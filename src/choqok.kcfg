@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile/>
+  <group name="Preferences">
+  	<entry name="systrayTriggerType" type="Enum">
+      <choices>
+	      <value>MainWindow</value>
+	      <value>QuickStatus</value>
+	      <value>UpdateTimeLine</value>
+	  </choices>
+    </entry>
+    <entry name="notifyType" type="Enum">
+      <choices>
+	      <value>None</value>
+	      <value>KNotify</value>
+	      <value>LibNotify</value>
+	  </choices>
+    </entry>
+    <entry name="updateInterval" type="Int">
+	    <label>Update interval</label>
+	    <default>10</default>
+    </entry>
+    <entry name="countOfStatusesOnMain" type="Int">
+	    <default>20</default>
+    </entry>
+    <entry name="notifyInterval" type="Int">
+	    <label>Update interval</label>
+	    <default>10</default>
+    </entry>
+    <entry name="latestStatusId" type="UInt">
+	    <default>0</default>
+    </entry>
+    <entry name="isSmilysEnabled" type="Bool">
+	    <default>true</default>
+    </entry>
+    <entry name="showMainWinOnStart" type="Bool">
+	    <default>true</default>
+    </entry>
+    <entry name="hideTwitField" type="Bool">
+	    <default>false</default>
+    </entry>
+  </group>
+  <group name="Account">
+    <entry name="username" type="String">
+	    <label>Username</label>
+    </entry>
+    <entry name="password" type="Password">
+	    <label>Password</label>
+    </entry>
+    <entry name="direction" type="Enum">
+	    <label>Direction</label>
+	    <choices>
+	      <value>LeftToRight</value>
+	      <value>RightToLeft</value>
+	    </choices>
+    </entry>
+  </group>
+</kcfg>

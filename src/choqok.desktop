@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=choqoK
+Name[x-test]=xxchoqoKxx
+Exec=choqok %i -caption "%c"
+Icon=choqok
+Type=Application
+DocPath=choqok/index.html
+GenericName=A KDE4 Twitter client
+Terminal=0
+
+X-Ubuntu-Gettext-Domain=desktop_kdesdk

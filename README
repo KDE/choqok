@@ -1,0 +1,25 @@
+choqoK
+A KDE 4 Twitter client.
+
+Author:
+	Mehrdad Momeny <mehrdad.momeny[AT]gmail.com>
+License:
+	GNU GPL v3
+
+Requirements to build:
+     CMake 2.6
+     KDE 4 library Development packages! (KDEUI and KIO)
+
+
+How To Build The Project
+-=-=-=-=-=-=-=-=-=-=-=-=-=
+cd choqok
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+make
+sudo make install OR su -c 'make install'
+
+to uninstall the project:
+make uninstall or su -c 'make uninstall'
+
