@@ -3,7 +3,7 @@ Name=choqoK
 Exec=choqok %i -caption "%c"
 Icon=choqok
 Type=Application
-DocPath=choqok/index.html
+Categories=Internet;
 GenericName=A KDE4 Twitter client
 Terminal=0
 

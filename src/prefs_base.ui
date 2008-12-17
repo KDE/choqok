@@ -182,7 +182,7 @@
    <item row="2" column="0" colspan="3" >
     <widget class="QCheckBox" name="kcfg_isSmilysEnabled" >
      <property name="text" >
-      <string>Enable Smiles</string>
+      <string>Enable Smilies</string>
      </property>
      <property name="checked" >
       <bool>true</bool>

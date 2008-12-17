@@ -45,7 +45,6 @@ signals:
 	void sigFavorite(uint statusId, bool isFavorite);
 	
 protected slots:
-	void remove();
 	void setFavorite(bool isFavorite);
 	void requestReply();
 	void requestDestroy();

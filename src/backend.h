@@ -26,7 +26,7 @@ class Backend : public QObject
 {
 	Q_OBJECT
 public:
-	enum TimeLineType{All=0, HomeTimeLine, ReplyTimeLine, UserTimeLine};
+	enum TimeLineType{HomeTimeLine=1, ReplyTimeLine, UserTimeLine};
     Backend(QObject* parent=0);
 
     ~Backend();
@@ -78,7 +78,6 @@ private:
 	int homeTimelineHttpNum;
 	int replyTimelineHttpNum;
 	
-	QMap<QString, int> monthes;
 	QString mLatestErrorString;
 };
 

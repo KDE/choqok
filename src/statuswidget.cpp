@@ -33,10 +33,6 @@ StatusWidget::~StatusWidget()
 {
 }
 
-void StatusWidget::remove()
-{
-}
-
 void StatusWidget::setFavorite(bool isFavorite)
 {
 	emit sigFavorite(mCurrentStatus.statusId, isFavorite);
@@ -69,15 +65,15 @@ void StatusWidget::updateUi()
 QString StatusWidget::formatDateTime(const QDateTime &time) 
 {
 	int seconds = time.secsTo(QDateTime::currentDateTime());
-// 	kDebug()<<seconds<<"Time is: "<< time << " Current datetime: " <<QDateTime::currentDateTime();
-	if (seconds <= 15) return "Just now";
-	if (seconds <= 45) return "about " + QString::number(seconds) + " second" + (seconds == 1 ? "" : "s") + " ago";
+	///FIXME problem on showing singulares!
+	if (seconds <= 15) return i18n("Just now");
+	if (seconds <= 45) return i18np("about 1 second ago", "about %1 seconds ago", QString::number(seconds));
 	int minutes = (seconds - 45 + 59) / 60;
-	if (minutes <= 45) return "about " + QString::number(minutes) + " minute" + (minutes == 1 ? "" : "s") + " ago";
+	if (minutes <= 45) return i18np("about 1 minute ago", "about %1 minutes ago", QString::number(minutes));
 	int hours = (seconds - 45 * 60 + 3599) / 3600;
-	if (hours <= 18) return "about " + QString::number(hours) + " hour" + (hours == 1 ? "" : "s") + " ago";
+	if (hours <= 18) return i18np("about 1 hour ago", "about %1 hours ago", QString::number(hours));
 	int days = (seconds - 18 * 3600 + 24 * 3600 - 1) / (24 * 3600);
-	return "about " + QString::number(days) + " day" + (days == 1 ? "" : "s") + " ago";
+	return i18np("about 1 day ago", "about %1 days ago", QString::number(days));
 }
 
 void StatusWidget::setUserImage(const QString & imgPath)

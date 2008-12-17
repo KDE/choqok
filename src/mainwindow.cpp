@@ -48,7 +48,7 @@ MainWindow::MainWindow()
 	txtNewStatus = new StatusTextEdit(mainWidget);
 	txtNewStatus->setObjectName("txtNewStatus");
 	txtNewStatus->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
-	txtNewStatus->setMaximumHeight(70);
+	txtNewStatus->setMaximumHeight(80);
 	txtNewStatus->setFocus(Qt::OtherFocusReason);
 	txtNewStatus->setTabChangesFocus ( true );
 	ui.inputFrame->layout()->addWidget(txtNewStatus);
@@ -88,7 +88,7 @@ void MainWindow::setupActions()
 	connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(quitApp()));
 	KStandardAction::preferences(this, SLOT(optionsPreferences()), actionCollection());
 
-	KAction *actUpdate = new KAction(KIcon("view-refresh"), i18n("Update timeline"), this);
+	KAction *actUpdate = new KAction(KIcon("view-refresh"), i18n("Update timelines"), this);
 	actionCollection()->addAction(QLatin1String("update_timeline"), actUpdate);
 	actUpdate->setShortcut(Qt::Key_F5);
 	actUpdate->setGlobalShortcutAllowed(true);
@@ -97,7 +97,7 @@ void MainWindow::setupActions()
 	
 	KAction *newTwit = new KAction(this);
 	newTwit->setIcon(KIcon("document-new"));
-	newTwit->setText(i18n("Quick Twit"));
+	newTwit->setText(i18n("Quick Tweet"));
 	actionCollection()->addAction(QLatin1String("choqok_new_twit"), newTwit);
 	newTwit->setShortcut(Qt::ControlModifier | Qt::Key_T);
 	newTwit->setGlobalShortcutAllowed(true);
@@ -142,8 +142,10 @@ void MainWindow::optionsPreferences()
 
 void MainWindow::checkNewStatusCharactersCount(int numOfChars)
 {
-	if(numOfChars < 30){
+	if(numOfChars < 0){
 		ui.lblCounter->setStyleSheet("QLabel {color: red}");
+	} else if(numOfChars < 30){
+		ui.lblCounter->setStyleSheet("QLabel {color: rgb(255, 255, 0);}");
 	} else {
 		ui.lblCounter->setStyleSheet("QLabel {color: green}");
 	}
@@ -200,11 +202,11 @@ void MainWindow::updateHomeTimeLine()
 void MainWindow::homeTimeLinesRecived(QList< Status > & statusList)
 {
 	kDebug();
-	statusBar()->showMessage(i18n("Latest friends timeline recived!"), TIMEOUT);
+	statusBar()->showMessage(i18n("Latest friends timeline received!"), TIMEOUT);
 	int count = statusList.count();
 	if(count==0){
 		kDebug()<<"Status list is empty";
-		statusBar()->showMessage(i18n("No new twits recived, The list is up to date."), TIMEOUT);
+		statusBar()->showMessage(i18n("No new statuses received, The list is up to date."), TIMEOUT);
 		return;
 	} else {
 		int count = statusList.count();
@@ -221,10 +223,10 @@ void MainWindow::homeTimeLinesRecived(QList< Status > & statusList)
 void MainWindow::replyTimeLineRecived(QList< Status > & statusList)
 {
 	kDebug();
-	statusBar()->showMessage(i18n("Latest replies timeline recived!"), TIMEOUT);
+	statusBar()->showMessage(i18n("Latest replies timeline received!"), TIMEOUT);
 	if(statusList.count()==0){
 		kDebug()<<"Status list is empty";
-		statusBar()->showMessage(i18n("No new twits received, The list is up to date."), TIMEOUT);
+		statusBar()->showMessage(i18n("No new statuses received, The list is up to date."), TIMEOUT);
 		return;
 	}else {
 		int count = statusList.count();

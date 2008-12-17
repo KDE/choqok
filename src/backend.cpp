@@ -24,20 +24,7 @@ Backend::Backend(QObject* parent): QObject(parent)
 	urls[HomeTimeLine] = "http://twitter.com/statuses/friends_timeline.xml";
 	urls[ReplyTimeLine] = "http://twitter.com/statuses/replies.xml";
 	urls[UserTimeLine] = "http://twitter.com/statuses/user_timeline.xml";
-	login();
-	monthes["Jan"] = 1;
-	monthes["Feb"] = 2;
-	monthes["Mar"] = 3;
-	monthes["Apr"] = 4;
-	monthes["May"] = 5;
-	monthes["Jun"] = 6;
-	monthes["Jul"] = 7;
-	monthes["Aug"] = 8;
-	monthes["Sep"] = 9;
-	monthes["Oct"] = 10;
-	monthes["Nov"] = 11;
-	monthes["Dec"] = 12;
-	
+	login();	
 	
 	connect(&statusHttp, SIGNAL(requestFinished( int, bool )), this, SLOT(postNewStatusFinished(int, bool)));
 	connect(&timelineHttp, SIGNAL(requestFinished( int, bool )), this, SLOT(requestTimelineFinished(int, bool)));
@@ -86,12 +73,6 @@ void Backend::logout()
 void Backend::requestTimeLine(TimeLineType type, int page)
 {
 	kDebug();
-	if(type == All){
-		QString errMsg = i18n("Internal coding error, requesting all timelines not tolerated!");
-		kDebug()<<"Internal coding error, requesting all timelines not tolerated!";
-		mLatestErrorString = errMsg;
-		return;
-	}
 	QUrl url(urls[type]);
 	timelineHttp.setHost(url.host(), url.port(80));
 	timelineHttp.setUser(Settings::username(), Settings::password());
@@ -160,7 +141,7 @@ QString Backend::getErrorString(QHttp * sender)
 			errType = i18n("Connection refused by server, please try again later. ");
 			break;
 		case QHttp::UnexpectedClose:
-			errType = i18n("Connection terminated unexpected, please try again later. ");
+			errType = i18n("Connection terminated unexpectedly, please try again later. ");
 			break;
 		case QHttp::Aborted:
 // 			errType = i18n("Aborted, ");
@@ -200,7 +181,7 @@ QList<Status> * Backend::readTimeLineFromXml(QByteArray & buffer)
 	
 	if (root.tagName() != "statuses") {
 		QString err = i18n("Data returned from server corrupted!");
-		kDebug()<<"there no statuses tag in XML\t the XML is: \n"<<buffer.data();
+		kDebug()<<"there's no statuses tag in XML\t the XML is: \n"<<buffer.data();
 		mLatestErrorString = err;
 		return 0;
 	}

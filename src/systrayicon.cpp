@@ -97,10 +97,10 @@ void SysTrayIcon::toggleMainWindowVisibility()
 	if(mainWin->isVisible()){
 		mainWin->setUnreadStatusesToReadState();
 		mainWin->hide();
-		actionCollection()->action("toggle-mainwin")->setText("&Restore");
+		actionCollection()->action("toggle-mainwin")->setText(i18n("&Restore"));
 	} else {
 		mainWin->show();
-		actionCollection()->action("toggle-mainwin")->setText("&Minimize");
+		actionCollection()->action("toggle-mainwin")->setText(i18n("&Minimize"));
 	}
 }
 

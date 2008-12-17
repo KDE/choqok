@@ -25,7 +25,7 @@ QuickTwit::QuickTwit(QWidget* parent): KDialog(parent)
 	this->resize(280, 120);
 	txtStatus->setFocus(Qt::OtherFocusReason);
 	
-	this->setCaption("What are you doing?");
+	this->setCaption(i18n("What are you doing?"));
 	setButtonText(KDialog::Ok, QString::number(MAX_STATUS_SIZE));
 	
 	twitter = new Backend(this);
