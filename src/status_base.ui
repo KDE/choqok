@@ -55,7 +55,7 @@
    <item rowspan="2" row="0" column="2" >
     <layout class="QVBoxLayout" name="verticalLayout" >
      <property name="spacing" >
-      <number>0</number>
+      <number>3</number>
      </property>
      <property name="sizeConstraint" >
       <enum>QLayout::SetMaximumSize</enum>
@@ -86,14 +86,14 @@
        </property>
        <property name="minimumSize" >
         <size>
-         <width>32</width>
-         <height>32</height>
+         <width>30</width>
+         <height>30</height>
         </size>
        </property>
        <property name="maximumSize" >
         <size>
-         <width>32</width>
-         <height>32</height>
+         <width>30</width>
+         <height>30</height>
         </size>
        </property>
        <property name="toolTip" >
@@ -117,14 +117,14 @@
        </property>
        <property name="minimumSize" >
         <size>
-         <width>32</width>
-         <height>32</height>
+         <width>30</width>
+         <height>30</height>
         </size>
        </property>
        <property name="maximumSize" >
         <size>
-         <width>32</width>
-         <height>32</height>
+         <width>30</width>
+         <height>30</height>
         </size>
        </property>
        <property name="toolTip" >
@@ -145,14 +145,14 @@
        </property>
        <property name="minimumSize" >
         <size>
-         <width>32</width>
-         <height>32</height>
+         <width>30</width>
+         <height>30</height>
         </size>
        </property>
        <property name="maximumSize" >
         <size>
-         <width>32</width>
-         <height>32</height>
+         <width>30</width>
+         <height>30</height>
         </size>
        </property>
        <property name="toolTip" >

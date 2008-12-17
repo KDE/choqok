@@ -43,7 +43,7 @@ private:
 	
 	MainWindow *mainWin;
 	QuickTwit *quickWidget;
-	bool isQuickActivated;
+// 	bool isQuickActivated;
 	
 	QPixmap m_defaultIcon;
 	int m_unread;

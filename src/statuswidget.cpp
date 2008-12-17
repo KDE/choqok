@@ -65,7 +65,6 @@ void StatusWidget::updateUi()
 QString StatusWidget::formatDateTime(const QDateTime &time) 
 {
 	int seconds = time.secsTo(QDateTime::currentDateTime());
-	///FIXME problem on showing singulares!
 	if (seconds <= 15) return i18n("Just now");
 	if (seconds <= 45) return i18np("about 1 second ago", "about %1 seconds ago", seconds);
 	int minutes = (seconds - 45 + 59) / 60;

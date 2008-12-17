@@ -19,6 +19,7 @@
 
 QuickTwit::QuickTwit(QWidget* parent): KDialog(parent)
 {
+	kDebug();
 	txtStatus = new StatusTextEdit(this);
 	txtStatus->setDefaultDirection((Qt::LayoutDirection)Settings::direction());
 	this->setMainWidget(txtStatus);

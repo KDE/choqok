@@ -85,6 +85,9 @@ protected:
 	void keyPressEvent(QKeyEvent * e);
 	void checkUnreadStatuses(int numOfNewStatusesReciened);
 	bool queryClose();
+	
+private slots:
+	void initObjects();
 
 private:
     void setupActions();

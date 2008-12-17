@@ -32,6 +32,37 @@ MainWindow::MainWindow()
     // accept dnd
 //     setAcceptDrops(true);
 	this->setAttribute(Qt::WA_DeleteOnClose, false);
+    // tell the KXmlGuiWindow that this is indeed the main widget
+	mainWidget = new QWidget(this);
+    ui.setupUi(mainWidget);
+	ui.homeLayout->setDirection(QBoxLayout::TopToBottom);
+	ui.replyLayout->setDirection(QBoxLayout::TopToBottom);
+	txtNewStatus = new StatusTextEdit(mainWidget);
+	txtNewStatus->setObjectName("txtNewStatus");
+	ui.inputFrame->layout()->addWidget(txtNewStatus);
+	
+	setCentralWidget(mainWidget);
+	setupActions();
+	statusBar()->show();
+	setupGUI();
+	
+	connect(ui.toggleArrow, SIGNAL(clicked()), this, SLOT(toggleTwitFieldVisible()));
+	connect(txtNewStatus, SIGNAL(charsLeft(int)), this, SLOT(checkNewStatusCharactersCount(int)));
+	connect(txtNewStatus, SIGNAL(returnPressed(QString&)), this, SLOT(postStatus(QString&)));
+	connect(this, SIGNAL(sigSetUserImage(StatusWidget*)), this, SLOT(setUserImage(StatusWidget*)));
+	
+	QTimer::singleShot( 0, this, SLOT(initObjects()) );
+}
+
+void MainWindow::initObjects()
+{
+	kDebug();
+	
+	txtNewStatus->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
+	txtNewStatus->setMaximumHeight(80);
+	txtNewStatus->setFocus(Qt::OtherFocusReason);
+	txtNewStatus->setTabChangesFocus ( true );
+	
 	Settings::setLatestStatusId(0);
 	Settings::self()->readConfig();
 	twitter = new Backend(this);
@@ -40,25 +71,9 @@ MainWindow::MainWindow()
 	connect(twitter, SIGNAL(sigPostNewStatusDone(bool)), this, SLOT(postingNewStatusDone(bool)));
 	connect(twitter, SIGNAL(sigFavoritedDone(bool)), this, SLOT(requestFavoritedDone(bool)));
 	connect(twitter, SIGNAL(sigDestroyDone(bool)), this, SLOT(requestDestroyDone(bool)));
-    // tell the KXmlGuiWindow that this is indeed the main widget
-	mainWidget = new QWidget(this);
-    ui.setupUi(mainWidget);
-	ui.homeLayout->setDirection(QBoxLayout::TopToBottom);
-	ui.replyLayout->setDirection(QBoxLayout::TopToBottom);
-	txtNewStatus = new StatusTextEdit(mainWidget);
-	txtNewStatus->setObjectName("txtNewStatus");
-	txtNewStatus->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
-	txtNewStatus->setMaximumHeight(80);
-	txtNewStatus->setFocus(Qt::OtherFocusReason);
-	txtNewStatus->setTabChangesFocus ( true );
-	ui.inputFrame->layout()->addWidget(txtNewStatus);
 	
-	setCentralWidget(mainWidget);
-	replyToStatusId = 0;
+	replyToStatusId = unreadStatusCount = 0;
 
-	setupActions();
-	statusBar()->show();
-	setupGUI();
 	
 	timelineTimer = new QTimer(this);
 	timelineTimer->start();
@@ -66,10 +81,6 @@ MainWindow::MainWindow()
 	mediaMan = new MediaManagement(this);
 	
 	connect(timelineTimer, SIGNAL(timeout()), this, SLOT(updateTimeLines()));
-	connect(txtNewStatus, SIGNAL(charsLeft(int)), this, SLOT(checkNewStatusCharactersCount(int)));
-	connect(txtNewStatus, SIGNAL(returnPressed(QString&)), this, SLOT(postStatus(QString&)));
-	connect(this, SIGNAL(sigSetUserImage(StatusWidget*)), this, SLOT(setUserImage(StatusWidget*)));
-	connect(ui.toggleArrow, SIGNAL(clicked()), this, SLOT(toggleTwitFieldVisible()));
 	
 	loadConfigurations();
 }
@@ -77,7 +88,6 @@ MainWindow::MainWindow()
 MainWindow::~MainWindow()
 {
 	kDebug();
-	//TODO Save Status list
 	timelineTimer->stop();
 	Settings::self()->writeConfig();
 }
@@ -211,12 +221,12 @@ void MainWindow::homeTimeLinesRecived(QList< Status > & statusList)
 	} else {
 		int count = statusList.count();
 		kDebug()<<count<<" Statuses received.";
-		addNewStatusesToUi(statusList, ui.homeLayout, &listHomeStatus);
-		ui.homeScroll->verticalScrollBar()->setSliderPosition ( 0 );
 		if(!isStartMode){
 			unreadStatusInHome+=count;
 			ui.tabs->setTabText(0, i18n("Home(%1)", unreadStatusInHome));
 		}
+		addNewStatusesToUi(statusList, ui.homeLayout, &listHomeStatus);
+		ui.homeScroll->verticalScrollBar()->setSliderPosition ( 0 );
 	}
 }
 
@@ -231,12 +241,12 @@ void MainWindow::replyTimeLineRecived(QList< Status > & statusList)
 	}else {
 		int count = statusList.count();
 		kDebug()<<count<<" Statuses received.";
-		addNewStatusesToUi(statusList, ui.replyLayout, &listReplyStatus, Backend::ReplyTimeLine);
-		ui.replyScroll->verticalScrollBar()->setSliderPosition ( 0 );
 		if(!isStartMode){
 			unreadStatusInReply+=count;
 			ui.tabs->setTabText(1, i18n("Reply(%1)", unreadStatusInReply));
 		}
+		addNewStatusesToUi(statusList, ui.replyLayout, &listReplyStatus, Backend::ReplyTimeLine);
+		ui.replyScroll->verticalScrollBar()->setSliderPosition ( 0 );
 	}
 }
 
@@ -244,14 +254,10 @@ void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * l
 									 QList<StatusWidget*> *list, Backend::TimeLineType type)
 {
 	kDebug();
+	int countNewOfStatuses = statusList.count();
 	QList<Status>::const_iterator it = statusList.constBegin();
 	QList<Status>::const_iterator endIt = statusList.constEnd();
-	
 	for(;it!=endIt; ++it){
-		if(!isStartMode && (type != Backend::HomeTimeLine || it->replyToUserScreenName!=Settings::username())){
-			emit sigNotify(it->user.screenName, it->content,
-									 mediaMan->getImageLocalPathIfExist(it->user.profileImageUrl));
-		}
 		StatusWidget *wt = new StatusWidget(this);
 		wt->setAttribute(Qt::WA_DeleteOnClose);
 		wt->setCurrentStatus(*it);
@@ -262,6 +268,14 @@ void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * l
 		list->append(wt);
 		layoutToAddStatuses->insertWidget(0, wt);
 		if(!isStartMode){
+			if(it->user.screenName != Settings::username()){
+				if(type == Backend::ReplyTimeLine || it->replyToUserScreenName != Settings::username()){
+					emit sigNotify(it->user.screenName, it->content,
+								mediaMan->getImageLocalPathIfExist(it->user.profileImageUrl) );
+				}
+			} else {
+				--countNewOfStatuses;
+			}
 			wt->setUnread();
 			listUnreadStatuses.append(wt);
 		}
@@ -272,7 +286,7 @@ void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * l
 		Settings::setLatestStatusId(latestId);
 	}
 	if(!isStartMode)
-		checkUnreadStatuses(statusList.count());
+		checkUnreadStatuses(countNewOfStatuses);
 	updateStatusList(list);
 }
 
@@ -294,7 +308,6 @@ void MainWindow::error(QString & errMsg)
 void MainWindow::postStatus(QString & status)
 {
 	kDebug();
-	//TODO will check for urls!
 	if(status.size()>MAX_STATUS_SIZE && status.indexOf("http://")==-1 ){
 		QString err = i18n("Status text size is more than server limit size.");
 		error(err);
@@ -499,7 +512,6 @@ void MainWindow::checkUnreadStatuses(int numOfNewStatusesReciened)
 		unreadStatusCount = 0;
 	} else {
 		unreadStatusCount += numOfNewStatusesReciened;
-		
 	}
 	emit sigSetUnread(unreadStatusCount);
 }

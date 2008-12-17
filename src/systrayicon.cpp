@@ -20,6 +20,7 @@
 
 SysTrayIcon::SysTrayIcon(QWidget* parent): KSystemTrayIcon(parent)
 {
+	kDebug();
 	setToolTip(i18n("choqoK Twitter - Hit me to update your status"));
 	
 	mainWin = new MainWindow;
@@ -32,16 +33,21 @@ SysTrayIcon::SysTrayIcon(QWidget* parent): KSystemTrayIcon(parent)
 		mainWin->show();
 	}
 	
-	isQuickActivated = false;
-	setupActions();
 	quickWidget = new QuickTwit;
+	setupActions();
 	
 	connect(this, SIGNAL(activated( QSystemTrayIcon::ActivationReason )),
 			 this, SLOT(sysTrayActivated(QSystemTrayIcon::ActivationReason)));
+	
 	connect(quickWidget, SIGNAL(sigStatusUpdated()), mainWin, SLOT(updateHomeTimeLine()));
+	
 	connect(mainWin, SIGNAL(sigSetUnread(int)), this, SLOT(slotSetUnread(int)));
-	connect(mainWin, SIGNAL(sigNotify(const QString&, const QString&, const QString&)), this, SLOT(systemNotify(const QString&, const QString&,const QString&)));
-	connect(quickWidget, SIGNAL(sigNotify(const QString&,const  QString&,const  QString&)), this, SLOT(systemNotify(const QString&, const QString&, const QString&)));
+	
+	connect(mainWin, SIGNAL(sigNotify(const QString&, const QString&, const QString&)), 
+			this, SLOT(systemNotify(const QString&, const QString&,const QString&)));
+	
+	connect(quickWidget, SIGNAL(sigNotify(const QString&,const  QString&,const  QString&)), 
+			this, SLOT(systemNotify(const QString&, const QString&, const QString&)));
 }
 
 SysTrayIcon::~SysTrayIcon()
