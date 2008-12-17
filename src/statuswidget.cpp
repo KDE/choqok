@@ -63,6 +63,7 @@ void StatusWidget::updateUi()
 	}
 	lblSign->setText(generateSign());
 	lblStatus->setText(prepareStatus(mCurrentStatus.content, mCurrentStatus.replyToStatusId));
+	setUiStyle();
 }
 
 QString StatusWidget::formatDateTime(const QDateTime &time) 
@@ -113,36 +114,42 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
 {
 	QString s = text;
 	int i = 0, j = 0;
-// 	if(Settings::isSmilysEnabled()){
-// 		while((j = s.indexOf(':', i)) != -1){
-// 			if(s[j+1]==')' && s[j+2]==')')
-// 				;
-// 			else
-// 				switch(s[j+1]){
-// 					case 'D':
-// 						break;
-// 					case ')':
-// 						break;
-// 					case '(':
-// 						break;
-// 					case 'o':
-// 					case 'O':
-// 						break;
-// 					case '*':
-// 					case 'x':
-// 						break;
-// 					case '|':
-// 						break;
-// 					case '/':
-// 						break;
-// 						
-// 				};
-// 		}
-// 	}
+	///TODO Adding smile support!
+/*	if(Settings::isSmilysEnabled()){
+		while((j = s.indexOf(':', i)) != -1){
+			if(s[j+1]==')' && s[j+2]==')')
+				;
+			else
+				switch(s[j+1]){
+					case 'D':
+						break;
+					case ')':
+						break;
+					case '(':
+						break;
+					case 'o':
+					case 'O':
+						break;
+					case '*':
+					case 'x':
+						break;
+					case '|':
+						break;
+					case '/':
+						break;
+						
+				};
+		}
+	}*/
 	
 	s.replace(" www.", " http://www.");
 	if (s.startsWith("www.")) s = "http://" + s;
-	QString t = "";
+	QString t;
+	if(Settings::direction()==Qt::RightToLeft){
+		t = "<div dir='rtl'>";
+	} else {
+		t = "<div dir='ltr'>";
+	}
 	i = j = 0;
 	while ((j = s.indexOf("http://", i)) != -1) {
 		t += s.mid(i, j - i);
@@ -160,6 +167,7 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
 		QString username = s.mid(1, i - 1);
 		t = "<a href=\"http://twitter.com/" + username + "/statuses/" + QString::number(replyStatusId) + "\" style=\"text-decoration:none\">@" + username + "</a>" + s.mid(i);
 	}
+	t += "</div>";
 	return t;
 }
 
@@ -181,6 +189,17 @@ void StatusWidget::setRead()
 	int blue = backColor.blue()-COLOROFFSET;
 	int green = backColor.green()-COLOROFFSET;
 	int red = backColor.red()-COLOROFFSET;
+	
+	this->setStyleSheet("background-color: rgb("+QString::number(red)+",\
+			"+QString::number(green)+", "+QString::number(blue)+");");
+}
+
+void StatusWidget::setUiStyle()
+{
+	QColor backColor = this->palette().window().color();
+	int blue = backColor.blue();
+	int green = backColor.green();
+	int red = backColor.red();
 	
 	this->setStyleSheet("background-color: rgb("+QString::number(red)+",\
 			"+QString::number(green)+", "+QString::number(blue)+");");

@@ -174,20 +174,6 @@ void MainWindow::notify(const QString &message)
 	statusBar()->showMessage( message, TIMEOUT);
 }
 
-// void MainWindow::systemNotify(const QString title, const QString message, QString iconUrl)
-// {
-// 	switch(Settings::notifyType()){
-// 			case 0:
-// 				break;
-// 			case 1://KNotify
-// 				break;
-// 			case 2://Libnotify!
-// 				QString libnotifyCmd = QString("notify-send -t ") + QString::number(Settings::notifyInterval()*1000) + QString(" -u low -i "+ iconUrl +" \"") + title + QString("\" \"") + message + QString("\"");
-// 				QProcess::execute(libnotifyCmd);
-// 				break;
-// 		}
-// }
-
 void MainWindow::updateTimeLines()
 {
 	kDebug();
@@ -252,7 +238,8 @@ void MainWindow::replyTimeLineRecived(QList< Status > & statusList)
 	}
 }
 
-void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * layoutToAddStatuses, QList<StatusWidget*> *list, Backend::TimeLineType type)
+void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * layoutToAddStatuses,
+									 QList<StatusWidget*> *list, Backend::TimeLineType type)
 {
 	kDebug();
 	QList<Status>::const_iterator it = statusList.constBegin();
@@ -417,6 +404,7 @@ void MainWindow::keyPressEvent(QKeyEvent * e)
 
 void MainWindow::quitApp()
 {
+	twitter->quiting();
 	saveStatuses("choqokHomeStatusListrc", listHomeStatus);
 	saveStatuses("choqokReplyStatusListrc", listReplyStatus);
 	deleteLater();

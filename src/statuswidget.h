@@ -53,6 +53,7 @@ protected slots:
 	
 private:
 	QString prepareStatus(const QString &text, const int &replyStatusId);
+	void setUiStyle();
 	QString generateSign();
 	void updateUi();
 	QTimer timer;

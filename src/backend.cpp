@@ -47,7 +47,7 @@ Backend::~Backend()
 {
 	kDebug();
 	logout();
-	quiting();
+// 	quiting();
 }
 
 void Backend::postNewStatus(const QString & statusMessage, uint replyToStatusId)
@@ -339,10 +339,10 @@ void Backend::requestDestroy(uint statusId)
 
 void Backend::quiting()
 {
-	statusHttp.abort();
+// 	statusHttp.abort();
 	statusHttp.close();
 	
-	timelineHttp.abort();
+// 	timelineHttp.abort();
 	timelineHttp.close();
 }
 
