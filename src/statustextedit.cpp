@@ -16,6 +16,8 @@ StatusTextEdit::StatusTextEdit(QWidget *parent)
 {
 	this->setAcceptRichText(false);
 	connect(this, SIGNAL(textChanged()), this, SLOT(setNumOfCharsLeft()));
+// 	setCheckSpellingEnabled(true);
+	setAcceptRichText(false);
 }
 
 

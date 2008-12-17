@@ -201,6 +201,9 @@
      <property name="openExternalLinks" >
       <bool>true</bool>
      </property>
+     <property name="textInteractionFlags" >
+      <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+     </property>
     </widget>
    </item>
    <item row="0" column="1" >
@@ -221,7 +224,7 @@
       <bool>true</bool>
      </property>
      <property name="textInteractionFlags" >
-      <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+      <set>Qt::TextBrowserInteraction</set>
      </property>
     </widget>
    </item>

@@ -33,7 +33,7 @@ public slots:
 	void checkNewStatusCharactersCount(int numOfChars);
 	void slotPostNewStatus(QString &newStatus);
 	void slotPostNewStatusDone(bool isError);
-// 	void postStatus(QString &status);
+	void sltAccepted();
 
 protected:
 // 	void keyPressEvent(QKeyEvent *e);

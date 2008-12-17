@@ -22,7 +22,7 @@ QuickTwit::QuickTwit(QWidget* parent): KDialog(parent)
 	txtStatus = new StatusTextEdit(this);
 	txtStatus->setDefaultDirection((Qt::LayoutDirection)Settings::direction());
 	this->setMainWidget(txtStatus);
-	this->resize(250, 100);
+	this->resize(280, 120);
 	txtStatus->setFocus(Qt::OtherFocusReason);
 	
 	this->setCaption("What are you doing?");
@@ -32,6 +32,7 @@ QuickTwit::QuickTwit(QWidget* parent): KDialog(parent)
 	connect(txtStatus, SIGNAL(returnPressed(QString&)), this, SLOT(slotPostNewStatus(QString&)));
 	connect(txtStatus, SIGNAL(charsLeft(int)), this, SLOT(checkNewStatusCharactersCount(int)));
 	connect(twitter, SIGNAL(sigPostNewStatusDone(bool)), this, SLOT(slotPostNewStatusDone(bool)));
+	connect(this, SIGNAL(accepted()), this, SLOT(sltAccepted()));
 }
 
 
@@ -65,8 +66,16 @@ void QuickTwit::slotPostNewStatusDone(bool isError)
 
 void QuickTwit::slotPostNewStatus(QString & newStatus)
 {
+	kDebug();
 	twitter->postNewStatus(newStatus);
 	this->hide();
+}
+
+void QuickTwit::sltAccepted()
+{
+	kDebug();
+	QString txt = txtStatus->toPlainText();
+	slotPostNewStatus(txt);
 }
 
 #include "quicktwit.moc"

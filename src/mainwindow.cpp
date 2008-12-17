@@ -389,6 +389,7 @@ void MainWindow::prepareReply(QString &userName, uint statusId)
 	txtNewStatus->setDefaultDirection((Qt::LayoutDirection)Settings::direction());
 	if(!ui.inputFrame->isVisible())
 		ui.inputFrame->show();
+	txtNewStatus->moveCursor(QTextCursor::End);
 }
 
 void MainWindow::keyPressEvent(QKeyEvent * e)
