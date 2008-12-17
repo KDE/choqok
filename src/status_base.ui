@@ -208,20 +208,26 @@
    </item>
    <item row="0" column="1" >
     <widget class="QTextEdit" name="lblStatus" >
+     <property name="acceptDrops" >
+      <bool>false</bool>
+     </property>
      <property name="autoFillBackground" >
       <bool>true</bool>
      </property>
      <property name="frameShape" >
       <enum>QFrame::NoFrame</enum>
      </property>
-     <property name="verticalScrollBarPolicy" >
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
      <property name="horizontalScrollBarPolicy" >
       <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
+     <property name="undoRedoEnabled" >
+      <bool>false</bool>
+     </property>
      <property name="readOnly" >
       <bool>true</bool>
+     </property>
+     <property name="acceptRichText" >
+      <bool>false</bool>
      </property>
      <property name="textInteractionFlags" >
       <set>Qt::TextBrowserInteraction</set>

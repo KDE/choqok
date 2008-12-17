@@ -20,6 +20,4 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr ..
 make
 sudo make install OR su -c 'make install'
 
-to uninstall the project:
-make uninstall or su -c 'make uninstall'
 
