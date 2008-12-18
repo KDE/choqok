@@ -32,7 +32,8 @@ MediaManagement::~MediaManagement()
 	delete mediaResource;
 }
 
-QString MediaManagement::getImageLocalPathDownloadIfNotExist(const QString &username, const QString & remotePath, QWidget *window)
+QString MediaManagement::getImageLocalPathDownloadIfNotExist(const QString &username, 
+		const QString & remotePath, QWidget *window)
 {
 // 	kDebug();
 	QString path = map->readEntry(remotePath, QString());

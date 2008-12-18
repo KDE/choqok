@@ -34,7 +34,8 @@ public:
 
     ~MediaManagement();
 
-	QString getImageLocalPathDownloadIfNotExist(const QString &username, const QString &remotePath, QWidget *window=0);
+	QString getImageLocalPathDownloadIfNotExist(const QString &username, 
+			const QString &remotePath, QWidget *window=0);
 	QString getImageLocalPathIfExist(const QString &remotePath);
 	
 signals:

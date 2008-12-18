@@ -23,6 +23,8 @@ StatusWidget::StatusWidget(QWidget *parent)
 	btnReply->setIcon(KIcon("edit-undo"));
 	btnRemove->setIcon(KIcon("edit-delete"));
 	
+	this->setMaximumHeight(110);
+	
 	connect(btnReply, SIGNAL(clicked(bool)), this, SLOT(requestReply()));
 	connect(&timer, SIGNAL(timeout()), this, SLOT(updateSign()));
 	connect(btnFavorite, SIGNAL(clicked(bool)), this, SLOT(setFavorite(bool)));
@@ -177,8 +179,8 @@ void StatusWidget::setUnread()
 		backColor.setGreen( backColor.green()+COLOROFFSET);
 		backColor.setRed( backColor.red()+COLOROFFSET);
 	}
-	this->setStyleSheet("background-color: rgb("+QString::number(backColor.red())+",\
-			"+QString::number(backColor.green())+", "+QString::number(backColor.blue())+");");
+	this->setStyleSheet("background-color: rgb(" + QString::number(backColor.red()) + ","
+			+ QString::number(backColor.green()) + ", " + QString::number(backColor.blue()) + ");");
 }
 
 void StatusWidget::setRead()
@@ -192,8 +194,8 @@ void StatusWidget::setRead()
 		backColor.setGreen( backColor.green()-COLOROFFSET);
 		backColor.setRed( backColor.red()-COLOROFFSET);
 	}
-	this->setStyleSheet("background-color: rgb("+QString::number(backColor.red())+",\
-			"+QString::number(backColor.green())+", "+QString::number(backColor.blue())+");");
+	this->setStyleSheet("background-color: rgb("+QString::number(backColor.red())+","
+			+QString::number(backColor.green())+", "+QString::number(backColor.blue())+");");
 }
 
 void StatusWidget::setUiStyle()
@@ -204,8 +206,8 @@ void StatusWidget::setUiStyle()
 	} else {
 		backColor = this->palette().window().color();
 	}
-	this->setStyleSheet("background-color: rgb("+QString::number(backColor.red())+",\
-			"+QString::number(backColor.green())+", "+QString::number(backColor.blue())+");");
+	this->setStyleSheet( "background-color: rgb(" + QString::number(backColor.red()) + ","
+			+ QString::number(backColor.green()) + ", " + QString::number(backColor.blue()) + ");");
 }
 
 #include "statuswidget.moc"

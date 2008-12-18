@@ -16,8 +16,9 @@ How To Build The Project
 cd choqok
 mkdir build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+cmake -DCMAKE_INSTALL_PREFIX=$KDEDIR ..
 make
 sudo make install OR su -c 'make install'
 
-
+to uninstall the project:
+make uninstall or su -c 'make uninstall'
