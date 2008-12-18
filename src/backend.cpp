@@ -132,7 +132,7 @@ QString Backend::getErrorString(QHttp * sender)
 	QString errType;
 	switch(sender->error()){
 		case QHttp::NoError:
-			errType = i18n("No error occured! ");
+			errType = i18n("No error occurred! ");
 			break;
 		case QHttp::HostNotFound:
 // 			errType = i18n("Host not found, ");
