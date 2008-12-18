@@ -58,4 +58,15 @@
 	    </choices>
     </entry>
   </group>
+  <group name="Appearances">
+    <entry name="isCustomUi" type="Bool">
+	    <default>false</default>
+    </entry>
+    <entry name="defaultBackColor" type="Color">
+	    <default>white</default>
+    </entry>
+    <entry name="newStatusBackColor" type="Color">
+	    <default>yellow</default>
+    </entry>
+  </group>
 </kcfg>

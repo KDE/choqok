@@ -72,7 +72,7 @@ void MainWindow::initObjects()
 	connect(twitter, SIGNAL(sigFavoritedDone(bool)), this, SLOT(requestFavoritedDone(bool)));
 	connect(twitter, SIGNAL(sigDestroyDone(bool)), this, SLOT(requestDestroyDone(bool)));
 	
-	replyToStatusId = unreadStatusCount = 0;
+	replyToStatusId = unreadStatusCount = unreadStatusInReply = unreadStatusInHome = 0;
 
 	
 	timelineTimer = new QTimer(this);
@@ -143,6 +143,10 @@ void MainWindow::optionsPreferences()
 	QWidget *accountsSettingsDlg = new QWidget;
 	ui_accounts_base.setupUi(accountsSettingsDlg);
 	dialog->addPage(accountsSettingsDlg, i18n("Account"), "accounts_setting");
+	
+	QWidget *appearsSettingsDlg = new QWidget;
+	ui_appears_base.setupUi(appearsSettingsDlg);
+	dialog->addPage(appearsSettingsDlg, i18n("Appearances"), "appears_setting");
 	
     connect(dialog, SIGNAL(settingsChanged(QString)), this, SLOT(settingsChanged()));
 	currentUsername = Settings::username();
@@ -254,7 +258,7 @@ void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * l
 									 QList<StatusWidget*> *list, Backend::TimeLineType type)
 {
 	kDebug();
-	int countNewOfStatuses = statusList.count();
+	int numOfNewStatuses = statusList.count();
 	QList<Status>::const_iterator it = statusList.constBegin();
 	QList<Status>::const_iterator endIt = statusList.constEnd();
 	for(;it!=endIt; ++it){
@@ -274,7 +278,7 @@ void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * l
 								mediaMan->getImageLocalPathIfExist(it->user.profileImageUrl) );
 				}
 			} else {
-				--countNewOfStatuses;
+				--numOfNewStatuses;
 			}
 			wt->setUnread();
 			listUnreadStatuses.append(wt);
@@ -286,7 +290,7 @@ void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * l
 		Settings::setLatestStatusId(latestId);
 	}
 	if(!isStartMode)
-		checkUnreadStatuses(countNewOfStatuses);
+		checkUnreadStatuses(numOfNewStatuses);
 	updateStatusList(list);
 }
 

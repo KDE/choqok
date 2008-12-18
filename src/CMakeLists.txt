@@ -9,7 +9,7 @@ set(choqok_SRCS
    quicktwit.cpp
  )
 
-kde4_add_ui_files(choqok_SRCS mainwindow_base.ui prefs_base.ui status_base.ui accounts_base.ui)
+kde4_add_ui_files(choqok_SRCS mainwindow_base.ui prefs_base.ui status_base.ui accounts_base.ui appears_base.ui)
 
 kde4_add_kcfg_files(choqok_SRCS settings.kcfgc )
 

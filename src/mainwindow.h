@@ -12,6 +12,7 @@
 #include "ui_prefs_base.h"
 #include "ui_mainwindow_base.h"
 #include "ui_accounts_base.h"
+#include "ui_appears_base.h"
 #include "datacontainers.h"
 #include "backend.h"
 
@@ -119,6 +120,7 @@ private:
 	Ui::MainWindow_base ui;
     Ui::prefs_base ui_prefs_base;
 	Ui::accounts_base ui_accounts_base;
+	Ui::appears_base ui_appears_base;
 	QWidget *mainWidget;
 	Backend *twitter;
 	StatusTextEdit *txtNewStatus;

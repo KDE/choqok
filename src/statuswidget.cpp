@@ -168,36 +168,44 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
 
 void StatusWidget::setUnread()
 {
-	QColor backColor = this->palette().window().color();
-	int blue = backColor.blue()+COLOROFFSET;
-	int green = backColor.green()+COLOROFFSET;
-	int red = backColor.red()+COLOROFFSET;
-	
-	this->setStyleSheet("background-color: rgb("+QString::number(red)+",\
-						 "+QString::number(green)+", "+QString::number(blue)+");");
-	
+	QColor backColor;
+	if(Settings::isCustomUi()){
+		backColor = Settings::newStatusBackColor();
+	} else {
+		backColor = this->palette().window().color();
+		backColor.setBlue( backColor.blue()+COLOROFFSET);
+		backColor.setGreen( backColor.green()+COLOROFFSET);
+		backColor.setRed( backColor.red()+COLOROFFSET);
+	}
+	this->setStyleSheet("background-color: rgb("+QString::number(backColor.red())+",\
+			"+QString::number(backColor.green())+", "+QString::number(backColor.blue())+");");
 }
 
 void StatusWidget::setRead()
 {
-	QColor backColor = this->palette().window().color();
-	int blue = backColor.blue()-COLOROFFSET;
-	int green = backColor.green()-COLOROFFSET;
-	int red = backColor.red()-COLOROFFSET;
-	
-	this->setStyleSheet("background-color: rgb("+QString::number(red)+",\
-			"+QString::number(green)+", "+QString::number(blue)+");");
+	QColor backColor;
+	if(Settings::isCustomUi()){
+		backColor = Settings::defaultBackColor();
+	} else {
+		backColor = this->palette().window().color();
+		backColor.setBlue( backColor.blue()-COLOROFFSET);
+		backColor.setGreen( backColor.green()-COLOROFFSET);
+		backColor.setRed( backColor.red()-COLOROFFSET);
+	}
+	this->setStyleSheet("background-color: rgb("+QString::number(backColor.red())+",\
+			"+QString::number(backColor.green())+", "+QString::number(backColor.blue())+");");
 }
 
 void StatusWidget::setUiStyle()
 {
-	QColor backColor = this->palette().window().color();
-	int blue = backColor.blue();
-	int green = backColor.green();
-	int red = backColor.red();
-	
-	this->setStyleSheet("background-color: rgb("+QString::number(red)+",\
-			"+QString::number(green)+", "+QString::number(blue)+");");
+	QColor backColor;
+	if(Settings::isCustomUi()){
+		backColor = Settings::defaultBackColor();
+	} else {
+		backColor = this->palette().window().color();
+	}
+	this->setStyleSheet("background-color: rgb("+QString::number(backColor.red())+",\
+			"+QString::number(backColor.green())+", "+QString::number(backColor.blue())+");");
 }
 
 #include "statuswidget.moc"
