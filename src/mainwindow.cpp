@@ -220,7 +220,7 @@ void MainWindow::homeTimeLinesRecived(QList< Status > & statusList)
 	int count = statusList.count();
 	if(count==0){
 		kDebug()<<"Status list is empty";
-		statusBar()->showMessage(i18n("No new statuses received, The list is up to date."), TIMEOUT);
+		statusBar()->showMessage(i18n("No new statuses received. The list is up to date."), TIMEOUT);
 		return;
 	} else {
 		int count = statusList.count();
@@ -240,7 +240,7 @@ void MainWindow::replyTimeLineRecived(QList< Status > & statusList)
 	statusBar()->showMessage(i18n("Latest replies timeline received!"), TIMEOUT);
 	if(statusList.count()==0){
 		kDebug()<<"Status list is empty";
-		statusBar()->showMessage(i18n("No new statuses received, The list is up to date."), TIMEOUT);
+		statusBar()->showMessage(i18n("No new statuses received. The list is up to date."), TIMEOUT);
 		return;
 	}else {
 		int count = statusList.count();
@@ -306,7 +306,7 @@ void MainWindow::setDefaultDirection()
 
 void MainWindow::error(QString & errMsg)
 {
-	emit sigNotify(i18n("Transaction faild"), errMsg, APPNAME);
+	emit sigNotify(i18n("Transaction failed"), errMsg, APPNAME);
 }
 
 void MainWindow::postStatus(QString & status)
