@@ -6,6 +6,7 @@ Icon=choqok
 Type=Application
 Categories=Internet;
 GenericName=A KDE4 Twitter client
+GenericName[gl]=Un cliente de Twitter para KDE4
 GenericName[nds]=En Twitter-Client för KDE
 GenericName[pt]=Um cliente de Twitter para o KDE4
 GenericName[pt_BR]=Um cliente de Twitter para o KDE4
