@@ -281,6 +281,8 @@ void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * l
 				if(type == Backend::ReplyTimeLine || it->replyToUserScreenName != Settings::username()){
 					emit sigNotify(it->user.screenName, it->content,
 								mediaMan->getImageLocalPathIfExist(it->user.profileImageUrl) );
+				} else {
+					--numOfNewStatuses;
 				}
 			} else {
 				--numOfNewStatuses;

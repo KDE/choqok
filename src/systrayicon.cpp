@@ -33,7 +33,7 @@ SysTrayIcon::SysTrayIcon(QWidget* parent): KSystemTrayIcon(parent)
 		mainWin->show();
 	}
 	
-	quickWidget = new QuickTwit;
+	quickWidget = new QuickTwit(mainWin);
 	setupActions();
 	
 	connect(this, SIGNAL(activated( QSystemTrayIcon::ActivationReason )),
