@@ -62,6 +62,7 @@ void StatusWidget::updateUi()
 	lblSign->setText(generateSign());
 	lblStatus->setText(prepareStatus(mCurrentStatus.content, mCurrentStatus.replyToStatusId));
 	setUiStyle();
+	updateFavoriteUi();
 }
 
 QString StatusWidget::formatDateTime(const QDateTime &time) 
@@ -208,6 +209,15 @@ void StatusWidget::setUiStyle()
 	}
 	this->setStyleSheet( "background-color: rgb(" + QString::number(backColor.red()) + ","
 			+ QString::number(backColor.green()) + ", " + QString::number(backColor.blue()) + ");");
+}
+
+void StatusWidget::updateFavoriteUi()
+{
+	if(mCurrentStatus.isFavorited){
+		btnFavorite->setChecked(true);
+	} else {
+		btnFavorite->setChecked(false);
+	}
 }
 
 #include "statuswidget.moc"

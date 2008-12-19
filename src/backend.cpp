@@ -210,9 +210,9 @@ QList<Status> * Backend::readTimeLineFromXml(QByteArray & buffer)
 					else if(node2.toElement().tagName() == "source")
 						status.source = node2.toElement().text();
 					else if(node2.toElement().tagName() == "truncated")
-						status.isTruncated = QVariant(node2.toElement().text().toInt()).toBool();
+						status.isTruncated = (node2.toElement().text() == "true")? true : false;
 					else if(node2.toElement().tagName() == "favorited")
-						status.isFavorited = QVariant(node2.toElement().text().toInt()).toBool();
+						status.isFavorited = (node2.toElement().text() == "true")? true : false;
 					else if(node2.toElement().tagName() == "user"){
 						QDomNode node3 = node2.firstChild();
 						while (!node3.isNull()) {

@@ -38,6 +38,7 @@ public:
 	void setUserImage(const QString &imgPath);
 	void setUnread();
 	void setRead();
+	void updateFavoriteUi();
 	
 signals:
 	void sigReply(QString &userName, uint statusId);

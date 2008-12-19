@@ -56,15 +56,7 @@ SysTrayIcon::~SysTrayIcon()
 
 void SysTrayIcon::setupActions()
 {
-// 	KAction *newTwit = new KAction(this);
-// 	newTwit->setIcon(KIcon("document-new"));
-// 	newTwit->setText(i18n("Quick Twit"));
-// 	newTwit->setShortcut(Qt::ControlModifier | Qt::Key_N);
-// 	newTwit->setGlobalShortcutAllowed(true, KAction::NoAutoloading);
-// 	newTwit->setGlobalShortcut(KShortcut(Qt::ControlModifier | Qt::MetaModifier | Qt::Key_T));
-// 	connect(newTwit, SIGNAL(triggered( bool )), this, SLOT(postQuickTwit()));
-// 	mainWin->actionCollection()->addAction(QLatin1String("choqok_new_twit"), newTwit);
-// 	
+
 	QAction *newTwit = mainWin->actionCollection()->action("choqok_new_twit");
 	connect(newTwit, SIGNAL(triggered( bool )), this, SLOT(postQuickTwit()));
 	this->contextMenu()->addAction(newTwit);

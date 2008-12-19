@@ -44,6 +44,7 @@ MainWindow::MainWindow()
 	setCentralWidget(mainWidget);
 	setupActions();
 	statusBar()->show();
+	notify("Initializing choqoK UI, please be patient...");
 	setupGUI();
 	
 	connect(ui.toggleArrow, SIGNAL(clicked()), this, SLOT(toggleTwitFieldVisible()));
@@ -58,7 +59,7 @@ void MainWindow::initObjects()
 {
 	kDebug();
 	
-	txtNewStatus->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
+	txtNewStatus->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
 	txtNewStatus->setMaximumHeight(80);
 	txtNewStatus->setFocus(Qt::OtherFocusReason);
 	txtNewStatus->setTabChangesFocus ( true );
@@ -102,7 +103,9 @@ void MainWindow::setupActions()
 	actionCollection()->addAction(QLatin1String("update_timeline"), actUpdate);
 	actUpdate->setShortcut(Qt::Key_F5);
 	actUpdate->setGlobalShortcutAllowed(true);
-	actUpdate->setGlobalShortcut(KShortcut(Qt::ControlModifier | Qt::MetaModifier | Qt::Key_F5));
+	KShortcut updateGlobalShortcut(Qt::ControlModifier | Qt::MetaModifier | Qt::Key_F5);
+	updateGlobalShortcut.setAlternate(Qt::MetaModifier | Qt::Key_F5);
+	actUpdate->setGlobalShortcut(updateGlobalShortcut);
 	connect(actUpdate, SIGNAL(triggered( bool )), this, SLOT(updateTimeLines()));
 	
 	KAction *newTwit = new KAction(this);
@@ -111,7 +114,9 @@ void MainWindow::setupActions()
 	actionCollection()->addAction(QLatin1String("choqok_new_twit"), newTwit);
 	newTwit->setShortcut(Qt::ControlModifier | Qt::Key_T);
 	newTwit->setGlobalShortcutAllowed(true);
-	newTwit->setGlobalShortcut(KShortcut(Qt::ControlModifier | Qt::MetaModifier | Qt::Key_T));
+	KShortcut quickTwitGlobalShortcut(Qt::ControlModifier | Qt::MetaModifier | Qt::Key_T);
+	quickTwitGlobalShortcut.setAlternate(Qt::MetaModifier | Qt::Key_T);
+	newTwit->setGlobalShortcut(quickTwitGlobalShortcut);
 	
 // 	KAction *toggleTwitField = new KAction(this);
 // 	toggleTwitField->setShortcut(Qt::ControlModifier | Qt::Key_E);
@@ -138,15 +143,15 @@ void MainWindow::optionsPreferences()
 	
     QWidget *generalSettingsDlg = new QWidget;
     ui_prefs_base.setupUi(generalSettingsDlg);
-    dialog->addPage(generalSettingsDlg, i18n("General"), "package_setting");
+    dialog->addPage(generalSettingsDlg, i18n("General"), "configure");
 	
 	QWidget *accountsSettingsDlg = new QWidget;
 	ui_accounts_base.setupUi(accountsSettingsDlg);
-	dialog->addPage(accountsSettingsDlg, i18n("Account"), "accounts_setting");
+	dialog->addPage(accountsSettingsDlg, i18n("Account"), "user-properties");
 	
 	QWidget *appearsSettingsDlg = new QWidget;
 	ui_appears_base.setupUi(appearsSettingsDlg);
-	dialog->addPage(appearsSettingsDlg, i18n("Appearances"), "appears_setting");
+	dialog->addPage(appearsSettingsDlg, i18n("Appearances"), "format-stroke-color");
 	
     connect(dialog, SIGNAL(settingsChanged(QString)), this, SLOT(settingsChanged()));
 	currentUsername = Settings::username();
@@ -504,7 +509,6 @@ void MainWindow::loadConfigurations()
 	QList< Status > lstReply = loadStatuses("choqokReplyStatusListrc");
 	if(lstReply.count()>0)
 		addNewStatusesToUi(lstReply, ui.replyLayout, &listReplyStatus, Backend::ReplyTimeLine);
-	
 	
 	updateTimeLines();
 }
