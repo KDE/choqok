@@ -462,8 +462,12 @@ void MainWindow::updateStatusList(QList<StatusWidget*> *list)
 	int toBeDelete = list->count() - Settings::countOfStatusesOnMain();
 	if(toBeDelete > 0){
 		for(int i =0; i < toBeDelete; ++i){
-			StatusWidget* wt = list->first();
-			list->removeFirst();
+			StatusWidget* wt = list->at(i);
+			if(!wt->isReaded())
+				break;
+			list->removeAt(i);
+			--i;
+			--toBeDelete;
 			wt->close();
 		}
 	}

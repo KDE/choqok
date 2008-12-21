@@ -16,7 +16,7 @@ StatusWidget::StatusWidget(QWidget *parent)
  : QFrame(parent)
 {
 	setupUi(this);
-	
+	mIsReaded = true;
 	timer.start(UPDATEINTERVAL);
 	
 	btnFavorite->setIcon(KIcon("rating"));
@@ -171,6 +171,7 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
 
 void StatusWidget::setUnread()
 {
+	mIsReaded = false;
 	QColor backColor;
 	if(Settings::isCustomUi()){
 		backColor = Settings::newStatusBackColor();
@@ -186,6 +187,7 @@ void StatusWidget::setUnread()
 
 void StatusWidget::setRead()
 {
+	mIsReaded = true;
 	QColor backColor;
 	if(Settings::isCustomUi()){
 		backColor = Settings::defaultBackColor();
@@ -218,6 +220,11 @@ void StatusWidget::updateFavoriteUi()
 	} else {
 		btnFavorite->setChecked(false);
 	}
+}
+
+bool StatusWidget::isReaded()
+{
+	return mIsReaded;
 }
 
 #include "statuswidget.moc"

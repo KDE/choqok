@@ -39,6 +39,7 @@ public:
 	void setUnread();
 	void setRead();
 	void updateFavoriteUi();
+	bool isReaded();
 	
 signals:
 	void sigReply(QString &userName, uint statusId);
@@ -58,7 +59,7 @@ private:
 	void updateUi();
 	QTimer timer;
 	Status mCurrentStatus;
-
+	bool mIsReaded;
 };
 
 #endif
