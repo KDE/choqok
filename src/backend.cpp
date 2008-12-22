@@ -100,6 +100,7 @@ void Backend::requestTimelineFinished(int id, bool isError)
 	if(isError){
 		mLatestErrorString = getErrorString(qobject_cast<QHttp *>(sender()));
 		kDebug()<<mLatestErrorString;
+		emit sigError(mLatestErrorString);
 		return;
 	}
 	QByteArray tmp;

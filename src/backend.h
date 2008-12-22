@@ -51,7 +51,7 @@ signals:
 	void sigPostNewStatusDone(bool isError);
 	void sigFavoritedDone(bool isError);
 	void sigDestroyDone(bool isError);
-// 	void sigError(QString &errorMessage);
+	void sigError(QString &errMsg);
 	void homeTimeLineRecived(QList<Status> &statusList);
 	void replyTimeLineRecived(QList<Status> &statusList);
 	void currentUserInfo(User);

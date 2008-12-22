@@ -72,6 +72,7 @@ void MainWindow::initObjects()
 	connect(twitter, SIGNAL(sigPostNewStatusDone(bool)), this, SLOT(postingNewStatusDone(bool)));
 	connect(twitter, SIGNAL(sigFavoritedDone(bool)), this, SLOT(requestFavoritedDone(bool)));
 	connect(twitter, SIGNAL(sigDestroyDone(bool)), this, SLOT(requestDestroyDone(bool)));
+	connect(twitter, SIGNAL(sigError(QString&)), this, SLOT(error(QString&)));
 	
 	replyToStatusId = unreadStatusCount = unreadStatusInReply = unreadStatusInHome = 0;
 
@@ -313,7 +314,7 @@ void MainWindow::setDefaultDirection()
 
 void MainWindow::error(QString & errMsg)
 {
-	emit sigNotify(i18n("Transaction failed"), errMsg, APPNAME);
+	notify(i18n("Failed, %1",errMsg));
 }
 
 void MainWindow::postStatus(QString & status)
