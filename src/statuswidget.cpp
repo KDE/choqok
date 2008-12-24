@@ -158,7 +158,7 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
 		int i = 1;
 		while ((i < s.length()) && (QChar(s[i]).isLetterOrNumber() || (s[i] == '_'))) ++i;
 		QString username = s.mid(1, i - 1);
-		t = "<a href='http://twitter.com/" + username + "/statuses/" + QString::number(replyStatusId) + "' >@" + username + "</a>" + s.mid(i);
+		t = "@<a href='http://twitter.com/" + username + "/statuses/" + QString::number(replyStatusId) + "' >" + username + "</a>" + s.mid(i);
 	}
 	if(Settings::direction()==Qt::RightToLeft){
 		s = "<div dir='rtl'>";

@@ -336,7 +336,9 @@ void MainWindow::postingNewStatusDone(bool isError)
 		updateHomeTimeLine();
 		txtNewStatus->setText(QString());
 		txtNewStatus->clearContentsAndSetDirection((Qt::LayoutDirection)Settings::direction());
-		emit sigNotify(i18n("Success!"), i18n("New status posted successfully"), APPNAME);
+		QString successMsg = i18n("New status posted successfully");
+		emit sigNotify(i18n("Success!"), successMsg, APPNAME);
+		notify(successMsg);
 		replyToStatusId = 0;
 	} else {
 		error(twitter->latestErrorString());

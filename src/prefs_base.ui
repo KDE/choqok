@@ -152,7 +152,7 @@
    <item row="1" column="0" colspan="3" >
     <widget class="QCheckBox" name="kcfg_hideTwitField" >
      <property name="text" >
-      <string>&amp;Hide twit field in main window</string>
+      <string>&amp;Hide tweet field in main window</string>
      </property>
     </widget>
    </item>
