@@ -60,7 +60,7 @@ void StatusWidget::updateUi()
 		btnRemove->setVisible(false);
 	}
 	lblSign->setText(generateSign());
-	lblStatus->setText(prepareStatus(mCurrentStatus.content, mCurrentStatus.replyToStatusId));
+	lblStatus->setHtml(prepareStatus(mCurrentStatus.content, mCurrentStatus.replyToStatusId));
 	setUiStyle();
 	updateFavoriteUi();
 }
@@ -142,19 +142,14 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
 	
 	s.replace(" www.", " http://www.");
 	if (s.startsWith("www.")) s = "http://" + s;
-	QString t;
-	if(Settings::direction()==Qt::RightToLeft){
-		t = "<div dir='rtl'>";
-	} else {
-		t = "<div dir='ltr'>";
-	}
+	QString t="";
 	i = j = 0;
 	while ((j = s.indexOf("http://", i)) != -1) {
 		t += s.mid(i, j - i);
 		int k = s.indexOf(" ", j);
 		if (k == -1) k = s.length();
 		QString url = s.mid(j, k - j);
-		t += "<a href=\"" + url + "\" style=\"text-decoration:none\">" + url + "</a>";
+		t += "<a href='" + url + "'>" + url + "</a>";
 		i = k;
 	}
 	t += s.mid(i);
@@ -163,10 +158,16 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
 		int i = 1;
 		while ((i < s.length()) && (QChar(s[i]).isLetterOrNumber() || (s[i] == '_'))) ++i;
 		QString username = s.mid(1, i - 1);
-		t = "<a href=\"http://twitter.com/" + username + "/statuses/" + QString::number(replyStatusId) + "\" style=\"text-decoration:none\">@" + username + "</a>" + s.mid(i);
+		t = "<a href='http://twitter.com/" + username + "/statuses/" + QString::number(replyStatusId) + "' >@" + username + "</a>" + s.mid(i);
 	}
-	t += "</div>";
-	return t;
+	if(Settings::direction()==Qt::RightToLeft){
+		s = "<div dir='rtl'>";
+	} else {
+		s = "<div dir='ltr'>";
+	}
+	s += t;
+	s += "</div>";
+	return s;
 }
 
 void StatusWidget::setUnread()
