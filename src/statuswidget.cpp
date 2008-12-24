@@ -61,6 +61,7 @@ void StatusWidget::updateUi()
 	}
 	lblSign->setText(generateSign());
 	lblStatus->setHtml(prepareStatus(mCurrentStatus.content, mCurrentStatus.replyToStatusId));
+	lblImage->setToolTip(mCurrentStatus.user.name);
 	setUiStyle();
 	updateFavoriteUi();
 }

@@ -223,6 +223,8 @@ QList<Status> * Backend::readTimeLineFromXml(QByteArray & buffer)
 								status.user.profileImageUrl = node3.toElement().text();
 							} else if (node3.toElement().tagName() == "id") {
 								status.user.userId = node3.toElement().text().toUInt();
+							} else if (node3.toElement().tagName() == "name") {
+								status.user.name = node3.toElement().text();
 							}
 							node3 = node3.nextSibling();
 						}
