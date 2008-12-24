@@ -171,7 +171,7 @@ void SysTrayIcon::slotSetUnread(int unread)
 		p.drawRoundedRect(boundingRect, 2.0, 2.0);
 
 		p.setBrush(Qt::NoBrush);
-		p.setPen(scheme.foreground(KColorScheme::LinkText).color());
+		p.setPen(QColor(0,0,0));
 		p.setOpacity(1.0);
 		p.drawText(overlayImg.rect(), Qt::AlignCenter, countStr);
 

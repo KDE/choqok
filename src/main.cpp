@@ -6,7 +6,7 @@
 #include <KDE/KLocale>
 
 static const char description[] =
-    I18N_NOOP("A KDE 4 Twitter client");
+    I18N_NOOP("A KDE 4 Twitter Client");
 
 static const char version[] = "0.1";
 
@@ -16,6 +16,7 @@ int main(int argc, char **argv)
                      KAboutData::License_GPL_V3, ki18n("(C) 2008 Mehrdad Momeny"), KLocalizedString(), 0, "mehrdad.momeny@gmail.com");
     about.addAuthor( ki18n("Mehrdad Momeny"), ki18n("Author and Core Developer"),
 					 "mehrdad.momeny@gmail.com");
+	about.addCredit(ki18n("Roozbeh Shafiee"), ki18n("Icon designer"), "roozbeh@roozbehonline.com");
     KCmdLineArgs::init(argc, argv, &about);
 
 //     KCmdLineOptions options;
