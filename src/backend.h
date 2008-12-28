@@ -1,24 +1,24 @@
 //
 // C++ Interface: backend
 //
-// Description: 
+// Description: the Backend of choqoK
 //
 //
-// Author:  Mehrdad Momeny <mehrdad.momeny@gmail.com>, (C) 2008
-//
-// Copyright: See COPYING file that comes with this distribution
+// Author:  Mehrdad Momeny (C) 2008
+// Email Address: mehrdad.momeny[AT]gmail.com
+// Copyright: GNU GPL v3
 //
 //
 #ifndef BACKEND_H
 #define BACKEND_H
 
 #include <QtCore/QObject>
-
+#include <QMap>
 #include "datacontainers.h"
-#include "QBuffer"
-#include "QHttp"
-// class QNetworkAccessManager;
-
+class KJob;
+namespace KIO{
+	class Job;
+}
 /**
 	@author Mehrdad Momeny <mehrdad.momeny@gmail.com>
 */
@@ -39,7 +39,6 @@ public:
 	void quiting();
 	
 public slots:
-// 	void updateTimeLines(TimeLineType type=All, int page=0);
 	void postNewStatus(const QString &statusMessage, uint replyToStatusId=0);
 	void requestTimeLine(TimeLineType type, int page=0);
 	void requestFavorited(uint statusId, bool isFavorite);
@@ -58,27 +57,19 @@ signals:
 // 	void directMessagesRecived(QList<Status> &statusList);
 	
 protected slots:
-	void requestTimelineFinished(int id, bool isError);
-	void postNewStatusFinished(int id, bool isError);
+	void slotPostNewStatusFinished(KJob *job);
+	void slotRequestTimelineFinished(KJob *job);
+	void slotRequestTimelineData(KIO::Job *job, const QByteArray &data);
+	void slotRequestFavoritedFinished(KJob *job);
+	void slotRequestDestroyFinished(KJob *job);
 	
 private:
-	QString getErrorString(QHttp *sender);
-	QList<Status> * readTimeLineFromXml(QByteArray &buffer);
+	QList<Status> * readTimeLineFromXml(const QByteArray &buffer);
 	QString urls[4];
-	QBuffer homeBuffer;
-	QBuffer replyBuffer;
-	QBuffer userIdBuffer;
-	
-	QHttp statusHttp;
-	int statusHttpNum;
-	int favoritedHttpNum;
-	int destroyHttpNum;
-	
-	QHttp timelineHttp;
-	int homeTimelineHttpNum;
-	int replyTimelineHttpNum;
 	
 	QString mLatestErrorString;
+	QMap<KJob *, TimeLineType> mRequestTimelineMap;
+	QMap<KJob *, QByteArray> mRequestTimelineBuffer;
 };
 
 #endif
