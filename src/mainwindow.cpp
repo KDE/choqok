@@ -357,13 +357,13 @@ bool MainWindow::saveStatuses(QString fileName, QList<StatusWidget*> &list)
 {
 	kDebug();
 	KConfig statusesBackup(fileName);
-	statusesBackup.deleteGroup("Statuses");
-	statusesBackup.sync();
-	KConfigGroup entries(&statusesBackup, "Statuses");
+// 	statusesBackup.deleteGroup("Statuses");
+// 	statusesBackup.sync();
+// 	KConfigGroup entries(&statusesBackup, "Statuses");
 	int count = list.count();
 	for(int i=0; i < count; ++i){
 // 		QString str = ;
-		KConfigGroup grp(&entries, QString::number(list[i]->currentStatus().statusId));
+		KConfigGroup grp(&statusesBackup, QString::number(list[i]->currentStatus().statusId));
 		grp.writeEntry("created_at", list[i]->currentStatus().creationDateTime);
 		grp.writeEntry("id", list[i]->currentStatus().statusId);
 		grp.writeEntry("text", list[i]->currentStatus().content);
@@ -385,13 +385,13 @@ QList< Status > MainWindow::loadStatuses(QString fileName)
 {
 	kDebug();
 	KConfig statusesBackup(fileName, KConfig::NoGlobals);
-	KConfigGroup entries(&statusesBackup, "Statuses");
+// 	KConfigGroup entries(&statusesBackup, "Statuses");
 	QList< Status > list;
-	QStringList groupList = entries.groupList();
+	QStringList groupList = statusesBackup.groupList();
 // 	kDebug()<<groupList;
 	int count = groupList.count();
 	for(int i=0; i < count; ++i){
-		KConfigGroup grp(&entries, groupList[i]);
+		KConfigGroup grp(&statusesBackup, groupList[i]);
 		Status st;
 		st.creationDateTime = grp.readEntry("created_at", QDateTime::currentDateTime());
 		st.statusId = grp.readEntry("id", (uint)0);
