@@ -95,7 +95,8 @@ private:
 	void setDefaultDirection();
 	void addNewStatusesToUi(QList< Status > & statusList, QBoxLayout *layoutToAddStatuses, QList<StatusWidget*> *list,
 							 Backend::TimeLineType type = Backend::HomeTimeLine);
-// 	void setTxtNewStatusDirection();
+	void disableApp();
+	void enableApp();
 // 	QString prepareNewStatus(QString newStatus=QString());
 
 	/**

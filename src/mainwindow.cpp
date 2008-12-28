@@ -29,10 +29,9 @@ MainWindow::MainWindow()
 	: KXmlGuiWindow()
 {
 	kDebug();
-    // accept dnd
-//     setAcceptDrops(true);
+	
 	this->setAttribute(Qt::WA_DeleteOnClose, false);
-    // tell the KXmlGuiWindow that this is indeed the main widget
+
 	mainWidget = new QWidget(this);
     ui.setupUi(mainWidget);
 	ui.homeLayout->setDirection(QBoxLayout::TopToBottom);
@@ -78,6 +77,7 @@ void MainWindow::initObjects()
 
 	
 	timelineTimer = new QTimer(this);
+	timelineTimer->setInterval(Settings::updateInterval()*60000);
 	timelineTimer->start();
 		
 	mediaMan = new MediaManagement(this);
@@ -175,6 +175,11 @@ void MainWindow::checkNewStatusCharactersCount(int numOfChars)
 void MainWindow::settingsChanged()
 {
 	kDebug();
+	if(Settings::username().isEmpty() || Settings::password().isEmpty()){
+		disableApp();
+	} else {
+		enableApp();
+	}
 	if(currentUsername != Settings::username()){
 		setUnreadStatusesToReadState();
 		reloadTimeLineLists();
@@ -352,11 +357,13 @@ bool MainWindow::saveStatuses(QString fileName, QList<StatusWidget*> &list)
 {
 	kDebug();
 	KConfig statusesBackup(fileName);
-	
+	statusesBackup.deleteGroup("Statuses");
+	statusesBackup.sync();
+	KConfigGroup entries(&statusesBackup, "Statuses");
 	int count = list.count();
 	for(int i=0; i < count; ++i){
 // 		QString str = ;
-		KConfigGroup grp(&statusesBackup, QString::number(list[i]->currentStatus().statusId));
+		KConfigGroup grp(&entries, QString::number(list[i]->currentStatus().statusId));
 		grp.writeEntry("created_at", list[i]->currentStatus().creationDateTime);
 		grp.writeEntry("id", list[i]->currentStatus().statusId);
 		grp.writeEntry("text", list[i]->currentStatus().content);
@@ -378,12 +385,13 @@ QList< Status > MainWindow::loadStatuses(QString fileName)
 {
 	kDebug();
 	KConfig statusesBackup(fileName, KConfig::NoGlobals);
+	KConfigGroup entries(&statusesBackup, "Statuses");
 	QList< Status > list;
-	QStringList groupList = statusesBackup.groupList();
+	QStringList groupList = entries.groupList();
 // 	kDebug()<<groupList;
 	int count = groupList.count();
 	for(int i=0; i < count; ++i){
-		KConfigGroup grp(&statusesBackup, groupList[i]);
+		KConfigGroup grp(&entries, groupList[i]);
 		Status st;
 		st.creationDateTime = grp.readEntry("created_at", QDateTime::currentDateTime());
 		st.statusId = grp.readEntry("id", (uint)0);
@@ -518,8 +526,16 @@ void MainWindow::loadConfigurations()
 	QList< Status > lstReply = loadStatuses("choqokReplyStatusListrc");
 	if(lstReply.count()>0)
 		addNewStatusesToUi(lstReply, ui.replyLayout, &listReplyStatus, Backend::ReplyTimeLine);
-	
-	updateTimeLines();
+	if(Settings::username().isEmpty() || Settings::password().isEmpty()){
+		if(KMessageBox::questionYesNo(this, i18n("There isn't any account configured yet.\nTo use this app, you need a twitter.com account.\
+				\nWould you like to add your account now?")) == KMessageBox::Yes){
+					optionsPreferences();
+				} else {
+					disableApp();
+				}
+	} else {
+		updateTimeLines();
+	}
 }
 
 void MainWindow::checkUnreadStatuses(int numOfNewStatusesReciened)
@@ -575,6 +591,24 @@ void MainWindow::requestDestroy(uint statusId)
 		toBeDestroied = qobject_cast<StatusWidget*>(sender());
 		setUnreadStatusesToReadState();
 	}
+}
+
+void MainWindow::disableApp()
+{
+	kDebug();
+	txtNewStatus->setEnabled(false);
+	timelineTimer->stop();
+	actionCollection()->action("update_timeline")->setEnabled(false);
+	actionCollection()->action("choqok_new_twit")->setEnabled(false);
+}
+
+void MainWindow::enableApp()
+{
+	kDebug();
+	txtNewStatus->setEnabled(true);
+	timelineTimer->start();
+	actionCollection()->action("update_timeline")->setEnabled(true);
+	actionCollection()->action("choqok_new_twit")->setEnabled(true);
 }
 
 #include "mainwindow.moc"

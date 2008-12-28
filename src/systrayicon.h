@@ -37,7 +37,7 @@ public slots:
 	
 protected slots:
 	void slotSetUnread(int unread);
-		
+	
 private:
 	void setupActions();
 	
