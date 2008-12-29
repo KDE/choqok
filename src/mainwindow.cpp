@@ -436,7 +436,7 @@ void MainWindow::prepareReply(QString &userName, uint statusId)
 {
 	kDebug();
 	QString current = txtNewStatus->toPlainText();
-	txtNewStatus->setText("@"+userName + " " + current);
+	txtNewStatus->setText('@'+userName + ' ' + current);
 	replyToStatusId = statusId;
 	txtNewStatus->setDefaultDirection((Qt::LayoutDirection)Settings::direction());
 	if(!ui.inputFrame->isVisible())

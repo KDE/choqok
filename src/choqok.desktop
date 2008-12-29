@@ -5,7 +5,7 @@ Name[x-test]=xxchoqoKxx
 Exec=choqok %i -caption "%c"
 Icon=choqok
 Type=Application
-Categories=Internet;
+Categories=Network;
 GenericName=A KDE4 Twitter Client
 GenericName[el]=Ένας πελάτης Twitter για το KDE 4
 GenericName[gl]=Un cliente de Twitter para KDE4
@@ -14,6 +14,6 @@ GenericName[pt]=Um Cliente de Twitter para o KDE4
 GenericName[pt_BR]=Um Cliente de Twitter para o KDE4
 GenericName[uk]=Клієнт Twitter для KDE4
 GenericName[x-test]=xxA KDE4 Twitter Clientxx
-Terminal=0
+Terminal=false
 
 X-Ubuntu-Gettext-Domain=desktop_kdesdk

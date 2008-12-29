@@ -242,7 +242,7 @@ void Backend::quiting()
 void Backend::slotPostNewStatusFinished(KJob * job)
 {
 	kDebug();
-	if(job->error()==0){//No error occured
+	if(job->error()==0){//No error occurred
 		emit sigPostNewStatusDone(false);
 	} else {
 		mLatestErrorString = job->errorText();

@@ -152,11 +152,11 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
 	
 	s.replace(" www.", " http://www.");
 	if (s.startsWith("www.")) s = "http://" + s;
-	QString t="";
+	QString t=QString();
 	i = j = 0;
 	while ((j = s.indexOf("http://", i)) != -1) {
 		t += s.mid(i, j - i);
-		int k = s.indexOf(" ", j);
+		int k = s.indexOf(' ', j);
 		if (k == -1) k = s.length();
 		QString url = s.mid(j, k - j);
 		t += "<a href='" + url + "'>" + url + "</a>";
@@ -192,7 +192,7 @@ void StatusWidget::setUnread()
 		backColor.setGreen( backColor.green()+COLOROFFSET);
 		backColor.setRed( backColor.red()+COLOROFFSET);
 	}
-	this->setStyleSheet("background-color: rgb(" + QString::number(backColor.red()) + ","
+	this->setStyleSheet("background-color: rgb(" + QString::number(backColor.red()) + ','
 			+ QString::number(backColor.green()) + ", " + QString::number(backColor.blue()) + ");");
 }
 
@@ -208,7 +208,7 @@ void StatusWidget::setRead()
 		backColor.setGreen( backColor.green()-COLOROFFSET);
 		backColor.setRed( backColor.red()-COLOROFFSET);
 	}
-	this->setStyleSheet("background-color: rgb("+QString::number(backColor.red())+","
+	this->setStyleSheet("background-color: rgb("+QString::number(backColor.red())+','
 			+QString::number(backColor.green())+", "+QString::number(backColor.blue())+");");
 }
 
@@ -220,7 +220,7 @@ void StatusWidget::setUiStyle()
 	} else {
 		backColor = this->palette().window().color();
 	}
-	this->setStyleSheet( "background-color: rgb(" + QString::number(backColor.red()) + ","
+	this->setStyleSheet( "background-color: rgb(" + QString::number(backColor.red()) + ','
 			+ QString::number(backColor.green()) + ", " + QString::number(backColor.blue()) + ");");
 }
 

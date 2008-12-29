@@ -41,7 +41,7 @@ void StatusTextEdit::keyPressEvent(QKeyEvent * e)
 		emit returnPressed(txt);
 		e->accept();
 	} else{
-		QTextEdit::keyPressEvent(e);
+		KTextEdit::keyPressEvent(e);
 	}
 }
 

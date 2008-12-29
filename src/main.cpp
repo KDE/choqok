@@ -44,7 +44,7 @@ int main(int argc, char **argv)
 //     KCmdLineArgs::addCmdLineOptions(options);
     KApplication app;
 
-	if(QSystemTrayIcon::isSystemTrayAvailable()){
+	if(KSystemTrayIcon::isSystemTrayAvailable()){
 		SysTrayIcon *sysIcon = new SysTrayIcon;
 		sysIcon->show();
 	} else {
