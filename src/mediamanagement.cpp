@@ -19,6 +19,7 @@
 
 */
 #include "mediamanagement.h"
+#include <QPixmap>
 #include <kio/netaccess.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
@@ -47,7 +48,6 @@ QString MediaManagement::getImageLocalPathDownloadIfNotExist(const QString &user
 // 	kDebug();
 	QString path = map->readEntry(remotePath, QString());
 	if(path.isEmpty()){
-// 		QString mediaDir = MEDIA_DIR;
 		path = DATA_DIR + '/' + username;
 		if(KIO::NetAccess::download(remotePath, path, window)){
 			map->writeEntry(remotePath, path);
@@ -67,5 +67,29 @@ QString MediaManagement::getImageLocalPathIfExist(const QString & remotePath)
 	QString path = map->readEntry(remotePath, QString(" "));
 	return path;
 }
+
+QPixmap * MediaManagement::userImagePixmap(const QString & username, const QString & remotePath, QWidget * window)
+{
+	QPixmap *image = userImagesMap.value(remotePath);
+	if(image){
+		return image;
+	} else {
+		QString path = getImageLocalPathDownloadIfNotExist(username, remotePath, window);
+		map->writeEntry(remotePath, path);
+		QPixmap *newImage = new QPixmap(path);
+		userImagesMap.insert(remotePath, newImage);
+		return newImage;
+	}
+}
+
+// void MediaManagement::clearUserImages()
+// {
+// 	QPixmap *tmp = new QPixmap("/home/mtux/m21");
+// 	for(int i=0; i<userImagesMap.count(); ++i){
+// // 		QPixmap *toRM = userImagesMap[i];
+// 		userImagesMap.[i] = tmp;
+// // 		delete toRM;
+// 	}
+// }
 
 #include "mediamanagement.moc"

@@ -238,4 +238,9 @@ bool StatusWidget::isReaded()
 	return mIsReaded;
 }
 
+void StatusWidget::setUserImage(const QPixmap * image)
+{
+	lblImage->setPixmap(*image);
+}
+
 #include "statuswidget.moc"

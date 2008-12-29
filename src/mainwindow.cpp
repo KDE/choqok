@@ -390,6 +390,7 @@ bool MainWindow::saveStatuses(QString fileName, QList<StatusWidget*> &list)
 		grp.writeEntry("in_reply_to_screen_name", list[i]->currentStatus().replyToUserScreenName);
 		grp.writeEntry("userId", list[i]->currentStatus().user.userId);
 		grp.writeEntry("screen_name", list[i]->currentStatus().user.screenName);
+		grp.writeEntry("name", list[i]->currentStatus().user.name);
 		grp.writeEntry("profile_image_url", list[i]->currentStatus().user.profileImageUrl);
 	}
 	statusesBackup.sync();
@@ -419,6 +420,7 @@ QList< Status > MainWindow::loadStatuses(QString fileName)
 		st.replyToUserScreenName = grp.readEntry("in_reply_to_screen_name", QString());
 		st.user.userId = grp.readEntry("userId", (uint)0);
 		st.user.screenName = grp.readEntry("screen_name", QString());
+		st.user.name = grp.readEntry("name", QString());
 		st.user.profileImageUrl = grp.readEntry("profile_image_url", QString());
 		list.append(st);
 	}
@@ -430,6 +432,8 @@ void MainWindow::setUserImage(StatusWidget * widget)
 	QString imgPath = mediaMan->getImageLocalPathDownloadIfNotExist(widget->currentStatus().user.screenName,
 			 widget->currentStatus().user.profileImageUrl, this);
 	widget->setUserImage(imgPath);
+// 	widget->setUserImage(mediaMan->userImagePixmap(widget->currentStatus().user.screenName,
+// 			widget->currentStatus().user.profileImageUrl, this));
 }
 
 void MainWindow::prepareReply(QString &userName, uint statusId)
@@ -448,10 +452,13 @@ void MainWindow::keyPressEvent(QKeyEvent * e)
 {
 	if(e->key() == Qt::Key_Escape){
 		if(txtNewStatus->isEnabled()){
-// 			this->close();
+			this->hide();
 		} else {
+			txtNewStatus->setEnabled(true);
 			twitter->abortPostNewStatus();
 		}
+	} else {
+		KXmlGuiWindow::keyPressEvent(e);
 	}
 }
 
@@ -556,11 +563,11 @@ void MainWindow::loadConfigurations()
 void MainWindow::checkUnreadStatuses(int numOfNewStatusesReciened)
 {
 	kDebug();
-	if(this->isVisible()){
-		unreadStatusCount = 0;
-	} else {
+// 	if(this->isVisible()){
+// 		unreadStatusCount = 0;
+// 	} else {
 		unreadStatusCount += numOfNewStatusesReciened;
-	}
+// 	}
 	emit sigSetUnread(unreadStatusCount);
 }
 

@@ -45,6 +45,7 @@ public:
 	Status currentStatus() const;
 	void setCurrentStatus(const Status newStatus);
 	void setUserImage(const QString &imgPath);
+	void setUserImage(const QPixmap *image);
 	void setUnread();
 	void setRead();
 	void updateFavoriteUi();

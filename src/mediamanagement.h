@@ -22,10 +22,10 @@
 #define MEDIAMANAGEMENT_H
 
 #include <QObject>
-
+#include <QMap>
 #define DATA_DIR KStandardDirs::locateLocal("data", "choqok")
 #define MEDIA_DIR KStandardDirs::locateLocal("data", "choqok/media", true)
-
+class QPixmap;
 class KConfig;
 class KConfigGroup;
 /**
@@ -47,12 +47,18 @@ public:
 			const QString &remotePath, QWidget *window=0);
 	QString getImageLocalPathIfExist(const QString &remotePath);
 	
+	QPixmap * userImagePixmap(const QString &username, 
+							 const QString &remotePath, QWidget *window=0);
+// public slots:
+// 	void clearUserImages();
+	
 signals:
 	void sigError(QString &errMsg);
 	
 private:
 	KConfig *mediaResource;
 	KConfigGroup *map;
+	QMap<QString, QPixmap*> userImagesMap;
 };
 
 #endif
