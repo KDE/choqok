@@ -67,6 +67,7 @@ private:
 	void setUiStyle();
 	QString generateSign();
 	void updateUi();
+	
 	QTimer timer;
 	Status mCurrentStatus;
 	bool mIsReaded;

@@ -1,0 +1,13 @@
+[Global]
+IconName=choqok
+Comment=choqoK Twitter Client
+
+[Event/new-status-arrived]
+Name=New tweet arrived
+Comment=New tweet arrived
+Action=Popup
+
+[Event/notify]
+Name=Something happens
+Comment=Something happens
+Action=Popup

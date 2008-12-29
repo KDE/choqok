@@ -45,7 +45,7 @@ public:
 
 	QString getImageLocalPathDownloadIfNotExist(const QString &username, 
 			const QString &remotePath, QWidget *window=0);
-	QString getImageLocalPathIfExist(const QString &remotePath);
+	static QString getImageLocalPathIfExist(const QString &remotePath);
 	
 	QPixmap * userImagePixmap(const QString &username, 
 							 const QString &remotePath, QWidget *window=0);

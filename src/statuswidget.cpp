@@ -20,6 +20,8 @@
 */
 #include "statuswidget.h"
 #include "settings.h"
+#include "mediamanagement.h"
+#include <knotification.h>
 
 StatusWidget::StatusWidget(QWidget *parent)
  : QFrame(parent)
@@ -182,6 +184,7 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
 
 void StatusWidget::setUnread()
 {
+	kDebug();
 	mIsReaded = false;
 	QColor backColor;
 	if(Settings::isCustomUi()){
@@ -194,6 +197,15 @@ void StatusWidget::setUnread()
 	}
 	this->setStyleSheet("background-color: rgb(" + QString::number(backColor.red()) + ','
 			+ QString::number(backColor.green()) + ", " + QString::number(backColor.blue()) + ");");
+	if(Settings::notifyType() == 1 && mCurrentStatus.user.screenName != Settings::username()){
+		KNotification *notify=new KNotification("new-status-arrived", parentWidget());
+		notify->setText( QString("<qt><b>" + mCurrentStatus.user.screenName + ":</b><br/>" +
+						 mCurrentStatus.content + "</qt>" ) );
+		notify->setPixmap(QPixmap(MediaManagement::getImageLocalPathIfExist(mCurrentStatus.user.profileImageUrl)));
+		notify->setActions( i18n("Reply").split(',') );
+		connect(notify,SIGNAL(action1Activated()), this , SLOT(requestReply()) );
+		notify->sendEvent();
+	}
 }
 
 void StatusWidget::setRead()

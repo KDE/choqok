@@ -19,6 +19,7 @@
 
 */
 #include "systrayicon.h"
+#include "constants.h"
 #include "settings.h"
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -26,6 +27,7 @@
 #include <QPainter>
 #include <KColorScheme>
 #include <QProcess>
+#include <KNotification>
 
 SysTrayIcon::SysTrayIcon(QWidget* parent): KSystemTrayIcon(parent)
 {
@@ -194,6 +196,7 @@ void SysTrayIcon::systemNotify(const QString &title, const QString &message, con
 		case 0:
 			break;
 		case 1://KNotify
+			KNotification::event( "notify", message, KIcon("choqok").pixmap(48), 0, KNotification::CloseOnTimeout );
 			break;
 		case 2://Libnotify!
 			QString libnotifyCmd = QString("notify-send -t ") + QString::number(Settings::notifyInterval()*1000) + QString(" -u low -i "+ iconUrl +" \"") + title + QString("\" \"") + message + QString("\"");

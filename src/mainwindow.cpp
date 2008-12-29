@@ -288,9 +288,13 @@ void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * l
 	QList<Status>::const_iterator it = statusList.constBegin();
 	QList<Status>::const_iterator endIt = statusList.constEnd();
 	for(;it!=endIt; ++it){
+		if(it->replyToUserScreenName == Settings::username() && type == Backend::HomeTimeLine){
+			continue;
+		}
 		StatusWidget *wt = new StatusWidget(this);
 		wt->setAttribute(Qt::WA_DeleteOnClose);
 		wt->setCurrentStatus(*it);
+// 		wt->setUserLocalImagePath(mediaMan->getImageLocalPathIfExist(it->user.profileImageUrl));
 		emit sigSetUserImage(wt);
 		connect(wt, SIGNAL(sigReply(QString&, uint)), this, SLOT(prepareReply(QString&, uint)));
 		connect(wt, SIGNAL(sigFavorite(uint, bool)), twitter, SLOT(requestFavorited(uint, bool)));
@@ -298,14 +302,14 @@ void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * l
 		list->append(wt);
 		layoutToAddStatuses->insertWidget(0, wt);
 		if(!isStartMode){
-			if(it->user.screenName != Settings::username()){
-				if(type == Backend::ReplyTimeLine || it->replyToUserScreenName != Settings::username()){
-					emit sigNotify(it->user.screenName, it->content,
-								mediaMan->getImageLocalPathIfExist(it->user.profileImageUrl) );
-				} else {
-					--numOfNewStatuses;
-				}
-			} else {
+			if(it->user.screenName == Settings::username()){
+// 				if(type == Backend::ReplyTimeLine || it->replyToUserScreenName != Settings::username()){
+// // 					emit sigNotify(it->user.screenName, it->content,
+// // 								mediaMan->getImageLocalPathIfExist(it->user.profileImageUrl) );
+// 				} else {
+// 					--numOfNewStatuses;
+// 				}
+// 			} else {
 				--numOfNewStatuses;
 			}
 			wt->setUnread();
@@ -439,6 +443,8 @@ void MainWindow::setUserImage(StatusWidget * widget)
 void MainWindow::prepareReply(QString &userName, uint statusId)
 {
 	kDebug();
+	if(!this->isVisible())
+		this->show();
 	QString current = txtNewStatus->toPlainText();
 	txtNewStatus->setText('@'+userName + ' ' + current);
 	replyToStatusId = statusId;
