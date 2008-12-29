@@ -74,6 +74,8 @@ protected slots:
 	
 private:
 	QList<Status> * readTimeLineFromXml(const QByteArray &buffer);
+	QString prepareStatus(QString status);
+	
 	QString urls[4];
 	
 	QString mLatestErrorString;

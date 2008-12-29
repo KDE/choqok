@@ -26,6 +26,7 @@
 #include <kio/job.h>
 #include <kurl.h>
 #include "settings.h"
+#include <kio/netaccess.h>
 
 Backend::Backend(QObject* parent): QObject(parent)
 {
@@ -50,7 +51,7 @@ void Backend::postNewStatus(const QString & statusMessage, uint replyToStatusId)
 	url.setUser(Settings::username());
 	url.setPass(Settings::password());
 	QByteArray data = "status=";
-	data += QUrl::toPercentEncoding(statusMessage);
+	data += QUrl::toPercentEncoding(prepareStatus(statusMessage));
 	if(replyToStatusId!=0)
 		data += "&in_reply_to_status_id=" + QString::number(replyToStatusId);
 	data += "&source=choqok";
@@ -324,6 +325,47 @@ void Backend::slotRequestDestroyFinished(KJob * job)
 		return;
 	} else
 		emit sigDestroyDone(false);
+}
+
+QString Backend::prepareStatus(QString status)
+{
+	kDebug();
+	QString t=QString();
+	int i = 0, j = 0;
+	while ((j = status.indexOf("http://", i)) != -1) {
+		t += status.mid(i, j - i);
+		int k = status.indexOf(' ', j);
+		if (k == -1) k = status.length();
+		QString baseUrl = status.mid(j, k - j);
+		if(baseUrl.count()>30){
+			QString url = "http://is.gd/api.php?longurl=" + baseUrl;
+			
+			KIO::Job *job = KIO::get( url );
+			QMap<QString, QString> metaData;
+			QByteArray data;
+			metaData.insert( "PropagateHttpHeader", "true" );
+			if ( KIO::NetAccess::synchronousRun( job, 0, &data, 0, &metaData ) ) {
+				QString responseHeaders = metaData[ "HTTP-Headers" ];
+				QString code = responseHeaders.split(' ')[1];
+				if(code=="200"){
+					kDebug()<<"Short url is: "<< data;
+					t += QString(data);
+				} else {
+					kDebug()<<"shortenning url faild HTTP response code is: "<<code;
+					t += baseUrl;
+				}
+			} else {
+				QString responseHeaders = metaData[ "HTTP-Headers" ];
+				kDebug()<<"Cannot create a shorten url.\t"<<"Response header = "<< responseHeaders;
+				t += baseUrl;
+			}
+		} else {
+			t += baseUrl;
+		}
+		i = k;
+	}
+	t += status.mid(i);
+	return t;
 }
 
 
