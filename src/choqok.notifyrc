@@ -1,13 +1,43 @@
 [Global]
 IconName=choqok
 Comment=choqoK Twitter Client
+Comment[gl]=choqok, un cliente de Twitter
+Comment[km]=ម៉ាស៊ីន​ភ្ញៀវ choqoK Twitter
+Comment[nds]=Twitter-Client choqoK
+Comment[nl]=choqoK Twitter-cliënt
+Comment[sv]=Choqok Twitter-klient
+Comment[uk]=Клієнт Twitter choqoK
 
 [Event/new-status-arrived]
 Name=New tweet arrived
+Name[gl]=Chegou un novo tweet
+Name[km]=tweet ថ្មី​បាន​មក​ដល់
+Name[nds]=Nieg Jiepel ankamen
+Name[nl]=Nieuwe tweet aangekomen
+Name[sv]=Nytt meddelande anländer
+Name[uk]=Надійшло нове нагадування
 Comment=New tweet arrived
+Comment[gl]=Chegou un novo tweet
+Comment[km]=tweet ថ្មី​បានមកដល់
+Comment[nds]=Nieg Jiepel ankamen
+Comment[nl]=Nieuwe tweet aangekomen
+Comment[sv]=Nytt meddelande anländer
+Comment[uk]=Надійшло нове нагадування
 Action=Popup
 
 [Event/notify]
 Name=Something happens
+Name[gl]=Acontece algo
+Name[km]=មានអ្វី​មួយ​កើតឡើង
+Name[nds]=Dor deit sik wat
+Name[nl]=Er is iets gebeurd
+Name[sv]=Någonting händer
+Name[uk]=Щось сталося
 Comment=Something happens
+Comment[gl]=Acontece algo
+Comment[km]=មាន​អ្វី​មួយ​កើត​ឡើង
+Comment[nds]=Dor deit sik wat
+Comment[nl]=Er is iets gebeurd
+Comment[sv]=Någonting händer
+Comment[uk]=Щось сталося
 Action=Popup
