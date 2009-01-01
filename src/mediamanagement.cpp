@@ -69,7 +69,7 @@ QString MediaManagement::getImageLocalPathIfExist(const QString & remotePath)
 {
 	KConfig conf;
 	KConfigGroup stMap(&conf, "MediaMap");
-	QString path = stMap.readEntry(remotePath, QString(" "));
+	QString path = stMap.readEntry(remotePath, QString(' '));
 	return path;
 }
 

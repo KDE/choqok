@@ -53,7 +53,7 @@ public slots:
 	void requestFavorited(uint statusId, bool isFavorite);
 	void requestDestroy(uint statusId);
 	void abortPostNewStatus();
-// 	void requestCurrentUser();
+	void settingsChanged();
 	
 signals:
 	void sigPostNewStatusDone(bool isError);
@@ -76,8 +76,8 @@ private:
 	QList<Status> * readTimeLineFromXml(const QByteArray &buffer);
 	QString prepareStatus(QString status);
 	
-	QString urls[4];
-	
+// 	QString urls[4];
+	QString prefix;
 	QString mLatestErrorString;
 	QMap<KJob *, TimeLineType> mRequestTimelineMap;
 	QMap<KJob *, QByteArray> mRequestTimelineBuffer;

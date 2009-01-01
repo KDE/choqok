@@ -28,12 +28,17 @@
 #include "settings.h"
 #include <kio/netaccess.h>
 
+#define HTTP "http://twitter.com/"
+#define HTTPS "https://twitter.com/"
+
 Backend::Backend(QObject* parent): QObject(parent)
 {
 	kDebug();
-	urls[HomeTimeLine] = "http://twitter.com/statuses/friends_timeline.xml";
-	urls[ReplyTimeLine] = "http://twitter.com/statuses/replies.xml";
-	urls[UserTimeLine] = "http://twitter.com/statuses/user_timeline.xml";
+	settingsChanged();
+// 	urls[0] = ;
+// 	urls[HomeTimeLine] = ;
+// 	urls[ReplyTimeLine] = prefix + "statuses/replies.xml";
+// 	urls[UserTimeLine] = prefix + "statuses/user_timeline.xml";
 	login();	
 	
 }
@@ -47,7 +52,7 @@ Backend::~Backend()
 void Backend::postNewStatus(const QString & statusMessage, uint replyToStatusId)
 {
 	kDebug();
-	KUrl url("http://twitter.com/statuses/update.xml");
+	KUrl url(prefix + "statuses/update.xml");
 	url.setUser(Settings::username());
 	url.setPass(Settings::password());
 	QByteArray data = "status=";
@@ -81,7 +86,11 @@ void Backend::logout()
 void Backend::requestTimeLine(TimeLineType type, int page)
 {
 	kDebug();
-	KUrl url(urls[type]);
+	KUrl url;
+	if(type==HomeTimeLine)
+		url.setUrl(prefix + "statuses/friends_timeline.xml");
+	else
+		url.setUrl(prefix + "statuses/replies.xml");
 	url.setUser(Settings::username());
 	url.setPass(Settings::password());
 	url.setQuery(Settings::latestStatusId() ? "?since_id=" + QString::number(Settings::latestStatusId()) : QString());
@@ -194,10 +203,10 @@ void Backend::requestFavorited(uint statusId, bool isFavorite)
 	kDebug();
 	KUrl url;
 	if(isFavorite){
-		url.setUrl("http://twitter.com/favorites/create/"+QString::number(statusId)+".xml");
+		url.setUrl(prefix + "favorites/create/"+QString::number(statusId)+".xml");
 	
 	} else {
-		url.setUrl("http://twitter.com/favorites/destroy/"+QString::number(statusId)+".xml");
+		url.setUrl(prefix + "favorites/destroy/"+QString::number(statusId)+".xml");
 	}
 	url.setUser(Settings::username());
 	url.setPass(Settings::password());
@@ -218,7 +227,7 @@ void Backend::requestFavorited(uint statusId, bool isFavorite)
 void Backend::requestDestroy(uint statusId)
 {
 	kDebug();
-	KUrl url("http://twitter.com/statuses/destroy/"+QString::number(statusId)+".xml");
+	KUrl url(prefix + "statuses/destroy/"+QString::number(statusId)+".xml");
 	
 	url.setUser(Settings::username());
 	url.setPass(Settings::password());
@@ -370,6 +379,14 @@ QString Backend::prepareStatus(QString status)
 	}
 	t += status.mid(i);
 	return t;
+}
+
+void Backend::settingsChanged()
+{
+	if(Settings::useSecureConnection())
+		prefix = HTTPS;
+	else
+		prefix = HTTP;
 }
 
 

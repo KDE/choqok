@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>363</width>
-    <height>197</height>
+    <width>347</width>
+    <height>224</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout_3" >
@@ -20,7 +20,7 @@
        <string>General</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2" >
-       <item row="2" column="0" >
+       <item row="3" column="0" >
         <widget class="QLabel" name="label_2" >
          <property name="toolTip" >
           <string>Set behavior of system tray icon clicking option</string>
@@ -33,7 +33,7 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1" >
+       <item row="3" column="1" >
         <widget class="KComboBox" name="kcfg_systrayTriggerType" >
          <property name="toolTip" >
           <string>Set behavior of system tray icon clicking option</string>
@@ -55,7 +55,7 @@
          </item>
         </widget>
        </item>
-       <item row="3" column="0" >
+       <item row="4" column="0" >
         <widget class="QLabel" name="label" >
          <property name="text" >
           <string>&amp;Update timeline interval :</string>
@@ -65,7 +65,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="1" >
+       <item row="4" column="1" >
         <widget class="KIntSpinBox" name="kcfg_updateInterval" >
          <property name="suffix" >
           <string> Minutes</string>
@@ -78,7 +78,7 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0" >
+       <item row="5" column="0" >
         <widget class="QLabel" name="label_5" >
          <property name="maximumSize" >
           <size>
@@ -87,14 +87,17 @@
           </size>
          </property>
          <property name="text" >
-          <string>Number of statuses shown on main window : </string>
+          <string>&amp;Number of statuses shown on main window : </string>
          </property>
          <property name="wordWrap" >
           <bool>true</bool>
          </property>
+         <property name="buddy" >
+          <cstring>kcfg_countOfStatusesOnMain</cstring>
+         </property>
         </widget>
        </item>
-       <item row="4" column="1" >
+       <item row="5" column="1" >
         <widget class="KIntSpinBox" name="kcfg_countOfStatusesOnMain" >
          <property name="minimum" >
           <number>1</number>
@@ -124,7 +127,7 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="0" colspan="2" >
+       <item row="6" column="0" colspan="2" >
         <spacer name="verticalSpacer" >
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
@@ -136,6 +139,13 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="2" column="0" colspan="2" >
+        <widget class="QCheckBox" name="kcfg_useSecureConnection" >
+         <property name="text" >
+          <string>Use &amp;secure connection (https instead of http)</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -246,8 +256,16 @@
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>kcfg_hideTwitField</tabstop>
+  <tabstop>kcfg_showMainWinOnStart</tabstop>
+  <tabstop>kcfg_useSecureConnection</tabstop>
   <tabstop>kcfg_systrayTriggerType</tabstop>
   <tabstop>kcfg_updateInterval</tabstop>
+  <tabstop>kcfg_countOfStatusesOnMain</tabstop>
+  <tabstop>ktabwidget</tabstop>
+  <tabstop>kcfg_notifyType</tabstop>
+  <tabstop>kcfg_showAllNotifiesInOne</tabstop>
+  <tabstop>kcfg_notifyInterval</tabstop>
  </tabstops>
  <includes>
   <include location="local" >kcolorbutton.h</include>

@@ -168,6 +168,7 @@ void MainWindow::optionsPreferences()
 	dialog->addPage(appearsSettingsDlg, i18n("Appearances"), "format-stroke-color");
 	
     connect(dialog, SIGNAL(settingsChanged(QString)), this, SLOT(settingsChanged()));
+	connect(dialog, SIGNAL(settingsChanged(QString)), twitter, SLOT(settingsChanged()));
 	currentUsername = Settings::username();
     dialog->setAttribute( Qt::WA_DeleteOnClose );
     dialog->show();

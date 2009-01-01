@@ -40,6 +40,9 @@
     <entry name="isSmilysEnabled" type="Bool">
 	    <default>true</default>
     </entry>
+    <entry name="useSecureConnection" type="Bool">
+	    <default>false</default>
+    </entry>
     <entry name="showMainWinOnStart" type="Bool">
 	    <default>true</default>
     </entry>
