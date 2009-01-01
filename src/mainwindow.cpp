@@ -248,14 +248,15 @@ void MainWindow::homeTimeLinesRecived(QList< Status > & statusList)
 		statusBar()->showMessage(i18n("No new statuses received. The list is up to date."), TIMEOUT);
 		return;
 	} else {
+		addNewStatusesToUi(statusList, ui.homeLayout, &listHomeStatus);
+		ui.homeScroll->verticalScrollBar()->setSliderPosition ( 0 );
+		
 		int count = statusList.count();
 		kDebug()<<count<<" Statuses received.";
 		if(!isStartMode){
 			unreadStatusInHome+=count;
 			ui.tabs->setTabText(0, i18n("Home(%1)", unreadStatusInHome));
 		}
-		addNewStatusesToUi(statusList, ui.homeLayout, &listHomeStatus);
-		ui.homeScroll->verticalScrollBar()->setSliderPosition ( 0 );
 	}
 }
 
@@ -268,14 +269,15 @@ void MainWindow::replyTimeLineRecived(QList< Status > & statusList)
 		statusBar()->showMessage(i18n("No new statuses received. The list is up to date."), TIMEOUT);
 		return;
 	}else {
+		addNewStatusesToUi(statusList, ui.replyLayout, &listReplyStatus, Backend::ReplyTimeLine);
+		ui.replyScroll->verticalScrollBar()->setSliderPosition ( 0 );
+		
 		int count = statusList.count();
 		kDebug()<<count<<" Statuses received.";
 		if(!isStartMode){
 			unreadStatusInReply+=count;
 			ui.tabs->setTabText(1, i18n("Reply(%1)", unreadStatusInReply));
 		}
-		addNewStatusesToUi(statusList, ui.replyLayout, &listReplyStatus, Backend::ReplyTimeLine);
-		ui.replyScroll->verticalScrollBar()->setSliderPosition ( 0 );
 	}
 }
 
@@ -290,6 +292,8 @@ void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * l
 	QList<Status>::const_iterator endIt = statusList.constEnd();
 	for(;it!=endIt; ++it){
 		if(it->replyToUserScreenName == Settings::username() && type == Backend::HomeTimeLine){
+			--numOfNewStatuses;
+			--unreadStatusInHome;
 			continue;
 		}
 		StatusWidget *wt = new StatusWidget(this);
