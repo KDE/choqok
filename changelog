@@ -1,4 +1,13 @@
-[b]Version 0.1[/b]:
 
-(2008-12-24)
+=== Version 0.2 -- 01-Jan-2009 ===
+ * Fetching UserImages moved to background and make it asynchronous.
+ * Support for batch notifying added.
+ * Support for using secure connection (HTTPS) added.
+ * Support for KNotification implemented.
+ * Source code issues reported by Krazy fixed.
+ * Bug fix on saving statuses list.
+ * Support for shortenning urls with more than 30 characters implemented.
+ * The backend functions migrated to KIO library.
+
+=== Version 0.1 -- 24-Dec-2008 ===
  * Initial version.
