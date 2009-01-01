@@ -86,14 +86,14 @@ protected slots:
 	
 	void error(QString &errMsg);
 	
-	void setUserImage(StatusWidget *widget);
+// 	void setUserImage(StatusWidget *widget);
 	
 	void quitApp();
 	
 	void abortPostNewStatus();
 	
 signals:
-	void sigSetUserImage(StatusWidget *widget);
+// 	void sigSetUserImage(StatusWidget *widget);
 	void sigSetUnread(int unread);
 	void sigNotify( const QString &title, const QString &message, const QString &iconUrl);
 	
@@ -143,7 +143,7 @@ private:
 	QList<StatusWidget*> listHomeStatus;
 	QList<StatusWidget*> listReplyStatus;
 	QList<StatusWidget*> listUnreadStatuses;
-	MediaManagement *mediaMan;
+// 	MediaManagement *mediaMan;
 	uint replyToStatusId;
 	QString currentUsername;// used for undresanding of username changes!
 	bool isStartMode;//used for Notify, if true: notify will not send for any or all new twits, if false will send.

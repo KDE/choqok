@@ -21,14 +21,17 @@
 #include "mediamanagement.h"
 #include <QPixmap>
 #include <kio/netaccess.h>
+#include <kio/job.h>
+#include <kio/jobclasses.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
+#include <KDE/KLocale>
 
 MediaManagement::MediaManagement(QObject* parent): QObject(parent)
 {
-	kDebug();
+// 	kDebug();
 	mediaResource = new KConfig();
 	map = new KConfigGroup(mediaResource, "MediaMap");
 }
@@ -36,7 +39,7 @@ MediaManagement::MediaManagement(QObject* parent): QObject(parent)
 
 MediaManagement::~MediaManagement()
 {
-	kDebug();
+// 	kDebug();
 	map->sync();
 	delete map;
 	delete mediaResource;
@@ -48,7 +51,7 @@ QString MediaManagement::getImageLocalPathDownloadIfNotExist(const QString &user
 // 	kDebug();
 	QString path = map->readEntry(remotePath, QString());
 	if(path.isEmpty()){
-		path = DATA_DIR + '/' + username;
+		path = MEDIA_DIR + '/' + username;
 		if(KIO::NetAccess::download(remotePath, path, window)){
 			map->writeEntry(remotePath, path);
 			return path;
@@ -70,28 +73,40 @@ QString MediaManagement::getImageLocalPathIfExist(const QString & remotePath)
 	return path;
 }
 
-QPixmap * MediaManagement::userImagePixmap(const QString & username, const QString & remotePath, QWidget * window)
+void MediaManagement::getImageLocalPathDownloadAsyncIfNotExists(const QString & username, const QString & remotePath)
 {
-	QPixmap *image = userImagesMap.value(remotePath);
-	if(image){
-		return image;
+	local = map->readEntry(remotePath, QString());
+	if(local.isEmpty()){
+		remote = remotePath;
+		KUrl srcUrl(remotePath);
+		local = MEDIA_DIR+'/'+username;
+		KUrl destUrl(local);
+		
+		KIO::FileCopyJob *job = KIO::file_copy(srcUrl, destUrl, -1, KIO::HideProgressInfo | KIO::Overwrite) ;
+		if(!job){
+			kDebug()<<"Cannot create a FileCopyJob!";
+			QString errMsg = i18n("Cannot download userimage for %1, please check your internet connection.", username);
+			emit sigError(errMsg);
+			return;
+		}
+		connect( job, SIGNAL(result(KJob*)), this, SLOT(imageFetched(KJob *)));
+		job->start();
 	} else {
-		QString path = getImageLocalPathDownloadIfNotExist(username, remotePath, window);
-		map->writeEntry(remotePath, path);
-		QPixmap *newImage = new QPixmap(path);
-		userImagesMap.insert(remotePath, newImage);
-		return newImage;
+		emit imageLocalPath(local);
 	}
 }
 
-// void MediaManagement::clearUserImages()
-// {
-// 	QPixmap *tmp = new QPixmap("/home/mtux/m21");
-// 	for(int i=0; i<userImagesMap.count(); ++i){
-// // 		QPixmap *toRM = userImagesMap[i];
-// 		userImagesMap.[i] = tmp;
-// // 		delete toRM;
-// 	}
-// }
+void MediaManagement::imageFetched(KJob * job)
+{
+	if(job->error()){
+		kDebug()<<"Job error!"<<job->error()<<"\t"<<job->errorString();
+		QString errMsg = i18n("Cannot download userimage, The returned result is: %1.", job->errorText());
+		emit sigError(errMsg);
+	} else {
+		map->writeEntry(remote,  local);
+		map->sync();
+		emit imageLocalPath(local);
+	}
+}
 
 #include "mediamanagement.moc"

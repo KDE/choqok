@@ -75,6 +75,7 @@ void StatusWidget::updateUi()
 	lblImage->setToolTip(mCurrentStatus.user.name);
 	setUiStyle();
 	updateFavoriteUi();
+	setUserImage();
 }
 
 QString StatusWidget::formatDateTime(const QDateTime &time) 
@@ -154,7 +155,7 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
 	
 	s.replace(" www.", " http://www.");
 	if (s.startsWith("www.")) s = "http://" + s;
-	QString t=QString();
+	QString t="";
 	i = j = 0;
 	while ((j = s.indexOf("http://", i)) != -1) {
 		t += s.mid(i, j - i);
@@ -253,6 +254,19 @@ bool StatusWidget::isReaded()
 void StatusWidget::setUserImage(const QPixmap * image)
 {
 	lblImage->setPixmap(*image);
+}
+
+void StatusWidget::setUserImage()
+{
+	MediaManagement *media = new MediaManagement(this);
+	connect(media, SIGNAL(imageLocalPath(const QString&)), this, SLOT(userImageLocalPathFetched(const QString&)));
+	media->getImageLocalPathDownloadAsyncIfNotExists(mCurrentStatus.user.screenName, mCurrentStatus.user.profileImageUrl);
+}
+
+void StatusWidget::userImageLocalPathFetched(const QString & path)
+{
+	lblImage->setPixmap(QPixmap(path));
+	sender()->deleteLater();
 }
 
 #include "statuswidget.moc"

@@ -61,8 +61,10 @@ protected slots:
 	void requestReply();
 	void requestDestroy();
 	void updateSign();
+	void userImageLocalPathFetched(const QString &path);
 	
 private:
+	void setUserImage();
 	QString prepareStatus(const QString &text, const int &replyStatusId);
 	void setUiStyle();
 	QString generateSign();

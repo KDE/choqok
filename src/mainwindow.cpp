@@ -95,7 +95,7 @@ void MainWindow::initObjects()
 	timelineTimer->setInterval(Settings::updateInterval()*60000);
 	timelineTimer->start();
 		
-	mediaMan = new MediaManagement(this);
+// 	mediaMan = new MediaManagement(this);
 	
 	connect(timelineTimer, SIGNAL(timeout()), this, SLOT(updateTimeLines()));
 	
@@ -295,7 +295,7 @@ void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * l
 		wt->setAttribute(Qt::WA_DeleteOnClose);
 		wt->setCurrentStatus(*it);
 // 		wt->setUserLocalImagePath(mediaMan->getImageLocalPathIfExist(it->user.profileImageUrl));
-		emit sigSetUserImage(wt);
+// 		emit sigSetUserImage(wt);
 		connect(wt, SIGNAL(sigReply(QString&, uint)), this, SLOT(prepareReply(QString&, uint)));
 		connect(wt, SIGNAL(sigFavorite(uint, bool)), twitter, SLOT(requestFavorited(uint, bool)));
 		connect(wt, SIGNAL(sigDestroy(uint)), this, SLOT(requestDestroy(uint)));
@@ -429,15 +429,6 @@ QList< Status > MainWindow::loadStatuses(QString fileName)
 		list.append(st);
 	}
 	return list;
-}
-
-void MainWindow::setUserImage(StatusWidget * widget)
-{
-	QString imgPath = mediaMan->getImageLocalPathDownloadIfNotExist(widget->currentStatus().user.screenName,
-			 widget->currentStatus().user.profileImageUrl, this);
-	widget->setUserImage(imgPath);
-// 	widget->setUserImage(mediaMan->userImagePixmap(widget->currentStatus().user.screenName,
-// 			widget->currentStatus().user.profileImageUrl, this));
 }
 
 void MainWindow::prepareReply(QString &userName, uint statusId)
