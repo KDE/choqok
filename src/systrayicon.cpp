@@ -28,6 +28,7 @@
 #include <KColorScheme>
 #include <QProcess>
 #include <KNotification>
+#include <QTimer>
 
 SysTrayIcon::SysTrayIcon(QWidget* parent): KSystemTrayIcon(parent)
 {
@@ -192,16 +193,16 @@ void SysTrayIcon::slotSetUnread(int unread)
 
 void SysTrayIcon::systemNotify(const QString &title, const QString &message, const QString &iconUrl)
 {
-	switch(Settings::notifyType()){
-		case 0:
-			break;
-		case 1://KNotify
-			KNotification::event( "notify", message, KIcon("choqok").pixmap(48), 0, KNotification::CloseOnTimeout );
-			break;
-		case 2://Libnotify!
-			QString libnotifyCmd = QString("notify-send -t ") + QString::number(Settings::notifyInterval()*1000) + QString(" -u low -i "+ iconUrl +" \"") + title + QString("\" \"") + message + QString("\"");
-			QProcess::execute(libnotifyCmd);
-			break;
+	if(Settings::notifyType() == 1){//KNotify
+		KNotification *notif = new KNotification("notify");
+		notif->event( "notify", message, KIcon("choqok").pixmap(48), 
+						parentWidget(), KNotification::RaiseWidgetOnActivation | KNotification::Persistent);
+		QTimer::singleShot(Settings::notifyInterval()*1000, notif, SLOT(close()));
+		
+	} else if(Settings::notifyType() == 2){//Libnotify!
+		QString libnotifyCmd = QString("notify-send -t ") + QString::number(Settings::notifyInterval()*1000)
+				+ QString(" -u low -i "+ iconUrl +" \"") + title + QString("\" \"") + message + QString("\"");
+		QProcess::execute(libnotifyCmd);
 	}
 }
 

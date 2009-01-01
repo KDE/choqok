@@ -284,6 +284,8 @@ void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * l
 									 QList<StatusWidget*> *list, Backend::TimeLineType type)
 {
 	kDebug();
+	bool allInOne = Settings::showAllNotifiesInOne();
+	QString notifyStr;
 	int numOfNewStatuses = statusList.count();
 	QList<Status>::const_iterator it = statusList.constBegin();
 	QList<Status>::const_iterator endIt = statusList.constEnd();
@@ -294,8 +296,6 @@ void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * l
 		StatusWidget *wt = new StatusWidget(this);
 		wt->setAttribute(Qt::WA_DeleteOnClose);
 		wt->setCurrentStatus(*it);
-// 		wt->setUserLocalImagePath(mediaMan->getImageLocalPathIfExist(it->user.profileImageUrl));
-// 		emit sigSetUserImage(wt);
 		connect(wt, SIGNAL(sigReply(QString&, uint)), this, SLOT(prepareReply(QString&, uint)));
 		connect(wt, SIGNAL(sigFavorite(uint, bool)), twitter, SLOT(requestFavorited(uint, bool)));
 		connect(wt, SIGNAL(sigDestroy(uint)), this, SLOT(requestDestroy(uint)));
@@ -303,16 +303,16 @@ void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * l
 		layoutToAddStatuses->insertWidget(0, wt);
 		if(!isStartMode){
 			if(it->user.screenName == Settings::username()){
-// 				if(type == Backend::ReplyTimeLine || it->replyToUserScreenName != Settings::username()){
-// // 					emit sigNotify(it->user.screenName, it->content,
-// // 								mediaMan->getImageLocalPathIfExist(it->user.profileImageUrl) );
-// 				} else {
-// 					--numOfNewStatuses;
-// 				}
-// 			} else {
 				--numOfNewStatuses;
+				wt->setUnread(StatusWidget::WithoutNotify);
+			} else {
+				if(allInOne){
+					notifyStr += "<b>" + it->user.screenName + " : </b>" + it->content + '\n';
+					wt->setUnread(StatusWidget::WithoutNotify);
+				} else {
+					wt->setUnread(StatusWidget::WithNotify);
+				}
 			}
-			wt->setUnread(StatusWidget::WithNotify);
 			listUnreadStatuses.append(wt);
 		}
 	}
@@ -323,6 +323,9 @@ void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * l
 	}
 	if(!isStartMode)
 		checkUnreadStatuses(numOfNewStatuses);
+	if(!notifyStr.isEmpty()){
+		emit sigNotify(i18n("New statuses"), notifyStr, APPNAME);
+	}
 	updateStatusList(list);
 }
 

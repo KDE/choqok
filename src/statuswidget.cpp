@@ -200,7 +200,7 @@ void StatusWidget::setUnread(Notify notifyType)
 	this->setStyleSheet("background-color: rgb(" + QString::number(backColor.red()) + ','
 			+ QString::number(backColor.green()) + ", " + QString::number(backColor.blue()) + ");");
 	
-	if(notifyType == WithNotify && mCurrentStatus.user.screenName != Settings::username()){
+	if(notifyType == WithNotify/* && mCurrentStatus.user.screenName != Settings::username()*/){
 		QString iconUrl = MediaManagement::getImageLocalPathIfExist(mCurrentStatus.user.profileImageUrl);
 		QString name = mCurrentStatus.user.screenName;
 		QString msg = mCurrentStatus.content;
@@ -208,9 +208,11 @@ void StatusWidget::setUnread(Notify notifyType)
 			KNotification *notify=new KNotification("new-status-arrived", parentWidget());
 			notify->setText( QString("<qt><b>" + name + ":</b><br/>" + msg + "</qt>" ) );
 			notify->setPixmap(QPixmap(iconUrl));
+			notify->setFlags(KNotification::RaiseWidgetOnActivation | KNotification::Persistent);
 			notify->setActions( i18n("Reply").split(',') );
 			connect(notify,SIGNAL(action1Activated()), this , SLOT(requestReply()) );
 			notify->sendEvent();
+			QTimer::singleShot(Settings::notifyInterval()*1000, notify, SLOT(close()));
 		} else if(Settings::notifyType() == 2){
 			QString libnotifyCmd = QString("notify-send -t ") + QString::number(Settings::notifyInterval()*1000) + QString(" -u low -i "+ iconUrl +" \"") + name + QString("\" \"") + msg + QString("\"");
 			QProcess::execute(libnotifyCmd);

@@ -20,7 +20,7 @@
 */
 
 #include "systrayicon.h"
-#include <kapplication.h>
+#include <kuniqueapplication.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
 #include <KDE/KLocale>
@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 //     KCmdLineOptions options;
 //     options.add("+[URL]", ki18n( "Document to open" ));
 //     KCmdLineArgs::addCmdLineOptions(options);
-    KApplication app;
+	KUniqueApplication app;
 
 	if(KSystemTrayIcon::isSystemTrayAvailable()){
 		SysTrayIcon *sysIcon = new SysTrayIcon;

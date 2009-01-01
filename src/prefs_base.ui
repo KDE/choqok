@@ -5,184 +5,222 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>342</width>
-    <height>242</height>
+    <width>363</width>
+    <height>197</height>
    </rect>
   </property>
-  <layout class="QGridLayout" >
-   <item row="3" column="0" >
-    <widget class="QLabel" name="label" >
-     <property name="text" >
-      <string>&amp;Update timeline interval :</string>
+  <layout class="QGridLayout" name="gridLayout_3" >
+   <item row="0" column="0" >
+    <widget class="KTabWidget" name="ktabwidget" >
+     <property name="currentIndex" >
+      <number>0</number>
      </property>
-     <property name="buddy" >
-      <cstring>kcfg_updateInterval</cstring>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1" colspan="2" >
-    <widget class="KIntSpinBox" name="kcfg_updateInterval" >
-     <property name="suffix" >
-      <string> Minutes</string>
-     </property>
-     <property name="minimum" >
-      <number>1</number>
-     </property>
-     <property name="value" >
-      <number>10</number>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" >
-    <widget class="QLabel" name="label_3" >
-     <property name="text" >
-      <string>Notify &amp;mode :</string>
-     </property>
-     <property name="buddy" >
-      <cstring>kcfg_notifyType</cstring>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1" colspan="2" >
-    <widget class="KComboBox" name="kcfg_notifyType" >
-     <property name="toolTip" >
-      <string>Support for KNotify not implemented yet.</string>
-     </property>
-     <item>
-      <property name="text" >
-       <string>None</string>
-      </property>
-     </item>
-     <item>
-      <property name="text" >
-       <string>KNotify</string>
-      </property>
-     </item>
-     <item>
-      <property name="text" >
-       <string>LibNotify</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="5" column="0" >
-    <widget class="QLabel" name="label_4" >
-     <property name="text" >
-      <string>&amp;Notify duration :</string>
-     </property>
-     <property name="buddy" >
-      <cstring>kcfg_notifyInterval</cstring>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1" colspan="2" >
-    <widget class="KIntSpinBox" name="kcfg_notifyInterval" >
-     <property name="suffix" >
-      <string> Seconds</string>
-     </property>
-     <property name="minimum" >
-      <number>2</number>
-     </property>
-     <property name="maximum" >
-      <number>30</number>
-     </property>
-     <property name="value" >
-      <number>10</number>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0" colspan="3" >
-    <spacer name="verticalSpacer" >
-     <property name="orientation" >
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0" >
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="2" column="0" >
-    <widget class="QLabel" name="label_2" >
-     <property name="toolTip" >
-      <string>Set behavior of system tray icon clicking option</string>
-     </property>
-     <property name="text" >
-      <string>System &amp;tray Icon behavior :</string>
-     </property>
-     <property name="buddy" >
-      <cstring>kcfg_systrayTriggerType</cstring>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1" colspan="2" >
-    <widget class="KComboBox" name="kcfg_systrayTriggerType" >
-     <property name="toolTip" >
-      <string>Set behavior of system tray icon clicking option</string>
-     </property>
-     <item>
-      <property name="text" >
-       <string>Toggle Mainwindow</string>
-      </property>
-     </item>
-     <item>
-      <property name="text" >
-       <string>Quick Twitting</string>
-      </property>
-     </item>
-     <item>
-      <property name="text" >
-       <string>Update timelines</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="0" column="0" colspan="3" >
-    <widget class="QCheckBox" name="kcfg_showMainWinOnStart" >
-     <property name="text" >
-      <string>Show Main &amp;Window on application start</string>
-     </property>
-     <property name="checked" >
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="3" >
-    <widget class="QCheckBox" name="kcfg_hideTwitField" >
-     <property name="text" >
-      <string>&amp;Hide new tweet field in main window</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0" >
-    <widget class="QLabel" name="label_5" >
-     <property name="maximumSize" >
-      <size>
-       <width>150</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text" >
-      <string>Number of statuses shown on main window : </string>
-     </property>
-     <property name="wordWrap" >
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="1" colspan="2" >
-    <widget class="KIntSpinBox" name="kcfg_countOfStatusesOnMain" >
-     <property name="minimum" >
-      <number>1</number>
-     </property>
-     <property name="maximum" >
-      <number>50</number>
-     </property>
-     <property name="value" >
-      <number>20</number>
-     </property>
+     <widget class="QWidget" name="tab" >
+      <attribute name="title" >
+       <string>General</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_2" >
+       <item row="2" column="0" >
+        <widget class="QLabel" name="label_2" >
+         <property name="toolTip" >
+          <string>Set behavior of system tray icon clicking option</string>
+         </property>
+         <property name="text" >
+          <string>System &amp;tray Icon behavior :</string>
+         </property>
+         <property name="buddy" >
+          <cstring>kcfg_systrayTriggerType</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" >
+        <widget class="KComboBox" name="kcfg_systrayTriggerType" >
+         <property name="toolTip" >
+          <string>Set behavior of system tray icon clicking option</string>
+         </property>
+         <item>
+          <property name="text" >
+           <string>Toggle Mainwindow</string>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>Quick Twitting</string>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>Update timelines</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="3" column="0" >
+        <widget class="QLabel" name="label" >
+         <property name="text" >
+          <string>&amp;Update timeline interval :</string>
+         </property>
+         <property name="buddy" >
+          <cstring>kcfg_updateInterval</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1" >
+        <widget class="KIntSpinBox" name="kcfg_updateInterval" >
+         <property name="suffix" >
+          <string> Minutes</string>
+         </property>
+         <property name="minimum" >
+          <number>1</number>
+         </property>
+         <property name="value" >
+          <number>10</number>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" >
+        <widget class="QLabel" name="label_5" >
+         <property name="maximumSize" >
+          <size>
+           <width>150</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text" >
+          <string>Number of statuses shown on main window : </string>
+         </property>
+         <property name="wordWrap" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1" >
+        <widget class="KIntSpinBox" name="kcfg_countOfStatusesOnMain" >
+         <property name="minimum" >
+          <number>1</number>
+         </property>
+         <property name="maximum" >
+          <number>50</number>
+         </property>
+         <property name="value" >
+          <number>20</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2" >
+        <widget class="QCheckBox" name="kcfg_showMainWinOnStart" >
+         <property name="text" >
+          <string>Show Main &amp;Window on application start</string>
+         </property>
+         <property name="checked" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2" >
+        <widget class="QCheckBox" name="kcfg_hideTwitField" >
+         <property name="text" >
+          <string>&amp;Hide new tweet field in main window</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="2" >
+        <spacer name="verticalSpacer" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2" >
+      <attribute name="title" >
+       <string>Notifications</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout" >
+       <item row="0" column="0" >
+        <widget class="QLabel" name="label_3" >
+         <property name="text" >
+          <string>Notify &amp;mode :</string>
+         </property>
+         <property name="buddy" >
+          <cstring>kcfg_notifyType</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" >
+        <widget class="KComboBox" name="kcfg_notifyType" >
+         <item>
+          <property name="text" >
+           <string>None</string>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>KNotify</string>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>LibNotify</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="2" column="0" >
+        <widget class="QLabel" name="label_4" >
+         <property name="text" >
+          <string>&amp;Notify duration :</string>
+         </property>
+         <property name="buddy" >
+          <cstring>kcfg_notifyInterval</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" >
+        <widget class="KIntSpinBox" name="kcfg_notifyInterval" >
+         <property name="suffix" >
+          <string> Seconds</string>
+         </property>
+         <property name="minimum" >
+          <number>2</number>
+         </property>
+         <property name="maximum" >
+          <number>30</number>
+         </property>
+         <property name="value" >
+          <number>10</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2" >
+        <spacer name="verticalSpacer_2" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="0" colspan="2" >
+        <widget class="QCheckBox" name="kcfg_showAllNotifiesInOne" >
+         <property name="text" >
+          <string>&amp;Show all new statuses in one Notify</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>
@@ -200,12 +238,16 @@
    <extends>QSpinBox</extends>
    <header>knuminput.h</header>
   </customwidget>
+  <customwidget>
+   <class>KTabWidget</class>
+   <extends>QTabWidget</extends>
+   <header>ktabwidget.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>kcfg_systrayTriggerType</tabstop>
   <tabstop>kcfg_updateInterval</tabstop>
-  <tabstop>kcfg_notifyType</tabstop>
-  <tabstop>kcfg_notifyInterval</tabstop>
  </tabstops>
  <includes>
   <include location="local" >kcolorbutton.h</include>

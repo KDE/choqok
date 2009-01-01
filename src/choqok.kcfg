@@ -19,6 +19,10 @@
 	      <value>LibNotify</value>
 	  </choices>
     </entry>
+    <entry name="showAllNotifiesInOne" type="Bool">
+    	<label>Show all new statuses in one Notify</label>
+    	<default>false</default>
+    </entry>
     <entry name="updateInterval" type="Int">
 	    <label>Update interval</label>
 	    <default>10</default>

@@ -19,5 +19,5 @@ GenericName[th]=โปรแกรมลูกข่าย Twitter สำหร�
 GenericName[uk]=Клієнт Twitter для KDE4
 GenericName[x-test]=xxA KDE4 Twitter Clientxx
 Terminal=false
-
+X-DBUS-StartupType=Unique
 X-Ubuntu-Gettext-Domain=desktop_kdesdk
