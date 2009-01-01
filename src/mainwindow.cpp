@@ -64,7 +64,7 @@ MainWindow::MainWindow()
 	connect(ui.toggleArrow, SIGNAL(clicked()), this, SLOT(toggleTwitFieldVisible()));
 	connect(txtNewStatus, SIGNAL(charsLeft(int)), this, SLOT(checkNewStatusCharactersCount(int)));
 	connect(txtNewStatus, SIGNAL(returnPressed(QString&)), this, SLOT(postStatus(QString&)));
-	connect(this, SIGNAL(sigSetUserImage(StatusWidget*)), this, SLOT(setUserImage(StatusWidget*)));
+// 	connect(this, SIGNAL(sigSetUserImage(StatusWidget*)), this, SLOT(setUserImage(StatusWidget*)));
 	
 	QTimer::singleShot( 0, this, SLOT(initObjects()) );
 }
@@ -312,7 +312,7 @@ void MainWindow::addNewStatusesToUi(QList< Status > & statusList, QBoxLayout * l
 // 			} else {
 				--numOfNewStatuses;
 			}
-			wt->setUnread();
+			wt->setUnread(StatusWidget::WithNotify);
 			listUnreadStatuses.append(wt);
 		}
 	}

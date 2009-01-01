@@ -36,6 +36,7 @@ class StatusWidget : public QFrame, public Ui_StatusBase
 {
 Q_OBJECT
 public:
+	enum Notify{ WithNotify=0, WithoutNotify};
     StatusWidget(QWidget *parent=0);
 
     ~StatusWidget();
@@ -46,7 +47,7 @@ public:
 	void setCurrentStatus(const Status newStatus);
 	void setUserImage(const QString &imgPath);
 	void setUserImage(const QPixmap *image);
-	void setUnread();
+	void setUnread(Notify notifyType);
 	void setRead();
 	void updateFavoriteUi();
 	bool isReaded();

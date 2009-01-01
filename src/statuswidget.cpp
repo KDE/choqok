@@ -22,6 +22,7 @@
 #include "settings.h"
 #include "mediamanagement.h"
 #include <knotification.h>
+#include <QProcess>
 
 StatusWidget::StatusWidget(QWidget *parent)
  : QFrame(parent)
@@ -183,7 +184,7 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
 	return s;
 }
 
-void StatusWidget::setUnread()
+void StatusWidget::setUnread(Notify notifyType)
 {
 	kDebug();
 	mIsReaded = false;
@@ -198,14 +199,22 @@ void StatusWidget::setUnread()
 	}
 	this->setStyleSheet("background-color: rgb(" + QString::number(backColor.red()) + ','
 			+ QString::number(backColor.green()) + ", " + QString::number(backColor.blue()) + ");");
-	if(Settings::notifyType() == 1 && mCurrentStatus.user.screenName != Settings::username()){
-		KNotification *notify=new KNotification("new-status-arrived", parentWidget());
-		notify->setText( QString("<qt><b>" + mCurrentStatus.user.screenName + ":</b><br/>" +
-						 mCurrentStatus.content + "</qt>" ) );
-		notify->setPixmap(QPixmap(MediaManagement::getImageLocalPathIfExist(mCurrentStatus.user.profileImageUrl)));
-		notify->setActions( i18n("Reply").split(',') );
-		connect(notify,SIGNAL(action1Activated()), this , SLOT(requestReply()) );
-		notify->sendEvent();
+	
+	if(notifyType == WithNotify && mCurrentStatus.user.screenName != Settings::username()){
+		QString iconUrl = MediaManagement::getImageLocalPathIfExist(mCurrentStatus.user.profileImageUrl);
+		QString name = mCurrentStatus.user.screenName;
+		QString msg = mCurrentStatus.content;
+		if(Settings::notifyType() == 1){
+			KNotification *notify=new KNotification("new-status-arrived", parentWidget());
+			notify->setText( QString("<qt><b>" + name + ":</b><br/>" + msg + "</qt>" ) );
+			notify->setPixmap(QPixmap(iconUrl));
+			notify->setActions( i18n("Reply").split(',') );
+			connect(notify,SIGNAL(action1Activated()), this , SLOT(requestReply()) );
+			notify->sendEvent();
+		} else if(Settings::notifyType() == 2){
+			QString libnotifyCmd = QString("notify-send -t ") + QString::number(Settings::notifyInterval()*1000) + QString(" -u low -i "+ iconUrl +" \"") + name + QString("\" \"") + msg + QString("\"");
+			QProcess::execute(libnotifyCmd);
+		}
 	}
 }
 
