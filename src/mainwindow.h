@@ -36,7 +36,6 @@ class Backend;
 class StatusTextEdit;
 class StatusWidget;
 class QTimer;
-class MediaManagement;
 /**
  * This class serves as the main window for choqoK.  It handles the
  * menus, toolbars, and status bars.
@@ -143,7 +142,6 @@ private:
 	QList<StatusWidget*> listHomeStatus;
 	QList<StatusWidget*> listReplyStatus;
 	QList<StatusWidget*> listUnreadStatuses;
-// 	MediaManagement *mediaMan;
 	uint replyToStatusId;
 	QString currentUsername;// used for undresanding of username changes!
 	bool isStartMode;//used for Notify, if true: notify will not send for any or all new twits, if false will send.

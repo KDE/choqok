@@ -246,7 +246,8 @@ void Backend::slotPostNewStatusFinished(KJob * job)
 	if(job->error()==0){//No error occurred
 		emit sigPostNewStatusDone(false);
 	} else {
-		mLatestErrorString = job->errorText();
+		kDebug()<<"Error: "<<job->errorString();
+		mLatestErrorString = job->errorString();
 		emit sigPostNewStatusDone(true);
 	}
 }
@@ -259,7 +260,8 @@ void Backend::slotRequestTimelineFinished(KJob *job)
 		return;
 	}
 	if(job->error()){
-		mLatestErrorString = job->errorText();
+		kDebug()<<"Error: "<<job->errorString();
+		mLatestErrorString = job->errorString();
 		kDebug()<<mLatestErrorString;
 		emit sigError(mLatestErrorString);
 		return;
@@ -305,7 +307,8 @@ void Backend::slotRequestFavoritedFinished(KJob * job)
 		return;
 	}
 	if(job->error()){
-			mLatestErrorString = job->errorText();
+		kDebug()<<"Error: "<<job->errorString();
+		mLatestErrorString = job->errorString();
 			emit sigFavoritedDone(true);
 			return;
 		} else
@@ -320,7 +323,8 @@ void Backend::slotRequestDestroyFinished(KJob * job)
 		return;
 	}
 	if(job->error()){
-		mLatestErrorString = job->errorText();
+		kDebug()<<"Error: "<<job->errorString();
+		mLatestErrorString = job->errorString();
 		emit sigDestroyDone(true);
 		return;
 	} else

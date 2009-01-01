@@ -20,12 +20,13 @@
 */
 #include "statustextedit.h"
 #include <QKeyEvent>
+
 StatusTextEdit::StatusTextEdit(QWidget *parent)
  : KTextEdit(parent)
 {
 	this->setAcceptRichText(false);
 	connect(this, SIGNAL(textChanged()), this, SLOT(setNumOfCharsLeft()));
-// 	setCheckSpellingEnabled(true);
+	isCleared = true;
 	setAcceptRichText(false);
 }
 
@@ -40,7 +41,10 @@ void StatusTextEdit::keyPressEvent(QKeyEvent * e)
 		QString txt = toPlainText();
 		emit returnPressed(txt);
 		e->accept();
-	} else{
+	} else if(e->modifiers()==Qt::ControlModifier && e->key() == Qt::Key_Z && isCleared){
+		this->setHtml(prevStr);
+		isCleared = false;
+	}else{
 		KTextEdit::keyPressEvent(e);
 	}
 }
@@ -63,6 +67,8 @@ void StatusTextEdit::setNumOfCharsLeft()
 
 void StatusTextEdit::clearContentsAndSetDirection(Qt::LayoutDirection dir)
 {
+	prevStr = this->toHtml();
+	isCleared = true;
 	this->clear();
 	setDefaultDirection(dir);
 }

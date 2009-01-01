@@ -45,7 +45,9 @@ protected:
 signals:
 	void returnPressed(QString &txt);
 	void charsLeft(int count);
-// 	void aborted();
+private:
+	QString prevStr;
+	bool isCleared;
 };
 
 #endif

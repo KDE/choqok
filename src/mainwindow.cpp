@@ -94,8 +94,6 @@ void MainWindow::initObjects()
 	timelineTimer = new QTimer(this);
 	timelineTimer->setInterval(Settings::updateInterval()*60000);
 	timelineTimer->start();
-		
-// 	mediaMan = new MediaManagement(this);
 	
 	connect(timelineTimer, SIGNAL(timeout()), this, SLOT(updateTimeLines()));
 	
@@ -361,7 +359,6 @@ void MainWindow::postingNewStatusDone(bool isError)
 {
 	if(!isError){
 		updateHomeTimeLine();
-		txtNewStatus->setText(QString());
 		txtNewStatus->clearContentsAndSetDirection((Qt::LayoutDirection)Settings::direction());
 		QString successMsg = i18n("New status posted successfully");
 		emit sigNotify(i18n("Success!"), successMsg, APPNAME);
@@ -378,10 +375,17 @@ void MainWindow::postingNewStatusDone(bool isError)
 bool MainWindow::saveStatuses(QString fileName, QList<StatusWidget*> &list)
 {
 	kDebug();
-	KConfig statusesBackup(fileName);
-// 	statusesBackup.deleteGroup("Statuses");
-// 	statusesBackup.sync();
-// 	KConfigGroup entries(&statusesBackup, "Statuses");
+	KConfig statusesBackup(fileName, KConfig::NoGlobals);
+	
+	///Clear previous data:
+	QStringList prevList = statusesBackup.groupList();
+	int c = prevList.count();
+	if(c > 0){
+		for(int i=0; i<c; ++i){
+			statusesBackup.deleteGroup( prevList[i] );
+		}
+	}
+	
 	int count = list.count();
 	for(int i=0; i < count; ++i){
 // 		QString str = ;
