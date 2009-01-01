@@ -351,9 +351,10 @@ QString Backend::prepareStatus(QString status)
 		if (k == -1) k = status.length();
 		QString baseUrl = status.mid(j, k - j);
 		if(baseUrl.count()>30){
-			QString url = "http://is.gd/api.php?longurl=" + baseUrl;
+			KUrl url("http://is.gd/api.php");
+			url.addQueryItem("longurl", baseUrl) ;
 			
-			KIO::Job *job = KIO::get( url );
+			KIO::Job *job = KIO::get( url, KIO::Reload, KIO::HideProgressInfo );
 			QMap<QString, QString> metaData;
 			QByteArray data;
 			metaData.insert( "PropagateHttpHeader", "true" );
