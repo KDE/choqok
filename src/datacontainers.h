@@ -48,5 +48,6 @@ public:
 	bool isFavorited;
 	QString replyToUserScreenName;
 	User user;
+	bool isError;
 };
 #endif

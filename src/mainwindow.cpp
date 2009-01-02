@@ -363,7 +363,7 @@ void MainWindow::postStatus(QString & status)
 void MainWindow::postingNewStatusDone(bool isError)
 {
 	if(!isError){
-		updateHomeTimeLine();
+// 		updateHomeTimeLine();
 		txtNewStatus->clearContentsAndSetDirection((Qt::LayoutDirection)Settings::direction());
 		QString successMsg = i18n("New status posted successfully");
 		emit sigNotify(i18n("Success!"), successMsg, APPNAME);

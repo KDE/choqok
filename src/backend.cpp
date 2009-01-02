@@ -68,9 +68,9 @@ void Backend::postNewStatus(const QString & statusMessage, uint replyToStatusId)
 		return;
 	}
 	job->addMetaData( "content-type", "Content-Type: application/x-www-form-urlencoded" );
-	
+	mPostNewStatusBuffer[ job ] = QByteArray();
 	connect( job, SIGNAL(result(KJob*)), this, SLOT(slotPostNewStatusFinished(KJob*)) );
-	
+	connect( job, SIGNAL(data( KIO::Job *, const QByteArray &)), this, SLOT(slotPostNewStatusData(KIO::Job*, const QByteArray&)));
 	job->start();
 }
 
@@ -187,6 +187,63 @@ QList<Status> * Backend::readTimeLineFromXml(const QByteArray & buffer)
 	return statusList;
 }
 
+Status Backend::readStatusFromXml(const QByteArray & buffer)
+{
+	QDomDocument document;
+	Status status;
+	status.isError = false;
+	document.setContent(buffer);
+	
+	QDomElement root = document.documentElement();
+	
+	if (root.tagName() != "status") {
+		kDebug()<<"there's no status tag in XML, Error!!";
+		status.isError = true;
+		return status;
+	}
+	QDomNode node2 = root.firstChild();
+	QString timeStr;
+	while (!node2.isNull()) {
+		if(node2.toElement().tagName() == "created_at")
+			timeStr = node2.toElement().text();
+		else if(node2.toElement().tagName() == "text")
+			status.content = node2.toElement().text();
+		else if(node2.toElement().tagName() == "id")
+			status.statusId = node2.toElement().text().toInt();
+		else if(node2.toElement().tagName() == "in_reply_to_status_id")
+			status.replyToStatusId = node2.toElement().text().toULongLong();
+		else if(node2.toElement().tagName() == "in_reply_to_user_id")
+			status.replyToUserId = node2.toElement().text().toULongLong();
+		else if(node2.toElement().tagName() == "in_reply_to_screen_name")
+			status.replyToUserScreenName = node2.toElement().text();
+		else if(node2.toElement().tagName() == "source")
+			status.source = node2.toElement().text();
+		else if(node2.toElement().tagName() == "truncated")
+			status.isTruncated = (node2.toElement().text() == "true")? true : false;
+		else if(node2.toElement().tagName() == "favorited")
+			status.isFavorited = (node2.toElement().text() == "true")? true : false;
+		else if(node2.toElement().tagName() == "user"){
+			QDomNode node3 = node2.firstChild();
+			while (!node3.isNull()) {
+				if (node3.toElement().tagName() == "screen_name") {
+					status.user.screenName = node3.toElement().text();
+				} else if (node3.toElement().tagName() == "profile_image_url") {
+					status.user.profileImageUrl = node3.toElement().text();
+				} else if (node3.toElement().tagName() == "id") {
+					status.user.userId = node3.toElement().text().toUInt();
+				} else if (node3.toElement().tagName() == "name") {
+					status.user.name = node3.toElement().text();
+				}
+				node3 = node3.nextSibling();
+			}
+		}
+		node2 = node2.nextSibling();
+	}
+	status.creationDateTime = dateFromString(timeStr);
+	
+	return status;
+}
+
 void Backend::abortPostNewStatus()
 {
 	kDebug()<<"Not implemented yet!";
@@ -252,12 +309,23 @@ void Backend::quiting()
 void Backend::slotPostNewStatusFinished(KJob * job)
 {
 	kDebug();
-	if(job->error()==0){//No error occurred
-		emit sigPostNewStatusDone(false);
-	} else {
+	if(job->error()){
 		kDebug()<<"Error: "<<job->errorString();
 		mLatestErrorString = job->errorString();
 		emit sigPostNewStatusDone(true);
+	} else {
+// 		kDebug()<<mPostNewStatusBuffer[job];
+		Status st = readStatusFromXml(mPostNewStatusBuffer[job]);
+		if(st.isError){
+			kDebug()<<"Error: "<<job->errorString();
+			mLatestErrorString = job->errorString();
+			emit sigPostNewStatusDone(true);
+		} else {
+			QList<Status> newSt;
+			newSt.append(st);
+			emit sigPostNewStatusDone(false);
+			emit homeTimeLineRecived(newSt);
+		}
 	}
 }
 
@@ -294,6 +362,8 @@ void Backend::slotRequestTimelineFinished(KJob *job)
 		kDebug()<<"The returned job isn't in Map!";
 		break;
 	};
+	mRequestTimelineMap.remove(job);
+	mRequestTimelineBuffer.remove(job);
 }
 
 void Backend::slotRequestTimelineData(KIO::Job * job, const QByteArray & data)
@@ -390,5 +460,16 @@ void Backend::settingsChanged()
 		prefix = HTTP;
 }
 
+void Backend::slotPostNewStatusData(KIO::Job * job, const QByteArray & data)
+{
+	kDebug();
+	if( !job ) {
+		kError() << "Job is a null pointer.";
+		return;
+	}
+	unsigned int oldSize = mPostNewStatusBuffer[ job ].size();
+	mPostNewStatusBuffer[ job ].resize( oldSize + data.size() );
+	memcpy( mPostNewStatusBuffer[ job ].data() + oldSize, data.data(), data.size() );
+}
 
 #include "backend.moc"

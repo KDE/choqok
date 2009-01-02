@@ -67,6 +67,7 @@ signals:
 	
 protected slots:
 	void slotPostNewStatusFinished(KJob *job);
+	void slotPostNewStatusData(KIO::Job *job, const QByteArray &data);
 	void slotRequestTimelineFinished(KJob *job);
 	void slotRequestTimelineData(KIO::Job *job, const QByteArray &data);
 	void slotRequestFavoritedFinished(KJob *job);
@@ -74,6 +75,7 @@ protected slots:
 	
 private:
 	QList<Status> * readTimeLineFromXml(const QByteArray &buffer);
+	Status readStatusFromXml(const QByteArray &buffer);
 	QString prepareStatus(QString status);
 	
 // 	QString urls[4];
@@ -81,6 +83,9 @@ private:
 	QString mLatestErrorString;
 	QMap<KJob *, TimeLineType> mRequestTimelineMap;
 	QMap<KJob *, QByteArray> mRequestTimelineBuffer;
+	
+// 	QMap<KJob *, TimeLineType> mPostNewStatusMap;
+	QMap<KJob *, QByteArray> mPostNewStatusBuffer;
 };
 
 #endif
