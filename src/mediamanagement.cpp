@@ -100,7 +100,7 @@ void MediaManagement::imageFetched(KJob * job)
 {
 	if(job->error()){
 		kDebug()<<"Job error!"<<job->error()<<"\t"<<job->errorString();
-		QString errMsg = i18n("Cannot download userimage, The returned result is: %1.", job->errorString());
+		QString errMsg = i18n("Cannot download userimage. The returned result is: %1.", job->errorString());
 		emit sigError(errMsg);
 	} else {
 		map->writeEntry(remote,  local);
