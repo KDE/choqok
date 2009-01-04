@@ -50,4 +50,15 @@ public:
 	User user;
 	bool isError;
 };
+
+struct Account{
+public:
+  QString username;
+  QString password;
+  QString serviceName;
+  QString alias;
+  Qt::LayoutDirection direction;
+  QString apiPath;
+};
+
 #endif

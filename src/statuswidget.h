@@ -37,7 +37,8 @@ class StatusWidget : public QFrame, public Ui_StatusBase
 Q_OBJECT
 public:
 	enum Notify{ WithNotify=0, WithoutNotify};
-    StatusWidget(QWidget *parent=0);
+    
+    StatusWidget(const Account *account, QWidget *parent=0);
 
     ~StatusWidget();
 	
@@ -74,6 +75,7 @@ private:
 	QTimer timer;
 	Status mCurrentStatus;
 	bool mIsReaded;
+    const Account *mCurrentAccount;
 };
 
 #endif

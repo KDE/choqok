@@ -18,45 +18,40 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 */
-#ifndef QUICKTWIT_H
-#define QUICKTWIT_H
+#ifndef ACCOUNTSWIZARD_H
+#define ACCOUNTSWIZARD_H
 
+#include "ui_accounts_wizard_base.h"
 #include "datacontainers.h"
-#include "ui_quicktwit_base.h"
-#include <kdialog.h>
-class StatusTextEdit;
-class Backend;
-/**
-Widget for Quik twitting
 
-	@author Mehrdad Momeny <mehrdad.momeny@gmail.com>
-*/
-class QuickTwit : public KDialog
+#define TWITTER_API_PATH "http://twitter.com/"
+#define TWITTER_SERVICE_TEXT "Twitter.com"
+
+#define IDENTICA_API_PATH "http://identi.ca/api/"
+#define IDENTICA_SERVICE_TEXT "Identi.ca"
+
+class AccountsWizard: public KDialog
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-  QuickTwit(QWidget* parent=0);
+    AccountsWizard ( QString alias = QString(), QWidget *parent = 0 );
 
-    ~QuickTwit();
-public slots:
-	void showNearMouse();
-	void checkNewStatusCharactersCount(int numOfChars);
-	void slotPostNewStatus(QString &newStatus);
-	void slotPostNewStatusDone(bool isError);
-	void sltAccepted();
-
-protected:
-    void loadAccounts();
-	
 signals:
-// 	void sigStatusUpdated();
-	void sigNotify( const QString &title, const QString &message, const QString &iconUrl);
-	
+    void accountAdded ( const Account &account );
+    void accountEdited ( const Account &account );
+
+protected slots:
+    void slotAccepted();
+
 private:
-    Ui::quicktwit_base ui;
-	StatusTextEdit *txtStatus;
-// 	Backend *twitter;
-    QList<Account> accountsList;
+    void loadAccount ( const QString &alias );
+
+    Ui::accounts_wizard_base ui;
+    KConfig *accountsGrp;
+//     KConfigGroup *accountsGrp;
+
+    QString mAlias;
+    bool isEdit;
 };
 
 #endif

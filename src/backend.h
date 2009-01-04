@@ -36,7 +36,7 @@ class Backend : public QObject
 	Q_OBJECT
 public:
 	enum TimeLineType{HomeTimeLine=1, ReplyTimeLine, UserTimeLine};
-    Backend(QObject* parent=0);
+    Backend(const Account *account, QObject* parent=0);
 
     ~Backend();
 	
@@ -49,7 +49,7 @@ public:
 	
 public slots:
 	void postNewStatus(const QString &statusMessage, uint replyToStatusId=0);
-	void requestTimeLine(TimeLineType type, int page=0);
+	void requestTimeLine(uint latestStatusId, TimeLineType type, int page=0);
 	void requestFavorited(uint statusId, bool isFavorite);
 	void requestDestroy(uint statusId);
 	void abortPostNewStatus();
@@ -79,13 +79,16 @@ private:
 	QString prepareStatus(QString status);
 	
 // 	QString urls[4];
-	QString prefix;
+// 	QString prefix;
 	QString mLatestErrorString;
 	QMap<KJob *, TimeLineType> mRequestTimelineMap;
 	QMap<KJob *, QByteArray> mRequestTimelineBuffer;
 	
-// 	QMap<KJob *, TimeLineType> mPostNewStatusMap;
+
 	QMap<KJob *, QByteArray> mPostNewStatusBuffer;
+    
+    const Account *mCurrentAccount;
+//     int latestStatusId;
 };
 
 #endif

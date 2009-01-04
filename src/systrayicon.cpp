@@ -51,11 +51,11 @@ SysTrayIcon::SysTrayIcon(QWidget* parent): KSystemTrayIcon(parent)
 	connect(this, SIGNAL(activated( QSystemTrayIcon::ActivationReason )),
 			 this, SLOT(sysTrayActivated(QSystemTrayIcon::ActivationReason)));
 	
-	connect(quickWidget, SIGNAL(sigStatusUpdated()), mainWin, SLOT(updateHomeTimeLine()));
+// 	connect(quickWidget, SIGNAL(sigStatusUpdated()), mainWin, SIGNAL(updateHomeTimeLine()));
 	
 	connect(mainWin, SIGNAL(sigSetUnread(int)), this, SLOT(slotSetUnread(int)));
 	
-	connect(mainWin, SIGNAL(sigNotify(const QString&, const QString&, const QString&)), 
+	connect(mainWin, SIGNAL(systemNotify(const QString&, const QString&, const QString&)), 
 			this, SLOT(systemNotify(const QString&, const QString&,const QString&)));
 	
 	connect(quickWidget, SIGNAL(sigNotify(const QString&,const  QString&,const  QString&)), 
@@ -105,8 +105,7 @@ void SysTrayIcon::postQuickTwit()
 void SysTrayIcon::toggleMainWindowVisibility()
 {
 	if(mainWin->isVisible()){
-		mainWin->setUnreadStatusesToReadState();
-		mainWin->hide();
+		mainWin->close();
 		actionCollection()->action("toggle-mainwin")->setText(i18n("&Restore"));
 	} else {
 		mainWin->show();
@@ -124,8 +123,6 @@ void SysTrayIcon::sysTrayActivated(QSystemTrayIcon::ActivationReason reason)
 			case 1:
 				postQuickTwit();
 				break;
-			case 2:
-				mainWin->updateTimeLines();
 		};
 	}
 }

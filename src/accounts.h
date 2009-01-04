@@ -18,45 +18,38 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 */
-#ifndef QUICKTWIT_H
-#define QUICKTWIT_H
-
+#ifndef ACCOUNTS_H
+#define ACCOUNTS_H
 #include "datacontainers.h"
-#include "ui_quicktwit_base.h"
-#include <kdialog.h>
-class StatusTextEdit;
-class Backend;
-/**
-Widget for Quik twitting
+#include "ui_accounts_base.h"
+#include <QWidget>
 
-	@author Mehrdad Momeny <mehrdad.momeny@gmail.com>
-*/
-class QuickTwit : public KDialog
+class Accounts: public QWidget, public Ui::accounts_base
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-  QuickTwit(QWidget* parent=0);
+    Accounts ( QWidget *parent = 0 );
+    ~Accounts();
 
-    ~QuickTwit();
-public slots:
-	void showNearMouse();
-	void checkNewStatusCharactersCount(int numOfChars);
-	void slotPostNewStatus(QString &newStatus);
-	void slotPostNewStatusDone(bool isError);
-	void sltAccepted();
-
-protected:
-    void loadAccounts();
-	
 signals:
-// 	void sigStatusUpdated();
-	void sigNotify( const QString &title, const QString &message, const QString &iconUrl);
-	
+    void accountAdded(const Account &account);
+    void accountRemoved(const QString &alias);
+    void accountEdited(const Account &alias);
+
+public slots:
+    void addAccount();
+    void editAccount ( QString alias = QString() );
+    void removeAccount ( QString alias = QString() );
+
+protected slots:
+    void slotAccountAdded ( const Account &account );
+    void slotAccountEdited ( const Account &account );
+    void accountsTablestateChanged();
+
 private:
-    Ui::quicktwit_base ui;
-	StatusTextEdit *txtStatus;
-// 	Backend *twitter;
-    QList<Account> accountsList;
+    void addAccountToTable (/* bool isEnabled, */const QString &alias, const QString &service );
+    void loadAccountsData();
+    void saveAccountsData();
 };
 
 #endif

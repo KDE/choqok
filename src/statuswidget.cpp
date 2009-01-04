@@ -24,13 +24,13 @@
 #include <knotification.h>
 #include <QProcess>
 
-StatusWidget::StatusWidget(QWidget *parent)
+StatusWidget::StatusWidget(const Account *account, QWidget *parent)
  : QFrame(parent)
 {
 	setupUi(this);
 	mIsReaded = true;
 	timer.start(UPDATEINTERVAL);
-	
+	mCurrentAccount = account;
 	btnFavorite->setIcon(KIcon("rating"));
 	btnReply->setIcon(KIcon("edit-undo"));
 	btnRemove->setIcon(KIcon("edit-delete"));
@@ -66,12 +66,12 @@ void StatusWidget::setCurrentStatus(const Status newStatus)
 void StatusWidget::updateUi()
 {
 // 	kDebug()<<"ScreenName: "<<mCurrentStatus.user.screenName<<"Current: "<<mCurrentStatus.user.userId<<" Settings: "<<Settings::currentUserId();
-	if(mCurrentStatus.user.screenName == Settings::username()){
+	if(mCurrentStatus.user.screenName == mCurrentAccount->username){
 		btnReply->setVisible(false);
 	} else {
 		btnRemove->setVisible(false);
 	}
-	lblSign->setText(generateSign());
+	lblSign->setHtml(generateSign());
 	lblStatus->setHtml(prepareStatus(mCurrentStatus.content, mCurrentStatus.replyToStatusId));
 	lblImage->setToolTip(mCurrentStatus.user.name);
 	setUiStyle();
@@ -105,9 +105,11 @@ void StatusWidget::requestReply()
 
 QString StatusWidget::generateSign()
 {
-	QString sign = "<b><a href='http://twitter.com/"+mCurrentStatus.user.screenName+"'>"+mCurrentStatus.user.screenName+"</a> - </b> ";
-	sign += "<a href='http://twitter.com/" + mCurrentStatus.user.screenName + "/statuses/" + QString::number(mCurrentStatus.statusId) +
-			"'>" + formatDateTime(mCurrentStatus.creationDateTime) + "</a> - ";
+	QString sign = "<b><a href=\"http://twitter.com/"+mCurrentStatus.user.screenName+"\" title=\""+
+             mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName+"</a> - </b> ";
+	sign += "<a href=\"http://twitter.com/" + mCurrentStatus.user.screenName + "/statuses/" +
+             QString::number(mCurrentStatus.statusId) + "\" title=\"" + 
+            mCurrentStatus.creationDateTime.toString()+"\">" + formatDateTime(mCurrentStatus.creationDateTime) + "</a> - ";
 	sign += mCurrentStatus.source;
 	return sign;
 }
@@ -172,9 +174,10 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
 		int i = 1;
 		while ((i < s.length()) && (QChar(s[i]).isLetterOrNumber() || (s[i] == '_'))) ++i;
 		QString username = s.mid(1, i - 1);
-		t = "@<a href='http://twitter.com/" + username + "/statuses/" + QString::number(replyStatusId) + "' >" + username + "</a>" + s.mid(i);
+        QString statusUrl = "http://twitter.com/" + username + "/statuses/" + QString::number(replyStatusId);
+        t = "@<a href=\"" + statusUrl + "\" title=\""+ statusUrl +"\" >" + username + "</a>" + s.mid(i);
 	}
-	if(Settings::direction()==Qt::RightToLeft){
+	if(mCurrentAccount->direction==Qt::RightToLeft){
 		s = "<div dir='rtl'>";
 	} else {
 		s = "<div dir='ltr'>";
@@ -186,7 +189,6 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
 
 void StatusWidget::setUnread(Notify notifyType)
 {
-	kDebug();
 	mIsReaded = false;
 	QColor backColor;
 	if(Settings::isCustomUi()){

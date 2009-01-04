@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>231</width>
-    <height>95</height>
+    <width>270</width>
+    <height>115</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -18,7 +18,7 @@
   <property name="minimumSize" >
    <size>
     <width>200</width>
-    <height>80</height>
+    <height>115</height>
    </size>
   </property>
   <property name="maximumSize" >
@@ -37,23 +37,52 @@
    <enum>QFrame::Sunken</enum>
   </property>
   <layout class="QGridLayout" name="gridLayout" >
-   <property name="margin" >
-    <number>1</number>
-   </property>
-   <property name="spacing" >
-    <number>1</number>
-   </property>
-   <item rowspan="2" row="0" column="2" >
+   <item row="0" column="0" >
+    <widget class="QLabel" name="lblImage" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize" >
+      <size>
+       <width>48</width>
+       <height>48</height>
+      </size>
+     </property>
+     <property name="maximumSize" >
+      <size>
+       <width>48</width>
+       <height>48</height>
+      </size>
+     </property>
+     <property name="text" >
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" >
+    <widget class="KTextBrowser" name="lblStatus" >
+     <property name="minimumSize" >
+      <size>
+       <width>0</width>
+       <height>80</height>
+      </size>
+     </property>
+     <property name="frameShape" >
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="verticalScrollBarPolicy" >
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy" >
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2" >
     <layout class="QVBoxLayout" name="verticalLayout" >
-     <property name="spacing" >
-      <number>3</number>
-     </property>
-     <property name="sizeConstraint" >
-      <enum>QLayout::SetMaximumSize</enum>
-     </property>
-     <property name="rightMargin" >
-      <number>0</number>
-     </property>
      <item>
       <spacer name="verticalSpacer" >
        <property name="orientation" >
@@ -61,7 +90,7 @@
        </property>
        <property name="sizeHint" stdset="0" >
         <size>
-         <width>20</width>
+         <width>27</width>
          <height>0</height>
         </size>
        </property>
@@ -161,7 +190,7 @@
        </property>
        <property name="sizeHint" stdset="0" >
         <size>
-         <width>20</width>
+         <width>27</width>
          <height>0</height>
         </size>
        </property>
@@ -169,61 +198,20 @@
      </item>
     </layout>
    </item>
-   <item row="2" column="0" colspan="3" >
-    <widget class="QLabel" name="lblSign" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Maximum" hsizetype="MinimumExpanding" >
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text" >
-      <string/>
-     </property>
-     <property name="textFormat" >
-      <enum>Qt::RichText</enum>
-     </property>
-     <property name="alignment" >
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-     </property>
-     <property name="wordWrap" >
-      <bool>true</bool>
-     </property>
-     <property name="openExternalLinks" >
-      <bool>true</bool>
-     </property>
-     <property name="textInteractionFlags" >
-      <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0" >
-    <widget class="QLabel" name="lblImage" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+   <item row="1" column="0" colspan="3" >
+    <widget class="KTextBrowser" name="lblSign" >
      <property name="minimumSize" >
       <size>
-       <width>48</width>
-       <height>48</height>
+       <width>0</width>
+       <height>20</height>
       </size>
      </property>
      <property name="maximumSize" >
       <size>
-       <width>48</width>
-       <height>48</height>
+       <width>16777215</width>
+       <height>20</height>
       </size>
      </property>
-     <property name="text" >
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1" >
-    <widget class="KTextBrowser" name="lblStatus" >
      <property name="frameShape" >
       <enum>QFrame::NoFrame</enum>
      </property>
@@ -232,6 +220,9 @@
      </property>
      <property name="horizontalScrollBarPolicy" >
       <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="openExternalLinks" >
+      <bool>true</bool>
      </property>
     </widget>
    </item>

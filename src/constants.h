@@ -22,7 +22,6 @@
 #define CONSTANTS_H
 
 #define APPNAME "choqok"
-#define VERSION 0.1
 #define MAX_STATUS_SIZE 140
 
 #endif

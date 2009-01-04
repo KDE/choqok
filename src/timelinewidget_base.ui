@@ -1,12 +1,12 @@
 <ui version="4.0" >
- <class>MainWindow_base</class>
- <widget class="QWidget" name="MainWindow_base" >
+ <class>timelinewidget_base</class>
+ <widget class="QWidget" name="timelinewidget_base" >
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
     <width>291</width>
-    <height>577</height>
+    <height>550</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -192,7 +192,7 @@ p, li { white-space: pre-wrap; }
             <x>0</x>
             <y>0</y>
             <width>279</width>
-            <height>486</height>
+            <height>459</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5" >
@@ -268,7 +268,7 @@ p, li { white-space: pre-wrap; }
             <x>0</x>
             <y>0</y>
             <width>279</width>
-            <height>486</height>
+            <height>459</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout" >

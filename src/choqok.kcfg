@@ -9,7 +9,6 @@
       <choices>
 	      <value>MainWindow</value>
 	      <value>QuickStatus</value>
-	      <value>UpdateTimeLine</value>
 	  </choices>
     </entry>
     <entry name="notifyType" type="Enum">
@@ -34,9 +33,6 @@
 	    <label>Update interval</label>
 	    <default>10</default>
     </entry>
-    <entry name="latestStatusId" type="UInt">
-	    <default>0</default>
-    </entry>
     <entry name="isSmilysEnabled" type="Bool">
 	    <default>true</default>
     </entry>
@@ -48,21 +44,6 @@
     </entry>
     <entry name="hideTwitField" type="Bool">
 	    <default>false</default>
-    </entry>
-  </group>
-  <group name="Account">
-    <entry name="username" type="String">
-	    <label>Username</label>
-    </entry>
-    <entry name="password" type="Password">
-	    <label>Password</label>
-    </entry>
-    <entry name="direction" type="Enum">
-	    <label>Direction</label>
-	    <choices>
-	      <value>LeftToRight</value>
-	      <value>RightToLeft</value>
-	    </choices>
     </entry>
   </group>
   <group name="Appearances">

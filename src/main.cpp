@@ -28,7 +28,7 @@
 static const char description[] =
     I18N_NOOP("A KDE 4 Twitter Client");
 
-static const char version[] = "0.2";
+static const char version[] = "0.2.5";
 
 int main(int argc, char **argv)
 {

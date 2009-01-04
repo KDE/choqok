@@ -1,4 +1,6 @@
 set(choqok_SRCS
+   accounts.cpp
+   accountswizard.cpp
    mainwindow.cpp
    main.cpp
    statuswidget.cpp
@@ -7,9 +9,11 @@ set(choqok_SRCS
    mediamanagement.cpp
    systrayicon.cpp
    quicktwit.cpp
+   timelinewidget.cpp
  )
 
-kde4_add_ui_files(choqok_SRCS mainwindow_base.ui prefs_base.ui status_base.ui accounts_base.ui appears_base.ui)
+kde4_add_ui_files(choqok_SRCS timelinewidget_base.ui prefs_base.ui status_base.ui accounts_base.ui 
+accounts_wizard_base.ui appears_base.ui quicktwit_base.ui)
 
 kde4_add_kcfg_files(choqok_SRCS settings.kcfgc )
 
