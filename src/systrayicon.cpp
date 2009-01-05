@@ -60,6 +60,9 @@ SysTrayIcon::SysTrayIcon(QWidget* parent): KSystemTrayIcon(parent)
 	
 	connect(quickWidget, SIGNAL(sigNotify(const QString&,const  QString&,const  QString&)), 
 			this, SLOT(systemNotify(const QString&, const QString&, const QString&)));
+    
+    connect(mainWin, SIGNAL(accountAdded(const Account&)), quickWidget, SLOT(addAccount(const Account&)));
+    connect(mainWin, SIGNAL(accountRemoved(const QString&)), quickWidget, SLOT(removeAccount(const QString&)));
 }
 
 SysTrayIcon::~SysTrayIcon()
@@ -98,7 +101,7 @@ void SysTrayIcon::postQuickTwit()
 		quickWidget->hide();
 	}
 	else{
-		quickWidget->show();
+		quickWidget->showFocusedOnNewStatusField();
 	}
 }
 

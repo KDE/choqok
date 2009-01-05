@@ -39,11 +39,13 @@ public:
 
     ~QuickTwit();
 public slots:
-	void showNearMouse();
+    void showFocusedOnNewStatusField();
 	void checkNewStatusCharactersCount(int numOfChars);
 	void slotPostNewStatus(QString &newStatus);
 	void slotPostNewStatusDone(bool isError);
 	void sltAccepted();
+    void addAccount(const Account &account);
+    void removeAccount(const QString &alias);
 
 protected:
     void loadAccounts();
@@ -51,7 +53,9 @@ protected:
 signals:
 // 	void sigStatusUpdated();
 	void sigNotify( const QString &title, const QString &message, const QString &iconUrl);
-	
+
+protected slots:
+    void checkAll(bool isAll);
 private:
     Ui::quicktwit_base ui;
 	StatusTextEdit *txtStatus;

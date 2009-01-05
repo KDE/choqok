@@ -110,8 +110,14 @@ void MainWindow::optionsPreferences()
     dialog->addPage ( generalSettingsDlg, i18n ( "General" ), "configure" );
 
     Accounts *accountsSettingsDlg = new Accounts ( this );
-    connect(accountsSettingsDlg, SIGNAL(accountAdded(const Account&)), this, SLOT(addAccountTimeLine(const Account&)));
-    connect(accountsSettingsDlg, SIGNAL(accountRemoved(const QString&)), this, SLOT(removeAccountTimeLine(const QString&)));
+    connect(accountsSettingsDlg, SIGNAL(accountAdded(const Account&)),
+            this, SLOT(addAccountTimeLine(const Account&)));
+    connect(accountsSettingsDlg, SIGNAL(accountRemoved(const QString&)),
+            this, SLOT(removeAccountTimeLine(const QString&)));
+    connect(accountsSettingsDlg, SIGNAL(accountAdded(const Account&)),
+           this, SIGNAL(accountAdded(const Account&)));
+    connect(accountsSettingsDlg, SIGNAL(accountRemoved(const QString&)),
+           this, SIGNAL(accountRemoved(const QString&)));
     dialog->addPage ( accountsSettingsDlg, i18n ( "Accounts" ), "user-properties" );
 
     QWidget *appearsSettingsDlg = new QWidget;

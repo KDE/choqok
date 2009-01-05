@@ -18,6 +18,13 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout" >
        <item>
+        <widget class="QCheckBox" name="checkAll" >
+         <property name="text" >
+          <string>&amp;All</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="KComboBox" name="comboAccounts" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >

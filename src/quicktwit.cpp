@@ -45,12 +45,13 @@ QuickTwit::QuickTwit(QWidget* parent): KDialog(parent)
 	this->resize(280, 140);
 	txtStatus->setFocus(Qt::OtherFocusReason);
 	
-	this->setCaption(i18n("Quick Update"));
+	this->setCaption(i18n("Quick Tweet"));
 	ui.lblCounter->setText(QString::number(MAX_STATUS_SIZE));
 	
 	connect(txtStatus, SIGNAL(returnPressed(QString&)), this, SLOT(slotPostNewStatus(QString&)));
 	connect(txtStatus, SIGNAL(charsLeft(int)), this, SLOT(checkNewStatusCharactersCount(int)));
 	connect(this, SIGNAL(accepted()), this, SLOT(sltAccepted()));
+    connect(ui.checkAll, SIGNAL(toggled(bool)), this, SLOT(checkAll(bool)));
 }
 
 
@@ -58,11 +59,10 @@ QuickTwit::~QuickTwit()
 {
 }
 
-void QuickTwit::showNearMouse()
+void QuickTwit::showFocusedOnNewStatusField()
 {
-	QPoint cursorPos = QCursor::pos();
-	
-// 	move();
+    txtStatus->setFocus( Qt::OtherFocusReason );
+    this->show();
 }
 
 void QuickTwit::checkNewStatusCharactersCount(int numOfChars)
@@ -82,7 +82,6 @@ void QuickTwit::slotPostNewStatusDone(bool isError)
 	kDebug();
 	if(!isError){
         txtStatus->clearContentsAndSetDirection(accountsList[ui.comboAccounts->currentIndex()].direction);
-// 		emit sigStatusUpdated();
 		QString name(APPNAME);
 		emit sigNotify(i18n("Success!"), i18n("New status posted successfully"), name);
 	}
@@ -93,9 +92,18 @@ void QuickTwit::slotPostNewStatusDone(bool isError)
 void QuickTwit::slotPostNewStatus(QString & newStatus)
 {
     kDebug();
-    Backend *twitter = new Backend(&accountsList[ui.comboAccounts->currentIndex()] , this);
-    connect(twitter, SIGNAL(sigPostNewStatusDone(bool)), this, SLOT(slotPostNewStatusDone(bool)));
-	twitter->postNewStatus(newStatus);
+    if(ui.checkAll->isChecked()){
+        int count = accountsList.count();
+        for(int i=0;i < count; ++i){
+            Backend *twitter = new Backend(&accountsList[i] , this);
+            connect(twitter, SIGNAL(sigPostNewStatusDone(bool)), this, SLOT(slotPostNewStatusDone(bool)));
+            twitter->postNewStatus(newStatus);
+        }
+    } else {
+        Backend *twitter = new Backend(&accountsList[ui.comboAccounts->currentIndex()] , this);
+        connect(twitter, SIGNAL(sigPostNewStatusDone(bool)), this, SLOT(slotPostNewStatusDone(bool)));
+        twitter->postNewStatus(newStatus);
+    }
 	this->hide();
 }
 
@@ -130,6 +138,32 @@ void QuickTwit::loadAccounts()
             ui.comboAccounts->addItem(a.alias);
         }
     }
+}
+
+void QuickTwit::addAccount(const Account & account)
+{
+    kDebug();
+    accountsList.append(account);
+    ui.comboAccounts->addItem(account.alias);
+}
+
+void QuickTwit::removeAccount(const QString & alias)
+{
+    kDebug();
+    int count = accountsList.count();
+    for(int i=0; i<count; ++i){
+        if( accountsList[i].alias == alias ){
+            accountsList.removeAt(i);
+            ui.comboAccounts->removeItem(i);
+            kDebug()<<"Found!";
+            return;
+        }
+    }
+}
+
+void QuickTwit::checkAll(bool isAll)
+{
+    ui.comboAccounts->setEnabled( !isAll );
 }
 
 #include "quicktwit.moc"
