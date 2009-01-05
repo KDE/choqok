@@ -34,7 +34,7 @@ SysTrayIcon::SysTrayIcon(QWidget* parent): KSystemTrayIcon(parent)
 {
 	kDebug();
 	setToolTip(i18n("choqoK Twitter - Hit me to update your status"));
-	
+	unread = 0;
 	mainWin = new MainWindow;
 	
 	m_defaultIcon = KIcon("choqok").pixmap(22);
@@ -130,13 +130,14 @@ void SysTrayIcon::sysTrayActivated(QSystemTrayIcon::ActivationReason reason)
 	}
 }
 
-void SysTrayIcon::slotSetUnread(int unread)
+void SysTrayIcon::slotSetUnread(int numOfUnreadStatuses)
 {
 	kDebug();
-	if (unread == m_unread)
-		return;
-
-	m_unread=unread;
+// 	if (unread == m_unread)
+// 		return;
+    unread += numOfUnreadStatuses;
+//     kDebug()<< "unread: " << unread << " numOfUnreadStatuses: " << numOfUnreadStatuses;
+// 	m_unread=unread;
 
 	this->setToolTip( i18np("choqoK - 1 unread status", "choqoK - %1 unread statuses", unread > 0 ? unread : 0));
 

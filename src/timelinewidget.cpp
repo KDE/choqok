@@ -193,7 +193,7 @@ void TimeLineWidget::addNewStatusesToUi ( QList< Status > & statusList, QBoxLayo
     bool isThereIsAnyNewStatusToNotify = false;
     notifyStr = (mCurrentAccount.direction==Qt::RightToLeft) ? "<div dir='rtl'>" : "<div dir='ltr'>";
     for ( ;it != endIt; ++it ) {
-        if ( it->replyToUserScreenName == mCurrentAccount.username && type == Backend::HomeTimeLine ) {
+        if ( it->replyToUserScreenName.toLower() == mCurrentAccount.username.toLower() && type == Backend::HomeTimeLine ) {
             --numOfNewStatuses;
             --unreadStatusInHome;
             continue;
@@ -210,7 +210,7 @@ void TimeLineWidget::addNewStatusesToUi ( QList< Status > & statusList, QBoxLayo
         layoutToAddStatuses->insertWidget ( 0, wt );
 
         if ( !isStartMode ) {
-            if ( it->user.screenName == mCurrentAccount.username ) {
+            if ( it->user.screenName.toLower() == mCurrentAccount.username.toLower() ) {
                 --numOfNewStatuses;
                 wt->setUnread ( StatusWidget::WithoutNotify );
             } else {
@@ -461,7 +461,8 @@ void TimeLineWidget::checkUnreadStatuses ( int numOfNewStatusesReciened )
 //  } else {
     unreadStatusCount += numOfNewStatusesReciened;
 //  }
-    emit sigSetUnread ( unreadStatusCount );
+    emit sigSetUnread ( numOfNewStatusesReciened );
+    emit sigSetUnreadOnMainWin( unreadStatusCount );
 }
 
 void TimeLineWidget::setUnreadStatusesToReadState()
@@ -477,8 +478,9 @@ void TimeLineWidget::setUnreadStatusesToReadState()
 
     listUnreadStatuses.clear();
 
+    emit sigSetUnread ( -unreadStatusCount );
+    emit sigSetUnreadOnMainWin( 0 );
     unreadStatusCount = unreadStatusInReply = unreadStatusInHome = 0;
-    emit sigSetUnread ( unreadStatusCount );
 }
 
 void TimeLineWidget::requestFavoritedDone ( bool isError )

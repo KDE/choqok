@@ -45,17 +45,17 @@ public slots:
 	void systemNotify(const QString &title, const QString &message, const QString &iconUrl);
 	
 protected slots:
-	void slotSetUnread(int unread);
+	void slotSetUnread(int numOfUnreadStatuses);
 	
 private:
 	void setupActions();
 	
 	MainWindow *mainWin;
 	QuickTwit *quickWidget;
-// 	bool isQuickActivated;
+    int unread;
 	
 	QPixmap m_defaultIcon;
-	int m_unread;
+// 	int m_unread;
 };
 
 #endif

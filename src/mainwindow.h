@@ -72,6 +72,7 @@ protected slots:
     void settingsChanged();
     void notify ( const QString &message );
     void quitApp();
+    void setNumOfUnreadOnMainWin( int unread );
 
 protected:
     void keyPressEvent ( QKeyEvent * e );
