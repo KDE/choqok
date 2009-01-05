@@ -29,9 +29,8 @@
 #define TIMEOUT 5000
 
 class Backend;
-
+class QLabel;
 class StatusTextEdit;
-
 class StatusWidget;
 
 /**
@@ -58,7 +57,7 @@ public slots:
     void abortPostNewStatus();
 
 protected slots:
-    void toggleTwitFieldVisible();
+//     void toggleTwitFieldVisible();
     void requestFavoritedDone ( bool isError );
     void requestDestroyDone ( bool isError );
 
@@ -116,6 +115,7 @@ private:
 private:
     Backend *twitter;
     StatusTextEdit *txtNewStatus;
+    QLabel *lblCounter;
     QList<StatusWidget*> listHomeStatus;
     QList<StatusWidget*> listReplyStatus;
     QList<StatusWidget*> listUnreadStatuses;

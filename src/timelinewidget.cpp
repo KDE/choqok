@@ -42,10 +42,12 @@ TimeLineWidget::TimeLineWidget ( const Account &userAccount, QWidget* parent ) :
     homeLayout->setDirection ( QBoxLayout::TopToBottom );
     replyLayout->setDirection ( QBoxLayout::TopToBottom );
     txtNewStatus = new StatusTextEdit ( this );
+    lblCounter = new QLabel(this);
+    tabs->setCornerWidget(lblCounter, Qt::TopRightCorner);
     txtNewStatus->setObjectName ( "txtNewStatus" );
     inputFrame->layout()->addWidget ( txtNewStatus );
 
-    connect ( toggleArrow, SIGNAL ( clicked() ), this, SLOT ( toggleTwitFieldVisible() ) );
+//     connect ( toggleArrow, SIGNAL ( clicked() ), this, SLOT ( toggleTwitFieldVisible() ) );
     connect ( txtNewStatus, SIGNAL ( charsLeft ( int ) ), this, SLOT ( checkNewStatusCharactersCount ( int ) ) );
     connect ( txtNewStatus, SIGNAL ( returnPressed ( QString& ) ), this, SLOT ( postStatus ( QString& ) ) );
 
@@ -64,10 +66,17 @@ void TimeLineWidget::initObjects()
 {
     kDebug();
 
-    txtNewStatus->setSizePolicy ( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );
-    txtNewStatus->setMaximumHeight ( 80 );
+    txtNewStatus->setSizePolicy ( QSizePolicy::Expanding, QSizePolicy::Maximum );
+//     txtNewStatus->setMaximumHeight ( 80 );
+//     txtNewStatus->setMinimumHeight ( 30 );
     txtNewStatus->setFocus ( Qt::OtherFocusReason );
     txtNewStatus->setTabChangesFocus ( true );
+    
+    QFont counterF;
+    counterF.setBold( true );
+    counterF.setPointSize( 12 );
+    lblCounter->setFont( counterF );
+    checkNewStatusCharactersCount(140);
 
     twitter = new Backend ( &mCurrentAccount, this );
 
@@ -86,11 +95,17 @@ void TimeLineWidget::initObjects()
 void TimeLineWidget::checkNewStatusCharactersCount ( int numOfChars )
 {
     if ( numOfChars < 0 ) {
-        lblCounter->setStyleSheet ( "QLabel {color: red}" );
+        lblCounter->setStyleSheet ( "QLabel {color: red;}" );
     } else if ( numOfChars < 30 ) {
         lblCounter->setStyleSheet ( "QLabel {color: rgb(255, 255, 0);}" );
     } else {
-        lblCounter->setStyleSheet ( "QLabel {color: green}" );
+        lblCounter->setStyleSheet ( "QLabel {color: green;}" );
+    }
+//     kDebug()<<numOfChars;
+    if(numOfChars == 140 ){
+        txtNewStatus->setMaximumHeight( 28 );
+    } else {
+        txtNewStatus->setMaximumHeight( 80 );
     }
 
     lblCounter->setText ( i18n ( "%1", numOfChars ) );
@@ -101,14 +116,6 @@ void TimeLineWidget::settingsChanged()
     kDebug();
     setDefaultDirection();
 
-    if ( Settings::hideTwitField() ) {
-        inputFrame->hide();
-        toggleArrow->setArrowType ( Qt::LeftArrow );
-    } else {
-        toggleArrow->setArrowType ( Qt::DownArrow );
-        inputFrame->show();
-        txtNewStatus->setFocus ( Qt::OtherFocusReason );
-    }
 }
 
 void TimeLineWidget::updateTimeLines()
@@ -275,7 +282,6 @@ void TimeLineWidget::postStatus ( QString & status )
 void TimeLineWidget::postingNewStatusDone ( bool isError )
 {
     if ( !isError ) {
-//   updateHomeTimeLine();
         txtNewStatus->clearContentsAndSetDirection ( mCurrentAccount.direction );
         QString successMsg = i18n ( "New status posted successfully" );
         emit systemNotify ( i18n ( "Success!" ), successMsg, APPNAME );
@@ -284,11 +290,9 @@ void TimeLineWidget::postingNewStatusDone ( bool isError )
     } else {
         error ( twitter->latestErrorString() );
     }
-
+    txtNewStatus->setFocus( Qt::OtherFocusReason );
     txtNewStatus->setEnabled ( true );
 
-    if ( Settings::hideTwitField() )
-        toggleTwitFieldVisible();
 }
 
 bool TimeLineWidget::saveStatuses ( QString fileName, QList<StatusWidget*> &list )
@@ -386,18 +390,6 @@ void TimeLineWidget::prepareReply ( QString &userName, uint statusId )
     txtNewStatus->moveCursor ( QTextCursor::End );
 }
 
-void TimeLineWidget::toggleTwitFieldVisible()
-{
-    if ( inputFrame->isVisible() ) {
-        inputFrame->hide();
-        toggleArrow->setArrowType ( Qt::LeftArrow );
-    } else {
-        inputFrame->show();
-        toggleArrow->setArrowType ( Qt::DownArrow );
-        txtNewStatus->setFocus ( Qt::OtherFocusReason );
-    }
-}
-
 void TimeLineWidget::updateStatusList ( QList<StatusWidget*> *list )
 {
     kDebug();
@@ -447,15 +439,6 @@ void TimeLineWidget::loadConfigurations()
 {
     kDebug();
     setDefaultDirection();
-
-    if ( Settings::hideTwitField() ) {
-        inputFrame->hide();
-        toggleArrow->setArrowType ( Qt::LeftArrow );
-    } else {
-        toggleArrow->setArrowType ( Qt::DownArrow );
-        inputFrame->show();
-        txtNewStatus->setFocus ( Qt::OtherFocusReason );
-    }
 
     isStartMode = true;
 

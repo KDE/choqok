@@ -20,14 +20,15 @@
 */
 #include "statustextedit.h"
 #include <QKeyEvent>
+#include <KDE/KLocale>
 
 StatusTextEdit::StatusTextEdit(QWidget *parent)
  : KTextEdit(parent)
 {
 	this->setAcceptRichText(false);
 	connect(this, SIGNAL(textChanged()), this, SLOT(setNumOfCharsLeft()));
-	isCleared = true;
 	setAcceptRichText(false);
+    this->setToolTip(i18n("Press Ctrl+P to have previous text submited."));
 }
 
 
@@ -41,10 +42,13 @@ void StatusTextEdit::keyPressEvent(QKeyEvent * e)
 		QString txt = toPlainText();
 		emit returnPressed(txt);
 		e->accept();
-	} else if(e->modifiers()==Qt::ControlModifier && e->key() == Qt::Key_Z && isCleared){
-		this->setHtml(prevStr);
-		isCleared = false;
-	}else{
+	} else if(e->modifiers()==Qt::ControlModifier && e->key() == Qt::Key_P){
+        QString tmp = this->toHtml();
+		this->setHtml(tmp+ ' ' +prevStr);
+    } else if(e->key() == Qt::Key_Escape){
+        this->clear();
+        setDefaultDirection(dir);
+    } else{
 		KTextEdit::keyPressEvent(e);
 	}
 }
@@ -68,7 +72,6 @@ void StatusTextEdit::setNumOfCharsLeft()
 void StatusTextEdit::clearContentsAndSetDirection(Qt::LayoutDirection dir)
 {
 	prevStr = this->toHtml();
-	isCleared = true;
 	this->clear();
 	setDefaultDirection(dir);
 }

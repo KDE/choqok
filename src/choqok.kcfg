@@ -42,9 +42,6 @@
     <entry name="showMainWinOnStart" type="Bool">
 	    <default>true</default>
     </entry>
-    <entry name="hideTwitField" type="Bool">
-	    <default>false</default>
-    </entry>
   </group>
   <group name="Appearances">
     <entry name="isCustomUi" type="Bool">

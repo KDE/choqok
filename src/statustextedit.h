@@ -47,7 +47,7 @@ signals:
 	void charsLeft(int count);
 private:
 	QString prevStr;
-	bool isCleared;
+    Qt::LayoutDirection dir;
 };
 
 #endif
