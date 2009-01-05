@@ -272,8 +272,10 @@ void StatusWidget::setUserImage(const QPixmap * image)
 void StatusWidget::setUserImage()
 {
 	MediaManagement *media = new MediaManagement(this);
-	connect(media, SIGNAL(imageLocalPath(const QString&)), this, SLOT(userImageLocalPathFetched(const QString&)));
-	media->getImageLocalPathDownloadAsyncIfNotExists(mCurrentStatus.user.screenName, mCurrentStatus.user.profileImageUrl);
+	connect(media, SIGNAL(imageLocalPath(const QString&)),
+            this, SLOT(userImageLocalPathFetched(const QString&)));
+	media->getImageLocalPathDownloadAsyncIfNotExists(mCurrentAccount->serviceName + '_' 
+            + mCurrentStatus.user.screenName , mCurrentStatus.user.profileImageUrl);
 }
 
 void StatusWidget::userImageLocalPathFetched(const QString & path)
