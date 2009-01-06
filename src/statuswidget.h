@@ -25,8 +25,9 @@
 #include <QTimer>
 #include <ui_status_base.h>
 #include "datacontainers.h"
+#include "constants.h"
 #define UPDATEINTERVAL 2*60000
-#define COLOROFFSET 15
+#define COLOROFFSET 20
 /**
 Status Widget
 

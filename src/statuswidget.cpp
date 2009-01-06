@@ -105,12 +105,21 @@ void StatusWidget::requestReply()
 
 QString StatusWidget::generateSign()
 {
-	QString sign = "<b><a href=\"http://twitter.com/"+mCurrentStatus.user.screenName+"\" title=\""+
-             mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName+"</a> - </b> ";
-	sign += "<a href=\"http://twitter.com/" + mCurrentStatus.user.screenName + "/statuses/" +
-             QString::number(mCurrentStatus.statusId) + "\" title=\"" + 
-            mCurrentStatus.creationDateTime.toString()+"\">" + formatDateTime(mCurrentStatus.creationDateTime) + "</a> - ";
-	sign += mCurrentStatus.source;
+    QString sign;
+    if(mCurrentAccount->serviceName.toLower() == QString(IDENTICA_SERVICE_TEXT).toLower()){
+        sign = "<b><a href=\"http://identi.ca/"+mCurrentStatus.user.screenName+"\" title=\""+
+                mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName+"</a> - </b> ";
+        sign += "<a href=\"http://identi.ca/notice/" + QString::number(mCurrentStatus.statusId) + "\" title=\"" + 
+                mCurrentStatus.creationDateTime.toString()+"\">" + formatDateTime(mCurrentStatus.creationDateTime) + "</a> - ";
+        sign += mCurrentStatus.source;
+    } else {
+        sign = "<b><a href=\"http://twitter.com/"+mCurrentStatus.user.screenName+"\" title=\""+
+                mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName+"</a> - </b> ";
+        sign += "<a href=\"http://twitter.com/" + mCurrentStatus.user.screenName + "/statuses/" +
+                QString::number(mCurrentStatus.statusId) + "\" title=\"" + 
+                mCurrentStatus.creationDateTime.toString()+"\">" + formatDateTime(mCurrentStatus.creationDateTime) + "</a> - ";
+        sign += mCurrentStatus.source;
+    }
 	return sign;
 }
 
@@ -174,7 +183,12 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
 		int i = 1;
 		while ((i < s.length()) && (QChar(s[i]).isLetterOrNumber() || (s[i] == '_'))) ++i;
 		QString username = s.mid(1, i - 1);
-        QString statusUrl = "http://twitter.com/" + username + "/statuses/" + QString::number(replyStatusId);
+        QString statusUrl;
+        if(mCurrentAccount->serviceName.toLower() == QString(IDENTICA_SERVICE_TEXT).toLower()){
+            statusUrl = "http://identi.ca/notice/" + QString::number(replyStatusId);
+        }else {
+            statusUrl = "http://twitter.com/" + username + "/statuses/" + QString::number(replyStatusId);
+        }
         t = "@<a href=\"" + statusUrl + "\" title=\""+ statusUrl +"\" >" + username + "</a>" + s.mid(i);
 	}
 	if(mCurrentAccount->direction==Qt::RightToLeft){
