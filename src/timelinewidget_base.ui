@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>291</width>
-    <height>550</height>
+    <height>543</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -54,12 +54,6 @@
    </item>
    <item>
     <widget class="KTabWidget" name="tabs" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="MinimumExpanding" hsizetype="Expanding" >
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
      <property name="tabPosition" >
       <enum>QTabWidget::North</enum>
      </property>
@@ -112,7 +106,7 @@
             <x>0</x>
             <y>0</y>
             <width>279</width>
-            <height>509</height>
+            <height>502</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5" >
@@ -131,9 +125,6 @@
               <spacer name="verticalSpacer" >
                <property name="orientation" >
                 <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeType" >
-                <enum>QSizePolicy::MinimumExpanding</enum>
                </property>
                <property name="sizeHint" stdset="0" >
                 <size>
@@ -227,9 +218,6 @@
     </widget>
    </item>
   </layout>
-  <zorder>inputFrame</zorder>
-  <zorder>tabs</zorder>
-  <zorder></zorder>
  </widget>
  <layoutdefault spacing="6" margin="11" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>

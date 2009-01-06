@@ -36,7 +36,7 @@ class Backend : public QObject
 	Q_OBJECT
 public:
 	enum TimeLineType{HomeTimeLine=1, ReplyTimeLine, UserTimeLine};
-    Backend(const Account *account, QObject* parent=0);
+    explicit Backend(const Account *account, QObject* parent=0);
 
     ~Backend();
 	
@@ -45,7 +45,7 @@ public:
 	
 	QDateTime dateFromString(const QString &date);
 	QString& latestErrorString();
-	void quiting();
+	void quitting();
 	
 public slots:
 	void postNewStatus(const QString &statusMessage, uint replyToStatusId=0);

@@ -59,6 +59,7 @@ public:
   QString alias;
   Qt::LayoutDirection direction;
   QString apiPath;
+  bool isError;
 };
 
 #endif

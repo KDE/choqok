@@ -31,11 +31,6 @@ public:
     Accounts ( QWidget *parent = 0 );
     ~Accounts();
 
-signals:
-    void accountAdded(const Account &account);
-    void accountRemoved(const QString &alias);
-    void accountEdited(const Account &alias);
-
 public slots:
     void addAccount();
     void editAccount ( QString alias = QString() );

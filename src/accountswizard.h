@@ -34,7 +34,7 @@ class AccountsWizard: public KDialog
 {
     Q_OBJECT
 public:
-    AccountsWizard ( QString alias = QString(), QWidget *parent = 0 );
+    explicit AccountsWizard ( QString alias = QString(), QWidget *parent = 0 );
 
 signals:
     void accountAdded ( const Account &account );
@@ -44,11 +44,9 @@ protected slots:
     void slotAccepted();
 
 private:
-    void loadAccount ( const QString &alias );
+    void loadAccount ( QString &alias );
 
     Ui::accounts_wizard_base ui;
-    KConfig *accountsGrp;
-//     KConfigGroup *accountsGrp;
 
     QString mAlias;
     bool isEdit;

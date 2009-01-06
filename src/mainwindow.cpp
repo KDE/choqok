@@ -38,6 +38,7 @@
 
 #include "constants.h"
 #include "accounts.h"
+#include "accountmanager.h"
 
 MainWindow::MainWindow()
         : KXmlGuiWindow()
@@ -59,6 +60,8 @@ MainWindow::MainWindow()
     timelineTimer->start();
 
     connect ( timelineTimer, SIGNAL ( timeout() ), this, SIGNAL ( updateTimeLines() ) );
+    connect ( AccountManager::self(), SIGNAL(accountAdded(const Account&)), this, SLOT(addAccountTimeLine(const Account&)) );
+    connect ( AccountManager::self(), SIGNAL(accountRemoved(const QString&)), this, SLOT(removeAccountTimeLine(const QString&)) );
     QTimer::singleShot( 0, this, SLOT(loadAccounts()) );
 }
 
@@ -110,14 +113,6 @@ void MainWindow::optionsPreferences()
     dialog->addPage ( generalSettingsDlg, i18n ( "General" ), "configure" );
 
     Accounts *accountsSettingsDlg = new Accounts ( this );
-    connect(accountsSettingsDlg, SIGNAL(accountAdded(const Account&)),
-            this, SLOT(addAccountTimeLine(const Account&)));
-    connect(accountsSettingsDlg, SIGNAL(accountRemoved(const QString&)),
-            this, SLOT(removeAccountTimeLine(const QString&)));
-    connect(accountsSettingsDlg, SIGNAL(accountAdded(const Account&)),
-           this, SIGNAL(accountAdded(const Account&)));
-    connect(accountsSettingsDlg, SIGNAL(accountRemoved(const QString&)),
-           this, SIGNAL(accountRemoved(const QString&)));
     dialog->addPage ( accountsSettingsDlg, i18n ( "Accounts" ), "user-properties" );
 
     QWidget *appearsSettingsDlg = new QWidget;
@@ -221,34 +216,21 @@ void MainWindow::addAccountTimeLine(const Account & account)
     mainWidget->addTab(widget, account.alias);
     
     QTimer::singleShot(500, widget, SLOT(updateTimeLines()));
+    enableApp();
 }
 
 void MainWindow::loadAccounts()
 {
     kDebug();
-    KConfig grp;
-//     KConfigGroup (&conf, "Accounts");
-    QStringList list = grp.groupList();
-    int count = list.count();
-    bool foundAccount = false;
-    for(int i=0; i<count; ++i){
-        if(list[i].contains("Account")){
-            Account a;
-            KConfigGroup accountGrp(&grp, list[i]);
-            a.alias = accountGrp.readEntry("alias", QString());
-            a.username = accountGrp.readEntry("username", QString());
-            a.password = accountGrp.readEntry("password", QString());
-            a.serviceName = accountGrp.readEntry("service", QString());
-            a.apiPath = accountGrp.readEntry("api_path", QString());
-            a.direction = (accountGrp.readEntry("direction", "ltr") == "rtl") ? Qt::RightToLeft : Qt::LeftToRight;
-            addAccountTimeLine(a);
-            foundAccount = true;
-        }
+    QList<Account> ac = AccountManager::self()->accounts();
+    QListIterator<Account> it(ac);
+    while(it.hasNext()){
+        Account current = it.next();
+        addAccountTimeLine(current);
     }
-    if(foundAccount){
+    if(ac.count()>0){
         enableApp();
     } else {
-        timelineTimer->stop();
         disableApp();
     }
 }
@@ -261,6 +243,8 @@ void MainWindow::removeAccountTimeLine(const QString & alias)
         TimeLineWidget * tmp = qobject_cast<TimeLineWidget *>( mainWidget->widget( i ) );
         if(tmp->currentAccount().alias == alias){
             mainWidget->removeTab( i );
+            if(mainWidget->count()<1)
+                disableApp();
             return;
         }
     }

@@ -307,7 +307,7 @@ void Backend::requestDestroy(uint statusId)
 	job->start();
 }
 
-void Backend::quiting()
+void Backend::quitting()
 {
 }
 

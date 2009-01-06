@@ -20,9 +20,10 @@
 */
 #include "accounts.h"
 #include "accountswizard.h"
+#include "accountmanager.h"
 #include <kdebug.h>
 #include <QCheckBox>
-
+#include <KMessageBox>
 Accounts::Accounts ( QWidget *parent )
         : QWidget ( parent )
 {
@@ -72,21 +73,21 @@ void Accounts::editAccount ( QString alias )
 
 void Accounts::removeAccount ( QString alias )
 {
-    kDebug();
-    KConfig conf;
-//     KConfigGroup accounts ( &conf, "Accounts" );
-//     KConfigGroup account ( &accounts, alias );
-    conf.deleteGroup ( "Account "+alias, KConfigBase::Localized );
-    conf.sync();
-    accountsTable->removeRow ( accountsTable->currentRow() );
-    emit accountRemoved( alias );
+    kDebug()<<alias;
+    if(alias.isEmpty())
+        alias = accountsTable->item(accountsTable->currentRow(), 0)->text();
+    if(AccountManager::self()->removeAccount(alias)){
+        accountsTable->removeRow ( accountsTable->currentRow() );
+//         emit accountRemoved( alias );
+    } else
+        KMessageBox::sorry(this, i18n("Cannot remove the account, please try removing it handy."));
 }
 
 void Accounts::slotAccountAdded ( const Account &account )
 {
     kDebug();
     addAccountToTable ( account.alias, account.serviceName );
-    emit accountAdded( account );
+//     emit accountAdded( account );
 }
 
 void Accounts::slotAccountEdited ( const Account &account )
@@ -95,7 +96,7 @@ void Accounts::slotAccountEdited ( const Account &account )
     int row = accountsTable->currentRow();
     accountsTable->item ( row, 0 )->setText ( account.alias );
     accountsTable->item ( row, 1 )->setText ( account.serviceName );
-    emit accountEdited(account);
+//     emit accountEdited(account);
 }
 
 void Accounts::addAccountToTable (/* bool isEnabled, */const QString & alias, const QString & service )
@@ -126,21 +127,12 @@ void Accounts::accountsTablestateChanged()
 void Accounts::loadAccountsData()
 {
     kDebug();
-    KConfig grp;
 //     KConfigGroup grp(&conf, "Accounts");
-    QStringList list = grp.groupList();
-    int count = list.count();
-    for(int i=0; i<count; ++i){
-        if( list[i].contains("Account")){
-            KConfigGroup accountGrp(&grp, list[i]);
-            QString alias = accountGrp.readEntry("alias", QString());
-    //         a.username = accountGrp.readEntry("username", QString());
-    //         a.password = accountGrp.readEntry("password", QString());
-            QString serviceName = accountGrp.readEntry("service", QString());
-    //         a.apiPath = accountGrp.readEntry("api_path", QString());
-    //         a.direction = (accountGrp.readEntry("direction", "ltr") == "rtl") ? Qt::RightToLeft : Qt::LeftToRight;
-            this->addAccountToTable( alias, serviceName );
-        }
+    QList<Account> ac = AccountManager::self()->accounts();
+    QListIterator<Account> it(ac);
+    while(it.hasNext()){
+        Account current = it.next();
+        addAccountToTable(current.alias, current.serviceName);
     }
 }
 

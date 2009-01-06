@@ -19,6 +19,7 @@
 
 */
 #include "accountswizard.h"
+#include "accountmanager.h"
 #include <kdebug.h>
 AccountsWizard::AccountsWizard ( QString alias, QWidget *parent )
         : KDialog ( parent )
@@ -29,14 +30,11 @@ AccountsWizard::AccountsWizard ( QString alias, QWidget *parent )
     dialog->setAttribute ( Qt::WA_DeleteOnClose );
     this->setMainWidget ( dialog );
 
-    accountsGrp = new KConfig;
-//     accountsGrp = new KConfigGroup ( conf, "Accounts" );
-
     if ( alias.isEmpty() ) {
         this->setCaption ( i18n ( "Add a new account" ) );
         isEdit = false;
     } else {
-        this->setCaption ( i18n ( "Edit existing account" ) );
+        this->setCaption ( i18n ( "Modify existing account" ) );
         isEdit = true;
         this->mAlias = alias;
         loadAccount ( alias );
@@ -49,11 +47,7 @@ void AccountsWizard::slotAccepted()
 {
     kDebug();
 
-    if ( isEdit ) {
-        accountsGrp->deleteGroup ( "Account " + mAlias );
-    }
     Account a;
-//     QString apiPath, service;
 
     if ( ui.kcfg_service->currentIndex() == 1 ) {
         a.apiPath = IDENTICA_API_PATH;
@@ -65,17 +59,16 @@ void AccountsWizard::slotAccepted()
     a.username = ui.kcfg_username->text();
     a.password = ui.kcfg_password->text();
     a.direction = (Qt::LayoutDirection)ui.kcfg_direction->currentIndex();
-    mAlias = ui.kcfg_alias->text();
-    a.alias = mAlias;
-    KConfigGroup account ( accountsGrp, "Account "+mAlias );
-    account.writeEntry ( "alias", mAlias );
-    account.writeEntry ( "username", a.username );
-    account.writeEntry ( "password", a.password );
-    account.writeEntry ( "direction", ( a.direction == Qt::RightToLeft ) ? "rtl" : "ltr" );
-    account.writeEntry ( "service", a.serviceName );
-    account.writeEntry ( "api_path", a.apiPath );
-    account.writeEntry ( "enabled", true );
-    accountsGrp->sync();
+    a.alias = ui.kcfg_alias->text();
+    if(isEdit){
+        a = AccountManager::self()->modifyAccount(a, mAlias);;
+    } else {
+        a = AccountManager::self()->addAccount(a);
+    }
+    if(a.isError){
+        kDebug()<<"Cannot add or modify account with alias "<<a.alias;
+        return;
+    }
 
     if ( isEdit ) {
         emit accountEdited ( a );
@@ -84,16 +77,19 @@ void AccountsWizard::slotAccepted()
     }
 }
 
-void AccountsWizard::loadAccount ( const QString &alias )
+void AccountsWizard::loadAccount ( QString &alias )
 {
-    kDebug();
-    KConfigGroup account ( accountsGrp, "Account "+alias );
-    ui.kcfg_alias->setText ( account.readEntry ( "alias", QString() ) );
-    ui.kcfg_username->setText ( account.readEntry ( "username", QString() ) );
-    ui.kcfg_password->setText ( account.readEntry ( "password", QString() ) );
-    ui.kcfg_direction->setCurrentIndex ( ( account.readEntry ( "direction", "ltr" ) == "rtl" ) ? 1 : 0 );
-    QString service = account.readEntry ( "service", QString() );
-    ui.kcfg_service->setCurrentIndex ( ( service == IDENTICA_SERVICE_TEXT ) ? 1 : 0 );
+    kDebug()<<"Loading account "<<alias;
+    Account a = AccountManager::self()->findAccount(alias);
+    if(a.isError){
+        kDebug()<<"Error on Loading Account with alias "<<alias;
+        return;
+    }
+    ui.kcfg_username->setText ( a.username );
+    ui.kcfg_alias->setText ( a.alias);
+    ui.kcfg_password->setText ( a.password );
+    ui.kcfg_direction->setCurrentIndex ( ( a.direction == Qt::RightToLeft ) ? 1 : 0 );
+    ui.kcfg_service->setCurrentIndex ( ( a.serviceName == IDENTICA_SERVICE_TEXT ) ? 1 : 0 );
 }
 
 #include "accountswizard.moc"

@@ -38,7 +38,7 @@ Q_OBJECT
 public:
 	enum Notify{ WithNotify=0, WithoutNotify};
     
-    StatusWidget(const Account *account, QWidget *parent=0);
+    explicit StatusWidget(const Account *account, QWidget *parent = 0);
 
     ~StatusWidget();
 	

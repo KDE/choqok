@@ -44,7 +44,7 @@ class TimeLineWidget : public QWidget, public Ui::timelinewidget_base
 {
     Q_OBJECT
 public:
-    TimeLineWidget ( const Account &userAccount, QWidget* parent = 0 );
+    explicit TimeLineWidget ( const Account &userAccount, QWidget* parent = 0 );
 
     ~TimeLineWidget();
     Account currentAccount() const;

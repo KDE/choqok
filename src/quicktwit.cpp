@@ -28,6 +28,7 @@
 #include "mainwindow.h"
 #include "constants.h"
 #include "settings.h"
+#include "accountmanager.h"
 
 QuickTwit::QuickTwit(QWidget* parent): KDialog(parent)
 {
@@ -52,6 +53,8 @@ QuickTwit::QuickTwit(QWidget* parent): KDialog(parent)
 	connect(txtStatus, SIGNAL(charsLeft(int)), this, SLOT(checkNewStatusCharactersCount(int)));
 	connect(this, SIGNAL(accepted()), this, SLOT(sltAccepted()));
     connect(ui.checkAll, SIGNAL(toggled(bool)), this, SLOT(checkAll(bool)));
+    connect(AccountManager::self(), SIGNAL(accountAdded(const Account&)), this, SLOT(addAccount(const Account&)));
+    connect(AccountManager::self(), SIGNAL(accountRemoved(const QString&)), this, SLOT(removeAccount(const QString&)));
 }
 
 
@@ -116,27 +119,18 @@ void QuickTwit::sltAccepted()
 
 void QuickTwit::loadAccounts()
 {
-    KConfig grp;
-//     KConfigGroup grp(&conf, "Accounts");
-    QStringList list = grp.groupList();
-    int count = list.count();
-    if(count == 0){
-        txtStatus->setEnabled(false);
-        return;
+    kDebug();
+    QList<Account> ac = AccountManager::self()->accounts();
+    QListIterator<Account> it(ac);
+    while(it.hasNext()){
+        Account current = it.next();
+        accountsList.append(current);
+        ui.comboAccounts->addItem(current.alias);
     }
-    for(int i=0; i<count; ++i){
-        if(list[i].contains("Account")){
-            Account a;
-            KConfigGroup accountGrp(&grp, list[i]);
-            a.alias = accountGrp.readEntry("alias", QString());
-            a.username = accountGrp.readEntry("username", QString());
-            a.password = accountGrp.readEntry("password", QString());
-            a.serviceName = accountGrp.readEntry("service", QString());
-            a.apiPath = accountGrp.readEntry("api_path", QString());
-            a.direction = (accountGrp.readEntry("direction", "ltr") == "rtl") ? Qt::RightToLeft : Qt::LeftToRight;
-            accountsList.append(a);
-            ui.comboAccounts->addItem(a.alias);
-        }
+    if(ac.count()>0){
+        txtStatus->setEnabled(true);
+    } else {
+        txtStatus->setEnabled(false);
     }
 }
 

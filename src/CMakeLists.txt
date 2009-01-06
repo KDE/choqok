@@ -10,6 +10,7 @@ set(choqok_SRCS
    systrayicon.cpp
    quicktwit.cpp
    timelinewidget.cpp
+   accountmanager.cpp
  )
 
 kde4_add_ui_files(choqok_SRCS timelinewidget_base.ui prefs_base.ui status_base.ui accounts_base.ui 
