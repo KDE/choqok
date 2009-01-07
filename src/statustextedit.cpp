@@ -28,7 +28,7 @@ StatusTextEdit::StatusTextEdit(QWidget *parent)
 	this->setAcceptRichText(false);
 	connect(this, SIGNAL(textChanged()), this, SLOT(setNumOfCharsLeft()));
 	setAcceptRichText(false);
-    this->setToolTip(i18n("Press Ctrl+P to have previous text submited."));
+    this->setToolTip(i18n("Press Ctrl+P to have previous text submitted."));
 }
 
 

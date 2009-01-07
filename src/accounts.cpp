@@ -80,7 +80,7 @@ void Accounts::removeAccount ( QString alias )
         accountsTable->removeRow ( accountsTable->currentRow() );
 //         emit accountRemoved( alias );
     } else
-        KMessageBox::sorry(this, i18n("Cannot remove the account, please try removing it handy."));
+        KMessageBox::sorry(this, i18n("Cannot remove the account, please try removing it manually."));
 }
 
 void Accounts::slotAccountAdded ( const Account &account )
