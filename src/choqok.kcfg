@@ -48,10 +48,16 @@
 	    <default>false</default>
     </entry>
     <entry name="defaultBackColor" type="Color">
-	    <default>white</default>
+        <default>white</default>
     </entry>
     <entry name="newStatusBackColor" type="Color">
-	    <default>yellow</default>
+        <default>yellow</default>
+    </entry>
+    <entry name="defaultForeColor" type="Color">
+        <default>Black</default>
+    </entry>
+    <entry name="newStatusForeColor" type="Color">
+        <default>Black</default>
     </entry>
   </group>
 </kcfg>

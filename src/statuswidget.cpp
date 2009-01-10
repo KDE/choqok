@@ -204,19 +204,22 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
 void StatusWidget::setUnread(Notify notifyType)
 {
 	mIsReaded = false;
-	QColor backColor;
+    QColor backColor;
+    QString sheet;
 	if(Settings::isCustomUi()){
 		backColor = Settings::newStatusBackColor();
+        sheet += " color:" + Settings::newStatusForeColor().name() + ';';
 	} else {
 		backColor = this->palette().window().color();
 		backColor.setBlue( backColor.blue()+COLOROFFSET);
 		backColor.setGreen( backColor.green()+COLOROFFSET);
 		backColor.setRed( backColor.red()+COLOROFFSET);
 	}
-	this->setStyleSheet("background-color: rgb(" + QString::number(backColor.red()) + ','
-			+ QString::number(backColor.green()) + ", " + QString::number(backColor.blue()) + ");");
+    sheet += "background-color: rgb(" + QString::number(backColor.red()) + ','
+            + QString::number(backColor.green()) + ',' + QString::number(backColor.blue()) + ");";
+	this->setStyleSheet(sheet);
 	
-	if(notifyType == WithNotify/* && mCurrentStatus.user.screenName != Settings::username()*/){
+	if(notifyType == WithNotify){
 		QString iconUrl = MediaManager::self()->getImageLocalPathIfExist(mCurrentStatus.user.profileImageUrl);
 		QString name = mCurrentStatus.user.screenName;
 		QString msg = mCurrentStatus.content;
@@ -239,29 +242,35 @@ void StatusWidget::setUnread(Notify notifyType)
 void StatusWidget::setRead()
 {
 	mIsReaded = true;
-	QColor backColor;
+    QColor backColor;
+    QString sheet;
 	if(Settings::isCustomUi()){
-		backColor = Settings::defaultBackColor();
+        backColor = Settings::defaultBackColor();
+        sheet += " color:" + Settings::defaultForeColor().name() + ';';
 	} else {
 		backColor = this->palette().window().color();
 		backColor.setBlue( backColor.blue()-COLOROFFSET);
 		backColor.setGreen( backColor.green()-COLOROFFSET);
 		backColor.setRed( backColor.red()-COLOROFFSET);
 	}
-	this->setStyleSheet("background-color: rgb("+QString::number(backColor.red())+','
-			+QString::number(backColor.green())+", "+QString::number(backColor.blue())+");");
+    sheet += "background-color: rgb("+QString::number(backColor.red())+','
+            +QString::number(backColor.green())+", "+QString::number(backColor.blue())+");";
+	this->setStyleSheet( sheet );
 }
 
 void StatusWidget::setUiStyle()
 {
 	QColor backColor;
+    QString sheet;
 	if(Settings::isCustomUi()){
-		backColor = Settings::defaultBackColor();
+        backColor = Settings::defaultBackColor();
+        sheet += " color:" + Settings::defaultForeColor().name() + ';';
 	} else {
 		backColor = this->palette().window().color();
-	}
-	this->setStyleSheet( "background-color: rgb(" + QString::number(backColor.red()) + ','
-			+ QString::number(backColor.green()) + ", " + QString::number(backColor.blue()) + ");");
+    }
+    sheet += "background-color: rgb(" + QString::number(backColor.red()) + ','
+            + QString::number(backColor.green()) + ',' + QString::number(backColor.blue()) + ");";
+	this->setStyleSheet( sheet );
 }
 
 void StatusWidget::updateFavoriteUi()
