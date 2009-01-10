@@ -20,6 +20,7 @@
 */
 
 #include "systrayicon.h"
+#include "constants.h"
 #include <kuniqueapplication.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
@@ -28,11 +29,9 @@
 static const char description[] =
     I18N_NOOP("A KDE 4 Twitter Client");
 
-static const char version[] = "0.2.5";
-
 int main(int argc, char **argv)
 {
-	KAboutData about("choqok", 0, ki18n("choqoK"), version, ki18n(description),
+	KAboutData about("choqok", 0, ki18n("choqoK"), VERSION, ki18n(description),
                      KAboutData::License_GPL_V3, ki18n("(C) 2008 Mehrdad Momeny"), KLocalizedString(), 0, "mehrdad.momeny@gmail.com");
     about.addAuthor( ki18n("Mehrdad Momeny"), ki18n("Author and Core Developer"),
 					 "mehrdad.momeny@gmail.com");

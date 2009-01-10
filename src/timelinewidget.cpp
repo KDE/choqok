@@ -228,10 +228,13 @@ void TimeLineWidget::addNewStatusesToUi ( QList< Status > & statusList, QBoxLayo
     }
     notifyStr += "</div>";
     uint latestId = statusList.last().statusId;
-//   if(latestId > latestStatusId){
-//     kDebug()<<"Latest sets to: "<<latestId;
-//     latestStatusId = latestId;
-//   }
+    if( type == Backend::HomeTimeLine && latestId > latestHomeStatusId){
+        kDebug()<<"Latest home statusId sets to: "<<latestId;
+        latestHomeStatusId = latestId;
+    } else if( type == Backend::ReplyTimeLine && latestId > latestReplyStatusId){
+        kDebug()<<"Latest reply statusId sets to: "<<latestId;
+        latestReplyStatusId = latestId;
+    }
     if ( !isStartMode )
         checkUnreadStatuses ( numOfNewStatuses );
 

@@ -1,5 +1,5 @@
 Name: choqok
-Version: 0.1
+Version: 0.3
 Release: 1
 Vendor: KDE Project
 Summary: A KDE 4 Twitter Client
