@@ -25,6 +25,10 @@
 #include "datacontainers.h"
 
 class KConfig;
+namespace KWallet
+{
+	class Wallet;
+}
 
 /**
 Account manager class
@@ -99,7 +103,8 @@ private:
     
     static AccountManager *mSelf;
     QList<Account> mAccounts;
-    KConfig *conf;
+	KConfig *conf;
+	KWallet::Wallet* mWallet;
 };
 
 #endif

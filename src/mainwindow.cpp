@@ -52,7 +52,7 @@ MainWindow::MainWindow()
     setCentralWidget ( mainWidget );
     setupActions();
     statusBar()->show();
-    notify ( "Initializing choqoK UI, please be patient..." );
+    notify ( i18n("Initializing choqoK, please be patient...") );
     setupGUI();
 
     timelineTimer = new QTimer ( this );

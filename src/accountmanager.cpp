@@ -22,11 +22,21 @@
 #include <kdebug.h>
 #include <KConfig>
 #include <KConfigGroup>
+#include <kio/netaccess.h>
+#include <kwallet.h>
 
 AccountManager::AccountManager(QObject* parent):
-        QObject(parent)
+		QObject(parent), mWallet(0)
 {
-    kDebug();
+	kDebug();
+	mWallet = KWallet::Wallet::openWallet( "kdewallet", 0 );
+    if ( mWallet ) {
+        if(!mWallet->setFolder( "choqok" )){
+            mWallet->createFolder( "choqok" );
+            mWallet->setFolder( "choqok" );
+        }
+		kDebug() << "Wallet successfully opened.";
+	}
     conf = new KConfig( );
     loadAccounts();
 }
@@ -78,6 +88,12 @@ bool AccountManager::removeAccount(const QString &alias)
             conf->deleteGroup( QString::fromLatin1("Account %1").arg(alias) );
             conf->sync();
             mAccounts.removeAt(i);
+            if(mWallet){
+                if(mWallet->removeEntry(alias)==0)
+                    kDebug()<<"Password successfully removed from kde wallet";
+            }
+// 			KIO::NetAccess:: remove(KStandardDirs::locate("data", QString::fromLatin1("%1_homestatuslistrc").arg(alias)));
+			///TODO Remove statuslist rc files.
             emit accountRemoved(alias);
             return true;
         }
@@ -88,8 +104,6 @@ bool AccountManager::removeAccount(const QString &alias)
 Account & AccountManager::addAccount(Account & account)
 {
     kDebug()<<"Adding: "<<account.alias;
-//     if( mAccounts.contains( account ) )
-//         return account;
     
     if( account.alias.isEmpty() )
     {
@@ -112,10 +126,14 @@ Account & AccountManager::addAccount(Account & account)
     KConfigGroup acConf ( conf, QString::fromLatin1("Account %1").arg(account.alias) );
     acConf.writeEntry ( "alias", account.alias );
     acConf.writeEntry ( "username", account.username );
-    acConf.writeEntry ( "password", account.password );
-    acConf.writeEntry ( "direction", ( account.direction == Qt::RightToLeft ) ? "rtl" : "ltr" );
     acConf.writeEntry ( "service", account.serviceName );
     acConf.writeEntry ( "api_path", account.apiPath );
+    acConf.writeEntry ( "direction", ( account.direction == Qt::RightToLeft ) ? "rtl" : "ltr" );
+    if(mWallet && mWallet->writePassword(account.serviceName+'_'+account.username, account.password)==0){
+        kDebug()<<"Password stored to kde wallet";
+    } else {
+        acConf.writeEntry ( "password", account.password );
+    }
     conf->sync();
     emit accountAdded(account);
     account.isError = false;
@@ -137,7 +155,6 @@ void AccountManager::loadAccounts()
 {
     kDebug();
     QStringList list = conf->groupList();
-//     kDebug()<<"Accounts : "<<list;
     int count = list.count();
     for(int i=0; i<count; ++i){
         if(list[i].contains("Account")){
@@ -145,10 +162,16 @@ void AccountManager::loadAccounts()
             KConfigGroup accountGrp(conf, list[i]);
             a.username = accountGrp.readEntry("username", QString());
             a.alias = accountGrp.readEntry("alias", a.username);
-            a.password = accountGrp.readEntry("password", QString());
             a.serviceName = accountGrp.readEntry("service", QString());
             a.apiPath = accountGrp.readEntry("api_path", QString());
             a.direction = (accountGrp.readEntry("direction", "ltr") == "rtl") ? Qt::RightToLeft : Qt::LeftToRight;
+                QString buffer;
+            if(mWallet && mWallet->readPassword( a.serviceName+'_'+a.username, buffer )==0){
+                a.password = buffer;
+                kDebug()<<"Password loaded from kde wallet: ";
+            } else {
+                a.password = accountGrp.readEntry("password", QString());
+            }
             a.isError = false;
             mAccounts.append(a);
         }
