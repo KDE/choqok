@@ -148,7 +148,7 @@
         </size>
        </property>
        <property name="toolTip" >
-        <string>Replay</string>
+        <string>Reply</string>
        </property>
        <property name="flat" >
         <bool>true</bool>

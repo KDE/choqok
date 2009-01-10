@@ -67,6 +67,7 @@ SysTrayIcon::SysTrayIcon(QWidget* parent): KSystemTrayIcon(parent)
 
 SysTrayIcon::~SysTrayIcon()
 {
+	kDebug();
 }
 
 void SysTrayIcon::setupActions()

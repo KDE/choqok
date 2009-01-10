@@ -22,8 +22,12 @@
 #include <kdebug.h>
 #include <KConfig>
 #include <KConfigGroup>
-#include <kio/netaccess.h>
+// #include <kjob.h>
+// #include <kio/job.h>
+// #include <kio/deletejob.h>
+// #include <kio/netaccess.h>
 #include <kwallet.h>
+#include <kstandarddirs.h>
 
 AccountManager::AccountManager(QObject* parent):
 		QObject(parent), mWallet(0)
@@ -63,7 +67,7 @@ const QList< Account > & AccountManager::accounts() const
     return mAccounts;
 }
 
-Account & AccountManager::findAccount( QString &alias )
+Account AccountManager::findAccount( QString &alias )
 {
     kDebug()<<"Finding: "<<alias;
     int count = mAccounts.count();
@@ -92,7 +96,17 @@ bool AccountManager::removeAccount(const QString &alias)
                 if(mWallet->removeEntry(alias)==0)
                     kDebug()<<"Password successfully removed from kde wallet";
             }
-// 			KIO::NetAccess:: remove(KStandardDirs::locate("data", QString::fromLatin1("%1_homestatuslistrc").arg(alias)));
+//             QString tmpFile;
+//             tmpFile = KStandardDirs::locate("data", QString::fromLatin1("%1_homestatuslistrc").arg(alias));
+//             kDebug()<<"Will remove "<<tmpFile;
+//             const KUrl homePath(tmpFile);
+//             DeleteJob * delJob = KIO::del(homePath, KIO::HideProgressInfo);
+//             KIO::NetAccess::synchronousRun(delJob, 0);
+//             tmpFile = KStandardDirs::locate("data", QString::fromLatin1("%1_replystatuslistrc").arg(alias));
+//             kDebug()<<"Will remove "<<tmpFile;
+//             const KUrl replyPath(tmpFile);
+//             delJob = KIO::del(replyPath, KIO::HideProgressInfo);
+//             KIO::NetAccess::synchronousRun(delJob, 0);
 			///TODO Remove statuslist rc files.
             emit accountRemoved(alias);
             return true;
@@ -133,6 +147,7 @@ Account & AccountManager::addAccount(Account & account)
         kDebug()<<"Password stored to kde wallet";
     } else {
         acConf.writeEntry ( "password", account.password );
+        kDebug()<<"Password stored to config file";
     }
     conf->sync();
     emit accountAdded(account);
@@ -165,12 +180,13 @@ void AccountManager::loadAccounts()
             a.serviceName = accountGrp.readEntry("service", QString());
             a.apiPath = accountGrp.readEntry("api_path", QString());
             a.direction = (accountGrp.readEntry("direction", "ltr") == "rtl") ? Qt::RightToLeft : Qt::LeftToRight;
-                QString buffer;
-            if(mWallet && mWallet->readPassword( a.serviceName+'_'+a.username, buffer )==0){
+            QString buffer;
+            if(mWallet && mWallet->readPassword( a.serviceName+'_'+a.username, buffer )==0 && !buffer.isEmpty()){
                 a.password = buffer;
-                kDebug()<<"Password loaded from kde wallet: ";
+                kDebug()<<"Password loaded from kde wallet.";
             } else {
                 a.password = accountGrp.readEntry("password", QString());
+                kDebug()<<"Password loaded from config file.";
             }
             a.isError = false;
             mAccounts.append(a);

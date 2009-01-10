@@ -60,6 +60,7 @@ QuickTwit::QuickTwit(QWidget* parent): KDialog(parent)
 
 QuickTwit::~QuickTwit()
 {
+	kDebug();
 }
 
 void QuickTwit::showFocusedOnNewStatusField()

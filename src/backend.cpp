@@ -113,7 +113,7 @@ void Backend::requestTimeLine(uint latestStatusId, TimeLineType type, int page)
 }
 
 QDateTime Backend::dateFromString(const QString &date)
-{//FIXME Bug with Identica output
+{
 	QDateTime datetime = QDateTime::fromString(date, "ddd MMM dd h:mm:ss '+0000' yyyy");
 	datetime.setTimeSpec(Qt::UTC);
 	return datetime.toLocalTime();

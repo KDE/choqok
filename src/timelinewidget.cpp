@@ -527,7 +527,7 @@ QString TimeLineWidget::generateStatusBackupFileName(Backend::TimeLineType type)
             name += "home";
             break;
         case Backend::ReplyTimeLine:
-            name += "replay";
+            name += "reply";
             break;
         default:
             name += QString::number(type);
