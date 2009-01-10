@@ -64,7 +64,7 @@ protected slots:
 	void requestReply();
 	void requestDestroy();
 	void updateSign();
-	void userImageLocalPathFetched(const QString &path);
+    void userImageLocalPathFetched(const QString &remotePath, const QString &localPath);
 	
 private:
 	void setUserImage();

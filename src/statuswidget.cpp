@@ -20,7 +20,7 @@
 */
 #include "statuswidget.h"
 #include "settings.h"
-#include "mediamanagement.h"
+#include "mediamanager.h"
 #include <knotification.h>
 #include <QProcess>
 
@@ -217,7 +217,7 @@ void StatusWidget::setUnread(Notify notifyType)
 			+ QString::number(backColor.green()) + ", " + QString::number(backColor.blue()) + ");");
 	
 	if(notifyType == WithNotify/* && mCurrentStatus.user.screenName != Settings::username()*/){
-		QString iconUrl = MediaManagement::getImageLocalPathIfExist(mCurrentStatus.user.profileImageUrl);
+		QString iconUrl = MediaManager::self()->getImageLocalPathIfExist(mCurrentStatus.user.profileImageUrl);
 		QString name = mCurrentStatus.user.screenName;
 		QString msg = mCurrentStatus.content;
 		if(Settings::notifyType() == 1){
@@ -285,17 +285,19 @@ void StatusWidget::setUserImage(const QPixmap * image)
 
 void StatusWidget::setUserImage()
 {
-	MediaManagement *media = new MediaManagement(this);
-	connect(media, SIGNAL(imageLocalPath(const QString&)),
-            this, SLOT(userImageLocalPathFetched(const QString&)));
-	media->getImageLocalPathDownloadAsyncIfNotExists(mCurrentAccount->serviceName + '_' 
+    connect(MediaManager::self(), SIGNAL(imageFetched(const QString &, const QString &)),
+            this, SLOT(userImageLocalPathFetched(const QString&, const QString&)));
+    MediaManager::self()->getImageLocalPathDownloadAsyncIfNotExists(mCurrentAccount->serviceName + '_' 
             + mCurrentStatus.user.screenName , mCurrentStatus.user.profileImageUrl);
 }
 
-void StatusWidget::userImageLocalPathFetched(const QString & path)
+void StatusWidget::userImageLocalPathFetched(const QString &remotePath, const QString &localPath)
 {
-	lblImage->setPixmap(QPixmap(path));
-	sender()->deleteLater();
+    if(remotePath == mCurrentStatus.user.profileImageUrl){
+        lblImage->setPixmap(QPixmap(localPath));
+        disconnect(MediaManager::self(), SIGNAL(imageFetched(const QString &, const QString &)),
+                this, SLOT(userImageLocalPathFetched(const QString&, const QString&)));
+    }
 }
 
 #include "statuswidget.moc"

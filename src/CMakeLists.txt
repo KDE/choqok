@@ -6,7 +6,7 @@ set(choqok_SRCS
    statuswidget.cpp
    backend.cpp
    statustextedit.cpp
-   mediamanagement.cpp
+   mediamanager.cpp
    systrayicon.cpp
    quicktwit.cpp
    timelinewidget.cpp

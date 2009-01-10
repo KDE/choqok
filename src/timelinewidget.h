@@ -131,7 +131,8 @@ private:
     StatusWidget *toBeDestroied;
 
     Account mCurrentAccount;
-    uint latestStatusId;
+    uint latestHomeStatusId;
+    uint latestReplyStatusId;
 };
 
 #endif

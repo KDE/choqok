@@ -18,8 +18,8 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 */
-#ifndef MEDIAMANAGEMENT_H
-#define MEDIAMANAGEMENT_H
+#ifndef MEDIAMANAGER_H
+#define MEDIAMANAGER_H
 
 #include <QObject>
 #include <QMap>
@@ -33,38 +33,38 @@ namespace KIO{
 }
 class KJob;
 /**
-Media files management!
+Media files manager!
 
 	@author Mehrdad Momeny <mehrdad.momeny@gmail.com>
 */
-class MediaManagement : public QObject
+class MediaManager : public QObject
 {
 	Q_OBJECT
 public:
     
     
-    MediaManagement(QObject* parent=0);
+    MediaManager(QObject* parent=0);
 
-    ~MediaManagement();
+    ~MediaManager();
+    
+    static MediaManager *self();
 
-	QString getImageLocalPathDownloadIfNotExist(const QString &username, 
-			const QString &remotePath, QWidget *window=0);
-	static QString getImageLocalPathIfExist(const QString &remotePath);
+    QString getImageLocalPathIfExist(const QString &remotePath);
 	
-	void getImageLocalPathDownloadAsyncIfNotExists(const QString &username, const QString &remotePath);
+    void getImageLocalPathDownloadAsyncIfNotExists(const QString &localName, const QString &remotePath);
 	
 signals:
 	void sigError(QString &errMsg);
-	void imageLocalPath(const QString &path);
+	void imageFetched(const QString &remotePath, const QString &localPath);
 	
 protected slots:
-	void imageFetched(KJob *job);
+	void slotImageFetched(KJob *job);
 	
 private:
+    static MediaManager *mSelf;
 	KConfig *mediaResource;
 	KConfigGroup *map;
-	QString local;
-	QString remote;
+    QMap<QString, QString> mMediaFilesMap;// QMap<RemotePath, LocalPath>
 };
 
 #endif

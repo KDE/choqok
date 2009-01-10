@@ -37,7 +37,7 @@ TimeLineWidget::TimeLineWidget ( const Account &userAccount, QWidget* parent ) :
     kDebug();
     setupUi ( this );
     mCurrentAccount = userAccount;
-    latestStatusId = 0;
+    latestHomeStatusId = latestReplyStatusId = 0;
 
     homeLayout->setDirection ( QBoxLayout::TopToBottom );
     replyLayout->setDirection ( QBoxLayout::TopToBottom );
@@ -121,10 +121,10 @@ void TimeLineWidget::settingsChanged()
 void TimeLineWidget::updateTimeLines()
 {
     kDebug();
-    twitter->requestTimeLine ( latestStatusId, Backend::HomeTimeLine );
-    twitter->requestTimeLine ( latestStatusId, Backend::ReplyTimeLine );
+    twitter->requestTimeLine ( latestHomeStatusId, Backend::HomeTimeLine );
+    twitter->requestTimeLine ( latestReplyStatusId, Backend::ReplyTimeLine );
 
-    if ( latestStatusId == 0 )
+    if ( latestHomeStatusId == 0 || latestReplyStatusId == 0 )
         isStartMode = true;
     else
         isStartMode = false;
@@ -228,10 +228,10 @@ void TimeLineWidget::addNewStatusesToUi ( QList< Status > & statusList, QBoxLayo
     }
     notifyStr += "</div>";
     uint latestId = statusList.last().statusId;
-  if(latestId > latestStatusId){
-    kDebug()<<"Latest sets to: "<<latestId;
-    latestStatusId = latestId;
-  }
+//   if(latestId > latestStatusId){
+//     kDebug()<<"Latest sets to: "<<latestId;
+//     latestStatusId = latestId;
+//   }
     if ( !isStartMode )
         checkUnreadStatuses ( numOfNewStatuses );
 
