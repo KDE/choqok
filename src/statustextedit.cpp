@@ -28,7 +28,7 @@ StatusTextEdit::StatusTextEdit(QWidget *parent)
 	this->setAcceptRichText(false);
 	connect(this, SIGNAL(textChanged()), this, SLOT(setNumOfCharsLeft()));
 	setAcceptRichText(false);
-    this->setToolTip(i18n("Press Ctrl+P to have previous text submitted."));
+    this->setToolTip(i18n("Press Ctrl+P to have previous text submitted.\nPress Ctrl+S to enable/disable spell checking."));
 }
 
 
@@ -42,12 +42,19 @@ void StatusTextEdit::keyPressEvent(QKeyEvent * e)
 		QString txt = toPlainText();
 		emit returnPressed(txt);
 		e->accept();
-	} else if(e->modifiers()==Qt::ControlModifier && e->key() == Qt::Key_P){
+    } else if(e->modifiers()==Qt::ControlModifier && e->key() == Qt::Key_S){
+        this->setCheckSpellingEnabled( !this->checkSpellingEnabled() );
+    } else if(e->modifiers()==Qt::ControlModifier && e->key() == Qt::Key_P){
         QString tmp = this->toHtml();
 		this->setHtml(tmp+ ' ' +prevStr);
     } else if(e->key() == Qt::Key_Escape){
-        this->clear();
-        setDefaultDirection(dir);
+        if(!this->toPlainText().isEmpty()){
+            this->clear();
+            setDefaultDirection(dir);
+            e->accept();
+        } else {
+            KTextEdit::keyPressEvent(e);
+        }
     } else{
 		KTextEdit::keyPressEvent(e);
 	}
