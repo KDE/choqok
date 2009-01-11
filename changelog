@@ -1,4 +1,15 @@
 
+=== Version 0.3 -- 11-Jan-2009 ===
+ * Support for Multiple Accounts implemented.
+ * Support for Identi.ca service implemented. (Using its Twitter compatible API)
+ * Some information about user and Links added to User Interface via tooltips.
+ * The shape of post new status field on mainWindow changed to be more user friendly and more usable.
+ * Ability to Post new status to All available accounts implemented on Quick tweet tool.
+ * KWallet integration implemented.
+ * Media files manager improved.
+ * Support for Enabling or Disabling Spell checker by a shortcut key on new Tweet fields added. (Ctrl+S)
+ * Some reported and known bugs fixed.
+
 === Version 0.2 -- 01-Jan-2009 ===
  * Fetching User Images moved to background and make it asynchronous.
  * Support for batch notifying added.
