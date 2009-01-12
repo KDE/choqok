@@ -89,7 +89,7 @@ bool AccountManager::removeAccount(const QString &alias)
     int count = mAccounts.count();
     for(int i=0; i<count; ++i){
         if(mAccounts[i].alias == alias){
-            conf->deleteGroup( QString::fromLatin1("Account %1").arg(alias) );
+            conf->deleteGroup( QString::fromLatin1("Account%1").arg(alias) );
             conf->sync();
             mAccounts.removeAt(i);
             if(mWallet){
@@ -137,7 +137,7 @@ Account & AccountManager::addAccount(Account & account)
         }
     }
     mAccounts.append( account );
-    KConfigGroup acConf ( conf, QString::fromLatin1("Account %1").arg(account.alias) );
+    KConfigGroup acConf ( conf, QString::fromLatin1("Account%1").arg(account.alias) );
     acConf.writeEntry ( "alias", account.alias );
     acConf.writeEntry ( "username", account.username );
     acConf.writeEntry ( "service", account.serviceName );
@@ -176,7 +176,7 @@ void AccountManager::loadAccounts()
             Account a;
             KConfigGroup accountGrp(conf, list[i]);
             a.username = accountGrp.readEntry("username", QString());
-            a.alias = accountGrp.readEntry("alias", a.username);
+            a.alias = accountGrp.readEntry("alias", QString());
             a.serviceName = accountGrp.readEntry("service", QString());
             a.apiPath = accountGrp.readEntry("api_path", QString());
             a.direction = (accountGrp.readEntry("direction", "ltr") == "rtl") ? Qt::RightToLeft : Qt::LeftToRight;

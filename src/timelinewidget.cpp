@@ -191,7 +191,8 @@ void TimeLineWidget::addNewStatusesToUi ( QList< Status > & statusList, QBoxLayo
     QList<Status>::const_iterator it = statusList.constBegin();
     QList<Status>::const_iterator endIt = statusList.constEnd();
     bool isThereIsAnyNewStatusToNotify = false;
-    notifyStr = (mCurrentAccount.direction==Qt::RightToLeft) ? "<div dir='rtl'>" : "<div dir='ltr'>";
+	if(Settings::notifyType() != 2)
+		notifyStr = (mCurrentAccount.direction==Qt::RightToLeft) ? "<div dir='rtl'>" : "<div dir='ltr'>";
     for ( ;it != endIt; ++it ) {
         if ( it->replyToUserScreenName.toLower() == mCurrentAccount.username.toLower() && type == Backend::HomeTimeLine ) {
             --numOfNewStatuses;
@@ -225,8 +226,9 @@ void TimeLineWidget::addNewStatusesToUi ( QList< Status > & statusList, QBoxLayo
 
             listUnreadStatuses.append ( wt );
         }
-    }
-    notifyStr += "</div>";
+	}
+	if(Settings::notifyType() != 2)
+		notifyStr += "</div>";
     uint latestId = statusList.last().statusId;
     if( type == Backend::HomeTimeLine && latestId > latestHomeStatusId){
         kDebug()<<"Latest home statusId sets to: "<<latestId;

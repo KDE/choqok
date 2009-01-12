@@ -296,8 +296,8 @@ void StatusWidget::setUserImage()
 {
     connect(MediaManager::self(), SIGNAL(imageFetched(const QString &, const QString &)),
             this, SLOT(userImageLocalPathFetched(const QString&, const QString&)));
-    MediaManager::self()->getImageLocalPathDownloadAsyncIfNotExists(mCurrentAccount->serviceName + '_' 
-            + mCurrentStatus.user.screenName , mCurrentStatus.user.profileImageUrl);
+    MediaManager::self()->getImageLocalPathDownloadAsyncIfNotExists(mCurrentAccount->serviceName + 
+			mCurrentStatus.user.screenName , mCurrentStatus.user.profileImageUrl);
 }
 
 void StatusWidget::userImageLocalPathFetched(const QString &remotePath, const QString &localPath)

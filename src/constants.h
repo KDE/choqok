@@ -22,7 +22,7 @@
 #define CONSTANTS_H
 
 #define APPNAME "choqok"
-#define VERSION "0.3"
+#define VERSION "0.3.1"
 #define MAX_STATUS_SIZE 140
 
 #define TWITTER_API_PATH "http://twitter.com/"
