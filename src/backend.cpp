@@ -115,6 +115,8 @@ void Backend::requestTimeLine(uint latestStatusId, TimeLineType type, int page)
 QDateTime Backend::dateFromString(const QString &date)
 {
 	QDateTime datetime = QDateTime::fromString(date, "ddd MMM dd h:mm:ss '+0000' yyyy");
+    if(!datetime.isValid() || datetime.isNull())
+        kDebug()<<"Convertion failed for \""<< date <<"\" date time, fetched from server.";
 	datetime.setTimeSpec(Qt::UTC);
 	return datetime.toLocalTime();
 }
