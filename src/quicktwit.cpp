@@ -84,7 +84,11 @@ void QuickTwit::checkNewStatusCharactersCount(int numOfChars)
 void QuickTwit::slotPostNewStatusDone(bool isError)
 {
 	kDebug();
-	if(!isError){
+	if(isError){
+        Backend * b = qobject_cast<Backend *>(sender());
+        QString name(APPNAME);
+        emit sigNotify(i18n("Failed!"), i18n("Posting new status failed. %1", b->latestErrorString()), name);
+    }else{
         txtStatus->clearContentsAndSetDirection(accountsList[ui.comboAccounts->currentIndex()].direction);
 		QString name(APPNAME);
 		emit sigNotify(i18n("Success!"), i18n("New status posted successfully"), name);

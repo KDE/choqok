@@ -157,7 +157,7 @@ Account & AccountManager::addAccount(Account & account)
 
 Account & AccountManager::modifyAccount(Account & account, const QString & previousAlias)
 {
-    kDebug()<<"Modifing: "<<previousAlias;
+    kDebug()<<"Modifying: "<<previousAlias;
     
     if(removeAccount(previousAlias))
         return addAccount(account);
