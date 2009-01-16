@@ -82,8 +82,8 @@ void MainWindow::setupActions()
     actionCollection()->addAction ( QLatin1String ( "update_timeline" ), actUpdate );
     actUpdate->setShortcut ( Qt::Key_F5 );
     actUpdate->setGlobalShortcutAllowed ( true );
-    KShortcut updateGlobalShortcut ( Qt::ControlModifier | Qt::MetaModifier | Qt::Key_F5 );
-    updateGlobalShortcut.setAlternate ( Qt::MetaModifier | Qt::Key_F5 );
+    KShortcut updateGlobalShortcut ( Qt::CTRL | Qt::META | Qt::Key_F5 );
+//     updateGlobalShortcut.setAlternate ( Qt::MetaModifier | Qt::Key_F5 );
     actUpdate->setGlobalShortcut ( updateGlobalShortcut );
     connect ( actUpdate, SIGNAL ( triggered ( bool ) ), this, SIGNAL ( updateTimeLines() ) );
 
@@ -91,10 +91,10 @@ void MainWindow::setupActions()
     newTwit->setIcon ( KIcon ( "document-new" ) );
     newTwit->setText ( i18n ( "Quick Tweet" ) );
     actionCollection()->addAction ( QLatin1String ( "choqok_new_twit" ), newTwit );
-    newTwit->setShortcut ( Qt::ControlModifier | Qt::Key_T );
+    newTwit->setShortcut ( KShortcut(Qt::CTRL | Qt::Key_T) );
     newTwit->setGlobalShortcutAllowed ( true );
-    KShortcut quickTwitGlobalShortcut ( Qt::ControlModifier | Qt::MetaModifier | Qt::Key_T );
-    quickTwitGlobalShortcut.setAlternate ( Qt::MetaModifier | Qt::Key_T );
+    KShortcut quickTwitGlobalShortcut ( Qt::CTRL | Qt::META | Qt::Key_T );
+//     quickTwitGlobalShortcut.setAlternate ( Qt::MetaModifier | Qt::Key_T );
     newTwit->setGlobalShortcut ( quickTwitGlobalShortcut );
 }
 
