@@ -368,7 +368,14 @@ QList< Status > TimeLineWidget::loadStatuses ( QString fileName )
         st.user.name = grp.readEntry ( "name", QString() );
         st.user.profileImageUrl = grp.readEntry ( "profile_image_url", QString() );
         st.user.description = grp.readEntry( "description" , QString() );
-        list.append ( st );
+
+        //Sorting The new statuses:
+        int i=0;
+        int count = list.count();
+        while( (i < count) && (st.statusId > list[ i ].statusId) ){
+            ++i;
+        }
+        list.insert( i, st );
     }
 
     return list;
@@ -547,6 +554,5 @@ void TimeLineWidget::setCurrentAccount(const Account & account)
 {
     mCurrentAccount = account;
 }
-
 
 #include "timelinewidget.moc"
