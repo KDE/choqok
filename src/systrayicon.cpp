@@ -196,9 +196,11 @@ void SysTrayIcon::slotSetUnread(int numOfUnreadStatuses)
 void SysTrayIcon::systemNotify(const QString &title, const QString &message, const QString &iconUrl)
 {
 	if(Settings::notifyType() == 1){//KNotify
-		KNotification *notif = new KNotification("notify");
-		notif->event( "notify", message, KIcon("choqok").pixmap(48), 
-						parentWidget(), KNotification::RaiseWidgetOnActivation | KNotification::Persistent);
+		KNotification *notif = new KNotification("notify", mainWin);
+        notif->setText( message );
+//         notify->setPixmap(mainWin-);
+        notif->setFlags(KNotification::RaiseWidgetOnActivation | KNotification::Persistent);
+        notif->sendEvent();
 		QTimer::singleShot(Settings::notifyInterval()*1000, notif, SLOT(close()));
 		
 	} else if(Settings::notifyType() == 2){//Libnotify!
