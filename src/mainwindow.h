@@ -64,15 +64,13 @@ signals:
     void accountAdded(const Account &account);
     void accountRemoved(const QString &alias);
 
-public slots:
-//     void setUnreadStatusesToReadState();
-
 protected slots:
     void optionsPreferences();
     void settingsChanged();
     void notify ( const QString &message );
     void quitApp();
     void setNumOfUnreadOnMainWin( int unread );
+    void showTimeLine();
 
 protected:
     void keyPressEvent ( QKeyEvent * e );

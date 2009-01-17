@@ -206,7 +206,8 @@ void MainWindow::addAccountTimeLine(const Account & account)
     connect(widget, SIGNAL(systemNotify(const QString&, const QString&, const QString&)),
            this, SIGNAL(systemNotify(const QString&, const QString&, const QString&)));
     connect(widget, SIGNAL(notify(const QString&)), this, SLOT(notify(const QString&)));
-    
+    connect(widget, SIGNAL(showMe()), this, SLOT(showTimeLine()));
+
     connect(this, SIGNAL(updateTimeLines()), widget, SLOT(updateTimeLines()));
     connect(this, SIGNAL(abortPostNewStatus()), widget, SLOT(abortPostNewStatus()));
     connect(this, SIGNAL(setUnreadStatusesToReadState()), widget, SLOT(setUnreadStatusesToReadState()));
@@ -266,6 +267,14 @@ void MainWindow::setNumOfUnreadOnMainWin(int unread)
         text = subWidget->currentAccount().alias + i18n("(%1)", unread);
     }
     mainWidget->setTabText(mainWidget->indexOf(subWidget), text);
+}
+
+void MainWindow::showTimeLine()
+{
+    mainWidget->setCurrentWidget( qobject_cast<TimeLineWidget*>(sender()) );
+    if(!this->isVisible())
+        this->show();
+    this->raise();
 }
 
 #include "mainwindow.moc"

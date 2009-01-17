@@ -81,6 +81,7 @@ signals:
     void notify ( const QString &message );
     void systemNotify ( const QString &title, const QString &message, const QString &iconUrl );
     void sigSetUnreadOnMainWin( int unread );
+    void showMe();
 
 protected:
     void checkUnreadStatuses ( int numOfNewStatusesReciened );

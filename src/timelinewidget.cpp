@@ -378,8 +378,7 @@ void TimeLineWidget::prepareReply ( QString &userName, uint statusId )
 {
     kDebug();
 
-    if ( !parentWidget()->isVisible() )
-        this->show();
+    emit showMe();
 
     QString current = txtNewStatus->toPlainText();
 
@@ -388,9 +387,6 @@ void TimeLineWidget::prepareReply ( QString &userName, uint statusId )
     replyToStatusId = statusId;
 
     txtNewStatus->setDefaultDirection ( mCurrentAccount.direction );
-
-    if ( !inputFrame->isVisible() )
-        inputFrame->show();
 
     txtNewStatus->moveCursor ( QTextCursor::End );
 }
