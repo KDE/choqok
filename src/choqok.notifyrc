@@ -1,16 +1,15 @@
 [Global]
 IconName=choqok
-Comment=choqoK Twitter Client
-Comment[et]=Twitteri klient choqok
-Comment[fr]=Client Twitter choqoK
-Comment[gl]=choqok, un cliente de Twitter
-Comment[km]=ម៉ាស៊ីន​ភ្ញៀវ choqoK Twitter
-Comment[nds]=Twitter-Client choqoK
-Comment[nl]=choqoK Twitter-cliënt
-Comment[pt]=Cliente de Twitter choqoK
-Comment[pt_BR]=Cliente de Twitter choqoK
-Comment[sv]=Choqok Twitter-klient
-Comment[uk]=Клієнт Twitter choqoK
+Comment=choqoK
+Comment[et]=choqok
+Comment[fr]=choqoK
+Comment[gl]=choqok
+Comment[nds]=choqoK
+Comment[nl]=choqoK
+Comment[pt]=choqoK
+Comment[pt_BR]=choqoK
+Comment[sv]=Choqok
+Comment[uk]=choqoK
 
 [Event/new-status-arrived]
 Name=New tweet arrived
@@ -36,6 +35,7 @@ Comment[pt_BR]=Chegou um novo 'twit'
 Comment[sv]=Nytt meddelande anländer
 Comment[uk]=Надійшло нове нагадування
 Action=Popup
+Persistent=True
 
 [Event/notify]
 Name=Something happens
@@ -61,3 +61,4 @@ Comment[pt_BR]=Algo aconteceu
 Comment[sv]=Någonting händer
 Comment[uk]=Щось сталося
 Action=Popup
+Persistent=True
