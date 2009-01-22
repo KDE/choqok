@@ -204,8 +204,10 @@ void SysTrayIcon::systemNotify(const QString &title, const QString &message, con
 		QTimer::singleShot(Settings::notifyInterval()*1000, notif, SLOT(close()));
 		
 	} else if(Settings::notifyType() == 2){//Libnotify!
+        QString msg = message;
+        msg = msg.replace( "<br/>", "\n");
 		QString libnotifyCmd = QString("notify-send -t ") + QString::number(Settings::notifyInterval()*1000)
-				+ QString(" -u low -i "+ iconUrl +" \"") + title + QString("\" \"") + message + QString("\"");
+				+ QString(" -u low -i "+ iconUrl +" \"") + title + QString("\" \"") + msg + QString("\"");
 		QProcess::execute(libnotifyCmd);
 	}
 }
