@@ -42,6 +42,9 @@
     <entry name="showMainWinOnStart" type="Bool">
 	    <default>true</default>
     </entry>
+    <entry name="quickTweetSize" type="Size">
+        <default>QSize(280,140)</default>
+    </entry>
   </group>
   <group name="Appearances">
     <entry name="isCustomUi" type="Bool">

@@ -1,4 +1,4 @@
 File=choqok.kcfg
 ClassName=Settings
 Singleton=true
-Mutators=latestStatusId,currentUserScreenName
+Mutators=quickTweetSize

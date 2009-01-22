@@ -43,7 +43,7 @@ QuickTwit::QuickTwit(QWidget* parent): KDialog(parent)
 //     txtStatus->setDefaultDirection(accountsList[ui.comboAccounts->currentIndex()].direction);
     ui.layout->addWidget(txtStatus);
 	this->setMainWidget(wdg);
-	this->resize(280, 140);
+	this->resize(Settings::quickTweetSize());
 	txtStatus->setFocus(Qt::OtherFocusReason);
 	
 	this->setCaption(i18n("Quick Tweet"));
@@ -60,6 +60,8 @@ QuickTwit::QuickTwit(QWidget* parent): KDialog(parent)
 
 QuickTwit::~QuickTwit()
 {
+    Settings::setQuickTweetSize( this->size() );
+    Settings::self()->writeConfig();
 	kDebug();
 }
 
@@ -74,7 +76,7 @@ void QuickTwit::checkNewStatusCharactersCount(int numOfChars)
     if(numOfChars < 0){
         ui.lblCounter->setStyleSheet("QLabel {color: red}");
     } else if(numOfChars < 30){
-        ui.lblCounter->setStyleSheet("QLabel {color: rgb(255, 255, 0);}");
+        ui.lblCounter->setStyleSheet("QLabel {color: rgb(242, 179, 19);}");
     } else {
         ui.lblCounter->setStyleSheet("QLabel {color: green}");
     }

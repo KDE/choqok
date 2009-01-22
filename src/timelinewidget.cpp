@@ -97,7 +97,7 @@ void TimeLineWidget::checkNewStatusCharactersCount ( int numOfChars )
     if ( numOfChars < 0 ) {
         lblCounter->setStyleSheet ( "QLabel {color: red;}" );
     } else if ( numOfChars < 30 ) {
-        lblCounter->setStyleSheet ( "QLabel {color: rgb(255, 255, 0);}" );
+        lblCounter->setStyleSheet ( "QLabel {color: rgb(242, 179, 19);}" );
     } else {
         lblCounter->setStyleSheet ( "QLabel {color: green;}" );
     }
