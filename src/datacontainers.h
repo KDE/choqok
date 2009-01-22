@@ -25,41 +25,42 @@
 
 struct User{
 public:
-	uint userId;
-	QString name;
-	QString screenName;
-	QString location;
-	QString description;
-	QString profileImageUrl;
-	QString homePageUrl;
-	bool isProtected;
-	uint followersCount;
+    uint userId;
+    QString name;
+    QString screenName;
+    QString location;
+    QString description;
+    QString profileImageUrl;
+    QString homePageUrl;
+    bool isProtected;
+    uint followersCount;
 };
 
 struct Status{
 public:
-	QDateTime creationDateTime;
-	uint statusId;
-	QString content;
-	QString source;
-	bool isTruncated;
-	uint replyToStatusId;
-	uint replyToUserId;
-	bool isFavorited;
-	QString replyToUserScreenName;
-	User user;
-	bool isError;
+    QDateTime creationDateTime;
+    uint statusId;
+    QString content;
+    QString source;
+    bool isTruncated;
+    uint replyToStatusId;
+    uint replyToUserId;
+    bool isFavorited;
+    QString replyToUserScreenName;
+    User user;
+    bool isError;
 };
 
-struct Account{
-public:
-  QString username;
-  QString password;
-  QString serviceName;
-  QString alias;
-  Qt::LayoutDirection direction;
-  QString apiPath;
-  bool isError;
-};
+// struct Account{
+// public:
+//     uint userId;
+//     QString username;
+//     QString password;
+//     QString serviceName;
+//     QString alias;
+//     Qt::LayoutDirection direction;
+//     QString apiPath;
+//     bool isError;
+// };
 
 #endif

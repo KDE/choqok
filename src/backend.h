@@ -24,6 +24,7 @@
 #include <QtCore/QObject>
 #include <QMap>
 #include "datacontainers.h"
+#include "account.h"
 class KJob;
 namespace KIO{
 	class Job;
@@ -36,13 +37,15 @@ class Backend : public QObject
 	Q_OBJECT
 public:
 	enum TimeLineType{HomeTimeLine=1, ReplyTimeLine, UserTimeLine};
-    explicit Backend(const Account *account, QObject* parent=0);
+    explicit Backend(Account *account, QObject* parent=0);
 
     ~Backend();
 	
 	void login();
 	void logout();
 	
+    void verifyCredential();
+    
 	QDateTime dateFromString(const QString &date);
 	QString& latestErrorString();
 	void quitting();
@@ -62,7 +65,7 @@ signals:
 	void sigError(QString &errMsg);
 	void homeTimeLineRecived(QList<Status> &statusList);
 	void replyTimeLineRecived(QList<Status> &statusList);
-	void currentUserInfo(User);
+    void userVerified(Account *userAccount);
 // 	void directMessagesRecived(QList<Status> &statusList);
 	
 protected slots:
@@ -72,11 +75,14 @@ protected slots:
 	void slotRequestTimelineData(KIO::Job *job, const QByteArray &data);
 	void slotRequestFavoritedFinished(KJob *job);
 	void slotRequestDestroyFinished(KJob *job);
+    void slotUserInfoReceived(KJob *job);
+    void slotCredentialsReceived(KJob *job);
 	
 private:
 	QList<Status> * readTimeLineFromXml(const QByteArray &buffer);
 	Status readStatusFromXml(const QByteArray &buffer);
 	QString prepareStatus(QString status);
+    void requestCurrentUser();
 	
 // 	QString urls[4];
 // 	QString prefix;
@@ -87,7 +93,7 @@ private:
 
 	QMap<KJob *, QByteArray> mPostNewStatusBuffer;
     
-    const Account *mCurrentAccount;
+    Account *mCurrentAccount;
 //     int latestStatusId;
 };
 

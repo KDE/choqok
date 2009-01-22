@@ -66,7 +66,7 @@ void StatusWidget::setCurrentStatus(const Status newStatus)
 void StatusWidget::updateUi()
 {
 // 	kDebug()<<"ScreenName: "<<mCurrentStatus.user.screenName<<"Current: "<<mCurrentStatus.user.userId<<" Settings: "<<Settings::currentUserId();
-	if(mCurrentStatus.user.screenName == mCurrentAccount->username){
+	if(mCurrentStatus.user.userId == mCurrentAccount->userId()){
 		btnReply->setVisible(false);
 	} else {
 		btnRemove->setVisible(false);
@@ -106,7 +106,7 @@ void StatusWidget::requestReply()
 QString StatusWidget::generateSign()
 {
     QString sign;
-    if(mCurrentAccount->serviceName.toLower() == QString(IDENTICA_SERVICE_TEXT).toLower()){
+    if(mCurrentAccount->serviceName().toLower() == QString(IDENTICA_SERVICE_TEXT).toLower()){
         sign = "<b><a href=\"http://identi.ca/"+mCurrentStatus.user.screenName+"\" title=\""+
                 mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName+"</a> - </b> ";
         sign += "<a href=\"http://identi.ca/notice/" + QString::number(mCurrentStatus.statusId) + "\" title=\"" + 
@@ -184,14 +184,14 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
 		while ((i < s.length()) && (QChar(s[i]).isLetterOrNumber() || (s[i] == '_'))) ++i;
 		QString username = s.mid(1, i - 1);
         QString statusUrl;
-        if(mCurrentAccount->serviceName.toLower() == QString(IDENTICA_SERVICE_TEXT).toLower()){
+        if(mCurrentAccount->serviceName().toLower() == QString(IDENTICA_SERVICE_TEXT).toLower()){
             statusUrl = "http://identi.ca/notice/" + QString::number(replyStatusId);
         }else {
             statusUrl = "http://twitter.com/" + username + "/statuses/" + QString::number(replyStatusId);
         }
         t = "@<a href=\"" + statusUrl + "\" title=\""+ statusUrl +"\" >" + username + "</a>" + s.mid(i);
 	}
-	if(mCurrentAccount->direction==Qt::RightToLeft){
+	if(mCurrentAccount->direction()==Qt::RightToLeft){
 		s = "<div dir='rtl'>";
 	} else {
 		s = "<div dir='ltr'>";
@@ -296,7 +296,7 @@ void StatusWidget::setUserImage()
 {
     connect(MediaManager::self(), SIGNAL(imageFetched(const QString &, const QString &)),
             this, SLOT(userImageLocalPathFetched(const QString&, const QString&)));
-    MediaManager::self()->getImageLocalPathDownloadAsyncIfNotExists(mCurrentAccount->serviceName + 
+    MediaManager::self()->getImageLocalPathDownloadAsyncIfNotExists(mCurrentAccount->serviceName() + 
 			mCurrentStatus.user.screenName , mCurrentStatus.user.profileImageUrl);
 }
 

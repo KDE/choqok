@@ -28,6 +28,7 @@
 // #include <kio/netaccess.h>
 #include <kwallet.h>
 #include <kstandarddirs.h>
+#include "backend.h"
 
 AccountManager::AccountManager(QObject* parent):
 		QObject(parent), mWallet(0)
@@ -73,13 +74,13 @@ Account AccountManager::findAccount( QString &alias )
     int count = mAccounts.count();
     for ( int i=0; i<count; ++i )
     {
-        if ( mAccounts[i].alias == alias ){
-            mAccounts[i].isError = false;
+        if ( mAccounts[i].alias() == alias ){
+            mAccounts[i].setIsError( false );
             return mAccounts[i];
         }
     }
     Account a;
-    a.isError = true;
+    a.setIsError ( true );
     return a;
 }
 
@@ -88,7 +89,7 @@ bool AccountManager::removeAccount(const QString &alias)
     kDebug()<<"Removing "<<alias;
     int count = mAccounts.count();
     for(int i=0; i<count; ++i){
-        if(mAccounts[i].alias == alias){
+        if(mAccounts[i].alias() == alias){
             conf->deleteGroup( QString::fromLatin1("Account%1").arg(alias) );
             conf->sync();
             mAccounts.removeAt(i);
@@ -117,11 +118,11 @@ bool AccountManager::removeAccount(const QString &alias)
 
 Account & AccountManager::addAccount(Account & account)
 {
-    kDebug()<<"Adding: "<<account.alias;
+    kDebug()<<"Adding: "<<account.alias();
     
-    if( account.alias.isEmpty() )
+    if( account.alias().isEmpty() )
     {
-        account.isError = true;
+        account.setIsError( true );
         return account;
     }
     
@@ -130,28 +131,29 @@ Account & AccountManager::addAccount(Account & account)
     while ( it.hasNext() )
     {
         Account curracc = it.next();
-        if ( account.alias == curracc.alias )
+        if ( account.alias() == curracc.alias() )
         {
-            account.isError = true;
+            account.setIsError( true );
             return account;
         }
     }
     mAccounts.append( account );
-    KConfigGroup acConf ( conf, QString::fromLatin1("Account%1").arg(account.alias) );
-    acConf.writeEntry ( "alias", account.alias );
-    acConf.writeEntry ( "username", account.username );
-    acConf.writeEntry ( "service", account.serviceName );
-    acConf.writeEntry ( "api_path", account.apiPath );
-    acConf.writeEntry ( "direction", ( account.direction == Qt::RightToLeft ) ? "rtl" : "ltr" );
-    if(mWallet && mWallet->writePassword(account.serviceName+'_'+account.username, account.password)==0){
+    KConfigGroup acConf ( conf, QString::fromLatin1("Account%1").arg(account.alias()) );
+    acConf.writeEntry ( "alias", account.alias() );
+    acConf.writeEntry ( "username", account.username() );
+    acConf.writeEntry ( "userId", account.userId() );
+    acConf.writeEntry ( "service", account.serviceName() );
+    acConf.writeEntry ( "api_path", account.apiPath() );
+    acConf.writeEntry ( "direction", ( account.direction() == Qt::RightToLeft ) ? "rtl" : "ltr" );
+    if(mWallet && mWallet->writePassword(account.serviceName()+'_'+account.username(), account.password())==0){
         kDebug()<<"Password stored to kde wallet";
     } else {
-        acConf.writeEntry ( "password", account.password );
+        acConf.writeEntry ( "password", account.password() );
         kDebug()<<"Password stored to config file";
     }
     conf->sync();
     emit accountAdded(account);
-    account.isError = false;
+    account.setIsError( false );
     return account;
 }
 
@@ -162,7 +164,7 @@ Account & AccountManager::modifyAccount(Account & account, const QString & previ
     if(removeAccount(previousAlias))
         return addAccount(account);
     
-    account.isError = true;
+    account.setIsError ( true );
     return account;
 }
 
@@ -175,24 +177,36 @@ void AccountManager::loadAccounts()
         if(list[i].contains("Account")){
             Account a;
             KConfigGroup accountGrp(conf, list[i]);
-            a.username = accountGrp.readEntry("username", QString());
-            a.alias = accountGrp.readEntry("alias", QString());
-            a.serviceName = accountGrp.readEntry("service", QString());
-            a.apiPath = accountGrp.readEntry("api_path", QString());
-            a.direction = (accountGrp.readEntry("direction", "ltr") == "rtl") ? Qt::RightToLeft : Qt::LeftToRight;
+            a.setUsername( accountGrp.readEntry("username", QString()) );
+            a.setUserId( accountGrp.readEntry( "userId", uint(-1) ) );
+            a.setAlias( accountGrp.readEntry("alias", QString()) );
+            a.setServiceName( accountGrp.readEntry("service", QString()) );
+            a.setApiPath( accountGrp.readEntry("api_path", QString()) );
+            a.setDirection( (accountGrp.readEntry("direction", "ltr") == "rtl") ? Qt::RightToLeft : Qt::LeftToRight );
             QString buffer;
-            if(mWallet && mWallet->readPassword( a.serviceName+'_'+a.username, buffer )==0 && !buffer.isEmpty()){
-                a.password = buffer;
+            if(mWallet && mWallet->readPassword( a.serviceName()+'_'+a.username(), buffer )==0 && !buffer.isEmpty()){
+                a.setPassword( buffer );
                 kDebug()<<"Password loaded from kde wallet.";
             } else {
-                a.password = accountGrp.readEntry("password", QString());
+                a.setPassword( accountGrp.readEntry("password", QString()) );
                 kDebug()<<"Password loaded from config file.";
             }
-            a.isError = false;
+            a.setIsError( false );
+            if(a.userId() == -1){///Just for compatibility with previous versions
+                Account *account = new Account(a);
+                Backend *b = new Backend(account);
+                connect(b, SIGNAL(userVerified(Account*)), this, SLOT(userVerified(Account*)));
+                b->verifyCredential();
+            }
             mAccounts.append(a);
         }
     }
     kDebug()<<mAccounts.count()<<" accounts loaded.";
+}
+
+void AccountManager::userVerified(Account * userAccount)
+{
+    this->modifyAccount(*userAccount, userAccount->alias());
 }
 
 #include "accountmanager.moc"

@@ -23,6 +23,7 @@
 #include "datacontainers.h"
 #include "ui_accounts_base.h"
 #include <QWidget>
+#include "account.h"
 
 class Accounts: public QWidget, public Ui::accounts_base
 {

@@ -192,9 +192,9 @@ void TimeLineWidget::addNewStatusesToUi ( QList< Status > & statusList, QBoxLayo
     QList<Status>::const_iterator endIt = statusList.constEnd();
     bool isThereIsAnyNewStatusToNotify = false;
 	if(Settings::notifyType() != 2)
-		notifyStr = (mCurrentAccount.direction==Qt::RightToLeft) ? "<div dir='rtl'>" : "<div dir='ltr'>";
+		notifyStr = (mCurrentAccount.direction()==Qt::RightToLeft) ? "<div dir='rtl'>" : "<div dir='ltr'>";
     for ( ;it != endIt; ++it ) {
-        if ( it->replyToUserScreenName.toLower() == mCurrentAccount.username.toLower() && type == Backend::HomeTimeLine ) {
+        if ( it->replyToUserId == mCurrentAccount.userId() && type == Backend::HomeTimeLine ) {
             --numOfNewStatuses;
             --unreadStatusInHome;
             continue;
@@ -211,7 +211,7 @@ void TimeLineWidget::addNewStatusesToUi ( QList< Status > & statusList, QBoxLayo
         layoutToAddStatuses->insertWidget ( 0, wt );
 
         if ( !isStartMode ) {
-            if ( it->user.screenName.toLower() == mCurrentAccount.username.toLower() ) {
+            if ( it->user.userId == mCurrentAccount.userId() ) {
                 --numOfNewStatuses;
                 wt->setUnread ( StatusWidget::WithoutNotify );
             } else {
@@ -256,11 +256,11 @@ void TimeLineWidget::abortPostNewStatus()
 void TimeLineWidget::setDefaultDirection()
 {
 //  this->setLayoutDirection((Qt::LayoutDirection)Settings::direction());
-    tabs->widget ( 0 )->setLayoutDirection ( mCurrentAccount.direction );
-    tabs->widget ( 1 )->setLayoutDirection ( mCurrentAccount.direction );
+    tabs->widget ( 0 )->setLayoutDirection ( mCurrentAccount.direction() );
+    tabs->widget ( 1 )->setLayoutDirection ( mCurrentAccount.direction() );
 //  txtNewStatus->document()->firstBlock()->
 //  inputLayout->setLayoutDirection((Qt::LayoutDirection)Settings::direction());
-    txtNewStatus->setDefaultDirection ( mCurrentAccount.direction );
+    txtNewStatus->setDefaultDirection ( mCurrentAccount.direction() );
 }
 
 void TimeLineWidget::error ( QString & errMsg )
@@ -287,7 +287,7 @@ void TimeLineWidget::postStatus ( QString & status )
 void TimeLineWidget::postingNewStatusDone ( bool isError )
 {
     if ( !isError ) {
-        txtNewStatus->clearContentsAndSetDirection ( mCurrentAccount.direction );
+        txtNewStatus->clearContentsAndSetDirection ( mCurrentAccount.direction() );
         QString successMsg = i18n ( "New status posted successfully" );
         emit systemNotify ( i18n ( "Success!" ), successMsg, APPNAME );
         notify ( successMsg );
@@ -393,7 +393,7 @@ void TimeLineWidget::prepareReply ( QString &userName, uint statusId )
 
     replyToStatusId = statusId;
 
-    txtNewStatus->setDefaultDirection ( mCurrentAccount.direction );
+    txtNewStatus->setDefaultDirection ( mCurrentAccount.direction() );
 
     txtNewStatus->moveCursor ( QTextCursor::End );
 }
@@ -527,7 +527,7 @@ void TimeLineWidget::enableApp()
 
 QString TimeLineWidget::generateStatusBackupFileName(Backend::TimeLineType type)
 {
-    QString name = mCurrentAccount.alias;
+    QString name = mCurrentAccount.alias();
     name += '_';
     
     switch(type){

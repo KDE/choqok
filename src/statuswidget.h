@@ -26,6 +26,7 @@
 #include <ui_status_base.h>
 #include "datacontainers.h"
 #include "constants.h"
+#include "account.h"
 #define UPDATEINTERVAL 2*60000
 #define COLOROFFSET 20
 /**

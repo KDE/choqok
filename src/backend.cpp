@@ -31,7 +31,7 @@
 // #define HTTP "http://twitter.com/"
 // #define HTTPS "https://twitter.com/"
 
-Backend::Backend(const Account *account, QObject* parent): QObject(parent)
+Backend::Backend(Account *account, QObject* parent): QObject(parent)
 {
 	kDebug();
 	settingsChanged();
@@ -53,9 +53,9 @@ Backend::~Backend()
 void Backend::postNewStatus(const QString & statusMessage, uint replyToStatusId)
 {
 	kDebug();
-	KUrl url(mCurrentAccount->apiPath + "/statuses/update.xml");
-	url.setUser(mCurrentAccount->username);
-    url.setPass(mCurrentAccount->password);
+	KUrl url(mCurrentAccount->apiPath() + "/statuses/update.xml");
+	url.setUser(mCurrentAccount->username());
+    url.setPass(mCurrentAccount->password());
 	QByteArray data = "status=";
 	data += QUrl::toPercentEncoding(prepareStatus(statusMessage));
 	if(replyToStatusId!=0)
@@ -89,11 +89,11 @@ void Backend::requestTimeLine(uint latestStatusId, TimeLineType type, int page)
 	kDebug();
 	KUrl url;
 	if(type==HomeTimeLine)
-		url.setUrl(mCurrentAccount->apiPath + "/statuses/friends_timeline.xml");
+		url.setUrl(mCurrentAccount->apiPath() + "/statuses/friends_timeline.xml");
 	else
-        url.setUrl(mCurrentAccount->apiPath + "/statuses/replies.xml");
-	url.setUser(mCurrentAccount->username);
-    url.setPass(mCurrentAccount->password);
+        url.setUrl(mCurrentAccount->apiPath() + "/statuses/replies.xml");
+	url.setUser(mCurrentAccount->username());
+    url.setPass(mCurrentAccount->password());
 	url.setQuery(latestStatusId ? "?since_id=" + QString::number(latestStatusId) : QString());
 	kDebug()<<"Latest status Id: "<<latestStatusId;
 	
@@ -196,14 +196,14 @@ Status Backend::readStatusFromXml(const QByteArray & buffer)
 {
 	QDomDocument document;
 	Status status;
-	status.isError = false;
+	status.isError = false ;
 	document.setContent(buffer);
 	
 	QDomElement root = document.documentElement();
 	
 	if (root.tagName() != "status") {
 		kDebug()<<"there's no status tag in XML, Error!!";
-		status.isError = true;
+		status.isError = true ;
 		return status;
 	}
 	QDomNode node2 = root.firstChild();
@@ -267,13 +267,13 @@ void Backend::requestFavorited(uint statusId, bool isFavorite)
 	kDebug();
 	KUrl url;
 	if(isFavorite){
-        url.setUrl(mCurrentAccount->apiPath + "/favorites/create/"+QString::number(statusId)+".xml");
+        url.setUrl(mCurrentAccount->apiPath() + "/favorites/create/"+QString::number(statusId)+".xml");
 	
 	} else {
-        url.setUrl(mCurrentAccount->apiPath + "/favorites/destroy/"+QString::number(statusId)+".xml");
+        url.setUrl(mCurrentAccount->apiPath() + "/favorites/destroy/"+QString::number(statusId)+".xml");
 	}
-    url.setUser(mCurrentAccount->username);
-    url.setPass(mCurrentAccount->password);
+    url.setUser(mCurrentAccount->username());
+    url.setPass(mCurrentAccount->password());
 	
 	KIO::TransferJob *job = KIO::http_post(url, QByteArray(), KIO::HideProgressInfo) ;
 	if(!job){
@@ -291,10 +291,10 @@ void Backend::requestFavorited(uint statusId, bool isFavorite)
 void Backend::requestDestroy(uint statusId)
 {
 	kDebug();
-    KUrl url(mCurrentAccount->apiPath + "/statuses/destroy/"+QString::number(statusId)+".xml");
+    KUrl url(mCurrentAccount->apiPath() + "/statuses/destroy/"+QString::number(statusId)+".xml");
 	
-    url.setUser(mCurrentAccount->username);
-    url.setPass(mCurrentAccount->password);
+    url.setUser(mCurrentAccount->username());
+    url.setPass(mCurrentAccount->password());
 	
 	KIO::TransferJob *job = KIO::http_post(url, QByteArray(), KIO::HideProgressInfo) ;
 	if(!job){
@@ -477,6 +477,139 @@ void Backend::slotPostNewStatusData(KIO::Job * job, const QByteArray & data)
 	unsigned int oldSize = mPostNewStatusBuffer[ job ].size();
 	mPostNewStatusBuffer[ job ].resize( oldSize + data.size() );
 	memcpy( mPostNewStatusBuffer[ job ].data() + oldSize, data.data(), data.size() );
+}
+
+void Backend::verifyCredential()
+{
+    kDebug();
+    KUrl url;
+    url.setUrl(mCurrentAccount->apiPath() + "/account/verify_credentials.xml");
+    url.setUser(mCurrentAccount->username());
+    url.setPass(mCurrentAccount->password());
+
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
+    if(!job){
+        kDebug()<<"Cannot create a http GET request!";
+        QString errMsg = i18n("Cannot create a http GET request, please check your internet connection.");
+        emit sigError(errMsg);
+        return;
+    }
+
+    connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCredentialsReceived(KJob*)));
+    job->start();
+}
+
+void Backend::slotCredentialsReceived(KJob * job)
+{
+    kDebug();
+    if(job->error()){
+        kDebug()<<"Job error, "<<job->errorString();
+        QString err = i18n("Authorization Failed, more info: %1", job->errorString());
+        emit sigError(err);
+        return;
+    }
+    QByteArray buffer = qobject_cast<KIO::StoredTransferJob *>(job)->data();
+    ///Read response!
+    QDomDocument document;
+    Status status;
+    status.isError = false ;
+    document.setContent(buffer);
+    
+    QDomElement root = document.documentElement();
+    
+    if (root.tagName() == "user") {
+        QDomNode node2 = root.firstChild();
+        QString timeStr;
+        while (!node2.isNull()) {
+            if(node2.toElement().tagName() == "id"){
+                mCurrentAccount->setUserId( node2.toElement().text().toUInt() );
+                break;
+            }
+            node2 = node2.nextSibling();
+        }
+        emit userVerified( mCurrentAccount );
+    } else if(root.tagName() == "authorized" ) {
+        if(root.toElement().text() == "true"){
+            requestCurrentUser();
+        } else {
+            kDebug()<<"Authorization result is not TRUE, is : "<<root.toElement().text();
+            QString err = i18n("Authorization Failed, more info: %1", job->errorString());
+            emit sigError(err);
+            return;
+        }
+    } else {
+        kDebug()<<"ERROR, unrecognized result, buffer is: "<<buffer;
+    }
+}
+
+void Backend::slotUserInfoReceived(KJob * job)
+{
+    kDebug();
+    
+    if(job->error()){
+        kDebug()<<"Job Error: "<<job->errorString();
+        QString err = i18n("Requesting user informations failed. more info: %1", job->errorString());
+    }
+    QDomDocument document;
+    QByteArray buffer = qobject_cast<KIO::StoredTransferJob *>(job)->data();
+    document.setContent(buffer);
+    
+    QDomElement root = document.documentElement();
+    
+    if (root.tagName() != "statuses") {
+        QString err = i18n("Data returned from server corrupted!");
+        kDebug()<<"there's no statuses tag in XML\t the XML is: \n"<<buffer.data();
+        mLatestErrorString = err;
+        return;
+    }
+    QDomNode node = root.firstChild();
+
+    while (!node.isNull()) {
+        if (node.toElement().tagName() != "status") {
+            QString err = i18n("Data returned from server corrupted!");
+            kDebug()<<"there's no status tag in XML\t the XML is: \n"<<buffer.data();
+            mLatestErrorString = err;
+            return;
+        }
+        QDomNode node2 = node.firstChild();
+        while (!node2.isNull()) {
+            if(node2.toElement().tagName() == "user"){
+                QDomNode node3 = node2.firstChild();
+                while (!node3.isNull()) {
+                    if (node3.toElement().tagName() == "id") {
+                        mCurrentAccount->setUserId( node3.toElement().text().toUInt() );
+                        emit userVerified( mCurrentAccount );
+                        return;
+                    }
+                    node3 = node3.nextSibling();
+                }
+            }
+            node2 = node2.nextSibling();
+        }
+        node = node.nextSibling();
+    }
+
+}
+
+void Backend::requestCurrentUser()
+{
+    kDebug();
+    KUrl url;
+    url.setUrl(mCurrentAccount->apiPath() + "/statuses/user_timeline.xml");
+    url.setUser(mCurrentAccount->username());
+    url.setPass(mCurrentAccount->password());
+    url.setQuery( "?count=1" );
+
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
+    if(!job){
+        kDebug()<<"Cannot create a http GET request!";
+        QString errMsg = i18n("Cannot create a http GET request, please check your internet connection.");
+        emit sigError(errMsg);
+        return;
+    }
+
+    connect( job, SIGNAL(result(KJob*)), this, SLOT(slotUserInfoReceived(KJob*)));
+    job->start();
 }
 
 #include "backend.moc"

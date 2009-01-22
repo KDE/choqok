@@ -199,7 +199,7 @@ void MainWindow::enableApp()
 
 void MainWindow::addAccountTimeLine(const Account & account)
 {
-    kDebug()<<"Alias: "<<account.alias <<"Service :"<<account.serviceName;
+    kDebug()<<"Alias: "<<account.alias() <<"Service :"<<account.serviceName();
     TimeLineWidget *widget = new TimeLineWidget(account, this);
     
     connect(widget, SIGNAL(sigSetUnread(int)), this, SIGNAL(sigSetUnread(int)));
@@ -214,7 +214,7 @@ void MainWindow::addAccountTimeLine(const Account & account)
     
     connect(widget, SIGNAL(sigSetUnreadOnMainWin(int)), this, SLOT(setNumOfUnreadOnMainWin(int)));
     
-    mainWidget->addTab(widget, account.alias);
+    mainWidget->addTab(widget, account.alias());
     
     QTimer::singleShot(500, widget, SLOT(updateTimeLines()));
     enableApp();
@@ -242,7 +242,7 @@ void MainWindow::removeAccountTimeLine(const QString & alias)
     int count = mainWidget->count();
     for(int i=0; i<count; ++i){
         TimeLineWidget * tmp = qobject_cast<TimeLineWidget *>( mainWidget->widget( i ) );
-        if(tmp->currentAccount().alias == alias){
+        if(tmp->currentAccount().alias() == alias){
             mainWidget->removeTab( i );
             if(mainWidget->count()<1)
                 disableApp();
@@ -262,9 +262,9 @@ void MainWindow::setNumOfUnreadOnMainWin(int unread)
     TimeLineWidget *subWidget = qobject_cast<TimeLineWidget*>(sender());
     QString text;
     if( unread <= 0){
-        text = subWidget->currentAccount().alias;
+        text = subWidget->currentAccount().alias();
     } else {
-        text = subWidget->currentAccount().alias + i18n("(%1)", unread);
+        text = subWidget->currentAccount().alias() + i18n("(%1)", unread);
     }
     mainWidget->setTabText(mainWidget->indexOf(subWidget), text);
 }

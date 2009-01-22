@@ -21,6 +21,9 @@
 #include "accountswizard.h"
 #include "accountmanager.h"
 #include <kdebug.h>
+#include <QProgressBar>
+#include <KMessageBox>
+#include "backend.h"
 AccountsWizard::AccountsWizard ( QString alias, QWidget *parent )
         : KDialog ( parent )
 {
@@ -40,56 +43,85 @@ AccountsWizard::AccountsWizard ( QString alias, QWidget *parent )
         loadAccount ( alias );
     }
 
-    connect ( this, SIGNAL ( accepted() ), this, SLOT ( slotAccepted() ) );
-}
-
-void AccountsWizard::slotAccepted()
-{
-    kDebug();
-
-    Account a;
-
-    if ( ui.kcfg_service->currentIndex() == 1 ) {
-        a.apiPath = IDENTICA_API_PATH;
-        a.serviceName = IDENTICA_SERVICE_TEXT;
-    } else {
-        a.apiPath = TWITTER_API_PATH;
-        a.serviceName = TWITTER_SERVICE_TEXT;
-    }
-    a.username = ui.kcfg_username->text();
-    a.password = ui.kcfg_password->text();
-    a.direction = (Qt::LayoutDirection)ui.kcfg_direction->currentIndex();
-    a.alias = ui.kcfg_alias->text();
-    if(isEdit){
-        a = AccountManager::self()->modifyAccount(a, mAlias);;
-    } else {
-        a = AccountManager::self()->addAccount(a);
-    }
-    if(a.isError){
-        kDebug()<<"Cannot add or modify account with alias "<<a.alias;
-        return;
-    }
-
-    if ( isEdit ) {
-        emit accountEdited ( a );
-    } else {
-        emit accountAdded ( a );
-    }
 }
 
 void AccountsWizard::loadAccount ( QString &alias )
 {
     kDebug()<<"Loading account "<<alias;
-    Account a = AccountManager::self()->findAccount(alias);
-    if(a.isError){
+    mAccount = AccountManager::self()->findAccount(alias);
+    if(mAccount.isError()){
         kDebug()<<"Error on Loading Account with alias "<<alias;
         return;
     }
-    ui.kcfg_username->setText ( a.username );
-    ui.kcfg_alias->setText ( a.alias);
-    ui.kcfg_password->setText ( a.password );
-    ui.kcfg_direction->setCurrentIndex ( ( a.direction == Qt::RightToLeft ) ? 1 : 0 );
-    ui.kcfg_service->setCurrentIndex ( ( a.serviceName == IDENTICA_SERVICE_TEXT ) ? 1 : 0 );
+    ui.kcfg_username->setText ( mAccount.username() );
+    ui.kcfg_alias->setText ( mAccount.alias());
+    ui.kcfg_password->setText ( mAccount.password() );
+    ui.kcfg_direction->setCurrentIndex ( ( mAccount.direction() == Qt::RightToLeft ) ? 1 : 0 );
+    ui.kcfg_service->setCurrentIndex ( ( mAccount.serviceName() == IDENTICA_SERVICE_TEXT ) ? 1 : 0 );
+}
+
+void AccountsWizard::slotButtonClicked(int button)
+{
+    kDebug();
+    if ( button == KDialog::Ok ) {
+        ///Show ProgressBar:
+        QProgressBar *progress = new QProgressBar(this);
+        progress->setMinimum( 0 );
+        progress->setMaximum( 0 );
+        QGridLayout* grid = qobject_cast<QGridLayout*>(this->mainWidget()->layout());
+        grid->addWidget(progress, grid->rowCount(), 0, grid->rowCount(), 2);
+        ///Check for account
+//         Account a;
+        if ( ui.kcfg_service->currentIndex() == 1 ) {
+            mAccount.setApiPath( IDENTICA_API_PATH );
+            mAccount.setServiceName( IDENTICA_SERVICE_TEXT );
+        } else {
+            mAccount.setApiPath( TWITTER_API_PATH );
+            mAccount.setServiceName( TWITTER_SERVICE_TEXT );
+        }
+        mAccount.setUsername( ui.kcfg_username->text() );
+        mAccount.setPassword( ui.kcfg_password->text() );
+        mAccount.setDirection( (Qt::LayoutDirection)ui.kcfg_direction->currentIndex() );
+        mAccount.setAlias( ui.kcfg_alias->text() );
+        
+        Backend *b = new Backend(&mAccount, this);
+        connect(b, SIGNAL(userVerified(Account*)), this, SLOT(slotUserVerified(Account*)));
+        connect(b, SIGNAL(sigError(QString&)), this, SLOT(slotError(QString&)));
+        b->verifyCredential();
+    } else
+        KDialog::slotButtonClicked( button );
+}
+
+void AccountsWizard::slotUserVerified(Account * userAccount)
+{
+    kDebug();
+    if(!userAccount){
+        kDebug()<<"userAccount is NULL";
+        return;
+    }
+    mAccount = *userAccount;
+    if(isEdit){
+        mAccount = AccountManager::self()->modifyAccount(mAccount, mAlias);
+    } else {
+        mAccount = AccountManager::self()->addAccount(mAccount);
+    }
+    if(mAccount.isError()){
+        kDebug()<<"Cannot add or modify account with alias "<<mAccount.alias();
+        return;
+    }
+
+    if ( isEdit ) {
+        emit accountEdited ( mAccount );
+    } else {
+        emit accountAdded ( mAccount );
+    }
+    accept();
+}
+
+void AccountsWizard::slotError(QString & errMsg)
+{
+    kDebug();
+    KMessageBox::detailedError(this, i18n("authentication failed, please check your credentials."), errMsg);
 }
 
 #include "accountswizard.moc"

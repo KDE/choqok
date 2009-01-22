@@ -23,6 +23,7 @@
 
 #include <QObject>
 #include "datacontainers.h"
+#include "account.h"
 
 class KConfig;
 namespace KWallet
@@ -98,6 +99,9 @@ public:
 signals:
     void accountAdded( const Account &account );
     void accountRemoved( const QString &alias );
+    
+protected slots:
+    void userVerified(Account *userAccount);
 private:
     void loadAccounts();
     

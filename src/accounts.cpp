@@ -86,7 +86,7 @@ void Accounts::removeAccount ( QString alias )
 void Accounts::slotAccountAdded ( const Account &account )
 {
     kDebug();
-    addAccountToTable ( account.alias, account.serviceName );
+    addAccountToTable ( account.alias(), account.serviceName() );
 //     emit accountAdded( account );
 }
 
@@ -94,8 +94,8 @@ void Accounts::slotAccountEdited ( const Account &account )
 {
     kDebug();
     int row = accountsTable->currentRow();
-    accountsTable->item ( row, 0 )->setText ( account.alias );
-    accountsTable->item ( row, 1 )->setText ( account.serviceName );
+    accountsTable->item ( row, 0 )->setText ( account.alias() );
+    accountsTable->item ( row, 1 )->setText ( account.serviceName() );
 //     emit accountEdited(account);
 }
 
@@ -132,7 +132,7 @@ void Accounts::loadAccountsData()
     QListIterator<Account> it(ac);
     while(it.hasNext()){
         Account current = it.next();
-        addAccountToTable(current.alias, current.serviceName);
+        addAccountToTable(current.alias(), current.serviceName());
     }
 }
 

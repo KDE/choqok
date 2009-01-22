@@ -89,7 +89,7 @@ void QuickTwit::slotPostNewStatusDone(bool isError)
         QString name(APPNAME);
         emit sigNotify(i18n("Failed!"), i18n("Posting new status failed. %1", b->latestErrorString()), name);
     }else{
-        txtStatus->clearContentsAndSetDirection(accountsList[ui.comboAccounts->currentIndex()].direction);
+        txtStatus->clearContentsAndSetDirection(accountsList[ui.comboAccounts->currentIndex()].direction());
 		QString name(APPNAME);
 		emit sigNotify(i18n("Success!"), i18n("New status posted successfully"), name);
 	}
@@ -130,7 +130,7 @@ void QuickTwit::loadAccounts()
     while(it.hasNext()){
         Account current = it.next();
         accountsList.append(current);
-        ui.comboAccounts->addItem(current.alias);
+        ui.comboAccounts->addItem(current.alias());
     }
     if(ac.count()>0){
         txtStatus->setEnabled(true);
@@ -143,7 +143,7 @@ void QuickTwit::addAccount(const Account & account)
 {
     kDebug();
     accountsList.append(account);
-    ui.comboAccounts->addItem(account.alias);
+    ui.comboAccounts->addItem(account.alias());
 }
 
 void QuickTwit::removeAccount(const QString & alias)
@@ -151,7 +151,7 @@ void QuickTwit::removeAccount(const QString & alias)
     kDebug();
     int count = accountsList.count();
     for(int i=0; i<count; ++i){
-        if( accountsList[i].alias == alias ){
+        if( accountsList[i].alias() == alias ){
             accountsList.removeAt(i);
             ui.comboAccounts->removeItem(i);
             kDebug()<<"Found!";

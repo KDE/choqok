@@ -24,6 +24,7 @@
 #include "datacontainers.h"
 #include "ui_quicktwit_base.h"
 #include <kdialog.h>
+#include "account.h"
 class StatusTextEdit;
 class Backend;
 /**

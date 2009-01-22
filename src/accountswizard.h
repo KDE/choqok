@@ -24,6 +24,7 @@
 #include "ui_accounts_wizard_base.h"
 #include "datacontainers.h"
 #include "constants.h"
+#include "account.h"
 
 
 class AccountsWizard: public KDialog
@@ -37,7 +38,9 @@ signals:
     void accountEdited ( const Account &account );
 
 protected slots:
-    void slotAccepted();
+    virtual void slotButtonClicked( int button );
+    void slotUserVerified(Account *userAccount);
+    void slotError(QString &errMsg);
 
 private:
     void loadAccount ( QString &alias );
@@ -46,6 +49,7 @@ private:
 
     QString mAlias;
     bool isEdit;
+    Account mAccount;
 };
 
 #endif

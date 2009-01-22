@@ -23,6 +23,7 @@
 
 #include <kxmlguiwindow.h>
 #include "datacontainers.h"
+#include "account.h"
 #include "ui_prefs_base.h"
 // #include "ui_accounts_base.h"
 #include "ui_appears_base.h"

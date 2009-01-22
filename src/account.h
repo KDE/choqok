@@ -1,0 +1,73 @@
+/*
+    This file is part of choqoK, the KDE Twitter client
+
+    Copyright (C) 2008 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+
+*/
+#ifndef ACCOUNT_H
+#define ACCOUNT_H
+#include <QString>
+// #include <QObject>
+
+/**
+	@author Mehrdad Momeny <mehrdad.momeny@gmail.com>
+*/
+class Account //: private QObject
+{
+public:
+    Account();
+    Account(const Account &account);
+
+    ~Account();
+
+    uint userId() const;
+    void setUserId( uint id );
+
+    QString username() const;
+    void setUsername(const QString &name);
+
+    QString password() const;
+    void setPassword(const QString &pass);
+
+    QString serviceName() const;
+    void setServiceName(const QString &servicename);
+
+    QString alias() const;
+    void setAlias(const QString &alias);
+
+    Qt::LayoutDirection direction() const;
+    void setDirection(const Qt::LayoutDirection &dir);
+
+    QString apiPath() const;
+    void setApiPath(const QString &apiPath);
+
+    bool isError() const;
+    void setIsError(bool isError);
+    
+private:
+    uint mUserId;
+    QString mUsername;
+    QString mPassword;
+    QString mServiceName;
+    QString mAlias;
+    Qt::LayoutDirection mDirection;
+    QString mApiPath;
+    bool mIsError;
+
+};
+
+#endif
