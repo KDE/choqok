@@ -87,15 +87,36 @@ void MainWindow::setupActions()
     actUpdate->setGlobalShortcut ( updateGlobalShortcut );
     connect ( actUpdate, SIGNAL ( triggered ( bool ) ), this, SIGNAL ( updateTimeLines() ) );
 
-    KAction *newTwit = new KAction ( this );
-    newTwit->setIcon ( KIcon ( "document-new" ) );
-    newTwit->setText ( i18n ( "Quick Tweet" ) );
+    KAction *newTwit = new KAction ( KIcon ( "document-new" ), i18n ( "Quick Tweet" ), this );
     actionCollection()->addAction ( QLatin1String ( "choqok_new_twit" ), newTwit );
     newTwit->setShortcut ( KShortcut(Qt::CTRL | Qt::Key_T) );
     newTwit->setGlobalShortcutAllowed ( true );
     KShortcut quickTwitGlobalShortcut ( Qt::CTRL | Qt::META | Qt::Key_T );
 //     quickTwitGlobalShortcut.setAlternate ( Qt::MetaModifier | Qt::Key_T );
     newTwit->setGlobalShortcut ( quickTwitGlobalShortcut );
+
+    KAction *showMain = new KAction(this);
+    actionCollection()->addAction( QLatin1String( "toggle_mainwin" ), showMain);
+    showMain->setShortcut( KShortcut(Qt::CTRL + Qt::Key_C) );
+    KShortcut toggleMainGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_C );
+    showMain->setGlobalShortcutAllowed( true );
+    showMain->setGlobalShortcut( toggleMainGlobalShortcut/*, KAction::DefaultShortcut, KAction::NoAutoloading*/ );
+    if(this->isVisible())
+        showMain->setText(i18n("Minimize"));
+    else
+        showMain->setText(i18n("Restore"));
+    connect(showMain, SIGNAL(triggered( bool )), this, SLOT(toggleMainWindowVisibility()));
+}
+
+void MainWindow::toggleMainWindowVisibility()
+{
+    if(this->isVisible()){
+        this->close();
+        actionCollection()->action("toggle_mainwin")->setText(i18n("&Restore"));
+    } else {
+        this->show();
+        actionCollection()->action("toggle_mainwin")->setText(i18n("&Minimize"));
+    }
 }
 
 void MainWindow::optionsPreferences()

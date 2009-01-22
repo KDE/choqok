@@ -40,7 +40,7 @@ public:
 public slots:
 	void quitApp();
 	void postQuickTwit();
-	void toggleMainWindowVisibility();
+// 	void toggleMainWindowVisibility();
 	void sysTrayActivated( QSystemTrayIcon::ActivationReason reason );
 	void systemNotify(const QString &title, const QString &message, const QString &iconUrl);
 	

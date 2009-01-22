@@ -65,6 +65,8 @@ signals:
     void accountAdded(const Account &account);
     void accountRemoved(const QString &alias);
 
+public slots:
+    void toggleMainWindowVisibility();
 protected slots:
     void optionsPreferences();
     void settingsChanged();
@@ -85,7 +87,7 @@ private:
     void enableApp();
     void loadConfigurations();
 //     void addNewAccountTimeLine(const Account &account);
-    
+
 private slots:
     void loadAccounts();
     void addAccountTimeLine(const Account &account);

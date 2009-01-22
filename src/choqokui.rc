@@ -4,7 +4,7 @@
   <Menu name="file"><text>File</text>
 	  <Action name="choqok_new_twit" />
 	  <Action name="update_timeline" />
-	  <!--<Action name="toggle_twit_field"/>-->
+      <Action name="toggle_mainwin"/>
   </Menu>
 </MenuBar>
 </kpartgui>
