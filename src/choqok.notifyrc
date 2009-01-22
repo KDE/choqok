@@ -1,15 +1,6 @@
 [Global]
 IconName=choqok
 Comment=choqoK
-Comment[et]=choqok
-Comment[fr]=choqoK
-Comment[gl]=choqok
-Comment[nds]=choqoK
-Comment[nl]=choqoK
-Comment[pt]=choqoK
-Comment[pt_BR]=choqoK
-Comment[sv]=Choqok
-Comment[uk]=choqoK
 
 [Event/new-status-arrived]
 Name=New tweet arrived
