@@ -75,6 +75,32 @@ void Backend::postNewStatus(const QString & statusMessage, uint replyToStatusId)
 	job->start();
 }
 
+void Backend::sendDMessage(const QString & screenName, const QString & message)
+{
+    kDebug();
+    KUrl url(mCurrentAccount->apiPath() + "/direct_messages/new.xml");
+    url.setUser(mCurrentAccount->username());
+    url.setPass(mCurrentAccount->password());
+    QByteArray data = "user=";
+    data += screenName;
+    data += "&text=";
+    data += QUrl::toPercentEncoding(prepareStatus(message));
+
+    KIO::TransferJob *job = KIO::http_post(url, data, KIO::HideProgressInfo) ;
+    if(!job){
+        kDebug()<<"Cannot create a http POST request!";
+        QString errMsg = i18n("Cannot create a http POST request, please check your internet connection.");
+        emit sigError(errMsg);
+        return;
+    }
+    job->addMetaData( "content-type", "Content-Type: application/x-www-form-urlencoded" );
+    mSendDMessageBuffer[ job ] = QByteArray();
+    connect( job, SIGNAL(result(KJob*)), this, SLOT(slotSendDMessageFinished(KJob*)) );
+    connect( job, SIGNAL(data( KIO::Job *, const QByteArray &)),
+             this, SLOT(slotSendDMessageData(KIO::Job*, const QByteArray&)));
+    job->start();
+}
+
 void Backend::login()
 {
 	
@@ -146,6 +172,7 @@ QList<Status> * Backend::readTimeLineFromXml(const QByteArray & buffer)
 			}
 				QDomNode node2 = node.firstChild();
 				Status status;
+                status.isDMessage = false;
 				while (!node2.isNull()) {
 					if(node2.toElement().tagName() == "created_at")
 						timeStr = node2.toElement().text();
@@ -309,6 +336,27 @@ void Backend::requestDestroy(uint statusId)
 	job->start();
 }
 
+void Backend::requestDestroyDMessage(uint statusId)
+{
+    kDebug();
+    KUrl url(mCurrentAccount->apiPath() + "/direct_messages/destroy/"+QString::number(statusId)+".xml");
+
+    url.setUser(mCurrentAccount->username());
+    url.setPass(mCurrentAccount->password());
+
+    KIO::TransferJob *job = KIO::http_post(url, QByteArray(), KIO::HideProgressInfo) ;
+    if(!job){
+        kDebug()<<"Cannot create a http POST request!";
+        QString errMsg = i18n("Cannot create a http POST request, please check your internet connection.");
+        emit sigError(errMsg);
+        return;
+    }
+    
+    connect( job, SIGNAL(result(KJob*)), this, SLOT(slotRequestDestroyFinished(KJob*)) );
+    
+    job->start();
+}
+
 void Backend::quitting()
 {
 }
@@ -346,7 +394,6 @@ void Backend::slotRequestTimelineFinished(KJob *job)
 	if(job->error()){
 		kDebug()<<"Error: "<<job->errorString();
 		mLatestErrorString = job->errorString();
-		kDebug()<<mLatestErrorString;
 		emit sigError(mLatestErrorString);
 		return;
 	}
@@ -611,5 +658,389 @@ void Backend::requestCurrentUser()
     connect( job, SIGNAL(result(KJob*)), this, SLOT(slotUserInfoReceived(KJob*)));
     job->start();
 }
+
+void Backend::requestDMessages(uint latestStatusId, DMessageType type, int page)
+{
+    kDebug();
+    KUrl url;
+    if ( type == Recieved )
+        url.setUrl(mCurrentAccount->apiPath() + "/direct_messages.xml");
+    else
+        url.setUrl(mCurrentAccount->apiPath() + "/direct_messages/sent.xml");
+    url.setUser(mCurrentAccount->username());
+    url.setPass(mCurrentAccount->password());
+    url.setQuery(latestStatusId ? "?since_id=" + QString::number(latestStatusId) : QString());
+    kDebug()<<"DMessage: Latest status Id: "<<latestStatusId;
+
+
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
+    if(!job){
+        kDebug()<<"Cannot create a http GET request!";
+        QString errMsg = i18n("Cannot create a http GET request, please check your internet connection.");
+        emit sigError(errMsg);
+        return;
+    }
+    mRequestDMessagesMap[job] = type;
+    connect( job, SIGNAL(result(KJob*)), this, SLOT(slotRequestDMessagesFinished(KJob*)));
+    job->start();
+}
+
+void Backend::slotRequestDMessagesFinished(KJob *job)
+{
+    kDebug();
+    if(!job){
+        kDebug()<<"Job is null pointer";
+        return;
+    }
+    if(job->error()){
+        kDebug()<<"Error: "<<job->errorString();
+        mLatestErrorString = job->errorString();
+        emit sigError(mLatestErrorString);
+        return;
+    }
+    KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob*>(job);
+    QList<Status> *ptr = readDMessagesFromXml(j->data());
+    switch(mRequestDMessagesMap.value(job)){
+        case Recieved:
+            if(ptr){
+                emit directMessagesRecieved(*ptr);
+            } else {
+                kDebug()<<"Null returned from Backend::readDMessagesFromXml()";
+            }
+            break;
+        case Sent:
+            if(ptr)
+                emit sentMessagesRecieved(*ptr);
+            else
+                kDebug()<<"Null returned from Backend::readDMessagesFromXml()";
+            break;
+        default:
+            kDebug()<<"The returned job isn't in Map! or type is Unknown";
+            break;
+    };
+    mRequestDMessagesMap.remove(job);
+}
+
+QList< Status > * Backend::readDMessagesFromXml(const QByteArray & buffer)
+{
+    kDebug();
+    QDomDocument document;
+    QList<Status> *statusList = new QList<Status>;
+
+    document.setContent(buffer);
+
+    QDomElement root = document.documentElement();
+
+    if (root.tagName() != "direct-messages") {
+        QString err = i18n("Data returned from server corrupted!");
+        kDebug()<<"there's no direct-messages tag in XML\t the XML is: \n"<<buffer.data();
+        mLatestErrorString = err;
+        return 0;
+    }
+    QDomNode node = root.firstChild();
+    QString timeStr;
+    while (!node.isNull()) {
+        if (node.toElement().tagName() != "direct_message") {
+            kDebug()<<"there's no direct_message tag in XML, maybe there is no new status!";
+            return statusList;
+        }
+        QDomNode node2 = node.firstChild();
+        Status msg;
+        msg.isDMessage = true;
+        uint senderId, recipientId;
+        QString senderScreenName, recipientScreenName, senderProfileImageUrl, senderName,
+        senderDescription, recipientProfileImageUrl, recipientName, recipientDescription;
+        while (!node2.isNull()) {
+            if(node2.toElement().tagName() == "created_at")
+                timeStr = node2.toElement().text();
+            else if(node2.toElement().tagName() == "text")
+                msg.content = node2.toElement().text();
+            else if(node2.toElement().tagName() == "id")
+                msg.statusId = node2.toElement().text().toInt();
+            else if(node2.toElement().tagName() == "sender_id")
+                senderId = node2.toElement().text().toULongLong();
+            else if(node2.toElement().tagName() == "recipient_id")
+                recipientId = node2.toElement().text().toULongLong();
+            else if(node2.toElement().tagName() == "sender_screen_name")
+                senderScreenName = node2.toElement().text();
+            else if(node2.toElement().tagName() == "recipient_screen_name")
+                recipientScreenName = node2.toElement().text();
+            else if(node2.toElement().tagName() == "sender"){
+                QDomNode node3 = node2.firstChild();
+                while (!node3.isNull()) {
+                    if (node3.toElement().tagName() == "profile_image_url") {
+                        senderProfileImageUrl = node3.toElement().text();
+                    } else if (node3.toElement().tagName() == "name") {
+                        senderName = node3.toElement().text();
+                    } else if (node3.toElement().tagName() == "description" ) {
+                        senderDescription = node3.toElement().text();
+                    }
+                    node3 = node3.nextSibling();
+                }
+            } else if(node2.toElement().tagName() == "recipient"){
+                QDomNode node3 = node2.firstChild();
+                while (!node3.isNull()) {
+                    if (node3.toElement().tagName() == "profile_image_url") {
+                        recipientProfileImageUrl = node3.toElement().text();
+                    } else if (node3.toElement().tagName() == "name") {
+                        recipientName = node3.toElement().text();
+                    } else if (node3.toElement().tagName() == "description" ) {
+                        recipientDescription = node3.toElement().text();
+                    }
+                    node3 = node3.nextSibling();
+                }
+            }
+            node2 = node2.nextSibling();
+        }
+        node = node.nextSibling();
+        msg.creationDateTime = dateFromString(timeStr);
+        if(senderId == mCurrentAccount->userId()){
+            msg.user.description = recipientDescription;
+            msg.user.screenName = recipientScreenName;
+            msg.user.profileImageUrl = recipientProfileImageUrl;
+            msg.user.name = recipientName;
+            msg.user.userId = recipientId;
+        } else {
+            msg.user.description = senderDescription;
+            msg.user.screenName = senderScreenName;
+            msg.user.profileImageUrl = senderProfileImageUrl;
+            msg.user.name = senderName;
+            msg.user.userId = senderId;
+        }
+        statusList->insert(0, msg);
+    }
+    return statusList;
+}
+
+void Backend::slotSendDMessageFinished(KJob *job)
+{
+    kDebug();
+    if(job->error()){
+        kDebug()<<"Error: "<<job->error()<< " Text:" <<job->errorString();
+        kDebug()<<mSendDMessageBuffer.value(job);
+        mLatestErrorString = job->errorString();
+        emit sigPostNewStatusDone(true);
+    } else {
+        Status st = readDMessageFromXml(mSendDMessageBuffer[job]);
+        if(st.isError){
+            kDebug()<<"Error: "<<job->errorString();
+            mLatestErrorString = job->errorString();
+            emit sigPostNewStatusDone(true);
+        } else {
+            QList<Status> newSt;
+            newSt.append(st);
+            emit sigPostNewStatusDone(false);
+            emit sentMessagesRecieved(newSt);
+        }
+    }
+}
+
+void Backend::slotSendDMessageData(KIO::Job *job, const QByteArray &data)
+{
+    kDebug();
+    if( !job ) {
+        kError() << "Job is a null pointer.";
+        return;
+    }
+    mPostNewStatusBuffer[ job ].append( data );
+}
+
+Status Backend::readDMessageFromXml(const QByteArray & buffer)
+{
+    QDomDocument document;
+    Status status;
+    status.isError = false ;
+    document.setContent(buffer);
+    Status msg;
+    msg.isDMessage = true;
+    QDomElement root = document.documentElement();
+    QDomNode node = root.firstChild();
+    QString timeStr;
+    while (!node.isNull()) {
+        if (node.toElement().tagName() != "direct_message") {
+            kDebug()<<"there's no direct_message tag in XML, probably an error occurred!";
+            status.isError = true;
+            return status;
+        }
+        QDomNode node2 = node.firstChild();
+        uint senderId, recipientId;
+        QString senderScreenName, recipientScreenName, senderProfileImageUrl, senderName,
+        senderDescription, recipientProfileImageUrl, recipientName, recipientDescription;
+        while (!node2.isNull()) {
+            if(node2.toElement().tagName() == "created_at")
+                timeStr = node2.toElement().text();
+            else if(node2.toElement().tagName() == "text")
+                msg.content = node2.toElement().text();
+            else if(node2.toElement().tagName() == "id")
+                msg.statusId = node2.toElement().text().toInt();
+            else if(node2.toElement().tagName() == "sender_id")
+                senderId = node2.toElement().text().toULongLong();
+            else if(node2.toElement().tagName() == "recipient_id")
+                recipientId = node2.toElement().text().toULongLong();
+            else if(node2.toElement().tagName() == "sender_screen_name")
+                senderScreenName = node2.toElement().text();
+            else if(node2.toElement().tagName() == "recipient_screen_name")
+                recipientScreenName = node2.toElement().text();
+            else if(node2.toElement().tagName() == "sender"){
+                QDomNode node3 = node2.firstChild();
+                while (!node3.isNull()) {
+                    if (node3.toElement().tagName() == "profile_image_url") {
+                        senderProfileImageUrl = node3.toElement().text();
+                    } else if (node3.toElement().tagName() == "name") {
+                        senderName = node3.toElement().text();
+                    } else if (node3.toElement().tagName() == "description" ) {
+                        senderDescription = node3.toElement().text();
+                    }
+                    node3 = node3.nextSibling();
+                }
+            } else if(node2.toElement().tagName() == "recipient"){
+                QDomNode node3 = node2.firstChild();
+                while (!node3.isNull()) {
+                    if (node3.toElement().tagName() == "profile_image_url") {
+                        recipientProfileImageUrl = node3.toElement().text();
+                    } else if (node3.toElement().tagName() == "name") {
+                        recipientName = node3.toElement().text();
+                    } else if (node3.toElement().tagName() == "description" ) {
+                        recipientDescription = node3.toElement().text();
+                    }
+                    node3 = node3.nextSibling();
+                }
+            }
+            node2 = node2.nextSibling();
+        }
+        node = node.nextSibling();
+        msg.creationDateTime = dateFromString(timeStr);
+        if(senderId == mCurrentAccount->userId()){
+            msg.user.description = recipientDescription;
+            msg.user.screenName = recipientScreenName;
+            msg.user.profileImageUrl = recipientProfileImageUrl;
+            msg.user.name = recipientName;
+            msg.user.userId = recipientId;
+        } else {
+            msg.user.description = senderDescription;
+            msg.user.screenName = senderScreenName;
+            msg.user.profileImageUrl = senderProfileImageUrl;
+            msg.user.name = senderName;
+            msg.user.userId = senderId;
+        }
+    }
+    return msg;
+}
+
+void Backend::listFollowersScreenName()
+{
+    kDebug();
+    requestFollowers();
+    followersPage = 1;
+}
+
+void Backend::requestFollowers(int page)
+{
+    kDebug();
+    KUrl url;
+    url.setUrl(mCurrentAccount->apiPath() + "/statuses/followers.xml");
+    url.setUser(mCurrentAccount->username());
+    url.setPass(mCurrentAccount->password());
+    url.setQuery("?page=" + QString::number(page));
+
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
+    if(!job){
+        kDebug()<<"Cannot create a http GET request!";
+        QString errMsg = i18n("Cannot create a http GET request, please check your internet connection.");
+        emit sigError(errMsg);
+        return;
+    }
+    connect( job, SIGNAL(result(KJob*)), this, SLOT(slotListFollowersScreenName(KJob*)));
+    job->start();
+}
+
+void Backend::slotListFollowersScreenName(KJob * job)
+{
+    kDebug();
+    KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>(job);
+    QStringList newList = readUsersNameFromXml( stJob->data() );
+    followersList << newList;
+    if(newList.count() == 100){
+        requestFollowers( ++followersPage );
+    } else {
+        emit followersListed( followersList );
+    }
+}
+
+
+void Backend::listFriendsScreenName()
+{
+    kDebug();
+    requestFriends();
+    friendsPage = 1;
+}
+
+void Backend::requestFriends(int page)
+{
+    kDebug();
+    KUrl url;
+    url.setUrl(mCurrentAccount->apiPath() + "/statuses/friends/" + mCurrentAccount->username() + ".xml");
+    url.setUser(mCurrentAccount->username());
+    url.setPass(mCurrentAccount->password());
+    url.setQuery("?page=" + QString::number(page));
+
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
+    if(!job){
+        kDebug()<<"Cannot create a http GET request!";
+        QString errMsg = i18n("Cannot create a http GET request, please check your internet connection.");
+        emit sigError(errMsg);
+        return;
+    }
+    connect( job, SIGNAL(result(KJob*)), this, SLOT(slotListFriendsScreenName(KJob*)));
+    job->start();
+}
+
+void Backend::slotListFriendsScreenName(KJob * job)
+{
+    kDebug();
+    KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>(job);
+    QStringList newList = readUsersNameFromXml( stJob->data() );
+    friendsList << newList;
+    if(newList.count() == 100){
+        requestFriends( ++friendsPage );
+    } else {
+        emit friendsListed( friendsList );
+    }
+}
+
+QStringList Backend::readUsersNameFromXml(const QByteArray & buffer)
+{
+    kDebug();
+    QStringList list;
+    QDomDocument document;
+    document.setContent(buffer);
+    QDomElement root = document.documentElement();
+    
+    if (root.tagName() != "users") {
+        QString err = i18n("Data returned from server corrupted!");
+        kDebug()<<"there's no users tag in XML\t the XML is: \n"<<buffer.data();
+        mLatestErrorString = err;
+        return list;
+    }
+    QDomNode node = root.firstChild();
+    QString timeStr;
+    while (!node.isNull()) {
+        if (node.toElement().tagName() != "user") {
+            kDebug()<<"there's no status tag in XML, maybe there is no new status!";
+            return list;
+        }
+        QDomNode node2 = node.firstChild();
+        while (!node2.isNull()) {
+            if (node2.toElement().tagName() == "screen_name") {
+                list.append( node2.toElement().text() );
+                break;
+            }
+            node2 = node2.nextSibling();
+        }
+        node = node.nextSibling();
+    }
+    return list;
+}
+
 
 #include "backend.moc"

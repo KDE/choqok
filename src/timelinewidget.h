@@ -57,14 +57,17 @@ public slots:
     void abortPostNewStatus();
 
 protected slots:
-//     void toggleTwitFieldVisible();
     void requestFavoritedDone ( bool isError );
     void requestDestroyDone ( bool isError );
 
+    void directMessagesRecieved( QList< Status >& msgList );
+    void sentMessagesRecieved( QList< Status >& msgList );
+
     void homeTimeLinesRecived ( QList<Status> &statusList );
     void replyTimeLineRecived ( QList<Status> &statusList );
+
     void postingNewStatusDone ( bool isError );
-    void prepareReply ( QString &userName, uint statusId );
+    void prepareReply ( const QString &userName, uint statusId );
 
     void requestDestroy ( uint statusId );
 //   void notify(const QString &message);
@@ -73,7 +76,7 @@ protected slots:
 
     void postStatus ( QString &status );
 
-    void error ( QString &errMsg );
+    void error ( const QString &errMsg );
 
 
 signals:
@@ -88,6 +91,8 @@ protected:
 
 private slots:
     void initObjects();
+    void reloadFriendsList();
+    void friendsListed(const QStringList &list);
 
 private:
     void setDefaultDirection();
@@ -120,6 +125,8 @@ private:
     QLabel *lblCounter;
     QList<StatusWidget*> listHomeStatus;
     QList<StatusWidget*> listReplyStatus;
+    QList<StatusWidget*> listInboxStatus;
+    QList<StatusWidget*> listSentStatus;
     QList<StatusWidget*> listUnreadStatuses;
     uint replyToStatusId;
 //   QString currentUsername;// used for undresanding of username changes!
@@ -128,12 +135,16 @@ private:
     int unreadStatusCount;
     short unreadStatusInHome;
     short unreadStatusInReply;
+    short unreadStatusInSent;
+    short unreadStatusInInbox;
 
     StatusWidget *toBeDestroied;
 
     Account mCurrentAccount;
     uint latestHomeStatusId;
     uint latestReplyStatusId;
+    uint latestRecievedStatusId;
+    uint latestSentStatusId;
 };
 
 #endif

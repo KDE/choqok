@@ -20,7 +20,7 @@
 */
 #ifndef BACKEND_H
 #define BACKEND_H
-
+#include <QStringList>
 #include <QtCore/QObject>
 #include <QMap>
 #include "datacontainers.h"
@@ -36,7 +36,8 @@ class Backend : public QObject
 {
 	Q_OBJECT
 public:
-	enum TimeLineType{HomeTimeLine=1, ReplyTimeLine, UserTimeLine};
+	enum TimeLineType{HomeTimeLine=1, ReplyTimeLine, InboxTimeLine, SentTimeLine, UserTimeLine};
+    enum DMessageType{Recieved=1, Sent};
     explicit Backend(Account *account, QObject* parent=0);
 
     ~Backend();
@@ -52,23 +53,33 @@ public:
 	
 public slots:
 	void postNewStatus(const QString &statusMessage, uint replyToStatusId=0);
+    void sendDMessage( const QString &screenName, const QString &message);
 	void requestTimeLine(uint latestStatusId, TimeLineType type, int page=0);
+    void requestDMessages(uint latestStatusId, DMessageType type, int page=0);
 	void requestFavorited(uint statusId, bool isFavorite);
 	void requestDestroy(uint statusId);
+    void requestDestroyDMessage(uint statusId);
 	void abortPostNewStatus();
 	void settingsChanged();
-	
+    void listFollowersScreenName();
+    void listFriendsScreenName();
+
 signals:
 	void sigPostNewStatusDone(bool isError);
 	void sigFavoritedDone(bool isError);
 	void sigDestroyDone(bool isError);
-	void sigError(QString &errMsg);
+	void sigError(const QString &errMsg);
 	void homeTimeLineRecived(QList<Status> &statusList);
 	void replyTimeLineRecived(QList<Status> &statusList);
     void userVerified(Account *userAccount);
-// 	void directMessagesRecived(QList<Status> &statusList);
+    void directMessagesRecieved(QList<Status> &msgList);
+    void sentMessagesRecieved(QList<Status> &msgList);
+    void followersListed(const QStringList &followersList);
+    void friendsListed(const QStringList &friendsList);
 	
 protected slots:
+    void slotListFollowersScreenName(KJob *job);
+    void slotListFriendsScreenName(KJob *job);
 	void slotPostNewStatusFinished(KJob *job);
 	void slotPostNewStatusData(KIO::Job *job, const QByteArray &data);
 	void slotRequestTimelineFinished(KJob *job);
@@ -77,24 +88,35 @@ protected slots:
 	void slotRequestDestroyFinished(KJob *job);
     void slotUserInfoReceived(KJob *job);
     void slotCredentialsReceived(KJob *job);
+    void slotRequestDMessagesFinished(KJob *job);
 	
+    void slotSendDMessageFinished(KJob*);
+    void slotSendDMessageData(KIO::Job*, const QByteArray&);
+
 private:
+    QStringList readUsersNameFromXml(const QByteArray &buffer);
 	QList<Status> * readTimeLineFromXml(const QByteArray &buffer);
+    QList<Status> * readDMessagesFromXml(const QByteArray &buffer);
 	Status readStatusFromXml(const QByteArray &buffer);
+    Status readDMessageFromXml(const QByteArray &buffer);
 	QString prepareStatus(QString status);
     void requestCurrentUser();
-	
-// 	QString urls[4];
-// 	QString prefix;
+    void requestFollowers(int page=1);
+    void requestFriends(int page=1);
+
 	QString mLatestErrorString;
 	QMap<KJob *, TimeLineType> mRequestTimelineMap;
 	QMap<KJob *, QByteArray> mRequestTimelineBuffer;
-	
+    QMap<KJob *, DMessageType> mRequestDMessagesMap;
 
 	QMap<KJob *, QByteArray> mPostNewStatusBuffer;
-    
+    QMap<KJob *, QByteArray> mSendDMessageBuffer;
     Account *mCurrentAccount;
-//     int latestStatusId;
+    
+    QStringList followersList;
+    short followersPage;
+    QStringList friendsList;
+    short friendsPage;
 };
 
 #endif

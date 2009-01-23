@@ -49,18 +49,21 @@ public:
     QString replyToUserScreenName;
     User user;
     bool isError;
+    bool isDMessage;
 };
 
-// struct Account{
+// struct DMessage{
 // public:
-//     uint userId;
-//     QString username;
-//     QString password;
-//     QString serviceName;
-//     QString alias;
-//     Qt::LayoutDirection direction;
-//     QString apiPath;
+//     uint msgId;
+//     QDateTime creationDateTime;
+//     uint senderId;
+//     uint recipientId;
+//     QString senderScreenName;
+//     QString recipientScreenName;
+//     QString content;
 //     bool isError;
+//     User sender;
+//     User recipient;
 // };
 
 #endif

@@ -209,4 +209,18 @@ void AccountManager::userVerified(Account * userAccount)
     this->modifyAccount(*userAccount, userAccount->alias());
 }
 
+QStringList AccountManager::listFriends(const QString & alias)
+{
+    KConfigGroup accountGrp( conf, "Account" + alias );
+    QStringList list = accountGrp.readEntry( "friends", QStringList() );
+    return list;
+}
+
+void AccountManager::saveFriendsList(const QString & alias, const QStringList & list)
+{
+    KConfigGroup accountGrp( conf, "Account" + alias );
+    accountGrp.writeEntry( "friends", list );
+    accountGrp.sync();
+}
+
 #include "accountmanager.moc"

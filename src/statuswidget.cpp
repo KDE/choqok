@@ -65,8 +65,9 @@ void StatusWidget::setCurrentStatus(const Status newStatus)
 
 void StatusWidget::updateUi()
 {
-// 	kDebug()<<"ScreenName: "<<mCurrentStatus.user.screenName<<"Current: "<<mCurrentStatus.user.userId<<" Settings: "<<Settings::currentUserId();
-	if(mCurrentStatus.user.userId == mCurrentAccount->userId()){
+    if(mCurrentStatus.isDMessage){
+        btnFavorite->setVisible( false );
+    } else if(mCurrentStatus.user.userId == mCurrentAccount->userId()){
 		btnReply->setVisible(false);
 	} else {
 		btnRemove->setVisible(false);
@@ -110,15 +111,19 @@ QString StatusWidget::generateSign()
         sign = "<b><a href=\"http://identi.ca/"+mCurrentStatus.user.screenName+"\" title=\""+
                 mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName+"</a> - </b> ";
         sign += "<a href=\"http://identi.ca/notice/" + QString::number(mCurrentStatus.statusId) + "\" title=\"" + 
-                mCurrentStatus.creationDateTime.toString()+"\">" + formatDateTime(mCurrentStatus.creationDateTime) + "</a> - ";
-        sign += mCurrentStatus.source;
+                mCurrentStatus.creationDateTime.toString()+"\">" + formatDateTime(mCurrentStatus.creationDateTime) + "</a>";
+        if(!mCurrentStatus.isDMessage){
+            sign += " - " + mCurrentStatus.source;
+        }
     } else {
         sign = "<b><a href=\"http://twitter.com/"+mCurrentStatus.user.screenName+"\" title=\""+
                 mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName+"</a> - </b> ";
         sign += "<a href=\"http://twitter.com/" + mCurrentStatus.user.screenName + "/statuses/" +
                 QString::number(mCurrentStatus.statusId) + "\" title=\"" + 
-                mCurrentStatus.creationDateTime.toString()+"\">" + formatDateTime(mCurrentStatus.creationDateTime) + "</a> - ";
-        sign += mCurrentStatus.source;
+                mCurrentStatus.creationDateTime.toString()+"\">" + formatDateTime(mCurrentStatus.creationDateTime) + "</a>";
+        if(!mCurrentStatus.isDMessage){
+            sign += " - " + mCurrentStatus.source;
+        }
     }
 	return sign;
 }

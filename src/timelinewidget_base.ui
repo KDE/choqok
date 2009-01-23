@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>291</width>
+    <width>288</width>
     <height>543</height>
    </rect>
   </property>
@@ -21,14 +21,59 @@
   <property name="autoFillBackground" >
    <bool>true</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3" >
-   <property name="spacing" >
-    <number>1</number>
-   </property>
-   <property name="margin" >
-    <number>1</number>
-   </property>
-   <item>
+  <layout class="QGridLayout" name="gridLayout_2" >
+   <item row="0" column="0" >
+    <widget class="QCheckBox" name="chkDMessage" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Fixed" hsizetype="Maximum" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text" >
+      <string>Direct Message to</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" >
+    <widget class="KComboBox" name="comboFriendList" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+     <property name="editable" >
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2" >
+    <widget class="KPushButton" name="btnReloadFriends" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Fixed" hsizetype="Ignored" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize" >
+      <size>
+       <width>28</width>
+       <height>28</height>
+      </size>
+     </property>
+     <property name="maximumSize" >
+      <size>
+       <width>28</width>
+       <height>28</height>
+      </size>
+     </property>
+     <property name="toolTip" >
+      <string>Reload friends list</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3" >
     <widget class="QFrame" name="inputFrame" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="Maximum" hsizetype="Preferred" >
@@ -52,7 +97,7 @@
      </layout>
     </widget>
    </item>
-   <item>
+   <item row="2" column="0" colspan="3" >
     <widget class="KTabWidget" name="tabs" >
      <property name="tabPosition" >
       <enum>QTabWidget::North</enum>
@@ -68,13 +113,10 @@
        <string>Home</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout" >
-       <property name="horizontalSpacing" >
+       <property name="margin" >
         <number>1</number>
        </property>
-       <property name="verticalSpacing" >
-        <number>2</number>
-       </property>
-       <property name="margin" >
+       <property name="spacing" >
         <number>1</number>
        </property>
        <item row="0" column="0" >
@@ -91,12 +133,6 @@
          <property name="frameShadow" >
           <enum>QFrame::Plain</enum>
          </property>
-         <property name="verticalScrollBarPolicy" >
-          <enum>Qt::ScrollBarAsNeeded</enum>
-         </property>
-         <property name="horizontalScrollBarPolicy" >
-          <enum>Qt::ScrollBarAsNeeded</enum>
-         </property>
          <property name="widgetResizable" >
           <bool>true</bool>
          </property>
@@ -105,8 +141,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>279</width>
-            <height>502</height>
+            <width>270</width>
+            <height>461</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5" >
@@ -148,7 +184,7 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2" >
        <property name="spacing" >
-        <number>2</number>
+        <number>1</number>
        </property>
        <property name="margin" >
         <number>1</number>
@@ -164,12 +200,6 @@
          <property name="frameShape" >
           <enum>QFrame::NoFrame</enum>
          </property>
-         <property name="verticalScrollBarPolicy" >
-          <enum>Qt::ScrollBarAsNeeded</enum>
-         </property>
-         <property name="horizontalScrollBarPolicy" >
-          <enum>Qt::ScrollBarAsNeeded</enum>
-         </property>
          <property name="widgetResizable" >
           <bool>true</bool>
          </property>
@@ -178,8 +208,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>100</width>
-            <height>30</height>
+            <width>270</width>
+            <height>461</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout" >
@@ -215,6 +245,216 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tabInbox" >
+      <attribute name="title" >
+       <string>Recieved</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_3" >
+       <property name="margin" >
+        <number>1</number>
+       </property>
+       <property name="spacing" >
+        <number>1</number>
+       </property>
+       <item row="0" column="0" >
+        <widget class="QScrollArea" name="inboxScroll" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="frameShape" >
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow" >
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="widgetResizable" >
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="frameInbox" >
+          <property name="geometry" >
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>270</width>
+            <height>461</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_6" >
+           <property name="spacing" >
+            <number>0</number>
+           </property>
+           <property name="margin" >
+            <number>0</number>
+           </property>
+           <item>
+            <layout class="QVBoxLayout" name="inboxLayout" >
+             <property name="spacing" >
+              <number>1</number>
+             </property>
+             <item>
+              <spacer name="verticalSpacer" >
+               <property name="orientation" >
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0" >
+                <size>
+                 <width>20</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabSent" >
+      <attribute name="title" >
+       <string>Sent</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_4" >
+       <property name="margin" >
+        <number>1</number>
+       </property>
+       <property name="spacing" >
+        <number>1</number>
+       </property>
+       <item row="0" column="0" >
+        <widget class="QScrollArea" name="sentScroll" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="frameShape" >
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow" >
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="widgetResizable" >
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="frameSent" >
+          <property name="geometry" >
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>270</width>
+            <height>461</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_7" >
+           <property name="spacing" >
+            <number>0</number>
+           </property>
+           <property name="margin" >
+            <number>0</number>
+           </property>
+           <item>
+            <layout class="QVBoxLayout" name="sentLayout" >
+             <property name="spacing" >
+              <number>1</number>
+             </property>
+             <item>
+              <spacer name="verticalSpacer" >
+               <property name="orientation" >
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0" >
+                <size>
+                 <width>20</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabUser" >
+      <attribute name="title" >
+       <string>User</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_5" >
+       <property name="margin" >
+        <number>1</number>
+       </property>
+       <property name="spacing" >
+        <number>1</number>
+       </property>
+       <item row="0" column="0" >
+        <widget class="QScrollArea" name="userScroll" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="frameShape" >
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow" >
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="widgetResizable" >
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="frameUser" >
+          <property name="geometry" >
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>270</width>
+            <height>461</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_8" >
+           <property name="spacing" >
+            <number>0</number>
+           </property>
+           <property name="margin" >
+            <number>0</number>
+           </property>
+           <item>
+            <layout class="QVBoxLayout" name="userLayout" >
+             <property name="spacing" >
+              <number>1</number>
+             </property>
+             <item>
+              <spacer name="verticalSpacer" >
+               <property name="orientation" >
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0" >
+                <size>
+                 <width>20</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>
@@ -223,6 +463,16 @@
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
   <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
+  </customwidget>
+  <customwidget>
    <class>KTabWidget</class>
    <extends>QTabWidget</extends>
    <header>ktabwidget.h</header>
@@ -230,8 +480,49 @@
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>chkDMessage</tabstop>
+  <tabstop>comboFriendList</tabstop>
+  <tabstop>btnReloadFriends</tabstop>
   <tabstop>tabs</tabstop>
+  <tabstop>homeScroll</tabstop>
+  <tabstop>sentScroll</tabstop>
+  <tabstop>inboxScroll</tabstop>
+  <tabstop>replyScroll</tabstop>
+  <tabstop>userScroll</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>chkDMessage</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comboFriendList</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>61</x>
+     <y>15</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>157</x>
+     <y>16</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chkDMessage</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>btnReloadFriends</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>46</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>276</x>
+     <y>22</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

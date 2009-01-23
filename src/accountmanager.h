@@ -43,7 +43,7 @@ public:
     AccountManager(QObject* parent=0);
 
     ~AccountManager();
-    
+
     /**
      * \brief Retrieve the instance of AccountManager.
      *
@@ -54,7 +54,7 @@ public:
      * \return the instance of the AccountManager
      */
     static AccountManager* self();
-    
+
     /**
      * \brief Retrieve the list of accounts
      * \return a list of all the accounts
@@ -68,14 +68,14 @@ public:
      * \return the Account object found or NULL if no account was found
      */
     Account findAccount( QString &alias );
-    
+
     /**
      * \brief Delete the account and clean the config data
      *
      * This is praticaly called by the account config page when you remove the account.
      */
     bool removeAccount( const QString &alias );
-    
+
     /**
      * @brief Add the account.
      *
@@ -85,7 +85,7 @@ public:
      * @return @p account, or 0L if the account was deleted because alias collision
      */
     Account & addAccount( Account &account );
-    
+
     /**
      * @brief Modify the account.
      *
@@ -95,20 +95,33 @@ public:
      * @return @p account, or 0L if the account was not modified because alias collision
      */
     Account & modifyAccount( Account &account, const QString &previousAlias );
-    
+
+    /**
+     * Get the friends list of @p alias
+     * @param alias Account alias
+     * @return List of friends
+     */
+    QStringList listFriends( const QString &alias );
+
+    /**
+     * Save the @p list as friends of @p alias
+     * @param alias Account alias
+     * @param list list of new friends
+     */
+    void saveFriendsList( const QString &alias, const QStringList &list );
 signals:
     void accountAdded( const Account &account );
     void accountRemoved( const QString &alias );
-    
+
 protected slots:
     void userVerified(Account *userAccount);
 private:
     void loadAccounts();
-    
+
     static AccountManager *mSelf;
     QList<Account> mAccounts;
-	KConfig *conf;
-	KWallet::Wallet* mWallet;
+    KConfig *conf;
+    KWallet::Wallet* mWallet;
 };
 
 #endif

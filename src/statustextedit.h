@@ -33,7 +33,10 @@ public:
     StatusTextEdit(QWidget *parent=0);
 
     ~StatusTextEdit();
-	
+    QStringList friendsList() const;
+    void clearFriendsList();
+    void setFriendsList(const QStringList &list);
+    void appendToFriendsList(const QStringList &list);
 public slots:
 	void setDefaultDirection(Qt::LayoutDirection dir);
 	void setNumOfCharsLeft();
@@ -48,6 +51,7 @@ signals:
 private:
 	QString prevStr;
     Qt::LayoutDirection dir;
+    QStringList mFriendsList;
 };
 
 #endif

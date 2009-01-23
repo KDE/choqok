@@ -31,7 +31,6 @@ StatusTextEdit::StatusTextEdit(QWidget *parent)
     this->setToolTip(i18n("Press Ctrl+P to have previous text submitted.\nPress Ctrl+S to enable/disable spell checking."));
 }
 
-
 StatusTextEdit::~StatusTextEdit()
 {
 }
@@ -81,6 +80,26 @@ void StatusTextEdit::clearContentsAndSetDirection(Qt::LayoutDirection dir)
 	prevStr = this->toHtml();
 	this->clear();
 	setDefaultDirection(dir);
+}
+
+QStringList StatusTextEdit::friendsList() const
+{
+    return mFriendsList;
+}
+
+void StatusTextEdit::setFriendsList(const QStringList & list)
+{
+    mFriendsList = list;
+}
+
+void StatusTextEdit::clearFriendsList()
+{
+    mFriendsList.clear();
+}
+
+void StatusTextEdit::appendToFriendsList(const QStringList & list)
+{
+    mFriendsList<<list;
 }
 
 #include "statustextedit.moc"
