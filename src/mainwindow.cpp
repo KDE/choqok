@@ -194,7 +194,6 @@ void MainWindow::loadConfigurations()
     timelineTimer->setInterval ( Settings::updateInterval() *60000 );
 }
 
-
 bool MainWindow::queryClose()
 {
     kDebug();
@@ -222,7 +221,8 @@ void MainWindow::addAccountTimeLine(const Account & account)
 {
     kDebug()<<"Alias: "<<account.alias() <<"Service :"<<account.serviceName();
     TimeLineWidget *widget = new TimeLineWidget(account, this);
-    
+    widget->layout()->setContentsMargins( 0, 0, 0, 0);
+
     connect(widget, SIGNAL(sigSetUnread(int)), this, SIGNAL(sigSetUnread(int)));
     connect(widget, SIGNAL(systemNotify(const QString&, const QString&, const QString&)),
            this, SIGNAL(systemNotify(const QString&, const QString&, const QString&)));
@@ -232,11 +232,11 @@ void MainWindow::addAccountTimeLine(const Account & account)
     connect(this, SIGNAL(updateTimeLines()), widget, SLOT(updateTimeLines()));
     connect(this, SIGNAL(abortPostNewStatus()), widget, SLOT(abortPostNewStatus()));
     connect(this, SIGNAL(setUnreadStatusesToReadState()), widget, SLOT(setUnreadStatusesToReadState()));
-    
+
     connect(widget, SIGNAL(sigSetUnreadOnMainWin(int)), this, SLOT(setNumOfUnreadOnMainWin(int)));
-    
+
     mainWidget->addTab(widget, account.alias());
-    
+
     QTimer::singleShot(500, widget, SLOT(updateTimeLines()));
     enableApp();
 }
@@ -271,11 +271,6 @@ void MainWindow::removeAccountTimeLine(const QString & alias)
         }
     }
 }
-
-// void MainWindow::updateAccountTimeLine(const Account & account)
-// {
-//     
-// }
 
 void MainWindow::setNumOfUnreadOnMainWin(int unread)
 {

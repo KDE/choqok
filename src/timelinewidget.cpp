@@ -57,7 +57,7 @@ TimeLineWidget::TimeLineWidget ( const Account &userAccount, QWidget* parent ) :
 TimeLineWidget::~TimeLineWidget()
 {
     kDebug();
-    AccountManager::self()->saveFriendsList( mCurrentAccount.alias(), txtNewStatus->friendsList() );
+    AccountManager::self()->saveFriendsList( mCurrentAccount.alias(), friendsList );
     saveStatuses( generateStatusBackupFileName(Backend::HomeTimeLine), listHomeStatus );
     saveStatuses( generateStatusBackupFileName(Backend::ReplyTimeLine), listReplyStatus );
     saveStatuses( generateStatusBackupFileName(Backend::InboxTimeLine), listInboxStatus );
@@ -69,7 +69,6 @@ void TimeLineWidget::initObjects()
     kDebug();
 
     txtNewStatus->setSizePolicy ( QSizePolicy::Expanding, QSizePolicy::Maximum );
-    txtNewStatus->setFocus ( Qt::OtherFocusReason );
     txtNewStatus->setTabChangesFocus ( true );
     btnReloadFriends->setIcon( KIcon("view-refresh") );
     connect( btnReloadFriends, SIGNAL(clicked( bool )), this, SLOT(reloadFriendsList()) );
@@ -99,7 +98,13 @@ void TimeLineWidget::initObjects()
 
     replyToStatusId = unreadStatusCount = unreadStatusInReply = unreadStatusInHome = latestRecievedStatusId = latestSentStatusId = 0;
 
+    setTabOrder( chkDMessage, comboFriendList);
+    setTabOrder( comboFriendList, btnReloadFriends);
+    setTabOrder( btnReloadFriends, txtNewStatus);
+    setTabOrder( txtNewStatus, chkDMessage);
+
     loadConfigurations();
+    txtNewStatus->setFocus ( Qt::OtherFocusReason );
 }
 
 void TimeLineWidget::checkNewStatusCharactersCount ( int numOfChars )
@@ -185,7 +190,7 @@ void TimeLineWidget::sentMessagesRecieved(QList< Status > & msgList)
 //         if ( !isStartMode ) {
 //             unreadStatusInSent += count;
 //             if( unreadStatusInSent > 0 )
-//                 tabs->setTabText ( 3, i18n ( "Sent(%1)", unreadStatusInSent ) );
+//                 tabs->setTabText ( 3, i18n ( "Outbox(%1)", unreadStatusInSent ) );
 //         }
     }
 }
@@ -328,7 +333,7 @@ void TimeLineWidget::setDefaultDirection()
     tabs->widget ( 1 )->setLayoutDirection ( mCurrentAccount.direction() );
     tabs->widget ( 2 )->setLayoutDirection ( mCurrentAccount.direction() );
     tabs->widget ( 3 )->setLayoutDirection ( mCurrentAccount.direction() );
-    tabs->widget ( 4 )->setLayoutDirection ( mCurrentAccount.direction() );
+//     tabs->widget ( 4 )->setLayoutDirection ( mCurrentAccount.direction() );
 
     txtNewStatus->setDefaultDirection ( mCurrentAccount.direction() );
 }
@@ -407,6 +412,7 @@ bool TimeLineWidget::saveStatuses ( QString fileName, QList<StatusWidget*> &list
         grp.writeEntry ( "name", list[i]->currentStatus().user.name );
         grp.writeEntry ( "profile_image_url", list[i]->currentStatus().user.profileImageUrl );
         grp.writeEntry ( "description" , list[i]->currentStatus().user.description );
+        grp.writeEntry ( "isDMessage" , list[i]->currentStatus().isDMessage );
     }
 
     statusesBackup.sync();
@@ -441,6 +447,7 @@ QList< Status > TimeLineWidget::loadStatuses ( QString fileName )
         st.user.name = grp.readEntry ( "name", QString() );
         st.user.profileImageUrl = grp.readEntry ( "profile_image_url", QString() );
         st.user.description = grp.readEntry( "description" , QString() );
+        st.isDMessage = grp.readEntry( "isDMessage" , false );
 
         //Sorting The new statuses:
         int i=0;
@@ -520,9 +527,12 @@ void TimeLineWidget::loadConfigurations()
 {
     kDebug();
     setDefaultDirection();
-    QStringList fList = AccountManager::self()->listFriends( mCurrentAccount.alias() );
-    txtNewStatus->setFriendsList( fList );
-    comboFriendList->addItems( fList );
+    friendsList = AccountManager::self()->listFriends( mCurrentAccount.alias() );
+//     txtNewStatus->setFriendsList( friendsList );
+    comboFriendList->addItems( friendsList );
+    KCompletion *c = comboFriendList->completionObject( true );;
+    c->setItems( friendsList );
+    c->setCompletionMode( KGlobalSettings::CompletionPopupAuto );
 
     isStartMode = true;
 
@@ -650,16 +660,26 @@ void TimeLineWidget::setCurrentAccount(const Account & account)
 void TimeLineWidget::reloadFriendsList()
 {
     kDebug();
-    comboFriendList->clear();
-    txtNewStatus->clearFriendsList();
+    friendsList.clear();
+//     txtNewStatus->clearFriendsList();
     twitter->listFollowersScreenName();
     twitter->listFriendsScreenName();
 }
 
 void TimeLineWidget::friendsListed(const QStringList & list)
 {
-    comboFriendList->addItems( list );
-    txtNewStatus->appendToFriendsList( list );
+    int count = list.count();
+    for(int i=0; i < count; ++i){
+        if(!friendsList.contains(list[i], Qt::CaseInsensitive ))
+            friendsList<< list[i];
+    }
+    comboFriendList->clear();
+    comboFriendList->addItems( friendsList );
+//     txtNewStatus->setFriendsList( friendsList );
+
+    KCompletion *c = comboFriendList->completionObject( true );;
+    c->setItems( friendsList );
+    c->setCompletionMode( KGlobalSettings::CompletionPopupAuto );
 }
 
 #include "timelinewidget.moc"

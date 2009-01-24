@@ -222,7 +222,8 @@ QList<Status> * Backend::readTimeLineFromXml(const QByteArray & buffer)
 Status Backend::readStatusFromXml(const QByteArray & buffer)
 {
 	QDomDocument document;
-	Status status;
+    Status status;
+    status.isDMessage = false;
 	status.isError = false ;
 	document.setContent(buffer);
 	

@@ -129,7 +129,6 @@ private:
     QList<StatusWidget*> listSentStatus;
     QList<StatusWidget*> listUnreadStatuses;
     uint replyToStatusId;
-//   QString currentUsername;// used for undresanding of username changes!
     bool isStartMode;//used for Notify, if true: notify will not send for any or all new twits, if false will send.
 
     int unreadStatusCount;
@@ -145,6 +144,8 @@ private:
     uint latestReplyStatusId;
     uint latestRecievedStatusId;
     uint latestSentStatusId;
+
+    QStringList friendsList;
 };
 
 #endif

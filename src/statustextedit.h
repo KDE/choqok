@@ -34,9 +34,9 @@ public:
 
     ~StatusTextEdit();
     QStringList friendsList() const;
-    void clearFriendsList();
-    void setFriendsList(const QStringList &list);
-    void appendToFriendsList(const QStringList &list);
+//     void clearFriendsList();
+//     void setFriendsList(const QStringList &list);
+//     void appendToFriendsList(const QStringList &list);
 public slots:
 	void setDefaultDirection(Qt::LayoutDirection dir);
 	void setNumOfCharsLeft();

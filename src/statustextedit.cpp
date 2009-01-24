@@ -82,6 +82,7 @@ void StatusTextEdit::clearContentsAndSetDirection(Qt::LayoutDirection dir)
 	setDefaultDirection(dir);
 }
 
+/*
 QStringList StatusTextEdit::friendsList() const
 {
     return mFriendsList;
@@ -101,6 +102,7 @@ void StatusTextEdit::appendToFriendsList(const QStringList & list)
 {
     mFriendsList<<list;
 }
+*/
 
 #include "statustextedit.moc"
 
