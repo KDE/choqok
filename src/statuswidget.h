@@ -23,7 +23,7 @@
 
 #include <QFrame>
 #include <QTimer>
-#include <ui_status_base.h>
+#include <ui_statuswidget_base.h>
 #include "datacontainers.h"
 #include "constants.h"
 #include "account.h"
@@ -34,7 +34,7 @@ Status Widget
 
 	@author Mehrdad Momeny <mehrdad.momeny@gmail.com>
 */
-class StatusWidget : public QFrame, public Ui_StatusBase
+class StatusWidget : public QFrame, public Ui_StatusWidgetBase
 {
 Q_OBJECT
 public:

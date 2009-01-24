@@ -1,6 +1,6 @@
 <ui version="4.0" >
- <class>StatusBase</class>
- <widget class="QFrame" name="StatusBase" >
+ <class>StatusWidgetBase</class>
+ <widget class="QFrame" name="StatusWidgetBase" >
   <property name="geometry" >
    <rect>
     <x>0</x>
