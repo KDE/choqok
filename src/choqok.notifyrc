@@ -1,6 +1,7 @@
 [Global]
 IconName=choqok
 Comment=choqoK
+Comment[sv]=Choqok
 
 [Event/new-status-arrived]
 Name=New tweet arrived
