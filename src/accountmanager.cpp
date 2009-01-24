@@ -67,7 +67,7 @@ const QList< Account > & AccountManager::accounts() const
     return mAccounts;
 }
 
-Account AccountManager::findAccount( QString &alias )
+Account AccountManager::findAccount( const QString &alias )
 {
     kDebug()<<"Finding: "<<alias;
     int count = mAccounts.count();
@@ -217,6 +217,8 @@ QStringList AccountManager::listFriends(const QString & alias)
 
 void AccountManager::saveFriendsList(const QString & alias, const QStringList & list)
 {
+    if(findAccount( alias ).isError())
+        return;
     KConfigGroup accountGrp( conf, "Account" + alias );
     accountGrp.writeEntry( "friends", list );
     accountGrp.sync();

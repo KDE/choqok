@@ -196,6 +196,38 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
         }
         t = "@<a href=\"" + statusUrl + "\" title=\""+ statusUrl +"\" >" + username + "</a>" + s.mid(i);
 	}
+
+    if(mCurrentAccount->serviceName().toLower() == QString(IDENTICA_SERVICE_TEXT).toLower()) {
+        ///To show Identica TAGs:
+        i = j = 0;
+        s = t;
+        t = QString();
+        while ((j = s.indexOf('#', i)) != -1) {
+            t += s.mid(i, j - i);
+            int k = s.indexOf(QRegExp("[ ,]"), j);
+            if (k == -1) k = s.length();
+            QString tag = s.mid(j+1, k - j - 1);
+            QString url = "http://identi.ca/tag/" + tag;
+            t += "#<a href='" + url + "' title='"+ url +"'>" + tag + "</a>";
+            i = k;
+        }
+        t += s.mid(i);
+
+        ///To show Identica Groups:
+        i = j = 0;
+        s = t;
+        t = QString();
+        while ((j = s.indexOf('!', i)) != -1) {
+            t += s.mid(i, j - i);
+            int k = s.indexOf(QRegExp("[ .,]"), j);
+            if (k == -1) k = s.length();
+            QString group = s.mid(j+1, k - j - 1);
+            QString url = "http://identi.ca/group/" + group;
+            t += "!<a href='" + url + "' title='"+url+"'>" + group + "</a>";
+            i = k;
+        }
+        t += s.mid(i);
+    }
 	if(mCurrentAccount->direction()==Qt::RightToLeft){
 		s = "<div dir='rtl'>";
 	} else {

@@ -67,7 +67,7 @@ public:
      * \param accountId is the ID for the account you want
      * \return the Account object found or NULL if no account was found
      */
-    Account findAccount( QString &alias );
+    Account findAccount( const QString &alias );
 
     /**
      * \brief Delete the account and clean the config data

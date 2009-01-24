@@ -62,6 +62,7 @@ MainWindow::MainWindow()
     connect ( timelineTimer, SIGNAL ( timeout() ), this, SIGNAL ( updateTimeLines() ) );
     connect ( AccountManager::self(), SIGNAL(accountAdded(const Account&)), this, SLOT(addAccountTimeLine(const Account&)) );
     connect ( AccountManager::self(), SIGNAL(accountRemoved(const QString&)), this, SLOT(removeAccountTimeLine(const QString&)) );
+    settingsChanged();
     QTimer::singleShot( 0, this, SLOT(loadAccounts()) );
 }
 
@@ -150,11 +151,13 @@ void MainWindow::settingsChanged()
 {
     kDebug();
     ///TODO Check if there's at least one account? and there isn't any so disable app
-//   if(currentUsername != Settings::username()){
-//     setUnreadStatusesToReadState();
-//     reloadTimeLineLists();
-//   }
-//   setDefaultDirection();
+    if ( AccountManager::self()->accounts().count() < 1 ){
+        if(KMessageBox::questionYesNo( this, i18n("<qt>In order to use this app you need at \
+least one account on <a href='http://identi.ca'>Identi.ca</a> or \
+<a href='http://twitter.com'>Twitter.com</a> services.<br/>Would you like to add your account now?</qt>")
+                                     ) == KMessageBox::Yes )
+           optionsPreferences();
+    }
     timelineTimer->setInterval ( Settings::updateInterval() *60000 );
 
     int count = mainWidget->count();
