@@ -77,8 +77,11 @@ void StatusTextEdit::setNumOfCharsLeft()
 
 void StatusTextEdit::clearContentsAndSetDirection(Qt::LayoutDirection dir)
 {
-	prevStr = this->toHtml();
-	this->clear();
+	QString tmp = this->toPlainText();
+    if(!tmp.isEmpty()){
+        prevStr = this->toHtml();
+        this->clear();
+    }
 	setDefaultDirection(dir);
 }
 
