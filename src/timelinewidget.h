@@ -61,7 +61,7 @@ protected slots:
     void requestDestroyDone ( bool isError );
 
     void directMessagesRecieved( QList< Status >& msgList );
-    void sentMessagesRecieved( QList< Status >& msgList );
+    void outboxMessagesRecieved( QList< Status >& msgList );
 
     void homeTimeLinesRecived ( QList<Status> &statusList );
     void replyTimeLineRecived ( QList<Status> &statusList );
@@ -126,7 +126,7 @@ private:
     QList<StatusWidget*> listHomeStatus;
     QList<StatusWidget*> listReplyStatus;
     QList<StatusWidget*> listInboxStatus;
-    QList<StatusWidget*> listSentStatus;
+    QList<StatusWidget*> listOutboxStatus;
     QList<StatusWidget*> listUnreadStatuses;
     uint replyToStatusId;
     bool isStartMode;//used for Notify, if true: notify will not send for any or all new twits, if false will send.
@@ -134,7 +134,7 @@ private:
     int unreadStatusCount;
     short unreadStatusInHome;
     short unreadStatusInReply;
-    short unreadStatusInSent;
+    short unreadStatusInOutbox;
     short unreadStatusInInbox;
 
     StatusWidget *toBeDestroied;
@@ -142,8 +142,8 @@ private:
     Account mCurrentAccount;
     uint latestHomeStatusId;
     uint latestReplyStatusId;
-    uint latestRecievedStatusId;
-    uint latestSentStatusId;
+    uint latestInboxStatusId;
+    uint latestOutboxStatusId;
 
     QStringList friendsList;
 };

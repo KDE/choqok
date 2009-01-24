@@ -61,7 +61,7 @@ TimeLineWidget::~TimeLineWidget()
     saveStatuses( generateStatusBackupFileName(Backend::HomeTimeLine), listHomeStatus );
     saveStatuses( generateStatusBackupFileName(Backend::ReplyTimeLine), listReplyStatus );
     saveStatuses( generateStatusBackupFileName(Backend::InboxTimeLine), listInboxStatus );
-    saveStatuses( generateStatusBackupFileName(Backend::SentTimeLine), listSentStatus );
+    saveStatuses( generateStatusBackupFileName(Backend::OutboxTimeLine), listOutboxStatus );
 }
 
 void TimeLineWidget::initObjects()
@@ -87,8 +87,8 @@ void TimeLineWidget::initObjects()
               this, SLOT ( replyTimeLineRecived ( QList< Status >& ) ) );
     connect( twitter, SIGNAL(directMessagesRecieved( QList< Status >&)), 
              this, SLOT(directMessagesRecieved(QList< Status >&)) );
-    connect( twitter, SIGNAL(sentMessagesRecieved(QList< Status >&)), 
-             this, SLOT(sentMessagesRecieved(QList< Status >&)) );
+    connect( twitter, SIGNAL(outboxMessagesRecieved(QList< Status >&)), 
+             this, SLOT(outboxMessagesRecieved(QList< Status >&)) );
     connect ( twitter, SIGNAL ( sigPostNewStatusDone ( bool ) ), this, SLOT ( postingNewStatusDone ( bool ) ) );
     connect ( twitter, SIGNAL ( sigFavoritedDone ( bool ) ), this, SLOT ( requestFavoritedDone ( bool ) ) );
     connect ( twitter, SIGNAL ( sigDestroyDone ( bool ) ), this, SLOT ( requestDestroyDone ( bool ) ) );
@@ -96,7 +96,9 @@ void TimeLineWidget::initObjects()
     connect ( twitter, SIGNAL (friendsListed(const QStringList&)), this, SLOT(friendsListed(const QStringList&)));
     connect ( twitter, SIGNAL (followersListed(const QStringList&)), this, SLOT(friendsListed(const QStringList&)));
 
-    replyToStatusId = unreadStatusCount = unreadStatusInReply = unreadStatusInHome = latestRecievedStatusId = latestSentStatusId = 0;
+    replyToStatusId = unreadStatusCount = unreadStatusInReply = unreadStatusInHome =
+            unreadStatusInInbox = unreadStatusInOutbox = latestInboxStatusId =
+            latestOutboxStatusId = 0;
 
     setTabOrder( chkDMessage, comboFriendList);
     setTabOrder( comboFriendList, btnReloadFriends);
@@ -130,7 +132,7 @@ void TimeLineWidget::settingsChanged()
 {
     kDebug();
     setDefaultDirection();
-
+    twitter->settingsChanged();
 }
 
 void TimeLineWidget::updateTimeLines()
@@ -138,8 +140,8 @@ void TimeLineWidget::updateTimeLines()
     kDebug();
     twitter->requestTimeLine ( latestHomeStatusId, Backend::HomeTimeLine );
     twitter->requestTimeLine ( latestReplyStatusId, Backend::ReplyTimeLine );
-    twitter->requestDMessages( latestRecievedStatusId, Backend::Recieved );
-    twitter->requestDMessages( latestSentStatusId, Backend::Sent );
+    twitter->requestDMessages( latestInboxStatusId, Backend::Inbox );
+    twitter->requestDMessages( latestOutboxStatusId, Backend::Outbox );
 
     if ( latestHomeStatusId == 0 || latestReplyStatusId == 0 )
         isStartMode = true;
@@ -171,7 +173,7 @@ void TimeLineWidget::directMessagesRecieved(QList< Status > & msgList)
     }
 }
 
-void TimeLineWidget::sentMessagesRecieved(QList< Status > & msgList)
+void TimeLineWidget::outboxMessagesRecieved(QList< Status > & msgList)
 {
     kDebug();
     emit notify ( i18n ( "Latest sent messages received!" ) );
@@ -182,15 +184,15 @@ void TimeLineWidget::sentMessagesRecieved(QList< Status > & msgList)
         emit notify ( i18n ( "No new messages received. The list is up to date." ) );
         return;
     } else {
-        addNewStatusesToUi ( msgList, sentLayout, &listSentStatus, Backend::SentTimeLine );
-        sentScroll->verticalScrollBar()->setSliderPosition ( 0 );
+        addNewStatusesToUi ( msgList, outboxLayout, &listOutboxStatus, Backend::OutboxTimeLine );
+        outboxScroll->verticalScrollBar()->setSliderPosition ( 0 );
 
         kDebug() << count << " Statuses received.";
 
 //         if ( !isStartMode ) {
-//             unreadStatusInSent += count;
-//             if( unreadStatusInSent > 0 )
-//                 tabs->setTabText ( 3, i18n ( "Outbox(%1)", unreadStatusInSent ) );
+//             unreadStatusInOutbox += count;
+//             if( unreadStatusInOutbox > 0 )
+//                 tabs->setTabText ( 3, i18n ( "Outbox(%1)", unreadStatusInOutbox ) );
 //         }
     }
 }
@@ -281,7 +283,7 @@ void TimeLineWidget::addNewStatusesToUi ( QList< Status > & statusList, QBoxLayo
                 --numOfNewStatuses;
                 wt->setUnread ( StatusWidget::WithoutNotify );
             } else {
-                if(type == Backend::SentTimeLine){
+                if(type == Backend::OutboxTimeLine){
                     wt->setUnread ( StatusWidget::WithoutNotify );
                 } else if ( allInOne ) {
                     notifyStr += "<b>" + it->user.screenName + " : </b>" + it->content + "<br/>";
@@ -304,14 +306,14 @@ void TimeLineWidget::addNewStatusesToUi ( QList< Status > & statusList, QBoxLayo
     } else if( type == Backend::ReplyTimeLine && latestId > latestReplyStatusId){
         kDebug()<<"Latest reply statusId sets to: "<<latestId;
         latestReplyStatusId = latestId;
-    } else if( type == Backend::InboxTimeLine && latestId > latestRecievedStatusId ) {
+    } else if( type == Backend::InboxTimeLine && latestId > latestInboxStatusId ) {
         kDebug()<<"Latest recieved statusId sets to: "<<latestId;
-        latestRecievedStatusId = latestId;
-    } else if( type == Backend::SentTimeLine && latestId > latestSentStatusId ) {
+        latestInboxStatusId = latestId;
+    } else if( type == Backend::OutboxTimeLine && latestId > latestOutboxStatusId ) {
         kDebug()<<"Latest sent statusId sets to: "<<latestId;
-        latestSentStatusId = latestId;
+        latestOutboxStatusId = latestId;
     }
-    if ( !isStartMode )
+    if ( !isStartMode && type != Backend::OutboxTimeLine )
         checkUnreadStatuses ( numOfNewStatuses );
 
     if ( isThereIsAnyNewStatusToNotify ) {
@@ -548,9 +550,9 @@ void TimeLineWidget::loadConfigurations()
     if ( lstInbox.count() > 0 )
         addNewStatusesToUi ( lstInbox, inboxLayout, &listInboxStatus, Backend::InboxTimeLine );
 
-    QList< Status > lstSent = loadStatuses ( generateStatusBackupFileName(Backend::SentTimeLine) );
-    if ( lstSent.count() > 0 )
-        addNewStatusesToUi ( lstSent, sentLayout, &listSentStatus, Backend::SentTimeLine );
+    QList< Status > lstOutbox = loadStatuses ( generateStatusBackupFileName(Backend::OutboxTimeLine) );
+    if ( lstOutbox.count() > 0 )
+        addNewStatusesToUi ( lstOutbox, outboxLayout, &listOutboxStatus, Backend::OutboxTimeLine );
 }
 
 void TimeLineWidget::checkUnreadStatuses ( int numOfNewStatusesReciened )
@@ -636,8 +638,8 @@ QString TimeLineWidget::generateStatusBackupFileName(Backend::TimeLineType type)
         case Backend::InboxTimeLine:
             name += "inbox";
             break;
-        case Backend::SentTimeLine:
-            name += "sent";
+        case Backend::OutboxTimeLine:
+            name += "outbox";
             break;
         default:
             name += QString::number(type);

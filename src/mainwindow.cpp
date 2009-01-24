@@ -141,8 +141,7 @@ void MainWindow::optionsPreferences()
     dialog->addPage ( appearsSettingsDlg, i18n ( "Appearances" ), "format-stroke-color" );
 
     connect ( dialog, SIGNAL ( settingsChanged ( QString ) ), this, SLOT ( settingsChanged() ) );
-//   connect(dialog, SIGNAL(settingsChanged(QString)), twitter, SLOT(settingsChanged()));********************
-//   currentUsername = Settings::username();
+
     dialog->setAttribute ( Qt::WA_DeleteOnClose );
     dialog->show();
 }
@@ -158,8 +157,10 @@ void MainWindow::settingsChanged()
 //   setDefaultDirection();
     timelineTimer->setInterval ( Settings::updateInterval() *60000 );
 
-    ///TODO Call for All TimeLineWidgets settingsChanged() function.
-    /// or simply add all of them to SIGNAL on optionsPreferences function. :)
+    int count = mainWidget->count();
+    for ( int i=0; i<count; ++i  ){
+        qobject_cast<TimeLineWidget *>( mainWidget->widget( i ) )->settingsChanged();
+    }
 }
 
 void MainWindow::notify ( const QString &message )

@@ -315,7 +315,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabSent" >
+     <widget class="QWidget" name="tabOutbox" >
       <attribute name="title" >
        <string>Outbox</string>
       </attribute>
@@ -327,7 +327,7 @@
         <number>1</number>
        </property>
        <item row="0" column="0" >
-        <widget class="QScrollArea" name="sentScroll" >
+        <widget class="QScrollArea" name="outboxScroll" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
            <horstretch>0</horstretch>
@@ -343,7 +343,7 @@
          <property name="widgetResizable" >
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="frameSent" >
+         <widget class="QWidget" name="frameOutbox" >
           <property name="geometry" >
            <rect>
             <x>0</x>
@@ -360,7 +360,7 @@
             <number>0</number>
            </property>
            <item>
-            <layout class="QVBoxLayout" name="sentLayout" >
+            <layout class="QVBoxLayout" name="outboxLayout" >
              <property name="spacing" >
               <number>1</number>
              </property>
@@ -415,7 +415,7 @@
   <tabstop>btnReloadFriends</tabstop>
   <tabstop>tabs</tabstop>
   <tabstop>homeScroll</tabstop>
-  <tabstop>sentScroll</tabstop>
+  <tabstop>outboxScroll</tabstop>
   <tabstop>inboxScroll</tabstop>
   <tabstop>replyScroll</tabstop>
  </tabstops>

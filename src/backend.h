@@ -23,6 +23,7 @@
 #include <QStringList>
 #include <QtCore/QObject>
 #include <QMap>
+#include <KUrl>
 #include "datacontainers.h"
 #include "account.h"
 class KJob;
@@ -36,8 +37,8 @@ class Backend : public QObject
 {
 	Q_OBJECT
 public:
-	enum TimeLineType{HomeTimeLine=1, ReplyTimeLine, InboxTimeLine, SentTimeLine, UserTimeLine};
-    enum DMessageType{Recieved=1, Sent};
+	enum TimeLineType{HomeTimeLine=1, ReplyTimeLine, InboxTimeLine, OutboxTimeLine, UserTimeLine};
+    enum DMessageType{Inbox=1, Outbox};
     explicit Backend(Account *account, QObject* parent=0);
 
     ~Backend();
@@ -73,7 +74,7 @@ signals:
 	void replyTimeLineRecived(QList<Status> &statusList);
     void userVerified(Account *userAccount);
     void directMessagesRecieved(QList<Status> &msgList);
-    void sentMessagesRecieved(QList<Status> &msgList);
+    void outboxMessagesRecieved(QList<Status> &msgList);
     void followersListed(const QStringList &followersList);
     void friendsListed(const QStringList &friendsList);
 	
@@ -100,6 +101,7 @@ private:
 	Status readStatusFromXml(const QByteArray &buffer);
     Status readDMessageFromXml(const QByteArray &buffer);
 	QString prepareStatus(QString status);
+    void setDefaultArgs(KUrl &url);
     void requestCurrentUser();
     void requestFollowers(int page=1);
     void requestFriends(int page=1);
@@ -117,6 +119,7 @@ private:
     short followersPage;
     QStringList friendsList;
     short friendsPage;
+    QString mScheme;
 };
 
 #endif

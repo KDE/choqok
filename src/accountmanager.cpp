@@ -46,7 +46,6 @@ AccountManager::AccountManager(QObject* parent):
     loadAccounts();
 }
 
-
 AccountManager::~AccountManager()
 {
     mSelf = 0L;
@@ -192,7 +191,7 @@ void AccountManager::loadAccounts()
                 kDebug()<<"Password loaded from config file.";
             }
             a.setIsError( false );
-            if(a.userId() == -1){///Just for compatibility with previous versions
+            if(a.userId() == (uint)-1){///Just for compatibility with previous versions
                 Account *account = new Account(a);
                 Backend *b = new Backend(account);
                 connect(b, SIGNAL(userVerified(Account*)), this, SLOT(userVerified(Account*)));

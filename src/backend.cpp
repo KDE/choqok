@@ -28,34 +28,25 @@
 #include "settings.h"
 #include <kio/netaccess.h>
 
-// #define HTTP "http://twitter.com/"
-// #define HTTPS "https://twitter.com/"
-
 Backend::Backend(Account *account, QObject* parent): QObject(parent)
 {
 	kDebug();
 	settingsChanged();
     mCurrentAccount = account;
-// 	urls[0] = ;
-// 	urls[HomeTimeLine] = ;
-// 	urls[ReplyTimeLine] = prefix + "statuses/replies.xml";
-// 	urls[UserTimeLine] = prefix + "statuses/user_timeline.xml";
-	login();	
-	
+// 	login();
 }
 
 Backend::~Backend()
 {
 	kDebug();
-	logout();
+// 	logout();
 }
 
 void Backend::postNewStatus(const QString & statusMessage, uint replyToStatusId)
 {
 	kDebug();
 	KUrl url(mCurrentAccount->apiPath() + "/statuses/update.xml");
-	url.setUser(mCurrentAccount->username());
-    url.setPass(mCurrentAccount->password());
+    setDefaultArgs( url );
 	QByteArray data = "status=";
 	data += QUrl::toPercentEncoding(prepareStatus(statusMessage));
 	if(replyToStatusId!=0)
@@ -79,8 +70,7 @@ void Backend::sendDMessage(const QString & screenName, const QString & message)
 {
     kDebug();
     KUrl url(mCurrentAccount->apiPath() + "/direct_messages/new.xml");
-    url.setUser(mCurrentAccount->username());
-    url.setPass(mCurrentAccount->password());
+    setDefaultArgs( url );
     QByteArray data = "user=";
     data += screenName;
     data += "&text=";
@@ -118,9 +108,9 @@ void Backend::requestTimeLine(uint latestStatusId, TimeLineType type, int page)
 		url.setUrl(mCurrentAccount->apiPath() + "/statuses/friends_timeline.xml");
 	else
         url.setUrl(mCurrentAccount->apiPath() + "/statuses/replies.xml");
-	url.setUser(mCurrentAccount->username());
-    url.setPass(mCurrentAccount->password());
-	url.setQuery(latestStatusId ? "?since_id=" + QString::number(latestStatusId) : QString());
+    setDefaultArgs( url );
+
+    url.setQuery(latestStatusId ? "?since_id=" + QString::number(latestStatusId) : QString());
 	kDebug()<<"Latest status Id: "<<latestStatusId;
 	
 
@@ -300,8 +290,7 @@ void Backend::requestFavorited(uint statusId, bool isFavorite)
 	} else {
         url.setUrl(mCurrentAccount->apiPath() + "/favorites/destroy/"+QString::number(statusId)+".xml");
 	}
-    url.setUser(mCurrentAccount->username());
-    url.setPass(mCurrentAccount->password());
+    setDefaultArgs( url );
 	
 	KIO::TransferJob *job = KIO::http_post(url, QByteArray(), KIO::HideProgressInfo) ;
 	if(!job){
@@ -321,8 +310,7 @@ void Backend::requestDestroy(uint statusId)
 	kDebug();
     KUrl url(mCurrentAccount->apiPath() + "/statuses/destroy/"+QString::number(statusId)+".xml");
 	
-    url.setUser(mCurrentAccount->username());
-    url.setPass(mCurrentAccount->password());
+    setDefaultArgs( url );
 	
 	KIO::TransferJob *job = KIO::http_post(url, QByteArray(), KIO::HideProgressInfo) ;
 	if(!job){
@@ -342,8 +330,7 @@ void Backend::requestDestroyDMessage(uint statusId)
     kDebug();
     KUrl url(mCurrentAccount->apiPath() + "/direct_messages/destroy/"+QString::number(statusId)+".xml");
 
-    url.setUser(mCurrentAccount->username());
-    url.setPass(mCurrentAccount->password());
+    setDefaultArgs( url );
 
     KIO::TransferJob *job = KIO::http_post(url, QByteArray(), KIO::HideProgressInfo) ;
     if(!job){
@@ -509,10 +496,10 @@ QString Backend::prepareStatus(QString status)
 
 void Backend::settingsChanged()
 {
-// 	if(Settings::useSecureConnection())
-// 		prefix = mCurrentAccount->apiPath;
-// 	else
-// 		prefix = HTTP;
+	if(Settings::useSecureConnection())
+		mScheme = "https";
+	else
+		mScheme = "http";
 }
 
 void Backend::slotPostNewStatusData(KIO::Job * job, const QByteArray & data)
@@ -532,8 +519,7 @@ void Backend::verifyCredential()
     kDebug();
     KUrl url;
     url.setUrl(mCurrentAccount->apiPath() + "/account/verify_credentials.xml");
-    url.setUser(mCurrentAccount->username());
-    url.setPass(mCurrentAccount->password());
+    setDefaultArgs( url );
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
     if(!job){
@@ -644,8 +630,7 @@ void Backend::requestCurrentUser()
     kDebug();
     KUrl url;
     url.setUrl(mCurrentAccount->apiPath() + "/statuses/user_timeline.xml");
-    url.setUser(mCurrentAccount->username());
-    url.setPass(mCurrentAccount->password());
+    setDefaultArgs( url );
     url.setQuery( "?count=1" );
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
@@ -664,12 +649,11 @@ void Backend::requestDMessages(uint latestStatusId, DMessageType type, int page)
 {
     kDebug();
     KUrl url;
-    if ( type == Recieved )
+    if ( type == Inbox )
         url.setUrl(mCurrentAccount->apiPath() + "/direct_messages.xml");
     else
         url.setUrl(mCurrentAccount->apiPath() + "/direct_messages/sent.xml");
-    url.setUser(mCurrentAccount->username());
-    url.setPass(mCurrentAccount->password());
+    setDefaultArgs( url );
     url.setQuery(latestStatusId ? "?since_id=" + QString::number(latestStatusId) : QString());
     kDebug()<<"DMessage: Latest status Id: "<<latestStatusId;
 
@@ -702,16 +686,16 @@ void Backend::slotRequestDMessagesFinished(KJob *job)
     KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob*>(job);
     QList<Status> *ptr = readDMessagesFromXml(j->data());
     switch(mRequestDMessagesMap.value(job)){
-        case Recieved:
+        case Inbox:
             if(ptr){
                 emit directMessagesRecieved(*ptr);
             } else {
                 kDebug()<<"Null returned from Backend::readDMessagesFromXml()";
             }
             break;
-        case Sent:
+        case Outbox:
             if(ptr)
-                emit sentMessagesRecieved(*ptr);
+                emit outboxMessagesRecieved(*ptr);
             else
                 kDebug()<<"Null returned from Backend::readDMessagesFromXml()";
             break;
@@ -831,7 +815,7 @@ void Backend::slotSendDMessageFinished(KJob *job)
             QList<Status> newSt;
             newSt.append(st);
             emit sigPostNewStatusDone(false);
-            emit sentMessagesRecieved(newSt);
+            emit outboxMessagesRecieved(newSt);
         }
     }
 }
@@ -940,8 +924,7 @@ void Backend::requestFollowers(int page)
     kDebug();
     KUrl url;
     url.setUrl(mCurrentAccount->apiPath() + "/statuses/followers.xml");
-    url.setUser(mCurrentAccount->username());
-    url.setPass(mCurrentAccount->password());
+    setDefaultArgs( url );
     url.setQuery("?page=" + QString::number(page));
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
@@ -968,7 +951,6 @@ void Backend::slotListFollowersScreenName(KJob * job)
     }
 }
 
-
 void Backend::listFriendsScreenName()
 {
     kDebug();
@@ -981,8 +963,7 @@ void Backend::requestFriends(int page)
     kDebug();
     KUrl url;
     url.setUrl(mCurrentAccount->apiPath() + "/statuses/friends/" + mCurrentAccount->username() + ".xml");
-    url.setUser(mCurrentAccount->username());
-    url.setPass(mCurrentAccount->password());
+    setDefaultArgs( url );
     url.setQuery("?page=" + QString::number(page));
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
@@ -1041,6 +1022,13 @@ QStringList Backend::readUsersNameFromXml(const QByteArray & buffer)
         node = node.nextSibling();
     }
     return list;
+}
+
+void Backend::setDefaultArgs(KUrl & url)
+{
+    url.setScheme( mScheme );
+    url.setUser(mCurrentAccount->username());
+    url.setPass(mCurrentAccount->password());
 }
 
 

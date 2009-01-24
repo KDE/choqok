@@ -79,9 +79,6 @@
      <property name="horizontalScrollBarPolicy" >
       <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
-     <property name="openExternalLinks" >
-      <bool>true</bool>
-     </property>
     </widget>
    </item>
    <item row="0" column="2" >
@@ -223,9 +220,6 @@
      </property>
      <property name="horizontalScrollBarPolicy" >
       <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="openExternalLinks" >
-      <bool>true</bool>
      </property>
     </widget>
    </item>
