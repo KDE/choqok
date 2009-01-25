@@ -22,10 +22,7 @@
 #include <kdebug.h>
 #include <KConfig>
 #include <KConfigGroup>
-// #include <kjob.h>
-// #include <kio/job.h>
 #include <kio/deletejob.h>
-// #include <kio/netaccess.h>
 #include <kwallet.h>
 #include <kstandarddirs.h>
 #include "backend.h"

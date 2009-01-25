@@ -134,11 +134,6 @@ void QuickTwit::loadAccounts()
         accountsList.append(current);
         ui.comboAccounts->addItem(current.alias());
     }
-    if(ac.count()>0){
-        txtStatus->setEnabled(true);
-    } else {
-        txtStatus->setEnabled(false);
-    }
 }
 
 void QuickTwit::addAccount(const Account & account)
@@ -156,7 +151,6 @@ void QuickTwit::removeAccount(const QString & alias)
         if( accountsList[i].alias() == alias ){
             accountsList.removeAt(i);
             ui.comboAccounts->removeItem(i);
-            kDebug()<<"Found!";
             return;
         }
     }

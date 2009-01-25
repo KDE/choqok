@@ -39,6 +39,7 @@
 #include "constants.h"
 #include "accounts.h"
 #include "accountmanager.h"
+#include "accountswizard.h"
 
 MainWindow::MainWindow()
         : KXmlGuiWindow()
@@ -173,8 +174,11 @@ void MainWindow::settingsChanged()
         if(KMessageBox::questionYesNo( this, i18n("<qt>In order to use this app you need at \
 least one account on <a href='http://identi.ca'>Identi.ca</a> or \
 <a href='http://twitter.com'>Twitter.com</a> services.<br/>Would you like to add your account now?</qt>")
-                                     ) == KMessageBox::Yes )
-           optionsPreferences();
+                                     ) == KMessageBox::Yes ) {
+            AccountsWizard *dia = new AccountsWizard(QString(), this);
+            dia->setAttribute( Qt::WA_DeleteOnClose );
+            dia->show();
+                                     }
     }
     timelineTimer->setInterval ( Settings::updateInterval() *60000 );
 
