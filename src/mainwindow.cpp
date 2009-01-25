@@ -102,6 +102,12 @@ void MainWindow::setupActions()
 //     quickTwitGlobalShortcut.setAlternate ( Qt::MetaModifier | Qt::Key_T );
     newTwit->setGlobalShortcut ( quickTwitGlobalShortcut );
 
+    KAction *markRead = new KAction ( KIcon ( "mail-mark-read" ), i18n ( "Mark All As Read" ), this );
+    actionCollection()->addAction ( QLatin1String ( "choqok_mark_read" ), markRead );
+    markRead->setShortcut ( KShortcut(Qt::CTRL | Qt::Key_R) );
+    actUpdate->setGlobalShortcutAllowed ( false );
+    connect ( markRead, SIGNAL ( triggered ( bool ) ), this, SIGNAL ( setUnreadStatusesToReadState() ) );
+
     KAction *showMain = new KAction(this);
     actionCollection()->addAction( QLatin1String( "toggle_mainwin" ), showMain);
     showMain->setShortcut( KShortcut(Qt::CTRL + Qt::Key_C) );
@@ -251,6 +257,7 @@ void MainWindow::disableApp()
     timelineTimer->stop();
     actionCollection()->action ( "update_timeline" )->setEnabled ( false );
     actionCollection()->action ( "choqok_new_twit" )->setEnabled ( false );
+    actionCollection()->action ( "choqok_mark_read" )->setEnabled ( false );
 }
 
 void MainWindow::enableApp()
@@ -259,6 +266,7 @@ void MainWindow::enableApp()
     timelineTimer->start();
     actionCollection()->action ( "update_timeline" )->setEnabled ( true );
     actionCollection()->action ( "choqok_new_twit" )->setEnabled ( true );
+    actionCollection()->action ( "choqok_mark_read" )->setEnabled ( true );
 }
 
 void MainWindow::addAccountTimeLine(const Account & account)

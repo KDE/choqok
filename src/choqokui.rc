@@ -4,6 +4,7 @@
   <Menu name="file"><text>File</text>
 	  <Action name="choqok_new_twit" />
 	  <Action name="update_timeline" />
+      <Action name="choqok_mark_read" />
       <Separator/>
         <Action name="choqok_enable_updates"/>
         <Action name="choqok_enable_notify"/>
