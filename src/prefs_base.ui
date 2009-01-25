@@ -62,11 +62,14 @@
        </item>
        <item row="3" column="1" >
         <widget class="KIntSpinBox" name="kcfg_updateInterval" >
+         <property name="specialValueText" >
+          <string>Disabled</string>
+         </property>
          <property name="suffix" >
           <string> Minutes</string>
          </property>
          <property name="minimum" >
-          <number>1</number>
+          <number>2</number>
          </property>
          <property name="value" >
           <number>10</number>

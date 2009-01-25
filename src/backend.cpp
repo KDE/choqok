@@ -31,6 +31,7 @@
 Backend::Backend(Account *account, QObject* parent): QObject(parent)
 {
 	kDebug();
+    mScheme = "http";
 	settingsChanged();
     mCurrentAccount = account;
 // 	login();

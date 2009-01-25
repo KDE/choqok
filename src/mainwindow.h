@@ -52,7 +52,7 @@ public:
     MainWindow();
 
     /**
-        * Default Destructor
+    * Default Destructor
     */
     virtual ~MainWindow();
     
@@ -86,21 +86,22 @@ private:
     void disableApp();
     void enableApp();
     void loadConfigurations();
-//     void addNewAccountTimeLine(const Account &account);
 
 private slots:
     void loadAccounts();
     void addAccountTimeLine(const Account &account);
     void removeAccountTimeLine(const QString &alias);
-//     void updateAccountTimeLine(const Account &account);
+    void setTimeLineUpdatesEnabled( bool isEnabled );
+    void setNotificationsEnabled( bool isEnabled );
 
 private:
     KTabWidget *mainWidget;
     QTimer *timelineTimer;
     Ui::prefs_base ui_prefs_base;
-//     Ui::accounts_base ui_accounts_base;
     Ui::appears_base ui_appears_base;
     QString currentUsername;// used for undresanding of username changes!
+    int mPrevNotifyType;
+    int mPrevUpdateInterval;
 };
 
 #endif

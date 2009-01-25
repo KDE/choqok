@@ -33,7 +33,6 @@
 SysTrayIcon::SysTrayIcon(QWidget* parent): KSystemTrayIcon(parent)
 {
 	kDebug();
-	setToolTip(i18n("choqoK Twitter - Hit me to update your status"));
 	unread = 0;
 	mainWin = new MainWindow;
 	
@@ -79,18 +78,14 @@ void SysTrayIcon::setupActions()
 	
 	contextMenu()->addAction(mainWin->actionCollection()->action("update_timeline"));
 	contextMenu()->addSeparator();
-	
-// 	KAction *showMain = new KAction(this);
-//     showMain->setShortcut( KShortcut(Qt::CTRL + Qt::Key_C) );
-//     KShortcut toggleMainGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_C );
-//     showMain->setGlobalShortcutAllowed( true );
-//     showMain->setGlobalShortcut( toggleMainGlobalShortcut );
-// 	if(mainWin->isVisible())
-// 		showMain->setText(i18n("Minimize"));
-// 	else
-// 		showMain->setText(i18n("Restore"));
-// 	connect(showMain, SIGNAL(triggered( bool )), this, SLOT(toggleMainWindowVisibility()));
-//     actionCollection()->addAction();
+
+    QAction *enableUpdates = mainWin->actionCollection()->action("choqok_enable_updates");
+    connect ( enableUpdates, SIGNAL(toggled( bool )), this, SLOT(setTimeLineUpdatesEnabled(bool)) );
+    contextMenu()->addAction( enableUpdates );
+    setTimeLineUpdatesEnabled( enableUpdates->isChecked() );
+
+    contextMenu()->addAction( mainWin->actionCollection()->action("choqok_enable_notify") );
+    contextMenu()->addSeparator();
     contextMenu()->addAction(mainWin->actionCollection()->action("toggle_mainwin"));
 }
 
@@ -109,17 +104,6 @@ void SysTrayIcon::postQuickTwit()
 		quickWidget->showFocusedOnNewStatusField();
 	}
 }
-
-// void SysTrayIcon::toggleMainWindowVisibility()
-// {
-// 	if(mainWin->isVisible()){
-// 		mainWin->close();
-// 		actionCollection()->action("toggle-mainwin")->setText(i18n("&Restore"));
-// 	} else {
-// 		mainWin->show();
-// 		actionCollection()->action("toggle-mainwin")->setText(i18n("&Minimize"));
-// 	}
-// }
 
 void SysTrayIcon::sysTrayActivated(QSystemTrayIcon::ActivationReason reason)
 {
@@ -214,6 +198,16 @@ void SysTrayIcon::systemNotify(const QString &title, const QString &message, con
 				+ QString(" -u low -i "+ iconUrl +" \"") + title + QString("\" \"") + msg + QString("\"");
 		QProcess::execute(libnotifyCmd);
 	}
+}
+
+void SysTrayIcon::setTimeLineUpdatesEnabled(bool isEnabled)
+{
+    if(isEnabled) {
+        setToolTip(i18n("choqoK - Hit me to update your status"));
+    } else {
+        slotSetUnread( -unread );
+        setToolTip(i18n("choqoK - Disabeld"));
+    }
 }
 
 #include "systrayicon.moc"

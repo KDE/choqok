@@ -47,6 +47,9 @@ public slots:
 protected slots:
 	void slotSetUnread(int numOfUnreadStatuses);
 	
+private slots:
+    void setTimeLineUpdatesEnabled( bool isEnabled );
+
 private:
 	void setupActions();
 	

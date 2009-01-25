@@ -56,8 +56,10 @@ MainWindow::MainWindow()
     setupGUI();
 
     timelineTimer = new QTimer ( this );
-    timelineTimer->setInterval ( Settings::updateInterval() *60000 );
-    timelineTimer->start();
+//     timelineTimer->setInterval ( Settings::updateInterval() *60000 );
+//     timelineTimer->start();
+    mPrevNotifyType = 1;
+    mPrevUpdateInterval = 10;
 
     connect ( timelineTimer, SIGNAL ( timeout() ), this, SIGNAL ( updateTimeLines() ) );
     connect ( AccountManager::self(), SIGNAL(accountAdded(const Account&)), this, SLOT(addAccountTimeLine(const Account&)) );
@@ -107,6 +109,23 @@ void MainWindow::setupActions()
     else
         showMain->setText(i18n("Restore"));
     connect(showMain, SIGNAL(triggered( bool )), this, SLOT(toggleMainWindowVisibility()));
+
+    KAction *enableUpdates = new KAction ( i18n ( "Enable update timer" ), this );
+    enableUpdates->setCheckable( true );
+    actionCollection()->addAction ( QLatin1String ( "choqok_enable_updates" ), enableUpdates );
+    enableUpdates->setShortcut ( KShortcut(Qt::CTRL | Qt::Key_U) );
+    enableUpdates->setGlobalShortcutAllowed ( true );
+    connect ( enableUpdates, SIGNAL(toggled( bool )), this, SLOT(setTimeLineUpdatesEnabled(bool)) );
+//     KShortcut quickTwitGlobalShortcut ( Qt::CTRL | Qt::META | Qt::Key_T );
+//     quickTwitGlobalShortcut.setAlternate ( Qt::MetaModifier | Qt::Key_T );
+//     newTwit->setGlobalShortcut ( quickTwitGlobalShortcut );
+
+    KAction *enableNotify = new KAction ( i18n ( "Enable notifications" ), this );
+    enableNotify->setCheckable( true );
+    actionCollection()->addAction ( QLatin1String ( "choqok_enable_notify" ), enableNotify );
+    enableNotify->setShortcut ( KShortcut(Qt::CTRL | Qt::Key_N) );
+    enableNotify->setGlobalShortcutAllowed ( true );
+    connect ( enableNotify, SIGNAL(toggled( bool )), this, SLOT(setNotificationsEnabled(bool)) );
 }
 
 void MainWindow::toggleMainWindowVisibility()
@@ -150,7 +169,6 @@ void MainWindow::optionsPreferences()
 void MainWindow::settingsChanged()
 {
     kDebug();
-    ///TODO Check if there's at least one account? and there isn't any so disable app
     if ( AccountManager::self()->accounts().count() < 1 ){
         if(KMessageBox::questionYesNo( this, i18n("<qt>In order to use this app you need at \
 least one account on <a href='http://identi.ca'>Identi.ca</a> or \
@@ -163,6 +181,19 @@ least one account on <a href='http://identi.ca'>Identi.ca</a> or \
     int count = mainWidget->count();
     for ( int i=0; i<count; ++i  ){
         qobject_cast<TimeLineWidget *>( mainWidget->widget( i ) )->settingsChanged();
+    }
+    if(Settings::notifyType() == 0){
+        actionCollection()->action( "choqok_enable_notify" )->setChecked( false );
+    } else {
+        actionCollection()->action( "choqok_enable_notify" )->setChecked( true );
+    }
+    if(Settings::updateInterval() > 2){
+        timelineTimer->start();
+        actionCollection()->action( "choqok_enable_updates" )->setChecked( true );
+    } else {
+        kDebug()<<"Updating disabeld.";
+        timelineTimer->stop();
+        actionCollection()->action( "choqok_enable_updates" )->setChecked( false );
     }
 }
 
@@ -194,8 +225,6 @@ void MainWindow::quitApp()
 void MainWindow::loadConfigurations()
 {
     kDebug();
-
-    timelineTimer->setInterval ( Settings::updateInterval() *60000 );
 }
 
 bool MainWindow::queryClose()
@@ -296,5 +325,30 @@ void MainWindow::showTimeLine()
         this->show();
     this->raise();
 }
+
+void MainWindow::setTimeLineUpdatesEnabled(bool isEnabled)
+{
+    kDebug();
+    if(isEnabled){
+        Settings::setUpdateInterval( mPrevUpdateInterval );
+        timelineTimer->start( Settings::updateInterval() *60000 );
+    } else {
+        mPrevUpdateInterval = Settings::updateInterval();
+        timelineTimer->stop();
+        Settings::setUpdateInterval( 2 );
+    }
+}
+
+void MainWindow::setNotificationsEnabled(bool isEnabled)
+{
+    kDebug();
+    if(isEnabled){
+        Settings::setNotifyType( mPrevNotifyType );
+    } else {
+        mPrevNotifyType = Settings::notifyType();
+        Settings::setNotifyType( 0 );
+    }
+}
+
 
 #include "mainwindow.moc"
