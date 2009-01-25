@@ -49,6 +49,7 @@ public:
     ~TimeLineWidget();
     Account currentAccount() const;
     void setCurrentAccount(const Account &account);
+    void setRemoved(bool isRemoved);
 
 public slots:
     void settingsChanged();
@@ -117,7 +118,7 @@ private:
     void clearTimeLineList ( QList<StatusWidget*> *list );
 
     void loadConfigurations();
-    QString generateStatusBackupFileName(Backend::TimeLineType type);
+//     QString generateStatusBackupFileName(Backend::TimeLineType type);
 
 private:
     Backend *twitter;
@@ -146,6 +147,8 @@ private:
     uint latestOutboxStatusId;
 
     QStringList friendsList;
+
+    bool mRemoved; // if this is True, so this timeline is removed. (Used for saving account settings and history)
 };
 
 #endif

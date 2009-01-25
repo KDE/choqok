@@ -300,6 +300,8 @@ void MainWindow::removeAccountTimeLine(const QString & alias)
             mainWidget->removeTab( i );
             if(mainWidget->count()<1)
                 disableApp();
+            tmp->setRemoved( true );
+            tmp->deleteLater();
             return;
         }
     }

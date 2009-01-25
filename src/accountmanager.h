@@ -24,7 +24,7 @@
 #include <QObject>
 #include "datacontainers.h"
 #include "account.h"
-
+#include "backend.h"
 class KConfig;
 namespace KWallet
 {
@@ -43,6 +43,8 @@ public:
     AccountManager(QObject* parent=0);
 
     ~AccountManager();
+
+    static QString generateStatusBackupFileName(const QString &name, Backend::TimeLineType type);
 
     /**
      * \brief Retrieve the instance of AccountManager.

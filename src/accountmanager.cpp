@@ -24,7 +24,7 @@
 #include <KConfigGroup>
 // #include <kjob.h>
 // #include <kio/job.h>
-// #include <kio/deletejob.h>
+#include <kio/deletejob.h>
 // #include <kio/netaccess.h>
 #include <kwallet.h>
 #include <kstandarddirs.h>
@@ -96,18 +96,14 @@ bool AccountManager::removeAccount(const QString &alias)
                 if(mWallet->removeEntry(alias)==0)
                     kDebug()<<"Password successfully removed from kde wallet";
             }
-//             QString tmpFile;
-//             tmpFile = KStandardDirs::locate("data", QString::fromLatin1("%1_homestatuslistrc").arg(alias));
-//             kDebug()<<"Will remove "<<tmpFile;
-//             const KUrl homePath(tmpFile);
-//             DeleteJob * delJob = KIO::del(homePath, KIO::HideProgressInfo);
-//             KIO::NetAccess::synchronousRun(delJob, 0);
-//             tmpFile = KStandardDirs::locate("data", QString::fromLatin1("%1_replystatuslistrc").arg(alias));
-//             kDebug()<<"Will remove "<<tmpFile;
-//             const KUrl replyPath(tmpFile);
-//             delJob = KIO::del(replyPath, KIO::HideProgressInfo);
-//             KIO::NetAccess::synchronousRun(delJob, 0);
-			///TODO Remove statuslist rc files.
+            for (int i=Backend::HomeTimeLine; i <= Backend::OutboxTimeLine; ++i) {
+                QString tmpFile;
+                tmpFile = KStandardDirs::locate("data", "choqok/" + generateStatusBackupFileName(alias, (Backend::TimeLineType)i) );
+                kDebug()<<"Will remove "<<tmpFile;
+                const KUrl path(tmpFile);
+                KIO::DeleteJob * delJob = KIO::del(path, KIO::HideProgressInfo);
+                delJob->start();
+            }
             emit accountRemoved(alias);
             return true;
         }
@@ -222,6 +218,32 @@ void AccountManager::saveFriendsList(const QString & alias, const QStringList & 
     KConfigGroup accountGrp( conf, "Account" + alias );
     accountGrp.writeEntry( "friends", list );
     accountGrp.sync();
+}
+
+QString AccountManager::generateStatusBackupFileName(const QString &alias, Backend::TimeLineType type)
+{
+    QString name = alias;
+    name += '_';
+
+    switch(type){
+        case Backend::HomeTimeLine:
+            name += "home";
+            break;
+        case Backend::ReplyTimeLine:
+            name += "reply";
+            break;
+        case Backend::InboxTimeLine:
+            name += "inbox";
+            break;
+        case Backend::OutboxTimeLine:
+            name += "outbox";
+            break;
+        default:
+            name += QString::number(type);
+            break;
+    };
+    name += "statuslistrc";
+    return name;
 }
 
 #include "accountmanager.moc"

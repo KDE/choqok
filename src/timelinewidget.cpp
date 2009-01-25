@@ -38,6 +38,7 @@ TimeLineWidget::TimeLineWidget ( const Account &userAccount, QWidget* parent ) :
     setupUi ( this );
     mCurrentAccount = userAccount;
     latestHomeStatusId = latestReplyStatusId = 0;
+    mRemoved = false;
 
     homeLayout->setDirection ( QBoxLayout::TopToBottom );
     replyLayout->setDirection ( QBoxLayout::TopToBottom );
@@ -57,11 +58,13 @@ TimeLineWidget::TimeLineWidget ( const Account &userAccount, QWidget* parent ) :
 TimeLineWidget::~TimeLineWidget()
 {
     kDebug();
-    AccountManager::self()->saveFriendsList( mCurrentAccount.alias(), friendsList );
-    saveStatuses( generateStatusBackupFileName(Backend::HomeTimeLine), listHomeStatus );
-    saveStatuses( generateStatusBackupFileName(Backend::ReplyTimeLine), listReplyStatus );
-    saveStatuses( generateStatusBackupFileName(Backend::InboxTimeLine), listInboxStatus );
-    saveStatuses( generateStatusBackupFileName(Backend::OutboxTimeLine), listOutboxStatus );
+    if ( !mRemoved ) {
+        AccountManager::self()->saveFriendsList( mCurrentAccount.alias(), friendsList );
+        saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::HomeTimeLine), listHomeStatus );
+        saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::ReplyTimeLine), listReplyStatus );
+        saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::InboxTimeLine), listInboxStatus );
+        saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::OutboxTimeLine), listOutboxStatus );
+    }
 }
 
 void TimeLineWidget::initObjects()
@@ -538,19 +541,19 @@ void TimeLineWidget::loadConfigurations()
 
     isStartMode = true;
 
-    QList< Status > lstHome = loadStatuses ( generateStatusBackupFileName(Backend::HomeTimeLine) );
+    QList< Status > lstHome = loadStatuses ( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::HomeTimeLine) );
     if ( lstHome.count() > 0 )
         addNewStatusesToUi ( lstHome, homeLayout, &listHomeStatus );
 
-    QList< Status > lstReply = loadStatuses ( generateStatusBackupFileName(Backend::ReplyTimeLine) );
+    QList< Status > lstReply = loadStatuses ( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::ReplyTimeLine) );
     if ( lstReply.count() > 0 )
         addNewStatusesToUi ( lstReply, replyLayout, &listReplyStatus, Backend::ReplyTimeLine );
 
-    QList< Status > lstInbox = loadStatuses ( generateStatusBackupFileName(Backend::InboxTimeLine) );
+    QList< Status > lstInbox = loadStatuses ( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::InboxTimeLine) );
     if ( lstInbox.count() > 0 )
         addNewStatusesToUi ( lstInbox, inboxLayout, &listInboxStatus, Backend::InboxTimeLine );
 
-    QList< Status > lstOutbox = loadStatuses ( generateStatusBackupFileName(Backend::OutboxTimeLine) );
+    QList< Status > lstOutbox = loadStatuses ( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::OutboxTimeLine) );
     if ( lstOutbox.count() > 0 )
         addNewStatusesToUi ( lstOutbox, outboxLayout, &listOutboxStatus, Backend::OutboxTimeLine );
 }
@@ -623,6 +626,7 @@ void TimeLineWidget::enableApp()
     txtNewStatus->setEnabled ( true );
 }
 
+/*
 QString TimeLineWidget::generateStatusBackupFileName(Backend::TimeLineType type)
 {
     QString name = mCurrentAccount.alias();
@@ -648,6 +652,7 @@ QString TimeLineWidget::generateStatusBackupFileName(Backend::TimeLineType type)
     name += "statuslistrc";
     return name;
 }
+*/
 
 Account TimeLineWidget::currentAccount() const
 {
@@ -682,6 +687,11 @@ void TimeLineWidget::friendsListed(const QStringList & list)
     KCompletion *c = comboFriendList->completionObject( true );;
     c->setItems( friendsList );
     c->setCompletionMode( KGlobalSettings::CompletionPopupAuto );
+}
+
+void TimeLineWidget::setRemoved(bool isRemoved)
+{
+    mRemoved = isRemoved;
 }
 
 #include "timelinewidget.moc"
