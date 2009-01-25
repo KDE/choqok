@@ -82,10 +82,11 @@ protected slots:
 
 signals:
     void sigSetUnread ( int unread );
-    void notify ( const QString &message );
+    void notify ( const QString &message, bool isPermanent = false );
     void systemNotify ( const QString &title, const QString &message, const QString &iconUrl );
     void sigSetUnreadOnMainWin( int unread );
     void showMe();
+//     void sigStatusUpdated (bool isError);
 
 protected:
     void checkUnreadStatuses ( int numOfNewStatusesReciened );

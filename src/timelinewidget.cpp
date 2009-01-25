@@ -151,7 +151,7 @@ void TimeLineWidget::updateTimeLines()
     else
         isStartMode = false;
 
-  emit notify(i18n("Loading timelines..."));
+  emit notify(i18n("Loading timelines..."), true);
 }
 
 void TimeLineWidget::directMessagesRecieved(QList< Status > & msgList)
@@ -345,7 +345,7 @@ void TimeLineWidget::setDefaultDirection()
 
 void TimeLineWidget::error ( const QString & errMsg )
 {
-    emit notify ( i18n ( "Failed, %1", errMsg ) );
+    emit notify ( i18n ( "Failed, %1", errMsg ), true );
 }
 
 void TimeLineWidget::postStatus ( QString & status )
@@ -369,6 +369,8 @@ void TimeLineWidget::postStatus ( QString & status )
 
 void TimeLineWidget::postingNewStatusDone ( bool isError )
 {
+    kDebug();
+//     emit sigStatusUpdated( isError );
     if ( !isError ) {
         txtNewStatus->clearContentsAndSetDirection ( mCurrentAccount.direction() );
         QString successMsg = i18n ( "New status posted successfully" );

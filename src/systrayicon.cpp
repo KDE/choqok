@@ -50,7 +50,7 @@ SysTrayIcon::SysTrayIcon(QWidget* parent): KSystemTrayIcon(parent)
 	connect(this, SIGNAL(activated( QSystemTrayIcon::ActivationReason )),
 			 this, SLOT(sysTrayActivated(QSystemTrayIcon::ActivationReason)));
 	
-// 	connect(quickWidget, SIGNAL(sigStatusUpdated()), mainWin, SIGNAL(updateHomeTimeLine()));
+	connect(mainWin, SIGNAL(sigStatusUpdated(bool)), this, SLOT(slotStatusUpdated(bool)));
 	
 	connect(mainWin, SIGNAL(sigSetUnread(int)), this, SLOT(slotSetUnread(int)));
 	
@@ -59,6 +59,7 @@ SysTrayIcon::SysTrayIcon(QWidget* parent): KSystemTrayIcon(parent)
 	
 	connect(quickWidget, SIGNAL(sigNotify(const QString&,const  QString&,const  QString&)), 
 			this, SLOT(systemNotify(const QString&, const QString&, const QString&)));
+    connect(quickWidget, SIGNAL(sigStatusUpdated(bool)), this, SLOT(slotStatusUpdated(bool)));
     
     connect(mainWin, SIGNAL(accountAdded(const Account&)), quickWidget, SLOT(addAccount(const Account&)));
     connect(mainWin, SIGNAL(accountRemoved(const QString&)), quickWidget, SLOT(removeAccount(const QString&)));
@@ -133,6 +134,7 @@ void SysTrayIcon::slotSetUnread(int numOfUnreadStatuses)
 	if (unread <= 0)
 	{
 		setIcon(m_defaultIcon);
+        isIconChanged = true;
 	}
 	else
 	{
@@ -177,7 +179,8 @@ void SysTrayIcon::slotSetUnread(int numOfUnreadStatuses)
 		p.setOpacity(1.0);
 		p.drawText(overlayImg.rect(), Qt::AlignCenter, countStr);
 
-		setIcon(QPixmap::fromImage(overlayImg));
+        setIcon(QPixmap::fromImage(overlayImg));
+        isIconChanged = true;
 	}
 }
 
@@ -207,6 +210,26 @@ void SysTrayIcon::setTimeLineUpdatesEnabled(bool isEnabled)
     } else {
         slotSetUnread( -unread );
         setToolTip(i18n("choqoK - Disabeld"));
+    }
+}
+
+void SysTrayIcon::slotStatusUpdated(bool isError)
+{
+    kDebug();
+    prevIcon = icon();
+    isIconChanged = false;
+    if( isError ){
+        setIcon( KIcon("dialog-cancel") );
+    } else {
+        setIcon( KIcon("dialog-ok") );
+    }
+    QTimer::singleShot( 4000, this, SLOT(slotRestoreIcon()) );
+}
+
+void SysTrayIcon::slotRestoreIcon()
+{
+    if( !isIconChanged ){
+        setIcon( prevIcon );
     }
 }
 

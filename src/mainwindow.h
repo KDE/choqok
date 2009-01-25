@@ -64,13 +64,14 @@ signals:
     void setUnreadStatusesToReadState();
     void accountAdded(const Account &account);
     void accountRemoved(const QString &alias);
+//     void sigStatusUpdated( bool isError );
 
 public slots:
     void toggleMainWindowVisibility();
 protected slots:
     void optionsPreferences();
     void settingsChanged();
-    void notify ( const QString &message );
+    void notify ( const QString &message, bool isPermanent = false );
     void quitApp();
     void setNumOfUnreadOnMainWin( int unread );
     void showTimeLine();

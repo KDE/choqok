@@ -52,7 +52,7 @@ protected:
     void loadAccounts();
 	
 signals:
-// 	void sigStatusUpdated();
+	void sigStatusUpdated( bool isError );
 	void sigNotify( const QString &title, const QString &message, const QString &iconUrl);
 
 protected slots:

@@ -201,9 +201,13 @@ least one account on <a href='http://identi.ca'>Identi.ca</a> or \
     }
 }
 
-void MainWindow::notify ( const QString &message )
+void MainWindow::notify ( const QString &message, bool isPermanent )
 {
+    if( isPermanent ){
+        statusBar()->showMessage ( message );
+    } else {
     statusBar()->showMessage ( message, TIMEOUT );
+    }
 }
 
 void MainWindow::keyPressEvent ( QKeyEvent * e )
@@ -263,8 +267,9 @@ void MainWindow::addAccountTimeLine(const Account & account)
     connect(widget, SIGNAL(sigSetUnread(int)), this, SIGNAL(sigSetUnread(int)));
     connect(widget, SIGNAL(systemNotify(const QString&, const QString&, const QString&)),
            this, SIGNAL(systemNotify(const QString&, const QString&, const QString&)));
-    connect(widget, SIGNAL(notify(const QString&)), this, SLOT(notify(const QString&)));
+    connect(widget, SIGNAL(notify(const QString&, bool)), this, SLOT(notify(const QString&, bool)));
     connect(widget, SIGNAL(showMe()), this, SLOT(showTimeLine()));
+//     connect(widget, SIGNAL(sigStatusUpdated(bool)), this, SIGNAL(sigStatusUpdated(bool)));
 
     connect(this, SIGNAL(updateTimeLines()), widget, SLOT(updateTimeLines()));
     connect(this, SIGNAL(abortPostNewStatus()), widget, SLOT(abortPostNewStatus()));

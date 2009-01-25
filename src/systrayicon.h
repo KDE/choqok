@@ -49,6 +49,8 @@ protected slots:
 	
 private slots:
     void setTimeLineUpdatesEnabled( bool isEnabled );
+    void slotStatusUpdated (bool isError);
+    void slotRestoreIcon();
 
 private:
 	void setupActions();
@@ -58,7 +60,8 @@ private:
     int unread;
 	
 	QPixmap m_defaultIcon;
-// 	int m_unread;
+    QIcon prevIcon;
+    bool isIconChanged;
 };
 
 #endif

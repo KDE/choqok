@@ -57,7 +57,6 @@ QuickTwit::QuickTwit(QWidget* parent): KDialog(parent)
     connect(AccountManager::self(), SIGNAL(accountRemoved(const QString&)), this, SLOT(removeAccount(const QString&)));
 }
 
-
 QuickTwit::~QuickTwit()
 {
     Settings::setQuickTweetSize( this->size() );
@@ -86,6 +85,7 @@ void QuickTwit::checkNewStatusCharactersCount(int numOfChars)
 void QuickTwit::slotPostNewStatusDone(bool isError)
 {
 	kDebug();
+    emit sigStatusUpdated( isError );
 	if(isError){
         Backend * b = qobject_cast<Backend *>(sender());
         QString name(APPNAME);
