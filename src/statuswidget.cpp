@@ -109,40 +109,46 @@ void StatusWidget::requestReply()
 
 QString StatusWidget::generateSign()
 {
-    QString sign;
     if(mCurrentAccount->serviceName().toLower() == QString(IDENTICA_SERVICE_TEXT).toLower()){
-        sign = "<b><a href=\"http://identi.ca/"+mCurrentStatus.user.screenName+"\" title=\""+
+        signPrefix = "<b><a href=\"http://identi.ca/"+mCurrentStatus.user.screenName+"\" title=\""+
                 mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName+"</a> - </b> ";
-        sign += "<a href=\"http://identi.ca/notice/" + QString::number(mCurrentStatus.statusId) + "\" title=\"" +
-                mCurrentStatus.creationDateTime.toString()+"\">" + 
-                formatDateTime(mCurrentStatus.creationDateTime) + "</a>";
+        signPrefix += "<a href=\"http://identi.ca/notice/" + QString::number(mCurrentStatus.statusId) + "\" title=\"" +
+                mCurrentStatus.creationDateTime.toString()+"\">";
         if(!mCurrentStatus.isDMessage){
-            sign += " - " + mCurrentStatus.source;
-        }
-        if(mCurrentStatus.replyToStatusId > 0 && !mCurrentStatus.isDMessage){
-            sign += " - <a href=\"http://identi.ca/notice/"+
-                    QString::number(mCurrentStatus.replyToStatusId)+"\">in reply to</a>";
+            signPostfix = " - " + mCurrentStatus.source;
+            if(mCurrentStatus.replyToStatusId > 0){
+                signPostfix += " - <a href=\"http://identi.ca/notice/"+
+                        QString::number(mCurrentStatus.replyToStatusId)+"\">in reply to</a>";
+            }
         }
     } else {
-        sign = "<b><a href=\"http://twitter.com/"+mCurrentStatus.user.screenName+"\" title=\""+
+        signPrefix = "<b><a href=\"http://twitter.com/"+mCurrentStatus.user.screenName+"\" title=\""+
                 mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName+"</a> - </b> ";
-        sign += "<a href=\"http://twitter.com/" + mCurrentStatus.user.screenName + "/statuses/" +
+        signPrefix += "<a href=\"http://twitter.com/" + mCurrentStatus.user.screenName + "/statuses/" +
                 QString::number(mCurrentStatus.statusId) + "\" title=\"" + 
-                mCurrentStatus.creationDateTime.toString()+"\">" + formatDateTime(mCurrentStatus.creationDateTime) + "</a>";
+                mCurrentStatus.creationDateTime.toString()+"\">";
         if(!mCurrentStatus.isDMessage){
-            sign += " - " + mCurrentStatus.source;
-        }
-        if(mCurrentStatus.replyToStatusId > 0 && !mCurrentStatus.isDMessage){
-            sign += " - <a href=\"http://twitter.com/" + mCurrentStatus.replyToUserScreenName + "/statuses/"
-                    + QString::number(mCurrentStatus.replyToStatusId) + "\">in reply to</a>";
+            signPostfix = " - " + mCurrentStatus.source;
+            if(mCurrentStatus.replyToStatusId > 0){
+                signPostfix += " - <a href=\"http://twitter.com/" + mCurrentStatus.replyToUserScreenName + "/statuses/"
+                        + QString::number(mCurrentStatus.replyToStatusId) + "\">in reply to</a>";
+            }
         }
     }
+    return regenerateSign();
+}
+
+QString StatusWidget::regenerateSign()
+{
+    QString sign = signPrefix;
+    sign += formatDateTime(mCurrentStatus.creationDateTime) + "</a>";
+    sign += signPostfix;
     return sign;
 }
 
 void StatusWidget::updateSign()
 {
-	lblSign->setText(generateSign());
+	lblSign->setText(regenerateSign());
 }
 
 void StatusWidget::requestDestroy()

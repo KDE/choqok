@@ -75,12 +75,15 @@ private:
 	QString prepareStatus(const QString &text, const int &replyStatusId);
 	void setUiStyle();
 	QString generateSign();
+    QString regenerateSign();
 	void updateUi();
 	
 	QTimer timer;
 	Status mCurrentStatus;
 	bool mIsReaded;
     const Account *mCurrentAccount;
+    QString signPrefix;
+    QString signPostfix;
 };
 
 #endif
