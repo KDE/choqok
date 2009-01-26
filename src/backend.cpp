@@ -53,7 +53,7 @@ void Backend::postNewStatus(const QString & statusMessage, uint replyToStatusId)
     setDefaultArgs( url );
 	QByteArray data = "status=";
 	data += QUrl::toPercentEncoding(prepareStatus(statusMessage));
-	if(replyToStatusId!=0)
+	if( replyToStatusId != 0 && statusMessage.indexOf('@') > -1 )
 		data += "&in_reply_to_status_id=" + QString::number(replyToStatusId);
 	data += "&source=choqok";
 	KIO::TransferJob *job = KIO::http_post(url, data, KIO::HideProgressInfo) ;

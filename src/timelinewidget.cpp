@@ -54,6 +54,7 @@ TimeLineWidget::TimeLineWidget ( const Account &userAccount, QWidget* parent ) :
 //     connect ( toggleArrow, SIGNAL ( clicked() ), this, SLOT ( toggleTwitFieldVisible() ) );
     connect ( txtNewStatus, SIGNAL ( charsLeft ( int ) ), this, SLOT ( checkNewStatusCharactersCount ( int ) ) );
     connect ( txtNewStatus, SIGNAL ( returnPressed ( QString& ) ), this, SLOT ( postStatus ( QString& ) ) );
+    connect ( txtNewStatus, SIGNAL ( cleared() ), this, SLOT (txtNewStatusCleared()) );
 
     QTimer::singleShot ( 0, this, SLOT ( initObjects() ) );
 }
@@ -699,6 +700,11 @@ void TimeLineWidget::friendsListed(const QStringList & list)
 void TimeLineWidget::setRemoved(bool isRemoved)
 {
     mRemoved = isRemoved;
+}
+
+void TimeLineWidget::txtNewStatusCleared()
+{
+    replyToStatusId = 0;
 }
 
 #include "timelinewidget.moc"

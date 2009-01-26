@@ -98,6 +98,7 @@ private slots:
     void initObjects();
     void reloadFriendsList();
     void friendsListed(const QStringList &list);
+    void txtNewStatusCleared();
 
 private:
     void setDefaultDirection();

@@ -51,6 +51,7 @@ protected:
 signals:
 	void returnPressed(QString &txt);
 	void charsLeft(int count);
+    void cleared();
 private:
 	QString prevStr;
     Qt::LayoutDirection dir;

@@ -53,6 +53,7 @@ void StatusTextEdit::keyPressEvent(QKeyEvent * e)
         if(!this->toPlainText().isEmpty()){
             this->clear();
             setDefaultDirection(dir);
+            emit cleared();
             e->accept();
         } else {
             KTextEdit::keyPressEvent(e);
