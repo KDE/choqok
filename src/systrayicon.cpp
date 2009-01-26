@@ -213,7 +213,7 @@ void SysTrayIcon::setTimeLineUpdatesEnabled(bool isEnabled)
         setIcon( KIcon(m_defaultIcon) );
     } else {
         slotSetUnread( -unread );
-        setToolTip(i18n("choqoK - Disabeld"));
+        setToolTip(i18n("choqoK - Disabled"));
         ///Generating new Icon:
         QImage result = m_defaultIcon.toImage();
         for (int y = 0; y < result.height(); ++y) {
