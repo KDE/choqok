@@ -210,9 +210,21 @@ void SysTrayIcon::setTimeLineUpdatesEnabled(bool isEnabled)
 {
     if(isEnabled) {
         setToolTip(i18n("choqoK - Hit me to update your status"));
+        setIcon( KIcon(m_defaultIcon) );
     } else {
         slotSetUnread( -unread );
         setToolTip(i18n("choqoK - Disabeld"));
+        ///Generating new Icon:
+        QImage result = m_defaultIcon.toImage();
+        for (int y = 0; y < result.height(); ++y) {
+            for (int x = 0; x < result.width(); ++x) {
+                int pixel = result.pixel(x, y);
+                int gray = qGray(pixel);
+                int alpha = qAlpha(pixel);
+                result.setPixel(x, y, qRgba(gray, gray, gray, alpha));
+            }
+        }
+        setIcon( KIcon(QPixmap::fromImage(result)) );
     }
 }
 
