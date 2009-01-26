@@ -580,6 +580,8 @@ void TimeLineWidget::setUnreadStatusesToReadState()
     kDebug();
     tabs->setTabText ( 0, i18n ( "Home" ) );
     tabs->setTabText ( 1, i18n ( "Reply" ) );
+    tabs->setTabText ( 2, i18n ( "Inbox" ) );
+    tabs->setTabText ( 3, i18n ( "Outbox" ) );
     int count = listUnreadStatuses.count();
 
     for ( int i = 0;i < count; ++i ) {

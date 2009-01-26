@@ -6,10 +6,11 @@
 	  <Action name="update_timeline" />
       <Action name="choqok_mark_read" />
       <Separator/>
+      <Action name="toggle_mainwin"/>
+  </Menu>
+  <Menu name="settings"><text>Settings</text>
         <Action name="choqok_enable_updates"/>
         <Action name="choqok_enable_notify"/>
-      <Separator/>
-      <Action name="toggle_mainwin"/>
   </Menu>
 </MenuBar>
 </kpartgui>
