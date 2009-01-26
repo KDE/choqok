@@ -87,7 +87,7 @@ protected slots:
 	void slotPostNewStatusFinished(KJob *job);
 	void slotPostNewStatusData(KIO::Job *job, const QByteArray &data);
 	void slotRequestTimelineFinished(KJob *job);
-	void slotRequestTimelineData(KIO::Job *job, const QByteArray &data);
+// 	void slotRequestTimelineData(KIO::Job *job, const QByteArray &data);
 	void slotRequestFavoritedFinished(KJob *job);
 	void slotRequestDestroyFinished(KJob *job);
     void slotUserInfoReceived(KJob *job);
@@ -111,7 +111,7 @@ private:
 
 	QString mLatestErrorString;
 	QMap<KJob *, TimeLineType> mRequestTimelineMap;
-	QMap<KJob *, QByteArray> mRequestTimelineBuffer;
+// 	QMap<KJob *, QByteArray> mRequestTimelineBuffer;
     QMap<KJob *, DMessageType> mRequestDMessagesMap;
 
 	QMap<KJob *, QByteArray> mPostNewStatusBuffer;

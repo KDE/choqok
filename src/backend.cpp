@@ -118,7 +118,7 @@ void Backend::requestTimeLine(uint latestStatusId, TimeLineType type, int page)
 	kDebug()<<"Latest status Id: "<<latestStatusId;
 	
 
-	KIO::TransferJob *job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo) ;
+	KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
 	if(!job){
 		kDebug()<<"Cannot create a http GET request!";
 		QString errMsg = i18n("Cannot create a http GET request, please check your internet connection.");
@@ -126,9 +126,9 @@ void Backend::requestTimeLine(uint latestStatusId, TimeLineType type, int page)
 		return;
 	}
 	mRequestTimelineMap[job] = type;
-	mRequestTimelineBuffer[job] = QByteArray();
+// 	mRequestTimelineBuffer[job] = QByteArray();
 	connect( job, SIGNAL(result(KJob*)), this, SLOT(slotRequestTimelineFinished(KJob*)));
-	connect( job, SIGNAL(data( KIO::Job *, const QByteArray &)), this, SLOT(slotRequestTimelineData(KIO::Job*, const QByteArray&)));
+// 	connect( job, SIGNAL(data( KIO::Job *, const QByteArray &)), this, SLOT(slotRequestTimelineData(KIO::Job*, const QByteArray&)));
 	job->start();
 }
 
@@ -389,7 +389,9 @@ void Backend::slotRequestTimelineFinished(KJob *job)
 		emit sigError(mLatestErrorString);
 		return;
 	}
-	QList<Status> *ptr = readTimeLineFromXml(mRequestTimelineBuffer[ job ].data());
+    KIO::StoredTransferJob *jj = qobject_cast<KIO::StoredTransferJob *>(job);
+    QList<Status> *ptr = readTimeLineFromXml(jj->data());
+//     QList<Status> *ptr = readTimeLineFromXml(mRequestTimelineBuffer[ job ].data());
 	switch(mRequestTimelineMap.value(job)){
 	case HomeTimeLine:
 		if(ptr){
@@ -409,19 +411,7 @@ void Backend::slotRequestTimelineFinished(KJob *job)
 		break;
 	};
 	mRequestTimelineMap.remove(job);
-	mRequestTimelineBuffer.remove(job);
-}
-
-void Backend::slotRequestTimelineData(KIO::Job * job, const QByteArray & data)
-{
-	kDebug();
-	if( !job ) {
-		kError() << "Job is a null pointer.";
-		return;
-	}
-	unsigned int oldSize = mRequestTimelineBuffer[ job ].size();
-	mRequestTimelineBuffer[ job ].resize( oldSize + data.size() );
-	memcpy( mRequestTimelineBuffer[ job ].data() + oldSize, data.data(), data.size() );
+// 	mRequestTimelineBuffer.remove(job);
 }
 
 void Backend::slotRequestFavoritedFinished(KJob * job)
@@ -513,9 +503,7 @@ void Backend::slotPostNewStatusData(KIO::Job * job, const QByteArray & data)
 		kError() << "Job is a null pointer.";
 		return;
 	}
-	unsigned int oldSize = mPostNewStatusBuffer[ job ].size();
-	mPostNewStatusBuffer[ job ].resize( oldSize + data.size() );
-	memcpy( mPostNewStatusBuffer[ job ].data() + oldSize, data.data(), data.size() );
+    mPostNewStatusBuffer[ job ].append(data);
 }
 
 void Backend::verifyCredential()
@@ -805,16 +793,14 @@ void Backend::slotSendDMessageFinished(KJob *job)
 {
     kDebug();
     if(job->error()){
-        kDebug()<<"Error: "<<job->error()<< " Text:" <<job->errorString();
+        kDebug()<<"Job Error: "<<job->error()<< " Text:" <<job->errorString();
         kDebug()<<mSendDMessageBuffer.value(job);
         mLatestErrorString = job->errorString();
         emit sigPostNewStatusDone(true);
     } else {
         Status st = readDMessageFromXml(mSendDMessageBuffer[job]);
         if(st.isError){
-            kDebug()<<"Error: "<<job->errorString();
-            mLatestErrorString = job->errorString();
-            emit sigPostNewStatusDone(true);
+            emit sigPostNewStatusDone(false);
         } else {
             QList<Status> newSt;
             newSt.append(st);
