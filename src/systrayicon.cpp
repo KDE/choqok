@@ -46,7 +46,7 @@ SysTrayIcon::SysTrayIcon(QWidget* parent): KSystemTrayIcon(parent)
 	if(Settings::showMainWinOnStart()){
 		mainWin->show();
 	}
-	
+	isIconChanged = false;
 	quickWidget = new QuickTwit(mainWin);
 	setupActions();
 	
@@ -137,7 +137,7 @@ void SysTrayIcon::slotSetUnread(int numOfUnreadStatuses)
 	if (unread <= 0)
 	{
 		setIcon(m_defaultIcon);
-        isIconChanged = true;
+        isBaseIconChanged = true;
 	}
 	else
 	{
@@ -183,7 +183,7 @@ void SysTrayIcon::slotSetUnread(int numOfUnreadStatuses)
 		p.drawText(overlayImg.rect(), Qt::AlignCenter, countStr);
 
         setIcon(QPixmap::fromImage(overlayImg));
-        isIconChanged = true;
+        isBaseIconChanged = true;
 	}
 }
 
@@ -231,8 +231,11 @@ void SysTrayIcon::setTimeLineUpdatesEnabled(bool isEnabled)
 void SysTrayIcon::slotStatusUpdated(bool isError)
 {
     kDebug();
-    prevIcon = icon();
-    isIconChanged = false;
+    if( !isIconChanged ){
+        prevIcon = icon();
+        isIconChanged = true;
+    }
+    isBaseIconChanged = false;
     if( isError ){
         setIcon( KIcon("dialog-cancel") );
     } else {
@@ -243,9 +246,10 @@ void SysTrayIcon::slotStatusUpdated(bool isError)
 
 void SysTrayIcon::slotRestoreIcon()
 {
-    if( !isIconChanged ){
+    if( !isBaseIconChanged ){
         setIcon( prevIcon );
     }
+    isIconChanged = false;
 }
 
 #include "systrayicon.moc"

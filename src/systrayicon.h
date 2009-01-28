@@ -65,6 +65,7 @@ private:
 	QPixmap m_defaultIcon;
     QIcon prevIcon;
     bool isIconChanged;
+    bool isBaseIconChanged;
 };
 
 #endif
