@@ -119,11 +119,9 @@ private:
 
     void updateStatusList ( QList<StatusWidget*> *list );
 
-    void reloadTimeLineLists();
     void clearTimeLineList ( QList<StatusWidget*> *list );
 
     void loadConfigurations();
-//     QString generateStatusBackupFileName(Backend::TimeLineType type);
 
 private:
     Backend *twitter;

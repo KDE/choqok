@@ -2,9 +2,9 @@ choqoK
 A KDE 4 Twitter Client.
 
 Author:
-	Mehrdad Momeny <mehrdad.momeny[AT]gmail.com>
+    Mehrdad Momeny <mehrdad.momeny[AT]gmail.com>
 License:
-	GNU GPL v3
+    GNU GPL v3
 
 Requirements to build:
      CMake 2.6

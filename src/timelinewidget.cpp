@@ -512,16 +512,6 @@ void TimeLineWidget::updateStatusList ( QList<StatusWidget*> *list )
     }
 }
 
-void TimeLineWidget::reloadTimeLineLists()
-{
-    kDebug();
-    clearTimeLineList ( &listHomeStatus );
-    clearTimeLineList ( &listReplyStatus );
-//   Settings::setLatestStatusId(0);
-    updateTimeLines();
-
-}
-
 void TimeLineWidget::clearTimeLineList ( QList< StatusWidget * > * list )
 {
     kDebug();
@@ -633,34 +623,6 @@ void TimeLineWidget::enableApp()
     kDebug();
     txtNewStatus->setEnabled ( true );
 }
-
-/*
-QString TimeLineWidget::generateStatusBackupFileName(Backend::TimeLineType type)
-{
-    QString name = mCurrentAccount.alias();
-    name += '_';
-    
-    switch(type){
-        case Backend::HomeTimeLine:
-            name += "home";
-            break;
-        case Backend::ReplyTimeLine:
-            name += "reply";
-            break;
-        case Backend::InboxTimeLine:
-            name += "inbox";
-            break;
-        case Backend::OutboxTimeLine:
-            name += "outbox";
-            break;
-        default:
-            name += QString::number(type);
-            break;
-    };
-    name += "statuslistrc";
-    return name;
-}
-*/
 
 Account TimeLineWidget::currentAccount() const
 {

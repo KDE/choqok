@@ -39,9 +39,9 @@ SysTrayIcon::SysTrayIcon(QWidget* parent): KSystemTrayIcon(parent)
 	unread = 0;
 	mainWin = new MainWindow;
 	
-	m_defaultIcon = KIcon("choqok").pixmap(22);
+	m_defaultIcon = parentWidget()->windowIcon().pixmap(22);;
 	
-	setIcon(m_defaultIcon);
+// 	setIcon(m_defaultIcon);
 	
 	if(Settings::showMainWinOnStart()){
 		mainWin->show();
@@ -53,7 +53,7 @@ SysTrayIcon::SysTrayIcon(QWidget* parent): KSystemTrayIcon(parent)
 	connect(this, SIGNAL(activated( QSystemTrayIcon::ActivationReason )),
 			 this, SLOT(sysTrayActivated(QSystemTrayIcon::ActivationReason)));
 	
-	connect(mainWin, SIGNAL(sigStatusUpdated(bool)), this, SLOT(slotStatusUpdated(bool)));
+// 	connect(mainWin, SIGNAL(sigStatusUpdated(bool)), this, SLOT(slotStatusUpdated(bool)));
 	
 	connect(mainWin, SIGNAL(sigSetUnread(int)), this, SLOT(slotSetUnread(int)));
 	
@@ -210,7 +210,7 @@ void SysTrayIcon::setTimeLineUpdatesEnabled(bool isEnabled)
 {
     if(isEnabled) {
         setToolTip(i18n("choqoK - Hit me to update your status"));
-        setIcon( KIcon(m_defaultIcon) );
+        m_defaultIcon = parentWidget()->windowIcon().pixmap(22);
     } else {
         slotSetUnread( -unread );
         setToolTip(i18n("choqoK - Disabled"));
@@ -224,8 +224,9 @@ void SysTrayIcon::setTimeLineUpdatesEnabled(bool isEnabled)
                 result.setPixel(x, y, qRgba(gray, gray, gray, alpha));
             }
         }
-        setIcon( KIcon(QPixmap::fromImage(result)) );
+        m_defaultIcon = QPixmap::fromImage(result);
     }
+    setIcon( KIcon(m_defaultIcon) );
 }
 
 void SysTrayIcon::slotStatusUpdated(bool isError)

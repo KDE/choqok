@@ -40,7 +40,7 @@ QuickTwit::QuickTwit(QWidget* parent): KDialog(parent)
     ui.setupUi(wdg);
     
 	txtStatus = new StatusTextEdit(this);
-    
+    txtStatus->setTabChangesFocus ( true );
     loadAccounts();
     
 //     txtStatus->setDefaultDirection(accountsList[ui.comboAccounts->currentIndex()].direction);

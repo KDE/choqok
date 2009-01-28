@@ -80,7 +80,7 @@ protected slots:
     void showTimeLine();
 
 protected:
-    void keyPressEvent ( QKeyEvent * e );
+//     void keyPressEvent ( QKeyEvent * e );
     void checkUnreadStatuses ( int numOfNewStatusesReciened );
     bool queryClose();
 
@@ -93,7 +93,7 @@ private:
 
 private slots:
     void loadAccounts();
-    void addAccountTimeLine(const Account &account);
+    void addAccountTimeLine(const Account &account, bool isStartup = false);
     void removeAccountTimeLine(const QString &alias);
     void setTimeLineUpdatesEnabled( bool isEnabled );
     void setNotificationsEnabled( bool isEnabled );

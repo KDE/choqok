@@ -202,10 +202,11 @@ least one account on <a href='http://identi.ca'>Identi.ca</a> or \
     }
     if(Settings::updateInterval() > 2){
         timelineTimer->start();
+//         kDebug()<<"timelineTimer started";
         actionCollection()->action( "choqok_enable_updates" )->setChecked( true );
     } else {
-        kDebug()<<"Updating disabeld.";
         timelineTimer->stop();
+//         kDebug()<<"timelineTimer stoped";
         actionCollection()->action( "choqok_enable_updates" )->setChecked( false );
     }
 }
@@ -219,20 +220,20 @@ void MainWindow::notify ( const QString &message, bool isPermanent )
     }
 }
 
-void MainWindow::keyPressEvent ( QKeyEvent * e )
-{
-//     if ( e->key() == Qt::Key_Escape ) {
-// //     if(txtNewStatus->isEnabled()){
-// //       this->hide();
+// void MainWindow::keyPressEvent ( QKeyEvent * e )
+// {
+// //     if ( e->key() == Qt::Key_Escape ) {
+// // //     if(txtNewStatus->isEnabled()){
+// // //       this->hide();
+// // //     } else {
+// // //       txtNewStatus->setEnabled(true);
+// // //       twitter->abortPostNewStatus();
+// //         ///TODO ^ Current visible TimelineWidget abort!
+// // //     }
 // //     } else {
-// //       txtNewStatus->setEnabled(true);
-// //       twitter->abortPostNewStatus();
-//         ///TODO ^ Current visible TimelineWidget abort!
+//         KXmlGuiWindow::keyPressEvent ( e );
 // //     }
-//     } else {
-        KXmlGuiWindow::keyPressEvent ( e );
-//     }
-}
+// }
 
 void MainWindow::quitApp()
 {
@@ -255,6 +256,7 @@ void MainWindow::disableApp()
 {
     kDebug();
     timelineTimer->stop();
+//     kDebug()<<"timelineTimer stoped";
     actionCollection()->action ( "update_timeline" )->setEnabled ( false );
     actionCollection()->action ( "choqok_new_twit" )->setEnabled ( false );
     actionCollection()->action ( "choqok_mark_read" )->setEnabled ( false );
@@ -263,13 +265,16 @@ void MainWindow::disableApp()
 void MainWindow::enableApp()
 {
     kDebug();
-    timelineTimer->start();
+    if(Settings::updateInterval() > 2){
+        timelineTimer->start();
+//         kDebug()<<"timelineTimer started";
+    }
     actionCollection()->action ( "update_timeline" )->setEnabled ( true );
     actionCollection()->action ( "choqok_new_twit" )->setEnabled ( true );
     actionCollection()->action ( "choqok_mark_read" )->setEnabled ( true );
 }
 
-void MainWindow::addAccountTimeLine(const Account & account)
+void MainWindow::addAccountTimeLine(const Account & account, bool isStartup)
 {
     kDebug()<<"Alias: "<<account.alias() <<"Service :"<<account.serviceName();
     TimeLineWidget *widget = new TimeLineWidget(account, this);
@@ -290,7 +295,8 @@ void MainWindow::addAccountTimeLine(const Account & account)
 
     mainWidget->addTab(widget, account.alias());
 
-    QTimer::singleShot(500, widget, SLOT(updateTimeLines()));
+    if(!isStartup)
+        QTimer::singleShot(500, widget, SLOT(updateTimeLines()));
     enableApp();
 }
 
@@ -301,7 +307,7 @@ void MainWindow::loadAccounts()
     QListIterator<Account> it(ac);
     while(it.hasNext()){
         Account current = it.next();
-        addAccountTimeLine(current);
+        addAccountTimeLine(current, true);
     }
     if(ac.count()>0){
         enableApp();
@@ -354,9 +360,11 @@ void MainWindow::setTimeLineUpdatesEnabled(bool isEnabled)
     if(isEnabled){
         Settings::setUpdateInterval( mPrevUpdateInterval );
         timelineTimer->start( Settings::updateInterval() *60000 );
+//         kDebug()<<"timelineTimer started";
     } else {
         mPrevUpdateInterval = Settings::updateInterval();
         timelineTimer->stop();
+//         kDebug()<<"timelineTimer stoped";
         Settings::setUpdateInterval( 2 );
     }
 }
