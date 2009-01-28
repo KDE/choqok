@@ -213,8 +213,8 @@ QStringList AccountManager::listFriends(const QString & alias)
 
 void AccountManager::saveFriendsList(const QString & alias, const QStringList & list)
 {
-    if(findAccount( alias ).isError())
-        return;
+//     if(findAccount( alias ).isError())
+//         return;
     KConfigGroup accountGrp( conf, "Account" + alias );
     accountGrp.writeEntry( "friends", list );
     accountGrp.sync();

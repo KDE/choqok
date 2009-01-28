@@ -363,10 +363,10 @@ void TimeLineWidget::postStatus ( QString & status )
     }
     txtNewStatus->setEnabled ( false );
     if(chkDMessage->isChecked()){
-        emit notify ( i18n ( "Sending direct message..." ) );
+        emit notify ( i18n ( "Sending direct message..." ), true );
         twitter->sendDMessage( comboFriendList->currentText(), status );
     } else {
-        emit notify ( i18n ( "Posting new status..." ) );
+        emit notify ( i18n ( "Posting new status..." ), true );
         twitter->postNewStatus ( status, replyToStatusId );
     }
 }
