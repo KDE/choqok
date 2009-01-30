@@ -85,9 +85,7 @@ protected slots:
     void slotListFollowersScreenName(KJob *job);
     void slotListFriendsScreenName(KJob *job);
 	void slotPostNewStatusFinished(KJob *job);
-	void slotPostNewStatusData(KIO::Job *job, const QByteArray &data);
 	void slotRequestTimelineFinished(KJob *job);
-// 	void slotRequestTimelineData(KIO::Job *job, const QByteArray &data);
 	void slotRequestFavoritedFinished(KJob *job);
 	void slotRequestDestroyFinished(KJob *job);
     void slotUserInfoReceived(KJob *job);
@@ -95,7 +93,6 @@ protected slots:
     void slotRequestDMessagesFinished(KJob *job);
 	
     void slotSendDMessageFinished(KJob*);
-    void slotSendDMessageData(KIO::Job*, const QByteArray&);
 
 private:
     QStringList readUsersNameFromXml(const QByteArray &buffer);
@@ -114,8 +111,6 @@ private:
 // 	QMap<KJob *, QByteArray> mRequestTimelineBuffer;
     QMap<KJob *, DMessageType> mRequestDMessagesMap;
 
-	QMap<KJob *, QByteArray> mPostNewStatusBuffer;
-    QMap<KJob *, QByteArray> mSendDMessageBuffer;
     Account *mCurrentAccount;
     
     QStringList followersList;

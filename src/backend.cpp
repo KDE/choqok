@@ -56,7 +56,7 @@ void Backend::postNewStatus(const QString & statusMessage, uint replyToStatusId)
 	if( replyToStatusId != 0 && statusMessage.indexOf('@') > -1 )
 		data += "&in_reply_to_status_id=" + QString::number(replyToStatusId);
 	data += "&source=choqok";
-	KIO::TransferJob *job = KIO::http_post(url, data, KIO::HideProgressInfo) ;
+	KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
 	if(!job){
 		kDebug()<<"Cannot create a http POST request!";
 		QString errMsg = i18n("Cannot create a http POST request, please check your internet connection.");
@@ -64,9 +64,7 @@ void Backend::postNewStatus(const QString & statusMessage, uint replyToStatusId)
 		return;
 	}
 	job->addMetaData( "content-type", "Content-Type: application/x-www-form-urlencoded" );
-	mPostNewStatusBuffer[ job ] = QByteArray();
 	connect( job, SIGNAL(result(KJob*)), this, SLOT(slotPostNewStatusFinished(KJob*)) );
-	connect( job, SIGNAL(data( KIO::Job *, const QByteArray &)), this, SLOT(slotPostNewStatusData(KIO::Job*, const QByteArray&)));
 	job->start();
 }
 
@@ -80,7 +78,7 @@ void Backend::sendDMessage(const QString & screenName, const QString & message)
     data += "&text=";
     data += QUrl::toPercentEncoding(prepareStatus(message));
 
-    KIO::TransferJob *job = KIO::http_post(url, data, KIO::HideProgressInfo) ;
+    KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
     if(!job){
         kDebug()<<"Cannot create a http POST request!";
         QString errMsg = i18n("Cannot create a http POST request, please check your internet connection.");
@@ -88,10 +86,8 @@ void Backend::sendDMessage(const QString & screenName, const QString & message)
         return;
     }
     job->addMetaData( "content-type", "Content-Type: application/x-www-form-urlencoded" );
-    mSendDMessageBuffer[ job ] = QByteArray();
+
     connect( job, SIGNAL(result(KJob*)), this, SLOT(slotSendDMessageFinished(KJob*)) );
-    connect( job, SIGNAL(data( KIO::Job *, const QByteArray &)),
-             this, SLOT(slotSendDMessageData(KIO::Job*, const QByteArray&)));
     job->start();
 }
 
@@ -296,7 +292,7 @@ void Backend::requestFavorited(uint statusId, bool isFavorite)
 	}
     setDefaultArgs( url );
 	
-	KIO::TransferJob *job = KIO::http_post(url, QByteArray(), KIO::HideProgressInfo) ;
+	KIO::StoredTransferJob *job = KIO::storedHttpPost(QByteArray(), url, KIO::HideProgressInfo) ;
 	if(!job){
 		kDebug()<<"Cannot create a http POST request!";
 		QString errMsg = i18n("Cannot create a http POST request, please check your internet connection.");
@@ -316,7 +312,7 @@ void Backend::requestDestroy(uint statusId)
 	
     setDefaultArgs( url );
 	
-	KIO::TransferJob *job = KIO::http_post(url, QByteArray(), KIO::HideProgressInfo) ;
+	KIO::StoredTransferJob *job = KIO::storedHttpPost(QByteArray(), url, KIO::HideProgressInfo) ;
 	if(!job){
 		kDebug()<<"Cannot create a http POST request!";
 		QString errMsg = i18n("Cannot create a http POST request, please check your internet connection.");
@@ -336,7 +332,7 @@ void Backend::requestDestroyDMessage(uint statusId)
 
     setDefaultArgs( url );
 
-    KIO::TransferJob *job = KIO::http_post(url, QByteArray(), KIO::HideProgressInfo) ;
+    KIO::StoredTransferJob *job = KIO::storedHttpPost(QByteArray(), url, KIO::HideProgressInfo) ;
     if(!job){
         kDebug()<<"Cannot create a http POST request!";
         QString errMsg = i18n("Cannot create a http POST request, please check your internet connection.");
@@ -362,7 +358,8 @@ void Backend::slotPostNewStatusFinished(KJob * job)
 		emit sigPostNewStatusDone(true);
 	} else {
 // 		kDebug()<<mPostNewStatusBuffer[job];
-		Status st = readStatusFromXml(mPostNewStatusBuffer[job]);
+        KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>(job);
+		Status st = readStatusFromXml(stj->data());
 		if(st.isError){
 			kDebug()<<"Error: "<<job->errorString();
 			mLatestErrorString = job->errorString();
@@ -426,8 +423,14 @@ void Backend::slotRequestFavoritedFinished(KJob * job)
 		mLatestErrorString = job->errorString();
 			emit sigFavoritedDone(true);
 			return;
-		} else
-			emit sigFavoritedDone(false);
+		} else {
+            KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>(job);
+            Status st = readStatusFromXml(stj->data());
+            if(!st.isError && st.isFavorited)
+                emit sigFavoritedDone(false);
+            else
+                emit sigFavoritedDone(true);
+        }
 }
 
 void Backend::slotRequestDestroyFinished(KJob * job)
@@ -442,8 +445,14 @@ void Backend::slotRequestDestroyFinished(KJob * job)
 		mLatestErrorString = job->errorString();
 		emit sigDestroyDone(true);
 		return;
-	} else
-		emit sigDestroyDone(false);
+	} else {
+        KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>(job);
+        Status st = readStatusFromXml(stj->data());
+        if(st.isError)
+            emit sigDestroyDone(true);
+        else
+            emit sigDestroyDone(false);
+    }
 }
 
 QString Backend::prepareStatus(QString status)
@@ -494,16 +503,6 @@ void Backend::settingsChanged()
 		mScheme = "https";
 	else
 		mScheme = "http";
-}
-
-void Backend::slotPostNewStatusData(KIO::Job * job, const QByteArray & data)
-{
-	kDebug();
-	if( !job ) {
-		kError() << "Job is a null pointer.";
-		return;
-	}
-    mPostNewStatusBuffer[ job ].append(data);
 }
 
 void Backend::verifyCredential()
@@ -724,7 +723,7 @@ QList< Status > * Backend::readDMessagesFromXml(const QByteArray & buffer)
         QDomNode node2 = node.firstChild();
         Status msg;
         msg.isDMessage = true;
-        uint senderId, recipientId;
+        uint senderId=0, recipientId=0;
         QString senderScreenName, recipientScreenName, senderProfileImageUrl, senderName,
         senderDescription, recipientProfileImageUrl, recipientName, recipientDescription;
         while (!node2.isNull()) {
@@ -794,11 +793,12 @@ void Backend::slotSendDMessageFinished(KJob *job)
     kDebug();
     if(job->error()){
         kDebug()<<"Job Error: "<<job->error()<< " Text:" <<job->errorString();
-        kDebug()<<mSendDMessageBuffer.value(job);
+//         kDebug()<<mSendDMessageBuffer.value(job);
         mLatestErrorString = job->errorString();
         emit sigPostNewStatusDone(true);
     } else {
-        Status st = readDMessageFromXml(mSendDMessageBuffer[job]);
+        KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>(job);
+        Status st = readDMessageFromXml(stj->data());
         if(st.isError){
             emit sigPostNewStatusDone(false);
         } else {
@@ -808,16 +808,6 @@ void Backend::slotSendDMessageFinished(KJob *job)
             emit outboxMessagesRecieved(newSt);
         }
     }
-}
-
-void Backend::slotSendDMessageData(KIO::Job *job, const QByteArray &data)
-{
-    kDebug();
-    if( !job ) {
-        kError() << "Job is a null pointer.";
-        return;
-    }
-    mPostNewStatusBuffer[ job ].append( data );
 }
 
 Status Backend::readDMessageFromXml(const QByteArray & buffer)
@@ -838,7 +828,7 @@ Status Backend::readDMessageFromXml(const QByteArray & buffer)
             return status;
         }
         QDomNode node2 = node.firstChild();
-        uint senderId, recipientId;
+        uint senderId=0, recipientId=0;
         QString senderScreenName, recipientScreenName, senderProfileImageUrl, senderName,
         senderDescription, recipientProfileImageUrl, recipientName, recipientDescription;
         while (!node2.isNull()) {

@@ -64,8 +64,13 @@ SysTrayIcon::SysTrayIcon(QWidget* parent): KSystemTrayIcon(parent)
 			this, SLOT(systemNotify(const QString&, const QString&, const QString&)));
     connect(quickWidget, SIGNAL(sigStatusUpdated(bool)), this, SLOT(slotStatusUpdated(bool)));
     
-    connect(mainWin, SIGNAL(accountAdded(const Account&)), quickWidget, SLOT(addAccount(const Account&)));
-    connect(mainWin, SIGNAL(accountRemoved(const QString&)), quickWidget, SLOT(removeAccount(const QString&)));
+    connect(mainWin, SIGNAL(accountAdded(const Account&)),
+             quickWidget, SLOT(addAccount(const Account&)));
+    connect(mainWin, SIGNAL(accountRemoved(const QString&)),
+             quickWidget, SLOT(removeAccount(const
+QString&)));
+    
+    connect ( qApp, SIGNAL ( aboutToQuit() ), this, SLOT ( quitApp() ) );
 }
 
 SysTrayIcon::~SysTrayIcon()
@@ -96,7 +101,8 @@ void SysTrayIcon::setupActions()
 void SysTrayIcon::quitApp()
 {
 	kDebug();
-	qApp->quit();
+// 	qApp->quit();
+    deleteLater();
 }
 
 void SysTrayIcon::postQuickTwit()

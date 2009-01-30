@@ -48,6 +48,7 @@ AccountManager::AccountManager(QObject* parent):
 
 AccountManager::~AccountManager()
 {
+    kDebug();
     mSelf = 0L;
     conf->sync();
     delete conf;
