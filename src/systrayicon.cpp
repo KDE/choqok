@@ -202,7 +202,7 @@ void SysTrayIcon::systemNotify(const QString &title, const QString &message, con
         notif->setFlags(KNotification::RaiseWidgetOnActivation | KNotification::Persistent);
         notif->sendEvent();
 		QTimer::singleShot(Settings::notifyInterval()*1000, notif, SLOT(close()));
-		
+
 	} else if(Settings::notifyType() == 2){//Libnotify!
         QString msg = message;
         msg = msg.replace( "<br/>", "\n");
@@ -248,7 +248,7 @@ void SysTrayIcon::slotStatusUpdated(bool isError)
     } else {
         setIcon( KIcon("dialog-ok") );
     }
-    QTimer::singleShot( 4000, this, SLOT(slotRestoreIcon()) );
+    QTimer::singleShot( 5000, this, SLOT(slotRestoreIcon()) );
 }
 
 void SysTrayIcon::slotRestoreIcon()

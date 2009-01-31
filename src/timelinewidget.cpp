@@ -62,7 +62,7 @@ TimeLineWidget::TimeLineWidget ( const Account &userAccount, QWidget* parent ) :
 TimeLineWidget::~TimeLineWidget()
 {
     kDebug();
-    if ( !mRemoved ) {
+    if ( !mRemoved ) {///TODO Move this jobs to another function runs before destructor.
         AccountManager::self()->saveFriendsList( mCurrentAccount.alias(), friendsList );
         saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::HomeTimeLine), listHomeStatus );
         saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::ReplyTimeLine), listReplyStatus );

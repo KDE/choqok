@@ -38,6 +38,18 @@ Backend::Backend(Account *account, QObject* parent): QObject(parent)
 	settingsChanged();
     mCurrentAccount = account;
 // 	login();
+    monthes["Jan"] = 1;
+    monthes["Feb"] = 2;
+    monthes["Mar"] = 3;
+    monthes["Apr"] = 4;
+    monthes["May"] = 5;
+    monthes["Jun"] = 6;
+    monthes["Jul"] = 7;
+    monthes["Aug"] = 8;
+    monthes["Sep"] = 9;
+    monthes["Oct"] = 10;
+    monthes["Nov"] = 11;
+    monthes["Dec"] = 12;
 }
 
 Backend::~Backend()
@@ -130,11 +142,19 @@ void Backend::requestTimeLine(uint latestStatusId, TimeLineType type, int page)
 
 QDateTime Backend::dateFromString(const QString &date)
 {
-	QDateTime datetime = QDateTime::fromString(date, "ddd MMM dd h:mm:ss '+0000' yyyy");
-    if(!datetime.isValid() || datetime.isNull())
-        kDebug()<<"Convertion failed for \""<< date <<"\" date time, fetched from server.";
-	datetime.setTimeSpec(Qt::UTC);
-	return datetime.toLocalTime();
+    char s[10];
+    int year, day, hours, minutes, seconds;
+    sscanf(qPrintable(date), "%*s %s %d %d:%d:%d %*s %d", s, &day, &hours, &minutes, &seconds, &year);
+    int month = monthes[s];
+    QDateTime recognized(QDate(year, month, day), QTime(hours, minutes, seconds));
+    recognized.setTimeSpec(Qt::UTC);
+    return recognized.toLocalTime();
+    ///Changed to this^ with hope it solve problem on some situations :)
+//     QDateTime datetime = QDateTime::fromString(date, "ddd MMM dd h:mm:ss '+0000' yyyy");
+//     if(!datetime.isValid() || datetime.isNull())
+//         kDebug()<<"Convertion failed for \""<< date <<"\" date time, fetched from server.";
+//     datetime.setTimeSpec(Qt::UTC);
+//     return datetime.toLocalTime();
 }
 
 QList<Status> * Backend::readTimeLineFromXml(const QByteArray & buffer)

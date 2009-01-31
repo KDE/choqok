@@ -112,7 +112,7 @@ private:
     QMap<KJob *, DMessageType> mRequestDMessagesMap;
 
     Account *mCurrentAccount;
-    
+    QMap<QString, int> monthes;
     QStringList followersList;
     short followersPage;
     QStringList friendsList;
