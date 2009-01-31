@@ -62,8 +62,14 @@ MainWindow::MainWindow()
     timelineTimer = new QTimer ( this );
 //     timelineTimer->setInterval ( Settings::updateInterval() *60000 );
 //     timelineTimer->start();
-    mPrevNotifyType = 1;
-    mPrevUpdateInterval = 10;
+    if(Settings::notifyType() == 0)
+        mPrevNotifyType = 1;
+    else
+        mPrevNotifyType = Settings::notifyType();
+    if(Settings::updateInterval() > 2)
+        mPrevUpdateInterval = Settings::updateInterval();
+    else
+        mPrevUpdateInterval = 10;
 
     connect ( timelineTimer, SIGNAL ( timeout() ), this, SIGNAL ( updateTimeLines() ) );
     connect ( AccountManager::self(), SIGNAL(accountAdded(const Account&)), this, SLOT(addAccountTimeLine(const Account&)) );
