@@ -43,7 +43,7 @@ signals:
 protected slots:
     virtual void slotButtonClicked( int button );
     void slotUserVerified(Account *userAccount);
-    void slotError(QString &errMsg);
+    void slotError(const QString &errMsg);
 
 private:
     void loadAccount ( QString &alias );

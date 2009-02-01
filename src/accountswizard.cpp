@@ -89,7 +89,7 @@ void AccountsWizard::slotButtonClicked(int button)
         
         Backend *b = new Backend(&mAccount, this);
         connect(b, SIGNAL(userVerified(Account*)), this, SLOT(slotUserVerified(Account*)));
-        connect(b, SIGNAL(sigError(QString&)), this, SLOT(slotError(QString&)));
+        connect(b, SIGNAL(sigError(const QString&)), this, SLOT(slotError(const QString&)));
         b->verifyCredential();
     } else
         KDialog::slotButtonClicked( button );
@@ -121,7 +121,7 @@ void AccountsWizard::slotUserVerified(Account * userAccount)
     accept();
 }
 
-void AccountsWizard::slotError(QString & errMsg)
+void AccountsWizard::slotError(const QString & errMsg)
 {
     kDebug();
     KMessageBox::detailedError(this, i18n("authentication failed, please check your credentials."), errMsg);

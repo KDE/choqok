@@ -67,7 +67,6 @@ signals:
     void setUnreadStatusesToReadState();
     void accountAdded(const Account &account);
     void accountRemoved(const QString &alias);
-//     void sigStatusUpdated( bool isError );
 
 public slots:
     void toggleMainWindowVisibility();

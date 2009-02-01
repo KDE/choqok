@@ -52,13 +52,14 @@ public:
     ~TimeLineWidget();
     Account currentAccount() const;
     void setCurrentAccount(const Account &account);
-    void setRemoved(bool isRemoved);
+//     void setRemoved(bool isRemoved);
 
 public slots:
     void settingsChanged();
     void updateTimeLines();
     void setUnreadStatusesToReadState();
     void abortPostNewStatus();
+    void aboutQuit();
 
 protected slots:
     void requestFavoritedDone ( bool isError );
@@ -151,7 +152,7 @@ private:
 
     QStringList friendsList;
 
-    bool mRemoved; // if this is True, so this timeline is removed. (Used for saving account settings and history)
+//     bool mRemoved; // if this is True, so this timeline is removed. (Used for saving account settings and history)
 };
 
 #endif
