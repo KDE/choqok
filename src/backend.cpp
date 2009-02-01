@@ -487,7 +487,7 @@ QString Backend::prepareStatus(QString status)
 		QString baseUrl = status.mid(j, k - j);
 		if(baseUrl.count()>30){
 			KUrl url("http://is.gd/api.php");
-			url.addQueryItem("longurl", KUrl::toPercentEncoding(baseUrl)) ;
+			url.addQueryItem("longurl", KUrl(baseUrl).url());
 			
 			KIO::Job *job = KIO::get( url, KIO::Reload, KIO::HideProgressInfo );
 			QMap<QString, QString> metaData;
