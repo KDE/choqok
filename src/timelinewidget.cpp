@@ -31,8 +31,9 @@
 #include <QTimer>
 #include <QScrollBar>
 #include <KDE/KLocale>
-#include <KMessageBox>
+#include <KDE/KMessageBox>
 #include <QProcess>
+#include <KDE/KNotification>
 
 TimeLineWidget::TimeLineWidget ( const Account &userAccount, QWidget* parent ) :
         QWidget ( parent )
@@ -266,7 +267,7 @@ void TimeLineWidget::addNewStatusesToUi ( QList< Status > & statusList, QBoxLayo
     QList<Status>::const_iterator it = statusList.constBegin();
     QList<Status>::const_iterator endIt = statusList.constEnd();
     bool isThereIsAnyNewStatusToNotify = false;
-	if(Settings::notifyType() != 2)
+	if(allInOne && Settings::notifyType() != 2)
 		notifyStr = (mCurrentAccount.direction()==Qt::RightToLeft) ? "<div dir='rtl'>" : "<div dir='ltr'>";
     for ( ;it != endIt; ++it ) {
         if ( it->replyToUserId == mCurrentAccount.userId() && type == Backend::HomeTimeLine ) {
@@ -307,7 +308,7 @@ void TimeLineWidget::addNewStatusesToUi ( QList< Status > & statusList, QBoxLayo
             listUnreadStatuses.append ( wt );
         }
 	}
-	if(Settings::notifyType() != 2)
+	if(allInOne && Settings::notifyType() != 2)
 		notifyStr += "</div>";
     uint latestId = statusList.last().statusId;
     if( type == Backend::HomeTimeLine && latestId > latestHomeStatusId){
@@ -327,7 +328,7 @@ void TimeLineWidget::addNewStatusesToUi ( QList< Status > & statusList, QBoxLayo
         checkUnreadStatuses ( numOfNewStatuses );
 
     if ( isThereIsAnyNewStatusToNotify ) {
-        emit systemNotify ( i18n ( "New statuses" ), notifyStr, APPNAME );
+        showNotify( i18n ( "New statuses" ), notifyStr );
     }
 
     updateStatusList ( list );
@@ -662,10 +663,22 @@ void TimeLineWidget::friendsListed(const QStringList & list)
     c->setCompletionMode( KGlobalSettings::CompletionPopupAuto );
 }
 
-// void TimeLineWidget::setRemoved(bool isRemoved)
-// {
-//     mRemoved = isRemoved;
-// }
+void TimeLineWidget::showNotify(const QString &title, const QString &message)
+{
+    if(Settings::notifyType() == 1){//KNotify
+        KNotification *notif = new KNotification("new-status-arrived", parentWidget());
+        notif->setText( message );
+        notif->setFlags(KNotification::RaiseWidgetOnActivation | KNotification::Persistent);
+        notif->sendEvent();
+        QTimer::singleShot(Settings::notifyInterval()*1000, notif, SLOT(close()));
+    } else if(Settings::notifyType() == 2){//Libnotify!
+        QString msg = message;
+        msg = msg.replace( "<br/>", "\n");
+        QString libnotifyCmd = QString("notify-send -t ") + QString::number(Settings::notifyInterval()*1000)
+        + QString(" -u low \"") + title + QString("\" \"") + msg + QString("\"");
+        QProcess::execute(libnotifyCmd);
+    }
+}
 
 void TimeLineWidget::txtNewStatusCleared()
 {

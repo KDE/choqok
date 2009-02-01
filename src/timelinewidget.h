@@ -124,6 +124,8 @@ private:
 
     void loadConfigurations();
 
+    void showNotify(const QString &title, const QString &message);
+
 private:
     Backend *twitter;
     StatusTextEdit *txtNewStatus;
