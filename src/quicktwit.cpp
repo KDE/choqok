@@ -105,6 +105,7 @@ void QuickTwit::slotPostNewStatusDone(bool isError)
 void QuickTwit::slotPostNewStatus(QString & newStatus)
 {
     kDebug();
+    this->hide();
     if(ui.checkAll->isChecked()){
         int count = accountsList.count();
         for(int i=0;i < count; ++i){
@@ -117,7 +118,6 @@ void QuickTwit::slotPostNewStatus(QString & newStatus)
         connect(twitter, SIGNAL(sigPostNewStatusDone(bool)), this, SLOT(slotPostNewStatusDone(bool)));
         twitter->postNewStatus(newStatus);
     }
-	this->hide();
 }
 
 void QuickTwit::sltAccepted()
