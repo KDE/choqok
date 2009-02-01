@@ -216,7 +216,7 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
 // 	}
     i = j = 0;
     s = t;
-    t = QString();
+    t.clear();
     while ((j = s.indexOf('@', i)) != -1) {
         t += s.mid(i, j - i);
         int k = s.indexOf(QRegExp("[ ,]"), j);
@@ -237,7 +237,7 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
         ///To cover Identica TAGs:
         i = j = 0;
         s = t;
-        t = QString();
+        t.clear();
         while ((j = s.indexOf('#', i)) != -1) {
             t += s.mid(i, j - i);
             int k = s.indexOf(QRegExp("[ ,?]"), j);
@@ -252,7 +252,7 @@ QString StatusWidget::prepareStatus(const QString &text, const int &replyStatusI
         ///To cover Identica Groups:
         i = j = 0;
         s = t;
-        t = QString();
+        t.clear();
         while ((j = s.indexOf('!', i)) != -1) {
             t += s.mid(i, j - i);
             int k = s.indexOf(QRegExp("[ .,?]"), j);

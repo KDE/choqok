@@ -388,7 +388,7 @@ void Backend::slotPostNewStatusFinished(KJob * job)
 			QList<Status> newSt;
 			newSt.append(st);
 			emit sigPostNewStatusDone(false);
-			emit homeTimeLineRecived(newSt);
+            emit homeTimeLineReceived(newSt);
 		}
 	}
 }
@@ -412,14 +412,14 @@ void Backend::slotRequestTimelineFinished(KJob *job)
 	switch(mRequestTimelineMap.value(job)){
 	case HomeTimeLine:
 		if(ptr){
-			emit homeTimeLineRecived(*ptr);
+            emit homeTimeLineReceived(*ptr);
 		} else {
 			kDebug()<<"Null returned from Backend::readTimeLineFromXml()";
 		}
 		break;
 	case ReplyTimeLine:
 		if(ptr)
-			emit replyTimeLineRecived(*ptr);
+            emit replyTimeLineReceived(*ptr);
 		else
 			kDebug()<<"Null returned from Backend::readTimeLineFromXml()";
 		break;
@@ -593,7 +593,7 @@ void Backend::slotUserInfoReceived(KJob * job)
     
     if(job->error()){
         kDebug()<<"Job Error: "<<job->errorString();
-        QString err = i18n("Requesting user informations failed. more info: %1", job->errorString());
+        QString err = i18n("Requesting user information failed. more info: %1", job->errorString());
     }
     QDomDocument document;
     QByteArray buffer = qobject_cast<KIO::StoredTransferJob *>(job)->data();
@@ -699,14 +699,14 @@ void Backend::slotRequestDMessagesFinished(KJob *job)
     switch(mRequestDMessagesMap.value(job)){
         case Inbox:
             if(ptr){
-                emit directMessagesRecieved(*ptr);
+                emit directMessagesReceived(*ptr);
             } else {
                 kDebug()<<"Null returned from Backend::readDMessagesFromXml()";
             }
             break;
         case Outbox:
             if(ptr)
-                emit outboxMessagesRecieved(*ptr);
+                emit outboxMessagesReceived(*ptr);
             else
                 kDebug()<<"Null returned from Backend::readDMessagesFromXml()";
             break;
@@ -825,7 +825,7 @@ void Backend::slotSendDMessageFinished(KJob *job)
             QList<Status> newSt;
             newSt.append(st);
             emit sigPostNewStatusDone(false);
-            emit outboxMessagesRecieved(newSt);
+            emit outboxMessagesReceived(newSt);
         }
     }
 }

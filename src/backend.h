@@ -73,11 +73,11 @@ signals:
 	void sigFavoritedDone(bool isError);
 	void sigDestroyDone(bool isError);
 	void sigError(const QString &errMsg);
-	void homeTimeLineRecived(QList<Status> &statusList);
-	void replyTimeLineRecived(QList<Status> &statusList);
+    void homeTimeLineReceived(QList<Status> &statusList);
+    void replyTimeLineReceived(QList<Status> &statusList);
     void userVerified(Account *userAccount);
-    void directMessagesRecieved(QList<Status> &msgList);
-    void outboxMessagesRecieved(QList<Status> &msgList);
+    void directMessagesReceived(QList<Status> &msgList);
+    void outboxMessagesReceived(QList<Status> &msgList);
     void followersListed(const QStringList &followersList);
     void friendsListed(const QStringList &friendsList);
 	
