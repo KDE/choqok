@@ -68,7 +68,9 @@ void AccountsWizard::slotButtonClicked(int button)
     kDebug();
     if ( button == KDialog::Ok ) {
         ///Show ProgressBar:
-        QProgressBar *progress = new QProgressBar(this);
+        if(progress)
+            progress = 0L;
+        progress = new QProgressBar(this);
         progress->setMinimum( 0 );
         progress->setMaximum( 0 );
         QGridLayout* grid = qobject_cast<QGridLayout*>(this->mainWidget()->layout());
@@ -86,7 +88,7 @@ void AccountsWizard::slotButtonClicked(int button)
         mAccount.setPassword( ui.kcfg_password->text() );
         mAccount.setDirection( (Qt::LayoutDirection)ui.kcfg_direction->currentIndex() );
         mAccount.setAlias( ui.kcfg_alias->text() );
-        
+
         Backend *b = new Backend(&mAccount, this);
         connect(b, SIGNAL(userVerified(Account*)), this, SLOT(slotUserVerified(Account*)));
         connect(b, SIGNAL(sigError(const QString&)), this, SLOT(slotError(const QString&)));
@@ -125,6 +127,8 @@ void AccountsWizard::slotError(const QString & errMsg)
 {
     kDebug();
     KMessageBox::detailedError(this, i18n("authentication failed, please check your credentials."), errMsg);
+    if(progress)
+        progress->deleteLater();
 }
 
 #include "accountswizard.moc"

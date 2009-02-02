@@ -76,7 +76,7 @@ void Backend::postNewStatus(const QString & statusMessage, uint replyToStatusId)
 		return;
 	}
 	job->addMetaData( "content-type", "Content-Type: application/x-www-form-urlencoded" );
-	connect( job, SIGNAL(result(KJob*)), this, SLOT(slotPostNewStatusFinished(KJob*)) );
+    connect( job, SIGNAL(result(KJob*)), this, SLOT(slotPostNewStatusFinished(KJob*)) );
 	job->start();
 }
 
@@ -134,9 +134,7 @@ void Backend::requestTimeLine(uint latestStatusId, TimeLineType type, int page)
 		return;
 	}
 	mRequestTimelineMap[job] = type;
-// 	mRequestTimelineBuffer[job] = QByteArray();
-	connect( job, SIGNAL(result(KJob*)), this, SLOT(slotRequestTimelineFinished(KJob*)));
-// 	connect( job, SIGNAL(data( KIO::Job *, const QByteArray &)), this, SLOT(slotRequestTimelineData(KIO::Job*, const QByteArray&)));
+    connect( job, SIGNAL(result(KJob*)), this, SLOT(slotRequestTimelineFinished(KJob*)));
 	job->start();
 }
 
@@ -320,8 +318,7 @@ void Backend::requestFavorited(uint statusId, bool isFavorite)
 		return;
 	}
 	
-	connect( job, SIGNAL(result(KJob*)), this, SLOT(slotRequestFavoritedFinished(KJob*)) );
-	
+    connect( job, SIGNAL(result(KJob*)), this, SLOT(slotRequestFavoritedFinished(KJob*)) );
 	job->start();
 }
 
@@ -339,9 +336,9 @@ void Backend::requestDestroy(uint statusId)
 		emit sigError(errMsg);
 		return;
 	}
-	
-	connect( job, SIGNAL(result(KJob*)), this, SLOT(slotRequestDestroyFinished(KJob*)) );
-	
+
+    connect( job, SIGNAL(result(KJob*)), this, SLOT(slotRequestDestroyFinished(KJob*)) );
+
 	job->start();
 }
 
@@ -359,9 +356,9 @@ void Backend::requestDestroyDMessage(uint statusId)
         emit sigError(errMsg);
         return;
     }
-    
+
     connect( job, SIGNAL(result(KJob*)), this, SLOT(slotRequestDestroyFinished(KJob*)) );
-    
+
     job->start();
 }
 
@@ -559,9 +556,9 @@ void Backend::slotCredentialsReceived(KJob * job)
     Status status;
     status.isError = false ;
     document.setContent(buffer);
-    
+
     QDomElement root = document.documentElement();
-    
+
     if (root.tagName() == "user") {
         QDomNode node2 = root.firstChild();
         QString timeStr;
@@ -581,6 +578,15 @@ void Backend::slotCredentialsReceived(KJob * job)
             QString err = i18n("Authorization Failed, more info: %1", job->errorString());
             emit sigError(err);
             return;
+        }
+    } else if ( root.tagName() == "hash" ) {
+        QDomNode node2 = root.firstChild();
+        while (!node2.isNull()) {
+            if(node2.toElement().tagName() == "error"){
+                emit sigError( i18n("Authentication failed with this result: %1", node2.toElement().text()) );
+                return;
+            }
+            node2 = node2.nextSibling();
         }
     } else {
         kDebug()<<"ERROR, unrecognized result, buffer is: "<<buffer;

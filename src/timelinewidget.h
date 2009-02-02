@@ -65,11 +65,11 @@ protected slots:
     void requestFavoritedDone ( bool isError );
     void requestDestroyDone ( bool isError );
 
-    void directMessagesRecieved( QList< Status >& msgList );
-    void outboxMessagesRecieved( QList< Status >& msgList );
+    void directMessagesReceived( QList< Status >& msgList );
+    void outboxMessagesReceived( QList< Status >& msgList );
 
-    void homeTimeLinesRecived ( QList<Status> &statusList );
-    void replyTimeLineRecived ( QList<Status> &statusList );
+    void homeTimeLinesReceived ( QList<Status> &statusList );
+    void replyTimeLineReceived ( QList<Status> &statusList );
 
     void postingNewStatusDone ( bool isError );
     void prepareReply ( const QString &userName, uint statusId );

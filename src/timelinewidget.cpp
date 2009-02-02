@@ -92,14 +92,14 @@ void TimeLineWidget::initObjects()
 
     twitter = new Backend ( &mCurrentAccount, this );
 
-    connect ( twitter, SIGNAL ( homeTimeLineRecived ( QList< Status >& ) ),
-              this, SLOT ( homeTimeLinesRecived ( QList< Status >& ) ) );
-    connect ( twitter, SIGNAL ( replyTimeLineRecived ( QList< Status >& ) ),
-              this, SLOT ( replyTimeLineRecived ( QList< Status >& ) ) );
-    connect( twitter, SIGNAL(directMessagesRecieved( QList< Status >&)), 
-             this, SLOT(directMessagesRecieved(QList< Status >&)) );
-    connect( twitter, SIGNAL(outboxMessagesRecieved(QList< Status >&)), 
-             this, SLOT(outboxMessagesRecieved(QList< Status >&)) );
+    connect ( twitter, SIGNAL ( homeTimeLineReceived ( QList< Status >& ) ),
+              this, SLOT ( homeTimeLinesReceived ( QList< Status >& ) ) );
+    connect ( twitter, SIGNAL ( replyTimeLineReceived ( QList< Status >& ) ),
+              this, SLOT ( replyTimeLineReceived ( QList< Status >& ) ) );
+    connect( twitter, SIGNAL(directMessagesReceived( QList< Status >&)),
+             this, SLOT(directMessagesReceived(QList< Status >&)) );
+    connect( twitter, SIGNAL(outboxMessagesReceived(QList< Status >&)),
+             this, SLOT(outboxMessagesReceived(QList< Status >&)) );
     connect ( twitter, SIGNAL ( sigPostNewStatusDone ( bool ) ), this, SLOT ( postingNewStatusDone ( bool ) ) );
     connect ( twitter, SIGNAL ( sigFavoritedDone ( bool ) ), this, SLOT ( requestFavoritedDone ( bool ) ) );
     connect ( twitter, SIGNAL ( sigDestroyDone ( bool ) ), this, SLOT ( requestDestroyDone ( bool ) ) );
@@ -162,7 +162,7 @@ void TimeLineWidget::updateTimeLines()
   emit notify(i18n("Loading timelines..."), true);
 }
 
-void TimeLineWidget::directMessagesRecieved(QList< Status > & msgList)
+void TimeLineWidget::directMessagesReceived(QList< Status > & msgList)
 {
     kDebug();
     emit notify ( i18n ( "Latest direct messages received!" ) );
@@ -184,7 +184,7 @@ void TimeLineWidget::directMessagesRecieved(QList< Status > & msgList)
     }
 }
 
-void TimeLineWidget::outboxMessagesRecieved(QList< Status > & msgList)
+void TimeLineWidget::outboxMessagesReceived(QList< Status > & msgList)
 {
     kDebug();
     emit notify ( i18n ( "Latest sent messages received!" ) );
@@ -208,7 +208,7 @@ void TimeLineWidget::outboxMessagesRecieved(QList< Status > & msgList)
     }
 }
 
-void TimeLineWidget::homeTimeLinesRecived ( QList< Status > & statusList )
+void TimeLineWidget::homeTimeLinesReceived ( QList< Status > & statusList )
 {
     kDebug();
     emit notify ( i18n ( "Latest friends timeline received!" ) );
@@ -233,7 +233,7 @@ void TimeLineWidget::homeTimeLinesRecived ( QList< Status > & statusList )
     }
 }
 
-void TimeLineWidget::replyTimeLineRecived ( QList< Status > & statusList )
+void TimeLineWidget::replyTimeLineReceived ( QList< Status > & statusList )
 {
     kDebug();
     emit notify ( i18n ( "Latest replies timeline received!" ) );

@@ -28,7 +28,7 @@
 // #include "datacontainers.h"
 #include "constants.h"
 #include "account.h"
-
+class QProgressBar;
 
 class AccountsWizard: public KDialog
 {
@@ -49,7 +49,7 @@ private:
     void loadAccount ( QString &alias );
 
     Ui::accounts_wizard_base ui;
-
+    QProgressBar *progress;
     QString mAlias;
     bool isEdit;
     Account mAccount;
