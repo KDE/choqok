@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -32,84 +32,85 @@
 #include <kdebug.h>
 #include <KDE/KLocale>
 
-MediaManager::MediaManager(QObject* parent): QObject(parent)
+MediaManager::MediaManager( QObject* parent ): QObject( parent )
 {
-	kDebug();
-	mediaResource = new KConfig();
-	map = new KConfigGroup(mediaResource, "MediaMap");
+    kDebug();
+    mediaResource = new KConfig();
+    map = new KConfigGroup( mediaResource, "MediaMap" );
 }
 
 
 MediaManager::~MediaManager()
 {
-	kDebug();
+    kDebug();
     mSelf = 0L;
-	map->sync();
-	delete map;
-	delete mediaResource;
+    map->sync();
+    delete map;
+    delete mediaResource;
 }
 
 MediaManager * MediaManager::mSelf = 0L;
 
 MediaManager * MediaManager::self()
 {
-    if(!mSelf)
+    if ( !mSelf )
         mSelf = new MediaManager;
     return mSelf;
 }
 
-QString MediaManager::getImageLocalPathIfExist(const QString & remotePath)
+QString MediaManager::getImageLocalPathIfExist( const QString & remotePath )
 {
-	QString path = map->readEntry(remotePath, QString(' '));
-	return path;
+    QString path = map->readEntry( remotePath, QString( ' ' ) );
+    return path;
 }
 
-void MediaManager::getImageLocalPathDownloadAsyncIfNotExists(const QString & localName, const QString & remotePath)
+void MediaManager::getImageLocalPathDownloadAsyncIfNotExists( const QString & localName, const QString & remotePath )
 {
 //     kDebug();
-    if(mMediaFilesMap.contains(remotePath)){
+    if ( mMediaFilesMap.contains( remotePath ) ) {
         ///The file is on the way, wait to download complete.
         return;
     }
     QString local;
-    if(map->hasKey(remotePath)){
-        local = map->readEntry(remotePath, QString());
-        emit imageFetched(remotePath, local);
+    if ( map->hasKey( remotePath ) ) {
+        local = map->readEntry( remotePath, QString() );
+        emit imageFetched( remotePath, local );
     } else {
-        local = MEDIA_DIR+'/'+localName;
+        local = MEDIA_DIR + '/' + localName;
         mMediaFilesMap [ remotePath ] = local;
-        KUrl srcUrl(remotePath);
-        KUrl destUrl(local);
+        KUrl srcUrl( remotePath );
+        KUrl destUrl( local );
 
-        KIO::FileCopyJob *job = KIO::file_copy(srcUrl, destUrl, -1, KIO::HideProgressInfo | KIO::Overwrite) ;
-        if(!job){
-            kDebug()<<"Cannot create a FileCopyJob!";
-            QString errMsg = i18n("Cannot download userimage for %1, please check your internet connection.", localName);
-            emit sigError(errMsg);
+        KIO::FileCopyJob *job = KIO::file_copy( srcUrl, destUrl, -1, KIO::HideProgressInfo | KIO::Overwrite ) ;
+        if ( !job ) {
+            kDebug() << "Cannot create a FileCopyJob!";
+            QString errMsg = i18n( "Cannot download userimage for %1, please check your internet connection.",
+                                   localName );
+            emit sigError( errMsg );
             return;
         }
-        connect( job, SIGNAL(result(KJob*)), this, SLOT(slotImageFetched(KJob *)));
+        connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotImageFetched( KJob * ) ) );
         job->start();
     }
 }
 
-void MediaManager::slotImageFetched(KJob * job)
+void MediaManager::slotImageFetched( KJob * job )
 {
 //     kDebug();
-    KIO::FileCopyJob *baseJob = qobject_cast<KIO::FileCopyJob *>(job);
-	if(job->error()){
-		kDebug()<<"Job error!"<<job->error()<<"\t"<<job->errorString();
-        QString errMsg = i18n("Cannot download user image from %1. The returned result is: %2",
-                              job->errorString(), baseJob->srcUrl().pathOrUrl());
-		emit sigError(errMsg);
+    KIO::FileCopyJob *baseJob = qobject_cast<KIO::FileCopyJob *>( job );
+    if ( job->error() ) {
+        kDebug() << "Job error!" << job->error() << "\t" << job->errorString();
+        QString errMsg = i18n( "Cannot download user image from %1. The returned result is: %2",
+                               job->errorString(), baseJob->srcUrl().pathOrUrl() );
+        emit sigError( errMsg );
     } else {
         QString local = baseJob->destUrl().pathOrUrl();
-        QString remote= baseJob->srcUrl().pathOrUrl();
-        mMediaFilesMap.remove(remote);
-		map->writeEntry(remote,  local);
-		map->sync();
-        emit imageFetched(remote, local);
-	}
+        QString remote = baseJob->srcUrl().pathOrUrl();
+        mMediaFilesMap.remove( remote );
+        map->writeEntry( remote,  local );
+        map->sync();
+        emit imageFetched( remote, local );
+    }
 }
 
 #include "mediamanager.moc"

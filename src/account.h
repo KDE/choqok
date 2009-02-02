@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -27,13 +27,13 @@
 // #include <QObject>
 
 /**
-	@author Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
 */
 class Account //: private QObject
 {
 public:
     Account();
-    Account(const Account &account);
+    Account( const Account &account );
 
     ~Account();
 
@@ -41,26 +41,26 @@ public:
     void setUserId( uint id );
 
     QString username() const;
-    void setUsername(const QString &name);
+    void setUsername( const QString &name );
 
     QString password() const;
-    void setPassword(const QString &pass);
+    void setPassword( const QString &pass );
 
     QString serviceName() const;
-    void setServiceName(const QString &servicename);
+    void setServiceName( const QString &servicename );
 
     QString alias() const;
-    void setAlias(const QString &alias);
+    void setAlias( const QString &alias );
 
     Qt::LayoutDirection direction() const;
-    void setDirection(const Qt::LayoutDirection &dir);
+    void setDirection( const Qt::LayoutDirection &dir );
 
     QString apiPath() const;
-    void setApiPath(const QString &apiPath);
+    void setApiPath( const QString &apiPath );
 
     bool isError() const;
-    void setIsError(bool isError);
-    
+    void setIsError( bool isError );
+
 private:
     uint mUserId;
     QString mUsername;

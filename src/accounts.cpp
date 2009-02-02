@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -27,21 +27,21 @@
 #include <kdebug.h>
 #include <QCheckBox>
 #include <KMessageBox>
-Accounts::Accounts ( QWidget *parent )
-        : QWidget ( parent )
+Accounts::Accounts( QWidget *parent )
+        : QWidget( parent )
 {
     kDebug();
-    setupUi ( this );
+    setupUi( this );
 
-    connect ( btnAdd, SIGNAL ( clicked() ), this, SLOT ( addAccount() ) );
-    connect ( btnEdit, SIGNAL ( clicked() ), this, SLOT ( editAccount() ) );
-    connect ( btnRemove, SIGNAL ( clicked() ), this, SLOT ( removeAccount() ) );
-    connect ( accountsTable, SIGNAL ( currentItemChanged ( QTableWidgetItem *, QTableWidgetItem * ) ),
-              this, SLOT ( accountsTablestateChanged() ) );
+    connect( btnAdd, SIGNAL( clicked() ), this, SLOT( addAccount() ) );
+    connect( btnEdit, SIGNAL( clicked() ), this, SLOT( editAccount() ) );
+    connect( btnRemove, SIGNAL( clicked() ), this, SLOT( removeAccount() ) );
+    connect( accountsTable, SIGNAL( currentItemChanged( QTableWidgetItem *, QTableWidgetItem * ) ),
+             this, SLOT( accountsTablestateChanged() ) );
 
-    btnAdd->setIcon ( KIcon ( "list-add" ) );
-    btnEdit->setIcon ( KIcon ( "edit-rename" ) );
-    btnRemove->setIcon ( KIcon ( "list-remove" ) );
+    btnAdd->setIcon( KIcon( "list-add" ) );
+    btnEdit->setIcon( KIcon( "edit-rename" ) );
+    btnRemove->setIcon( KIcon( "list-remove" ) );
     loadAccountsData();
 }
 
@@ -53,77 +53,77 @@ Accounts::~ Accounts()
 void Accounts::addAccount()
 {
     kDebug();
-    AccountsWizard *wz = new AccountsWizard ( QString(), this );
-    connect ( wz, SIGNAL ( accountAdded ( const Account & ) ),
-              this, SLOT ( slotAccountAdded ( const Account & ) ) );
+    AccountsWizard *wz = new AccountsWizard( QString(), this );
+    connect( wz, SIGNAL( accountAdded( const Account & ) ),
+             this, SLOT( slotAccountAdded( const Account & ) ) );
     wz->show();
 }
 
-void Accounts::editAccount ( QString alias )
+void Accounts::editAccount( QString alias )
 {
     kDebug();
     if ( alias.isEmpty() ) {
         int currentRow = accountsTable->currentRow();
-        alias = accountsTable->item ( currentRow, 0 )->text();
+        alias = accountsTable->item( currentRow, 0 )->text();
     }
 
-    AccountsWizard *wz = new AccountsWizard ( alias, this );
+    AccountsWizard *wz = new AccountsWizard( alias, this );
 
-    connect ( wz, SIGNAL ( accountEdited ( const Account & ) ),
-              this, SLOT ( slotAccountEdited ( const Account & ) ) );
+    connect( wz, SIGNAL( accountEdited( const Account & ) ),
+             this, SLOT( slotAccountEdited( const Account & ) ) );
     wz->show();
 }
 
-void Accounts::removeAccount ( QString alias )
+void Accounts::removeAccount( QString alias )
 {
-    kDebug()<<alias;
-    if(alias.isEmpty())
-        alias = accountsTable->item(accountsTable->currentRow(), 0)->text();
-    if(AccountManager::self()->removeAccount(alias)){
-        accountsTable->removeRow ( accountsTable->currentRow() );
+    kDebug() << alias;
+    if ( alias.isEmpty() )
+        alias = accountsTable->item( accountsTable->currentRow(), 0 )->text();
+    if ( AccountManager::self()->removeAccount( alias ) ) {
+        accountsTable->removeRow( accountsTable->currentRow() );
 //         emit accountRemoved( alias );
     } else
-        KMessageBox::sorry(this, i18n("Cannot remove the account, please try removing it manually."));
+        KMessageBox::sorry( this, i18n( "Cannot remove the account, please try removing it manually." ) );
 }
 
-void Accounts::slotAccountAdded ( const Account &account )
+void Accounts::slotAccountAdded( const Account &account )
 {
     kDebug();
-    addAccountToTable ( account.alias(), account.serviceName() );
+    addAccountToTable( account.alias(), account.serviceName() );
 //     emit accountAdded( account );
 }
 
-void Accounts::slotAccountEdited ( const Account &account )
+void Accounts::slotAccountEdited( const Account &account )
 {
     kDebug();
     int row = accountsTable->currentRow();
-    accountsTable->item ( row, 0 )->setText ( account.alias() );
-    accountsTable->item ( row, 1 )->setText ( account.serviceName() );
+    accountsTable->item( row, 0 )->setText( account.alias() );
+    accountsTable->item( row, 1 )->setText( account.serviceName() );
 //     emit accountEdited(account);
 }
 
-void Accounts::addAccountToTable (/* bool isEnabled, */const QString & alias, const QString & service )
+void Accounts::addAccountToTable( /* bool isEnabled, */const QString & alias, const QString & service )
 {
     kDebug();
     int row = accountsTable->rowCount();
-    accountsTable->setRowCount ( row + 1 );
+    accountsTable->setRowCount( row + 1 );
 //   accountsTable->insertRow(row);
 //     QCheckBox *check = new QCheckBox ( accountsTable );
 //     check->setChecked ( isEnabled );
 //     accountsTable->setCellWidget ( row, 0, check );
-    accountsTable->setItem(row, 0, new QTableWidgetItem(alias));
-    accountsTable->setItem(row, 1, new QTableWidgetItem(service));
+    accountsTable->setItem( row, 0, new QTableWidgetItem( alias ) );
+    accountsTable->setItem( row, 1, new QTableWidgetItem( service ) );
 }
 
 void Accounts::accountsTablestateChanged()
 {
     kDebug();
     if ( accountsTable->currentRow() >= 0 ) {
-        btnEdit->setEnabled ( true );
-        btnRemove->setEnabled ( true );
+        btnEdit->setEnabled( true );
+        btnRemove->setEnabled( true );
     } else {
-        btnEdit->setEnabled ( false );
-        btnRemove->setEnabled ( false );
+        btnEdit->setEnabled( false );
+        btnRemove->setEnabled( false );
     }
 }
 
@@ -132,10 +132,10 @@ void Accounts::loadAccountsData()
     kDebug();
 //     KConfigGroup grp(&conf, "Accounts");
     QList<Account> ac = AccountManager::self()->accounts();
-    QListIterator<Account> it(ac);
-    while(it.hasNext()){
+    QListIterator<Account> it( ac );
+    while ( it.hasNext() ) {
         Account current = it.next();
-        addAccountToTable(current.alias(), current.serviceName());
+        addAccountToTable( current.alias(), current.serviceName() );
     }
 }
 

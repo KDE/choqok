@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -25,7 +25,6 @@
 #define ACCOUNTSWIZARD_H
 
 #include "ui_accounts_wizard_base.h"
-// #include "datacontainers.h"
 #include "constants.h"
 #include "account.h"
 class QProgressBar;
@@ -34,19 +33,19 @@ class AccountsWizard: public KDialog
 {
     Q_OBJECT
 public:
-    explicit AccountsWizard ( QString alias = QString(), QWidget *parent = 0 );
+    explicit AccountsWizard( QString alias = QString(), QWidget *parent = 0 );
 
 signals:
-    void accountAdded ( const Account &account );
-    void accountEdited ( const Account &account );
+    void accountAdded( const Account &account );
+    void accountEdited( const Account &account );
 
 protected slots:
     virtual void slotButtonClicked( int button );
-    void slotUserVerified(Account *userAccount);
-    void slotError(const QString &errMsg);
+    void slotUserVerified( Account *userAccount );
+    void slotError( const QString &errMsg );
 
 private:
-    void loadAccount ( QString &alias );
+    void loadAccount( QString &alias );
 
     Ui::accounts_wizard_base ui;
     QProgressBar *progress;

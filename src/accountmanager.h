@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -31,23 +31,23 @@
 class KConfig;
 namespace KWallet
 {
-	class Wallet;
+    class Wallet;
 }
 
 /**
 Account manager class
 
-	@author Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
 */
 class AccountManager : public QObject
 {
     Q_OBJECT
 public:
-    AccountManager(QObject* parent=0);
+    AccountManager( QObject* parent = 0 );
 
     ~AccountManager();
 
-    static QString generateStatusBackupFileName(const QString &name, Backend::TimeLineType type);
+    static QString generateStatusBackupFileName( const QString &name, Backend::TimeLineType type );
 
     /**
      * \brief Retrieve the instance of AccountManager.
@@ -119,7 +119,7 @@ signals:
     void accountRemoved( const QString &alias );
 
 protected slots:
-    void userVerified(Account *userAccount);
+    void userVerified( Account *userAccount );
 private:
     void loadAccounts();
 

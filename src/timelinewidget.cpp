@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -35,29 +35,29 @@
 #include <QProcess>
 #include <KDE/KNotification>
 
-TimeLineWidget::TimeLineWidget ( const Account &userAccount, QWidget* parent ) :
-        QWidget ( parent )
+TimeLineWidget::TimeLineWidget( const Account &userAccount, QWidget* parent ) :
+        QWidget( parent )
 {
     kDebug();
-    setupUi ( this );
+    setupUi( this );
     mCurrentAccount = userAccount;
     latestHomeStatusId = latestReplyStatusId = 0;
 //     mRemoved = false;
 
-    homeLayout->setDirection ( QBoxLayout::TopToBottom );
-    replyLayout->setDirection ( QBoxLayout::TopToBottom );
-    txtNewStatus = new StatusTextEdit ( this );
-    lblCounter = new QLabel(this);
-    tabs->setCornerWidget(lblCounter, Qt::TopRightCorner);
-    txtNewStatus->setObjectName ( "txtNewStatus" );
-    inputFrame->layout()->addWidget ( txtNewStatus );
+    homeLayout->setDirection( QBoxLayout::TopToBottom );
+    replyLayout->setDirection( QBoxLayout::TopToBottom );
+    txtNewStatus = new StatusTextEdit( this );
+    lblCounter = new QLabel( this );
+    tabs->setCornerWidget( lblCounter, Qt::TopRightCorner );
+    txtNewStatus->setObjectName( "txtNewStatus" );
+    inputFrame->layout()->addWidget( txtNewStatus );
 
 //     connect ( toggleArrow, SIGNAL ( clicked() ), this, SLOT ( toggleTwitFieldVisible() ) );
-    connect ( txtNewStatus, SIGNAL ( charsLeft ( int ) ), this, SLOT ( checkNewStatusCharactersCount ( int ) ) );
-    connect ( txtNewStatus, SIGNAL ( returnPressed ( QString& ) ), this, SLOT ( postStatus ( QString& ) ) );
-    connect ( txtNewStatus, SIGNAL ( cleared() ), this, SLOT (txtNewStatusCleared()) );
-    connect ( qApp, SIGNAL ( aboutToQuit() ), this, SLOT ( aboutQuit() ) );
-    QTimer::singleShot ( 0, this, SLOT ( initObjects() ) );
+    connect( txtNewStatus, SIGNAL( charsLeft( int ) ), this, SLOT( checkNewStatusCharactersCount( int ) ) );
+    connect( txtNewStatus, SIGNAL( returnPressed( QString& ) ), this, SLOT( postStatus( QString& ) ) );
+    connect( txtNewStatus, SIGNAL( cleared() ), this, SLOT( txtNewStatusCleared() ) );
+    connect( qApp, SIGNAL( aboutToQuit() ), this, SLOT( aboutQuit() ) );
+    QTimer::singleShot( 0, this, SLOT( initObjects() ) );
 }
 
 TimeLineWidget::~TimeLineWidget()
@@ -69,74 +69,74 @@ void TimeLineWidget::aboutQuit()
 {
     kDebug();
     AccountManager::self()->saveFriendsList( mCurrentAccount.alias(), friendsList );
-    saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::HomeTimeLine), listHomeStatus );
-    saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::ReplyTimeLine), listReplyStatus );
-    saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::InboxTimeLine), listInboxStatus );
-    saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::OutboxTimeLine), listOutboxStatus );
+    saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::HomeTimeLine ), listHomeStatus );
+    saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::ReplyTimeLine ), listReplyStatus );
+    saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::InboxTimeLine ), listInboxStatus );
+    saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::OutboxTimeLine ), listOutboxStatus );
 }
 
 void TimeLineWidget::initObjects()
 {
     kDebug();
 
-    txtNewStatus->setSizePolicy ( QSizePolicy::Expanding, QSizePolicy::Maximum );
-    txtNewStatus->setTabChangesFocus ( true );
-    btnReloadFriends->setIcon( KIcon("view-refresh") );
-    connect( btnReloadFriends, SIGNAL(clicked( bool )), this, SLOT(reloadFriendsList()) );
+    txtNewStatus->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Maximum );
+    txtNewStatus->setTabChangesFocus( true );
+    btnReloadFriends->setIcon( KIcon( "view-refresh" ) );
+    connect( btnReloadFriends, SIGNAL( clicked( bool ) ), this, SLOT( reloadFriendsList() ) );
 
     QFont counterF;
     counterF.setBold( true );
     counterF.setPointSize( 12 );
     lblCounter->setFont( counterF );
-    checkNewStatusCharactersCount(140);
+    checkNewStatusCharactersCount( 140 );
 
-    twitter = new Backend ( &mCurrentAccount, this );
+    twitter = new Backend( &mCurrentAccount, this );
 
-    connect ( twitter, SIGNAL ( homeTimeLineReceived ( QList< Status >& ) ),
-              this, SLOT ( homeTimeLinesReceived ( QList< Status >& ) ) );
-    connect ( twitter, SIGNAL ( replyTimeLineReceived ( QList< Status >& ) ),
-              this, SLOT ( replyTimeLineReceived ( QList< Status >& ) ) );
-    connect( twitter, SIGNAL(directMessagesReceived( QList< Status >&)),
-             this, SLOT(directMessagesReceived(QList< Status >&)) );
-    connect( twitter, SIGNAL(outboxMessagesReceived(QList< Status >&)),
-             this, SLOT(outboxMessagesReceived(QList< Status >&)) );
-    connect ( twitter, SIGNAL ( sigPostNewStatusDone ( bool ) ), this, SLOT ( postingNewStatusDone ( bool ) ) );
-    connect ( twitter, SIGNAL ( sigFavoritedDone ( bool ) ), this, SLOT ( requestFavoritedDone ( bool ) ) );
-    connect ( twitter, SIGNAL ( sigDestroyDone ( bool ) ), this, SLOT ( requestDestroyDone ( bool ) ) );
-    connect ( twitter, SIGNAL ( sigError ( const QString& ) ), this, SLOT ( error ( const QString& ) ) );
-    connect ( twitter, SIGNAL (friendsListed(const QStringList&)), this, SLOT(friendsListed(const QStringList&)));
-    connect ( twitter, SIGNAL (followersListed(const QStringList&)), this, SLOT(friendsListed(const QStringList&)));
+    connect( twitter, SIGNAL( homeTimeLineReceived( QList< Status >& ) ),
+             this, SLOT( homeTimeLinesReceived( QList< Status >& ) ) );
+    connect( twitter, SIGNAL( replyTimeLineReceived( QList< Status >& ) ),
+             this, SLOT( replyTimeLineReceived( QList< Status >& ) ) );
+    connect( twitter, SIGNAL( directMessagesReceived( QList< Status >& ) ),
+             this, SLOT( directMessagesReceived( QList< Status >& ) ) );
+    connect( twitter, SIGNAL( outboxMessagesReceived( QList< Status >& ) ),
+             this, SLOT( outboxMessagesReceived( QList< Status >& ) ) );
+    connect( twitter, SIGNAL( sigPostNewStatusDone( bool ) ), this, SLOT( postingNewStatusDone( bool ) ) );
+    connect( twitter, SIGNAL( sigFavoritedDone( bool ) ), this, SLOT( requestFavoritedDone( bool ) ) );
+    connect( twitter, SIGNAL( sigDestroyDone( bool ) ), this, SLOT( requestDestroyDone( bool ) ) );
+    connect( twitter, SIGNAL( sigError( const QString& ) ), this, SLOT( error( const QString& ) ) );
+    connect( twitter, SIGNAL( friendsListed( const QStringList& ) ), this, SLOT( friendsListed( const QStringList& ) ) );
+    connect( twitter, SIGNAL( followersListed( const QStringList& ) ), this, SLOT( friendsListed( const QStringList& ) ) );
 
     replyToStatusId = unreadStatusCount = unreadStatusInReply = unreadStatusInHome =
-            unreadStatusInInbox = unreadStatusInOutbox = latestInboxStatusId =
-            latestOutboxStatusId = 0;
+                                              unreadStatusInInbox = unreadStatusInOutbox = latestInboxStatusId =
+                                                                        latestOutboxStatusId = 0;
 
-    setTabOrder( chkDMessage, comboFriendList);
-    setTabOrder( comboFriendList, btnReloadFriends);
-    setTabOrder( btnReloadFriends, txtNewStatus);
-    setTabOrder( txtNewStatus, chkDMessage);
+    setTabOrder( chkDMessage, comboFriendList );
+    setTabOrder( comboFriendList, btnReloadFriends );
+    setTabOrder( btnReloadFriends, txtNewStatus );
+    setTabOrder( txtNewStatus, chkDMessage );
 
     loadConfigurations();
-    txtNewStatus->setFocus ( Qt::OtherFocusReason );
+    txtNewStatus->setFocus( Qt::OtherFocusReason );
 }
 
-void TimeLineWidget::checkNewStatusCharactersCount ( int numOfChars )
+void TimeLineWidget::checkNewStatusCharactersCount( int numOfChars )
 {
     if ( numOfChars < 0 ) {
-        lblCounter->setStyleSheet ( "QLabel {color: red;}" );
+        lblCounter->setStyleSheet( "QLabel {color: red;}" );
     } else if ( numOfChars < 30 ) {
-        lblCounter->setStyleSheet ( "QLabel {color: rgb(242, 179, 19);}" );
+        lblCounter->setStyleSheet( "QLabel {color: rgb(242, 179, 19);}" );
     } else {
-        lblCounter->setStyleSheet ( "QLabel {color: green;}" );
+        lblCounter->setStyleSheet( "QLabel {color: green;}" );
     }
 //     kDebug()<<numOfChars;
-    if(numOfChars == 140 ){
+    if ( numOfChars == 140 ) {
         txtNewStatus->setMaximumHeight( 28 );
     } else {
         txtNewStatus->setMaximumHeight( 80 );
     }
 
-    lblCounter->setText ( i18n ( "%1", numOfChars ) );
+    lblCounter->setText( i18n( "%1", numOfChars ) );
 }
 
 void TimeLineWidget::settingsChanged()
@@ -149,8 +149,8 @@ void TimeLineWidget::settingsChanged()
 void TimeLineWidget::updateTimeLines()
 {
     kDebug();
-    twitter->requestTimeLine ( latestHomeStatusId, Backend::HomeTimeLine );
-    twitter->requestTimeLine ( latestReplyStatusId, Backend::ReplyTimeLine );
+    twitter->requestTimeLine( latestHomeStatusId, Backend::HomeTimeLine );
+    twitter->requestTimeLine( latestReplyStatusId, Backend::ReplyTimeLine );
     twitter->requestDMessages( latestInboxStatusId, Backend::Inbox );
     twitter->requestDMessages( latestOutboxStatusId, Backend::Outbox );
 
@@ -159,44 +159,44 @@ void TimeLineWidget::updateTimeLines()
     else
         isStartMode = false;
 
-  emit notify(i18n("Loading timelines..."), true);
+    emit notify( i18n( "Loading timelines..." ), true );
 }
 
-void TimeLineWidget::directMessagesReceived(QList< Status > & msgList)
+void TimeLineWidget::directMessagesReceived( QList< Status > & msgList )
 {
     kDebug();
-    emit notify ( i18n ( "Latest direct messages received!" ) );
+    emit notify( i18n( "Latest direct messages received!" ) );
     int count = msgList.count();
 
     if ( count == 0 ) {
         kDebug() << "Message list is empty";
-        emit notify ( i18n ( "No new messages received. The list is up to date." ) );
+        emit notify( i18n( "No new messages received. The list is up to date." ) );
         return;
     } else {
-        addNewStatusesToUi ( msgList, inboxLayout, &listInboxStatus, Backend::InboxTimeLine );
-        inboxScroll->verticalScrollBar()->setSliderPosition ( 0 );
+        addNewStatusesToUi( msgList, inboxLayout, &listInboxStatus, Backend::InboxTimeLine );
+        inboxScroll->verticalScrollBar()->setSliderPosition( 0 );
         kDebug() << count << " Statuses received.";
         if ( !isStartMode ) {
             unreadStatusInInbox += count;
-            if( unreadStatusInInbox > 0 )
-                tabs->setTabText ( 2, i18n ( "Inbox(%1)", unreadStatusInInbox ) );
+            if ( unreadStatusInInbox > 0 )
+                tabs->setTabText( 2, i18n( "Inbox(%1)", unreadStatusInInbox ) );
         }
     }
 }
 
-void TimeLineWidget::outboxMessagesReceived(QList< Status > & msgList)
+void TimeLineWidget::outboxMessagesReceived( QList< Status > & msgList )
 {
     kDebug();
-    emit notify ( i18n ( "Latest sent messages received!" ) );
+    emit notify( i18n( "Latest sent messages received!" ) );
     int count = msgList.count();
 
     if ( count == 0 ) {
         kDebug() << "Message list is empty";
-        emit notify ( i18n ( "No new messages received. The list is up to date." ) );
+        emit notify( i18n( "No new messages received. The list is up to date." ) );
         return;
     } else {
-        addNewStatusesToUi ( msgList, outboxLayout, &listOutboxStatus, Backend::OutboxTimeLine );
-        outboxScroll->verticalScrollBar()->setSliderPosition ( 0 );
+        addNewStatusesToUi( msgList, outboxLayout, &listOutboxStatus, Backend::OutboxTimeLine );
+        outboxScroll->verticalScrollBar()->setSliderPosition( 0 );
 
         kDebug() << count << " Statuses received.";
 
@@ -208,56 +208,56 @@ void TimeLineWidget::outboxMessagesReceived(QList< Status > & msgList)
     }
 }
 
-void TimeLineWidget::homeTimeLinesReceived ( QList< Status > & statusList )
+void TimeLineWidget::homeTimeLinesReceived( QList< Status > & statusList )
 {
     kDebug();
-    emit notify ( i18n ( "Latest friends timeline received!" ) );
+    emit notify( i18n( "Latest friends timeline received!" ) );
     int count = statusList.count();
 
     if ( count == 0 ) {
         kDebug() << "Status list is empty";
-        emit notify ( i18n ( "No new statuses received. The list is up to date." ) );
+        emit notify( i18n( "No new statuses received. The list is up to date." ) );
         return;
     } else {
-        addNewStatusesToUi ( statusList, homeLayout, &listHomeStatus );
-        homeScroll->verticalScrollBar()->setSliderPosition ( 0 );
+        addNewStatusesToUi( statusList, homeLayout, &listHomeStatus );
+        homeScroll->verticalScrollBar()->setSliderPosition( 0 );
 
 //         int count = statusList.count();
         kDebug() << count << " Statuses received.";
 
         if ( !isStartMode ) {
             unreadStatusInHome += count;
-            if( unreadStatusInHome > 0 )
-                tabs->setTabText ( 0, i18n ( "Home(%1)", unreadStatusInHome ) );
+            if ( unreadStatusInHome > 0 )
+                tabs->setTabText( 0, i18n( "Home(%1)", unreadStatusInHome ) );
         }
     }
 }
 
-void TimeLineWidget::replyTimeLineReceived ( QList< Status > & statusList )
+void TimeLineWidget::replyTimeLineReceived( QList< Status > & statusList )
 {
     kDebug();
-    emit notify ( i18n ( "Latest replies timeline received!" ) );
+    emit notify( i18n( "Latest replies timeline received!" ) );
     int count = statusList.count();
     if ( count == 0 ) {
         kDebug() << "Status list is empty";
-        emit notify ( i18n ( "No new statuses received. The list is up to date." ) );
+        emit notify( i18n( "No new statuses received. The list is up to date." ) );
         return;
     } else {
-        addNewStatusesToUi ( statusList, replyLayout, &listReplyStatus, Backend::ReplyTimeLine );
-        replyScroll->verticalScrollBar()->setSliderPosition ( 0 );
+        addNewStatusesToUi( statusList, replyLayout, &listReplyStatus, Backend::ReplyTimeLine );
+        replyScroll->verticalScrollBar()->setSliderPosition( 0 );
 
 //         int count = statusList.count();
         kDebug() << count << " Statuses received.";
 
         if ( !isStartMode ) {
             unreadStatusInReply += count;
-            if( unreadStatusInReply > 0 )
-                tabs->setTabText ( 1, i18n ( "Reply(%1)", unreadStatusInReply ) );
+            if ( unreadStatusInReply > 0 )
+                tabs->setTabText( 1, i18n( "Reply(%1)", unreadStatusInReply ) );
         }
     }
 }
 
-void TimeLineWidget::addNewStatusesToUi ( QList< Status > & statusList, QBoxLayout * layoutToAddStatuses,
+void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayout * layoutToAddStatuses,
         QList<StatusWidget*> *list, Backend::TimeLineType type )
 {
     kDebug();
@@ -267,8 +267,8 @@ void TimeLineWidget::addNewStatusesToUi ( QList< Status > & statusList, QBoxLayo
     QList<Status>::const_iterator it = statusList.constBegin();
     QList<Status>::const_iterator endIt = statusList.constEnd();
     bool isThereIsAnyNewStatusToNotify = false;
-	if(allInOne && Settings::notifyType() != 2)
-		notifyStr = (mCurrentAccount.direction()==Qt::RightToLeft) ? "<div dir='rtl'>" : "<div dir='ltr'>";
+    if ( allInOne && Settings::notifyType() != 2 )
+        notifyStr = ( mCurrentAccount.direction() == Qt::RightToLeft ) ? "<div dir='rtl'>" : "<div dir='ltr'>";
     for ( ;it != endIt; ++it ) {
         if ( it->replyToUserId == mCurrentAccount.userId() && type == Backend::HomeTimeLine ) {
             --numOfNewStatuses;
@@ -276,62 +276,62 @@ void TimeLineWidget::addNewStatusesToUi ( QList< Status > & statusList, QBoxLayo
             continue;
         }
 
-        StatusWidget *wt = new StatusWidget ( &mCurrentAccount, this );
+        StatusWidget *wt = new StatusWidget( &mCurrentAccount, this );
 
-        wt->setAttribute ( Qt::WA_DeleteOnClose );
-        wt->setCurrentStatus ( *it );
-        connect ( wt, SIGNAL ( sigReply ( const QString&, uint ) ),
-                  this, SLOT ( prepareReply ( const QString&, uint ) ) );
-        connect ( wt, SIGNAL ( sigFavorite ( uint, bool ) ),
-                  twitter, SLOT ( requestFavorited ( uint, bool ) ) );
-        connect ( wt, SIGNAL ( sigDestroy ( uint ) ),
-                  this, SLOT ( requestDestroy ( uint ) ) );
-        list->append ( wt );
-        layoutToAddStatuses->insertWidget ( 0, wt );
+        wt->setAttribute( Qt::WA_DeleteOnClose );
+        wt->setCurrentStatus( *it );
+        connect( wt, SIGNAL( sigReply( const QString&, uint ) ),
+                 this, SLOT( prepareReply( const QString&, uint ) ) );
+        connect( wt, SIGNAL( sigFavorite( uint, bool ) ),
+                 twitter, SLOT( requestFavorited( uint, bool ) ) );
+        connect( wt, SIGNAL( sigDestroy( uint ) ),
+                 this, SLOT( requestDestroy( uint ) ) );
+        list->append( wt );
+        layoutToAddStatuses->insertWidget( 0, wt );
 
         if ( !isStartMode ) {
             if ( it->user.userId == mCurrentAccount.userId() ) {
                 --numOfNewStatuses;
-                wt->setUnread ( StatusWidget::WithoutNotify );
+                wt->setUnread( StatusWidget::WithoutNotify );
             } else {
-                if(type == Backend::OutboxTimeLine){
-                    wt->setUnread ( StatusWidget::WithoutNotify );
+                if ( type == Backend::OutboxTimeLine ) {
+                    wt->setUnread( StatusWidget::WithoutNotify );
                 } else if ( allInOne ) {
                     notifyStr += "<b>" + it->user.screenName + " : </b>" + it->content + "<br/>";
                     isThereIsAnyNewStatusToNotify = true;
-                    wt->setUnread ( StatusWidget::WithoutNotify );
+                    wt->setUnread( StatusWidget::WithoutNotify );
                 } else {
-                    wt->setUnread ( StatusWidget::WithNotify );
+                    wt->setUnread( StatusWidget::WithNotify );
                 }
             }
 
-            listUnreadStatuses.append ( wt );
+            listUnreadStatuses.append( wt );
         }
-	}
-	if(allInOne && Settings::notifyType() != 2)
-		notifyStr += "</div>";
+    }
+    if ( allInOne && Settings::notifyType() != 2 )
+        notifyStr += "</div>";
     uint latestId = statusList.last().statusId;
-    if( type == Backend::HomeTimeLine && latestId > latestHomeStatusId){
-        kDebug()<<"Latest home statusId sets to: "<<latestId;
+    if ( type == Backend::HomeTimeLine && latestId > latestHomeStatusId ) {
+        kDebug() << "Latest home statusId sets to: " << latestId;
         latestHomeStatusId = latestId;
-    } else if( type == Backend::ReplyTimeLine && latestId > latestReplyStatusId){
-        kDebug()<<"Latest reply statusId sets to: "<<latestId;
+    } else if ( type == Backend::ReplyTimeLine && latestId > latestReplyStatusId ) {
+        kDebug() << "Latest reply statusId sets to: " << latestId;
         latestReplyStatusId = latestId;
-    } else if( type == Backend::InboxTimeLine && latestId > latestInboxStatusId ) {
-        kDebug()<<"Latest recieved statusId sets to: "<<latestId;
+    } else if ( type == Backend::InboxTimeLine && latestId > latestInboxStatusId ) {
+        kDebug() << "Latest recieved statusId sets to: " << latestId;
         latestInboxStatusId = latestId;
-    } else if( type == Backend::OutboxTimeLine && latestId > latestOutboxStatusId ) {
-        kDebug()<<"Latest sent statusId sets to: "<<latestId;
+    } else if ( type == Backend::OutboxTimeLine && latestId > latestOutboxStatusId ) {
+        kDebug() << "Latest sent statusId sets to: " << latestId;
         latestOutboxStatusId = latestId;
     }
     if ( !isStartMode && type != Backend::OutboxTimeLine )
-        checkUnreadStatuses ( numOfNewStatuses );
+        checkUnreadStatuses( numOfNewStatuses );
 
     if ( isThereIsAnyNewStatusToNotify ) {
-        showNotify( i18n ( "New statuses" ), notifyStr );
+        showNotify( i18n( "New statuses" ), notifyStr );
     }
 
-    updateStatusList ( list );
+    updateStatusList( list );
 }
 
 void TimeLineWidget::abortPostNewStatus()
@@ -342,61 +342,61 @@ void TimeLineWidget::abortPostNewStatus()
 
 void TimeLineWidget::setDefaultDirection()
 {
-    tabs->widget ( 0 )->setLayoutDirection ( mCurrentAccount.direction() );
-    tabs->widget ( 1 )->setLayoutDirection ( mCurrentAccount.direction() );
-    tabs->widget ( 2 )->setLayoutDirection ( mCurrentAccount.direction() );
-    tabs->widget ( 3 )->setLayoutDirection ( mCurrentAccount.direction() );
+    tabs->widget( 0 )->setLayoutDirection( mCurrentAccount.direction() );
+    tabs->widget( 1 )->setLayoutDirection( mCurrentAccount.direction() );
+    tabs->widget( 2 )->setLayoutDirection( mCurrentAccount.direction() );
+    tabs->widget( 3 )->setLayoutDirection( mCurrentAccount.direction() );
 //     tabs->widget ( 4 )->setLayoutDirection ( mCurrentAccount.direction() );
 
-    txtNewStatus->setDefaultDirection ( mCurrentAccount.direction() );
+    txtNewStatus->setDefaultDirection( mCurrentAccount.direction() );
 }
 
-void TimeLineWidget::error ( const QString & errMsg )
+void TimeLineWidget::error( const QString & errMsg )
 {
-    emit notify ( i18n ( "Failed, %1", errMsg ), true );
+    emit notify( i18n( "Failed, %1", errMsg ), true );
 }
 
-void TimeLineWidget::postStatus ( QString & status )
+void TimeLineWidget::postStatus( QString & status )
 {
     kDebug();
 
-    if ( status.size() > MAX_STATUS_SIZE && status.indexOf ( "http://" ) == -1 ) {
-        QString err = i18n ( "Status text size is more than server limit size." );
-        error ( err );
+    if ( status.size() > MAX_STATUS_SIZE && status.indexOf( "http://" ) == -1 ) {
+        QString err = i18n( "Status text size is more than server limit size." );
+        error( err );
         return;
     }
-    txtNewStatus->setEnabled ( false );
-    if(chkDMessage->isChecked()){
-        emit notify ( i18n ( "Sending direct message..." ), true );
+    txtNewStatus->setEnabled( false );
+    if ( chkDMessage->isChecked() ) {
+        emit notify( i18n( "Sending direct message..." ), true );
         twitter->sendDMessage( comboFriendList->currentText(), status );
     } else {
-        emit notify ( i18n ( "Posting new status..." ), true );
-        twitter->postNewStatus ( status, replyToStatusId );
+        emit notify( i18n( "Posting new status..." ), true );
+        twitter->postNewStatus( status, replyToStatusId );
     }
 }
 
-void TimeLineWidget::postingNewStatusDone ( bool isError )
+void TimeLineWidget::postingNewStatusDone( bool isError )
 {
     kDebug();
 //     emit sigStatusUpdated( isError );
     if ( !isError ) {
-        txtNewStatus->clearContentsAndSetDirection ( mCurrentAccount.direction() );
-        QString successMsg = i18n ( "New status posted successfully" );
-        emit systemNotify ( i18n ( "Success!" ), successMsg, APPNAME );
-        notify ( successMsg );
+        txtNewStatus->clearContentsAndSetDirection( mCurrentAccount.direction() );
+        QString successMsg = i18n( "New status posted successfully" );
+        emit systemNotify( i18n( "Success!" ), successMsg, APPNAME );
+        notify( successMsg );
         replyToStatusId = 0;
     } else {
-        error ( twitter->latestErrorString() );
+        error( twitter->latestErrorString() );
     }
     txtNewStatus->setFocus( Qt::OtherFocusReason );
-    txtNewStatus->setEnabled ( true );
+    txtNewStatus->setEnabled( true );
 
 }
 
-bool TimeLineWidget::saveStatuses ( QString fileName, QList<StatusWidget*> &list )
+bool TimeLineWidget::saveStatuses( QString fileName, QList<StatusWidget*> &list )
 {
     kDebug();
-    KConfig statusesBackup ( "choqok/"+fileName, KConfig::NoGlobals, "data" );
+    KConfig statusesBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
 
     ///Clear previous data:
     QStringList prevList = statusesBackup.groupList();
@@ -404,7 +404,7 @@ bool TimeLineWidget::saveStatuses ( QString fileName, QList<StatusWidget*> &list
 
     if ( c > 0 ) {
         for ( int i = 0; i < c; ++i ) {
-            statusesBackup.deleteGroup ( prevList[i] );
+            statusesBackup.deleteGroup( prevList[i] );
         }
     }
 
@@ -412,22 +412,22 @@ bool TimeLineWidget::saveStatuses ( QString fileName, QList<StatusWidget*> &list
 
     for ( int i = 0; i < count; ++i ) {
 //   QString str = ;
-        KConfigGroup grp ( &statusesBackup, QString::number ( list[i]->currentStatus().statusId ) );
-        grp.writeEntry ( "created_at", list[i]->currentStatus().creationDateTime );
-        grp.writeEntry ( "id", list[i]->currentStatus().statusId );
-        grp.writeEntry ( "text", list[i]->currentStatus().content );
-        grp.writeEntry ( "source", list[i]->currentStatus().source );
-        grp.writeEntry ( "truncated", list[i]->currentStatus().isTruncated );
-        grp.writeEntry ( "in_reply_to_status_id", list[i]->currentStatus().replyToStatusId );
-        grp.writeEntry ( "in_reply_to_user_id", list[i]->currentStatus().replyToUserId );
-        grp.writeEntry ( "favorited", list[i]->currentStatus().isFavorited );
-        grp.writeEntry ( "in_reply_to_screen_name", list[i]->currentStatus().replyToUserScreenName );
-        grp.writeEntry ( "userId", list[i]->currentStatus().user.userId );
-        grp.writeEntry ( "screen_name", list[i]->currentStatus().user.screenName );
-        grp.writeEntry ( "name", list[i]->currentStatus().user.name );
-        grp.writeEntry ( "profile_image_url", list[i]->currentStatus().user.profileImageUrl );
-        grp.writeEntry ( "description" , list[i]->currentStatus().user.description );
-        grp.writeEntry ( "isDMessage" , list[i]->currentStatus().isDMessage );
+        KConfigGroup grp( &statusesBackup, QString::number( list[i]->currentStatus().statusId ) );
+        grp.writeEntry( "created_at", list[i]->currentStatus().creationDateTime );
+        grp.writeEntry( "id", list[i]->currentStatus().statusId );
+        grp.writeEntry( "text", list[i]->currentStatus().content );
+        grp.writeEntry( "source", list[i]->currentStatus().source );
+        grp.writeEntry( "truncated", list[i]->currentStatus().isTruncated );
+        grp.writeEntry( "in_reply_to_status_id", list[i]->currentStatus().replyToStatusId );
+        grp.writeEntry( "in_reply_to_user_id", list[i]->currentStatus().replyToUserId );
+        grp.writeEntry( "favorited", list[i]->currentStatus().isFavorited );
+        grp.writeEntry( "in_reply_to_screen_name", list[i]->currentStatus().replyToUserScreenName );
+        grp.writeEntry( "userId", list[i]->currentStatus().user.userId );
+        grp.writeEntry( "screen_name", list[i]->currentStatus().user.screenName );
+        grp.writeEntry( "name", list[i]->currentStatus().user.name );
+        grp.writeEntry( "profile_image_url", list[i]->currentStatus().user.profileImageUrl );
+        grp.writeEntry( "description" , list[i]->currentStatus().user.description );
+        grp.writeEntry( "isDMessage" , list[i]->currentStatus().isDMessage );
     }
 
     statusesBackup.sync();
@@ -435,10 +435,10 @@ bool TimeLineWidget::saveStatuses ( QString fileName, QList<StatusWidget*> &list
     return true;
 }
 
-QList< Status > TimeLineWidget::loadStatuses ( QString fileName )
+QList< Status > TimeLineWidget::loadStatuses( QString fileName )
 {
     kDebug();
-    KConfig statusesBackup ( "choqok/"+fileName, KConfig::NoGlobals, "data" );
+    KConfig statusesBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
 //  KConfigGroup entries(&statusesBackup, "Statuses");
     QList< Status > list;
     QStringList groupList = statusesBackup.groupList();
@@ -446,28 +446,28 @@ QList< Status > TimeLineWidget::loadStatuses ( QString fileName )
     int count = groupList.count();
 
     for ( int i = 0; i < count; ++i ) {
-        KConfigGroup grp ( &statusesBackup, groupList[i] );
+        KConfigGroup grp( &statusesBackup, groupList[i] );
         Status st;
-        st.creationDateTime = grp.readEntry ( "created_at", QDateTime::currentDateTime() );
-        st.statusId = grp.readEntry ( "id", ( uint ) 0 );
-        st.content = grp.readEntry ( "text", QString() );
-        st.source = grp.readEntry ( "source", QString() );
-        st.isTruncated = grp.readEntry ( "truncated", false );
-        st.replyToStatusId = grp.readEntry ( "in_reply_to_status_id", ( uint ) 0 );
-        st.replyToUserId = grp.readEntry ( "in_reply_to_user_id", ( uint ) 0 );
-        st.isFavorited = grp.readEntry ( "favorited", false );
-        st.replyToUserScreenName = grp.readEntry ( "in_reply_to_screen_name", QString() );
-        st.user.userId = grp.readEntry ( "userId", ( uint ) 0 );
-        st.user.screenName = grp.readEntry ( "screen_name", QString() );
-        st.user.name = grp.readEntry ( "name", QString() );
-        st.user.profileImageUrl = grp.readEntry ( "profile_image_url", QString() );
+        st.creationDateTime = grp.readEntry( "created_at", QDateTime::currentDateTime() );
+        st.statusId = grp.readEntry( "id", ( uint ) 0 );
+        st.content = grp.readEntry( "text", QString() );
+        st.source = grp.readEntry( "source", QString() );
+        st.isTruncated = grp.readEntry( "truncated", false );
+        st.replyToStatusId = grp.readEntry( "in_reply_to_status_id", ( uint ) 0 );
+        st.replyToUserId = grp.readEntry( "in_reply_to_user_id", ( uint ) 0 );
+        st.isFavorited = grp.readEntry( "favorited", false );
+        st.replyToUserScreenName = grp.readEntry( "in_reply_to_screen_name", QString() );
+        st.user.userId = grp.readEntry( "userId", ( uint ) 0 );
+        st.user.screenName = grp.readEntry( "screen_name", QString() );
+        st.user.name = grp.readEntry( "name", QString() );
+        st.user.profileImageUrl = grp.readEntry( "profile_image_url", QString() );
         st.user.description = grp.readEntry( "description" , QString() );
         st.isDMessage = grp.readEntry( "isDMessage" , false );
 
         //Sorting The new statuses:
-        int i=0;
+        int i = 0;
         int count = list.count();
-        while( (i < count) && (st.statusId > list[ i ].statusId) ){
+        while (( i < count ) && ( st.statusId > list[ i ].statusId ) ) {
             ++i;
         }
         list.insert( i, st );
@@ -476,36 +476,36 @@ QList< Status > TimeLineWidget::loadStatuses ( QString fileName )
     return list;
 }
 
-void TimeLineWidget::prepareReply ( const QString &userName, uint statusId )
+void TimeLineWidget::prepareReply( const QString &userName, uint statusId )
 {
     kDebug();
     emit showMe();
-    if (qobject_cast<StatusWidget*> ( sender() )->currentStatus().isDMessage ){
+    if ( qobject_cast<StatusWidget*> ( sender() )->currentStatus().isDMessage ) {
         chkDMessage->setChecked( true );
         comboFriendList->setCurrentItem( userName, true, 0 );
     } else {
         QString current = txtNewStatus->toPlainText();
-        txtNewStatus->setText ( '@' + userName + ' ' + current );
+        txtNewStatus->setText( '@' + userName + ' ' + current );
         replyToStatusId = statusId;
-        txtNewStatus->setDefaultDirection ( mCurrentAccount.direction() );
+        txtNewStatus->setDefaultDirection( mCurrentAccount.direction() );
     }
-    txtNewStatus->moveCursor ( QTextCursor::End );
+    txtNewStatus->moveCursor( QTextCursor::End );
     txtNewStatus->setFocus( Qt::OtherFocusReason );
 }
 
-void TimeLineWidget::updateStatusList ( QList<StatusWidget*> *list )
+void TimeLineWidget::updateStatusList( QList<StatusWidget*> *list )
 {
     kDebug();
     int toBeDelete = list->count() - Settings::countOfStatusesOnMain();
 
     if ( toBeDelete > 0 ) {
         for ( int i = 0; i < toBeDelete; ++i ) {
-            StatusWidget* wt = list->at ( i );
+            StatusWidget* wt = list->at( i );
 
             if ( !wt->isReaded() )
                 break;
 
-            list->removeAt ( i );
+            list->removeAt( i );
 
             --i;
 
@@ -516,7 +516,7 @@ void TimeLineWidget::updateStatusList ( QList<StatusWidget*> *list )
     }
 }
 
-void TimeLineWidget::clearTimeLineList ( QList< StatusWidget * > * list )
+void TimeLineWidget::clearTimeLineList( QList< StatusWidget * > * list )
 {
     kDebug();
     int count = list->count();
@@ -541,24 +541,24 @@ void TimeLineWidget::loadConfigurations()
 
     isStartMode = true;
 
-    QList< Status > lstHome = loadStatuses ( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::HomeTimeLine) );
+    QList< Status > lstHome = loadStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::HomeTimeLine ) );
     if ( lstHome.count() > 0 )
-        addNewStatusesToUi ( lstHome, homeLayout, &listHomeStatus );
+        addNewStatusesToUi( lstHome, homeLayout, &listHomeStatus );
 
-    QList< Status > lstReply = loadStatuses ( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::ReplyTimeLine) );
+    QList< Status > lstReply = loadStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::ReplyTimeLine ) );
     if ( lstReply.count() > 0 )
-        addNewStatusesToUi ( lstReply, replyLayout, &listReplyStatus, Backend::ReplyTimeLine );
+        addNewStatusesToUi( lstReply, replyLayout, &listReplyStatus, Backend::ReplyTimeLine );
 
-    QList< Status > lstInbox = loadStatuses ( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::InboxTimeLine) );
+    QList< Status > lstInbox = loadStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::InboxTimeLine ) );
     if ( lstInbox.count() > 0 )
-        addNewStatusesToUi ( lstInbox, inboxLayout, &listInboxStatus, Backend::InboxTimeLine );
+        addNewStatusesToUi( lstInbox, inboxLayout, &listInboxStatus, Backend::InboxTimeLine );
 
-    QList< Status > lstOutbox = loadStatuses ( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::OutboxTimeLine) );
+    QList< Status > lstOutbox = loadStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::OutboxTimeLine ) );
     if ( lstOutbox.count() > 0 )
-        addNewStatusesToUi ( lstOutbox, outboxLayout, &listOutboxStatus, Backend::OutboxTimeLine );
+        addNewStatusesToUi( lstOutbox, outboxLayout, &listOutboxStatus, Backend::OutboxTimeLine );
 }
 
-void TimeLineWidget::checkUnreadStatuses ( int numOfNewStatusesReciened )
+void TimeLineWidget::checkUnreadStatuses( int numOfNewStatusesReciened )
 {
     kDebug();
 //  if(this->isVisible()){
@@ -566,17 +566,17 @@ void TimeLineWidget::checkUnreadStatuses ( int numOfNewStatusesReciened )
 //  } else {
     unreadStatusCount += numOfNewStatusesReciened;
 //  }
-    emit sigSetUnread ( numOfNewStatusesReciened );
+    emit sigSetUnread( numOfNewStatusesReciened );
     emit sigSetUnreadOnMainWin( unreadStatusCount );
 }
 
 void TimeLineWidget::setUnreadStatusesToReadState()
 {
     kDebug();
-    tabs->setTabText ( 0, i18n ( "Home" ) );
-    tabs->setTabText ( 1, i18n ( "Reply" ) );
-    tabs->setTabText ( 2, i18n ( "Inbox" ) );
-    tabs->setTabText ( 3, i18n ( "Outbox" ) );
+    tabs->setTabText( 0, i18n( "Home" ) );
+    tabs->setTabText( 1, i18n( "Reply" ) );
+    tabs->setTabText( 2, i18n( "Inbox" ) );
+    tabs->setTabText( 3, i18n( "Outbox" ) );
     int count = listUnreadStatuses.count();
 
     for ( int i = 0;i < count; ++i ) {
@@ -585,47 +585,47 @@ void TimeLineWidget::setUnreadStatusesToReadState()
 
     listUnreadStatuses.clear();
 
-    emit sigSetUnread ( -unreadStatusCount );
+    emit sigSetUnread( -unreadStatusCount );
     emit sigSetUnreadOnMainWin( 0 );
     unreadStatusCount = unreadStatusInReply = unreadStatusInHome = 0;
 }
 
-void TimeLineWidget::requestFavoritedDone ( bool isError )
+void TimeLineWidget::requestFavoritedDone( bool isError )
 {
     kDebug() << "is Error: " << isError;
-    notify ( "Done!" );
+    notify( "Done!" );
 }
 
-void TimeLineWidget::requestDestroyDone ( bool isError )
+void TimeLineWidget::requestDestroyDone( bool isError )
 {
     kDebug() << "is Error: " << isError;
-    notify ( "Done!" );
+    notify( "Done!" );
     toBeDestroied->close();
 }
 
-void TimeLineWidget::requestDestroy ( uint statusId )
+void TimeLineWidget::requestDestroy( uint statusId )
 {
-    if ( KMessageBox::warningYesNo ( this, i18n ( "Are you sure of destroying this status?" ) ) == KMessageBox::Yes ) {
+    if ( KMessageBox::warningYesNo( this, i18n( "Are you sure of destroying this status?" ) ) == KMessageBox::Yes ) {
         toBeDestroied = qobject_cast<StatusWidget*> ( sender() );
-        if(toBeDestroied->currentStatus().isDMessage){
+        if ( toBeDestroied->currentStatus().isDMessage ) {
             twitter->requestDestroyDMessage( statusId );
         } else {
-            twitter->requestDestroy ( statusId );
+            twitter->requestDestroy( statusId );
         }
-            setUnreadStatusesToReadState();
+        setUnreadStatusesToReadState();
     }
 }
 
 void TimeLineWidget::disableApp()
 {
     kDebug();
-    txtNewStatus->setEnabled ( false );
+    txtNewStatus->setEnabled( false );
 }
 
 void TimeLineWidget::enableApp()
 {
     kDebug();
-    txtNewStatus->setEnabled ( true );
+    txtNewStatus->setEnabled( true );
 }
 
 Account TimeLineWidget::currentAccount() const
@@ -633,7 +633,7 @@ Account TimeLineWidget::currentAccount() const
     return mCurrentAccount;
 }
 
-void TimeLineWidget::setCurrentAccount(const Account & account)
+void TimeLineWidget::setCurrentAccount( const Account & account )
 {
     mCurrentAccount = account;
 }
@@ -647,12 +647,12 @@ void TimeLineWidget::reloadFriendsList()
     twitter->listFriendsScreenName();
 }
 
-void TimeLineWidget::friendsListed(const QStringList & list)
+void TimeLineWidget::friendsListed( const QStringList & list )
 {
     int count = list.count();
-    for(int i=0; i < count; ++i){
-        if(!friendsList.contains(list[i], Qt::CaseInsensitive ))
-            friendsList<< list[i];
+    for ( int i = 0; i < count; ++i ) {
+        if ( !friendsList.contains( list[i], Qt::CaseInsensitive ) )
+            friendsList << list[i];
     }
     comboFriendList->clear();
     comboFriendList->addItems( friendsList );
@@ -663,20 +663,20 @@ void TimeLineWidget::friendsListed(const QStringList & list)
     c->setCompletionMode( KGlobalSettings::CompletionPopupAuto );
 }
 
-void TimeLineWidget::showNotify(const QString &title, const QString &message)
+void TimeLineWidget::showNotify( const QString &title, const QString &message )
 {
-    if(Settings::notifyType() == 1){//KNotify
-        KNotification *notif = new KNotification("new-status-arrived", parentWidget());
+    if ( Settings::notifyType() == 1 ) {//KNotify
+        KNotification *notif = new KNotification( "new-status-arrived", parentWidget() );
         notif->setText( message );
-        notif->setFlags(KNotification::RaiseWidgetOnActivation | KNotification::Persistent);
+        notif->setFlags( KNotification::RaiseWidgetOnActivation | KNotification::Persistent );
         notif->sendEvent();
-        QTimer::singleShot(Settings::notifyInterval()*1000, notif, SLOT(close()));
-    } else if(Settings::notifyType() == 2){//Libnotify!
+        QTimer::singleShot( Settings::notifyInterval()*1000, notif, SLOT( close() ) );
+    } else if ( Settings::notifyType() == 2 ) {//Libnotify!
         QString msg = message;
-        msg = msg.replace( "<br/>", "\n");
-        QString libnotifyCmd = QString("notify-send -t ") + QString::number(Settings::notifyInterval()*1000)
-        + QString(" -u low \"") + title + QString("\" \"") + msg + QString("\"");
-        QProcess::execute(libnotifyCmd);
+        msg = msg.replace( "<br/>", "\n" );
+        QString libnotifyCmd = QString( "notify-send -t " ) + QString::number( Settings::notifyInterval() * 1000 )
+                               + QString( " -u low \"" ) + title + QString( "\" \"" ) + msg + QString( "\"" );
+        QProcess::execute( libnotifyCmd );
     }
 }
 

@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -32,7 +32,7 @@ Account::~Account()
 {
 }
 
-Account::Account(const Account & account)
+Account::Account( const Account & account )
 {
     mUserId = account.userId();
     mUsername = account.username();
@@ -49,7 +49,7 @@ uint Account::userId() const
     return mUserId;
 }
 
-void Account::setUserId(uint id)
+void Account::setUserId( uint id )
 {
     mUserId = id;
 }
@@ -59,7 +59,7 @@ QString Account::username() const
     return mUsername;
 }
 
-void Account::setUsername(const QString & name)
+void Account::setUsername( const QString & name )
 {
     mUsername = name;
 }
@@ -69,7 +69,7 @@ QString Account::password() const
     return mPassword;
 }
 
-void Account::setPassword(const QString & pass)
+void Account::setPassword( const QString & pass )
 {
     mPassword = pass;
 }
@@ -79,7 +79,7 @@ QString Account::serviceName() const
     return mServiceName;
 }
 
-void Account::setServiceName(const QString & servicename)
+void Account::setServiceName( const QString & servicename )
 {
     mServiceName = servicename;
 }
@@ -89,7 +89,7 @@ QString Account::alias() const
     return mAlias;
 }
 
-void Account::setAlias(const QString & alias)
+void Account::setAlias( const QString & alias )
 {
     mAlias = alias;
 }
@@ -99,7 +99,7 @@ Qt::LayoutDirection Account::direction() const
     return mDirection;
 }
 
-void Account::setDirection(const Qt::LayoutDirection & dir)
+void Account::setDirection( const Qt::LayoutDirection & dir )
 {
     mDirection = dir;
 }
@@ -109,12 +109,12 @@ QString Account::apiPath() const
     return mApiPath;
 }
 
-void Account::setApiPath(const QString & apiPath)
+void Account::setApiPath( const QString & apiPath )
 {
     mApiPath = apiPath;
 }
 
-void Account::setIsError(bool isError)
+void Account::setIsError( bool isError )
 {
     mIsError = isError;
 }

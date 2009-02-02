@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -30,18 +30,18 @@
 #include <kstandarddirs.h>
 #include "backend.h"
 
-AccountManager::AccountManager(QObject* parent):
-		QObject(parent), mWallet(0)
+AccountManager::AccountManager( QObject* parent ):
+        QObject( parent ), mWallet( 0 )
 {
-	kDebug();
-	mWallet = KWallet::Wallet::openWallet( "kdewallet", 0 );
+    kDebug();
+    mWallet = KWallet::Wallet::openWallet( "kdewallet", 0 );
     if ( mWallet ) {
-        if(!mWallet->setFolder( "choqok" )){
+        if ( !mWallet->setFolder( "choqok" ) ) {
             mWallet->createFolder( "choqok" );
             mWallet->setFolder( "choqok" );
         }
-		kDebug() << "Wallet successfully opened.";
-	}
+        kDebug() << "Wallet successfully opened.";
+    }
     conf = new KConfig( );
     loadAccounts();
 }
@@ -58,7 +58,7 @@ AccountManager * AccountManager::mSelf = 0L;
 
 AccountManager * AccountManager::self()
 {
-    if( !mSelf )
+    if ( !mSelf )
         mSelf = new AccountManager;
     return mSelf;
 }
@@ -70,97 +70,93 @@ const QList< Account > & AccountManager::accounts() const
 
 Account AccountManager::findAccount( const QString &alias )
 {
-    kDebug()<<"Finding: "<<alias;
+    kDebug() << "Finding: " << alias;
     int count = mAccounts.count();
-    for ( int i=0; i<count; ++i )
-    {
-        if ( mAccounts[i].alias() == alias ){
+    for ( int i = 0; i < count; ++i ) {
+        if ( mAccounts[i].alias() == alias ) {
             mAccounts[i].setIsError( false );
             return mAccounts[i];
         }
     }
     Account a;
-    a.setIsError ( true );
+    a.setIsError( true );
     return a;
 }
 
-bool AccountManager::removeAccount(const QString &alias)
+bool AccountManager::removeAccount( const QString &alias )
 {
-    kDebug()<<"Removing "<<alias;
+    kDebug() << "Removing " << alias;
     int count = mAccounts.count();
-    for(int i=0; i<count; ++i){
-        if(mAccounts[i].alias() == alias){
-            conf->deleteGroup( QString::fromLatin1("Account%1").arg(alias) );
+    for ( int i = 0; i < count; ++i ) {
+        if ( mAccounts[i].alias() == alias ) {
+            conf->deleteGroup( QString::fromLatin1( "Account%1" ).arg( alias ) );
             conf->sync();
-            mAccounts.removeAt(i);
-            if(mWallet){
-                if(mWallet->removeEntry(alias)==0)
-                    kDebug()<<"Password successfully removed from kde wallet";
+            mAccounts.removeAt( i );
+            if ( mWallet ) {
+                if ( mWallet->removeEntry( alias ) == 0 )
+                    kDebug() << "Password successfully removed from kde wallet";
             }
-            for (int i=Backend::HomeTimeLine; i <= Backend::OutboxTimeLine; ++i) {
+            for ( int i = Backend::HomeTimeLine; i <= Backend::OutboxTimeLine; ++i ) {
                 QString tmpFile;
-                tmpFile = KStandardDirs::locate("data", "choqok/" + generateStatusBackupFileName(alias, (Backend::TimeLineType)i) );
-                kDebug()<<"Will remove "<<tmpFile;
-                const KUrl path(tmpFile);
-                KIO::DeleteJob * delJob = KIO::del(path, KIO::HideProgressInfo);
+                tmpFile = KStandardDirs::locate( "data", "choqok/" + generateStatusBackupFileName( alias, ( Backend::TimeLineType )i ) );
+                kDebug() << "Will remove " << tmpFile;
+                const KUrl path( tmpFile );
+                KIO::DeleteJob * delJob = KIO::del( path, KIO::HideProgressInfo );
                 delJob->start();
             }
-            emit accountRemoved(alias);
+            emit accountRemoved( alias );
             return true;
         }
     }
     return false;
 }
 
-Account & AccountManager::addAccount(Account & account)
+Account & AccountManager::addAccount( Account & account )
 {
-    kDebug()<<"Adding: "<<account.alias();
-    
-    if( account.alias().isEmpty() )
-    {
+    kDebug() << "Adding: " << account.alias();
+
+    if ( account.alias().isEmpty() ) {
         account.setIsError( true );
         return account;
     }
-    
+
     // If this account already exists, do nothing
     QListIterator<Account> it( mAccounts );
-    while ( it.hasNext() )
-    {
+    while ( it.hasNext() ) {
         Account curracc = it.next();
-        if ( account.alias() == curracc.alias() )
-        {
+        if ( account.alias() == curracc.alias() ) {
             account.setIsError( true );
             return account;
         }
     }
     mAccounts.append( account );
-    KConfigGroup acConf ( conf, QString::fromLatin1("Account%1").arg(account.alias()) );
-    acConf.writeEntry ( "alias", account.alias() );
-    acConf.writeEntry ( "username", account.username() );
-    acConf.writeEntry ( "userId", account.userId() );
-    acConf.writeEntry ( "service", account.serviceName() );
-    acConf.writeEntry ( "api_path", account.apiPath() );
-    acConf.writeEntry ( "direction", ( account.direction() == Qt::RightToLeft ) ? "rtl" : "ltr" );
-    if(mWallet && mWallet->writePassword(account.serviceName()+'_'+account.username(), account.password())==0){
-        kDebug()<<"Password stored to kde wallet";
+    KConfigGroup acConf( conf, QString::fromLatin1( "Account%1" ).arg( account.alias() ) );
+    acConf.writeEntry( "alias", account.alias() );
+    acConf.writeEntry( "username", account.username() );
+    acConf.writeEntry( "userId", account.userId() );
+    acConf.writeEntry( "service", account.serviceName() );
+    acConf.writeEntry( "api_path", account.apiPath() );
+    acConf.writeEntry( "direction", ( account.direction() == Qt::RightToLeft ) ? "rtl" : "ltr" );
+    if ( mWallet && mWallet->writePassword( account.serviceName() + '_' + account.username(), account.password() ) == 0 ) {
+        kDebug() << "Password stored to kde wallet";
     } else {
-        acConf.writeEntry ( "password", account.password() );
-        kDebug()<<"Password stored to config file";
+        acConf.writeEntry( "password", account.password() );
+        kDebug() << "Password stored to config file";
     }
     conf->sync();
-    emit accountAdded(account);
+    emit accountAdded( account );
     account.setIsError( false );
     return account;
 }
 
-Account & AccountManager::modifyAccount(Account & account, const QString & previousAlias)
+Account & AccountManager::modifyAccount( Account & account, const QString & previousAlias )
 {
-    kDebug()<<"Modifying: "<<previousAlias;
-    
-    if(removeAccount(previousAlias))
-        return addAccount(account);
-    
-    account.setIsError ( true );
+    kDebug() << "Modifying: " << previousAlias;
+
+    if ( removeAccount( previousAlias ) )
+        return addAccount( account );
+
+    account.setIsError( true );
     return account;
 }
 
@@ -169,50 +165,50 @@ void AccountManager::loadAccounts()
     kDebug();
     QStringList list = conf->groupList();
     int count = list.count();
-    for(int i=0; i<count; ++i){
-        if(list[i].contains("Account")){
+    for ( int i = 0; i < count; ++i ) {
+        if ( list[i].contains( "Account" ) ) {
             Account a;
-            KConfigGroup accountGrp(conf, list[i]);
-            a.setUsername( accountGrp.readEntry("username", QString()) );
-            a.setUserId( accountGrp.readEntry( "userId", uint(-1) ) );
-            a.setAlias( accountGrp.readEntry("alias", QString()) );
-            a.setServiceName( accountGrp.readEntry("service", QString()) );
-            a.setApiPath( accountGrp.readEntry("api_path", QString()) );
-            a.setDirection( (accountGrp.readEntry("direction", "ltr") == "rtl") ? Qt::RightToLeft : Qt::LeftToRight );
+            KConfigGroup accountGrp( conf, list[i] );
+            a.setUsername( accountGrp.readEntry( "username", QString() ) );
+            a.setUserId( accountGrp.readEntry( "userId", uint( -1 ) ) );
+            a.setAlias( accountGrp.readEntry( "alias", QString() ) );
+            a.setServiceName( accountGrp.readEntry( "service", QString() ) );
+            a.setApiPath( accountGrp.readEntry( "api_path", QString() ) );
+            a.setDirection(( accountGrp.readEntry( "direction", "ltr" ) == "rtl" ) ? Qt::RightToLeft : Qt::LeftToRight );
             QString buffer;
-            if(mWallet && mWallet->readPassword( a.serviceName()+'_'+a.username(), buffer )==0 && !buffer.isEmpty()){
+            if ( mWallet && mWallet->readPassword( a.serviceName() + '_' + a.username(), buffer ) == 0 && !buffer.isEmpty() ) {
                 a.setPassword( buffer );
-                kDebug()<<"Password loaded from kde wallet.";
+                kDebug() << "Password loaded from kde wallet.";
             } else {
-                a.setPassword( accountGrp.readEntry("password", QString()) );
-                kDebug()<<"Password loaded from config file.";
+                a.setPassword( accountGrp.readEntry( "password", QString() ) );
+                kDebug() << "Password loaded from config file.";
             }
             a.setIsError( false );
-            if(a.userId() == (uint)-1){///Just for compatibility with previous versions
-                Account *account = new Account(a);
-                Backend *b = new Backend(account);
-                connect(b, SIGNAL(userVerified(Account*)), this, SLOT(userVerified(Account*)));
+            if ( a.userId() == ( uint ) - 1 ) {///Just for compatibility with previous versions
+                Account *account = new Account( a );
+                Backend *b = new Backend( account );
+                connect( b, SIGNAL( userVerified( Account* ) ), this, SLOT( userVerified( Account* ) ) );
                 b->verifyCredential();
             }
-            mAccounts.append(a);
+            mAccounts.append( a );
         }
     }
-    kDebug()<<mAccounts.count()<<" accounts loaded.";
+    kDebug() << mAccounts.count() << " accounts loaded.";
 }
 
-void AccountManager::userVerified(Account * userAccount)
+void AccountManager::userVerified( Account * userAccount )
 {
-    this->modifyAccount(*userAccount, userAccount->alias());
+    this->modifyAccount( *userAccount, userAccount->alias() );
 }
 
-QStringList AccountManager::listFriends(const QString & alias)
+QStringList AccountManager::listFriends( const QString & alias )
 {
     KConfigGroup accountGrp( conf, "Account" + alias );
     QStringList list = accountGrp.readEntry( "friends", QStringList() );
     return list;
 }
 
-void AccountManager::saveFriendsList(const QString & alias, const QStringList & list)
+void AccountManager::saveFriendsList( const QString & alias, const QStringList & list )
 {
 //     if(findAccount( alias ).isError())
 //         return;
@@ -221,27 +217,27 @@ void AccountManager::saveFriendsList(const QString & alias, const QStringList & 
     accountGrp.sync();
 }
 
-QString AccountManager::generateStatusBackupFileName(const QString &alias, Backend::TimeLineType type)
+QString AccountManager::generateStatusBackupFileName( const QString &alias, Backend::TimeLineType type )
 {
     QString name = alias;
     name += '_';
 
-    switch(type){
-        case Backend::HomeTimeLine:
-            name += "home";
-            break;
-        case Backend::ReplyTimeLine:
-            name += "reply";
-            break;
-        case Backend::InboxTimeLine:
-            name += "inbox";
-            break;
-        case Backend::OutboxTimeLine:
-            name += "outbox";
-            break;
-        default:
-            name += QString::number(type);
-            break;
+    switch ( type ) {
+    case Backend::HomeTimeLine:
+        name += "home";
+        break;
+    case Backend::ReplyTimeLine:
+        name += "reply";
+        break;
+    case Backend::InboxTimeLine:
+        name += "inbox";
+        break;
+    case Backend::OutboxTimeLine:
+        name += "outbox";
+        break;
+    default:
+        name += QString::number( type );
+        break;
     };
     name += "statuslistrc";
     return name;

@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -27,33 +27,31 @@
 #include <ktextedit.h>
 
 /**
-	@author Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
 */
 class StatusTextEdit : public KTextEdit
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    StatusTextEdit(QWidget *parent=0);
+    StatusTextEdit( QWidget *parent = 0 );
 
     ~StatusTextEdit();
     QStringList friendsList() const;
-//     void clearFriendsList();
-//     void setFriendsList(const QStringList &list);
-//     void appendToFriendsList(const QStringList &list);
+
 public slots:
-	void setDefaultDirection(Qt::LayoutDirection dir);
-	void setNumOfCharsLeft();
-	void clearContentsAndSetDirection(Qt::LayoutDirection dir);
-	
+    void setDefaultDirection( Qt::LayoutDirection dir );
+    void setNumOfCharsLeft();
+    void clearContentsAndSetDirection( Qt::LayoutDirection dir );
+
 protected:
-	virtual void keyPressEvent(QKeyEvent *e);
-	
+    virtual void keyPressEvent( QKeyEvent *e );
+
 signals:
-	void returnPressed(QString &txt);
-	void charsLeft(int count);
+    void returnPressed( QString &txt );
+    void charsLeft( int count );
     void cleared();
 private:
-	QString prevStr;
+    QString prevStr;
     Qt::LayoutDirection dir;
     QStringList mFriendsList;
 };

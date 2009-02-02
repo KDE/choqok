@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -33,37 +33,37 @@ class Backend;
 /**
 Widget for Quik twitting
 
-	@author Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
 */
 class QuickTwit : public KDialog
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-  QuickTwit(QWidget* parent=0);
+    QuickTwit( QWidget* parent = 0 );
 
     ~QuickTwit();
 public slots:
     void showFocusedOnNewStatusField();
-	void checkNewStatusCharactersCount(int numOfChars);
-	void slotPostNewStatus(QString &newStatus);
-	void slotPostNewStatusDone(bool isError);
-	void sltAccepted();
-    void addAccount(const Account &account);
-    void removeAccount(const QString &alias);
+    void checkNewStatusCharactersCount( int numOfChars );
+    void slotPostNewStatus( QString &newStatus );
+    void slotPostNewStatusDone( bool isError );
+    void sltAccepted();
+    void addAccount( const Account &account );
+    void removeAccount( const QString &alias );
 
 protected:
     void loadAccounts();
-	
+
 signals:
-	void sigStatusUpdated( bool isError );
-	void sigNotify( const QString &title, const QString &message, const QString &iconUrl);
+    void sigStatusUpdated( bool isError );
+    void sigNotify( const QString &title, const QString &message, const QString &iconUrl );
 
 protected slots:
-    void checkAll(bool isAll);
+    void checkAll( bool isAll );
 private:
     Ui::quicktwit_base ui;
-	StatusTextEdit *txtStatus;
-// 	Backend *twitter;
+    StatusTextEdit *txtStatus;
+//  Backend *twitter;
     QList<Account> accountsList;
 };
 

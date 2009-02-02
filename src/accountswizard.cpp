@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -27,54 +27,54 @@
 #include <QProgressBar>
 #include <KMessageBox>
 #include "backend.h"
-AccountsWizard::AccountsWizard ( QString alias, QWidget *parent )
-        : KDialog ( parent )
+AccountsWizard::AccountsWizard( QString alias, QWidget *parent )
+        : KDialog( parent )
 {
     kDebug();
-    QWidget *dialog = new QWidget ( this );
-    ui.setupUi ( dialog );
-    dialog->setAttribute ( Qt::WA_DeleteOnClose );
-    this->setMainWidget ( dialog );
+    QWidget *dialog = new QWidget( this );
+    ui.setupUi( dialog );
+    dialog->setAttribute( Qt::WA_DeleteOnClose );
+    this->setMainWidget( dialog );
 
     if ( alias.isEmpty() ) {
-        this->setCaption ( i18n ( "Add a new account" ) );
+        this->setCaption( i18n( "Add a new account" ) );
         isEdit = false;
     } else {
-        this->setCaption ( i18n ( "Modify existing account" ) );
+        this->setCaption( i18n( "Modify existing account" ) );
         isEdit = true;
         this->mAlias = alias;
-        loadAccount ( alias );
+        loadAccount( alias );
     }
 
 }
 
-void AccountsWizard::loadAccount ( QString &alias )
+void AccountsWizard::loadAccount( QString &alias )
 {
-    kDebug()<<"Loading account "<<alias;
-    mAccount = AccountManager::self()->findAccount(alias);
-    if(mAccount.isError()){
-        kDebug()<<"Error on Loading Account with alias "<<alias;
+    kDebug() << "Loading account " << alias;
+    mAccount = AccountManager::self()->findAccount( alias );
+    if ( mAccount.isError() ) {
+        kDebug() << "Error on Loading Account with alias " << alias;
         return;
     }
-    ui.kcfg_username->setText ( mAccount.username() );
-    ui.kcfg_alias->setText ( mAccount.alias());
-    ui.kcfg_password->setText ( mAccount.password() );
-    ui.kcfg_direction->setCurrentIndex ( ( mAccount.direction() == Qt::RightToLeft ) ? 1 : 0 );
-    ui.kcfg_service->setCurrentIndex ( ( mAccount.serviceName() == IDENTICA_SERVICE_TEXT ) ? 1 : 0 );
+    ui.kcfg_username->setText( mAccount.username() );
+    ui.kcfg_alias->setText( mAccount.alias() );
+    ui.kcfg_password->setText( mAccount.password() );
+    ui.kcfg_direction->setCurrentIndex(( mAccount.direction() == Qt::RightToLeft ) ? 1 : 0 );
+    ui.kcfg_service->setCurrentIndex(( mAccount.serviceName() == IDENTICA_SERVICE_TEXT ) ? 1 : 0 );
 }
 
-void AccountsWizard::slotButtonClicked(int button)
+void AccountsWizard::slotButtonClicked( int button )
 {
     kDebug();
     if ( button == KDialog::Ok ) {
         ///Show ProgressBar:
-        if(progress)
+        if ( progress )
             progress = 0L;
-        progress = new QProgressBar(this);
+        progress = new QProgressBar( this );
         progress->setMinimum( 0 );
         progress->setMaximum( 0 );
-        QGridLayout* grid = qobject_cast<QGridLayout*>(this->mainWidget()->layout());
-        grid->addWidget(progress, grid->rowCount(), 0, grid->rowCount(), 2);
+        QGridLayout* grid = qobject_cast<QGridLayout*>( this->mainWidget()->layout() );
+        grid->addWidget( progress, grid->rowCount(), 0, grid->rowCount(), 2 );
         ///Check for account
 //         Account a;
         if ( ui.kcfg_service->currentIndex() == 1 ) {
@@ -86,48 +86,48 @@ void AccountsWizard::slotButtonClicked(int button)
         }
         mAccount.setUsername( ui.kcfg_username->text() );
         mAccount.setPassword( ui.kcfg_password->text() );
-        mAccount.setDirection( (Qt::LayoutDirection)ui.kcfg_direction->currentIndex() );
+        mAccount.setDirection(( Qt::LayoutDirection )ui.kcfg_direction->currentIndex() );
         mAccount.setAlias( ui.kcfg_alias->text() );
 
-        Backend *b = new Backend(&mAccount, this);
-        connect(b, SIGNAL(userVerified(Account*)), this, SLOT(slotUserVerified(Account*)));
-        connect(b, SIGNAL(sigError(const QString&)), this, SLOT(slotError(const QString&)));
+        Backend *b = new Backend( &mAccount, this );
+        connect( b, SIGNAL( userVerified( Account* ) ), this, SLOT( slotUserVerified( Account* ) ) );
+        connect( b, SIGNAL( sigError( const QString& ) ), this, SLOT( slotError( const QString& ) ) );
         b->verifyCredential();
     } else
         KDialog::slotButtonClicked( button );
 }
 
-void AccountsWizard::slotUserVerified(Account * userAccount)
+void AccountsWizard::slotUserVerified( Account * userAccount )
 {
     kDebug();
-    if(!userAccount){
-        kDebug()<<"userAccount is NULL";
+    if ( !userAccount ) {
+        kDebug() << "userAccount is NULL";
         return;
     }
     mAccount = *userAccount;
-    if(isEdit){
-        mAccount = AccountManager::self()->modifyAccount(mAccount, mAlias);
+    if ( isEdit ) {
+        mAccount = AccountManager::self()->modifyAccount( mAccount, mAlias );
     } else {
-        mAccount = AccountManager::self()->addAccount(mAccount);
+        mAccount = AccountManager::self()->addAccount( mAccount );
     }
-    if(mAccount.isError()){
-        kDebug()<<"Cannot add or modify account with alias "<<mAccount.alias();
+    if ( mAccount.isError() ) {
+        kDebug() << "Cannot add or modify account with alias " << mAccount.alias();
         return;
     }
 
     if ( isEdit ) {
-        emit accountEdited ( mAccount );
+        emit accountEdited( mAccount );
     } else {
-        emit accountAdded ( mAccount );
+        emit accountAdded( mAccount );
     }
     accept();
 }
 
-void AccountsWizard::slotError(const QString & errMsg)
+void AccountsWizard::slotError( const QString & errMsg )
 {
     kDebug();
-    KMessageBox::detailedError(this, i18n("authentication failed, please check your credentials."), errMsg);
-    if(progress)
+    KMessageBox::detailedError( this, i18n( "authentication failed, please check your credentials." ), errMsg );
+    if ( progress )
         progress->deleteLater();
 }
 

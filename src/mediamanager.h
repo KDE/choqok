@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -31,42 +31,43 @@
 class QPixmap;
 class KConfig;
 class KConfigGroup;
-namespace KIO{
-	class Job;
+namespace KIO
+{
+    class Job;
 }
 class KJob;
 /**
 Media files manager!
 
-	@author Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
 */
 class MediaManager : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    
-    
-    MediaManager(QObject* parent=0);
+
+
+    MediaManager( QObject* parent = 0 );
 
     ~MediaManager();
-    
+
     static MediaManager *self();
 
-    QString getImageLocalPathIfExist(const QString &remotePath);
-	
-    void getImageLocalPathDownloadAsyncIfNotExists(const QString &localName, const QString &remotePath);
-	
+    QString getImageLocalPathIfExist( const QString &remotePath );
+
+    void getImageLocalPathDownloadAsyncIfNotExists( const QString &localName, const QString &remotePath );
+
 signals:
-	void sigError(QString &errMsg);
-	void imageFetched(const QString &remotePath, const QString &localPath);
-	
+    void sigError( QString &errMsg );
+    void imageFetched( const QString &remotePath, const QString &localPath );
+
 protected slots:
-	void slotImageFetched(KJob *job);
-	
+    void slotImageFetched( KJob *job );
+
 private:
     static MediaManager *mSelf;
-	KConfig *mediaResource;
-	KConfigGroup *map;
+    KConfig *mediaResource;
+    KConfigGroup *map;
     QMap<QString, QString> mMediaFilesMap;// QMap<RemotePath, LocalPath>
 };
 

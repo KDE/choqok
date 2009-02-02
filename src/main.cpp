@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -30,34 +30,34 @@
 #include <KDE/KLocale>
 
 static const char description[] =
-    I18N_NOOP("KDE mono-blogging client,\n\
+    I18N_NOOP( "KDE mono-blogging client,\n\
 Currently supports <a href='http://twitter.com'>Twitter.com</a> and \
-<a href='http://identi.ca'>Identi.ca</a>");
+<a href='http://identi.ca'>Identi.ca</a>" );
 
 static const char version[] = "0.4";
 
-int main(int argc, char **argv)
+int main( int argc, char **argv )
 {
-	KAboutData about("choqok", 0, ki18n("choqoK"), version, ki18n(description),
-                     KAboutData::License_GPL_V3, ki18n("(C) 2008-2009 Mehrdad Momeny"),
-                             KLocalizedString(), 0, "mehrdad.momeny@gmail.com");
-    about.addAuthor( ki18n("Mehrdad Momeny"), ki18n("Author and Core Developer"),
-					 "mehrdad.momeny@gmail.com");
-	about.addCredit(ki18n("Roozbeh Shafiee"), ki18n("Icon designer"), "roozbeh@roozbehonline.com");
-    KCmdLineArgs::init(argc, argv, &about);
+    KAboutData about( "choqok", 0, ki18n( "choqoK" ), version, ki18n( description ),
+                      KAboutData::License_GPL_V3, ki18n( "(C) 2008-2009 Mehrdad Momeny" ),
+                      KLocalizedString(), 0, "mehrdad.momeny@gmail.com" );
+    about.addAuthor( ki18n( "Mehrdad Momeny" ), ki18n( "Author and Core Developer" ),
+                     "mehrdad.momeny@gmail.com" );
+    about.addCredit( ki18n( "Roozbeh Shafiee" ), ki18n( "Icon designer" ), "roozbeh@roozbehonline.com" );
+    KCmdLineArgs::init( argc, argv, &about );
 
 //     KCmdLineOptions options;
 //     options.add("+[URL]", ki18n( "Document to open" ));
 //     KCmdLineArgs::addCmdLineOptions(options);
-	KUniqueApplication app;
+    KUniqueApplication app;
 
-	if(KSystemTrayIcon::isSystemTrayAvailable()){
-		SysTrayIcon *sysIcon = new SysTrayIcon;
-		sysIcon->show();
-	} else {
-		MainWindow *mainWin = new MainWindow;
-		mainWin->show();
-	}
+    if ( KSystemTrayIcon::isSystemTrayAvailable() ) {
+        SysTrayIcon *sysIcon = new SysTrayIcon;
+        sysIcon->show();
+    } else {
+        MainWindow *mainWin = new MainWindow;
+        mainWin->show();
+    }
 
 
     return app.exec();

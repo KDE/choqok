@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -25,91 +25,70 @@
 #include <QKeyEvent>
 #include <KDE/KLocale>
 
-StatusTextEdit::StatusTextEdit(QWidget *parent)
- : KTextEdit(parent)
+StatusTextEdit::StatusTextEdit( QWidget *parent )
+        : KTextEdit( parent )
 {
-	this->setAcceptRichText(false);
-	connect(this, SIGNAL(textChanged()), this, SLOT(setNumOfCharsLeft()));
-	setAcceptRichText(false);
-    this->setToolTip(i18n("Press Ctrl+P to have previous text submitted.\nPress Ctrl+S to enable/disable spell checking."));
+    this->setAcceptRichText( false );
+    connect( this, SIGNAL( textChanged() ), this, SLOT( setNumOfCharsLeft() ) );
+    setAcceptRichText( false );
+    this->setToolTip( i18n( "Press Ctrl+P to have previous text submitted.\n\
+Press Ctrl+S to enable/disable spell checking." ) );
 }
 
 StatusTextEdit::~StatusTextEdit()
 {
 }
 
-void StatusTextEdit::keyPressEvent(QKeyEvent * e)
+void StatusTextEdit::keyPressEvent( QKeyEvent * e )
 {
-	if ((e->key() == Qt::Key_Return) || (e->key() == Qt::Key_Enter)) {
-		QString txt = toPlainText();
-		emit returnPressed(txt);
-		e->accept();
-    } else if(e->modifiers()==Qt::ControlModifier && e->key() == Qt::Key_S){
+    if (( e->key() == Qt::Key_Return ) || ( e->key() == Qt::Key_Enter ) ) {
+        QString txt = toPlainText();
+        emit returnPressed( txt );
+        e->accept();
+    } else if ( e->modifiers() == Qt::ControlModifier && e->key() == Qt::Key_S ) {
         this->setCheckSpellingEnabled( !this->checkSpellingEnabled() );
-    } else if(e->modifiers()==Qt::ControlModifier && e->key() == Qt::Key_P){
+    } else if ( e->modifiers() == Qt::ControlModifier && e->key() == Qt::Key_P ) {
         QString tmp = this->toHtml();
-		this->setHtml(tmp+ ' ' +prevStr);
-    } else if(e->key() == Qt::Key_Escape){
-        if(!this->toPlainText().isEmpty()){
+        this->setHtml( tmp + ' ' + prevStr );
+    } else if ( e->key() == Qt::Key_Escape ) {
+        if ( !this->toPlainText().isEmpty() ) {
             this->clear();
-            setDefaultDirection(dir);
+            setDefaultDirection( dir );
             emit cleared();
             e->accept();
         } else {
-            KTextEdit::keyPressEvent(e);
+            KTextEdit::keyPressEvent( e );
         }
-    } else{
-		KTextEdit::keyPressEvent(e);
-	}
+    } else {
+        KTextEdit::keyPressEvent( e );
+    }
 }
 
-void StatusTextEdit::setDefaultDirection(Qt::LayoutDirection dir)
+void StatusTextEdit::setDefaultDirection( Qt::LayoutDirection dir )
 {
-	QTextCursor c = this->textCursor();
-	QTextBlockFormat f = c.blockFormat();
-	f.setLayoutDirection(dir);
-	c.setBlockFormat(f);
-	this->setTextCursor(c);
-	this->setFocus(Qt::OtherFocusReason);
+    QTextCursor c = this->textCursor();
+    QTextBlockFormat f = c.blockFormat();
+    f.setLayoutDirection( dir );
+    c.setBlockFormat( f );
+    this->setTextCursor( c );
+    this->setFocus( Qt::OtherFocusReason );
 }
 
 void StatusTextEdit::setNumOfCharsLeft()
 {
-	int remainChar = 140 - toPlainText().count();
-	emit charsLeft(remainChar);
+    int remainChar = 140 - toPlainText().count();
+    emit charsLeft( remainChar );
 }
 
-void StatusTextEdit::clearContentsAndSetDirection(Qt::LayoutDirection dir)
+void StatusTextEdit::clearContentsAndSetDirection( Qt::LayoutDirection dir )
 {
-	QString tmp = this->toPlainText();
-    if(!tmp.isEmpty()){
+    QString tmp = this->toPlainText();
+    if ( !tmp.isEmpty() ) {
         prevStr = this->toHtml();
         this->clear();
     }
-	setDefaultDirection(dir);
+    setDefaultDirection( dir );
 }
-
-/*
-QStringList StatusTextEdit::friendsList() const
-{
-    return mFriendsList;
-}
-
-void StatusTextEdit::setFriendsList(const QStringList & list)
-{
-    mFriendsList = list;
-}
-
-void StatusTextEdit::clearFriendsList()
-{
-    mFriendsList.clear();
-}
-
-void StatusTextEdit::appendToFriendsList(const QStringList & list)
-{
-    mFriendsList<<list;
-}
-*/
 
 #include "statustextedit.moc"
 

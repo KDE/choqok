@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -47,11 +47,11 @@ class TimeLineWidget : public QWidget, public Ui::timelinewidget_base
 {
     Q_OBJECT
 public:
-    explicit TimeLineWidget ( const Account &userAccount, QWidget* parent = 0 );
+    explicit TimeLineWidget( const Account &userAccount, QWidget* parent = 0 );
 
     ~TimeLineWidget();
     Account currentAccount() const;
-    void setCurrentAccount(const Account &account);
+    void setCurrentAccount( const Account &account );
 //     void setRemoved(bool isRemoved);
 
 public slots:
@@ -62,49 +62,49 @@ public slots:
     void aboutQuit();
 
 protected slots:
-    void requestFavoritedDone ( bool isError );
-    void requestDestroyDone ( bool isError );
+    void requestFavoritedDone( bool isError );
+    void requestDestroyDone( bool isError );
 
     void directMessagesReceived( QList< Status >& msgList );
     void outboxMessagesReceived( QList< Status >& msgList );
 
-    void homeTimeLinesReceived ( QList<Status> &statusList );
-    void replyTimeLineReceived ( QList<Status> &statusList );
+    void homeTimeLinesReceived( QList<Status> &statusList );
+    void replyTimeLineReceived( QList<Status> &statusList );
 
-    void postingNewStatusDone ( bool isError );
-    void prepareReply ( const QString &userName, uint statusId );
+    void postingNewStatusDone( bool isError );
+    void prepareReply( const QString &userName, uint statusId );
 
-    void requestDestroy ( uint statusId );
+    void requestDestroy( uint statusId );
 //   void notify(const QString &message);
 
-    void checkNewStatusCharactersCount ( int numOfChars );
+    void checkNewStatusCharactersCount( int numOfChars );
 
-    void postStatus ( QString &status );
+    void postStatus( QString &status );
 
-    void error ( const QString &errMsg );
+    void error( const QString &errMsg );
 
 
 signals:
-    void sigSetUnread ( int unread );
-    void notify ( const QString &message, bool isPermanent = false );
-    void systemNotify ( const QString &title, const QString &message, const QString &iconUrl );
+    void sigSetUnread( int unread );
+    void notify( const QString &message, bool isPermanent = false );
+    void systemNotify( const QString &title, const QString &message, const QString &iconUrl );
     void sigSetUnreadOnMainWin( int unread );
     void showMe();
 //     void sigStatusUpdated (bool isError);
 
 protected:
-    void checkUnreadStatuses ( int numOfNewStatusesReciened );
+    void checkUnreadStatuses( int numOfNewStatusesReciened );
 
 private slots:
     void initObjects();
     void reloadFriendsList();
-    void friendsListed(const QStringList &list);
+    void friendsListed( const QStringList &list );
     void txtNewStatusCleared();
 
 private:
     void setDefaultDirection();
-    void addNewStatusesToUi ( QList< Status > & statusList, QBoxLayout *layoutToAddStatuses, QList<StatusWidget*> *list,
-                              Backend::TimeLineType type = Backend::HomeTimeLine );
+    void addNewStatusesToUi( QList< Status > & statusList, QBoxLayout *layoutToAddStatuses, QList<StatusWidget*> *list,
+                             Backend::TimeLineType type = Backend::HomeTimeLine );
     void disableApp();
     void enableApp();
 
@@ -114,17 +114,17 @@ private:
     * @param list list of Statuses will be stored.
     * @return True on success, and false on failer
       */
-    bool saveStatuses ( QString fileName, QList<StatusWidget*> &list );
+    bool saveStatuses( QString fileName, QList<StatusWidget*> &list );
 
-    QList< Status > loadStatuses ( QString fileName );
+    QList< Status > loadStatuses( QString fileName );
 
-    void updateStatusList ( QList<StatusWidget*> *list );
+    void updateStatusList( QList<StatusWidget*> *list );
 
-    void clearTimeLineList ( QList<StatusWidget*> *list );
+    void clearTimeLineList( QList<StatusWidget*> *list );
 
     void loadConfigurations();
 
-    void showNotify(const QString &title, const QString &message);
+    void showNotify( const QString &title, const QString &message );
 
 private:
     Backend *twitter;
@@ -153,8 +153,6 @@ private:
     uint latestOutboxStatusId;
 
     QStringList friendsList;
-
-//     bool mRemoved; // if this is True, so this timeline is removed. (Used for saving account settings and history)
 };
 
 #endif

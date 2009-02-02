@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -26,7 +26,7 @@
 #define DATACONTAINERS_H
 #include <QDateTime>
 
-struct User{
+struct User {
 public:
     uint userId;
     QString name;
@@ -39,7 +39,7 @@ public:
     uint followersCount;
 };
 
-struct Status{
+struct Status {
 public:
     QDateTime creationDateTime;
     uint statusId;
@@ -54,19 +54,5 @@ public:
     bool isError;
     bool isDMessage;
 };
-
-// struct DMessage{
-// public:
-//     uint msgId;
-//     QDateTime creationDateTime;
-//     uint senderId;
-//     uint recipientId;
-//     QString senderScreenName;
-//     QString recipientScreenName;
-//     QString content;
-//     bool isError;
-//     User sender;
-//     User recipient;
-// };
 
 #endif

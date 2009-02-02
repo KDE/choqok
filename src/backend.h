@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -30,83 +30,82 @@
 #include "datacontainers.h"
 #include "account.h"
 class KJob;
-namespace KIO{
-	class Job;
+namespace KIO {
+    class Job;
 }
 /**
-	@author Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
 */
-class Backend : public QObject
-{
-	Q_OBJECT
+class Backend : public QObject {
+    Q_OBJECT
 public:
-	enum TimeLineType{HomeTimeLine=1, ReplyTimeLine, InboxTimeLine, OutboxTimeLine, UserTimeLine};
-    enum DMessageType{Inbox=1, Outbox};
-    explicit Backend(Account *account, QObject* parent=0);
+    enum TimeLineType {HomeTimeLine = 1, ReplyTimeLine, InboxTimeLine, OutboxTimeLine, UserTimeLine};
+    enum DMessageType {Inbox = 1, Outbox};
+    explicit Backend( Account *account, QObject* parent = 0 );
 
     ~Backend();
-	
-	void login();
-	void logout();
-	
+
+    void login();
+    void logout();
+
     void verifyCredential();
 
-	QDateTime dateFromString(const QString &date);
-	QString& latestErrorString();
+    QDateTime dateFromString( const QString &date );
+    QString& latestErrorString();
 
 public slots:
-	void postNewStatus(const QString &statusMessage, uint replyToStatusId=0);
-    void sendDMessage( const QString &screenName, const QString &message);
-	void requestTimeLine(uint latestStatusId, TimeLineType type, int page=0);
-    void requestDMessages(uint latestStatusId, DMessageType type, int page=0);
-	void requestFavorited(uint statusId, bool isFavorite);
-	void requestDestroy(uint statusId);
-    void requestDestroyDMessage(uint statusId);
-	void abortPostNewStatus();
-	void settingsChanged();
+    void postNewStatus( const QString &statusMessage, uint replyToStatusId = 0 );
+    void sendDMessage( const QString &screenName, const QString &message );
+    void requestTimeLine( uint latestStatusId, TimeLineType type, int page = 0 );
+    void requestDMessages( uint latestStatusId, DMessageType type, int page = 0 );
+    void requestFavorited( uint statusId, bool isFavorite );
+    void requestDestroy( uint statusId );
+    void requestDestroyDMessage( uint statusId );
+    void abortPostNewStatus();
+    void settingsChanged();
     void listFollowersScreenName();
     void listFriendsScreenName();
 
 signals:
-	void sigPostNewStatusDone(bool isError);
-	void sigFavoritedDone(bool isError);
-	void sigDestroyDone(bool isError);
-	void sigError(const QString &errMsg);
-    void homeTimeLineReceived(QList<Status> &statusList);
-    void replyTimeLineReceived(QList<Status> &statusList);
-    void userVerified(Account *userAccount);
-    void directMessagesReceived(QList<Status> &msgList);
-    void outboxMessagesReceived(QList<Status> &msgList);
-    void followersListed(const QStringList &followersList);
-    void friendsListed(const QStringList &friendsList);
-	
+    void sigPostNewStatusDone( bool isError );
+    void sigFavoritedDone( bool isError );
+    void sigDestroyDone( bool isError );
+    void sigError( const QString &errMsg );
+    void homeTimeLineReceived( QList<Status> &statusList );
+    void replyTimeLineReceived( QList<Status> &statusList );
+    void userVerified( Account *userAccount );
+    void directMessagesReceived( QList<Status> &msgList );
+    void outboxMessagesReceived( QList<Status> &msgList );
+    void followersListed( const QStringList &followersList );
+    void friendsListed( const QStringList &friendsList );
+
 protected slots:
-    void slotListFollowersScreenName(KJob *job);
-    void slotListFriendsScreenName(KJob *job);
-	void slotPostNewStatusFinished(KJob *job);
-	void slotRequestTimelineFinished(KJob *job);
-	void slotRequestFavoritedFinished(KJob *job);
-	void slotRequestDestroyFinished(KJob *job);
-    void slotUserInfoReceived(KJob *job);
-    void slotCredentialsReceived(KJob *job);
-    void slotRequestDMessagesFinished(KJob *job);
-	
-    void slotSendDMessageFinished(KJob*);
+    void slotListFollowersScreenName( KJob *job );
+    void slotListFriendsScreenName( KJob *job );
+    void slotPostNewStatusFinished( KJob *job );
+    void slotRequestTimelineFinished( KJob *job );
+    void slotRequestFavoritedFinished( KJob *job );
+    void slotRequestDestroyFinished( KJob *job );
+    void slotUserInfoReceived( KJob *job );
+    void slotCredentialsReceived( KJob *job );
+    void slotRequestDMessagesFinished( KJob *job );
+
+    void slotSendDMessageFinished( KJob* );
 
 private:
-    QStringList readUsersNameFromXml(const QByteArray &buffer);
-	QList<Status> * readTimeLineFromXml(const QByteArray &buffer);
-    QList<Status> * readDMessagesFromXml(const QByteArray &buffer);
-	Status readStatusFromXml(const QByteArray &buffer);
-    Status readDMessageFromXml(const QByteArray &buffer);
-	QString prepareStatus(QString status);
-    void setDefaultArgs(KUrl &url);
+    QStringList readUsersNameFromXml( const QByteArray &buffer );
+    QList<Status> * readTimeLineFromXml( const QByteArray &buffer );
+    QList<Status> * readDMessagesFromXml( const QByteArray &buffer );
+    Status readStatusFromXml( const QByteArray &buffer );
+    Status readDMessageFromXml( const QByteArray &buffer );
+    QString prepareStatus( QString status );
+    void setDefaultArgs( KUrl &url );
     void requestCurrentUser();
-    void requestFollowers(int page=1);
-    void requestFriends(int page=1);
+    void requestFollowers( int page = 1 );
+    void requestFriends( int page = 1 );
 
-	QString mLatestErrorString;
-	QMap<KJob *, TimeLineType> mRequestTimelineMap;
+    QString mLatestErrorString;
+    QMap<KJob *, TimeLineType> mRequestTimelineMap;
     QMap<KJob *, DMessageType> mRequestDMessagesMap;
 
     Account *mCurrentAccount;

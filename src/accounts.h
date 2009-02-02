@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -23,7 +23,6 @@
 */
 #ifndef ACCOUNTS_H
 #define ACCOUNTS_H
-// #include "datacontainers.h"
 #include "ui_accounts_base.h"
 #include <QWidget>
 #include "account.h"
@@ -32,21 +31,21 @@ class Accounts: public QWidget, public Ui::accounts_base
 {
     Q_OBJECT
 public:
-    Accounts ( QWidget *parent = 0 );
+    Accounts( QWidget *parent = 0 );
     ~Accounts();
 
 public slots:
     void addAccount();
-    void editAccount ( QString alias = QString() );
-    void removeAccount ( QString alias = QString() );
+    void editAccount( QString alias = QString() );
+    void removeAccount( QString alias = QString() );
 
 protected slots:
-    void slotAccountAdded ( const Account &account );
-    void slotAccountEdited ( const Account &account );
+    void slotAccountAdded( const Account &account );
+    void slotAccountEdited( const Account &account );
     void accountsTablestateChanged();
 
 private:
-    void addAccountToTable (/* bool isEnabled, */const QString &alias, const QString &service );
+    void addAccountToTable( /* bool isEnabled, */const QString &alias, const QString &service );
     void loadAccountsData();
     void saveAccountsData();
 };

@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -34,52 +34,52 @@
 /**
 Status Widget
 
-	@author Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
 */
 class StatusWidget : public QFrame, public Ui_StatusWidgetBase
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-	enum Notify{ WithNotify=0, WithoutNotify};
-    
-    explicit StatusWidget(const Account *account, QWidget *parent = 0);
+    enum Notify { WithNotify = 0, WithoutNotify};
+
+    explicit StatusWidget( const Account *account, QWidget *parent = 0 );
 
     ~StatusWidget();
-	
-	QString formatDateTime(const QDateTime &time);
-	
-	Status currentStatus() const;
-	void setCurrentStatus(const Status newStatus);
-	void setUserImage(const QString &imgPath);
-	void setUserImage(const QPixmap *image);
-	void setUnread(Notify notifyType);
-	void setRead();
-	void updateFavoriteUi();
-	bool isReaded();
-	
+
+    QString formatDateTime( const QDateTime &time );
+
+    Status currentStatus() const;
+    void setCurrentStatus( const Status newStatus );
+    void setUserImage( const QString &imgPath );
+    void setUserImage( const QPixmap *image );
+    void setUnread( Notify notifyType );
+    void setRead();
+    void updateFavoriteUi();
+    bool isReaded();
+
 signals:
-	void sigReply( const QString &userName, uint statusId);
-	void sigDestroy(uint statusId);
-	void sigFavorite(uint statusId, bool isFavorite);
-	
+    void sigReply( const QString &userName, uint statusId );
+    void sigDestroy( uint statusId );
+    void sigFavorite( uint statusId, bool isFavorite );
+
 protected slots:
-	void setFavorite(bool isFavorite);
-	void requestReply();
-	void requestDestroy();
-	void updateSign();
-    void userImageLocalPathFetched(const QString &remotePath, const QString &localPath);
-	
+    void setFavorite( bool isFavorite );
+    void requestReply();
+    void requestDestroy();
+    void updateSign();
+    void userImageLocalPathFetched( const QString &remotePath, const QString &localPath );
+
 private:
-	void setUserImage();
-	QString prepareStatus(const QString &text, const int &replyStatusId);
-	void setUiStyle();
-	QString generateSign();
+    void setUserImage();
+    QString prepareStatus( const QString &text, const int &replyStatusId );
+    void setUiStyle();
+    QString generateSign();
     QString regenerateSign();
-	void updateUi();
-	
-	QTimer timer;
-	Status mCurrentStatus;
-	bool mIsReaded;
+    void updateUi();
+
+    QTimer timer;
+    Status mCurrentStatus;
+    bool mIsReaded;
     const Account *mCurrentAccount;
     QString signPrefix;
     QString signPostfix;

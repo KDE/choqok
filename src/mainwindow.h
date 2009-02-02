@@ -8,7 +8,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
 
@@ -58,29 +58,29 @@ public:
     * Default Destructor
     */
     virtual ~MainWindow();
-    
+
 signals:
-    void systemNotify(const QString &title, const QString &message, const QString &iconUrl);
+    void systemNotify( const QString &title, const QString &message, const QString &iconUrl );
     void updateTimeLines();
-    void sigSetUnread ( int unread );
+    void sigSetUnread( int unread );
     void abortPostNewStatus();
     void setUnreadStatusesToReadState();
-    void accountAdded(const Account &account);
-    void accountRemoved(const QString &alias);
+    void accountAdded( const Account &account );
+    void accountRemoved( const QString &alias );
 
 public slots:
     void toggleMainWindowVisibility();
 protected slots:
     void optionsPreferences();
     void settingsChanged();
-    void notify ( const QString &message, bool isPermanent = false );
+    void notify( const QString &message, bool isPermanent = false );
     void quitApp();
     void setNumOfUnreadOnMainWin( int unread );
     void showTimeLine();
 
 protected:
 //     void keyPressEvent ( QKeyEvent * e );
-    void checkUnreadStatuses ( int numOfNewStatusesReciened );
+    void checkUnreadStatuses( int numOfNewStatusesReciened );
     bool queryClose();
 
 private:
@@ -92,8 +92,8 @@ private:
 
 private slots:
     void loadAccounts();
-    void addAccountTimeLine(const Account &account, bool isStartup = false);
-    void removeAccountTimeLine(const QString &alias);
+    void addAccountTimeLine( const Account &account, bool isStartup = false );
+    void removeAccountTimeLine( const QString &alias );
     void setTimeLineUpdatesEnabled( bool isEnabled );
     void setNotificationsEnabled( bool isEnabled );
 
