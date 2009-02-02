@@ -30,8 +30,7 @@
 #include "datacontainers.h"
 #include "constants.h"
 #include "account.h"
-#define UPDATEINTERVAL 2*60000
-#define COLOROFFSET 20
+
 /**
 Status Widget
 
@@ -47,7 +46,7 @@ public:
 
     ~StatusWidget();
 	
-	static QString formatDateTime(const QDateTime &time);
+	QString formatDateTime(const QDateTime &time);
 	
 	Status currentStatus() const;
 	void setCurrentStatus(const Status newStatus);
