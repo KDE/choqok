@@ -50,11 +50,10 @@ public:
 	void logout();
 	
     void verifyCredential();
-    
+
 	QDateTime dateFromString(const QString &date);
 	QString& latestErrorString();
-	void quitting();
-	
+
 public slots:
 	void postNewStatus(const QString &statusMessage, uint replyToStatusId=0);
     void sendDMessage( const QString &screenName, const QString &message);
@@ -108,7 +107,6 @@ private:
 
 	QString mLatestErrorString;
 	QMap<KJob *, TimeLineType> mRequestTimelineMap;
-// 	QMap<KJob *, QByteArray> mRequestTimelineBuffer;
     QMap<KJob *, DMessageType> mRequestDMessagesMap;
 
     Account *mCurrentAccount;

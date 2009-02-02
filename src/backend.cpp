@@ -362,10 +362,6 @@ void Backend::requestDestroyDMessage(uint statusId)
     job->start();
 }
 
-void Backend::quitting()
-{
-}
-
 void Backend::slotPostNewStatusFinished(KJob * job)
 {
 	kDebug();
