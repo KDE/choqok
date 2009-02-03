@@ -234,19 +234,19 @@ QString StatusWidget::prepareStatus( const QString &text )
     i = j = 0;
     s = t;
     t.clear();
-    while (( j = s.indexOf( '@', i ) ) != -1 ) {
+    QRegExp usrRx( "(^|\\s)(@\\w+)(\\s|$|\\b)", Qt::CaseInsensitive );
+    while (( j = usrRx.indexIn( s , i ) ) != -1 ) {
         t += s.mid( i, j - i );
-        int k = s.indexOf( QRegExp( "[ ,]" ), j );
-        if ( k == -1 ) k = s.length();
-        QString username = s.mid( j + 1, k - j - 1 );
+        int k = usrRx.cap(2).length();
+        QString username = usrRx.cap(2).remove(0, 1);
         QString url;
         if ( mCurrentAccount->serviceName().toLower() == QString( IDENTICA_SERVICE_TEXT ).toLower() ) {
             url = "http://identi.ca/" + username ;
         } else {
             url = "http://twitter.com/" + username ;
         }
-        t += "@<a href='" + url + "'>" + username + "</a>";
-        i = k;
+        t += " @<a href='" + url + "' title='" + url + "'>" + username + "</a> ";
+        i = k + j + 1;
     }
     t += s.mid( i );
 
@@ -255,14 +255,15 @@ QString StatusWidget::prepareStatus( const QString &text )
         i = j = 0;
         s = t;
         t.clear();
-        while (( j = s.indexOf( '#', i ) ) != -1 ) {
+        QRegExp tagRx( "(^|\\s)(#\\w+)(\\s|$)", Qt::CaseInsensitive );
+        while( ( j = tagRx.indexIn( s, i ) ) != -1 ){
+//             kDebug()<<tagRx.capturedTexts()<<i<<j;
             t += s.mid( i, j - i );
-            int k = s.indexOf( QRegExp( "[ ,?]" ), j );
-            if ( k == -1 ) k = s.length();
-            QString tag = s.mid( j + 1, k - j - 1 );
+            int k = tagRx.cap(2).length();
+            QString tag = tagRx.cap(2).remove(0, 1);
             QString url = "http://identi.ca/tag/" + tag;
-            t += "#<a href='" + url + "' title='" + url + "'>" + tag + "</a>";
-            i = k;
+            t += " #<a href='" + url + "' title='" + url + "'>" + tag + "</a>";
+            i += k + j + 1;
         }
         t += s.mid( i );
 
@@ -270,14 +271,15 @@ QString StatusWidget::prepareStatus( const QString &text )
         i = j = 0;
         s = t;
         t.clear();
-        while (( j = s.indexOf( '!', i ) ) != -1 ) {
+        QRegExp grpRx( "(^|\\s)(!\\w+)(\\s|$|\\b)", Qt::CaseInsensitive );
+        while (( j = grpRx.indexIn( s, i ) ) != -1 ) {
+//             kDebug()<<grpRx.capturedTexts()<<i<<j;
             t += s.mid( i, j - i );
-            int k = s.indexOf( QRegExp( "[ .,?]" ), j );
-            if ( k == -1 ) k = s.length();
-            QString group = s.mid( j + 1, k - j - 1 );
+            int k = grpRx.cap(2).length();
+            QString group = grpRx.cap(2).remove(0, 1);
             QString url = "http://identi.ca/group/" + group;
-            t += "!<a href='" + url + "' title='" + url + "'>" + group + "</a>";
-            i = k;
+            t += " !<a href='" + url + "' title='" + url + "'>" + group + "</a> ";
+            i = k + j + 1;
         }
         t += s.mid( i );
     }
