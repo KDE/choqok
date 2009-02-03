@@ -58,6 +58,7 @@ public slots:
     void sendDMessage( const QString &screenName, const QString &message );
     void requestTimeLine( uint latestStatusId, TimeLineType type, int page = 0 );
     void requestDMessages( uint latestStatusId, DMessageType type, int page = 0 );
+    void requestSingleStatus( uint statusId );
     void requestFavorited( uint statusId, bool isFavorite );
     void requestDestroy( uint statusId );
     void requestDestroyDMessage( uint statusId );
@@ -78,6 +79,7 @@ signals:
     void outboxMessagesReceived( QList<Status> &msgList );
     void followersListed( const QStringList &followersList );
     void friendsListed( const QStringList &friendsList );
+    void singleStatusReceived( uint statusId, Status status );
 
 protected slots:
     void slotListFollowersScreenName( KJob *job );
@@ -89,7 +91,7 @@ protected slots:
     void slotUserInfoReceived( KJob *job );
     void slotCredentialsReceived( KJob *job );
     void slotRequestDMessagesFinished( KJob *job );
-
+    void slotRequestSingleStatusFinished( KJob* );
     void slotSendDMessageFinished( KJob* );
 
 private:
@@ -107,6 +109,7 @@ private:
     QString mLatestErrorString;
     QMap<KJob *, TimeLineType> mRequestTimelineMap;
     QMap<KJob *, DMessageType> mRequestDMessagesMap;
+    QMap<KJob *, uint> mRequestSingleStatusMap;
 
     Account *mCurrentAccount;
     QMap<QString, int> monthes;

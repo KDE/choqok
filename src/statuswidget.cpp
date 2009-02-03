@@ -24,6 +24,7 @@
 #include "statuswidget.h"
 #include "settings.h"
 #include "mediamanager.h"
+#include "backend.h"
 #include <knotification.h>
 #include <QProcess>
 #define _15SECS 15000
@@ -80,7 +81,7 @@ void StatusWidget::updateUi()
         btnRemove->setVisible( false );
     }
     lblSign->setHtml( generateSign() );
-    lblStatus->setHtml( prepareStatus( mCurrentStatus.content, mCurrentStatus.replyToStatusId ) );
+    lblStatus->setHtml( prepareStatus( mCurrentStatus.content ) );
     lblImage->setToolTip( mCurrentStatus.user.name );
     setUiStyle();
     updateFavoriteUi();
@@ -177,8 +178,15 @@ void StatusWidget::requestDestroy()
     emit sigDestroy( mCurrentStatus.statusId );
 }
 
-QString StatusWidget::prepareStatus( const QString &text, const int &replyStatusId )
+QString StatusWidget::prepareStatus( const QString &text )
 {
+    if(text.isEmpty() && mCurrentAccount->serviceName().toLower() == QString( IDENTICA_SERVICE_TEXT ).toLower()){
+        Backend *b = new Backend(new Account(*mCurrentAccount), this);
+        connect(b, SIGNAL(singleStatusReceived( uint, Status )),
+                 this, SLOT(missingStatusReceived( uint, Status )));
+        b->requestSingleStatus(mCurrentStatus.statusId);
+        return text;
+    }
     QString s = text;
     int i = 0, j = 0;
     ///TODO Adding smile support!
@@ -222,19 +230,7 @@ QString StatusWidget::prepareStatus( const QString &text, const int &replyStatus
         i = k;
     }
     t += s.mid( i );
-//  if (replyStatusId && (t[0] == '@')) {
-//      s = t;
-//      int i = 1;
-//      while ((i < s.length()) && (QChar(s[i]).isLetterOrNumber() || (s[i] == '_'))) ++i;
-//      QString username = s.mid(1, i - 1);
-//         QString statusUrl;
-//         if(mCurrentAccount->serviceName().toLower() == QString(IDENTICA_SERVICE_TEXT).toLower()){
-//             statusUrl = "http://identi.ca/notice/" + QString::number(replyStatusId);
-//         }else {
-//             statusUrl = "http://twitter.com/" + username + "/statuses/" + QString::number(replyStatusId);
-//         }
-//         t = "@<a href=\"" + statusUrl + "\" title=\""+ statusUrl +"\" >" + username + "</a>" + s.mid(i);
-//  }
+
     i = j = 0;
     s = t;
     t.clear();
@@ -402,6 +398,15 @@ void StatusWidget::userImageLocalPathFetched( const QString &remotePath, const Q
         disconnect( MediaManager::self(), SIGNAL( imageFetched( const QString &, const QString & ) ),
                     this, SLOT( userImageLocalPathFetched( const QString&, const QString& ) ) );
     }
+}
+
+void StatusWidget::missingStatusReceived( uint statusId, Status status )
+{
+//     if( statusId == mCurrentStatus.statusId ){
+        mCurrentStatus = status;
+        lblStatus->setHtml( prepareStatus( mCurrentStatus.content ) );
+        sender()->deleteLater();
+//     }
 }
 
 #include "statuswidget.moc"

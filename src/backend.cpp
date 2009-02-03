@@ -55,7 +55,6 @@ Backend::Backend( Account *account, QObject* parent ): QObject( parent )
 Backend::~Backend()
 {
     kDebug();
-//  logout();
 }
 
 void Backend::postNewStatus( const QString & statusMessage, uint replyToStatusId )
@@ -1085,5 +1084,40 @@ void Backend::setDefaultArgs( KUrl & url )
     url.setPass( mCurrentAccount->password() );
 }
 
+void Backend::requestSingleStatus( uint statusId )
+{
+    kDebug();
+    KUrl url;
+    url.setUrl( mCurrentAccount->apiPath() + "/statuses/show/" + QString::number(statusId) + ".xml" );
+    setDefaultArgs( url );
+
+    KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
+    if ( !job ) {
+        kDebug() << "Cannot create a http GET request!";
+        QString errMsg = i18n( "Cannot create a http GET request, please check your internet connection." );
+        emit sigError( errMsg );
+        return;
+    }
+    mRequestSingleStatusMap[ job ] = statusId;
+    connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestSingleStatusFinished ( KJob* ) ) );
+    job->start();
+}
+
+void Backend::slotRequestSingleStatusFinished( KJob* job )
+{
+    kDebug();
+    if ( job->error() ) {
+        kDebug() << "Job Error: " << job->errorString();
+    } else {
+        KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>( job );
+        Status st = readStatusFromXml( stj->data() );
+        if ( st.isError ) {
+            kDebug() << "Parsing Error";
+        } else {
+            emit singleStatusReceived( mRequestSingleStatusMap[job], st);
+            mRequestSingleStatusMap.remove(job);
+        }
+    }
+}
 
 #include "backend.moc"
