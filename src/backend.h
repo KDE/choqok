@@ -105,6 +105,7 @@ private:
     void requestCurrentUser();
     void requestFollowers( int page = 1 );
     void requestFriends( int page = 1 );
+    QString shortenUrl(const QString &baseUrl);
 
     QString mLatestErrorString;
     QMap<KJob *, TimeLineType> mRequestTimelineMap;

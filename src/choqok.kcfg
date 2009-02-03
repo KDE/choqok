@@ -11,6 +11,14 @@
 	      <value>QuickStatus</value>
 	  </choices>
     </entry>
+    <entry name="shortenService" type="Enum">
+        <choices>
+            <value>None</value>
+            <value>TightURL</value>
+            <value>IS_GD</value>
+        </choices>
+        <default>1</default>
+    </entry>
     <entry name="notifyType" type="Enum">
       <choices>
 	      <value>None</value>

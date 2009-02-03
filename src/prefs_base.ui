@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>347</width>
-    <height>224</height>
+    <width>359</width>
+    <height>227</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout_3" >
@@ -118,7 +118,7 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="0" colspan="2" >
+       <item row="6" column="0" colspan="2" >
         <spacer name="verticalSpacer" >
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
@@ -139,6 +139,35 @@
          <property name="text" >
           <string>Use &amp;secure connection (https instead of http)</string>
          </property>
+        </widget>
+       </item>
+       <item row="5" column="0" >
+        <widget class="QLabel" name="label_6" >
+         <property name="text" >
+          <string>URL auto-shortening service :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1" >
+        <widget class="KComboBox" name="kcfg_shortenService" >
+         <property name="currentIndex" >
+          <number>1</number>
+         </property>
+         <item>
+          <property name="text" >
+           <string>None</string>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>2tu.us (free service)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>is.gd</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>
