@@ -218,10 +218,11 @@ QString StatusWidget::prepareStatus( const QString &text )
         }*/
 
     s.replace( " www.", " http://www." );
-    if ( s.startsWith( "www." ) ) s = "http://" + s;
+    if ( s.startsWith( "www." ) ) 
+        s.prepend( "http://" );
     QString t = "";
     i = j = 0;
-    while (( j = s.indexOf( "http://", i ) ) != -1 ) {
+    while (( j = s.indexOf( QRegExp( "(https?://)" ), i ) ) != -1 ) {
         t += s.mid( i, j - i );
         int k = s.indexOf( ' ', j );
         if ( k == -1 ) k = s.length();

@@ -497,7 +497,7 @@ QString Backend::prepareStatus( QString status )
     kDebug();
     QString t = "";
     int i = 0, j = 0;
-    while (( j = status.indexOf( "http://", i ) ) != -1 ) {
+    while (( j = status.indexOf( QRegExp( "(https?://)" ), i ) ) != -1 ) {
         t += status.mid( i, j - i );
         int k = status.indexOf( ' ', j );
         if ( k == -1 )
