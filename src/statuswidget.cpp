@@ -131,6 +131,8 @@ void StatusWidget::requestReply()
 
 QString StatusWidget::generateSign()
 {
+    signPrefix.clear();
+    signPostfix.clear();
     if ( mCurrentAccount->serviceType() == Account::Identica ) {
         signPrefix = "<b><a href=\"http://identi.ca/" + mCurrentStatus.user.screenName + "\" title=\"" +
                      mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName + "</a> - </b> ";
@@ -139,8 +141,8 @@ QString StatusWidget::generateSign()
         if ( !mCurrentStatus.isDMessage ) {
             signPostfix = " - " + mCurrentStatus.source;
             if ( mCurrentStatus.replyToStatusId > 0 ) {
-                signPostfix += " - <a href=\"http://identi.ca/notice/" +
-                               QString::number( mCurrentStatus.replyToStatusId ) + "\">in reply to</a>";
+                QString link = "http://identi.ca/notice/" + QString::number( mCurrentStatus.replyToStatusId );
+                signPostfix += " - <a href=\"" + link + "\" title=\"" + link + "\">in reply to</a>";
             }
         }
     } else {
@@ -152,8 +154,9 @@ QString StatusWidget::generateSign()
         if ( !mCurrentStatus.isDMessage ) {
             signPostfix = " - " + mCurrentStatus.source;
             if ( mCurrentStatus.replyToStatusId > 0 ) {
-                signPostfix += " - <a href=\"http://twitter.com/" + mCurrentStatus.replyToUserScreenName + "/statuses/"
-                               + QString::number( mCurrentStatus.replyToStatusId ) + "\">in reply to</a>";
+                QString link = "http://twitter.com/" + mCurrentStatus.replyToUserScreenName + "/statuses/"
+                + QString::number( mCurrentStatus.replyToStatusId );
+                signPostfix += " - <a href=\"" + link + "\" title=\"" + link + "\">in reply to</a>";
             }
         }
     }
@@ -241,7 +244,11 @@ QString StatusWidget::prepareStatus( const QString &text )
         int k = usrRx.cap(2).length();
         QString username = usrRx.cap(2).remove(0, 1);
         QString url;
-        url = mCurrentAccount->userProfilePath();
+        if( mCurrentAccount->serviceType() == Account::Identica )
+            url = "http://identi.ca/";
+        else
+            url = "http://twitter.com/";
+        url += username;
         t += " @<a href='" + url + "' title='" + url + "'>" + username + "</a> ";
         i = k + j + 1;
     }
@@ -259,7 +266,7 @@ QString StatusWidget::prepareStatus( const QString &text )
             int k = tagRx.cap(2).length();
             QString tag = tagRx.cap(2).remove(0, 1);
             QString url = "http://identi.ca/tag/" + tag;
-            t += " #<a href='" + url + "' title='" + url + "'>" + tag + "</a>";
+            t += " #<a href='" + url + "' title='" + url + "'>" + tag + "</a> ";
             i += k + j + 1;
         }
         t += s.mid( i );

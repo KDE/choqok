@@ -71,7 +71,6 @@ public:
     Service serviceType() const;
     void setServiceType( Service type );
 
-    QString userProfilePath() const;
 private:
     uint mUserId;
     QString mUsername;

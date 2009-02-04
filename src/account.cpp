@@ -145,12 +145,3 @@ void Account::setServiceType( Service type )
         mApiPath = "http://twitter.com/";
     }
 }
-
-QString Account::userProfilePath() const
-{
-    if( mServiceType == Identica )
-        return QString ( "http://identi.ca/" + mUsername );
-    else if ( mServiceType == Twitter )
-        return QString ( "http://twitter.com/" + mUsername );
-    return QString();
-}

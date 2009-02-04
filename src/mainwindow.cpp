@@ -83,8 +83,6 @@ MainWindow::MainWindow()
 MainWindow::~MainWindow()
 {
     kDebug();
-    timelineTimer->stop();
-    Settings::self()->writeConfig();
 }
 
 void MainWindow::setupActions()
@@ -246,6 +244,8 @@ void MainWindow::notify( const QString &message, bool isPermanent )
 void MainWindow::quitApp()
 {
     kDebug();
+    timelineTimer->stop();
+    Settings::self()->writeConfig();
     deleteLater();
 }
 
