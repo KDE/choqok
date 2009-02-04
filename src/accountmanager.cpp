@@ -74,12 +74,12 @@ Account AccountManager::findAccount( const QString &alias )
     int count = mAccounts.count();
     for ( int i = 0; i < count; ++i ) {
         if ( mAccounts[i].alias() == alias ) {
-            mAccounts[i].setIsError( false );
+            mAccounts[i].setError( false );
             return mAccounts[i];
         }
     }
     Account a;
-    a.setIsError( true );
+    a.setError( true );
     return a;
 }
 
@@ -116,7 +116,7 @@ Account & AccountManager::addAccount( Account & account )
     kDebug() << "Adding: " << account.alias();
 
     if ( account.alias().isEmpty() ) {
-        account.setIsError( true );
+        account.setError( true );
         return account;
     }
 
@@ -125,7 +125,7 @@ Account & AccountManager::addAccount( Account & account )
     while ( it.hasNext() ) {
         Account curracc = it.next();
         if ( account.alias() == curracc.alias() ) {
-            account.setIsError( true );
+            account.setError( true );
             return account;
         }
     }
@@ -134,8 +134,9 @@ Account & AccountManager::addAccount( Account & account )
     acConf.writeEntry( "alias", account.alias() );
     acConf.writeEntry( "username", account.username() );
     acConf.writeEntry( "userId", account.userId() );
-    acConf.writeEntry( "service", account.serviceName() );
-    acConf.writeEntry( "api_path", account.apiPath() );
+    acConf.writeEntry( "service_type", (int)account.serviceType() );
+//     acConf.writeEntry( "service", account.serviceName() );
+//     acConf.writeEntry( "api_path", account.apiPath() );
     acConf.writeEntry( "direction", ( account.direction() == Qt::RightToLeft ) ? "rtl" : "ltr" );
     if ( mWallet && mWallet->writePassword( account.serviceName() + '_' + account.username(), account.password() ) == 0 ) {
         kDebug() << "Password stored to kde wallet";
@@ -145,7 +146,7 @@ Account & AccountManager::addAccount( Account & account )
     }
     conf->sync();
     emit accountAdded( account );
-    account.setIsError( false );
+    account.setError( false );
     return account;
 }
 
@@ -156,7 +157,7 @@ Account & AccountManager::modifyAccount( Account & account, const QString & prev
     if ( removeAccount( previousAlias ) )
         return addAccount( account );
 
-    account.setIsError( true );
+    account.setError( true );
     return account;
 }
 
@@ -172,8 +173,17 @@ void AccountManager::loadAccounts()
             a.setUsername( accountGrp.readEntry( "username", QString() ) );
             a.setUserId( accountGrp.readEntry( "userId", uint( -1 ) ) );
             a.setAlias( accountGrp.readEntry( "alias", QString() ) );
-            a.setServiceName( accountGrp.readEntry( "service", QString() ) );
-            a.setApiPath( accountGrp.readEntry( "api_path", QString() ) );
+            int service_type = accountGrp.readEntry( "service_type", -1 );
+            if(service_type == -1){///For compatibility with previous versions (e.g. 0.3.1 )
+                QString service = accountGrp.readEntry( "service", QString() );
+                if( service.toLower() == QString(IDENTICA_SERVICE_TEXT).toLower() ) {
+                    a.setServiceType(Account::Identica);
+                } else {
+                    a.setServiceType(Account::Twitter);
+                }
+            } else {
+                a.setServiceType( (Account::Service) service_type );
+            }
             a.setDirection(( accountGrp.readEntry( "direction", "ltr" ) == "rtl" ) ? Qt::RightToLeft : Qt::LeftToRight );
             QString buffer;
             if ( mWallet && mWallet->readPassword( a.serviceName() + '_' + a.username(), buffer ) == 0 && !buffer.isEmpty() ) {
@@ -183,7 +193,7 @@ void AccountManager::loadAccounts()
                 a.setPassword( accountGrp.readEntry( "password", QString() ) );
                 kDebug() << "Password loaded from config file.";
             }
-            a.setIsError( false );
+            a.setError( false );
             if ( a.userId() == ( uint ) - 1 ) {///Just for compatibility with previous versions
                 Account *account = new Account( a );
                 Backend *b = new Backend( account );

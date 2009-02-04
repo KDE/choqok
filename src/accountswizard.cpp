@@ -60,7 +60,7 @@ void AccountsWizard::loadAccount( QString &alias )
     ui.kcfg_alias->setText( mAccount.alias() );
     ui.kcfg_password->setText( mAccount.password() );
     ui.kcfg_direction->setCurrentIndex(( mAccount.direction() == Qt::RightToLeft ) ? 1 : 0 );
-    ui.kcfg_service->setCurrentIndex(( mAccount.serviceName() == IDENTICA_SERVICE_TEXT ) ? 1 : 0 );
+    ui.kcfg_service->setCurrentIndex( mAccount.serviceType() );
 }
 
 void AccountsWizard::slotButtonClicked( int button )
@@ -77,13 +77,12 @@ void AccountsWizard::slotButtonClicked( int button )
         grid->addWidget( progress, grid->rowCount(), 0, grid->rowCount(), 2 );
         ///Check for account
 //         Account a;
-        if ( ui.kcfg_service->currentIndex() == 1 ) {
-            mAccount.setApiPath( IDENTICA_API_PATH );
-            mAccount.setServiceName( IDENTICA_SERVICE_TEXT );
-        } else {
-            mAccount.setApiPath( TWITTER_API_PATH );
-            mAccount.setServiceName( TWITTER_SERVICE_TEXT );
-        }
+        mAccount.setServiceType( (Account::Service) ui.kcfg_service->currentIndex() );
+//         if ( ui.kcfg_service->currentIndex() == 1 ) {
+//             mAccount.setServiceType(Account::Identica);
+//         } else {
+//             mAccount.setServiceType(Account::Twitter);
+//         }
         mAccount.setUsername( ui.kcfg_username->text() );
         mAccount.setPassword( ui.kcfg_password->text() );
         mAccount.setDirection(( Qt::LayoutDirection )ui.kcfg_direction->currentIndex() );

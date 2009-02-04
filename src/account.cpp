@@ -23,10 +23,14 @@
 */
 #include "account.h"
 
-Account::Account()
+Account::Account( Service type )
 {
+    setServiceType(type);
 }
 
+Account::Account( )
+{
+}
 
 Account::~Account()
 {
@@ -42,6 +46,7 @@ Account::Account( const Account & account )
     mDirection = account.direction();
     mApiPath = account.apiPath();
     mIsError = account.isError();
+    mServiceType = account.serviceType();
 }
 
 uint Account::userId() const
@@ -79,10 +84,10 @@ QString Account::serviceName() const
     return mServiceName;
 }
 
-void Account::setServiceName( const QString & servicename )
-{
-    mServiceName = servicename;
-}
+// void Account::setServiceName( const QString & servicename )
+// {
+//     mServiceName = servicename;
+// }
 
 QString Account::alias() const
 {
@@ -109,12 +114,12 @@ QString Account::apiPath() const
     return mApiPath;
 }
 
-void Account::setApiPath( const QString & apiPath )
-{
-    mApiPath = apiPath;
-}
+// void Account::setApiPath( const QString & apiPath )
+// {
+//     mApiPath = apiPath;
+// }
 
-void Account::setIsError( bool isError )
+void Account::setError( bool isError )
 {
     mIsError = isError;
 }
@@ -122,4 +127,30 @@ void Account::setIsError( bool isError )
 bool Account::isError() const
 {
     return mIsError;
+}
+
+Account::Service Account::serviceType() const
+{
+    return mServiceType;
+}
+
+void Account::setServiceType( Service type )
+{
+    mServiceType = type;
+    if ( type == Identica){
+        mServiceName = "Identi.ca";
+        mApiPath = "http://identi.ca/api/";
+    } else if (type == Twitter) {
+        mServiceName = "Twitter.com";
+        mApiPath = "http://twitter.com/";
+    }
+}
+
+QString Account::userProfilePath() const
+{
+    if( mServiceType == Identica )
+        return QString ( "http://identi.ca/" + mUsername );
+    else if ( mServiceType == Twitter )
+        return QString ( "http://twitter.com/" + mUsername );
+    return QString();
 }

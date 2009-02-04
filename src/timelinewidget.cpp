@@ -69,10 +69,15 @@ void TimeLineWidget::aboutQuit()
 {
     kDebug();
     AccountManager::self()->saveFriendsList( mCurrentAccount.alias(), friendsList );
-    saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::HomeTimeLine ), listHomeStatus );
-    saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::ReplyTimeLine ), listReplyStatus );
-    saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::InboxTimeLine ), listInboxStatus );
-    saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::OutboxTimeLine ), listOutboxStatus );
+    saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::HomeTimeLine ),
+                  listHomeStatus );
+    saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::ReplyTimeLine ),
+                  listReplyStatus );
+    saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::InboxTimeLine ),
+                  listInboxStatus );
+    saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::OutboxTimeLine ),
+                  listOutboxStatus );
+    deleteLater();
 }
 
 void TimeLineWidget::initObjects()

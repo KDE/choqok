@@ -24,15 +24,22 @@
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
 #include <QString>
-// #include <QObject>
+
+#define TWITTER_API_PATH "http://twitter.com/"
+#define TWITTER_SERVICE_TEXT "Twitter.com"
+
+#define IDENTICA_API_PATH "http://identi.ca/api/"
+#define IDENTICA_SERVICE_TEXT "Identi.ca"
 
 /**
     @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
 */
-class Account //: private QObject
+class Account
 {
 public:
+    enum Service{ Twitter=0, Identica=1  };
     Account();
+    Account( Service type );
     Account( const Account &account );
 
     ~Account();
@@ -47,7 +54,7 @@ public:
     void setPassword( const QString &pass );
 
     QString serviceName() const;
-    void setServiceName( const QString &servicename );
+//     void setServiceName( const QString &servicename );
 
     QString alias() const;
     void setAlias( const QString &alias );
@@ -56,11 +63,15 @@ public:
     void setDirection( const Qt::LayoutDirection &dir );
 
     QString apiPath() const;
-    void setApiPath( const QString &apiPath );
+//     void setApiPath( const QString &apiPath );
 
     bool isError() const;
-    void setIsError( bool isError );
+    void setError( bool isError );
 
+    Service serviceType() const;
+    void setServiceType( Service type );
+
+    QString userProfilePath() const;
 private:
     uint mUserId;
     QString mUsername;
@@ -70,7 +81,7 @@ private:
     Qt::LayoutDirection mDirection;
     QString mApiPath;
     bool mIsError;
-
+    Service mServiceType;
 };
 
 #endif

@@ -131,7 +131,7 @@ void StatusWidget::requestReply()
 
 QString StatusWidget::generateSign()
 {
-    if ( mCurrentAccount->serviceName().toLower() == QString( IDENTICA_SERVICE_TEXT ).toLower() ) {
+    if ( mCurrentAccount->serviceType() == Account::Identica ) {
         signPrefix = "<b><a href=\"http://identi.ca/" + mCurrentStatus.user.screenName + "\" title=\"" +
                      mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName + "</a> - </b> ";
         signPrefix += "<a href=\"http://identi.ca/notice/" + QString::number( mCurrentStatus.statusId ) + "\" title=\"" +
@@ -180,7 +180,7 @@ void StatusWidget::requestDestroy()
 
 QString StatusWidget::prepareStatus( const QString &text )
 {
-    if(text.isEmpty() && mCurrentAccount->serviceName().toLower() == QString( IDENTICA_SERVICE_TEXT ).toLower()){
+    if(text.isEmpty() && mCurrentAccount->serviceType() == Account::Identica){
         Backend *b = new Backend(new Account(*mCurrentAccount), this);
         connect(b, SIGNAL(singleStatusReceived( uint, Status )),
                  this, SLOT(missingStatusReceived( uint, Status )));
@@ -241,17 +241,13 @@ QString StatusWidget::prepareStatus( const QString &text )
         int k = usrRx.cap(2).length();
         QString username = usrRx.cap(2).remove(0, 1);
         QString url;
-        if ( mCurrentAccount->serviceName().toLower() == QString( IDENTICA_SERVICE_TEXT ).toLower() ) {
-            url = "http://identi.ca/" + username ;
-        } else {
-            url = "http://twitter.com/" + username ;
-        }
+        url = mCurrentAccount->userProfilePath();
         t += " @<a href='" + url + "' title='" + url + "'>" + username + "</a> ";
         i = k + j + 1;
     }
     t += s.mid( i );
 
-    if ( mCurrentAccount->serviceName().toLower() == QString( IDENTICA_SERVICE_TEXT ).toLower() ) {
+    if ( mCurrentAccount->serviceType() == Account::Identica ) {
         ///To cover Identica TAGs:
         i = j = 0;
         s = t;

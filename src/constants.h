@@ -28,9 +28,4 @@
 
 #define MAX_STATUS_SIZE 140
 
-#define TWITTER_API_PATH "http://twitter.com/"
-#define TWITTER_SERVICE_TEXT "Twitter.com"
-
-#define IDENTICA_API_PATH "http://identi.ca/api/"
-#define IDENTICA_SERVICE_TEXT "Identi.ca"
 #endif
