@@ -220,8 +220,8 @@ QString StatusWidget::prepareStatus( const QString &text )
             }
         }*/
 
-    s.replace( "<", " &lt;" );
-    s.replace( ">", " &gt;" );
+    s.replace( "<", "&lt;" );
+    s.replace( ">", "&gt;" );
     s.replace( " www.", " http://www." );
     if ( s.startsWith( "www." ) ) 
         s.prepend( "http://" );
