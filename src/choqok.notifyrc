@@ -2,6 +2,7 @@
 IconName=choqok
 Comment=choqoK
 Comment[sv]=Choqok
+Comment[x-test]=xxchoqoKxx
 
 [Event/new-status-arrived]
 Name=New tweet arrived
@@ -15,6 +16,7 @@ Name[pt]=Chegou um novo 'twit'
 Name[pt_BR]=Chegou um novo 'twit'
 Name[sv]=Nytt meddelande anländer
 Name[uk]=Надійшло нове нагадування
+Name[x-test]=xxNew tweet arrivedxx
 Comment=New tweet arrived
 Comment[et]=Saabus uus tviit
 Comment[fr]=Un nouveau tweet est arrivé
@@ -26,6 +28,7 @@ Comment[pt]=Chegou um novo 'twit'
 Comment[pt_BR]=Chegou um novo 'twit'
 Comment[sv]=Nytt meddelande anländer
 Comment[uk]=Надійшло нове нагадування
+Comment[x-test]=xxNew tweet arrivedxx
 Action=Popup
 Persistent=True
 
@@ -41,6 +44,7 @@ Name[pt]=Aconteceu alguma coisa
 Name[pt_BR]=Algo aconteceu
 Name[sv]=Någonting händer
 Name[uk]=Щось сталося
+Name[x-test]=xxSomething happensxx
 Comment=Something happens
 Comment[et]=Midagi juhtus
 Comment[fr]=Quelque chose s'est produit
@@ -52,5 +56,6 @@ Comment[pt]=Aconteceu alguma coisa
 Comment[pt_BR]=Algo aconteceu
 Comment[sv]=Någonting händer
 Comment[uk]=Щось сталося
+Comment[x-test]=xxSomething happensxx
 Action=Popup
 Persistent=True
