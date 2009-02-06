@@ -141,7 +141,7 @@ void TimeLineWidget::checkNewStatusCharactersCount( int numOfChars )
         txtNewStatus->setMaximumHeight( 80 );
     }
 
-    lblCounter->setText( i18n( "%1", numOfChars ) );
+    lblCounter->setText( KGlobal::locale()->formatNumber( numOfChars, 0 ) );
 }
 
 void TimeLineWidget::settingsChanged()

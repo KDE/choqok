@@ -87,7 +87,7 @@ void QuickTwit::checkNewStatusCharactersCount( int numOfChars )
     } else {
         ui.lblCounter->setStyleSheet( "QLabel {color: green}" );
     }
-    ui.lblCounter->setText( i18n( "%1", numOfChars ) );
+    ui.lblCounter->setText( KGlobal::locale()->formatNumber( numOfChars, 0 ) );
 }
 
 void QuickTwit::slotPostNewStatusDone( bool isError )

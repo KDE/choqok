@@ -350,7 +350,7 @@ void MainWindow::setNumOfUnreadOnMainWin( int unread )
     if ( unread <= 0 ) {
         text = subWidget->currentAccount().alias();
     } else {
-        text = subWidget->currentAccount().alias() + i18n( "(%1)", unread );
+        text = i18nc( "account, unread","%1(%2)", subWidget->currentAccount().alias(), unread );
     }
     mainWidget->setTabText( mainWidget->indexOf( subWidget ), text );
 }
