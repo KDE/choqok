@@ -74,6 +74,8 @@ void AccountsWizard::slotButtonClicked( int button )
         progress->setMinimum( 0 );
         progress->setMaximum( 0 );
         QGridLayout* grid = qobject_cast<QGridLayout*>( this->mainWidget()->layout() );
+        if ( !grid )
+            return;
         grid->addWidget( progress, grid->rowCount(), 0, grid->rowCount(), 2 );
         ///Check for account
 //         Account a;
