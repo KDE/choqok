@@ -324,10 +324,10 @@ void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayou
         kDebug() << "Latest reply statusId sets to: " << latestId;
         latestReplyStatusId = latestId;
     } else if ( type == Backend::InboxTimeLine && latestId > latestInboxStatusId ) {
-        kDebug() << "Latest recieved statusId sets to: " << latestId;
+        kDebug() << "Latest inbox statusId sets to: " << latestId;
         latestInboxStatusId = latestId;
     } else if ( type == Backend::OutboxTimeLine && latestId > latestOutboxStatusId ) {
-        kDebug() << "Latest sent statusId sets to: " << latestId;
+        kDebug() << "Latest outbox statusId sets to: " << latestId;
         latestOutboxStatusId = latestId;
     }
     if ( !isStartMode && type != Backend::OutboxTimeLine )
@@ -649,7 +649,7 @@ void TimeLineWidget::reloadFriendsList()
 {
     kDebug();
     friendsList.clear();
-//     txtNewStatus->clearFriendsList();
+    comboFriendList->setCurrentItem( i18n("Please wait..."), true, 0);
     twitter->listFollowersScreenName();
     twitter->listFriendsScreenName();
 }
@@ -663,9 +663,8 @@ void TimeLineWidget::friendsListed( const QStringList & list )
     }
     comboFriendList->clear();
     comboFriendList->addItems( friendsList );
-//     txtNewStatus->setFriendsList( friendsList );
 
-    KCompletion *c = comboFriendList->completionObject( true );;
+    KCompletion *c = comboFriendList->completionObject( true );
     c->setItems( friendsList );
     c->setCompletionMode( KGlobalSettings::CompletionPopupAuto );
 }
