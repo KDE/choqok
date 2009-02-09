@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>288</width>
+    <width>290</width>
     <height>543</height>
    </rect>
   </property>
@@ -22,6 +22,9 @@
    <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout_2" >
+   <property name="margin" >
+    <number>2</number>
+   </property>
    <item row="0" column="0" >
     <widget class="QCheckBox" name="chkDMessage" >
      <property name="sizePolicy" >
@@ -112,6 +115,9 @@
       <attribute name="title" >
        <string>Home</string>
       </attribute>
+      <attribute name="toolTip" >
+       <string>Friends statuses</string>
+      </attribute>
       <layout class="QGridLayout" name="gridLayout" >
        <property name="margin" >
         <number>1</number>
@@ -141,8 +147,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>270</width>
-            <height>461</height>
+            <width>280</width>
+            <height>468</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5" >
@@ -182,6 +188,9 @@
       <attribute name="title" >
        <string>Reply</string>
       </attribute>
+      <attribute name="toolTip" >
+       <string>Replies to your statuses</string>
+      </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2" >
        <property name="spacing" >
         <number>1</number>
@@ -208,8 +217,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>270</width>
-            <height>461</height>
+            <width>276</width>
+            <height>464</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout" >
@@ -249,6 +258,9 @@
       <attribute name="title" >
        <string>Inbox</string>
       </attribute>
+      <attribute name="toolTip" >
+       <string>Direct messages</string>
+      </attribute>
       <layout class="QGridLayout" name="gridLayout_3" >
        <property name="margin" >
         <number>1</number>
@@ -278,8 +290,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>270</width>
-            <height>461</height>
+            <width>276</width>
+            <height>464</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6" >
@@ -319,6 +331,9 @@
       <attribute name="title" >
        <string>Outbox</string>
       </attribute>
+      <attribute name="toolTip" >
+       <string>Sent messages</string>
+      </attribute>
       <layout class="QGridLayout" name="gridLayout_4" >
        <property name="margin" >
         <number>1</number>
@@ -348,8 +363,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>270</width>
-            <height>461</height>
+            <width>276</width>
+            <height>464</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_7" >

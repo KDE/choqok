@@ -123,7 +123,7 @@ private:
     void clearTimeLineList( QList<StatusWidget*> *list );
 
     void loadConfigurations();
-
+    void updateUi();
     void showNotify( const QString &title, const QString &message );
 
 private:

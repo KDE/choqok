@@ -42,7 +42,6 @@ TimeLineWidget::TimeLineWidget( const Account &userAccount, QWidget* parent ) :
     setupUi( this );
     mCurrentAccount = userAccount;
     latestHomeStatusId = latestReplyStatusId = 0;
-//     mRemoved = false;
 
     homeLayout->setDirection( QBoxLayout::TopToBottom );
     replyLayout->setDirection( QBoxLayout::TopToBottom );
@@ -123,6 +122,7 @@ void TimeLineWidget::initObjects()
 
     loadConfigurations();
     txtNewStatus->setFocus( Qt::OtherFocusReason );
+    settingsChanged();
 }
 
 void TimeLineWidget::checkNewStatusCharactersCount( int numOfChars )
@@ -149,6 +149,7 @@ void TimeLineWidget::settingsChanged()
     kDebug();
     setDefaultDirection();
     twitter->settingsChanged();
+    updateUi();
 }
 
 void TimeLineWidget::updateTimeLines()
@@ -689,6 +690,21 @@ void TimeLineWidget::showNotify( const QString &title, const QString &message )
 void TimeLineWidget::txtNewStatusCleared()
 {
     replyToStatusId = 0;
+}
+
+void TimeLineWidget::updateUi()
+{
+    if(Settings::showIconsOnTimelineTabs()) {
+        tabs->setTabIcon(0, KIcon( "user-home" ));
+        tabs->setTabIcon(1, KIcon( "edit-undo" ));
+        tabs->setTabIcon(2, KIcon( "mail-folder-inbox" ));
+        tabs->setTabIcon(3, KIcon( "mail-folder-outbox" ));
+    } else {
+        tabs->setTabIcon(0, KIcon());
+        tabs->setTabIcon(1, KIcon());
+        tabs->setTabIcon(2, KIcon());
+        tabs->setTabIcon(3, KIcon());
+    }
 }
 
 #include "timelinewidget.moc"

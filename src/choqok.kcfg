@@ -5,11 +5,14 @@
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <kcfgfile/>
   <group name="Preferences">
-  	<entry name="systrayTriggerType" type="Enum">
-      <choices>
-	      <value>MainWindow</value>
-	      <value>QuickStatus</value>
-	  </choices>
+    <entry name="systrayTriggerType" type="Enum">
+        <choices>
+            <value>MainWindow</value>
+            <value>QuickStatus</value>
+        </choices>
+    </entry>
+    <entry name="showIconsOnTimelineTabs" type="Bool">
+        <default>false</default>
     </entry>
     <entry name="shortenService" type="Enum">
         <choices>

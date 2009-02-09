@@ -5,14 +5,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>378</width>
-    <height>210</height>
+    <width>365</width>
+    <height>227</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2" >
+   <item>
+    <widget class="QCheckBox" name="kcfg_showIconsOnTimelineTabs" >
+     <property name="text" >
+      <string>Show icons on timeline tabs</string>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QCheckBox" name="kcfg_isCustomUi" >
      <property name="text" >
@@ -21,96 +28,116 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox" >
-     <property name="enabled" >
-      <bool>false</bool>
-     </property>
-     <property name="title" >
-      <string>Statuses color preferences</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout" >
-      <item>
-       <layout class="QGridLayout" name="gridLayout" >
-        <item row="0" column="1" >
-         <widget class="QLabel" name="label_5" >
-          <property name="text" >
-           <string>Background</string>
-          </property>
-          <property name="alignment" >
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" >
-         <widget class="QLabel" name="label" >
-          <property name="text" >
-           <string>Default color :</string>
-          </property>
-          <property name="alignment" >
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1" >
-         <widget class="KColorButton" name="kcfg_defaultBackColor" />
-        </item>
-        <item row="1" column="2" >
-         <widget class="KColorButton" name="kcfg_defaultForeColor" >
-          <property name="color" >
-           <color>
-            <red>0</red>
-            <green>0</green>
-            <blue>0</blue>
-           </color>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" >
-         <widget class="QLabel" name="label_2" >
-          <property name="text" >
-           <string>New status color :</string>
-          </property>
-          <property name="alignment" >
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1" >
-         <widget class="KColorButton" name="kcfg_newStatusBackColor" >
-          <property name="color" >
-           <color>
-            <red>195</red>
-            <green>230</green>
-            <blue>205</blue>
-           </color>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2" >
-         <widget class="KColorButton" name="kcfg_newStatusForeColor" >
-          <property name="color" >
-           <color>
-            <red>0</red>
-            <green>0</green>
-            <blue>0</blue>
-           </color>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2" >
-         <widget class="QLabel" name="label_6" >
-          <property name="text" >
-           <string>Foreground</string>
-          </property>
-          <property name="alignment" >
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout" >
+     <item>
+      <spacer name="horizontalSpacer" >
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType" >
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0" >
+        <size>
+         <width>15</width>
+         <height>80</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox" >
+       <property name="enabled" >
+        <bool>false</bool>
+       </property>
+       <property name="title" >
+        <string>Statuses color preferences</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout" >
+        <item>
+         <layout class="QGridLayout" name="gridLayout" >
+          <item row="0" column="1" >
+           <widget class="QLabel" name="label_5" >
+            <property name="text" >
+             <string>Background</string>
+            </property>
+            <property name="alignment" >
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label" >
+            <property name="text" >
+             <string>Default color :</string>
+            </property>
+            <property name="alignment" >
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="KColorButton" name="kcfg_defaultBackColor" />
+          </item>
+          <item row="1" column="2" >
+           <widget class="KColorButton" name="kcfg_defaultForeColor" >
+            <property name="color" >
+             <color>
+              <red>0</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" >
+           <widget class="QLabel" name="label_2" >
+            <property name="text" >
+             <string>New status color :</string>
+            </property>
+            <property name="alignment" >
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" >
+           <widget class="KColorButton" name="kcfg_newStatusBackColor" >
+            <property name="color" >
+             <color>
+              <red>195</red>
+              <green>230</green>
+              <blue>205</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2" >
+           <widget class="KColorButton" name="kcfg_newStatusForeColor" >
+            <property name="color" >
+             <color>
+              <red>0</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2" >
+           <widget class="QLabel" name="label_6" >
+            <property name="text" >
+             <string>Foreground</string>
+            </property>
+            <property name="alignment" >
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
-      </item>
-     </layout>
-    </widget>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="QLabel" name="label_3" >

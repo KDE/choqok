@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>270</width>
+    <width>272</width>
     <height>115</height>
    </rect>
   </property>
@@ -38,7 +38,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout" >
    <property name="margin" >
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="spacing" >
     <number>0</number>
@@ -70,6 +70,9 @@
    </item>
    <item row="0" column="1" >
     <widget class="KTextBrowser" name="lblStatus" >
+     <property name="acceptDrops" >
+      <bool>false</bool>
+     </property>
      <property name="frameShape" >
       <enum>QFrame::NoFrame</enum>
      </property>
@@ -219,6 +222,9 @@
       <font>
        <pointsize>8</pointsize>
       </font>
+     </property>
+     <property name="acceptDrops" >
+      <bool>false</bool>
      </property>
      <property name="frameShape" >
       <enum>QFrame::NoFrame</enum>
