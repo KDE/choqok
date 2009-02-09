@@ -116,7 +116,7 @@ void MainWindow::setupActions()
 
     KAction *showMain = new KAction( this );
     actionCollection()->addAction( QLatin1String( "toggle_mainwin" ), showMain );
-    showMain->setShortcut( KShortcut( Qt::CTRL + Qt::Key_C ) );
+//     showMain->setShortcut( KShortcut( Qt::CTRL + Qt::Key_C ) );
     KShortcut toggleMainGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_C );
     showMain->setGlobalShortcutAllowed( true );
     showMain->setGlobalShortcut( toggleMainGlobalShortcut/*, KAction::DefaultShortcut, KAction::NoAutoloading*/ );

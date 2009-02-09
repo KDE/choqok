@@ -122,6 +122,9 @@
          <height>30</height>
         </size>
        </property>
+       <property name="cursor" >
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="toolTip" >
         <string>Favorite</string>
        </property>
@@ -153,6 +156,9 @@
          <height>30</height>
         </size>
        </property>
+       <property name="cursor" >
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="toolTip" >
         <string>Reply</string>
        </property>
@@ -180,6 +186,9 @@
          <width>30</width>
          <height>30</height>
         </size>
+       </property>
+       <property name="cursor" >
+        <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="toolTip" >
         <string>Remove</string>

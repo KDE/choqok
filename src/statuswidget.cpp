@@ -238,56 +238,58 @@ QString StatusWidget::prepareStatus( const QString &text )
     t += s.mid( i );
 
     i = j = 0;
-    s = t;
-    t.clear();
-    QRegExp usrRx( "(^|\\s)(@\\w+)(\\s|$|\\b)", Qt::CaseInsensitive );
-    while (( j = usrRx.indexIn( s , i ) ) != -1 ) {
-        t += s.mid( i, j - i );
-        int k = usrRx.cap(2).length();
-        QString username = usrRx.cap(2).remove(0, 1);
+//     s = t;
+//     t.clear();
+    QRegExp usrRx( "(@\\w+)(\\s|$|\\b)", Qt::CaseInsensitive );
+    while (( j = usrRx.indexIn( t , i ) ) != -1 ) {
+//         t += s.mid( i, j - i );
+        int k = usrRx.cap(1).length();
+        QString username = usrRx.cap(1).remove(0, 1);
         QString url;
         if( mCurrentAccount->serviceType() == Account::Identica )
             url = "http://identi.ca/";
         else
             url = "http://twitter.com/";
         url += username;
-        t += " @<a href='" + url + "' title='" + url + "'>" + username + "</a> ";
-        i = k + j + 1;
+        QString m = "@<a href='" + url + "' title='" + url + "'>" + username + "</a>";
+        t.replace(j, k, m);
+        i = k + j;
     }
-    t += s.mid( i );
+//     t += s.mid( i );
 
     if ( mCurrentAccount->serviceType() == Account::Identica ) {
         ///To cover Identica TAGs:
         i = j = 0;
-        s = t;
-        t.clear();
-        QRegExp tagRx( "(^|\\s)(#\\w+)(\\s|$)", Qt::CaseInsensitive );
-        while( ( j = tagRx.indexIn( s, i ) ) != -1 ){
-//             kDebug()<<tagRx.capturedTexts()<<i<<j;
-            t += s.mid( i, j - i );
-            int k = tagRx.cap(2).length();
-            QString tag = tagRx.cap(2).remove(0, 1);
+//         s = t;
+//         t.clear();
+        QRegExp tagRx( "(#\\w+)(\\s|$|\\b)", Qt::CaseInsensitive );
+        while( ( j = tagRx.indexIn( t, i ) ) != -1 ){
+//             t += s.mid( i, j - i );
+            int k = tagRx.cap(1).length();
+            QString tag = tagRx.cap(1).remove(0, 1);
             QString url = "http://identi.ca/tag/" + tag;
-            t += " #<a href='" + url + "' title='" + url + "'>" + tag + "</a> ";
-            i += k + j + 1;
+            QString m = "#<a href='" + url + "' title='" + url + "'>" + tag + "</a>";
+            t.replace(j, k, m);
+            i += k + j;
         }
-        t += s.mid( i );
+//         t = s;
 
         ///To cover Identica Groups:
         i = j = 0;
-        s = t;
-        t.clear();
-        QRegExp grpRx( "(^|\\s)(!\\w+)(\\s|$|\\b)", Qt::CaseInsensitive );
-        while (( j = grpRx.indexIn( s, i ) ) != -1 ) {
-//             kDebug()<<grpRx.capturedTexts()<<i<<j;
-            t += s.mid( i, j - i );
-            int k = grpRx.cap(2).length();
-            QString group = grpRx.cap(2).remove(0, 1);
+//         s = t;
+//         t.clear();
+        QRegExp grpRx( "(!\\w+)(\\s|$|\\b)", Qt::CaseInsensitive );
+        while (( j = grpRx.indexIn( t, i ) ) != -1 ) {
+//             t += s.mid( i, j - i );
+//             kDebug()<<grpRx.capturedTexts()<<j<<s;
+            int k = grpRx.cap(1).length();
+            QString group = grpRx.cap(1).remove(0, 1);
             QString url = "http://identi.ca/group/" + group;
-            t += " !<a href='" + url + "' title='" + url + "'>" + group + "</a> ";
-            i = k + j + 1;
+            QString m = "!<a href='" + url + "' title='" + url + "'>" + group + "</a>";
+            t.replace(j, k, m);
+            i = k + j;
         }
-        t += s.mid( i );
+//         t = s;
     }
     if ( mCurrentAccount->direction() == Qt::RightToLeft ) {
         s = "<div dir='rtl'>";
