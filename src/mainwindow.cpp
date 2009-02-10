@@ -304,8 +304,10 @@ void MainWindow::addAccountTimeLine( const Account & account, bool isStartup )
 
     mainWidget->addTab( widget, account.alias() );
 
-    if ( !isStartup )
+    if ( !isStartup ) {
         QTimer::singleShot( 500, widget, SLOT( updateTimeLines() ) );
+        QTimer::singleShot( 1000, widget, SLOT(reloadFriendsList()) );
+    }
     enableApp();
 }
 
