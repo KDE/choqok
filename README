@@ -1,5 +1,6 @@
-choqoK
-A KDE 4 Twitter Client.
+    choqoK
+KDE mono-blogging client,
+Currently supports Identi.ca and Twitter.com
 
 Author:
     Mehrdad Momeny <mehrdad.momeny[AT]gmail.com>
@@ -22,3 +23,6 @@ sudo make install OR su -c 'make install'
 
 to uninstall the project:
 make uninstall or su -c 'make uninstall'
+
+
+Feel free to email me.
