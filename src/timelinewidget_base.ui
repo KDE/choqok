@@ -115,9 +115,6 @@
       <attribute name="title" >
        <string>Home</string>
       </attribute>
-      <attribute name="toolTip" >
-       <string>Friends statuses</string>
-      </attribute>
       <layout class="QGridLayout" name="gridLayout" >
        <property name="margin" >
         <number>1</number>
@@ -125,7 +122,7 @@
        <property name="spacing" >
         <number>1</number>
        </property>
-       <item row="0" column="0" >
+       <item row="1" column="0" >
         <widget class="QScrollArea" name="homeScroll" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
@@ -147,8 +144,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>280</width>
-            <height>468</height>
+            <width>276</width>
+            <height>447</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5" >
@@ -182,14 +179,30 @@
          </widget>
         </widget>
        </item>
+       <item row="0" column="0" >
+        <widget class="QLabel" name="label" >
+         <property name="font" >
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text" >
+          <string>You and your friends</string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tabReply" >
       <attribute name="title" >
        <string>Reply</string>
-      </attribute>
-      <attribute name="toolTip" >
-       <string>Replies to your statuses</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2" >
        <property name="spacing" >
@@ -198,6 +211,25 @@
        <property name="margin" >
         <number>1</number>
        </property>
+       <item>
+        <widget class="QLabel" name="label_2" >
+         <property name="font" >
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text" >
+          <string>Replies to you</string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QScrollArea" name="replyScroll" >
          <property name="sizePolicy" >
@@ -217,8 +249,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>276</width>
-            <height>464</height>
+            <width>264</width>
+            <height>447</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout" >
@@ -258,9 +290,6 @@
       <attribute name="title" >
        <string>Inbox</string>
       </attribute>
-      <attribute name="toolTip" >
-       <string>Direct messages</string>
-      </attribute>
       <layout class="QGridLayout" name="gridLayout_3" >
        <property name="margin" >
         <number>1</number>
@@ -268,7 +297,7 @@
        <property name="spacing" >
         <number>1</number>
        </property>
-       <item row="0" column="0" >
+       <item row="1" column="0" >
         <widget class="QScrollArea" name="inboxScroll" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
@@ -290,8 +319,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>276</width>
-            <height>464</height>
+            <width>264</width>
+            <height>447</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6" >
@@ -325,14 +354,30 @@
          </widget>
         </widget>
        </item>
+       <item row="0" column="0" >
+        <widget class="QLabel" name="label_3" >
+         <property name="font" >
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text" >
+          <string>Your incoming private messages</string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tabOutbox" >
       <attribute name="title" >
        <string>Outbox</string>
-      </attribute>
-      <attribute name="toolTip" >
-       <string>Sent messages</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_4" >
        <property name="margin" >
@@ -341,7 +386,7 @@
        <property name="spacing" >
         <number>1</number>
        </property>
-       <item row="0" column="0" >
+       <item row="1" column="0" >
         <widget class="QScrollArea" name="outboxScroll" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
@@ -363,8 +408,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>276</width>
-            <height>464</height>
+            <width>264</width>
+            <height>447</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_7" >
@@ -396,6 +441,25 @@
            </item>
           </layout>
          </widget>
+        </widget>
+       </item>
+       <item row="0" column="0" >
+        <widget class="QLabel" name="label_4" >
+         <property name="font" >
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text" >
+          <string>Private messages you have sent</string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap" >
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
       </layout>
