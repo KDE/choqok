@@ -34,7 +34,7 @@
       </sizepolicy>
      </property>
      <property name="text" >
-      <string>Direct Message to</string>
+      <string>Direct message to</string>
      </property>
     </widget>
    </item>
@@ -249,7 +249,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>264</width>
+            <width>276</width>
             <height>447</height>
            </rect>
           </property>
@@ -319,7 +319,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>264</width>
+            <width>276</width>
             <height>447</height>
            </rect>
           </property>
@@ -408,7 +408,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>264</width>
+            <width>276</width>
             <height>447</height>
            </rect>
           </property>

@@ -93,8 +93,9 @@ bool AccountManager::removeAccount( const QString &alias )
             conf->sync();
             mAccounts.removeAt( i );
             if ( mWallet ) {
-                if ( mWallet->removeEntry( alias ) == 0 )
+                if ( mWallet->removeEntry( alias ) == 0 ) {
                     kDebug() << "Password successfully removed from kde wallet";
+                }
             }
             for ( int i = Backend::HomeTimeLine; i <= Backend::OutboxTimeLine; ++i ) {
                 QString tmpFile;
