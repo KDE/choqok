@@ -1,4 +1,18 @@
 
+=== Version 0.4 -- 12-Feb-2009 ===
+ * Support for all functionalities of “Direct Messages” implemented.
+ * support for recognizing link of Identi.ca’s Tags and Groups implemented.
+ * First run wizard.
+ * Ability to Enable/Disable Notifications and Updating time-lines via system tray context menu.
+ * Support for TightURL (a free url shortening service) implemented.
+ * Support for using secure connections (HTTPS) is Back, it was disabled because the Identi.ca server doesn’t support it before.
+ * The “Quick Tweet” widget will remember its size.
+ * A global shortcut (Meta+Ctrl+C) sets for Toggle mainwindow visibility.
+ * Result of posting new status with Quick Tweet, will effect on system tray Icon.
+ * Add “Mark All As Read” action to the File Menu. (Thanks to “Casey Link” for patch)
+ * An “in reply to” link added to sign of reply statuses, and @USER links points to user account (Instead of main notice/status)
+ * Bunch of known bugs fixed.
+
 === Version 0.3 -- 11-Jan-2009 ===
  * Support for Multiple Accounts implemented.
  * Support for Identi.ca service implemented. (Using its Twitter compatible API)
