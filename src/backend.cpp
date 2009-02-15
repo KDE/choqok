@@ -125,8 +125,12 @@ void Backend::requestTimeLine( uint latestStatusId, TimeLineType type, int page 
     else
         url.setUrl( mCurrentAccount->apiPath() + "/statuses/replies.xml" );
     setDefaultArgs( url );
-
-    url.setQuery( latestStatusId ? "?since_id=" + QString::number( latestStatusId ) : QString() );
+    if(latestStatusId) {
+        url.addQueryItem( "since_id", QString::number( latestStatusId ) );
+    }
+    if(page) {
+        url.addQueryItem( "page", QString::number( page ) );
+    }
     kDebug() << "Latest status Id: " << latestStatusId;
 
 
@@ -679,7 +683,12 @@ void Backend::requestDMessages( uint latestStatusId, DMessageType type, int page
     else
         url.setUrl( mCurrentAccount->apiPath() + "/direct_messages/sent.xml" );
     setDefaultArgs( url );
-    url.setQuery( latestStatusId ? "?since_id=" + QString::number( latestStatusId ) : QString() );
+    if(latestStatusId) {
+        url.addQueryItem( "since_id", QString::number( latestStatusId ) );
+    }
+    if(page) {
+        url.addQueryItem( "page", QString::number( page ) );
+    }
     kDebug() << "DMessage: Latest status Id: " << latestStatusId;
 
 
@@ -1098,7 +1107,7 @@ void Backend::slotRequestSingleStatusFinished( KJob* job )
         if ( st.isError ) {
             kDebug() << "Parsing Error";
         } else {
-            emit singleStatusReceived( mRequestSingleStatusMap[job], st);
+            emit singleStatusReceived( st );
             mRequestSingleStatusMap.remove(job);
         }
     }

@@ -68,7 +68,7 @@ protected slots:
     void requestDestroy();
     void updateSign();
     void userImageLocalPathFetched( const QString &remotePath, const QString &localPath );
-    void missingStatusReceived( uint statusId, Status status );
+    void missingStatusReceived( Status status );
 
 private:
     void setUserImage();

@@ -410,7 +410,7 @@ void StatusWidget::userImageLocalPathFetched( const QString &remotePath, const Q
     }
 }
 
-void StatusWidget::missingStatusReceived( uint statusId, Status status )
+void StatusWidget::missingStatusReceived( Status status )
 {
 //     if( statusId == mCurrentStatus.statusId ){
         mCurrentStatus = status;

@@ -147,9 +147,11 @@ void MainWindow::setupActions()
 void MainWindow::toggleMainWindowVisibility()
 {
     if ( this->isVisible() ) {
-        this->close();
+        position = this->pos();
+        this->hide();
         actionCollection()->action( "toggle_mainwin" )->setText( i18n( "&Restore" ) );
     } else {
+        this->move(position);
         this->show();
         actionCollection()->action( "toggle_mainwin" )->setText( i18n( "&Minimize" ) );
     }
@@ -258,7 +260,8 @@ bool MainWindow::queryClose()
 {
     kDebug();
     emit setUnreadStatusesToReadState();
-    return true;
+    toggleMainWindowVisibility();
+    return false;
 }
 
 void MainWindow::disableApp()

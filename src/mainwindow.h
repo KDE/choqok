@@ -103,6 +103,7 @@ private:
     QString currentUsername;// used for undresanding of username changes!
     int mPrevNotifyType;
     int mPrevUpdateInterval;
+    QPoint position;
 };
 
 #endif

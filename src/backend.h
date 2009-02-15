@@ -79,7 +79,7 @@ signals:
     void outboxMessagesReceived( QList<Status> &msgList );
     void followersListed( const QStringList &followersList );
     void friendsListed( const QStringList &friendsList );
-    void singleStatusReceived( uint statusId, Status status );
+    void singleStatusReceived( Status status );
 
 protected slots:
     void slotListFollowersScreenName( KJob *job );
