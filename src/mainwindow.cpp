@@ -148,6 +148,7 @@ void MainWindow::toggleMainWindowVisibility()
 {
     if ( this->isVisible() ) {
         position = this->pos();
+        emit setUnreadStatusesToReadState();
         this->hide();
         actionCollection()->action( "toggle_mainwin" )->setText( i18n( "&Restore" ) );
     } else {
@@ -259,7 +260,6 @@ void MainWindow::loadConfigurations()
 bool MainWindow::queryClose()
 {
     kDebug();
-    emit setUnreadStatusesToReadState();
     toggleMainWindowVisibility();
     return false;
 }
