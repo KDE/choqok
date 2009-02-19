@@ -3,75 +3,67 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
-  <kcfgfile/>
-  <group name="Preferences">
-    <entry name="systrayTriggerType" type="Enum">
-        <choices>
-            <value>MainWindow</value>
-            <value>QuickStatus</value>
-        </choices>
-    </entry>
-    <entry name="showIconsOnTimelineTabs" type="Bool">
-        <default>false</default>
-    </entry>
-    <entry name="shortenService" type="Enum">
-        <choices>
-            <value>None</value>
-            <value>TightURL</value>
-            <value>IS_GD</value>
-        </choices>
-        <default>1</default>
-    </entry>
-    <entry name="notifyType" type="Enum">
-      <choices>
-	      <value>None</value>
-	      <value>KNotify</value>
-	      <value>LibNotify</value>
-	  </choices>
-    </entry>
-    <entry name="showAllNotifiesInOne" type="Bool">
-    	<label>Show all new statuses in one Notify</label>
-    	<default>false</default>
-    </entry>
-    <entry name="updateInterval" type="Int">
-	    <label>Update interval</label>
-	    <default>10</default>
-    </entry>
-    <entry name="countOfStatusesOnMain" type="Int">
-	    <default>20</default>
-    </entry>
-    <entry name="notifyInterval" type="Int">
-	    <label>Update interval</label>
-	    <default>10</default>
-    </entry>
-    <entry name="isSmilysEnabled" type="Bool">
-	    <default>true</default>
-    </entry>
-    <entry name="useSecureConnection" type="Bool">
-	    <default>false</default>
-    </entry>
-    <entry name="showMainWinOnStart" type="Bool">
-	    <default>true</default>
-    </entry>
-    <entry name="quickTweetSize" type="Size">
-        <default>QSize(280,140)</default>
-    </entry>
-  </group>
-  <group name="Appearances">
-    <entry name="isCustomUi" type="Bool">
-	    <default>false</default>
-    </entry>
-    <entry name="defaultBackColor" type="Color">
-        <default>white</default>
-    </entry>
-    <entry name="newStatusBackColor" type="Color">
-        <default>yellow</default>
-    </entry>
-    <entry name="defaultForeColor" type="Color">
-        <default>Black</default>
-    </entry>
-    <entry name="newStatusForeColor" type="Color">
-        <default>Black</default>
-    </entry>
-  </group>
+    <include>"settingsbase.h"</include>
+<kcfgfile/>
+    <group name="Preferences">
+        <entry name="systrayTriggerType" type="Enum">
+            <choices name="SettingsBase::SysTrayTriggerType" />
+            <default>SettingsBase::MainWin</default>
+        </entry>
+        <entry name="showIconsOnTimelineTabs" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="shortenService" type="Enum">
+            <choices name="SettingsBase::ShortenService" />
+            <default>SettingsBase::TightURL</default>
+        </entry>
+        <entry name="notifyType" type="Enum">
+            <choices name="SettingsBase::NotifyType" />
+            <default>SettingsBase::KNotify</default>
+        </entry>
+        <entry name="showAllNotifiesInOne" type="Bool">
+            <label>Show all new statuses in one Notify</label>
+            <default>false</default>
+        </entry>
+        <entry name="updateInterval" type="Int">
+            <label>Update interval</label>
+            <default>10</default>
+        </entry>
+        <entry name="countOfStatusesOnMain" type="Int">
+            <default>20</default>
+        </entry>
+        <entry name="notifyInterval" type="Int">
+            <label>Update interval</label>
+            <default>10</default>
+        </entry>
+        <entry name="isSmilysEnabled" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="useSecureConnection" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="showMainWinOnStart" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="quickTweetSize" type="Size">
+            <default>QSize(280,140)</default>
+        </entry>
+    </group>
+    <group name="Appearances">
+        <entry name="isCustomUi" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="defaultBackColor" type="Color">
+            <default>white</default>
+        </entry>
+        <entry name="newStatusBackColor" type="Color">
+            <default>yellow</default>
+        </entry>
+        <entry name="defaultForeColor" type="Color">
+            <default>Black</default>
+        </entry>
+        <entry name="newStatusForeColor" type="Color">
+            <default>Black</default>
+        </entry>
+    </group>
 </kcfg>

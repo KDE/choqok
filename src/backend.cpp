@@ -513,7 +513,7 @@ QString Backend::prepareStatus( QString status )
         if ( k == -1 )
             k = status.length();
         QString baseUrl = status.mid( j, k - j );
-        if ( baseUrl.count() > 30 && Settings::shortenService() > 0 ) {
+        if ( baseUrl.count() > 30 && Settings::shortenService() != SettingsBase::NoShorten ) {
             t += shortenUrl(baseUrl);
         } else {
             t += baseUrl;
@@ -1117,7 +1117,7 @@ QString Backend::shortenUrl(const QString &baseUrl)
 {
     QMap<QString, QString> metaData;
     QByteArray data;
-    if(Settings::shortenService() == 1){
+    if(Settings::shortenService() == SettingsBase::TightURL){
         kDebug()<<"Using 2tu.us";
         KUrl url( "http://2tu.us/" );
         url.addQueryItem( "save", "y" );
@@ -1141,7 +1141,7 @@ QString Backend::shortenUrl(const QString &baseUrl)
         } else {
             kDebug() << "Cannot create a shorten url.\t" << "KJob ERROR";
         }
-    } else if(Settings::shortenService() == 2) {
+    } else if(Settings::shortenService() == SettingsBase::IS_GD) {
         kDebug()<<"Using is.gd";
         KUrl url( "http://is.gd/api.php" );
         url.addQueryItem( "longurl", KUrl( baseUrl ).url() );

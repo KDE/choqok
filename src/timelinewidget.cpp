@@ -273,7 +273,7 @@ void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayou
     QList<Status>::const_iterator it = statusList.constBegin();
     QList<Status>::const_iterator endIt = statusList.constEnd();
     bool isThereIsAnyNewStatusToNotify = false;
-    if ( allInOne && Settings::notifyType() != 2 )
+    if ( allInOne && Settings::notifyType() != SettingsBase::LibNotify )
         notifyStr = ( mCurrentAccount.direction() == Qt::RightToLeft ) ? "<div dir='rtl'>" : "<div dir='ltr'>";
     for ( ;it != endIt; ++it ) {
         if ( it->replyToUserId == mCurrentAccount.userId() && type == Backend::HomeTimeLine ) {
@@ -314,7 +314,7 @@ void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayou
             listUnreadStatuses.append( wt );
         }
     }
-    if ( allInOne && Settings::notifyType() != 2 )
+    if ( allInOne && Settings::notifyType() != SettingsBase::LibNotify )
         notifyStr += "</div>";
     uint latestId = statusList.last().statusId;
     if ( type == Backend::HomeTimeLine && latestId > latestHomeStatusId ) {
@@ -671,13 +671,13 @@ void TimeLineWidget::friendsListed( const QStringList & list )
 
 void TimeLineWidget::showNotify( const QString &title, const QString &message )
 {
-    if ( Settings::notifyType() == 1 ) {//KNotify
+    if ( Settings::notifyType() == SettingsBase::KNotify ) {//KNotify
         KNotification *notif = new KNotification( "new-status-arrived", parentWidget() );
         notif->setText( message );
         notif->setFlags( KNotification::RaiseWidgetOnActivation | KNotification::Persistent );
         notif->sendEvent();
         QTimer::singleShot( Settings::notifyInterval()*1000, notif, SLOT( close() ) );
-    } else if ( Settings::notifyType() == 2 ) {//Libnotify!
+    } else if ( Settings::notifyType() == SettingsBase::LibNotify ) {//Libnotify!
         QString msg = message;
         msg = msg.replace( "<br/>", "\n" );
         QString libnotifyCmd = QString( "notify-send -t " ) + QString::number( Settings::notifyInterval() * 1000 )

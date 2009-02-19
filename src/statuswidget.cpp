@@ -323,7 +323,7 @@ void StatusWidget::setUnread( Notify notifyType )
         QString iconUrl = MediaManager::self()->getImageLocalPathIfExist( mCurrentStatus.user.profileImageUrl );
         QString name = mCurrentStatus.user.screenName;
         QString msg = mCurrentStatus.content;
-        if ( Settings::notifyType() == 1 ) {
+        if ( Settings::notifyType() == SettingsBase::KNotify ) {
             KNotification *notify = new KNotification( "new-status-arrived", parentWidget() );
             notify->setText( QString( "<qt><b>" + name + ":</b><br/>" + msg + "</qt>" ) );
             notify->setPixmap( QPixmap( iconUrl ) );
@@ -332,7 +332,7 @@ void StatusWidget::setUnread( Notify notifyType )
             connect( notify, SIGNAL( action1Activated() ), this , SLOT( requestReply() ) );
             notify->sendEvent();
             QTimer::singleShot( Settings::notifyInterval()*1000, notify, SLOT( close() ) );
-        } else if ( Settings::notifyType() == 2 ) {
+        } else if ( Settings::notifyType() == SettingsBase::LibNotify ) {
             QString libnotifyCmd = QString( "notify-send -t " ) + QString::number( Settings::notifyInterval() * 1000 )
             + QString( " -u low -i " + iconUrl + " \"" ) + name + QString( "\" \"" ) + msg + QString( "\"" );
             QProcess::execute( libnotifyCmd );

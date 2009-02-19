@@ -2,3 +2,4 @@ File=choqok.kcfg
 ClassName=Settings
 Singleton=true
 Mutators=quickTweetSize,notifyType,updateInterval
+UseEnumTypes=true

@@ -114,10 +114,10 @@ void SysTrayIcon::sysTrayActivated( QSystemTrayIcon::ActivationReason reason )
 {
     if ( reason == QSystemTrayIcon::Trigger ) {
         switch ( Settings::systrayTriggerType() ) {
-        case 0:
+        case SettingsBase::MainWin:
             mainWin->toggleMainWindowVisibility();
             break;
-        case 1:
+        case SettingsBase::Quick:
             postQuickTwit();
             break;
         };
@@ -187,7 +187,7 @@ void SysTrayIcon::slotSetUnread( int numOfUnreadStatuses )
 
 void SysTrayIcon::systemNotify( const QString &title, const QString &message, const QString &iconUrl )
 {
-    if ( Settings::notifyType() == 1 ) {//KNotify
+    if ( Settings::notifyType() == SettingsBase::KNotify ) {//KNotify
         KNotification *notif = new KNotification( "notify", mainWin );
         notif->setText( message );
 //         notify->setPixmap(mainWin-);
@@ -195,7 +195,7 @@ void SysTrayIcon::systemNotify( const QString &title, const QString &message, co
         notif->sendEvent();
         QTimer::singleShot( Settings::notifyInterval()*1000, notif, SLOT( close() ) );
 
-    } else if ( Settings::notifyType() == 2 ) {//Libnotify!
+    } else if ( Settings::notifyType() == SettingsBase::LibNotify ) {//Libnotify!
         QString msg = message;
         msg = msg.replace( "<br/>", "\n" );
         QString libnotifyCmd = QString( "notify-send -t " ) +

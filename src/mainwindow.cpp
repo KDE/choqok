@@ -62,7 +62,7 @@ MainWindow::MainWindow()
     timelineTimer = new QTimer( this );
 //     timelineTimer->setInterval ( Settings::updateInterval() *60000 );
 //     timelineTimer->start();
-    if ( Settings::notifyType() == 0 )
+    if ( Settings::notifyType() == SettingsBase::NoNotify )
         mPrevNotifyType = 1;
     else
         mPrevNotifyType = Settings::notifyType();
@@ -204,7 +204,7 @@ least one account on <a href='http://identi.ca'>Identi.ca</a> or \
     for ( int i = 0; i < count; ++i ) {
         qobject_cast<TimeLineWidget *>( mainWidget->widget( i ) )->settingsChanged();
     }
-    if ( Settings::notifyType() == 0 ) {
+    if ( Settings::notifyType() == SettingsBase::NoNotify ) {
         actionCollection()->action( "choqok_enable_notify" )->setChecked( false );
     } else {
         actionCollection()->action( "choqok_enable_notify" )->setChecked( true );
@@ -387,10 +387,10 @@ void MainWindow::setNotificationsEnabled( bool isEnabled )
 {
     kDebug();
     if ( isEnabled ) {
-        Settings::setNotifyType( mPrevNotifyType );
+        Settings::setNotifyType( (SettingsBase::NotifyType) mPrevNotifyType );
     } else {
         mPrevNotifyType = Settings::notifyType();
-        Settings::setNotifyType( 0 );
+        Settings::setNotifyType( SettingsBase::NoNotify );
     }
 }
 
