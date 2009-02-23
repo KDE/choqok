@@ -25,6 +25,9 @@
 #include <QKeyEvent>
 #include <KDE/KLocale>
 
+#include "backend.h"
+#include <settings.h>
+
 StatusTextEdit::StatusTextEdit( QWidget *parent )
         : KTextEdit( parent )
 {
@@ -62,6 +65,14 @@ void StatusTextEdit::keyPressEvent( QKeyEvent * e )
     } else {
         KTextEdit::keyPressEvent( e );
     }
+}
+
+void StatusTextEdit::insertFromMimeData ( const QMimeData *source )
+{
+    if( Settings::shortenOnPaste() )
+        KTextEdit::insertPlainText( Backend::prepareStatus( source->text() ) );
+    else
+        KTextEdit::insertPlainText( source->text() );
 }
 
 void StatusTextEdit::setDefaultDirection( Qt::LayoutDirection dir )

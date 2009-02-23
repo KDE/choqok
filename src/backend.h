@@ -53,6 +53,9 @@ public:
     QDateTime dateFromString( const QString &date );
     QString& latestErrorString();
 
+    static QString prepareStatus( QString status );
+    static QString shortenUrl(const QString &baseUrl);
+
 public slots:
     void postNewStatus( const QString &statusMessage, uint replyToStatusId = 0 );
     void sendDMessage( const QString &screenName, const QString &message );
@@ -102,12 +105,10 @@ private:
     QList<Status> * readDMessagesFromXml( const QByteArray &buffer );
     Status readStatusFromXml( const QByteArray &buffer );
     Status readDMessageFromXml( const QByteArray &buffer );
-    QString prepareStatus( QString status );
     void setDefaultArgs( KUrl &url );
     void requestCurrentUser();
     void requestFollowers( int page = 1 );
     void requestFriends( int page = 1 );
-    QString shortenUrl(const QString &baseUrl);
 
     QString mLatestErrorString;
     QMap<KJob *, TimeLineType> mRequestTimelineMap;

@@ -45,6 +45,7 @@ public slots:
 
 protected:
     virtual void keyPressEvent( QKeyEvent *e );
+    virtual void insertFromMimeData ( const QMimeData *source );
 
 signals:
     void returnPressed( QString &txt );
