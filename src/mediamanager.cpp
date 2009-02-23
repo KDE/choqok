@@ -99,7 +99,8 @@ void MediaManager::slotImageFetched( KJob * job )
 //     kDebug();
     KIO::FileCopyJob *baseJob = qobject_cast<KIO::FileCopyJob *>( job );
     if ( job->error() ) {
-        kDebug() << "Job error!" << job->error() << "\t" << job->errorString();
+        kDebug() << "Job error!" << job->error() << "\t" << job->errorString() <<
+        "ImagePath: "<<baseJob->srcUrl().pathOrUrl();
         QString errMsg = i18n( "Cannot download user image from %1. The returned result is: %2",
                                job->errorString(), baseJob->srcUrl().pathOrUrl() );
         emit sigError( errMsg );

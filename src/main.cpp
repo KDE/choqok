@@ -22,7 +22,8 @@
 
 */
 
-#include "systrayicon.h"
+#include "mainwindow.h"
+#include "settings.h"
 #include "constants.h"
 #include <kuniqueapplication.h>
 #include <kaboutdata.h>
@@ -51,11 +52,8 @@ int main( int argc, char **argv )
 //     KCmdLineArgs::addCmdLineOptions(options);
     KUniqueApplication app;
 
-    if ( KSystemTrayIcon::isSystemTrayAvailable() ) {
-        SysTrayIcon *sysIcon = new SysTrayIcon;
-        sysIcon->show();
-    } else {
-        MainWindow *mainWin = new MainWindow;
+    MainWindow *mainWin = new MainWindow;
+    if ( Settings::showMainWinOnStart() ) {
         mainWin->show();
     }
 

@@ -25,8 +25,8 @@
 #define SYSTRAYICON_H
 
 #include <ksystemtrayicon.h>
-#include "mainwindow.h"
-#include "quicktwit.h"
+// #include "mainwindow.h"
+// #include "quicktwit.h"
 
 /**
 System tray icon!
@@ -41,25 +41,11 @@ public:
 
     ~SysTrayIcon();
 public slots:
-    void quitApp();
-    void postQuickTwit();
-//  void toggleMainWindowVisibility();
-    void sysTrayActivated( QSystemTrayIcon::ActivationReason reason );
-    void systemNotify( const QString &title, const QString &message, const QString &iconUrl );
-
-protected slots:
-    void slotSetUnread( int numOfUnreadStatuses );
-
-private slots:
     void setTimeLineUpdatesEnabled( bool isEnabled );
     void slotStatusUpdated( bool isError );
     void slotRestoreIcon();
-
+    void slotSetUnread( int numOfUnreadStatuses );
 private:
-    void setupActions();
-
-    MainWindow *mainWin;
-    QuickTwit *quickWidget;
     int unread;
 
     QPixmap m_defaultIcon;

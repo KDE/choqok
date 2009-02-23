@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>450</width>
-    <height>260</height>
+    <width>461</width>
+    <height>232</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout_3" >
@@ -59,48 +59,6 @@ p, li { white-space: pre-wrap; }
          <item>
           <layout class="QGridLayout" name="gridLayout_2" >
            <item row="0" column="0" >
-            <widget class="QLabel" name="label_2" >
-             <property name="toolTip" >
-              <string>Set behavior of system tray icon clicking option</string>
-             </property>
-             <property name="text" >
-              <string>System &amp;tray Icon behavior :</string>
-             </property>
-             <property name="alignment" >
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="buddy" >
-              <cstring>kcfg_systrayTriggerType</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1" >
-            <widget class="KComboBox" name="kcfg_systrayTriggerType" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="toolTip" >
-              <string>Set behavior of system tray icon clicking option</string>
-             </property>
-             <property name="sizeAdjustPolicy" >
-              <enum>QComboBox::AdjustToMinimumContentsLength</enum>
-             </property>
-             <item>
-              <property name="text" >
-               <string>Toggle Mainwindow</string>
-              </property>
-             </item>
-             <item>
-              <property name="text" >
-               <string>Quick Twitting</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="1" column="0" >
             <widget class="QLabel" name="label" >
              <property name="text" >
               <string>&amp;Update timeline interval :</string>
@@ -113,7 +71,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="1" column="1" >
+           <item row="0" column="1" >
             <widget class="KIntSpinBox" name="kcfg_updateInterval" >
              <property name="specialValueText" >
               <string>Disabled</string>
@@ -129,7 +87,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="2" column="1" >
+           <item row="1" column="1" >
             <widget class="KIntSpinBox" name="kcfg_countOfStatusesOnMain" >
              <property name="minimum" >
               <number>1</number>
@@ -142,7 +100,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="3" column="0" >
+           <item row="2" column="0" >
             <widget class="QLabel" name="label_6" >
              <property name="text" >
               <string>URL auto-shortening service :</string>
@@ -152,7 +110,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="3" column="1" >
+           <item row="2" column="1" >
             <widget class="KComboBox" name="kcfg_shortenService" >
              <property name="sizePolicy" >
               <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
@@ -180,7 +138,7 @@ p, li { white-space: pre-wrap; }
              </item>
             </widget>
            </item>
-           <item row="2" column="0" >
+           <item row="1" column="0" >
             <widget class="QLabel" name="label_5" >
              <property name="sizePolicy" >
               <sizepolicy vsizetype="Preferred" hsizetype="MinimumExpanding" >
@@ -346,7 +304,6 @@ p, li { white-space: pre-wrap; }
  <tabstops>
   <tabstop>kcfg_showMainWinOnStart</tabstop>
   <tabstop>kcfg_useSecureConnection</tabstop>
-  <tabstop>kcfg_systrayTriggerType</tabstop>
   <tabstop>kcfg_updateInterval</tabstop>
   <tabstop>kcfg_countOfStatusesOnMain</tabstop>
   <tabstop>kcfg_notifyType</tabstop>

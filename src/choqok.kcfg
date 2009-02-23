@@ -6,10 +6,6 @@
     <include>"settingsbase.h"</include>
 <kcfgfile/>
     <group name="Preferences">
-        <entry name="systrayTriggerType" type="Enum">
-            <choices name="SettingsBase::SysTrayTriggerType" />
-            <default>SettingsBase::MainWin</default>
-        </entry>
         <entry name="showIconsOnTimelineTabs" type="Bool">
             <default>false</default>
         </entry>

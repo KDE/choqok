@@ -26,102 +26,29 @@
 #include "settings.h"
 #include <kaction.h>
 #include <kactioncollection.h>
-#include <QMenu>
+#include <KDE/KLocale>
 #include <QPainter>
 #include <KColorScheme>
 #include <QProcess>
 #include <KNotification>
 #include <QTimer>
 #include "accountmanager.h"
+#include <kglobalsettings.h>
 
 SysTrayIcon::SysTrayIcon( QWidget* parent ): KSystemTrayIcon( parent )
 {
     kDebug();
     unread = 0;
-    mainWin = new MainWindow;
 
     m_defaultIcon = parentWidget()->windowIcon().pixmap( 22 );;
 
-//  setIcon(m_defaultIcon);
-
-    if ( Settings::showMainWinOnStart() ) {
-        mainWin->show();
-    }
     isIconChanged = false;
-    quickWidget = new QuickTwit( mainWin );
-    setupActions();
-
-    connect( this, SIGNAL( activated( QSystemTrayIcon::ActivationReason ) ),
-             this, SLOT( sysTrayActivated( QSystemTrayIcon::ActivationReason ) ) );
-
-//  connect(mainWin, SIGNAL(sigStatusUpdated(bool)), this, SLOT(slotStatusUpdated(bool)));
-
-    connect( mainWin, SIGNAL( sigSetUnread( int ) ), this, SLOT( slotSetUnread( int ) ) );
-
-    connect( mainWin, SIGNAL( systemNotify( const QString&, const QString&, const QString& ) ),
-             this, SLOT( systemNotify( const QString&, const QString&, const QString& ) ) );
-
-    connect( quickWidget, SIGNAL( sigNotify( const QString&, const  QString&, const  QString& ) ),
-             this, SLOT( systemNotify( const QString&, const QString&, const QString& ) ) );
-    connect( quickWidget, SIGNAL( sigStatusUpdated( bool ) ), this, SLOT( slotStatusUpdated( bool ) ) );
-
-    connect( qApp, SIGNAL( aboutToQuit() ), this, SLOT( quitApp() ) );
 }
 
 SysTrayIcon::~SysTrayIcon()
 {
     kDebug();
     AccountManager::self()->deleteLater();
-}
-
-void SysTrayIcon::setupActions()
-{
-
-    QAction *newTwit = mainWin->actionCollection()->action( "choqok_new_twit" );
-    connect( newTwit, SIGNAL( triggered( bool ) ), this, SLOT( postQuickTwit() ) );
-    this->contextMenu()->addAction( newTwit );
-
-    contextMenu()->addAction( mainWin->actionCollection()->action( "update_timeline" ) );
-    contextMenu()->addSeparator();
-
-    QAction *enableUpdates = mainWin->actionCollection()->action( "choqok_enable_updates" );
-    connect( enableUpdates, SIGNAL( toggled( bool ) ), this, SLOT( setTimeLineUpdatesEnabled( bool ) ) );
-    contextMenu()->addAction( enableUpdates );
-    setTimeLineUpdatesEnabled( enableUpdates->isChecked() );
-
-    contextMenu()->addAction( mainWin->actionCollection()->action( "choqok_enable_notify" ) );
-    contextMenu()->addSeparator();
-    contextMenu()->addAction( mainWin->actionCollection()->action( "toggle_mainwin" ) );
-}
-
-void SysTrayIcon::quitApp()
-{
-    kDebug();
-//  qApp->quit();
-    deleteLater();
-}
-
-void SysTrayIcon::postQuickTwit()
-{
-    if ( quickWidget->isVisible() ) {
-        quickWidget->hide();
-    } else {
-        quickWidget->showFocusedOnNewStatusField();
-    }
-}
-
-void SysTrayIcon::sysTrayActivated( QSystemTrayIcon::ActivationReason reason )
-{
-    if ( reason == QSystemTrayIcon::Trigger ) {
-        switch ( Settings::systrayTriggerType() ) {
-        case SettingsBase::MainWin:
-            mainWin->toggleMainWindowVisibility();
-            break;
-        case SettingsBase::Quick:
-            postQuickTwit();
-            break;
-        };
-    }
 }
 
 void SysTrayIcon::slotSetUnread( int numOfUnreadStatuses )
@@ -182,27 +109,6 @@ void SysTrayIcon::slotSetUnread( int numOfUnreadStatuses )
 
         setIcon( QPixmap::fromImage( overlayImg ) );
         isBaseIconChanged = true;
-    }
-}
-
-void SysTrayIcon::systemNotify( const QString &title, const QString &message, const QString &iconUrl )
-{
-    if ( Settings::notifyType() == SettingsBase::KNotify ) {//KNotify
-        KNotification *notif = new KNotification( "notify", mainWin );
-        notif->setText( message );
-//         notify->setPixmap(mainWin-);
-        notif->setFlags( KNotification::RaiseWidgetOnActivation | KNotification::Persistent );
-        notif->sendEvent();
-        QTimer::singleShot( Settings::notifyInterval()*1000, notif, SLOT( close() ) );
-
-    } else if ( Settings::notifyType() == SettingsBase::LibNotify ) {//Libnotify!
-        QString msg = message;
-        msg = msg.replace( "<br/>", "\n" );
-        QString libnotifyCmd = QString( "notify-send -t " ) +
-                               QString::number( Settings::notifyInterval() * 1000 ) +
-                               QString( " -u low -i " + iconUrl + " \"" ) + title +
-                               QString( "\" \"" ) + msg + QString( "\"" );
-        QProcess::execute( libnotifyCmd );
     }
 }
 

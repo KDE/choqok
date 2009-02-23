@@ -29,7 +29,7 @@ class SettingsBase
 {
     public:
         enum ShortenService{ NoShorten, TightURL, IS_GD };
-        enum SysTrayTriggerType{ MainWin, Quick };
+//         enum SysTrayTriggerType{ MainWin, Quick };
         enum NotifyType{ NoNotify, KNotify, LibNotify };
 };
 

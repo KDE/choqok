@@ -38,28 +38,36 @@
 #include <QTimer>
 #include <QKeyEvent>
 #include <QScrollBar>
+#include <QProcess>
+#include <QMenu>
+#include <KNotification>
 
 #include "constants.h"
 #include "accounts.h"
 #include "accountmanager.h"
 #include "accountswizard.h"
+#include "systrayicon.h"
+#include "quicktwit.h"
 
 MainWindow::MainWindow()
-        : KXmlGuiWindow()
+    : KXmlGuiWindow()
 {
     kDebug();
+    quickWidget = 0;
+    timelineTimer = new QTimer( this );
 
     this->setAttribute( Qt::WA_DeleteOnClose, false );
 
     mainWidget = new KTabWidget( this );
 
     setCentralWidget( mainWidget );
+    sysIcon = new SysTrayIcon(this);
+//     setupQuickTweet();
     setupActions();
     statusBar()->show();
     notify( i18n( "Initializing choqoK, please be patient..." ) );
     setupGUI();
 
-    timelineTimer = new QTimer( this );
 //     timelineTimer->setInterval ( Settings::updateInterval() *60000 );
 //     timelineTimer->start();
     if ( Settings::notifyType() == SettingsBase::NoNotify )
@@ -89,7 +97,7 @@ void MainWindow::setupActions()
 {
     KStandardAction::quit( qApp, SLOT( quit() ), actionCollection() );
     connect( qApp, SIGNAL( aboutToQuit() ), this, SLOT( quitApp() ) );
-    KStandardAction::preferences( this, SLOT( optionsPreferences() ), actionCollection() );
+    KAction *prefs = KStandardAction::preferences( this, SLOT( optionsPreferences() ), actionCollection() );
 
     KAction *actUpdate = new KAction( KIcon( "view-refresh" ), i18n( "Update timelines" ), this );
     actionCollection()->addAction( QLatin1String( "update_timeline" ), actUpdate );
@@ -105,8 +113,8 @@ void MainWindow::setupActions()
     newTwit->setShortcut( KShortcut( Qt::CTRL | Qt::Key_T ) );
     newTwit->setGlobalShortcutAllowed( true );
     KShortcut quickTwitGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_T );
-//     quickTwitGlobalShortcut.setAlternate ( Qt::MetaModifier | Qt::Key_T );
     newTwit->setGlobalShortcut( quickTwitGlobalShortcut );
+    connect( newTwit, SIGNAL( triggered(bool) ), this, SLOT( postQuickTwit() ) );
 
     KAction *markRead = new KAction( KIcon( "mail-mark-read" ), i18n( "Mark All As Read" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_mark_read" ), markRead );
@@ -116,15 +124,11 @@ void MainWindow::setupActions()
 
     KAction *showMain = new KAction( this );
     actionCollection()->addAction( QLatin1String( "toggle_mainwin" ), showMain );
-//     showMain->setShortcut( KShortcut( Qt::CTRL + Qt::Key_C ) );
     KShortcut toggleMainGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_C );
     showMain->setGlobalShortcutAllowed( true );
     showMain->setGlobalShortcut( toggleMainGlobalShortcut/*, KAction::DefaultShortcut, KAction::NoAutoloading*/ );
-    if ( this->isVisible() )
-        showMain->setText( i18n( "Minimize" ) );
-    else
-        showMain->setText( i18n( "Restore" ) );
-    connect( showMain, SIGNAL( triggered( bool ) ), this, SLOT( toggleMainWindowVisibility() ) );
+    showMain->setText( i18n( "Minimize" ) );
+    connect( showMain, SIGNAL( triggered( bool ) ), this, SLOT( hide() ) );
 
     KAction *enableUpdates = new KAction( i18n( "Enable update timer" ), this );
     enableUpdates->setCheckable( true );
@@ -132,9 +136,6 @@ void MainWindow::setupActions()
     enableUpdates->setShortcut( KShortcut( Qt::CTRL | Qt::Key_U ) );
     enableUpdates->setGlobalShortcutAllowed( true );
     connect( enableUpdates, SIGNAL( toggled( bool ) ), this, SLOT( setTimeLineUpdatesEnabled( bool ) ) );
-//     KShortcut quickTwitGlobalShortcut ( Qt::CTRL | Qt::META | Qt::Key_T );
-//     quickTwitGlobalShortcut.setAlternate ( Qt::MetaModifier | Qt::Key_T );
-//     newTwit->setGlobalShortcut ( quickTwitGlobalShortcut );
 
     KAction *enableNotify = new KAction( i18n( "Enable notifications" ), this );
     enableNotify->setCheckable( true );
@@ -142,20 +143,66 @@ void MainWindow::setupActions()
     enableNotify->setShortcut( KShortcut( Qt::CTRL | Qt::Key_N ) );
     enableNotify->setGlobalShortcutAllowed( true );
     connect( enableNotify, SIGNAL( toggled( bool ) ), this, SLOT( setNotificationsEnabled( bool ) ) );
+
+    ///SysTray Actions:
+    sysIcon->contextMenu()->addAction( newTwit );
+
+    sysIcon->contextMenu()->addAction( actUpdate );
+    sysIcon->contextMenu()->addSeparator();
+
+    connect( enableUpdates, SIGNAL( toggled( bool ) ), sysIcon, SLOT( setTimeLineUpdatesEnabled( bool ) ) );
+    sysIcon->contextMenu()->addAction( enableUpdates );
+    sysIcon->setTimeLineUpdatesEnabled( enableUpdates->isChecked() );
+    sysIcon->show();
+
+    sysIcon->contextMenu()->addAction( enableNotify );
+    sysIcon->contextMenu()->addAction( prefs );
 }
 
-void MainWindow::toggleMainWindowVisibility()
+void MainWindow::setupQuickTweet()
 {
-    if ( this->isVisible() ) {
-        position = this->pos();
-        emit setUnreadStatusesToReadState();
-        this->hide();
-        actionCollection()->action( "toggle_mainwin" )->setText( i18n( "&Restore" ) );
+    quickWidget = new QuickTwit( this );
+    connect( quickWidget, SIGNAL( sigNotify( const QString&, const  QString&, const  QString& ) ),
+             this, SLOT( systemNotify( const QString&, const QString&, const QString& ) ) );
+    connect( quickWidget, SIGNAL( sigStatusUpdated( bool ) ), sysIcon, SLOT( slotStatusUpdated( bool ) ) );
+}
+
+void MainWindow::postQuickTwit()
+{
+    if(!quickWidget)
+        setupQuickTweet();
+    if ( quickWidget->isVisible() ) {
+        quickWidget->hide();
     } else {
-        this->move(position);
-        this->show();
-        actionCollection()->action( "toggle_mainwin" )->setText( i18n( "&Minimize" ) );
+        quickWidget->showFocusedOnNewStatusField();
     }
+}
+
+void MainWindow::systemNotify( const QString &title, const QString &message, const QString &iconUrl )
+{
+    if ( Settings::notifyType() == SettingsBase::KNotify ) {//KNotify
+        KNotification *notif = new KNotification( "notify", this );
+        notif->setText( message );
+        //         notify->setPixmap(mainWin-);
+        notif->setFlags( KNotification::RaiseWidgetOnActivation | KNotification::Persistent );
+        notif->sendEvent();
+        QTimer::singleShot( Settings::notifyInterval()*1000, notif, SLOT( close() ) );
+
+    } else if ( Settings::notifyType() == SettingsBase::LibNotify ) {//Libnotify!
+        QString msg = message;
+        msg = msg.replace( "<br/>", "\n" );
+        QString libnotifyCmd = QString( "notify-send -t " ) +
+        QString::number( Settings::notifyInterval() * 1000 ) +
+        QString( " -u low -i " + iconUrl + " \"" ) + title +
+        QString( "\" \"" ) + msg + QString( "\"" );
+        QProcess::execute( libnotifyCmd );
+    }
+}
+
+void MainWindow::hideEvent( QHideEvent * event )
+{
+    Q_UNUSED(event);
+    emit setUnreadStatusesToReadState();
 }
 
 void MainWindow::optionsPreferences()
@@ -229,21 +276,6 @@ void MainWindow::notify( const QString &message, bool isPermanent )
     }
 }
 
-// void MainWindow::keyPressEvent ( QKeyEvent * e )
-// {
-// //     if ( e->key() == Qt::Key_Escape ) {
-// // //     if(txtNewStatus->isEnabled()){
-// // //       this->hide();
-// // //     } else {
-// // //       txtNewStatus->setEnabled(true);
-// // //       twitter->abortPostNewStatus();
-// //         ///TODO ^ Current visible TimelineWidget abort!
-// // //     }
-// //     } else {
-//         KXmlGuiWindow::keyPressEvent ( e );
-// //     }
-// }
-
 void MainWindow::quitApp()
 {
     kDebug();
@@ -259,8 +291,7 @@ void MainWindow::loadConfigurations()
 
 bool MainWindow::queryClose()
 {
-    kDebug();
-    toggleMainWindowVisibility();
+    hide();
     return false;
 }
 
@@ -292,9 +323,9 @@ void MainWindow::addAccountTimeLine( const Account & account, bool isStartup )
     TimeLineWidget *widget = new TimeLineWidget( account, this );
     widget->layout()->setContentsMargins( 0, 0, 0, 0 );
 
-    connect( widget, SIGNAL( sigSetUnread( int ) ), this, SIGNAL( sigSetUnread( int ) ) );
+    connect( widget, SIGNAL( sigSetUnread( int ) ), sysIcon, SLOT( slotSetUnread( int ) ) );
     connect( widget, SIGNAL( systemNotify( const QString&, const QString&, const QString& ) ),
-             this, SIGNAL( systemNotify( const QString&, const QString&, const QString& ) ) );
+             this, SLOT( systemNotify( const QString&, const QString&, const QString& ) ) );
     connect( widget, SIGNAL( notify( const QString&, bool ) ), this, SLOT( notify( const QString&, bool ) ) );
     connect( widget, SIGNAL( showMe() ), this, SLOT( showTimeLine() ) );
 //     connect(widget, SIGNAL(sigStatusUpdated(bool)), this, SIGNAL(sigStatusUpdated(bool)));

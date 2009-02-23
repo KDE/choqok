@@ -185,8 +185,8 @@ QString StatusWidget::prepareStatus( const QString &text )
 {
     if(text.isEmpty() && mCurrentAccount->serviceType() == Account::Identica){
         Backend *b = new Backend(new Account(*mCurrentAccount), this);
-        connect(b, SIGNAL(singleStatusReceived( uint, Status )),
-                 this, SLOT(missingStatusReceived( uint, Status )));
+        connect(b, SIGNAL(singleStatusReceived( Status )),
+                 this, SLOT(missingStatusReceived( Status )));
         b->requestSingleStatus(mCurrentStatus.statusId);
         return text;
     }

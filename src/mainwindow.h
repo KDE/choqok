@@ -34,7 +34,8 @@
 #define TIMEOUT 5000
 
 class QTimer;
-
+class QuickTwit;
+class SysTrayIcon;
 class KTabWidget;
 
 /**
@@ -60,14 +61,14 @@ public:
     virtual ~MainWindow();
 
 signals:
-    void systemNotify( const QString &title, const QString &message, const QString &iconUrl );
     void updateTimeLines();
-    void sigSetUnread( int unread );
+//     void sigSetUnread( int unread );
     void abortPostNewStatus();
     void setUnreadStatusesToReadState();
 
 public slots:
-    void toggleMainWindowVisibility();
+    void systemNotify( const QString &title, const QString &message, const QString &iconUrl );
+
 protected slots:
     void optionsPreferences();
     void settingsChanged();
@@ -77,12 +78,13 @@ protected slots:
     void showTimeLine();
 
 protected:
-//     void keyPressEvent ( QKeyEvent * e );
+    void hideEvent( QHideEvent * event );
     void checkUnreadStatuses( int numOfNewStatusesReciened );
     bool queryClose();
 
 private:
     void setupActions();
+    void setupQuickTweet();
     void setDefaultDirection();
     void disableApp();
     void enableApp();
@@ -94,6 +96,7 @@ private slots:
     void removeAccountTimeLine( const QString &alias );
     void setTimeLineUpdatesEnabled( bool isEnabled );
     void setNotificationsEnabled( bool isEnabled );
+    void postQuickTwit();
 
 private:
     KTabWidget *mainWidget;
@@ -103,7 +106,8 @@ private:
     QString currentUsername;// used for undresanding of username changes!
     int mPrevNotifyType;
     int mPrevUpdateInterval;
-    QPoint position;
+    SysTrayIcon *sysIcon;
+    QuickTwit *quickWidget;
 };
 
 #endif
