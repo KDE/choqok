@@ -279,6 +279,7 @@ void MainWindow::notify( const QString &message, bool isPermanent )
 void MainWindow::quitApp()
 {
     kDebug();
+    Settings::setPosition( pos() );
     timelineTimer->stop();
     Settings::self()->writeConfig();
     deleteLater();

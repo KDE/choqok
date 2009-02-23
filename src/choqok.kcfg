@@ -64,5 +64,8 @@
         <entry name="newStatusForeColor" type="Color">
             <default>Black</default>
         </entry>
+        <entry name="position" type="Point">
+            <default>QPoint(-1,-1)</default>
+        </entry>
     </group>
 </kcfg>
