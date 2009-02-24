@@ -413,7 +413,8 @@ void Backend::slotPostNewStatusFinished( KJob * job )
             QList<Status> newSt;
             newSt.append( st );
             emit sigPostNewStatusDone( false );
-            emit homeTimeLineReceived( newSt );
+            
+//             emit homeTimeLineReceived( newSt );
         }
     }
 }

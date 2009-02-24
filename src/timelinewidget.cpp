@@ -393,7 +393,13 @@ void TimeLineWidget::postingNewStatusDone( bool isError )
         emit systemNotify( i18n( "Success!" ), successMsg, APPNAME );
         notify( successMsg );
         replyToStatusId = 0;
+        lblCounter->setText(QString());
+        lblCounter->setPixmap(KIcon("dialog-ok").pixmap(22));
+        QTimer::singleShot(5000, this, SLOT(revertCounterLabelShape()));
+        twitter->requestTimeLine(latestHomeStatusId, Backend::HomeTimeLine);
     } else {
+        lblCounter->setText(QString());
+        lblCounter->setPixmap(KIcon("dialog-cancel").pixmap(22));
         error( twitter->latestErrorString() );
     }
     txtNewStatus->setFocus( Qt::OtherFocusReason );
@@ -705,6 +711,12 @@ void TimeLineWidget::updateUi()
         tabs->setTabIcon(2, KIcon());
         tabs->setTabIcon(3, KIcon());
     }
+}
+
+void TimeLineWidget::revertCounterLabelShape()
+{
+    lblCounter->setPixmap(QPixmap());
+    lblCounter->setText(QString::number(txtNewStatus->countOfRemainsChar()));
 }
 
 #include "timelinewidget.moc"

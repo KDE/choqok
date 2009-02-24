@@ -37,6 +37,7 @@ public:
 
     ~StatusTextEdit();
     QStringList friendsList() const;
+    int countOfRemainsChar() const;
 
 public slots:
     void setDefaultDirection( Qt::LayoutDirection dir );
@@ -55,6 +56,7 @@ private:
     QString prevStr;
     Qt::LayoutDirection dir;
     QStringList mFriendsList;
+    int mCountOfRemainsChars;
 };
 
 #endif

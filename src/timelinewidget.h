@@ -100,6 +100,7 @@ private slots:
     void reloadFriendsList();
     void friendsListed( const QStringList &list );
     void txtNewStatusCleared();
+    void revertCounterLabelShape();
 
 private:
     void setDefaultDirection();

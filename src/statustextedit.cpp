@@ -87,8 +87,8 @@ void StatusTextEdit::setDefaultDirection( Qt::LayoutDirection dir )
 
 void StatusTextEdit::setNumOfCharsLeft()
 {
-    int remainChar = 140 - toPlainText().count();
-    emit charsLeft( remainChar );
+    mCountOfRemainsChars = 140 - toPlainText().count();
+    emit charsLeft( mCountOfRemainsChars );
 }
 
 void StatusTextEdit::clearContentsAndSetDirection( Qt::LayoutDirection dir )
@@ -101,6 +101,9 @@ void StatusTextEdit::clearContentsAndSetDirection( Qt::LayoutDirection dir )
     setDefaultDirection( dir );
 }
 
+int StatusTextEdit::countOfRemainsChar() const
+{
+    return mCountOfRemainsChars;
+}
+
 #include "statustextedit.moc"
-
-
