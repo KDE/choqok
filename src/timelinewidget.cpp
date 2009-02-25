@@ -368,7 +368,7 @@ void TimeLineWidget::postStatus( QString & status )
 
     if ( status.size() > MAX_STATUS_SIZE && status.indexOf( QRegExp( "https?://" ) ) == -1 ) {
         QString err = i18n( "Message text size is more than server limit, \
-Server may truncate or drop it.\nAre you sure of posting this message?" );
+server may truncate or drop it.\nAre you sure of posting this message?" );
         if(KMessageBox::warningContinueCancel( this, err ) == KMessageBox::Cancel)
             return;
     }
