@@ -14,7 +14,7 @@ set(choqok_SRCS
    account.cpp
  )
 
-kde4_add_ui_files(choqok_SRCS timelinewidget_base.ui prefs_base.ui statuswidget_base.ui accounts_base.ui 
+kde4_add_ui_files(choqok_SRCS timelinewidget_base.ui prefs_base.ui accounts_base.ui 
 accounts_wizard_base.ui appears_base.ui quicktwit_base.ui)
 
 kde4_add_kcfg_files(choqok_SRCS settings.kcfgc )

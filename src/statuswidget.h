@@ -26,7 +26,9 @@
 
 #include <QFrame>
 #include <QTimer>
-#include <ui_statuswidget_base.h>
+#include <KTextBrowser>
+#include <KPushButton>
+
 #include "datacontainers.h"
 #include "constants.h"
 #include "account.h"
@@ -36,7 +38,7 @@ Status Widget
 
     @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
 */
-class StatusWidget : public QFrame, public Ui_StatusWidgetBase
+class StatusWidget : public KTextBrowser
 {
     Q_OBJECT
 public:
@@ -50,12 +52,10 @@ public:
 
     Status currentStatus() const;
     void setCurrentStatus( const Status newStatus );
-    void setUserImage( const QString &imgPath );
-    void setUserImage( const QPixmap *image );
     void setUnread( Notify notifyType );
     void setRead();
     void updateFavoriteUi();
-    bool isReaded();
+    bool isRead();
 
 signals:
     void sigReply( const QString &userName, uint statusId );
@@ -70,20 +70,39 @@ protected slots:
     void userImageLocalPathFetched( const QString &remotePath, const QString &localPath );
     void missingStatusReceived( Status status );
 
+protected:
+    void resizeEvent ( QResizeEvent * event );
+    void enterEvent ( QEvent * event );
+    void leaveEvent ( QEvent * event );
+
 private:
+    void setupUi();
+    static KPushButton * getButton(const QString & objName, const QString & toolTip, const QString & icon);
+
     void setUserImage();
     QString prepareStatus( const QString &text );
     void setUiStyle();
     QString generateSign();
-    QString regenerateSign();
     void updateUi();
+    void setHeight();
+
+    static QString getStyle(const QColor&,const QColor&);
+    static QString getColorString(const QColor & color);
 
     QTimer timer;
     Status mCurrentStatus;
-    bool mIsReaded;
+    bool mIsRead;
     const Account *mCurrentAccount;
-    QString signPrefix;
-    QString signPostfix;
+
+    QString mSign;
+    QString mStatus;
+    QString mImage;
+    QString mDir;
+
+    static const QString baseText;
+    static const QString baseStyle;
+
+    KPushButton * btnReply,*btnFavorite,*btnRemove;
 };
 
 #endif

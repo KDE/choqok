@@ -45,6 +45,7 @@ int main( int argc, char **argv )
     about.addAuthor( ki18n( "Mehrdad Momeny" ), ki18n( "Author and Core Developer" ),
                      "mehrdad.momeny@gmail.com" );
     about.addCredit( ki18n( "Roozbeh Shafiee" ), ki18n( "Icon designer" ), "roozbeh@roozbehonline.com" );
+    about.addCredit( ki18n( "Daniel Schaal" ), ki18n( "UI Improvements" ), "daniel@foto-schaal.de");
     KCmdLineArgs::init( argc, argv, &about );
 
 //     KCmdLineOptions options;

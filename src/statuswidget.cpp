@@ -25,30 +25,93 @@
 #include "settings.h"
 #include "mediamanager.h"
 #include "backend.h"
-#include <knotification.h>
+#include <KNotification>
 #include <QProcess>
+
+#include <KDE/KLocale>
+#include <QLayout>
+
 #define _15SECS 15000
 #define _MINUTE 60000
 #define _HOUR (60 * _MINUTE)
 #define COLOROFFSET 20
 
-StatusWidget::StatusWidget( const Account *account, QWidget *parent )
-        : QFrame( parent )
-{
-    setupUi( this );
-    mIsReaded = true;
-    timer.start( _MINUTE );
-    mCurrentAccount = account;
-    btnFavorite->setIcon( KIcon( "rating" ) );
-    btnReply->setIcon( KIcon( "edit-undo" ) );
-    btnRemove->setIcon( KIcon( "edit-delete" ) );
+const QString StatusWidget::baseText("<table dir=\"%1\" width=\"100%\"><tr><td rowspan=\"2\"\
+width=\"32\">%2</td><td>%3</td></tr><tr><td style=\"font-size:small;\" align=\"right\">%4</td></tr></table>");
+const QString StatusWidget::baseStyle("QFrame.StatusWidget {border: 1px solid rgb(150,150,150);\
+border-radius:5px;background-color: %2;} !QPushButton { color: %1; background-color:transparent; }");
 
-    this->setMaximumHeight( 110 );
+StatusWidget::StatusWidget( const Account *account, QWidget *parent )
+        : KTextBrowser( parent ),mIsRead(true),mCurrentAccount(account)
+{
+    setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    setupUi();
+    this->setOpenExternalLinks( true );
+
+    timer.start( _MINUTE );
+    connect( &timer, SIGNAL( timeout() ), this, SLOT( updateSign() ) );
+}
+
+void StatusWidget::setupUi() {
+    QVBoxLayout * vl = new QVBoxLayout(this);
+    QHBoxLayout * l = new QHBoxLayout();
+
+    l->setSpacing(0);
+    l->setMargin(0);
+    vl->setSpacing(0);
+    vl->setMargin(0);
+
+    vl->addStretch();
+    vl->addLayout(l);
+
+    btnReply = getButton("btnReply","Reply","edit-undo");
+    btnRemove = getButton("btnRemove","Remove","edit-delete");
+    btnFavorite = getButton("btnFavorite","Favorite","rating");
+    btnFavorite->setCheckable(true);
+
+    l->addWidget(btnReply);
+    l->addWidget(btnRemove);
+    l->addWidget(btnFavorite);
+    l->addStretch();
 
     connect( btnReply, SIGNAL( clicked( bool ) ), this, SLOT( requestReply() ) );
-    connect( &timer, SIGNAL( timeout() ), this, SLOT( updateSign() ) );
     connect( btnFavorite, SIGNAL( clicked( bool ) ), this, SLOT( setFavorite( bool ) ) );
     connect( btnRemove, SIGNAL( clicked( bool ) ), this, SLOT( requestDestroy() ) );
+}
+
+void StatusWidget::enterEvent(QEvent* event) {
+  if ( !mCurrentStatus.isDMessage )
+      btnFavorite->setVisible( true );
+  if ( mCurrentStatus.user.userId != mCurrentAccount->userId() )
+      btnReply->setVisible( true );
+  else
+      btnRemove->setVisible( true );
+
+  QWidget::enterEvent(event);
+}
+
+void StatusWidget::leaveEvent(QEvent* event) {
+  btnRemove->setVisible(false);
+  btnFavorite->setVisible(false);
+  btnReply->setVisible(false);
+
+  QWidget::leaveEvent(event);
+}
+
+
+KPushButton * StatusWidget::getButton(const QString & objName, const QString & toolTip, const QString & icon) {
+    KPushButton * button = new KPushButton(KIcon(icon),QString());
+    button->setObjectName(objName);
+    button->setToolTip(toolTip);
+    button->setIconSize(QSize(8,8));
+    button->setMinimumSize(QSize(20, 20));
+    button->setMaximumSize(QSize(20, 20));
+    button->setFlat(true);
+    button->setVisible(false);
+    return button;
 }
 
 StatusWidget::~StatusWidget()
@@ -80,12 +143,21 @@ void StatusWidget::updateUi()
     } else {
         btnRemove->setVisible( false );
     }
-    lblSign->setHtml( generateSign() );
-    lblStatus->setHtml( prepareStatus( mCurrentStatus.content ) );
-    lblImage->setToolTip( mCurrentStatus.user.name );
+    mDir = ( mCurrentAccount->direction() == Qt::RightToLeft ) ? "rtl" : "ltr";
+    mStatus = prepareStatus(mCurrentStatus.content);
+    mSign = generateSign();
+    setUserImage();
+    updateSign();
     setUiStyle();
     updateFavoriteUi();
-    setUserImage();
+    setHeight();
+}
+
+void StatusWidget::setHeight() {
+    document()->setTextWidth(parentWidget()->width());
+    QSize s = document()->size().toSize();
+    setMinimumHeight(s.height()+2);
+    setMaximumHeight(s.height()+2);
 }
 
 QString StatusWidget::formatDateTime( const QDateTime &time )
@@ -98,29 +170,24 @@ QString StatusWidget::formatDateTime( const QDateTime &time )
 
     if ( seconds <= 45 ) {
         timer.setInterval( _15SECS );
-        return i18np( "about 1 second ago", "about %1 seconds ago", seconds );
+        return i18np( "1 sec ago", "%1 secs ago", seconds );
     }
 
     int minutes = ( seconds - 45 + 59 ) / 60;
     if ( minutes <= 45 ) {
         timer.setInterval( _MINUTE );
-        return i18np( "about 1 minute ago", "about %1 minutes ago", minutes );
+        return i18np( "1 min ago", "%1 mins ago", minutes );
     }
 
     int hours = ( seconds - 45 * 60 + 3599 ) / 3600;
     if ( hours <= 18 ) {
         timer.setInterval( _MINUTE * 15 );
-        return i18np( "about 1 hour ago", "about %1 hours ago", hours );
+        return i18np( "1 hour ago", "%1 hours ago", hours );
     }
 
     timer.setInterval( _HOUR );
     int days = ( seconds - 18 * 3600 + 24 * 3600 - 1 ) / ( 24 * 3600 );
-    return i18np( "about 1 day ago", "about %1 days ago", days );
-}
-
-void StatusWidget::setUserImage( const QString & imgPath )
-{
-    lblImage->setPixmap( QPixmap( imgPath ) );
+    return i18np( "1 day ago", "%1 days ago", days );
 }
 
 void StatusWidget::requestReply()
@@ -131,49 +198,40 @@ void StatusWidget::requestReply()
 
 QString StatusWidget::generateSign()
 {
-    signPrefix.clear();
-    signPostfix.clear();
+    QString sign;
     if ( mCurrentAccount->serviceType() == Account::Identica ) {
-        signPrefix = "<b><a href=\"http://identi.ca/" + mCurrentStatus.user.screenName + "\" title=\"" +
-                     mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName + "</a> - </b> ";
-        signPrefix += "<a href=\"http://identi.ca/notice/" + QString::number( mCurrentStatus.statusId ) + "\" title=\"" +
-                      mCurrentStatus.creationDateTime.toString() + "\">";
+        sign = "<b><a href=\"http://identi.ca/" + mCurrentStatus.user.screenName + "\" title=\"" +
+                     mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName + "</a> - </b>";
+        sign += "<a href=\"http://identi.ca/notice/" + QString::number( mCurrentStatus.statusId ) +
+        "\" title=\"" + mCurrentStatus.creationDateTime.toString() + "\">%1</a> - ";
         if ( !mCurrentStatus.isDMessage ) {
-            signPostfix = " - " + mCurrentStatus.source;
+            sign += mCurrentStatus.source;
             if ( mCurrentStatus.replyToStatusId > 0 ) {
                 QString link = "http://identi.ca/notice/" + QString::number( mCurrentStatus.replyToStatusId );
-                signPostfix += " - <a href=\"" + link + "\" title=\"" + link + "\">in reply to</a>";
+                sign += " - <a href=\"" + link + "\" title=\"" + link + "\">in reply to</a>";
             }
         }
     } else {
-        signPrefix = "<b><a href=\"http://twitter.com/" + mCurrentStatus.user.screenName + "\" title=\"" +
-                     mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName + "</a> - </b> ";
-        signPrefix += "<a href=\"http://twitter.com/" + mCurrentStatus.user.screenName + "/statuses/" +
-                      QString::number( mCurrentStatus.statusId ) + "\" title=\"" +
-                      mCurrentStatus.creationDateTime.toString() + "\">";
+        sign = "<b><a href=\"http://twitter.com/" + mCurrentStatus.user.screenName + "\" title=\"" +
+                     mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName + "</a> - </b>";
+        sign += "<a href=\"http://twitter.com/" + mCurrentStatus.user.screenName + "/statuses/" +
+                     QString::number( mCurrentStatus.statusId ) + "\" title=\"" +
+                     mCurrentStatus.creationDateTime.toString() + "\">%1</a> - ";
         if ( !mCurrentStatus.isDMessage ) {
-            signPostfix = " - " + mCurrentStatus.source;
+            sign += mCurrentStatus.source;
             if ( mCurrentStatus.replyToStatusId > 0 ) {
                 QString link = "http://twitter.com/" + mCurrentStatus.replyToUserScreenName + "/statuses/"
                 + QString::number( mCurrentStatus.replyToStatusId );
-                signPostfix += " - <a href=\"" + link + "\" title=\"" + link + "\">in reply to</a>";
+                sign += " - <a href=\"" + link + "\" title=\"" + link + "\">in reply to</a>";
             }
         }
     }
-    return regenerateSign();
-}
-
-QString StatusWidget::regenerateSign()
-{
-    QString sign = signPrefix;
-    sign += formatDateTime( mCurrentStatus.creationDateTime ) + "</a>";
-    sign += signPostfix;
     return sign;
 }
 
 void StatusWidget::updateSign()
-{
-    lblSign->setText( regenerateSign() );
+{ 
+    setHtml( baseText.arg( mDir, mImage, mStatus, mSign.arg( formatDateTime( mCurrentStatus.creationDateTime ) ) ) );
 }
 
 void StatusWidget::requestDestroy()
@@ -188,10 +246,9 @@ QString StatusWidget::prepareStatus( const QString &text )
         connect(b, SIGNAL(singleStatusReceived( Status )),
                  this, SLOT(missingStatusReceived( Status )));
         b->requestSingleStatus(mCurrentStatus.statusId);
-        return text;
+	return text;
     }
-    QString s = text;
-    int i = 0, j = 0;
+    QString status = text;
     ///TODO Adding smile support!
     /*  if(Settings::isSmilysEnabled()){
             while((j = s.indexOf(':', i)) != -1){
@@ -220,104 +277,50 @@ QString StatusWidget::prepareStatus( const QString &text )
             }
         }*/
 
-    s.replace( '<', "&lt;" );
-    s.replace( '>', "&gt;" );
-    s.replace( " www.", " http://www." );
-    if ( s.startsWith( QLatin1String("www.") ) ) 
-        s.prepend( "http://" );
-    QString t = "";
-    i = j = 0;
-    while (( j = s.indexOf( QRegExp( "(https?://)" ), i ) ) != -1 ) {
-        t += s.mid( i, j - i );
-        int k = s.indexOf( ' ', j );
-        if ( k == -1 ) k = s.length();
-        QString url = s.mid( j, k - j );
-        t += "<a href='" + url + "'>" + url + "</a>";
-        i = k;
-    }
-    t += s.mid( i );
+    status.replace( '<', "&lt;" );
+    status.replace( '>', "&gt;" );
+    status.replace( " www.", " http://www." );
+    if ( status.startsWith( QLatin1String("www.") ) ) 
+        status.prepend( "http://" );
+    status.replace(QRegExp("(https?://[^ ]+)"),"<a href='\\1' title='\\1'>\\1</a>");
 
-    i = j = 0;
-//     s = t;
-//     t.clear();
-    QRegExp usrRx( "(@\\w+)(\\s|$|\\b)", Qt::CaseInsensitive );
-    while (( j = usrRx.indexIn( t , i ) ) != -1 ) {
-//         t += s.mid( i, j - i );
-        int k = usrRx.cap(1).length();
-        QString username = usrRx.cap(1).remove(0, 1);
-        QString url;
-        if( mCurrentAccount->serviceType() == Account::Identica )
-            url = "http://identi.ca/";
-        else
-            url = "http://twitter.com/";
-        url += username;
-        QString m = "@<a href='" + url + "' title='" + url + "'>" + username + "</a>";
-        t.replace(j, k, m);
-        i = k + j;
-    }
-//     t += s.mid( i );
+    QString urlPrefix;
+    if( mCurrentAccount->serviceType() == Account::Identica )
+	urlPrefix = "http://identi.ca/";
+    else
+	urlPrefix = "http://twitter.com/";
+    status.replace(QRegExp("@(\\w+)(\\s|$|\\b)", Qt::CaseInsensitive),"@<a href='"+urlPrefix+"\\1'>\\1</a>\\2");
 
     if ( mCurrentAccount->serviceType() == Account::Identica ) {
-        ///To cover Identica TAGs:
-        i = j = 0;
-//         s = t;
-//         t.clear();
-        QRegExp tagRx( "(#\\w+)(\\s|$|\\b)", Qt::CaseInsensitive );
-        while( ( j = tagRx.indexIn( t, i ) ) != -1 ){
-//             t += s.mid( i, j - i );
-            int k = tagRx.cap(1).length();
-            QString tag = tagRx.cap(1).remove(0, 1);
-            QString url = "http://identi.ca/tag/" + tag;
-            QString m = "#<a href='" + url + "' title='" + url + "'>" + tag + "</a>";
-            t.replace(j, k, m);
-            i += k + j;
-        }
-//         t = s;
+      status.replace(QRegExp( "#(\\w+)(\\s|$|\\b)", Qt::CaseInsensitive ),"#<a href='"+urlPrefix+"tag/\\1'>\\1</a>\\2");
+      status.replace(QRegExp( "!(\\w+)(\\s|$|\\b)", Qt::CaseInsensitive ),"!<a href='"+urlPrefix+"group/\\1'>\\1</a>\\2");
+    }
+    return status;
+}
 
-        ///To cover Identica Groups:
-        i = j = 0;
-//         s = t;
-//         t.clear();
-        QRegExp grpRx( "(!\\w+)(\\s|$|\\b)", Qt::CaseInsensitive );
-        while (( j = grpRx.indexIn( t, i ) ) != -1 ) {
-//             t += s.mid( i, j - i );
-//             kDebug()<<grpRx.capturedTexts()<<j<<s;
-            int k = grpRx.cap(1).length();
-            QString group = grpRx.cap(1).remove(0, 1);
-            QString url = "http://identi.ca/group/" + group;
-            QString m = "!<a href='" + url + "' title='" + url + "'>" + group + "</a>";
-            t.replace(j, k, m);
-            i = k + j;
-        }
-//         t = s;
-    }
-    if ( mCurrentAccount->direction() == Qt::RightToLeft ) {
-        s = "<div dir='rtl'>";
-    } else {
-        s = "<div dir='ltr'>";
-    }
-    s += t;
-    s += "</div>";
-    return s;
+QString StatusWidget::getStyle(const QColor & color, const QColor & background) {
+  return baseStyle.arg(getColorString(color)).arg(getColorString(background));
+}
+
+QString StatusWidget::getColorString(const QColor& color) {
+  return "rgb("+QString::number(color.red())+","+QString::number(color.green())+","+QString::number(color.blue())+")";
 }
 
 void StatusWidget::setUnread( Notify notifyType )
 {
-    mIsReaded = false;
-    QColor backColor;
+    mIsRead = false;
+    QColor backColor,frontColor("black");
     QString sheet;
     if ( Settings::isCustomUi() ) {
         backColor = Settings::newStatusBackColor();
-        sheet += " color:" + Settings::newStatusForeColor().name() + ';';
+        frontColor = Settings::newStatusForeColor();
     } else {
         backColor = this->palette().window().color();
         backColor.setBlue( backColor.blue() + COLOROFFSET );
         backColor.setGreen( backColor.green() + COLOROFFSET );
         backColor.setRed( backColor.red() + COLOROFFSET );
     }
-    sheet += "background-color: rgb(" + QString::number( backColor.red() ) + ','
-             + QString::number( backColor.green() ) + ',' + QString::number( backColor.blue() ) + ");";
-    this->setStyleSheet( sheet );
+    this->setStyleSheet( getStyle(frontColor,backColor) );
 
     if ( notifyType == WithNotify ) {
         QString iconUrl = MediaManager::self()->getImageLocalPathIfExist( mCurrentStatus.user.profileImageUrl );
@@ -342,36 +345,29 @@ void StatusWidget::setUnread( Notify notifyType )
 
 void StatusWidget::setRead()
 {
-    mIsReaded = true;
-    QColor backColor;
+    mIsRead = true;
+    QColor backColor,frontColor("black");
     QString sheet;
     if ( Settings::isCustomUi() ) {
         backColor = Settings::defaultBackColor();
-        sheet += " color:" + Settings::defaultForeColor().name() + ';';
+        frontColor = Settings::defaultForeColor();
     } else {
         backColor = this->palette().window().color();
-        backColor.setBlue( backColor.blue() - COLOROFFSET );
-        backColor.setGreen( backColor.green() - COLOROFFSET );
-        backColor.setRed( backColor.red() - COLOROFFSET );
     }
-    sheet += "background-color: rgb(" + QString::number( backColor.red() ) + ','
-             + QString::number( backColor.green() ) + ", " + QString::number( backColor.blue() ) + ");";
-    this->setStyleSheet( sheet );
+    this->setStyleSheet( getStyle(frontColor,backColor) );
 }
 
 void StatusWidget::setUiStyle()
 {
-    QColor backColor;
+    QColor backColor,frontColor("black");
     QString sheet;
     if ( Settings::isCustomUi() ) {
         backColor = Settings::defaultBackColor();
-        sheet += " color:" + Settings::defaultForeColor().name() + ';';
+        frontColor = Settings::defaultForeColor();
     } else {
         backColor = this->palette().window().color();
     }
-    sheet += "background-color: rgb(" + QString::number( backColor.red() ) + ','
-             + QString::number( backColor.green() ) + ',' + QString::number( backColor.blue() ) + ");";
-    this->setStyleSheet( sheet );
+    this->setStyleSheet( getStyle(frontColor,backColor) );
 }
 
 void StatusWidget::updateFavoriteUi()
@@ -383,14 +379,9 @@ void StatusWidget::updateFavoriteUi()
     }
 }
 
-bool StatusWidget::isReaded()
+bool StatusWidget::isRead()
 {
-    return mIsReaded;
-}
-
-void StatusWidget::setUserImage( const QPixmap * image )
-{
-    lblImage->setPixmap( *image );
+    return mIsRead;
 }
 
 void StatusWidget::setUserImage()
@@ -404,7 +395,8 @@ void StatusWidget::setUserImage()
 void StatusWidget::userImageLocalPathFetched( const QString &remotePath, const QString &localPath )
 {
     if ( remotePath == mCurrentStatus.user.profileImageUrl ) {
-        lblImage->setPixmap( QPixmap( localPath ) );
+      mImage = "<img src='"+localPath+"' />";
+      updateSign();
         disconnect( MediaManager::self(), SIGNAL( imageFetched( const QString &, const QString & ) ),
                     this, SLOT( userImageLocalPathFetched( const QString&, const QString& ) ) );
     }
@@ -412,11 +404,17 @@ void StatusWidget::userImageLocalPathFetched( const QString &remotePath, const Q
 
 void StatusWidget::missingStatusReceived( Status status )
 {
-//     if( statusId == mCurrentStatus.statusId ){
+    if( mCurrentStatus.statusId == mCurrentStatus.statusId ){
         mCurrentStatus = status;
-        lblStatus->setHtml( prepareStatus( mCurrentStatus.content ) );
+        updateUi();
         sender()->deleteLater();
-//     }
+    }
+}
+
+
+void StatusWidget::resizeEvent(QResizeEvent* event) {
+  setHeight();
+  QTextEdit::resizeEvent(event);
 }
 
 #include "statuswidget.moc"

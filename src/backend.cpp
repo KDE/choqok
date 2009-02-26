@@ -404,16 +404,15 @@ void Backend::slotPostNewStatusFinished( KJob * job )
         emit sigPostNewStatusDone( true );
     } else {
 //      kDebug()<<mPostNewStatusBuffer[job];
-        Status st = readStatusFromXml(mPostNewStatusBuffer[job]);
+        Status st = readStatusFromXml( mPostNewStatusBuffer[job] );
         if ( st.isError ) {
             kDebug() << "Error: " << job->errorString();
             mLatestErrorString = job->errorString();
             emit sigPostNewStatusDone( true );
         } else {
-            QList<Status> newSt;
-            newSt.append( st );
+//             QList<Status> newSt;
+//             newSt.append( st );
             emit sigPostNewStatusDone( false );
-            
 //             emit homeTimeLineReceived( newSt );
         }
     }

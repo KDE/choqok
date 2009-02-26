@@ -137,8 +137,10 @@ void TimeLineWidget::checkNewStatusCharactersCount( int numOfChars )
 //     kDebug()<<numOfChars;
     if ( numOfChars == 140 ) {
         txtNewStatus->setMaximumHeight( 28 );
+	lblCounter->setVisible(false);
     } else {
         txtNewStatus->setMaximumHeight( 80 );
+	lblCounter->setVisible(true);
     }
 
     lblCounter->setText( KGlobal::locale()->formatNumber( numOfChars, 0 ) );
@@ -348,10 +350,10 @@ void TimeLineWidget::abortPostNewStatus()
 
 void TimeLineWidget::setDefaultDirection()
 {
-    tabs->widget( 0 )->setLayoutDirection( mCurrentAccount.direction() );
-    tabs->widget( 1 )->setLayoutDirection( mCurrentAccount.direction() );
-    tabs->widget( 2 )->setLayoutDirection( mCurrentAccount.direction() );
-    tabs->widget( 3 )->setLayoutDirection( mCurrentAccount.direction() );
+//     tabs->widget( 0 )->setLayoutDirection( mCurrentAccount.direction() );
+//     tabs->widget( 1 )->setLayoutDirection( mCurrentAccount.direction() );
+//     tabs->widget( 2 )->setLayoutDirection( mCurrentAccount.direction() );
+//     tabs->widget( 3 )->setLayoutDirection( mCurrentAccount.direction() );
 //     tabs->widget ( 4 )->setLayoutDirection ( mCurrentAccount.direction() );
 
     txtNewStatus->setDefaultDirection( mCurrentAccount.direction() );
@@ -516,7 +518,7 @@ void TimeLineWidget::updateStatusList( QList<StatusWidget*> *list )
         for ( int i = 0; i < toBeDelete; ++i ) {
             StatusWidget* wt = list->at( i );
 
-            if ( !wt->isReaded() )
+            if ( !wt->isRead() )
                 break;
 
             list->removeAt( i );

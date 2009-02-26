@@ -158,6 +158,9 @@
            <item>
             <layout class="QVBoxLayout" name="homeLayout" >
              <property name="spacing" >
+              <number>4</number>
+             </property>
+             <property name="margin" >
               <number>1</number>
              </property>
              <item>
@@ -263,6 +266,9 @@
            <item>
             <layout class="QVBoxLayout" name="replyLayout" >
              <property name="spacing" >
+              <number>4</number>
+             </property>
+             <property name="margin" >
               <number>1</number>
              </property>
              <item>
@@ -333,6 +339,9 @@
            <item>
             <layout class="QVBoxLayout" name="inboxLayout" >
              <property name="spacing" >
+              <number>4</number>
+             </property>
+             <property name="margin" >
               <number>1</number>
              </property>
              <item>
@@ -422,6 +431,9 @@
            <item>
             <layout class="QVBoxLayout" name="outboxLayout" >
              <property name="spacing" >
+              <number>4</number>
+             </property>
+             <property name="margin" >
               <number>1</number>
              </property>
              <item>
