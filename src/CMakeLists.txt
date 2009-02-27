@@ -1,4 +1,6 @@
 set(choqok_SRCS
+   search.cpp
+   twittersearch.cpp
    accounts.cpp
    accountswizard.cpp
    mainwindow.cpp
@@ -10,12 +12,13 @@ set(choqok_SRCS
    systrayicon.cpp
    quicktwit.cpp
    timelinewidget.cpp
+   searchwindow.cpp
    accountmanager.cpp
    account.cpp
  )
 
 kde4_add_ui_files(choqok_SRCS timelinewidget_base.ui prefs_base.ui accounts_base.ui 
-accounts_wizard_base.ui appears_base.ui quicktwit_base.ui)
+accounts_wizard_base.ui appears_base.ui quicktwit_base.ui searchwidget_base.ui)
 
 kde4_add_kcfg_files(choqok_SRCS settings.kcfgc )
 

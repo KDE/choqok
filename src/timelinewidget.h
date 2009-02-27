@@ -52,6 +52,8 @@ public:
     ~TimeLineWidget();
     Account currentAccount() const;
     void setCurrentAccount( const Account &account );
+
+    Backend* getBackend();
 //     void setRemoved(bool isRemoved);
 
 public slots:
@@ -72,7 +74,7 @@ protected slots:
     void replyTimeLineReceived( QList<Status> &statusList );
 
     void postingNewStatusDone( bool isError );
-    void prepareReply( const QString &userName, uint statusId );
+    void prepareReply( const QString &userName, uint statusId, bool dMsg );
 
     void requestDestroy( uint statusId );
 //   void notify(const QString &message);

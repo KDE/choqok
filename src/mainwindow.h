@@ -30,6 +30,7 @@
 #include "ui_prefs_base.h"
 // #include "ui_accounts_base.h"
 #include "ui_appears_base.h"
+#include "searchwindow.h"
 
 #define TIMEOUT 5000
 
@@ -71,6 +72,7 @@ public slots:
 
 protected slots:
     void optionsPreferences();
+    void search();
     void settingsChanged();
     void notify( const QString &message, bool isPermanent = false );
     void quitApp();
@@ -108,6 +110,8 @@ private:
     int mPrevUpdateInterval;
     SysTrayIcon *sysIcon;
     QuickTwit *quickWidget;
+    //QWidget* searchRoot;
+    SearchWindow* searchWin;
 };
 
 #endif

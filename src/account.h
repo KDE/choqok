@@ -25,6 +25,8 @@
 #define ACCOUNT_H
 #include <QString>
 
+#include "search.h"
+
 #define TWITTER_API_PATH "http://twitter.com/"
 #define TWITTER_SERVICE_TEXT "Twitter.com"
 
@@ -65,11 +67,15 @@ public:
     QString apiPath() const;
 //     void setApiPath( const QString &apiPath );
 
+    Search* searchPtr() const;
+
     bool isError() const;
     void setError( bool isError );
 
     Service serviceType() const;
     void setServiceType( Service type );
+
+    void initSearch();
 
 private:
     uint mUserId;
@@ -79,6 +85,7 @@ private:
     QString mAlias;
     Qt::LayoutDirection mDirection;
     QString mApiPath;
+    Search* mSearch;
     bool mIsError;
     Service mServiceType;
 };

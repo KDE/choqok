@@ -46,6 +46,7 @@
 #include "accounts.h"
 #include "accountmanager.h"
 #include "accountswizard.h"
+#include "searchwindow.h"
 #include "systrayicon.h"
 #include "quicktwit.h"
 
@@ -59,6 +60,8 @@ MainWindow::MainWindow()
     this->setAttribute( Qt::WA_DeleteOnClose, false );
 
     mainWidget = new KTabWidget( this );
+
+    searchWin = 0;
 
     setCentralWidget( mainWidget );
     sysIcon = new SysTrayIcon(this);
@@ -116,6 +119,12 @@ void MainWindow::setupActions()
     newTwit->setGlobalShortcut( quickTwitGlobalShortcut );
     connect( newTwit, SIGNAL( triggered(bool) ), this, SLOT( postQuickTwit() ) );
 
+    KAction *newSearch = new KAction( KIcon( "edit-find" ), i18n( "Search" ), this );
+    actionCollection()->addAction( QLatin1String( "choqok_search" ), newSearch );
+    newSearch->setShortcut( KShortcut( Qt::CTRL | Qt::Key_F ) );
+    newSearch->setGlobalShortcutAllowed( false );
+    connect( newSearch, SIGNAL( triggered( bool ) ), this, SLOT( search() ) );
+
     KAction *markRead = new KAction( KIcon( "mail-mark-read" ), i18n( "Mark All As Read" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_mark_read" ), markRead );
     markRead->setShortcut( KShortcut( Qt::CTRL | Qt::Key_R ) );
@@ -146,6 +155,7 @@ void MainWindow::setupActions()
 
     ///SysTray Actions:
     sysIcon->contextMenu()->addAction( newTwit );
+//     sysIcon->contextMenu()->addAction( newSearch );
 
     sysIcon->contextMenu()->addAction( actUpdate );
     sysIcon->contextMenu()->addSeparator();
@@ -232,6 +242,38 @@ void MainWindow::optionsPreferences()
     dialog->show();
 }
 
+void MainWindow::search()
+{
+    kDebug();
+    TimeLineWidget * tmp = qobject_cast<TimeLineWidget *>( mainWidget->widget( mainWidget->currentIndex() ) );
+    if( tmp->currentAccount().searchPtr() == 0 )
+    {
+        kDebug() << "Service has no search implementation";
+        KMessageBox::error( this, i18n( "This service has no search feature." ) );
+        return;
+    }
+
+    if( !searchWin )
+    {
+        searchWin = new SearchWindow( tmp->currentAccount(), 0 );
+        searchWin->setWindowTitle( i18np( "Search in service", "%1 Search",
+                                          tmp->currentAccount().serviceName() ) );
+        searchWin->show();
+        connect( searchWin, SIGNAL( forwardReply( const QString&, uint, bool ) ),
+             tmp, SLOT( prepareReply( const QString&, uint, bool ) ) );
+        connect( searchWin, SIGNAL( forwardFavorited( uint, bool ) ),
+                 tmp->getBackend(), SLOT( requestFavorited( uint, bool ) ) );
+    } else if ( searchWin->isVisible() ) {
+        searchWin->hide();
+    } else {
+        searchWin->clearSearchResults();
+        searchWin->setAccount( tmp->currentAccount() );
+        searchWin->setWindowTitle( i18np( "Search in service", "%1 Search",
+                                          tmp->currentAccount().serviceName() ) );
+        searchWin->show();
+    }
+}
+
 void MainWindow::settingsChanged()
 {
     kDebug();
@@ -303,6 +345,7 @@ void MainWindow::disableApp()
 //     kDebug()<<"timelineTimer stoped";
     actionCollection()->action( "update_timeline" )->setEnabled( false );
     actionCollection()->action( "choqok_new_twit" )->setEnabled( false );
+    actionCollection()->action( "choqok_search" )->setEnabled( false );
     actionCollection()->action( "choqok_mark_read" )->setEnabled( false );
 }
 
@@ -315,12 +358,14 @@ void MainWindow::enableApp()
     }
     actionCollection()->action( "update_timeline" )->setEnabled( true );
     actionCollection()->action( "choqok_new_twit" )->setEnabled( true );
+    actionCollection()->action( "choqok_search" )->setEnabled( true );
     actionCollection()->action( "choqok_mark_read" )->setEnabled( true );
 }
 
 void MainWindow::addAccountTimeLine( const Account & account, bool isStartup )
 {
     kDebug() << "Alias: " << account.alias() << "Service :" << account.serviceName();
+
     TimeLineWidget *widget = new TimeLineWidget( account, this );
     widget->layout()->setContentsMargins( 0, 0, 0, 0 );
 

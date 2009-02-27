@@ -58,7 +58,7 @@ public:
     bool isRead();
 
 signals:
-    void sigReply( const QString &userName, uint statusId );
+    void sigReply( const QString &userName, uint statusId, bool dMsg );
     void sigDestroy( uint statusId );
     void sigFavorite( uint statusId, bool isFavorite );
 

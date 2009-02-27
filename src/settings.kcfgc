@@ -1,5 +1,5 @@
 File=choqok.kcfg
 ClassName=Settings
 Singleton=true
-Mutators=quickTweetSize,notifyType,updateInterval,position
+Mutators=quickTweetSize,notifyType,updateInterval,position,searchWindowSize,searchWindowPosition
 UseEnumTypes=true

@@ -5,6 +5,7 @@
 	  <Action name="choqok_new_twit" />
 	  <Action name="update_timeline" />
       <Action name="choqok_mark_read" />
+      <Action name="choqok_search" />
       <Separator/>
       <Action name="toggle_mainwin"/>
   </Menu>

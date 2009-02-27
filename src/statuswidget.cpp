@@ -193,7 +193,7 @@ QString StatusWidget::formatDateTime( const QDateTime &time )
 void StatusWidget::requestReply()
 {
     kDebug();
-    emit sigReply( mCurrentStatus.user.screenName, mCurrentStatus.statusId );
+    emit sigReply( mCurrentStatus.user.screenName, mCurrentStatus.statusId, currentStatus().isDMessage );
 }
 
 QString StatusWidget::generateSign()

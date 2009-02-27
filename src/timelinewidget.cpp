@@ -288,8 +288,8 @@ void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayou
 
         wt->setAttribute( Qt::WA_DeleteOnClose );
         wt->setCurrentStatus( *it );
-        connect( wt, SIGNAL( sigReply( const QString&, uint ) ),
-                 this, SLOT( prepareReply( const QString&, uint ) ) );
+        connect( wt, SIGNAL( sigReply( const QString&, uint, bool ) ),
+                 this, SLOT( prepareReply( const QString&, uint, bool ) ) );
         connect( wt, SIGNAL( sigFavorite( uint, bool ) ),
                  twitter, SLOT( requestFavorited( uint, bool ) ) );
         connect( wt, SIGNAL( sigDestroy( uint ) ),
@@ -492,11 +492,11 @@ QList< Status > TimeLineWidget::loadStatuses( QString fileName )
     return list;
 }
 
-void TimeLineWidget::prepareReply( const QString &userName, uint statusId )
+void TimeLineWidget::prepareReply( const QString &userName, uint statusId, bool dMsg )
 {
     kDebug();
     emit showMe();
-    if ( qobject_cast<StatusWidget*> ( sender() )->currentStatus().isDMessage ) {
+    if ( dMsg ) {
         chkDMessage->setChecked( true );
         comboFriendList->setCurrentItem( userName, true, 0 );
     } else {
@@ -719,6 +719,11 @@ void TimeLineWidget::revertCounterLabelShape()
 {
     lblCounter->setPixmap(QPixmap());
     lblCounter->setText(QString::number(txtNewStatus->countOfRemainsChar()));
+}
+
+Backend* TimeLineWidget::getBackend()
+{
+    return twitter;
 }
 
 #include "timelinewidget.moc"
