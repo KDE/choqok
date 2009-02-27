@@ -113,7 +113,7 @@
      </property>
      <widget class="QWidget" name="tabHome" >
       <attribute name="title" >
-       <string>Home</string>
+       <string comment="@title:tab">Home</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout" >
        <property name="margin" >
@@ -205,7 +205,7 @@
      </widget>
      <widget class="QWidget" name="tabReply" >
       <attribute name="title" >
-       <string>Reply</string>
+       <string comment="@title:tab">Reply</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2" >
        <property name="spacing" >
@@ -294,7 +294,7 @@
      </widget>
      <widget class="QWidget" name="tabInbox" >
       <attribute name="title" >
-       <string>Inbox</string>
+       <string comment="@title:tab">Inbox</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3" >
        <property name="margin" >
@@ -386,7 +386,7 @@
      </widget>
      <widget class="QWidget" name="tabOutbox" >
       <attribute name="title" >
-       <string>Outbox</string>
+       <string comment="@title:tab">Outbox</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_4" >
        <property name="margin" >
