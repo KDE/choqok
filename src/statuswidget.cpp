@@ -67,9 +67,9 @@ void StatusWidget::setupUi() {
     vl->addStretch();
     vl->addLayout(l);
 
-    btnReply = getButton("btnReply","Reply","edit-undo");
-    btnRemove = getButton("btnRemove","Remove","edit-delete");
-    btnFavorite = getButton("btnFavorite","Favorite","rating");
+    btnReply = getButton( "btnReply",i18nc( "@info:tooltip", "Reply" ), "edit-undo" );
+    btnRemove = getButton( "btnRemove",i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
+    btnFavorite = getButton( "btnFavorite",i18nc( "@info:tooltip", "Favorite" ), "rating" );
     btnFavorite->setCheckable(true);
 
     l->addWidget(btnReply);
