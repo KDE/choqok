@@ -1,17 +1,17 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="choqok" version="2">
+<kpartgui name="choqok" version="3">
 <MenuBar>
   <Menu name="file"><text>File</text>
-	  <Action name="choqok_new_twit" />
-	  <Action name="update_timeline" />
-      <Action name="choqok_mark_read" />
-      <Action name="choqok_search" />
-      <Separator/>
-      <Action name="toggle_mainwin"/>
+    <Action name="choqok_new_twit" />
+    <Action name="update_timeline" />
+    <Action name="choqok_mark_read" />
+    <Action name="choqok_search" />
+    <Separator/>
+    <Action name="toggle_mainwin"/>
   </Menu>
   <Menu name="settings"><text>Settings</text>
-        <Action name="choqok_enable_updates"/>
-        <Action name="choqok_enable_notify"/>
+    <Action name="choqok_enable_updates"/>
+    <Action name="choqok_enable_notify"/>
   </Menu>
 </MenuBar>
 </kpartgui>

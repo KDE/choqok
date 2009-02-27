@@ -1,5 +1,5 @@
 /*
-    This file is part of choqoK, the KDE mono-blogging client
+    This file is part of choqoK, the KDE micro-blogging client
 
     Copyright (C) 2008-2009 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 

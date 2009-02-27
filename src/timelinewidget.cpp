@@ -1,5 +1,5 @@
 /*
-    This file is part of choqoK, the KDE mono-blogging client
+    This file is part of choqoK, the KDE micro-blogging client
 
     Copyright (C) 2008-2009 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
@@ -134,13 +134,13 @@ void TimeLineWidget::checkNewStatusCharactersCount( int numOfChars )
     } else {
         lblCounter->setStyleSheet( "QLabel {color: green;}" );
     }
-//     kDebug()<<numOfChars;
+
     if ( numOfChars == 140 ) {
         txtNewStatus->setMaximumHeight( 28 );
-	lblCounter->setVisible(false);
+        lblCounter->setVisible(false);
     } else {
         txtNewStatus->setMaximumHeight( 80 );
-	lblCounter->setVisible(true);
+        lblCounter->setVisible(true);
     }
 
     lblCounter->setText( KGlobal::locale()->formatNumber( numOfChars, 0 ) );
@@ -395,15 +395,15 @@ void TimeLineWidget::postingNewStatusDone( bool isError )
         emit systemNotify( i18n( "Success!" ), successMsg, APPNAME );
         notify( successMsg );
         replyToStatusId = 0;
-        lblCounter->setText(QString());
         lblCounter->setPixmap(KIcon("dialog-ok").pixmap(22));
-        QTimer::singleShot(5000, this, SLOT(revertCounterLabelShape()));
         twitter->requestTimeLine(latestHomeStatusId, Backend::HomeTimeLine);
     } else {
-        lblCounter->setText(QString());
         lblCounter->setPixmap(KIcon("dialog-cancel").pixmap(22));
         error( twitter->latestErrorString() );
     }
+    QTimer::singleShot( 3000, this, SLOT( revertCounterLabelShape() ) );
+    lblCounter->show();
+    lblCounter->setText(QString());
     txtNewStatus->setFocus( Qt::OtherFocusReason );
     txtNewStatus->setEnabled( true );
 
@@ -717,8 +717,8 @@ void TimeLineWidget::updateUi()
 
 void TimeLineWidget::revertCounterLabelShape()
 {
-    lblCounter->setPixmap(QPixmap());
-    lblCounter->setText(QString::number(txtNewStatus->countOfRemainsChar()));
+    lblCounter->setPixmap( QPixmap() );
+    checkNewStatusCharactersCount( txtNewStatus->countOfRemainsChar() );
 }
 
 Backend* TimeLineWidget::getBackend()

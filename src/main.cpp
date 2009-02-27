@@ -1,5 +1,5 @@
 /*
-    This file is part of choqoK, the KDE mono-blogging client
+    This file is part of choqoK, the KDE micro-blogging client
 
     Copyright (C) 2008-2009 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
@@ -31,7 +31,7 @@
 #include <KDE/KLocale>
 
 static const char description[] =
-    I18N_NOOP( "KDE mono-blogging client,\n\
+    I18N_NOOP( "KDE Micro-blogging client,\n\
 Currently supports <a href='http://twitter.com'>Twitter.com</a> and \
 <a href='http://identi.ca'>Identi.ca</a>" );
 
@@ -46,6 +46,7 @@ int main( int argc, char **argv )
                      "mehrdad.momeny@gmail.com" );
     about.addCredit( ki18n( "Roozbeh Shafiee" ), ki18n( "Icon designer" ), "roozbeh@roozbehonline.com" );
     about.addCredit( ki18n( "Daniel Schaal" ), ki18n( "UI Improvements" ), "daniel@foto-schaal.de");
+    about.addCredit( ki18n( "Stephen Henderson" ), ki18n( "Twitter search API implementation" ), "hendersonsk@gmail.com");
     KCmdLineArgs::init( argc, argv, &about );
 
 //     KCmdLineOptions options;
