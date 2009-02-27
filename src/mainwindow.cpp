@@ -256,7 +256,7 @@ void MainWindow::search()
     if( !searchWin )
     {
         searchWin = new SearchWindow( tmp->currentAccount(), 0 );
-        searchWin->setWindowTitle( i18np( "Search in service", "%1 Search",
+        searchWin->setWindowTitle( i18nc( "Search in service", "%1 Search",
                                           tmp->currentAccount().serviceName() ) );
         searchWin->show();
         connect( searchWin, SIGNAL( forwardReply( const QString&, uint, bool ) ),
@@ -268,7 +268,7 @@ void MainWindow::search()
     } else {
         searchWin->clearSearchResults();
         searchWin->setAccount( tmp->currentAccount() );
-        searchWin->setWindowTitle( i18np( "Search in service", "%1 Search",
+        searchWin->setWindowTitle( i18nc( "Search in service", "%1 Search",
                                           tmp->currentAccount().serviceName() ) );
         searchWin->show();
     }
