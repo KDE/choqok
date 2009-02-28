@@ -41,6 +41,7 @@ Status Widget
 class StatusWidget : public KTextBrowser
 {
     Q_OBJECT
+    Q_PROPERTY (bool read READ isRead)
 public:
     enum Notify { WithNotify = 0, WithoutNotify};
 
@@ -50,12 +51,17 @@ public:
 
     QString formatDateTime( const QDateTime &time );
 
+    static void setStyle(const QColor & color, const QColor & back, const QColor & read, const QColor & readBack);
+
     Status currentStatus() const;
     void setCurrentStatus( const Status newStatus );
     void setUnread( Notify notifyType );
-    void setRead();
+    void setRead(bool read = true);
     void updateFavoriteUi();
     bool isRead();
+
+public slots:
+    void setUiStyle();
 
 signals:
     void sigReply( const QString &userName, uint statusId, bool dMsg );
@@ -69,6 +75,7 @@ protected slots:
     void updateSign();
     void userImageLocalPathFetched( const QString &remotePath, const QString &localPath );
     void missingStatusReceived( Status status );
+    void setHeight();
 
 protected:
     void resizeEvent ( QResizeEvent * event );
@@ -81,12 +88,10 @@ private:
 
     void setUserImage();
     QString prepareStatus( const QString &text );
-    void setUiStyle();
     QString generateSign();
     void updateUi();
-    void setHeight();
 
-    static QString getStyle(const QColor&,const QColor&);
+//     static QString getStyle(const QColor&,const QColor&);
     static QString getColorString(const QColor & color);
 
     QTimer timer;
@@ -101,6 +106,7 @@ private:
 
     static const QString baseText;
     static const QString baseStyle;
+    static QString style;
 
     KPushButton * btnReply,*btnFavorite,*btnRemove;
 };

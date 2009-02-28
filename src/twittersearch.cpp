@@ -198,7 +198,7 @@ QList<Status>* TwitterSearch::parseAtom( const QByteArray &buffer )
         }
         status.isFavorited = false;
         status.isTruncated = false;
-
+        status.replyToStatusId = 0;
         statusList->insert( 0, status );
         node = node.nextSibling();
     }

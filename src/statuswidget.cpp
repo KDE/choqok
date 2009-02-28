@@ -28,18 +28,27 @@
 #include <KNotification>
 #include <QProcess>
 
+#include <QInputDialog>
+
 #include <KDE/KLocale>
 #include <QLayout>
 
 #define _15SECS 15000
 #define _MINUTE 60000
 #define _HOUR (60 * _MINUTE)
-#define COLOROFFSET 20
 
 const QString StatusWidget::baseText("<table dir=\"%1\" width=\"100%\"><tr><td rowspan=\"2\"\
 width=\"32\">%2</td><td>%3</td></tr><tr><td style=\"font-size:small;\" align=\"right\">%4</td></tr></table>");
 const QString StatusWidget::baseStyle("QFrame.StatusWidget {border: 1px solid rgb(150,150,150);\
-border-radius:5px;background-color: %2;} !QPushButton { color: %1; background-color:transparent; }");
+border-radius:5px;}\
+QFrame.StatusWidget[read=false] {color: %1; background-color: %2}\
+QFrame.StatusWidget[read=true] {color: %3; background-color: %4}");
+
+QString StatusWidget::style;
+
+void StatusWidget::setStyle(const QColor& color, const QColor& back, const QColor& read, const QColor& readBack) {
+  style = baseStyle.arg(getColorString(color),getColorString(back),getColorString(read),getColorString(readBack));
+}
 
 StatusWidget::StatusWidget( const Account *account, QWidget *parent )
         : KTextBrowser( parent ),mIsRead(true),mCurrentAccount(account)
@@ -49,6 +58,7 @@ StatusWidget::StatusWidget( const Account *account, QWidget *parent )
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     setupUi();
+
     this->setOpenExternalLinks( true );
 
     timer.start( _MINUTE );
@@ -80,6 +90,8 @@ void StatusWidget::setupUi() {
     connect( btnReply, SIGNAL( clicked( bool ) ), this, SLOT( requestReply() ) );
     connect( btnFavorite, SIGNAL( clicked( bool ) ), this, SLOT( setFavorite( bool ) ) );
     connect( btnRemove, SIGNAL( clicked( bool ) ), this, SLOT( requestDestroy() ) );
+
+    connect(this,SIGNAL(textChanged()),this,SLOT(setHeight()));
 }
 
 void StatusWidget::enterEvent(QEvent* event) {
@@ -150,11 +162,10 @@ void StatusWidget::updateUi()
     updateSign();
     setUiStyle();
     updateFavoriteUi();
-    setHeight();
 }
 
 void StatusWidget::setHeight() {
-    document()->setTextWidth(parentWidget()->width());
+    document()->setTextWidth(width()-2);
     QSize s = document()->size().toSize();
     setMinimumHeight(s.height()+2);
     setMaximumHeight(s.height()+2);
@@ -298,10 +309,6 @@ QString StatusWidget::prepareStatus( const QString &text )
     return status;
 }
 
-QString StatusWidget::getStyle(const QColor & color, const QColor & background) {
-  return baseStyle.arg(getColorString(color)).arg(getColorString(background));
-}
-
 QString StatusWidget::getColorString(const QColor& color) {
   return "rgb("+QString::number(color.red())+","+QString::number(color.green())+","+QString::number(color.blue())+")";
 }
@@ -309,18 +316,7 @@ QString StatusWidget::getColorString(const QColor& color) {
 void StatusWidget::setUnread( Notify notifyType )
 {
     mIsRead = false;
-    QColor backColor,frontColor("black");
-    QString sheet;
-    if ( Settings::isCustomUi() ) {
-        backColor = Settings::newStatusBackColor();
-        frontColor = Settings::newStatusForeColor();
-    } else {
-        backColor = this->palette().window().color();
-        backColor.setBlue( backColor.blue() + COLOROFFSET );
-        backColor.setGreen( backColor.green() + COLOROFFSET );
-        backColor.setRed( backColor.red() + COLOROFFSET );
-    }
-    this->setStyleSheet( getStyle(frontColor,backColor) );
+    setUiStyle();
 
     if ( notifyType == WithNotify ) {
         QString iconUrl = MediaManager::self()->getImageLocalPathIfExist( mCurrentStatus.user.profileImageUrl );
@@ -343,40 +339,20 @@ void StatusWidget::setUnread( Notify notifyType )
     }
 }
 
-void StatusWidget::setRead()
+void StatusWidget::setRead(bool read)
 {
-    mIsRead = true;
-    QColor backColor,frontColor("black");
-    QString sheet;
-    if ( Settings::isCustomUi() ) {
-        backColor = Settings::defaultBackColor();
-        frontColor = Settings::defaultForeColor();
-    } else {
-        backColor = this->palette().window().color();
-    }
-    this->setStyleSheet( getStyle(frontColor,backColor) );
+    mIsRead = read;
+    setUiStyle();
 }
 
 void StatusWidget::setUiStyle()
 {
-    QColor backColor,frontColor("black");
-    QString sheet;
-    if ( Settings::isCustomUi() ) {
-        backColor = Settings::defaultBackColor();
-        frontColor = Settings::defaultForeColor();
-    } else {
-        backColor = this->palette().window().color();
-    }
-    this->setStyleSheet( getStyle(frontColor,backColor) );
+    this->setStyleSheet( style );
 }
 
 void StatusWidget::updateFavoriteUi()
 {
-    if ( mCurrentStatus.isFavorited ) {
-        btnFavorite->setChecked( true );
-    } else {
-        btnFavorite->setChecked( false );
-    }
+  btnFavorite->setChecked(mCurrentStatus.isFavorited);
 }
 
 bool StatusWidget::isRead()

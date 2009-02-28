@@ -152,6 +152,15 @@ void TimeLineWidget::settingsChanged()
     setDefaultDirection();
     twitter->settingsChanged();
     updateUi();
+
+    foreach(StatusWidget * s,listHomeStatus)
+      s->setUiStyle();
+    foreach(StatusWidget * s,listInboxStatus)
+      s->setUiStyle();
+    foreach(StatusWidget * s,listOutboxStatus)
+      s->setUiStyle();
+    foreach(StatusWidget * s,listReplyStatus)
+      s->setUiStyle();
 }
 
 void TimeLineWidget::updateTimeLines()
