@@ -38,7 +38,7 @@
 #define _HOUR (60 * _MINUTE)
 
 const QString StatusWidget::baseText("<table dir=\"%1\" width=\"100%\"><tr><td rowspan=\"2\"\
-width=\"32\">%2</td><td>%3</td></tr><tr><td style=\"font-size:small;\" align=\"right\">%4</td></tr></table>");
+width=\"48\">%2</td><td>%3</td></tr><tr><td style=\"font-size:small;\" align=\"right\">%4</td></tr></table>");
 const QString StatusWidget::baseStyle("QFrame.StatusWidget {border: 1px solid rgb(150,150,150);\
 border-radius:5px;}\
 QFrame.StatusWidget[read=false] {color: %1; background-color: %2}\
@@ -371,7 +371,7 @@ void StatusWidget::setUserImage()
 void StatusWidget::userImageLocalPathFetched( const QString &remotePath, const QString &localPath )
 {
     if ( remotePath == mCurrentStatus.user.profileImageUrl ) {
-      mImage = "<img src='"+localPath+"' />";
+      mImage = "<img src='"+localPath+"' width=\"48\" height=\"48\" />";
       updateSign();
         disconnect( MediaManager::self(), SIGNAL( imageFetched( const QString &, const QString & ) ),
                     this, SLOT( userImageLocalPathFetched( const QString&, const QString& ) ) );
