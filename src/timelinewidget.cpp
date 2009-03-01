@@ -598,10 +598,10 @@ void TimeLineWidget::checkUnreadStatuses( int numOfNewStatusesReciened )
 void TimeLineWidget::setUnreadStatusesToReadState()
 {
     kDebug();
-    tabs->setTabText( 0, i18n( "Home" ) );
-    tabs->setTabText( 1, i18n( "Reply" ) );
-    tabs->setTabText( 2, i18n( "Inbox" ) );
-    tabs->setTabText( 3, i18n( "Outbox" ) );
+    tabs->setTabText( 0, i18nc( "@title:tab", "Home" ) );
+    tabs->setTabText( 1, i18nc( "@title:tab", "Reply" ) );
+    tabs->setTabText( 2, i18nc( "@title:tab", "Inbox" ) );
+    tabs->setTabText( 3, i18nc( "@title:tab", "Outbox" ) );
     int count = listUnreadStatuses.count();
 
     for ( int i = 0;i < count; ++i ) {
