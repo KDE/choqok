@@ -70,7 +70,7 @@ KUrl TwitterSearch::buildUrl( QString query, int option, uint sinceStatusId )
             formattedQuery = "from:" + query;
             break;
         case ReferenceUser:
-            formattedQuery = "@" + query;
+            formattedQuery = '@' + query;
             break;
         case ReferenceHashtag:
             formattedQuery = "%23" + query;

@@ -1,84 +1,77 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ui version="4.0">
+<ui version="4.0" >
  <class>searchwidget_base</class>
- <widget class="QWidget" name="searchwidget_base">
-  <property name="windowModality">
+ <widget class="QWidget" name="searchwidget_base" >
+  <property name="windowModality" >
    <enum>Qt::NonModal</enum>
   </property>
-  <property name="geometry">
+  <property name="geometry" >
    <rect>
     <x>0</x>
-    <y>120</y>
+    <y>0</y>
     <width>320</width>
     <height>400</height>
    </rect>
   </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+  <property name="sizePolicy" >
+   <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="windowTitle">
+  <property name="windowTitle" >
    <string>choqoK</string>
   </property>
-  <property name="autoFillBackground">
+  <property name="autoFillBackground" >
    <bool>true</bool>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
-   <property name="margin">
+  <layout class="QGridLayout" name="gridLayout_2" >
+   <property name="margin" >
     <number>1</number>
    </property>
-   <item row="0" column="0">
-    <widget class="QComboBox" name="comboSearchType"/>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLineEdit" name="txtSearch"/>
-   </item>
-   <item row="3" column="0">
-    <widget class="QScrollArea" name="searchScroll">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+   <item row="3" column="0" >
+    <widget class="QScrollArea" name="searchScroll" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
+     <property name="frameShape" >
       <enum>QFrame::NoFrame</enum>
      </property>
-     <property name="frameShadow">
+     <property name="frameShadow" >
       <enum>QFrame::Plain</enum>
      </property>
-     <property name="widgetResizable">
+     <property name="widgetResizable" >
       <bool>true</bool>
      </property>
-     <widget class="QWidget" name="frameSearch">
-      <property name="geometry">
+     <widget class="QWidget" name="frameSearch" >
+      <property name="geometry" >
        <rect>
         <x>0</x>
         <y>0</y>
         <width>318</width>
-        <height>313</height>
+        <height>289</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_8">
-       <property name="spacing">
+      <layout class="QVBoxLayout" name="verticalLayout_8" >
+       <property name="spacing" >
         <number>0</number>
        </property>
-       <property name="margin">
+       <property name="margin" >
         <number>0</number>
        </property>
        <item>
-        <layout class="QVBoxLayout" name="searchLayout">
-         <property name="spacing">
+        <layout class="QVBoxLayout" name="searchLayout" >
+         <property name="spacing" >
           <number>1</number>
          </property>
          <item>
-          <spacer name="verticalSpacer">
-           <property name="orientation">
+          <spacer name="verticalSpacer" >
+           <property name="orientation" >
             <enum>Qt::Vertical</enum>
            </property>
-           <property name="sizeHint" stdset="0">
+           <property name="sizeHint" stdset="0" >
             <size>
              <width>20</width>
              <height>0</height>
@@ -92,33 +85,61 @@
      </widget>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="lblStatus">
-     <property name="font">
+   <item row="2" column="0" >
+    <widget class="QLabel" name="lblStatus" >
+     <property name="font" >
       <font>
        <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
-     <property name="text">
+     <property name="text" >
       <string>No Search Results</string>
      </property>
-     <property name="alignment">
+     <property name="alignment" >
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
+   <item row="4" column="0" >
     <widget class="QCheckBox" name="chkAutoUpdate" >
      <property name="text" >
       <string>Auto-Update Results</string>
      </property>
     </widget>
    </item>
+   <item row="1" column="0" >
+    <widget class="KLineEdit" name="txtSearch" >
+     <property name="maxLength" >
+      <number>140</number>
+     </property>
+     <property name="clickMessage" >
+      <string>Enter search query here</string>
+     </property>
+     <property name="showClearButton" stdset="0" >
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" >
+    <widget class="KComboBox" name="comboSearchType" />
+   </item>
   </layout>
  </widget>
- <layoutdefault spacing="6" margin="11"/>
+ <layoutdefault spacing="6" margin="11" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

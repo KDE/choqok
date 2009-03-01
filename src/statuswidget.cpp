@@ -310,7 +310,8 @@ QString StatusWidget::prepareStatus( const QString &text )
 }
 
 QString StatusWidget::getColorString(const QColor& color) {
-  return "rgb("+QString::number(color.red())+","+QString::number(color.green())+","+QString::number(color.blue())+")";
+  return "rgb(" + QString::number(color.red()) + ',' + QString::number(color.green()) + ',' +
+  QString::number(color.blue()) + ')';
 }
 
 void StatusWidget::setUnread( Notify notifyType )
@@ -390,7 +391,7 @@ void StatusWidget::missingStatusReceived( Status status )
 
 void StatusWidget::resizeEvent(QResizeEvent* event) {
   setHeight();
-  QTextEdit::resizeEvent(event);
+  KTextBrowser::resizeEvent(event);
 }
 
 #include "statuswidget.moc"

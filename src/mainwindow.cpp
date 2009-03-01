@@ -21,27 +21,25 @@
     along with this program; if not, see http://www.gnu.org/licenses/
 
 */
-#include "mainwindow.h"
-#include "settings.h"
-#include "timelinewidget.h"
+
 #include <KTabWidget>
 #include <kconfigdialog.h>
 #include <kstatusbar.h>
-
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kstandardaction.h>
-
 #include <KDE/KLocale>
 #include <KMessageBox>
 #include <QProcess>
 #include <QTimer>
 #include <QKeyEvent>
 #include <QScrollBar>
-#include <QProcess>
 #include <QMenu>
 #include <KNotification>
 
+#include "mainwindow.h"
+#include "settings.h"
+#include "timelinewidget.h"
 #include "constants.h"
 #include "accounts.h"
 #include "accountmanager.h"
