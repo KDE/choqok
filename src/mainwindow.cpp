@@ -346,12 +346,6 @@ void MainWindow::loadConfigurations()
     kDebug();
 }
 
-bool MainWindow::queryClose()
-{
-    hide();
-    return false;
-}
-
 void MainWindow::disableApp()
 {
     kDebug();

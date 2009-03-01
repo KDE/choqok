@@ -83,7 +83,6 @@ protected slots:
 protected:
     void hideEvent( QHideEvent * event );
     void checkUnreadStatuses( int numOfNewStatusesReciened );
-    bool queryClose();
 
 private:
     void setupActions();

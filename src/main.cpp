@@ -55,6 +55,7 @@ int main( int argc, char **argv )
     KUniqueApplication app;
 
     MainWindow *mainWin = new MainWindow;
+    mainWin->setAttribute(Qt::WA_DeleteOnClose, false);
     QPoint pos = Settings::position();
     if(pos.x() != -1 && pos.y() != -1) {
         mainWin->move(pos);
