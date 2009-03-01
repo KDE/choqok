@@ -63,6 +63,7 @@ public:
 
 signals:
     void updateTimeLines();
+    void updateSearchResults();
 //     void sigSetUnread( int unread );
     void abortPostNewStatus();
     void setUnreadStatusesToReadState();

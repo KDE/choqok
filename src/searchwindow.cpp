@@ -52,9 +52,7 @@ void SearchWindow::initObjects()
     connect( mAccount.searchPtr(), SIGNAL( error( QString ) ), this, SLOT( error( QString ) ) );
     connect( ui.txtSearch, SIGNAL( returnPressed() ), this, SLOT( search() ) );
 
-    QMap<int, QString> searchTypes = mAccount.searchPtr()->getSearchTypes();
-    for( int i = 0; i < searchTypes.count(); ++i )
-        ui.comboSearchType->insertItem( i, searchTypes[i] );
+    resetSearchArea();
 }
 
 SearchWindow::~SearchWindow()
@@ -67,25 +65,23 @@ SearchWindow::~SearchWindow()
 void SearchWindow::error( QString message )
 {
     ui.lblStatus->setText( i18n( "Failed, %1", message ) );
+    lastSearchQuery.clear();
 }
 
 void SearchWindow::searchResultsReceived(QList<Status> &statusList )
 {
     kDebug();
 
-    ui.txtSearch->setEnabled( true );
-    clearSearchResults();
-
     int count = statusList.count();
     if ( count == 0 ) {
         kDebug() << "Status list is empty";
         ui.lblStatus->setText( i18n( "No search results." ) );
-        return;
     } else {
         ui.lblStatus->setText( i18n( "Search Results Received!" ) );
         addNewStatusesToUi( statusList );
         ui.searchScroll->verticalScrollBar()->setSliderPosition( 0 );
     }
+    ui.txtSearch->setEnabled( true );
 }
 
 void SearchWindow::search()
@@ -99,14 +95,50 @@ void SearchWindow::search()
     }
 
     ui.txtSearch->setEnabled( false );
+    clearSearchResults();
     ui.lblStatus->setText( i18n( "Searching..." ) );
     mAccount.searchPtr()->requestSearchResults( ui.txtSearch->text(),
-                                   ui.comboSearchType->currentIndex() );
+                                   ui.comboSearchType->currentIndex(), 0 );
+
+    lastSearchQuery = ui.txtSearch->text();
+    lastSearchType = ui.comboSearchType->currentIndex();
+}
+
+void SearchWindow::updateSearchResults()
+{
+    kDebug();
+    if( isVisible() && !lastSearchQuery.isNull() )
+    {
+        uint sinceStatusId = 0;
+        if( listResults.count() )
+            sinceStatusId = listResults.last()->currentStatus().statusId;
+
+        ui.lblStatus->setText( i18n( "Searching..." ) );
+        mAccount.searchPtr()->requestSearchResults( lastSearchQuery,
+                                                    lastSearchType,
+                                                    sinceStatusId );
+    }
+}
+
+void SearchWindow::autoUpdateSearchResults()
+{
+    kDebug();
+    if( ui.chkAutoUpdate->isChecked() )
+        updateSearchResults();
 }
 
 void SearchWindow::addNewStatusesToUi( QList<Status> &statusList )
 {
     kDebug();
+
+    // This will make all statuses prior to the update marked as read
+    // and deleted if there are more than Settings::countOfStatusesOnMain.
+    // The reasoning for this is that there's a distinct possibility of
+    // a searching racking up thousands of unread messages depending on
+    // the query which would go undeleted as unread messages. The other
+    // option to avoid this would be to enforce a strict message limit
+    // regardless of whether or not they were marked as read.
+    markStatusesAsRead();
 
     QList<Status>::const_iterator it = statusList.constBegin();
     QList<Status>::const_iterator endIt = statusList.constEnd();
@@ -122,9 +154,34 @@ void SearchWindow::addNewStatusesToUi( QList<Status> &statusList )
 
         wt->setAttribute( Qt::WA_DeleteOnClose );
         wt->setCurrentStatus( *it );
+        wt->setUnread( StatusWidget::WithoutNotify );
 
         listResults.append( wt );
         ui.searchLayout->insertWidget( 0, wt );
+    }
+    updateStatusList();
+}
+
+void SearchWindow::updateStatusList()
+{
+    kDebug();
+    int toBeDelete = listResults.count() - Settings::countOfStatusesOnMain();
+
+    if ( toBeDelete > 0 ) {
+        for ( int i = 0; i < toBeDelete; ++i ) {
+            StatusWidget* wt = listResults.at( i );
+
+            if ( !wt->isRead() )
+                break;
+
+            listResults.removeAt( i );
+
+            --i;
+
+            --toBeDelete;
+
+            wt->close();
+        }
     }
 }
 
@@ -140,7 +197,41 @@ void SearchWindow::clearSearchResults()
     }
 }
 
+void SearchWindow::markStatusesAsRead()
+{
+    kDebug();
+    int count = listResults.count();
+    for ( int i = 0;i < count; ++i ) {
+        listResults[i]->setRead();
+    }
+}
+
 void SearchWindow::setAccount( Account account )
 {
     mAccount = account;
+    resetSearchArea();
+}
+
+void SearchWindow::resetSearchArea()
+{
+    ui.txtSearch->setText( QString() );
+    ui.comboSearchType->clear();
+    ui.chkAutoUpdate->setChecked( false );
+
+    QMap<int, QString> searchTypes = mAccount.searchPtr()->getSearchTypes();
+    for( int i = 0; i < searchTypes.count(); ++i )
+        ui.comboSearchType->insertItem( i, searchTypes[i] );
+}
+
+void SearchWindow::keyPressEvent( QKeyEvent* e )
+{
+    if ( e->key() == Qt::Key_F5 ) {
+//         emit updateTimeLines();
+        updateSearchResults();
+        e->accept();
+    } else if ( e->modifiers() == Qt::CTRL && e->key() == Qt::Key_R ) {
+        markStatusesAsRead();
+    } else {
+        QWidget::keyPressEvent( e );
+    }
 }

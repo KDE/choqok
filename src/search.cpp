@@ -37,17 +37,19 @@ QMap<int, QString> Search::getSearchTypes()
     return mSearchTypes;
 }
 
-KUrl Search::buildUrl( QString query, int option )
+KUrl Search::buildUrl( QString query, int option, uint sinceStatusId )
 {
     Q_UNUSED(query);
     Q_UNUSED(option);
+    Q_UNUSED(sinceStatusId);
     return KUrl();
 }
 
-void Search::requestSearchResults( QString query, int option )
+void Search::requestSearchResults( QString query, int option, uint sinceStatusId )
 {
     Q_UNUSED(query);
     Q_UNUSED(option);
+    Q_UNUSED(sinceStatusId)
 }
 
 void Search::searchResultsReturned( KJob* job )

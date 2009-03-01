@@ -26,6 +26,7 @@
 #define SEARCHWINDOW_H
 
 #include <QWidget>
+#include <QKeyEvent>
 
 #include "ui_searchwidget_base.h"
 #include "account.h"
@@ -36,6 +37,7 @@ class StatusWidget;
 
 /**
 The Search Widget
+
 For any microblogging service compatible with the Twitter Search API
 
  @author Stephen Henderson <hendersonsk@gmail.com>
@@ -48,7 +50,15 @@ public:
     ~SearchWindow();
 
     void clearSearchResults();
+    void updateStatusList();
     void setAccount(Account account);
+
+protected:
+    virtual void keyPressEvent( QKeyEvent *e );
+
+public slots:
+    void updateSearchResults();
+    void autoUpdateSearchResults();
 
 protected slots:
     void search();
@@ -61,9 +71,12 @@ private slots:
 signals:
     void forwardReply( const QString &username, uint statusId, bool dMsg );
     void forwardFavorited( uint statusId, bool isFavorite );
+//     void updateTimeLines();
 
 private:
     void addNewStatusesToUi( QList<Status> &statusList );
+    void resetSearchArea();
+    void markStatusesAsRead();
 
 protected:
     QList<StatusWidget*> listResults;
@@ -71,6 +84,9 @@ protected:
 private:
     Account mAccount;
     Ui::searchwidget_base ui;
+
+    QString lastSearchQuery;
+    int lastSearchType;
 };
 
 #endif

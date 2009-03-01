@@ -48,10 +48,10 @@ public:
     QMap<int, QString> getSearchTypes();
 
 private:
-    virtual KUrl buildUrl( QString query, int option );
+    virtual KUrl buildUrl( QString query, int option, uint sinceStatusId = 0 );
 
 public slots:
-    virtual void requestSearchResults( QString query, int option );
+    virtual void requestSearchResults( QString query, int option, uint sinceStatusId = 0 );
 
 protected slots:
     virtual void searchResultsReturned( KJob *job );

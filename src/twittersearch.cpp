@@ -48,10 +48,15 @@ TwitterSearch::~TwitterSearch()
     kDebug();
 }
 
-KUrl TwitterSearch::buildUrl( QString query, int option )
+KUrl TwitterSearch::buildUrl( QString query, int option, uint sinceStatusId )
 {
     kDebug();
-    QString baseUrl = "http://search.twitter.com/search.atom?q=";
+    QString baseUrl = "http://search.twitter.com/search.atom?";
+    if( sinceStatusId )
+        baseUrl += "since_id=" + QString::number( sinceStatusId ) + "&";
+    baseUrl += "q=";
+
+    kDebug() << "Search URL: " << baseUrl;
 
     QString formattedQuery;
     switch ( option ) {
@@ -80,11 +85,11 @@ KUrl TwitterSearch::buildUrl( QString query, int option )
     return url;
 }
 
-void TwitterSearch::requestSearchResults( QString query, int option )
+void TwitterSearch::requestSearchResults( QString query, int option, uint sinceStatusId )
 {
     kDebug();
 
-    KUrl url = buildUrl( query, option );
+    KUrl url = buildUrl( query, option, sinceStatusId );
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo );
     if( !job ) {
@@ -190,8 +195,6 @@ QList<Status>* TwitterSearch::parseAtom( const QByteArray &buffer )
                     userNode = userNode.nextSibling();
                 }
 
-            } else {
-                kDebug() << "No instructions on how to deal with element " << entryNode.toElement().tagName();
             }
 
             entryNode = entryNode.nextSibling();

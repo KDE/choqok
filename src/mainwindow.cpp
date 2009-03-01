@@ -112,6 +112,7 @@ void MainWindow::setupActions()
 //     updateGlobalShortcut.setAlternate ( Qt::MetaModifier | Qt::Key_F5 );
     actUpdate->setGlobalShortcut( updateGlobalShortcut );
     connect( actUpdate, SIGNAL( triggered( bool ) ), this, SIGNAL( updateTimeLines() ) );
+    connect( actUpdate, SIGNAL( triggered( bool ) ), this, SIGNAL( updateSearchResults() ) );
 
     KAction *newTwit = new KAction( KIcon( "document-new" ), i18n( "Quick Tweet" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_new_twit" ), newTwit );
@@ -265,6 +266,12 @@ void MainWindow::search()
              tmp, SLOT( prepareReply( const QString&, uint, bool ) ) );
         connect( searchWin, SIGNAL( forwardFavorited( uint, bool ) ),
                  tmp->getBackend(), SLOT( requestFavorited( uint, bool ) ) );
+        connect( this, SIGNAL( updateSearchResults() ),
+                 searchWin, SLOT( updateSearchResults() ) );
+        connect( timelineTimer, SIGNAL( timeout() ),
+                 searchWin, SLOT( autoUpdateSearchResults() ) );
+//         connect( searchWin, SIGNAL( updateTimeLines() ), this, SIGNAL( updateTimeLines() ) );
+        ///I think this^ connection made code a bit confusing! -Mehrdad
     } else if ( searchWin->isVisible() ) {
         searchWin->hide();
     } else {

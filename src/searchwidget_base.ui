@@ -8,7 +8,7 @@
   <property name="geometry">
    <rect>
     <x>0</x>
-    <y>129</y>
+    <y>120</y>
     <width>320</width>
     <height>400</height>
    </rect>
@@ -105,6 +105,13 @@
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QCheckBox" name="chkAutoUpdate" >
+     <property name="text" >
+      <string>Auto-Update Results</string>
      </property>
     </widget>
    </item>
