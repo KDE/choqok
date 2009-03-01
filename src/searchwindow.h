@@ -46,12 +46,12 @@ class SearchWindow : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SearchWindow( Account account, QWidget* parent = 0 );
+    explicit SearchWindow(const Account &account, QWidget* parent = 0 );
     ~SearchWindow();
 
     void clearSearchResults();
     void updateStatusList();
-    void setAccount(Account account);
+    void setAccount(const Account &account);
 
 protected:
     virtual void keyPressEvent( QKeyEvent *e );

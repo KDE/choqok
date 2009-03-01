@@ -1,6 +1,7 @@
 set(choqok_SRCS
    search.cpp
    twittersearch.cpp
+   identicasearch.cpp
    accounts.cpp
    accountswizard.cpp
    mainwindow.cpp

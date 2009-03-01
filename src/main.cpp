@@ -46,7 +46,7 @@ int main( int argc, char **argv )
                      "mehrdad.momeny@gmail.com" );
     about.addCredit( ki18n( "Roozbeh Shafiee" ), ki18n( "Icon designer" ), "roozbeh@roozbehonline.com" );
     about.addCredit( ki18n( "Daniel Schaal" ), ki18n( "UI Improvements" ), "daniel@foto-schaal.de");
-    about.addCredit( ki18n( "Stephen Henderson" ), ki18n( "Twitter search API implementation" ), "hendersonsk@gmail.com");
+    about.addCredit( ki18n( "Stephen Henderson" ), ki18n( "Search API implementation" ), "hendersonsk@gmail.com");
     KCmdLineArgs::init( argc, argv, &about );
 
 //     KCmdLineOptions options;

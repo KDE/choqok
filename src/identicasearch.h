@@ -22,33 +22,31 @@
 
 */
 
-#ifndef SEARCH_H
-#define SEARCH_H
+#ifndef IDENTICASEARCH_H
+#define IDENTICASEARCH_H
 
-#include <QString>
-#include <QObject>
-#include <QMap>
-#include <KUrl>
+#include <QList>
 
+#include "search.h"
 #include "datacontainers.h"
 
-class KJob;
-
 /**
-    Base class for search feature.
-    @author Stephen Henderson <hendersonsk@gmail.com>
+Twitter.com search API implementation.
+
+@author Stephen Henderson <hendersonsk@gmail.com>
 */
-class Search : public QObject
+class IdenticaSearch : public Search
 {
     Q_OBJECT
 public:
-    Search();
-    virtual ~Search();
+    enum SearchType { ToUser = 0, FromUser, ReferenceGroup, ReferenceHashtag };
 
-    QMap<int, QString> getSearchTypes();
+    IdenticaSearch();
+    virtual ~IdenticaSearch();
 
 private:
     virtual KUrl buildUrl( QString query, int option, uint sinceStatusId = 0 );
+    QList<Status>* parseRss( const QByteArray &buffer );
 
 public slots:
     virtual void requestSearchResults( QString query, int option, uint sinceStatusId = 0 );
@@ -56,13 +54,6 @@ public slots:
 protected slots:
     virtual void searchResultsReturned( KJob *job );
 
-signals:
-    void searchResultsReceived( QList<Status> &statusList );
-    void error( QString message );
-
-protected:
-    QMap<int, QString> mSearchTypes;
-    uint mSinceStatusId;
 };
 
 #endif

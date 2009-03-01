@@ -24,6 +24,7 @@
 #include "account.h"
 
 #include "twittersearch.h"
+#include "identicasearch.h"
 
 Account::Account( Service type )
 {
@@ -160,7 +161,7 @@ void Account::initSearch()
     switch (mServiceType)
     {
         case Identica:
-            mSearch = 0;
+            mSearch = new IdenticaSearch;
             break;
         case Twitter:
             mSearch = new TwitterSearch;

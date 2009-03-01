@@ -32,7 +32,7 @@
 #include <QScrollBar>
 #include <KDE/KLocale>
 
-SearchWindow::SearchWindow( Account account, QWidget* parent ) :
+SearchWindow::SearchWindow( const Account &account, QWidget* parent ) :
         QWidget( parent )
 {
     kDebug();
@@ -206,17 +206,27 @@ void SearchWindow::markStatusesAsRead()
     }
 }
 
-void SearchWindow::setAccount( Account account )
+void SearchWindow::setAccount( const Account &account )
 {
+    disconnect( mAccount.searchPtr(), SIGNAL( searchResultsReceived( QList< Status>& ) ),
+                this, SLOT( searchResultsReceived ( QList< Status >& ) ) );
+    disconnect( mAccount.searchPtr(), SIGNAL( error( QString ) ), this, SLOT( error( QString ) ) );
+
     mAccount = account;
     resetSearchArea();
+
+    connect( mAccount.searchPtr(), SIGNAL( searchResultsReceived( QList< Status>& ) ),
+             this, SLOT( searchResultsReceived ( QList< Status >& ) ) );
+    connect( mAccount.searchPtr(), SIGNAL( error( QString ) ), this, SLOT( error( QString ) ) );
 }
 
 void SearchWindow::resetSearchArea()
 {
     ui.txtSearch->setText( QString() );
+    ui.txtSearch->setEnabled( true );
     ui.comboSearchType->clear();
     ui.chkAutoUpdate->setChecked( false );
+    ui.lblStatus->setText( i18n( "No Search Results" ) );
 
     QMap<int, QString> searchTypes = mAccount.searchPtr()->getSearchTypes();
     for( int i = 0; i < searchTypes.count(); ++i )

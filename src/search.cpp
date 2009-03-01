@@ -35,6 +35,7 @@ Search::Search()
 
 Search::~Search()
 {
+    mSinceStatusId = 0;
 }
 
 QMap<int, QString> Search::getSearchTypes()
