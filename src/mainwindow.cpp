@@ -257,7 +257,7 @@ void MainWindow::search()
     }
 
     if( !searchWin )
-    {
+    {///TODO Make search window deletOnClose and open a new window for new search
         searchWin = new SearchWindow( tmp->currentAccount(), 0 );
         searchWin->setWindowTitle( i18nc( "Search in service", "%1 Search",
                                           tmp->currentAccount().serviceName() ) );

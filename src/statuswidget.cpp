@@ -214,9 +214,9 @@ QString StatusWidget::generateSign()
         sign = "<b><a href=\"http://identi.ca/" + mCurrentStatus.user.screenName + "\" title=\"" +
                      mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName + "</a> - </b>";
         sign += "<a href=\"http://identi.ca/notice/" + QString::number( mCurrentStatus.statusId ) +
-        "\" title=\"" + mCurrentStatus.creationDateTime.toString() + "\">%1</a> - ";
+        "\" title=\"" + mCurrentStatus.creationDateTime.toString() + "\">%1</a>";
         if ( !mCurrentStatus.isDMessage ) {
-            sign += mCurrentStatus.source;
+            sign += " - " + mCurrentStatus.source;
             if ( mCurrentStatus.replyToStatusId > 0 ) {
                 QString link = "http://identi.ca/notice/" + QString::number( mCurrentStatus.replyToStatusId );
                 sign += " - <a href=\"" + link + "\" title=\"" + link + "\">in reply to</a>";
@@ -227,9 +227,9 @@ QString StatusWidget::generateSign()
                      mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName + "</a> - </b>";
         sign += "<a href=\"http://twitter.com/" + mCurrentStatus.user.screenName + "/statuses/" +
                      QString::number( mCurrentStatus.statusId ) + "\" title=\"" +
-                     mCurrentStatus.creationDateTime.toString() + "\">%1</a> - ";
+                     mCurrentStatus.creationDateTime.toString() + "\">%1</a>";
         if ( !mCurrentStatus.isDMessage ) {
-            sign += mCurrentStatus.source;
+            sign += " - " + mCurrentStatus.source;
             if ( mCurrentStatus.replyToStatusId > 0 ) {
                 QString link = "http://twitter.com/" + mCurrentStatus.replyToUserScreenName + "/statuses/"
                 + QString::number( mCurrentStatus.replyToStatusId );

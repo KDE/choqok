@@ -26,6 +26,11 @@
 
 Search::Search()
 {
+    /**
+     * TODO Support multiple pages on search results! instead of just first 20 latest results!
+     * And its better to have something like Google reader:
+     * i.e. load previous pages on scrollbar riched maximum value
+     */
 }
 
 Search::~Search()
