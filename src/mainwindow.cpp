@@ -61,8 +61,6 @@ MainWindow::MainWindow()
 
     mainWidget = new KTabWidget( this );
 
-    searchWin = 0;
-
     setCentralWidget( mainWidget );
     sysIcon = new SysTrayIcon(this);
 //     setupQuickTweet();
@@ -247,38 +245,19 @@ void MainWindow::search()
 {
     kDebug();
     TimeLineWidget * tmp = qobject_cast<TimeLineWidget *>( mainWidget->widget( mainWidget->currentIndex() ) );
-    if( tmp->currentAccount().searchPtr() == 0 )
-    {
-        kDebug() << "Service has no search implementation";
-        KMessageBox::error( this, i18n( "This service has no search feature." ) );
-        return;
-    }
 
-    if( !searchWin )
-    {///TODO Make search window deletOnClose and open a new window for new search
-        searchWin = new SearchWindow( tmp->currentAccount(), 0 );
-        searchWin->setWindowTitle( i18nc( "Search in service", "%1 Search",
-                                          tmp->currentAccount().serviceName() ) );
-        searchWin->show();
-        connect( searchWin, SIGNAL( forwardReply( const QString&, uint, bool ) ),
+    SearchWindow* searchWin = new SearchWindow( tmp->currentAccount(), 0 );
+
+    connect( searchWin, SIGNAL( forwardReply( const QString&, uint, bool ) ),
              tmp, SLOT( prepareReply( const QString&, uint, bool ) ) );
-        connect( searchWin, SIGNAL( forwardFavorited( uint, bool ) ),
-                 tmp->getBackend(), SLOT( requestFavorited( uint, bool ) ) );
-        connect( this, SIGNAL( updateSearchResults() ),
-                 searchWin, SLOT( updateSearchResults() ) );
-        connect( timelineTimer, SIGNAL( timeout() ),
-                 searchWin, SLOT( autoUpdateSearchResults() ) );
-//         connect( searchWin, SIGNAL( updateTimeLines() ), this, SIGNAL( updateTimeLines() ) );
-        ///I think this^ connection made code a bit confusing! -Mehrdad
-    } else if ( searchWin->isVisible() ) {
-        searchWin->hide();
-    } else {
-        searchWin->clearSearchResults();
-        searchWin->setAccount( tmp->currentAccount() );
-        searchWin->setWindowTitle( i18nc( "Search in service", "%1 Search",
-                                          tmp->currentAccount().serviceName() ) );
-        searchWin->show();
-    }
+    connect( searchWin, SIGNAL( forwardFavorited( uint, bool ) ),
+             tmp->getBackend(), SLOT( requestFavorited( uint, bool ) ) );
+    connect( this, SIGNAL( updateSearchResults() ),
+             searchWin, SLOT( updateSearchResults() ) );
+    connect( timelineTimer, SIGNAL( timeout() ),
+             searchWin, SLOT( autoUpdateSearchResults() ) );
+
+    searchWin->init();
 }
 
 void MainWindow::settingsChanged()

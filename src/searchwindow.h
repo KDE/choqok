@@ -30,6 +30,7 @@
 
 #include "ui_searchwidget_base.h"
 #include "account.h"
+#include "search.h"
 
 class QLabel;
 class StatusTextEdit;
@@ -52,6 +53,7 @@ public:
     void clearSearchResults();
     void updateStatusList();
     void setAccount(const Account &account);
+    void init();
 
 protected:
     virtual void keyPressEvent( QKeyEvent *e );
@@ -64,9 +66,6 @@ protected slots:
     void search();
     void searchResultsReceived( QList<Status> &stautsList );
     void error( QString message );
-
-private slots:
-    void initObjects();
 
 signals:
     void forwardReply( const QString &username, uint statusId, bool dMsg );
@@ -83,6 +82,7 @@ protected:
 
 private:
     Account mAccount;
+    Search* mSearch;
     Ui::searchwidget_base ui;
 
     QString lastSearchQuery;

@@ -85,7 +85,6 @@ private:
     QString mAlias;
     Qt::LayoutDirection mDirection;
     QString mApiPath;
-    Search* mSearch;
     bool mIsError;
     Service mServiceType;
 };

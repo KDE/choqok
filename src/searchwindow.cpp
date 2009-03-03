@@ -31,6 +31,10 @@
 #include <QString>
 #include <QScrollBar>
 #include <KDE/KLocale>
+#include <KMessageBox>
+
+#include "twittersearch.h"
+#include "identicasearch.h"
 
 SearchWindow::SearchWindow( const Account &account, QWidget* parent ) :
         QWidget( parent )
@@ -38,21 +42,49 @@ SearchWindow::SearchWindow( const Account &account, QWidget* parent ) :
     kDebug();
     mAccount = account;
 
+    setAttribute( Qt::WA_DeleteOnClose );
+
+    switch( mAccount.serviceType() )
+    {
+        case Account::Twitter:
+            mSearch = new TwitterSearch;
+            break;
+        case Account::Identica:
+            mSearch = new IdenticaSearch;
+            break;
+        default:
+            mSearch = 0;
+            break;
+    }
+
     ui.setupUi( this );
     resize( Settings::searchWindowSize() );
     move( Settings::searchWindowPosition() );
-    QTimer::singleShot( 0, this, SLOT( initObjects() ) );
+
+    setWindowTitle( i18nc( "Search in service", "%1 Search",
+                           mAccount.serviceName() ) );
 }
 
-void SearchWindow::initObjects()
+void SearchWindow::init()
 {
     kDebug();
-    connect( mAccount.searchPtr(), SIGNAL( searchResultsReceived( QList< Status>& ) ),
-             this, SLOT( searchResultsReceived ( QList< Status >& ) ) );
-    connect( mAccount.searchPtr(), SIGNAL( error( QString ) ), this, SLOT( error( QString ) ) );
-    connect( ui.txtSearch, SIGNAL( returnPressed() ), this, SLOT( search() ) );
 
-    resetSearchArea();
+    if( mSearch )
+    {
+        connect( mSearch, SIGNAL( searchResultsReceived( QList< Status>& ) ),
+                this, SLOT( searchResultsReceived ( QList< Status >& ) ) );
+        connect( mSearch, SIGNAL( error( QString ) ), this, SLOT( error( QString ) ) );
+        connect( ui.txtSearch, SIGNAL( returnPressed() ), this, SLOT( search() ) );
+
+        show();
+        resetSearchArea();
+    }
+    else
+    {
+        kDebug() << "Service has no search implementation";
+        KMessageBox::error( this, i18n( "This service has no search feature." ) );
+        close();
+    }
 }
 
 SearchWindow::~SearchWindow()
@@ -60,6 +92,9 @@ SearchWindow::~SearchWindow()
     kDebug();
     Settings::setSearchWindowPosition(pos());
     Settings::setSearchWindowSize(size());
+
+    if( mSearch )
+        mSearch->deleteLater();
 }
 
 void SearchWindow::error( QString message )
@@ -97,11 +132,14 @@ void SearchWindow::search()
     ui.txtSearch->setEnabled( false );
     clearSearchResults();
     ui.lblStatus->setText( i18n( "Searching..." ) );
-    mAccount.searchPtr()->requestSearchResults( ui.txtSearch->text(),
+    mSearch->requestSearchResults( ui.txtSearch->text(),
                                    ui.comboSearchType->currentIndex(), 0 );
 
     lastSearchQuery = ui.txtSearch->text();
     lastSearchType = ui.comboSearchType->currentIndex();
+
+    setWindowTitle( i18nc( "Search in service", "%1 Search (%2)",
+                           mAccount.serviceName(), lastSearchQuery ) );
 }
 
 void SearchWindow::updateSearchResults()
@@ -114,9 +152,9 @@ void SearchWindow::updateSearchResults()
             sinceStatusId = listResults.last()->currentStatus().statusId;
 
         ui.lblStatus->setText( i18n( "Searching..." ) );
-        mAccount.searchPtr()->requestSearchResults( lastSearchQuery,
-                                                    lastSearchType,
-                                                    sinceStatusId );
+        mSearch->requestSearchResults( lastSearchQuery,
+                                       lastSearchType,
+                                       sinceStatusId );
     }
 }
 
@@ -208,27 +246,28 @@ void SearchWindow::markStatusesAsRead()
 
 void SearchWindow::setAccount( const Account &account )
 {
-    disconnect( mAccount.searchPtr(), SIGNAL( searchResultsReceived( QList< Status>& ) ),
+    disconnect( mSearch, SIGNAL( searchResultsReceived( QList< Status>& ) ),
                 this, SLOT( searchResultsReceived ( QList< Status >& ) ) );
-    disconnect( mAccount.searchPtr(), SIGNAL( error( QString ) ), this, SLOT( error( QString ) ) );
+    disconnect( mSearch, SIGNAL( error( QString ) ), this, SLOT( error( QString ) ) );
 
     mAccount = account;
     resetSearchArea();
 
-    connect( mAccount.searchPtr(), SIGNAL( searchResultsReceived( QList< Status>& ) ),
+    connect( mSearch, SIGNAL( searchResultsReceived( QList< Status>& ) ),
              this, SLOT( searchResultsReceived ( QList< Status >& ) ) );
-    connect( mAccount.searchPtr(), SIGNAL( error( QString ) ), this, SLOT( error( QString ) ) );
+    connect( mSearch, SIGNAL( error( QString ) ), this, SLOT( error( QString ) ) );
 }
 
 void SearchWindow::resetSearchArea()
 {
+    kDebug();
     ui.txtSearch->setText( QString() );
     ui.txtSearch->setEnabled( true );
     ui.comboSearchType->clear();
     ui.chkAutoUpdate->setChecked( false );
     ui.lblStatus->setText( i18n( "No Search Results" ) );
 
-    QMap<int, QString> searchTypes = mAccount.searchPtr()->getSearchTypes();
+    QMap<int, QString> searchTypes = mSearch->getSearchTypes();
     for( int i = 0; i < searchTypes.count(); ++i )
         ui.comboSearchType->insertItem( i, searchTypes[i] );
 }

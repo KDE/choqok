@@ -110,8 +110,6 @@ private:
     int mPrevUpdateInterval;
     SysTrayIcon *sysIcon;
     QuickTwit *quickWidget;
-    //QWidget* searchRoot;
-    SearchWindow* searchWin;
 };
 
 #endif

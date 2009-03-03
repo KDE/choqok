@@ -23,9 +23,6 @@
 */
 #include "account.h"
 
-#include "twittersearch.h"
-#include "identicasearch.h"
-
 Account::Account( Service type )
 {
     setServiceType(type);
@@ -50,7 +47,6 @@ Account::Account( const Account & account )
     mApiPath = account.apiPath();
     mIsError = account.isError();
     mServiceType = account.serviceType();
-    mSearch = account.searchPtr();
 }
 
 uint Account::userId() const
@@ -118,11 +114,6 @@ QString Account::apiPath() const
     return mApiPath;
 }
 
-Search* Account::searchPtr() const
-{
-    return mSearch;
-}
-
 // void Account::setApiPath( const QString & apiPath )
 // {
 //     mApiPath = apiPath;
@@ -153,18 +144,4 @@ void Account::setServiceType( Service type )
         mServiceName = "Twitter.com";
         mApiPath = "http://twitter.com/";
     }
-    initSearch();
-}
-
-void Account::initSearch()
-{
-    switch (mServiceType)
-    {
-        case Identica:
-            mSearch = new IdenticaSearch;
-            break;
-        case Twitter:
-            mSearch = new TwitterSearch;
-            break;
-    };
 }
