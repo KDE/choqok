@@ -29,8 +29,6 @@
 #include "datacontainers.h"
 #include "backend.h"
 
-#define TIMEOUT 5000
-
 class Backend;
 class QLabel;
 class StatusTextEdit;

@@ -26,11 +26,11 @@
 
 #include <QObject>
 #include <QMap>
-#define DATA_DIR KStandardDirs::locateLocal("data", "choqok/")
-#define MEDIA_DIR KStandardDirs::locateLocal("data", "choqok/media/", true)
+
 class QPixmap;
 class KConfig;
 class KConfigGroup;
+
 namespace KIO
 {
     class Job;
@@ -66,6 +66,7 @@ protected slots:
 
 private:
     static MediaManager *mSelf;
+    QString MEDIA_DIR;
     KConfig *mediaResource;
     KConfigGroup *map;
     QMap<QString, QString> mMediaFilesMap;// QMap<RemotePath, LocalPath>

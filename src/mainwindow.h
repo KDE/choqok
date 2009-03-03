@@ -32,7 +32,7 @@
 #include "ui_appears_base.h"
 #include "searchwindow.h"
 
-#define TIMEOUT 5000
+static const int TIMEOUT = 5000;
 
 class QTimer;
 class QuickTwit;

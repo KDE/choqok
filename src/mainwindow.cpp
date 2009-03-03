@@ -86,11 +86,18 @@ MainWindow::MainWindow()
     connect( AccountManager::self(), SIGNAL( accountRemoved( const QString& ) ),
              this, SLOT( removeAccountTimeLine( const QString& ) ) );
     settingsChanged();
+
+    QPoint pos = Settings::position();
+    if(pos.x() != -1 && pos.y() != -1) {
+        move(pos);
+    }
+
     QTimer::singleShot( 0, this, SLOT( loadAccounts() ) );
 }
 
 MainWindow::~MainWindow()
 {
+    qApp->setStyleSheet(QString()); //crashes if qApp->styleSheet() != QString(), maybe Qt/KDE bug?
     kDebug();
 }
 
@@ -281,6 +288,7 @@ least one account on <a href='http://identi.ca'>Identi.ca</a> or \
 	QPalette p = window()->palette();
 	StatusWidget::setStyle(p.color(QPalette::WindowText),p.color(QPalette::Window).lighter(),p.color(QPalette::WindowText),p.color(QPalette::Window));
     }
+    qApp->setStyleSheet(StatusWidget::getColoredStyle());
 
     int count = mainWidget->count();
     for ( int i = 0; i < count; ++i ) {

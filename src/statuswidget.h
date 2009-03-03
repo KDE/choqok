@@ -33,6 +33,7 @@
 #include "constants.h"
 #include "account.h"
 
+
 /**
 Status Widget
 
@@ -58,10 +59,9 @@ public:
     void setUnread( Notify notifyType );
     void setRead(bool read = true);
     void updateFavoriteUi();
-    bool isRead();
+    bool isRead() const;
 
-public slots:
-    void setUiStyle();
+    static QString getColoredStyle() { return style; };
 
 signals:
     void sigReply( const QString &userName, uint statusId, bool dMsg );
@@ -91,7 +91,6 @@ private:
     QString generateSign();
     void updateUi();
 
-//     static QString getStyle(const QColor&,const QColor&);
     static QString getColorString(const QColor & color);
 
     QTimer timer;
@@ -107,6 +106,11 @@ private:
     static const QString baseText;
     static const QString baseStyle;
     static QString style;
+
+    static QRegExp mUrlRegExp;
+    static QRegExp mUserRegExp;
+    static QRegExp mHashtagRegExp;
+    static QRegExp mGroupRegExp;
 
     KPushButton * btnReply,*btnFavorite,*btnRemove;
 };

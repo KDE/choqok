@@ -28,23 +28,26 @@
 #include <KNotification>
 #include <QProcess>
 
-#include <QInputDialog>
-
 #include <KDE/KLocale>
 #include <QLayout>
 
-#define _15SECS 15000
-#define _MINUTE 60000
-#define _HOUR (60 * _MINUTE)
+static const int _15SECS = 15000;
+static const int _MINUTE = 60000;
+static const int _HOUR = 60*_MINUTE;
 
 const QString StatusWidget::baseText("<table dir=\"%1\" width=\"100%\"><tr><td rowspan=\"2\"\
 width=\"48\">%2</td><td>%3</td></tr><tr><td style=\"font-size:small;\" align=\"right\">%4</td></tr></table>");
-const QString StatusWidget::baseStyle("QFrame.StatusWidget {border: 1px solid rgb(150,150,150);\
+const QString StatusWidget::baseStyle("StatusWidget {border: 1px solid rgb(150,150,150);\
 border-radius:5px;}\
-QFrame.StatusWidget[read=false] {color: %1; background-color: %2}\
-QFrame.StatusWidget[read=true] {color: %3; background-color: %4}");
+StatusWidget[read=false] {color: %1; background-color: %2}\
+StatusWidget[read=true] {color: %3; background-color: %4}");
 
 QString StatusWidget::style;
+
+QRegExp StatusWidget::mUrlRegExp("(https?://[^\\s]+)");
+QRegExp StatusWidget::mUserRegExp("@(\\w+)(\\s|$|\\b)", Qt::CaseInsensitive);
+QRegExp StatusWidget::mHashtagRegExp("#(\\w+)(\\s|$|\\b)", Qt::CaseInsensitive);
+QRegExp StatusWidget::mGroupRegExp("!(\\w+)(\\s|$|\\b)", Qt::CaseInsensitive);
 
 void StatusWidget::setStyle(const QColor& color, const QColor& back, const QColor& read, const QColor& readBack) {
   style = baseStyle.arg(getColorString(color),getColorString(back),getColorString(read),getColorString(readBack));
@@ -58,34 +61,30 @@ StatusWidget::StatusWidget( const Account *account, QWidget *parent )
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     setupUi();
-
-    this->setOpenExternalLinks( true );
+    setOpenLinks(true);
 
     timer.start( _MINUTE );
     connect( &timer, SIGNAL( timeout() ), this, SLOT( updateSign() ) );
 }
 
 void StatusWidget::setupUi() {
-    QVBoxLayout * vl = new QVBoxLayout(this);
-    QHBoxLayout * l = new QHBoxLayout();
-
-    l->setSpacing(0);
-    l->setMargin(0);
-    vl->setSpacing(0);
-    vl->setMargin(0);
-
-    vl->addStretch();
-    vl->addLayout(l);
+    QGridLayout * buttonGrid = new QGridLayout;
 
     btnReply = getButton( "btnReply",i18nc( "@info:tooltip", "Reply" ), "edit-undo" );
     btnRemove = getButton( "btnRemove",i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
     btnFavorite = getButton( "btnFavorite",i18nc( "@info:tooltip", "Favorite" ), "rating" );
     btnFavorite->setCheckable(true);
 
-    l->addWidget(btnReply);
-    l->addWidget(btnRemove);
-    l->addWidget(btnFavorite);
-    l->addStretch();
+    buttonGrid->setRowStretch(0,100);
+    buttonGrid->setColumnStretch(4,100);
+    buttonGrid->setMargin(0);
+    buttonGrid->setSpacing(0);
+
+    buttonGrid->addWidget(btnReply,1,0);
+    buttonGrid->addWidget(btnRemove,1,1);
+    buttonGrid->addWidget(btnFavorite,1,2);
+
+    setLayout(buttonGrid);
 
     connect( btnReply, SIGNAL( clicked( bool ) ), this, SLOT( requestReply() ) );
     connect( btnFavorite, SIGNAL( clicked( bool ) ), this, SLOT( setFavorite( bool ) ) );
@@ -101,8 +100,7 @@ void StatusWidget::enterEvent(QEvent* event) {
       btnReply->setVisible( true );
   else
       btnRemove->setVisible( true );
-
-  QWidget::enterEvent(event);
+  KTextBrowser::enterEvent(event);
 }
 
 void StatusWidget::leaveEvent(QEvent* event) {
@@ -110,9 +108,8 @@ void StatusWidget::leaveEvent(QEvent* event) {
   btnFavorite->setVisible(false);
   btnReply->setVisible(false);
 
-  QWidget::leaveEvent(event);
+  KTextBrowser::leaveEvent(event);
 }
-
 
 KPushButton * StatusWidget::getButton(const QString & objName, const QString & toolTip, const QString & icon) {
     KPushButton * button = new KPushButton(KIcon(icon),QString());
@@ -160,15 +157,14 @@ void StatusWidget::updateUi()
     mSign = generateSign();
     setUserImage();
     updateSign();
-    setUiStyle();
     updateFavoriteUi();
 }
 
 void StatusWidget::setHeight() {
     document()->setTextWidth(width()-2);
-    QSize s = document()->size().toSize();
-    setMinimumHeight(s.height()+2);
-    setMaximumHeight(s.height()+2);
+    int h = document()->size().toSize().height()+2;
+    setMinimumHeight(h);
+    setMaximumHeight(h);
 }
 
 QString StatusWidget::formatDateTime( const QDateTime &time )
@@ -293,18 +289,18 @@ QString StatusWidget::prepareStatus( const QString &text )
     status.replace( " www.", " http://www." );
     if ( status.startsWith( QLatin1String("www.") ) ) 
         status.prepend( "http://" );
-    status.replace(QRegExp("(https?://[^ ]+)"),"<a href='\\1' title='\\1'>\\1</a>");
+    status.replace(mUrlRegExp,"<a href='\\1' title='\\1'>\\1</a>");
 
     QString urlPrefix;
     if( mCurrentAccount->serviceType() == Account::Identica )
 	urlPrefix = "http://identi.ca/";
     else
 	urlPrefix = "http://twitter.com/";
-    status.replace(QRegExp("@(\\w+)(\\s|$|\\b)", Qt::CaseInsensitive),"@<a href='"+urlPrefix+"\\1'>\\1</a>\\2");
+    status.replace(mUserRegExp,"@<a href='"+urlPrefix+"\\1'>\\1</a>\\2");
 
     if ( mCurrentAccount->serviceType() == Account::Identica ) {
-      status.replace(QRegExp( "#(\\w+)(\\s|$|\\b)", Qt::CaseInsensitive ),"#<a href='"+urlPrefix+"tag/\\1'>\\1</a>\\2");
-      status.replace(QRegExp( "!(\\w+)(\\s|$|\\b)", Qt::CaseInsensitive ),"!<a href='"+urlPrefix+"group/\\1'>\\1</a>\\2");
+      status.replace(mHashtagRegExp,"#<a href='"+urlPrefix+"tag/\\1'>\\1</a>\\2");
+      status.replace(mGroupRegExp,"!<a href='"+urlPrefix+"group/\\1'>\\1</a>\\2");
     }
     return status;
 }
@@ -317,7 +313,6 @@ QString StatusWidget::getColorString(const QColor& color) {
 void StatusWidget::setUnread( Notify notifyType )
 {
     mIsRead = false;
-    setUiStyle();
 
     if ( notifyType == WithNotify ) {
         QString iconUrl = MediaManager::self()->getImageLocalPathIfExist( mCurrentStatus.user.profileImageUrl );
@@ -343,12 +338,6 @@ void StatusWidget::setUnread( Notify notifyType )
 void StatusWidget::setRead(bool read)
 {
     mIsRead = read;
-    setUiStyle();
-}
-
-void StatusWidget::setUiStyle()
-{
-    this->setStyleSheet( style );
 }
 
 void StatusWidget::updateFavoriteUi()
@@ -356,7 +345,7 @@ void StatusWidget::updateFavoriteUi()
   btnFavorite->setChecked(mCurrentStatus.isFavorited);
 }
 
-bool StatusWidget::isRead()
+bool StatusWidget::isRead() const
 {
     return mIsRead;
 }
@@ -387,7 +376,6 @@ void StatusWidget::missingStatusReceived( Status status )
         sender()->deleteLater();
     }
 }
-
 
 void StatusWidget::resizeEvent(QResizeEvent* event) {
   setHeight();

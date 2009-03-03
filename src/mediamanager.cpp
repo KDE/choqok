@@ -35,6 +35,7 @@
 MediaManager::MediaManager( QObject* parent ): QObject( parent )
 {
     kDebug();
+    MEDIA_DIR = KStandardDirs::locateLocal("data", "choqok/media/", true);
     mediaResource = new KConfig();
     map = new KConfigGroup( mediaResource, "MediaMap" );
 }

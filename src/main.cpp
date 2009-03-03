@@ -56,14 +56,8 @@ int main( int argc, char **argv )
 
     MainWindow *mainWin = new MainWindow;
     mainWin->setAttribute(Qt::WA_DeleteOnClose, false);
-    QPoint pos = Settings::position();
-    if(pos.x() != -1 && pos.y() != -1) {
-        mainWin->move(pos);
-    }
     if ( Settings::showMainWinOnStart() ) {
         mainWin->show();
     }
-
-
     return app.exec();
 }

@@ -24,8 +24,7 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#define APPNAME "choqok"
-
-#define MAX_STATUS_SIZE 140
+static const char APPNAME[] = "choqok";
+static const int MAX_STATUS_SIZE = 140;
 
 #endif

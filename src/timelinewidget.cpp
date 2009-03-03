@@ -152,15 +152,6 @@ void TimeLineWidget::settingsChanged()
     setDefaultDirection();
     twitter->settingsChanged();
     updateUi();
-
-    foreach(StatusWidget * s,listHomeStatus)
-      s->setUiStyle();
-    foreach(StatusWidget * s,listInboxStatus)
-      s->setUiStyle();
-    foreach(StatusWidget * s,listOutboxStatus)
-      s->setUiStyle();
-    foreach(StatusWidget * s,listReplyStatus)
-      s->setUiStyle();
 }
 
 void TimeLineWidget::updateTimeLines()
@@ -531,12 +522,10 @@ void TimeLineWidget::updateStatusList( QList<StatusWidget*> *list )
                 break;
 
             list->removeAt( i );
-
             --i;
-
             --toBeDelete;
-
-            wt->close();
+//             wt->close();
+	    delete wt;
         }
     }
 }
@@ -544,13 +533,7 @@ void TimeLineWidget::updateStatusList( QList<StatusWidget*> *list )
 void TimeLineWidget::clearTimeLineList( QList< StatusWidget * > * list )
 {
     kDebug();
-    int count = list->count();
-
-    for ( int i = 0; i < count; ++i ) {
-        StatusWidget* wt = list->first();
-        list->removeFirst();
-        wt->close();
-    }
+    qDeleteAll(*list);
 }
 
 void TimeLineWidget::loadConfigurations()
@@ -609,6 +592,10 @@ void TimeLineWidget::setUnreadStatusesToReadState()
     }
 
     listUnreadStatuses.clear();
+    if(unreadStatusCount) {
+      QString s = qApp->styleSheet();
+      qApp->setStyleSheet(s);
+    }
 
     emit sigSetUnread( -unreadStatusCount );
     emit sigSetUnreadOnMainWin( 0 );
