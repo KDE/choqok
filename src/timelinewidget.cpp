@@ -592,10 +592,11 @@ void TimeLineWidget::setUnreadStatusesToReadState()
     }
 
     listUnreadStatuses.clear();
-    if(unreadStatusCount) {
-      QString s = qApp->styleSheet();
-      qApp->setStyleSheet(s);
-    }
+//     if(unreadStatusCount) {
+//       QString s = qApp->styleSheet();
+//       qApp->setStyleSheet(s);
+//     }
+    qApp->setStyleSheet( StatusWidget::getColoredStyle() );
 
     emit sigSetUnread( -unreadStatusCount );
     emit sigSetUnreadOnMainWin( 0 );

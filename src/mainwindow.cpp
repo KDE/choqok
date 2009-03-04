@@ -283,10 +283,12 @@ least one account on <a href='http://identi.ca'>Identi.ca</a> or \
     timelineTimer->setInterval( Settings::updateInterval() *60000 );
 
     if ( Settings::isCustomUi() ) {
-	StatusWidget::setStyle(Settings::newStatusForeColor(),Settings::newStatusBackColor(),Settings::defaultForeColor(),Settings::defaultBackColor());
+    StatusWidget::setStyle( Settings::newStatusForeColor() , Settings::newStatusBackColor(),
+                            Settings::defaultForeColor() , Settings::defaultBackColor());
     } else {
-	QPalette p = window()->palette();
-	StatusWidget::setStyle(p.color(QPalette::WindowText),p.color(QPalette::Window).lighter(),p.color(QPalette::WindowText),p.color(QPalette::Window));
+    QPalette p = window()->palette();
+    StatusWidget::setStyle( p.color(QPalette::WindowText) , p.color(QPalette::Window).lighter() ,
+                            p.color(QPalette::WindowText) , p.color(QPalette::Window));
     }
     qApp->setStyleSheet(StatusWidget::getColoredStyle());
 
