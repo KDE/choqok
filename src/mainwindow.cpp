@@ -290,7 +290,7 @@ least one account on <a href='http://identi.ca'>Identi.ca</a> or \
     StatusWidget::setStyle( p.color(QPalette::WindowText) , p.color(QPalette::Window).lighter() ,
                             p.color(QPalette::WindowText) , p.color(QPalette::Window));
     }
-    qApp->setStyleSheet(StatusWidget::getColoredStyle());
+//     qApp->setStyleSheet(StatusWidget::getColoredStyle());
 
     int count = mainWidget->count();
     for ( int i = 0; i < count; ++i ) {

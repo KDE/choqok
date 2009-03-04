@@ -242,7 +242,7 @@ void SearchWindow::markStatusesAsRead()
     for ( int i = 0;i < count; ++i ) {
         listResults[i]->setRead();
     }
-    qApp->setStyleSheet( qApp->styleSheet() );
+//     qApp->setStyleSheet( qApp->styleSheet() );
 }
 
 void SearchWindow::setAccount( const Account &account )

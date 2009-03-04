@@ -61,8 +61,9 @@ public:
     void updateFavoriteUi();
     bool isRead() const;
 
-    static QString getColoredStyle() { return style; };
-
+//     static QString getColoredStyle() { return style; };
+public slots:
+    void setUiStyle();
 signals:
     void sigReply( const QString &userName, uint statusId, bool dMsg );
     void sigDestroy( uint statusId );

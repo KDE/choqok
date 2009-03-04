@@ -37,10 +37,10 @@ static const int _HOUR = 60*_MINUTE;
 
 const QString StatusWidget::baseText("<table dir=\"%1\" width=\"100%\"><tr><td rowspan=\"2\"\
 width=\"48\">%2</td><td>%3</td></tr><tr><td style=\"font-size:small;\" align=\"right\">%4</td></tr></table>");
-const QString StatusWidget::baseStyle("StatusWidget {border: 1px solid rgb(150,150,150);\
+const QString StatusWidget::baseStyle("QFrame.StatusWidget {border: 1px solid rgb(150,150,150);\
 border-radius:5px;}\
-StatusWidget[read=false] {color: %1; background-color: %2}\
-StatusWidget[read=true] {color: %3; background-color: %4}");
+QFrame.StatusWidget[read=false] {color: %1; background-color: %2}\
+QFrame.StatusWidget[read=true] {color: %3; background-color: %4}");
 
 QString StatusWidget::style;
 
@@ -62,6 +62,7 @@ StatusWidget::StatusWidget( const Account *account, QWidget *parent )
 
     setupUi();
     setOpenLinks(true);
+    setOpenExternalLinks(true);
 
     timer.start( _MINUTE );
     connect( &timer, SIGNAL( timeout() ), this, SLOT( updateSign() ) );
@@ -156,6 +157,7 @@ void StatusWidget::updateUi()
     mStatus = prepareStatus(mCurrentStatus.content);
     mSign = generateSign();
     setUserImage();
+    setUiStyle();
     updateSign();
     updateFavoriteUi();
 }
@@ -338,6 +340,12 @@ void StatusWidget::setUnread( Notify notifyType )
 void StatusWidget::setRead(bool read)
 {
     mIsRead = read;
+    setUiStyle();
+}
+
+void StatusWidget::setUiStyle()
+{
+    setStyleSheet( style );
 }
 
 void StatusWidget::updateFavoriteUi()
