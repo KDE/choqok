@@ -22,6 +22,18 @@
 
 */
 
+#include "mainwindow.h"
+#include "settings.h"
+#include "timelinewidget.h"
+#include "constants.h"
+#include "accounts.h"
+#include "accountmanager.h"
+#include "accountswizard.h"
+#include "searchwindow.h"
+#include "systrayicon.h"
+#include "quicktwit.h"
+#include "statuswidget.h"
+
 #include <KTabWidget>
 #include <kconfigdialog.h>
 #include <kstatusbar.h>
@@ -37,18 +49,6 @@
 #include <QMenu>
 #include <KNotification>
 
-#include "mainwindow.h"
-#include "settings.h"
-#include "timelinewidget.h"
-#include "constants.h"
-#include "accounts.h"
-#include "accountmanager.h"
-#include "accountswizard.h"
-#include "searchwindow.h"
-#include "systrayicon.h"
-#include "quicktwit.h"
-
-#include "statuswidget.h"
 
 MainWindow::MainWindow()
     : KXmlGuiWindow()

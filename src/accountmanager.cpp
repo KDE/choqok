@@ -28,6 +28,7 @@
 #include <kio/deletejob.h>
 #include <kwallet.h>
 #include <kstandarddirs.h>
+#include <KDE/KLocale>
 #include "backend.h"
 
 AccountManager::AccountManager( QObject* parent ):
@@ -80,6 +81,7 @@ Account AccountManager::findAccount( const QString &alias )
     }
     Account a;
     a.setError( true );
+    mLastError = i18n( "There isn't any account with alias %1", alias );
     return a;
 }
 
@@ -99,7 +101,8 @@ bool AccountManager::removeAccount( const QString &alias )
             }
             for ( int i = Backend::HomeTimeLine; i <= Backend::OutboxTimeLine; ++i ) {
                 QString tmpFile;
-                tmpFile = KStandardDirs::locate( "data", "choqok/" + generateStatusBackupFileName( alias, ( Backend::TimeLineType )i ) );
+                tmpFile = KStandardDirs::locate( "data", "choqok/" +
+                        generateStatusBackupFileName( alias, ( Backend::TimeLineType )i ) );
                 kDebug() << "Will remove " << tmpFile;
                 const KUrl path( tmpFile );
                 KIO::DeleteJob * delJob = KIO::del( path, KIO::HideProgressInfo );
@@ -109,6 +112,7 @@ bool AccountManager::removeAccount( const QString &alias )
             return true;
         }
     }
+    mLastError = i18n( "There isn't any account with alias %1", alias );
     return false;
 }
 
@@ -127,6 +131,7 @@ Account & AccountManager::addAccount( Account & account )
         Account curracc = it.next();
         if ( account.alias() == curracc.alias() ) {
             account.setError( true );
+            mLastError = i18n( "An account with this alias already exists, you have to select a unique alias" );
             return account;
         }
     }
@@ -254,4 +259,8 @@ QString AccountManager::generateStatusBackupFileName( const QString &alias, Back
     return name;
 }
 
+QString AccountManager::lastError() const
+{
+    return mLastError;
+}
 #include "accountmanager.moc"

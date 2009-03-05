@@ -112,7 +112,11 @@ void AccountsWizard::slotUserVerified( Account * userAccount )
         mAccount = AccountManager::self()->addAccount( mAccount );
     }
     if ( mAccount.isError() ) {
+        if ( progress )
+            progress->deleteLater();
         kDebug() << "Cannot add or modify account with alias " << mAccount.alias();
+        KMessageBox::detailedError(this, i18n( "An error occurred when adding this account" ),
+                                    AccountManager::self()->lastError());
         return;
     }
 

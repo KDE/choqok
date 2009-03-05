@@ -68,9 +68,8 @@ public:
 
     /**
      * \brief Return the account asked
-     * \param protocolId is the ID for the protocol
-     * \param accountId is the ID for the account you want
-     * \return the Account object found or NULL if no account was found
+     * \param alias is the alias of account
+     * \return the Account object found
      */
     Account findAccount( const QString &alias );
 
@@ -114,6 +113,9 @@ public:
      * @param list list of new friends
      */
     void saveFriendsList( const QString &alias, const QStringList &list );
+
+    QString lastError() const;
+
 signals:
     void accountAdded( const Account &account );
     void accountRemoved( const QString &alias );
@@ -127,6 +129,7 @@ private:
     QList<Account> mAccounts;
     KConfig *conf;
     KWallet::Wallet* mWallet;
+    QString mLastError;
 };
 
 #endif

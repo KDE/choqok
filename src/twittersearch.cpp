@@ -53,7 +53,7 @@ KUrl TwitterSearch::buildUrl( QString query, int option, uint sinceStatusId )
     kDebug();
     QString baseUrl = "http://search.twitter.com/search.atom?";
     if( sinceStatusId )
-        baseUrl += "since_id=" + QString::number( sinceStatusId ) + "&";
+        baseUrl += "since_id=" + QString::number( sinceStatusId ) + '&';
     baseUrl += "q=";
 
     kDebug() << "Search URL: " << baseUrl;
