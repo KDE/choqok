@@ -27,6 +27,8 @@
 #include <QProgressBar>
 #include <KMessageBox>
 #include "backend.h"
+#include <QTimer>
+
 AccountsWizard::AccountsWizard( QString alias, QWidget *parent )
         : KDialog( parent )
 {
@@ -78,13 +80,7 @@ void AccountsWizard::slotButtonClicked( int button )
             return;
         grid->addWidget( progress, grid->rowCount(), 0, grid->rowCount(), 2 );
         ///Check for account
-//         Account a;
         mAccount.setServiceType( (Account::Service) ui.kcfg_service->currentIndex() );
-//         if ( ui.kcfg_service->currentIndex() == 1 ) {
-//             mAccount.setServiceType(Account::Identica);
-//         } else {
-//             mAccount.setServiceType(Account::Twitter);
-//         }
         mAccount.setUsername( ui.kcfg_username->text() );
         mAccount.setPassword( ui.kcfg_password->text() );
         mAccount.setDirection(( Qt::LayoutDirection )ui.kcfg_direction->currentIndex() );
@@ -94,6 +90,7 @@ void AccountsWizard::slotButtonClicked( int button )
         connect( b, SIGNAL( userVerified( Account* ) ), this, SLOT( slotUserVerified( Account* ) ) );
         connect( b, SIGNAL( sigError( const QString& ) ), this, SLOT( slotError( const QString& ) ) );
         b->verifyCredential();
+        QTimer::singleShot( 45000, this, SLOT( handleVerifyTimeout() ) );
     } else
         KDialog::slotButtonClicked( button );
 }
@@ -132,6 +129,14 @@ void AccountsWizard::slotError( const QString & errMsg )
 {
     kDebug();
     KMessageBox::detailedError( this, i18n( "authentication failed, please check your credentials." ), errMsg );
+    if ( progress )
+        progress->deleteLater();
+}
+
+void AccountsWizard::handleVerifyTimeout()
+{
+    KMessageBox::sorry(this, i18n( "Verification progress timed out,\
+check your internet connection and credentials, and try again ..." ) , i18n( "Timeout" ) );
     if ( progress )
         progress->deleteLater();
 }

@@ -43,6 +43,7 @@ protected slots:
     virtual void slotButtonClicked( int button );
     void slotUserVerified( Account *userAccount );
     void slotError( const QString &errMsg );
+    void handleVerifyTimeout();
 
 private:
     void loadAccount( QString &alias );
