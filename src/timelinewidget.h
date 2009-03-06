@@ -90,6 +90,7 @@ signals:
     void systemNotify( const QString &title, const QString &message, const QString &iconUrl );
     void sigSetUnreadOnMainWin( int unread );
     void showMe();
+    void sigSearch( int type, const QString & query = 0);
 //     void sigStatusUpdated (bool isError);
 
 protected:

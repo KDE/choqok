@@ -53,7 +53,7 @@ public:
     void clearSearchResults();
     void updateStatusList();
     void setAccount(const Account &account);
-    void init();
+    void init(int type = 0, const QString & query = QString());
 
 protected:
     virtual void keyPressEvent( QKeyEvent *e );
@@ -74,8 +74,11 @@ signals:
 
 private:
     void addNewStatusesToUi( QList<Status> &statusList );
-    void resetSearchArea();
+    void resetSearchArea(int type = 0, const QString & query = QString());
     void markStatusesAsRead();
+
+private slots:
+    void updateSearchArea(int type = 0, const QString & query = QString());
 
 protected:
     QList<StatusWidget*> listResults;

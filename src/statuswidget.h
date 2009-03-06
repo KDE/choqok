@@ -33,7 +33,6 @@
 #include "constants.h"
 #include "account.h"
 
-
 /**
 Status Widget
 
@@ -65,6 +64,7 @@ public:
 public slots:
     void setUiStyle();
 signals:
+    void sigSearch(int type, const QString & search);
     void sigReply( const QString &userName, uint statusId, bool dMsg );
     void sigDestroy( uint statusId );
     void sigFavorite( uint statusId, bool isFavorite );
@@ -77,6 +77,7 @@ protected slots:
     void userImageLocalPathFetched( const QString &remotePath, const QString &localPath );
     void missingStatusReceived( Status status );
     void setHeight();
+    void checkAnchor(const QUrl & url);
 
 protected:
     void resizeEvent ( QResizeEvent * event );
@@ -85,6 +86,7 @@ protected:
 
 private:
     void setupUi();
+
     static KPushButton * getButton(const QString & objName, const QString & toolTip, const QString & icon);
 
     void setUserImage();
@@ -102,7 +104,7 @@ private:
     QString mSign;
     QString mStatus;
     QString mImage;
-    QString mDir;
+//     QString mDir;
 
     static const QString baseText;
     static const QString baseStyle;

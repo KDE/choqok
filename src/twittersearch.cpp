@@ -134,7 +134,7 @@ QList<Status>* TwitterSearch::parseAtom( const QByteArray &buffer )
 
     if ( root.tagName() != "feed" ) {
         kDebug() << "There is no feed element in Atom feed " << buffer.data();
-        return 0;
+        return statusList;
     }
 
     QDomNode node = root.firstChild();

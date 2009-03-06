@@ -248,7 +248,7 @@ void MainWindow::optionsPreferences()
     dialog->show();
 }
 
-void MainWindow::search()
+void MainWindow::search(int type, const QString& query)
 {
     kDebug();
     TimeLineWidget * tmp = qobject_cast<TimeLineWidget *>( mainWidget->widget( mainWidget->currentIndex() ) );
@@ -264,7 +264,7 @@ void MainWindow::search()
     connect( timelineTimer, SIGNAL( timeout() ),
              searchWin, SLOT( autoUpdateSearchResults() ) );
 
-    searchWin->init();
+    searchWin->init(type, query);
 }
 
 void MainWindow::settingsChanged()
@@ -378,6 +378,7 @@ void MainWindow::addAccountTimeLine( const Account & account, bool isStartup )
     connect( this, SIGNAL( setUnreadStatusesToReadState() ), widget, SLOT( setUnreadStatusesToReadState() ) );
 
     connect( widget, SIGNAL( sigSetUnreadOnMainWin( int ) ), this, SLOT( setNumOfUnreadOnMainWin( int ) ) );
+    connect( widget, SIGNAL(sigSearch(int,QString)),this,SLOT(search(int,QString)));
 
     mainWidget->addTab( widget, account.alias() );
 

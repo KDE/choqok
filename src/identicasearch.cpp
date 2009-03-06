@@ -130,7 +130,7 @@ QList<Status>* IdenticaSearch::parseRss( const QByteArray &buffer )
 
     if ( root.tagName() != "rdf:RDF" ) {
         kDebug() << "There is no rdf:RDF element in RSS feed " << buffer.data();
-        return 0;
+        return statusList;
     }
 
     QDomNode node = root.firstChild();

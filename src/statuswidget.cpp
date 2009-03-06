@@ -28,15 +28,23 @@
 #include <KNotification>
 #include <QProcess>
 
+#include "mainwindow.h"
+
+#include <KMenu>
+
 #include <KDE/KLocale>
 #include <QLayout>
+#include <KToolInvocation>
+#include "identicasearch.h"
+#include "twittersearch.h"
+#include <KAction>
 
 static const int _15SECS = 15000;
 static const int _MINUTE = 60000;
 static const int _HOUR = 60*_MINUTE;
 
-const QString StatusWidget::baseText("<table dir=\"%1\" width=\"100%\"><tr><td rowspan=\"2\"\
-width=\"48\">%2</td><td>%3</td></tr><tr><td style=\"font-size:small;\" align=\"right\">%4</td></tr></table>");
+const QString StatusWidget::baseText("<table width=\"100%\"><tr><td rowspan=\"2\"\
+ width=\"48\">%2</td><td>%3</td></tr><tr><td style=\"font-size:small;\" align=\"right\">%4</td></tr></table>");
 const QString StatusWidget::baseStyle("QFrame.StatusWidget {border: 1px solid rgb(150,150,150);\
 border-radius:5px;}\
 QFrame.StatusWidget[read=false] {color: %1; background-color: %2}\
@@ -61,11 +69,56 @@ StatusWidget::StatusWidget( const Account *account, QWidget *parent )
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     setupUi();
-    setOpenLinks(true);
-    setOpenExternalLinks(true);
+    setOpenLinks(false);
 
     timer.start( _MINUTE );
     connect( &timer, SIGNAL( timeout() ), this, SLOT( updateSign() ) );
+    connect(this,SIGNAL(anchorClicked(QUrl)),this,SLOT(checkAnchor(QUrl)));
+}
+
+void StatusWidget::checkAnchor(const QUrl & url) {
+  QString scheme = url.scheme();
+  Account::Service s = mCurrentAccount->serviceType();
+  int type = 0;
+  if(scheme == "group" && s == Account::Identica) {
+    type = IdenticaSearch::ReferenceGroup;
+  } else if(scheme == "tag") {
+    switch(s) {
+    case Account::Identica:
+      type = IdenticaSearch::ReferenceHashtag;
+    break;
+    case Account::Twitter:
+      type = TwitterSearch::ReferenceHashtag;
+    }
+  } else if(scheme == "user") {
+    KMenu menu;
+//     menu.addTitle(i18n("Search"));
+    KAction * from = new KAction(KIcon("edit-find-user"),i18n("from %1",url.host()),&menu);
+    KAction * to = new KAction(KIcon("meeting-attending"),i18n("replies to %1",url.host()),&menu);
+    menu.addAction(from);
+    menu.addAction(to);
+    QAction * ret;
+    KAction *cont;
+    switch(s) {
+    case Account::Identica:
+      from->setData(IdenticaSearch::FromUser);
+      to->setData(IdenticaSearch::ToUser);
+    break;
+    case Account::Twitter:
+      cont = new KAction(KIcon("user-properties"),i18n("including %1",url.host()),&menu);
+      menu.addAction(cont);
+      from->setData(TwitterSearch::FromUser);
+      to->setData(TwitterSearch::ToUser);
+      cont->setData(TwitterSearch::ReferenceUser);
+    }
+    ret = menu.exec(QCursor::pos());
+    if(ret == 0) return;
+    type = ret->data().toInt();
+  } else {
+    KToolInvocation::invokeBrowser(url.toString());
+    return;
+  }
+  emit sigSearch(type,url.host());
 }
 
 void StatusWidget::setupUi() {
@@ -84,6 +137,8 @@ void StatusWidget::setupUi() {
     buttonGrid->addWidget(btnReply,1,0);
     buttonGrid->addWidget(btnRemove,1,1);
     buttonGrid->addWidget(btnFavorite,1,2);
+
+    document()->addResource(QTextDocument::ImageResource,QUrl("icon://web"),KIcon("applications-internet").pixmap(8));
 
     setLayout(buttonGrid);
 
@@ -153,7 +208,9 @@ void StatusWidget::updateUi()
     } else {
         btnRemove->setVisible( false );
     }
-    mDir = ( mCurrentAccount->direction() == Qt::RightToLeft ) ? "rtl" : "ltr";
+    QTextOption options(document()->defaultTextOption());
+    options.setTextDirection(mCurrentAccount->direction());
+    document()->setDefaultTextOption(options);
     mStatus = prepareStatus(mCurrentStatus.content);
     mSign = generateSign();
     setUserImage();
@@ -209,8 +266,8 @@ QString StatusWidget::generateSign()
 {
     QString sign;
     if ( mCurrentAccount->serviceType() == Account::Identica ) {
-        sign = "<b><a href=\"http://identi.ca/" + mCurrentStatus.user.screenName + "\" title=\"" +
-                     mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName + "</a> - </b>";
+        sign = "<b><a href='user://"+mCurrentStatus.user.screenName+"'>" + mCurrentStatus.user.screenName + "</a> <a href=\"http://identi.ca/" + mCurrentStatus.user.screenName + "\" title=\"" +
+                     mCurrentStatus.user.description + "\"><img src=\"icon://web\" /></a> - </b>";
         sign += "<a href=\"http://identi.ca/notice/" + QString::number( mCurrentStatus.statusId ) +
         "\" title=\"" + mCurrentStatus.creationDateTime.toString() + "\">%1</a>";
         if ( !mCurrentStatus.isDMessage ) {
@@ -221,8 +278,8 @@ QString StatusWidget::generateSign()
             }
         }
     } else {
-        sign = "<b><a href=\"http://twitter.com/" + mCurrentStatus.user.screenName + "\" title=\"" +
-                     mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName + "</a> - </b>";
+        sign = "<b><a href='user://"+mCurrentStatus.user.screenName+"'>" + mCurrentStatus.user.screenName + "</a> <a href=\"http://twitter.com/" + mCurrentStatus.user.screenName + "\" title=\"" +
+                     mCurrentStatus.user.description + "\"><img src=\"icon://web\" /></a> - </b>";
         sign += "<a href=\"http://twitter.com/" + mCurrentStatus.user.screenName + "/statuses/" +
                      QString::number( mCurrentStatus.statusId ) + "\" title=\"" +
                      mCurrentStatus.creationDateTime.toString() + "\">%1</a>";
@@ -240,7 +297,7 @@ QString StatusWidget::generateSign()
 
 void StatusWidget::updateSign()
 { 
-    setHtml( baseText.arg( mDir, mImage, mStatus, mSign.arg( formatDateTime( mCurrentStatus.creationDateTime ) ) ) );
+    setHtml( baseText.arg( mImage, mStatus, mSign.arg( formatDateTime( mCurrentStatus.creationDateTime ) ) ) );
 }
 
 void StatusWidget::requestDestroy()
@@ -298,11 +355,13 @@ QString StatusWidget::prepareStatus( const QString &text )
 	urlPrefix = "http://identi.ca/";
     else
 	urlPrefix = "http://twitter.com/";
-    status.replace(mUserRegExp,"@<a href='"+urlPrefix+"\\1'>\\1</a>\\2");
 
+      status.replace(mUserRegExp,"@<a href='user://\\1'>\\1</a> <a href='"+urlPrefix+"\\1'><img src=\"icon://web\" /></a>\\2");
     if ( mCurrentAccount->serviceType() == Account::Identica ) {
-      status.replace(mHashtagRegExp,"#<a href='"+urlPrefix+"tag/\\1'>\\1</a>\\2");
-      status.replace(mGroupRegExp,"!<a href='"+urlPrefix+"group/\\1'>\\1</a>\\2");
+	status.replace(mGroupRegExp,"!<a href='group://\\1'>\\1</a> <a href='"+urlPrefix+"group/\\1'><img src=\"icon://web\" /></a>\\2");
+	status.replace(mHashtagRegExp,"#<a href='tag://\\1'>\\1</a> <a href='"+urlPrefix+"tag/\\1'><img src=\"icon://web\" /></a>\\2");
+      } else {
+	status.replace(mHashtagRegExp,"#<a href='tag://\\1'>\\1</a>\\2");
     }
     return status;
 }
@@ -384,7 +443,6 @@ void StatusWidget::missingStatusReceived( Status status )
         sender()->deleteLater();
     }
 }
-
 void StatusWidget::resizeEvent(QResizeEvent* event) {
   setHeight();
   KTextBrowser::resizeEvent(event);

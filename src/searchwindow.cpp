@@ -65,7 +65,7 @@ SearchWindow::SearchWindow( const Account &account, QWidget* parent ) :
                            mAccount.serviceName() ) );
 }
 
-void SearchWindow::init()
+void SearchWindow::init(int type, const QString & query)
 {
     kDebug();
 
@@ -77,7 +77,7 @@ void SearchWindow::init()
         connect( ui.txtSearch, SIGNAL( returnPressed() ), this, SLOT( search() ) );
 
         show();
-        resetSearchArea();
+        resetSearchArea(type,query);
     }
     else
     {
@@ -189,6 +189,7 @@ void SearchWindow::addNewStatusesToUi( QList<Status> &statusList )
 
         connect( wt, SIGNAL( sigFavorite( uint, bool ) ),
                  this, SIGNAL( forwardFavorited( uint, bool ) ) );
+	connect (wt,SIGNAL(sigSearch(int,QString)),this,SLOT(updateSearchArea(int,QString)));
 
         wt->setAttribute( Qt::WA_DeleteOnClose );
         wt->setCurrentStatus( *it );
@@ -259,19 +260,34 @@ void SearchWindow::setAccount( const Account &account )
     connect( mSearch, SIGNAL( error( QString ) ), this, SLOT( error( QString ) ) );
 }
 
-void SearchWindow::resetSearchArea()
+void SearchWindow::resetSearchArea(int type, const QString & query)
 {
     kDebug();
-    ui.txtSearch->setText( QString() );
+    ui.txtSearch->setText( query );
     ui.txtSearch->setEnabled( true );
     ui.comboSearchType->clear();
     ui.chkAutoUpdate->setChecked( false );
     ui.lblStatus->setText( i18n( "No Search Results" ) );
 
     QMap<int, QString> searchTypes = mSearch->getSearchTypes();
-    for( int i = 0; i < searchTypes.count(); ++i )
+    for( int i = 0; i < searchTypes.count(); ++i ) {
         ui.comboSearchType->insertItem( i, searchTypes[i] );
+    }
+
+    if(!query.isEmpty()) {
+      ui.comboSearchType->setCurrentIndex(type);
+      search();
+    }
 }
+
+void SearchWindow::updateSearchArea(int type, const QString& query) {
+  ui.txtSearch->setText(query);
+  if(!query.isEmpty()) {
+    ui.comboSearchType->setCurrentIndex(type);
+    search();
+  }
+}
+
 
 void SearchWindow::keyPressEvent( QKeyEvent* e )
 {

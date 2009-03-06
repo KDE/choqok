@@ -70,10 +70,11 @@ signals:
 
 public slots:
     void systemNotify( const QString &title, const QString &message, const QString &iconUrl );
+    void search(int type = 0, const QString &search = QString());
 
 protected slots:
     void optionsPreferences();
-    void search();
+//     void search();
     void settingsChanged();
     void notify( const QString &message, bool isPermanent = false );
     void quitApp();
