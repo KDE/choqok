@@ -274,7 +274,7 @@ QString StatusWidget::generateSign()
             sign += " - " + mCurrentStatus.source;
             if ( mCurrentStatus.replyToStatusId > 0 ) {
                 QString link = "http://identi.ca/notice/" + QString::number( mCurrentStatus.replyToStatusId );
-                sign += " - <a href=\"" + link + "\" title=\"" + link + "\">in reply to</a>";
+                sign += " - <a href=\"" + link + "\" title=\"" + link + "\">" + i18n("in reply to") + "</a>";
             }
         }
     } else {
@@ -288,7 +288,7 @@ QString StatusWidget::generateSign()
             if ( mCurrentStatus.replyToStatusId > 0 ) {
                 QString link = "http://twitter.com/" + mCurrentStatus.replyToUserScreenName + "/statuses/"
                 + QString::number( mCurrentStatus.replyToStatusId );
-                sign += " - <a href=\"" + link + "\" title=\"" + link + "\">in reply to</a>";
+                sign += " - <a href=\"" + link + "\" title=\"" + link + "\">" + i18n("in reply to") + "</a>";
             }
         }
     }
