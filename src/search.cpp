@@ -24,12 +24,12 @@
 
 #include "search.h"
 
-Search::Search()
+Search::Search( const QString searchUrl, QObject *parent )
+    : QObject( parent )
 {
+    mSearchUrl = searchUrl;
     /**
      * TODO Support multiple pages on search results! instead of just first 20 latest results!
-     * And its better to have something like Google reader:
-     * i.e. load previous pages on scrollbar riched maximum value
      */
 }
 

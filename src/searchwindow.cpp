@@ -47,10 +47,11 @@ SearchWindow::SearchWindow( const Account &account, QWidget* parent ) :
     switch( mAccount.serviceType() )
     {
         case Account::Twitter:
-            mSearch = new TwitterSearch;
+            mSearch = new TwitterSearch( QString(), this );
             break;
         case Account::Identica:
-            mSearch = new IdenticaSearch;
+        case Account::Laconica:
+            mSearch = new IdenticaSearch( mAccount.homepage(), this );
             break;
         default:
             mSearch = 0;
@@ -275,12 +276,14 @@ void SearchWindow::resetSearchArea(int type, const QString & query)
     }
 
     if(!query.isEmpty()) {
-      ui.comboSearchType->setCurrentIndex(type);
-      search();
+        kDebug()<<type;
+        ui.comboSearchType->setCurrentIndex(type);
+        search();
     }
 }
 
-void SearchWindow::updateSearchArea(int type, const QString& query) {
+void SearchWindow::updateSearchArea(int type, const QString& query)
+{
   ui.txtSearch->setText(query);
   if(!query.isEmpty()) {
     ui.comboSearchType->setCurrentIndex(type);

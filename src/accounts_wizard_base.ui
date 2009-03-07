@@ -177,7 +177,14 @@ p, li { white-space: pre-wrap; }
     </widget>
    </item>
    <item row="2" column="1" >
-    <widget class="KLineEdit" name="kcfg_homepage" />
+    <widget class="KLineEdit" name="kcfg_homepage" >
+     <property name="text" >
+      <string>http://</string>
+     </property>
+     <property name="showClearButton" stdset="0" >
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

@@ -82,11 +82,12 @@ void StatusWidget::checkAnchor(const QUrl & url)
   QString scheme = url.scheme();
   Account::Service s = mCurrentAccount->serviceType();
   int type = 0;
-  if(scheme == "group" && s == Account::Identica) {
+  if( scheme == "group" && ( s == Account::Identica || s == Account::Laconica ) ) {
     type = IdenticaSearch::ReferenceGroup;
   } else if(scheme == "tag") {
     switch(s) {
     case Account::Identica:
+    case Account::Laconica:
       type = IdenticaSearch::ReferenceHashtag;
     break;
     case Account::Twitter:
@@ -103,6 +104,7 @@ void StatusWidget::checkAnchor(const QUrl & url)
     KAction *cont;
     switch(s) {
     case Account::Identica:
+    case Account::Laconica:
       from->setData(IdenticaSearch::FromUser);
       to->setData(IdenticaSearch::ToUser);
     break;
@@ -299,7 +301,7 @@ void StatusWidget::requestDestroy()
 
 QString StatusWidget::prepareStatus( const QString &text )
 {
-    if(text.isEmpty() && mCurrentAccount->serviceType() == Account::Identica){
+    if(text.isEmpty() && ( mCurrentAccount->serviceType() == Account::Identica || mCurrentAccount->serviceType() == Account::Laconica ) ){
         Backend *b = new Backend(new Account(*mCurrentAccount), this);
         connect(b, SIGNAL(singleStatusReceived( Status )),
                  this, SLOT(missingStatusReceived( Status )));
@@ -343,7 +345,7 @@ QString StatusWidget::prepareStatus( const QString &text )
     status.replace(mUrlRegExp,"<a href='\\1' title='\\1'>\\1</a>");
 
     status.replace(mUserRegExp,"\\1@<a href='user://\\2'>\\2</a> <a href='"+ mCurrentAccount->homepage() +"\\2'><img src=\"icon://web\" /></a>");
-    if ( mCurrentAccount->serviceType() == Account::Identica ) {
+    if ( mCurrentAccount->serviceType() == Account::Identica || mCurrentAccount->serviceType() == Account::Laconica ) {
         status.replace(mGroupRegExp,"\\1!<a href='group://\\2'>\\2</a> <a href='"+ mCurrentAccount->homepage() +"group/\\2'><img src=\"icon://web\" /></a>");
         status.replace(mHashtagRegExp,"\\1#<a href='tag://\\2'>\\2</a> <a href='"+ mCurrentAccount->homepage() +"tag/\\1'><img src=\"icon://web\" /></a>");
       } else {

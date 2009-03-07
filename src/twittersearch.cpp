@@ -32,8 +32,8 @@
 #include <kio/netaccess.h>
 #include <kdebug.h>
 
-TwitterSearch::TwitterSearch() :
-        Search()
+TwitterSearch::TwitterSearch( const QString searchUrl, QObject *parent ) :
+        Search(searchUrl, parent)
 {
     kDebug();
     mSearchTypes[CustomSearch] = i18n( "Custom Search" );

@@ -74,6 +74,9 @@ void AccountsWizard::slotButtonClicked( int button )
 {
     kDebug();
     if ( button == KDialog::Ok ) {
+        QString home = ui.kcfg_homepage->text();
+        if( home.at( home.count() - 1 ) != '/' )
+            ui.kcfg_homepage->setText( home.append('/') );
         ///Show ProgressBar:
         if ( progress )
             progress = 0L;

@@ -32,8 +32,8 @@
 #include <kio/netaccess.h>
 #include <kdebug.h>
 
-IdenticaSearch::IdenticaSearch() :
-        Search()
+IdenticaSearch::IdenticaSearch( const QString searchUrl, QObject *parent ) :
+        Search(searchUrl, parent)
 {
     kDebug();
     mSearchTypes[ToUser] = i18n( "Dents To This User" );
@@ -51,7 +51,7 @@ KUrl IdenticaSearch::buildUrl( QString query, int option, uint sinceStatusId )
 {
     kDebug();
     Q_UNUSED(sinceStatusId);
-    QString baseUrl = "http://identi.ca/";
+    QString baseUrl = mSearchUrl;
 
     QString formattedQuery;
     switch ( option ) {
@@ -146,7 +146,7 @@ QList<Status>* IdenticaSearch::parseRss( const QByteArray &buffer )
         QDomAttr statusIdAttr = node.toElement().attributeNode( "rdf:about" );
         uint statusId = 0;
         sscanf( qPrintable( statusIdAttr.value() ),
-                "http://identi.ca/notice/%d", &statusId );
+                qPrintable( mSearchUrl + "notice/%d" ), &statusId );
 
         if( statusId <= mSinceStatusId )
         {
@@ -183,7 +183,7 @@ QList<Status>* IdenticaSearch::parseRss( const QByteArray &buffer )
                 QDomAttr userIdAttr = itemNode.toElement().attributeNode( "rdf:resource" );
                 int id = 0;
                 sscanf( qPrintable( userIdAttr.value() ),
-                        "http://identi.ca/user/%d", &id );
+                        qPrintable( mSearchUrl + "user/%d" ), &id );
                 status.user.userId = id;
             } else if ( itemNode.toElement().tagName() == "laconica:postIcon" ) {
                 QDomAttr imageAttr = itemNode.toElement().attributeNode( "rdf:resource" );
