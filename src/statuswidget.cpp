@@ -52,12 +52,13 @@ QFrame.StatusWidget[read=true] {color: %3; background-color: %4}");
 
 QString StatusWidget::style;
 
-QRegExp StatusWidget::mUrlRegExp("(https?://[^\\s]+)");
-QRegExp StatusWidget::mUserRegExp("@(\\w+)(\\s|$|\\b)", Qt::CaseInsensitive);
-QRegExp StatusWidget::mHashtagRegExp("#(\\w+)(\\s|$|\\b)", Qt::CaseInsensitive);
-QRegExp StatusWidget::mGroupRegExp("!(\\w+)(\\s|$|\\b)", Qt::CaseInsensitive);
+QRegExp StatusWidget::mUrlRegExp("(https?://[^\\s<>'\"]+[^!,\\.\\s<>'\"\\]])"); // "borrowed" from microblog plasmoid
+QRegExp StatusWidget::mUserRegExp("([\\s]|^)@([^\\s\\W]+)", Qt::CaseInsensitive);
+QRegExp StatusWidget::mHashtagRegExp("([\\s]|^)#([^\\s\\W]+)", Qt::CaseInsensitive);
+QRegExp StatusWidget::mGroupRegExp("([\\s]|^)!([^\\s\\W]+)", Qt::CaseInsensitive);
 
-void StatusWidget::setStyle(const QColor& color, const QColor& back, const QColor& read, const QColor& readBack) {
+void StatusWidget::setStyle(const QColor& color, const QColor& back, const QColor& read, const QColor& readBack)
+{
   style = baseStyle.arg(getColorString(color),getColorString(back),getColorString(read),getColorString(readBack));
 }
 
@@ -76,7 +77,8 @@ StatusWidget::StatusWidget( const Account *account, QWidget *parent )
     connect(this,SIGNAL(anchorClicked(QUrl)),this,SLOT(checkAnchor(QUrl)));
 }
 
-void StatusWidget::checkAnchor(const QUrl & url) {
+void StatusWidget::checkAnchor(const QUrl & url)
+{
   QString scheme = url.scheme();
   Account::Service s = mCurrentAccount->serviceType();
   int type = 0;
@@ -121,7 +123,8 @@ void StatusWidget::checkAnchor(const QUrl & url) {
   emit sigSearch(type,url.host());
 }
 
-void StatusWidget::setupUi() {
+void StatusWidget::setupUi()
+{
     QGridLayout * buttonGrid = new QGridLayout;
 
     btnReply = getButton( "btnReply",i18nc( "@info:tooltip", "Reply" ), "edit-undo" );
@@ -149,7 +152,8 @@ void StatusWidget::setupUi() {
     connect(this,SIGNAL(textChanged()),this,SLOT(setHeight()));
 }
 
-void StatusWidget::enterEvent(QEvent* event) {
+void StatusWidget::enterEvent(QEvent* event)
+{
   if ( !mCurrentStatus.isDMessage )
       btnFavorite->setVisible( true );
   if ( mCurrentStatus.user.userId != mCurrentAccount->userId() )
@@ -159,7 +163,8 @@ void StatusWidget::enterEvent(QEvent* event) {
   KTextBrowser::enterEvent(event);
 }
 
-void StatusWidget::leaveEvent(QEvent* event) {
+void StatusWidget::leaveEvent(QEvent* event)
+{
   btnRemove->setVisible(false);
   btnFavorite->setVisible(false);
   btnReply->setVisible(false);
@@ -167,7 +172,8 @@ void StatusWidget::leaveEvent(QEvent* event) {
   KTextBrowser::leaveEvent(event);
 }
 
-KPushButton * StatusWidget::getButton(const QString & objName, const QString & toolTip, const QString & icon) {
+KPushButton * StatusWidget::getButton(const QString & objName, const QString & toolTip, const QString & icon)
+{
     KPushButton * button = new KPushButton(KIcon(icon),QString());
     button->setObjectName(objName);
     button->setToolTip(toolTip);
@@ -219,7 +225,8 @@ void StatusWidget::updateUi()
     updateFavoriteUi();
 }
 
-void StatusWidget::setHeight() {
+void StatusWidget::setHeight()
+{
     document()->setTextWidth(width()-2);
     int h = document()->size().toSize().height()+2;
     setMinimumHeight(h);
@@ -335,17 +342,18 @@ QString StatusWidget::prepareStatus( const QString &text )
         status.prepend( "http://" );
     status.replace(mUrlRegExp,"<a href='\\1' title='\\1'>\\1</a>");
 
-    status.replace(mUserRegExp,"@<a href='user://\\1'>\\1</a> <a href='"+ mCurrentAccount->homepage() +"/\\1'><img src=\"icon://web\" /></a>\\2");
+    status.replace(mUserRegExp,"\\1@<a href='user://\\2'>\\2</a> <a href='"+ mCurrentAccount->homepage() +"\\2'><img src=\"icon://web\" /></a>");
     if ( mCurrentAccount->serviceType() == Account::Identica ) {
-        status.replace(mGroupRegExp,"!<a href='group://\\1'>\\1</a> <a href='"+ mCurrentAccount->homepage() +"/group/\\1'><img src=\"icon://web\" /></a>\\2");
-        status.replace(mHashtagRegExp,"#<a href='tag://\\1'>\\1</a> <a href='"+ mCurrentAccount->homepage() +"/tag/\\1'><img src=\"icon://web\" /></a>\\2");
+        status.replace(mGroupRegExp,"\\1!<a href='group://\\2'>\\2</a> <a href='"+ mCurrentAccount->homepage() +"group/\\2'><img src=\"icon://web\" /></a>");
+        status.replace(mHashtagRegExp,"\\1#<a href='tag://\\2'>\\2</a> <a href='"+ mCurrentAccount->homepage() +"tag/\\1'><img src=\"icon://web\" /></a>");
       } else {
-        status.replace(mHashtagRegExp,"#<a href='tag://\\1'>\\1</a>\\2");
+          status.replace(mHashtagRegExp,"\\1#<a href='tag://\\2'>\\2</a>");
     }
     return status;
 }
 
-QString StatusWidget::getColorString(const QColor& color) {
+QString StatusWidget::getColorString(const QColor& color)
+{
   return "rgb(" + QString::number(color.red()) + ',' + QString::number(color.green()) + ',' +
   QString::number(color.blue()) + ')';
 }
@@ -422,7 +430,8 @@ void StatusWidget::missingStatusReceived( Status status )
         sender()->deleteLater();
     }
 }
-void StatusWidget::resizeEvent(QResizeEvent* event) {
+void StatusWidget::resizeEvent(QResizeEvent* event)
+{
   setHeight();
   KTextBrowser::resizeEvent(event);
 }
