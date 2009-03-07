@@ -265,31 +265,16 @@ void StatusWidget::requestReply()
 QString StatusWidget::generateSign()
 {
     QString sign;
-    if ( mCurrentAccount->serviceType() == Account::Identica ) {
-        sign = "<b><a href='user://"+mCurrentStatus.user.screenName+"'>" + mCurrentStatus.user.screenName + "</a> <a href=\"http://identi.ca/" + mCurrentStatus.user.screenName + "\" title=\"" +
-                     mCurrentStatus.user.description + "\"><img src=\"icon://web\" /></a> - </b>";
-        sign += "<a href=\"http://identi.ca/notice/" + QString::number( mCurrentStatus.statusId ) +
-        "\" title=\"" + mCurrentStatus.creationDateTime.toString() + "\">%1</a>";
-        if ( !mCurrentStatus.isDMessage ) {
-            sign += " - " + mCurrentStatus.source;
-            if ( mCurrentStatus.replyToStatusId > 0 ) {
-                QString link = "http://identi.ca/notice/" + QString::number( mCurrentStatus.replyToStatusId );
-                sign += " - <a href=\"" + link + "\" title=\"" + link + "\">" + i18n("in reply to") + "</a>";
-            }
-        }
-    } else {
-        sign = "<b><a href='user://"+mCurrentStatus.user.screenName+"'>" + mCurrentStatus.user.screenName + "</a> <a href=\"http://twitter.com/" + mCurrentStatus.user.screenName + "\" title=\"" +
-                     mCurrentStatus.user.description + "\"><img src=\"icon://web\" /></a> - </b>";
-        sign += "<a href=\"http://twitter.com/" + mCurrentStatus.user.screenName + "/statuses/" +
-                     QString::number( mCurrentStatus.statusId ) + "\" title=\"" +
-                     mCurrentStatus.creationDateTime.toString() + "\">%1</a>";
-        if ( !mCurrentStatus.isDMessage ) {
-            sign += " - " + mCurrentStatus.source;
-            if ( mCurrentStatus.replyToStatusId > 0 ) {
-                QString link = "http://twitter.com/" + mCurrentStatus.replyToUserScreenName + "/statuses/"
-                + QString::number( mCurrentStatus.replyToStatusId );
-                sign += " - <a href=\"" + link + "\" title=\"" + link + "\">" + i18n("in reply to") + "</a>";
-            }
+    sign = "<b><a href='user://"+mCurrentStatus.user.screenName+"'>" + mCurrentStatus.user.screenName +
+    "</a> <a href=\"" + mCurrentAccount->homepage() + mCurrentStatus.user.screenName + "\" title=\"" +
+                    mCurrentStatus.user.description + "\"><img src=\"icon://web\" /></a> - </b>";
+    sign += "<a href=\"" + mCurrentAccount->statusUrl( mCurrentStatus.statusId, mCurrentStatus.user.screenName ) +
+    "\" title=\"" + mCurrentStatus.creationDateTime.toString() + "\">%1</a>";
+    if ( !mCurrentStatus.isDMessage ) {
+        sign += " - " + mCurrentStatus.source;
+        if ( mCurrentStatus.replyToStatusId > 0 ) {
+            QString link = mCurrentAccount->statusUrl( mCurrentStatus.replyToStatusId, mCurrentStatus.user.screenName );
+            sign += " - <a href=\"" + link + "\" title=\"" + link + "\">" + i18n("in reply to") + "</a>";
         }
     }
     return sign;
@@ -350,18 +335,12 @@ QString StatusWidget::prepareStatus( const QString &text )
         status.prepend( "http://" );
     status.replace(mUrlRegExp,"<a href='\\1' title='\\1'>\\1</a>");
 
-    QString urlPrefix;
-    if( mCurrentAccount->serviceType() == Account::Identica )
-	urlPrefix = "http://identi.ca/";
-    else
-	urlPrefix = "http://twitter.com/";
-
-      status.replace(mUserRegExp,"@<a href='user://\\1'>\\1</a> <a href='"+urlPrefix+"\\1'><img src=\"icon://web\" /></a>\\2");
+    status.replace(mUserRegExp,"@<a href='user://\\1'>\\1</a> <a href='"+ mCurrentAccount->homepage() +"/\\1'><img src=\"icon://web\" /></a>\\2");
     if ( mCurrentAccount->serviceType() == Account::Identica ) {
-	status.replace(mGroupRegExp,"!<a href='group://\\1'>\\1</a> <a href='"+urlPrefix+"group/\\1'><img src=\"icon://web\" /></a>\\2");
-	status.replace(mHashtagRegExp,"#<a href='tag://\\1'>\\1</a> <a href='"+urlPrefix+"tag/\\1'><img src=\"icon://web\" /></a>\\2");
+        status.replace(mGroupRegExp,"!<a href='group://\\1'>\\1</a> <a href='"+ mCurrentAccount->homepage() +"/group/\\1'><img src=\"icon://web\" /></a>\\2");
+        status.replace(mHashtagRegExp,"#<a href='tag://\\1'>\\1</a> <a href='"+ mCurrentAccount->homepage() +"/tag/\\1'><img src=\"icon://web\" /></a>\\2");
       } else {
-	status.replace(mHashtagRegExp,"#<a href='tag://\\1'>\\1</a>\\2");
+        status.replace(mHashtagRegExp,"#<a href='tag://\\1'>\\1</a>\\2");
     }
     return status;
 }

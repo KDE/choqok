@@ -6,14 +6,14 @@
     <x>0</x>
     <y>0</y>
     <width>274</width>
-    <height>246</height>
+    <height>277</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout" >
-   <item row="2" column="0" >
+   <item row="3" column="0" >
     <widget class="QLabel" name="textLabel1" >
      <property name="text" >
       <string>&amp;User name :</string>
@@ -29,7 +29,7 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0" >
+   <item row="4" column="0" >
     <widget class="QLabel" name="textLabel1_2" >
      <property name="text" >
       <string>&amp;Password :</string>
@@ -45,7 +45,7 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="1" >
+   <item row="4" column="1" >
     <widget class="KLineEdit" name="kcfg_password" >
      <property name="text" >
       <string/>
@@ -55,7 +55,7 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0" >
+   <item row="5" column="0" >
     <widget class="QLabel" name="textLabel2_2" >
      <property name="text" >
       <string>&amp;Direction :</string>
@@ -71,7 +71,7 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="1" >
+   <item row="5" column="1" >
     <widget class="KComboBox" name="kcfg_direction" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="Maximum" hsizetype="MinimumExpanding" >
@@ -91,10 +91,10 @@
      </item>
     </widget>
    </item>
-   <item row="2" column="1" >
+   <item row="3" column="1" >
     <widget class="KLineEdit" name="kcfg_username" />
    </item>
-   <item row="5" column="0" colspan="2" >
+   <item row="6" column="0" colspan="2" >
     <widget class="QLabel" name="label" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="MinimumExpanding" hsizetype="Preferred" >
@@ -146,6 +146,11 @@ p, li { white-space: pre-wrap; }
        <string>Identi.ca</string>
       </property>
      </item>
+     <item>
+      <property name="text" >
+       <string>Custom Laconica</string>
+      </property>
+     </item>
     </widget>
    </item>
    <item row="0" column="1" >
@@ -164,6 +169,16 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </item>
+   <item row="2" column="0" >
+    <widget class="QLabel" name="lblHomepage" >
+     <property name="text" >
+      <string>Homepage :</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" >
+    <widget class="KLineEdit" name="kcfg_homepage" />
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -181,6 +196,7 @@ p, li { white-space: pre-wrap; }
  <tabstops>
   <tabstop>kcfg_alias</tabstop>
   <tabstop>kcfg_service</tabstop>
+  <tabstop>kcfg_homepage</tabstop>
   <tabstop>kcfg_username</tabstop>
   <tabstop>kcfg_password</tabstop>
   <tabstop>kcfg_direction</tabstop>

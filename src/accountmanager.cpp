@@ -35,7 +35,7 @@ AccountManager::AccountManager( QObject* parent ):
         QObject( parent ), mWallet( 0 )
 {
     kDebug();
-    mWallet = KWallet::Wallet::openWallet( "kdewallet", 0 );
+    mWallet = KWallet::Wallet::openWallet( KWallet::Wallet::LocalWallet(), 0 );
     if ( mWallet ) {
         if ( !mWallet->setFolder( "choqok" ) ) {
             mWallet->createFolder( "choqok" );
@@ -141,8 +141,8 @@ Account & AccountManager::addAccount( Account & account )
     acConf.writeEntry( "username", account.username() );
     acConf.writeEntry( "userId", account.userId() );
     acConf.writeEntry( "service_type", (int)account.serviceType() );
-//     acConf.writeEntry( "service", account.serviceName() );
-//     acConf.writeEntry( "api_path", account.apiPath() );
+    if( account.serviceType() == Account::Laconica )
+        acConf.writeEntry( "homepage", account.homepage() );
     acConf.writeEntry( "direction", ( account.direction() == Qt::RightToLeft ) ? "rtl" : "ltr" );
     if ( mWallet && mWallet->writePassword( account.serviceName() + '_' + account.username(), account.password() ) == 0 ) {
         kDebug() << "Password stored to kde wallet";
@@ -180,19 +180,21 @@ void AccountManager::loadAccounts()
             a.setUserId( accountGrp.readEntry( "userId", uint( -1 ) ) );
             a.setAlias( accountGrp.readEntry( "alias", QString() ) );
             int service_type = accountGrp.readEntry( "service_type", -1 );
+            QString homepage = accountGrp.readEntry( "homepage", QString() );
             if(service_type == -1){///For compatibility with previous versions (e.g. 0.3.1 )
                 QString service = accountGrp.readEntry( "service", QString() );
-                if( service.toLower() == QString(IDENTICA_SERVICE_TEXT).toLower() ) {
-                    a.setServiceType(Account::Identica);
+                if( service.toLower() == QString("Identi.ca").toLower() ) {
+                    a.setServiceType( Account::Identica );
                 } else {
-                    a.setServiceType(Account::Twitter);
+                    a.setServiceType( Account::Twitter );
                 }
             } else {
-                a.setServiceType( (Account::Service) service_type );
+                a.setServiceType( (Account::Service) service_type, homepage );
             }
             a.setDirection(( accountGrp.readEntry( "direction", "ltr" ) == "rtl" ) ? Qt::RightToLeft : Qt::LeftToRight );
             QString buffer;
-            if ( mWallet && mWallet->readPassword( a.serviceName() + '_' + a.username(), buffer ) == 0 && !buffer.isEmpty() ) {
+            if ( mWallet && mWallet->readPassword( a.serviceName() + '_' + a.username(), buffer ) == 0 &&
+                !buffer.isEmpty() ) {
                 a.setPassword( buffer );
                 kDebug() << "Password loaded from kde wallet.";
             } else {

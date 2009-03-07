@@ -28,6 +28,7 @@
 #include "constants.h"
 #include "account.h"
 class QProgressBar;
+class QTimer;
 
 class AccountsWizard: public KDialog
 {
@@ -44,6 +45,7 @@ protected slots:
     void slotUserVerified( Account *userAccount );
     void slotError( const QString &errMsg );
     void handleVerifyTimeout();
+    void slotServiceChanged( int index );
 
 private:
     void loadAccount( QString &alias );
@@ -53,6 +55,7 @@ private:
     QString mAlias;
     bool isEdit;
     Account mAccount;
+    QTimer *verifyTimer;
 };
 
 #endif

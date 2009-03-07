@@ -33,10 +33,14 @@ AccountsWizard::AccountsWizard( QString alias, QWidget *parent )
         : KDialog( parent )
 {
     kDebug();
+    verifyTimer = 0;
     QWidget *dialog = new QWidget( this );
     ui.setupUi( dialog );
     dialog->setAttribute( Qt::WA_DeleteOnClose );
     this->setMainWidget( dialog );
+    slotServiceChanged( ui.kcfg_service->currentIndex() );
+    progress = 0;
+    connect( ui.kcfg_service, SIGNAL( currentIndexChanged(int) ), this, SLOT( slotServiceChanged(int) ) );
 
     if ( alias.isEmpty() ) {
         this->setCaption( i18n( "Add a new account" ) );
@@ -63,6 +67,7 @@ void AccountsWizard::loadAccount( QString &alias )
     ui.kcfg_password->setText( mAccount.password() );
     ui.kcfg_direction->setCurrentIndex(( mAccount.direction() == Qt::RightToLeft ) ? 1 : 0 );
     ui.kcfg_service->setCurrentIndex( mAccount.serviceType() );
+    ui.kcfg_homepage->setText( mAccount.homepage() );
 }
 
 void AccountsWizard::slotButtonClicked( int button )
@@ -80,7 +85,8 @@ void AccountsWizard::slotButtonClicked( int button )
             return;
         grid->addWidget( progress, grid->rowCount(), 0, grid->rowCount(), 2 );
         ///Check for account
-        mAccount.setServiceType( (Account::Service) ui.kcfg_service->currentIndex() );
+        mAccount.setServiceType( (Account::Service) ui.kcfg_service->currentIndex(),
+                                 ui.kcfg_homepage->text() );
         mAccount.setUsername( ui.kcfg_username->text() );
         mAccount.setPassword( ui.kcfg_password->text() );
         mAccount.setDirection(( Qt::LayoutDirection )ui.kcfg_direction->currentIndex() );
@@ -90,7 +96,14 @@ void AccountsWizard::slotButtonClicked( int button )
         connect( b, SIGNAL( userVerified( Account* ) ), this, SLOT( slotUserVerified( Account* ) ) );
         connect( b, SIGNAL( sigError( const QString& ) ), this, SLOT( slotError( const QString& ) ) );
         b->verifyCredential();
-        QTimer::singleShot( 45000, this, SLOT( handleVerifyTimeout() ) );
+        if( verifyTimer ) {
+            verifyTimer->deleteLater();
+            verifyTimer = 0;
+        }
+        verifyTimer = new QTimer( this );
+        verifyTimer->setSingleShot( true );
+        connect ( verifyTimer, SIGNAL(timeout()), this, SLOT( handleVerifyTimeout() ) );
+        verifyTimer->start( 45000 );
     } else
         KDialog::slotButtonClicked( button );
 }
@@ -129,16 +142,33 @@ void AccountsWizard::slotError( const QString & errMsg )
 {
     kDebug();
     KMessageBox::detailedError( this, i18n( "authentication failed, please check your credentials." ), errMsg );
-    if ( progress )
+    if ( progress ) {
         progress->deleteLater();
+        progress = 0;
+    }
+    verifyTimer->stop();
 }
 
 void AccountsWizard::handleVerifyTimeout()
 {
     KMessageBox::sorry(this, i18n( "Verification progress timed out.\
 Check your Internet connection and credentials then try again..." ) , i18n( "Timeout" ) );
-    if ( progress )
+    if ( progress ) {
         progress->deleteLater();
+        progress = 0;
+    }
+    verifyTimer->stop();
+}
+
+void AccountsWizard::slotServiceChanged( int index )
+{
+    if( index == 2 ) {
+        ui.lblHomepage->setVisible( true );
+        ui.kcfg_homepage->setVisible( true );
+    } else {
+        ui.lblHomepage->setVisible( false );
+        ui.kcfg_homepage->setVisible( false );
+    }
 }
 
 #include "accountswizard.moc"

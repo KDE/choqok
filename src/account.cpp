@@ -23,9 +23,9 @@
 */
 #include "account.h"
 
-Account::Account( Service type )
+Account::Account( Service type, const QString &homepage )
 {
-    setServiceType(type);
+    setServiceType(type, homepage);
 }
 
 Account::Account( )
@@ -41,12 +41,10 @@ Account::Account( const Account & account )
     mUserId = account.userId();
     mUsername = account.username();
     mPassword = account.password();
-    mServiceName = account.serviceName();
     mAlias = account.alias();
     mDirection = account.direction();
-    mApiPath = account.apiPath();
     mIsError = account.isError();
-    mServiceType = account.serviceType();
+    setServiceType( account.serviceType(), account.homepage() );
 }
 
 uint Account::userId() const
@@ -84,11 +82,6 @@ QString Account::serviceName() const
     return mServiceName;
 }
 
-// void Account::setServiceName( const QString & servicename )
-// {
-//     mServiceName = servicename;
-// }
-
 QString Account::alias() const
 {
     return mAlias;
@@ -114,10 +107,14 @@ QString Account::apiPath() const
     return mApiPath;
 }
 
-// void Account::setApiPath( const QString & apiPath )
-// {
-//     mApiPath = apiPath;
-// }
+QString Account::statusUrl( int statusId, const QString &userScreenName ) const
+{
+    if( mServiceType == Twitter ) {
+        return mStatusUrlBase.arg( QString::number(statusId), userScreenName );
+    } else {
+        return mStatusUrlBase.arg( statusId );
+    }
+}
 
 void Account::setError( bool isError )
 {
@@ -134,14 +131,32 @@ Account::Service Account::serviceType() const
     return mServiceType;
 }
 
-void Account::setServiceType( Service type )
+QString Account::homepage() const
+{
+    return mHomepage;
+}
+
+void Account::setServiceType( Service type, const QString &homepage )
 {
     mServiceType = type;
-    if ( type == Identica){
-        mServiceName = "Identi.ca";
-        mApiPath = "http://identi.ca/api/";
-    } else if ( type == Twitter ) {
-        mServiceName = "Twitter.com";
-        mApiPath = "http://twitter.com/";
+    switch( type ) {
+        case Identica:
+            mServiceName = "Identi.ca";
+            mApiPath = "http://identi.ca/api/";
+            mHomepage = "http://identi.ca/";
+            mStatusUrlBase = "http://identi.ca/notice/%1";
+            break;
+        case Twitter:
+            mServiceName = "Twitter.com";
+            mApiPath = "http://twitter.com/";
+            mHomepage = "http://twitter.com/";
+            mStatusUrlBase = "http://twitter.com/%2/status/%1";
+            break;
+        case Laconica:
+            mServiceName = "Custom Laconica";
+            mApiPath = homepage + "/api/";
+            mHomepage = homepage;
+            mStatusUrlBase = homepage + "/notice/%1";
+            break;
     }
 }

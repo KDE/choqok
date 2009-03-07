@@ -27,21 +27,15 @@
 
 #include "search.h"
 
-static const char TWITTER_API_PATH[] = "http://twitter.com/";
-static const char TWITTER_SERVICE_TEXT[] = "Twitter.com";
-
-static const char IDENTICA_API_PATH[] = "http://identi.ca/api/";
-static const char IDENTICA_SERVICE_TEXT[] = "Identi.ca";
-
 /**
     @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
 */
 class Account
 {
 public:
-    enum Service{ Twitter=0, Identica=1  };
+    enum Service{ Twitter=0, Identica=1, Laconica=2 };
     Account();
-    Account( Service type );
+    explicit Account( Service type, const QString &homepage = QString() );
     Account( const Account &account );
 
     ~Account();
@@ -56,7 +50,6 @@ public:
     void setPassword( const QString &pass );
 
     QString serviceName() const;
-//     void setServiceName( const QString &servicename );
 
     QString alias() const;
     void setAlias( const QString &alias );
@@ -65,15 +58,15 @@ public:
     void setDirection( const Qt::LayoutDirection &dir );
 
     QString apiPath() const;
-//     void setApiPath( const QString &apiPath );
 
-    Search* searchPtr() const;
+    QString statusUrl( int statusId, const QString &userScreenName ) const;
+    QString homepage() const;
 
     bool isError() const;
     void setError( bool isError );
 
     Service serviceType() const;
-    void setServiceType( Service type );
+    void setServiceType( Service type, const QString &homepage = QString() );
 
     void initSearch();
 
@@ -87,6 +80,8 @@ private:
     QString mApiPath;
     bool mIsError;
     Service mServiceType;
+    QString mStatusUrlBase;
+    QString mHomepage;
 };
 
 #endif
