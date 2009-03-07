@@ -216,11 +216,13 @@ void StatusWidget::updateUi()
     } else {
         btnRemove->setVisible( false );
     }
-    QTextOption options(document()->defaultTextOption());
-    options.setTextDirection(mCurrentAccount->direction());
-    document()->setDefaultTextOption(options);
     mStatus = prepareStatus(mCurrentStatus.content);
     mSign = generateSign();
+    if( mStatus.isRightToLeft() ) {
+        QTextOption options(document()->defaultTextOption());
+        options.setTextDirection( Qt::RightToLeft );
+        document()->setDefaultTextOption(options);
+    }
     setUserImage();
     setUiStyle();
     updateSign();
