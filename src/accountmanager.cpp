@@ -81,7 +81,7 @@ Account AccountManager::findAccount( const QString &alias )
     }
     Account a;
     a.setError( true );
-    mLastError = i18n( "There isn't any account with alias %1", alias );
+    mLastError = i18n( "There is no account with alias %1", alias );
     return a;
 }
 
@@ -112,7 +112,7 @@ bool AccountManager::removeAccount( const QString &alias )
             return true;
         }
     }
-    mLastError = i18n( "There isn't any account with alias %1", alias );
+    mLastError = i18n( "There is no account with alias %1", alias );
     return false;
 }
 

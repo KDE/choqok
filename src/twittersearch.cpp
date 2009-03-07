@@ -39,7 +39,7 @@ TwitterSearch::TwitterSearch() :
     mSearchTypes[CustomSearch] = i18n( "Custom Search" );
     mSearchTypes[ToUser] = i18n( "Tweets To This User" );
     mSearchTypes[FromUser] = i18n( "Tweets From This User" );
-    mSearchTypes[ReferenceUser] = i18n( "Tweets Including This Users Name" );
+    mSearchTypes[ReferenceUser] = i18n( "Tweets Including This User's Name" );
     mSearchTypes[ReferenceHashtag] = i18n( "Tweets Including This Hashtag" );
 }
 

@@ -611,7 +611,7 @@ void Backend::slotUserInfoReceived( KJob * job )
 
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        QString err = i18n( "Requesting user information failed. more info: %1", job->errorString() );
+        QString err = i18n( "Request for user information failed. More info: %1", job->errorString() );
     }
     QDomDocument document;
     QByteArray buffer = qobject_cast<KIO::StoredTransferJob *>( job )->data();
@@ -620,7 +620,7 @@ void Backend::slotUserInfoReceived( KJob * job )
     QDomElement root = document.documentElement();
 
     if ( root.tagName() != "statuses" ) {
-        QString err = i18n( "Data returned from server corrupted!" );
+        QString err = i18n( "Data returned from server corrupted." );
         kDebug() << "there's no statuses tag in XML\t the XML is: \n" << buffer.data();
         mLatestErrorString = err;
         return;

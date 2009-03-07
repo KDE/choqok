@@ -51,7 +51,7 @@
         <bool>false</bool>
        </property>
        <property name="title" >
-        <string>Statuses color preferences</string>
+        <string>Status color preferences</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout" >
         <item>
