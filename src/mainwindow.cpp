@@ -218,7 +218,9 @@ void MainWindow::systemNotify( const QString &title, const QString &message, con
 void MainWindow::hideEvent( QHideEvent * event )
 {
     Q_UNUSED(event);
-    emit setUnreadStatusesToReadState();
+    if( !this->isVisible() ) {
+        emit setUnreadStatusesToReadState();
+    }
 }
 
 void MainWindow::optionsPreferences()
