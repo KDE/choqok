@@ -6,6 +6,9 @@
     <include>"settingsbase.h"</include>
 <kcfgfile/>
     <group name="Preferences">
+        <entry name="doNotShowRepliesOnHome" type="Bool">
+            <default>true</default>
+        </entry>
         <entry name="showIconsOnTimelineTabs" type="Bool">
             <default>false</default>
         </entry>

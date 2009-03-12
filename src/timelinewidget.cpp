@@ -286,10 +286,12 @@ void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayou
     if ( allInOne && Settings::notifyType() != SettingsBase::LibNotify )
         notifyStr = ( mCurrentAccount.direction() == Qt::RightToLeft ) ? "<div dir='rtl'>" : "<div dir='ltr'>";
     for ( ;it != endIt; ++it ) {
-        if ( it->replyToUserId == mCurrentAccount.userId() && type == Backend::HomeTimeLine ) {
-            --numOfNewStatuses;
-            --unreadStatusInHome;
-            continue;
+        if ( Settings::doNotShowRepliesOnHome() ) {
+            if ( it->replyToUserId == mCurrentAccount.userId() && type == Backend::HomeTimeLine ) {
+                --numOfNewStatuses;
+                --unreadStatusInHome;
+                continue;
+            }
         }
 
         StatusWidget *wt = new StatusWidget( &mCurrentAccount, this );

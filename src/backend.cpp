@@ -832,12 +832,14 @@ QList< Status > * Backend::readDMessagesFromXml( const QByteArray & buffer )
             msg.user.profileImageUrl = recipientProfileImageUrl;
             msg.user.name = recipientName;
             msg.user.userId = recipientId;
+            msg.replyToUserId = recipientId;
         } else {
             msg.user.description = senderDescription;
             msg.user.screenName = senderScreenName;
             msg.user.profileImageUrl = senderProfileImageUrl;
             msg.user.name = senderName;
             msg.user.userId = senderId;
+            msg.replyToUserId = recipientId;
         }
         statusList->insert( 0, msg );
     }

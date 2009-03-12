@@ -281,7 +281,13 @@ QString StatusWidget::generateSign()
                     mCurrentStatus.user.description + "\"><img src=\"icon://web\" /></a> - </b>";
     sign += "<a href=\"" + mCurrentAccount->statusUrl( mCurrentStatus.statusId, mCurrentStatus.user.screenName ) +
     "\" title=\"" + mCurrentStatus.creationDateTime.toString() + "\">%1</a>";
-    if ( !mCurrentStatus.isDMessage ) {
+    if ( mCurrentStatus.isDMessage ) {
+        if( mCurrentStatus.replyToUserId == mCurrentAccount->userId() ) {
+            sign.prepend( "From " );
+        } else {
+            sign.prepend( "To " );
+        }
+    } else {
         sign += " - " + mCurrentStatus.source;
         if ( mCurrentStatus.replyToStatusId > 0 ) {
             QString link = mCurrentAccount->statusUrl( mCurrentStatus.replyToStatusId, mCurrentStatus.user.screenName );
