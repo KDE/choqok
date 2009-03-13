@@ -154,8 +154,8 @@ void AccountsWizard::slotError( const QString & errMsg )
 
 void AccountsWizard::handleVerifyTimeout()
 {
-    KMessageBox::sorry(this, i18n( "Verification progress timed out.\
-Check your Internet connection and credentials then try again..." ) , i18n( "Timeout" ) );
+    KMessageBox::sorry(this, i18n( "Verification progress timed out. "
+                                   "Check your Internet connection and credentials then try again..." ) , i18n( "Timeout" ) );
     if ( progress ) {
         progress->deleteLater();
         progress = 0;
