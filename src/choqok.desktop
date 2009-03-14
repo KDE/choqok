@@ -8,6 +8,7 @@ Type=Application
 Categories=Network;
 GenericName=KDE Micro-blogging Client
 GenericName[et]=KDE mikroblogimise klient
+GenericName[gl]=Cliente de micro-blogging de KDE
 GenericName[pt]=Cliente de Micro-Blogs do KDE
 GenericName[pt_BR]=Cliente de Micro-Blogs do KDE
 GenericName[sv]=KDE-klient för mikrowebbjournaler
