@@ -41,7 +41,7 @@ class TwitterSearch : public Search
 public:
     enum SearchType { CustomSearch = 0, ToUser, FromUser, ReferenceUser, ReferenceHashtag };
 
-    TwitterSearch( const QString searchUrl = QString(), QObject *parent=0 );
+    explicit TwitterSearch( const QString searchUrl = QString(), QObject *parent=0 );
     virtual ~TwitterSearch();
 
 private:

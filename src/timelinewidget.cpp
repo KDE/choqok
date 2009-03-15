@@ -282,7 +282,7 @@ void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayou
     int numOfNewStatuses = statusList.count();
     QList<Status>::const_iterator it = statusList.constBegin();
     QList<Status>::const_iterator endIt = statusList.constEnd();
-    bool isThereIsAnyNewStatusToNotify = false;
+    bool isThereAnyNewStatusToNotify = false;
     if ( allInOne && Settings::notifyType() != SettingsBase::LibNotify )
         notifyStr = ( mCurrentAccount.direction() == Qt::RightToLeft ) ? "<div dir='rtl'>" : "<div dir='ltr'>";
     for ( ;it != endIt; ++it ) {
@@ -318,7 +318,7 @@ void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayou
                     wt->setUnread( StatusWidget::WithoutNotify );
                 } else if ( allInOne ) {
                     notifyStr += "<b>" + it->user.screenName + " : </b>" + it->content + "<br/>";
-                    isThereIsAnyNewStatusToNotify = true;
+                    isThereAnyNewStatusToNotify = true;
                     wt->setUnread( StatusWidget::WithoutNotify );
                 } else {
                     wt->setUnread( StatusWidget::WithNotify );
@@ -347,7 +347,7 @@ void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayou
     if ( !isStartMode && type != Backend::OutboxTimeLine )
         checkUnreadStatuses( numOfNewStatuses );
 
-    if ( isThereIsAnyNewStatusToNotify ) {
+    if ( isThereAnyNewStatusToNotify ) {
         showNotify( i18n( "New statuses" ), notifyStr );
     }
 

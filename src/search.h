@@ -42,7 +42,7 @@ class Search : public QObject
 {
     Q_OBJECT
 public:
-    Search( const QString searchUrl = QString(), QObject *parent=0 );
+    explicit Search( const QString searchUrl = QString(), QObject *parent=0 );
     virtual ~Search();
 
     QMap<int, QString> getSearchTypes();
