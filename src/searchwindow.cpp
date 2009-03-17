@@ -63,7 +63,7 @@ SearchWindow::SearchWindow( const Account &account, QWidget* parent ) :
     move( Settings::searchWindowPosition() );
 
     setWindowTitle( i18nc( "Search in service", "%1 Search",
-                           mAccount.serviceName() ) );
+                           mAccount.alias() ) );
 }
 
 void SearchWindow::init(int type, const QString & query)
