@@ -13,6 +13,7 @@ GenericName[pt]=Cliente de Micro-Blogs do KDE
 GenericName[pt_BR]=Cliente de Micro-Blogs do KDE
 GenericName[sv]=KDE-klient för mikrowebbjournaler
 GenericName[uk]=Клієнт мікроблогів для KDE
+GenericName[x-test]=xxKDE Micro-blogging Clientxx
 Terminal=false
 X-DBUS-StartupType=Unique
 X-Ubuntu-Gettext-Domain=desktop_kdesdk
