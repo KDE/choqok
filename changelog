@@ -1,7 +1,7 @@
 === Version 0.5 -- 20-Mar-2009 ===
  * Twitter.com search API implemented. (Stephen Henderson)
  * Identi.ca search API implemented. (Stephen Henderson)
- * Integration of search facilities in MainWindow. and less need of using web browser. (Stephen Henderson)
+ * Integration of search facilities in MainWindow. and less need of using web browser. (Daniel Schaal)
  * Support for Laconica websites implemented.
  * Showing base status of a reply status on choqoK window.
  * Icon updated.

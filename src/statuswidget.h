@@ -116,6 +116,7 @@ private:
     static QRegExp mGroupRegExp;
 
     KPushButton * btnReply,*btnFavorite,*btnRemove;
+    bool isBaseStatusShowed;
 };
 
 #endif

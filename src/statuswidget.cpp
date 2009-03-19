@@ -63,7 +63,7 @@ void StatusWidget::setStyle(const QColor& color, const QColor& back, const QColo
 }
 
 StatusWidget::StatusWidget( const Account *account, QWidget *parent )
-        : KTextBrowser( parent ),mIsRead(true),mCurrentAccount(account)
+        : KTextBrowser( parent ),mIsRead(true),mCurrentAccount(account),isBaseStatusShowed(false)
 {
     setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -119,6 +119,8 @@ void StatusWidget::checkAnchor(const QUrl & url)
     if(ret == 0) return;
     type = ret->data().toInt();
   } else if( scheme == "status" ) {
+      if(isBaseStatusShowed)
+          return;
         Backend *b = new Backend(new Account(*mCurrentAccount), this);
         connect( b, SIGNAL( singleStatusReceived( Status ) ),
                this, SLOT( baseStatusReceived(Status) ) );
@@ -457,6 +459,9 @@ void StatusWidget::resizeEvent(QResizeEvent* event)
 
 void StatusWidget::baseStatusReceived( Status status )
 {
+    if(isBaseStatusShowed)
+        return;
+    isBaseStatusShowed = true;
     QString color;
     if( Settings::isCustomUi() ) {
         color = Settings::defaultForeColor().lighter().name();
