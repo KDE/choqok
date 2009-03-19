@@ -42,16 +42,18 @@ SearchWindow::SearchWindow( const Account &account, QWidget* parent ) :
     kDebug();
     mAccount = account;
 
+    intValidator = new QIntValidator( 1, 1500 / Settings::countOfStatusesOnMain(), this );
+
     setAttribute( Qt::WA_DeleteOnClose );
 
     switch( mAccount.serviceType() )
     {
         case Account::Twitter:
-            mSearch = new TwitterSearch( QString(), this );
+            mSearch = new TwitterSearch( &mAccount, QString(), this );
             break;
         case Account::Identica:
         case Account::Laconica:
-            mSearch = new IdenticaSearch( mAccount.homepage(), this );
+            mSearch = new IdenticaSearch( &mAccount, mAccount.homepage(), this );
             break;
         default:
             mSearch = 0;
@@ -76,6 +78,26 @@ void SearchWindow::init(int type, const QString & query)
                 this, SLOT( searchResultsReceived ( QList< Status >& ) ) );
         connect( mSearch, SIGNAL( error( QString ) ), this, SLOT( error( QString ) ) );
         connect( ui.txtSearch, SIGNAL( returnPressed() ), this, SLOT( search() ) );
+        connect( ui.txtPage, SIGNAL( returnPressed() ), this, SLOT( pageChange() ) );
+
+        page = 1;
+        lastValidPage = 1;
+
+        ui.btnRefresh->setIcon( KIcon( "view-refresh" ) );
+        ui.btnBack->setIcon( KIcon( "go-previous" ) );
+        ui.btnForward->setIcon( KIcon( "go-next" ) );
+
+        ui.btnRefresh->setEnabled( false );
+        ui.btnBack->setEnabled( false );
+        ui.btnForward->setEnabled( false );
+
+        ui.txtPage->setValidator( intValidator );
+
+        connect( ui.btnRefresh, SIGNAL( clicked( bool ) ), this, SLOT( refresh() ) );
+        connect( ui.btnBack, SIGNAL( clicked( bool ) ), this, SLOT( goBack() ) );
+        connect( ui.btnForward, SIGNAL( clicked( bool ) ), this, SLOT( goForward() ) );
+
+        showNavigation( false );
 
         show();
         resetSearchArea(type,query);
@@ -96,6 +118,7 @@ SearchWindow::~SearchWindow()
 
     if( mSearch )
         mSearch->deleteLater();
+    intValidator->deleteLater();
 }
 
 void SearchWindow::error( QString message )
@@ -111,12 +134,43 @@ void SearchWindow::searchResultsReceived(QList<Status> &statusList )
     int count = statusList.count();
     if ( count == 0 ) {
         kDebug() << "Status list is empty";
-        ui.lblStatus->setText( i18n( "No search results." ) );
+        ui.lblStatus->setText( i18n( "No search results on page %1.", QString::number( page ) ) );
+        ui.btnForward->setEnabled( false );
+        if( page > 1 )
+            page = lastValidPage;
+        ui.btnRefresh->setEnabled( false );
     } else {
-        ui.lblStatus->setText( i18n( "Search Results Received!" ) );
+
+        // Sets up the navigation for the current page
+        if( mSearch->getSearchTypes()[lastSearchType].second ) {
+            showNavigation( true );
+            if( page == 1 )
+            {
+                ui.chkAutoUpdate->setEnabled( true );
+                ui.btnBack->setEnabled( false );
+                ui.btnForward->setEnabled( true );
+            }
+            else {
+                if ( (int)page == intValidator->top() )
+                    ui.btnForward->setEnabled( false );
+                else
+                    ui.btnForward->setEnabled( true );
+                ui.chkAutoUpdate->setEnabled( false );
+                clearSearchResults();
+                ui.btnBack->setEnabled( true );
+            }
+        } else {
+            showNavigation( false );
+        }
+
+        ui.lblStatus->setText( i18n( "Search results for page %1.", QString::number( page ) ) );
         addNewStatusesToUi( statusList );
         ui.searchScroll->verticalScrollBar()->setSliderPosition( 0 );
+        lastValidPage = page;
+        ui.btnRefresh->setEnabled( true );
     }
+
+    ui.txtPage->setText( QString::number( lastValidPage ) );
     ui.txtSearch->setEnabled( true );
 }
 
@@ -124,17 +178,23 @@ void SearchWindow::search()
 {
     kDebug();
 
+    page = 1;
+
     if ( ui.txtSearch->text().size() > 140 )
     {
         ui.lblStatus->setText( i18n( "Search text size is more than 140 characters." ) );
         return;
     }
 
-    ui.txtSearch->setEnabled( false );
     clearSearchResults();
+
+    ui.txtSearch->setEnabled( false );
     ui.lblStatus->setText( i18n( "Searching..." ) );
+    ui.chkAutoUpdate->setCheckState( Qt::Unchecked );
     mSearch->requestSearchResults( ui.txtSearch->text(),
-                                   ui.comboSearchType->currentIndex(), 0 );
+                                   ui.comboSearchType->currentIndex(),
+                                   0,
+                                   Settings::countOfStatusesOnMain() );
 
     lastSearchQuery = ui.txtSearch->text();
     lastSearchType = ui.comboSearchType->currentIndex();
@@ -146,7 +206,7 @@ void SearchWindow::search()
 void SearchWindow::updateSearchResults()
 {
     kDebug();
-    if( isVisible() && !lastSearchQuery.isNull() )
+    if( isVisible() && !lastSearchQuery.isNull() && page == 1 )
     {
         uint sinceStatusId = 0;
         if( listResults.count() )
@@ -155,7 +215,9 @@ void SearchWindow::updateSearchResults()
         ui.lblStatus->setText( i18n( "Searching..." ) );
         mSearch->requestSearchResults( lastSearchQuery,
                                        lastSearchType,
-                                       sinceStatusId );
+                                       sinceStatusId,
+                                       Settings::countOfStatusesOnMain(),
+                                       page );
     }
 }
 
@@ -270,9 +332,9 @@ void SearchWindow::resetSearchArea(int type, const QString & query)
     ui.chkAutoUpdate->setChecked( false );
     ui.lblStatus->setText( i18n( "No Search Results" ) );
 
-    QMap<int, QString> searchTypes = mSearch->getSearchTypes();
+    QMap<int, QPair<QString, bool> > searchTypes = mSearch->getSearchTypes();
     for( int i = 0; i < searchTypes.count(); ++i ) {
-        ui.comboSearchType->insertItem( i, searchTypes[i] );
+        ui.comboSearchType->insertItem( i, searchTypes[i].first );
     }
 
     if(!query.isEmpty()) {
@@ -291,16 +353,76 @@ void SearchWindow::updateSearchArea(int type, const QString& query)
   }
 }
 
-
 void SearchWindow::keyPressEvent( QKeyEvent* e )
 {
     if ( e->key() == Qt::Key_F5 ) {
 //         emit updateTimeLines();
-        updateSearchResults();
+        refresh();
         e->accept();
     } else if ( e->modifiers() == Qt::CTRL && e->key() == Qt::Key_R ) {
         markStatusesAsRead();
     } else {
         QWidget::keyPressEvent( e );
     }
+}
+
+void SearchWindow::refresh()
+{
+    page = 1;
+    clearSearchResults();
+    updateSearchResults();
+}
+
+void SearchWindow::goForward()
+{
+    ++page;
+
+    ui.lblStatus->setText( i18n( "Fetching Next Page..." ) );
+    mSearch->requestSearchResults( lastSearchQuery,
+                                    lastSearchType,
+                                    0,
+                                    Settings::countOfStatusesOnMain(),
+                                    page );
+}
+
+void SearchWindow::goBack()
+{
+    if (page == 1 ) {
+        ui.btnBack->setEnabled( false );
+        return;
+    }
+    --page;
+
+    ui.lblStatus->setText( i18n( "Fetching Previous Page..." ) );
+    mSearch->requestSearchResults( lastSearchQuery,
+                                    lastSearchType,
+                                    0,
+                                    Settings::countOfStatusesOnMain(),
+                                    page );
+}
+
+void SearchWindow::pageChange()
+{
+    page = ui.txtPage->text().toUInt();
+    ui.lblStatus->setText( i18n( "Fetching Page %1...", QString::number( page ) ) );
+    mSearch->requestSearchResults( lastSearchQuery,
+                                    lastSearchType,
+                                    0,
+                                    Settings::countOfStatusesOnMain(),
+                                    page );
+}
+
+void SearchWindow::showNavigation( bool showNav )
+{
+    ui.btnBack->setVisible( showNav );
+    ui.btnForward->setVisible( showNav );
+    ui.txtPage->setVisible( showNav );
+}
+
+void SearchWindow::updateNumPages()
+{
+    intValidator->setTop( 1500 / Settings::countOfStatusesOnMain() );
+    page = 1;
+    lastValidPage = 1;
+    updateSearchResults();
 }

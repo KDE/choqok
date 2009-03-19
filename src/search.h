@@ -28,11 +28,13 @@
 #include <QString>
 #include <QObject>
 #include <QMap>
+#include <QPair>
 #include <KUrl>
 
 #include "datacontainers.h"
 
 class KJob;
+class Account;
 
 /**
     Base class for search feature.
@@ -42,28 +44,36 @@ class Search : public QObject
 {
     Q_OBJECT
 public:
-    explicit Search( const QString searchUrl = QString(), QObject *parent=0 );
+    explicit Search( Account* account, const QString searchUrl = QString(), QObject *parent=0 );
     virtual ~Search();
 
-    QMap<int, QString> getSearchTypes();
+    QMap<int, QPair<QString, bool> > getSearchTypes();
 
 private:
-    virtual KUrl buildUrl( QString query, int option, uint sinceStatusId = 0 );
+    virtual KUrl buildUrl( QString query, int option, uint sinceStatusId = 0, uint count = 0, uint page = 1 );
 
 public slots:
-    virtual void requestSearchResults( QString query, int option, uint sinceStatusId = 0 );
+    virtual void requestSearchResults( QString query,
+                                       int option,
+                                       uint sinceStatusId = 0,
+                                       uint count = 0,
+                                       uint page = 1 );
 
 protected slots:
     virtual void searchResultsReturned( KJob *job );
+    virtual void singleStatusReturned( KJob* job );
 
 signals:
     void searchResultsReceived( QList<Status> &statusList );
     void error( QString message );
 
 protected:
-    QMap<int, QString> mSearchTypes;
+    // The QString in the QPair is a human readable string describing what the type searches for. The boolean value
+    // determines whether or not the search type is traversable (if the forward and back buttons should be displayed).
+    QMap<int, QPair<QString, bool> > mSearchTypes;
     uint mSinceStatusId;
     QString mSearchUrl;
+    Account* mAccount;
 };
 
 #endif

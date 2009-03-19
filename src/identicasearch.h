@@ -41,15 +41,19 @@ class IdenticaSearch : public Search
 public:
     enum SearchType { ToUser = 0, FromUser, ReferenceGroup, ReferenceHashtag };
 
-    explicit IdenticaSearch( const QString searchUrl = QString(), QObject *parent=0 );
+    explicit IdenticaSearch( Account* account, const QString searchUrl = QString(), QObject *parent=0 );
     virtual ~IdenticaSearch();
 
 private:
-    virtual KUrl buildUrl( QString query, int option, uint sinceStatusId = 0 );
+    virtual KUrl buildUrl( QString query, int option, uint sinceStatusId = 0, uint count = 0, uint page = 1 );
     QList<Status>* parseRss( const QByteArray &buffer );
 
 public slots:
-    virtual void requestSearchResults( QString query, int option, uint sinceStatusId = 0 );
+    virtual void requestSearchResults( QString query,
+                                       int option,
+                                       uint sinceStatusId = 0,
+                                       uint count = 0,
+                                       uint page = 1 );
 
 protected slots:
     virtual void searchResultsReturned( KJob *job );

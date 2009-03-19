@@ -265,6 +265,7 @@ void MainWindow::search(int type, const QString& query)
              searchWin, SLOT( updateSearchResults() ) );
     connect( timelineTimer, SIGNAL( timeout() ),
              searchWin, SLOT( autoUpdateSearchResults() ) );
+    connect( this, SIGNAL( updateSearchLimits() ), searchWin, SLOT( updateNumPages() ) );
 
     searchWin->init(type, query);
 }
@@ -312,6 +313,8 @@ least one account on <a href='http://identi.ca'>Identi.ca</a> or \
 //         kDebug()<<"timelineTimer stoped";
         actionCollection()->action( "choqok_enable_updates" )->setChecked( false );
     }
+
+    emit updateSearchLimits();
 }
 
 void MainWindow::notify( const QString &message, bool isPermanent )

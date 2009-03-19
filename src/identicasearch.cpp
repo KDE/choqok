@@ -32,14 +32,23 @@
 #include <kio/netaccess.h>
 #include <kdebug.h>
 
-IdenticaSearch::IdenticaSearch( const QString searchUrl, QObject *parent ) :
-        Search(searchUrl, parent)
+#include "backend.h"
+
+IdenticaSearch::IdenticaSearch( Account* account, const QString searchUrl, QObject *parent ) :
+        Search(account, searchUrl, parent)
 {
     kDebug();
-    mSearchTypes[ToUser] = i18n( "Dents To This User" );
-    mSearchTypes[FromUser] = i18n( "Dents From This User" );
-    mSearchTypes[ReferenceGroup] = i18n( "Dents Including This Group" );
-    mSearchTypes[ReferenceHashtag] = i18n( "Dents Including This Hashtag" );
+    mSearchTypes[ToUser].first = i18n( "Dents To This User" );
+    mSearchTypes[ToUser].second = false;
+
+    mSearchTypes[FromUser].first = i18n( "Dents From This User" );
+    mSearchTypes[FromUser].second = false;
+
+    mSearchTypes[ReferenceGroup].first = i18n( "Dents Including This Group" );
+    mSearchTypes[ReferenceGroup].second = false;
+
+    mSearchTypes[ReferenceHashtag].first = i18n( "Dents Including This Hashtag" );
+    mSearchTypes[ReferenceHashtag].second = false;
 }
 
 IdenticaSearch::~IdenticaSearch()
@@ -47,10 +56,12 @@ IdenticaSearch::~IdenticaSearch()
     kDebug();
 }
 
-KUrl IdenticaSearch::buildUrl( QString query, int option, uint sinceStatusId )
+KUrl IdenticaSearch::buildUrl( QString query, int option, uint sinceStatusId, uint count, uint page )
 {
     kDebug();
     Q_UNUSED(sinceStatusId);
+    Q_UNUSED(count);
+    Q_UNUSED(page);
     QString baseUrl = mSearchUrl;
 
     QString formattedQuery;
@@ -72,16 +83,17 @@ KUrl IdenticaSearch::buildUrl( QString query, int option, uint sinceStatusId )
             break;
     };
 
-    kDebug() << "Search URL: " << baseUrl << formattedQuery;
-
-    KUrl url( baseUrl + formattedQuery );
+    KUrl url;
+    url.setUrl( baseUrl + formattedQuery );
 
     return url;
 }
 
-void IdenticaSearch::requestSearchResults( QString query, int option, uint sinceStatusId )
+void IdenticaSearch::requestSearchResults( QString query, int option, uint sinceStatusId, uint count, uint page )
 {
     kDebug();
+    Q_UNUSED(count);
+    Q_UNUSED(page);
 
     KUrl url = buildUrl( query, option, sinceStatusId );
 

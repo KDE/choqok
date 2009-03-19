@@ -23,10 +23,12 @@
 */
 
 #include "search.h"
+//#include "account.h"
 
-Search::Search( const QString searchUrl, QObject *parent )
+Search::Search( Account* account, const QString searchUrl, QObject *parent )
     : QObject( parent )
 {
+    mAccount = account;
     mSearchUrl = searchUrl;
     /**
      * TODO Support multiple pages on search results! instead of just first 20 latest results!
@@ -38,27 +40,36 @@ Search::~Search()
     mSinceStatusId = 0;
 }
 
-QMap<int, QString> Search::getSearchTypes()
+QMap<int, QPair<QString, bool> > Search::getSearchTypes()
 {
     return mSearchTypes;
 }
 
-KUrl Search::buildUrl( QString query, int option, uint sinceStatusId )
+KUrl Search::buildUrl( QString query, int option, uint sinceStatusId, uint count, uint page )
 {
     Q_UNUSED(query);
     Q_UNUSED(option);
     Q_UNUSED(sinceStatusId);
+    Q_UNUSED(count);
+    Q_UNUSED(page);
     return KUrl();
 }
 
-void Search::requestSearchResults( QString query, int option, uint sinceStatusId )
+void Search::requestSearchResults( QString query, int option, uint sinceStatusId, uint count, uint page )
 {
     Q_UNUSED(query);
     Q_UNUSED(option);
-    Q_UNUSED(sinceStatusId)
+    Q_UNUSED(sinceStatusId);
+    Q_UNUSED(count);
+    Q_UNUSED(page);
 }
 
 void Search::searchResultsReturned( KJob* job )
+{
+    Q_UNUSED(job);
+}
+
+void Search::singleStatusReturned( KJob* job )
 {
     Q_UNUSED(job);
 }

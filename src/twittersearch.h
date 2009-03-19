@@ -41,15 +41,19 @@ class TwitterSearch : public Search
 public:
     enum SearchType { CustomSearch = 0, ToUser, FromUser, ReferenceUser, ReferenceHashtag };
 
-    explicit TwitterSearch( const QString searchUrl = QString(), QObject *parent=0 );
+    explicit TwitterSearch( Account* account, const QString searchUrl = QString(), QObject *parent=0 );
     virtual ~TwitterSearch();
 
 private:
-    virtual KUrl buildUrl( QString query, int option, uint sinceStatusId = 0 );
+    virtual KUrl buildUrl( QString query, int option, uint sinceStatusId = 0, uint count = 0, uint page = 1 );
     QList<Status>* parseAtom( const QByteArray &buffer );
 
 public slots:
-    virtual void requestSearchResults( QString query, int option, uint sinceStatusId = 0 );
+    virtual void requestSearchResults( QString query,
+                                       int option,
+                                       uint sinceStatusId = 0,
+                                       uint count = 0,
+                                       uint page = 1 );
 
 protected slots:
     virtual void searchResultsReturned( KJob *job );

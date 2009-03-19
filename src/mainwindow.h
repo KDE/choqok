@@ -64,6 +64,7 @@ public:
 signals:
     void updateTimeLines();
     void updateSearchResults();
+    void updateSearchLimits();
 //     void sigSetUnread( int unread );
     void abortPostNewStatus();
     void setUnreadStatusesToReadState();

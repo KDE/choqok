@@ -297,7 +297,8 @@ QString StatusWidget::generateSign()
             sign.prepend( "To " );
         }
     } else {
-        sign += " - " + mCurrentStatus.source;
+        if( !mCurrentStatus.source.isNull() )
+            sign += " - " + mCurrentStatus.source;
         if ( mCurrentStatus.replyToStatusId > 0 ) {
             QString link = mCurrentAccount->statusUrl( mCurrentStatus.replyToStatusId, mCurrentStatus.user.screenName );
             sign += " - <a href='status://" + QString::number( mCurrentStatus.replyToStatusId ) + "'>" +

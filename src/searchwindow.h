@@ -27,6 +27,7 @@
 
 #include <QWidget>
 #include <QKeyEvent>
+#include <QIntValidator>
 
 #include "ui_searchwidget_base.h"
 #include "account.h"
@@ -61,6 +62,7 @@ protected:
 public slots:
     void updateSearchResults();
     void autoUpdateSearchResults();
+    void updateNumPages();
 
 protected slots:
     void search();
@@ -79,6 +81,11 @@ private:
 
 private slots:
     void updateSearchArea(int type = 0, const QString & query = QString());
+    void refresh();
+    void goForward();
+    void goBack();
+    void pageChange();
+    void showNavigation( bool showNav );
 
 protected:
     QList<StatusWidget*> listResults;
@@ -87,9 +94,11 @@ private:
     Account mAccount;
     Search* mSearch;
     Ui::searchwidget_base ui;
-
+    uint page;
+    uint lastValidPage;
     QString lastSearchQuery;
     int lastSearchType;
+    QIntValidator* intValidator;
 };
 
 #endif

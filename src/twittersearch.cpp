@@ -32,15 +32,26 @@
 #include <kio/netaccess.h>
 #include <kdebug.h>
 
-TwitterSearch::TwitterSearch( const QString searchUrl, QObject *parent ) :
-        Search(searchUrl, parent)
+#include "backend.h"
+
+TwitterSearch::TwitterSearch( Account* account, const QString searchUrl, QObject *parent ) :
+        Search(account, searchUrl, parent)
 {
     kDebug();
-    mSearchTypes[CustomSearch] = i18n( "Custom Search" );
-    mSearchTypes[ToUser] = i18n( "Tweets To This User" );
-    mSearchTypes[FromUser] = i18n( "Tweets From This User" );
-    mSearchTypes[ReferenceUser] = i18n( "Tweets Including This User's Name" );
-    mSearchTypes[ReferenceHashtag] = i18n( "Tweets Including This Hashtag" );
+    mSearchTypes[CustomSearch].first = i18n( "Custom Search" );
+    mSearchTypes[CustomSearch].second = true;
+
+    mSearchTypes[ToUser].first = i18n( "Tweets To This User" );
+    mSearchTypes[ToUser].second = true;
+
+    mSearchTypes[FromUser].first = i18n( "Tweets From This User" );
+    mSearchTypes[FromUser].second = true;
+
+    mSearchTypes[ReferenceUser].first = i18n( "Tweets Including This User's Name" );
+    mSearchTypes[ReferenceUser].second = true;
+
+    mSearchTypes[ReferenceHashtag].first = i18n( "Tweets Including This Hashtag" );
+    mSearchTypes[ReferenceHashtag].second = true;
 }
 
 TwitterSearch::~TwitterSearch()
@@ -48,15 +59,16 @@ TwitterSearch::~TwitterSearch()
     kDebug();
 }
 
-KUrl TwitterSearch::buildUrl( QString query, int option, uint sinceStatusId )
+KUrl TwitterSearch::buildUrl( QString query, int option, uint sinceStatusId, uint count, uint page )
 {
     kDebug();
     QString baseUrl = "http://search.twitter.com/search.atom?";
     if( sinceStatusId )
         baseUrl += "since_id=" + QString::number( sinceStatusId ) + '&';
+    if( count && count <= 100 )
+        baseUrl += "rpp=" + QString::number( count ) + "&";
+    baseUrl += "page=" + QString::number( page ) + "&";
     baseUrl += "q=";
-
-    kDebug() << "Search URL: " << baseUrl;
 
     QString formattedQuery;
     switch ( option ) {
@@ -80,16 +92,17 @@ KUrl TwitterSearch::buildUrl( QString query, int option, uint sinceStatusId )
             break;
     };
 
-    KUrl url( baseUrl + formattedQuery );
+    KUrl url;
+    url.setUrl( baseUrl + formattedQuery );
 
     return url;
 }
 
-void TwitterSearch::requestSearchResults( QString query, int option, uint sinceStatusId )
+void TwitterSearch::requestSearchResults( QString query, int option, uint sinceStatusId, uint count, uint page )
 {
     kDebug();
 
-    KUrl url = buildUrl( query, option, sinceStatusId );
+    KUrl url = buildUrl( query, option, sinceStatusId, count, page );
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo );
     if( !job ) {
