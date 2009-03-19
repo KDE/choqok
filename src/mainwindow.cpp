@@ -75,7 +75,7 @@ MainWindow::MainWindow()
         mPrevNotifyType = 1;
     else
         mPrevNotifyType = Settings::notifyType();
-    if ( Settings::updateInterval() > 2 )
+    if ( Settings::updateInterval() > 0 )
         mPrevUpdateInterval = Settings::updateInterval();
     else
         mPrevUpdateInterval = 10;
@@ -282,7 +282,6 @@ least one account on <a href='http://identi.ca'>Identi.ca</a> or \
             dia->show();
         }
     }
-    timelineTimer->setInterval( Settings::updateInterval() *60000 );
 
     if ( Settings::isCustomUi() ) {
     StatusWidget::setStyle( Settings::newStatusForeColor() , Settings::newStatusBackColor(),
@@ -303,7 +302,8 @@ least one account on <a href='http://identi.ca'>Identi.ca</a> or \
     } else {
         actionCollection()->action( "choqok_enable_notify" )->setChecked( true );
     }
-    if ( Settings::updateInterval() > 2 ) {
+    if ( Settings::updateInterval() > 0 ) {
+        timelineTimer->setInterval( Settings::updateInterval() *60000 );
         timelineTimer->start();
 //         kDebug()<<"timelineTimer started";
         actionCollection()->action( "choqok_enable_updates" )->setChecked( true );
@@ -351,7 +351,7 @@ void MainWindow::disableApp()
 void MainWindow::enableApp()
 {
     kDebug();
-    if ( Settings::updateInterval() > 2 ) {
+    if ( Settings::updateInterval() > 0 ) {
         timelineTimer->start();
 //         kDebug()<<"timelineTimer started";
     }
@@ -449,14 +449,15 @@ void MainWindow::setTimeLineUpdatesEnabled( bool isEnabled )
 {
     kDebug();
     if ( isEnabled ) {
-        Settings::setUpdateInterval( mPrevUpdateInterval );
+        if( mPrevUpdateInterval > 0 )
+            Settings::setUpdateInterval( mPrevUpdateInterval );
         timelineTimer->start( Settings::updateInterval() *60000 );
 //         kDebug()<<"timelineTimer started";
     } else {
         mPrevUpdateInterval = Settings::updateInterval();
         timelineTimer->stop();
 //         kDebug()<<"timelineTimer stoped";
-        Settings::setUpdateInterval( 2 );
+        Settings::setUpdateInterval( 1 );
     }
 }
 
