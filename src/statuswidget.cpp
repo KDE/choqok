@@ -465,7 +465,7 @@ void StatusWidget::baseStatusReceived( Status status )
     }
     QString baseStatusText = "<p style=\"margin-top:10px; margin-bottom:10px; margin-left:20px;\
     margin-right:20px; -qt-block-indent:0; text-indent:0px\"><span style=\" color:" + color + ";\">";
-    baseStatusText += "<b>" + status.user.screenName + " :</b> ";
+    baseStatusText += "<b><a href='user://"+ status.user.screenName +"'>" + status.user.screenName + "</a> :</b> ";
     baseStatusText += prepareStatus( status.content ) + "</p>";
     mStatus.prepend( baseStatusText );
     updateSign();
