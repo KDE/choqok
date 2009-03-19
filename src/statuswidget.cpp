@@ -118,6 +118,12 @@ void StatusWidget::checkAnchor(const QUrl & url)
     ret = menu.exec(QCursor::pos());
     if(ret == 0) return;
     type = ret->data().toInt();
+  } else if( scheme == "status" ) {
+        Backend *b = new Backend(new Account(*mCurrentAccount), this);
+        connect( b, SIGNAL( singleStatusReceived( Status ) ),
+               this, SLOT( baseStatusReceived(Status) ) );
+        b->requestSingleStatus( url.host().toInt() );
+        return;
   } else {
     KToolInvocation::invokeBrowser(url.toString());
     return;
@@ -276,7 +282,8 @@ void StatusWidget::requestReply()
 QString StatusWidget::generateSign()
 {
     QString sign;
-    sign = "<b><a href='user://"+mCurrentStatus.user.screenName+"'>" + mCurrentStatus.user.screenName +
+    sign = "<b><a href='user://"+mCurrentStatus.user.screenName+"' title=\"" +
+    mCurrentStatus.user.description + "\">" + mCurrentStatus.user.screenName +
     "</a> <a href=\"" + mCurrentAccount->homepage() + mCurrentStatus.user.screenName + "\" title=\"" +
                     mCurrentStatus.user.description + "\"><img src=\"icon://web\" /></a> - </b>";
     sign += "<a href=\"" + mCurrentAccount->statusUrl( mCurrentStatus.statusId, mCurrentStatus.user.screenName ) +
@@ -291,14 +298,15 @@ QString StatusWidget::generateSign()
         sign += " - " + mCurrentStatus.source;
         if ( mCurrentStatus.replyToStatusId > 0 ) {
             QString link = mCurrentAccount->statusUrl( mCurrentStatus.replyToStatusId, mCurrentStatus.user.screenName );
-            sign += " - <a href=\"" + link + "\" title=\"" + link + "\">" + i18n("in reply to") + "</a>";
+            sign += " - <a href='status://" + QString::number( mCurrentStatus.replyToStatusId ) + "'>" +
+            i18n("in reply to")+ "</a> <a href=\"" + link + "\"><img src=\"icon://web\" /></a>";
         }
     }
     return sign;
 }
 
 void StatusWidget::updateSign()
-{ 
+{
     setHtml( baseText.arg( mImage, mStatus, mSign.arg( formatDateTime( mCurrentStatus.creationDateTime ) ) ) );
 }
 
@@ -425,7 +433,7 @@ void StatusWidget::setUserImage()
 void StatusWidget::userImageLocalPathFetched( const QString &remotePath, const QString &localPath )
 {
     if ( remotePath == mCurrentStatus.user.profileImageUrl ) {
-      mImage = "<img src='"+localPath+"' width=\"48\" height=\"48\" />";
+      mImage = "<img src='"+localPath+"' title='"+ mCurrentStatus.user.name +"' width=\"48\" height=\"48\" />";
       updateSign();
         disconnect( MediaManager::self(), SIGNAL( imageFetched( const QString &, const QString & ) ),
                     this, SLOT( userImageLocalPathFetched( const QString&, const QString& ) ) );
@@ -440,10 +448,27 @@ void StatusWidget::missingStatusReceived( Status status )
         sender()->deleteLater();
     }
 }
+
 void StatusWidget::resizeEvent(QResizeEvent* event)
 {
   setHeight();
   KTextBrowser::resizeEvent(event);
+}
+
+void StatusWidget::baseStatusReceived( Status status )
+{
+    QString color;
+    if( Settings::isCustomUi() ) {
+        color = Settings::defaultForeColor().lighter().name();
+    } else {
+        color = this->palette().dark().color().name();
+    }
+    QString baseStatusText = "<p style=\"margin-top:10px; margin-bottom:10px; margin-left:20px;\
+    margin-right:20px; -qt-block-indent:0; text-indent:0px\"><span style=\" color:" + color + ";\">";
+    baseStatusText += "<b>" + status.user.screenName + " :</b> ";
+    baseStatusText += prepareStatus( status.content ) + "</p>";
+    mStatus.prepend( baseStatusText );
+    updateSign();
 }
 
 #include "statuswidget.moc"

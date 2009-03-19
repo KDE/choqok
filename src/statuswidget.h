@@ -78,6 +78,7 @@ protected slots:
     void missingStatusReceived( Status status );
     void setHeight();
     void checkAnchor(const QUrl & url);
+    void baseStatusReceived( Status status );
 
 protected:
     void resizeEvent ( QResizeEvent * event );
@@ -104,7 +105,6 @@ private:
     QString mSign;
     QString mStatus;
     QString mImage;
-//     QString mDir;
 
     static const QString baseText;
     static const QString baseStyle;
