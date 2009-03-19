@@ -143,7 +143,7 @@ void MainWindow::setupActions()
     showMain->setGlobalShortcutAllowed( true );
     showMain->setGlobalShortcut( toggleMainGlobalShortcut/*, KAction::DefaultShortcut, KAction::NoAutoloading*/ );
     showMain->setText( i18n( "Minimize" ) );
-    connect( showMain, SIGNAL( triggered( bool ) ), this, SLOT( hide() ) );
+    connect( showMain, SIGNAL( triggered( bool ) ), this, SLOT( toggleMainWindow() ) );
 
     KAction *enableUpdates = new KAction( i18n( "Enable update timer" ), this );
     enableUpdates->setCheckable( true );
@@ -472,5 +472,12 @@ void MainWindow::setNotificationsEnabled( bool isEnabled )
     }
 }
 
+void MainWindow::toggleMainWindow()
+{
+    if( this->isVisible() )
+        hide();
+    else
+        show();
+}
 
 #include "mainwindow.moc"

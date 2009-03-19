@@ -100,6 +100,7 @@ private slots:
     void setTimeLineUpdatesEnabled( bool isEnabled );
     void setNotificationsEnabled( bool isEnabled );
     void postQuickTwit();
+    void toggleMainWindow();
 
 private:
     KTabWidget *mainWidget;
