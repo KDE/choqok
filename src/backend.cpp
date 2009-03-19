@@ -128,6 +128,7 @@ void Backend::requestTimeLine( uint latestStatusId, TimeLineType type, int page 
     if(latestStatusId) {
         url.addQueryItem( "since_id", QString::number( latestStatusId ) );
     }
+    url.addQueryItem( "count", QString::number( Settings::countOfStatusesOnMain() ) );
     if(page) {
         url.addQueryItem( "page", QString::number( page ) );
     }
@@ -684,6 +685,7 @@ void Backend::requestDMessages( uint latestStatusId, DMessageType type, int page
     else
         url.setUrl( mCurrentAccount->apiPath() + "/direct_messages/sent.xml" );
     setDefaultArgs( url );
+    url.addQueryItem( "count", QString::number( Settings::countOfStatusesOnMain() ) );
     if(latestStatusId) {
         url.addQueryItem( "since_id", QString::number( latestStatusId ) );
     }
