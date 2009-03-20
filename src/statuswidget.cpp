@@ -119,13 +119,16 @@ void StatusWidget::checkAnchor(const QUrl & url)
     if(ret == 0) return;
     type = ret->data().toInt();
   } else if( scheme == "status" ) {
-      if(isBaseStatusShowed)
+      if(isBaseStatusShowed) {
+          updateUi();
+          isBaseStatusShowed = false;
           return;
-        Backend *b = new Backend(new Account(*mCurrentAccount), this);
-        connect( b, SIGNAL( singleStatusReceived( Status ) ),
+      }
+      Backend *b = new Backend(new Account(*mCurrentAccount), this);
+      connect( b, SIGNAL( singleStatusReceived( Status ) ),
                this, SLOT( baseStatusReceived(Status) ) );
-        b->requestSingleStatus( url.host().toInt() );
-        return;
+      b->requestSingleStatus( url.host().toInt() );
+      return;
   } else {
     KToolInvocation::invokeBrowser(url.toString());
     return;
