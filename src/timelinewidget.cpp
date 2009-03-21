@@ -190,7 +190,7 @@ void TimeLineWidget::directMessagesReceived( QList< Status > & msgList )
         return;
     } else {
         addNewStatusesToUi( msgList, inboxLayout, &listInboxStatus, Backend::InboxTimeLine );
-        inboxScroll->verticalScrollBar()->setSliderPosition( 0 );
+//         inboxScroll->verticalScrollBar()->setSliderPosition( 0 );
         kDebug() << count << " Statuses received.";
         if ( !isStartMode ) {
             unreadStatusInInbox += count;
@@ -212,7 +212,7 @@ void TimeLineWidget::outboxMessagesReceived( QList< Status > & msgList )
         return;
     } else {
         addNewStatusesToUi( msgList, outboxLayout, &listOutboxStatus, Backend::OutboxTimeLine );
-        outboxScroll->verticalScrollBar()->setSliderPosition( 0 );
+//         outboxScroll->verticalScrollBar()->setSliderPosition( 0 );
 
         kDebug() << count << " Statuses received.";
 
@@ -236,7 +236,7 @@ void TimeLineWidget::homeTimeLinesReceived( QList< Status > & statusList )
         return;
     } else {
         addNewStatusesToUi( statusList, homeLayout, &listHomeStatus );
-        homeScroll->verticalScrollBar()->setSliderPosition( 0 );
+//         homeScroll->verticalScrollBar()->setSliderPosition( 0 );
 
 //         int count = statusList.count();
         kDebug() << count << " Statuses received.";
@@ -260,7 +260,7 @@ void TimeLineWidget::replyTimeLineReceived( QList< Status > & statusList )
         return;
     } else {
         addNewStatusesToUi( statusList, replyLayout, &listReplyStatus, Backend::ReplyTimeLine );
-        replyScroll->verticalScrollBar()->setSliderPosition( 0 );
+//         replyScroll->verticalScrollBar()->setSliderPosition( 0 );
 
 //         int count = statusList.count();
         kDebug() << count << " Statuses received.";
