@@ -66,8 +66,8 @@ KUrl TwitterSearch::buildUrl( QString query, int option, uint sinceStatusId, uin
     if( sinceStatusId )
         baseUrl += "since_id=" + QString::number( sinceStatusId ) + '&';
     if( count && count <= 100 )
-        baseUrl += "rpp=" + QString::number( count ) + "&";
-    baseUrl += "page=" + QString::number( page ) + "&";
+        baseUrl += "rpp=" + QString::number( count ) + '&';
+    baseUrl += "page=" + QString::number( page ) + '&';
     baseUrl += "q=";
 
     QString formattedQuery;
