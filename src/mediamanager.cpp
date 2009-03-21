@@ -85,7 +85,7 @@ void MediaManager::getImageLocalPathDownloadAsyncIfNotExists( const QString & lo
         KIO::FileCopyJob *job = KIO::file_copy( srcUrl, destUrl, -1, KIO::HideProgressInfo | KIO::Overwrite ) ;
         if ( !job ) {
             kDebug() << "Cannot create a FileCopyJob!";
-            QString errMsg = i18n( "Cannot download userimage for %1, please check your internet connection.",
+            QString errMsg = i18n( "Cannot download user image for %1, please check your Internet connection.",
                                    localName );
             emit sigError( errMsg );
             return;

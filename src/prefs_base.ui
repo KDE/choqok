@@ -25,7 +25,7 @@
          <item>
           <widget class="QCheckBox" name="kcfg_showMainWinOnStart" >
            <property name="text" >
-            <string>Show Main &amp;Window on application start</string>
+            <string>Show main &amp;window on application start</string>
            </property>
            <property name="checked" >
             <bool>true</bool>
@@ -71,7 +71,7 @@ p, li { white-space: pre-wrap; }
            <item row="0" column="0" >
             <widget class="QLabel" name="label" >
              <property name="text" >
-              <string>&amp;Update timeline interval :</string>
+              <string>&amp;Update timeline interval:</string>
              </property>
              <property name="alignment" >
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -113,7 +113,7 @@ p, li { white-space: pre-wrap; }
            <item row="2" column="0" >
             <widget class="QLabel" name="label_6" >
              <property name="text" >
-              <string>URL auto-shortening service :</string>
+              <string>URL auto-shortening service:</string>
              </property>
              <property name="alignment" >
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -163,7 +163,7 @@ p, li { white-space: pre-wrap; }
               </size>
              </property>
              <property name="text" >
-              <string>&amp;Number of statuses shown on main window :</string>
+              <string>&amp;Number of statuses shown on main window:</string>
              </property>
              <property name="alignment" >
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -205,7 +205,7 @@ p, li { white-space: pre-wrap; }
          <item row="0" column="0" >
           <widget class="QLabel" name="label_3" >
            <property name="text" >
-            <string>Notify &amp;mode :</string>
+            <string>Notify &amp;mode:</string>
            </property>
            <property name="alignment" >
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -244,7 +244,7 @@ p, li { white-space: pre-wrap; }
          <item row="2" column="0" >
           <widget class="QLabel" name="label_4" >
            <property name="text" >
-            <string>&amp;Notify duration :</string>
+            <string>&amp;Notify duration:</string>
            </property>
            <property name="alignment" >
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

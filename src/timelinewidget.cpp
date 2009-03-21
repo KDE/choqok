@@ -181,7 +181,7 @@ void TimeLineWidget::updateTimeLines()
 void TimeLineWidget::directMessagesReceived( QList< Status > & msgList )
 {
     kDebug();
-    emit notify( i18n( "Latest direct messages received!" ) );
+    emit notify( i18n( "Latest direct messages received." ) );
     int count = msgList.count();
 
     if ( count == 0 ) {
@@ -203,7 +203,7 @@ void TimeLineWidget::directMessagesReceived( QList< Status > & msgList )
 void TimeLineWidget::outboxMessagesReceived( QList< Status > & msgList )
 {
     kDebug();
-    emit notify( i18n( "Latest sent messages received!" ) );
+    emit notify( i18n( "Latest sent messages received." ) );
     int count = msgList.count();
 
     if ( count == 0 ) {
@@ -227,7 +227,7 @@ void TimeLineWidget::outboxMessagesReceived( QList< Status > & msgList )
 void TimeLineWidget::homeTimeLinesReceived( QList< Status > & statusList )
 {
     kDebug();
-    emit notify( i18n( "Latest friends timeline received!" ) );
+    emit notify( i18n( "Latest friends timeline received." ) );
     int count = statusList.count();
 
     if ( count == 0 ) {
@@ -252,7 +252,7 @@ void TimeLineWidget::homeTimeLinesReceived( QList< Status > & statusList )
 void TimeLineWidget::replyTimeLineReceived( QList< Status > & statusList )
 {
     kDebug();
-    emit notify( i18n( "Latest replies timeline received!" ) );
+    emit notify( i18n( "Latest replies timeline received." ) );
     int count = statusList.count();
     if ( count == 0 ) {
         kDebug() << "Status list is empty";
@@ -404,7 +404,7 @@ void TimeLineWidget::postingNewStatusDone( bool isError )
     if ( !isError ) {
         txtNewStatus->clearContentsAndSetDirection( mCurrentAccount.direction() );
         QString successMsg = i18n( "New status posted successfully" );
-        emit systemNotify( i18n( "Success!" ), successMsg, APPNAME );
+        emit systemNotify( i18n( "Success." ), successMsg, APPNAME );
         notify( successMsg );
         replyToStatusId = 0;
         lblCounter->setPixmap(KIcon("dialog-ok").pixmap(22));

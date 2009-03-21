@@ -107,7 +107,7 @@ void MainWindow::setupActions()
     connect( qApp, SIGNAL( aboutToQuit() ), this, SLOT( quitApp() ) );
     KAction *prefs = KStandardAction::preferences( this, SLOT( optionsPreferences() ), actionCollection() );
 
-    KAction *actUpdate = new KAction( KIcon( "view-refresh" ), i18n( "Update timelines" ), this );
+    KAction *actUpdate = new KAction( KIcon( "view-refresh" ), i18n( "Update Timelines" ), this );
     actionCollection()->addAction( QLatin1String( "update_timeline" ), actUpdate );
     actUpdate->setShortcut( Qt::Key_F5 );
     actUpdate->setGlobalShortcutAllowed( true );
@@ -145,14 +145,14 @@ void MainWindow::setupActions()
     showMain->setText( i18n( "Minimize" ) );
     connect( showMain, SIGNAL( triggered( bool ) ), this, SLOT( toggleMainWindow() ) );
 
-    KAction *enableUpdates = new KAction( i18n( "Enable update timer" ), this );
+    KAction *enableUpdates = new KAction( i18n( "Enable Update Timer" ), this );
     enableUpdates->setCheckable( true );
     actionCollection()->addAction( QLatin1String( "choqok_enable_updates" ), enableUpdates );
     enableUpdates->setShortcut( KShortcut( Qt::CTRL | Qt::Key_U ) );
     enableUpdates->setGlobalShortcutAllowed( true );
     connect( enableUpdates, SIGNAL( toggled( bool ) ), this, SLOT( setTimeLineUpdatesEnabled( bool ) ) );
 
-    KAction *enableNotify = new KAction( i18n( "Enable notifications" ), this );
+    KAction *enableNotify = new KAction( i18n( "Enable Notifications" ), this );
     enableNotify->setCheckable( true );
     actionCollection()->addAction( QLatin1String( "choqok_enable_notify" ), enableNotify );
     enableNotify->setShortcut( KShortcut( Qt::CTRL | Qt::Key_N ) );
@@ -242,7 +242,7 @@ void MainWindow::optionsPreferences()
 
     QWidget *appearsSettingsDlg = new QWidget;
     ui_appears_base.setupUi( appearsSettingsDlg );
-    dialog->addPage( appearsSettingsDlg, i18n( "Appearances" ), "format-stroke-color" );
+    dialog->addPage( appearsSettingsDlg, i18n( "Appearance" ), "format-stroke-color" );
 
     connect( dialog, SIGNAL( settingsChanged( QString ) ), this, SLOT( settingsChanged() ) );
 

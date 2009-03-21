@@ -105,7 +105,7 @@
    <item row="4" column="0">
     <widget class="QCheckBox" name="chkAutoUpdate">
      <property name="text">
-      <string>Auto-Update Results</string>
+      <string>Auto-update results</string>
      </property>
     </widget>
    </item>
@@ -146,7 +146,7 @@
       </size>
      </property>
      <property name="toolTip">
-      <string>Previous Page</string>
+      <string>Previous page</string>
      </property>
      <property name="text">
       <string/>
@@ -174,7 +174,7 @@
       </size>
      </property>
      <property name="toolTip">
-      <string>Next Page</string>
+      <string>Next page</string>
      </property>
      <property name="text">
       <string/>

@@ -13,7 +13,7 @@
    <item row="3" column="0" >
     <widget class="QLabel" name="textLabel1" >
      <property name="text" >
-      <string>&amp;User name :</string>
+      <string>&amp;User name:</string>
      </property>
      <property name="alignment" >
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -29,7 +29,7 @@
    <item row="4" column="0" >
     <widget class="QLabel" name="textLabel1_2" >
      <property name="text" >
-      <string>&amp;Password :</string>
+      <string>&amp;Password:</string>
      </property>
      <property name="alignment" >
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -55,7 +55,7 @@
    <item row="5" column="0" >
     <widget class="QLabel" name="textLabel2_2" >
      <property name="text" >
-      <string>&amp;Direction :</string>
+      <string>&amp;Direction:</string>
      </property>
      <property name="alignment" >
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -118,7 +118,7 @@ p, li { white-space: pre-wrap; }
    <item row="1" column="0" >
     <widget class="QLabel" name="label_2" >
      <property name="text" >
-      <string>&amp;Service :</string>
+      <string>&amp;Service:</string>
      </property>
      <property name="alignment" >
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -156,7 +156,7 @@ p, li { white-space: pre-wrap; }
    <item row="0" column="0" >
     <widget class="QLabel" name="label_3" >
      <property name="text" >
-      <string>&amp;Alias :</string>
+      <string>&amp;Alias:</string>
      </property>
      <property name="alignment" >
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -169,7 +169,7 @@ p, li { white-space: pre-wrap; }
    <item row="2" column="0" >
     <widget class="QLabel" name="lblHomepage" >
      <property name="text" >
-      <string>Homepage :</string>
+      <string>Homepage:</string>
      </property>
     </widget>
    </item>

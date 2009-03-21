@@ -70,7 +70,7 @@ void Backend::postNewStatus( const QString & statusMessage, uint replyToStatusId
     KIO::TransferJob *job = KIO::http_post(url, data, KIO::HideProgressInfo) ;
     if ( !job ) {
         kDebug() << "Cannot create a http POST request!";
-        QString errMsg = i18n( "Cannot create a http POST request, please check your internet connection." );
+        QString errMsg = i18n( "Cannot create a http POST request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
     }
@@ -95,7 +95,7 @@ void Backend::sendDMessage( const QString & screenName, const QString & message 
     KIO::TransferJob *job = KIO::http_post(url, data, KIO::HideProgressInfo) ;
     if ( !job ) {
         kDebug() << "Cannot create a http POST request!";
-        QString errMsg = i18n( "Cannot create a http POST request, please check your internet connection." );
+        QString errMsg = i18n( "Cannot create a http POST request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
     }
@@ -138,7 +138,7 @@ void Backend::requestTimeLine( uint latestStatusId, TimeLineType type, int page 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create a http GET request!";
-        QString errMsg = i18n( "Cannot create a http GET request, please check your internet connection." );
+        QString errMsg = i18n( "Cannot create a http GET request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
     }
@@ -175,7 +175,7 @@ QList<Status> * Backend::readTimeLineFromXml( const QByteArray & buffer )
     QDomElement root = document.documentElement();
 
     if ( root.tagName() != "statuses" ) {
-        QString err = i18n( "Data returned from server corrupted!" );
+        QString err = i18n( "Data returned from server corrupted." );
         kDebug() << "there's no statuses tag in XML\t the XML is: \n" << buffer.data();
         mLatestErrorString = err;
         return 0;
@@ -347,7 +347,7 @@ void Backend::requestFavorited( uint statusId, bool isFavorite )
     KIO::TransferJob *job = KIO::http_post(url, QByteArray(), KIO::HideProgressInfo) ;
     if ( !job ) {
         kDebug() << "Cannot create a http POST request!";
-        QString errMsg = i18n( "Cannot create a http POST request, please check your internet connection." );
+        QString errMsg = i18n( "Cannot create a http POST request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
     }
@@ -366,7 +366,7 @@ void Backend::requestDestroy( uint statusId )
     KIO::TransferJob *job = KIO::http_post(url, QByteArray(), KIO::HideProgressInfo) ;
     if ( !job ) {
         kDebug() << "Cannot create a http POST request!";
-        QString errMsg = i18n( "Cannot create a http POST request, please check your internet connection." );
+        QString errMsg = i18n( "Cannot create a http POST request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
     }
@@ -386,7 +386,7 @@ void Backend::requestDestroyDMessage( uint statusId )
     KIO::TransferJob *job = KIO::http_post(url, QByteArray(), KIO::HideProgressInfo) ;
     if ( !job ) {
         kDebug() << "Cannot create a http POST request!";
-        QString errMsg = i18n( "Cannot create a http POST request, please check your internet connection." );
+        QString errMsg = i18n( "Cannot create a http POST request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
     }
@@ -544,7 +544,7 @@ void Backend::verifyCredential()
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create a http GET request!";
-        QString errMsg = i18n( "Cannot create a http GET request, please check your internet connection." );
+        QString errMsg = i18n( "Cannot create a http GET request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
     }
@@ -558,7 +558,7 @@ void Backend::slotCredentialsReceived( KJob * job )
     kDebug();
     if ( job->error() ) {
         kDebug() << "Job error, " << job->errorString();
-        QString err = i18n( "Authorization Failed, more info: %1", job->errorString() );
+        QString err = i18n( "Authorization failed, more info: %1", job->errorString() );
         emit sigError( err );
         return;
     }
@@ -588,7 +588,7 @@ void Backend::slotCredentialsReceived( KJob * job )
                 requestCurrentUser();
             } else {
                 kDebug() << "Authorization result is not TRUE, is : " << root.toElement().text();
-                QString err = i18n( "Authorization Failed, more info: %1", job->errorString() );
+                QString err = i18n( "Authorization failed, more info: %1", job->errorString() );
                 emit sigError( err );
                 return;
             }
@@ -631,7 +631,7 @@ void Backend::slotUserInfoReceived( KJob * job )
 
     while ( !node.isNull() ) {
         if ( node.toElement().tagName() != "status" ) {
-            QString err = i18n( "Data returned from server corrupted!" );
+            QString err = i18n( "Data returned from server corrupted." );
             kDebug() << "there's no status tag in XML\t the XML is: \n" << buffer.data();
             mLatestErrorString = err;
             return;
@@ -667,7 +667,7 @@ void Backend::requestCurrentUser()
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create a http GET request!";
-        QString errMsg = i18n( "Cannot create a http GET request, please check your internet connection." );
+        QString errMsg = i18n( "Cannot create a http GET request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
     }
@@ -697,7 +697,7 @@ void Backend::requestDMessages( uint latestStatusId, DMessageType type, int page
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create a http GET request!";
-        QString errMsg = i18n( "Cannot create a http GET request, please check your internet connection." );
+        QString errMsg = i18n( "Cannot create a http GET request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
     }
@@ -753,7 +753,7 @@ QList< Status > * Backend::readDMessagesFromXml( const QByteArray & buffer )
     QDomElement root = document.documentElement();
 
     if ( root.tagName() != "direct-messages" ) {
-        QString err = i18n( "Data returned from server corrupted!" );
+        QString err = i18n( "Data returned from server corrupted." );
         kDebug() << "there's no direct-messages tag in XML\t the XML is: \n" << buffer.data();
         mLatestErrorString = err;
         return 0;
@@ -980,7 +980,7 @@ void Backend::requestFollowers( int page )
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create a http GET request!";
-        QString errMsg = i18n( "Cannot create a http GET request, please check your internet connection." );
+        QString errMsg = i18n( "Cannot create a http GET request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
     }
@@ -1019,7 +1019,7 @@ void Backend::requestFriends( int page )
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create a http GET request!";
-        QString errMsg = i18n( "Cannot create a http GET request, please check your internet connection." );
+        QString errMsg = i18n( "Cannot create a http GET request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
     }
@@ -1049,7 +1049,7 @@ QStringList Backend::readUsersNameFromXml( const QByteArray & buffer )
     QDomElement root = document.documentElement();
 
     if ( root.tagName() != "users" ) {
-        QString err = i18n( "Data returned from server corrupted!" );
+        QString err = i18n( "Data returned from server corrupted." );
         kDebug() << "there's no users tag in XML\t the XML is: \n" << buffer.data();
         mLatestErrorString = err;
         return list;
@@ -1091,7 +1091,7 @@ void Backend::requestSingleStatus( uint statusId )
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create a http GET request!";
-        QString errMsg = i18n( "Cannot create a http GET request, please check your internet connection." );
+        QString errMsg = i18n( "Cannot create a http GET request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
     }

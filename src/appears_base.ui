@@ -20,7 +20,7 @@
    <item>
     <widget class="QCheckBox" name="kcfg_isCustomUi" >
      <property name="text" >
-      <string>Use custom Colors</string>
+      <string>Use custom colors</string>
      </property>
     </widget>
    </item>
@@ -48,7 +48,7 @@
         <bool>false</bool>
        </property>
        <property name="title" >
-        <string>Status color preferences</string>
+        <string>Status Color Preferences</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout" >
         <item>
@@ -66,7 +66,7 @@
           <item row="1" column="0" >
            <widget class="QLabel" name="label" >
             <property name="text" >
-             <string>Default color :</string>
+             <string>Default color:</string>
             </property>
             <property name="alignment" >
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -90,7 +90,7 @@
           <item row="2" column="0" >
            <widget class="QLabel" name="label_2" >
             <property name="text" >
-             <string>New status color :</string>
+             <string>New status color:</string>
             </property>
             <property name="alignment" >
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
