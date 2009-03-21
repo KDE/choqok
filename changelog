@@ -1,4 +1,4 @@
-=== Version 0.5 -- 20-Mar-2009 ===
+=== Version 0.5 -- 21-Mar-2009 ===
  * Twitter.com search API implemented. (Stephen Henderson)
  * Identi.ca search API implemented. (Stephen Henderson)
  * Integration of search facilities in MainWindow. and less need of using web browser. (Daniel Schaal)
