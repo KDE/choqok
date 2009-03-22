@@ -483,4 +483,9 @@ void MainWindow::toggleMainWindow()
         show();
 }
 
+QSize MainWindow::sizeHint() const
+{
+    return QSize( 350, 380 );
+}
+
 #include "mainwindow.moc"

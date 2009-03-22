@@ -85,6 +85,7 @@ protected slots:
 protected:
     void hideEvent( QHideEvent * event );
     void checkUnreadStatuses( int numOfNewStatusesReciened );
+    QSize sizeHint() const;
 
 private:
     void setupActions();
