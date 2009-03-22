@@ -176,7 +176,7 @@ p, li { white-space: pre-wrap; }
    <item row="2" column="1" >
     <widget class="KLineEdit" name="kcfg_homepage" >
      <property name="text" >
-      <string>http://</string>
+      <string comment="KDE::DoNotExtract">http://</string>
      </property>
      <property name="showClearButton" stdset="0" >
       <bool>true</bool>
