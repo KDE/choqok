@@ -1,61 +1,15 @@
 [Global]
 IconName=choqok
 Comment=choqoK
-Comment[sv]=Choqok
-Comment[x-test]=xxchoqoKxx
 
 [Event/new-status-arrived]
 Name=New tweet arrived
-Name[et]=Saabus uus tviit
-Name[fr]=Un nouveau tweet est arrivé
-Name[gl]=Chegou un novo tweet
-Name[km]=tweet ថ្មី​បាន​មក​ដល់
-Name[nds]=Nieg Jiepel ankamen
-Name[nl]=Nieuwe tweet aangekomen
-Name[pt]=Chegou um novo 'twit'
-Name[pt_BR]=Chegou um novo 'twit'
-Name[sv]=Nytt meddelande anländer
-Name[uk]=Надійшло нове нагадування
-Name[x-test]=xxNew tweet arrivedxx
 Comment=New tweet arrived
-Comment[et]=Saabus uus tviit
-Comment[fr]=Un nouveau tweet est arrivé
-Comment[gl]=Chegou un novo tweet
-Comment[km]=tweet ថ្មី​បានមកដល់
-Comment[nds]=Nieg Jiepel ankamen
-Comment[nl]=Nieuwe tweet aangekomen
-Comment[pt]=Chegou um novo 'twit'
-Comment[pt_BR]=Chegou um novo 'twit'
-Comment[sv]=Nytt meddelande anländer
-Comment[uk]=Надійшло нове нагадування
-Comment[x-test]=xxNew tweet arrivedxx
 Action=Popup
 Persistent=True
 
 [Event/notify]
 Name=Something happens
-Name[et]=Midagi juhtus
-Name[fr]=Quelque chose s'est produit
-Name[gl]=Acontece algo
-Name[km]=មានអ្វី​មួយ​កើតឡើង
-Name[nds]=Dor deit sik wat
-Name[nl]=Er is iets gebeurd
-Name[pt]=Aconteceu alguma coisa
-Name[pt_BR]=Algo aconteceu
-Name[sv]=Någonting händer
-Name[uk]=Щось сталося
-Name[x-test]=xxSomething happensxx
 Comment=Something happens
-Comment[et]=Midagi juhtus
-Comment[fr]=Quelque chose s'est produit
-Comment[gl]=Acontece algo
-Comment[km]=មាន​អ្វី​មួយ​កើត​ឡើង
-Comment[nds]=Dor deit sik wat
-Comment[nl]=Er is iets gebeurd
-Comment[pt]=Aconteceu alguma coisa
-Comment[pt_BR]=Algo aconteceu
-Comment[sv]=Någonting händer
-Comment[uk]=Щось сталося
-Comment[x-test]=xxSomething happensxx
 Action=Popup
 Persistent=True
