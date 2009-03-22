@@ -40,7 +40,8 @@ SysTrayIcon::SysTrayIcon( QWidget* parent ): KSystemTrayIcon( parent )
     kDebug();
     unread = 0;
 
-    m_defaultIcon = parentWidget()->windowIcon().pixmap( 22 );;
+    m_defaultIcon = parentWidget()->windowIcon().pixmap( 22 );
+    this->setIcon( parentWidget()->windowIcon() );
 
     isIconChanged = false;
 }
