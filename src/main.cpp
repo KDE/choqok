@@ -31,7 +31,7 @@
 #include <KDE/KLocale>
 
 static const char description[] =
-    I18N_NOOP( "KDE Micro-blogging client,\n\
+    I18N_NOOP( "KDE micro-blogging client.\n\n\
 Currently supports <a href='http://twitter.com'>Twitter.com</a> and \
 <a href='http://identi.ca'>Identi.ca</a>" );
 
@@ -45,7 +45,7 @@ int main( int argc, char **argv )
     about.addAuthor( ki18n( "Mehrdad Momeny" ), ki18n( "Author and Core Developer" ),
                      "mehrdad.momeny@gmail.com" );
     about.addCredit( ki18n( "Roozbeh Shafiee" ), ki18n( "Icon designer" ), "roozbeh@roozbehonline.com" );
-    about.addCredit( ki18n( "Daniel Schaal" ), ki18n( "UI Improvements" ), "daniel@foto-schaal.de");
+    about.addCredit( ki18n( "Daniel Schaal" ), ki18n( "UI improvements" ), "daniel@foto-schaal.de");
     about.addCredit( ki18n( "Stephen Henderson" ), ki18n( "Search API implementation" ), "hendersonsk@gmail.com");
     KCmdLineArgs::init( argc, argv, &about );
 
