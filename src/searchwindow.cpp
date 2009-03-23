@@ -26,7 +26,6 @@
 #include "statuswidget.h"
 #include "settings.h"
 #include <kdebug.h>
-#include <QTimer>
 #include <QMap>
 #include <QString>
 #include <QScrollBar>

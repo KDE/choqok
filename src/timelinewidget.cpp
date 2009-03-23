@@ -29,7 +29,6 @@
 #include "accountmanager.h"
 #include <kdebug.h>
 #include <QTimer>
-#include <QScrollBar>
 #include <KDE/KLocale>
 #include <KDE/KMessageBox>
 #include <QProcess>

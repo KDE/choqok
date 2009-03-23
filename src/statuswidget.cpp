@@ -33,7 +33,6 @@
 #include <KMenu>
 
 #include <KDE/KLocale>
-#include <QLayout>
 #include <KToolInvocation>
 #include "identicasearch.h"
 #include "twittersearch.h"

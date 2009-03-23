@@ -23,8 +23,6 @@
 */
 
 #include "quicktwit.h"
-#include <QKeyEvent>
-#include <KComboBox>
 #include "statustextedit.h"
 #include "backend.h"
 #include "datacontainers.h"

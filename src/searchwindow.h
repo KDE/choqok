@@ -33,8 +33,6 @@
 #include "account.h"
 #include "search.h"
 
-class QLabel;
-class StatusTextEdit;
 class StatusWidget;
 
 /**

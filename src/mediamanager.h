@@ -27,7 +27,6 @@
 #include <QObject>
 #include <QMap>
 
-class QPixmap;
 class KConfig;
 class KConfigGroup;
 

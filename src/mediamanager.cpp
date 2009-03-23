@@ -22,7 +22,6 @@
 
 */
 #include "mediamanager.h"
-#include <QPixmap>
 #include <kio/netaccess.h>
 #include <kio/job.h>
 #include <kio/jobclasses.h>

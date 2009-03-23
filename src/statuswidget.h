@@ -24,7 +24,6 @@
 #ifndef STATUSWIDGET_H
 #define STATUSWIDGET_H
 
-#include <QFrame>
 #include <QTimer>
 #include <KTextBrowser>
 #include <KPushButton>

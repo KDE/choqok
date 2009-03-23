@@ -29,8 +29,6 @@
 #include <KDE/KLocale>
 #include <QPainter>
 #include <KColorScheme>
-#include <QProcess>
-#include <KNotification>
 #include <QTimer>
 #include "accountmanager.h"
 #include <kglobalsettings.h>

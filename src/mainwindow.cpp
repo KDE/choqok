@@ -44,8 +44,6 @@
 #include <KMessageBox>
 #include <QProcess>
 #include <QTimer>
-#include <QKeyEvent>
-#include <QScrollBar>
 #include <QMenu>
 #include <KNotification>
 
