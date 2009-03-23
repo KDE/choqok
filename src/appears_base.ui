@@ -13,14 +13,14 @@
    <item>
     <widget class="QCheckBox" name="kcfg_showIconsOnTimelineTabs" >
      <property name="text" >
-      <string>Show icons on timeline tabs</string>
+      <string>Show icons on timeline tabs.</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QCheckBox" name="kcfg_isCustomUi" >
      <property name="text" >
-      <string>Use custom colors</string>
+      <string>Use custom colors.</string>
      </property>
     </widget>
    </item>
@@ -48,7 +48,7 @@
         <bool>false</bool>
        </property>
        <property name="title" >
-        <string>Status Color Preferences</string>
+        <string>Status Color Preferences:</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout" >
         <item>

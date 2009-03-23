@@ -34,8 +34,8 @@ StatusTextEdit::StatusTextEdit( QWidget *parent )
     this->setAcceptRichText( false );
     connect( this, SIGNAL( textChanged() ), this, SLOT( setNumOfCharsLeft() ) );
     setAcceptRichText( false );
-    this->setToolTip( i18n( "Press Ctrl+P to have previous text submitted.\n\
-Press Ctrl+S to enable/disable spell checking." ) );
+    this->setToolTip( i18n( "Press Ctrl+P to have the previous text submitted.\n\
+Press Ctrl+S to enable/disable spell-checking." ) );
 }
 
 StatusTextEdit::~StatusTextEdit()

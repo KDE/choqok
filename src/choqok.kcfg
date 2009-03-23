@@ -24,7 +24,7 @@
             <default>SettingsBase::KNotify</default>
         </entry>
         <entry name="showAllNotifiesInOne" type="Bool">
-            <label>Show all new statuses in one Notify</label>
+            <label>Show all new statuses in one notification.</label>
             <default>false</default>
         </entry>
         <entry name="updateInterval" type="Int">

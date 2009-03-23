@@ -97,12 +97,12 @@ void QuickTwit::slotPostNewStatusDone( bool isError )
     if ( isError ) {
         Backend * b = qobject_cast<Backend *>( sender() );
         QString name( APPNAME );
-        emit sigNotify( i18n( "Failed." ), i18n( "Posting new status failed. %1",
+        emit sigNotify( i18n( "Failed." ), i18n( "Posting new status failed: %1",
                                                  b->latestErrorString() ), name );
     } else {
         txtStatus->clearContentsAndSetDirection( accountsList[ui.comboAccounts->currentIndex()].direction() );
         QString name( APPNAME );
-        emit sigNotify( i18n( "Success." ), i18n( "New status posted successfully" ), name );
+        emit sigNotify( i18n( "Success." ), i18n( "New status posted successfully." ), name );
     }
     this->close();
     sender()->deleteLater();

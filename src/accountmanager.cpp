@@ -81,7 +81,7 @@ Account AccountManager::findAccount( const QString &alias )
     }
     Account a;
     a.setError( true );
-    mLastError = i18n( "There is no account with alias %1", alias );
+    mLastError = i18n( "There is no account with alias %1.", alias );
     return a;
 }
 
@@ -112,7 +112,7 @@ bool AccountManager::removeAccount( const QString &alias )
             return true;
         }
     }
-    mLastError = i18n( "There is no account with alias %1", alias );
+    mLastError = i18n( "There is no account with alias %1.", alias );
     return false;
 }
 
@@ -131,7 +131,7 @@ Account & AccountManager::addAccount( Account & account )
         Account curracc = it.next();
         if ( account.alias() == curracc.alias() ) {
             account.setError( true );
-            mLastError = i18n( "An account with this alias already exists, you have to select a unique alias" );
+            mLastError = i18n( "An account with this alias already exists: a unique alias has to be specified." );
             return account;
         }
     }

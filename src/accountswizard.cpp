@@ -128,7 +128,7 @@ void AccountsWizard::slotUserVerified( Account * userAccount )
         if ( progress )
             progress->deleteLater();
         kDebug() << "Cannot add or modify account with alias " << mAccount.alias();
-        KMessageBox::detailedError(this, i18n( "An error occurred when adding this account" ),
+        KMessageBox::detailedError(this, i18n( "An error occurred when adding this account." ),
                                     AccountManager::self()->lastError());
         return;
     }
@@ -144,7 +144,7 @@ void AccountsWizard::slotUserVerified( Account * userAccount )
 void AccountsWizard::slotError( const QString & errMsg )
 {
     kDebug();
-    KMessageBox::detailedError( this, i18n( "authentication failed, please check your credentials." ), errMsg );
+    KMessageBox::detailedError( this, i18n( "Authentication failed, please check your credentials." ), errMsg );
     if ( progress ) {
         progress->deleteLater();
         progress = 0;
@@ -155,7 +155,7 @@ void AccountsWizard::slotError( const QString & errMsg )
 void AccountsWizard::handleVerifyTimeout()
 {
     KMessageBox::sorry(this, i18n( "Verification progress timed out. "
-                                   "Check your Internet connection and credentials then try again..." ) , i18n( "Timeout" ) );
+                                   "Check your Internet connection and credentials then try again." ) , i18n( "Timeout" ) );
     if ( progress ) {
         progress->deleteLater();
         progress = 0;

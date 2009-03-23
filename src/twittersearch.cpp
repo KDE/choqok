@@ -126,7 +126,7 @@ void TwitterSearch::searchResultsReturned( KJob* job )
 
     if( job->error() ) {
         kError() << "Error: " << job->errorString();
-        emit error( i18n( "Unable to fetch search results. Error: %1", job->errorString() ) );
+        emit error( i18n( "Unable to fetch search results: %1", job->errorString() ) );
         return;
     }
     KIO::StoredTransferJob *jj = qobject_cast<KIO::StoredTransferJob *>( job );

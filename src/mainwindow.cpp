@@ -66,7 +66,7 @@ MainWindow::MainWindow()
 //     setupQuickTweet();
     setupActions();
     statusBar()->show();
-    notify( i18n( "Initializing choqoK, please be patient..." ) );
+    notify( i18n( "Initializing choqoK, please wait...." ) );
     setupGUI();
 
 //     timelineTimer->setInterval ( Settings::updateInterval() *60000 );
@@ -274,7 +274,7 @@ void MainWindow::settingsChanged()
 {
     kDebug();
     if ( AccountManager::self()->accounts().count() < 1 ) {
-        if ( KMessageBox::questionYesNo( this, i18n( "<qt>In order to use this app you need at \
+        if ( KMessageBox::questionYesNo( this, i18n( "<qt>In order to use this program you need at \
 least one account on <a href='http://identi.ca'>Identi.ca</a> or \
 <a href='http://twitter.com'>Twitter.com</a> services.<br/>Would you like to add your account now?</qt>" )
                                        ) == KMessageBox::Yes ) {

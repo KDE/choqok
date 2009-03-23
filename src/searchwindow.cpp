@@ -123,7 +123,7 @@ SearchWindow::~SearchWindow()
 
 void SearchWindow::error( QString message )
 {
-    ui.lblStatus->setText( i18n( "Failed, %1", message ) );
+    ui.lblStatus->setText( i18n( "Failed: %1", message ) );
     lastSearchQuery.clear();
 }
 

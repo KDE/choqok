@@ -227,7 +227,7 @@ void TimeLineWidget::outboxMessagesReceived( QList< Status > & msgList )
 void TimeLineWidget::homeTimeLinesReceived( QList< Status > & statusList )
 {
     kDebug();
-    emit notify( i18n( "Latest friends timeline received." ) );
+    emit notify( i18n( "Latest friend timelines received." ) );
     int count = statusList.count();
 
     if ( count == 0 ) {
@@ -252,7 +252,7 @@ void TimeLineWidget::homeTimeLinesReceived( QList< Status > & statusList )
 void TimeLineWidget::replyTimeLineReceived( QList< Status > & statusList )
 {
     kDebug();
-    emit notify( i18n( "Latest replies timeline received." ) );
+    emit notify( i18n( "Latest reply timelines received." ) );
     int count = statusList.count();
     if ( count == 0 ) {
         kDebug() << "Status list is empty";
@@ -373,7 +373,7 @@ void TimeLineWidget::setDefaultDirection()
 
 void TimeLineWidget::error( const QString & errMsg )
 {
-    emit notify( i18n( "Failed, %1", errMsg ), true );
+    emit notify( i18n( "Failed: %1", errMsg ), true );
 }
 
 void TimeLineWidget::postStatus( QString & status )
@@ -381,18 +381,18 @@ void TimeLineWidget::postStatus( QString & status )
     kDebug();
 
     if ( status.size() > MAX_STATUS_SIZE && status.indexOf( QRegExp( "https?://" ) ) == -1 ) {
-        QString err = i18n( "Message text size is more than server limit, \
-server may truncate or drop it.\nAre you sure of posting this message?" );
+        QString err = i18n( "Message text size is greater than the server limit: \
+the server may truncate or drop it.\nAre you sure you want to post this message?" );
         if(KMessageBox::warningContinueCancel( this, err ) == KMessageBox::Cancel)
             return;
     }
     txtNewStatus->setEnabled( false );
     if ( chkDMessage->isChecked() ) {
-        emit notify( i18n( "Sending direct message..." ), true );
+        emit notify( i18n( "Sending direct message...." ), true );
         twitter->sendDMessage( comboFriendList->currentText(), status );
         chkDMessage->setChecked( false );
     } else {
-        emit notify( i18n( "Posting new status..." ), true );
+        emit notify( i18n( "Posting new status...." ), true );
         twitter->postNewStatus( status, replyToStatusId );
     }
 }
@@ -629,7 +629,7 @@ void TimeLineWidget::requestDestroyDone( bool isError )
 
 void TimeLineWidget::requestDestroy( uint statusId )
 {
-    if ( KMessageBox::warningYesNo( this, i18n( "Are you sure of destroying this status?" ) ) == KMessageBox::Yes ) {
+    if ( KMessageBox::warningYesNo( this, i18n( "Are you sure you wish to destroy this status?" ) ) == KMessageBox::Yes ) {
         toBeDestroied = qobject_cast<StatusWidget*> ( sender() );
         if ( toBeDestroied->currentStatus().isDMessage ) {
             twitter->requestDestroyDMessage( statusId );
@@ -666,7 +666,7 @@ void TimeLineWidget::reloadFriendsList()
 {
     kDebug();
     friendsList.clear();
-    comboFriendList->setCurrentItem( i18n("Please wait..."), true, 0);
+    comboFriendList->setCurrentItem( i18n("Please wait...."), true, 0);
     twitter->listFollowersScreenName();
     twitter->listFriendsScreenName();
 }
