@@ -114,7 +114,7 @@ void SysTrayIcon::slotSetUnread( int numOfUnreadStatuses )
 void SysTrayIcon::setTimeLineUpdatesEnabled( bool isEnabled )
 {
     if ( isEnabled ) {
-        setToolTip( i18n( "choqoK - Hit me to update your status" ) );
+        setToolTip( i18n( "choqoK - Click me to update your status" ) );
         m_defaultIcon = parentWidget()->windowIcon().pixmap( 22 );
     } else {
         slotSetUnread( -unread );
