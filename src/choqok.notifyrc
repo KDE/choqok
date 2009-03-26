@@ -5,12 +5,16 @@ Comment[sv]=Choqok
 
 [Event/new-status-arrived]
 Name=New tweet arrived
+Name[fr]=Nouveau tweet arrivé
+Name[nds]=Nieg Jiepel ankamen
 Name[pt]=Chegou um novo 'twit'
 Name[pt_BR]=Chegou um novo 'twit'
 Name[sv]=Nytt meddelande anländer
 Name[uk]=Надійшов новий твіт
 Name[zh_TW]=新的 tweet 已抵達
 Comment=New tweet arrived
+Comment[fr]=Nouveau tweet arrivé
+Comment[nds]=Nieg Jiepel ankamen
 Comment[pt]=Chegou um novo 'twit'
 Comment[pt_BR]=Chegou um novo 'twit'
 Comment[sv]=Nytt meddelande anländer
@@ -21,12 +25,16 @@ Persistent=True
 
 [Event/notify]
 Name=Something happens
+Name[fr]=Quelquechose a eu lieu
+Name[nds]=Dor deit sik wat
 Name[pt]=Algo aconteceu
 Name[pt_BR]=Algo aconteceu
 Name[sv]=Någonting händer
 Name[uk]=Щось сталося
 Name[zh_TW]=有些事發生了
 Comment=Something happens
+Comment[fr]=Quelquechose a eu lieu
+Comment[nds]=Dor deit sik wat
 Comment[pt]=Algo aconteceu
 Comment[pt_BR]=Algo aconteceu
 Comment[sv]=Någonting händer
