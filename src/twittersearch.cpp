@@ -41,16 +41,16 @@ TwitterSearch::TwitterSearch( Account* account, const QString searchUrl, QObject
     mSearchTypes[CustomSearch].first = i18n( "Custom Search" );
     mSearchTypes[CustomSearch].second = true;
 
-    mSearchTypes[ToUser].first = i18n( "Tweets To This User" );
+    mSearchTypes[ToUser].first = i18nc( "Tweets are Twitter posts",  "Tweets To This User" );
     mSearchTypes[ToUser].second = true;
 
-    mSearchTypes[FromUser].first = i18n( "Tweets From This User" );
+    mSearchTypes[FromUser].first = i18nc( "Tweets are Twitter posts", "Tweets From This User" );
     mSearchTypes[FromUser].second = true;
 
-    mSearchTypes[ReferenceUser].first = i18n( "Tweets Including This User's Name" );
+    mSearchTypes[ReferenceUser].first = i18nc( "Tweets are Twitter posts", "Tweets Including This User's Name" );
     mSearchTypes[ReferenceUser].second = true;
 
-    mSearchTypes[ReferenceHashtag].first = i18n( "Tweets Including This Hashtag" );
+    mSearchTypes[ReferenceHashtag].first = i18nc( "Tweets are Twitter posts", "Tweets Including This Hashtag" );
     mSearchTypes[ReferenceHashtag].second = true;
 }
 

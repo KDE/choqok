@@ -38,16 +38,16 @@ IdenticaSearch::IdenticaSearch( Account* account, const QString searchUrl, QObje
         Search(account, searchUrl, parent)
 {
     kDebug();
-    mSearchTypes[ToUser].first = i18n( "Dents To This User" );
+    mSearchTypes[ToUser].first = i18nc( "Dents are Identica posts", "Dents To This User" );
     mSearchTypes[ToUser].second = false;
 
-    mSearchTypes[FromUser].first = i18n( "Dents From This User" );
+    mSearchTypes[FromUser].first = i18nc( "Dents are Identica posts", "Dents From This User" );
     mSearchTypes[FromUser].second = false;
 
-    mSearchTypes[ReferenceGroup].first = i18n( "Dents Including This Group" );
+    mSearchTypes[ReferenceGroup].first = i18nc( "Dents are Identica posts", "Dents Including This Group" );
     mSearchTypes[ReferenceGroup].second = false;
 
-    mSearchTypes[ReferenceHashtag].first = i18n( "Dents Including This Hashtag" );
+    mSearchTypes[ReferenceHashtag].first = i18nc( "Dents are Identica posts", "Dents Including This Hashtag" );
     mSearchTypes[ReferenceHashtag].second = false;
 }
 
