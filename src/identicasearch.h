@@ -31,7 +31,7 @@
 #include "datacontainers.h"
 
 /**
-Twitter.com search API implementation.
+Identi.ca search API implementation.
 
 @author Stephen Henderson <hendersonsk@gmail.com>
 */

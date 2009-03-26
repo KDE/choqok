@@ -94,7 +94,7 @@ public:
      * @brief Modify the account.
      *
      * This modifies the account in the manager's account list.
-     * It will check no accounts already exist with the same Alias, if any, the account will not modified
+     * It will check that no accounts already exist with the same Alias, if any, the account will not be modified
      *
      * @return @p account, or 0L if the account was not modified because alias collision
      */

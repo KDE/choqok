@@ -112,9 +112,9 @@ private:
 
     /**
     * Will store current first page of statuses on disk.
-    * @param fileName list will be stored on this file.
-    * @param list list of Statuses will be stored.
-    * @return True on success, and false on failer
+    * @param fileName list will be stored in this file.
+    * @param list list of statuses will be stored.
+    * @return True on success, and false on fail
       */
     bool saveStatuses( QString fileName, QList<StatusWidget*> &list );
 

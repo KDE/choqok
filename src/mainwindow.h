@@ -109,7 +109,7 @@ private:
     QTimer *timelineTimer;
     Ui::prefs_base ui_prefs_base;
     Ui::appears_base ui_appears_base;
-    QString currentUsername;// used for undresanding of username changes!
+    QString currentUsername;// used for understanding username changes!
     int mPrevNotifyType;
     int mPrevUpdateInterval;
     SysTrayIcon *sysIcon;

@@ -31,7 +31,7 @@
 class StatusTextEdit;
 class Backend;
 /**
-Widget for Quik twitting
+Widget for Quick twitting
 
     @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
 */
