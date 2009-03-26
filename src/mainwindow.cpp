@@ -1,5 +1,5 @@
 /*
-    This file is part of choqoK, the KDE micro-blogging client
+    This file is part of Choqok, the KDE micro-blogging client
 
     Copyright (C) 2008-2009 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
@@ -64,7 +64,7 @@ MainWindow::MainWindow()
 //     setupQuickTweet();
     setupActions();
     statusBar()->show();
-    notify( i18n( "Initializing choqoK, please wait...." ) );
+    notify( i18n( "Initializing Choqok, please wait...." ) );
     setupGUI();
 
 //     timelineTimer->setInterval ( Settings::updateInterval() *60000 );

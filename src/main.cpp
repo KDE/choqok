@@ -1,5 +1,5 @@
 /*
-    This file is part of choqoK, the KDE micro-blogging client
+    This file is part of Choqok, the KDE micro-blogging client
 
     Copyright (C) 2008-2009 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
@@ -39,7 +39,7 @@ static const char version[] = "0.5";
 
 int main( int argc, char **argv )
 {
-    KAboutData about( "choqok", 0, ki18n( "choqoK" ), version, ki18n( description ),
+    KAboutData about( "choqok", 0, ki18n( "Choqok" ), version, ki18n( description ),
                       KAboutData::License_GPL_V3, ki18n( "(C) 2008-2009 Mehrdad Momeny" ),
                       KLocalizedString(), 0, "mehrdad.momeny@gmail.com" );
     about.addAuthor( ki18n( "Mehrdad Momeny" ), ki18n( "Author and Core Developer" ),

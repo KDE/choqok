@@ -2,9 +2,9 @@ Name: choqok
 Version: 0.3
 Release: 1
 Vendor: KDE Project
-Summary: A KDE 4 Twitter Client
+Summary: A KDE Micro-blogging Client
 Group: Utility
-Url: http://choqok.ospdev.net
+Url: http://choqok.gnufolks.org
 License: GPL
 Packager: Mehrdad Momeny <mehrdad.momeny@gmail.com>
 BuildRoot:  %{_tmppath}/rpm/%{name}-root 

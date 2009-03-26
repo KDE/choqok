@@ -1,5 +1,5 @@
 /*
-    This file is part of choqoK, the KDE micro-blogging client
+    This file is part of Choqok, the KDE micro-blogging client
 
     Copyright (C) 2008-2009 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
@@ -59,7 +59,7 @@ void SysTrayIcon::slotSetUnread( int numOfUnreadStatuses )
 //     kDebug()<< "unread: " << unread << " numOfUnreadStatuses: " << numOfUnreadStatuses;
 //  m_unread=unread;
 
-    this->setToolTip( i18np( "choqoK - 1 unread status", "choqoK - %1 unread statuses",
+    this->setToolTip( i18np( "Choqok - 1 unread status", "choqoK - %1 unread statuses",
                              unread > 0 ? unread : 0 ) );
 
     if ( unread <= 0 ) {
@@ -114,11 +114,11 @@ void SysTrayIcon::slotSetUnread( int numOfUnreadStatuses )
 void SysTrayIcon::setTimeLineUpdatesEnabled( bool isEnabled )
 {
     if ( isEnabled ) {
-        setToolTip( i18n( "choqoK - Click me to update your status" ) );
+        setToolTip( i18n( "Choqok - Click me to update your status" ) );
         m_defaultIcon = parentWidget()->windowIcon().pixmap( 22 );
     } else {
         slotSetUnread( -unread );
-        setToolTip( i18n( "choqoK - Disabled" ) );
+        setToolTip( i18n( "Choqok - Disabled" ) );
         ///Generating new Icon:
         QImage result = m_defaultIcon.toImage();
         for ( int y = 0; y < result.height(); ++y ) {
