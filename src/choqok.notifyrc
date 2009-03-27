@@ -1,6 +1,6 @@
 [Global]
 IconName=choqok
-Comment=choqoK
+Comment=Choqok
 Comment[sv]=Choqok
 
 [Event/new-status-arrived]

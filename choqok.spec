@@ -11,7 +11,7 @@ BuildRoot:  %{_tmppath}/rpm/%{name}-root
 Source0: %{name}-%{version}.tar.gz
 
 %description
-choqoK is a 
+Choqok is a 
 
 %prep
 %setup -q
