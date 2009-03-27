@@ -59,7 +59,7 @@ void SysTrayIcon::slotSetUnread( int numOfUnreadStatuses )
 //     kDebug()<< "unread: " << unread << " numOfUnreadStatuses: " << numOfUnreadStatuses;
 //  m_unread=unread;
 
-    this->setToolTip( i18np( "Choqok - 1 unread status", "choqoK - %1 unread statuses",
+    this->setToolTip( i18np( "Choqok - 1 unread status", "Choqok - %1 unread statuses",
                              unread > 0 ? unread : 0 ) );
 
     if ( unread <= 0 ) {
