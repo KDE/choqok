@@ -54,7 +54,7 @@ MainWindow::MainWindow()
     kDebug();
     quickWidget = 0;
     timelineTimer = new QTimer( this );
-
+    setWindowTitle( i18n("Choqok") );
     this->setAttribute( Qt::WA_DeleteOnClose, false );
 
     mainWidget = new KTabWidget( this );

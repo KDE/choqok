@@ -40,7 +40,7 @@ class SysTrayIcon;
 class KTabWidget;
 
 /**
- * This class serves as the main window for choqoK.  It handles the
+ * This class serves as the main window for Choqok.  It handles the
  * menus, toolbars, and status bars.
  *
  * @short Main window class
