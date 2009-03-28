@@ -1,6 +1,5 @@
 [Desktop Entry]
 Name=Choqok
-Name[sv]=Choqok
 Exec=choqok %i -caption "%c"
 Icon=choqok
 Type=Application
