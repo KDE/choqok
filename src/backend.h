@@ -124,7 +124,7 @@ private:
     QStringList friendsList;
     short friendsPage;
     QString mScheme;
-    QList< TimeLineType > requestList;
+//     QList< TimeLineType > requestList;
 };
 
 #endif

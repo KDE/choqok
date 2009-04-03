@@ -123,10 +123,10 @@ void Backend::logout()
 void Backend::requestTimeLine( uint latestStatusId, TimeLineType type, int page )
 {
     kDebug();
-    if( requestList.contains( type ) ) {
-        return;
-    }
-    requestList.append( type );
+//     if( requestList.contains( type ) ) {
+//         return;
+//     }
+//     requestList.append( type );
     KUrl url;
     if ( type == HomeTimeLine )
         url.setUrl( mCurrentAccount->apiPath() + "/statuses/friends_timeline.xml" );
@@ -451,14 +451,14 @@ void Backend::slotRequestTimelineFinished( KJob *job )
         } else {
             kDebug() << "Null returned from Backend::readTimeLineFromXml()";
         }
-        requestList.removeAll(HomeTimeLine);
+//         requestList.removeAll(HomeTimeLine);
         break;
     case ReplyTimeLine:
         if ( ptr )
             emit replyTimeLineReceived( *ptr );
         else
             kDebug() << "Null returned from Backend::readTimeLineFromXml()";
-        requestList.removeAll(ReplyTimeLine);
+//         requestList.removeAll(ReplyTimeLine);
         break;
     default:
         kDebug() << "The returned job isn't in Map!";
@@ -690,14 +690,14 @@ void Backend::requestCurrentUser()
 void Backend::requestDMessages( uint latestStatusId, DMessageType type, int page )
 {
     kDebug();
-    TimeLineType t;
-    if( type == Inbox )
-        t = InboxTimeLine;
-    else if( type == Outbox )
-        t = OutboxTimeLine;
-    if( requestList.contains( t ) )
-        return;
-    requestList.append( t );
+//     TimeLineType t;
+//     if( type == Inbox )
+//         t = InboxTimeLine;
+//     else if( type == Outbox )
+//         t = OutboxTimeLine;
+//     if( requestList.contains( t ) )
+//         return;
+//     requestList.append( t );
     KUrl url;
     if ( type == Inbox )
         url.setUrl( mCurrentAccount->apiPath() + "/direct_messages.xml" );
@@ -747,14 +747,14 @@ void Backend::slotRequestDMessagesFinished( KJob *job )
         } else {
             kDebug() << "Null returned from Backend::readDMessagesFromXml()";
         }
-        requestList.removeAll(InboxTimeLine);
+//         requestList.removeAll(InboxTimeLine);
         break;
     case Outbox:
         if ( ptr )
             emit outboxMessagesReceived( *ptr );
         else
             kDebug() << "Null returned from Backend::readDMessagesFromXml()";
-        requestList.removeAll(OutboxTimeLine);
+//         requestList.removeAll(OutboxTimeLine);
         break;
     default:
         kDebug() << "The returned job isn't in Map! or type is Unknown";
