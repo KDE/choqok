@@ -41,7 +41,7 @@ int main( int argc, char **argv )
 {
     KAboutData about( "choqok", 0, ki18n( "Choqok" ), version, ki18n( description ),
                       KAboutData::License_GPL_V3, ki18n( "(C) 2008-2009 Mehrdad Momeny" ),
-                      KLocalizedString(), 0, "mehrdad.momeny@gmail.com" );
+                      KLocalizedString(), 0  );
     about.addAuthor( ki18n( "Mehrdad Momeny" ), ki18n( "Author and Core Developer" ),
                      "mehrdad.momeny@gmail.com" );
     about.addCredit( ki18n( "Roozbeh Shafiee" ), ki18n( "Icon designer" ), "roozbeh@roozbehonline.com" );
