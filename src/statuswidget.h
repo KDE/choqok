@@ -73,7 +73,7 @@ protected slots:
     void requestReply();
     void requestDestroy();
     void updateSign();
-    void userImageLocalPathFetched( const QString &remotePath, const QString &localPath );
+    void userImageLocalPathFetched( const QString &, const QPixmap & pixmap );
     void missingStatusReceived( Status status );
     void setHeight();
     void checkAnchor(const QUrl & url);
@@ -109,10 +109,10 @@ private:
     static const QString baseStyle;
     static QString style;
 
-    static QRegExp mUrlRegExp;
-    static QRegExp mUserRegExp;
-    static QRegExp mHashtagRegExp;
-    static QRegExp mGroupRegExp;
+    static const QRegExp mUrlRegExp;
+    static const QRegExp mUserRegExp;
+    static const QRegExp mHashtagRegExp;
+    static const QRegExp mGroupRegExp;
 
     KPushButton * btnReply,*btnFavorite,*btnRemove;
     bool isBaseStatusShowed;

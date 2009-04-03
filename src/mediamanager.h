@@ -25,10 +25,15 @@
 #define MEDIAMANAGER_H
 
 #include <QObject>
-#include <QMap>
+#include <QSet>
 
-class KConfig;
-class KConfigGroup;
+#include <KEmoticons>
+#include <KEmoticonsTheme>
+
+#include <KPixmapCache>
+
+class QPixmap;
+class KUrl;
 
 namespace KIO
 {
@@ -44,31 +49,27 @@ class MediaManager : public QObject
 {
     Q_OBJECT
 public:
-
-
     MediaManager( QObject* parent = 0 );
-
     ~MediaManager();
 
     static MediaManager *self();
 
-    QString getImageLocalPathIfExist( const QString &remotePath );
-
-    void getImageLocalPathDownloadAsyncIfNotExists( const QString &localName, const QString &remotePath );
+    QPixmap * getImageLocalPathIfExist( const KUrl& remotePath );
+    void getImageLocalPathDownloadAsyncIfNotExists( const QString & value, const QString &remotePath );
+    QString parseEmoticons(const QString & text);
 
 signals:
     void sigError( QString &errMsg );
-    void imageFetched( const QString &remotePath, const QString &localPath );
+    void imageFetched( const QString & url, const QPixmap & pixmap );
 
 protected slots:
     void slotImageFetched( KJob *job );
 
 private:
-    static MediaManager *mSelf;
-    QString MEDIA_DIR;
-    KConfig *mediaResource;
-    KConfigGroup *map;
-    QMap<QString, QString> mMediaFilesMap;// QMap<RemotePath, LocalPath>
+    static MediaManager * mSelf;
+    KEmoticonsTheme mEmoticons;
+    KPixmapCache mCache;
+    QMap<QString,QString> mQueue;
 };
 
 #endif

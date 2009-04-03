@@ -24,18 +24,15 @@
             <default>SettingsBase::KNotify</default>
         </entry>
         <entry name="showAllNotifiesInOne" type="Bool">
-            <label>Show all new statuses in one notification.</label>
             <default>false</default>
         </entry>
         <entry name="updateInterval" type="Int">
-            <label>Update interval</label>
             <default>10</default>
         </entry>
         <entry name="countOfStatusesOnMain" type="Int">
             <default>20</default>
         </entry>
         <entry name="notifyInterval" type="Int">
-            <label>Update interval</label>
             <default>10</default>
         </entry>
         <entry name="isSmilysEnabled" type="Bool">
@@ -52,6 +49,9 @@
         </entry>
     </group>
     <group name="Appearances">
+        <entry name="isSmiliesEnabled" type="Bool">
+            <default>true</default>
+        </entry>
         <entry name="isCustomUi" type="Bool">
             <default>false</default>
         </entry>

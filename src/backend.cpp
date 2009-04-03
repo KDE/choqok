@@ -186,7 +186,7 @@ QList<Status> * Backend::readTimeLineFromXml( const QByteArray & buffer )
         QString err = i18n( "Data returned from server is corrupted." );
         kDebug() << "there's no statuses tag in XML\t the XML is: \n" << buffer.data();
         mLatestErrorString = err;
-	delete statusList;
+        delete statusList;
         return 0;
     }
     QDomNode node = root.firstChild();
@@ -777,7 +777,7 @@ QList< Status > * Backend::readDMessagesFromXml( const QByteArray & buffer )
         QString err = i18n( "Data returned from server is corrupted." );
         kDebug() << "there's no direct-messages tag in XML\t the XML is: \n" << buffer.data();
         mLatestErrorString = err;
-	delete statusList;
+        delete statusList;
         return 0;
     }
     QDomNode node = root.firstChild();

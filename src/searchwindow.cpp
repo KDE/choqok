@@ -251,7 +251,7 @@ void SearchWindow::addNewStatusesToUi( QList<Status> &statusList )
 
         connect( wt, SIGNAL( sigFavorite( uint, bool ) ),
                  this, SIGNAL( forwardFavorited( uint, bool ) ) );
-	connect (wt,SIGNAL(sigSearch(int,QString)),this,SLOT(updateSearchArea(int,QString)));
+        connect (wt,SIGNAL(sigSearch(int,QString)),this,SLOT(updateSearchArea(int,QString)));
 
         wt->setAttribute( Qt::WA_DeleteOnClose );
         wt->setCurrentStatus( *it );

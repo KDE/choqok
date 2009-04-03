@@ -303,7 +303,7 @@ void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayou
                  twitter, SLOT( requestFavorited( uint, bool ) ) );
         connect( wt, SIGNAL( sigDestroy( uint ) ),
                  this, SLOT( requestDestroy( uint ) ) );
-	connect(wt,SIGNAL(sigSearch(int,QString)),this,SIGNAL(sigSearch(int,QString)));
+        connect(wt,SIGNAL(sigSearch(int,QString)),this,SIGNAL(sigSearch(int,QString)));
 
         list->append( wt );
         layoutToAddStatuses->insertWidget( 0, wt );

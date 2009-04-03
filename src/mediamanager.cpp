@@ -22,31 +22,19 @@
 
 */
 #include "mediamanager.h"
-#include <kio/netaccess.h>
 #include <kio/job.h>
 #include <kio/jobclasses.h>
-#include <kconfig.h>
-#include <kconfiggroup.h>
-#include <kstandarddirs.h>
 #include <kdebug.h>
 #include <KDE/KLocale>
 
-MediaManager::MediaManager( QObject* parent ): QObject( parent )
+MediaManager::MediaManager( QObject* parent ): QObject( parent ),mEmoticons(KEmoticons().theme()),mCache("choqok-userimages")
 {
-    kDebug();
-    MEDIA_DIR = KStandardDirs::locateLocal("data", "choqok/media/", true);
-    mediaResource = new KConfig();
-    map = new KConfigGroup( mediaResource, "MediaMap" );
 }
-
 
 MediaManager::~MediaManager()
 {
-    kDebug();
     mSelf = 0L;
-    map->sync();
-    delete map;
-    delete mediaResource;
+    kDebug();
 }
 
 MediaManager * MediaManager::mSelf = 0L;
@@ -58,34 +46,36 @@ MediaManager * MediaManager::self()
     return mSelf;
 }
 
-QString MediaManager::getImageLocalPathIfExist( const QString & remotePath )
-{
-    QString path = map->readEntry( remotePath, QString( ' ' ) );
-    return path;
+QString MediaManager::parseEmoticons(const QString& text) {
+  return mEmoticons.parseEmoticons(text,KEmoticonsTheme::DefaultParse,QStringList() << "(e)");
 }
 
-void MediaManager::getImageLocalPathDownloadAsyncIfNotExists( const QString & localName, const QString & remotePath )
+QPixmap * MediaManager::getImageLocalPathIfExist( const KUrl & remotePath )
 {
-//     kDebug();
-    if ( mMediaFilesMap.contains( remotePath ) ) {
+    QPixmap *p = new QPixmap();
+    if(!mCache.find(remotePath.url(),*p))
+      return 0;
+    return p;
+}
+
+void MediaManager::getImageLocalPathDownloadAsyncIfNotExists( const QString & value, const QString & remotePath )
+{
+    KUrl srcUrl( remotePath );
+    QString url = srcUrl.url(KUrl::RemoveTrailingSlash);
+    if ( mQueue.contains( url ) ) {
         ///The file is on the way, wait to download complete.
         return;
     }
-    QString local;
-    if ( map->hasKey( remotePath ) ) {
-        local = map->readEntry( remotePath, QString() );
-        emit imageFetched( remotePath, local );
+    QPixmap p;
+    if ( mCache.find( value,p ) ) {
+        emit imageFetched( url, p );
     } else {
-        local = MEDIA_DIR + '/' + localName;
-        mMediaFilesMap [ remotePath ] = local;
-        KUrl srcUrl( remotePath );
-        KUrl destUrl( local );
+        mQueue.insert(url,value);
 
-        KIO::FileCopyJob *job = KIO::file_copy( srcUrl, destUrl, -1, KIO::HideProgressInfo | KIO::Overwrite ) ;
+        KIO::Job *job = KIO::storedGet( srcUrl,KIO::NoReload, KIO::HideProgressInfo ) ;
         if ( !job ) {
             kDebug() << "Cannot create a FileCopyJob!";
-            QString errMsg = i18n( "Cannot download user image for %1, please check your Internet connection.",
-                                   localName );
+            QString errMsg = i18n( "Cannot download user image, please check your Internet connection.");
             emit sigError( errMsg );
             return;
         }
@@ -96,21 +86,19 @@ void MediaManager::getImageLocalPathDownloadAsyncIfNotExists( const QString & lo
 
 void MediaManager::slotImageFetched( KJob * job )
 {
-//     kDebug();
-    KIO::FileCopyJob *baseJob = qobject_cast<KIO::FileCopyJob *>( job );
+    KIO::StoredTransferJob *baseJob = qobject_cast<KIO::StoredTransferJob *>( job );
     if ( job->error() ) {
-        kDebug() << "Job error!" << job->error() << "\t" << job->errorString() <<
-        "ImagePath: "<<baseJob->srcUrl().pathOrUrl();
-        QString errMsg = i18n( "Cannot download user image from %1. The returned result is: %2",
-                               job->errorString(), baseJob->srcUrl().pathOrUrl() );
+        kDebug() << "Job error!" << job->error() << "\t" << job->errorString();
+        QString errMsg = i18n( "Cannot download user image from %1",
+                               job->errorString() );
         emit sigError( errMsg );
     } else {
-        QString local = baseJob->destUrl().pathOrUrl();
-        QString remote = baseJob->srcUrl().pathOrUrl();
-        mMediaFilesMap.remove( remote );
-        map->writeEntry( remote,  local );
-        map->sync();
-        emit imageFetched( remote, local );
+        QPixmap p;
+        p.loadFromData(baseJob->data());
+        QString local = baseJob->url().url(KUrl::RemoveTrailingSlash);
+        QString key = mQueue.take(local);
+        mCache.insert(key,p);
+        emit imageFetched( local, p );
     }
 }
 

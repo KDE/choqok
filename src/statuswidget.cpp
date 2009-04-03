@@ -37,6 +37,7 @@
 #include "identicasearch.h"
 #include "twittersearch.h"
 #include <KAction>
+#include <KTemporaryFile>
 
 static const int _15SECS = 15000;
 static const int _MINUTE = 60000;
@@ -51,10 +52,10 @@ QFrame.StatusWidget[read=true] {color: %3; background-color: %4}");
 
 QString StatusWidget::style;
 
-QRegExp StatusWidget::mUrlRegExp("(https?://[^\\s<>'\"]+[^!,\\.\\s<>'\"\\]])"); // "borrowed" from microblog plasmoid
-QRegExp StatusWidget::mUserRegExp("([\\s]|^)@([^\\s\\W]+)", Qt::CaseInsensitive);
-QRegExp StatusWidget::mHashtagRegExp("([\\s]|^)#([^\\s\\W]+)", Qt::CaseInsensitive);
-QRegExp StatusWidget::mGroupRegExp("([\\s]|^)!([^\\s\\W]+)", Qt::CaseInsensitive);
+const QRegExp StatusWidget::mUrlRegExp("(https?://[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])"); // "borrowed" from microblog plasmoid
+const QRegExp StatusWidget::mUserRegExp("([\\s]|^)@([^\\s\\W]+)");
+const QRegExp StatusWidget::mHashtagRegExp("([\\s]|^)#([^\\s\\W]+)");
+const QRegExp StatusWidget::mGroupRegExp("([\\s]|^)!([^\\s\\W]+)");
 
 void StatusWidget::setStyle(const QColor& color, const QColor& back, const QColor& read, const QColor& readBack)
 {
@@ -322,41 +323,15 @@ void StatusWidget::requestDestroy()
 
 QString StatusWidget::prepareStatus( const QString &text )
 {
-    if(text.isEmpty() && ( mCurrentAccount->serviceType() == Account::Identica || mCurrentAccount->serviceType() == Account::Laconica ) ){
+    if(text.isEmpty() && ( mCurrentAccount->serviceType() == Account::Identica ||
+        mCurrentAccount->serviceType() == Account::Laconica ) ){
         Backend *b = new Backend(new Account(*mCurrentAccount), this);
         connect(b, SIGNAL(singleStatusReceived( Status )),
                  this, SLOT(missingStatusReceived( Status )));
         b->requestSingleStatus(mCurrentStatus.statusId);
-	return text;
+        return text;
     }
     QString status = text;
-    ///TODO Adding smile support!
-    /*  if(Settings::isSmilysEnabled()){
-            while((j = s.indexOf(':', i)) != -1){
-                if(s[j+1]==')' && s[j+2]==')')
-                    ;
-                else
-                    switch(s[j+1]){
-                        case 'D':
-                            break;
-                        case ')':
-                            break;
-                        case '(':
-                            break;
-                        case 'o':
-                        case 'O':
-                            break;
-                        case '*':
-                        case 'x':
-                            break;
-                        case '|':
-                            break;
-                        case '/':
-                            break;
-
-                    };
-            }
-        }*/
 
     status.replace( '<', "&lt;" );
     status.replace( '>', "&gt;" );
@@ -365,10 +340,17 @@ QString StatusWidget::prepareStatus( const QString &text )
         status.prepend( "http://" );
     status.replace(mUrlRegExp,"<a href='\\1' title='\\1'>\\1</a>");
 
-    status.replace(mUserRegExp,"\\1@<a href='user://\\2'>\\2</a> <a href='"+ mCurrentAccount->homepage() +"\\2'><img src=\"icon://web\" /></a>");
-    if ( mCurrentAccount->serviceType() == Account::Identica || mCurrentAccount->serviceType() == Account::Laconica ) {
-        status.replace(mGroupRegExp,"\\1!<a href='group://\\2'>\\2</a> <a href='"+ mCurrentAccount->homepage() +"group/\\2'><img src=\"icon://web\" /></a>");
-        status.replace(mHashtagRegExp,"\\1#<a href='tag://\\2'>\\2</a> <a href='"+ mCurrentAccount->homepage() +"tag/\\1'><img src=\"icon://web\" /></a>");
+    if(Settings::isSmiliesEnabled())
+      status = MediaManager::self()->parseEmoticons(status);
+
+    status.replace(mUserRegExp,"\\1@<a href='user://\\2'>\\2</a> <a href='"+ mCurrentAccount->homepage() + 
+    "\\2'><img src=\"icon://web\" /></a>");
+    if ( mCurrentAccount->serviceType() == Account::Identica ||
+        mCurrentAccount->serviceType() == Account::Laconica ) {
+        status.replace(mGroupRegExp,"\\1!<a href='group://\\2'>\\2</a> <a href='"+ mCurrentAccount->homepage() + 
+        "group/\\2'><img src=\"icon://web\" /></a>");
+        status.replace(mHashtagRegExp,"\\1#<a href='tag://\\2'>\\2</a> <a href='"+ mCurrentAccount->homepage() + 
+        "tag/\\1'><img src=\"icon://web\" /></a>");
       } else {
           status.replace(mHashtagRegExp,"\\1#<a href='tag://\\2'>\\2</a>");
     }
@@ -386,21 +368,32 @@ void StatusWidget::setUnread( Notify notifyType )
     mIsRead = false;
 
     if ( notifyType == WithNotify ) {
-        QString iconUrl = MediaManager::self()->getImageLocalPathIfExist( mCurrentStatus.user.profileImageUrl );
         QString name = mCurrentStatus.user.screenName;
         QString msg = mCurrentStatus.content;
-        if ( Settings::notifyType() == SettingsBase::KNotify ) {
-            KNotification *notify = new KNotification( "new-status-arrived", parentWidget() );
-            notify->setText( QString( "<qt><b>" + name + ":</b><br/>" + msg + "</qt>" ) );
-            notify->setPixmap( QPixmap( iconUrl ) );
-            notify->setFlags( KNotification::RaiseWidgetOnActivation | KNotification::Persistent );
-            notify->setActions( i18n( "Reply" ).split( ',' ) );
-            connect( notify, SIGNAL( action1Activated() ), this , SLOT( requestReply() ) );
-            notify->sendEvent();
-            QTimer::singleShot( Settings::notifyInterval()*1000, notify, SLOT( close() ) );
-        } else if ( Settings::notifyType() == SettingsBase::LibNotify ) {
-            QString libnotifyCmd = QString( "notify-send -t " ) + QString::number( Settings::notifyInterval() * 1000 )
-            + QString( " -u low -i " + iconUrl + " \"" ) + name + QString( "\" \"" ) + msg + QString( "\"" );
+    QPixmap icon = document()->resource(QTextDocument::ImageResource,QUrl("userimg://"+name)).value<QPixmap>();
+//         QPixmap * iconUrl = MediaManager::self()->getImageLocalPathIfExist( mCurrentStatus.user.profileImageUrl );
+    if ( Settings::notifyType() == SettingsBase::KNotify ) {
+        KNotification *notify = new KNotification( "new-status-arrived", parentWidget() );
+        notify->setText( QString( "<qt><b>" + name + ":</b><br/>" + msg + "</qt>" ) );
+        if(!icon.isNull()) notify->setPixmap( icon );
+        notify->setFlags( KNotification::RaiseWidgetOnActivation | KNotification::Persistent );
+        notify->setActions( i18n( "Reply" ).split( ',' ) );
+        connect( notify, SIGNAL( action1Activated() ), this , SLOT( requestReply() ) );
+        notify->sendEvent();
+        QTimer::singleShot( Settings::notifyInterval()*1000, notify, SLOT( close() ) );
+    } else if ( Settings::notifyType() == SettingsBase::LibNotify ) {
+    QString iconArg;
+    KTemporaryFile tmp;
+    if(!icon.isNull()) {
+        tmp.setSuffix(".png");
+        if(tmp.open()) {
+            icon.save(&tmp,"PNG");
+            iconArg = " -i "+tmp.fileName();
+        }
+        }
+            QString libnotifyCmd = QString( "notify-send -t " ) +
+            QString::number( Settings::notifyInterval() * 1000 ) + iconArg + QString( " -u low \"" ) +
+            name + QString( "\" \"" ) + msg + QString( "\"" );
             QProcess::execute( libnotifyCmd );
         }
     }
@@ -429,19 +422,21 @@ bool StatusWidget::isRead() const
 
 void StatusWidget::setUserImage()
 {
-    connect( MediaManager::self(), SIGNAL( imageFetched( const QString &, const QString & ) ),
-             this, SLOT( userImageLocalPathFetched( const QString&, const QString& ) ) );
-    MediaManager::self()->getImageLocalPathDownloadAsyncIfNotExists( mCurrentAccount->serviceName() +
-            mCurrentStatus.user.screenName , mCurrentStatus.user.profileImageUrl );
+    connect( MediaManager::self(), SIGNAL( imageFetched( const QString &, const QPixmap & ) ),
+             this, SLOT( userImageLocalPathFetched( const QString&, const QPixmap& ) ) );
+    MediaManager::self()->getImageLocalPathDownloadAsyncIfNotExists( mCurrentAccount->serviceName()
+      + mCurrentStatus.user.screenName,mCurrentStatus.user.profileImageUrl );
 }
 
-void StatusWidget::userImageLocalPathFetched( const QString &remotePath, const QString &localPath )
+void StatusWidget::userImageLocalPathFetched( const QString & remotePath, const QPixmap & pixmap )
 {
     if ( remotePath == mCurrentStatus.user.profileImageUrl ) {
-      mImage = "<img src='"+localPath+"' title='"+ mCurrentStatus.user.name +"' width=\"48\" height=\"48\" />";
+      QString url = "userimg://"+mCurrentStatus.user.screenName;
+      document()->addResource(QTextDocument::ImageResource,url,pixmap);
+      mImage = "<img src='"+url+"' width=\"48\" height=\"48\" />";
       updateSign();
-        disconnect( MediaManager::self(), SIGNAL( imageFetched( const QString &, const QString & ) ),
-                    this, SLOT( userImageLocalPathFetched( const QString&, const QString& ) ) );
+      disconnect( MediaManager::self(), SIGNAL( imageFetched( const QString &, const QPixmap & ) ),
+                  this, SLOT( userImageLocalPathFetched( const QString&, const QPixmap& ) ) );
     }
 }
 
