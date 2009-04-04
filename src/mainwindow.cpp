@@ -333,11 +333,6 @@ void MainWindow::quitApp()
     deleteLater();
 }
 
-void MainWindow::loadConfigurations()
-{
-    kDebug();
-}
-
 void MainWindow::disableApp()
 {
     kDebug();

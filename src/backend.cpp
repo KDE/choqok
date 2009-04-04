@@ -31,12 +31,11 @@
 #include "settings.h"
 #include <kio/netaccess.h>
 
-Backend::Backend( Account *account, QObject* parent ): QObject( parent )
+Backend::Backend( Account *account, QObject* parent )
+: QObject( parent ), mCurrentAccount(account), mScheme("http")
 {
     kDebug();
-    mScheme = "http";
     settingsChanged();
-    mCurrentAccount = account;
 //  login();
     monthes["Jan"] = 1;
     monthes["Feb"] = 2;

@@ -93,7 +93,6 @@ private:
     void setDefaultDirection();
     void disableApp();
     void enableApp();
-    void loadConfigurations();
 
 private slots:
     void loadAccounts();

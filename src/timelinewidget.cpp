@@ -40,6 +40,7 @@ TimeLineWidget::TimeLineWidget( const Account &userAccount, QWidget* parent ) :
     kDebug();
     setupUi( this );
     mCurrentAccount = userAccount;
+    twitter = new Backend( &mCurrentAccount, this );
     latestHomeStatusId = latestReplyStatusId = 0;
 
     homeLayout->setDirection( QBoxLayout::TopToBottom );
@@ -93,8 +94,6 @@ void TimeLineWidget::initObjects()
     lblCounter->setFont( counterF );
     checkNewStatusCharactersCount( 140 );
 
-    twitter = new Backend( &mCurrentAccount, this );
-
     connect( twitter, SIGNAL( homeTimeLineReceived( QList< Status >& ) ),
              this, SLOT( homeTimeLinesReceived( QList< Status >& ) ) );
     connect( twitter, SIGNAL( replyTimeLineReceived( QList< Status >& ) ),
@@ -103,12 +102,18 @@ void TimeLineWidget::initObjects()
              this, SLOT( directMessagesReceived( QList< Status >& ) ) );
     connect( twitter, SIGNAL( outboxMessagesReceived( QList< Status >& ) ),
              this, SLOT( outboxMessagesReceived( QList< Status >& ) ) );
-    connect( twitter, SIGNAL( sigPostNewStatusDone( bool ) ), this, SLOT( postingNewStatusDone( bool ) ) );
-    connect( twitter, SIGNAL( sigFavoritedDone( bool ) ), this, SLOT( requestFavoritedDone( bool ) ) );
-    connect( twitter, SIGNAL( sigDestroyDone( bool ) ), this, SLOT( requestDestroyDone( bool ) ) );
-    connect( twitter, SIGNAL( sigError( const QString& ) ), this, SLOT( error( const QString& ) ) );
-    connect( twitter, SIGNAL( friendsListed( const QStringList& ) ), this, SLOT( friendsListed( const QStringList& ) ) );
-    connect( twitter, SIGNAL( followersListed( const QStringList& ) ), this, SLOT( friendsListed( const QStringList& ) ) );
+    connect( twitter, SIGNAL( sigPostNewStatusDone( bool ) ),
+             this, SLOT( postingNewStatusDone( bool ) ) );
+    connect( twitter, SIGNAL( sigFavoritedDone( bool ) ),
+             this, SLOT( requestFavoritedDone( bool ) ) );
+    connect( twitter, SIGNAL( sigDestroyDone( bool ) ),
+             this, SLOT( requestDestroyDone( bool ) ) );
+    connect( twitter, SIGNAL( sigError( const QString& ) ),
+             this, SLOT( error( const QString& ) ) );
+    connect( twitter, SIGNAL( friendsListed( const QStringList& ) ),
+             this, SLOT( friendsListed( const QStringList& ) ) );
+    connect( twitter, SIGNAL( followersListed( const QStringList& ) ),
+             this, SLOT( friendsListed( const QStringList& ) ) );
 
     replyToStatusId = unreadStatusCount = unreadStatusInReply = unreadStatusInHome =
                                               unreadStatusInInbox = unreadStatusInOutbox = latestInboxStatusId =
@@ -559,21 +564,35 @@ void TimeLineWidget::loadConfigurations()
 
     isStartMode = true;
 
-    QList< Status > lstHome = loadStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::HomeTimeLine ) );
+    QList< Status > lstHome =
+        loadStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(),
+                                                                    Backend::HomeTimeLine ) );
     if ( lstHome.count() > 0 )
-        addNewStatusesToUi( lstHome, homeLayout, &listHomeStatus );
+        homeTimeLinesReceived( lstHome );
+//         addNewStatusesToUi( lstHome, homeLayout, &listHomeStatus );
 
-    QList< Status > lstReply = loadStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::ReplyTimeLine ) );
+    QList< Status > lstReply =
+        loadStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(),
+                                                                    Backend::ReplyTimeLine ) );
     if ( lstReply.count() > 0 )
-        addNewStatusesToUi( lstReply, replyLayout, &listReplyStatus, Backend::ReplyTimeLine );
+        replyTimeLineReceived( lstReply );
+//         addNewStatusesToUi( lstReply, replyLayout, &listReplyStatus, Backend::ReplyTimeLine );
 
-    QList< Status > lstInbox = loadStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::InboxTimeLine ) );
+    QList< Status > lstInbox =
+        loadStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(),
+                                                                    Backend::InboxTimeLine ) );
     if ( lstInbox.count() > 0 )
-        addNewStatusesToUi( lstInbox, inboxLayout, &listInboxStatus, Backend::InboxTimeLine );
+        directMessagesReceived( lstInbox );
+//         addNewStatusesToUi( lstInbox, inboxLayout, &listInboxStatus, Backend::InboxTimeLine );
 
-    QList< Status > lstOutbox = loadStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::OutboxTimeLine ) );
+    QList< Status > lstOutbox =
+        loadStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(),
+                                                                    Backend::OutboxTimeLine ) );
     if ( lstOutbox.count() > 0 )
-        addNewStatusesToUi( lstOutbox, outboxLayout, &listOutboxStatus, Backend::OutboxTimeLine );
+        outboxMessagesReceived( lstOutbox );
+//         addNewStatusesToUi( lstOutbox, outboxLayout, &listOutboxStatus, Backend::OutboxTimeLine );
+
+//     QTimer::singleShot( 1000, this, SLOT( updateTimeLines() ) );
 }
 
 void TimeLineWidget::checkUnreadStatuses( int numOfNewStatusesReciened )
