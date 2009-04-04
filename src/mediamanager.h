@@ -58,6 +58,9 @@ public:
     void getImageLocalPathDownloadAsyncIfNotExists( const QString & value, const QString &remotePath );
     QString parseEmoticons(const QString & text);
 
+public slots:
+    void clearAvatarCache();
+
 signals:
     void sigError( QString &errMsg );
     void imageFetched( const QString & url, const QPixmap & pixmap );

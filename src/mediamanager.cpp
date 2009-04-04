@@ -46,7 +46,8 @@ MediaManager * MediaManager::self()
     return mSelf;
 }
 
-QString MediaManager::parseEmoticons(const QString& text) {
+QString MediaManager::parseEmoticons(const QString& text)
+{
   return mEmoticons.parseEmoticons(text,KEmoticonsTheme::DefaultParse,QStringList() << "(e)");
 }
 
@@ -67,12 +68,12 @@ void MediaManager::getImageLocalPathDownloadAsyncIfNotExists( const QString & va
         return;
     }
     QPixmap p;
-    if ( mCache.find( value,p ) ) {
+    if ( mCache.find( value, p ) ) {
         emit imageFetched( url, p );
     } else {
-        mQueue.insert(url,value);
+        mQueue.insert( url, value );
 
-        KIO::Job *job = KIO::storedGet( srcUrl,KIO::NoReload, KIO::HideProgressInfo ) ;
+        KIO::Job *job = KIO::storedGet( srcUrl, KIO::NoReload, KIO::HideProgressInfo ) ;
         if ( !job ) {
             kDebug() << "Cannot create a FileCopyJob!";
             QString errMsg = i18n( "Cannot download user image, please check your Internet connection.");
@@ -94,12 +95,20 @@ void MediaManager::slotImageFetched( KJob * job )
         emit sigError( errMsg );
     } else {
         QPixmap p;
-        p.loadFromData(baseJob->data());
-        QString local = baseJob->url().url(KUrl::RemoveTrailingSlash);
-        QString key = mQueue.take(local);
-        mCache.insert(key,p);
-        emit imageFetched( local, p );
+        QString remote = baseJob->url().url(KUrl::RemoveTrailingSlash);
+        QString key = mQueue.take( remote );
+        if( p.loadFromData( baseJob->data() ) ) {
+            mCache.insert( key, p );
+            emit imageFetched( remote, p );
+        } else {
+            getImageLocalPathDownloadAsyncIfNotExists( key, remote);
+        }
     }
+}
+
+void MediaManager::clearAvatarCache()
+{
+    mCache.removeEntries();
 }
 
 #include "mediamanager.moc"

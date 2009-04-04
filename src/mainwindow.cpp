@@ -33,6 +33,7 @@
 #include "systrayicon.h"
 #include "quicktwit.h"
 #include "statuswidget.h"
+#include "mediamanager.h"
 
 #include <KTabWidget>
 #include <kconfigdialog.h>
@@ -156,6 +157,13 @@ void MainWindow::setupActions()
     enableNotify->setShortcut( KShortcut( Qt::CTRL | Qt::Key_N ) );
     enableNotify->setGlobalShortcutAllowed( true );
     connect( enableNotify, SIGNAL( toggled( bool ) ), this, SLOT( setNotificationsEnabled( bool ) ) );
+
+    KAction *clearAvatarCache = new KAction(KIcon("edit-clear"), i18n( "Clear Avatar cache" ), this );
+    actionCollection()->addAction( QLatin1String( "choqok_clear_avatar_cache" ), clearAvatarCache );
+    QString tip = i18n( "You have to restart Choqok to load avatars again" );
+    clearAvatarCache->setToolTip(tip);
+    clearAvatarCache->setStatusTip(tip);
+    connect( clearAvatarCache, SIGNAL( triggered() ), MediaManager::self(), SLOT(clearAvatarCache()) );
 
     ///SysTray Actions:
     sysIcon->contextMenu()->addAction( newTwit );

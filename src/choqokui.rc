@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="choqok" version="3">
+<kpartgui name="choqok" version="4">
 <MenuBar>
   <Menu name="file"><text>File</text>
     <Action name="choqok_new_twit" />
@@ -12,6 +12,7 @@
   <Menu name="settings"><text>Settings</text>
     <Action name="choqok_enable_updates"/>
     <Action name="choqok_enable_notify"/>
+    <Action name="choqok_clear_avatar_cache"/>
   </Menu>
 </MenuBar>
 </kpartgui>
