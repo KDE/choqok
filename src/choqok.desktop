@@ -1,10 +1,15 @@
 [Desktop Entry]
 Name=Choqok
+Name[x-test]=xxChoqokxx
 Exec=choqok %i -caption "%c"
 Icon=choqok
 Type=Application
 Categories=Network;
 GenericName=KDE Micro-blogging Client
+GenericName[pt]=Cliente de micro-blogs do KDE
+GenericName[sv]=KDE-klient för mikrowebbjournaler
+GenericName[uk]=Клієнт мікроблогів для KDE
+GenericName[x-test]=xxKDE Micro-blogging Clientxx
 Terminal=false
 X-DBUS-StartupType=Unique
 X-Ubuntu-Gettext-Domain=desktop_kdesdk
