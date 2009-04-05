@@ -91,6 +91,7 @@ private:
 
     void setUserImage();
     QString prepareStatus( const QString &text );
+    void setDirection();
     QString generateSign();
     void updateUi();
 

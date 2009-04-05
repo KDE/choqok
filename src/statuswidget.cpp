@@ -229,15 +229,27 @@ void StatusWidget::updateUi()
     }
     mStatus = prepareStatus(mCurrentStatus.content);
     mSign = generateSign();
-//     if( mCurrentAccount->direction() ) {
-    QTextOption options(document()->defaultTextOption());
-    options.setTextDirection( mCurrentAccount->direction() );
-    document()->setDefaultTextOption(options);
-//     }
+    setDirection();
     setUserImage();
     setUiStyle();
     updateSign();
     updateFavoriteUi();
+}
+
+void StatusWidget::setDirection()
+{
+    QString txt = mCurrentStatus.content;
+    if(txt.startsWith('@'))
+        txt.remove(QRegExp("(^)@([^\\s\\W]+)"));
+    if(txt.startsWith('#'))
+        txt.remove(QRegExp("(^)#([^\\s\\W]+)"));
+    if(txt.startsWith('!'))
+        txt.remove(QRegExp("(^)!([^\\s\\W]+)"));
+    if( txt.isRightToLeft() ) {
+        QTextOption options(document()->defaultTextOption());
+        options.setTextDirection( Qt::RightToLeft );
+        document()->setDefaultTextOption(options);
+    }
 }
 
 void StatusWidget::setHeight()
