@@ -90,7 +90,7 @@ void MediaManager::slotImageFetched( KJob * job )
     KIO::StoredTransferJob *baseJob = qobject_cast<KIO::StoredTransferJob *>( job );
     if ( job->error() ) {
         kDebug() << "Job error!" << job->error() << "\t" << job->errorString();
-        QString errMsg = i18n( "Cannot download user image from %1",
+        QString errMsg = i18n( "Cannot download user image from %1.",
                                job->errorString() );
         emit sigError( errMsg );
     } else {
