@@ -54,8 +54,8 @@ public:
 
     static MediaManager *self();
 
-    QPixmap * getImageLocalPathIfExist( const KUrl& remotePath );
-    void getImageLocalPathDownloadAsyncIfNotExists( const QString &remotePath );
+    QPixmap * getAvatarIfExist( const KUrl& remotePath );
+    void getAvatarDownloadAsyncIfNotExist( const QString &remotePath );
     QString parseEmoticons(const QString & text);
 
     QPixmap & defaultImage() { return mDefaultImage; };
@@ -65,7 +65,7 @@ public slots:
 
 signals:
     void sigError( QString &errMsg );
-    void imageFetched( const QString & url, const QPixmap & pixmap );
+    void avatarFetched( const QString & url, const QPixmap & pixmap );
 
 protected slots:
     void slotImageFetched( KJob *job );

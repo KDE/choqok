@@ -55,7 +55,7 @@ QString MediaManager::parseEmoticons(const QString& text)
   return mEmoticons.parseEmoticons(text,KEmoticonsTheme::DefaultParse,QStringList() << "(e)");
 }
 
-QPixmap * MediaManager::getImageLocalPathIfExist( const KUrl & remotePath )
+QPixmap * MediaManager::getAvatarIfExist( const KUrl & remotePath )
 {
     QPixmap *p = new QPixmap();
     if(!mCache.find(remotePath.url(),*p))
@@ -63,7 +63,7 @@ QPixmap * MediaManager::getImageLocalPathIfExist( const KUrl & remotePath )
     return p;
 }
 
-void MediaManager::getImageLocalPathDownloadAsyncIfNotExists( const QString & remotePath )
+void MediaManager::getAvatarDownloadAsyncIfNotExist( const QString & remotePath )
 {
     KUrl srcUrl( remotePath );
     QString url = srcUrl.url(KUrl::RemoveTrailingSlash);
@@ -73,7 +73,7 @@ void MediaManager::getImageLocalPathDownloadAsyncIfNotExists( const QString & re
     }
     QPixmap p;
     if ( mCache.find( url, p ) ) {
-        emit imageFetched( url, p );
+        emit avatarFetched( url, p );
     } else {
         mQueue.insert( url );
 
@@ -99,14 +99,14 @@ void MediaManager::slotImageFetched( KJob * job )
         QString errMsg = i18n( "Cannot download user image from %1.",
                                job->errorString() );
         emit sigError( errMsg );
-        emit imageFetched(remote, KIcon("image-missing").pixmap(48));
+        emit avatarFetched(remote, KIcon("image-missing").pixmap(48));
     } else {
         QPixmap p;
         if( p.loadFromData( baseJob->data() ) ) {
             mCache.insert( remote, p );
-            emit imageFetched( remote, p );
+            emit avatarFetched( remote, p );
         } else {
-            getImageLocalPathDownloadAsyncIfNotExists(remote);
+            getAvatarDownloadAsyncIfNotExist(remote);
         }
     }
 }

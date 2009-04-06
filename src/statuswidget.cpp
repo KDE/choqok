@@ -436,9 +436,9 @@ bool StatusWidget::isRead() const
 
 void StatusWidget::setUserImage()
 {
-    connect( MediaManager::self(), SIGNAL( imageFetched( const QString &, const QPixmap & ) ),
+    connect( MediaManager::self(), SIGNAL( avatarFetched( const QString &, const QPixmap & ) ),
              this, SLOT( userImageLocalPathFetched( const QString&, const QPixmap& ) ) );
-    MediaManager::self()->getImageLocalPathDownloadAsyncIfNotExists( mCurrentStatus.user.profileImageUrl );
+    MediaManager::self()->getAvatarDownloadAsyncIfNotExist( mCurrentStatus.user.profileImageUrl );
 }
 
 void StatusWidget::userImageLocalPathFetched( const QString & remotePath, const QPixmap & pixmap )
@@ -448,7 +448,7 @@ void StatusWidget::userImageLocalPathFetched( const QString & remotePath, const 
       document()->addResource(QTextDocument::ImageResource,url,pixmap);
 //       mImage = "<img src='"+url+"' width=\"48\" height=\"48\" />";
       updateSign();
-      disconnect( MediaManager::self(), SIGNAL( imageFetched( const QString &, const QPixmap & ) ),
+      disconnect( MediaManager::self(), SIGNAL( avatarFetched( const QString &, const QPixmap & ) ),
                   this, SLOT( userImageLocalPathFetched( const QString&, const QPixmap& ) ) );
     }
 }
