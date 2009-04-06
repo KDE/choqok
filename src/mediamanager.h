@@ -32,7 +32,7 @@
 
 #include <KPixmapCache>
 
-class QPixmap;
+#include <QPixmap>
 class KUrl;
 
 namespace KIO
@@ -55,8 +55,10 @@ public:
     static MediaManager *self();
 
     QPixmap * getImageLocalPathIfExist( const KUrl& remotePath );
-    void getImageLocalPathDownloadAsyncIfNotExists( const QString & value, const QString &remotePath );
+    void getImageLocalPathDownloadAsyncIfNotExists( const QString &remotePath );
     QString parseEmoticons(const QString & text);
+
+    QPixmap & defaultImage() { return mDefaultImage; };
 
 public slots:
     void clearAvatarCache();
@@ -72,7 +74,8 @@ private:
     static MediaManager * mSelf;
     KEmoticonsTheme mEmoticons;
     KPixmapCache mCache;
-    QMap<QString,QString> mQueue;
+    QSet<QString> mQueue;
+    QPixmap mDefaultImage;
 };
 
 #endif

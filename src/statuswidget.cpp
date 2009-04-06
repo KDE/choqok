@@ -155,6 +155,8 @@ void StatusWidget::setupUi()
     buttonGrid->addWidget(btnFavorite,1,2);
 
     document()->addResource(QTextDocument::ImageResource,QUrl("icon://web"),KIcon("applications-internet").pixmap(8));
+    document()->addResource(QTextDocument::ImageResource,QUrl("img://profileImage"),MediaManager::self()->defaultImage());
+    mImage = "<img src=\"img://profileImage\" width=\"48\" height=\"48\" />";
 
     setLayout(buttonGrid);
 
@@ -382,7 +384,7 @@ void StatusWidget::setUnread( Notify notifyType )
     if ( notifyType == WithNotify ) {
         QString name = mCurrentStatus.user.screenName;
         QString msg = mCurrentStatus.content;
-    QPixmap icon = document()->resource(QTextDocument::ImageResource,QUrl("userimg://"+name)).value<QPixmap>();
+	QPixmap icon = document()->resource(QTextDocument::ImageResource,QUrl("img://profileImage")).value<QPixmap>();
 //         QPixmap * iconUrl = MediaManager::self()->getImageLocalPathIfExist( mCurrentStatus.user.profileImageUrl );
     if ( Settings::notifyType() == SettingsBase::KNotify ) {
         KNotification *notify = new KNotification( "new-status-arrived", parentWidget() );
@@ -436,16 +438,15 @@ void StatusWidget::setUserImage()
 {
     connect( MediaManager::self(), SIGNAL( imageFetched( const QString &, const QPixmap & ) ),
              this, SLOT( userImageLocalPathFetched( const QString&, const QPixmap& ) ) );
-    MediaManager::self()->getImageLocalPathDownloadAsyncIfNotExists( mCurrentAccount->serviceName()
-      + mCurrentStatus.user.screenName,mCurrentStatus.user.profileImageUrl );
+    MediaManager::self()->getImageLocalPathDownloadAsyncIfNotExists( mCurrentStatus.user.profileImageUrl );
 }
 
 void StatusWidget::userImageLocalPathFetched( const QString & remotePath, const QPixmap & pixmap )
 {
-    if ( remotePath == mCurrentStatus.user.profileImageUrl ) {
-      QString url = "userimg://"+mCurrentStatus.user.screenName;
+    if ( remotePath == KUrl(mCurrentStatus.user.profileImageUrl).url(KUrl::RemoveTrailingSlash) ) {
+      QString url = "img://profileImage";
       document()->addResource(QTextDocument::ImageResource,url,pixmap);
-      mImage = "<img src='"+url+"' width=\"48\" height=\"48\" />";
+//       mImage = "<img src='"+url+"' width=\"48\" height=\"48\" />";
       updateSign();
       disconnect( MediaManager::self(), SIGNAL( imageFetched( const QString &, const QPixmap & ) ),
                   this, SLOT( userImageLocalPathFetched( const QString&, const QPixmap& ) ) );

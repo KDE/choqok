@@ -26,9 +26,13 @@
 #include <kio/jobclasses.h>
 #include <kdebug.h>
 #include <KDE/KLocale>
+#include <kicon.h>
 
 MediaManager::MediaManager( QObject* parent ): QObject( parent ),mEmoticons(KEmoticons().theme()),mCache("choqok-userimages")
 {
+  KIcon icon("image-loading");
+  mDefaultImage = icon.pixmap(48);
+  mCache.setCacheLimit(20000);
 }
 
 MediaManager::~MediaManager()
@@ -59,7 +63,7 @@ QPixmap * MediaManager::getImageLocalPathIfExist( const KUrl & remotePath )
     return p;
 }
 
-void MediaManager::getImageLocalPathDownloadAsyncIfNotExists( const QString & value, const QString & remotePath )
+void MediaManager::getImageLocalPathDownloadAsyncIfNotExists( const QString & remotePath )
 {
     KUrl srcUrl( remotePath );
     QString url = srcUrl.url(KUrl::RemoveTrailingSlash);
@@ -68,10 +72,10 @@ void MediaManager::getImageLocalPathDownloadAsyncIfNotExists( const QString & va
         return;
     }
     QPixmap p;
-    if ( mCache.find( value, p ) ) {
+    if ( mCache.find( url, p ) ) {
         emit imageFetched( url, p );
     } else {
-        mQueue.insert( url, value );
+        mQueue.insert( url );
 
         KIO::Job *job = KIO::storedGet( srcUrl, KIO::NoReload, KIO::HideProgressInfo ) ;
         if ( !job ) {
@@ -88,27 +92,28 @@ void MediaManager::getImageLocalPathDownloadAsyncIfNotExists( const QString & va
 void MediaManager::slotImageFetched( KJob * job )
 {
     KIO::StoredTransferJob *baseJob = qobject_cast<KIO::StoredTransferJob *>( job );
+    QString remote = baseJob->url().url(KUrl::RemoveTrailingSlash);
+    mQueue.remove( remote );
     if ( job->error() ) {
         kDebug() << "Job error!" << job->error() << "\t" << job->errorString();
         QString errMsg = i18n( "Cannot download user image from %1.",
                                job->errorString() );
         emit sigError( errMsg );
+        emit imageFetched(remote, KIcon("image-missing").pixmap(48));
     } else {
         QPixmap p;
-        QString remote = baseJob->url().url(KUrl::RemoveTrailingSlash);
-        QString key = mQueue.take( remote );
         if( p.loadFromData( baseJob->data() ) ) {
-            mCache.insert( key, p );
+            mCache.insert( remote, p );
             emit imageFetched( remote, p );
         } else {
-            getImageLocalPathDownloadAsyncIfNotExists( key, remote);
+            getImageLocalPathDownloadAsyncIfNotExists(remote);
         }
     }
 }
 
 void MediaManager::clearAvatarCache()
 {
-    mCache.removeEntries();
+  mCache.discard();
 }
 
 #include "mediamanager.moc"
