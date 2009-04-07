@@ -73,7 +73,8 @@ protected slots:
     void requestReply();
     void requestDestroy();
     void updateSign();
-    void userImageLocalPathFetched( const QString &, const QPixmap & pixmap );
+    void userAvatarFetched( const QString &, const QPixmap & pixmap );
+    void fetchAvatarError( const QString & avatarUrl, const QString &errMsg );
     void missingStatusReceived( Status status );
     void setHeight();
     void checkAnchor(const QUrl & url);

@@ -154,8 +154,10 @@ void StatusWidget::setupUi()
     buttonGrid->addWidget(btnRemove,1,1);
     buttonGrid->addWidget(btnFavorite,1,2);
 
-    document()->addResource(QTextDocument::ImageResource,QUrl("icon://web"),KIcon("applications-internet").pixmap(8));
-    document()->addResource(QTextDocument::ImageResource,QUrl("img://profileImage"),MediaManager::self()->defaultImage());
+    document()->addResource( QTextDocument::ImageResource, QUrl("icon://web"),
+                             KIcon("applications-internet").pixmap(8) );
+    document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
+                             MediaManager::self()->defaultImage() );
     mImage = "<img src=\"img://profileImage\" width=\"48\" height=\"48\" />";
 
     setLayout(buttonGrid);
@@ -437,22 +439,35 @@ bool StatusWidget::isRead() const
 void StatusWidget::setUserImage()
 {
     connect( MediaManager::self(), SIGNAL( avatarFetched( const QString &, const QPixmap & ) ),
-             this, SLOT( userImageLocalPathFetched( const QString&, const QPixmap& ) ) );
+             this, SLOT(userAvatarFetched(const QString&, const QPixmap&)) );
+    connect( MediaManager::self(), SIGNAL(avatarFetchError( const QString&, const QString&)),
+             this, SLOT(fetchAvatarError( const QString&, const QString&)) );
     MediaManager::self()->getAvatarDownloadAsyncIfNotExist( mCurrentStatus.user.profileImageUrl );
 }
 
-void StatusWidget::userImageLocalPathFetched( const QString & remotePath, const QPixmap & pixmap )
+void StatusWidget::userAvatarFetched( const QString & remotePath, const QPixmap & pixmap )
 {
     if ( remotePath == KUrl(mCurrentStatus.user.profileImageUrl).url(KUrl::RemoveTrailingSlash) ) {
-      QString url = "img://profileImage";
-      document()->addResource(QTextDocument::ImageResource,url,pixmap);
-//       mImage = "<img src='"+url+"' width=\"48\" height=\"48\" />";
-      updateSign();
-      disconnect( MediaManager::self(), SIGNAL( avatarFetched( const QString &, const QPixmap & ) ),
-                  this, SLOT( userImageLocalPathFetched( const QString&, const QPixmap& ) ) );
+        QString url = "img://profileImage";
+        document()->addResource( QTextDocument::ImageResource, url, pixmap );
+        updateSign();
+        disconnect( MediaManager::self(), SIGNAL( avatarFetched( const QString &, const QPixmap & ) ),
+                    this, SLOT( userAvatarFetched( const QString&, const QPixmap& ) ) );
+        disconnect( MediaManager::self(), SIGNAL(avatarFetchError( const QString&, const QString&)),
+                 this, SLOT(fetchAvatarError( const QString&, const QString&)) );
     }
 }
 
+void StatusWidget::fetchAvatarError( const QString & avatarUrl, const QString &errMsg )
+{
+    Q_UNUSED(errMsg);
+    if( avatarUrl == KUrl(mCurrentStatus.user.profileImageUrl).url(KUrl::RemoveTrailingSlash) ){
+        ///Avatar fetching is failed! but will not disconnect to get the img if it fetches later!
+        QString url = "img://profileImage";
+        document()->addResource( QTextDocument::ImageResource, url, KIcon("image-missing").pixmap(48) );
+        updateSign();
+    }
+}
 void StatusWidget::missingStatusReceived( Status status )
 {
     if( mCurrentStatus.statusId == mCurrentStatus.statusId ){

@@ -64,8 +64,8 @@ public slots:
     void clearAvatarCache();
 
 signals:
-    void sigError( QString &errMsg );
-    void avatarFetched( const QString & url, const QPixmap & pixmap );
+    void avatarFetchError( const QString &avatarUrl, const QString &errMsg );
+    void avatarFetched( const QString & avatarurl, const QPixmap & pixmap );
 
 protected slots:
     void slotImageFetched( KJob *job );

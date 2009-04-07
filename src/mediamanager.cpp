@@ -75,15 +75,14 @@ void MediaManager::getAvatarDownloadAsyncIfNotExist( const QString & remotePath 
     if ( mCache.find( url, p ) ) {
         emit avatarFetched( url, p );
     } else {
-        mQueue.insert( url );
-
         KIO::Job *job = KIO::storedGet( srcUrl, KIO::NoReload, KIO::HideProgressInfo ) ;
         if ( !job ) {
             kDebug() << "Cannot create a FileCopyJob!";
             QString errMsg = i18n( "Cannot download user image, please check your Internet connection.");
-            emit sigError( errMsg );
+            emit avatarFetchError( url, errMsg );
             return;
         }
+        mQueue.insert( url );
         connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotImageFetched( KJob * ) ) );
         job->start();
     }
@@ -98,8 +97,8 @@ void MediaManager::slotImageFetched( KJob * job )
         kDebug() << "Job error!" << job->error() << "\t" << job->errorString();
         QString errMsg = i18n( "Cannot download user image from %1.",
                                job->errorString() );
-        emit sigError( errMsg );
-        emit avatarFetched(remote, KIcon("image-missing").pixmap(48));
+        emit avatarFetchError( remote, errMsg );
+//         emit avatarFetched(remote, KIcon("image-missing").pixmap(48));
     } else {
         QPixmap p;
         if( p.loadFromData( baseJob->data() ) ) {
