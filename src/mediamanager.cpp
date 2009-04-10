@@ -105,7 +105,7 @@ void MediaManager::slotImageFetched( KJob * job )
             mCache.insert( remote, p );
             emit avatarFetched( remote, p );
         } else {
-            getAvatarDownloadAsyncIfNotExist(remote);
+            emit avatarFetchError( remote,"download failed" );
         }
     }
 }

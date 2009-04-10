@@ -468,6 +468,7 @@ void StatusWidget::fetchAvatarError( const QString & avatarUrl, const QString &e
         updateSign();
     }
 }
+
 void StatusWidget::missingStatusReceived( Status status )
 {
     if( mCurrentStatus.statusId == mCurrentStatus.statusId ){
