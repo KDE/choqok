@@ -143,28 +143,31 @@ void StatusWidget::setupUi()
     btnReply = getButton( "btnReply",i18nc( "@info:tooltip", "Reply" ), "edit-undo" );
     btnRemove = getButton( "btnRemove",i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
     btnFavorite = getButton( "btnFavorite",i18nc( "@info:tooltip", "Favorite" ), "rating" );
+    btnReTweet = getButton( "btnReTweet", i18nc( "@info:tooltip", "ReTweet" ), "retweet" );
     btnFavorite->setCheckable(true);
 
     buttonGrid->setRowStretch(0,100);
-    buttonGrid->setColumnStretch(4,100);
+    buttonGrid->setColumnStretch(5,100);
     buttonGrid->setMargin(0);
     buttonGrid->setSpacing(0);
 
-    buttonGrid->addWidget(btnReply,1,0);
-    buttonGrid->addWidget(btnRemove,1,1);
-    buttonGrid->addWidget(btnFavorite,1,2);
+    buttonGrid->addWidget( btnReply, 1, 0 );
+    buttonGrid->addWidget( btnRemove, 1, 1 );
+    buttonGrid->addWidget( btnFavorite, 1, 2 );
+    buttonGrid->addWidget( btnReTweet, 1, 3 );
 
     document()->addResource( QTextDocument::ImageResource, QUrl("icon://web"),
                              KIcon("applications-internet").pixmap(8) );
     document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
                              MediaManager::self()->defaultImage() );
-    mImage = "<img src=\"img://profileImage\" width=\"48\" height=\"48\" />";
+    mImage = "<img src=\"img://profileImage\" title=\""+ mCurrentStatus.user.name +"\" width=\"48\" height=\"48\" />";
 
     setLayout(buttonGrid);
 
     connect( btnReply, SIGNAL( clicked( bool ) ), this, SLOT( requestReply() ) );
     connect( btnFavorite, SIGNAL( clicked( bool ) ), this, SLOT( setFavorite( bool ) ) );
     connect( btnRemove, SIGNAL( clicked( bool ) ), this, SLOT( requestDestroy() ) );
+    connect( btnReTweet, SIGNAL( clicked( bool ) ), this, SLOT( requestReTweet() ) );
 
     connect(this,SIGNAL(textChanged()),this,SLOT(setHeight()));
 }
@@ -177,14 +180,16 @@ void StatusWidget::enterEvent(QEvent* event)
       btnReply->setVisible( true );
   else
       btnRemove->setVisible( true );
+  btnReTweet->setVisible( true );
   KTextBrowser::enterEvent(event);
 }
 
 void StatusWidget::leaveEvent(QEvent* event)
 {
-  btnRemove->setVisible(false);
-  btnFavorite->setVisible(false);
-  btnReply->setVisible(false);
+  btnRemove->setVisible( false );
+  btnFavorite->setVisible( false );
+  btnReply->setVisible( false );
+  btnReTweet->setVisible( false );
 
   KTextBrowser::leaveEvent(event);
 }
@@ -335,6 +340,12 @@ void StatusWidget::updateSign()
 void StatusWidget::requestDestroy()
 {
     emit sigDestroy( mCurrentStatus.statusId );
+}
+
+void StatusWidget::requestReTweet()
+{
+    QString text = "RT @" + mCurrentStatus.user.screenName + ' ' + mCurrentStatus.content;
+    emit sigReTweet( text );
 }
 
 QString StatusWidget::prepareStatus( const QString &text )

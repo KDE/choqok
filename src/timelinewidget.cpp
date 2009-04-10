@@ -309,6 +309,7 @@ void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayou
         connect( wt, SIGNAL( sigDestroy( uint ) ),
                  this, SLOT( requestDestroy( uint ) ) );
         connect(wt,SIGNAL(sigSearch(int,QString)),this,SIGNAL(sigSearch(int,QString)));
+        connect(wt, SIGNAL(sigReTweet(const QString&)), this, SLOT(reTweet(const QString&)));
 
         list->append( wt );
         layoutToAddStatuses->insertWidget( 0, wt );
@@ -750,6 +751,13 @@ void TimeLineWidget::revertCounterLabelShape()
 Backend* TimeLineWidget::getBackend()
 {
     return twitter;
+}
+
+void TimeLineWidget::reTweet( const QString &text )
+{
+    replyToStatusId = 0;
+    txtNewStatus->setText( text );
+    txtNewStatus->setFocus(Qt::OtherFocusReason);
 }
 
 #include "timelinewidget.moc"

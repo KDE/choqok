@@ -67,11 +67,13 @@ signals:
     void sigReply( const QString &userName, uint statusId, bool dMsg );
     void sigDestroy( uint statusId );
     void sigFavorite( uint statusId, bool isFavorite );
+    void sigReTweet( const QString &text );
 
 protected slots:
     void setFavorite( bool isFavorite );
     void requestReply();
     void requestDestroy();
+    void requestReTweet();
     void updateSign();
     void userAvatarFetched( const QString &, const QPixmap & pixmap );
     void fetchAvatarError( const QString & avatarUrl, const QString &errMsg );
@@ -116,7 +118,7 @@ private:
     static const QRegExp mHashtagRegExp;
     static const QRegExp mGroupRegExp;
 
-    KPushButton * btnReply,*btnFavorite,*btnRemove;
+    KPushButton * btnReply,*btnFavorite,*btnRemove, *btnReTweet;
     bool isBaseStatusShowed;
 };
 

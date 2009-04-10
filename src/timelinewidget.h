@@ -75,7 +75,7 @@ protected slots:
     void prepareReply( const QString &userName, uint statusId, bool dMsg );
 
     void requestDestroy( uint statusId );
-//   void notify(const QString &message);
+    void reTweet( const QString &text );
 
     void checkNewStatusCharactersCount( int numOfChars );
 
