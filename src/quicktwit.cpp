@@ -102,7 +102,7 @@ void QuickTwit::slotPostNewStatusDone( bool isError )
         QString name( APPNAME );
         emit sigNotify( i18n( "Success." ), i18n( "New status posted successfully." ), name );
     }
-    this->close();
+//     this->close();
     sender()->deleteLater();
 }
 
