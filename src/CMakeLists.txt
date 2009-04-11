@@ -23,6 +23,8 @@ accounts_wizard_base.ui appears_base.ui quicktwit_base.ui searchwidget_base.ui)
 
 kde4_add_kcfg_files(choqok_SRCS settings.kcfgc )
 
+kde4_add_app_icon(choqok_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-choqok.png")
+
 kde4_add_executable(choqok ${choqok_SRCS})
 
 target_link_libraries(choqok ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS})

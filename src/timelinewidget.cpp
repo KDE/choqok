@@ -498,12 +498,12 @@ QList< Status > TimeLineWidget::loadStatuses( QString fileName )
         st.isDMessage = grp.readEntry( "isDMessage" , false );
 
         //Sorting The new statuses:
-        int i = 0;
+        int j = 0;
         int count = list.count();
-        while (( i < count ) && ( st.statusId > list[ i ].statusId ) ) {
-            ++i;
+        while (( j < count ) && ( st.statusId > list[ j ].statusId ) ) {
+            ++j;
         }
-        list.insert( i, st );
+        list.insert( j, st );
     }
 
     return list;
