@@ -175,10 +175,9 @@ void MainWindow::setupActions()
     connect( enableUpdates, SIGNAL( toggled( bool ) ), sysIcon, SLOT( setTimeLineUpdatesEnabled( bool ) ) );
     sysIcon->contextMenu()->addAction( enableUpdates );
     sysIcon->setTimeLineUpdatesEnabled( enableUpdates->isChecked() );
-    sysIcon->show();
-
     sysIcon->contextMenu()->addAction( enableNotify );
     sysIcon->contextMenu()->addAction( prefs );
+    sysIcon->show();
 }
 
 void MainWindow::setupQuickTweet()
@@ -388,8 +387,8 @@ void MainWindow::addAccountTimeLine( const Account & account, bool isStartup )
 
     mainWidget->addTab( widget, account.alias() );
 
+    QTimer::singleShot( 500, widget, SLOT( updateTimeLines() ) );
     if ( !isStartup ) {
-        QTimer::singleShot( 500, widget, SLOT( updateTimeLines() ) );
         QTimer::singleShot( 1000, widget, SLOT(reloadFriendsList()) );
     }
     enableApp();

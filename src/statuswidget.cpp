@@ -204,6 +204,7 @@ KPushButton * StatusWidget::getButton(const QString & objName, const QString & t
     button->setMaximumSize(QSize(20, 20));
     button->setFlat(true);
     button->setVisible(false);
+    button->setCursor(Qt::PointingHandCursor);
     return button;
 }
 
