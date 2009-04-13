@@ -56,7 +56,6 @@ MainWindow::MainWindow()
     quickWidget = 0;
     timelineTimer = new QTimer( this );
     setWindowTitle( i18n("Choqok") );
-    this->setAttribute( Qt::WA_DeleteOnClose, false );
 
     mainWidget = new KTabWidget( this );
 
@@ -96,7 +95,6 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
-    qApp->setStyleSheet(QString()); //crashes if qApp->styleSheet() != QString(), maybe Qt/KDE bug?
     kDebug();
 }
 

@@ -25,8 +25,6 @@
 #define ACCOUNT_H
 #include <QString>
 
-#include "search.h"
-
 /**
     @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
 */
@@ -67,8 +65,6 @@ public:
 
     Service serviceType() const;
     void setServiceType( Service type, const QString &homepage = QString() );
-
-    void initSearch();
 
 private:
     uint mUserId;

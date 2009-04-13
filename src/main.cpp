@@ -53,7 +53,7 @@ int main( int argc, char **argv )
 //     options.add("+[URL]", ki18n( "Document to open" ));
 //     KCmdLineArgs::addCmdLineOptions(options);
     KUniqueApplication app;
-
+    app.setQuitOnLastWindowClosed(false);
     MainWindow *mainWin = new MainWindow;
     mainWin->setAttribute(Qt::WA_DeleteOnClose, false);
     if ( Settings::showMainWinOnStart() ) {
