@@ -47,6 +47,9 @@ QuickTwit::QuickTwit( QWidget* parent ): KDialog( parent )
     this->resize( Settings::quickTweetSize() );
     txtStatus->setFocus( Qt::OtherFocusReason );
 
+    ui.checkAll->setChecked( Settings::quickTweetAll() );
+    checkAll( Settings::quickTweetAll() );
+
     this->setCaption( i18n( "Quick Tweet" ) );
     ui.lblCounter->setText( QString::number( MAX_STATUS_SIZE ) );
 
@@ -123,6 +126,11 @@ void QuickTwit::slotPostNewStatus( QString & newStatus )
         connect( twitter, SIGNAL( sigPostNewStatusDone( bool ) ),
                  this, SLOT( slotPostNewStatusDone( bool ) ) );
         twitter->postNewStatus( newStatus );
+    }
+
+    if (ui.checkAll->isChecked() != Settings::quickTweetAll()) {
+	Settings::setQuickTweetAll(ui.checkAll->isChecked());
+	Settings::self()->writeConfig();
     }
 }
 
