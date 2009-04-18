@@ -181,6 +181,7 @@ void MainWindow::setupActions()
 void MainWindow::setupQuickTweet()
 {
     quickWidget = new QuickTwit( this );
+    quickWidget->setAttribute(Qt::WA_DeleteOnClose, false);
     connect( quickWidget, SIGNAL( sigNotify( const QString&, const  QString&, const  QString& ) ),
              this, SLOT( systemNotify( const QString&, const QString&, const QString& ) ) );
     connect( quickWidget, SIGNAL( sigStatusUpdated( bool ) ), sysIcon, SLOT( slotStatusUpdated( bool ) ) );
