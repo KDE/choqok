@@ -62,14 +62,6 @@ TwitterSearch::~TwitterSearch()
 KUrl TwitterSearch::buildUrl( QString query, int option, uint sinceStatusId, uint count, uint page )
 {
     kDebug();
-    QString baseUrl = "http://search.twitter.com/search.atom?";
-    if( sinceStatusId )
-        baseUrl += "since_id=" + QString::number( sinceStatusId ) + '&';
-    if( count && count <= 100 )
-        baseUrl += "rpp=" + QString::number( count ) + '&';
-    baseUrl += "page=" + QString::number( page ) + '&';
-    baseUrl += "q=";
-
     QString formattedQuery;
     switch ( option ) {
         case CustomSearch:
@@ -85,15 +77,19 @@ KUrl TwitterSearch::buildUrl( QString query, int option, uint sinceStatusId, uin
             formattedQuery = '@' + query;
             break;
         case ReferenceHashtag:
-            formattedQuery = "%23" + query;
+            formattedQuery = "#" + query;
             break;
         default:
             formattedQuery = query;
             break;
     };
-
-    KUrl url;
-    url.setUrl( baseUrl + formattedQuery );
+    KUrl url( "http://search.twitter.com/search.atom" );
+    url.addQueryItem("q", formattedQuery);
+    if( sinceStatusId )
+        url.addQueryItem( "since_id", QString::number( sinceStatusId ) );
+    if( count && count <= 100 )
+        url.addQueryItem( "rpp", QString::number( count ) );
+    url.addQueryItem( "page", QString::number( page ) );
 
     return url;
 }
