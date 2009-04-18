@@ -120,6 +120,7 @@ private:
 
     KPushButton * btnReply,*btnFavorite,*btnRemove, *btnReTweet;
     bool isBaseStatusShowed;
+    bool isMissingStatusRequested;
 };
 
 #endif

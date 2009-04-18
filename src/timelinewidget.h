@@ -25,6 +25,7 @@
 #define TIMELINEWIDGET_H
 
 #include <QWidget>
+#include <QMap>
 #include "ui_timelinewidget_base.h"
 #include "datacontainers.h"
 #include "backend.h"
@@ -105,7 +106,7 @@ private slots:
 
 private:
     void setDefaultDirection();
-    void addNewStatusesToUi( QList< Status > & statusList, QBoxLayout *layoutToAddStatuses, QList<StatusWidget*> *list,
+    void addNewStatusesToUi( QList< Status > & statusList, QBoxLayout *layoutToAddStatuses, QMap<uint, StatusWidget*> *list,
                              Backend::TimeLineType type = Backend::HomeTimeLine );
     void disableApp();
     void enableApp();
@@ -116,13 +117,13 @@ private:
     * @param list list of statuses will be stored.
     * @return True on success, and false on fail
       */
-    bool saveStatuses( QString fileName, QList<StatusWidget*> &list );
+    bool saveStatuses( QString fileName, QList< StatusWidget* > list );
 
     QList< Status > loadStatuses( QString fileName );
 
-    void updateStatusList( QList<StatusWidget*> *list );
+    void updateStatusList( QMap<uint, StatusWidget*> *list );
 
-    void clearTimeLineList( QList<StatusWidget*> *list );
+    void clearTimeLineList( QMap<uint, StatusWidget*> *list );
 
     void loadConfigurations();
     void updateUi();
@@ -132,10 +133,10 @@ private:
     Backend *twitter;
     StatusTextEdit *txtNewStatus;
     QLabel *lblCounter;
-    QList<StatusWidget*> listHomeStatus;
-    QList<StatusWidget*> listReplyStatus;
-    QList<StatusWidget*> listInboxStatus;
-    QList<StatusWidget*> listOutboxStatus;
+    QMap<uint, StatusWidget*> listHomeStatus;
+    QMap<uint, StatusWidget*> listReplyStatus;
+    QMap<uint, StatusWidget*> listInboxStatus;
+    QMap<uint, StatusWidget*> listOutboxStatus;
     QList<StatusWidget*> listUnreadStatuses;
     uint replyToStatusId;
     bool isStartMode;//used for Notify, if true: notify will not send for any or all new twits, if false will send.

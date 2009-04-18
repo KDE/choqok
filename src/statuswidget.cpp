@@ -63,7 +63,8 @@ void StatusWidget::setStyle(const QColor& color, const QColor& back, const QColo
 }
 
 StatusWidget::StatusWidget( const Account *account, QWidget *parent )
-        : KTextBrowser( parent ),mIsRead(true),mCurrentAccount(account),isBaseStatusShowed(false)
+        : KTextBrowser( parent ),mIsRead(true),mCurrentAccount(account),isBaseStatusShowed(false),
+        isMissingStatusRequested(false)
 {
     setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -351,12 +352,13 @@ void StatusWidget::requestReTweet()
 
 QString StatusWidget::prepareStatus( const QString &text )
 {
-    if(text.isEmpty() && ( mCurrentAccount->serviceType() == Account::Identica ||
+    if( !isMissingStatusRequested && text.isEmpty() && ( mCurrentAccount->serviceType() == Account::Identica ||
         mCurrentAccount->serviceType() == Account::Laconica ) ){
         Backend *b = new Backend(new Account(*mCurrentAccount), this);
         connect(b, SIGNAL(singleStatusReceived( Status )),
                  this, SLOT(missingStatusReceived( Status )));
         b->requestSingleStatus(mCurrentStatus.statusId);
+        isMissingStatusRequested = true;
         return text;
     }
     QString status = text;

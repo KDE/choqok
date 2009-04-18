@@ -69,13 +69,13 @@ void TimeLineWidget::aboutQuit()
     kDebug();
     AccountManager::self()->saveFriendsList( mCurrentAccount.alias(), friendsList );
     saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::HomeTimeLine ),
-                  listHomeStatus );
+                  listHomeStatus.values() );
     saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::ReplyTimeLine ),
-                  listReplyStatus );
+                  listReplyStatus.values() );
     saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::InboxTimeLine ),
-                  listInboxStatus );
+                  listInboxStatus.values() );
     saveStatuses( AccountManager::generateStatusBackupFileName( mCurrentAccount.alias(), Backend::OutboxTimeLine ),
-                  listOutboxStatus );
+                  listOutboxStatus.values() );
     deleteLater();
 }
 
@@ -156,13 +156,13 @@ void TimeLineWidget::settingsChanged()
     setDefaultDirection();
     twitter->settingsChanged();
     updateUi();
-    foreach(StatusWidget * s,listHomeStatus)
+    foreach(StatusWidget * s,listHomeStatus.values())
       s->setUiStyle();
-    foreach(StatusWidget * s,listInboxStatus)
+    foreach(StatusWidget * s,listInboxStatus.values())
       s->setUiStyle();
-    foreach(StatusWidget * s,listOutboxStatus)
+    foreach(StatusWidget * s,listOutboxStatus.values())
       s->setUiStyle();
-    foreach(StatusWidget * s,listReplyStatus)
+    foreach(StatusWidget * s,listReplyStatus.values())
       s->setUiStyle();
 }
 
@@ -278,7 +278,7 @@ void TimeLineWidget::replyTimeLineReceived( QList< Status > & statusList )
 }
 
 void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayout * layoutToAddStatuses,
-        QList<StatusWidget*> *list, Backend::TimeLineType type )
+        QMap<uint, StatusWidget*> *list, Backend::TimeLineType type )
 {
     kDebug();
     bool allInOne = Settings::showAllNotifiesInOne();
@@ -297,9 +297,10 @@ void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayou
                 continue;
             }
         }
+        if(list->keys().contains(it->statusId))
+            continue;
 
         StatusWidget *wt = new StatusWidget( &mCurrentAccount, this );
-
         wt->setAttribute( Qt::WA_DeleteOnClose );
         wt->setCurrentStatus( *it );
         connect( wt, SIGNAL( sigReply( const QString&, uint, bool ) ),
@@ -311,7 +312,7 @@ void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayou
         connect(wt,SIGNAL(sigSearch(int,QString)),this,SIGNAL(sigSearch(int,QString)));
         connect(wt, SIGNAL(sigReTweet(const QString&)), this, SLOT(reTweet(const QString&)));
 
-        list->append( wt );
+        list->insert( it->statusId, wt );
         layoutToAddStatuses->insertWidget( 0, wt );
 
         if ( !isStartMode ) {
@@ -329,7 +330,6 @@ void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayou
                     wt->setUnread( StatusWidget::WithNotify );
                 }
             }
-
             listUnreadStatuses.append( wt );
         }
     }
@@ -426,7 +426,7 @@ void TimeLineWidget::postingNewStatusDone( bool isError )
 
 }
 
-bool TimeLineWidget::saveStatuses( QString fileName, QList<StatusWidget*> &list )
+bool TimeLineWidget::saveStatuses( QString fileName, QList<StatusWidget*> list )
 {
     kDebug();
     KConfig statusesBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
@@ -526,27 +526,26 @@ void TimeLineWidget::prepareReply( const QString &userName, uint statusId, bool 
     txtNewStatus->setFocus( Qt::OtherFocusReason );
 }
 
-void TimeLineWidget::updateStatusList( QList<StatusWidget*> *list )
+void TimeLineWidget::updateStatusList( QMap<uint, StatusWidget*> *list )
 {
     kDebug();
     int toBeDelete = list->count() - Settings::countOfStatusesOnMain();
 
     if ( toBeDelete > 0 ) {
-        for ( int i = 0; i < toBeDelete; ++i ) {
-            StatusWidget* wt = list->at( i );
-
+        QMap<uint, StatusWidget*>::const_iterator it = list->constBegin();
+        QMap<uint, StatusWidget*>::const_iterator endIt = list->constEnd();
+        for ( ; it != endIt && toBeDelete > 0; ++it ) {
+            StatusWidget* wt = it.value();
             if ( !wt->isRead() )
                 break;
-
-            list->removeAt( i );
-            --i;
+            wt->deleteLater();
+            list->remove( it.key() );
             --toBeDelete;
-            wt->close();
         }
     }
 }
 
-void TimeLineWidget::clearTimeLineList( QList< StatusWidget * > * list )
+void TimeLineWidget::clearTimeLineList( QMap<uint, StatusWidget * > * list )
 {
     kDebug();
     qDeleteAll(*list);
