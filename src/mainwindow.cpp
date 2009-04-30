@@ -263,6 +263,8 @@ void MainWindow::search(int type, const QString& query)
 
     connect( searchWin, SIGNAL( forwardReply( const QString&, uint, bool ) ),
              tmp, SLOT( prepareReply( const QString&, uint, bool ) ) );
+    connect( searchWin, SIGNAL(forwardReTweet(const QString&)),
+             tmp, SLOT( reTweet(const QString&) ) );
     connect( searchWin, SIGNAL( forwardFavorited( uint, bool ) ),
              tmp->getBackend(), SLOT( requestFavorited( uint, bool ) ) );
     connect( this, SIGNAL( updateSearchResults() ),

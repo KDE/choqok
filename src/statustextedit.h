@@ -36,7 +36,7 @@ public:
     StatusTextEdit( QWidget *parent = 0 );
 
     ~StatusTextEdit();
-    QStringList friendsList() const;
+//     QStringList friendsList() const;
     int countOfRemainsChar() const;
 
 public slots:

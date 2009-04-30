@@ -248,7 +248,7 @@ void SearchWindow::addNewStatusesToUi( QList<Status> &statusList )
 
         connect( wt, SIGNAL( sigReply( const QString&, uint, bool ) ),
                  this, SIGNAL( forwardReply( const QString&, uint, bool ) ) );
-
+        connect( wt, SIGNAL(sigReTweet(const QString&)), SIGNAL(forwardReTweet(const QString&)));
         connect( wt, SIGNAL( sigFavorite( uint, bool ) ),
                  this, SIGNAL( forwardFavorited( uint, bool ) ) );
         connect (wt,SIGNAL(sigSearch(int,QString)),this,SLOT(updateSearchArea(int,QString)));

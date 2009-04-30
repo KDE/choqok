@@ -40,7 +40,8 @@ The Search Widget
 
 For any microblogging service compatible with the Twitter Search API
 
- @author Stephen Henderson <hendersonsk@gmail.com>
+ @author Stephen Henderson \<hendersonsk@gmail.com\>
+ @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
 class SearchWindow : public QWidget
 {
@@ -70,6 +71,7 @@ protected slots:
 signals:
     void forwardReply( const QString &username, uint statusId, bool dMsg );
     void forwardFavorited( uint statusId, bool isFavorite );
+    void forwardReTweet( const QString &text );
 //     void updateTimeLines();
 
 private:

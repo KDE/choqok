@@ -27,6 +27,7 @@
 
 #include "backend.h"
 #include <settings.h>
+#include <QMenu>
 
 StatusTextEdit::StatusTextEdit( QWidget *parent )
         : KTextEdit( parent )
@@ -34,8 +35,8 @@ StatusTextEdit::StatusTextEdit( QWidget *parent )
     this->setAcceptRichText( false );
     connect( this, SIGNAL( textChanged() ), this, SLOT( setNumOfCharsLeft() ) );
     setAcceptRichText( false );
-    this->setToolTip( i18n( "Press Ctrl+P to have the previous text submitted.\n\
-Press Ctrl+S to enable/disable spell-checking." ) );
+    this->setToolTip( i18n( "<strong>Note:</strong><br/><em>Ctrl+P</em> to have the previous text submitted.<br/>\
+<em>Ctrl+S</em> to enable/disable Auto spell checker." ) );
 }
 
 StatusTextEdit::~StatusTextEdit()
