@@ -239,6 +239,7 @@ void StatusWidget::updateUi()
         btnRemove->setVisible( false );
     }
     mStatus = prepareStatus(mCurrentStatus.content);
+    checkForTwitPicImages(mCurrentStatus.content);
     mSign = generateSign();
     setDirection();
     setUserImage();
@@ -350,6 +351,27 @@ void StatusWidget::requestReTweet()
     emit sigReTweet( text );
 }
 
+void StatusWidget::checkForTwitPicImages(const QString &status)
+{
+    ///Check for twitpic images
+    if(Settings::loadTwitpicImages()) {
+        QRegExp twitPicUrlRegExp("(http://twitpic.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
+        if( status.indexOf(twitPicUrlRegExp) != -1 ) {
+            twitpicPageUrl = twitPicUrlRegExp.cap(0);
+            KUrl tempUrl( twitpicPageUrl );
+            if( tempUrl.isValid() ) {
+                kDebug()<<"Twitpic detected! "<<tempUrl.prettyUrl();
+                twitpicImageUrl = QString( "http://twitpic.com/show/mini%1" ).arg(tempUrl.path(KUrl::RemoveTrailingSlash));
+                connect( MediaManager::self(), SIGNAL( avatarFetched( const QString &, const QPixmap & ) ),
+                         this, SLOT(twitpicImageFetched( const QString&, const QPixmap&)) );
+                connect( MediaManager::self(), SIGNAL(fetchError( const QString&, const QString&)),
+                        this, SLOT(twitpicImageFailed( const QString&, const QString&)) );
+                MediaManager::self()->getAvatarDownloadAsyncIfNotExist( twitpicImageUrl );
+            }
+        }
+    }
+}
+
 QString StatusWidget::prepareStatus( const QString &text )
 {
     if( !isMissingStatusRequested && text.isEmpty() && ( mCurrentAccount->serviceType() == Account::Identica ||
@@ -368,6 +390,7 @@ QString StatusWidget::prepareStatus( const QString &text )
     status.replace( " www.", " http://www." );
     if ( status.startsWith( QLatin1String("www.") ) ) 
         status.prepend( "http://" );
+
     status.replace(mUrlRegExp,"<a href='\\1' title='\\1'>\\1</a>");
 
     if(Settings::isSmiliesEnabled())
@@ -454,7 +477,7 @@ void StatusWidget::setUserImage()
 {
     connect( MediaManager::self(), SIGNAL( avatarFetched( const QString &, const QPixmap & ) ),
              this, SLOT(userAvatarFetched(const QString&, const QPixmap&)) );
-    connect( MediaManager::self(), SIGNAL(avatarFetchError( const QString&, const QString&)),
+    connect( MediaManager::self(), SIGNAL(fetchError( const QString&, const QString&)),
              this, SLOT(fetchAvatarError( const QString&, const QString&)) );
     MediaManager::self()->getAvatarDownloadAsyncIfNotExist( mCurrentStatus.user.profileImageUrl );
 }
@@ -467,7 +490,7 @@ void StatusWidget::userAvatarFetched( const QString & remotePath, const QPixmap 
         updateSign();
         disconnect( MediaManager::self(), SIGNAL( avatarFetched( const QString &, const QPixmap & ) ),
                     this, SLOT( userAvatarFetched( const QString&, const QPixmap& ) ) );
-        disconnect( MediaManager::self(), SIGNAL(avatarFetchError( const QString&, const QString&)),
+        disconnect( MediaManager::self(), SIGNAL(fetchError( const QString&, const QString&)),
                  this, SLOT(fetchAvatarError( const QString&, const QString&)) );
     }
 }
@@ -515,6 +538,33 @@ void StatusWidget::baseStatusReceived( Status status )
     baseStatusText += prepareStatus( status.content ) + "</p>";
     mStatus.prepend( baseStatusText );
     updateSign();
+}
+
+void StatusWidget::twitpicImageFetched( const QString &imageUrl, const QPixmap & pixmap )
+{
+    if(imageUrl == twitpicImageUrl) {
+        kDebug();
+        disconnect( MediaManager::self(), SIGNAL( avatarFetched( const QString &, const QPixmap & ) ),
+                 this, SLOT(twitpicImageFetched( const QString&, const QPixmap&)) );
+        disconnect( MediaManager::self(), SIGNAL(fetchError( const QString&, const QString&)),
+                this, SLOT(twitpicImageFailed( const QString&, const QString&)) );
+        QString url = "img://twitpicImage";
+        document()->addResource( QTextDocument::ImageResource, url, pixmap );
+        QRegExp rx( '>' + twitpicPageUrl + '<');
+        mStatus.replace(rx, "><img src=\"img://twitpicImage\" /><");
+        updateSign();
+    }
+}
+
+void StatusWidget::twitpicImageFailed( const QString &imageUrl, const QString &errMsg )
+{
+    if(imageUrl == twitpicImageUrl) {
+        kDebug()<<errMsg;
+        disconnect( MediaManager::self(), SIGNAL( avatarFetched( const QString &, const QPixmap & ) ),
+                 this, SLOT(twitpicImageFetched( const QString&, const QPixmap&)) );
+        disconnect( MediaManager::self(), SIGNAL(fetchError( const QString&, const QString&)),
+                this, SLOT(twitpicImageFailed( const QString&, const QString&)) );
+    }
 }
 
 #include "statuswidget.moc"

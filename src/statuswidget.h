@@ -75,12 +75,15 @@ protected slots:
     void requestDestroy();
     void requestReTweet();
     void updateSign();
-    void userAvatarFetched( const QString &, const QPixmap & pixmap );
-    void fetchAvatarError( const QString & avatarUrl, const QString &errMsg );
+    void userAvatarFetched( const QString &avatarUrl, const QPixmap & pixmap );
+    void fetchAvatarError( const QString &avatarUrl, const QString &errMsg );
     void missingStatusReceived( Status status );
     void setHeight();
     void checkAnchor(const QUrl & url);
     void baseStatusReceived( Status status );
+
+    void twitpicImageFetched( const QString &imageUrl, const QPixmap & pixmap );
+    void twitpicImageFailed( const QString &imageUrl, const QString &errMsg );
 
 protected:
     void resizeEvent ( QResizeEvent * event );
@@ -94,6 +97,7 @@ private:
 
     void setUserImage();
     QString prepareStatus( const QString &text );
+    void checkForTwitPicImages(const QString &status);
     void setDirection();
     QString generateSign();
     void updateUi();
@@ -121,6 +125,8 @@ private:
     KPushButton * btnReply,*btnFavorite,*btnRemove, *btnReTweet;
     bool isBaseStatusShowed;
     bool isMissingStatusRequested;
+    QString twitpicImageUrl;
+    QString twitpicPageUrl;
 };
 
 #endif

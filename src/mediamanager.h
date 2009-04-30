@@ -25,7 +25,7 @@
 #define MEDIAMANAGER_H
 
 #include <QObject>
-#include <QSet>
+#include <QHash>
 
 #include <KEmoticons>
 #include <KEmoticonsTheme>
@@ -64,8 +64,8 @@ public slots:
     void clearAvatarCache();
 
 signals:
-    void avatarFetchError( const QString &avatarUrl, const QString &errMsg );
-    void avatarFetched( const QString & avatarurl, const QPixmap & pixmap );
+    void fetchError( const QString &avatarUrl, const QString &errMsg );
+    void avatarFetched( const QString & avatarUrl, const QPixmap & pixmap );
 
 protected slots:
     void slotImageFetched( KJob *job );
@@ -74,7 +74,7 @@ private:
     static MediaManager * mSelf;
     KEmoticonsTheme mEmoticons;
     KPixmapCache mCache;
-    QSet<QString> mQueue;
+    QHash<KJob*, QString> mQueue;
     QPixmap mDefaultImage;
 };
 

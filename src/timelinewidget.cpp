@@ -54,18 +54,14 @@ TimeLineWidget::TimeLineWidget( const Account &userAccount, QWidget* parent ) :
     inputFrame->layout()->addWidget( txtNewStatus );
 
     btnAttachMedia->setIcon(KIcon("mail-attachment"));
-    if(mCurrentAccount.serviceType() != Account::Twitter) {
-        attachMediaFrame->hide();
-        btnAttachMedia->setEnabled(false);
-        lblMediaName->deleteLater();
-        btnClearMedia->deleteLater();
-        attachMediaFrame->deleteLater();
-    } else {
-        attachMediaFrame->hide();
+    attachMediaFrame->hide();
+    if(mCurrentAccount.serviceType() == Account::Twitter) {
         mediaToAttach.clear();
         btnClearMedia->setIcon(KIcon("edit-clear"));
         connect(btnAttachMedia, SIGNAL(clicked(bool)), SLOT(attachMedia()));
         connect(btnClearMedia, SIGNAL(clicked(bool)), SLOT(clearMedia()));
+    } else {
+        btnAttachMedia->setEnabled(false);
     }
 
 //     connect ( toggleArrow, SIGNAL ( clicked() ), this, SLOT ( toggleTwitFieldVisible() ) );

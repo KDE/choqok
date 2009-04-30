@@ -33,6 +33,7 @@ MediaManager::MediaManager( QObject* parent ): QObject( parent ),mEmoticons(KEmo
   KIcon icon("image-loading");
   mDefaultImage = icon.pixmap(48);
   mCache.setCacheLimit(20000);
+//   mCache.setRemoveEntryStrategy(KPixmapCache::RemoveLeastRecentlyUsed);
 }
 
 MediaManager::~MediaManager()
@@ -67,7 +68,7 @@ void MediaManager::getAvatarDownloadAsyncIfNotExist( const QString & remotePath 
 {
     KUrl srcUrl( remotePath );
     QString url = srcUrl.url(KUrl::RemoveTrailingSlash);
-    if ( mQueue.contains( url ) ) {
+    if ( mQueue.values().contains( url ) ) {
         ///The file is on the way, wait to download complete.
         return;
     }
@@ -78,11 +79,11 @@ void MediaManager::getAvatarDownloadAsyncIfNotExist( const QString & remotePath 
         KIO::Job *job = KIO::storedGet( srcUrl, KIO::NoReload, KIO::HideProgressInfo ) ;
         if ( !job ) {
             kDebug() << "Cannot create a FileCopyJob!";
-            QString errMsg = i18n( "Cannot download user image, please check your Internet connection.");
-            emit avatarFetchError( url, errMsg );
+            QString errMsg = i18n( "Cannot download image, please check your Internet connection.");
+            emit fetchError( url, errMsg );
             return;
         }
-        mQueue.insert( url );
+        mQueue.insert(job, url );
         connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotImageFetched( KJob * ) ) );
         job->start();
     }
@@ -91,21 +92,20 @@ void MediaManager::getAvatarDownloadAsyncIfNotExist( const QString & remotePath 
 void MediaManager::slotImageFetched( KJob * job )
 {
     KIO::StoredTransferJob *baseJob = qobject_cast<KIO::StoredTransferJob *>( job );
-    QString remote = baseJob->url().url(KUrl::RemoveTrailingSlash);
-    mQueue.remove( remote );
+    QString remote = mQueue.value(job);
+    mQueue.remove( job );
     if ( job->error() ) {
         kDebug() << "Job error!" << job->error() << "\t" << job->errorString();
-        QString errMsg = i18n( "Cannot download user image from %1.",
+        QString errMsg = i18n( "Cannot download image from %1.",
                                job->errorString() );
-        emit avatarFetchError( remote, errMsg );
-//         emit avatarFetched(remote, KIcon("image-missing").pixmap(48));
+        emit fetchError( remote, errMsg );
     } else {
         QPixmap p;
         if( p.loadFromData( baseJob->data() ) ) {
             mCache.insert( remote, p );
             emit avatarFetched( remote, p );
         } else {
-            emit avatarFetchError( remote,"download failed" );
+            emit fetchError( remote,"download failed" );
         }
     }
 }
