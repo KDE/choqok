@@ -33,6 +33,8 @@
 #include <KDE/KMessageBox>
 #include <QProcess>
 #include <KDE/KNotification>
+#include <KFileDialog>
+#include <KUrl>
 
 TimeLineWidget::TimeLineWidget( const Account &userAccount, QWidget* parent ) :
         QWidget( parent )
@@ -50,6 +52,21 @@ TimeLineWidget::TimeLineWidget( const Account &userAccount, QWidget* parent ) :
     tabs->setCornerWidget( lblCounter, Qt::TopRightCorner );
     txtNewStatus->setObjectName( "txtNewStatus" );
     inputFrame->layout()->addWidget( txtNewStatus );
+
+    btnAttachMedia->setIcon(KIcon("mail-attachment"));
+    if(mCurrentAccount.serviceType() != Account::Twitter) {
+        attachMediaFrame->hide();
+        btnAttachMedia->setEnabled(false);
+        lblMediaName->deleteLater();
+        btnClearMedia->deleteLater();
+        attachMediaFrame->deleteLater();
+    } else {
+        attachMediaFrame->hide();
+        mediaToAttach.clear();
+        btnClearMedia->setIcon(KIcon("edit-clear"));
+        connect(btnAttachMedia, SIGNAL(clicked(bool)), SLOT(attachMedia()));
+        connect(btnClearMedia, SIGNAL(clicked(bool)), SLOT(clearMedia()));
+    }
 
 //     connect ( toggleArrow, SIGNAL ( clicked() ), this, SLOT ( toggleTwitFieldVisible() ) );
     connect( txtNewStatus, SIGNAL( charsLeft( int ) ), this, SLOT( checkNewStatusCharactersCount( int ) ) );
@@ -392,13 +409,19 @@ the server may truncate or drop it.\nAre you sure you want to post this message?
             return;
     }
     txtNewStatus->setEnabled( false );
-    if ( chkDMessage->isChecked() ) {
-        emit notify( i18n( "Sending direct message...." ), true );
-        twitter->sendDMessage( comboFriendList->currentText(), status );
-        chkDMessage->setChecked( false );
+    if( mediaToAttach.isEmpty() ) {
+        if ( chkDMessage->isChecked() ) {
+            emit notify( i18n( "Sending direct message...." ), true );
+            twitter->sendDMessage( comboFriendList->currentText(), status );
+            chkDMessage->setChecked( false );
+        } else {
+            emit notify( i18n( "Posting new status...." ), true );
+            twitter->postNewStatus( status, replyToStatusId );
+        }
     } else {
         emit notify( i18n( "Posting new status...." ), true );
-        twitter->postNewStatus( status, replyToStatusId );
+        twitter->twitPicCreatePost( mediaToAttach, status );
+        mediaToAttach.clear();
     }
 }
 
@@ -407,6 +430,7 @@ void TimeLineWidget::postingNewStatusDone( bool isError )
     kDebug();
 //     emit sigStatusUpdated( isError );
     if ( !isError ) {
+        clearMedia();
         txtNewStatus->clearContentsAndSetDirection( mCurrentAccount.direction() );
         QString successMsg = i18n( "New status posted successfully" );
         emit systemNotify( i18n( "Success." ), successMsg, APPNAME );
@@ -757,6 +781,26 @@ void TimeLineWidget::reTweet( const QString &text )
     replyToStatusId = 0;
     txtNewStatus->setText( text );
     txtNewStatus->setFocus(Qt::OtherFocusReason);
+}
+
+void TimeLineWidget::attachMedia()
+{
+    kDebug();
+    QString mediaPath = KFileDialog::getOpenFileName( KUrl("kfiledialog:///image?global"),
+                                                      "image/png image/jpeg image/gif", this,
+                                                      i18n("Select media to attach"));
+    if( !mediaPath.isEmpty() ) {
+        mediaToAttach.setPath(mediaPath);
+        lblMediaName->setText( mediaToAttach.fileName() );
+        attachMediaFrame->show();
+    }
+}
+
+void TimeLineWidget::clearMedia()
+{
+    lblMediaName->clear();
+    mediaToAttach.clear();
+    attachMediaFrame->hide();
 }
 
 #include "timelinewidget.moc"

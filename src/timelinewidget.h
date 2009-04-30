@@ -103,6 +103,8 @@ private slots:
     void friendsListed( const QStringList &list );
     void txtNewStatusCleared();
     void revertCounterLabelShape();
+    void attachMedia();
+    void clearMedia();
 
 private:
     void setDefaultDirection();
@@ -156,6 +158,7 @@ private:
     uint latestOutboxStatusId;
 
     QStringList friendsList;
+    KUrl mediaToAttach;
 };
 
 #endif

@@ -30,6 +30,7 @@
 #include <kurl.h>
 #include "settings.h"
 #include <kio/netaccess.h>
+#include <kmimetype.h>
 
 Backend::Backend( Account *account, QObject* parent )
 : QObject( parent ), mCurrentAccount(account), mScheme("http")
@@ -80,6 +81,76 @@ void Backend::postNewStatus( const QString & statusMessage, uint replyToStatusId
     job->addMetaData( "content-type", "Content-Type: application/x-www-form-urlencoded" );
     mPostNewStatusBuffer[ job ] = QByteArray();
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotPostNewStatusFinished( KJob* ) ) );
+    connect( job, SIGNAL(data( KIO::Job *, const QByteArray &)),
+             this, SLOT(slotPostNewStatusData(KIO::Job*, const QByteArray&)));
+    job->start();
+}
+
+void Backend::twitPicCreatePost(const KUrl &picUrl, const QString &message)
+{
+    kDebug();
+    QByteArray picData;
+    QString tmp;
+    KIO::TransferJob *picJob = KIO::get( picUrl, KIO::Reload, KIO::HideProgressInfo);
+    if( !KIO::NetAccess::synchronousRun(picJob, 0, &picData) ){
+        kError()<<"Job error: " << picJob->errorString();
+        tmp = i18n( "Uploading media failed : Cannot read the media file,\
+        please check if it exists. path: %1", picUrl.prettyUrl() );
+        kDebug() << "Emitting sigError...";
+        emit sigError( tmp );
+    }
+    if ( picData.count() == 0 ) {
+        kError() << "Cannot read the media file, please check if it exists.";
+        tmp = i18n( "Uploading media failed : Cannot read the media file,\
+        please check if it exists. path: %1", picUrl.prettyUrl() );
+        kDebug() << "Emitting sigError...";
+        Q_EMIT sigError( tmp );
+        return;
+    }
+    ///Documentation: http://twitpic.com/api.do
+    KUrl url( "http://twitpic.com/api/uploadAndPost" );
+    QByteArray newLine("\r\n");
+    QString formHeader( newLine + "Content-Disposition: form-data; name=\"%1\"" );
+    QByteArray header(newLine + "--AaB03x");
+    QByteArray footer(newLine + "--AaB03x--");
+    QByteArray fileContentType = KMimeType::findByUrl( picUrl, 0, true )->name().toAscii();
+    QByteArray fileHeader(newLine + "Content-Disposition: file; name=\"media\"; filename=\"" +
+                          picUrl.fileName().toAscii()+"\"");
+    QByteArray data;
+    data.append(header);
+
+    data.append(fileHeader);
+    data.append(newLine + "Content-Type: " + fileContentType);
+    data.append(newLine);
+    data.append(newLine + picData);
+
+    data.append(header);
+    data.append(formHeader.arg("username").toLatin1());
+    data.append(newLine);
+    data.append(newLine + mCurrentAccount->username().toLatin1());
+
+    data.append(header);
+    data.append(formHeader.arg("password").toLatin1());
+    data.append(newLine);
+    data.append(newLine + mCurrentAccount->password().toLatin1());
+
+    data.append(header);
+    data.append(formHeader.arg("message").toLatin1());
+    data.append(newLine);
+    data.append(newLine + message.toLatin1());
+
+    data.append(footer);
+
+    KIO::TransferJob *job = KIO::http_post(url, data, KIO::HideProgressInfo) ;
+    if ( !job ) {
+        kDebug() << "Cannot create a http POST request!";
+        QString errMsg = i18n( "Cannot create an http POST request, please check your Internet connection." );
+        emit sigError( errMsg );
+        return;
+    }
+    job->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=AaB03x" );
+    mPostNewStatusBuffer[ job ] = QByteArray();
+    connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotTwitPicCreatePost(KJob*) ) );
     connect( job, SIGNAL(data( KIO::Job *, const QByteArray &)),
              this, SLOT(slotPostNewStatusData(KIO::Job*, const QByteArray&)));
     job->start();
@@ -424,6 +495,56 @@ void Backend::slotPostNewStatusFinished( KJob * job )
             emit sigPostNewStatusDone( false );
 //             emit homeTimeLineReceived( newSt );
         }
+    }
+}
+
+void Backend::slotTwitPicCreatePost( KJob *job )
+{
+    kDebug();
+    if ( job->error() ) {
+        kDebug() << "Error: " << job->errorString();
+        mLatestErrorString = job->errorString();
+        emit sigPostNewStatusDone( true );
+        return;
+    } else {
+        QDomDocument doc;
+        QByteArray buffer = mPostNewStatusBuffer[job];
+        kDebug()<<buffer;
+        mPostNewStatusBuffer.remove(job);
+        doc.setContent(buffer);
+        QDomElement element = doc.documentElement();
+            if( element.tagName() == "rsp" ) {
+                QString result;
+                if(element.hasAttribute("stat") )
+                    result = element.attribute("stat" , "fail");
+                else if(element.hasAttribute("status"))
+                    result = element.attribute("status" , "fail");
+                else {
+                    kDebug()<<"There isn't any \"stat\" or \"status\" attribute. Buffer:\n"<<buffer;
+                    mLatestErrorString = i18n("Unrecognised result.");
+                    emit sigPostNewStatusDone(true);
+                    return;
+                }
+                if( result == "ok" ) {
+                    emit sigPostNewStatusDone(false);
+                    return;
+                } else {
+                    QDomNode node = element.firstChild();
+                    while( !node.isNull() ){
+                        element = node.toElement();
+                        if(element.tagName() == "err") {
+                            mLatestErrorString = element.attribute( "msg", i18n("Unrecognised result.") );
+                        }
+                        node = node.nextSibling();
+                    }
+                    emit sigPostNewStatusDone(true);
+                    return;
+                }
+            } else {
+                kDebug()<<"There isn't any \"rsp\" tag. Buffer:\n"<<buffer;
+                mLatestErrorString = i18n("Unrecognised result.");
+                emit sigPostNewStatusDone(true);
+            }
     }
 }
 

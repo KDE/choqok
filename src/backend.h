@@ -58,6 +58,7 @@ public:
 
 public slots:
     void postNewStatus( const QString &statusMessage, uint replyToStatusId = 0 );
+    void twitPicCreatePost(const KUrl &picUrl, const QString &message);
     void sendDMessage( const QString &screenName, const QString &message );
     void requestTimeLine( uint latestStatusId, TimeLineType type, int page = 0 );
     void requestDMessages( uint latestStatusId, DMessageType type, int page = 0 );
@@ -89,6 +90,7 @@ protected slots:
     void slotListFriendsScreenName( KJob *job );
     void slotPostNewStatusFinished( KJob *job );
     void slotPostNewStatusData(KIO::Job *job, const QByteArray &data);
+    void slotTwitPicCreatePost( KJob *job );
     void slotRequestTimelineFinished( KJob *job );
     void slotRequestFavoritedFinished( KJob *job );
     void slotRequestDestroyFinished( KJob *job );
