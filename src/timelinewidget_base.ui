@@ -92,7 +92,7 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Attach Media</string>
+        <string>Attach Image</string>
        </property>
       </widget>
      </item>
@@ -311,8 +311,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>287</width>
-            <height>186</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
@@ -384,8 +384,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>287</width>
-            <height>186</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -476,8 +476,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>287</width>
-            <height>186</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_7">

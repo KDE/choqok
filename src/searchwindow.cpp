@@ -95,11 +95,11 @@ void SearchWindow::init(int type, const QString & query)
         connect( ui.btnRefresh, SIGNAL( clicked( bool ) ), this, SLOT( refresh() ) );
         connect( ui.btnBack, SIGNAL( clicked( bool ) ), this, SLOT( goBack() ) );
         connect( ui.btnForward, SIGNAL( clicked( bool ) ), this, SLOT( goForward() ) );
-
+        connect( ui.comboSearchType, SIGNAL(currentIndexChanged(int)), SLOT(slotSearchTypeChanged(int)));
         showNavigation( false );
-
-        show();
         resetSearchArea(type,query);
+        ui.txtSearch->setFocus(Qt::OtherFocusReason);
+        show();
     }
     else
     {
@@ -425,3 +425,10 @@ void SearchWindow::updateNumPages()
     lastValidPage = 1;
     updateSearchResults();
 }
+
+void SearchWindow::slotSearchTypeChanged(int)
+{
+    ui.txtSearch->setFocus(Qt::OtherFocusReason);
+}
+
+#include "searchwindow.moc"

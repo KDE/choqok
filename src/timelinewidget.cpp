@@ -783,8 +783,10 @@ void TimeLineWidget::attachMedia()
     if( !mediaPath.isEmpty() ) {
         mediaToAttach.setPath(mediaPath);
         lblMediaName->setText( mediaToAttach.fileName() );
+        lblMediaName->setToolTip(mediaPath);
         attachMediaFrame->show();
     }
+    txtNewStatus->setFocus(Qt::OtherFocusReason);
 }
 
 void TimeLineWidget::clearMedia()

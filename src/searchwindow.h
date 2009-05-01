@@ -86,6 +86,7 @@ private slots:
     void goBack();
     void pageChange();
     void showNavigation( bool showNav );
+    void slotSearchTypeChanged(int);
 
 protected:
     QList<StatusWidget*> listResults;
