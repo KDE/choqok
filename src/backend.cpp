@@ -94,15 +94,15 @@ void Backend::twitPicCreatePost(const KUrl &picUrl, const QString &message)
     KIO::TransferJob *picJob = KIO::get( picUrl, KIO::Reload, KIO::HideProgressInfo);
     if( !KIO::NetAccess::synchronousRun(picJob, 0, &picData) ){
         kError()<<"Job error: " << picJob->errorString();
-        tmp = i18n( "Uploading media failed : Cannot read the media file,\
-        please check if it exists. path: %1", picUrl.prettyUrl() );
+        tmp = i18n( "Uploading media failed: cannot read the media file. "
+        "Please check whether it exists. Path: %1", picUrl.prettyUrl() );
         kDebug() << "Emitting sigError...";
         emit sigError( tmp );
     }
     if ( picData.count() == 0 ) {
         kError() << "Cannot read the media file, please check if it exists.";
-        tmp = i18n( "Uploading media failed : Cannot read the media file,\
-        please check if it exists. path: %1", picUrl.prettyUrl() );
+        tmp = i18n( "Uploading media failed: cannot read the media file. "
+        "Please check whether it exists. Path: %1", picUrl.prettyUrl() );
         kDebug() << "Emitting sigError...";
         Q_EMIT sigError( tmp );
         return;
