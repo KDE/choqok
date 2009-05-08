@@ -327,9 +327,10 @@ QString StatusWidget::generateSign()
         if( !mCurrentStatus.source.isNull() )
             sign += " - " + mCurrentStatus.source;
         if ( mCurrentStatus.replyToStatusId > 0 ) {
-            QString link = mCurrentAccount->statusUrl( mCurrentStatus.replyToStatusId, mCurrentStatus.user.screenName );
+            QString link = mCurrentAccount->statusUrl( mCurrentStatus.replyToStatusId,
+                                                       mCurrentStatus.replyToUserScreenName );
             sign += " - <a href='status://" + QString::number( mCurrentStatus.replyToStatusId ) + "'>" +
-            i18n("in reply to")+ "</a> <a href=\"" + link + "\"><img src=\"icon://web\" /></a>";
+            i18n("in reply to")+ "</a>&nbsp;<a href=\"" + link + "\"><img src=\"icon://web\" /></a>";
         }
     }
     return sign;
