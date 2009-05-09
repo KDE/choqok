@@ -51,7 +51,7 @@
             <default>QSize(280,140)</default>
         </entry>
         <entry name="nowListening" type="String">
-            <default>Currently listening to %title% by %artist% on %album%.</default>
+            <default>Currently listening to %title% by %artist% on %album% [Amarok].</default>
         </entry>
     </group>
     <group name="Appearances">
