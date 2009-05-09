@@ -50,6 +50,9 @@
         <entry name="quickTweetSize" type="Size">
             <default>QSize(280,140)</default>
         </entry>
+        <entry name="nowListening" type="String">
+            <default>Currently listening to %title% by %artist% on %album%.</default>
+        </entry>
     </group>
     <group name="Appearances">
         <entry name="isSmiliesEnabled" type="Bool">

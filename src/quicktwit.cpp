@@ -174,4 +174,9 @@ void QuickTwit::checkAll( bool isAll )
     ui.comboAccounts->setEnabled( !isAll );
 }
 
+void QuickTwit::setText( const QString &text )
+{
+    this->txtStatus->setText(text);
+}
+
 #include "quicktwit.moc"

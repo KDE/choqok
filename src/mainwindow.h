@@ -100,8 +100,9 @@ private slots:
     void removeAccountTimeLine( const QString &alias );
     void setTimeLineUpdatesEnabled( bool isEnabled );
     void setNotificationsEnabled( bool isEnabled );
-    void postQuickTwit();
+    void postQuickTwit( const QString &text=QString());
     void toggleMainWindow();
+    void postNowListening();
 
 private:
     KTabWidget *mainWidget;

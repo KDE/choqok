@@ -50,6 +50,7 @@ public slots:
     void sltAccepted();
     void addAccount( const Account &account );
     void removeAccount( const QString &alias );
+    void setText( const QString &text );
 
 protected:
     void loadAccounts();

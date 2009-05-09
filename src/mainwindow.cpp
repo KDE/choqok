@@ -47,7 +47,8 @@
 #include <QTimer>
 #include <QMenu>
 #include <KNotification>
-
+#include <QDBusInterface>
+#include <QDBusReply>
 
 MainWindow::MainWindow()
     : KXmlGuiWindow()
@@ -122,6 +123,13 @@ void MainWindow::setupActions()
     newTwit->setGlobalShortcut( quickTwitGlobalShortcut );
     connect( newTwit, SIGNAL( triggered(bool) ), this, SLOT( postQuickTwit() ) );
 
+    KAction *nowListening = new KAction( KIcon("amarok"), i18n("Post Now Listening"), this);
+    actionCollection()->addAction(QLatin1String("choqok_now_listening"), nowListening);
+    nowListening->setShortcut(KShortcut( Qt::CTRL | Qt::Key_L ));
+    nowListening->setGlobalShortcutAllowed(true);
+    nowListening->setGlobalShortcut( KShortcut(Qt::CTRL | Qt::META | Qt::Key_L) );
+    connect(nowListening, SIGNAL(triggered(bool)), SLOT(postNowListening()));
+
     KAction *newSearch = new KAction( KIcon( "edit-find" ), i18n( "Search" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_search" ), newSearch );
     newSearch->setShortcut( KShortcut( Qt::CTRL | Qt::Key_F ) );
@@ -165,7 +173,7 @@ void MainWindow::setupActions()
 
     ///SysTray Actions:
     sysIcon->contextMenu()->addAction( newTwit );
-//     sysIcon->contextMenu()->addAction( newSearch );
+    sysIcon->contextMenu()->addAction( nowListening );
 
     sysIcon->contextMenu()->addAction( actUpdate );
     sysIcon->contextMenu()->addSeparator();
@@ -187,15 +195,31 @@ void MainWindow::setupQuickTweet()
     connect( quickWidget, SIGNAL( sigStatusUpdated( bool ) ), sysIcon, SLOT( slotStatusUpdated( bool ) ) );
 }
 
-void MainWindow::postQuickTwit()
+void MainWindow::postQuickTwit(const QString &text)
 {
     if(!quickWidget)
         setupQuickTweet();
     if ( quickWidget->isVisible() ) {
         quickWidget->hide();
     } else {
+        quickWidget->setText(text);
         quickWidget->showFocusedOnNewStatusField();
     }
+}
+
+void MainWindow::postNowListening()
+{
+    QDBusInterface remoteApp( "org.kde.amarok", "/Player", "org.freedesktop.MediaPlayer" );
+    QDBusReply< QMap<QString, QVariant> > reply = remoteApp.call( "GetMetadata" );
+    QVariantMap trackInfo = reply.value();
+    QString text = Settings::nowListening();
+    text.replace("%track%", trackInfo["tracknumber"].toString());
+    text.replace("%title%", trackInfo["title"].toString());
+    text.replace("%album%", trackInfo["album"].toString());
+    text.replace("%artist%", trackInfo["artist"].toString());
+    text.replace("%year%", trackInfo["year"].toString());
+    text.replace("%genre%", trackInfo["genre"].toString());
+    postQuickTwit(text);
 }
 
 void MainWindow::systemNotify( const QString &title, const QString &message, const QString &iconUrl )
