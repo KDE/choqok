@@ -26,7 +26,7 @@
 #include "mediamanager.h"
 #include "backend.h"
 #include <KNotification>
-#include <QProcess>
+#include <KProcess>
 
 #include "mainwindow.h"
 
@@ -80,61 +80,73 @@ StatusWidget::StatusWidget( const Account *account, QWidget *parent )
 
 void StatusWidget::checkAnchor(const QUrl & url)
 {
-  QString scheme = url.scheme();
-  Account::Service s = mCurrentAccount->serviceType();
-  int type = 0;
-  if( scheme == "group" && ( s == Account::Identica || s == Account::Laconica ) ) {
-    type = IdenticaSearch::ReferenceGroup;
-  } else if(scheme == "tag") {
-    switch(s) {
-    case Account::Identica:
-    case Account::Laconica:
-      type = IdenticaSearch::ReferenceHashtag;
-    break;
-    case Account::Twitter:
-      type = TwitterSearch::ReferenceHashtag;
+    QString scheme = url.scheme();
+    Account::Service s = mCurrentAccount->serviceType();
+    int type = 0;
+    if( scheme == "group" && ( s == Account::Identica || s == Account::Laconica ) ) {
+        type = IdenticaSearch::ReferenceGroup;
+    } else if(scheme == "tag") {
+        switch(s) {
+            case Account::Identica:
+            case Account::Laconica:
+                type = IdenticaSearch::ReferenceHashtag;
+                break;
+            case Account::Twitter:
+                type = TwitterSearch::ReferenceHashtag;
+                break;
+        }
+    } else if(scheme == "user") {
+        KMenu menu;
+        KAction * from = new KAction(KIcon("edit-find-user"),i18n("From %1",url.host()),&menu);
+        KAction * to = new KAction(KIcon("meeting-attending"),i18n("Replies to %1",url.host()),&menu);
+        menu.addAction(from);
+        menu.addAction(to);
+        QAction * ret;
+        KAction *cont;
+        switch(s) {
+            case Account::Identica:
+            case Account::Laconica:
+                from->setData(IdenticaSearch::FromUser);
+                to->setData(IdenticaSearch::ToUser);
+                break;
+            case Account::Twitter:
+                cont = new KAction(KIcon("user-properties"),i18n("Including %1",url.host()),&menu);
+                menu.addAction(cont);
+                from->setData(TwitterSearch::FromUser);
+                to->setData(TwitterSearch::ToUser);
+                cont->setData(TwitterSearch::ReferenceUser);
+                break;
+        }
+        ret = menu.exec(QCursor::pos());
+        if(ret == 0) return;
+        type = ret->data().toInt();
+    } else if( scheme == "status" ) {
+        if(isBaseStatusShowed) {
+            updateUi();
+            isBaseStatusShowed = false;
+            return;
+        }
+        Backend *b = new Backend(new Account(*mCurrentAccount), this);
+        connect( b, SIGNAL( singleStatusReceived( Status ) ),
+                this, SLOT( baseStatusReceived(Status) ) );
+        b->requestSingleStatus( url.host().toInt() );
+        return;
+    } else {
+        if( Settings::useCustomBrowser() ) {
+            QStringList args = Settings::customBrowser().split(' ');
+            args.append(url.toString());
+            if( KProcess::execute( args ) == -2 ) {
+                KNotification *notif = new KNotification( "notify", this );
+                notif->setText( i18n("Could not launch custom browser.\nUsing KDE default browser.") );
+                notif->sendEvent();
+                KToolInvocation::invokeBrowser(url.toString());
+            }
+        } else {
+                KToolInvocation::invokeBrowser(url.toString());
+        }
+        return;
     }
-  } else if(scheme == "user") {
-    KMenu menu;
-//     menu.addTitle(i18n("Search"));
-    KAction * from = new KAction(KIcon("edit-find-user"),i18n("from %1",url.host()),&menu);
-    KAction * to = new KAction(KIcon("meeting-attending"),i18n("replies to %1",url.host()),&menu);
-    menu.addAction(from);
-    menu.addAction(to);
-    QAction * ret;
-    KAction *cont;
-    switch(s) {
-    case Account::Identica:
-    case Account::Laconica:
-      from->setData(IdenticaSearch::FromUser);
-      to->setData(IdenticaSearch::ToUser);
-    break;
-    case Account::Twitter:
-      cont = new KAction(KIcon("user-properties"),i18n("including %1",url.host()),&menu);
-      menu.addAction(cont);
-      from->setData(TwitterSearch::FromUser);
-      to->setData(TwitterSearch::ToUser);
-      cont->setData(TwitterSearch::ReferenceUser);
-    }
-    ret = menu.exec(QCursor::pos());
-    if(ret == 0) return;
-    type = ret->data().toInt();
-  } else if( scheme == "status" ) {
-      if(isBaseStatusShowed) {
-          updateUi();
-          isBaseStatusShowed = false;
-          return;
-      }
-      Backend *b = new Backend(new Account(*mCurrentAccount), this);
-      connect( b, SIGNAL( singleStatusReceived( Status ) ),
-               this, SLOT( baseStatusReceived(Status) ) );
-      b->requestSingleStatus( url.host().toInt() );
-      return;
-  } else {
-    KToolInvocation::invokeBrowser(url.toString());
-    return;
-  }
-  emit sigSearch(type,url.host());
+    emit sigSearch(type,url.host());
 }
 
 void StatusWidget::setupUi()
@@ -448,7 +460,7 @@ void StatusWidget::setUnread( Notify notifyType )
             QString libnotifyCmd = QString( "notify-send -t " ) +
             QString::number( Settings::notifyInterval() * 1000 ) + iconArg + QString( " -u low \"" ) +
             name + QString( "\" \"" ) + msg + QString( "\"" );
-            QProcess::execute( libnotifyCmd );
+            KProcess::execute( libnotifyCmd );
         }
     }
 }

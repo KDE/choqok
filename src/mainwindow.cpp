@@ -224,15 +224,7 @@ void MainWindow::postNowListening()
 
 void MainWindow::systemNotify( const QString &title, const QString &message, const QString &iconUrl )
 {
-    if ( Settings::notifyType() == SettingsBase::KNotify ) {//KNotify
-        KNotification *notif = new KNotification( "notify", this );
-        notif->setText( message );
-        //         notify->setPixmap(mainWin-);
-        notif->setFlags( KNotification::RaiseWidgetOnActivation | KNotification::Persistent );
-        notif->sendEvent();
-        QTimer::singleShot( Settings::notifyInterval()*1000, notif, SLOT( close() ) );
-
-    } else if ( Settings::notifyType() == SettingsBase::LibNotify ) {//Libnotify!
+    if ( Settings::notifyType() == SettingsBase::LibNotify ) {//Libnotify!
         QString msg = message;
         msg = msg.replace( "<br/>", "\n" );
         QString libnotifyCmd = QString( "notify-send -t " ) +
@@ -240,6 +232,13 @@ void MainWindow::systemNotify( const QString &title, const QString &message, con
         QString( " -u low -i " + iconUrl + " \"" ) + title +
         QString( "\" \"" ) + msg + QString( "\"" );
         QProcess::execute( libnotifyCmd );
+    } else {
+        KNotification *notif = new KNotification( "notify", this );
+        notif->setText( message );
+        //         notify->setPixmap(mainWin-);
+        notif->setFlags( KNotification::RaiseWidgetOnActivation | KNotification::Persistent );
+        notif->sendEvent();
+        QTimer::singleShot( Settings::notifyInterval()*1000, notif, SLOT( close() ) );
     }
 }
 
