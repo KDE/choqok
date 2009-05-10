@@ -135,7 +135,7 @@ void StatusWidget::checkAnchor(const QUrl & url)
         if( Settings::useCustomBrowser() ) {
             QStringList args = Settings::customBrowser().split(' ');
             args.append(url.toString());
-            if( KProcess::execute( args ) == -2 ) {
+            if( KProcess::startDetached( args ) == 0 ) {
                 KNotification *notif = new KNotification( "notify", this );
                 notif->setText( i18n("Could not launch custom browser.\nUsing KDE default browser.") );
                 notif->sendEvent();

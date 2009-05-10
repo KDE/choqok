@@ -236,9 +236,9 @@ void MainWindow::systemNotify( const QString &title, const QString &message, con
         KNotification *notif = new KNotification( "notify", this );
         notif->setText( message );
         //         notify->setPixmap(mainWin-);
-        notif->setFlags( KNotification::RaiseWidgetOnActivation | KNotification::Persistent );
+//         notif->setFlags( KNotification::RaiseWidgetOnActivation | KNotification::Persistent );
         notif->sendEvent();
-        QTimer::singleShot( Settings::notifyInterval()*1000, notif, SLOT( close() ) );
+//         QTimer::singleShot( Settings::notifyInterval()*1000, notif, SLOT( close() ) );
     }
 }
 
