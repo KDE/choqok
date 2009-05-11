@@ -35,6 +35,7 @@
 #include <KDE/KNotification>
 #include <KFileDialog>
 #include <KUrl>
+#include <QKeyEvent>
 
 TimeLineWidget::TimeLineWidget( const Account &userAccount, QWidget* parent ) :
         QWidget( parent )
@@ -794,6 +795,15 @@ void TimeLineWidget::clearMedia()
     lblMediaName->clear();
     mediaToAttach.clear();
     attachMediaFrame->hide();
+}
+
+void TimeLineWidget::keyPressEvent( QKeyEvent *event )
+{
+    if(event->key() == Qt::Key_Escape){
+        twitter->abortPostNewStatus();
+        txtNewStatus->setEnabled(true);
+        txtNewStatus->setFocus();
+    }
 }
 
 #include "timelinewidget.moc"

@@ -84,6 +84,7 @@ void Backend::postNewStatus( const QString & statusMessage, uint replyToStatusId
     connect( job, SIGNAL(data( KIO::Job *, const QByteArray &)),
              this, SLOT(slotPostNewStatusData(KIO::Job*, const QByteArray&)));
     job->start();
+    jobList<< job;
 }
 
 void Backend::twitPicCreatePost(const KUrl &picUrl, const QString &message)
@@ -154,6 +155,7 @@ void Backend::twitPicCreatePost(const KUrl &picUrl, const QString &message)
     connect( job, SIGNAL(data( KIO::Job *, const QByteArray &)),
              this, SLOT(slotPostNewStatusData(KIO::Job*, const QByteArray&)));
     job->start();
+    jobList<<job;
 }
 
 void Backend::sendDMessage( const QString & screenName, const QString & message )
@@ -179,24 +181,12 @@ void Backend::sendDMessage( const QString & screenName, const QString & message 
     connect( job, SIGNAL(data( KIO::Job *, const QByteArray &)),
              this, SLOT(slotSendDMessageData(KIO::Job*, const QByteArray&)));
     job->start();
-}
-
-void Backend::login()
-{
-
-}
-
-void Backend::logout()
-{
+    jobList<<job;
 }
 
 void Backend::requestTimeLine( uint latestStatusId, TimeLineType type, int page )
 {
     kDebug();
-//     if( requestList.contains( type ) ) {
-//         return;
-//     }
-//     requestList.append( type );
     KUrl url;
     if ( type == HomeTimeLine )
         url.setUrl( mCurrentAccount->apiPath() + "/statuses/friends_timeline.xml" );
@@ -403,8 +393,11 @@ Status Backend::readStatusFromXml( const QByteArray & buffer )
 
 void Backend::abortPostNewStatus()
 {
-    kDebug() << "Not implemented yet!";
-//  statusHttp.abort();
+    kDebug();
+    foreach(KJob *job, jobList){
+        job->kill();
+        jobList.removeAll(job);
+    }
 }
 
 QString& Backend::latestErrorString()
@@ -433,6 +426,7 @@ void Backend::requestFavorited( uint statusId, bool isFavorite )
 
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFavoritedFinished( KJob* ) ) );
     job->start();
+    jobList<<job;
 }
 
 void Backend::requestDestroy( uint statusId )
@@ -453,6 +447,7 @@ void Backend::requestDestroy( uint statusId )
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestDestroyFinished( KJob* ) ) );
 
     job->start();
+    jobList<<job;
 }
 
 void Backend::requestDestroyDMessage( uint statusId )
@@ -473,11 +468,13 @@ void Backend::requestDestroyDMessage( uint statusId )
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestDestroyFinished( KJob* ) ) );
 
     job->start();
+    jobList<<job;
 }
 
 void Backend::slotPostNewStatusFinished( KJob * job )
 {
     kDebug();
+    jobList.removeOne(job);
     if ( job->error() ) {
         kDebug() << "Error: " << job->errorString();
         mLatestErrorString = job->errorString();
@@ -501,6 +498,7 @@ void Backend::slotPostNewStatusFinished( KJob * job )
 void Backend::slotTwitPicCreatePost( KJob *job )
 {
     kDebug();
+    jobList.removeOne(job);
     if ( job->error() ) {
         kDebug() << "Error: " << job->errorString();
         mLatestErrorString = job->errorString();
@@ -595,6 +593,7 @@ void Backend::slotRequestFavoritedFinished( KJob * job )
         kDebug() << "Job is null pointer.";
         return;
     }
+    jobList.removeOne(job);
     if ( job->error() ) {
         kDebug() << "Error: " << job->errorString();
         mLatestErrorString = job->errorString();
@@ -618,6 +617,7 @@ void Backend::slotRequestDestroyFinished( KJob * job )
         kDebug() << "Job is null pointer.";
         return;
     }
+    jobList.removeOne(job);
     if ( job->error() ) {
         kDebug() << "Error: " << job->errorString();
         mLatestErrorString = job->errorString();
@@ -810,14 +810,6 @@ void Backend::requestCurrentUser()
 void Backend::requestDMessages( uint latestStatusId, DMessageType type, int page )
 {
     kDebug();
-//     TimeLineType t;
-//     if( type == Inbox )
-//         t = InboxTimeLine;
-//     else if( type == Outbox )
-//         t = OutboxTimeLine;
-//     if( requestList.contains( t ) )
-//         return;
-//     requestList.append( t );
     KUrl url;
     if ( type == Inbox )
         url.setUrl( mCurrentAccount->apiPath() + "/direct_messages.xml" );
@@ -992,6 +984,7 @@ QList< Status > * Backend::readDMessagesFromXml( const QByteArray & buffer )
 void Backend::slotSendDMessageFinished( KJob *job )
 {
     kDebug();
+    jobList.removeOne(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->error() << " Text:" << job->errorString();
 //         kDebug()<<mSendDMessageBuffer.value(job);

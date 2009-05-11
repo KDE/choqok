@@ -84,7 +84,6 @@ protected slots:
 
     void error( const QString &errMsg );
 
-
 signals:
     void sigSetUnread( int unread );
     void notify( const QString &message, bool isPermanent = false );
@@ -96,6 +95,7 @@ signals:
 
 protected:
     void checkUnreadStatuses( int numOfNewStatusesReciened );
+    void keyPressEvent( QKeyEvent *event );
 
 private slots:
     void initObjects();

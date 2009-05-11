@@ -45,9 +45,6 @@ public:
 
     ~Backend();
 
-    void login();
-    void logout();
-
     void verifyCredential();
 
     QDateTime dateFromString( const QString &date );
@@ -126,7 +123,7 @@ private:
     QStringList friendsList;
     short friendsPage;
     QString mScheme;
-//     QList< TimeLineType > requestList;
+    QList<KJob*> jobList;
 };
 
 #endif
