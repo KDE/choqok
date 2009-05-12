@@ -669,8 +669,7 @@ void Backend::verifyCredential()
     kDebug();
     KUrl url;
     url.setUrl( mCurrentAccount->apiPath() + "/account/verify_credentials.xml" );
-    url.setUser( mCurrentAccount->username() );
-    url.setPass( mCurrentAccount->password() );
+    setDefaultArgs(url);
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {

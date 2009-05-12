@@ -83,6 +83,9 @@
         <entry name="searchWindowSize" type="Size">
             <default>QSize(300,500)</default>
         </entry>
+        <entry name="configDialogSize" type="Size">
+            <default>QSize(500,400)</default>
+        </entry>
         <entry name="searchWindowPosition" type="Point">
             <default>QPoint(0, 0)</default>
         </entry>

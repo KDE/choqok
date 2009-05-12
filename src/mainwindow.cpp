@@ -274,6 +274,7 @@ void MainWindow::optionsPreferences()
     connect( dialog, SIGNAL( settingsChanged( QString ) ), this, SLOT( settingsChanged() ) );
 
     dialog->setAttribute( Qt::WA_DeleteOnClose );
+    dialog->resize(Settings::configDialogSize());
     dialog->show();
 }
 
@@ -311,6 +312,11 @@ least one account on <a href='http://identi.ca'>Identi.ca</a> or \
             dia->setAttribute( Qt::WA_DeleteOnClose );
             dia->show();
         }
+    }
+
+    QWidget *w = qobject_cast< QWidget* >(sender());
+    if( w ) {
+        Settings::setConfigDialogSize(w->size());
     }
 
     if ( Settings::isCustomUi() ) {
@@ -484,7 +490,7 @@ void MainWindow::setTimeLineUpdatesEnabled( bool isEnabled )
         mPrevUpdateInterval = Settings::updateInterval();
         timelineTimer->stop();
 //         kDebug()<<"timelineTimer stoped";
-        Settings::setUpdateInterval( 1 );
+        Settings::setUpdateInterval( 0 );
     }
 }
 
