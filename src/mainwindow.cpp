@@ -379,6 +379,7 @@ void MainWindow::disableApp()
     actionCollection()->action( "choqok_new_twit" )->setEnabled( false );
     actionCollection()->action( "choqok_search" )->setEnabled( false );
     actionCollection()->action( "choqok_mark_read" )->setEnabled( false );
+    actionCollection()->action( "choqok_now_listening" )->setEnabled( false );
 }
 
 void MainWindow::enableApp()
@@ -392,6 +393,7 @@ void MainWindow::enableApp()
     actionCollection()->action( "choqok_new_twit" )->setEnabled( true );
     actionCollection()->action( "choqok_search" )->setEnabled( true );
     actionCollection()->action( "choqok_mark_read" )->setEnabled( true );
+    actionCollection()->action( "choqok_now_listening" )->setEnabled( true );
 }
 
 void MainWindow::addAccountTimeLine( const Account & account, bool isStartup )

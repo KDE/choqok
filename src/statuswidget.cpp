@@ -269,6 +269,7 @@ void StatusWidget::setDirection()
         txt.remove(QRegExp("(^)#([^\\s\\W]+)"));
     if(txt.startsWith('!'))
         txt.remove(QRegExp("(^)!([^\\s\\W]+)"));
+    txt.prepend(' ');
     if( txt.isRightToLeft() ) {
         QTextOption options(document()->defaultTextOption());
         options.setTextDirection( Qt::RightToLeft );
