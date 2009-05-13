@@ -202,7 +202,8 @@ void MainWindow::postQuickTwit(const QString &text)
     if ( quickWidget->isVisible() ) {
         quickWidget->hide();
     } else {
-        quickWidget->setText(text);
+        if( !text.isEmpty() )
+            quickWidget->setText(text);
         quickWidget->showFocusedOnNewStatusField();
     }
 }
