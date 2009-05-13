@@ -85,6 +85,7 @@ protected slots:
     void twitpicImageFetched( const QString &imageUrl, const QPixmap & pixmap );
     void twitpicImageFailed( const QString &imageUrl, const QString &errMsg );
 
+    void showUserInformation(const User& user);
 protected:
     void resizeEvent ( QResizeEvent * event );
     void enterEvent ( QEvent * event );

@@ -38,6 +38,7 @@
 #include "twittersearch.h"
 #include <KAction>
 #include <KTemporaryFile>
+#include "userinfowidget.h"
 
 static const int _15SECS = 15000;
 static const int _MINUTE = 60000;
@@ -97,8 +98,11 @@ void StatusWidget::checkAnchor(const QUrl & url)
         }
     } else if(scheme == "user") {
         KMenu menu;
-        KAction * from = new KAction(KIcon("edit-find-user"),i18n("From %1",url.host()),&menu);
-        KAction * to = new KAction(KIcon("meeting-attending"),i18n("Replies to %1",url.host()),&menu);
+        KAction * info = new KAction( KIcon("user-identity"), i18n("Who is %1", url.host()), &menu );
+        KAction * from = new KAction(KIcon("edit-find-user"), i18n("From %1",url.host()),&menu);
+        KAction * to = new KAction(KIcon("meeting-attending"), i18n("Replies to %1",url.host()),&menu);
+        if(url.host() == mCurrentStatus.user.screenName)
+            menu.addAction(info);
         menu.addAction(from);
         menu.addAction(to);
         QAction * ret;
@@ -119,6 +123,10 @@ void StatusWidget::checkAnchor(const QUrl & url)
         }
         ret = menu.exec(QCursor::pos());
         if(ret == 0) return;
+        if(ret == info) {
+            showUserInformation(mCurrentStatus.user);
+            return;
+        }
         type = ret->data().toInt();
     } else if( scheme == "status" ) {
         if(isBaseStatusShowed) {
@@ -579,6 +587,12 @@ void StatusWidget::twitpicImageFailed( const QString &imageUrl, const QString &e
         disconnect( MediaManager::self(), SIGNAL(fetchError( const QString&, const QString&)),
                 this, SLOT(twitpicImageFailed( const QString&, const QString&)) );
     }
+}
+
+void StatusWidget::showUserInformation(const User& user)
+{
+    UserInfoWidget *widget = new UserInfoWidget(user, this);
+    widget->show(QCursor::pos());
 }
 
 #include "statuswidget.moc"
