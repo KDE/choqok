@@ -33,6 +33,8 @@
 #include <KToolInvocation>
 #include "statuswidget.h"
 #include <QKeyEvent>
+#include <KApplication>
+#include <QDesktopWidget>
 
 UserInfoWidget::UserInfoWidget(const User& user, QWidget* parent)
     : KTextBrowser(parent), mUser(user)
@@ -55,6 +57,13 @@ void UserInfoWidget::keyPressEvent( QKeyEvent * event )
 
 void UserInfoWidget::show(QPoint pos)
 {
+    resize(270, 200);
+    int desktopHeight = KApplication::desktop()->height();
+    int desktopWidth = KApplication::desktop()->width();
+    if( (pos.x() + this->width()) > desktopWidth )
+        pos.setX(desktopWidth - width());
+    if( (pos.y() + this->height()) > desktopHeight )
+        pos.setY(desktopHeight - height());
     move(pos);
     QWidget::show();
 }

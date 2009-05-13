@@ -45,7 +45,7 @@ static const int _MINUTE = 60000;
 static const int _HOUR = 60*_MINUTE;
 
 const QString StatusWidget::baseText("<table width=\"100%\"><tr><td rowspan=\"2\"\
- width=\"48\">%2</td><td>%3</td></tr><tr><td style=\"font-size:small;\" align=\"right\">%4</td></tr></table>");
+ width=\"48\">%1</td><td><p>%2</p></td></tr><tr><td style=\"font-size:small;\" align=\"right\">%3</td></tr></table>");
 const QString StatusWidget::baseStyle("QFrame.StatusWidget {border: 1px solid rgb(150,150,150);\
 border-radius:5px;}\
 QFrame.StatusWidget[read=false] {color: %1; background-color: %2}\
