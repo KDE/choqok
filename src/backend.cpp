@@ -232,164 +232,240 @@ QDateTime Backend::dateFromString( const QString &date )
 //     return datetime.toLocalTime();
 }
 
-QList<Status> * Backend::readTimeLineFromXml( const QByteArray & buffer )
+///***********************************************
+Status Backend::readStatusFromXml ( const QByteArray &buffer )
 {
     kDebug();
     QDomDocument document;
-    QList<Status> *statusList = new QList<Status>;
-
-    document.setContent( buffer );
-
+    document.setContent ( buffer );
     QDomElement root = document.documentElement();
 
-    if ( root.tagName() != "statuses" ) {
-        QString err = i18n( "Data returned from server is corrupted." );
-        kDebug() << "there's no statuses tag in XML\t the XML is: \n" << buffer.data();
-        mLatestErrorString = err;
-        delete statusList;
-        return 0;
+    if ( !root.isNull() ) {
+        return readStatusFromDomElement ( root.toElement() );
+    } else {
+        Status post;
+        post.isDMessage = false;
+        post.isError = true;
+        return post;
     }
-    QDomNode node = root.firstChild();
-    QString timeStr;
-    while ( !node.isNull() ) {
-        if ( node.toElement().tagName() != "status" ) {
-            kDebug() << "there's no status tag in XML, maybe there is no new status!";
-            return statusList;
-        }
-        QDomNode node2 = node.firstChild();
-        Status status;
-        status.isDMessage = false;
-        while ( !node2.isNull() ) {
-            if ( node2.toElement().tagName() == "created_at" )
-                timeStr = node2.toElement().text();
-            else
-                if ( node2.toElement().tagName() == "text" )
-                    status.content = node2.toElement().text();
-                else
-                    if ( node2.toElement().tagName() == "id" )
-                        status.statusId = node2.toElement().text().toInt();
-                    else
-                        if ( node2.toElement().tagName() == "in_reply_to_status_id" )
-                            status.replyToStatusId = node2.toElement().text().toULongLong();
-                        else
-                            if ( node2.toElement().tagName() == "in_reply_to_user_id" )
-                                status.replyToUserId = node2.toElement().text().toULongLong();
-                            else
-                                if ( node2.toElement().tagName() == "in_reply_to_screen_name" )
-                                    status.replyToUserScreenName = node2.toElement().text();
-                                else
-                                    if ( node2.toElement().tagName() == "source" )
-                                        status.source = node2.toElement().text();
-                                    else
-                                        if ( node2.toElement().tagName() == "truncated" )
-                                            status.isTruncated = ( node2.toElement().text() == "true" ) ? true : false;
-                                        else
-                                            if ( node2.toElement().tagName() == "favorited" )
-                                                status.isFavorited = ( node2.toElement().text() == "true" ) ? true : false;
-                                            else
-                                                if ( node2.toElement().tagName() == "user" ) {
-                                                    QDomNode node3 = node2.firstChild();
-                                                    while ( !node3.isNull() ) {
-                                                        if ( node3.toElement().tagName() == "screen_name" ) {
-                                                            status.user.screenName = node3.toElement().text();
-                                                        } else
-                                                            if ( node3.toElement().tagName() == "profile_image_url" ) {
-                                                                status.user.profileImageUrl = node3.toElement().text();
-                                                            } else
-                                                                if ( node3.toElement().tagName() == "id" ) {
-                                                                    status.user.userId = node3.toElement().text().toUInt();
-                                                                } else
-                                                                    if ( node3.toElement().tagName() == "name" ) {
-                                                                        status.user.name = node3.toElement().text();
-                                                                    } else
-                                                                        if ( node3.toElement().tagName() == "description" ) {
-                                                                            status.user.description = node3.toElement().text();
-                                                                        }
-                                                        node3 = node3.nextSibling();
-                                                    }
-                                                }
-            node2 = node2.nextSibling();
-        }
-        node = node.nextSibling();
-        status.creationDateTime = dateFromString( timeStr );
-//               = QDateTime(time.date(), time.time(), Qt::UTC);
-        statusList->insert( 0, status );
-    }
-    return statusList;
 }
 
-Status Backend::readStatusFromXml( const QByteArray & buffer )
+Status Backend::readStatusFromDomElement ( const QDomElement &root )
 {
-    QDomDocument document;
-    Status status;
-    status.isDMessage = false;
-    status.isError = false ;
-    document.setContent( buffer );
-
-    QDomElement root = document.documentElement();
+    Status post;
+    post.isDMessage = false;
+    post.isError = false ;
+    post.user.friendsCount = 0;
 
     if ( root.tagName() != "status" ) {
         kDebug() << "there's no status tag in XML, Error!!";
-        status.isError = true ;
-        return status;
+        post.isError = true ;
+        return post;
     }
     QDomNode node2 = root.firstChild();
     QString timeStr;
+    QDomElement element;
     while ( !node2.isNull() ) {
-        if ( node2.toElement().tagName() == "created_at" )
-            timeStr = node2.toElement().text();
-        else
-            if ( node2.toElement().tagName() == "text" )
-                status.content = node2.toElement().text();
-            else
-                if ( node2.toElement().tagName() == "id" )
-                    status.statusId = node2.toElement().text().toInt();
-                else
-                    if ( node2.toElement().tagName() == "in_reply_to_status_id" )
-                        status.replyToStatusId = node2.toElement().text().toULongLong();
-                    else
-                        if ( node2.toElement().tagName() == "in_reply_to_user_id" )
-                            status.replyToUserId = node2.toElement().text().toULongLong();
-                        else
-                            if ( node2.toElement().tagName() == "in_reply_to_screen_name" )
-                                status.replyToUserScreenName = node2.toElement().text();
-                            else
-                                if ( node2.toElement().tagName() == "source" )
-                                    status.source = node2.toElement().text();
-                                else
-                                    if ( node2.toElement().tagName() == "truncated" )
-                                        status.isTruncated = ( node2.toElement().text() == "true" ) ? true : false;
-                                    else
-                                        if ( node2.toElement().tagName() == "favorited" )
-                                            status.isFavorited = ( node2.toElement().text() == "true" ) ? true : false;
-                                        else
-                                            if ( node2.toElement().tagName() == "user" ) {
-                                                QDomNode node3 = node2.firstChild();
-                                                while ( !node3.isNull() ) {
-                                                    if ( node3.toElement().tagName() == "screen_name" ) {
-                                                        status.user.screenName = node3.toElement().text();
-                                                    } else
-                                                        if ( node3.toElement().tagName() == "profile_image_url" ) {
-                                                            status.user.profileImageUrl = node3.toElement().text();
-                                                        } else
-                                                            if ( node3.toElement().tagName() == "id" ) {
-                                                                status.user.userId = node3.toElement().text().toUInt();
-                                                            } else
-                                                                if ( node3.toElement().tagName() == "name" ) {
-                                                                    status.user.name = node3.toElement().text();
-                                                                } else
-                                                                    if ( node3.toElement().tagName() == QString( "description" ) ) {
-                                                                        status.user.description = node3.toElement().text();
-                                                                    }
-                                                    node3 = node3.nextSibling();
-                                                }
-                                            }
+        element = node2.toElement();
+        if ( element.tagName() == "created_at" )
+            timeStr = element.text();
+        else if ( element.tagName() == "text" )
+            post.content = element.text();
+        else if ( element.tagName() == "id" )
+            post.statusId = element.text().toInt();
+        else if ( element.tagName() == "in_reply_to_status_id" )
+            post.replyToStatusId = element.text().toULongLong();
+        else if ( element.tagName() == "in_reply_to_user_id" )
+            post.replyToUserId = element.text().toULongLong();
+        else if ( element.tagName() == "in_reply_to_screen_name" )
+            post.replyToUserScreenName = element.text();
+        else if ( element.tagName() == "source" )
+            post.source = element.text();
+        else if ( element.tagName() == "favorited" )
+            post.isFavorited = ( element.text() == "true" ) ? true : false;
+        else if ( element.tagName() == "user" ) {
+            QDomNode node3 = node2.firstChild();
+            QDomElement subElement;
+            while ( !node3.isNull() ) {
+                subElement = node3.toElement();
+                if ( subElement.tagName() == "screen_name" ) {
+                    post.user.screenName = subElement.text();
+                } else if ( subElement.tagName() == "profile_image_url" ) {
+                    post.user.profileImageUrl = subElement.text();
+                } else if ( subElement.tagName() == "id" ) {
+                    post.user.userId = subElement.text().toUInt();
+                } else if ( subElement.tagName() == "name" ) {
+                    post.user.name = subElement.text();
+                } else if ( subElement.tagName() == QString ( "description" ) ) {
+                    post.user.description = subElement.text();
+                } else if ( subElement.tagName() == "location" ) {
+                    post.user.location = subElement.text();
+                } else if (subElement.tagName() == "url") {
+                    post.user.homePageUrl = subElement.text();
+                } else if (subElement.tagName() == "followers_count") {
+                    post.user.followersCount = subElement.text().toInt();
+                } else if (subElement.tagName() == "friends_count") {
+                    post.user.friendsCount = subElement.text().toInt();
+                }
+                node3 = node3.nextSibling();
+            }
+        }
         node2 = node2.nextSibling();
     }
-    status.creationDateTime = dateFromString( timeStr );
+    post.creationDateTime = dateFromString ( timeStr );
 
-    return status;
+    return post;
 }
+
+QList<Status> Backend::readTimelineFromXml ( const QByteArray &buffer )
+{
+    kDebug();
+    QDomDocument document;
+    QList<Status> postList;
+    document.setContent ( buffer );
+    QDomElement root = document.documentElement();
+
+    if ( root.tagName() != "statuses" ) {
+        kDebug() << "there's no statuses tag in XML\t the XML is: \n" << buffer.data();
+        return postList;
+    }
+    QDomNode node = root.firstChild();
+    while ( !node.isNull() ) {
+        postList.prepend( readStatusFromDomElement ( node.toElement() ) );
+        node = node.nextSibling();
+    }
+    return postList;
+}
+
+Status Backend::readDMessageFromXml ( const QByteArray &buffer )
+{
+    kDebug();
+    QDomDocument document;
+    document.setContent ( buffer );
+    QDomElement root = document.documentElement();
+
+    if ( !root.isNull() ) {
+        return readDMessageFromDomElement ( root.toElement() );
+    } else {
+        Status post;
+        post.isError = true;
+        post.isDMessage = true;
+        return post;
+    }
+}
+
+Status Backend::readDMessageFromDomElement ( const QDomElement &root )
+{
+    Status msg;
+    msg.isError = false ;
+    msg.isDMessage = true;
+    msg.user.friendsCount = 0;
+    if ( root.tagName() != "direct_message" ) {
+        kDebug() << "there's no status tag in XML, Error!!";
+        msg.isError = true ;
+        return msg;
+    }
+    QDomNode node2 = root.firstChild();
+//     uint senderId = 0, recipientId = 0;
+    User sender, recipient;
+    QString timeStr;//, senderScreenName, recipientScreenName, senderProfileImageUrl, senderName,
+//     senderDescription, recipientProfileImageUrl, recipientName, recipientDescription;
+    while ( !node2.isNull() ) {
+        QDomElement element = node2.toElement();
+        if ( element.tagName() == "created_at" )
+            timeStr = element.text();
+        else if ( element.tagName() == "text" )
+            msg.content = element.text();
+        else if ( element.tagName() == "id" )
+            msg.statusId = element.text().toInt();
+        else if ( element.tagName() == "sender_id" )
+            sender.userId = element.text().toULongLong();
+        else if ( element.tagName() == "recipient_id" )
+            recipient.userId = element.text().toULongLong();
+        else if ( element.tagName() == "sender_screen_name" )
+            sender.screenName = element.text();
+        else if ( element.tagName() == "recipient_screen_name" )
+            recipient.screenName = element.text();
+        else if ( element.tagName() == "sender" ) {
+            QDomNode node3 = node2.firstChild();
+            QDomElement subElement;
+            while ( !node3.isNull() ) {
+                subElement = node3.toElement();
+                if ( subElement.tagName() == "profile_image_url" ) {
+                    sender.profileImageUrl = subElement.text();
+                } else if ( subElement.tagName() == "name" ) {
+                    sender.name = subElement.text();
+                } else if ( subElement.tagName() == "description" ) {
+                    sender.description = subElement.text();
+                } else if ( subElement.tagName() == "location" ) {
+                    sender.location = subElement.text();
+                } else if (subElement.tagName() == "url") {
+                    sender.homePageUrl = subElement.text();
+                } else if (subElement.tagName() == "followers_count") {
+                    sender.followersCount = subElement.text().toInt();
+                } else if (subElement.tagName() == "friends_count") {
+                    sender.friendsCount = subElement.text().toInt();
+                }
+                node3 = node3.nextSibling();
+            }
+        } else
+            if ( element.tagName() == "recipient" ) {
+                QDomNode node3 = node2.firstChild();
+                QDomElement subElement;
+                while ( !node3.isNull() ) {
+                    subElement = node3.toElement();
+                    if ( subElement.tagName() == "profile_image_url" ) {
+                        recipient.profileImageUrl = subElement.text();
+                    } else if ( subElement.tagName() == "name" ) {
+                        recipient.name = subElement.text();
+                    } else if ( subElement.tagName() == "description" ) {
+                        recipient.description = subElement.text();
+                    } else if ( subElement.tagName() == "location" ) {
+                        recipient.location = subElement.text();
+                    } else if (subElement.tagName() == "url") {
+                        recipient.homePageUrl = subElement.text();
+                    } else if (subElement.tagName() == "followers_count") {
+                        recipient.followersCount = subElement.text().toInt();
+                    } else if (subElement.tagName() == "friends_count") {
+                        recipient.friendsCount = subElement.text().toInt();
+                    }
+                    node3 = node3.nextSibling();
+                }
+            }
+            node2 = node2.nextSibling();
+    }
+    msg.creationDateTime = dateFromString ( timeStr );
+    if ( sender.userId == mCurrentAccount->userId() ) {
+        msg.user = recipient;
+        msg.replyToUserId = recipient.userId;
+    } else {
+        msg.user = sender;
+        msg.replyToUserId = recipient.userId;
+    }
+    return msg;
+}
+
+QList<Status> Backend::readDMessagesFromXml ( const QByteArray &buffer )
+{
+    kDebug();
+    QDomDocument document;
+    QList<Status> postList;
+    document.setContent ( buffer );
+    QDomElement root = document.documentElement();
+    
+    if ( root.tagName() != "direct-messages" ) {
+        //         QString err = i18n( "Data returned from server is corrupted." );
+        kDebug() << "there's no statuses tag in XML\t the XML is: \n" << buffer.data();
+        return postList;
+    }
+    QDomNode node = root.firstChild();
+    while ( !node.isNull() ) {
+        postList.prepend( readDMessageFromDomElement ( node.toElement() ) );
+        node = node.nextSibling();
+    }
+    return postList;
+}
+///***********************************************
 
 void Backend::abortPostNewStatus()
 {
@@ -560,23 +636,14 @@ void Backend::slotRequestTimelineFinished( KJob *job )
         return;
     }
     KIO::StoredTransferJob *jj = qobject_cast<KIO::StoredTransferJob *>( job );
-    QList<Status> *ptr = readTimeLineFromXml( jj->data() );
+    QList<Status> ptr = readTimelineFromXml( jj->data() );
 //     QList<Status> *ptr = readTimeLineFromXml(mRequestTimelineBuffer[ job ].data());
     switch ( mRequestTimelineMap.value( job ) ) {
     case HomeTimeLine:
-        if ( ptr ) {
-            emit homeTimeLineReceived( *ptr );
-        } else {
-            kDebug() << "Null returned from Backend::readTimeLineFromXml()";
-        }
-//         requestList.removeAll(HomeTimeLine);
+        emit homeTimeLineReceived( ptr );
         break;
     case ReplyTimeLine:
-        if ( ptr )
-            emit replyTimeLineReceived( *ptr );
-        else
-            kDebug() << "Null returned from Backend::readTimeLineFromXml()";
-//         requestList.removeAll(ReplyTimeLine);
+        emit replyTimeLineReceived( ptr );
         break;
     default:
         kDebug() << "The returned job isn't in Map!";
@@ -850,134 +917,19 @@ void Backend::slotRequestDMessagesFinished( KJob *job )
         return;
     }
     KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob*>( job );
-    QList<Status> *ptr = readDMessagesFromXml( j->data() );
+    QList<Status> ptr = readDMessagesFromXml( j->data() );
     switch ( mRequestDMessagesMap.value( job ) ) {
     case Inbox:
-        if ( ptr ) {
-            emit directMessagesReceived( *ptr );
-        } else {
-            kDebug() << "Null returned from Backend::readDMessagesFromXml()";
-        }
-//         requestList.removeAll(InboxTimeLine);
+        emit directMessagesReceived( ptr );
         break;
     case Outbox:
-        if ( ptr )
-            emit outboxMessagesReceived( *ptr );
-        else
-            kDebug() << "Null returned from Backend::readDMessagesFromXml()";
-//         requestList.removeAll(OutboxTimeLine);
+        emit outboxMessagesReceived( ptr );
         break;
     default:
         kDebug() << "The returned job isn't in Map! or type is Unknown";
         break;
     };
     mRequestDMessagesMap.remove( job );
-}
-
-QList< Status > * Backend::readDMessagesFromXml( const QByteArray & buffer )
-{
-    kDebug();
-    QDomDocument document;
-    QList<Status> *statusList = new QList<Status>;
-
-    document.setContent( buffer );
-
-    QDomElement root = document.documentElement();
-
-    if ( root.tagName() != "direct-messages" ) {
-        QString err = i18n( "Data returned from server is corrupted." );
-        kDebug() << "there's no direct-messages tag in XML\t the XML is: \n" << buffer.data();
-        mLatestErrorString = err;
-        delete statusList;
-        return 0;
-    }
-    QDomNode node = root.firstChild();
-    QString timeStr;
-    while ( !node.isNull() ) {
-        if ( node.toElement().tagName() != "direct_message" ) {
-            kDebug() << "there's no direct_message tag in XML, maybe there is no new status!";
-            return statusList;
-        }
-        QDomNode node2 = node.firstChild();
-        Status msg;
-        msg.isDMessage = true;
-        uint senderId = 0, recipientId = 0;
-        QString senderScreenName, recipientScreenName, senderProfileImageUrl, senderName,
-        senderDescription, recipientProfileImageUrl, recipientName, recipientDescription;
-        while ( !node2.isNull() ) {
-            if ( node2.toElement().tagName() == "created_at" )
-                timeStr = node2.toElement().text();
-            else
-                if ( node2.toElement().tagName() == "text" )
-                    msg.content = node2.toElement().text();
-                else
-                    if ( node2.toElement().tagName() == "id" )
-                        msg.statusId = node2.toElement().text().toInt();
-                    else
-                        if ( node2.toElement().tagName() == "sender_id" )
-                            senderId = node2.toElement().text().toULongLong();
-                        else
-                            if ( node2.toElement().tagName() == "recipient_id" )
-                                recipientId = node2.toElement().text().toULongLong();
-                            else
-                                if ( node2.toElement().tagName() == "sender_screen_name" )
-                                    senderScreenName = node2.toElement().text();
-                                else
-                                    if ( node2.toElement().tagName() == "recipient_screen_name" )
-                                        recipientScreenName = node2.toElement().text();
-                                    else
-                                        if ( node2.toElement().tagName() == "sender" ) {
-                                            QDomNode node3 = node2.firstChild();
-                                            while ( !node3.isNull() ) {
-                                                if ( node3.toElement().tagName() == "profile_image_url" ) {
-                                                    senderProfileImageUrl = node3.toElement().text();
-                                                } else
-                                                    if ( node3.toElement().tagName() == "name" ) {
-                                                        senderName = node3.toElement().text();
-                                                    } else
-                                                        if ( node3.toElement().tagName() == "description" ) {
-                                                            senderDescription = node3.toElement().text();
-                                                        }
-                                                node3 = node3.nextSibling();
-                                            }
-                                        } else
-                                            if ( node2.toElement().tagName() == "recipient" ) {
-                                                QDomNode node3 = node2.firstChild();
-                                                while ( !node3.isNull() ) {
-                                                    if ( node3.toElement().tagName() == "profile_image_url" ) {
-                                                        recipientProfileImageUrl = node3.toElement().text();
-                                                    } else
-                                                        if ( node3.toElement().tagName() == "name" ) {
-                                                            recipientName = node3.toElement().text();
-                                                        } else
-                                                            if ( node3.toElement().tagName() == "description" ) {
-                                                                recipientDescription = node3.toElement().text();
-                                                            }
-                                                    node3 = node3.nextSibling();
-                                                }
-                                            }
-            node2 = node2.nextSibling();
-        }
-        node = node.nextSibling();
-        msg.creationDateTime = dateFromString( timeStr );
-        if ( senderId == mCurrentAccount->userId() ) {
-            msg.user.description = recipientDescription;
-            msg.user.screenName = recipientScreenName;
-            msg.user.profileImageUrl = recipientProfileImageUrl;
-            msg.user.name = recipientName;
-            msg.user.userId = recipientId;
-            msg.replyToUserId = recipientId;
-        } else {
-            msg.user.description = senderDescription;
-            msg.user.screenName = senderScreenName;
-            msg.user.profileImageUrl = senderProfileImageUrl;
-            msg.user.name = senderName;
-            msg.user.userId = senderId;
-            msg.replyToUserId = recipientId;
-        }
-        statusList->insert( 0, msg );
-    }
-    return statusList;
 }
 
 void Backend::slotSendDMessageFinished( KJob *job )
@@ -1000,100 +952,6 @@ void Backend::slotSendDMessageFinished( KJob *job )
             emit outboxMessagesReceived( newSt );
         }
     }
-}
-
-Status Backend::readDMessageFromXml( const QByteArray & buffer )
-{
-    QDomDocument document;
-    Status status;
-    status.isError = false ;
-    document.setContent( buffer );
-    Status msg;
-    msg.isDMessage = true;
-    QDomElement root = document.documentElement();
-    QDomNode node = root.firstChild();
-    QString timeStr;
-    while ( !node.isNull() ) {
-        if ( node.toElement().tagName() != "direct_message" ) {
-            kDebug() << "there's no direct_message tag in XML, probably an error occurred!";
-            status.isError = true;
-            return status;
-        }
-        QDomNode node2 = node.firstChild();
-        uint senderId = 0, recipientId = 0;
-        QString senderScreenName, recipientScreenName, senderProfileImageUrl, senderName,
-        senderDescription, recipientProfileImageUrl, recipientName, recipientDescription;
-        while ( !node2.isNull() ) {
-            if ( node2.toElement().tagName() == "created_at" )
-                timeStr = node2.toElement().text();
-            else
-                if ( node2.toElement().tagName() == "text" )
-                    msg.content = node2.toElement().text();
-                else
-                    if ( node2.toElement().tagName() == "id" )
-                        msg.statusId = node2.toElement().text().toInt();
-                    else
-                        if ( node2.toElement().tagName() == "sender_id" )
-                            senderId = node2.toElement().text().toULongLong();
-                        else
-                            if ( node2.toElement().tagName() == "recipient_id" )
-                                recipientId = node2.toElement().text().toULongLong();
-                            else
-                                if ( node2.toElement().tagName() == "sender_screen_name" )
-                                    senderScreenName = node2.toElement().text();
-                                else
-                                    if ( node2.toElement().tagName() == "recipient_screen_name" )
-                                        recipientScreenName = node2.toElement().text();
-                                    else
-                                        if ( node2.toElement().tagName() == "sender" ) {
-                                            QDomNode node3 = node2.firstChild();
-                                            while ( !node3.isNull() ) {
-                                                if ( node3.toElement().tagName() == "profile_image_url" ) {
-                                                    senderProfileImageUrl = node3.toElement().text();
-                                                } else
-                                                    if ( node3.toElement().tagName() == "name" ) {
-                                                        senderName = node3.toElement().text();
-                                                    } else
-                                                        if ( node3.toElement().tagName() == "description" ) {
-                                                            senderDescription = node3.toElement().text();
-                                                        }
-                                                node3 = node3.nextSibling();
-                                            }
-                                        } else
-                                            if ( node2.toElement().tagName() == "recipient" ) {
-                                                QDomNode node3 = node2.firstChild();
-                                                while ( !node3.isNull() ) {
-                                                    if ( node3.toElement().tagName() == "profile_image_url" ) {
-                                                        recipientProfileImageUrl = node3.toElement().text();
-                                                    } else
-                                                        if ( node3.toElement().tagName() == "name" ) {
-                                                            recipientName = node3.toElement().text();
-                                                        } else
-                                                            if ( node3.toElement().tagName() == "description" ) {
-                                                                recipientDescription = node3.toElement().text();
-                                                            }
-                                                    node3 = node3.nextSibling();
-                                                }
-                                            }
-            node2 = node2.nextSibling();
-        }
-        node = node.nextSibling();
-        msg.creationDateTime = dateFromString( timeStr );
-        if ( senderId == mCurrentAccount->userId() ) {
-            msg.user.description = recipientDescription;
-            msg.user.screenName = recipientScreenName;
-            msg.user.profileImageUrl = recipientProfileImageUrl;
-            msg.user.name = recipientName;
-            msg.user.userId = recipientId;
-        } else {
-            msg.user.description = senderDescription;
-            msg.user.screenName = senderScreenName;
-            msg.user.profileImageUrl = senderProfileImageUrl;
-            msg.user.name = senderName;
-            msg.user.userId = senderId;
-        }
-    }
-    return msg;
 }
 
 void Backend::listFollowersScreenName()

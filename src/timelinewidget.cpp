@@ -482,6 +482,10 @@ bool TimeLineWidget::saveStatuses( QString fileName, QList<StatusWidget*> list )
         grp.writeEntry( "profile_image_url", list[i]->currentStatus().user.profileImageUrl );
         grp.writeEntry( "description" , list[i]->currentStatus().user.description );
         grp.writeEntry( "isDMessage" , list[i]->currentStatus().isDMessage );
+        grp.writeEntry( "location" , list[i]->currentStatus().user.location );
+        grp.writeEntry( "url" , list[i]->currentStatus().user.homePageUrl );
+        grp.writeEntry( "followers_count" , list[i]->currentStatus().user.followersCount );
+        grp.writeEntry( "friends_count" , list[i]->currentStatus().user.friendsCount );
     }
 
     statusesBackup.sync();
@@ -517,6 +521,10 @@ QList< Status > TimeLineWidget::loadStatuses( QString fileName )
         st.user.profileImageUrl = grp.readEntry( "profile_image_url", QString() );
         st.user.description = grp.readEntry( "description" , QString() );
         st.isDMessage = grp.readEntry( "isDMessage" , false );
+        st.user.location = grp.readEntry("location", QString());
+        st.user.homePageUrl = grp.readEntry("url", QString());
+        st.user.followersCount = grp.readEntry("followers_count", 0);
+        st.user.friendsCount = grp.readEntry("friends_count", 0);
 
         //Sorting The new statuses:
         int j = 0;

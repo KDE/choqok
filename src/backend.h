@@ -29,6 +29,7 @@
 #include <KUrl>
 #include "datacontainers.h"
 #include "account.h"
+#include <QDomDocument>
 class KJob;
 namespace KIO {
     class Job;
@@ -100,10 +101,13 @@ protected slots:
 
 private:
     QStringList readUsersNameFromXml( const QByteArray &buffer );
-    QList<Status> * readTimeLineFromXml( const QByteArray &buffer );
-    QList<Status> * readDMessagesFromXml( const QByteArray &buffer );
-    Status readStatusFromXml( const QByteArray &buffer );
-    Status readDMessageFromXml( const QByteArray &buffer );
+    Status readStatusFromXml ( const QByteArray &buffer );
+    Status readStatusFromDomElement ( const QDomElement &root );
+    QList<Status> readTimelineFromXml ( const QByteArray &buffer );
+    Status readDMessageFromXml ( const QByteArray &buffer );
+    Status readDMessageFromDomElement ( const QDomElement &root );
+    QList<Status> readDMessagesFromXml ( const QByteArray &buffer );
+
     void setDefaultArgs( KUrl &url );
     void requestCurrentUser();
     void requestFollowers( int page = 1 );

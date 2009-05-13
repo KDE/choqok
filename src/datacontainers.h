@@ -36,7 +36,8 @@ public:
     QString profileImageUrl;
     QString homePageUrl;
     bool isProtected;
-    uint followersCount;
+    int followersCount;
+    int friendsCount;
 };
 
 struct Status {
