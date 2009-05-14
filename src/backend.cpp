@@ -1158,6 +1158,36 @@ QString Backend::shortenUrl(const QString &baseUrl)
             QString responseHeaders = metaData[ "HTTP-Headers" ];
             kDebug() << "Cannot create a shorten url.\t" << "Response header = " << responseHeaders;
         }
+    } else if( Settings::shortenService() == SettingsBase::DIGG ) {
+        kDebug()<<"Using digg.com";
+        KUrl url( "http://services.digg.com/url/short/create" );
+        url.addQueryItem( "url", KUrl( baseUrl ).url() );
+        url.addQueryItem( "appkey", "http://choqok.gnufolks.org" );
+
+        KIO::Job *job = KIO::get( url, KIO::Reload, KIO::HideProgressInfo );
+
+        metaData.insert( "PropagateHttpHeader", "true" );
+        if ( KIO::NetAccess::synchronousRun( job, 0, &data, 0, &metaData ) ) {
+            QString responseHeaders = metaData[ "HTTP-Headers" ];
+            QString code = responseHeaders.split( ' ' )[1];
+            if ( code == "200" ) {
+                kDebug() << "Short url is: " << data;
+                QDomDocument doc;
+                doc.setContent(data);
+                if(doc.documentElement().tagName() == "shorturls") {
+                    QDomElement elm = doc.documentElement().firstChild().toElement();
+                    if(elm.tagName() == "shorturl"){
+                        return elm.attribute("short_url", baseUrl);
+                    }
+                }
+                return QString( data );
+            } else {
+                kDebug() << "shortenning url faild HTTP response code is: " << code;
+            }
+        } else {
+            QString responseHeaders = metaData[ "HTTP-Headers" ];
+            kDebug() << "Cannot create a shorten url.\t" << "Response header = " << responseHeaders;
+        }
     }
     return baseUrl;
 }
