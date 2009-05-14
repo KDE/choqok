@@ -32,32 +32,38 @@
 #include <KProcess>
 #include <KToolInvocation>
 #include "statuswidget.h"
-#include <QKeyEvent>
 #include <KApplication>
 #include <QDesktopWidget>
 
 UserInfoWidget::UserInfoWidget(const User& user, QWidget* parent)
-    : KTextBrowser(parent), mUser(user)
+    : QFrame(parent), mUser(user)
 {
-    this->setWindowFlags(Qt::ToolTip);
+    w = new KTextBrowser(this);
+    this->setFrameShape(StyledPanel);
+    this->setFrameShadow(Sunken);
+    w->setFrameShape(QFrame::NoFrame);
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->setContentsMargins(0,0,0,0);
+    layout->addWidget(w);
+    this->setLayout(layout);
+    this->setWindowFlags(Qt::Popup);// | Qt::FramelessWindowHint | Qt::Ta);
     setAttribute(Qt::WA_DeleteOnClose);
-    setOpenLinks(false);
-    connect(this,SIGNAL(anchorClicked(const QUrl)),this,SLOT(checkAnchor(const QUrl)));
+    w->setOpenLinks(false);
+    connect(w,SIGNAL(anchorClicked(const QUrl)),this,SLOT(checkAnchor(const QUrl)));
     setupUi();
 }
 
 UserInfoWidget::~UserInfoWidget()
 {}
 
-void UserInfoWidget::keyPressEvent( QKeyEvent * event )
-{
-    if(event->key()==Qt::Key_Escape)
-        this->close();
-}
-
 void UserInfoWidget::show(QPoint pos)
 {
-    resize(270, 200);
+    w->resize(270, 200);
+    w->document()->setTextWidth(width()-2);
+    int h = w->document()->size().toSize().height()+2;
+    w->setMinimumHeight(h);
+    w->setMaximumHeight(h);
+    this->resize(270,h+2);
     int desktopHeight = KApplication::desktop()->height();
     int desktopWidth = KApplication::desktop()->width();
     if( (pos.x() + this->width()) > desktopWidth )
@@ -86,6 +92,7 @@ void UserInfoWidget::checkAnchor( const QUrl url )
         } else {
             KToolInvocation::invokeBrowser(url.toString());
         }
+        close();
     }
 }
 
@@ -100,13 +107,13 @@ void UserInfoWidget::setupUi()
     <b>Web:</b> %3<br/>\
     <b>Bio:</b> %4\
     </p></td></tr></table></td></tr></table>" );
-    document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
+    w->document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
                              *(MediaManager::self()->getAvatarIfExist( KUrl( mUser.profileImageUrl ) )) );
-    document()->addResource( QTextDocument::ImageResource, QUrl("icon://close"),
+    w->document()->addResource( QTextDocument::ImageResource, QUrl("icon://close"),
                             KIcon("dialog-close").pixmap(16) );
     QString url = mUser.homePageUrl.isEmpty() ?
                   QString() : QString("<a title='%1' href='%1'>%1</a>").arg(mUser.homePageUrl);
-    setHtml( info.arg( mUser.name ).arg( mUser.location ).arg( url ).arg( mUser.description ).arg(mUser.screenName) );
+    w->setHtml( info.arg( mUser.name ).arg( mUser.location ).arg( url ).arg( mUser.description ).arg(mUser.screenName) );
 
     QString style = "color: %1; background-color: %2";
     if ( Settings::isCustomUi() ) {

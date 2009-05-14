@@ -24,10 +24,12 @@
 #ifndef USERINFOWIDGET_H
 #define USERINFOWIDGET_H
 
-#include <KTextBrowser>
+#include <QUrl>
 #include "datacontainers.h"
+#include <QFrame>
+class KTextBrowser;
 
-class UserInfoWidget : public KTextBrowser
+class UserInfoWidget : public QFrame
 {
     Q_OBJECT
 public:
@@ -37,11 +39,10 @@ public:
 protected slots:
     void checkAnchor( const QUrl url );
 
-protected:
-    void keyPressEvent( QKeyEvent * event );
 private:
     void setupUi();
     User mUser;
+    KTextBrowser *w;
 };
 
 #endif // USERINFOWIDGET_H
