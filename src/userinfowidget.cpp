@@ -106,7 +106,7 @@ void UserInfoWidget::setupUi()
     <b>Location:</b> %2<br/>\
     <b>Web:</b> %3<br/>\
     <b>Bio:</b> %4\
-    </p></td></tr></table></td></tr></table>" );
+    </p></td></tr></table></td></tr></table>", mUser.name, mUser.location, mUser.homePageUrl, mUser.description, mUser.screenName );
     w->document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
                              *(MediaManager::self()->getAvatarIfExist( KUrl( mUser.profileImageUrl ) )) );
     w->document()->addResource( QTextDocument::ImageResource, QUrl("icon://close"),
