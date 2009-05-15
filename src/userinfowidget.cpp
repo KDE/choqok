@@ -98,7 +98,8 @@ void UserInfoWidget::checkAnchor( const QUrl url )
 
 void UserInfoWidget::setupUi()
 {
-    //<tr><td style=\"font-size:small;\" align=\"right\">%4</td></tr>
+    QString url = mUser.homePageUrl.isEmpty() ? QString() 
+                        : QString("<a title='%1' href='%1'>%1</a>").arg(mUser.homePageUrl);
     QString info = i18n( "<table width=\"100%\">\
     <tr><td><b><i>Who is %5?</i></b><a href='choqok://close'><img src='icon://close' align='right' /></a></td></tr>\
     <tr><td><table><tr><td width=\"48\"><img width=48 height=48 src='img://profileImage'/></td>\
@@ -106,14 +107,14 @@ void UserInfoWidget::setupUi()
     <b>Location:</b> %2<br/>\
     <b>Web:</b> %3<br/>\
     <b>Bio:</b> %4\
-    </p></td></tr></table></td></tr></table>", mUser.name, mUser.location, mUser.homePageUrl, mUser.description, mUser.screenName );
+    </p></td></tr></table></td></tr></table>", mUser.name, mUser.location, url, mUser.description, mUser.screenName );
+
     w->document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
                              *(MediaManager::self()->getAvatarIfExist( KUrl( mUser.profileImageUrl ) )) );
     w->document()->addResource( QTextDocument::ImageResource, QUrl("icon://close"),
                             KIcon("dialog-close").pixmap(16) );
-    QString url = mUser.homePageUrl.isEmpty() ?
-                  QString() : QString("<a title='%1' href='%1'>%1</a>").arg(mUser.homePageUrl);
-    w->setHtml( info.arg( mUser.name ).arg( mUser.location ).arg( url ).arg( mUser.description ).arg(mUser.screenName) );
+
+    w->setHtml( info );
 
     QString style = "color: %1; background-color: %2";
     if ( Settings::isCustomUi() ) {

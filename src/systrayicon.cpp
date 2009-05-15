@@ -65,6 +65,7 @@ void SysTrayIcon::slotSetUnread( int numOfUnreadStatuses )
     if ( unread <= 0 ) {
         setIcon( m_defaultIcon );
         isBaseIconChanged = true;
+        unread = 0;
     } else {
         // adapted from KMSystemTray::updateCount()
         int oldWidth = m_defaultIcon.size().width();
