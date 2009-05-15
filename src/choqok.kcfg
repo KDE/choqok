@@ -50,9 +50,7 @@
         <entry name="quickTweetSize" type="Size">
             <default>QSize(280,140)</default>
         </entry>
-        <entry name="nowListening" type="String">
-            <default>Currently listening to %title% by %artist% on %album% [Amarok].</default>
-        </entry>
+        <entry name="nowListening" type="String"/>
         <entry name="useCustomBrowser" type="Bool">
             <default>false</default>
         </entry>
