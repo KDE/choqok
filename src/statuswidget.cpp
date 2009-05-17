@@ -164,7 +164,7 @@ void StatusWidget::setupUi()
     btnReply = getButton( "btnReply",i18nc( "@info:tooltip", "Reply" ), "edit-undo" );
     btnRemove = getButton( "btnRemove",i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
     btnFavorite = getButton( "btnFavorite",i18nc( "@info:tooltip", "Favorite" ), "rating" );
-    btnReTweet = getButton( "btnReTweet", i18nc( "@info:tooltip", "ReTweet" ), "retweet" );
+    btnReTweet = getButton( "btnReTweet", i18nc( "@info:tooltip", "ReTweet" ), "go-top" );
     btnFavorite->setCheckable(true);
 
     buttonGrid->setRowStretch(0,100);
