@@ -19,9 +19,6 @@
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
-     <property name="wordWrap">
-      <bool>false</bool>
-     </property>
      <property name="buddy">
       <cstring>kcfg_username</cstring>
      </property>
@@ -34,9 +31,6 @@
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="wordWrap">
-      <bool>false</bool>
      </property>
      <property name="buddy">
       <cstring>kcfg_password</cstring>
@@ -63,9 +57,6 @@
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="wordWrap">
-      <bool>false</bool>
      </property>
      <property name="buddy">
       <cstring>kcfg_direction</cstring>
@@ -183,7 +174,13 @@ p, li { white-space: pre-wrap; }
    <item row="2" column="0">
     <widget class="QLabel" name="lblHomepage">
      <property name="text">
-      <string>Homepage:</string>
+      <string>API Url:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="buddy">
+      <cstring>kcfg_homepage</cstring>
      </property>
     </widget>
    </item>
