@@ -22,6 +22,7 @@
 
 */
 #include "account.h"
+#include <KUrl>
 
 Account::Account( Service type, const QString &homepage )
 {
@@ -154,7 +155,9 @@ void Account::setServiceType( Service type, const QString &homepage )
             break;
         case Laconica:
             mServiceName = "Custom Laconica";
-            mApiPath = homepage + "/api/";
+            KUrl tmp( homepage );
+            tmp.addPath( "/api/" );
+            mApiPath = tmp.prettyUrl(KUrl::AddTrailingSlash);
             mHomepage = homepage;
             mStatusUrlBase = homepage + "/notice/%1";
             break;

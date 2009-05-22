@@ -60,7 +60,8 @@ Backend::~Backend()
 void Backend::postNewStatus( const QString & statusMessage, uint replyToStatusId )
 {
     kDebug();
-    KUrl url( mCurrentAccount->apiPath() + "/statuses/update.xml" );
+    KUrl url( mCurrentAccount->apiPath() );
+    url.addPath( "/statuses/update.xml" );
     setDefaultArgs( url );
     QByteArray data = "status=";
     data += QUrl::toPercentEncoding( prepareStatus( statusMessage ) );
@@ -161,7 +162,8 @@ void Backend::twitPicCreatePost(const KUrl &picUrl, const QString &message)
 void Backend::sendDMessage( const QString & screenName, const QString & message )
 {
     kDebug();
-    KUrl url( mCurrentAccount->apiPath() + "/direct_messages/new.xml" );
+    KUrl url( mCurrentAccount->apiPath() );
+    url.addPath( "/direct_messages/new.xml" );
     setDefaultArgs( url );
     QByteArray data = "user=";
     data += screenName.toLocal8Bit();
@@ -187,11 +189,11 @@ void Backend::sendDMessage( const QString & screenName, const QString & message 
 void Backend::requestTimeLine( uint latestStatusId, TimeLineType type, int page )
 {
     kDebug();
-    KUrl url;
+    KUrl url( mCurrentAccount->apiPath() );
     if ( type == HomeTimeLine )
-        url.setUrl( mCurrentAccount->apiPath() + "/statuses/friends_timeline.xml" );
+        url.addPath( "/statuses/friends_timeline.xml" );
     else
-        url.setUrl( mCurrentAccount->apiPath() + "/statuses/replies.xml" );
+        url.addPath( "/statuses/replies.xml" );
     setDefaultArgs( url );
     if(latestStatusId) {
         url.addQueryItem( "since_id", QString::number( latestStatusId ) );
@@ -484,11 +486,11 @@ QString& Backend::latestErrorString()
 void Backend::requestFavorited( uint statusId, bool isFavorite )
 {
     kDebug();
-    KUrl url;
+    KUrl url( mCurrentAccount->apiPath() );
     if ( isFavorite ) {
-        url.setUrl( mCurrentAccount->apiPath() + "/favorites/create/" + QString::number( statusId ) + ".xml" );
+        url.setUrl( "/favorites/create/" + QString::number( statusId ) + ".xml" );
     } else {
-        url.setUrl( mCurrentAccount->apiPath() + "/favorites/destroy/" + QString::number( statusId ) + ".xml" );
+        url.setUrl( "/favorites/destroy/" + QString::number( statusId ) + ".xml" );
     }
     setDefaultArgs( url );
 
@@ -508,7 +510,8 @@ void Backend::requestFavorited( uint statusId, bool isFavorite )
 void Backend::requestDestroy( uint statusId )
 {
     kDebug();
-    KUrl url( mCurrentAccount->apiPath() + "/statuses/destroy/" + QString::number( statusId ) + ".xml" );
+    KUrl url( mCurrentAccount->apiPath() );
+    url.addPath( "/statuses/destroy/" + QString::number( statusId ) + ".xml" );
 
     setDefaultArgs( url );
 
@@ -529,7 +532,8 @@ void Backend::requestDestroy( uint statusId )
 void Backend::requestDestroyDMessage( uint statusId )
 {
     kDebug();
-    KUrl url( mCurrentAccount->apiPath() + "/direct_messages/destroy/" + QString::number( statusId ) + ".xml" );
+    KUrl url( mCurrentAccount->apiPath() );
+    url.addPath( "/direct_messages/destroy/" + QString::number( statusId ) + ".xml" );
 
     setDefaultArgs( url );
 
@@ -734,8 +738,8 @@ void Backend::settingsChanged()
 void Backend::verifyCredential()
 {
     kDebug();
-    KUrl url;
-    url.setUrl( mCurrentAccount->apiPath() + "/account/verify_credentials.xml" );
+    KUrl url(mCurrentAccount->apiPath());
+    url.addPath( "/account/verify_credentials.xml" );
     setDefaultArgs(url);
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
@@ -856,8 +860,8 @@ void Backend::slotUserInfoReceived( KJob * job )
 void Backend::requestCurrentUser()
 {
     kDebug();
-    KUrl url;
-    url.setUrl( mCurrentAccount->apiPath() + "/statuses/user_timeline.xml" );
+    KUrl url( mCurrentAccount->apiPath() );
+    url.addPath( "/statuses/user_timeline.xml" );
     setDefaultArgs( url );
     url.setQuery( "?count=1" );
 
@@ -876,11 +880,11 @@ void Backend::requestCurrentUser()
 void Backend::requestDMessages( uint latestStatusId, DMessageType type, int page )
 {
     kDebug();
-    KUrl url;
+    KUrl url( mCurrentAccount->apiPath() );
     if ( type == Inbox )
-        url.setUrl( mCurrentAccount->apiPath() + "/direct_messages.xml" );
+        url.addPath( "/direct_messages.xml" );
     else
-        url.setUrl( mCurrentAccount->apiPath() + "/direct_messages/sent.xml" );
+        url.addPath( "/direct_messages/sent.xml" );
     setDefaultArgs( url );
     if(latestStatusId) {
         url.addQueryItem( "since_id", QString::number( latestStatusId ) );
@@ -964,8 +968,8 @@ void Backend::listFollowersScreenName()
 void Backend::requestFollowers( int page )
 {
     kDebug();
-    KUrl url;
-    url.setUrl( mCurrentAccount->apiPath() + "/statuses/followers.xml" );
+    KUrl url( mCurrentAccount->apiPath() );
+    url.addPath( "/statuses/followers.xml" );
     setDefaultArgs( url );
     url.setQuery( "?page=" + QString::number( page ) );
 
@@ -1003,8 +1007,8 @@ void Backend::listFriendsScreenName()
 void Backend::requestFriends( int page )
 {
     kDebug();
-    KUrl url;
-    url.setUrl( mCurrentAccount->apiPath() + "/statuses/friends/" + mCurrentAccount->username() + ".xml" );
+    KUrl url( mCurrentAccount->apiPath() );
+    url.addPath( "/statuses/friends/" + mCurrentAccount->username() + ".xml" );
     setDefaultArgs( url );
     url.setQuery( "?page=" + QString::number( page ) );
 
@@ -1076,8 +1080,8 @@ void Backend::setDefaultArgs( KUrl & url )
 void Backend::requestSingleStatus( uint statusId )
 {
     kDebug();
-    KUrl url;
-    url.setUrl( mCurrentAccount->apiPath() + "/statuses/show/" + QString::number(statusId) + ".xml" );
+    KUrl url( mCurrentAccount->apiPath() );
+    url.addPath( "/statuses/show/" + QString::number(statusId) + ".xml" );
     setDefaultArgs( url );
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
