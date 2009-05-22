@@ -53,7 +53,7 @@ QFrame.StatusWidget[read=true] {color: %3; background-color: %4}");
 
 QString StatusWidget::style;
 
-const QRegExp StatusWidget::mUrlRegExp("((ftps?|https?)://[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])"); // "borrowed" from microblog plasmoid
+const QRegExp StatusWidget::mUrlRegExp("((ftps?|https?)://[^\\s<>\"]+[^!,\\.\\s<>'\"\\)\\]])"); // "borrowed" from microblog plasmoid
 const QRegExp StatusWidget::mUserRegExp("([\\s]|^)@([^\\s\\W]+)");
 const QRegExp StatusWidget::mHashtagRegExp("([\\s]|^)#([^\\s\\W]+)");
 const QRegExp StatusWidget::mGroupRegExp("([\\s]|^)!([^\\s\\W]+)");
