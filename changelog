@@ -1,3 +1,16 @@
+=== Version 0.6 -- 22-May-2009 ===
+* Add support for smilies in texts.
+* Add support for ReTweet function.
+* Twitpic.com integration added, Posting to it and showing a thumbnail of it's pictures.
+* Posting "Currently listening to ..." text for Amarok 2.X Player implemented!
+* Option to use a custom browser instead of kde default implemented! (For Gnome users)
+* Ability to abort posting new status.
+* A "Who is ..." item added to user menu, to see Bio/Url and name of a user.
+* Support for Digg.com shorturls service added.
+* Better support for right to left languages, And users who use multiple languages with different directions.
+* Image caching improved and some related bugs fixed.
+* + bug fix and other improvements.
+
 === Version 0.5 -- 21-Mar-2009 ===
  * Twitter.com search API implemented. (Stephen Henderson)
  * Identi.ca search API implemented. (Stephen Henderson)

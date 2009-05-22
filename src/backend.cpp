@@ -710,7 +710,8 @@ QString Backend::prepareStatus( QString status )
     kDebug();
     QString t = "";
     int i = 0, j = 0;
-    while (( j = status.indexOf( QRegExp( "(https?://)" ), i ) ) != -1 ) {
+    QRegExp urlRegExp( "((ftps?|https?)://)" );
+    while (( j = status.indexOf( urlRegExp, i ) ) != -1 ) {
         t += status.mid( i, j - i );
         int k = status.indexOf( ' ', j );
         if ( k == -1 )

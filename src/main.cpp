@@ -35,7 +35,7 @@ static const char description[] =
 Currently supports <a href='http://twitter.com'>Twitter.com</a> and \
 <a href='http://identi.ca'>Identi.ca</a>" );
 
-static const char version[] = "0.5-svn";
+static const char version[] = "0.6";
 
 int main( int argc, char **argv )
 {
@@ -43,7 +43,7 @@ int main( int argc, char **argv )
                       KAboutData::License_GPL_V3, ki18n( "(C) 2008-2009 Mehrdad Momeny" ),
                       KLocalizedString(), 0  );
     about.addAuthor( ki18n( "Mehrdad Momeny" ), ki18n( "Author and Core Developer" ),
-                     "mehrdad.momeny@gmail.com" );
+                     "mehrdad.momeny@gmail.com", "http://identi.ca/mtux" );
     about.addCredit( ki18n( "Roozbeh Shafiee" ), ki18n( "Icon designer" ), "roozbeh@roozbehonline.com" );
     about.addCredit( ki18n( "Daniel Schaal" ), ki18n( "UI improvements" ), "daniel@foto-schaal.de");
     about.addCredit( ki18n( "Stephen Henderson" ), ki18n( "Search API implementation" ), "hendersonsk@gmail.com");

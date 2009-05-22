@@ -53,7 +53,7 @@ QFrame.StatusWidget[read=true] {color: %3; background-color: %4}");
 
 QString StatusWidget::style;
 
-const QRegExp StatusWidget::mUrlRegExp("(https?://[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])"); // "borrowed" from microblog plasmoid
+const QRegExp StatusWidget::mUrlRegExp("((ftps?|https?)://[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])"); // "borrowed" from microblog plasmoid
 const QRegExp StatusWidget::mUserRegExp("([\\s]|^)@([^\\s\\W]+)");
 const QRegExp StatusWidget::mHashtagRegExp("([\\s]|^)#([^\\s\\W]+)");
 const QRegExp StatusWidget::mGroupRegExp("([\\s]|^)!([^\\s\\W]+)");
@@ -101,7 +101,7 @@ void StatusWidget::checkAnchor(const QUrl & url)
         KAction * info = new KAction( KIcon("user-identity"), i18n("Who is %1", url.host()), &menu );
         KAction * from = new KAction(KIcon("edit-find-user"), i18n("From %1",url.host()),&menu);
         KAction * to = new KAction(KIcon("meeting-attending"), i18n("Replies to %1",url.host()),&menu);
-        if(url.host() == mCurrentStatus.user.screenName)
+        if(url.host().toLower() == mCurrentStatus.user.screenName.toLower())
             menu.addAction(info);
         menu.addAction(from);
         menu.addAction(to);
@@ -164,7 +164,7 @@ void StatusWidget::setupUi()
     btnReply = getButton( "btnReply",i18nc( "@info:tooltip", "Reply" ), "edit-undo" );
     btnRemove = getButton( "btnRemove",i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
     btnFavorite = getButton( "btnFavorite",i18nc( "@info:tooltip", "Favorite" ), "rating" );
-    btnReTweet = getButton( "btnReTweet", i18nc( "@info:tooltip", "ReTweet" ), "go-top" );
+    btnReTweet = getButton( "btnReTweet", i18nc( "@info:tooltip", "ReTweet" ), "retweet" );
     btnFavorite->setCheckable(true);
 
     buttonGrid->setRowStretch(0,100);
