@@ -78,8 +78,11 @@ void AccountsWizard::slotButtonClicked( int button )
         if( home.at( home.count() - 1 ) != '/' )
             ui.kcfg_homepage->setText( home.append('/') );
         ///Show ProgressBar:
-        if ( progress )
+        if ( progress ) {
+            progress->hide();
+            progress->deleteLater();
             progress = 0L;
+        }
         progress = new QProgressBar( this );
         progress->setMinimum( 0 );
         progress->setMaximum( 0 );
