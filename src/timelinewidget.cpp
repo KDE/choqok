@@ -565,9 +565,11 @@ void TimeLineWidget::updateStatusList( QMap<uint, StatusWidget*> *list )
         QMap<uint, StatusWidget*>::const_iterator endIt = list->constEnd();
         for ( ; it != endIt && toBeDelete > 0; ++it ) {
             StatusWidget* wt = it.value();
+            if( !wt )
+                continue;
             if ( !wt->isRead() )
                 break;
-            wt->deleteLater();
+            wt->close();
             list->remove( it.key() );
             --toBeDelete;
         }
