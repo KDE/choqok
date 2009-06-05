@@ -488,9 +488,9 @@ void Backend::requestFavorited( uint statusId, bool isFavorite )
     kDebug();
     KUrl url( mCurrentAccount->apiPath() );
     if ( isFavorite ) {
-        url.setUrl( "/favorites/create/" + QString::number( statusId ) + ".xml" );
+        url.addPath( "/favorites/create/" + QString::number( statusId ) + ".xml" );
     } else {
-        url.setUrl( "/favorites/destroy/" + QString::number( statusId ) + ".xml" );
+        url.addPath( "/favorites/destroy/" + QString::number( statusId ) + ".xml" );
     }
     setDefaultArgs( url );
 
