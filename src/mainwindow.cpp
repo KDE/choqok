@@ -425,6 +425,10 @@ void MainWindow::addAccountTimeLine( const Account & account, bool isStartup )
         QTimer::singleShot( 1000, widget, SLOT(reloadFriendsList()) );
     }
     enableApp();
+    if( mainWidget->count() > 1)
+        mainWidget->setTabBarHidden(false);
+    else
+        mainWidget->setTabBarHidden(true);
 }
 
 void MainWindow::loadAccounts()
@@ -453,8 +457,11 @@ void MainWindow::removeAccountTimeLine( const QString & alias )
             mainWidget->removeTab( i );
             if ( mainWidget->count() < 1 )
                 disableApp();
-//             tmp->setRemoved( true );
             tmp->deleteLater();
+            if( mainWidget->count() > 1)
+                mainWidget->setTabBarHidden(false);
+            else
+                mainWidget->setTabBarHidden(true);
             return;
         }
     }
