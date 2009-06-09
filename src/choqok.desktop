@@ -21,6 +21,7 @@ GenericName[tr]=KDE Mini-günlük İstemcisi
 GenericName[uk]=Клієнт мікроблогів для KDE
 GenericName[x-test]=xxKDE Micro-blogging Clientxx
 GenericName[zh_CN]=KDE 微播客吐槽客户端
+GenericName[zh_TW]=KDE Micro-blogging 客戶端程式
 Terminal=false
 X-DBUS-StartupType=Unique
 X-Ubuntu-Gettext-Domain=desktop_kdesdk
