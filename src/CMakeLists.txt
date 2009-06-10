@@ -30,7 +30,7 @@ kde4_add_executable(choqok ${choqok_SRCS})
 
 target_link_libraries(choqok ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS})
 
-install(TARGETS choqok DESTINATION ${BIN_INSTALL_DIR} )
+install(TARGETS choqok ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 ########### install files ###############
 
