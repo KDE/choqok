@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Choqok
+Name[gl]=ChoqoK
 Name[x-test]=xxChoqokxx
 Exec=choqok %i -caption "%c"
 Icon=choqok
@@ -11,6 +12,7 @@ GenericName[da]=KDE micro-blogging-klient
 GenericName[et]=KDE mikroblogimise klient
 GenericName[fr]=Client de microblogage pour KDE
 GenericName[ga]=Cliant Micreabhlagadóireachta KDE
+GenericName[gl]=Cliente para microblogues do KDE
 GenericName[ms]=Klien Mikro-pemblog KDE
 GenericName[nds]=KDE-Programm för Mikro-Nettdaagböker
 GenericName[nl]=KDE Micro-blogging-client

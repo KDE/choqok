@@ -1,6 +1,7 @@
 [Global]
 IconName=choqok
 Comment=Choqok
+Comment[gl]=ChoqoK
 Comment[x-test]=xxChoqokxx
 
 [Event/new-status-arrived]
@@ -10,6 +11,7 @@ Name[da]=Ny tweet modtaget
 Name[et]=Saabus uus tviit
 Name[fr]=Un nouveau tweet est arrivé
 Name[ga]=Fuair tú giolc nua
+Name[gl]=Chegou un novo tweet
 Name[ms]=Tweet baru telah tiba
 Name[nds]=Nieg Jiepel ankamen
 Name[nl]=Er is een nieuwe ´tweet´ binnengekomen
@@ -27,6 +29,7 @@ Comment[da]=Ny tweet modtaget
 Comment[et]=Saabus uus tviit
 Comment[fr]=Un nouveau tweet est arrivé
 Comment[ga]=Fuair tú giolc nua
+Comment[gl]=Chegou un novo tweet
 Comment[ms]=Tweet baru telah tiba
 Comment[nds]=Nieg Jiepel ankamen
 Comment[nl]=Er is een nieuwe ´tweet´ binnengekomen
@@ -48,6 +51,7 @@ Name[da]=Der sker noget
 Name[et]=Midagi juhtus
 Name[fr]=Il se passe quelque chose
 Name[ga]=Tharla rud éigin
+Name[gl]=Algo está a acontecer
 Name[nds]=Dor deit sik wat
 Name[nl]=Er is iets gebeurd
 Name[pt]=Algo aconteceu
@@ -64,6 +68,7 @@ Comment[da]=Der sker noget
 Comment[et]=Midagi juhtus
 Comment[fr]=Il se passe quelque chose
 Comment[ga]=Tharla rud éigin
+Comment[gl]=Algo está a acontecer
 Comment[nds]=Dor deit sik wat
 Comment[nl]=Er is iets gebeurd
 Comment[pt]=Algo aconteceu
