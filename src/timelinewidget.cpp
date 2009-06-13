@@ -292,7 +292,7 @@ void TimeLineWidget::replyTimeLineReceived( QList< Status > & statusList )
 }
 
 void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayout * layoutToAddStatuses,
-        QMap<uint, StatusWidget*> *list, Backend::TimeLineType type )
+        QMap<qulonglong, StatusWidget*> *list, Backend::TimeLineType type )
 {
     kDebug();
     bool allInOne = Settings::showAllNotifiesInOne();
@@ -311,18 +311,19 @@ void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayou
                 continue;
             }
         }
-        if(list->keys().contains(it->statusId))
+        if(list->keys().contains(it->statusId)) 
             continue;
+	
 
         StatusWidget *wt = new StatusWidget( &mCurrentAccount, this );
         wt->setAttribute( Qt::WA_DeleteOnClose );
         wt->setCurrentStatus( *it );
-        connect( wt, SIGNAL( sigReply( const QString&, uint, bool ) ),
-                 this, SLOT( prepareReply( const QString&, uint, bool ) ) );
-        connect( wt, SIGNAL( sigFavorite( uint, bool ) ),
-                 twitter, SLOT( requestFavorited( uint, bool ) ) );
-        connect( wt, SIGNAL( sigDestroy( uint ) ),
-                 this, SLOT( requestDestroy( uint ) ) );
+        connect( wt, SIGNAL( sigReply( const QString&, qulonglong, bool ) ),
+                 this, SLOT( prepareReply( const QString&, qulonglong, bool ) ) );
+        connect( wt, SIGNAL( sigFavorite( qulonglong, bool ) ),
+                 twitter, SLOT( requestFavorited( qulonglong, bool ) ) );
+        connect( wt, SIGNAL( sigDestroy( qulonglong ) ),
+                 this, SLOT( requestDestroy( qulonglong ) ) );
         connect(wt,SIGNAL(sigSearch(int,QString)),this,SIGNAL(sigSearch(int,QString)));
         connect(wt, SIGNAL(sigReTweet(const QString&)), this, SLOT(reTweet(const QString&)));
 
@@ -349,7 +350,7 @@ void TimeLineWidget::addNewStatusesToUi( QList< Status > & statusList, QBoxLayou
     }
     if ( allInOne && Settings::notifyType() != SettingsBase::LibNotify )
         notifyStr += "</div>";
-    uint latestId = statusList.last().statusId;
+    qulonglong latestId = statusList.last().statusId;
     if ( type == Backend::HomeTimeLine && latestId > latestHomeStatusId ) {
         kDebug() << "Latest home statusId sets to: " << latestId;
         latestHomeStatusId = latestId;
@@ -507,15 +508,15 @@ QList< Status > TimeLineWidget::loadStatuses( QString fileName )
         KConfigGroup grp( &statusesBackup, groupList[i] );
         Status st;
         st.creationDateTime = grp.readEntry( "created_at", QDateTime::currentDateTime() );
-        st.statusId = grp.readEntry( "id", ( uint ) 0 );
+        st.statusId = grp.readEntry( "id", ( qulonglong ) 0 );
         st.content = grp.readEntry( "text", QString() );
         st.source = grp.readEntry( "source", QString() );
         st.isTruncated = grp.readEntry( "truncated", false );
-        st.replyToStatusId = grp.readEntry( "in_reply_to_status_id", ( uint ) 0 );
-        st.replyToUserId = grp.readEntry( "in_reply_to_user_id", ( uint ) 0 );
+        st.replyToStatusId = grp.readEntry( "in_reply_to_status_id", ( qulonglong ) 0 );
+        st.replyToUserId = grp.readEntry( "in_reply_to_user_id", ( qulonglong ) 0 );
         st.isFavorited = grp.readEntry( "favorited", false );
         st.replyToUserScreenName = grp.readEntry( "in_reply_to_screen_name", QString() );
-        st.user.userId = grp.readEntry( "userId", ( uint ) 0 );
+        st.user.userId = grp.readEntry( "userId", ( qulonglong ) 0 );
         st.user.screenName = grp.readEntry( "screen_name", QString() );
         st.user.name = grp.readEntry( "name", QString() );
         st.user.profileImageUrl = grp.readEntry( "profile_image_url", QString() );
@@ -538,7 +539,7 @@ QList< Status > TimeLineWidget::loadStatuses( QString fileName )
     return list;
 }
 
-void TimeLineWidget::prepareReply( const QString &userName, uint statusId, bool dMsg )
+void TimeLineWidget::prepareReply( const QString &userName, qulonglong statusId, bool dMsg )
 {
     kDebug();
     emit showMe();
@@ -555,14 +556,14 @@ void TimeLineWidget::prepareReply( const QString &userName, uint statusId, bool 
     txtNewStatus->setFocus( Qt::OtherFocusReason );
 }
 
-void TimeLineWidget::updateStatusList( QMap<uint, StatusWidget*> *list )
+void TimeLineWidget::updateStatusList( QMap<qulonglong, StatusWidget*> *list )
 {
     kDebug();
     int toBeDelete = list->count() - Settings::countOfStatusesOnMain();
 
     if ( toBeDelete > 0 ) {
-        QMap<uint, StatusWidget*>::const_iterator it = list->constBegin();
-        QMap<uint, StatusWidget*>::const_iterator endIt = list->constEnd();
+        QMap<qulonglong, StatusWidget*>::const_iterator it = list->constBegin();
+        QMap<qulonglong, StatusWidget*>::const_iterator endIt = list->constEnd();
         for ( ; it != endIt && toBeDelete > 0; ++it ) {
             StatusWidget* wt = it.value();
             if( !wt )
@@ -576,7 +577,7 @@ void TimeLineWidget::updateStatusList( QMap<uint, StatusWidget*> *list )
     }
 }
 
-void TimeLineWidget::clearTimeLineList( QMap<uint, StatusWidget * > * list )
+void TimeLineWidget::clearTimeLineList( QMap<qulonglong, StatusWidget * > * list )
 {
     kDebug();
     qDeleteAll(*list);
@@ -671,7 +672,7 @@ void TimeLineWidget::requestDestroyDone( bool isError )
     toBeDestroied->close();
 }
 
-void TimeLineWidget::requestDestroy( uint statusId )
+void TimeLineWidget::requestDestroy( qulonglong statusId )
 {
     if ( KMessageBox::warningYesNo( this, i18n( "Are you sure you wish to destroy this status?" ) ) == KMessageBox::Yes ) {
         toBeDestroied = qobject_cast<StatusWidget*> ( sender() );

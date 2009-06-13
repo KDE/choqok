@@ -45,15 +45,15 @@ public:
     virtual ~IdenticaSearch();
 
 private:
-    virtual KUrl buildUrl( QString query, int option, uint sinceStatusId = 0, uint count = 0, uint page = 1 );
+    virtual KUrl buildUrl( QString query, int option, qulonglong sinceStatusId = 0, qulonglong count = 0, qulonglong page = 1 );
     QList<Status>* parseRss( const QByteArray &buffer );
 
 public slots:
     virtual void requestSearchResults( QString query,
                                        int option,
-                                       uint sinceStatusId = 0,
-                                       uint count = 0,
-                                       uint page = 1 );
+                                       qulonglong sinceStatusId = 0,
+                                       qulonglong count = 0,
+                                       qulonglong page = 1 );
 
 protected slots:
     virtual void searchResultsReturned( KJob *job );

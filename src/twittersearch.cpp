@@ -59,7 +59,7 @@ TwitterSearch::~TwitterSearch()
     kDebug();
 }
 
-KUrl TwitterSearch::buildUrl( QString query, int option, uint sinceStatusId, uint count, uint page )
+KUrl TwitterSearch::buildUrl( QString query, int option, qulonglong sinceStatusId, qulonglong count, qulonglong page )
 {
     kDebug();
     QString formattedQuery;
@@ -94,7 +94,7 @@ KUrl TwitterSearch::buildUrl( QString query, int option, uint sinceStatusId, uin
     return url;
 }
 
-void TwitterSearch::requestSearchResults( QString query, int option, uint sinceStatusId, uint count, uint page )
+void TwitterSearch::requestSearchResults( QString query, int option, qulonglong sinceStatusId, qulonglong count, qulonglong page )
 {
     kDebug();
 

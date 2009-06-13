@@ -28,7 +28,7 @@
 
 struct User {
 public:
-    uint userId;
+    qulonglong userId;
     QString name;
     QString screenName;
     QString location;
@@ -43,12 +43,12 @@ public:
 struct Status {
 public:
     QDateTime creationDateTime;
-    uint statusId;
+    qulonglong statusId;
     QString content;
     QString source;
     bool isTruncated;
-    uint replyToStatusId;
-    uint replyToUserId;
+    qulonglong replyToStatusId;
+    qulonglong replyToUserId;
     bool isFavorited;
     QString replyToUserScreenName;
     User user;

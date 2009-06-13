@@ -57,7 +57,7 @@ Backend::~Backend()
     kDebug();
 }
 
-void Backend::postNewStatus( const QString & statusMessage, uint replyToStatusId )
+void Backend::postNewStatus( const QString & statusMessage, qulonglong replyToStatusId )
 {
     kDebug();
     KUrl url( mCurrentAccount->apiPath() );
@@ -186,7 +186,7 @@ void Backend::sendDMessage( const QString & screenName, const QString & message 
     jobList<<job;
 }
 
-void Backend::requestTimeLine( uint latestStatusId, TimeLineType type, int page )
+void Backend::requestTimeLine( qulonglong latestStatusId, TimeLineType type, int page )
 {
     kDebug();
     KUrl url( mCurrentAccount->apiPath() );
@@ -197,6 +197,7 @@ void Backend::requestTimeLine( uint latestStatusId, TimeLineType type, int page 
     setDefaultArgs( url );
     if(latestStatusId) {
         url.addQueryItem( "since_id", QString::number( latestStatusId ) );
+	qDebug()<<url;
     }
     url.addQueryItem( "count", QString::number( Settings::countOfStatusesOnMain() ) );
     if(page) {
@@ -274,7 +275,7 @@ Status Backend::readStatusFromDomElement ( const QDomElement &root )
         else if ( element.tagName() == "text" )
             post.content = element.text();
         else if ( element.tagName() == "id" )
-            post.statusId = element.text().toInt();
+            post.statusId = element.text().toULongLong();
         else if ( element.tagName() == "in_reply_to_status_id" )
             post.replyToStatusId = element.text().toULongLong();
         else if ( element.tagName() == "in_reply_to_user_id" )
@@ -295,7 +296,7 @@ Status Backend::readStatusFromDomElement ( const QDomElement &root )
                 } else if ( subElement.tagName() == "profile_image_url" ) {
                     post.user.profileImageUrl = subElement.text();
                 } else if ( subElement.tagName() == "id" ) {
-                    post.user.userId = subElement.text().toUInt();
+                    post.user.userId = subElement.text().toULongLong();
                 } else if ( subElement.tagName() == "name" ) {
                     post.user.name = subElement.text();
                 } else if ( subElement.tagName() == QString ( "description" ) ) {
@@ -368,7 +369,7 @@ Status Backend::readDMessageFromDomElement ( const QDomElement &root )
         return msg;
     }
     QDomNode node2 = root.firstChild();
-//     uint senderId = 0, recipientId = 0;
+//     qulonglong senderId = 0, recipientId = 0;
     User sender, recipient;
     QString timeStr;//, senderScreenName, recipientScreenName, senderProfileImageUrl, senderName,
 //     senderDescription, recipientProfileImageUrl, recipientName, recipientDescription;
@@ -379,7 +380,7 @@ Status Backend::readDMessageFromDomElement ( const QDomElement &root )
         else if ( element.tagName() == "text" )
             msg.content = element.text();
         else if ( element.tagName() == "id" )
-            msg.statusId = element.text().toInt();
+            msg.statusId = element.text().toULongLong();
         else if ( element.tagName() == "sender_id" )
             sender.userId = element.text().toULongLong();
         else if ( element.tagName() == "recipient_id" )
@@ -483,7 +484,7 @@ QString& Backend::latestErrorString()
     return mLatestErrorString;
 }
 
-void Backend::requestFavorited( uint statusId, bool isFavorite )
+void Backend::requestFavorited( qulonglong statusId, bool isFavorite )
 {
     kDebug();
     KUrl url( mCurrentAccount->apiPath() );
@@ -507,7 +508,7 @@ void Backend::requestFavorited( uint statusId, bool isFavorite )
     jobList<<job;
 }
 
-void Backend::requestDestroy( uint statusId )
+void Backend::requestDestroy( qulonglong statusId )
 {
     kDebug();
     KUrl url( mCurrentAccount->apiPath() );
@@ -529,7 +530,7 @@ void Backend::requestDestroy( uint statusId )
     jobList<<job;
 }
 
-void Backend::requestDestroyDMessage( uint statusId )
+void Backend::requestDestroyDMessage( qulonglong statusId )
 {
     kDebug();
     KUrl url( mCurrentAccount->apiPath() );
@@ -778,7 +779,7 @@ void Backend::slotCredentialsReceived( KJob * job )
         QString timeStr;
         while ( !node2.isNull() ) {
             if ( node2.toElement().tagName() == "id" ) {
-                mCurrentAccount->setUserId( node2.toElement().text().toUInt() );
+                mCurrentAccount->setUserId( node2.toElement().text().toULongLong() );
                 break;
             }
             node2 = node2.nextSibling();
@@ -844,7 +845,7 @@ void Backend::slotUserInfoReceived( KJob * job )
                 QDomNode node3 = node2.firstChild();
                 while ( !node3.isNull() ) {
                     if ( node3.toElement().tagName() == "id" ) {
-                        mCurrentAccount->setUserId( node3.toElement().text().toUInt() );
+                        mCurrentAccount->setUserId( node3.toElement().text().toULongLong() );
                         emit userVerified( mCurrentAccount );
                         return;
                     }
@@ -878,7 +879,7 @@ void Backend::requestCurrentUser()
     job->start();
 }
 
-void Backend::requestDMessages( uint latestStatusId, DMessageType type, int page )
+void Backend::requestDMessages( qulonglong latestStatusId, DMessageType type, int page )
 {
     kDebug();
     KUrl url( mCurrentAccount->apiPath() );
@@ -1078,7 +1079,7 @@ void Backend::setDefaultArgs( KUrl & url )
     url.setPass( mCurrentAccount->password() );
 }
 
-void Backend::requestSingleStatus( uint statusId )
+void Backend::requestSingleStatus( qulonglong statusId )
 {
     kDebug();
     KUrl url( mCurrentAccount->apiPath() );

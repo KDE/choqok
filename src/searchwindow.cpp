@@ -207,7 +207,7 @@ void SearchWindow::updateSearchResults()
     kDebug();
     if( isVisible() && !lastSearchQuery.isNull() && page == 1 )
     {
-        uint sinceStatusId = 0;
+        qulonglong sinceStatusId = 0;
         if( listResults.count() )
             sinceStatusId = listResults.last()->currentStatus().statusId;
 
@@ -246,11 +246,11 @@ void SearchWindow::addNewStatusesToUi( QList<Status> &statusList )
     for( ; it != endIt; ++it ) {
         StatusWidget *wt = new StatusWidget( &mAccount, this );
 
-        connect( wt, SIGNAL( sigReply( const QString&, uint, bool ) ),
-                 this, SIGNAL( forwardReply( const QString&, uint, bool ) ) );
+        connect( wt, SIGNAL( sigReply( const QString&, qulonglong, bool ) ),
+                 this, SIGNAL( forwardReply( const QString&, qulonglong, bool ) ) );
         connect( wt, SIGNAL(sigReTweet(const QString&)), SIGNAL(forwardReTweet(const QString&)));
-        connect( wt, SIGNAL( sigFavorite( uint, bool ) ),
-                 this, SIGNAL( forwardFavorited( uint, bool ) ) );
+        connect( wt, SIGNAL( sigFavorite( qulonglong, bool ) ),
+                 this, SIGNAL( forwardFavorited( qulonglong, bool ) ) );
         connect (wt,SIGNAL(sigSearch(int,QString)),this,SLOT(updateSearchArea(int,QString)));
 
         wt->setAttribute( Qt::WA_DeleteOnClose );
@@ -402,7 +402,7 @@ void SearchWindow::goBack()
 
 void SearchWindow::pageChange()
 {
-    page = ui.txtPage->text().toUInt();
+    page = ui.txtPage->text().toULongLong();
     ui.lblStatus->setText( i18n( "Fetching Page %1...", QString::number( page ) ) );
     mSearch->requestSearchResults( lastSearchQuery,
                                     lastSearchType,

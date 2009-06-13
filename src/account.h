@@ -38,8 +38,8 @@ public:
 
     ~Account();
 
-    uint userId() const;
-    void setUserId( uint id );
+    qulonglong userId() const;
+    void setUserId( qulonglong id );
 
     QString username() const;
     void setUsername( const QString &name );
@@ -67,7 +67,7 @@ public:
     void setServiceType( Service type, const QString &homepage = QString() );
 
 private:
-    uint mUserId;
+    qulonglong mUserId;
     QString mUsername;
     QString mPassword;
     QString mServiceName;

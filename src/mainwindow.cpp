@@ -286,12 +286,12 @@ void MainWindow::search(int type, const QString& query)
 
     SearchWindow* searchWin = new SearchWindow( tmp->currentAccount(), 0 );
 
-    connect( searchWin, SIGNAL( forwardReply( const QString&, uint, bool ) ),
-             tmp, SLOT( prepareReply( const QString&, uint, bool ) ) );
+    connect( searchWin, SIGNAL( forwardReply( const QString&, qulonglong, bool ) ),
+             tmp, SLOT( prepareReply( const QString&, qulonglong, bool ) ) );
     connect( searchWin, SIGNAL(forwardReTweet(const QString&)),
              tmp, SLOT( reTweet(const QString&) ) );
-    connect( searchWin, SIGNAL( forwardFavorited( uint, bool ) ),
-             tmp->getBackend(), SLOT( requestFavorited( uint, bool ) ) );
+    connect( searchWin, SIGNAL( forwardFavorited( qulonglong, bool ) ),
+             tmp->getBackend(), SLOT( requestFavorited( qulonglong, bool ) ) );
     connect( this, SIGNAL( updateSearchResults() ),
              searchWin, SLOT( updateSearchResults() ) );
     connect( timelineTimer, SIGNAL( timeout() ),

@@ -45,7 +45,7 @@ QMap<int, QPair<QString, bool> > Search::getSearchTypes()
     return mSearchTypes;
 }
 
-KUrl Search::buildUrl( QString query, int option, uint sinceStatusId, uint count, uint page )
+KUrl Search::buildUrl( QString query, int option, qulonglong sinceStatusId, qulonglong count, qulonglong page )
 {
     Q_UNUSED(query);
     Q_UNUSED(option);
@@ -55,7 +55,7 @@ KUrl Search::buildUrl( QString query, int option, uint sinceStatusId, uint count
     return KUrl();
 }
 
-void Search::requestSearchResults( QString query, int option, uint sinceStatusId, uint count, uint page )
+void Search::requestSearchResults( QString query, int option, qulonglong sinceStatusId, qulonglong count, qulonglong page )
 {
     Q_UNUSED(query);
     Q_UNUSED(option);

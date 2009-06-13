@@ -177,7 +177,7 @@ void AccountManager::loadAccounts()
             Account a;
             KConfigGroup accountGrp( conf, list[i] );
             a.setUsername( accountGrp.readEntry( "username", QString() ) );
-            a.setUserId( accountGrp.readEntry( "userId", uint( -1 ) ) );
+            a.setUserId( accountGrp.readEntry( "userId", qulonglong( -1 ) ) );
             a.setAlias( accountGrp.readEntry( "alias", QString() ) );
             int service_type = accountGrp.readEntry( "service_type", -1 );
             QString homepage = accountGrp.readEntry( "homepage", QString() );
@@ -202,7 +202,7 @@ void AccountManager::loadAccounts()
                 kDebug() << "Password loaded from config file.";
             }
             a.setError( false );
-            if ( a.userId() == ( uint ) - 1 ) {///Just for compatibility with previous versions
+            if ( a.userId() == ( qulonglong ) - 1 ) {///Just for compatibility with previous versions
                 Account *account = new Account( a );
                 Backend *b = new Backend( account );
                 connect( b, SIGNAL( userVerified( Account* ) ), this, SLOT( userVerified( Account* ) ) );

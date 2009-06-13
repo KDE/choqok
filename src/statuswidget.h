@@ -64,9 +64,9 @@ public slots:
     void setUiStyle();
 signals:
     void sigSearch(int type, const QString & search);
-    void sigReply( const QString &userName, uint statusId, bool dMsg );
-    void sigDestroy( uint statusId );
-    void sigFavorite( uint statusId, bool isFavorite );
+    void sigReply( const QString &userName, qulonglong statusId, bool dMsg );
+    void sigDestroy( qulonglong statusId );
+    void sigFavorite( qulonglong statusId, bool isFavorite );
     void sigReTweet( const QString &text );
 
 protected slots:

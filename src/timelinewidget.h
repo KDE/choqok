@@ -62,7 +62,7 @@ public slots:
     void abortPostNewStatus();
     void aboutQuit();
     void reTweet( const QString &text );
-    void prepareReply( const QString &userName, uint statusId, bool dMsg );
+    void prepareReply( const QString &userName, qulonglong statusId, bool dMsg );
 
 protected slots:
     void requestFavoritedDone( bool isError );
@@ -76,7 +76,7 @@ protected slots:
 
     void postingNewStatusDone( bool isError );
 
-    void requestDestroy( uint statusId );
+    void requestDestroy( qulonglong statusId );
 
     void checkNewStatusCharactersCount( int numOfChars );
 
@@ -108,7 +108,7 @@ private slots:
 
 private:
     void setDefaultDirection();
-    void addNewStatusesToUi( QList< Status > & statusList, QBoxLayout *layoutToAddStatuses, QMap<uint, StatusWidget*> *list,
+    void addNewStatusesToUi( QList< Status > & statusList, QBoxLayout *layoutToAddStatuses, QMap<qulonglong, StatusWidget*> *list,
                              Backend::TimeLineType type = Backend::HomeTimeLine );
     void disableApp();
     void enableApp();
@@ -123,9 +123,9 @@ private:
 
     QList< Status > loadStatuses( QString fileName );
 
-    void updateStatusList( QMap<uint, StatusWidget*> *list );
+    void updateStatusList( QMap<qulonglong, StatusWidget*> *list );
 
-    void clearTimeLineList( QMap<uint, StatusWidget*> *list );
+    void clearTimeLineList( QMap<qulonglong, StatusWidget*> *list );
 
     void loadConfigurations();
     void updateUi();
@@ -135,12 +135,12 @@ private:
     Backend *twitter;
     StatusTextEdit *txtNewStatus;
     QLabel *lblCounter;
-    QMap<uint, StatusWidget*> listHomeStatus;
-    QMap<uint, StatusWidget*> listReplyStatus;
-    QMap<uint, StatusWidget*> listInboxStatus;
-    QMap<uint, StatusWidget*> listOutboxStatus;
+    QMap<qulonglong, StatusWidget*> listHomeStatus;
+    QMap<qulonglong, StatusWidget*> listReplyStatus;
+    QMap<qulonglong, StatusWidget*> listInboxStatus;
+    QMap<qulonglong, StatusWidget*> listOutboxStatus;
     QList<StatusWidget*> listUnreadStatuses;
-    uint replyToStatusId;
+    qulonglong replyToStatusId;
     bool isStartMode;//used for Notify, if true: notify will not send for any or all new twits, if false will send.
 
     int unreadStatusCount;
@@ -152,10 +152,10 @@ private:
     StatusWidget *toBeDestroied;
 
     Account mCurrentAccount;
-    uint latestHomeStatusId;
-    uint latestReplyStatusId;
-    uint latestInboxStatusId;
-    uint latestOutboxStatusId;
+    qulonglong latestHomeStatusId;
+    qulonglong latestReplyStatusId;
+    qulonglong latestInboxStatusId;
+    qulonglong latestOutboxStatusId;
 
     QStringList friendsList;
     KUrl mediaToAttach;

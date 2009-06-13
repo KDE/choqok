@@ -48,12 +48,12 @@ Account::Account( const Account & account )
     setServiceType( account.serviceType(), account.homepage() );
 }
 
-uint Account::userId() const
+qulonglong Account::userId() const
 {
     return mUserId;
 }
 
-void Account::setUserId( uint id )
+void Account::setUserId( qulonglong id )
 {
     mUserId = id;
 }

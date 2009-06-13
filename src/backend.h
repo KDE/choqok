@@ -55,15 +55,15 @@ public:
     static QString shortenUrl(const QString &baseUrl);
 
 public slots:
-    void postNewStatus( const QString &statusMessage, uint replyToStatusId = 0 );
+    void postNewStatus( const QString &statusMessage, qulonglong replyToStatusId = 0 );
     void twitPicCreatePost(const KUrl &picUrl, const QString &message);
     void sendDMessage( const QString &screenName, const QString &message );
-    void requestTimeLine( uint latestStatusId, TimeLineType type, int page = 0 );
-    void requestDMessages( uint latestStatusId, DMessageType type, int page = 0 );
-    void requestSingleStatus( uint statusId );
-    void requestFavorited( uint statusId, bool isFavorite );
-    void requestDestroy( uint statusId );
-    void requestDestroyDMessage( uint statusId );
+    void requestTimeLine( qulonglong latestStatusId, TimeLineType type, int page = 0 );
+    void requestDMessages( qulonglong latestStatusId, DMessageType type, int page = 0 );
+    void requestSingleStatus( qulonglong statusId );
+    void requestFavorited( qulonglong statusId, bool isFavorite );
+    void requestDestroy( qulonglong statusId );
+    void requestDestroyDMessage( qulonglong statusId );
     void abortPostNewStatus();
     void settingsChanged();
     void listFollowersScreenName();
@@ -116,7 +116,7 @@ private:
     QString mLatestErrorString;
     QMap<KJob *, TimeLineType> mRequestTimelineMap;
     QMap<KJob *, DMessageType> mRequestDMessagesMap;
-    QMap<KJob *, uint> mRequestSingleStatusMap;
+    QMap<KJob *, qulonglong> mRequestSingleStatusMap;
 
     QMap<KJob *, QByteArray> mPostNewStatusBuffer;
     QMap<KJob *, QByteArray> mSendDMessageBuffer;

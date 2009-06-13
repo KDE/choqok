@@ -56,7 +56,7 @@ IdenticaSearch::~IdenticaSearch()
     kDebug();
 }
 
-KUrl IdenticaSearch::buildUrl( QString query, int option, uint sinceStatusId, uint count, uint page )
+KUrl IdenticaSearch::buildUrl( QString query, int option, qulonglong sinceStatusId, qulonglong count, qulonglong page )
 {
     kDebug();
     Q_UNUSED(sinceStatusId);
@@ -89,7 +89,7 @@ KUrl IdenticaSearch::buildUrl( QString query, int option, uint sinceStatusId, ui
     return url;
 }
 
-void IdenticaSearch::requestSearchResults( QString query, int option, uint sinceStatusId, uint count, uint page )
+void IdenticaSearch::requestSearchResults( QString query, int option, qulonglong sinceStatusId, qulonglong count, qulonglong page )
 {
     kDebug();
     Q_UNUSED(count);
@@ -156,7 +156,7 @@ QList<Status>* IdenticaSearch::parseRss( const QByteArray &buffer )
         Status status;
 
         QDomAttr statusIdAttr = node.toElement().attributeNode( "rdf:about" );
-        uint statusId = 0;
+        qulonglong statusId = 0;
         sscanf( qPrintable( statusIdAttr.value() ),
                 qPrintable( mSearchUrl + "notice/%d" ), &statusId );
 

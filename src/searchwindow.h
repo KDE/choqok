@@ -69,8 +69,8 @@ protected slots:
     void error( QString message );
 
 signals:
-    void forwardReply( const QString &username, uint statusId, bool dMsg );
-    void forwardFavorited( uint statusId, bool isFavorite );
+    void forwardReply( const QString &username, qulonglong statusId, bool dMsg );
+    void forwardFavorited( qulonglong statusId, bool isFavorite );
     void forwardReTweet( const QString &text );
 //     void updateTimeLines();
 
@@ -95,8 +95,8 @@ private:
     Account mAccount;
     Search* mSearch;
     Ui::searchwidget_base ui;
-    uint page;
-    uint lastValidPage;
+    qulonglong page;
+    qulonglong lastValidPage;
     QString lastSearchQuery;
     int lastSearchType;
     QIntValidator* intValidator;
