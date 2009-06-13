@@ -137,7 +137,7 @@ void StatusWidget::checkAnchor(const QUrl & url)
         Backend *b = new Backend(new Account(*mCurrentAccount), this);
         connect( b, SIGNAL( singleStatusReceived( Status ) ),
                 this, SLOT( baseStatusReceived(Status) ) );
-        b->requestSingleStatus( url.host().toInt() );
+        b->requestSingleStatus( url.host().toUInt() );
         return;
     } else {
         if( Settings::useCustomBrowser() ) {
