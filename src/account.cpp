@@ -108,7 +108,7 @@ QString Account::apiPath() const
     return mApiPath;
 }
 
-QString Account::statusUrl( int statusId, const QString &userScreenName ) const
+QString Account::statusUrl( qulonglong statusId, const QString &userScreenName ) const
 {
     if( mServiceType == Twitter ) {
         return mStatusUrlBase.arg( QString::number(statusId), userScreenName );

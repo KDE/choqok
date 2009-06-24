@@ -57,7 +57,7 @@ public:
 
     QString apiPath() const;
 
-    QString statusUrl( int statusId, const QString &userScreenName ) const;
+    QString statusUrl( qulonglong statusId, const QString &userScreenName ) const;
     QString homepage() const;
 
     bool isError() const;
