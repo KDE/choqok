@@ -34,8 +34,8 @@
 
 #include "backend.h"
 
-IdenticaSearch::IdenticaSearch( Account* account, const QString searchUrl, QObject *parent ) :
-        Search(account, searchUrl, parent)
+IdenticaSearch::IdenticaSearch( Account* account, const QString & searchUrl, QObject *parent ) :
+        Search(account, "(?:user|(?:.*notice))/([0-9]+)", searchUrl, parent)
 {
     kDebug();
     mSearchTypes[ToUser].first = i18nc( "Dents are Identica posts", "Dents To This User" );
@@ -157,8 +157,11 @@ QList<Status>* IdenticaSearch::parseRss( const QByteArray &buffer )
 
         QDomAttr statusIdAttr = node.toElement().attributeNode( "rdf:about" );
         qulonglong statusId = 0;
-        sscanf( qPrintable( statusIdAttr.value() ),
-                qPrintable( mSearchUrl + "notice/%d" ), &statusId );
+	if(m_rId.exactMatch(statusIdAttr.value())) {
+	  statusId = m_rId.cap(1).toULongLong();
+	}
+//         sscanf( qPrintable( statusIdAttr.value() ),
+//                 qPrintable( mSearchUrl + "notice/%d" ), &statusId );
 
         if( statusId <= mSinceStatusId )
         {
@@ -193,9 +196,12 @@ QList<Status>* IdenticaSearch::parseRss( const QByteArray &buffer )
                 status.user.name = itemNode.toElement().text();
             } else if ( itemNode.toElement().tagName() == "sioc:has_creator" ) {
                 QDomAttr userIdAttr = itemNode.toElement().attributeNode( "rdf:resource" );
-                int id = 0;
-                sscanf( qPrintable( userIdAttr.value() ),
-                        qPrintable( mSearchUrl + "user/%d" ), &id );
+                qulonglong id = 0;
+		if(m_rId.exactMatch(userIdAttr.value())) {
+		  id = m_rId.cap(1).toULongLong();
+		}
+/*                sscanf( qPrintable( userIdAttr.value() ),
+                        qPrintable( mSearchUrl + "user/%d" ), &id );*/
                 status.user.userId = id;
             } else if ( itemNode.toElement().tagName() == "laconica:postIcon" ) {
                 QDomAttr imageAttr = itemNode.toElement().attributeNode( "rdf:resource" );

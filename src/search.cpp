@@ -25,8 +25,8 @@
 #include "search.h"
 //#include "account.h"
 
-Search::Search( Account* account, const QString searchUrl, QObject *parent )
-    : QObject( parent )
+Search::Search( Account* account, const QString & rId, const QString & searchUrl, QObject *parent )
+    : QObject( parent ),m_rId(rId)
 {
     mAccount = account;
     mSearchUrl = searchUrl;

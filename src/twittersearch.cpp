@@ -34,8 +34,8 @@
 
 #include "backend.h"
 
-TwitterSearch::TwitterSearch( Account* account, const QString searchUrl, QObject *parent ) :
-        Search(account, searchUrl, parent)
+TwitterSearch::TwitterSearch( Account* account, const QString & searchUrl, QObject *parent ) :
+        Search(account, "tag:search.twitter.com,[0-9]+:([0-9]+)", searchUrl, parent)
 {
     kDebug();
     mSearchTypes[CustomSearch].first = i18n( "Custom Search" );
@@ -161,9 +161,12 @@ QList<Status>* TwitterSearch::parseAtom( const QByteArray &buffer )
         while ( !entryNode.isNull() ) {
             if ( entryNode.toElement().tagName() == "id" ) {
                 // Fomatting example: "tag:search.twitter.com,2005:1235016836"
-                int id = 0;
-                sscanf( qPrintable( entryNode.toElement().text() ),
-                        "tag:search.twitter.com,%*d:%d", &id);
+                qulonglong id = 0;
+                if(m_rId.exactMatch(entryNode.toElement().text())) {
+                  id = m_rId.cap(1).toULongLong();
+                }
+/*                sscanf( qPrintable( entryNode.toElement().text() ),
+                        "tag:search.twitter.com,%*d:%d", &id);*/
                 status.statusId = id;
             } else if ( entryNode.toElement().tagName() == "published" ) {
                 // Formatting example: "2009-02-21T19:42:39Z"

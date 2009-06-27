@@ -41,7 +41,7 @@ class IdenticaSearch : public Search
 public:
     enum SearchType { ToUser = 0, FromUser, ReferenceGroup, ReferenceHashtag };
 
-    explicit IdenticaSearch( Account* account, const QString searchUrl = QString(), QObject *parent=0 );
+    explicit IdenticaSearch( Account* account, const QString& searchUrl = QString(), QObject* parent = 0 );
     virtual ~IdenticaSearch();
 
 private:

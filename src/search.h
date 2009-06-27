@@ -30,6 +30,7 @@
 #include <QMap>
 #include <QPair>
 #include <KUrl>
+#include <QRegExp>
 
 #include "datacontainers.h"
 
@@ -44,7 +45,7 @@ class Search : public QObject
 {
     Q_OBJECT
 public:
-    explicit Search( Account* account, const QString searchUrl = QString(), QObject *parent=0 );
+    explicit Search( Account* account, const QString & rId, const QString & searchUrl = QString(), QObject* parent = 0 );
     virtual ~Search();
 
     QMap<int, QPair<QString, bool> > getSearchTypes();
@@ -74,6 +75,7 @@ protected:
     qulonglong mSinceStatusId;
     QString mSearchUrl;
     Account* mAccount;
+    QRegExp m_rId;
 };
 
 #endif
