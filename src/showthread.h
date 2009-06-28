@@ -38,7 +38,6 @@
 
 #include "ui_showthread_base.h"
 
-class KJob;
 class Account;
 class Backend;
 
@@ -71,13 +70,9 @@ protected:
 
     Account *mAccount;
 
-    QVBoxLayout *layout;
-
     Backend *backend;
 
     qulonglong mStatus;
-
-    QSpacerItem *verticalSpacer;
 
     Ui::showthread_base ui;
 };

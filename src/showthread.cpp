@@ -29,53 +29,53 @@
 ShowThread::ShowThread(Account* account, const qulonglong &finalStatus, QWidget *parent )
     : QWidget( parent ), mAccount(account), mStatus(finalStatus)
 {
-	ui.setupUi(this);
+    ui.setupUi(this);
 
-	setSizePolicy(QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
+    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
 
-	ui.homeLayout->setDirection(QBoxLayout::BottomToTop);
+    ui.homeLayout->setDirection(QBoxLayout::BottomToTop);
 
-	backend = new Backend(account, this);
-	connect(backend, SIGNAL(singleStatusReceived(Status)), this, SLOT(newStatusReceived(Status)));
+    backend = new Backend(account, this);
+    connect(backend, SIGNAL(singleStatusReceived(Status)), this, SLOT(newStatusReceived(Status)));
 
-	connect(this, SIGNAL(close()), this, SLOT(deleteLater()));
+    setAttribute( Qt::WA_DeleteOnClose );
 }
 
 ShowThread::~ShowThread()
 {
-	delete backend;
+    delete backend;
 }
 
 void ShowThread::addStatusToThread(const qulonglong &status)
 {
-	backend->requestSingleStatus(status);
+    backend->requestSingleStatus(status);
 }
 
 void ShowThread::startPopulate()
 {
-	addStatusToThread(mStatus);
+    addStatusToThread(mStatus);
 }
 
 void ShowThread::newStatusReceived(const Status &status)
 {
 
-        StatusWidget *wt = new StatusWidget( mAccount, this );
+    StatusWidget *wt = new StatusWidget( mAccount, this );
 
-        connect( wt, SIGNAL( sigReply( const QString&, qulonglong, bool ) ),
+    connect( wt, SIGNAL( sigReply( const QString&, qulonglong, bool ) ),
                  this, SIGNAL( forwardReply( const QString&, qulonglong, bool ) ) );
-        connect( wt, SIGNAL(sigReTweet(const QString&)), SIGNAL(forwardReTweet(const QString&)));
-        connect( wt, SIGNAL( sigFavorite( qulonglong, bool ) ),
-                 this, SIGNAL( forwardFavorited( qulonglong, bool ) ) );
-        connect (wt,SIGNAL(sigSearch(int,QString)),this,SIGNAL(forwardSigSearch(int,QString)));
+    connect( wt, SIGNAL(sigReTweet(const QString&)), SIGNAL(forwardReTweet(const QString&)));
+    connect( wt, SIGNAL( sigFavorite( qulonglong, bool ) ),
+             this, SIGNAL( forwardFavorited( qulonglong, bool ) ) );
+    connect (wt,SIGNAL(sigSearch(int,QString)),this,SIGNAL(forwardSigSearch(int,QString)));
 
-        wt->setAttribute( Qt::WA_DeleteOnClose );
-        wt->setCurrentStatus( status );
-        wt->setUnread( StatusWidget::WithoutNotify );
+    wt->setAttribute( Qt::WA_DeleteOnClose );
+    wt->setCurrentStatus( status );
+    wt->setUnread( StatusWidget::WithoutNotify );
 
-        ui.homeLayout->addWidget( wt );
+    ui.homeLayout->addWidget( wt );
 
-	if(status.replyToStatusId)
-		addStatusToThread(status.replyToStatusId);
-	else
-		emit finishedPopulate();
+    if(status.replyToStatusId)
+    	addStatusToThread(status.replyToStatusId);
+    else
+    	emit finishedPopulate();
 }

@@ -144,6 +144,14 @@ void StatusWidget::checkAnchor(const QUrl & url)
     } else if (scheme == "thread") {
 	    qulonglong status = url.host().toULongLong();
 	    ShowThread *st = new ShowThread(new Account(*mCurrentAccount), status, NULL);
+
+            connect( st, SIGNAL( forwardReply( const QString&, qulonglong, bool ) ),
+                     this, SIGNAL(sigReply( const QString&, qulonglong, bool ) ) );
+            connect( st, SIGNAL(forwardReTweet(const QString&)), SIGNAL(sigReTweet(const QString&)));
+            connect( st, SIGNAL( forwardFavorited( qulonglong, bool ) ),
+                    this, SIGNAL( sigFavorited( qulonglong, bool ) ) );
+            connect (st,SIGNAL(forwardSigSearch(int,QString)),this,SIGNAL(sigSearch(int,QString)));
+
 	    st->startPopulate();
 	    st->show();
 	    return;
