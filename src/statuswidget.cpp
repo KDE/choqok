@@ -149,7 +149,7 @@ void StatusWidget::checkAnchor(const QUrl & url)
                      this, SIGNAL(sigReply( const QString&, qulonglong, bool ) ) );
             connect( st, SIGNAL(forwardReTweet(const QString&)), SIGNAL(sigReTweet(const QString&)));
             connect( st, SIGNAL( forwardFavorited( qulonglong, bool ) ),
-                    this, SIGNAL( sigFavorited( qulonglong, bool ) ) );
+                    this, SIGNAL( sigFavorite( qulonglong, bool ) ) );
             connect (st,SIGNAL(forwardSigSearch(int,QString)),this,SIGNAL(sigSearch(int,QString)));
 
 	    st->startPopulate();
@@ -195,6 +195,8 @@ void StatusWidget::setupUi()
 
     document()->addResource( QTextDocument::ImageResource, QUrl("icon://web"),
                              KIcon("applications-internet").pixmap(8) );
+    document()->addResource( QTextDocument::ImageResource, QUrl("icon://thread"),
+                             KIcon("go-top").pixmap(8) );
     document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
                              MediaManager::self()->defaultImage() );
     mImage = "<img src=\"img://profileImage\" title=\""+ mCurrentStatus.user.name +"\" width=\"48\" height=\"48\" />";
@@ -368,8 +370,8 @@ QString StatusWidget::generateSign()
                                                        mCurrentStatus.replyToUserScreenName );
 	    QString threadlink = "thread://" + QString::number(mCurrentStatus.statusId);
             sign += " - <a href='status://" + QString::number( mCurrentStatus.replyToStatusId ) + "'>" +
-            i18n("in reply to")+ "</a>&nbsp;<a href=\"" + link + "\"><img src=\"icon://web\" /></a>" +
-	    "<a href=\"" + threadlink + "\"><img src=\"icon://web\" /></a>";
+            i18n("in reply to")+ "</a>&nbsp;<a href=\"" + link + "\"><img src=\"icon://web\" /></a> " +
+	    "<a href=\"" + threadlink + "\"><img src=\"icon://thread\" /></a>";
         }
     }
     return sign;
