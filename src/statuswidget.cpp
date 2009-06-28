@@ -143,7 +143,8 @@ void StatusWidget::checkAnchor(const QUrl & url)
         return;
     } else if (scheme == "thread") {
 	    qulonglong status = url.host().toULongLong();
-	    ShowThread *st = new ShowThread(mCurrentAccount, status, NULL);
+	    ShowThread *st = new ShowThread(new Account(*mCurrentAccount), status, NULL);
+	    st->startPopulate();
 	    st->show();
 	    return;
     } else {

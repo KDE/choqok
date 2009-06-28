@@ -32,11 +32,13 @@
 #include <KUrl>
 #include <QWidget>
 #include <QVBoxLayout>
+#include <QScrollArea>
 
 #include "datacontainers.h"
 
 class KJob;
 class Account;
+class Backend;
 
 /**
     Base class for thread feature.
@@ -46,21 +48,30 @@ class ShowThread : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ShowThread(const Account* account, const qulonglong &finalStatus, QWidget *parent=0 );
+    explicit ShowThread(Account* account, const qulonglong &finalStatus, QWidget *parent=0 );
     virtual ~ShowThread();
 
-private:
-
 public slots:
+    void startPopulate();
+
+protected slots:
+    void newStatusReceived(const Status &status);
 
 signals:
+    void finishedPopulate();
 
 protected:
     void addStatusToThread(const qulonglong &status);
 
-    const Account *mAccount;
+    Account *mAccount;
 
     QVBoxLayout *layout;
+
+    Backend *backend;
+
+    qulonglong mStatus;
+
+    QSpacerItem *verticalSpacer;
 };
 
 #endif

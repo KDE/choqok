@@ -24,26 +24,66 @@
 
 #include "showthread.h"
 #include "statuswidget.h"
+#include "backend.h"
 
-ShowThread::ShowThread(const Account* account, const qulonglong &initialStatus, QWidget *parent )
-    : QWidget( parent )
+ShowThread::ShowThread(Account* account, const qulonglong &finalStatus, QWidget *parent )
+    : QWidget( parent ), mAccount(account), mStatus(finalStatus)
 {
-	mAccount = account;
-	
+	setMinimumWidth(300);
+	setMinimumHeight(300);
+
+	setSizePolicy(QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
+
 	layout = new QVBoxLayout;
 	layout->setDirection(QBoxLayout::BottomToTop);
+	layout->setSpacing(1);
+
+	verticalSpacer = new QSpacerItem(20, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+	layout->addItem(verticalSpacer);
+
 	setLayout(layout);
 
-	addStatusToThread(initialStatus);
+	backend = new Backend(account, this);
+	connect(backend, SIGNAL(singleStatusReceived(Status)), this, SLOT(newStatusReceived(Status)));
 
 	connect(this, SIGNAL(close()), this, SLOT(deleteLater()));
 }
 
 ShowThread::~ShowThread()
 {
+	delete backend;
 }
 
 void ShowThread::addStatusToThread(const qulonglong &status)
 {
-	return;
+	backend->requestSingleStatus(status);
+}
+
+void ShowThread::startPopulate()
+{
+	addStatusToThread(mStatus);
+}
+
+void ShowThread::newStatusReceived(const Status &status)
+{
+
+        StatusWidget *wt = new StatusWidget( mAccount, this );
+
+        connect( wt, SIGNAL( sigReply( const QString&, qulonglong, bool ) ),
+                 this, SIGNAL( forwardReply( const QString&, qulonglong, bool ) ) );
+        connect( wt, SIGNAL(sigReTweet(const QString&)), SIGNAL(forwardReTweet(const QString&)));
+        connect( wt, SIGNAL( sigFavorite( qulonglong, bool ) ),
+                 this, SIGNAL( forwardFavorited( qulonglong, bool ) ) );
+        connect (wt,SIGNAL(sigSearch(int,QString)),this,SLOT(updateSearchArea(int,QString)));
+
+        wt->setAttribute( Qt::WA_DeleteOnClose );
+        wt->setCurrentStatus( status );
+        wt->setUnread( StatusWidget::WithoutNotify );
+
+        layout->addWidget( wt );
+
+	if(status.replyToStatusId)
+		addStatusToThread(status.replyToStatusId);
+	else
+		emit finishedPopulate();
 }
