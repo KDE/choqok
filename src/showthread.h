@@ -36,6 +36,8 @@
 
 #include "datacontainers.h"
 
+#include "ui_showthread_base.h"
+
 class KJob;
 class Account;
 class Backend;
@@ -59,6 +61,10 @@ protected slots:
 
 signals:
     void finishedPopulate();
+    void forwardReply( const QString &username, qulonglong statusId, bool dMsg );
+    void forwardFavorited( qulonglong statusId, bool isFavorite );
+    void forwardReTweet( const QString &text );
+    void forwardSigSearch(int, const QString &text );
 
 protected:
     void addStatusToThread(const qulonglong &status);
@@ -72,6 +78,8 @@ protected:
     qulonglong mStatus;
 
     QSpacerItem *verticalSpacer;
+
+    Ui::showthread_base ui;
 };
 
 #endif

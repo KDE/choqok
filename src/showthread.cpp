@@ -29,19 +29,11 @@
 ShowThread::ShowThread(Account* account, const qulonglong &finalStatus, QWidget *parent )
     : QWidget( parent ), mAccount(account), mStatus(finalStatus)
 {
-	setMinimumWidth(300);
-	setMinimumHeight(300);
+	ui.setupUi(this);
 
 	setSizePolicy(QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
 
-	layout = new QVBoxLayout;
-	layout->setDirection(QBoxLayout::BottomToTop);
-	layout->setSpacing(1);
-
-	verticalSpacer = new QSpacerItem(20, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-	layout->addItem(verticalSpacer);
-
-	setLayout(layout);
+	ui.homeLayout->setDirection(QBoxLayout::BottomToTop);
 
 	backend = new Backend(account, this);
 	connect(backend, SIGNAL(singleStatusReceived(Status)), this, SLOT(newStatusReceived(Status)));
@@ -74,13 +66,13 @@ void ShowThread::newStatusReceived(const Status &status)
         connect( wt, SIGNAL(sigReTweet(const QString&)), SIGNAL(forwardReTweet(const QString&)));
         connect( wt, SIGNAL( sigFavorite( qulonglong, bool ) ),
                  this, SIGNAL( forwardFavorited( qulonglong, bool ) ) );
-        connect (wt,SIGNAL(sigSearch(int,QString)),this,SLOT(updateSearchArea(int,QString)));
+        connect (wt,SIGNAL(sigSearch(int,QString)),this,SIGNAL(forwardSigSearch(int,QString)));
 
         wt->setAttribute( Qt::WA_DeleteOnClose );
         wt->setCurrentStatus( status );
         wt->setUnread( StatusWidget::WithoutNotify );
 
-        layout->addWidget( wt );
+        ui.homeLayout->addWidget( wt );
 
 	if(status.replyToStatusId)
 		addStatusToThread(status.replyToStatusId);
