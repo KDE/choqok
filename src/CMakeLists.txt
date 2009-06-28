@@ -17,6 +17,7 @@ set(choqok_SRCS
    accountmanager.cpp
    account.cpp
    userinfowidget.cpp
+   showthread.cpp
  )
 
 kde4_add_ui_files(choqok_SRCS timelinewidget_base.ui prefs_base.ui accounts_base.ui 

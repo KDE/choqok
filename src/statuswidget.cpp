@@ -40,6 +40,8 @@
 #include <KTemporaryFile>
 #include "userinfowidget.h"
 
+#include "showthread.h"
+
 static const int _15SECS = 15000;
 static const int _MINUTE = 60000;
 static const int _HOUR = 60*_MINUTE;
@@ -139,6 +141,11 @@ void StatusWidget::checkAnchor(const QUrl & url)
                 this, SLOT( baseStatusReceived(Status) ) );
         b->requestSingleStatus( url.host().toULongLong() );
         return;
+    } else if (scheme == "thread") {
+	    qulonglong status = url.host().toULongLong();
+	    ShowThread *st = new ShowThread(mCurrentAccount, status, NULL);
+	    st->show();
+	    return;
     } else {
         if( Settings::useCustomBrowser() ) {
             QStringList args = Settings::customBrowser().split(' ');
@@ -350,8 +357,10 @@ QString StatusWidget::generateSign()
         if ( mCurrentStatus.replyToStatusId > 0 ) {
             QString link = mCurrentAccount->statusUrl( mCurrentStatus.replyToStatusId,
                                                        mCurrentStatus.replyToUserScreenName );
+	    QString threadlink = "thread://" + QString::number(mCurrentStatus.statusId);
             sign += " - <a href='status://" + QString::number( mCurrentStatus.replyToStatusId ) + "'>" +
-            i18n("in reply to")+ "</a>&nbsp;<a href=\"" + link + "\"><img src=\"icon://web\" /></a>";
+            i18n("in reply to")+ "</a>&nbsp;<a href=\"" + link + "\"><img src=\"icon://web\" /></a>" +
+	    "<a href=\"" + threadlink + "\"><img src=\"icon://web\" /></a>";
         }
     }
     return sign;
