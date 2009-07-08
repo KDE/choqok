@@ -77,6 +77,7 @@ void AccountsWizard::slotButtonClicked( int button )
         QString home = ui.kcfg_homepage->text();
         if( home.at( home.count() - 1 ) != '/' )
             ui.kcfg_homepage->setText( home.append('/') );
+        ui.kcfg_username->setText(ui.kcfg_username->text().toLower());
         ///Show ProgressBar:
         if ( progress ) {
             progress->hide();
