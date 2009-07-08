@@ -39,6 +39,7 @@
 #include <KAction>
 #include <KTemporaryFile>
 #include "userinfowidget.h"
+#include <kio/job.h>
 
 #include "showthread.h"
 
@@ -434,7 +435,26 @@ QString StatusWidget::prepareStatus( const QString &text )
     if ( status.startsWith( QLatin1String("www.") ) ) 
         status.prepend( "http://" );
 
+    // This next block replaces 301 redirects with an appropriate title
+    int pos = 0;
+    QStringList redirectList;
+    while ((pos = mUrlRegExp.indexIn(status, pos)) != -1) {
+        pos += mUrlRegExp.matchedLength();
+        redirectList << mUrlRegExp.cap(0);
+    }
+
     status.replace(mUrlRegExp,"<a href='\\1' title='\\1'>\\1</a>");
+
+    foreach(QString str, redirectList) {
+        KIO::TransferJob *job = KIO::mimetype( str, KIO::HideProgressInfo ) ;
+        if ( !job ) {
+            kDebug() << "Cannot create a http header request!";
+	    break;
+        }
+        connect( job, SIGNAL( permanentRedirection( KIO::Job*, KUrl, KUrl ) ), this, SLOT( slot301Redirected ( KIO::Job *, KUrl, KUrl ) ) );
+        job->start();
+    }
+
 
     if(Settings::isSmiliesEnabled())
       status = MediaManager::self()->parseEmoticons(status);
@@ -614,6 +634,14 @@ void StatusWidget::showUserInformation(const User& user)
 {
     UserInfoWidget *widget = new UserInfoWidget(user, this);
     widget->show(QCursor::pos());
+}
+
+void StatusWidget::slot301Redirected(KIO::Job *job, const KUrl &fromUrl, const KUrl &toUrl)
+{
+    job->kill();
+    kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
+    mStatus.replace(QRegExp("title='" + fromUrl.url() + "'"), "title='" + toUrl.url() + "'");
+    updateSign();
 }
 
 #include "statuswidget.moc"

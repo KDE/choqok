@@ -27,10 +27,15 @@
 #include <QTimer>
 #include <KTextBrowser>
 #include <KPushButton>
+#include <KUrl>
 
 #include "datacontainers.h"
 #include "constants.h"
 #include "account.h"
+
+namespace KIO {
+	class Job;
+}
 
 /**
 Status Widget
@@ -86,6 +91,9 @@ protected slots:
     void twitpicImageFailed( const QString &imageUrl, const QString &errMsg );
 
     void showUserInformation(const User& user);
+
+    void slot301Redirected(KIO::Job *job, const KUrl &fromUrl, const KUrl &toUrl);
+
 protected:
     void resizeEvent ( QResizeEvent * event );
     void enterEvent ( QEvent * event );
