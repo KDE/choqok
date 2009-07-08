@@ -366,12 +366,13 @@ QString StatusWidget::generateSign()
         if( !mCurrentStatus.source.isNull() )
             sign += " - " + mCurrentStatus.source;
         if ( mCurrentStatus.replyToStatusId > 0 ) {
+            QString showConMsg = i18n("Show Conversation");
             QString link = mCurrentAccount->statusUrl( mCurrentStatus.replyToStatusId,
                                                        mCurrentStatus.replyToUserScreenName );
-	    QString threadlink = "thread://" + QString::number(mCurrentStatus.statusId);
+            QString threadlink = "thread://" + QString::number(mCurrentStatus.statusId);
             sign += " - <a href='status://" + QString::number( mCurrentStatus.replyToStatusId ) + "'>" +
             i18n("in reply to")+ "</a>&nbsp;<a href=\"" + link + "\"><img src=\"icon://web\" /></a> " +
-	    "<a href=\"" + threadlink + "\"><img src=\"icon://thread\" /></a>";
+            "<a title=\""+ showConMsg +"\" href=\"" + threadlink + "\"><img src=\"icon://thread\" /></a>";
         }
     }
     return sign;
