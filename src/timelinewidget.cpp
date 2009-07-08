@@ -713,7 +713,7 @@ void TimeLineWidget::reloadFriendsList()
     kDebug();
     friendsList.clear();
     comboFriendList->setCurrentItem( i18n("Please wait...."), true, 0);
-    twitter->listFollowersScreenName();
+//     twitter->listFollowersScreenName();
     twitter->listFriendsScreenName();
 }
 
