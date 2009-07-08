@@ -588,6 +588,7 @@ void TimeLineWidget::loadConfigurations()
     kDebug();
     setDefaultDirection();
     friendsList = AccountManager::self()->listFriends( mCurrentAccount.alias() );
+    friendsList.sort();
 //     txtNewStatus->setFriendsList( friendsList );
     comboFriendList->addItems( friendsList );
     KCompletion *c = comboFriendList->completionObject( true );;
@@ -718,14 +719,12 @@ void TimeLineWidget::reloadFriendsList()
 
 void TimeLineWidget::friendsListed( const QStringList & list )
 {
-    int count = list.count();
-    for ( int i = 0; i < count; ++i ) {
-        if ( !friendsList.contains( list[i], Qt::CaseInsensitive ) )
-            friendsList << list[i];
-    }
+    friendsList<<list;
+    friendsList.removeDuplicates();
+    friendsList.sort();
+
     comboFriendList->clear();
     comboFriendList->addItems( friendsList );
-
     KCompletion *c = comboFriendList->completionObject( true );
     c->setItems( friendsList );
     c->setCompletionMode( KGlobalSettings::CompletionPopupAuto );
