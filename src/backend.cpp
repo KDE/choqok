@@ -261,7 +261,7 @@ Status Backend::readStatusFromDomElement ( const QDomElement &root )
     post.user.friendsCount = 0;
 
     if ( root.tagName() != "status" ) {
-        kDebug() << "there's no status tag in XML, Error!!";
+        kDebug() << "there's no status tag in XML, Error!! TagName: "<< root.tagName() << " Text: "<< root.text();
         post.isError = true ;
         return post;
     }
@@ -364,7 +364,7 @@ Status Backend::readDMessageFromDomElement ( const QDomElement &root )
     msg.isDMessage = true;
     msg.user.friendsCount = 0;
     if ( root.tagName() != "direct_message" ) {
-        kDebug() << "there's no status tag in XML, Error!!";
+        kDebug() << "there's no status tag in XML, Error!! TagName: "<< root.tagName() << " Text: "<< root.text();
         msg.isError = true ;
         return msg;
     }
