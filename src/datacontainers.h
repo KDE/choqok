@@ -38,6 +38,10 @@ public:
     bool isProtected;
     int followersCount;
     int friendsCount;
+
+    // These two are not necessarily set
+    bool isFriend;
+    bool isFollower;
 };
 
 struct Status {

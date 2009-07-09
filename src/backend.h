@@ -68,6 +68,7 @@ public slots:
     void settingsChanged();
     void listFollowersScreenName();
     void listFriendsScreenName();
+    void slotAddFriend(const QString &username);
 
 signals:
     void sigPostNewStatusDone( bool isError );
@@ -82,6 +83,7 @@ signals:
     void followersListed( const QStringList &followersList );
     void friendsListed( const QStringList &friendsList );
     void singleStatusReceived( Status status );
+    void friendAdded(const QString &screenName);
 
 protected slots:
     void slotListFollowersScreenName( KJob *job );
@@ -98,6 +100,7 @@ protected slots:
     void slotRequestSingleStatusFinished( KJob* );
     void slotSendDMessageFinished( KJob* );
     void slotSendDMessageData(KIO::Job*, const QByteArray&);
+    void slotRequestNewFriendFinished(KJob*);
 
 private:
     QStringList readUsersNameFromXml( const QByteArray &buffer );
@@ -117,6 +120,7 @@ private:
     QMap<KJob *, TimeLineType> mRequestTimelineMap;
     QMap<KJob *, DMessageType> mRequestDMessagesMap;
     QMap<KJob *, qulonglong> mRequestSingleStatusMap;
+    QMap<KJob *, QString> mRequestFriendMap;
 
     QMap<KJob *, QByteArray> mPostNewStatusBuffer;
     QMap<KJob *, QByteArray> mSendDMessageBuffer;

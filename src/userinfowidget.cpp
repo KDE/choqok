@@ -79,6 +79,8 @@ void UserInfoWidget::checkAnchor( const QUrl url )
     if(url.scheme()=="choqok"){
         if(url.host()=="close")
             this->close();
+	else if (url.host() == "follow")
+	    emit sigFollowUser(mUser.screenName);
     } else {
         if( Settings::useCustomBrowser() ) {
             QStringList args = Settings::customBrowser().split(' ');
@@ -101,13 +103,14 @@ void UserInfoWidget::setupUi()
     QString url = mUser.homePageUrl.isEmpty() ? QString() 
                         : QString("<a title='%1' href='%1'>%1</a>").arg(mUser.homePageUrl);
     QString info = i18n( "<table width=\"100%\">\
-    <tr><td><b><i>Who is %5?</i></b><a href='choqok://close'><img src='icon://close' align='right' /></a></td></tr>\
+    <tr><td><b><i>Who is %5?</i></b> <a href='choqok://follow'>%6</a> \
+    <a href='choqok://close'><img src='icon://close' align='right' /></a></td></tr>\
     <tr><td><table><tr><td width=\"48\"><img width=48 height=48 src='img://profileImage'/></td>\
     <td><p align='left'><b>Name:</b> %1<br/>\
     <b>Location:</b> %2<br/>\
     <b>Web:</b> %3<br/>\
     <b>Bio:</b> %4\
-    </p></td></tr></table></td></tr></table>", mUser.name, mUser.location, url, mUser.description, mUser.screenName );
+    </p></td></tr></table></td></tr></table>", mUser.name, mUser.location, url, mUser.description, mUser.screenName , QString(mUser.isFriend? "" : "follow"));
 
     w->document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
                              *(MediaManager::self()->getAvatarIfExist( KUrl( mUser.profileImageUrl ) )) );

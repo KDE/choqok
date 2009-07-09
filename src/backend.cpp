@@ -1218,4 +1218,36 @@ void Backend::slotSendDMessageData(KIO::Job *job, const QByteArray &data)
     mPostNewStatusBuffer[ job ].append( data );
 }
 
+void Backend::slotAddFriend(const QString &screenName)
+{
+    kDebug();
+    KUrl url( mCurrentAccount->apiPath() );
+    url.addPath( "/friendships/create/" + screenName + ".xml" );
+    setDefaultArgs( url );
+
+    KIO::TransferJob *job = KIO::http_post(url, QByteArray(), KIO::HideProgressInfo) ;
+    if ( !job ) {
+        kDebug() << "Cannot create a http POST request!";
+        QString errMsg = i18n( "Cannot create an http POST request, please check your Internet connection." );
+        emit sigError( errMsg );
+        return;
+    }
+
+    mRequestFriendMap[ job ] = screenName;
+    connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestNewFriendFinished ( KJob* ) ) );
+    job->start();
+}
+
+void Backend::slotRequestNewFriendFinished(KJob *job)
+{
+    // If we are already friends, then HTTP 403 is returned
+    kDebug();
+    if ( job->error() ) {
+        kDebug() << "Job Error: " << job->errorString();
+    } else {
+        emit friendAdded( mRequestFriendMap[job] );
+    }
+    mRequestFriendMap.remove(job);
+}
+
 #include "backend.moc"

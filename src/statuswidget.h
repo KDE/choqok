@@ -67,6 +67,8 @@ public:
 //     static QString getColoredStyle() { return style; };
 public slots:
     void setUiStyle();
+    void slotFriendAdded(const QString &);
+
 signals:
     void sigSearch(int type, const QString & search);
     void sigReply( const QString &userName, qulonglong statusId, bool dMsg );

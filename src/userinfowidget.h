@@ -43,6 +43,9 @@ private:
     void setupUi();
     User mUser;
     KTextBrowser *w;
+
+signals:
+    void sigFollowUser(const QString &username);
 };
 
 #endif // USERINFOWIDGET_H

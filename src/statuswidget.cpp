@@ -25,6 +25,7 @@
 #include "settings.h"
 #include "mediamanager.h"
 #include "backend.h"
+#include "accountmanager.h"
 #include <KNotification>
 #include <KProcess>
 
@@ -127,6 +128,7 @@ void StatusWidget::checkAnchor(const QUrl & url)
         ret = menu.exec(QCursor::pos());
         if(ret == 0) return;
         if(ret == info) {
+            mCurrentStatus.user.isFriend = AccountManager::self()->listFriends(mCurrentAccount->alias()).contains(mCurrentStatus.user.screenName);
             showUserInformation(mCurrentStatus.user);
             return;
         }
@@ -632,7 +634,14 @@ void StatusWidget::twitpicImageFailed( const QString &imageUrl, const QString &e
 
 void StatusWidget::showUserInformation(const User& user)
 {
+    Backend *b = new Backend(new Account(*mCurrentAccount), this);
+    connect( b, SIGNAL( singleStatusReceived( Status ) ),
+             this, SLOT( baseStatusReceived(Status) ) );
+
     UserInfoWidget *widget = new UserInfoWidget(user, this);
+
+    connect(widget, SIGNAL(sigFollowUser(QString)), b, SLOT(slotAddFriend(QString)));
+    connect(b, SIGNAL(friendAdded(QString)), this, SLOT(slotFriendAdded(QString)));
     widget->show(QCursor::pos());
 }
 
@@ -642,6 +651,26 @@ void StatusWidget::slot301Redirected(KIO::Job *job, const KUrl &fromUrl, const K
     kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
     mStatus.replace(QRegExp("title='" + fromUrl.url() + "'"), "title='" + toUrl.url() + "'");
     updateSign();
+}
+
+void StatusWidget::slotFriendAdded(const QString &username)
+{
+    QString message = "You are now following " + username;
+    kDebug()<<message;
+
+    if ( Settings::notifyType() == SettingsBase::KNotify ) {//KNotify
+        KNotification *notif = new KNotification( "notify", this );
+        notif->setText( message );
+        notif->setFlags( KNotification::RaiseWidgetOnActivation | KNotification::Persistent );
+        notif->sendEvent();
+        QTimer::singleShot( Settings::notifyInterval()*1000, notif, SLOT( close() ) );
+    } else if ( Settings::notifyType() == SettingsBase::LibNotify ) {//Libnotify!
+        QString msg = message;
+        msg = msg.replace( "<br/>", "\n" );
+        QString libnotifyCmd = QString( "notify-send -t " ) + QString::number( Settings::notifyInterval() * 1000 )
+                               + QString( " -u low \"" ) + "notification" + QString( "\" \"" ) + msg + QString( "\"" );
+        QProcess::execute( libnotifyCmd );
+    }
 }
 
 #include "statuswidget.moc"
