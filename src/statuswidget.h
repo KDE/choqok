@@ -34,7 +34,7 @@
 #include "account.h"
 
 namespace KIO {
-	class Job;
+    class Job;
 }
 
 /**

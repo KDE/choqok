@@ -648,7 +648,7 @@ void StatusWidget::showUserInformation(const User& user)
 void StatusWidget::slot301Redirected(KIO::Job *job, const KUrl &fromUrl, const KUrl &toUrl)
 {
     job->kill();
-    kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
+//     kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
     mStatus.replace(QRegExp("title='" + fromUrl.url() + "'"), "title='" + toUrl.url() + "'");
     updateSign();
 }
@@ -658,18 +658,18 @@ void StatusWidget::slotFriendAdded(const QString &username)
     QString message = "You are now following " + username;
     kDebug()<<message;
 
-    if ( Settings::notifyType() == SettingsBase::KNotify ) {//KNotify
-        KNotification *notif = new KNotification( "notify", this );
-        notif->setText( message );
-        notif->setFlags( KNotification::RaiseWidgetOnActivation | KNotification::Persistent );
-        notif->sendEvent();
-        QTimer::singleShot( Settings::notifyInterval()*1000, notif, SLOT( close() ) );
-    } else if ( Settings::notifyType() == SettingsBase::LibNotify ) {//Libnotify!
+    if ( Settings::notifyType() == SettingsBase::LibNotify ) {//Libnotify!
         QString msg = message;
         msg = msg.replace( "<br/>", "\n" );
         QString libnotifyCmd = QString( "notify-send -t " ) + QString::number( Settings::notifyInterval() * 1000 )
                                + QString( " -u low \"" ) + "notification" + QString( "\" \"" ) + msg + QString( "\"" );
         QProcess::execute( libnotifyCmd );
+    } else {//KNotify
+        KNotification *notif = new KNotification( "notify", this );
+        notif->setText( message );
+        notif->setFlags( KNotification::RaiseWidgetOnActivation | KNotification::Persistent );
+        notif->sendEvent();
+        QTimer::singleShot( Settings::notifyInterval()*1000, notif, SLOT( close() ) );
     }
 }
 
