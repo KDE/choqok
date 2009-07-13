@@ -437,21 +437,21 @@ QString StatusWidget::prepareStatus( const QString &text )
     if ( status.startsWith( QLatin1String("www.") ) ) 
         status.prepend( "http://" );
 
+    status.replace(mUrlRegExp,"<a href='\\1' title='\\1'>\\1</a>");
+
     // This next block replaces 301 redirects with an appropriate title
     int pos = 0;
     QStringList redirectList;
-    while ((pos = mUrlRegExp.indexIn(status, pos)) != -1) {
+    while ((pos = mUrlRegExp.indexIn(mCurrentStatus.content, pos)) != -1) {
         pos += mUrlRegExp.matchedLength();
-        redirectList << mUrlRegExp.cap(0);
+        if( mUrlRegExp.matchedLength() < 31 )//Most of shortenned URLs have less than 30 Chars!
+            redirectList << mUrlRegExp.cap(0);
     }
-
-    status.replace(mUrlRegExp,"<a href='\\1' title='\\1'>\\1</a>");
-
-    foreach(QString str, redirectList) {
-        KIO::TransferJob *job = KIO::mimetype( str, KIO::HideProgressInfo ) ;
+    foreach(QString url, redirectList) {
+        KIO::TransferJob *job = KIO::mimetype( url, KIO::HideProgressInfo );
         if ( !job ) {
             kDebug() << "Cannot create a http header request!";
-	    break;
+            break;
         }
         connect( job, SIGNAL( permanentRedirection( KIO::Job*, KUrl, KUrl ) ), this, SLOT( slot301Redirected ( KIO::Job *, KUrl, KUrl ) ) );
         job->start();
@@ -459,7 +459,7 @@ QString StatusWidget::prepareStatus( const QString &text )
 
 
     if(Settings::isSmiliesEnabled())
-      status = MediaManager::self()->parseEmoticons(status);
+        status = MediaManager::self()->parseEmoticons(status);
 
     status.replace(mUserRegExp,"\\1@<a href='user://\\2'>\\2</a> <a href='"+ mCurrentAccount->homepage() + 
     "\\2'><img src=\"icon://web\" /></a>");
@@ -648,7 +648,7 @@ void StatusWidget::showUserInformation(const User& user)
 void StatusWidget::slot301Redirected(KIO::Job *job, const KUrl &fromUrl, const KUrl &toUrl)
 {
     job->kill();
-//     kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
+    kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
     mStatus.replace(QRegExp("title='" + fromUrl.url() + "'"), "title='" + toUrl.url() + "'");
     updateSign();
 }
