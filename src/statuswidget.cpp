@@ -437,8 +437,6 @@ QString StatusWidget::prepareStatus( const QString &text )
     if ( status.startsWith( QLatin1String("www.") ) ) 
         status.prepend( "http://" );
 
-    status.replace(mUrlRegExp,"<a href='\\1' title='\\1'>\\1</a>");
-
     // This next block replaces 301 redirects with an appropriate title
     int pos = 0;
     QStringList redirectList;
@@ -447,6 +445,9 @@ QString StatusWidget::prepareStatus( const QString &text )
         if( mUrlRegExp.matchedLength() < 31 )//Most of shortenned URLs have less than 30 Chars!
             redirectList << mUrlRegExp.cap(0);
     }
+
+    status.replace(mUrlRegExp,"<a href='\\1' title='\\1'>\\1</a>");
+
     foreach(QString url, redirectList) {
         KIO::TransferJob *job = KIO::mimetype( url, KIO::HideProgressInfo );
         if ( !job ) {
