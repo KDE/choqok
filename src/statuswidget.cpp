@@ -393,7 +393,8 @@ void StatusWidget::requestDestroy()
 
 void StatusWidget::requestReTweet()
 {
-    QString text = "RT @" + mCurrentStatus.user.screenName + ' ' + mCurrentStatus.content;
+    QChar re(0x267B);
+    QString text =  QString(re) + " @" + mCurrentStatus.user.screenName + ": " + mCurrentStatus.content;
     emit sigReTweet( text );
 }
 
