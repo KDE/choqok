@@ -35,7 +35,7 @@ static const char description[] =
 Currently supports <a href='http://twitter.com'>Twitter.com</a> and \
 <a href='http://identi.ca'>Identi.ca</a>" );
 
-static const char version[] = "0.6";
+static const char version[] = "0.6.1";
 
 int main( int argc, char **argv )
 {
