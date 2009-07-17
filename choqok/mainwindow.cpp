@@ -49,6 +49,7 @@
 #include <KNotification>
 #include <QDBusInterface>
 #include <QDBusReply>
+#include "advancedconfig.h"
 
 MainWindow::MainWindow()
     : KXmlGuiWindow()
@@ -133,13 +134,11 @@ void MainWindow::setupActions()
     KAction *newSearch = new KAction( KIcon( "edit-find" ), i18n( "Search" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_search" ), newSearch );
     newSearch->setShortcut( KShortcut( Qt::CTRL | Qt::Key_F ) );
-    newSearch->setGlobalShortcutAllowed( false );
     connect( newSearch, SIGNAL( triggered( bool ) ), this, SLOT( search() ) );
 
     KAction *markRead = new KAction( KIcon( "mail-mark-read" ), i18n( "Mark All As Read" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_mark_read" ), markRead );
     markRead->setShortcut( KShortcut( Qt::CTRL | Qt::Key_R ) );
-    actUpdate->setGlobalShortcutAllowed( false );
     connect( markRead, SIGNAL( triggered( bool ) ), this, SIGNAL( setUnreadStatusesToReadState() ) );
 
     KAction *showMain = new KAction( this );
@@ -271,6 +270,9 @@ void MainWindow::optionsPreferences()
     QWidget *appearsSettingsDlg = new QWidget;
     ui_appears_base.setupUi( appearsSettingsDlg );
     dialog->addPage( appearsSettingsDlg, i18n( "Appearance" ), "format-stroke-color" );
+
+    AdvancedConfig *advancedSettingsDlg = new AdvancedConfig( this );
+    dialog->addPage( advancedSettingsDlg, i18n("Advanced"), "applications-utilities");
 
     connect( dialog, SIGNAL( settingsChanged( QString ) ), this, SLOT( settingsChanged() ) );
 

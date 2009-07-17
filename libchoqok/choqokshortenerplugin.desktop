@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=ServiceType
+X-KDE-ServiceType=Choqok/Shortener
+X-KDE-Derived=Choqok/Plugin
+Comment=Choqok Shortener Plugin
+

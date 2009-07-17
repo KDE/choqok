@@ -31,6 +31,7 @@
 #include "settings.h"
 #include <kio/netaccess.h>
 #include <kmimetype.h>
+#include <shortenmanager.h>
 
 Backend::Backend( Account *account, QObject* parent )
 : QObject( parent ), mCurrentAccount(account), mScheme("http")
@@ -718,8 +719,8 @@ QString Backend::prepareStatus( QString status )
         if ( k == -1 )
             k = status.length();
         QString baseUrl = status.mid( j, k - j );
-        if ( baseUrl.count() > 30 && Settings::shortenService() != SettingsBase::NoShorten ) {
-            t += shortenUrl(baseUrl);
+        if ( baseUrl.count() > 30 ) {
+            t += Choqok::ShortenManager::self()->shortenUrl(baseUrl);
         } else {
             t += baseUrl;
         }
