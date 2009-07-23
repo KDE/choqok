@@ -3,6 +3,7 @@ Type=ServiceType
 X-KDE-ServiceType=Choqok/Plugin
 X-KDE-Derived=KPluginInfo
 Comment=Choqok Plugin
+Comment[gl]=Engadido de ChoqoK
 Comment[it]=Estensione di Choqok
 Comment[pt]='Plugin' do Choqok
 Comment[pt_BR]='Plugin' do Choqok
