@@ -33,13 +33,14 @@
 /**
 Identi.ca search API implementation.
 
-@author Stephen Henderson <hendersonsk@gmail.com>
+@author Stephen Henderson \<hendersonsk@gmail.com\>
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
 class IdenticaSearch : public Search
 {
     Q_OBJECT
 public:
-    enum SearchType { ToUser = 0, FromUser, ReferenceGroup, ReferenceHashtag };
+    enum SearchType { ReferenceHashtag = 0, ToUser, FromUser, ReferenceGroup };
 
     explicit IdenticaSearch( Account* account, const QString& searchUrl = QString(), QObject* parent = 0 );
     virtual ~IdenticaSearch();
@@ -57,7 +58,9 @@ public slots:
 
 protected slots:
     virtual void searchResultsReturned( KJob *job );
-
+private:
+    int mLatestSearch;
+    QRegExp mIdRegExp;
 };
 
 #endif

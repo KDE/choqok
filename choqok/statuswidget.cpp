@@ -366,7 +366,7 @@ QString StatusWidget::generateSign()
             sign.prepend( "To " );
         }
     } else {
-        if( !mCurrentStatus.source.isNull() )
+        if( !mCurrentStatus.source.isEmpty() )
             sign += " - " + mCurrentStatus.source;
         if ( mCurrentStatus.replyToStatusId > 0 ) {
             QString showConMsg = i18n("Show Conversation");

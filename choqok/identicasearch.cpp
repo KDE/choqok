@@ -35,9 +35,10 @@
 #include "backend.h"
 
 IdenticaSearch::IdenticaSearch( Account* account, const QString & searchUrl, QObject *parent ) :
-        Search(account, "(?:user|(?:.*notice))/([0-9]+)", searchUrl, parent)
+    Search(account, "tag:search.twitter.com,[0-9]+:([0-9]+)", searchUrl, parent)
 {
     kDebug();
+    mIdRegExp.setPattern("(?:user|(?:.*notice))/([0-9]+)");
     mSearchTypes[ToUser].first = i18nc( "Dents are Identica posts", "Dents To This User" );
     mSearchTypes[ToUser].second = false;
 
@@ -48,7 +49,7 @@ IdenticaSearch::IdenticaSearch( Account* account, const QString & searchUrl, QOb
     mSearchTypes[ReferenceGroup].second = false;
 
     mSearchTypes[ReferenceHashtag].first = i18nc( "Dents are Identica posts", "Dents Including This Hashtag" );
-    mSearchTypes[ReferenceHashtag].second = false;
+    mSearchTypes[ReferenceHashtag].second = true;
 }
 
 IdenticaSearch::~IdenticaSearch()
@@ -59,10 +60,6 @@ IdenticaSearch::~IdenticaSearch()
 KUrl IdenticaSearch::buildUrl( QString query, int option, qulonglong sinceStatusId, qulonglong count, qulonglong page )
 {
     kDebug();
-    Q_UNUSED(sinceStatusId);
-    Q_UNUSED(count);
-    Q_UNUSED(page);
-    QString baseUrl = mSearchUrl;
 
     QString formattedQuery;
     switch ( option ) {
@@ -76,7 +73,7 @@ KUrl IdenticaSearch::buildUrl( QString query, int option, qulonglong sinceStatus
             formattedQuery = "group/" + query + "/rss";
             break;
         case ReferenceHashtag:
-            formattedQuery = "tag/" + query + "/rss";
+            formattedQuery = "#" + query;
             break;
         default:
             formattedQuery = query + "/rss";
@@ -84,8 +81,18 @@ KUrl IdenticaSearch::buildUrl( QString query, int option, qulonglong sinceStatus
     };
 
     KUrl url;
-    url.setUrl( baseUrl + formattedQuery );
-
+    if( option == ReferenceHashtag ) {
+        url.setUrl( mSearchUrl );
+        url.addPath("/api/search.atom");
+        url.addQueryItem("q", formattedQuery);
+        if( sinceStatusId )
+            url.addQueryItem( "since_id", QString::number( sinceStatusId ) );
+        if( count && count <= 100 )
+            url.addQueryItem( "rpp", QString::number( count ) );
+        url.addQueryItem( "page", QString::number( page ) );
+    } else {
+        url.setUrl( mSearchUrl + formattedQuery );
+    }
     return url;
 }
 
@@ -95,7 +102,7 @@ void IdenticaSearch::requestSearchResults( QString query, int option, qulonglong
     Q_UNUSED(count);
     Q_UNUSED(page);
 
-    KUrl url = buildUrl( query, option, sinceStatusId );
+    KUrl url = buildUrl( query, option, sinceStatusId, count, page );
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo );
     if( !job ) {
@@ -105,6 +112,7 @@ void IdenticaSearch::requestSearchResults( QString query, int option, qulonglong
     }
 
     mSinceStatusId = sinceStatusId;
+    mLatestSearch = option;
 
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( searchResultsReturned( KJob* ) ) );
     job->start();
@@ -125,7 +133,11 @@ void IdenticaSearch::searchResultsReturned( KJob* job )
         return;
     }
     KIO::StoredTransferJob *jj = qobject_cast<KIO::StoredTransferJob *>( job );
-    QList<Status>* statusList = parseRss( jj->data() );
+    QList<Status>* statusList;
+    if( mLatestSearch == ReferenceHashtag )
+        statusList = parseAtom( jj->data() );
+    else
+        statusList = parseRss( jj->data() );
 
     emit searchResultsReceived( *statusList );
 }
@@ -157,8 +169,8 @@ QList<Status>* IdenticaSearch::parseRss( const QByteArray &buffer )
 
         QDomAttr statusIdAttr = node.toElement().attributeNode( "rdf:about" );
         qulonglong statusId = 0;
-	if(m_rId.exactMatch(statusIdAttr.value())) {
-	  statusId = m_rId.cap(1).toULongLong();
+	if(mIdRegExp.exactMatch(statusIdAttr.value())) {
+	  statusId = mIdRegExp.cap(1).toULongLong();
 	}
 //         sscanf( qPrintable( statusIdAttr.value() ),
 //                 qPrintable( mSearchUrl + "notice/%d" ), &statusId );
@@ -197,8 +209,8 @@ QList<Status>* IdenticaSearch::parseRss( const QByteArray &buffer )
             } else if ( itemNode.toElement().tagName() == "sioc:has_creator" ) {
                 QDomAttr userIdAttr = itemNode.toElement().attributeNode( "rdf:resource" );
                 qulonglong id = 0;
-		if(m_rId.exactMatch(userIdAttr.value())) {
-		  id = m_rId.cap(1).toULongLong();
+		if(mIdRegExp.exactMatch(userIdAttr.value())) {
+		  id = mIdRegExp.cap(1).toULongLong();
 		}
 /*                sscanf( qPrintable( userIdAttr.value() ),
                         qPrintable( mSearchUrl + "user/%d" ), &id );*/
