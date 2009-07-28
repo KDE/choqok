@@ -3,6 +3,7 @@ Type=ServiceType
 X-KDE-ServiceType=Choqok/Shortener
 X-KDE-Derived=Choqok/Plugin
 Comment=Choqok Shortener Plugin
+Comment[es]=Complemento de acortamiento de Choqok
 Comment[fr]=Module externe de raccourcissement pour Choqok
 Comment[gl]=Engadido de abreviación de Choqok
 Comment[it]=Estensione di abbreviazione di Choqok
