@@ -100,6 +100,35 @@ MainWindow::~MainWindow()
     kDebug();
 }
 
+void MainWindow::nextTab(const QWheelEvent & event) {
+  if(!isVisible())
+    return;
+  KTabWidget * widget = 0;
+  switch(event.orientation()) {
+  case Qt::Vertical:
+    widget = mainWidget;
+  break;
+  case Qt::Horizontal:
+    TimeLineWidget * t = qobject_cast<TimeLineWidget*>(mainWidget->widget( mainWidget->currentIndex() ));
+    if(t)
+      widget = t->tabs;
+    else
+      return;
+  break;
+  }
+  if(!widget) return;
+
+  int count = widget->count();
+  int index = widget->currentIndex();
+  int page;
+  if(event.delta() > 0) {
+    page = index>0?index-1:count-1;
+  } else {
+    page = index<count-1?index+1:0;
+  }
+  widget->setCurrentIndex(page);
+}
+
 void MainWindow::setupActions()
 {
     KStandardAction::quit( qApp, SLOT( quit() ), actionCollection() );
@@ -182,6 +211,8 @@ void MainWindow::setupActions()
     sysIcon->setTimeLineUpdatesEnabled( enableUpdates->isChecked() );
     sysIcon->contextMenu()->addAction( enableNotify );
     sysIcon->contextMenu()->addAction( prefs );
+
+    connect(sysIcon,SIGNAL(wheelEvent(const QWheelEvent&)),this,SLOT(nextTab(const QWheelEvent&)));
     sysIcon->show();
 }
 

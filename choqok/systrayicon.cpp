@@ -33,6 +33,9 @@
 #include "accountmanager.h"
 #include <kglobalsettings.h>
 
+// #include <qcoreevent.h>
+#include <QWheelEvent>
+
 SysTrayIcon::SysTrayIcon( QWidget* parent ): KSystemTrayIcon( parent )
 {
     kDebug();
@@ -48,6 +51,15 @@ SysTrayIcon::~SysTrayIcon()
 {
     kDebug();
     AccountManager::self()->deleteLater();
+}
+
+bool SysTrayIcon::event(QEvent* event) {
+  if(event->type() == QEvent::Wheel) {
+    QWheelEvent * wheel = static_cast<QWheelEvent*>(event);
+    emit wheelEvent(*wheel);
+    return true;
+  }
+  return false;
 }
 
 void SysTrayIcon::slotSetUnread( int numOfUnreadStatuses )

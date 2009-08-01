@@ -45,6 +45,13 @@ public slots:
     void slotStatusUpdated( bool isError );
     void slotRestoreIcon();
     void slotSetUnread( int numOfUnreadStatuses );
+
+signals:
+    void wheelEvent(const QWheelEvent&);
+
+protected:
+    virtual bool event(QEvent* event);
+    
 private:
     int unread;
 

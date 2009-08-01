@@ -72,6 +72,7 @@ signals:
 public slots:
     void systemNotify( const QString &title, const QString &message, const QString &iconUrl );
     void search(int type = 0, const QString &search = QString());
+    void nextTab(const QWheelEvent&);
 
 protected slots:
     void optionsPreferences();
