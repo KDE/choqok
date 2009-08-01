@@ -296,14 +296,14 @@ void MainWindow::optionsPreferences()
     dialog->addPage( generalSettingsDlg, i18n( "General" ), "configure" );
 
     Accounts *accountsSettingsDlg = new Accounts( this );
-    dialog->addPage( accountsSettingsDlg, i18n( "Accounts" ), "user-properties" );
+    dialog->addPage( accountsSettingsDlg, i18n( "Accounts" ), "user-properties", QString(), false );
 
     QWidget *appearsSettingsDlg = new QWidget;
     ui_appears_base.setupUi( appearsSettingsDlg );
     dialog->addPage( appearsSettingsDlg, i18n( "Appearance" ), "format-stroke-color" );
 
     AdvancedConfig *advancedSettingsDlg = new AdvancedConfig( this );
-    dialog->addPage( advancedSettingsDlg, i18n("Advanced"), "applications-utilities");
+    dialog->addPage( advancedSettingsDlg, i18n("Advanced"), "applications-utilities", QString(), false);
 
     connect( dialog, SIGNAL( settingsChanged( QString ) ), this, SLOT( settingsChanged() ) );
 
