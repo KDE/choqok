@@ -32,7 +32,6 @@ class TightUrl : public Choqok::Shortener
 public:
     TightUrl( QObject *parent, const QStringList &  args  );
     ~TightUrl();
-public slots:
     QString shorten( const QString &url );
 };
 

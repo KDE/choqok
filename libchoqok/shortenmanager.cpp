@@ -28,6 +28,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <ksharedconfig.h>
 #include <kconfiggroup.h>
 #include <KDebug>
+#include <KPluginInfo>
 
 namespace Choqok{
 
@@ -43,13 +44,17 @@ public:
     }
     void reloadConfig()
     {
-        if(backend){
-            backend->deleteLater();
-            backend = 0;
-        }
         QString pluginId = KGlobal::config()->group("Advanced").readEntry("ShortenPlugin", QString());
         if(pluginId.isEmpty())
             return;
+        if(backend) {
+            if (backend->pluginInfo().pluginName() == pluginId) {
+                return;
+            } else {
+                backend->deleteLater();
+                backend = 0;
+            }
+        }
         Plugin *plugin = PluginManager::self()->loadPlugin(pluginId);
         backend = qobject_cast<Shortener*>( plugin );
         if(!backend){
