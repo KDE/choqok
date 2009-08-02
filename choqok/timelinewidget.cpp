@@ -170,13 +170,13 @@ void TimeLineWidget::settingsChanged()
     setDefaultDirection();
     twitter->settingsChanged();
     updateUi();
-    foreach(StatusWidget * s,listHomeStatus.values())
+    foreach(StatusWidget * s,listHomeStatus)
       s->setUiStyle();
-    foreach(StatusWidget * s,listInboxStatus.values())
+    foreach(StatusWidget * s,listInboxStatus)
       s->setUiStyle();
-    foreach(StatusWidget * s,listOutboxStatus.values())
+    foreach(StatusWidget * s,listOutboxStatus)
       s->setUiStyle();
-    foreach(StatusWidget * s,listReplyStatus.values())
+    foreach(StatusWidget * s,listReplyStatus)
       s->setUiStyle();
 }
 
