@@ -75,7 +75,7 @@ void Backend::postNewStatus( const QString & statusMessage, qulonglong replyToSt
     data += "&source=choqok";
     KIO::TransferJob *job = KIO::http_post(url, data, KIO::HideProgressInfo) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http POST request!";
+        kError() << "Cannot create a http POST request!";
         QString errMsg = i18n( "Cannot create an http POST request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
@@ -99,14 +99,14 @@ void Backend::twitPicCreatePost(const KUrl &picUrl, const QString &message)
         kError()<<"Job error: " << picJob->errorString();
         tmp = i18n( "Uploading media failed: cannot read the media file. "
         "Please check whether it exists. Path: %1", picUrl.prettyUrl() );
-        kDebug() << "Emitting sigError...";
+        kError() << "Emitting sigError...";
         emit sigError( tmp );
     }
     if ( picData.count() == 0 ) {
         kError() << "Cannot read the media file, please check if it exists.";
         tmp = i18n( "Uploading media failed: cannot read the media file. "
         "Please check whether it exists. Path: %1", picUrl.prettyUrl() );
-        kDebug() << "Emitting sigError...";
+        kError() << "Emitting sigError...";
         Q_EMIT sigError( tmp );
         return;
     }
@@ -146,7 +146,7 @@ void Backend::twitPicCreatePost(const KUrl &picUrl, const QString &message)
 
     KIO::TransferJob *job = KIO::http_post(url, data, KIO::HideProgressInfo) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http POST request!";
+        kError() << "Cannot create a http POST request!";
         QString errMsg = i18n( "Cannot create an http POST request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
@@ -173,7 +173,7 @@ void Backend::sendDMessage( const QString & screenName, const QString & message 
 
     KIO::TransferJob *job = KIO::http_post(url, data, KIO::HideProgressInfo) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http POST request!";
+        kError() << "Cannot create a http POST request!";
         QString errMsg = i18n( "Cannot create an http POST request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
@@ -209,7 +209,7 @@ void Backend::requestTimeLine( qulonglong latestStatusId, TimeLineType type, int
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http GET request!";
+        kError() << "Cannot create a http GET request!";
         QString errMsg = i18n( "Cannot create an http GET request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
@@ -262,7 +262,7 @@ Status Backend::readStatusFromDomElement ( const QDomElement &root )
     post.user.friendsCount = 0;
 
     if ( root.tagName() != "status" ) {
-        kDebug() << "there's no status tag in XML, Error!! TagName: "<< root.tagName() << " Text: "<< root.text();
+        kError() << "there's no status tag in XML, Error!! TagName: "<< root.tagName() << " Text: "<< root.text();
         post.isError = true ;
         return post;
     }
@@ -330,7 +330,7 @@ QList<Status> Backend::readTimelineFromXml ( const QByteArray &buffer )
     QDomElement root = document.documentElement();
 
     if ( root.tagName() != "statuses" ) {
-        kDebug() << "there's no statuses tag in XML\t the XML is: \n" << buffer.data();
+        kError() << "there's no statuses tag in XML\t the XML is: \n" << buffer.data();
         return postList;
     }
     QDomNode node = root.firstChild();
@@ -365,7 +365,7 @@ Status Backend::readDMessageFromDomElement ( const QDomElement &root )
     msg.isDMessage = true;
     msg.user.friendsCount = 0;
     if ( root.tagName() != "direct_message" ) {
-        kDebug() << "there's no status tag in XML, Error!! TagName: "<< root.tagName() << " Text: "<< root.text();
+        kError() << "there's no status tag in XML, Error!! TagName: "<< root.tagName() << " Text: "<< root.text();
         msg.isError = true ;
         return msg;
     }
@@ -459,7 +459,7 @@ QList<Status> Backend::readDMessagesFromXml ( const QByteArray &buffer )
     
     if ( root.tagName() != "direct-messages" ) {
         //         QString err = i18n( "Data returned from server is corrupted." );
-        kDebug() << "there's no statuses tag in XML\t the XML is: \n" << buffer.data();
+        kError() << "there's no statuses tag in XML\t the XML is: \n" << buffer.data();
         return postList;
     }
     QDomNode node = root.firstChild();
@@ -498,7 +498,7 @@ void Backend::requestFavorited( qulonglong statusId, bool isFavorite )
 
     KIO::TransferJob *job = KIO::http_post(url, QByteArray(), KIO::HideProgressInfo) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http POST request!";
+        kError() << "Cannot create a http POST request!";
         QString errMsg = i18n( "Cannot create an http POST request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
@@ -519,7 +519,7 @@ void Backend::requestDestroy( qulonglong statusId )
 
     KIO::TransferJob *job = KIO::http_post(url, QByteArray(), KIO::HideProgressInfo) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http POST request!";
+        kError() << "Cannot create a http POST request!";
         QString errMsg = i18n( "Cannot create an http POST request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
@@ -541,7 +541,7 @@ void Backend::requestDestroyDMessage( qulonglong statusId )
 
     KIO::TransferJob *job = KIO::http_post(url, QByteArray(), KIO::HideProgressInfo) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http POST request!";
+        kError() << "Cannot create a http POST request!";
         QString errMsg = i18n( "Cannot create an http POST request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
@@ -558,14 +558,14 @@ void Backend::slotPostNewStatusFinished( KJob * job )
     kDebug();
     jobList.removeOne(job);
     if ( job->error() ) {
-        kDebug() << "Error: " << job->errorString();
+        kError() << "Error: " << job->errorString();
         mLatestErrorString = job->errorString();
         emit sigPostNewStatusDone( true );
     } else {
-//      kDebug()<<mPostNewStatusBuffer[job];
+//      kError()<<mPostNewStatusBuffer[job];
         Status st = readStatusFromXml( mPostNewStatusBuffer[job] );
         if ( st.isError ) {
-            kDebug() << "Error: " << job->errorString();
+            kError() << "Error: " << job->errorString();
             mLatestErrorString = job->errorString();
             emit sigPostNewStatusDone( true );
         } else {
@@ -582,14 +582,13 @@ void Backend::slotTwitPicCreatePost( KJob *job )
     kDebug();
     jobList.removeOne(job);
     if ( job->error() ) {
-        kDebug() << "Error: " << job->errorString();
+        kError() << "Error: " << job->errorString();
         mLatestErrorString = job->errorString();
         emit sigPostNewStatusDone( true );
         return;
     } else {
         QDomDocument doc;
         QByteArray buffer = mPostNewStatusBuffer[job];
-        kDebug()<<buffer;
         mPostNewStatusBuffer.remove(job);
         doc.setContent(buffer);
         QDomElement element = doc.documentElement();
@@ -600,7 +599,7 @@ void Backend::slotTwitPicCreatePost( KJob *job )
                 else if(element.hasAttribute("status"))
                     result = element.attribute("status" , "fail");
                 else {
-                    kDebug()<<"There isn't any \"stat\" or \"status\" attribute. Buffer:\n"<<buffer;
+                    kError()<<"There isn't any \"stat\" or \"status\" attribute. Buffer:\n"<<buffer;
                     mLatestErrorString = i18n("Unrecognised result.");
                     emit sigPostNewStatusDone(true);
                     return;
@@ -621,7 +620,7 @@ void Backend::slotTwitPicCreatePost( KJob *job )
                     return;
                 }
             } else {
-                kDebug()<<"There isn't any \"rsp\" tag. Buffer:\n"<<buffer;
+                kError()<<"There isn't any \"rsp\" tag. Buffer:\n"<<buffer;
                 mLatestErrorString = i18n("Unrecognised result.");
                 emit sigPostNewStatusDone(true);
             }
@@ -632,11 +631,11 @@ void Backend::slotRequestTimelineFinished( KJob *job )
 {
     kDebug();
     if ( !job ) {
-        kDebug() << "Job is null pointer";
+        kError() << "Job is null pointer";
         return;
     }
     if ( job->error() ) {
-        kDebug() << "Error: " << job->errorString();
+        kError() << "Error: " << job->errorString();
         mLatestErrorString = job->errorString();
         emit sigError( mLatestErrorString );
         return;
@@ -652,7 +651,7 @@ void Backend::slotRequestTimelineFinished( KJob *job )
         emit replyTimeLineReceived( ptr );
         break;
     default:
-        kDebug() << "The returned job isn't in Map!";
+        kError() << "The returned job isn't in Map!";
         break;
     };
     mRequestTimelineMap.remove( job );
@@ -663,12 +662,12 @@ void Backend::slotRequestFavoritedFinished( KJob * job )
 {
     kDebug();
     if ( !job ) {
-        kDebug() << "Job is null pointer.";
+        kError() << "Job is null pointer.";
         return;
     }
     jobList.removeOne(job);
     if ( job->error() ) {
-        kDebug() << "Error: " << job->errorString();
+        kError() << "Error: " << job->errorString();
         mLatestErrorString = job->errorString();
         emit sigFavoritedDone( true );
         return;
@@ -687,12 +686,12 @@ void Backend::slotRequestDestroyFinished( KJob * job )
 {
     kDebug();
     if ( !job ) {
-        kDebug() << "Job is null pointer.";
+        kError() << "Job is null pointer.";
         return;
     }
     jobList.removeOne(job);
     if ( job->error() ) {
-        kDebug() << "Error: " << job->errorString();
+        kError() << "Error: " << job->errorString();
         mLatestErrorString = job->errorString();
         emit sigDestroyDone( true );
         return;
@@ -747,7 +746,7 @@ void Backend::verifyCredential()
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http GET request!";
+        kError() << "Cannot create a http GET request!";
         QString errMsg = i18n( "Cannot create an http GET request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
@@ -761,7 +760,7 @@ void Backend::slotCredentialsReceived( KJob * job )
 {
     kDebug();
     if ( job->error() ) {
-        kDebug() << "Job error, " << job->errorString();
+        kError() << "Job error, " << job->errorString();
         QString err = i18n( "Authorization failed: %1", job->errorString() );
         emit sigError( err );
         return;
@@ -791,8 +790,8 @@ void Backend::slotCredentialsReceived( KJob * job )
             if ( root.toElement().text() == "true" ) {
                 requestCurrentUser();
             } else {
-                kDebug() << "Authorization result is not TRUE, is : " << root.toElement().text();
-                QString err = i18n( "Authorization failed: %1", job->errorString() );
+                kError() << "Authorization result is not TRUE, is : " << root.toElement().text();
+                QString err = i18n( "Authentication failed." );
                 emit sigError( err );
                 return;
             }
@@ -807,7 +806,8 @@ void Backend::slotCredentialsReceived( KJob * job )
                     node2 = node2.nextSibling();
                 }
             } else {
-                kDebug() << "ERROR, unrecognized result, buffer is: " << buffer;
+                kError() << "ERROR, unrecognized result, buffer is: " << buffer;
+                emit sigError( i18n("Error, Unrecognized result.\nCannot parse result data back from server, maybe it's corrupted") );
             }
 }
 
@@ -816,7 +816,7 @@ void Backend::slotUserInfoReceived( KJob * job )
     kDebug();
 
     if ( job->error() ) {
-        kDebug() << "Job Error: " << job->errorString();
+        kError() << "Job Error: " << job->errorString();
         QString err = i18n( "Request for user information failed: %1", job->errorString() );
     }
     QDomDocument document;
@@ -827,7 +827,7 @@ void Backend::slotUserInfoReceived( KJob * job )
 
     if ( root.tagName() != "statuses" ) {
         QString err = i18n( "Data returned from server is corrupted." );
-        kDebug() << "there's no statuses tag in XML\t the XML is: \n" << buffer.data();
+        kError() << "there's no statuses tag in XML\t the XML is: \n" << buffer.data();
         mLatestErrorString = err;
         return;
     }
@@ -836,7 +836,7 @@ void Backend::slotUserInfoReceived( KJob * job )
     while ( !node.isNull() ) {
         if ( node.toElement().tagName() != "status" ) {
             QString err = i18n( "Data returned from server is corrupted." );
-            kDebug() << "there's no status tag in XML\t the XML is: \n" << buffer.data();
+            kError() << "there's no status tag in XML\t the XML is: \n" << buffer.data();
             mLatestErrorString = err;
             return;
         }
@@ -870,7 +870,7 @@ void Backend::requestCurrentUser()
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http GET request!";
+        kError() << "Cannot create a http GET request!";
         QString errMsg = i18n( "Cannot create an http GET request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
@@ -900,7 +900,7 @@ void Backend::requestDMessages( qulonglong latestStatusId, DMessageType type, in
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http GET request!";
+        kError() << "Cannot create a http GET request!";
         QString errMsg = i18n( "Cannot create an http GET request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
@@ -914,11 +914,11 @@ void Backend::slotRequestDMessagesFinished( KJob *job )
 {
     kDebug();
     if ( !job ) {
-        kDebug() << "Job is null pointer";
+        kError() << "Job is null pointer";
         return;
     }
     if ( job->error() ) {
-        kDebug() << "Error: " << job->errorString();
+        kError() << "Error: " << job->errorString();
         mLatestErrorString = job->errorString();
         emit sigError( mLatestErrorString );
         return;
@@ -933,7 +933,7 @@ void Backend::slotRequestDMessagesFinished( KJob *job )
         emit outboxMessagesReceived( ptr );
         break;
     default:
-        kDebug() << "The returned job isn't in Map! or type is Unknown";
+        kError() << "The returned job isn't in Map! or type is Unknown";
         break;
     };
     mRequestDMessagesMap.remove( job );
@@ -944,7 +944,7 @@ void Backend::slotSendDMessageFinished( KJob *job )
     kDebug();
     jobList.removeOne(job);
     if ( job->error() ) {
-        kDebug() << "Job Error: " << job->error() << " Text:" << job->errorString();
+        kError() << "Job Error: " << job->error() << " Text:" << job->errorString();
 //         kDebug()<<mSendDMessageBuffer.value(job);
         mLatestErrorString = job->errorString();
         emit sigPostNewStatusDone( true );
@@ -978,7 +978,7 @@ void Backend::requestFollowers( int page )
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http GET request!";
+        kError() << "Cannot create a http GET request!";
         QString errMsg = i18n( "Cannot create an http GET request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
@@ -1017,7 +1017,7 @@ void Backend::requestFriends( int page )
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http GET request!";
+        kError() << "Cannot create a http GET request!";
         QString errMsg = i18n( "Cannot create an http GET request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
@@ -1049,7 +1049,7 @@ QStringList Backend::readUsersNameFromXml( const QByteArray & buffer )
 
     if ( root.tagName() != "users" ) {
         QString err = i18n( "Data returned from server is corrupted." );
-        kDebug() << "there's no users tag in XML\t the XML is: \n" << buffer.data();
+        kError() << "there's no users tag in XML\t the XML is: \n" << buffer.data();
         mLatestErrorString = err;
         return list;
     }
@@ -1057,7 +1057,7 @@ QStringList Backend::readUsersNameFromXml( const QByteArray & buffer )
     QString timeStr;
     while ( !node.isNull() ) {
         if ( node.toElement().tagName() != "user" ) {
-            kDebug() << "there's no status tag in XML, maybe there is no new status!";
+            kError() << "there's no status tag in XML, maybe there is no new status!";
             return list;
         }
         QDomNode node2 = node.firstChild();
@@ -1089,7 +1089,7 @@ void Backend::requestSingleStatus( qulonglong statusId )
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http GET request!";
+        kError() << "Cannot create a http GET request!";
         QString errMsg = i18n( "Cannot create an http GET request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
@@ -1103,100 +1103,17 @@ void Backend::slotRequestSingleStatusFinished( KJob* job )
 {
     kDebug();
     if ( job->error() ) {
-        kDebug() << "Job Error: " << job->errorString();
+        kError() << "Job Error: " << job->errorString();
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>( job );
         Status st = readStatusFromXml( stj->data() );
         if ( st.isError ) {
-            kDebug() << "Parsing Error";
+            kError() << "Parsing Error";
         } else {
             emit singleStatusReceived( st );
             mRequestSingleStatusMap.remove(job);
         }
     }
-}
-
-QString Backend::shortenUrl(const QString &baseUrl)
-{
-    QMap<QString, QString> metaData;
-    QByteArray data;
-    if(Settings::shortenService() == SettingsBase::TightURL){
-        kDebug()<<"Using 2tu.us";
-        KUrl url( "http://2tu.us/" );
-        url.addQueryItem( "save", "y" );
-        url.addQueryItem( "url", KUrl( baseUrl ).url() );
-
-        KIO::Job *job = KIO::get( url, KIO::Reload, KIO::HideProgressInfo );
-
-        if ( KIO::NetAccess::synchronousRun( job, 0, &data ) ) {
-            QString output(data);
-            QRegExp rx( QString( "<code>(.+)</code>" ) );
-            rx.setMinimal(true);
-            rx.indexIn(output);
-            output = rx.cap(1);
-            kDebug()<<output;
-            rx.setPattern( QString( "href=[\'\"](.+)[\'\"]" ) );
-            rx.indexIn(output);
-            output = rx.cap(1);
-            kDebug() << "Short url is: " << output;
-            if(!output.isEmpty())
-                return output;
-        } else {
-            kDebug() << "Cannot create a shorten url.\t" << "KJob ERROR";
-        }
-    } else if(Settings::shortenService() == SettingsBase::IS_GD) {
-        kDebug()<<"Using is.gd";
-        KUrl url( "http://is.gd/api.php" );
-        url.addQueryItem( "longurl", KUrl( baseUrl ).url() );
-
-        KIO::Job *job = KIO::get( url, KIO::Reload, KIO::HideProgressInfo );
-
-        metaData.insert( "PropagateHttpHeader", "true" );
-        if ( KIO::NetAccess::synchronousRun( job, 0, &data, 0, &metaData ) ) {
-            QString responseHeaders = metaData[ "HTTP-Headers" ];
-            QString code = responseHeaders.split( ' ' )[1];
-            if ( code == "200" ) {
-                kDebug() << "Short url is: " << data;
-                return QString( data );
-            } else {
-                kDebug() << "shortenning url faild HTTP response code is: " << code;
-            }
-        } else {
-            QString responseHeaders = metaData[ "HTTP-Headers" ];
-            kDebug() << "Cannot create a shorten url.\t" << "Response header = " << responseHeaders;
-        }
-    } else if( Settings::shortenService() == SettingsBase::DIGG ) {
-        kDebug()<<"Using digg.com";
-        KUrl url( "http://services.digg.com/url/short/create" );
-        url.addQueryItem( "url", KUrl( baseUrl ).url() );
-        url.addQueryItem( "appkey", "http://choqok.gnufolks.org" );
-
-        KIO::Job *job = KIO::get( url, KIO::Reload, KIO::HideProgressInfo );
-
-        metaData.insert( "PropagateHttpHeader", "true" );
-        if ( KIO::NetAccess::synchronousRun( job, 0, &data, 0, &metaData ) ) {
-            QString responseHeaders = metaData[ "HTTP-Headers" ];
-            QString code = responseHeaders.split( ' ' )[1];
-            if ( code == "200" ) {
-                kDebug() << "Short url is: " << data;
-                QDomDocument doc;
-                doc.setContent(data);
-                if(doc.documentElement().tagName() == "shorturls") {
-                    QDomElement elm = doc.documentElement().firstChild().toElement();
-                    if(elm.tagName() == "shorturl"){
-                        return elm.attribute("short_url", baseUrl);
-                    }
-                }
-                return QString( data );
-            } else {
-                kDebug() << "shortenning url faild HTTP response code is: " << code;
-            }
-        } else {
-            QString responseHeaders = metaData[ "HTTP-Headers" ];
-            kDebug() << "Cannot create a shorten url.\t" << "Response header = " << responseHeaders;
-        }
-    }
-    return baseUrl;
 }
 
 void Backend::slotPostNewStatusData(KIO::Job * job, const QByteArray & data)
@@ -1228,7 +1145,7 @@ void Backend::slotAddFriend(const QString &screenName)
 
     KIO::TransferJob *job = KIO::http_post(url, QByteArray(), KIO::HideProgressInfo) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http POST request!";
+        kError() << "Cannot create a http POST request!";
         QString errMsg = i18n( "Cannot create an http POST request, please check your Internet connection." );
         emit sigError( errMsg );
         return;
@@ -1244,7 +1161,7 @@ void Backend::slotRequestNewFriendFinished(KJob *job)
     // If we are already friends, then HTTP 403 is returned
     kDebug();
     if ( job->error() ) {
-        kDebug() << "Job Error: " << job->errorString();
+        kError() << "Job Error: " << job->errorString();
     } else {
         emit friendAdded( mRequestFriendMap[job] );
     }

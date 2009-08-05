@@ -30,16 +30,14 @@
 #include <QTimer>
 
 AccountsWizard::AccountsWizard( QString alias, QWidget *parent )
-        : KDialog( parent )
+        : KDialog( parent ), progress(0), verifyTimer(0)
 {
     kDebug();
-    verifyTimer = 0;
     QWidget *dialog = new QWidget( this );
     ui.setupUi( dialog );
     dialog->setAttribute( Qt::WA_DeleteOnClose );
     this->setMainWidget( dialog );
     slotServiceChanged( ui.kcfg_service->currentIndex() );
-    progress = 0;
     connect( ui.kcfg_service, SIGNAL( currentIndexChanged(int) ), this, SLOT( slotServiceChanged(int) ) );
 
     if ( alias.isEmpty() ) {
@@ -59,7 +57,7 @@ void AccountsWizard::loadAccount( QString &alias )
     kDebug() << "Loading account " << alias;
     mAccount = AccountManager::self()->findAccount( alias );
     if ( mAccount.isError() ) {
-        kDebug() << "Error on Loading Account with alias " << alias;
+        kError() << "Error on Loading Account with alias " << alias;
         return;
     }
     ui.kcfg_username->setText( mAccount.username() );
@@ -111,6 +109,7 @@ void AccountsWizard::slotButtonClicked( int button )
         verifyTimer->setSingleShot( true );
         connect ( verifyTimer, SIGNAL(timeout()), this, SLOT( handleVerifyTimeout() ) );
         verifyTimer->start( 45000 );
+        this->setCursor(Qt::BusyCursor);
     } else
         KDialog::slotButtonClicked( button );
 }
@@ -118,8 +117,16 @@ void AccountsWizard::slotButtonClicked( int button )
 void AccountsWizard::slotUserVerified( Account * userAccount )
 {
     kDebug();
+    if(sender())
+        sender()->deleteLater();
+    if ( progress ) {
+        progress->deleteLater();
+        progress = 0;
+    }
+    verifyTimer->stop();
+    this->unsetCursor();
     if ( !userAccount ) {
-        kDebug() << "userAccount is NULL";
+        kError() << "userAccount is NULL";
         return;
     }
     mAccount = *userAccount;
@@ -129,9 +136,7 @@ void AccountsWizard::slotUserVerified( Account * userAccount )
         mAccount = AccountManager::self()->addAccount( mAccount );
     }
     if ( mAccount.isError() ) {
-        if ( progress )
-            progress->deleteLater();
-        kDebug() << "Cannot add or modify account with alias " << mAccount.alias();
+        kError() << "Cannot add or modify account with alias " << mAccount.alias();
         KMessageBox::detailedError(this, i18n( "An error occurred when adding this account." ),
                                     AccountManager::self()->lastError());
         return;
@@ -148,23 +153,27 @@ void AccountsWizard::slotUserVerified( Account * userAccount )
 void AccountsWizard::slotError( const QString & errMsg )
 {
     kDebug();
-    KMessageBox::detailedError( this, i18n( "Authentication failed, please check your credentials." ), errMsg );
     if ( progress ) {
         progress->deleteLater();
         progress = 0;
     }
+    this->unsetCursor();
     verifyTimer->stop();
+    KMessageBox::detailedError( this, i18n( "Authentication failed, please check your credentials." ), errMsg );
 }
 
 void AccountsWizard::handleVerifyTimeout()
 {
-    KMessageBox::sorry(this, i18n( "Verification progress timed out. "
-                                   "Check your Internet connection and credentials then try again." ) , i18n( "Timeout" ) );
+    kDebug();
     if ( progress ) {
         progress->deleteLater();
         progress = 0;
     }
+    this->unsetCursor();
     verifyTimer->stop();
+    KMessageBox::sorry(this, i18n( "Verification progress timed out. "
+                                   "Check your Internet connection and credentials then try again." ) , i18n( "Timeout" ) );
+
 }
 
 void AccountsWizard::slotServiceChanged( int index )
