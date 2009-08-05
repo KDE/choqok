@@ -52,6 +52,9 @@
         </widget>
        </item>
        <item>
+        <widget class="KSeparator" name="kseparator_2"/>
+       </item>
+       <item>
         <widget class="QCheckBox" name="kcfg_loadTwitpicImages">
          <property name="text">
           <string>Load Twitpic images.</string>
@@ -60,6 +63,22 @@
           <bool>true</bool>
          </property>
         </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="kcfg_unTiny">
+         <property name="toolTip">
+          <string>Note: This will increase resource usage on startup</string>
+         </property>
+         <property name="text">
+          <string>Load full url of shortened ones as tooltip</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="KSeparator" name="kseparator"/>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
@@ -365,6 +384,11 @@ p, li { white-space: pre-wrap; }
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KSeparator</class>
+   <extends>QFrame</extends>
+   <header>kseparator.h</header>
   </customwidget>
   <customwidget>
    <class>KTabWidget</class>

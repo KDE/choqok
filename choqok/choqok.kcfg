@@ -55,6 +55,9 @@
             <default>false</default>
         </entry>
         <entry name="customBrowser" type="String" />
+        <entry name="unTiny" type="Bool">
+            <default>true</default>
+        </entry>
     </group>
     <group name="Appearances">
         <entry name="isSmiliesEnabled" type="Bool">

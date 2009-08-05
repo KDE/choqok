@@ -241,7 +241,7 @@ KPushButton * StatusWidget::getButton(const QString & objName, const QString & t
     KPushButton * button = new KPushButton(KIcon(icon),QString());
     button->setObjectName(objName);
     button->setToolTip(toolTip);
-    button->setIconSize(QSize(8,8));
+    button->setIconSize(QSize(10,10));
     button->setMinimumSize(QSize(20, 20));
     button->setMaximumSize(QSize(20, 20));
     button->setFlat(true);
@@ -438,27 +438,26 @@ QString StatusWidget::prepareStatus( const QString &text )
     if ( status.startsWith( QLatin1String("www.") ) ) 
         status.prepend( "http://" );
 
-    // This next block replaces 301 redirects with an appropriate title
-    int pos = 0;
-    QStringList redirectList;
-    while ((pos = mUrlRegExp.indexIn(mCurrentStatus.content, pos)) != -1) {
-        pos += mUrlRegExp.matchedLength();
-        if( mUrlRegExp.matchedLength() < 31 )//Most of shortenned URLs have less than 30 Chars!
-            redirectList << mUrlRegExp.cap(0);
-    }
-
-    status.replace(mUrlRegExp,"<a href='\\1' title='\\1'>\\1</a>");
-
-    foreach(QString url, redirectList) {
-        KIO::TransferJob *job = KIO::mimetype( url, KIO::HideProgressInfo );
-        if ( !job ) {
-            kDebug() << "Cannot create a http header request!";
-            break;
+    if( Settings::unTiny() ) {
+        // This next block replaces 301 redirects with an appropriate title
+        int pos = 0;
+        QStringList redirectList;
+        while ((pos = mUrlRegExp.indexIn(mCurrentStatus.content, pos)) != -1) {
+            pos += mUrlRegExp.matchedLength();
+            if( mUrlRegExp.matchedLength() < 31 )//Most of shortenned URLs have less than 30 Chars!
+                redirectList << mUrlRegExp.cap(0);
         }
-        connect( job, SIGNAL( permanentRedirection( KIO::Job*, KUrl, KUrl ) ), this, SLOT( slot301Redirected ( KIO::Job *, KUrl, KUrl ) ) );
-        job->start();
+        foreach(QString url, redirectList) {
+            KIO::TransferJob *job = KIO::mimetype( url, KIO::HideProgressInfo );
+            if ( !job ) {
+                kDebug() << "Cannot create a http header request!";
+                break;
+            }
+            connect( job, SIGNAL( permanentRedirection( KIO::Job*, KUrl, KUrl ) ), this, SLOT( slot301Redirected ( KIO::Job *, KUrl, KUrl ) ) );
+            job->start();
+        }
     }
-
+    status.replace(mUrlRegExp,"<a href='\\1' title='\\1'>\\1</a>");
 
     if(Settings::isSmiliesEnabled())
         status = MediaManager::self()->parseEmoticons(status);
