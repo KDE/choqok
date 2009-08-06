@@ -69,7 +69,6 @@ signals:
     void error( QString message );
 
 protected:
-    QList<Status>* parseAtom( const QByteArray &buffer );
     // The QString in the QPair is a human readable string describing what the type searches for. The boolean value
     // determines whether or not the search type is traversable (if the forward and back buttons should be displayed).
     QMap<int, QPair<QString, bool> > mSearchTypes;

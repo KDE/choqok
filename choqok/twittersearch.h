@@ -46,6 +46,7 @@ public:
 
 private:
     virtual KUrl buildUrl( QString query, int option, qulonglong sinceStatusId = 0, qulonglong count = 0, qulonglong page = 1 );
+    QList<Status>* parseAtom( const QByteArray &buffer );
 
 public slots:
     virtual void requestSearchResults( QString query,

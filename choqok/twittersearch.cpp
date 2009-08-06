@@ -130,3 +130,89 @@ void TwitterSearch::searchResultsReturned( KJob* job )
 
     emit searchResultsReceived( *statusList );
 }
+
+QList<Status>* TwitterSearch::parseAtom( const QByteArray &buffer )
+{
+    kDebug();
+    QDomDocument document;
+    QList<Status> *statusList = new QList<Status>;
+    
+    document.setContent( buffer );
+    
+    QDomElement root = document.documentElement();
+    
+    if ( root.tagName() != "feed" ) {
+        kDebug() << "There is no feed element in Atom feed " << buffer.data();
+        return statusList;
+    }
+    
+    QDomNode node = root.firstChild();
+    QString timeStr;
+    while ( !node.isNull() ) {
+        if ( node.toElement().tagName() != "entry" ) {
+            node = node.nextSibling();
+            continue;
+        }
+        
+        QDomNode entryNode = node.firstChild();
+        Status status;
+        status.isDMessage = false;
+        
+        while ( !entryNode.isNull() ) {
+            QDomElement elm = entryNode.toElement();
+            if ( elm.tagName() == "id" ) {
+                // Fomatting example: "tag:search.twitter.com,2005:1235016836"
+                qulonglong id = 0;
+                if(m_rId.exactMatch(elm.text())) {
+                    id = m_rId.cap(1).toULongLong();
+                }
+                /*                sscanf( qPrintable( elm.text() ),
+                "tag:search.twitter.com,%*d:%d", &id);*/
+                status.statusId = id;
+            } else if ( elm.tagName() == "published" ) {
+                // Formatting example: "2009-02-21T19:42:39Z"
+                // Need to extract date in similar fashion to dateFromString
+                int year, month, day, hour, minute, second;
+                sscanf( qPrintable( elm.text() ),
+                        "%d-%d-%dT%d:%d:%d%*s", &year, &month, &day, &hour, &minute, &second);
+                        QDateTime recognized( QDate( year, month, day), QTime( hour, minute, second ) );
+                        recognized.setTimeSpec( Qt::UTC );
+                        status.creationDateTime = recognized;
+            } else if ( elm.tagName() == "title" ) {
+                status.content = elm.text();
+            } else if ( elm.tagName() == "twitter:source" ) {
+                status.source = elm.text();
+            } else if ( elm.tagName() == "link" &&
+                elm.attributeNode( "rel" ).value() == "image") {
+                QDomAttr imageAttr = elm.attributeNode( "href" );
+            status.user.profileImageUrl = imageAttr.value();
+            } else if ( elm.tagName() == "author") {
+                QDomNode userNode = entryNode.firstChild();
+                while ( !userNode.isNull() )
+                {
+                    if ( userNode.toElement().tagName() == "name" )
+                    {
+                        QString fullName = userNode.toElement().text();
+                        int bracketPos = fullName.indexOf( " ", 0 );
+                        
+                        QString screenName = fullName.left( bracketPos );
+                        QString name = fullName.right ( fullName.size() - bracketPos - 2 );
+                        name.chop( 1 );
+                        
+                        status.user.name = name;
+                        status.user.screenName = screenName;
+                    }
+                    userNode = userNode.nextSibling();
+                }
+            }
+            entryNode = entryNode.nextSibling();
+        }
+        status.isFavorited = false;
+        status.isTruncated = false;
+        status.replyToStatusId = 0;
+        statusList->insert( 0, status );
+        node = node.nextSibling();
+    }
+    
+    return statusList;
+}
