@@ -64,7 +64,7 @@ void Backend::postNewStatus( const QString & statusMessage, qulonglong replyToSt
     url.addPath( "/statuses/update.xml" );
     setDefaultArgs( url );
     QByteArray data = "status=";
-    data += QUrl::toPercentEncoding( statusMessage );
+    data += QUrl::toPercentEncoding( prepareStatus( statusMessage ) );
     if ( replyToStatusId != 0 && statusMessage.indexOf( '@' ) > -1 )
     {
         data += "&in_reply_to_status_id=";
