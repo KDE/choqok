@@ -53,7 +53,6 @@ public:
 
     static QString prepareStatus( QString status );
     static QString shortenUrl(const QString &baseUrl);
-
 public slots:
     void postNewStatus( const QString &statusMessage, qulonglong replyToStatusId = 0 );
     void twitPicCreatePost(const KUrl &picUrl, const QString &message);

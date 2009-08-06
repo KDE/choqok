@@ -49,7 +49,6 @@
 #include <KNotification>
 #include <QDBusInterface>
 #include <QDBusReply>
-#include "advancedconfig.h"
 
 MainWindow::MainWindow()
     : KXmlGuiWindow()
@@ -301,9 +300,6 @@ void MainWindow::optionsPreferences()
     QWidget *appearsSettingsDlg = new QWidget;
     ui_appears_base.setupUi( appearsSettingsDlg );
     dialog->addPage( appearsSettingsDlg, i18n( "Appearance" ), "format-stroke-color" );
-
-    AdvancedConfig *advancedSettingsDlg = new AdvancedConfig( this );
-    dialog->addPage( advancedSettingsDlg, i18n("Advanced"), "applications-utilities", QString(), false);
 
     connect( dialog, SIGNAL( settingsChanged( QString ) ), this, SLOT( settingsChanged() ) );
 

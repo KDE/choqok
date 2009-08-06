@@ -31,7 +31,6 @@
 #include "settings.h"
 #include <kio/netaccess.h>
 #include <kmimetype.h>
-#include <shortenmanager.h>
 
 Backend::Backend( Account *account, QObject* parent )
 : QObject( parent ), mCurrentAccount(account), mScheme("http")
@@ -65,7 +64,7 @@ void Backend::postNewStatus( const QString & statusMessage, qulonglong replyToSt
     url.addPath( "/statuses/update.xml" );
     setDefaultArgs( url );
     QByteArray data = "status=";
-    data += QUrl::toPercentEncoding( prepareStatus( statusMessage ) );
+    data += QUrl::toPercentEncoding( statusMessage );
     if ( replyToStatusId != 0 && statusMessage.indexOf( '@' ) > -1 )
     {
         data += "&in_reply_to_status_id=";
@@ -198,7 +197,6 @@ void Backend::requestTimeLine( qulonglong latestStatusId, TimeLineType type, int
     setDefaultArgs( url );
     if(latestStatusId) {
         url.addQueryItem( "since_id", QString::number( latestStatusId ) );
-	qDebug()<<url;
     }
     url.addQueryItem( "count", QString::number( Settings::countOfStatusesOnMain() ) );
     if(page) {
@@ -718,8 +716,8 @@ QString Backend::prepareStatus( QString status )
         if ( k == -1 )
             k = status.length();
         QString baseUrl = status.mid( j, k - j );
-        if ( baseUrl.count() > 30 ) {
-            t += Choqok::ShortenManager::self()->shortenUrl(baseUrl);
+        if ( baseUrl.count() > 30 && Settings::shortenService() != SettingsBase::NoShorten ) {
+            t += shortenUrl(baseUrl);
         } else {
             t += baseUrl;
         }
@@ -727,6 +725,88 @@ QString Backend::prepareStatus( QString status )
     }
     t += status.mid( i );
     return t;
+}
+QString Backend::shortenUrl(const QString &baseUrl)
+{
+    QMap<QString, QString> metaData;
+    QByteArray data;
+    if(Settings::shortenService() == SettingsBase::TightURL){
+        kDebug()<<"Using 2tu.us";
+        KUrl url( "http://2tu.us/" );
+        url.addQueryItem( "save", "y" );
+        url.addQueryItem( "url", KUrl( baseUrl ).url() );
+        
+        KIO::Job *job = KIO::get( url, KIO::Reload, KIO::HideProgressInfo );
+        
+        if ( KIO::NetAccess::synchronousRun( job, 0, &data ) ) {
+            QString output(data);
+            QRegExp rx( QString( "<code>(.+)</code>" ) );
+            rx.setMinimal(true);
+            rx.indexIn(output);
+            output = rx.cap(1);
+            kDebug()<<output;
+            rx.setPattern( QString( "href=[\'\"](.+)[\'\"]" ) );
+            rx.indexIn(output);
+            output = rx.cap(1);
+            kDebug() << "Short url is: " << output;
+            if(!output.isEmpty())
+                return output;
+        } else {
+            kDebug() << "Cannot create a shorten url.\t" << "KJob ERROR";
+        }
+    } else if(Settings::shortenService() == SettingsBase::IS_GD) {
+        kDebug()<<"Using is.gd";
+        KUrl url( "http://is.gd/api.php" );
+        url.addQueryItem( "longurl", KUrl( baseUrl ).url() );
+        
+        KIO::Job *job = KIO::get( url, KIO::Reload, KIO::HideProgressInfo );
+        
+        metaData.insert( "PropagateHttpHeader", "true" );
+        if ( KIO::NetAccess::synchronousRun( job, 0, &data, 0, &metaData ) ) {
+            QString responseHeaders = metaData[ "HTTP-Headers" ];
+            QString code = responseHeaders.split( ' ' )[1];
+            if ( code == "200" ) {
+                kDebug() << "Short url is: " << data;
+                return QString( data );
+            } else {
+                kDebug() << "shortenning url faild HTTP response code is: " << code;
+            }
+        } else {
+            QString responseHeaders = metaData[ "HTTP-Headers" ];
+            kDebug() << "Cannot create a shorten url.\t" << "Response header = " << responseHeaders;
+        }
+    } else if( Settings::shortenService() == SettingsBase::DIGG ) {
+        kDebug()<<"Using digg.com";
+        KUrl url( "http://services.digg.com/url/short/create" );
+        url.addQueryItem( "url", KUrl( baseUrl ).url() );
+        url.addQueryItem( "appkey", "http://choqok.gnufolks.org" );
+        
+        KIO::Job *job = KIO::get( url, KIO::Reload, KIO::HideProgressInfo );
+        
+        metaData.insert( "PropagateHttpHeader", "true" );
+        if ( KIO::NetAccess::synchronousRun( job, 0, &data, 0, &metaData ) ) {
+            QString responseHeaders = metaData[ "HTTP-Headers" ];
+            QString code = responseHeaders.split( ' ' )[1];
+            if ( code == "200" ) {
+                kDebug() << "Short url is: " << data;
+                QDomDocument doc;
+                doc.setContent(data);
+                if(doc.documentElement().tagName() == "shorturls") {
+                    QDomElement elm = doc.documentElement().firstChild().toElement();
+                    if(elm.tagName() == "shorturl"){
+                        return elm.attribute("short_url", baseUrl);
+                    }
+                }
+                return QString( data );
+            } else {
+                kDebug() << "shortenning url faild HTTP response code is: " << code;
+            }
+        } else {
+            QString responseHeaders = metaData[ "HTTP-Headers" ];
+            kDebug() << "Cannot create a shorten url.\t" << "Response header = " << responseHeaders;
+        }
+    }
+    return baseUrl;
 }
 
 void Backend::settingsChanged()
