@@ -24,10 +24,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef _CHOQOK_VERSION_H_
 #define _CHOQOK_VERSION_H_
 
-#define CHOQOK_VERSION_STRING "0.6.5"
+#define CHOQOK_VERSION_STRING "0.6.6"
 #define CHOQOK_VERSION_MAJOR 0
 #define CHOQOK_VERSION_MINOR 6
-#define CHOQOK_VERSION_RELEASE 5
+#define CHOQOK_VERSION_RELEASE 6
 #define CHOQOK_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
 
 #define CHOQOK_VERSION \
