@@ -33,7 +33,7 @@ kde4_add_app_icon(choqok_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-choq
 kde4_add_executable(choqok_bin ${choqok_SRCS})
 set_target_properties(choqok_bin PROPERTIES OUTPUT_NAME choqok)
 
-target_link_libraries(choqok_bin ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} choqok)
+target_link_libraries(choqok_bin ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS})
 
 install(TARGETS choqok_bin ${INSTALL_TARGETS_DEFAULT_ARGS})
 
