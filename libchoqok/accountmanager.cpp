@@ -169,7 +169,7 @@ void AccountManager::loadAllAccounts()
         if(mBlog) {
             QString alias = cg.readEntry("Alias", QString());
             if(alias.isEmpty())
-                alias = cg.readEntry("Username", QTime::currentTime().toString());
+                continue;///Unknown alias
             Account *acc = mBlog->createAccount(alias);
             if(acc)
                 d->accounts.append(acc);

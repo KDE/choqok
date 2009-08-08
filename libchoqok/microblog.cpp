@@ -24,6 +24,7 @@
 #include "microblog.h"
 #include <klocalizedstring.h>
 #include <KDebug>
+#include "account.h"
 
 namespace Choqok
 {

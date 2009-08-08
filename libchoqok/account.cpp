@@ -55,7 +55,6 @@ Account::Account(Choqok::MicroBlog* parent, QString alias)
     : QObject(parent), d(new Private(parent, alias))
 {
     kDebug();
-    parent->setCurrentAccount(this);
     KConfig *con = new KConfig;
     d->configGroup = new KConfigGroup(con, QString::fromLatin1( "Account_%1" ).arg( d->alias ));
     if(!d->configGroup)
@@ -64,6 +63,7 @@ Account::Account(Choqok::MicroBlog* parent, QString alias)
     d->priority = d->configGroup->readEntry("Priority", (uint)0);
     d->readonly = d->configGroup->readEntry("ReadOnly", false);
     d->password = PasswordManager::self()->readPassword(d->alias);
+    parent->setCurrentAccount(this);
 }
 
 Account::~Account()

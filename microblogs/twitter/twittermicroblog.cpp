@@ -90,10 +90,11 @@ Choqok::Account * TwitterMicroBlog::createAccount( const QString &alias )
     TwitterAccount *acc = qobject_cast<TwitterAccount*>( Choqok::AccountManager::self()->findAccount(alias) );
     if(!acc) {
         acc = new TwitterAccount(this, alias);
+        countOfPost = acc->countOfPosts();
+        return acc;
+    } else {
+        return 0;
     }
-    setCurrentAccount(acc);
-    countOfPost = acc->countOfPosts();
-    return acc;
 }
 
 ChoqokEditAccountWidget * TwitterMicroBlog::createEditAccountWidget( Choqok::Account *account, QWidget *parent )
