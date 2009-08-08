@@ -10,9 +10,9 @@ set(CHOQOK_INCLUDES
 ${KDE4_INCLUDES}
 ${QT_INCLUDES}
 ${CHOQOK_SOURCE_DIR}/libchoqok/
-${CHOQOK_BINARY_DIR}}/libchoqok/
+${CHOQOK_BINARY_DIR}/libchoqok/
 ${CHOQOK_SOURCE_DIR}/libchoqok/ui/
-${CHOQOK_BINARY_DIR}}/libchoqok/ui/
+${CHOQOK_BINARY_DIR}/libchoqok/ui/
 )
 
 add_subdirectory( libchoqok )
