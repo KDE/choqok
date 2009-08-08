@@ -47,6 +47,7 @@ public:
     void setRead(bool read = true);
     bool isRead() const;
 
+    Account *currentAccount();
     /**
     Setup UI elements
     @Note Should call from outside of class, To initialize drived class items too!
@@ -103,10 +104,10 @@ protected slots:
     /**
     Internal slot to remove/close/destroy this post after bing deleted
     */
-    void slotCurrentPostRemoved( Post *post );
+    void slotCurrentPostRemoved( Account *theAccount, Post *post );
 
-    virtual void slotPostError(Choqok::MicroBlog::ErrorType error, const QString &errorMessage,
-                        const Post *post);
+    virtual void slotPostError( Account *theAccount, Choqok::MicroBlog::ErrorType error,
+                                const QString &errorMessage, const Post *post);
 
     void avatarFetchError( const QString &remoteUrl, const QString &errMsg );
     void avatarFetched( const QString &remoteUrl, const QPixmap &pixmap );

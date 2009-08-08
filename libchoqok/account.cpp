@@ -63,7 +63,6 @@ Account::Account(Choqok::MicroBlog* parent, QString alias)
     d->priority = d->configGroup->readEntry("Priority", (uint)0);
     d->readonly = d->configGroup->readEntry("ReadOnly", false);
     d->password = PasswordManager::self()->readPassword(d->alias);
-    parent->setCurrentAccount(this);
 }
 
 Account::~Account()

@@ -27,6 +27,7 @@
 #include <klocalizedstring.h>
 #include <accountmanager.h>
 #include <KMessageBox>
+#include <KDebug>
 
 AddAccountDialog::AddAccountDialog( ChoqokEditAccountWidget *addWidget,QWidget* parent, Qt::WFlags flags)
         : KDialog(parent, flags), widget(addWidget)
@@ -51,8 +52,9 @@ void AddAccountDialog::closeEvent(QCloseEvent* e)
 
 void AddAccountDialog::slotButtonClicked(int button)
 {
+    kDebug()<<button;
     if(button == KDialog::Ok) {
-        if( widget->validateData() )
+        if( widget->validateData() ){
             if( Choqok::Account *acc = widget->apply() ) {
                 if( !Choqok::AccountManager::self()->registerAccount( acc ) )
                     KMessageBox::detailedError( this, i18n("Account registration failed."),
@@ -60,6 +62,10 @@ void AddAccountDialog::slotButtonClicked(int button)
                 else
                     accept();
             }
+        } else {
+            KMessageBox::sorry(this, i18n("Cannot validate your input information, Please check fields data.\n\
+            Maybe a required field is empty."));
+        }
     } else {
         KDialog::slotButtonClicked(button);
     }

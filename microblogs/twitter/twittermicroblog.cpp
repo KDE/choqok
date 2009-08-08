@@ -85,13 +85,11 @@ TwitterMicroBlog::~TwitterMicroBlog()
 {
 }
 
-Choqok::Account * TwitterMicroBlog::createAccount( const QString &alias )
+Choqok::Account * TwitterMicroBlog::createNewAccount( const QString &alias )
 {
     TwitterAccount *acc = qobject_cast<TwitterAccount*>( Choqok::AccountManager::self()->findAccount(alias) );
     if(!acc) {
-        acc = new TwitterAccount(this, alias);
-        countOfPost = acc->countOfPosts();
-        return acc;
+        return new TwitterAccount(this, alias);
     } else {
         return 0;
     }
@@ -176,7 +174,7 @@ QList< Choqok::Post* > TwitterMicroBlog::loadTimeline(const QString& accountAlia
 void TwitterMicroBlog::saveTimeline(const QString& accountAlias, const QString& timelineName, QList< Choqok::PostWidget* > timeline)
 {
     kDebug();
-    QString fileName = currentAccount()->alias() + '_' + timelineName + "_backuprc";
+    QString fileName = accountAlias + '_' + timelineName + "_backuprc";
     KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
 
     ///Clear previous data:
@@ -242,7 +240,7 @@ QString TwitterMicroBlog::postUrl ( const QString &postId, const QString &userSc
     return QString ( "http://twitter.com/%1/status/%2" ).arg ( userScreenName ).arg ( postId );
 }
 
-void TwitterMicroBlog::createPost ( Choqok::Post* post )
+void TwitterMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post* post )
 {
     kDebug();
     if ( !post || post->content.isEmpty() ) {
@@ -252,7 +250,7 @@ void TwitterMicroBlog::createPost ( Choqok::Post* post )
     if ( !post->isPrivate ) {///Status Update
         KUrl url = mApiUrl;
         url.addPath ( "/statuses/update.xml" );
-        setDefaultArgs ( url );
+        setDefaultArgs ( theAccount, url );
         QByteArray data = "status=";
         data += QUrl::toPercentEncoding (  post->content );
         if ( !post->replyToPostId.isEmpty() && post->content.indexOf ( '@' ) > -1 ) {
@@ -264,18 +262,19 @@ void TwitterMicroBlog::createPost ( Choqok::Post* post )
         if ( !job ) {
             kError() << "Cannot create a http POST request!";
             QString errMsg = i18n ( "Cannot create an http POST request." );
-            emit errorPost ( Choqok::MicroBlog::OtherError, errMsg, post );
+            emit errorPost ( theAccount, Choqok::MicroBlog::OtherError, errMsg, post );
             return;
         }
         job->addMetaData ( "content-type", "Content-Type: application/x-www-form-urlencoded" );
         mCreatePostMap[ job ] = post;
+        mAccountJobs[job] = theAccount;
         connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotCreatePost ( KJob* ) ) );
         job->start();
     } else {///Direct message
         QString recipientScreenName = post->replyToUserName;
         KUrl url = mApiUrl;
         url.addPath ( "/direct_messages/new.xml" );
-        setDefaultArgs ( url );
+        setDefaultArgs ( theAccount, url );
         QByteArray data = "user=";
         data += recipientScreenName.toLocal8Bit();
         data += "&text=";
@@ -284,11 +283,12 @@ void TwitterMicroBlog::createPost ( Choqok::Post* post )
         if ( !job ) {
             kError() << "Cannot create an http POST request!";
             QString errMsg = i18n ( "Cannot create an http POST request." );
-            emit errorPost ( Choqok::MicroBlog::OtherError, errMsg, post );
+            emit errorPost ( theAccount, Choqok::MicroBlog::OtherError, errMsg, post );
             return;
         }
         job->addMetaData ( "content-type", "Content-Type: application/x-www-form-urlencoded" );
         mCreatePostMap[ job ] = post;
+        mAccountJobs[job] = theAccount;
         connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotCreatePost ( KJob* ) ) );
         job->start();
     }
@@ -301,36 +301,40 @@ void TwitterMicroBlog::slotCreatePost ( KJob *job )
         kError() << "Job is null pointer";
         return;
     }
-    Choqok::Post *post = mCreatePostMap[job];
-    mCreatePostMap.remove ( job );
+    Choqok::Post *post = mCreatePostMap.take(job);
+    Choqok::Account *theAccount = mAccountJobs.take(job);
+    if(!post || !theAccount) {
+        kError()<<"Account or Post is NULL pointer";
+        return;
+    }
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit errorPost ( Choqok::MicroBlog::CommunicationError, job->errorString(), post );
+        emit errorPost ( theAccount, Choqok::MicroBlog::CommunicationError, job->errorString(), post );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast< KIO::StoredTransferJob * > ( job );
         if ( !post->isPrivate ) {
             readPostFromXml ( stj->data(), post );
             if ( post->isError ) {
                 kDebug() << "XML parsing error" ;
-                emit errorPost ( Choqok::MicroBlog::ParsingError,
+                emit errorPost ( theAccount, Choqok::MicroBlog::ParsingError,
                                  i18n ( "Error: Could not parse result data." ), post );
             } else {
-                emit postCreated ( post );
+                emit postCreated ( theAccount, post );
             }
         } else {
-            emit postCreated ( post );
+            emit postCreated ( theAccount, post );
         }
     }
 }
 
-void TwitterMicroBlog::abortCreatePost()
+void TwitterMicroBlog::abortAllJobs(Choqok::Account* theAccount)
 {
-    foreach ( KJob *job, mCreatePostMap.keys() ) {
+    foreach ( KJob *job, mAccountJobs.keys(theAccount) ) {
         job->kill();
     }
 }
 
-void TwitterMicroBlog::fetchPost ( Choqok::Post* post )
+void TwitterMicroBlog::fetchPost ( Choqok::Account* theAccount, Choqok::Post* post )
 {
     kDebug();
     if ( !post || post->postId.isEmpty()) {
@@ -338,16 +342,17 @@ void TwitterMicroBlog::fetchPost ( Choqok::Post* post )
     }
     KUrl url = mApiUrl;
     url.addPath ( QString("/statuses/show/%1.xml").arg(post->postId) );
-    setDefaultArgs ( url );
+    setDefaultArgs ( theAccount, url );
 
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create a http GET request!";
         QString errMsg = i18n ( "Cannot create an http GET request." );
-        emit errorPost ( Choqok::MicroBlog::OtherError, errMsg, post );
+        emit errorPost ( theAccount, Choqok::MicroBlog::OtherError, errMsg, post );
         return;
     }
     mFetchPostMap[ job ] = post;
+    mAccountJobs[ job ] = theAccount;
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotFetchPost ( KJob* ) ) );
     job->start();
 }
@@ -359,27 +364,27 @@ void TwitterMicroBlog::slotFetchPost ( KJob *job )
         kWarning()<<"NULL Job returned";
         return;
     }
-    Choqok::Post *post = mFetchPostMap.value(job);
-    mFetchPostMap.remove(job);
+    Choqok::Post *post = mFetchPostMap.take(job);
+    Choqok::Account *theAccount = mAccountJobs.take(job);
     if ( job->error() ) {
         kError() << "Job Error: " << job->errorString();
-        emit error ( Choqok::MicroBlog::CommunicationError, job->errorString() );
+        emit error ( theAccount, Choqok::MicroBlog::CommunicationError, job->errorString() );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
         readPostFromXml ( stj->data(), post );
         if ( post->isError ) {
             kError() << "Parsing Error";
-            emit errorPost ( Choqok::MicroBlog::ParsingError,
+            emit errorPost ( theAccount, Choqok::MicroBlog::ParsingError,
                              i18n ( "Error: Could not parse result data." ), post );
         } else {
             post->isError = true;
-            emit postFetched ( post );
+            emit postFetched ( theAccount, post );
             //             mFetchPostMap.remove(job);
         }
     }
 }
 
-void TwitterMicroBlog::removePost ( Choqok::Post* post )
+void TwitterMicroBlog::removePost ( Choqok::Account* theAccount, Choqok::Post* post )
 {
     kDebug();
     if ( !post->postId.isEmpty() ) {
@@ -389,15 +394,16 @@ void TwitterMicroBlog::removePost ( Choqok::Post* post )
         } else {
             url.addPath ( "/direct_messages/destroy/" + post->postId + ".xml" );
         }
-        setDefaultArgs ( url );
+        setDefaultArgs ( theAccount, url );
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
         if ( !job ) {
             kDebug() << "Cannot create a http POST request!";
             QString errMsg = i18n ( "Cannot create an http POST request." );
-            emit errorPost ( Choqok::MicroBlog::OtherError, errMsg, post );
+            emit errorPost ( theAccount, Choqok::MicroBlog::OtherError, errMsg, post );
             return;
         }
         mRemovePostMap[job] = post;
+        mAccountJobs[job] = theAccount;
         connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotRemovePost ( KJob* ) ) );
         job->start();
     }
@@ -410,30 +416,31 @@ void TwitterMicroBlog::slotRemovePost ( KJob *job )
         kDebug() << "Job is null pointer.";
         return;
     }
-    Choqok::Post *post = mRemovePostMap[job];
-    mRemovePostMap.remove(job);
+    Choqok::Post *post = mRemovePostMap.take(job);
+    Choqok::Account *theAccount = mAccountJobs.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit errorPost ( CommunicationError, job->errorString(), post );
+        emit errorPost ( theAccount, CommunicationError, job->errorString(), post );
     } else {
-        emit postRemoved ( post );
+        emit postRemoved ( theAccount, post );
     }
 }
 
-void TwitterMicroBlog::createFavorite ( const QString &postId )
+void TwitterMicroBlog::createFavorite ( Choqok::Account* theAccount, const QString &postId )
 {
     kDebug();
     KUrl url = mApiUrl;
     url.addPath ( "/favorites/create/" + postId + ".xml" );
-    setDefaultArgs ( url );
+    setDefaultArgs ( theAccount, url );
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create a http POST request!";
         QString errMsg = i18n ( "Cannot create an http POST request." );
-        emit error ( OtherError, errMsg );
+        emit error ( theAccount, OtherError, errMsg );
         return;
     }
     mFavoriteMap[job] = postId;
+    mAccountJobs[job] = theAccount;
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotCreateFavorite ( KJob* ) ) );
     job->start();
 }
@@ -445,30 +452,31 @@ void TwitterMicroBlog::slotCreateFavorite ( KJob *job )
         kDebug() << "Job is null pointer.";
         return;
     }
+    Choqok::Account *theAccount = mAccountJobs.take(job);
+    QString postId = mFavoriteMap.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit error ( CommunicationError, job->errorString() );
+        emit error ( theAccount, CommunicationError, job->errorString() );
     } else {
-        QString postId = mFavoriteMap[job];
-        mFavoriteMap.remove(job);
-        emit favoriteCreated ( postId );
+        emit favoriteCreated ( theAccount, postId );
     }
 }
 
-void TwitterMicroBlog::removeFavorite ( const QString &postId )
+void TwitterMicroBlog::removeFavorite ( Choqok::Account* theAccount, const QString& postId )
 {
     kDebug();
     KUrl url = mApiUrl;
     url.addPath ( "/favorites/destroy/" + postId + ".xml" );
-    setDefaultArgs ( url );
+    setDefaultArgs ( theAccount, url );
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create a http POST request!";
         QString errMsg = i18n ( "Cannot create an http POST request." );
-        emit error ( OtherError, errMsg );
+        emit error ( theAccount, OtherError, errMsg );
         return;
     }
     mFavoriteMap[job] = postId;
+    mAccountJobs[job] = theAccount;
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotRemoveFavorite ( KJob* ) ) );
     job->start();
 }
@@ -480,30 +488,30 @@ void TwitterMicroBlog::slotRemoveFavorite ( KJob *job )
         kDebug() << "Job is null pointer.";
         return;
     }
+    QString id = mFavoriteMap.take(job);
+    Choqok::Account *theAccount = mAccountJobs.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit error ( CommunicationError, job->errorString() );
+        emit error ( theAccount, CommunicationError, job->errorString() );
     } else {
-        QString id = mFavoriteMap[job];
-        mFavoriteMap.remove(job);
-        emit favoriteCreated ( id );
+        emit favoriteCreated ( theAccount, id );
     }
 }
 
-void TwitterMicroBlog::updateTimelines ()
+void TwitterMicroBlog::updateTimelines (Choqok::Account* theAccount)
 {
     kDebug();
     foreach ( QString tm, timelineTypes() ) {
-        requestTimeLine ( tm, mTimelineLatestId.value(tm) );
+        requestTimeLine ( theAccount, tm, mTimelineLatestId.value(tm) );
     }
 }
 
-void TwitterMicroBlog::requestTimeLine ( QString type, QString latestStatusId, int page, QString maxId )
+void TwitterMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString type, QString latestStatusId, int page, QString maxId )
 {
     kDebug();
     KUrl url = mApiUrl;
     url.addPath ( timelineApiPath[type] );
-    setDefaultArgs ( url );
+    setDefaultArgs ( theAccount, url );
     if ( !latestStatusId.isEmpty() ) {
         url.addQueryItem ( "since_id", latestStatusId );
     }
@@ -520,10 +528,11 @@ void TwitterMicroBlog::requestTimeLine ( QString type, QString latestStatusId, i
     if ( !job ) {
         kDebug() << "Cannot create a http GET request!";
         QString errMsg = i18n ( "Cannot create an http GET request." );
-        emit error ( OtherError, errMsg );
+        emit error ( theAccount, OtherError, errMsg );
         return;
     }
     mRequestTimelineMap[job] = type;
+    mAccountJobs[job] = theAccount;
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotRequestTimeline ( KJob* ) ) );
     job->start();
 }
@@ -535,34 +544,34 @@ void TwitterMicroBlog::slotRequestTimeline ( KJob *job )
         kDebug() << "Job is null pointer";
         return;
     }
+    Choqok::Account *theAccount = mAccountJobs.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit error( CommunicationError, job->errorString() );
+        emit error( theAccount, CommunicationError, job->errorString() );
         return;
     }
-    QString type = mRequestTimelineMap[job];
+    QString type = mRequestTimelineMap.take(job);
     if( isValidTimeline(type) ) {
         KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob*>( job );
         QList<Choqok::Post*> list;
         if( type=="Home" || type=="Replies" ) {
             list = readTimelineFromXml( j->data() );
         } else if( type=="Inbox" || type=="Outbox" ) {
-            list = readDMessagesFromXml( j->data() );
+            list = readDMessagesFromXml( theAccount, j->data() );
         }
         if(!list.isEmpty()) {
             mTimelineLatestId[type] = list.last()->postId;
-            emit timelineDataReceived(type, list);
+            emit timelineDataReceived( theAccount, type, list );
         }
-        mRequestTimelineMap.remove( job );
     }
 }
 
-void TwitterMicroBlog::setDefaultArgs ( KUrl & url )
+void TwitterMicroBlog::setDefaultArgs ( Choqok::Account* theAccount, KUrl& url )
 {
-    if(currentAccount()) {
-        url.setScheme ( qobject_cast<TwitterAccount*>(currentAccount())->useSecureConnection() ? "https" : "http" );
-        url.setUser ( currentAccount()->username() );
-        url.setPass ( currentAccount()->password() );
+    if(theAccount) {
+        url.setScheme ( qobject_cast<TwitterAccount*>(theAccount)->useSecureConnection() ? "https" : "http" );
+        url.setUser ( theAccount->username() );
+        url.setPass ( theAccount->password() );
     }
 }
 
@@ -659,7 +668,7 @@ QList<Choqok::Post*> TwitterMicroBlog::readTimelineFromXml ( const QByteArray &b
     return postList;
 }
 
-Choqok::Post * TwitterMicroBlog::readDMessageFromXml ( const QByteArray &buffer )
+Choqok::Post * TwitterMicroBlog::readDMessageFromXml (Choqok::Account *theAccount, const QByteArray &buffer )
 {
     kDebug();
     QDomDocument document;
@@ -667,7 +676,7 @@ Choqok::Post * TwitterMicroBlog::readDMessageFromXml ( const QByteArray &buffer 
     QDomElement root = document.documentElement();
 
     if ( !root.isNull() ) {
-        return readPostFromDomElement ( root.toElement() );
+        return readDMessageFromDomElement ( theAccount, root.toElement() );
     } else {
         Choqok::Post *post = new Choqok::Post;
         post->isError = true;
@@ -675,7 +684,7 @@ Choqok::Post * TwitterMicroBlog::readDMessageFromXml ( const QByteArray &buffer 
     }
 }
 
-Choqok::Post * TwitterMicroBlog::readDMessageFromDomElement ( const QDomElement& root )
+Choqok::Post * TwitterMicroBlog::readDMessageFromDomElement ( Choqok::Account* theAccount, const QDomElement& root )
 {
     Choqok::Post *msg = new Choqok::Post;
 
@@ -733,7 +742,7 @@ Choqok::Post * TwitterMicroBlog::readDMessageFromDomElement ( const QDomElement&
             node2 = node2.nextSibling();
     }
     msg->creationDateTime = dateFromString ( timeStr );
-    if ( senderId == qobject_cast<TwitterAccount*>( currentAccount() )->userId() ) {
+    if ( senderId == qobject_cast<TwitterAccount*>( theAccount )->userId() ) {
         msg->author.description = recipientDescription;
         msg->author.userName = recipientScreenName;
         msg->author.profileImageUrl = recipientProfileImageUrl;
@@ -751,7 +760,7 @@ Choqok::Post * TwitterMicroBlog::readDMessageFromDomElement ( const QDomElement&
     return msg;
 }
 
-QList<Choqok::Post*> TwitterMicroBlog::readDMessagesFromXml ( const QByteArray &buffer )
+QList<Choqok::Post*> TwitterMicroBlog::readDMessagesFromXml (Choqok::Account *theAccount, const QByteArray &buffer )
 {
     kDebug();
     QDomDocument document;
@@ -766,7 +775,7 @@ QList<Choqok::Post*> TwitterMicroBlog::readDMessagesFromXml ( const QByteArray &
     }
     QDomNode node = root.firstChild();
     while ( !node.isNull() ) {
-        postList.prepend( readDMessageFromDomElement ( node.toElement() ) );
+        postList.prepend( readDMessageFromDomElement ( theAccount, node.toElement() ) );
         node = node.nextSibling();
     }
     return postList;

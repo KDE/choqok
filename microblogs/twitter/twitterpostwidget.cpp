@@ -119,33 +119,40 @@ void TwitterPostWidget::setFavorite()
 {
     TwitterMicroBlog *mic = qobject_cast<TwitterMicroBlog*>(mCurrentAccount->microblog());
     if(mCurrentPost.isFavorited){
-        connect(mic, SIGNAL(favoriteRemoved(QString)), SLOT(slotSetFavorite(QString)));
-        mic->removeFavorite(mCurrentPost.postId);
+        connect(mic, SIGNAL(favoriteRemoved(Choqok::Account*,QString)),
+                this, SLOT(slotSetFavorite(Choqok::Account*,QString)) );
+        mic->removeFavorite(currentAccount(), mCurrentPost.postId);
     } else {
-        connect(mic, SIGNAL(favoriteCreated(QString)), SLOT(slotSetFavorite(QString)));
-        mic->createFavorite(mCurrentPost.postId);
+        connect(mic, SIGNAL(favoriteRemoved(Choqok::Account*,QString)),
+                this, SLOT(slotSetFavorite(Choqok::Account*,QString)) );
+        mic->createFavorite(currentAccount(), mCurrentPost.postId);
     }
 }
 
-void TwitterPostWidget::slotSetFavorite(const QString& postId)
+void TwitterPostWidget::slotSetFavorite(Choqok::Account *theAccount, const QString& postId)
 {
-    if(postId == mCurrentPost.postId){
+    if(currentAccount() == theAccount && postId == mCurrentPost.postId){
         kDebug()<<postId;
         mCurrentPost.isFavorited = !mCurrentPost.isFavorited;
         updateFavStat();
         TwitterMicroBlog *mic = qobject_cast<TwitterMicroBlog*>(mCurrentAccount->microblog());
-        disconnect(mic, SIGNAL(favoriteRemoved(QString)), this, SLOT(slotSetFavorite(QString)));
-        disconnect(mic, SIGNAL(favoriteCreated(QString)), this, SLOT(slotSetFavorite(QString)));
+        disconnect(mic, SIGNAL(favoriteRemoved(Choqok::Account*,QString)),
+                   this, SLOT(slotSetFavorite(Choqok::Account*,QString)) );
+        disconnect(mic, SIGNAL(favoriteCreated(Choqok::Account*,QString)),
+                   this, SLOT(slotSetFavorite(Choqok::Account*,QString)) );
         ///TODO Notify!
     }
 }
 
 void TwitterPostWidget::updateFavStat()
 {
-    if(mCurrentPost.isFavorited)
+    if(mCurrentPost.isFavorited){
+        btnFav->setChecked(true);
         btnFav->setIcon(KIcon("rating"));
-    else
+    } else {
+        btnFav->setChecked(false);
         btnFav->setIcon(unFavIcon);
+    }
 }
 
 void TwitterPostWidget::checkAnchor(const QUrl & url)

@@ -53,8 +53,8 @@ MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent, Qt::WindowF
     setupUi();
     connect(qApp, SIGNAL(aboutToQuit()), SLOT(aboutToQuit()));
     connect( this, SIGNAL(markAllAsRead()), SLOT(slotMarkAllAsRead()) );
-    connect(d->blog, SIGNAL(timelineDataReceived(QString,QList<Choqok::Post*>)),
-             this, SLOT(newTimelineDataRecieved(QString,QList<Choqok::Post*>)) );
+    connect(d->blog, SIGNAL(timelineDataReceived(Account*,QString,QList<Choqok::Post*>)),
+             this, SLOT(newTimelineDataRecieved(Account*,QString,QList<Choqok::Post*>)) );
     initTimelines();
 }
 
@@ -70,7 +70,6 @@ void MicroBlogWidget::setupUi()
         layout->addWidget(d->composer);
     timelinesTabWidget = new KTabWidget(this);
     layout->addWidget( timelinesTabWidget );
-//     timelinesTabWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     this->layout()->setContentsMargins( 0, 0, 0, 0 );
 }
 
@@ -105,7 +104,7 @@ void MicroBlogWidget::updateTimelines()
     if(!d->account)
         kError()<<"NIST AMU JAN";
     kDebug()<<d->account->alias();
-    d->account->microblog()->updateTimelines();
+    d->account->microblog()->updateTimelines(currentAccount());
 }
 
 void MicroBlogWidget::aboutToQuit()
@@ -119,8 +118,11 @@ void MicroBlogWidget::removeOldPosts()
     }
 }
 
-void MicroBlogWidget::newTimelineDataRecieved( const QString &type, QList<Post*> data )
+void MicroBlogWidget::newTimelineDataRecieved( Choqok::Account* theAccount, const QString& type, QList< Choqok::Post* > data )
 {
+    if(theAccount != currentAccount())
+        return;
+
     kDebug()<<d->account->alias()<<": "<<type;
     if(timelines.contains(type)){
         timelines.value(type)->addNewPosts(data);

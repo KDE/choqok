@@ -47,6 +47,8 @@ QString PostWidget::unreadStyle;
 PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* parent/* = 0*/ )
     :KTextBrowser(parent), mCurrentPost(post), mCurrentAccount(account), mRead(false)
 {
+    if(account->username() == post.author.userName)
+        mRead = true;
     setAttribute(Qt::WA_DeleteOnClose);
     setupUi();
     mTimer.start( _MINUTE );
@@ -55,6 +57,11 @@ PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* par
 
 PostWidget::~PostWidget()
 {
+}
+
+Account* PostWidget::currentAccount()
+{
+    return mCurrentAccount;
 }
 
 QString PostWidget::generateSign()
@@ -299,15 +306,17 @@ QString PostWidget::formatDateTime( const QDateTime& time )
 
 void PostWidget::removeCurrentPost()
 {
-    connect(mCurrentAccount->microblog(), SIGNAL(postRemoved(Post*)), SLOT(slotCurrentPostRemoved(Post*)));
-    connect( mCurrentAccount->microblog(), SIGNAL(errorPost(Choqok::MicroBlog::ErrorType,QString,const Post*)),
-             this, SLOT(slotPostError(Choqok::MicroBlog::ErrorType,QString,const Post*)) );
-    mCurrentAccount->microblog()->removePost(&mCurrentPost);
+    connect(mCurrentAccount->microblog(), SIGNAL(postRemoved(Account*,Post*)),
+            SLOT(slotCurrentPostRemoved(Account*,Post*)) );
+    connect( mCurrentAccount->microblog(),
+             SIGNAL(errorPost(Account*,Choqok::MicroBlog::ErrorType,QString,const Post*)),
+             this, SLOT(slotPostError(Account*,Choqok::MicroBlog::ErrorType,QString,const Post*)) );
+    mCurrentAccount->microblog()->removePost(mCurrentAccount, &mCurrentPost);
 }
 
-void PostWidget::slotCurrentPostRemoved( Choqok::Post* post )
+void PostWidget::slotCurrentPostRemoved( Account* theAccount, Post* post )
 {
-    if( post == &mCurrentPost )
+    if( theAccount == currentAccount() && post == &mCurrentPost )
         this->close();
 }
 
@@ -361,9 +370,10 @@ QList< KPushButton* >& PostWidget::buttons()
     return mUiButtons;
 }
 
-void PostWidget::slotPostError(MicroBlog::ErrorType error, const QString& errorMessage, const Choqok::Post* post)
+void PostWidget::slotPostError(Account* theAccount, MicroBlog::ErrorType error,
+                               const QString& errorMessage, const Choqok::Post* post)
 {
-    if(post == &mCurrentPost) {
+    if( theAccount == currentAccount() && post == &mCurrentPost) {
         kError()<<errorMessage;
     }
 }

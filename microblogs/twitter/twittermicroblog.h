@@ -39,7 +39,7 @@ public:
     TwitterMicroBlog( QObject* parent, const QStringList& args  );
     ~TwitterMicroBlog();
 
-    virtual Choqok::Account *createAccount( const QString &alias );
+    virtual Choqok::Account *createNewAccount( const QString &alias );
     virtual ChoqokEditAccountWidget * createEditAccountWidget( Choqok::Account *account, QWidget *parent );
     virtual Choqok::MicroBlogWidget * createMicroBlogWidget( Choqok::Account *account, QWidget *parent );
     virtual Choqok::TimelineWidget * createTimelineWidget( Choqok::Account* account,
@@ -47,6 +47,7 @@ public:
     virtual Choqok::PostWidget* createPostWidget(Choqok::Account* account,
                                                   const Choqok::Post& post, QWidget* parent);
     virtual QString profileUrl(const QString &username) const;
+    virtual QString postUrl ( const QString &postId, const QString &userScreenName );
 
     virtual QList< Choqok::Post* > loadTimeline(const QString& accountAlias, const QString& timelineName);
     virtual void saveTimeline(const QString& accountAlias, const QString& timelineName, QList< Choqok::PostWidget* > timeline);
@@ -58,26 +59,26 @@ public slots:
     @see postCreated()
     @see abortCreatePost()
     */
-    virtual void createPost( Choqok::Post *post );
+    virtual void createPost( Choqok::Account *theAccount, Choqok::Post *post );
 
     /**
     \brief Abort all of createPost requests!
     */
-    virtual void abortCreatePost();
+    virtual void abortAllJobs( Choqok::Account *theAccount );
 
     /**
     \brief Fetch a post
 
     @see postFetched()
     */
-    virtual void fetchPost( Choqok::Post *post );
+    virtual void fetchPost( Choqok::Account *theAccount, Choqok::Post *post );
 
     /**
     \brief Remove a post
 
     @see postRemoved()
     */
-    virtual void removePost( Choqok::Post *post );
+    virtual void removePost( Choqok::Account *theAccount, Choqok::Post *post );
 
     /**
     Request to update all timelines of account!
@@ -85,18 +86,18 @@ public slots:
 
     @see timelineDataReceived()
     */
-    virtual void updateTimelines();
+    virtual void updateTimelines(Choqok::Account *theAccount);
 
-    virtual void createFavorite( const QString &postId );
-    virtual void removeFavorite( const QString &postId );
+    virtual void createFavorite( Choqok::Account *theAccount, const QString &postId );
+    virtual void removeFavorite( Choqok::Account *theAccount, const QString &postId );
 
 signals:
-    void favoriteCreated(const QString &postId);
-    void favoriteRemoved(const QString &postId);
+    void favoriteCreated(Choqok::Account *theAccount, const QString &postId);
+    void favoriteRemoved(Choqok::Account *theAccount, const QString &postId);
 //     void errorPost( const QString &errorString, const Choqok::Post &post );
 
 protected slots:
-    virtual void requestTimeLine( QString type, QString latestStatusId, int page = 0, QString maxId = 0 );
+    virtual void requestTimeLine(Choqok::Account *theAccount, QString type, QString latestStatusId, int page = 0, QString maxId = 0 );
     virtual void slotCreatePost( KJob *job );
     virtual void slotFetchPost( KJob *job );
     virtual void slotRemovePost( KJob *job );
@@ -105,16 +106,14 @@ protected slots:
     virtual void slotRequestTimeline( KJob *job  );
 
 protected:
-    virtual void setDefaultArgs( KUrl &url );
+    virtual void setDefaultArgs( Choqok::Account *theAccount, KUrl &url );
     virtual QDateTime dateFromString( const QString &date );
     virtual Choqok::Post * readPostFromDomElement( const QDomElement &root, Choqok::Post *post=0 );
     virtual Choqok::Post * readPostFromXml( const QByteArray &buffer, Choqok::Post *post=0 );
     virtual QList<Choqok::Post*> readTimelineFromXml( const QByteArray &buffer );
-    virtual Choqok::Post * readDMessageFromXml ( const QByteArray &buffer );
-    virtual Choqok::Post * readDMessageFromDomElement ( const QDomElement& root );
-    virtual QList<Choqok::Post*> readDMessagesFromXml ( const QByteArray &buffer );
-
-    virtual QString postUrl ( const QString &postId, const QString &userScreenName );
+    virtual Choqok::Post * readDMessageFromXml (Choqok::Account *theAccount, const QByteArray &buffer );
+    virtual Choqok::Post * readDMessageFromDomElement (Choqok::Account *theAccount, const QDomElement& root );
+    virtual QList<Choqok::Post*> readDMessagesFromXml (Choqok::Account *theAccount, const QByteArray &buffer );
 
 
     QMap<QString, int> monthes;
@@ -126,12 +125,10 @@ protected:
     QMap<KJob*, Choqok::Post*> mFetchPostMap;
     QMap<KJob*, QString> mRequestTimelineMap;//Job, TimelineType
     QMap<QString, QString> mTimelineLatestId;//TimelineType, LatestId
+    QMap<KJob*, Choqok::Account*> mAccountJobs;
 
     KUrl mApiUrl;
     uint countOfPost;
-
-// private:
-//     TwitterMicroBlog *microBlogInstance;
 };
 
 #endif

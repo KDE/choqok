@@ -43,7 +43,7 @@ public slots:
 
 protected slots:
     virtual void submitPost( const QString &text );
-    virtual void slotPostSubmited(Post* post);
+    virtual void slotPostSubmited(Account *theAccount, Post* post);
     virtual void editorTextChanged();
     virtual void editorCleared();
 

@@ -52,15 +52,6 @@ MicroBlog::~MicroBlog()
     delete d;
 }
 
-void MicroBlog::setCurrentAccount(Account* account)
-{
-    d->account = account;
-}
-Account * MicroBlog::currentAccount() const
-{
-    return d->account;
-}
-
 QString MicroBlog::serviceName() const
 {
     return d->serviceName;

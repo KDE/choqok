@@ -128,13 +128,14 @@ void QuickPost::submitPost( QString & newPost )
             mSubmittedPost->content = newPost;
             mSubmittedPost->isPrivate = false;
         for ( int i = 0;i < count; ++i ) {
-            accountsList[i]->microblog()->createPost( mSubmittedPost );
+            accountsList[i]->microblog()->createPost(accountsList[i], mSubmittedPost );
         }
     } else {
         mSubmittedPost = new Post;
         mSubmittedPost->content = newPost;
         mSubmittedPost->isPrivate = false;
-        accountsList[comboAccounts->currentIndex()]->microblog()->createPost( mSubmittedPost );
+        accountsList[comboAccounts->currentIndex()]->microblog()->createPost(accountsList[comboAccounts->currentIndex()],
+                                                                             mSubmittedPost );
     }
 }
 

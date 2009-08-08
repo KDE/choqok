@@ -170,7 +170,7 @@ void AccountManager::loadAllAccounts()
             QString alias = cg.readEntry("Alias", QString());
             if(alias.isEmpty())
                 continue;///Unknown alias
-            Account *acc = mBlog->createAccount(alias);
+            Account *acc = mBlog->createNewAccount(alias);
             if(acc)
                 d->accounts.append(acc);
         }

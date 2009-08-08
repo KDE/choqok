@@ -67,6 +67,7 @@ bool TwitterEditAccountWidget::validateData()
 
 Choqok::Account* TwitterEditAccountWidget::apply()
 {
+    kDebug();
     if ( !verifyCredentials() )
         return 0;
     mAccount->setAlias(kcfg_alias->text());

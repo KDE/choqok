@@ -85,7 +85,7 @@ public:
     *
     * @return The new @ref Account object created by this function
     */
-    virtual Account *createAccount( const QString &alias ) = 0;
+    virtual Account *createNewAccount( const QString &alias ) = 0;
 
     /**
     * @brief Create a new EditAccountWidget
@@ -146,8 +146,6 @@ public:
     */
     virtual QList<Post*> loadTimeline( const QString &accountAlias, const QString &timelineName ) = 0;
 
-    void setCurrentAccount(Choqok::Account* account);
-    Account * currentAccount() const;
 public slots:
 
     /**
@@ -156,26 +154,26 @@ public slots:
     @see postCreated()
     @see abortCreatePost()
     */
-    virtual void createPost( Post *post ) = 0;
+    virtual void createPost( Account *theAccount, Post *post ) = 0;
 
     /**
     \brief Abort all of createPost requests!
     */
-    virtual void abortCreatePost() = 0;
+    virtual void abortAllJobs( Account *theAccount ) = 0;
 
     /**
     \brief Fetch a post
 
     @see postFetched()
     */
-    virtual void fetchPost( Post *post ) = 0;
+    virtual void fetchPost( Account *theAccount, Post *post ) = 0;
 
     /**
     \brief Remove a post
 
     @see postRemoved()
     */
-    virtual void removePost( Post *post ) = 0;
+    virtual void removePost( Account *theAccount, Post *post ) = 0;
 
     /**
     Request to update all timelines of account!
@@ -183,39 +181,39 @@ public slots:
 
     @see timelineDataReceived()
     */
-    virtual void updateTimelines() = 0;
+    virtual void updateTimelines( Account *theAccount ) = 0;
 
 signals:
 
     /**
     Emit when data for a timeline recieved! @p type specifies the type of timeline as specifies in timelineTypes()
     */
-    void timelineDataReceived( const QString &type, QList<Choqok::Post*> data );
+    void timelineDataReceived( Account *theAccount, const QString &timelineName, QList<Choqok::Post*> data );
 
     /**
     Emit when a post successfully created!
     */
-    void postCreated( Post *post );
+    void postCreated( Account *theAccount, Post *post );
 
     /**
     Emit when a post successfully fetched!
     */
-    void postFetched( Post *post );
+    void postFetched( Account *theAccount, Post *post );
 
     /**
     Emit when a post successfully removed!
     */
-    void postRemoved( Post *post );
+    void postRemoved( Account *theAccount, Post *post );
 
     /**
     Emit when an error occured the @p errorMessage will specify the error.
     */
-    void error( Choqok::MicroBlog::ErrorType error, const QString &errorMessage );
+    void error( Account *theAccount, Choqok::MicroBlog::ErrorType error, const QString &errorMessage );
 
     /**
     Emit when an error occured on Post manipulation. e.g. On Creation!
     */
-    void errorPost( Choqok::MicroBlog::ErrorType error, const QString &errorMessage,
+    void errorPost( Account *theAccount, Choqok::MicroBlog::ErrorType error, const QString &errorMessage,
                     const Post *post );
 
 public:

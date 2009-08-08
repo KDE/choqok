@@ -50,7 +50,7 @@ protected:
 protected slots:
     virtual void checkAnchor(const QUrl & url);
     virtual void setFavorite();
-    virtual void slotSetFavorite(const QString &postId);
+    virtual void slotSetFavorite(Choqok::Account *theAccount, const QString &postId);
     virtual void slotReply();
 
 };

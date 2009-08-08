@@ -402,8 +402,8 @@ void MainWindow::addBlog( Choqok::Account * account, bool isStartup )
 
     mainWidget->addTab( widget, account->alias() );
 
-    if( !isStartup )
-        QTimer::singleShot( 1500, widget, SLOT( updateTimelines() ) );
+//     if( !isStartup )///FIXME Cause a crash!
+//         QTimer::singleShot( 1500, widget, SLOT( updateTimelines() ) );
     enableApp();
     if( mainWidget->count() > 1)
         mainWidget->setTabBarHidden(false);
