@@ -235,7 +235,7 @@ public:
     enum Capability
     {
         CreatPost = 0x1,
-        RemovePost = 0x3,
+        RemovePost = 0x3
     };
     Q_DECLARE_FLAGS(Capabilities, Capability)
 
