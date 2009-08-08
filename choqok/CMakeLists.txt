@@ -1,7 +1,6 @@
 
 include_directories(
 ${CHOQOK_INCLUDES}
-${CMAKE_CURRENT_BINARY_DIR}/config
 ${CMAKE_CURRENT_SOURCE_DIR}/config
 )
 
