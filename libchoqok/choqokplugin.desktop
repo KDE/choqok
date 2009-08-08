@@ -1,0 +1,20 @@
+[Desktop Entry]
+Type=ServiceType
+X-KDE-ServiceType=Choqok/Plugin
+X-KDE-Derived=KPluginInfo
+Comment=Choqok Plugin
+Comment[es]=Complemento de Choqok
+Comment[fr]=Module externe pour Choqok
+Comment[gl]=Engadido de ChoqoK
+Comment[it]=Estensione di Choqok
+Comment[pt]='Plugin' do Choqok
+Comment[pt_BR]='Plugin' do Choqok
+Comment[sv]=Insticksprogram för Choqok
+Comment[uk]=Додаток до Choqok
+Comment[x-test]=xxChoqok Pluginxx
+
+
+# The Choqok version for which the plugin is written
+[PropertyDef::X-Choqok-Version]
+Type=int
+

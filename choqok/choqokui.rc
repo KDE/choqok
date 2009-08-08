@@ -1,12 +1,10 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="choqok" version="5">
+<kpartgui name="choqok" version="6">
 <MenuBar>
   <Menu name="file"><text>File</text>
-    <Action name="choqok_new_twit" />
-    <Action name="choqok_now_listening" />
+    <Action name="choqok_new_post" />
     <Action name="update_timeline" />
-    <Action name="choqok_mark_read" />
-    <Action name="choqok_search" />
+    <Action name="choqok_mark_as_read" />
     <Separator/>
     <Action name="toggle_mainwin"/>
   </Menu>

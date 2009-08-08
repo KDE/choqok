@@ -25,14 +25,17 @@
 #define MAINWINDOW_H
 
 #include <kxmlguiwindow.h>
-#include "datacontainers.h"
+// #include "datacontainers.h"
 #include "account.h"
-#include "ui_prefs_base.h"
+// #include "ui_prefs_base.h"
 // #include "ui_accounts_base.h"
-#include "ui_appears_base.h"
-#include "searchwindow.h"
+// #include "ui_appears_base.h"
+// #include "searchwindow.h"
 
-static const int TIMEOUT = 5000;
+namespace Choqok {
+class QuickPost;
+class Plugin;
+}
 
 class QTimer;
 class QuickTwit;
@@ -62,59 +65,53 @@ public:
     virtual ~MainWindow();
 
 signals:
-    void updateTimeLines();
-    void updateSearchResults();
-    void updateSearchLimits();
+    void updateTimelines();
+//     void updateSearchResults();
+//     void updateSearchLimits();
 //     void sigSetUnread( int unread );
-    void abortPostNewStatus();
-    void setUnreadStatusesToReadState();
+//     void abortPostNewStatus();
+    void markAllAsRead();
+    void removeOldPosts();
 
 public slots:
-    void systemNotify( const QString &title, const QString &message, const QString &iconUrl );
-    void search(int type = 0, const QString &search = QString());
+//     void systemNotify( const QString &title, const QString &message, const QString &iconUrl );
+//     void search(int type = 0, const QString &search = QString());
     void nextTab(const QWheelEvent&);
 
 protected slots:
     void optionsPreferences();
-//     void search();
     void settingsChanged();
-    void notify( const QString &message, bool isPermanent = false );
+    void showStatusMessage( const QString &message, bool isPermanent = false );
     void quitApp();
-    void setNumOfUnreadOnMainWin( int unread );
-    void showTimeLine();
+    void showBlog();
+    void slotUpdateUnreadCount( int count );
 
 protected:
     void hideEvent( QHideEvent * event );
-    void checkUnreadStatuses( int numOfNewStatusesReciened );
     QSize sizeHint() const;
 
 private:
     void setupActions();
-    void setupQuickTweet();
-    void setDefaultDirection();
+    void createQuickPostDialog();
     void disableApp();
     void enableApp();
 
 private slots:
-    void loadAccounts();
-    void addAccountTimeLine( const Account &account, bool isStartup = false );
-    void removeAccountTimeLine( const QString &alias );
+    void loadAllAccounts();
+    void newPluginAvailable( Choqok::Plugin *plugin );
+    void addBlog( Choqok::Account *account, bool isStartup = false );
+    void removeBlog( const QString &alias );
     void setTimeLineUpdatesEnabled( bool isEnabled );
     void setNotificationsEnabled( bool isEnabled );
-    void postQuickTwit( const QString &text=QString());
+    void triggerQuickPost();
     void toggleMainWindow();
-    void postNowListening();
 
 private:
     KTabWidget *mainWidget;
     QTimer *timelineTimer;
-    Ui::prefs_base ui_prefs_base;
-    Ui::appears_base ui_appears_base;
-    QString currentUsername;// used for understanding username changes!
-    int mPrevNotifyType;
     int mPrevUpdateInterval;
     SysTrayIcon *sysIcon;
-    QuickTwit *quickWidget;
+    Choqok::QuickPost *quickWidget;
 };
 
 #endif

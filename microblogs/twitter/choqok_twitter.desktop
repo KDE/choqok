@@ -1,0 +1,18 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Service
+X-Choqok-Version=1543
+Icon=twitter_microblog
+ServiceTypes=Choqok/Plugin
+X-KDE-Library=choqok_twitter
+X-KDE-PluginInfo-Author=Mehrdad Momeny
+X-KDE-PluginInfo-Email=mehrdad.momeny@gmail.com
+X-KDE-PluginInfo-Name=choqok_twitter
+X-KDE-PluginInfo-Version=0.1
+X-KDE-PluginInfo-Website=http://choqok.gnufolks.org
+X-KDE-PluginInfo-Category=MicroBlogs
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=false
+Name=Twitter
+Comment=A plugin to communicate with Twitter.com service

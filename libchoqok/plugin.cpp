@@ -19,47 +19,61 @@
 
     You should have received a copy of the GNU General Public License
     along with this program; if not, see http://www.gnu.org/licenses/
-
 */
-#ifndef SYSTRAYICON_H
-#define SYSTRAYICON_H
 
-#include <ksystemtrayicon.h>
-#include <choqoktypes.h>
-// #include "mainwindow.h"
-// #include "quicktwit.h"
+#include "plugin.h"
+#include "pluginmanager.h"
+#include <kplugininfo.h>
+#include <ksettings/dispatcher.h>
 
-/**
-System tray icon!
+namespace Choqok {
 
-    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
-*/
-class SysTrayIcon : public KSystemTrayIcon
+class Plugin::Private
 {
-    Q_OBJECT
 public:
-    SysTrayIcon( QWidget* parent = 0 );
-
-    ~SysTrayIcon();
-public slots:
-    void setTimeLineUpdatesEnabled( bool isEnabled );
-    void slotJobDone( Choqok::JobResult result );
-    void slotRestoreIcon();
-    void slotSetUnread( int numOfUnreadPosts );
-
-signals:
-    void wheelEvent(const QWheelEvent&);
-
-protected:
-    virtual bool event(QEvent* event);
     
-private:
-    int unread;
-
-    QPixmap m_defaultIcon;
-    QIcon prevIcon;
-    bool isIconChanged;
-    bool isBaseIconChanged;
 };
 
-#endif
+Plugin::Plugin( const KComponentData &instance, QObject *parent )
+: QObject( parent ), KXMLGUIClient(), d(new Private)
+{
+    setComponentData( instance );
+    KSettings::Dispatcher::registerComponent( instance, this, "settingsChanged" );
+}
+
+Plugin::~Plugin()
+{
+    delete d;
+}
+
+QString Plugin::pluginId() const
+{
+    return QString::fromLatin1( metaObject()->className() );
+}
+
+
+QString Plugin::displayName() const
+{
+    return pluginInfo().isValid() ? pluginInfo().name() : QString();
+}
+
+QString Plugin::pluginIcon() const
+{
+    return pluginInfo().isValid() ? pluginInfo().icon() : QString();
+}
+
+
+KPluginInfo Plugin::pluginInfo() const
+{
+    return PluginManager::self()->pluginInfo( this );
+}
+
+void Plugin::aboutToUnload()
+{
+    // Just make the unload synchronous by default
+    emit readyForUnload();
+}
+
+}
+
+#include "plugin.moc"

@@ -21,45 +21,61 @@
     along with this program; if not, see http://www.gnu.org/licenses/
 
 */
-#ifndef SYSTRAYICON_H
-#define SYSTRAYICON_H
+#ifndef QUICKPOST_H
+#define QUICKPOST_H
 
-#include <ksystemtrayicon.h>
-#include <choqoktypes.h>
-// #include "mainwindow.h"
-// #include "quicktwit.h"
+#include "choqoktypes.h"
+#include <kdialog.h>
+#include "account.h"
+#include <microblog.h>
+
+class KComboBox;
+class QCheckBox;
+namespace Choqok
+{
+class TextEdit;
 
 /**
-System tray icon!
+Widget for Quick posting
 
     @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
 */
-class SysTrayIcon : public KSystemTrayIcon
+class CHOQOK_EXPORT QuickPost : public KDialog
 {
     Q_OBJECT
 public:
-    SysTrayIcon( QWidget* parent = 0 );
+    QuickPost( QWidget* parent = 0 );
+    virtual ~QuickPost();
 
-    ~SysTrayIcon();
 public slots:
-    void setTimeLineUpdatesEnabled( bool isEnabled );
-    void slotJobDone( Choqok::JobResult result );
-    void slotRestoreIcon();
-    void slotSetUnread( int numOfUnreadPosts );
+    void show();
+    void submitPost( QString &newStatus );
+    void setText( const QString &text );
 
 signals:
-    void wheelEvent(const QWheelEvent&);
+    void newPostSubmitted( Choqok::JobResult result );
 
 protected:
-    virtual bool event(QEvent* event);
-    
-private:
-    int unread;
+    void loadAccounts();
 
-    QPixmap m_defaultIcon;
-    QIcon prevIcon;
-    bool isIconChanged;
-    bool isBaseIconChanged;
+protected slots:
+    void slotCurrentAccountChanged(int);
+    void checkAll( bool isAll );
+    virtual void slotButtonClicked(int button);
+    void addAccount( Choqok::Account* account );
+    void removeAccount( const QString &alias );
+    virtual void slotSubmitPost( Post *post );
+    void postError(Choqok::MicroBlog::ErrorType error,const QString &errorMessage,const Post* post);
+
+private:
+    void setupUi();
+    QCheckBox *all;
+    KComboBox *comboAccounts;
+    Choqok::TextEdit *txtPost;
+
+    QList<Account*> accountsList;
+    Post *mSubmittedPost;
 };
 
+}
 #endif

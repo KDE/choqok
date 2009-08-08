@@ -22,7 +22,6 @@
 
 */
 #include "systrayicon.h"
-#include "constants.h"
 #include "settings.h"
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -32,6 +31,7 @@
 #include <QTimer>
 #include "accountmanager.h"
 #include <kglobalsettings.h>
+#include <mediamanager.h>
 
 // #include <qcoreevent.h>
 #include <QWheelEvent>
@@ -50,7 +50,6 @@ SysTrayIcon::SysTrayIcon( QWidget* parent ): KSystemTrayIcon( parent )
 SysTrayIcon::~SysTrayIcon()
 {
     kDebug();
-    AccountManager::self()->deleteLater();
 }
 
 bool SysTrayIcon::event(QEvent* event) {
@@ -127,27 +126,18 @@ void SysTrayIcon::slotSetUnread( int numOfUnreadStatuses )
 void SysTrayIcon::setTimeLineUpdatesEnabled( bool isEnabled )
 {
     if ( isEnabled ) {
-        setToolTip( i18n( "Choqok - Click me to update your status" ) );
+        setToolTip( i18n( "Choqok" ) );
         m_defaultIcon = parentWidget()->windowIcon().pixmap( 22 );
     } else {
         slotSetUnread( -unread );
         setToolTip( i18n( "Choqok - Disabled" ) );
         ///Generating new Icon:
-        QImage result = m_defaultIcon.toImage();
-        for ( int y = 0; y < result.height(); ++y ) {
-            for ( int x = 0; x < result.width(); ++x ) {
-                int pixel = result.pixel( x, y );
-                int gray = qGray( pixel );
-                int alpha = qAlpha( pixel );
-                result.setPixel( x, y, qRgba( gray, gray, gray, alpha ) );
-            }
-        }
-        m_defaultIcon = QPixmap::fromImage( result );
+        m_defaultIcon = Choqok::MediaManager::convertToGrayScale(m_defaultIcon);
     }
     setIcon( KIcon( m_defaultIcon ) );
 }
 
-void SysTrayIcon::slotStatusUpdated( bool isError )
+void SysTrayIcon::slotJobDone( Choqok::JobResult result )
 {
     kDebug();
     if ( !isIconChanged ) {
@@ -155,10 +145,10 @@ void SysTrayIcon::slotStatusUpdated( bool isError )
         isIconChanged = true;
     }
     isBaseIconChanged = false;
-    if ( isError ) {
-        setIcon( KIcon( "dialog-cancel" ) );
-    } else {
+    if ( result == Choqok::Success ) {
         setIcon( KIcon( "dialog-ok" ) );
+    } else {
+        setIcon( KIcon( "dialog-cancel" ) );
     }
     QTimer::singleShot( 5000, this, SLOT( slotRestoreIcon() ) );
 }

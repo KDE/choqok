@@ -21,45 +21,50 @@
     along with this program; if not, see http://www.gnu.org/licenses/
 
 */
-#ifndef SYSTRAYICON_H
-#define SYSTRAYICON_H
 
-#include <ksystemtrayicon.h>
-#include <choqoktypes.h>
-// #include "mainwindow.h"
-// #include "quicktwit.h"
+#include "editaccountwidget.h"
 
-/**
-System tray icon!
-
-    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
-*/
-class SysTrayIcon : public KSystemTrayIcon
+class ChoqokEditAccountWidgetPrivate
 {
-    Q_OBJECT
 public:
-    SysTrayIcon( QWidget* parent = 0 );
-
-    ~SysTrayIcon();
-public slots:
-    void setTimeLineUpdatesEnabled( bool isEnabled );
-    void slotJobDone( Choqok::JobResult result );
-    void slotRestoreIcon();
-    void slotSetUnread( int numOfUnreadPosts );
-
-signals:
-    void wheelEvent(const QWheelEvent&);
-
-protected:
-    virtual bool event(QEvent* event);
-    
-private:
-    int unread;
-
-    QPixmap m_defaultIcon;
-    QIcon prevIcon;
-    bool isIconChanged;
-    bool isBaseIconChanged;
+    Choqok::Account *account;
+    QString prevAlias;
 };
 
-#endif
+ChoqokEditAccountWidget::ChoqokEditAccountWidget( Choqok::Account* account, QWidget *parent)
+    :QWidget(parent)
+{
+    d = new ChoqokEditAccountWidgetPrivate;
+    d->account = account;
+    if(account)
+    d->prevAlias = account->alias();
+}
+
+ChoqokEditAccountWidget::~ChoqokEditAccountWidget()
+{
+    delete d;
+}
+
+QString ChoqokEditAccountWidget::previousAlias() const
+{
+    return d->prevAlias;
+}
+
+Choqok::Account * ChoqokEditAccountWidget::account() const
+{
+    return d->account;
+}
+
+bool ChoqokEditAccountWidget::validateData()
+{
+    return true;
+}
+
+void ChoqokEditAccountWidget::setAccount(Choqok::Account* account)
+{
+    if(d->account)
+        delete d->account;
+    d->account = account;
+}
+
+#include "editaccountwidget.moc"

@@ -1,5 +1,10 @@
 File=choqok.kcfg
 ClassName=Settings
+GlobalEnums=false
+Inherits=KConfigSkeleton
+ItemAccessors=true
+MemberVariables=private
+Mutators=true
+SetUserTexts=false
 Singleton=true
-Mutators=quickTweetSize,quickTweetAll,notifyType,updateInterval,position,searchWindowSize,searchWindowPosition,configDialogSize
-UseEnumTypes=true
+IncludeFiles=klocale.h

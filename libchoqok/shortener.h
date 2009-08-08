@@ -19,47 +19,29 @@
 
     You should have received a copy of the GNU General Public License
     along with this program; if not, see http://www.gnu.org/licenses/
-
 */
-#ifndef SYSTRAYICON_H
-#define SYSTRAYICON_H
 
-#include <ksystemtrayicon.h>
-#include <choqoktypes.h>
-// #include "mainwindow.h"
-// #include "quicktwit.h"
+#ifndef SHORTENER_H
+#define SHORTENER_H
 
-/**
-System tray icon!
+#include "plugin.h"
 
-    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
-*/
-class SysTrayIcon : public KSystemTrayIcon
+class QWidget;
+
+namespace Choqok{
+
+class CHOQOK_EXPORT Shortener : public Plugin
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    SysTrayIcon( QWidget* parent = 0 );
-
-    ~SysTrayIcon();
-public slots:
-    void setTimeLineUpdatesEnabled( bool isEnabled );
-    void slotJobDone( Choqok::JobResult result );
-    void slotRestoreIcon();
-    void slotSetUnread( int numOfUnreadPosts );
-
-signals:
-    void wheelEvent(const QWheelEvent&);
-
-protected:
-    virtual bool event(QEvent* event);
-    
-private:
-    int unread;
-
-    QPixmap m_defaultIcon;
-    QIcon prevIcon;
-    bool isIconChanged;
-    bool isBaseIconChanged;
+    Shortener( const KComponentData &instance, QObject *parent );
+    virtual ~Shortener();
+    /**
+    A small widget will show if not null.
+    Default implementation returns NULL that means there's no config widget.
+    */
+    virtual QWidget *configWidget();
+    virtual QString shorten( const QString &url );
 };
-
+}//End Namespace Choqok
 #endif

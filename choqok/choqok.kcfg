@@ -1,27 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Author: Mehrdad Momeny-->
 <kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
-    <include>"settingsbase.h"</include>
 <kcfgfile/>
     <group name="Preferences">
-        <entry name="doNotShowRepliesOnHome" type="Bool">
-            <default>true</default>
-        </entry>
         <entry name="showIconsOnTimelineTabs" type="Bool">
             <default>false</default>
         </entry>
-        <entry name="shortenOnPaste" type="Bool">
-            <default>false</default>
-        </entry>
-        <entry name="shortenService" type="Enum">
-            <choices name="SettingsBase::ShortenService" />
-            <default>SettingsBase::TightURL</default>
-        </entry>
-        <entry name="notifyType" type="Enum">
-            <choices name="SettingsBase::NotifyType" />
-            <default>SettingsBase::KNotify</default>
+        <entry name="notifyEnabled" type="Bool">
+            <default>true</default>
         </entry>
         <entry name="showAllNotifiesInOne" type="Bool">
             <default>false</default>
@@ -29,71 +18,34 @@
         <entry name="updateInterval" type="Int">
             <default>10</default>
         </entry>
-        <entry name="countOfStatusesOnMain" type="Int">
-            <default>20</default>
-        </entry>
         <entry name="notifyInterval" type="Int">
             <default>10</default>
-        </entry>
-        <entry name="useSecureConnection" type="Bool">
-            <default>false</default>
         </entry>
         <entry name="showMainWinOnStart" type="Bool">
             <default>true</default>
         </entry>
-        <entry name="quickTweetAll" type="Bool">
-            <default>false</default>
-        </entry>
-        <entry name="loadTwitpicImages" type="Bool">
-            <default>true</default>
-        </entry>
-        <entry name="quickTweetSize" type="Size">
-            <default>QSize(280,140)</default>
-        </entry>
-        <entry name="nowListening" type="String">
-            <default>Currently listening to %title% by %artist% on %album% [Amarok].</default>
-        </entry>
-        <entry name="useCustomBrowser" type="Bool">
-            <default>false</default>
-        </entry>
-        <entry name="customBrowser" type="String" />
-        <entry name="unTiny" type="Bool">
-            <default>true</default>
-        </entry>
-    </group>
-    <group name="Appearances">
-        <entry name="isSmiliesEnabled" type="Bool">
-            <default>true</default>
-        </entry>
-        <entry name="isCustomUi" type="Bool">
-            <default>false</default>
-        </entry>
-        <entry name="defaultBackColor" type="Color">
-            <default>white</default>
-        </entry>
-        <entry name="newStatusBackColor" type="Color">
-            <default>yellow</default>
-        </entry>
-        <entry name="defaultForeColor" type="Color">
-            <default>Black</default>
-        </entry>
-        <entry name="newStatusForeColor" type="Color">
-            <default>Black</default>
+        <entry name="configDialogSize" type="Size">
+            <default>QSize(500,400)</default>
         </entry>
         <entry name="position" type="Point">
             <default>QPoint(-1,-1)</default>
         </entry>
-        <entry name="searchWindowSize" type="Size">
-            <default>QSize(300,500)</default>
+    </group>
+    <group name="Appearance">
+        <entry name="isCustomUi" type="Bool">
+            <default>false</default>
         </entry>
-        <entry name="configDialogSize" type="Size">
-            <default>QSize(500,400)</default>
+        <entry name="readBackColor" type="Color">
+            <default>white</default>
         </entry>
-        <entry name="searchWindowPosition" type="Point">
-            <default>QPoint(0, 0)</default>
+        <entry name="unreadBackColor" type="Color">
+            <default>yellow</default>
         </entry>
-        <entry name="isSmilysEnabled" type="Bool">
-            <default>true</default>
+        <entry name="readForeColor" type="Color">
+            <default>Black</default>
+        </entry>
+        <entry name="unreadForeColor" type="Color">
+            <default>Black</default>
         </entry>
     </group>
 </kcfg>

@@ -1,0 +1,12 @@
+ClassName=AppearanceSettings
+File=choqokappearancesettings.kcfg
+GlobalEnums=false
+#Inherits=KConfigSkeleton
+ItemAccessors=true
+MemberVariables=private
+Mutators=true
+NameSpace=Choqok
+SetUserTexts=false
+Singleton=true
+Visibility=CHOQOK_EXPORT
+IncludeFiles=choqok_export.h,klocale.h

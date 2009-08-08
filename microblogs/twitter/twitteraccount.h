@@ -21,45 +21,33 @@
     along with this program; if not, see http://www.gnu.org/licenses/
 
 */
-#ifndef SYSTRAYICON_H
-#define SYSTRAYICON_H
 
-#include <ksystemtrayicon.h>
-#include <choqoktypes.h>
-// #include "mainwindow.h"
-// #include "quicktwit.h"
+#ifndef TWITTERACCOUNT_H
+#define TWITTERACCOUNT_H
 
-/**
-System tray icon!
+#include <account.h>
 
-    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
-*/
-class SysTrayIcon : public KSystemTrayIcon
+class TwitterMicroBlog;
+
+class TwitterAccount : public Choqok::Account
 {
     Q_OBJECT
 public:
-    SysTrayIcon( QWidget* parent = 0 );
+    TwitterAccount(TwitterMicroBlog* parent, QString alias);
+    ~TwitterAccount();
+    virtual void writeConfig();
 
-    ~SysTrayIcon();
-public slots:
-    void setTimeLineUpdatesEnabled( bool isEnabled );
-    void slotJobDone( Choqok::JobResult result );
-    void slotRestoreIcon();
-    void slotSetUnread( int numOfUnreadPosts );
+    QString userId() const;
+    void setUserId( const QString &id );
 
-signals:
-    void wheelEvent(const QWheelEvent&);
+    bool useSecureConnection() const;
+    void setUseSecureConnection(bool use = true);
 
-protected:
-    virtual bool event(QEvent* event);
-    
+    int countOfPosts() const;
+    void setCountOfPosts(int count);
 private:
-    int unread;
-
-    QPixmap m_defaultIcon;
-    QIcon prevIcon;
-    bool isIconChanged;
-    bool isBaseIconChanged;
+    class Private;
+    Private *d;
 };
 
-#endif
+#endif // TWITTERACCOUNT_H

@@ -21,45 +21,38 @@
     along with this program; if not, see http://www.gnu.org/licenses/
 
 */
-#ifndef SYSTRAYICON_H
-#define SYSTRAYICON_H
 
-#include <ksystemtrayicon.h>
-#include <choqoktypes.h>
-// #include "mainwindow.h"
-// #include "quicktwit.h"
+#ifndef TWITTERPOSTWIDGET_H
+#define TWITTERPOSTWIDGET_H
 
-/**
-System tray icon!
+#include <postwidget.h>
 
-    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
-*/
-class SysTrayIcon : public KSystemTrayIcon
+class TwitterPostWidget : public Choqok::PostWidget
 {
     Q_OBJECT
 public:
-    SysTrayIcon( QWidget* parent = 0 );
-
-    ~SysTrayIcon();
-public slots:
-    void setTimeLineUpdatesEnabled( bool isEnabled );
-    void slotJobDone( Choqok::JobResult result );
-    void slotRestoreIcon();
-    void slotSetUnread( int numOfUnreadPosts );
-
-signals:
-    void wheelEvent(const QWheelEvent&);
+    TwitterPostWidget(Choqok::Account* account, const Choqok::Post &post, QWidget* parent = 0);
+    ~TwitterPostWidget();
+    virtual void initUi();
 
 protected:
-    virtual bool event(QEvent* event);
-    
-private:
-    int unread;
+//     virtual void updateUi();
+    virtual QString prepareStatus(const QString& text);
+    virtual QString generateSign();
+    void updateFavStat();
 
-    QPixmap m_defaultIcon;
-    QIcon prevIcon;
-    bool isIconChanged;
-    bool isBaseIconChanged;
+    static const QRegExp mUserRegExp;
+    static const QRegExp mHashtagRegExp;
+    KPushButton *btnFav;
+    static const KIcon unFavIcon;
+    KConfigGroup *config;
+
+protected slots:
+    virtual void checkAnchor(const QUrl & url);
+    virtual void setFavorite();
+    virtual void slotSetFavorite(const QString &postId);
+    virtual void slotReply();
+
 };
 
-#endif
+#endif // TWITTERPOSTWIDGET_H

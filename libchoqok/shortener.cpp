@@ -19,47 +19,28 @@
 
     You should have received a copy of the GNU General Public License
     along with this program; if not, see http://www.gnu.org/licenses/
-
 */
-#ifndef SYSTRAYICON_H
-#define SYSTRAYICON_H
 
-#include <ksystemtrayicon.h>
-#include <choqoktypes.h>
-// #include "mainwindow.h"
-// #include "quicktwit.h"
+#include "shortener.h"
+#include <kdemacros.h>
 
-/**
-System tray icon!
+namespace Choqok{
 
-    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
-*/
-class SysTrayIcon : public KSystemTrayIcon
+Shortener::Shortener( const KComponentData &instance, QObject *parent )
+    : Plugin(instance, parent)
 {
-    Q_OBJECT
-public:
-    SysTrayIcon( QWidget* parent = 0 );
+}
 
-    ~SysTrayIcon();
-public slots:
-    void setTimeLineUpdatesEnabled( bool isEnabled );
-    void slotJobDone( Choqok::JobResult result );
-    void slotRestoreIcon();
-    void slotSetUnread( int numOfUnreadPosts );
+Shortener::~Shortener()
+{}
 
-signals:
-    void wheelEvent(const QWheelEvent&);
-
-protected:
-    virtual bool event(QEvent* event);
-    
-private:
-    int unread;
-
-    QPixmap m_defaultIcon;
-    QIcon prevIcon;
-    bool isIconChanged;
-    bool isBaseIconChanged;
-};
-
-#endif
+QWidget *Shortener::configWidget()
+{
+    return 0;
+}
+QString Shortener::shorten( const QString &url )
+{
+    return url;
+}
+}
+#include "shortener.moc"

@@ -9,10 +9,14 @@ set(CHOQOK_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 set(CHOQOK_INCLUDES
 ${KDE4_INCLUDES}
 ${QT_INCLUDES}
-${CHOQOK_SOURCE_DIR}/choqok/
-${CHOQOK_BINARY_DIR}}/choqok/
+${CHOQOK_SOURCE_DIR}/libchoqok/
+${CHOQOK_BINARY_DIR}}/libchoqok/
+${CHOQOK_SOURCE_DIR}/libchoqok/ui/
+${CHOQOK_BINARY_DIR}}/libchoqok/ui/
 )
 
-
+add_subdirectory( libchoqok )
 add_subdirectory( choqok )
 add_subdirectory( icons )
+add_subdirectory( plugins )
+add_subdirectory(microblogs)

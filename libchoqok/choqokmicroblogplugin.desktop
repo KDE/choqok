@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=ServiceType
+X-KDE-ServiceType=Choqok/MicroBlog
+X-KDE-Derived=Choqok/Plugin
+Comment=Choqok MicroBlog Plugin
