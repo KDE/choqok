@@ -113,6 +113,7 @@ void Account::setAlias( const QString & alias )
 {
     d->alias = alias;
     d->configGroup->deleteGroup();
+    delete d->configGroup;
     d->configGroup = new KConfigGroup(KGlobal::config(), QString::fromLatin1( "Account_%1" ).arg( d->alias ));
     writeConfig();
 }
