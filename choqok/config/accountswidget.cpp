@@ -173,8 +173,8 @@ void AccountsWidget::saveAccountsData()
 KMenu * AccountsWidget::createAddAccountMenu()
 {
     mBlogMenu = new KMenu(i18n("Select MicroBlog type"), this);
-    QList<KPluginInfo> list = Choqok::PluginManager::self()->availablePlugins("MicroBlogs");
-    foreach(KPluginInfo info, list){
+    const QList<KPluginInfo> list = Choqok::PluginManager::self()->availablePlugins("MicroBlogs");
+    foreach(const KPluginInfo& info, list){
         KAction *act = new KAction(mBlogMenu);
         act->setText(info.name());
         act->setIcon( KIcon(info.icon()) );

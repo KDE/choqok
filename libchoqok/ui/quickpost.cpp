@@ -142,7 +142,7 @@ void QuickPost::slotButtonClicked(int button)
 {
     kDebug();
     if(button == KDialog::Ok) {
-        QString txt = txtPost->toPlainText();
+        const QString txt = txtPost->toPlainText();
         submitPost( txt );
     } else
         KDialog::slotButtonClicked(button);

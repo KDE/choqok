@@ -35,7 +35,7 @@ AdvancedConfig::AdvancedConfig( QWidget *parent )
     kDebug();
     setupUi(this);
     availablePlugins = Choqok::PluginManager::self()->availablePlugins("Shorteners");
-    foreach(KPluginInfo plugin, availablePlugins){
+    foreach(const KPluginInfo& plugin, availablePlugins){
         kcfg_plugins->addItem( KIcon(plugin.icon()), plugin.name(), plugin.pluginName());
     }
     prevShortener = KGlobal::config()->group("Advanced").readEntry("ShortenPlugin", QString());
@@ -49,7 +49,7 @@ AdvancedConfig::AdvancedConfig( QWidget *parent )
 AdvancedConfig::~AdvancedConfig()
 {
     kDebug();
-    QString shorten = kcfg_plugins->itemData(kcfg_plugins->currentIndex()).toString();
+    const QString shorten = kcfg_plugins->itemData(kcfg_plugins->currentIndex()).toString();
     KGlobal::config()->group("Advanced").writeEntry("ShortenPlugin", shorten);
     if( prevShortener != shorten )
         Choqok::ShortenManager::self()->reloadConfig();
@@ -68,3 +68,4 @@ void AdvancedConfig::currentPluginChanged( int index )
     if(currentShortener && currentShortener->configWidget())
         tabShortening->layout()->addWidget(currentShortener->configWidget());
 }
+

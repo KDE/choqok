@@ -62,8 +62,7 @@ bool ChoqokEditAccountWidget::validateData()
 
 void ChoqokEditAccountWidget::setAccount(Choqok::Account* account)
 {
-    if(d->account)
-        delete d->account;
+    delete d->account;
     d->account = account;
 }
 

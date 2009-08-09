@@ -47,7 +47,7 @@ public:
             backend->deleteLater();
             backend = 0;
         }
-        QString pluginId = KGlobal::config()->group("Advanced").readEntry("ShortenPlugin", QString());
+        const QString pluginId = KGlobal::config()->group("Advanced").readEntry("ShortenPlugin", QString());
         if(pluginId.isEmpty())
             return;
         Plugin *plugin = PluginManager::self()->loadPlugin(pluginId);

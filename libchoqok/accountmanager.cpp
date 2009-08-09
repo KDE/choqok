@@ -153,9 +153,9 @@ void AccountManager::loadAllAccounts()
         ac->deleteLater();
     }
     d->accounts.clear();
-    QStringList accountGroups = d->conf->groupList().filter( QRegExp( QString::fromLatin1( "^Account_" ) ) );
+    const QStringList accountGroups = d->conf->groupList().filter( QRegExp( QString::fromLatin1( "^Account_" ) ) );
     kDebug()<<accountGroups;
-    foreach ( QString grp, accountGroups ) {
+    foreach ( const QString& grp, accountGroups ) {
         kDebug()<<grp;
         KConfigGroup cg( d->conf, grp );
 //         KConfigGroup pluginConfig( d->conf, QLatin1String("Plugins") );
@@ -167,7 +167,7 @@ void AccountManager::loadAllAccounts()
         if ( !blog.isEmpty() && cg.readEntry( "Enabled", true ) )
             mBlog = qobject_cast<MicroBlog*>( PluginManager::self()->loadPlugin( blog ) );
         if(mBlog) {
-            QString alias = cg.readEntry("Alias", QString());
+            const QString alias = cg.readEntry("Alias", QString());
             if(alias.isEmpty())
                 continue;///Unknown alias
             Account *acc = mBlog->createNewAccount(alias);
