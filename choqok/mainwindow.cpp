@@ -122,7 +122,7 @@ void MainWindow::newPluginAvailable( Choqok::Plugin *plugin )
     guiFactory()->addClient(plugin);
 }
 
-void MainWindow::nextTab(const QWheelEvent & event) 
+void MainWindow::nextTab(const QWheelEvent & event)
 {
   if(!isVisible())
     return;
@@ -238,6 +238,11 @@ void MainWindow::createQuickPostDialog()
 
 void MainWindow::triggerQuickPost()
 {
+    if ( Choqok::AccountManager::self()->accounts().isEmpty() )
+    {
+        KMessageBox::error( this, i18n ( "Any account created. You must create an account before to make a post." ) );
+        return;
+    }
     if(!quickWidget)
         createQuickPostDialog();
     if ( quickWidget->isVisible() ) {
