@@ -38,7 +38,6 @@ class Plugin;
 }
 
 class QTimer;
-class QuickTwit;
 class SysTrayIcon;
 class KTabWidget;
 

@@ -27,7 +27,6 @@
 #include <QObject>
 #include "choqok_export.h"
 #include <QPixmap>
-class KUrl;
 
 namespace KIO
 {
