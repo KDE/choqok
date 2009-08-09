@@ -118,7 +118,7 @@ void QuickPost::postError(Choqok::MicroBlog::ErrorType error, const QString &err
     }
 }
 
-void QuickPost::submitPost( QString & newPost )
+void QuickPost::submitPost( const QString & newPost )
 {
     kDebug();
     this->hide();

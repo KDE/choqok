@@ -49,7 +49,7 @@ public:
 
 public slots:
     void show();
-    void submitPost( QString &newStatus );
+    void submitPost( const QString &newStatus );
     void setText( const QString &text );
 
 signals:
