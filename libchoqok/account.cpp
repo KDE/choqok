@@ -55,8 +55,7 @@ Account::Account(Choqok::MicroBlog* parent, const QString& alias)
     : QObject(parent), d(new Private(parent, alias))
 {
     kDebug();
-    KConfig *con = new KConfig;
-    d->configGroup = new KConfigGroup(con, QString::fromLatin1( "Account_%1" ).arg( d->alias ));
+    d->configGroup = new KConfigGroup(KGlobal::config(), QString::fromLatin1( "Account_%1" ).arg( d->alias ));
     if(!d->configGroup)
         kError()<<"ERROR, cannot create a config group";
     d->username = d->configGroup->readEntry("Username", QString());
