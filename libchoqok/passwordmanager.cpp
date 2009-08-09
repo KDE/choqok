@@ -23,7 +23,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 
 #include "passwordmanager.h"
-#include <KConfigGroup>
 #include <kwallet.h>
 #include "choqokbehaviorsettings.h"
 #include <kdebug.h>

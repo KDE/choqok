@@ -24,7 +24,6 @@
 #include "pluginmanager.h"
 
 #include <QApplication>
-#include <QFile>
 #include <QRegExp>
 #include <QTimer>
 #include <QStack>

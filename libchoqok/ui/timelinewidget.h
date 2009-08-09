@@ -26,6 +26,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QtGui/QWidget>
 #include "choqok_export.h"
 #include <choqoktypes.h>
+#include <QMap>
 
 class QVBoxLayout;
 

@@ -27,9 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QScrollArea>
 #include <qlayoutitem.h>
 #include "postwidget.h"
-#include <QLayout>
 #include <KDebug>
-#include <QLabel>
 #include "choqokbehaviorsettings.h"
 #include <QApplication>
 

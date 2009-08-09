@@ -22,7 +22,6 @@
 
 */
 #include "account.h"
-#include <KUrl>
 #include "microblog.h"
 #include <kglobal.h>
 #include <ksharedptr.h>

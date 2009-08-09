@@ -25,7 +25,6 @@
 #ifndef CHOQOKTYPES_H
 #define CHOQOKTYPES_H
 #include <QDateTime>
-#include <QVariant>
 #include "choqok_export.h"
 
 namespace Choqok

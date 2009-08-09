@@ -32,7 +32,6 @@
 #include <klocalizedstring.h>
 #include <kcombobox.h>
 #include <QHBoxLayout>
-#include <QLayout>
 #include <KPluginInfo>
 
 using namespace Choqok;

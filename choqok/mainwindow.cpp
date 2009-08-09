@@ -39,14 +39,8 @@
 #include <kactioncollection.h>
 #include <kstandardaction.h>
 #include <KDE/KLocale>
-#include <KXMLGUIFactory>
 #include <KMessageBox>
-#include <QProcess>
 #include <QTimer>
-#include <QMenu>
-#include <KNotification>
-#include <QDBusInterface>
-#include <QDBusReply>
 #include "advancedconfig.h"
 #include <postwidget.h>
 #include <microblogwidget.h>
@@ -54,7 +48,8 @@
 #include <passwordmanager.h>
 #include <mediamanager.h>
 #include <QWheelEvent>
-
+#include <QMenu>
+#include <KXMLGUIFactory>
 static const int TIMEOUT = 5000;
 
 MainWindow::MainWindow()
