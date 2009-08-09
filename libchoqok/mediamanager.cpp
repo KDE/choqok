@@ -88,6 +88,7 @@ QPixmap * MediaManager::fetchImage( const QString& remoteUrl, ReturnMode mode /*
     if( d->cache.find(remoteUrl,*p) ) {
         return p;
     } else if(mode == Async) {
+	delete p;
         if ( d->queue.values().contains( remoteUrl ) ) {
             ///The file is on the way, wait to download complete.
             return 0L;
@@ -104,6 +105,7 @@ QPixmap * MediaManager::fetchImage( const QString& remoteUrl, ReturnMode mode /*
         connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotImageFetched( KJob * ) ) );
         job->start();
     }
+    delete p;
     return 0L;
 }
 
