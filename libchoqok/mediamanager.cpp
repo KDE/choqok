@@ -58,6 +58,7 @@ MediaManager::MediaManager()
 
 MediaManager::~MediaManager()
 {
+    delete d;
     mSelf = 0L;
     kDebug();
 }
