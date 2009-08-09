@@ -50,6 +50,7 @@ TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
         kcfg_alias->setText( microblog->serviceName() );
     }
     kcfg_alias->setFocus(Qt::OtherFocusReason);
+    connect( kcfg_register, SIGNAL( clicked() ), SLOT( slotRegisterNewAccount() ) );
 }
 
 TwitterEditAccountWidget::~TwitterEditAccountWidget()
