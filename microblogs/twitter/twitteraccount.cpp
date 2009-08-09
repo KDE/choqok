@@ -34,7 +34,7 @@ public:
     int count;
 };
 
-TwitterAccount::TwitterAccount(TwitterMicroBlog* parent, QString alias)
+TwitterAccount::TwitterAccount(TwitterMicroBlog* parent, const QString &alias)
     : Account(parent, alias), d(new Private)
 {
     d->secure = configGroup()->readEntry("UseSecureConnection", false);

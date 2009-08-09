@@ -33,7 +33,7 @@ class TwitterAccount : public Choqok::Account
 {
     Q_OBJECT
 public:
-    TwitterAccount(TwitterMicroBlog* parent, QString alias);
+    TwitterAccount(TwitterMicroBlog* parent, const QString& alias);
     ~TwitterAccount();
     virtual void writeConfig();
 

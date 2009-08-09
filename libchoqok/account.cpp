@@ -37,7 +37,7 @@ namespace Choqok
 class Account::Private
 {
 public:
-    Private(Choqok::MicroBlog* parent, QString mAlias)
+    Private(Choqok::MicroBlog* parent, const QString& mAlias)
         : alias(mAlias), blog(parent)
     {}
     ~Private()
@@ -51,7 +51,7 @@ public:
     bool readonly;
 };
 
-Account::Account(Choqok::MicroBlog* parent, QString alias)
+Account::Account(Choqok::MicroBlog* parent, const QString& alias)
     : QObject(parent), d(new Private(parent, alias))
 {
     kDebug();

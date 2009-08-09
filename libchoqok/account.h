@@ -38,7 +38,7 @@ MicroBlog plugins can subclass this class or use it if fill their needs.
 class CHOQOK_EXPORT Account : public QObject
 {
 public:
-    Account(MicroBlog *parent, QString alias);
+    Account(MicroBlog *parent, const QString& alias);
 
     ~Account();
     /**
