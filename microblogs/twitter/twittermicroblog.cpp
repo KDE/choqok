@@ -46,7 +46,7 @@ static const KAboutData aboutdata("choqok_twitter", 0, ki18n("Twitter MicroBlog"
 K_EXPORT_COMPONENT_FACTORY( choqok_twitter, TWPluginFactory( &aboutdata )  )
 
 TwitterMicroBlog::TwitterMicroBlog ( QObject* parent, const QStringList&  )
-: MicroBlog(TWPluginFactory::componentData(), parent), countOfPost(20)
+: MicroBlog(TWPluginFactory::componentData(), parent), countOfPost(20), countOfTimelinesToSave(0)
 {
     kDebug();
     setCharLimit(140);
@@ -83,6 +83,7 @@ TwitterMicroBlog::TwitterMicroBlog ( QObject* parent, const QStringList&  )
 
 TwitterMicroBlog::~TwitterMicroBlog()
 {
+    kDebug();
 }
 
 Choqok::Account * TwitterMicroBlog::createNewAccount( const QString &alias )
@@ -207,6 +208,9 @@ void TwitterMicroBlog::saveTimeline(const QString& accountAlias, const QString& 
         grp.writeEntry( "authorUrl" , post->author.homePageUrl );
     }
     postsBackup.sync();
+    --countOfTimelinesToSave;
+    if(countOfTimelinesToSave < 1)
+        emit readyForUnload();
 }
 
 QString TwitterMicroBlog::profileUrl(const QString &username) const
@@ -790,6 +794,16 @@ QDateTime TwitterMicroBlog::dateFromString ( const QString &date )
     QDateTime recognized ( QDate ( year, month, day ), QTime ( hours, minutes, seconds ) );
     recognized.setTimeSpec( Qt::UTC );
     return recognized.toLocalTime();
+}
+
+void TwitterMicroBlog::aboutToUnload()
+{
+    countOfTimelinesToSave = 0;
+    foreach(Choqok::Account* acc, Choqok::AccountManager::self()->accounts()){
+        if(acc->microblog() == this)
+            countOfTimelinesToSave += this->timelineTypes().count();
+    }
+    emit saveTimelines();
 }
 
 #include "twittermicroblog.moc"

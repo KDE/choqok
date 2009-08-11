@@ -183,6 +183,7 @@ public slots:
     */
     virtual void updateTimelines( Account *theAccount ) = 0;
 
+//     virtual void aboutToUnload();
 signals:
 
     /**
@@ -215,6 +216,11 @@ signals:
     */
     void errorPost( Account *theAccount, Choqok::MicroBlog::ErrorType error, const QString &errorMessage,
                     const Post *post );
+
+    /**
+    Emit when microblog plugin is going to unload, and @ref Choqok::TimelineWidget should save their timelines
+    */
+    void saveTimelines();
 
 public:
     /**
@@ -292,6 +298,8 @@ protected:
 //     void setError(int);
 //     void setErrorString(const QString&);
     void setCharLimit(uint);
+protected slots:
+//     virtual void emitReadyForUnload();
 
 private:
     class Private;

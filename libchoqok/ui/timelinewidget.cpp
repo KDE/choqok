@@ -49,13 +49,14 @@ TimelineWidget::TimelineWidget(Choqok::Account* account, const QString &timeline
     : QWidget(parent), d(new Private(account, timelineName))
 {
     setupUi();
-    connect(QApplication::instance(), SIGNAL(aboutToQuit()), SLOT(aboutToQuit()));
     QList<Choqok::Post*> list = account->microblog()->loadTimeline(account->alias(), timelineName);
+    connect(account->microblog(), SIGNAL(saveTimelines()), SLOT(saveTimeline()));
     addNewPosts(list, true);
 }
 
 TimelineWidget::~TimelineWidget()
 {
+    kDebug();
     delete d;
 }
 
@@ -191,9 +192,10 @@ void TimelineWidget::slotOnePostReaded()
     emit updateUnreadCount(-1);
 }
 
-void TimelineWidget::aboutToQuit()
+void TimelineWidget::saveTimeline()
 {
-    currentAccount()->microblog()->saveTimeline( currentAccount()->alias(), timelineName(), posts.values() );
+    if(currentAccount()->microblog())
+        currentAccount()->microblog()->saveTimeline( currentAccount()->alias(), timelineName(), posts.values() );
 }
 
 }

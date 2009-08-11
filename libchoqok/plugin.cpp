@@ -51,7 +51,6 @@ QString Plugin::pluginId() const
     return QString::fromLatin1( metaObject()->className() );
 }
 
-
 QString Plugin::displayName() const
 {
     return pluginInfo().isValid() ? pluginInfo().name() : QString();
@@ -61,7 +60,6 @@ QString Plugin::pluginIcon() const
 {
     return pluginInfo().isValid() ? pluginInfo().icon() : QString();
 }
-
 
 KPluginInfo Plugin::pluginInfo() const
 {

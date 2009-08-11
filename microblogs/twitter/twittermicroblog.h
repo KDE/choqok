@@ -91,6 +91,8 @@ public slots:
     virtual void createFavorite( Choqok::Account *theAccount, const QString &postId );
     virtual void removeFavorite( Choqok::Account *theAccount, const QString &postId );
 
+    virtual void aboutToUnload();
+
 signals:
     void favoriteCreated(Choqok::Account *theAccount, const QString &postId);
     void favoriteRemoved(Choqok::Account *theAccount, const QString &postId);
@@ -129,6 +131,7 @@ protected:
 
     KUrl mApiUrl;
     uint countOfPost;
+    int countOfTimelinesToSave;
 };
 
 #endif

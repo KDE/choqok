@@ -55,7 +55,7 @@ void EditAccountDialog::slotButtonClicked(int button)
 {
     kDebug()<<button;
     if(button == KDialog::Ok) {
-        if( widget->validateData() )
+        if( widget->validateData() ) {
             if( Choqok::Account *acc = widget->apply() ) {
                 if( Choqok::AccountManager::self()->removeAccount(widget->previousAlias()) &&
                     Choqok::AccountManager::self()->registerAccount( acc ) ) {
@@ -65,6 +65,10 @@ void EditAccountDialog::slotButtonClicked(int button)
                                                 Choqok::AccountManager::self()->lastError() );
                 }
             }
+        } else {
+            KMessageBox::sorry(this, i18n("Cannot validate your input information, Please check fields data.\n\
+            Maybe a required field is empty."));
+        }
     } else {
         KDialog::slotButtonClicked(button);
     }

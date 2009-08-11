@@ -86,7 +86,7 @@ signals:
 
 protected slots:
     void slotOnePostReaded();
-    virtual void aboutToQuit();
+    virtual void saveTimeline();
 
 protected:
     /**

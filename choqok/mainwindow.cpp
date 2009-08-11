@@ -50,18 +50,21 @@
 #include <QWheelEvent>
 #include <QMenu>
 #include <KXMLGUIFactory>
+
 static const int TIMEOUT = 5000;
 
 MainWindow::MainWindow()
     : KXmlGuiWindow(), quickWidget(0)
 {
     kDebug();
+    setAttribute ( Qt::WA_DeleteOnClose, false );
+    setAttribute ( Qt::WA_QuitOnClose, false );
     timelineTimer = new QTimer( this );
     setWindowTitle( i18n("Choqok") );
     Choqok::PasswordManager::self()->setWId(winId());
     mainWidget = new KTabWidget( this );
     mainWidget->setDocumentMode(true);
-//     mainWidget->setMovable(true);
+    mainWidget->setMovable(true);
     setCentralWidget( mainWidget );
     sysIcon = new SysTrayIcon(this);
     setupActions();
@@ -81,7 +84,7 @@ MainWindow::MainWindow()
     connect( Choqok::AccountManager::self(), SIGNAL(allAccountsLoaded()),
              SLOT(loadAllAccounts()) );
     Choqok::AccountManager::self()->loadAllAccounts();
-
+    QTimer::singleShot(0, Choqok::PluginManager::self(), SLOT( loadAllPlugins() ) );
     settingsChanged();
 
     QPoint pos = Settings::position();
@@ -150,8 +153,7 @@ void MainWindow::nextTab(const QWheelEvent & event)
 
 void MainWindow::setupActions()
 {
-    KStandardAction::quit( qApp, SLOT( quit() ), actionCollection() );
-    connect( qApp, SIGNAL( aboutToQuit() ), this, SLOT( quitApp() ) );
+    KStandardAction::quit( this, SLOT( slotQuit() ), actionCollection() );
     KAction *prefs = KStandardAction::preferences( this, SLOT( optionsPreferences() ), actionCollection() );
 
     KAction *actUpdate = new KAction( KIcon( "view-refresh" ), i18n( "Update Timelines" ), this );
@@ -219,6 +221,7 @@ void MainWindow::setupActions()
     sysIcon->contextMenu()->addAction( enableNotify );
     sysIcon->contextMenu()->addAction( prefs );
 
+    connect( sysIcon, SIGNAL(quitSelected()), this, SLOT(slotQuit()) );
     connect(sysIcon,SIGNAL(wheelEvent(const QWheelEvent&)),this,SLOT(nextTab(const QWheelEvent&)));
     sysIcon->show();
 }
@@ -349,13 +352,42 @@ void MainWindow::showStatusMessage( const QString &message, bool isPermanent )
     }
 }
 
-void MainWindow::quitApp()
+void MainWindow::slotQuit()
 {
     kDebug();
     Settings::setPosition( pos() );
     timelineTimer->stop();
     Settings::self()->writeConfig();
+    kDebug () << " shutting down plugin manager";
+    Choqok::PluginManager::self()->shutdown();
+//     Choqok::PasswordManager::self()->deleteLater();
+//     Choqok::MediaManager::self()->deleteLater();
     deleteLater();
+//     ChoqokApplication *app = qobject_cast<ChoqokApplication*>(kapp);
+//     app->quitChoqok();
+}
+
+bool MainWindow::queryClose()
+{
+    return true;
+}
+
+bool MainWindow::queryExit()
+{
+    kDebug();
+    return true;
+//     ChoqokApplication *app = qobject_cast<ChoqokApplication*>(kapp);
+//     if( app->sessionSaving() || app->isShuttingDown() ) {
+//         Settings::setPosition( pos() );
+//         timelineTimer->stop();
+//         Settings::self()->writeConfig();
+//         kDebug () << " shutting down plugin manager";
+//         Choqok::PluginManager::self()->shutdown();
+//         Choqok::PasswordManager::self()->deleteLater();
+//         Choqok::MediaManager::self()->deleteLater();
+//         return true;
+//     } else
+//         return false;
 }
 
 void MainWindow::disableApp()

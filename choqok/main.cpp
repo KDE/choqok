@@ -25,10 +25,11 @@
 #include "mainwindow.h"
 #include "settings.h"
 #include "choqokversion.h"
-#include <kapplication.h>
+// #include <kapplication.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
 #include <KDE/KLocale>
+#include <KUniqueApplication>
 
 static const char description[] =
     I18N_NOOP( "KDE micro-blogging client.\n\n\
@@ -53,12 +54,12 @@ int main( int argc, char **argv )
 //     options.add("+[URL]", ki18n( "Document to open" ));
 //     KCmdLineArgs::addCmdLineOptions(options);
     KApplication app;
-    app.setQuitOnLastWindowClosed(false);
-    MainWindow *mainWin = new MainWindow;
-    mainWin->setAttribute(Qt::WA_DeleteOnClose, false);
+    qDebug()<<"Choqok "<<CHOQOK_VERSION_STRING<<"\n"<<CHOQOK_VERSION;
+    app.setQuitOnLastWindowClosed( false );
+
+    MainWindow *m_mainWindow = new MainWindow;
     if ( Settings::showMainWinOnStart() ) {
-        mainWin->show();
+        m_mainWindow->show();
     }
-//     kDebug()<<CHOQOK_VERSION;
     return app.exec();
 }

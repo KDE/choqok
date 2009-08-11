@@ -25,6 +25,7 @@
 #include <klocalizedstring.h>
 #include <KDebug>
 #include "account.h"
+#include <QTimer>
 
 namespace Choqok
 {
@@ -49,6 +50,7 @@ MicroBlog::MicroBlog( const KComponentData &instance, QObject *parent )
 
 MicroBlog::~MicroBlog()
 {
+    kDebug();
     delete d;
 }
 
@@ -125,5 +127,14 @@ bool MicroBlog::isValidTimeline( const QString &timeline )
 {
     return d->timelineTypes.contains( timeline );
 }
+
+/*
+void MicroBlog::aboutToUnload()
+{
+    kDebug();
+    emit saveTimelines();
+    QTimer::singleShot(0, this, SIGNAL( readyForUnload() ));
+}
+*/
 
 }

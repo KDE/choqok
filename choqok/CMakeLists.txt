@@ -5,6 +5,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/config
 )
 
 set(choqok_SRCS
+#    choqokapplication.cpp
    mainwindow.cpp
    main.cpp
    systrayicon.cpp

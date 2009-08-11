@@ -129,7 +129,7 @@ public:
     * more time you can reimplement this method and fire the signal whenever
     * you're ready. (you have 3 seconds)
     *
-    * @ref Choqok::Protocol reimplement it.
+    * @ref Choqok::MicroBlog reimplement it.
     */
     virtual void aboutToUnload();
 

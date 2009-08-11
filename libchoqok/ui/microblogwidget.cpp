@@ -88,6 +88,7 @@ void MicroBlogWidget::setComposerWidget(ComposerWidget *widget)
 
 MicroBlogWidget::~MicroBlogWidget()
 {
+    kDebug();
     delete d;
 }
 

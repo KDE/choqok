@@ -81,7 +81,7 @@ protected slots:
     void optionsPreferences();
     void settingsChanged();
     void showStatusMessage( const QString &message, bool isPermanent = false );
-    void quitApp();
+    void slotQuit();
     void showBlog();
     void slotUpdateUnreadCount( int count );
 
@@ -94,6 +94,8 @@ private:
     void createQuickPostDialog();
     void disableApp();
     void enableApp();
+    virtual bool queryExit();
+    virtual bool queryClose();
 
 private slots:
     void loadAllAccounts();
