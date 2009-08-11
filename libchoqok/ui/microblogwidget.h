@@ -31,11 +31,12 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 class KTabWidget;
 
-namespace Choqok
-{
+namespace Choqok {
+class Account;
+
+namespace UI {
 class ComposerWidget;
 class TimelineWidget;
-class Account;
 
 /**
  * \brief MicroBlogWidget class.
@@ -111,7 +112,6 @@ protected:
     class MBPrivate;
     MBPrivate *d;
 };
-
 }
-
+}
 #endif // MICROBLOGWIDGET_H

@@ -32,8 +32,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "composerwidget.h"
 #include <QLayout>
 
-namespace Choqok
-{
+namespace Choqok {
+namespace UI {
 
 class MicroBlogWidget::MBPrivate
 {
@@ -203,3 +203,5 @@ void MicroBlogWidget::slotMarkAllAsRead()
 }
 
 }
+}
+#include "microblogwidget.moc"

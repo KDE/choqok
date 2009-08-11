@@ -26,8 +26,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 class QLabel;
 
-namespace Choqok
-{
+namespace Choqok {
+namespace UI {
 
 class TextEdit : public KTextEdit
 {
@@ -61,6 +61,6 @@ private:
     class Private;
     Private *d;
 };
-
+}
 }
 #endif // CHOQOKTEXTEDIT_H

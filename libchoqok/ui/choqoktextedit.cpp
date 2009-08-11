@@ -28,8 +28,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QLabel>
 #include <KDebug>
 
-namespace Choqok
-{
+namespace Choqok {
+namespace UI{
 
 class TextEdit::Private
 {
@@ -144,5 +144,5 @@ void TextEdit::setCharLimit(uint charLimit /*= 0*/)
 }
 
 }
-
+}
 #include "choqoktextedit.moc"

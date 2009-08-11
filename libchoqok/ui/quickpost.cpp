@@ -34,7 +34,7 @@
 #include <QHBoxLayout>
 #include <KPluginInfo>
 
-using namespace Choqok;
+using namespace Choqok::UI;
 
 QuickPost::QuickPost( QWidget* parent )
     : KDialog( parent ), mSubmittedPost(0)

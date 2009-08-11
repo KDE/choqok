@@ -27,8 +27,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QHBoxLayout>
 #include <KDebug>
 
-namespace Choqok
-{
+namespace Choqok {
+namespace UI {
 
 class ComposerWidget::Private
 {
@@ -112,5 +112,5 @@ void ComposerWidget::editorCleared()
 }
 
 }
-
+}
 #include "composerwidget.moc"

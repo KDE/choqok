@@ -33,6 +33,7 @@ static const int _MINUTE = 60000;
 static const int _HOUR = 60*_MINUTE;
 
 using namespace Choqok;
+using namespace Choqok::UI;
 
 const QString PostWidget::baseText ( "<table width=\"100%\"><tr><td rowspan=\"2\"\
 width=\"48\">%1</td><td><p>%2</p></td></tr><tr><td style=\"font-size:small;\" align=\"right\">%3</td></tr></table>");
@@ -46,8 +47,6 @@ QString PostWidget::unreadStyle;
 PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* parent/* = 0*/ )
     :KTextBrowser(parent), mCurrentPost(post), mCurrentAccount(account), mRead(false)
 {
-    if(account->username() == post.author.userName)
-        mRead = true;
     setAttribute(Qt::WA_DeleteOnClose);
     setupUi();
     mTimer.start( _MINUTE );
@@ -176,7 +175,10 @@ const Post &PostWidget::currentPost() const
 
 void PostWidget::setRead(bool read/* = true*/)
 {
-    if(mRead != read) {
+    if(currentAccount()->username() == currentPost().author.userName && !mRead) {
+        mRead = true; ///Always Set own posts as read.
+        setUiStyle();
+    } else if( mRead != read ) {
         mRead = read;
         setUiStyle();
     }

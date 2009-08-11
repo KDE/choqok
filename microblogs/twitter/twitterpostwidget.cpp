@@ -53,7 +53,7 @@ TwitterPostWidget::~TwitterPostWidget()
 
 void TwitterPostWidget::initUi()
 {
-    Choqok::PostWidget::initUi();
+    Choqok::UI::PostWidget::initUi();
     if( !mCurrentPost.isPrivate ) {
         btnFav = addButton( "btnFavorite",i18nc( "@info:tooltip", "Favorite" ), "rating" );
         btnFav->setCheckable(true);
@@ -68,7 +68,7 @@ void TwitterPostWidget::initUi()
 
 QString TwitterPostWidget::prepareStatus(const QString& text)
 {
-    QString res = Choqok::PostWidget::prepareStatus(text);
+    QString res = Choqok::UI::PostWidget::prepareStatus(text);
     res.replace(mUserRegExp,"\\1@<a href='user://\\2'>\\2</a> <a href='"+
     mCurrentAccount->microblog()->profileUrl("\\2") + "' title='" +
     mCurrentAccount->microblog()->profileUrl("\\2") + "'>&#9794;</a>");

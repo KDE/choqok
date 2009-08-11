@@ -31,8 +31,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "choqokbehaviorsettings.h"
 #include <QApplication>
 
-namespace Choqok
-{
+namespace Choqok {
+namespace UI {
 
 class TimelineWidget::Private
 {
@@ -199,3 +199,5 @@ void TimelineWidget::saveTimeline()
 }
 
 }
+}
+#include "timelinewidget.moc"

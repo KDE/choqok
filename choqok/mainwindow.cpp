@@ -228,7 +228,7 @@ void MainWindow::setupActions()
 
 void MainWindow::createQuickPostDialog()
 {
-    quickWidget = new Choqok::QuickPost( this );
+    quickWidget = new Choqok::UI::QuickPost( this );
     quickWidget->setAttribute(Qt::WA_DeleteOnClose, false);
     connect( quickWidget, SIGNAL( newPostSubmitted(Choqok::JobResult)),
              sysIcon, SLOT( slotJobDone(Choqok::JobResult)) );
@@ -314,17 +314,17 @@ void MainWindow::settingsChanged()
     }
 
     if ( Settings::isCustomUi() ) {
-    Choqok::PostWidget::setStyle( Settings::unreadForeColor() , Settings::unreadBackColor(),
+    Choqok::UI::PostWidget::setStyle( Settings::unreadForeColor() , Settings::unreadBackColor(),
                             Settings::readForeColor() , Settings::readBackColor());
     } else {
     QPalette p = window()->palette();
-    Choqok::PostWidget::setStyle( p.color(QPalette::WindowText) , p.color(QPalette::Window).lighter() ,
+    Choqok::UI::PostWidget::setStyle( p.color(QPalette::WindowText) , p.color(QPalette::Window).lighter() ,
                             p.color(QPalette::WindowText) , p.color(QPalette::Window));
     }
 
     int count = mainWidget->count();
     for ( int i = 0; i < count; ++i ) {
-        qobject_cast<Choqok::MicroBlogWidget *>( mainWidget->widget( i ) )->settingsChanged();
+        qobject_cast<Choqok::UI::MicroBlogWidget *>( mainWidget->widget( i ) )->settingsChanged();
     }
     if ( Settings::notifyEnabled() ) {
         actionCollection()->action( "choqok_enable_notify" )->setChecked( true );
@@ -420,7 +420,7 @@ void MainWindow::addBlog( Choqok::Account * account, bool isStartup )
 {
     kDebug() << "Adding new Blog, Alias: " << account->alias() << "Blog: " << account->microblog()->serviceName();
 
-    Choqok::MicroBlogWidget *widget = account->microblog()->createMicroBlogWidget(account, this);
+    Choqok::UI::MicroBlogWidget *widget = account->microblog()->createMicroBlogWidget(account, this);
 
 //     connect( widget, SIGNAL( sigSetUnread( int ) ), sysIcon, SLOT( slotSetUnread( int ) ) );
     connect( widget, SIGNAL( showStatusMessage(QString,bool)),
@@ -448,7 +448,7 @@ void MainWindow::removeBlog( const QString & alias )
     kDebug();
     int count = mainWidget->count();
     for ( int i = 0; i < count; ++i ) {
-        Choqok::MicroBlogWidget * tmp = qobject_cast<Choqok::MicroBlogWidget *>( mainWidget->widget( i ) );
+        Choqok::UI::MicroBlogWidget * tmp = qobject_cast<Choqok::UI::MicroBlogWidget *>( mainWidget->widget( i ) );
         if ( tmp->currentAccount()->alias() == alias ) {
             mainWidget->removeTab( i );
         if ( mainWidget->count() < 1 )
@@ -468,7 +468,7 @@ void MainWindow::slotUpdateUnreadCount(int count)
     kDebug()<<count;
     if(sender())
         kDebug()<<sender()->objectName();
-    Choqok::MicroBlogWidget *wd = qobject_cast<Choqok::MicroBlogWidget*>(sender());
+    Choqok::UI::MicroBlogWidget *wd = qobject_cast<Choqok::UI::MicroBlogWidget*>(sender());
     if(wd) {
         int tabIndex = mainWidget->indexOf(wd);
         if(tabIndex == -1)

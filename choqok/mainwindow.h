@@ -33,7 +33,9 @@
 // #include "searchwindow.h"
 
 namespace Choqok {
-class QuickPost;
+namespace UI{
+    class QuickPost;
+}
 class Plugin;
 }
 
@@ -112,7 +114,7 @@ private:
     QTimer *timelineTimer;
     int mPrevUpdateInterval;
     SysTrayIcon *sysIcon;
-    Choqok::QuickPost *quickWidget;
+    Choqok::UI::QuickPost *quickWidget;
 };
 
 #endif

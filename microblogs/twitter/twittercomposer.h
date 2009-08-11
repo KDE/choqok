@@ -26,7 +26,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "composerwidget.h"
 
 
-class TwitterComposer : public Choqok::ComposerWidget
+class TwitterComposer : public Choqok::UI::ComposerWidget
 {
     Q_OBJECT
 public:

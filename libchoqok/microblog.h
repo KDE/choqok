@@ -34,11 +34,12 @@ class ChoqokEditAccountWidget;
 
 namespace Choqok
 {
+class Account;
+namespace UI{
 class PostWidget;
 class TimelineWidget;
 class MicroBlogWidget;
-class Account;
-
+}
 /**
 \brief Base class for MicroBlog plugins
 Every MicroBlog plugin should subclass this they can subclass UI classes to use too, and implement:
@@ -107,7 +108,7 @@ public:
     * @param account account to use.
     * @param parent The parent of the 'to be returned' widget
     */
-    virtual MicroBlogWidget * createMicroBlogWidget( Account *account, QWidget *parent ) = 0;
+    virtual UI::MicroBlogWidget * createMicroBlogWidget( Account *account, QWidget *parent ) = 0;
 
     /**
     * @brief Create a TimelineWidget to use in MicroBlogWidget
@@ -117,7 +118,7 @@ public:
     * @param account account to use.
     * @param parent The parent of the 'to be returned' widget
     */
-    virtual TimelineWidget * createTimelineWidget( Account *account, const QString &timelineName,
+    virtual UI::TimelineWidget * createTimelineWidget( Account *account, const QString &timelineName,
                                                    QWidget *parent ) = 0;
 
     /**
@@ -128,7 +129,7 @@ public:
      * @param account account to use.
      * @param parent The parent of the 'to be returned' widget
      */
-    virtual PostWidget * createPostWidget( Account *account, const Post &post, QWidget *parent ) = 0;
+    virtual UI::PostWidget * createPostWidget( Account *account, const Post &post, QWidget *parent ) = 0;
 
     /**
     @brief Save a specific timeline!
@@ -137,7 +138,7 @@ public:
     @see loadTimeline()
     */
     virtual void saveTimeline( const QString &accountAlias, const QString &timelineName,
-                               QList<PostWidget*> timeline) = 0;
+                               QList<UI::PostWidget*> timeline) = 0;
     /**
     @brief Load a specific timeline!
     @Note Implementation of this is optional, i.e. One microblog may don't have timeline backup

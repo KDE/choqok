@@ -30,10 +30,17 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 class QVBoxLayout;
 
-namespace Choqok
-{
-class PostWidget;
+namespace Choqok {
 class Account;
+
+namespace UI {
+
+class PostWidget;
+/**
+@brief Choqok base Timeline Widget
+
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
+*/
 class CHOQOK_EXPORT TimelineWidget : public QWidget
 {
     Q_OBJECT
@@ -103,5 +110,6 @@ private:
     class Private;
     Private *d;
 };
+}
 }
 #endif // TIMELINEWIDGET_H

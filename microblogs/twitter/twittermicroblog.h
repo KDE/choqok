@@ -41,16 +41,16 @@ public:
 
     virtual Choqok::Account *createNewAccount( const QString &alias );
     virtual ChoqokEditAccountWidget * createEditAccountWidget( Choqok::Account *account, QWidget *parent );
-    virtual Choqok::MicroBlogWidget * createMicroBlogWidget( Choqok::Account *account, QWidget *parent );
-    virtual Choqok::TimelineWidget * createTimelineWidget( Choqok::Account* account,
+    virtual Choqok::UI::MicroBlogWidget * createMicroBlogWidget( Choqok::Account *account, QWidget *parent );
+    virtual Choqok::UI::TimelineWidget * createTimelineWidget( Choqok::Account* account,
                                                            const QString& timelineName, QWidget* parent );
-    virtual Choqok::PostWidget* createPostWidget(Choqok::Account* account,
+    virtual Choqok::UI::PostWidget* createPostWidget(Choqok::Account* account,
                                                   const Choqok::Post& post, QWidget* parent);
     virtual QString profileUrl(const QString &username) const;
     virtual QString postUrl ( const QString &postId, const QString &userScreenName );
 
     virtual QList< Choqok::Post* > loadTimeline(const QString& accountAlias, const QString& timelineName);
-    virtual void saveTimeline(const QString& accountAlias, const QString& timelineName, QList< Choqok::PostWidget* > timeline);
+    virtual void saveTimeline(const QString& accountAlias, const QString& timelineName, QList< Choqok::UI::PostWidget* > timeline);
 public slots:
 
     /**

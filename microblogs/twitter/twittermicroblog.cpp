@@ -108,21 +108,21 @@ ChoqokEditAccountWidget * TwitterMicroBlog::createEditAccountWidget( Choqok::Acc
     }
 }
 
-Choqok::MicroBlogWidget * TwitterMicroBlog::createMicroBlogWidget( Choqok::Account *account, QWidget *parent )
+Choqok::UI::MicroBlogWidget * TwitterMicroBlog::createMicroBlogWidget( Choqok::Account *account, QWidget *parent )
 {
-    Choqok::MicroBlogWidget *wd = new Choqok::MicroBlogWidget(account, parent);
+    Choqok::UI::MicroBlogWidget *wd = new Choqok::UI::MicroBlogWidget(account, parent);
     if(!account->isReadOnly())
         wd->setComposerWidget(new TwitterComposer(account, wd));
     return wd;
 }
 
-Choqok::TimelineWidget * TwitterMicroBlog::createTimelineWidget( Choqok::Account *account,
+Choqok::UI::TimelineWidget * TwitterMicroBlog::createTimelineWidget( Choqok::Account *account,
                                                                  const QString &timelineName, QWidget *parent )
 {
-    return new Choqok::TimelineWidget(account, timelineName, parent);
+    return new Choqok::UI::TimelineWidget(account, timelineName, parent);
 }
 
-Choqok::PostWidget* TwitterMicroBlog::createPostWidget(Choqok::Account* account,
+Choqok::UI::PostWidget* TwitterMicroBlog::createPostWidget(Choqok::Account* account,
                                                         const Choqok::Post &post, QWidget* parent)
 {
     return new TwitterPostWidget(account, post, parent);
@@ -172,7 +172,7 @@ QList< Choqok::Post* > TwitterMicroBlog::loadTimeline(const QString& accountAlia
     return list;
 }
 
-void TwitterMicroBlog::saveTimeline(const QString& accountAlias, const QString& timelineName, QList< Choqok::PostWidget* > timeline)
+void TwitterMicroBlog::saveTimeline(const QString& accountAlias, const QString& timelineName, QList< Choqok::UI::PostWidget* > timeline)
 {
     kDebug();
     QString fileName = accountAlias + '_' + timelineName + "_backuprc";
@@ -186,7 +186,7 @@ void TwitterMicroBlog::saveTimeline(const QString& accountAlias, const QString& 
             postsBackup.deleteGroup( prevList[i] );
         }
     }
-    QList< Choqok::PostWidget *>::const_iterator it, endIt = timeline.constEnd();
+    QList< Choqok::UI::PostWidget *>::const_iterator it, endIt = timeline.constEnd();
     for ( it = timeline.constBegin(); it != endIt; ++it ) {
         const Choqok::Post *post = &((*it)->currentPost());
         KConfigGroup grp( &postsBackup, post->postId );

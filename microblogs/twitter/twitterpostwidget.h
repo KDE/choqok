@@ -27,7 +27,7 @@
 
 #include <postwidget.h>
 
-class TwitterPostWidget : public Choqok::PostWidget
+class TwitterPostWidget : public Choqok::UI::PostWidget
 {
     Q_OBJECT
 public:

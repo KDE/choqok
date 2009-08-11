@@ -33,8 +33,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 class QGridLayout;
 class KPushButton;
 
-namespace Choqok
-{
+namespace Choqok {
+namespace UI {
 
 class CHOQOK_EXPORT PostWidget : public KTextBrowser
 {
@@ -155,6 +155,6 @@ private:
     QGridLayout *buttonsLayout;
     QList<KPushButton*> mUiButtons;
 };
-
+}
 }
 #endif // POSTWIDGET_H

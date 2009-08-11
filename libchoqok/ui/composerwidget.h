@@ -27,10 +27,12 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "choqok_export.h"
 #include <choqoktypes.h>
 
-namespace Choqok
-{
+namespace Choqok {
 class Account;
+
+namespace UI {
 class TextEdit;
+
 class CHOQOK_EXPORT ComposerWidget : public QWidget
 {
     Q_OBJECT
@@ -55,6 +57,6 @@ private:
     class Private;
     Private *d;
 };
-
+}
 }
 #endif // COMPOSERWIDGET_H

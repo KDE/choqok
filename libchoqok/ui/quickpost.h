@@ -31,8 +31,8 @@
 
 class KComboBox;
 class QCheckBox;
-namespace Choqok
-{
+namespace Choqok {
+namespace UI {
 class TextEdit;
 
 /**
@@ -71,11 +71,13 @@ private:
     void setupUi();
     QCheckBox *all;
     KComboBox *comboAccounts;
-    Choqok::TextEdit *txtPost;
+    TextEdit *txtPost;
 
     QList<Account*> accountsList;
     Post *mSubmittedPost;
 };
+
+}
 
 }
 #endif
