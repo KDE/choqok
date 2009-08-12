@@ -85,7 +85,7 @@ protected slots:
     void showStatusMessage( const QString &message, bool isPermanent = false );
     void slotQuit();
     void showBlog();
-    void slotUpdateUnreadCount( int count );
+    void slotUpdateUnreadCount( int change, int sum );
 
 protected:
     void hideEvent( QHideEvent * event );

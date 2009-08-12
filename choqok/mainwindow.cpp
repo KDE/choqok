@@ -426,7 +426,7 @@ void MainWindow::addBlog( Choqok::Account * account, bool isStartup )
     connect( widget, SIGNAL( showStatusMessage(QString,bool)),
              this, SLOT( showStatusMessage( const QString&, bool ) ) );
     connect( widget, SIGNAL( showMe() ), this, SLOT( showBlog()) );
-    connect( widget, SIGNAL(updateUnreadCount(int)), SLOT(slotUpdateUnreadCount(int)));
+    connect( widget, SIGNAL(updateUnreadCount(int,int)), SLOT(slotUpdateUnreadCount(int,int)) );
 
     connect( this, SIGNAL( updateTimelines() ), widget, SLOT( updateTimelines() ) );
     connect( this, SIGNAL( markAllAsRead() ), widget, SIGNAL( markAllAsRead() ) );
@@ -463,18 +463,18 @@ void MainWindow::removeBlog( const QString & alias )
     }
 }
 
-void MainWindow::slotUpdateUnreadCount(int count)
+void MainWindow::slotUpdateUnreadCount(int change, int sum)
 {
-    kDebug()<<count;
-    if(sender())
-        kDebug()<<sender()->objectName();
+    kDebug()<<"Change: "<<change<<" Sum: "<<sum;
     Choqok::UI::MicroBlogWidget *wd = qobject_cast<Choqok::UI::MicroBlogWidget*>(sender());
+    Q_ASSERT(wd);
+    sysIcon->UpdateUnreadCount(change);
     if(wd) {
         int tabIndex = mainWidget->indexOf(wd);
         if(tabIndex == -1)
             return;
-        if(count > 0)
-            mainWidget->setTabText( tabIndex, wd->currentAccount()->alias() + QString("(%1)").arg(count) );
+        if(sum > 0)
+            mainWidget->setTabText( tabIndex, wd->currentAccount()->alias() + QString("(%1)").arg(sum) );
         else
             mainWidget->setTabText( tabIndex, wd->currentAccount()->alias() );
     }

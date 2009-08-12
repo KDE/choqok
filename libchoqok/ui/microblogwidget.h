@@ -77,8 +77,7 @@ protected slots:
     @see updateTimelines()
     */
     virtual void newTimelineDataRecieved( Account *theAccount, const QString& type, QList< Choqok::Post* > data );
-    virtual void aboutToQuit();
-    void slotUpdateUnreadCount( int count );
+    void slotUpdateUnreadCount( int change );
     void slotMarkAllAsRead();
 
 signals:
@@ -100,17 +99,23 @@ signals:
 
     @param change changes of unread Count, can be positive or negative.
     positive means addition, and negative means subtraction
+    @param sum of unread count on this blog
     */
-    void updateUnreadCount( int change );
+    void updateUnreadCount( int change, int sum );
+
 protected:
     virtual void setupUi();
     virtual TimelineWidget* addTimelineWidgetToUi( const QString &name);
     void initTimelines();
-    QMap<QString, TimelineWidget*> timelines;
-    QMap<TimelineWidget*, int> timelineUnreadCount;
-    KTabWidget *timelinesTabWidget;
-    class MBPrivate;
-    MBPrivate *d;
+
+    ComposerWidget *composer();
+    QMap<QString, TimelineWidget*> timelines();
+    QMap<TimelineWidget*, int> timelineUnreadCount();
+    KTabWidget *timelinesTabWidget();
+
+private:
+    class Private;
+    Private *d;
 };
 }
 }

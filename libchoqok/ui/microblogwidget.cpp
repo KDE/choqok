@@ -35,23 +35,25 @@ along with this program; if not, see http://www.gnu.org/licenses/
 namespace Choqok {
 namespace UI {
 
-class MicroBlogWidget::MBPrivate
+class MicroBlogWidget::Private
 {
 public:
-    MBPrivate(Account *acc)
+    Private(Account *acc)
     :account(acc), blog(acc->microblog()), composer(0)
     {}
     Account *account;
     MicroBlog *blog;
     ComposerWidget *composer;
+    QMap<QString, TimelineWidget*> timelines;
+    QMap<TimelineWidget*, int> timelineUnreadCount;
+    KTabWidget *timelinesTabWidget;
 };
 
 MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent, Qt::WindowFlags f)
-    :QWidget(parent, f), d(new MBPrivate(account))
+    :QWidget(parent, f), d(new Private(account))
 {
     kDebug();
     setupUi();
-    connect(qApp, SIGNAL(aboutToQuit()), SLOT(aboutToQuit()));
     connect( this, SIGNAL(markAllAsRead()), SLOT(slotMarkAllAsRead()) );
     connect(d->blog, SIGNAL(timelineDataReceived(Account*,QString,QList<Choqok::Post*>)),
              this, SLOT(newTimelineDataRecieved(Account*,QString,QList<Choqok::Post*>)) );
@@ -68,8 +70,8 @@ void MicroBlogWidget::setupUi()
     QVBoxLayout *layout = new QVBoxLayout(this);
     if(d->composer)
         layout->addWidget(d->composer);
-    timelinesTabWidget = new KTabWidget(this);
-    layout->addWidget( timelinesTabWidget );
+    d->timelinesTabWidget = new KTabWidget(this);
+    layout->addWidget( d->timelinesTabWidget );
     this->layout()->setContentsMargins( 0, 0, 0, 0 );
 }
 
@@ -80,7 +82,7 @@ void MicroBlogWidget::setComposerWidget(ComposerWidget *widget)
     d->composer = widget;
     d->composer->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Maximum);
     qobject_cast<QVBoxLayout*>( this->layout() )->insertWidget(0, d->composer);
-    foreach(TimelineWidget *mbw, timelines.values()) {
+    foreach(TimelineWidget *mbw, d->timelines.values()) {
         connect(mbw, SIGNAL(forwardResendPost(QString)), d->composer, SLOT(setText(QString)));
         connect( mbw, SIGNAL(forwardReply(QString,QString)), d->composer, SLOT(setText(QString,QString)) );
     }
@@ -95,7 +97,7 @@ MicroBlogWidget::~MicroBlogWidget()
 void MicroBlogWidget::settingsChanged()
 {
     kDebug();
-    foreach(TimelineWidget *wd, timelines.values()){
+    foreach(TimelineWidget *wd, d->timelines.values()){
         wd->settingsChanged();
     }
 }
@@ -108,13 +110,9 @@ void MicroBlogWidget::updateTimelines()
     d->account->microblog()->updateTimelines(currentAccount());
 }
 
-void MicroBlogWidget::aboutToQuit()
-{
-}
-
 void MicroBlogWidget::removeOldPosts()
 {
-    foreach(TimelineWidget *wd, timelines.values()) {
+    foreach(TimelineWidget *wd, d->timelines.values()) {
         wd->removeOldPosts();
     }
 }
@@ -125,8 +123,8 @@ void MicroBlogWidget::newTimelineDataRecieved( Choqok::Account* theAccount, cons
         return;
 
     kDebug()<<d->account->alias()<<": "<<type;
-    if(timelines.contains(type)){
-        timelines.value(type)->addNewPosts(data);
+    if(d->timelines.contains(type)){
+        d->timelines.value(type)->addNewPosts(data);
     } else {
         if(TimelineWidget *wd = addTimelineWidgetToUi(type) )
             wd->addNewPosts(data);
@@ -146,9 +144,9 @@ TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)
     TimelineWidget *mbw = d->blog->createTimelineWidget(d->account, name, this);
     if(mbw) {
         mbw->setObjectName(name);
-        timelines.insert(name, mbw);
-        timelineUnreadCount.insert(mbw, 0);
-        timelinesTabWidget->addTab(mbw, name);
+        d->timelines.insert(name, mbw);
+        d->timelineUnreadCount.insert(mbw, 0);
+        d->timelinesTabWidget->addTab(mbw, name);
         connect(this, SIGNAL(markAllAsRead()), mbw, SLOT(markAllAsRead()));
         connect( mbw, SIGNAL(updateUnreadCount(int)),
                     this, SLOT(slotUpdateUnreadCount(int)) );
@@ -163,43 +161,63 @@ TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)
         kError()<<"Cannot Create a new TimelineWidget for timeline "<<name;
         return 0L;
     }
-    if(timelinesTabWidget->count() == 1)
-        timelinesTabWidget->setTabBarHidden(true);
+    if(d->timelinesTabWidget->count() == 1)
+        d->timelinesTabWidget->setTabBarHidden(true);
     else
-        timelinesTabWidget->setTabBarHidden(false);
+        d->timelinesTabWidget->setTabBarHidden(false);
 }
 
-void MicroBlogWidget::slotUpdateUnreadCount(int count)
+void MicroBlogWidget::slotUpdateUnreadCount(int change)
 {
-    kDebug()<<count;
-    int sum = count;
-    foreach(int n, timelineUnreadCount.values())
+    kDebug()<<change;
+    int sum = change;
+    foreach(int n, d->timelineUnreadCount.values())
         sum += n;
-    emit updateUnreadCount(sum);
+    if(change != 0)
+        emit updateUnreadCount(change, sum);
 
-    if(sender())
-        kDebug()<<sender()->objectName();
     TimelineWidget *wd = qobject_cast<TimelineWidget*>(sender());
     if(wd) {
-        int cn = timelineUnreadCount[wd] = timelineUnreadCount[wd] + count;
-        int tabIndex = timelinesTabWidget->indexOf(wd);
+        int cn = d->timelineUnreadCount[wd] = d->timelineUnreadCount[wd] + change;
+        int tabIndex = d->timelinesTabWidget->indexOf(wd);
         if(tabIndex == -1)
             return;
         if(cn > 0)
-            timelinesTabWidget->setTabText( tabIndex, wd->timelineName() + QString("(%1)").arg(timelineUnreadCount[wd]) );
+            d->timelinesTabWidget->setTabText( tabIndex, wd->timelineName() +
+                                                QString("(%1)").arg(d->timelineUnreadCount[wd]) );
         else
-            timelinesTabWidget->setTabText( tabIndex, wd->timelineName() );
+            d->timelinesTabWidget->setTabText( tabIndex, wd->timelineName() );
     }
 }
 
 void MicroBlogWidget::slotMarkAllAsRead()
 {
-    foreach(TimelineWidget *wd, timelines.values()) {
-        int tabIndex = timelinesTabWidget->indexOf(wd);
+    foreach(TimelineWidget *wd, d->timelines.values()) {
+        int tabIndex = d->timelinesTabWidget->indexOf(wd);
         if(tabIndex == -1)
             continue;
-        timelinesTabWidget->setTabText( tabIndex, wd->timelineName() );
+        d->timelinesTabWidget->setTabText( tabIndex, wd->timelineName() );
     }
+}
+
+ComposerWidget* MicroBlogWidget::composer()
+{
+    return d->composer;
+}
+
+QMap< QString, TimelineWidget* > MicroBlogWidget::timelines()
+{
+    return d->timelines;
+}
+
+KTabWidget* MicroBlogWidget::timelinesTabWidget()
+{
+    return d->timelinesTabWidget;
+}
+
+QMap< TimelineWidget*, int > MicroBlogWidget::timelineUnreadCount()
+{
+    return d->timelineUnreadCount;
 }
 
 }

@@ -61,16 +61,12 @@ bool SysTrayIcon::event(QEvent* event) {
   return false;
 }
 
-void SysTrayIcon::slotSetUnread( int numOfUnreadStatuses )
+void SysTrayIcon::UpdateUnreadCount( int changeOfUnreadPosts )
 {
     kDebug();
-//  if (unread == m_unread)
-//      return;
-    unread += numOfUnreadStatuses;
-//     kDebug()<< "unread: " << unread << " numOfUnreadStatuses: " << numOfUnreadStatuses;
-//  m_unread=unread;
+    unread += changeOfUnreadPosts;
 
-    this->setToolTip( i18np( "Choqok - 1 unread status", "Choqok - %1 unread statuses",
+    this->setToolTip( i18np( "Choqok - 1 unread post", "Choqok - %1 unread posts",
                              unread > 0 ? unread : 0 ) );
 
     if ( unread <= 0 ) {
@@ -129,7 +125,7 @@ void SysTrayIcon::setTimeLineUpdatesEnabled( bool isEnabled )
         setToolTip( i18n( "Choqok" ) );
         m_defaultIcon = parentWidget()->windowIcon().pixmap( 22 );
     } else {
-        slotSetUnread( -unread );
+        UpdateUnreadCount( 0 );
         setToolTip( i18n( "Choqok - Disabled" ) );
         ///Generating new Icon:
         m_defaultIcon = Choqok::MediaManager::convertToGrayScale(m_defaultIcon);
