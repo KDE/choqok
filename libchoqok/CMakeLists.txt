@@ -13,6 +13,7 @@ shortenmanager.cpp
 accountmanager.cpp
 passwordmanager.cpp
 mediamanager.cpp
+choqokuiglobal.cpp
 ui/microblogwidget.cpp
 ui/editaccountwidget.cpp
 ui/timelinewidget.cpp

@@ -50,6 +50,7 @@
 #include <QWheelEvent>
 #include <QMenu>
 #include <KXMLGUIFactory>
+#include <choqokuiglobal.h>
 
 static const int TIMEOUT = 5000;
 
@@ -61,7 +62,7 @@ MainWindow::MainWindow()
     setAttribute ( Qt::WA_QuitOnClose, false );
     timelineTimer = new QTimer( this );
     setWindowTitle( i18n("Choqok") );
-    Choqok::PasswordManager::self()->setWId(winId());
+    Choqok::UI::Global::setMainWindow(this);
     mainWidget = new KTabWidget( this );
     mainWidget->setDocumentMode(true);
     mainWidget->setMovable(true);
@@ -70,6 +71,7 @@ MainWindow::MainWindow()
     setupActions();
     statusBar()->show();
     setupGUI();
+    createQuickPostDialog();
 
     if ( Settings::updateInterval() > 0 )
         mPrevUpdateInterval = Settings::updateInterval();
@@ -229,6 +231,7 @@ void MainWindow::setupActions()
 void MainWindow::createQuickPostDialog()
 {
     quickWidget = new Choqok::UI::QuickPost( this );
+    Choqok::UI::Global::setQuickPostWidget(quickWidget);
     quickWidget->setAttribute(Qt::WA_DeleteOnClose, false);
     connect( quickWidget, SIGNAL( newPostSubmitted(Choqok::JobResult)),
              sysIcon, SLOT( slotJobDone(Choqok::JobResult)) );

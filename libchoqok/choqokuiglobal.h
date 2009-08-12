@@ -21,37 +21,44 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see http://www.gnu.org/licenses/
 
 */
-#ifndef PASSWORDMANAGER_H
-#define PASSWORDMANAGER_H
 
-#include <QObject>
-#include <qwindowdefs.h>
+#ifndef CHOQOKUIGLOBAL_H
+#define CHOQOKUIGLOBAL_H
+
+#include <QtGui/QWidget>
+
 #include "choqok_export.h"
 
 namespace Choqok
 {
-/**
-@brief Singleton class to manage passwords
-Read: @ref readPassword()
-Write: @ref writePassword()
-Remove: @ref removePassword()
-*/
-class CHOQOK_EXPORT PasswordManager : public QObject
-{
-    Q_OBJECT
-public:
-    ~PasswordManager();
-    static PasswordManager *self();
-    QString readPassword(const QString& alias);
-    bool writePassword(const QString &alias, const QString &password);
-    bool removePassword(const QString& alias);
 
-private:
-    PasswordManager();
-    class Private;
-    Private *d;
-    static PasswordManager *mSelf;
-};
+namespace UI
+{
+class QuickPost;
+
+    /**
+    * This namespace contains the Choqok user interface's global widgets
+    * UI Plugins can use these
+    */
+    namespace Global
+    {
+        /**
+        * Set the main widget to widget
+        */
+        CHOQOK_EXPORT void setMainWindow( QWidget *widget );
+        /**
+        * Returns the main widget - this is the widget that message boxes
+        * and KNotify stuff should use as a parent.
+        */
+        CHOQOK_EXPORT QWidget *mainWindow();
+
+        CHOQOK_EXPORT void setQuickPostWidget( QuickPost *quickPost );
+
+        CHOQOK_EXPORT QuickPost * quickPostWidget();
+    } //Global::UI
+
+    } //UI
+
 }
 
 #endif

@@ -27,6 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "choqokbehaviorsettings.h"
 #include <kdebug.h>
 #include <QApplication>
+#include "choqokuiglobal.h"
 
 namespace Choqok
 {
@@ -34,10 +35,29 @@ class PasswordManager::Private
 {
 public:
     Private()
-    : id(0), wallet(0)
+    : wallet(0)
     {}
 
-    WId id;
+    bool openWallet()
+    {
+        kDebug();
+        if(wallet && wallet->isOpen())
+            return true;
+        WId id = 0;
+        if(Choqok::UI::Global::mainWindow())
+            id = Choqok::UI::Global::mainWindow()->winId();
+        wallet = KWallet::Wallet::openWallet(KWallet::Wallet::LocalWallet(), id);
+        if ( wallet ) {
+            if ( !wallet->setFolder( "choqok" ) ) {
+                wallet->createFolder( "choqok" );
+                wallet->setFolder( "choqok" );
+            }
+            kDebug() << "Wallet successfully opened.";
+            return true;
+        }
+        return false;
+    }
+
     KWallet::Wallet *wallet;
 };
 
@@ -66,7 +86,7 @@ PasswordManager *PasswordManager::self()
 
 QString PasswordManager::readPassword(const QString &alias)
 {
-    if(openWallet()) {
+    if(d->openWallet()) {
         QString pass;
         if( d->wallet->readPassword(alias, pass) == 0 ) {
             kDebug()<<"Read password from wallet";
@@ -81,7 +101,7 @@ QString PasswordManager::readPassword(const QString &alias)
 
 bool PasswordManager::writePassword(const QString &alias, const QString &password)
 {
-    if(openWallet()) {
+    if(d->openWallet()) {
         if( d->wallet->writePassword(alias, password) == 0 ){
             kDebug()<<"Password wrote to wallet successfuly";
             return true;
@@ -99,28 +119,6 @@ bool PasswordManager::removePassword(const QString& alias)
         return false;
     else
         return true;
-}
-
-bool PasswordManager::openWallet()
-{
-    kDebug();
-    if(d->wallet && d->wallet->isOpen())
-        return true;
-    d->wallet = KWallet::Wallet::openWallet(KWallet::Wallet::LocalWallet(), d->id);
-    if ( d->wallet ) {
-        if ( !d->wallet->setFolder( "choqok" ) ) {
-            d->wallet->createFolder( "choqok" );
-            d->wallet->setFolder( "choqok" );
-        }
-        kDebug() << "Wallet successfully opened.";
-        return true;
-    }
-    return false;
-}
-
-void PasswordManager::setWId(WId wid)
-{
-    d->id = wid;
 }
 
 }

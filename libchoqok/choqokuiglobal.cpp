@@ -21,37 +21,39 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see http://www.gnu.org/licenses/
 
 */
-#ifndef PASSWORDMANAGER_H
-#define PASSWORDMANAGER_H
+#include "choqokuiglobal.h"
 
-#include <QObject>
-#include <qwindowdefs.h>
-#include "choqok_export.h"
+#include <qpointer.h>
+#include "quickpost.h"
 
 namespace Choqok
 {
-/**
-@brief Singleton class to manage passwords
-Read: @ref readPassword()
-Write: @ref writePassword()
-Remove: @ref removePassword()
-*/
-class CHOQOK_EXPORT PasswordManager : public QObject
-{
-    Q_OBJECT
-public:
-    ~PasswordManager();
-    static PasswordManager *self();
-    QString readPassword(const QString& alias);
-    bool writePassword(const QString &alias, const QString &password);
-    bool removePassword(const QString& alias);
 
-private:
-    PasswordManager();
-    class Private;
-    Private *d;
-    static PasswordManager *mSelf;
-};
+
+namespace
+{
+    QPointer<QWidget> g_mainWidget;
+    QPointer<UI::QuickPost> g_quickPost;
 }
 
-#endif
+void UI::Global::setMainWindow( QWidget *widget )
+{
+    g_mainWidget = widget;
+}
+
+QWidget *UI::Global::mainWindow()
+{
+    return g_mainWidget;
+}
+
+UI::QuickPost* UI::Global::quickPostWidget()
+{
+    return g_quickPost;
+}
+
+void UI::Global::setQuickPostWidget(UI::QuickPost* quickPost)
+{
+    g_quickPost = quickPost;
+}
+
+}
