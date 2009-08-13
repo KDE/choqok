@@ -195,7 +195,8 @@ void QuickPost::setText( const QString &text )
 
 void QuickPost::slotCurrentAccountChanged(int index)
 {
-    txtPost->setCharLimit( accountsList[index]->microblog()->postCharLimit() );
+    if ( index >= 0 && index < accountsList.size() )
+        txtPost->setCharLimit( accountsList[index]->microblog()->postCharLimit() );
 }
 
 #include "quickpost.moc"
