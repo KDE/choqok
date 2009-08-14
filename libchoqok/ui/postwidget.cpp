@@ -68,7 +68,8 @@ Account* PostWidget::currentAccount()
 QString PostWidget::generateSign()
 {
     QString ss;
-    ss = "<b><a href='"+ mCurrentAccount->microblog()->profileUrl( mCurrentPost.author.userName ) +"' title=\"" +
+    ss = "<b><a href='"+ mCurrentAccount->microblog()->profileUrl( mCurrentAccount, mCurrentPost.author.userName )
+         +"' title=\"" +
     mCurrentPost.author.description + "\">" + mCurrentPost.author.userName +
     "</a> - </b>";
 

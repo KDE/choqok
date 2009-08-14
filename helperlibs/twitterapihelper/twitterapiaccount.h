@@ -48,6 +48,29 @@ public:
 
     int countOfPosts() const;
     void setCountOfPosts(int count);
+
+    QString host() const;
+    void setHost( const QString &host );
+
+    /**
+    @return api path
+    It's defer from apiUrl.
+    For example: in http://identi.ca/api/
+    identi.ca is @ref host()
+    api is @ref api()
+    http://identi.ca/api/ is @ref apiUrl()
+    */
+    QString api() const;
+    void setApi( const QString &api );
+
+    /**
+    Combined from @ref host and @ref api to use for connections and queries
+    */
+    KUrl apiUrl() const;
+
+protected:
+    void setApiUrl( const KUrl &apiUrl );
+
 private:
     class Private;
     Private *d;

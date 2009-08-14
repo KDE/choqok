@@ -26,6 +26,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <microblog.h>
 #include <KUrl>
 
+class TwitterApiAccount;
 class KJob;
 
 /**
@@ -37,8 +38,9 @@ Q_OBJECT
 public:
     ~TwitterApiMicroBlog();
 
-    virtual QList< Choqok::Post* > loadTimeline(const QString& accountAlias, const QString& timelineName);
-    virtual void saveTimeline(const QString& accountAlias, const QString& timelineName, QList< Choqok::UI::PostWidget* > timeline);
+    virtual QList< Choqok::Post* > loadTimeline(Choqok::Account* accountAlias, const QString& timelineName);
+    virtual void saveTimeline(Choqok::Account *account, const QString& timelineName,
+                              QList< Choqok::UI::PostWidget* > timeline);
 public slots:
 
     /**
@@ -98,11 +100,13 @@ protected slots:
 protected:
     TwitterApiMicroBlog( const KComponentData &instance, QObject *parent=0 );
 
-    virtual void setDefaultArgs( Choqok::Account *theAccount, KUrl &url );
+    virtual KUrl apiUrl( TwitterApiAccount* theAccount );
     virtual QDateTime dateFromString( const QString &date );
-    virtual Choqok::Post * readPostFromDomElement( const QDomElement &root, Choqok::Post *post=0 );
-    virtual Choqok::Post * readPostFromXml( const QByteArray &buffer, Choqok::Post *post=0 );
-    virtual QList<Choqok::Post*> readTimelineFromXml( const QByteArray &buffer );
+    virtual Choqok::Post * readPostFromDomElement( Choqok::Account* theAccount,
+                                                   const QDomElement& root, Choqok::Post* post = 0 );
+    virtual Choqok::Post * readPostFromXml( Choqok::Account* theAccount,
+                                            const QByteArray& buffer, Choqok::Post* post = 0 );
+    virtual QList<Choqok::Post*> readTimelineFromXml( Choqok::Account* theAccount, const QByteArray& buffer );
     virtual Choqok::Post * readDMessageFromXml (Choqok::Account *theAccount, const QByteArray &buffer );
     virtual Choqok::Post * readDMessageFromDomElement (Choqok::Account *theAccount, const QDomElement& root );
     virtual QList<Choqok::Post*> readDMessagesFromXml (Choqok::Account *theAccount, const QByteArray &buffer );
@@ -119,7 +123,6 @@ protected:
     QMap<QString, QString> mTimelineLatestId;//TimelineType, LatestId
     QMap<KJob*, Choqok::Account*> mAccountJobs;
 
-    KUrl mApiUrl;
     uint countOfPost;
     int countOfTimelinesToSave;
 };

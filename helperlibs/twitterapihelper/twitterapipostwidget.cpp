@@ -70,8 +70,8 @@ QString TwitterApiPostWidget::prepareStatus(const QString& text)
 {
     QString res = Choqok::UI::PostWidget::prepareStatus(text);
     res.replace(mUserRegExp,"\\1@<a href='user://\\2'>\\2</a> <a href='"+
-    mCurrentAccount->microblog()->profileUrl("\\2") + "' title='" +
-    mCurrentAccount->microblog()->profileUrl("\\2") + "'>&#9794;</a>");
+    mCurrentAccount->microblog()->profileUrl( currentAccount(), "\\2") + "' title='" +
+    mCurrentAccount->microblog()->profileUrl( currentAccount(), "\\2") + "'>&#9794;</a>");
     //<img src=\"icon://web\" />
     res.replace(mHashtagRegExp,"\\1#<a href='tag://\\2'>\\2</a>");
 
@@ -83,8 +83,9 @@ QString TwitterApiPostWidget::generateSign()
     QString sign;
     sign = "<b><a href='user://"+mCurrentPost.author.userName+"' title=\"" +
     mCurrentPost.author.description + "\">" + mCurrentPost.author.userName +
-    "</a> <a href=\"" + mCurrentAccount->microblog()->profileUrl(mCurrentPost.author.userName) + "\" title=\"" +
-    mCurrentAccount->microblog()->profileUrl(mCurrentPost.author.userName) + "\">&#9794;</a> - </b>";
+    "</a> <a href=\"" + mCurrentAccount->microblog()->profileUrl(currentAccount(), mCurrentPost.author.userName)
+    + "\" title=\"" + mCurrentAccount->microblog()->profileUrl(currentAccount(), mCurrentPost.author.userName)
+    + "\">&#9794;</a> - </b>";
     //<img src=\"icon://web\" />
     sign += "<a href=\"" + mCurrentPost.link +
     "\" title=\"" + mCurrentPost.creationDateTime.toString() + "\">%1</a>";
@@ -98,10 +99,11 @@ QString TwitterApiPostWidget::generateSign()
         if( !mCurrentPost.source.isNull() )
             sign += " - " + mCurrentPost.source;
         if ( !mCurrentPost.replyToPostId.isEmpty() ) {
-            QString link = mCurrentAccount->microblog()->postUrl( mCurrentPost.replyToUserName, mCurrentPost.replyToUserId );
+            QString link = mCurrentAccount->microblog()->postUrl( currentAccount(), mCurrentPost.replyToUserName,
+                                                                  mCurrentPost.replyToUserId );
             sign += " - <a href='status://" + mCurrentPost.replyToPostId + "'>" +
             i18n("in reply to")+ "</a>&nbsp;<a href=\"" +
-            mCurrentAccount->microblog()->postUrl(mCurrentPost.author.userName,
+            mCurrentAccount->microblog()->postUrl(currentAccount(), mCurrentPost.author.userName,
                                                    mCurrentPost.replyToPostId) +  "\">&#9794;</a>";
         }
     }

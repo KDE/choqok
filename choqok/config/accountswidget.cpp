@@ -35,6 +35,7 @@
 #include <accountmanager.h>
 #include "editaccountwidget.h"
 #include "editaccountdialog.h"
+#include <choqokuiglobal.h>
 
 AccountsWidget::AccountsWidget( QWidget *parent )
         : QWidget( parent )
@@ -73,7 +74,9 @@ void AccountsWidget::addAccount()
         QString name = act->data().toString();
         Choqok::MicroBlog *blog = qobject_cast<Choqok::MicroBlog *>(Choqok::PluginManager::self()->loadPlugin(name));
         if(blog){
-            AddAccountDialog *d = new AddAccountDialog( blog->createEditAccountWidget(0, this), this );
+            AddAccountDialog *d = new AddAccountDialog( blog->createEditAccountWidget(0,
+                                                                                      Choqok::UI::Global::mainWindow()),
+                                                        Choqok::UI::Global::mainWindow() );
             d->exec();
             blog->deleteLater();
         } else {

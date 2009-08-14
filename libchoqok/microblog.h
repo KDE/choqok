@@ -139,7 +139,7 @@ public:
 
     @see loadTimeline()
     */
-    virtual void saveTimeline( const QString &accountAlias, const QString &timelineName,
+    virtual void saveTimeline( Choqok::Account *account, const QString &timelineName,
                                QList<UI::PostWidget*> timeline) = 0;
     /**
     @brief Load a specific timeline!
@@ -147,7 +147,7 @@ public:
 
     @see saveTimeline()
     */
-    virtual QList<Post*> loadTimeline( const QString &accountAlias, const QString &timelineName ) = 0;
+    virtual QList<Post*> loadTimeline( Choqok::Account *account, const QString &timelineName ) = 0;
 
 public slots:
 
@@ -228,9 +228,9 @@ public:
     /**
     return Url to account page on service (Some kind of blog homepage)
     */
-    virtual QString profileUrl(const QString &username) const=0;
+    virtual QString profileUrl( Account *account, const QString &username) const=0;
 
-    virtual QString postUrl(const QString &username, const QString &postId) = 0;
+    virtual QString postUrl( Account *account, const QString &username, const QString &postId) const = 0;
 
     /**
     * @brief Available capabilities

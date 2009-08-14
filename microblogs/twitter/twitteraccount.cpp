@@ -35,6 +35,7 @@ public:
 TwitterAccount::TwitterAccount(TwitterMicroBlog* parent, const QString &alias)
     : TwitterApiAccount(parent, alias), d(new Private)
 {
+    setHost("twitter.com");
     d->loadTwitpics = configGroup()->readEntry("LoadTwitPics", false);
 }
 

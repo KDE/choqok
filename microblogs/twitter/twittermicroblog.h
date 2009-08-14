@@ -46,8 +46,10 @@ public:
                                                            const QString& timelineName, QWidget* parent );
     virtual Choqok::UI::PostWidget* createPostWidget(Choqok::Account* account,
                                                   const Choqok::Post& post, QWidget* parent);
-    virtual QString profileUrl(const QString &username) const;
-    virtual QString postUrl ( const QString &postId, const QString &userScreenName );
+                                                  
+    virtual QString postUrl(Choqok::Account* account, const QString& username, const QString& postId) const;
+    
+    virtual QString profileUrl(Choqok::Account* account, const QString& username) const;
 
 };
 

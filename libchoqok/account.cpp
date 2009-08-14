@@ -65,7 +65,7 @@ Account::Account(Choqok::MicroBlog* parent, const QString& alias)
 
 Account::~Account()
 {
-    kDebug();
+    kDebug()<<alias();
 //     writeConfig();
     delete d->configGroup;
     delete d;
@@ -144,7 +144,6 @@ uint Account::priority() const
 
 KConfigGroup* Account::configGroup() const
 {
-    kDebug();
     return d->configGroup;
 }
 

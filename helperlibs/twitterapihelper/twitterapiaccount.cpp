@@ -29,9 +29,15 @@
 class TwitterApiAccount::Private
 {
 public:
+    Private()
+        :api('/')
+    {}
     bool secure;
     QString userId;
     int count;
+    QString host;
+    QString api;
+    KUrl apiUrl;
 };
 
 TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString &alias)
@@ -40,6 +46,8 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString 
     d->secure = configGroup()->readEntry("UseSecureConnection", false);
     d->userId = configGroup()->readEntry("UserId", QString());
     d->count = configGroup()->readEntry("CountOfPosts", 20);
+    d->host = configGroup()->readEntry("Host", QString());
+    setApi( configGroup()->readEntry("Api", QString('/') ) );
 }
 
 TwitterApiAccount::~TwitterApiAccount()
@@ -52,6 +60,8 @@ void TwitterApiAccount::writeConfig()
     configGroup()->writeEntry("UseSecureConnection", d->secure);
     configGroup()->writeEntry("UserId", d->userId);
     configGroup()->writeEntry("CountOfPosts", d->count);
+    configGroup()->writeEntry("Host", d->host);
+    configGroup()->writeEntry("Api", d->api);
     Choqok::Account::writeConfig();
 }
 
@@ -84,6 +94,47 @@ int TwitterApiAccount::countOfPosts() const
 void TwitterApiAccount::setCountOfPosts(int count)
 {
     d->count = count;
+}
+
+KUrl TwitterApiAccount::apiUrl() const
+{
+    return d->apiUrl;
+}
+
+QString TwitterApiAccount::host() const
+{
+    return d->host;
+}
+
+void TwitterApiAccount::setApiUrl(const KUrl& apiUrl)
+{
+    d->apiUrl = apiUrl;
+}
+
+
+QString TwitterApiAccount::api() const
+{
+    return d->api;
+}
+
+void TwitterApiAccount::setApi(const QString& api)
+{
+    d->api = api;
+    KUrl url;
+    url.setHost(host());
+    url.addPath(api);
+    url.setScheme(useSecureConnection()?"https":"http");
+    setApiUrl(url);
+}
+
+void TwitterApiAccount::setHost(const QString& host)
+{
+    d->host = host;
+    KUrl url;
+    url.setHost(host);
+    url.addPath(d->api);
+    url.setScheme(useSecureConnection()?"https":"http");
+    setApiUrl(url);
 }
 
 #include "twitterapiaccount.moc"

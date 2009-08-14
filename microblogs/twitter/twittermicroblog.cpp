@@ -49,7 +49,6 @@ TwitterMicroBlog::TwitterMicroBlog ( QObject* parent, const QStringList&  )
 : TwitterApiMicroBlog(TWPluginFactory::componentData(), parent)
 {
     kDebug();
-    mApiUrl = KUrl ( "http://twitter.com/" );
     setServiceName("Twitter");
     setServiceHomepageUrl("http://twitter.com/");
     timelineApiPath["Reply"] = "/statuses/mentions.xml";
@@ -102,14 +101,17 @@ Choqok::UI::PostWidget* TwitterMicroBlog::createPostWidget(Choqok::Account* acco
     return new TwitterApiPostWidget(account, post, parent);
 }
 
-QString TwitterMicroBlog::profileUrl(const QString &username) const
+QString TwitterMicroBlog::profileUrl(Choqok::Account* account, const QString& username) const
 {
+    Q_UNUSED(account)
     return QString( KUrl( homepageUrl() ).prettyUrl(KUrl::AddTrailingSlash) + username) ;
 }
 
-QString TwitterMicroBlog::postUrl ( const QString &postId, const QString &userScreenName )
+QString TwitterMicroBlog::postUrl(Choqok::Account* account, const QString& username,
+                                  const QString& postId) const
 {
-    return QString ( "http://twitter.com/%1/status/%2" ).arg ( userScreenName ).arg ( postId );
+    Q_UNUSED(account)
+    return QString ( "http://twitter.com/%1/status/%2" ).arg ( username ).arg ( postId );
 }
 
 
