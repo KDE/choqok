@@ -52,7 +52,8 @@ SysTrayIcon::~SysTrayIcon()
     kDebug();
 }
 
-bool SysTrayIcon::event(QEvent* event) {
+bool SysTrayIcon::event(QEvent* event)
+{
   if(event->type() == QEvent::Wheel) {
     QWheelEvent * wheel = static_cast<QWheelEvent*>(event);
     emit wheelEvent(*wheel);
@@ -61,7 +62,12 @@ bool SysTrayIcon::event(QEvent* event) {
   return false;
 }
 
-void SysTrayIcon::UpdateUnreadCount( int changeOfUnreadPosts )
+void SysTrayIcon::resetUnreadCount()
+{
+    updateUnreadCount(-unread);
+}
+
+void SysTrayIcon::updateUnreadCount( int changeOfUnreadPosts )
 {
     kDebug();
     unread += changeOfUnreadPosts;
@@ -125,12 +131,12 @@ void SysTrayIcon::setTimeLineUpdatesEnabled( bool isEnabled )
         setToolTip( i18n( "Choqok" ) );
         m_defaultIcon = parentWidget()->windowIcon().pixmap( 22 );
     } else {
-        UpdateUnreadCount( 0 );
         setToolTip( i18n( "Choqok - Disabled" ) );
         ///Generating new Icon:
         m_defaultIcon = Choqok::MediaManager::convertToGrayScale(m_defaultIcon);
     }
     setIcon( KIcon( m_defaultIcon ) );
+    updateUnreadCount( 0 );
 }
 
 void SysTrayIcon::slotJobDone( Choqok::JobResult result )

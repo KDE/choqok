@@ -78,6 +78,7 @@ MainWindow::MainWindow()
         mPrevUpdateInterval = 10;
 
     connect( timelineTimer, SIGNAL( timeout() ), this, SIGNAL( updateTimelines() ) );
+    connect( this, SIGNAL(markAllAsRead()), SLOT(slotMarkAllAsRead()) );
     connect( Choqok::AccountManager::self(), SIGNAL( accountAdded(Choqok::Account*)),
              this, SLOT( addBlog(Choqok::Account*)));
     connect( Choqok::AccountManager::self(), SIGNAL( accountRemoved( const QString& ) ),
@@ -434,8 +435,8 @@ void MainWindow::addBlog( Choqok::Account * account, bool isStartup )
     connect( this, SIGNAL( updateTimelines() ), widget, SLOT( updateTimelines() ) );
     connect( this, SIGNAL( markAllAsRead() ), widget, SIGNAL( markAllAsRead() ) );
     connect( this, SIGNAL(removeOldPosts()), widget, SLOT(removeOldPosts()) );
-
-    mainWidget->addTab( widget, account->alias() );
+    kDebug()<<"Plugin Icon: "<<account->microblog()->pluginIcon();
+    mainWidget->addTab( widget, KIcon(account->microblog()->pluginIcon()), account->alias() );
 
 //     if( !isStartup )///FIXME Cause a crash!
 //         QTimer::singleShot( 1500, widget, SLOT( updateTimelines() ) );
@@ -471,7 +472,7 @@ void MainWindow::slotUpdateUnreadCount(int change, int sum)
     kDebug()<<"Change: "<<change<<" Sum: "<<sum;
     Choqok::UI::MicroBlogWidget *wd = qobject_cast<Choqok::UI::MicroBlogWidget*>(sender());
     Q_ASSERT(wd);
-    sysIcon->UpdateUnreadCount(change);
+    sysIcon->updateUnreadCount(change);
     if(wd) {
         int tabIndex = mainWidget->indexOf(wd);
         if(tabIndex == -1)
@@ -530,4 +531,13 @@ QSize MainWindow::sizeHint() const
     return QSize( 350, 380 );
 }
 
+void MainWindow::slotMarkAllAsRead()
+{
+    sysIcon->resetUnreadCount();
+    int count = mainWidget->count();
+    for(int i=0; i<count; ++i) {
+        Choqok::UI::MicroBlogWidget *wd = qobject_cast<Choqok::UI::MicroBlogWidget*>(mainWidget->widget(i));
+        mainWidget->setTabText( i, wd->currentAccount()->alias() );
+    }
+}
 #include "mainwindow.moc"

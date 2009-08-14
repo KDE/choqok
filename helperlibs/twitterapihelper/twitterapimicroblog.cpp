@@ -515,7 +515,6 @@ KUrl TwitterApiMicroBlog::apiUrl ( TwitterApiAccount* theAccount )
 Choqok::Post * TwitterApiMicroBlog::readPostFromXml ( Choqok::Account* theAccount,
                                                       const QByteArray& buffer, Choqok::Post* post /*= 0*/ )
 {
-    kDebug();
     QDomDocument document;
     document.setContent ( buffer );
     QDomElement root = document.documentElement();
@@ -589,7 +588,6 @@ Choqok::Post * TwitterApiMicroBlog::readPostFromDomElement ( Choqok::Account* th
 QList<Choqok::Post*> TwitterApiMicroBlog::readTimelineFromXml ( Choqok::Account* theAccount,
                                                                 const QByteArray &buffer )
 {
-    kDebug();
     QDomDocument document;
     QList<Choqok::Post*> postList;
     document.setContent ( buffer );
@@ -610,7 +608,6 @@ QList<Choqok::Post*> TwitterApiMicroBlog::readTimelineFromXml ( Choqok::Account*
 
 Choqok::Post * TwitterApiMicroBlog::readDMessageFromXml (Choqok::Account *theAccount, const QByteArray &buffer )
 {
-    kDebug();
     QDomDocument document;
     document.setContent ( buffer );
     QDomElement root = document.documentElement();
@@ -624,7 +621,8 @@ Choqok::Post * TwitterApiMicroBlog::readDMessageFromXml (Choqok::Account *theAcc
     }
 }
 
-Choqok::Post * TwitterApiMicroBlog::readDMessageFromDomElement ( Choqok::Account* theAccount, const QDomElement& root )
+Choqok::Post * TwitterApiMicroBlog::readDMessageFromDomElement ( Choqok::Account* theAccount,
+                                                                 const QDomElement& root )
 {
     Choqok::Post *msg = new Choqok::Post;
 
@@ -700,9 +698,9 @@ Choqok::Post * TwitterApiMicroBlog::readDMessageFromDomElement ( Choqok::Account
     return msg;
 }
 
-QList<Choqok::Post*> TwitterApiMicroBlog::readDMessagesFromXml (Choqok::Account *theAccount, const QByteArray &buffer )
+QList<Choqok::Post*> TwitterApiMicroBlog::readDMessagesFromXml (Choqok::Account *theAccount,
+                                                                const QByteArray &buffer )
 {
-    kDebug();
     QDomDocument document;
     QList<Choqok::Post*> postList;
     document.setContent ( buffer );

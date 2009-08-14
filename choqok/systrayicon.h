@@ -44,11 +44,14 @@ public:
 public slots:
     void setTimeLineUpdatesEnabled( bool isEnabled );
     void slotJobDone( Choqok::JobResult result );
-    void slotRestoreIcon();
-    void UpdateUnreadCount( int changeOfUnreadPosts );
+    void updateUnreadCount( int changeOfUnreadPosts );
+    void resetUnreadCount();
 
 signals:
     void wheelEvent(const QWheelEvent&);
+
+protected slots:
+    void slotRestoreIcon();
 
 protected:
     virtual bool event(QEvent* event);

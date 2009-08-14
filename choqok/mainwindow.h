@@ -108,7 +108,7 @@ private slots:
     void setNotificationsEnabled( bool isEnabled );
     void triggerQuickPost();
     void toggleMainWindow();
-
+    void slotMarkAllAsRead();
 private:
     KTabWidget *mainWidget;
     QTimer *timelineTimer;
