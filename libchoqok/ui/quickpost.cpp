@@ -123,7 +123,8 @@ void QuickPost::slotSubmitPost( Account* theAccount, Post* post )
     }
 }
 
-void QuickPost::postError(Account* theAccount, MicroBlog::ErrorType error, const QString& errorMessage, const Choqok::Post* post)
+void QuickPost::postError(Account* theAccount, MicroBlog::ErrorType error,
+                          const QString& errorMessage, Choqok::Post* post)
 {
     if (post == d->submittedPost) {
         d->txtPost->setEnabled(true);
@@ -175,8 +176,9 @@ void QuickPost::loadAccounts()
         d->accountsList.insert( current->alias(), current );
         d->comboAccounts->addItem( KIcon(current->microblog()->pluginInfo().icon()), current->alias() );
         connect(current->microblog(), SIGNAL(postCreated(Account*,Post*)), SLOT(slotSubmitPost(Account*,Post*)) );
-        connect(current->microblog(), SIGNAL(errorPost(Account*,Choqok::MicroBlog::ErrorType,QString,const Post*)),
-                 SLOT(postError(Account*,Choqok::MicroBlog::ErrorType,QString,const Post*)) );
+        connect(current->microblog(),
+                SIGNAL(errorPost(Account*,MicroBlog::ErrorType,QString,Post*)),
+                 SLOT(postError(Account*,MicroBlog::ErrorType,QString,Post*)) );
     }
 }
 

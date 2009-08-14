@@ -210,13 +210,12 @@ signals:
     /**
     Emit when an error occured the @p errorMessage will specify the error.
     */
-    void error( Account *theAccount, Choqok::MicroBlog::ErrorType error, const QString &errorMessage );
+    void error( Account *theAccount, MicroBlog::ErrorType error, const QString &errorMessage );
 
     /**
     Emit when an error occured on Post manipulation. e.g. On Creation!
     */
-    void errorPost( Account *theAccount, Choqok::MicroBlog::ErrorType error, const QString &errorMessage,
-                    const Post *post );
+    void errorPost( Account *theAccount, MicroBlog::ErrorType error, const QString &errorMessage, Post *post );
 
     /**
     Emit when microblog plugin is going to unload, and @ref Choqok::TimelineWidget should save their timelines
