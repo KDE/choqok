@@ -20,6 +20,9 @@
         <entry name="countOfPosts" type="Int">
             <default>20</default>
         </entry>
+        <entry name="resendWithQuickPost" type="Bool">
+            <default>false</default>
+        </entry>
     </group>
 
     <group name="QuickPost">

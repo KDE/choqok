@@ -26,10 +26,11 @@
 #define TWITTERACCOUNT_H
 
 #include <account.h>
+#include <twitterapihelper/twitterapiaccount.h>
 
 class TwitterMicroBlog;
 
-class TwitterAccount : public Choqok::Account
+class TwitterAccount : public TwitterApiAccount
 {
     Q_OBJECT
 public:
@@ -37,14 +38,8 @@ public:
     ~TwitterAccount();
     virtual void writeConfig();
 
-    QString userId() const;
-    void setUserId( const QString &id );
-
-    bool useSecureConnection() const;
-    void setUseSecureConnection(bool use = true);
-
-    int countOfPosts() const;
-    void setCountOfPosts(int count);
+    void setLoadTwitPics(bool load);
+    bool isLoadTwitPics() const;
 private:
     class Private;
     Private *d;

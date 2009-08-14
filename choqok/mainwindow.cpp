@@ -71,7 +71,6 @@ MainWindow::MainWindow()
     setupActions();
     statusBar()->show();
     setupGUI();
-    createQuickPostDialog();
 
     if ( Settings::updateInterval() > 0 )
         mPrevUpdateInterval = Settings::updateInterval();
@@ -85,9 +84,9 @@ MainWindow::MainWindow()
              this, SLOT( removeBlog(QString)) );
     connect( Choqok::AccountManager::self(), SIGNAL(allAccountsLoaded()),
              SLOT(loadAllAccounts()) );
-    Choqok::AccountManager::self()->loadAllAccounts();
     QTimer::singleShot(0, Choqok::PluginManager::self(), SLOT( loadAllPlugins() ) );
     settingsChanged();
+    Choqok::AccountManager::self()->loadAllAccounts();
 
     QPoint pos = Settings::position();
     if(pos.x() != -1 && pos.y() != -1) {
@@ -114,6 +113,7 @@ void MainWindow::loadAllAccounts()
         kDebug()<<"All accounts loaded. Emitting updateTimelines()";
         emit updateTimelines();
     }
+    createQuickPostDialog();
 }
 
 void MainWindow::newPluginAvailable( Choqok::Plugin *plugin )

@@ -27,6 +27,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QGridLayout>
 #include <KDebug>
 #include <mediamanager.h>
+#include "choqokbehaviorsettings.h"
+#include <choqokuiglobal.h>
+#include "quickpost.h"
 
 static const int _15SECS = 15000;
 static const int _MINUTE = 60000;
@@ -325,7 +328,11 @@ void PostWidget::slotResendPost()
 {
     QChar re(0x267B);
     QString text =  QString(re) + " @" + currentPost().author.userName + ": " + currentPost().content;
-    emit resendPost(text);
+
+    if(BehaviorSettings::resendWithQuickPost() && Global::quickPostWidget())
+        Global::quickPostWidget()->setText(text);
+    else
+        emit resendPost(text);
 }
 
 void PostWidget::setupAvatar()
@@ -376,6 +383,7 @@ void PostWidget::slotPostError(Account* theAccount, MicroBlog::ErrorType error,
 {
     if( theAccount == currentAccount() && post == &mCurrentPost) {
         kError()<<errorMessage;
+        //TODO Manage all errors in MicroBlogWidget and show notify for them.
     }
 }
 

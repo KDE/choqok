@@ -42,10 +42,6 @@ public:
     virtual ~TwitterEditAccountWidget();
 
     virtual bool validateData();
-    /**
-    * 
-    */
-    virtual bool verifyCredentials();
 
     /**
     * Create a new account if we are in the 'add account wizard',
@@ -58,6 +54,8 @@ protected slots:
     virtual void slotRegisterNewAccount();
 
 protected:
+    virtual bool verifyCredentials();
+
     TwitterMicroBlog *mBlog;
     TwitterAccount *mAccount;
 };

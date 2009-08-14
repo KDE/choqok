@@ -50,7 +50,7 @@ public:
 public slots:
     void show();
     void submitPost( const QString &newStatus );
-    void setText( const QString &text );
+    void setText( const QString& text/*, Choqok::Account* account = 0, const QString& replyToId = QString()*/ );
 
 signals:
     void newPostSubmitted( Choqok::JobResult result );
@@ -62,19 +62,15 @@ protected slots:
     void slotCurrentAccountChanged(int);
     void checkAll( bool isAll );
     virtual void slotButtonClicked(int button);
-    void addAccount( Choqok::Account* account );
+    void addAccount( Account* account );
     void removeAccount( const QString &alias );
-    virtual void slotSubmitPost( Post *post );
-    void postError(Choqok::MicroBlog::ErrorType error,const QString &errorMessage,const Post* post);
+    virtual void slotSubmitPost( Account *theAccount, Post *post );
+    void postError( Account *theAccount, MicroBlog::ErrorType error, const QString &errorMessage,const Post* post);
 
 private:
     void setupUi();
-    QCheckBox *all;
-    KComboBox *comboAccounts;
-    TextEdit *txtPost;
-
-    QList<Account*> accountsList;
-    Post *mSubmittedPost;
+    class Private;
+    Private *d;
 };
 
 }

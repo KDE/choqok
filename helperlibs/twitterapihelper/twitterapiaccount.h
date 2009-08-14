@@ -22,41 +22,33 @@
 
 */
 
-#include "twitteraccount.h"
-#include <KDebug>
-#include "twittermicroblog.h"
+#ifndef TWITTERAPIACCOUNT_H
+#define TWITTERAPIACCOUNT_H
 
-class TwitterAccount::Private
+#include <account.h>
+#include <choqok_export.h>
+
+class TwitterApiMicroBlog;
+
+class CHOQOK_EXPORT TwitterApiAccount : public Choqok::Account
 {
+    Q_OBJECT
 public:
-    bool loadTwitpics;
+    TwitterApiAccount(TwitterApiMicroBlog* parent, const QString& alias);
+    ~TwitterApiAccount();
+    virtual void writeConfig();
+
+    QString userId() const;
+    void setUserId( const QString &id );
+
+    bool useSecureConnection() const;
+    void setUseSecureConnection(bool use = true);
+
+    int countOfPosts() const;
+    void setCountOfPosts(int count);
+private:
+    class Private;
+    Private *d;
 };
 
-TwitterAccount::TwitterAccount(TwitterMicroBlog* parent, const QString &alias)
-    : TwitterApiAccount(parent, alias), d(new Private)
-{
-    d->loadTwitpics = configGroup()->readEntry("LoadTwitPics", false);
-}
-
-TwitterAccount::~TwitterAccount()
-{
-    delete d;
-}
-
-void TwitterAccount::writeConfig()
-{
-    configGroup()->writeEntry("LoadTwitPics", d->loadTwitpics);
-    TwitterApiAccount::writeConfig();
-}
-
-bool TwitterAccount::isLoadTwitPics() const
-{
-    return d->loadTwitpics;
-}
-
-void TwitterAccount::setLoadTwitPics(bool load)
-{
-    d->loadTwitpics = load;
-}
-
-#include "twitteraccount.moc"
+#endif // TWITTERACCOUNT_H

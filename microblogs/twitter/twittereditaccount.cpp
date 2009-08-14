@@ -86,7 +86,7 @@ void TwitterEditAccountWidget::slotRegisterNewAccount()
 bool TwitterEditAccountWidget::verifyCredentials()
 {
     kDebug();
-    KUrl url( "http://identi.ca/api/account/verify_credentials.xml" );
+    KUrl url( "http://twitter.com/account/verify_credentials.xml" );
     if(kcfg_secure->isChecked())
         url.setScheme("https");
     url.setUserName(kcfg_username->text());

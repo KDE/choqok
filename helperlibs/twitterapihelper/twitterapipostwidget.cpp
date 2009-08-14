@@ -22,24 +22,24 @@
 
 */
 
-#include "twitterpostwidget.h"
+#include "twitterapipostwidget.h"
 #include <microblog.h>
 #include <klocalizedstring.h>
-#include "twitteraccount.h"
+#include "twitterapiaccount.h"
 #include <kicon.h>
 #include <KPushButton>
-#include "twittermicroblog.h"
+#include "twitterapimicroblog.h"
 #include <KDebug>
 #include <mediamanager.h>
 #include <KProcess>
 #include <KToolInvocation>
 #include <KSharedConfig>
 
-const QRegExp TwitterPostWidget::mUserRegExp("([\\s]|^)@([^\\s\\W]+)");
-const QRegExp TwitterPostWidget::mHashtagRegExp("([\\s]|^)#([^\\s\\W]+)");
-const KIcon TwitterPostWidget::unFavIcon( Choqok::MediaManager::convertToGrayScale(KIcon("rating").pixmap(16)) );
+const QRegExp TwitterApiPostWidget::mUserRegExp("([\\s]|^)@([^\\s\\W]+)");
+const QRegExp TwitterApiPostWidget::mHashtagRegExp("([\\s]|^)#([^\\s\\W]+)");
+const KIcon TwitterApiPostWidget::unFavIcon( Choqok::MediaManager::convertToGrayScale(KIcon("rating").pixmap(16)) );
 
-TwitterPostWidget::TwitterPostWidget(Choqok::Account* account, const Choqok::Post &post, QWidget* parent)
+TwitterApiPostWidget::TwitterApiPostWidget(Choqok::Account* account, const Choqok::Post &post, QWidget* parent)
     : PostWidget(account, post, parent)
 {
     config = new KConfigGroup(KGlobal::config(), QString::fromLatin1("Behavior"));
@@ -47,11 +47,11 @@ TwitterPostWidget::TwitterPostWidget(Choqok::Account* account, const Choqok::Pos
     connect(this,SIGNAL(anchorClicked(QUrl)),this,SLOT(checkAnchor(QUrl)));
 }
 
-TwitterPostWidget::~TwitterPostWidget()
+TwitterApiPostWidget::~TwitterApiPostWidget()
 {
 }
 
-void TwitterPostWidget::initUi()
+void TwitterApiPostWidget::initUi()
 {
     Choqok::UI::PostWidget::initUi();
     if( !mCurrentPost.isPrivate ) {
@@ -66,7 +66,7 @@ void TwitterPostWidget::initUi()
     }
 }
 
-QString TwitterPostWidget::prepareStatus(const QString& text)
+QString TwitterApiPostWidget::prepareStatus(const QString& text)
 {
     QString res = Choqok::UI::PostWidget::prepareStatus(text);
     res.replace(mUserRegExp,"\\1@<a href='user://\\2'>\\2</a> <a href='"+
@@ -78,7 +78,7 @@ QString TwitterPostWidget::prepareStatus(const QString& text)
     return res;
 }
 
-QString TwitterPostWidget::generateSign()
+QString TwitterApiPostWidget::generateSign()
 {
     QString sign;
     sign = "<b><a href='user://"+mCurrentPost.author.userName+"' title=\"" +
@@ -89,7 +89,7 @@ QString TwitterPostWidget::generateSign()
     sign += "<a href=\"" + mCurrentPost.link +
     "\" title=\"" + mCurrentPost.creationDateTime.toString() + "\">%1</a>";
     if ( mCurrentPost.isPrivate ) {
-        if( mCurrentPost.replyToUserId == qobject_cast<TwitterAccount*>(mCurrentAccount)->userId() ) {
+        if( mCurrentPost.replyToUserId == qobject_cast<TwitterApiAccount*>(mCurrentAccount)->userId() ) {
             sign.prepend( "From " );
         } else {
             sign.prepend( "To " );
@@ -110,14 +110,14 @@ QString TwitterPostWidget::generateSign()
     return sign;
 }
 
-void TwitterPostWidget::slotReply()
+void TwitterApiPostWidget::slotReply()
 {
     emit reply( QString("@%1 ").arg(mCurrentPost.author.userName), mCurrentPost.postId );
 }
 
-void TwitterPostWidget::setFavorite()
+void TwitterApiPostWidget::setFavorite()
 {
-    TwitterMicroBlog *mic = qobject_cast<TwitterMicroBlog*>(mCurrentAccount->microblog());
+    TwitterApiMicroBlog *mic = qobject_cast<TwitterApiMicroBlog*>(mCurrentAccount->microblog());
     if(mCurrentPost.isFavorited){
         connect(mic, SIGNAL(favoriteRemoved(Choqok::Account*,QString)),
                 this, SLOT(slotSetFavorite(Choqok::Account*,QString)) );
@@ -129,13 +129,13 @@ void TwitterPostWidget::setFavorite()
     }
 }
 
-void TwitterPostWidget::slotSetFavorite(Choqok::Account *theAccount, const QString& postId)
+void TwitterApiPostWidget::slotSetFavorite(Choqok::Account *theAccount, const QString& postId)
 {
     if(currentAccount() == theAccount && postId == mCurrentPost.postId){
         kDebug()<<postId;
         mCurrentPost.isFavorited = !mCurrentPost.isFavorited;
         updateFavStat();
-        TwitterMicroBlog *mic = qobject_cast<TwitterMicroBlog*>(mCurrentAccount->microblog());
+        TwitterApiMicroBlog *mic = qobject_cast<TwitterApiMicroBlog*>(mCurrentAccount->microblog());
         disconnect(mic, SIGNAL(favoriteRemoved(Choqok::Account*,QString)),
                    this, SLOT(slotSetFavorite(Choqok::Account*,QString)) );
         disconnect(mic, SIGNAL(favoriteCreated(Choqok::Account*,QString)),
@@ -144,7 +144,7 @@ void TwitterPostWidget::slotSetFavorite(Choqok::Account *theAccount, const QStri
     }
 }
 
-void TwitterPostWidget::updateFavStat()
+void TwitterApiPostWidget::updateFavStat()
 {
     if(mCurrentPost.isFavorited){
         btnFav->setChecked(true);
@@ -155,7 +155,7 @@ void TwitterPostWidget::updateFavStat()
     }
 }
 
-void TwitterPostWidget::checkAnchor(const QUrl & url)
+void TwitterApiPostWidget::checkAnchor(const QUrl & url)
 {
     QString scheme = url.scheme();
     int type = 0;
@@ -182,4 +182,4 @@ void TwitterPostWidget::checkAnchor(const QUrl & url)
 //     emit sigSearch(type,url.host());
 }
 
-#include "twitterpostwidget.moc"
+#include "twitterapipostwidget.moc"

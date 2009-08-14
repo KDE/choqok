@@ -35,26 +35,42 @@
 #include <KPluginInfo>
 
 using namespace Choqok::UI;
+using namespace Choqok;
+
+class QuickPost::Private
+{
+public:
+    Private()
+    : submittedPost(0)
+    {}
+    QCheckBox *all;
+    KComboBox *comboAccounts;
+    TextEdit *txtPost;
+
+    QHash< QString, Account* > accountsList;
+    Post *submittedPost;
+//     QString replyToId;
+};
 
 QuickPost::QuickPost( QWidget* parent )
-    : KDialog( parent ), mSubmittedPost(0)
+    : KDialog( parent ), d(new Private)
 {
     kDebug();
     setupUi();
     loadAccounts();
-    connect( comboAccounts, SIGNAL(currentIndexChanged(int)),
+    connect( d->comboAccounts, SIGNAL(currentIndexChanged(int)),
              this, SLOT(slotCurrentAccountChanged(int)) );
-    connect( txtPost, SIGNAL( returnPressed( QString ) ),
+    connect( d->txtPost, SIGNAL( returnPressed( QString ) ),
              this, SLOT( submitPost( QString ) ) );
-    connect( all, SIGNAL( toggled( bool ) ),
+    connect( d->all, SIGNAL( toggled( bool ) ),
              this, SLOT( checkAll( bool ) ) );
     connect( AccountManager::self(), SIGNAL( accountAdded(Choqok::Account*)),
              this, SLOT( addAccount( Choqok::Account*)) );
     connect( AccountManager::self(), SIGNAL( accountRemoved( const QString& ) ),
              this, SLOT( removeAccount( const QString& ) ) );
 
-    all->setChecked( Choqok::BehaviorSettings::all() );
-    slotCurrentAccountChanged(comboAccounts->currentIndex());
+    d->all->setChecked( Choqok::BehaviorSettings::all() );
+    slotCurrentAccountChanged(d->comboAccounts->currentIndex());
 }
 
 void QuickPost::setupUi()
@@ -63,26 +79,26 @@ void QuickPost::setupUi()
     this->setMainWidget( wdg );
 
     this->resize( Choqok::BehaviorSettings::quickPostDialogSize() );
-    all = new QCheckBox( i18n("All"), this);
-    comboAccounts = new KComboBox(this);
+    d->all = new QCheckBox( i18n("All"), this);
+    d->comboAccounts = new KComboBox(this);
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     QHBoxLayout *hLayout = new QHBoxLayout;
-    hLayout->addWidget(all);
-    hLayout->addWidget(comboAccounts);
+    hLayout->addWidget(d->all);
+    hLayout->addWidget(d->comboAccounts);
     mainLayout->addLayout(hLayout);
-    txtPost = new TextEdit( 0, this );
-    txtPost->setTabChangesFocus( true );
-    mainLayout->addWidget( txtPost );
+    d->txtPost = new TextEdit( 0, this );
+    d->txtPost->setTabChangesFocus( true );
+    mainLayout->addWidget( d->txtPost );
     if(wdg->layout())
         wdg->layout()->deleteLater();
     wdg->setLayout(mainLayout);
-    txtPost->setFocus( Qt::OtherFocusReason );
+    d->txtPost->setFocus( Qt::OtherFocusReason );
     this->setCaption( i18n( "Quick Post" ) );
 }
 
 QuickPost::~QuickPost()
 {
-    BehaviorSettings::setAll( all->isChecked() );
+    BehaviorSettings::setAll( d->all->isChecked() );
     BehaviorSettings::setQuickPostDialogSize( this->size() );
     BehaviorSettings::self()->writeConfig();
     kDebug();
@@ -90,30 +106,32 @@ QuickPost::~QuickPost()
 
 void QuickPost::show()
 {
-    txtPost->setFocus( Qt::OtherFocusReason );
+    d->txtPost->setFocus( Qt::OtherFocusReason );
     KDialog::show();
 }
 
-void QuickPost::slotSubmitPost( Post *post )
+void QuickPost::slotSubmitPost( Account* theAccount, Post* post )
 {
-    if (post == mSubmittedPost) {
-        txtPost->setEnabled(true);
-        txtPost->clear();
+    if (post == d->submittedPost) {
+        d->txtPost->setEnabled(true);
+        d->txtPost->clear();
         emit newPostSubmitted(Success);
         //TODO Notify
-        delete mSubmittedPost;
-        mSubmittedPost = 0L;
+        delete d->submittedPost;
+        d->submittedPost = 0L;
+//         d->replyToId.clear();
     }
 }
 
-void QuickPost::postError(Choqok::MicroBlog::ErrorType error, const QString &errorMessage, const Post* post)
+void QuickPost::postError(Account* theAccount, MicroBlog::ErrorType error, const QString& errorMessage, const Choqok::Post* post)
 {
-    if (post == mSubmittedPost) {
-        txtPost->setEnabled(true);
+    if (post == d->submittedPost) {
+        d->txtPost->setEnabled(true);
         emit newPostSubmitted(Fail);
         //TODO Notify
-        delete mSubmittedPost;
-        mSubmittedPost = 0L;
+        delete d->submittedPost;
+        d->submittedPost = 0L;
+//         d->replyToId.clear();
     }
 }
 
@@ -121,20 +139,19 @@ void QuickPost::submitPost( const QString & newPost )
 {
     kDebug();
     this->hide();
-    if ( all->isChecked() ) {
-        int count = accountsList.count();
-            mSubmittedPost = new Post;
-            mSubmittedPost->content = newPost;
-            mSubmittedPost->isPrivate = false;
-        for ( int i = 0;i < count; ++i ) {
-            accountsList[i]->microblog()->createPost(accountsList[i], mSubmittedPost );
+    if ( d->all->isChecked() ) {
+            d->submittedPost = new Post;
+            d->submittedPost->content = newPost;
+            d->submittedPost->isPrivate = false;
+        foreach ( Account* acc, d->accountsList.values() ) {
+            acc->microblog()->createPost( acc, d->submittedPost );
         }
     } else {
-        mSubmittedPost = new Post;
-        mSubmittedPost->content = newPost;
-        mSubmittedPost->isPrivate = false;
-        accountsList[comboAccounts->currentIndex()]->microblog()->createPost(accountsList[comboAccounts->currentIndex()],
-                                                                             mSubmittedPost );
+        d->submittedPost = new Post;
+        d->submittedPost->content = newPost;
+        d->submittedPost->isPrivate = false;
+        d->accountsList.value(d->comboAccounts->currentText())->microblog()->createPost(d->accountsList.value(d->comboAccounts->currentText()),
+                                                                             d->submittedPost );
     }
 }
 
@@ -142,7 +159,7 @@ void QuickPost::slotButtonClicked(int button)
 {
     kDebug();
     if(button == KDialog::Ok) {
-        const QString txt = txtPost->toPlainText();
+        const QString txt = d->txtPost->toPlainText();
         submitPost( txt );
     } else
         KDialog::slotButtonClicked(button);
@@ -155,48 +172,47 @@ void QuickPost::loadAccounts()
     QListIterator<Account*> it( ac );
     while ( it.hasNext() ) {
         Account *current = it.next();
-        accountsList.append( current );
-        comboAccounts->addItem( KIcon(current->microblog()->pluginInfo().icon()), current->alias() );
-        connect(current->microblog(), SIGNAL(postCreated(Post*)), SLOT(slotSubmitPost(Post*)));
-        connect(current->microblog(), SIGNAL(errorPost(Choqok::MicroBlog::ErrorType,QString,const Post*)),
-                 SLOT(postError(Choqok::MicroBlog::ErrorType,QString,const Post*)));
+        d->accountsList.insert( current->alias(), current );
+        d->comboAccounts->addItem( KIcon(current->microblog()->pluginInfo().icon()), current->alias() );
+        connect(current->microblog(), SIGNAL(postCreated(Account*,Post*)), SLOT(slotSubmitPost(Account*,Post*)) );
+        connect(current->microblog(), SIGNAL(errorPost(Account*,Choqok::MicroBlog::ErrorType,QString,const Post*)),
+                 SLOT(postError(Account*,Choqok::MicroBlog::ErrorType,QString,const Post*)) );
     }
 }
 
 void QuickPost::addAccount( Choqok::Account* account )
 {
     kDebug();
-    accountsList.append( account );
-    comboAccounts->addItem( account->alias() );
+    d->accountsList.insert( account->alias(), account );
+    d->comboAccounts->addItem( KIcon(account->microblog()->pluginInfo().icon()), account->alias() );
 }
 
 void QuickPost::removeAccount( const QString & alias )
 {
     kDebug();
-    int count = accountsList.count();
-    for ( int i = 0; i < count; ++i ) {
-        if ( accountsList[i]->alias() == alias ) {
-            accountsList.removeAt( i );
-            comboAccounts->removeItem( i );
-            return;
-        }
-    }
+    d->accountsList.remove( alias );
+    d->comboAccounts->removeItem( d->comboAccounts->findText(alias) );
 }
 
 void QuickPost::checkAll( bool isAll )
 {
-    comboAccounts->setEnabled( !isAll );
+    d->comboAccounts->setEnabled( !isAll );
 }
 
-void QuickPost::setText( const QString &text )
+void QuickPost::setText( const QString& text )
 {
-    txtPost->setText(text);
+    d->txtPost->setText(text);
+//     if(account)
+//         d->comboAccounts->setCurrentItem(account->alias());
+//     if(!replyToId.isEmpty())
+//         d->replyToId = replyToId;
 }
 
 void QuickPost::slotCurrentAccountChanged(int index)
 {
-    if ( index >= 0 && index < accountsList.size() )
-        txtPost->setCharLimit( accountsList[index]->microblog()->postCharLimit() );
+    Q_UNUSED(index)
+    if( !d->accountsList.isEmpty() )
+        d->txtPost->setCharLimit( d->accountsList.value(d->comboAccounts->currentText())->microblog()->postCharLimit() );
 }
 
 #include "quickpost.moc"

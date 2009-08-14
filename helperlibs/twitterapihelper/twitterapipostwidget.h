@@ -22,17 +22,17 @@
 
 */
 
-#ifndef TWITTERPOSTWIDGET_H
-#define TWITTERPOSTWIDGET_H
+#ifndef TWITTERAPIPOSTWIDGET_H
+#define TWITTERAPIPOSTWIDGET_H
 
 #include <postwidget.h>
 
-class TwitterPostWidget : public Choqok::UI::PostWidget
+class CHOQOK_EXPORT TwitterApiPostWidget : public Choqok::UI::PostWidget
 {
     Q_OBJECT
 public:
-    TwitterPostWidget(Choqok::Account* account, const Choqok::Post &post, QWidget* parent = 0);
-    ~TwitterPostWidget();
+    TwitterApiPostWidget(Choqok::Account* account, const Choqok::Post &post, QWidget* parent = 0);
+    ~TwitterApiPostWidget();
     virtual void initUi();
 
 protected:
