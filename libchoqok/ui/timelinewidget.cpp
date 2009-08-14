@@ -77,19 +77,17 @@ void TimelineWidget::setupUi()
     QSpacerItem *verticalSpacer;
     gridLayout = new QGridLayout(this);
     gridLayout->setMargin(0);
-    gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+    gridLayout->setObjectName("gridLayout");
     scrollArea = new QScrollArea(this);
-    scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
+    scrollArea->setObjectName("scrollArea");
     scrollArea->setFrameShape(QFrame::NoFrame);
     scrollArea->setWidgetResizable(true);
     scrollAreaWidgetContents = new QWidget();
-    scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
+    scrollAreaWidgetContents->setObjectName("scrollAreaWidgetContents");
     scrollAreaWidgetContents->setGeometry(QRect(0, 0, 254, 300));
     verticalLayout_2 = new QVBoxLayout(scrollAreaWidgetContents);
     verticalLayout_2->setMargin(1);
-    verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
     mainLayout = new QVBoxLayout();
-    mainLayout->setObjectName(QString::fromUtf8("mainLayout"));
     verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
     mainLayout->addItem(verticalSpacer);
@@ -128,8 +126,8 @@ void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList, bool setRead
         if(posts.keys().contains((*it)->postId))
             continue;
         PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, **it, this);
-        pw->setRead(setRead);
         if(pw) {
+            pw->setRead(setRead);
             addPostWidgetToUi(pw);
             if( (*it)->author.userName != d->currentAccount->username() )
                 ++unread;

@@ -191,6 +191,7 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change)
 void MicroBlogWidget::slotMarkAllAsRead()
 {
     foreach(TimelineWidget *wd, d->timelines.values()) {
+        d->timelineUnreadCount[wd] = 0;
         int tabIndex = d->timelinesTabWidget->indexOf(wd);
         if(tabIndex == -1)
             continue;

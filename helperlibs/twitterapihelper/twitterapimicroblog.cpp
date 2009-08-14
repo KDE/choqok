@@ -105,12 +105,12 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
             st->author.homePageUrl = grp.readEntry("authorUrl", QString());
             st->link = postUrl( account, st->postId, st->author.userName);
             //Sorting The new statuses:
-            int j = 0;
-            int count = list.count();
-            while (( j < count ) && ( st->postId > list[ j ]->postId ) ) {
-                ++j;
-            }
-            list.insert( j, st );
+//             int j = 0;
+//             int count = list.count();
+//             while (( j < count ) && ( st->postId > list[ j ]->postId ) ) {
+//                 ++j;
+//             }
+            list.append( st );
         }
         mTimelineLatestId[timelineName] = st->postId;
     }
