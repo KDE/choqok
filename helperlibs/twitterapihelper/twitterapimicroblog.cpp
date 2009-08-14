@@ -103,7 +103,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
             st->isPrivate = grp.readEntry( "isPrivate" , false );
             st->author.location = grp.readEntry("authorLocation", QString());
             st->author.homePageUrl = grp.readEntry("authorUrl", QString());
-            st->link = postUrl( account, st->postId, st->author.userName);
+            st->link = postUrl( account, st->author.userName, st->postId);
             //Sorting The new statuses:
 //             int j = 0;
 //             int count = list.count();
@@ -579,7 +579,7 @@ Choqok::Post * TwitterApiMicroBlog::readPostFromDomElement ( Choqok::Account* th
         }
         node2 = node2.nextSibling();
     }
-    post->link = postUrl(theAccount, post->postId, post->author.userName);
+    post->link = postUrl(theAccount, post->author.userName, post->postId);
     post->creationDateTime = dateFromString ( timeStr );
 
     return post;

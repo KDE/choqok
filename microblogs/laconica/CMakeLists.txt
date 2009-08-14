@@ -9,7 +9,7 @@ laconicaaccount.cpp
 laconicamicroblog.cpp
 # twittercomposer.cpp
 laconicaeditaccount.cpp
-# twitterpostwidget.cpp
+laconicapostwidget.cpp
 )
 
 kde4_add_ui_files(choqok_laconica_SRCS laconicaeditaccount_base.ui )

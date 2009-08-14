@@ -39,7 +39,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "postwidget.h"
 #include "twitteraccount.h"
 #include <composerwidget.h>
-#include <twitterapihelper/twitterapipostwidget.h>
+#include "twitterpostwidget.h"
 
 typedef KGenericFactory<TwitterMicroBlog> TWPluginFactory;
 static const KAboutData aboutdata("choqok_twitter", 0, ki18n("Twitter MicroBlog") , "0.1" );
@@ -98,20 +98,29 @@ Choqok::UI::TimelineWidget * TwitterMicroBlog::createTimelineWidget( Choqok::Acc
 Choqok::UI::PostWidget* TwitterMicroBlog::createPostWidget(Choqok::Account* account,
                                                         const Choqok::Post &post, QWidget* parent)
 {
-    return new TwitterApiPostWidget(account, post, parent);
+    return new TwitterPostWidget(account, post, parent);
 }
 
 QString TwitterMicroBlog::profileUrl(Choqok::Account* account, const QString& username) const
 {
-    Q_UNUSED(account)
-    return QString( KUrl( homepageUrl() ).prettyUrl(KUrl::AddTrailingSlash) + username) ;
+    TwitterApiAccount *acc = qobject_cast<TwitterApiAccount*>(account);
+    if(acc){
+        return QString( acc->homepageUrl().prettyUrl(KUrl::AddTrailingSlash) + username) ;
+    } else {
+        return QString( "http://twitter.com/%1" ).arg( username );
+    }
 }
 
 QString TwitterMicroBlog::postUrl(Choqok::Account* account, const QString& username,
                                   const QString& postId) const
 {
-    Q_UNUSED(account)
-    return QString ( "http://twitter.com/%1/status/%2" ).arg ( username ).arg ( postId );
+    TwitterApiAccount *acc = qobject_cast<TwitterApiAccount*>(account);
+    if(acc){
+        KUrl url( acc->homepageUrl() );
+        url.addPath ( QString("/%1/status/%2" ).arg ( username ).arg ( postId ) );
+        return url.prettyUrl();
+    } else
+        return QString ( "http://twitter.com/%1/status/%2" ).arg ( username ).arg ( postId );
 }
 
 

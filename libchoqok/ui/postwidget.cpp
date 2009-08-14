@@ -46,6 +46,7 @@ KPushButton{border:0px}");
 const QRegExp PostWidget::mUrlRegExp("((ftps?|https?)://[^\\s<>\"]+[^!,\\.\\s<>'\"\\)\\]])");
 QString PostWidget::readStyle;
 QString PostWidget::unreadStyle;
+const QString PostWidget::webIconText("&#9794;");
 
 PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* parent/* = 0*/ )
     :KTextBrowser(parent), mCurrentPost(post), mCurrentAccount(account), mRead(false)
@@ -262,15 +263,10 @@ QString PostWidget::prepareStatus( const QString &txt )
 void PostWidget::setDirection()
 {
     QString txt = mCurrentPost.content;
-    QChar re(0x267B);
-    txt.remove(re);
     txt.remove(QRegExp("RT|RD"));
-    if(txt.startsWith('@'))
-        txt.remove(QRegExp("@([^\\s\\W]+)"));
-    if(txt.startsWith('#'))
-        txt.remove(QRegExp("#([^\\s\\W]+)"));
-    if(txt.startsWith('!'))
-        txt.remove(QRegExp("!([^\\s\\W]+)"));
+    txt.remove(QRegExp("@([^\\s\\W]+)"));
+    txt.remove(QRegExp("#([^\\s\\W]+)"));
+    txt.remove(QRegExp("!([^\\s\\W]+)"));
     txt.prepend(' ');
     if( txt.isRightToLeft() ) {
         QTextOption options(document()->defaultTextOption());

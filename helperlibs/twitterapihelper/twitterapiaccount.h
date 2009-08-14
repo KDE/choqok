@@ -67,9 +67,12 @@ public:
     Combined from @ref host and @ref api to use for connections and queries
     */
     KUrl apiUrl() const;
+    KUrl homepageUrl() const;
 
 protected:
     void setApiUrl( const KUrl &apiUrl );
+    void setHomepageUrl( const KUrl& homepageUrl );
+    void generateApiUrl();
 
 private:
     class Private;

@@ -23,7 +23,6 @@
 */
 
 #include "twitterapiaccount.h"
-#include <KDebug>
 #include "twitterapimicroblog.h"
 
 class TwitterApiAccount::Private
@@ -38,6 +37,7 @@ public:
     QString host;
     QString api;
     KUrl apiUrl;
+    KUrl homepageUrl;
 };
 
 TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString &alias)
@@ -72,7 +72,6 @@ QString TwitterApiAccount::userId() const
 
 void TwitterApiAccount::setUserId( const QString &id )
 {
-    kDebug();
     d->userId = id;
 }
 
@@ -84,6 +83,7 @@ bool TwitterApiAccount::useSecureConnection() const
 void TwitterApiAccount::setUseSecureConnection(bool use /*= true*/)
 {
     d->secure = use;
+    generateApiUrl();
 }
 
 int TwitterApiAccount::countOfPosts() const
@@ -111,7 +111,6 @@ void TwitterApiAccount::setApiUrl(const KUrl& apiUrl)
     d->apiUrl = apiUrl;
 }
 
-
 QString TwitterApiAccount::api() const
 {
     return d->api;
@@ -120,21 +119,35 @@ QString TwitterApiAccount::api() const
 void TwitterApiAccount::setApi(const QString& api)
 {
     d->api = api;
-    KUrl url;
-    url.setHost(host());
-    url.addPath(api);
-    url.setScheme(useSecureConnection()?"https":"http");
-    setApiUrl(url);
+    generateApiUrl();
 }
 
 void TwitterApiAccount::setHost(const QString& host)
 {
     d->host = host;
+    generateApiUrl();
+}
+
+KUrl TwitterApiAccount::homepageUrl() const
+{
+    return d->homepageUrl;
+}
+
+void TwitterApiAccount::generateApiUrl()
+{
     KUrl url;
-    url.setHost(host);
-    url.addPath(d->api);
     url.setScheme(useSecureConnection()?"https":"http");
+    url.setHost(host());
+
+    setHomepageUrl(url);
+
+    url.addPath(api());
     setApiUrl(url);
+}
+
+void TwitterApiAccount::setHomepageUrl(const KUrl& homepageUrl)
+{ 
+    d->homepageUrl = homepageUrl;
 }
 
 #include "twitterapiaccount.moc"

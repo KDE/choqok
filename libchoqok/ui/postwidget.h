@@ -152,6 +152,7 @@ protected:
     static QString readStyle;
     static QString unreadStyle;
     static const QRegExp mUrlRegExp;
+    static const QString webIconText;
 
 private:
     void setupUi();

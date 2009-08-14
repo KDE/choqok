@@ -40,6 +40,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "laconicaaccount.h"
 #include <composerwidget.h>
 #include <twitterapihelper/twitterapipostwidget.h>
+#include "laconicapostwidget.h"
 
 typedef KGenericFactory<LaconicaMicroBlog> TWPluginFactory;
 static const KAboutData aboutdata("choqok_laconica", 0, ki18n("Laconica MicroBlog") , "0.1" );
@@ -97,25 +98,25 @@ Choqok::UI::TimelineWidget * LaconicaMicroBlog::createTimelineWidget( Choqok::Ac
 Choqok::UI::PostWidget* LaconicaMicroBlog::createPostWidget(Choqok::Account* account,
                                                         const Choqok::Post &post, QWidget* parent)
 {
-    return new TwitterApiPostWidget(account, post, parent);
+    return new LaconicaPostWidget(account, post, parent);
 }
 
 QString LaconicaMicroBlog::profileUrl( Choqok::Account *account, const QString &username) const
 {
     TwitterApiAccount *acc = qobject_cast<TwitterApiAccount*>(account);
     if(acc){
-        return QString( KUrl( acc->host() ).prettyUrl(KUrl::AddTrailingSlash) + username) ;
+        return QString( acc->homepageUrl().prettyUrl(KUrl::AddTrailingSlash) + username) ;
     } else
         return QString();
 }
 
-QString LaconicaMicroBlog::postUrl ( Choqok::Account *account,  const QString &postId,
-                                     const QString &username ) const
+QString LaconicaMicroBlog::postUrl ( Choqok::Account *account,  const QString &username,
+                                     const QString &postId ) const
 {
     Q_UNUSED(username)
     TwitterApiAccount *acc = qobject_cast<TwitterApiAccount*>(account);
     if(acc){
-        KUrl url(acc->host());
+        KUrl url( acc->homepageUrl() );
         url.addPath ( QString("/notice/%1" ).arg ( postId ) );
         return QString ( url.prettyUrl() );
     } else

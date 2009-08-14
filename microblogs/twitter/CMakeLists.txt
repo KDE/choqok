@@ -4,10 +4,11 @@ ${CHOQOK_INCLUDES}
 ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-set( choqok_twitter_SRCS
+set( choqok_twitter_SRCS 
 twitteraccount.cpp
 twittermicroblog.cpp
 twittereditaccount.cpp
+twitterpostwidget.cpp
 )
 
 kde4_add_ui_files(choqok_twitter_SRCS twittereditaccount_base.ui )
