@@ -29,7 +29,9 @@
 #include <choqok_export.h>
 
 class TwitterApiMicroBlog;
-
+/**
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
+*/
 class CHOQOK_EXPORT TwitterApiAccount : public Choqok::Account
 {
     Q_OBJECT

@@ -25,7 +25,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <shortener.h>
 #include <QString>
-
+/**
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
+*/
 class TightUrl : public Choqok::Shortener
 {
     Q_OBJECT

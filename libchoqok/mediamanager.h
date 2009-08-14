@@ -39,7 +39,7 @@ namespace Choqok
     @brief Media files manager!
     A simple and global way to fetch and cache images
 
-    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
 class CHOQOK_EXPORT MediaManager : public QObject
 {

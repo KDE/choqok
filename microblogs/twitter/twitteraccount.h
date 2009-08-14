@@ -29,7 +29,10 @@
 #include <twitterapihelper/twitterapiaccount.h>
 
 class TwitterMicroBlog;
+/**
 
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
+*/
 class TwitterAccount : public TwitterApiAccount
 {
     Q_OBJECT

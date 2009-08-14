@@ -49,7 +49,7 @@ public:
     PluginManagerPrivate() : shutdownMode( StartingUp ), isAllPluginsLoaded(false)
     {
         plugins = KPluginInfo::fromServices( KServiceTypeTrader::self()->query( QLatin1String( "Choqok/Plugin" ),
-                                            QLatin1String( "[X-Choqok-Version] >= " +
+                                            QLatin1String( "[X-Choqok-Version] == " +
                                             QString::number(CHOQOK_VERSION).toLatin1() ) ) );
     }
 

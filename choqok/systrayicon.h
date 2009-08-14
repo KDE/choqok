@@ -32,7 +32,7 @@
 /**
 System tray icon!
 
-    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
 class SysTrayIcon : public KSystemTrayIcon
 {

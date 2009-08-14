@@ -35,7 +35,7 @@ kde4_add_library(choqok SHARED ${choqok_LIB_SRCS})
 target_link_libraries(choqok ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS})
 
 set_target_properties(choqok PROPERTIES
-VERSION 0.6.5
+VERSION 0.9.1
 SOVERSION 0
 )
 if(MSVC)

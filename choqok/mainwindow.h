@@ -48,7 +48,7 @@ class KTabWidget;
  * menus, toolbars, and status bars.
  *
  * @short Main window class
- * @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
+ * @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
  */
 
 class MainWindow : public KXmlGuiWindow

@@ -32,7 +32,10 @@ class Account;
 
 namespace UI {
 class TextEdit;
+/**
 
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
+*/
 class CHOQOK_EXPORT ComposerWidget : public QWidget
 {
     Q_OBJECT

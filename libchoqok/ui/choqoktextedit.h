@@ -28,7 +28,10 @@ class QLabel;
 
 namespace Choqok {
 namespace UI {
+/**
 
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
+*/
 class TextEdit : public KTextEdit
 {
     Q_OBJECT

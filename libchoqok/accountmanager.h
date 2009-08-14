@@ -32,7 +32,8 @@ namespace Choqok
 /**
 Account manager class
 
-    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
+
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
 class CHOQOK_EXPORT AccountManager : public QObject
 {

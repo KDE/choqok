@@ -35,6 +35,8 @@ namespace Choqok
 Read: @ref readPassword()
 Write: @ref writePassword()
 Remove: @ref removePassword()
+
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
 class CHOQOK_EXPORT PasswordManager : public QObject
 {

@@ -50,6 +50,8 @@ Every MicroBlog plugin should subclass this they can subclass UI classes to use 
 
 Additionally should implement this functions:
 @ref createPost() @ref abortCreatePost() @ref fetchPost() @ref removePost() @ref updateTimelines() @ref profileUrl()
+
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
 class CHOQOK_EXPORT MicroBlog : public Plugin
 {

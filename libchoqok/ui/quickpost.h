@@ -38,7 +38,7 @@ class TextEdit;
 /**
 Widget for Quick posting
 
-    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
 class CHOQOK_EXPORT QuickPost : public KDialog
 {

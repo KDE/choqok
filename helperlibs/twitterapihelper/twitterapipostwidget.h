@@ -27,6 +27,9 @@
 
 #include <postwidget.h>
 
+/**
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
+*/
 class CHOQOK_EXPORT TwitterApiPostWidget : public Choqok::UI::PostWidget
 {
     Q_OBJECT

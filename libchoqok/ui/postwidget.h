@@ -35,7 +35,10 @@ class KPushButton;
 
 namespace Choqok {
 namespace UI {
+/**
 
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
+*/
 class CHOQOK_EXPORT PostWidget : public KTextBrowser
 {
     Q_OBJECT

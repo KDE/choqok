@@ -79,7 +79,7 @@ MyPlugin::MyPlugin( QObject *parent, const char *name, const QStringList &  args
 * Please note that the client is added right after the plugin is created,
 * so you have to create every actions in the constructor.
 *
-* @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
+* @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
 class CHOQOK_EXPORT Plugin : public QObject, public KXMLGUIClient
 {

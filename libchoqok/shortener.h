@@ -29,7 +29,9 @@
 class QWidget;
 
 namespace Choqok{
-
+/**
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
+*/
 class CHOQOK_EXPORT Shortener : public Plugin
 {
 Q_OBJECT

@@ -33,7 +33,7 @@ namespace Choqok{
 class ShortenManagerPrivate;
 /**
 Singleton class to manage URL shortening
-@author Mehrdad Momeny <mehrdad.momeny@gmail.com>
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
 class CHOQOK_EXPORT ShortenManager: public QObject
 {

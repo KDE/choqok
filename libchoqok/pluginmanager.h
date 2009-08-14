@@ -40,7 +40,7 @@ typedef QList<Plugin*> PluginList;
 class PluginManagerPrivate;
 
 /**
- * @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
+ * @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
  */
 class CHOQOK_EXPORT PluginManager : public QObject
 {

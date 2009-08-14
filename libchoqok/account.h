@@ -33,7 +33,8 @@ class MicroBlog;
 /**
 \brief Account class base
 MicroBlog plugins can subclass this class or use it if fill their needs.
-    @author Mehrdad Momeny <mehrdad.momeny@gmail.com>
+
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
 class CHOQOK_EXPORT Account : public QObject
 {
