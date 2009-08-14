@@ -44,6 +44,8 @@ public:
     virtual ~TextEdit();
     void clear();
     void setCharLimit(uint charLimit = 0);
+    void setPlainText(const QString &text);
+    void setText(const QString &text);
 
 protected:
     virtual void keyPressEvent(QKeyEvent* );

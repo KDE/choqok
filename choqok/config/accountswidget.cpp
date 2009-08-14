@@ -56,6 +56,7 @@ AccountsWidget::AccountsWidget( QWidget *parent )
 
     btnAdd->setIcon( KIcon( "list-add" ) );
     btnEdit->setIcon( KIcon( "edit-rename" ) );
+    btnEdit->hide();///FIXME Fix account modify function
     btnRemove->setIcon( KIcon( "list-remove" ) );
     btnAdd->setMenu( createAddAccountMenu() );
     loadAccountsData();
@@ -110,7 +111,7 @@ void AccountsWidget::removeAccount( QString alias )
     if ( alias.isEmpty() )
         alias = accountsTable->item( accountsTable->currentRow(), 0 )->text();
     if ( Choqok::AccountManager::self()->removeAccount( alias ) ) {
-        accountsTable->removeRow( accountsTable->currentRow() );
+//         accountsTable->removeRow( accountsTable->currentRow() );
     } else
         KMessageBox::detailedSorry( this, i18n( "Cannot remove the account." ), Choqok::AccountManager::self()->lastError() );
 }
@@ -127,8 +128,10 @@ void AccountsWidget::slotAccountRemoved( const QString alias )
     kDebug();
     int count = accountsTable->rowCount();
     for(int i = 0; i<count; ++i) {
-        if(accountsTable->item(i, 0)->text() == alias)
+        if(accountsTable->item(i, 0)->text() == alias){
             accountsTable->removeRow(i);
+            break;
+        }
     }
 }
 

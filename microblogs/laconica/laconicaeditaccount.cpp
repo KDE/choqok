@@ -85,14 +85,12 @@ bool LaconicaEditAccountWidget::verifyCredentials()
     url.setHost(kcfg_host->text());
     url.addPath(kcfg_api->text());
     url.addPath("/account/verify_credentials.xml");
-    kDebug()<<url.prettyUrl();
     if(kcfg_secure->isChecked())
         url.setScheme("https");
     else
         url.setScheme("http");
     url.setUserName(kcfg_username->text());
     url.setPassword(kcfg_password->text());
-    kDebug()<<url.prettyUrl();
     KIO::TransferJob *job = KIO::get( url, KIO::Reload, KIO::HideProgressInfo );
     if ( !job ) {
         kDebug() << "Cannot create an http GET request.";
