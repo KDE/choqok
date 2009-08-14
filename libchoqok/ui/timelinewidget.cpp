@@ -29,7 +29,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "postwidget.h"
 #include <KDebug>
 #include "choqokbehaviorsettings.h"
-#include <QApplication>
 
 namespace Choqok {
 namespace UI {

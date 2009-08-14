@@ -25,11 +25,10 @@
 #include "mainwindow.h"
 #include "settings.h"
 #include "choqokversion.h"
-// #include <kapplication.h>
+#include <kapplication.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
 #include <KDE/KLocale>
-#include <KUniqueApplication>
 
 static const char description[] =
     I18N_NOOP( "KDE micro-blogging client.\n\n\

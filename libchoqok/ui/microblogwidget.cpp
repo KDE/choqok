@@ -25,12 +25,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "microblog.h"
 #include "account.h"
 #include <KDebug>
-#include <QHBoxLayout>
-#include <QApplication>
 #include "timelinewidget.h"
 #include <ktabwidget.h>
 #include "composerwidget.h"
-#include <QLayout>
+#include <QVBoxLayout>
 
 namespace Choqok {
 namespace UI {
