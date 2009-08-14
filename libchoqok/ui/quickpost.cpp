@@ -32,7 +32,6 @@
 #include <klocalizedstring.h>
 #include <kcombobox.h>
 #include <QHBoxLayout>
-#include <KPluginInfo>
 
 using namespace Choqok::UI;
 using namespace Choqok;
@@ -174,7 +173,7 @@ void QuickPost::loadAccounts()
     while ( it.hasNext() ) {
         Account *current = it.next();
         d->accountsList.insert( current->alias(), current );
-        d->comboAccounts->addItem( KIcon(current->microblog()->pluginInfo().icon()), current->alias() );
+        d->comboAccounts->addItem( KIcon(current->microblog()->pluginIcon()), current->alias() );
         connect(current->microblog(), SIGNAL(postCreated(Account*,Post*)), SLOT(slotSubmitPost(Account*,Post*)) );
         connect(current->microblog(),
                 SIGNAL(errorPost(Account*,MicroBlog::ErrorType,QString,Post*)),
@@ -186,7 +185,7 @@ void QuickPost::addAccount( Choqok::Account* account )
 {
     kDebug();
     d->accountsList.insert( account->alias(), account );
-    d->comboAccounts->addItem( KIcon(account->microblog()->pluginInfo().icon()), account->alias() );
+    d->comboAccounts->addItem( KIcon(account->microblog()->pluginIcon()), account->alias() );
 }
 
 void QuickPost::removeAccount( const QString & alias )
