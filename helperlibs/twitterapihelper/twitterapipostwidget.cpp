@@ -31,33 +31,38 @@
 #include "twitterapimicroblog.h"
 #include <KDebug>
 #include <mediamanager.h>
-#include <KProcess>
-#include <KToolInvocation>
-#include <KSharedConfig>
+#include <choqokappearancesettings.h>
 
 const QRegExp TwitterApiPostWidget::mUserRegExp("([\\s]|^)@([^\\s\\W]+)");
 const QRegExp TwitterApiPostWidget::mHashtagRegExp("([\\s]|^)#([^\\s\\W]+)");
-const KIcon TwitterApiPostWidget::unFavIcon( Choqok::MediaManager::convertToGrayScale(KIcon("rating").pixmap(16)) );
+const KIcon TwitterApiPostWidget::unFavIcon(Choqok::MediaManager::convertToGrayScale(KIcon("rating").pixmap(16)) );
+
+class TwitterApiPostWidget::Private
+{
+public:
+    Private()
+    {}
+    KPushButton *btnFav;
+    bool isBasePostShowed;
+};
 
 TwitterApiPostWidget::TwitterApiPostWidget(Choqok::Account* account, const Choqok::Post &post, QWidget* parent)
-    : PostWidget(account, post, parent)
+    : PostWidget(account, post, parent), d(new Private)
 {
-    config = new KConfigGroup(KGlobal::config(), QString::fromLatin1("Behavior"));
-    setOpenLinks(false);
-    connect(this,SIGNAL(anchorClicked(QUrl)),this,SLOT(checkAnchor(QUrl)));
 }
 
 TwitterApiPostWidget::~TwitterApiPostWidget()
 {
+    delete d;
 }
 
 void TwitterApiPostWidget::initUi()
 {
     Choqok::UI::PostWidget::initUi();
     if( !mCurrentPost.isPrivate ) {
-        btnFav = addButton( "btnFavorite",i18nc( "@info:tooltip", "Favorite" ), "rating" );
-        btnFav->setCheckable(true);
-        connect( btnFav, SIGNAL(clicked(bool)), SLOT(setFavorite()) );
+        d->btnFav = addButton( "btnFavorite",i18nc( "@info:tooltip", "Favorite" ), "rating" );
+        d->btnFav->setCheckable(true);
+        connect( d->btnFav, SIGNAL(clicked(bool)), SLOT(setFavorite()) );
         updateFavStat();
     }
     if( mCurrentAccount->username() != mCurrentPost.author.userName) {
@@ -99,7 +104,7 @@ QString TwitterApiPostWidget::generateSign()
         if ( !mCurrentPost.replyToPostId.isEmpty() ) {
             QString link = mCurrentAccount->microblog()->postUrl( currentAccount(), mCurrentPost.replyToUserName,
                                                                   mCurrentPost.replyToPostId );
-            sign += " - <a href='status://" + mCurrentPost.replyToPostId + "'>" +
+            sign += " - <a href='replyto://" + mCurrentPost.replyToPostId + "'>" +
             i18n("in reply to")+ "</a>&nbsp;<a href=\"" + link +  "\" title=\""+ link +"\">"+webIconText+"</a>";
         }
     }
@@ -145,39 +150,65 @@ void TwitterApiPostWidget::slotSetFavorite(Choqok::Account *theAccount, const QS
 void TwitterApiPostWidget::updateFavStat()
 {
     if(mCurrentPost.isFavorited){
-        btnFav->setChecked(true);
-        btnFav->setIcon(KIcon("rating"));
+        d->btnFav->setChecked(true);
+        d->btnFav->setIcon(KIcon("rating"));
     } else {
-        btnFav->setChecked(false);
-        btnFav->setIcon(unFavIcon);
+        d->btnFav->setChecked(false);
+        d->btnFav->setIcon(unFavIcon);
     }
 }
 
 void TwitterApiPostWidget::checkAnchor(const QUrl & url)
 {
     QString scheme = url.scheme();
-    int type = 0;
-    if(scheme == "tag") {
-
-    } else if(scheme == "user") {
-
-    } else if( scheme == "status" ) {
-
-    } else if (scheme == "thread") {
-
-    } else {
-        if( config->readEntry("useCustomBrowser", false) ) {
-            QStringList args = config->readEntry("customBrowser", "konqueror").split(' ');
-            args.append(url.toString());
-            if( KProcess::startDetached( args ) == 0 ) {
-                KToolInvocation::invokeBrowser(url.toString());
-            }
+    if(scheme == "user") {
+        kDebug()<<"NOT IMPLEMENTED YET";
+    } else if( scheme == "replyto" ) {
+        if(d->isBasePostShowed) {
+            mContent = prepareStatus(currentPost().content);
+            updateUi();
+            d->isBasePostShowed = false;
+            return;
         } else {
-            KToolInvocation::invokeBrowser(url.toString());
+            connect(currentAccount()->microblog(), SIGNAL(postFetched(Choqok::Account*,Choqok::Post*)),
+                    this, SLOT(slotBasePostFetched(Choqok::Account*,Choqok::Post*)) );
+            Choqok::Post *ps = new Choqok::Post;
+            ps->postId = url.host();
+            currentAccount()->microblog()->fetchPost(currentAccount(), ps);
         }
-        return;
+    } else if (scheme == "thread") {
+        kDebug()<<"NOT IMPLEMENTED YET";
+    } else {
+        Choqok::UI::PostWidget::checkAnchor(url);
     }
-//     emit sigSearch(type,url.host());
+
+}
+
+void TwitterApiPostWidget::slotBasePostFetched(Choqok::Account* theAccount, Choqok::Post* post)
+{
+    if(theAccount == currentAccount()){
+        kDebug();
+        disconnect( currentAccount()->microblog(), SIGNAL(postFetched(Choqok::Account*,Choqok::Post*)),
+                   this, SLOT(slotBasePostFetched(Choqok::Account*,Choqok::Post*)) );
+        if(d->isBasePostShowed)
+            return;
+        d->isBasePostShowed = true;
+        QString color;
+        if( Choqok::AppearanceSettings::isCustomUi() ) {
+            color = Choqok::AppearanceSettings::readForeColor().lighter().name();
+        } else {
+            color = this->palette().dark().color().name();
+        }
+        QString baseStatusText = "<p style=\"margin-top:10px; margin-bottom:10px; margin-left:20px;\
+        margin-right:20px; -qt-block-indent:0; text-indent:0px\"><span style=\" color:" + color + ";\">";
+        baseStatusText += "<b><a href='user://"+ post->author.userName +"'>" +
+        post->author.userName + "</a> :</b> ";
+
+        baseStatusText += prepareStatus( post->content ) + "</p>";
+        mContent.prepend( baseStatusText );
+        updateUi();
+        delete post;
+    }
 }
 
 #include "twitterapipostwidget.moc"

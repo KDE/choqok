@@ -31,21 +31,4 @@
             <default>QPoint(-1,-1)</default>
         </entry>
     </group>
-    <group name="Appearance">
-        <entry name="isCustomUi" type="Bool">
-            <default>false</default>
-        </entry>
-        <entry name="readBackColor" type="Color">
-            <default>white</default>
-        </entry>
-        <entry name="unreadBackColor" type="Color">
-            <default>yellow</default>
-        </entry>
-        <entry name="readForeColor" type="Color">
-            <default>Black</default>
-        </entry>
-        <entry name="unreadForeColor" type="Color">
-            <default>Black</default>
-        </entry>
-    </group>
 </kcfg>

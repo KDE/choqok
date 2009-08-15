@@ -30,6 +30,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "choqokbehaviorsettings.h"
 #include <choqokuiglobal.h>
 #include "quickpost.h"
+#include <KProcess>
+#include <KToolInvocation>
 
 static const int _15SECS = 15000;
 static const int _MINUTE = 60000;
@@ -55,6 +57,21 @@ PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* par
     setupUi();
     mTimer.start( _MINUTE );
     connect( &mTimer, SIGNAL( timeout() ), this, SLOT( updateUi()) );
+    setOpenLinks(false);
+    connect(this,SIGNAL(anchorClicked(QUrl)),this,SLOT(checkAnchor(QUrl)));
+}
+
+void PostWidget::checkAnchor(const QUrl & url)
+{
+    if( Choqok::BehaviorSettings::useCustomBrowser() ) {
+        QStringList args = Choqok::BehaviorSettings::customBrowser().split(' ');
+        args.append(url.toString());
+        if( KProcess::startDetached( args ) == 0 ) {
+            KToolInvocation::invokeBrowser(url.toString());
+        }
+    } else {
+        KToolInvocation::invokeBrowser(url.toString());
+    }
 }
 
 PostWidget::~PostWidget()
@@ -100,11 +117,9 @@ void PostWidget::setupUi()
 
     document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
                              MediaManager::self()->defaultImage() );
-                             mImage = "<img src=\"img://profileImage\" title=\""+ mCurrentPost.author.realName + "\" width=\"48\" height=\"48\" />";
-}
+                             mImage = "<img src=\"img://profileImage\" title=\""+ mCurrentPost.author.realName +
+                             "\" width=\"48\" height=\"48\" />";
 
-void PostWidget::initUi()
-{
     KPushButton *btnResend = addButton("btnResend", i18nc( "@info:tooltip", "ReSend" ), "retweet" );
     connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
 
@@ -112,7 +127,10 @@ void PostWidget::initUi()
         KPushButton *btnRemove = addButton("btnRemove", i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
         connect(btnRemove, SIGNAL(clicked(bool)), SLOT(removeCurrentPost()));
     }
+}
 
+void PostWidget::initUi()
+{
     mImage = "<img src=\"img://profileImage\" title=\""+ mCurrentPost.author.realName +"\" width=\"48\" height=\"48\" />";
     mContent = prepareStatus(mCurrentPost.content);
     mSign = generateSign();

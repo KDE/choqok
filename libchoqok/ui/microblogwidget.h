@@ -76,7 +76,8 @@ protected slots:
 
     @see updateTimelines()
     */
-    virtual void newTimelineDataRecieved( Account *theAccount, const QString& type, QList< Choqok::Post* > data );
+    virtual void newTimelineDataRecieved( Choqok::Account *theAccount, const QString& type,
+                                          QList< Choqok::Post* > data );
     void slotUpdateUnreadCount( int change );
     void slotMarkAllAsRead();
 

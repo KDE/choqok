@@ -87,6 +87,7 @@ signals:
     void reply(const QString &txt, const QString &replyToId);
 
 protected slots:
+    virtual void checkAnchor(const QUrl & url);
     /**
     Set height of widget related to text contents
     */

@@ -38,6 +38,13 @@ public:
     ~TwitterApiPostWidget();
     virtual void initUi();
 
+protected slots:
+    virtual void checkAnchor(const QUrl & url);
+    virtual void setFavorite();
+    virtual void slotSetFavorite(Choqok::Account *theAccount, const QString &postId);
+    virtual void slotReply();
+    void slotBasePostFetched(Choqok::Account* theAccount, Choqok::Post* post);
+
 protected:
 //     virtual void updateUi();
     virtual QString prepareStatus(const QString& text);
@@ -46,15 +53,10 @@ protected:
 
     static const QRegExp mUserRegExp;
     static const QRegExp mHashtagRegExp;
-    KPushButton *btnFav;
     static const KIcon unFavIcon;
-    KConfigGroup *config;
-
-protected slots:
-    virtual void checkAnchor(const QUrl & url);
-    virtual void setFavorite();
-    virtual void slotSetFavorite(Choqok::Account *theAccount, const QString &postId);
-    virtual void slotReply();
+private:
+    class Private;
+    Private *d;
 
 };
 

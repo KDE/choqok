@@ -53,8 +53,8 @@ MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent, Qt::WindowF
     kDebug();
     setupUi();
     connect( this, SIGNAL(markAllAsRead()), SLOT(slotMarkAllAsRead()) );
-    connect(d->blog, SIGNAL(timelineDataReceived(Account*,QString,QList<Choqok::Post*>)),
-             this, SLOT(newTimelineDataRecieved(Account*,QString,QList<Choqok::Post*>)) );
+    connect(d->blog, SIGNAL(timelineDataReceived(Choqok::Account*,QString,QList<Choqok::Post*>)),
+            this, SLOT(newTimelineDataRecieved(Choqok::Account*,QString,QList<Choqok::Post*>)) );
     initTimelines();
 }
 

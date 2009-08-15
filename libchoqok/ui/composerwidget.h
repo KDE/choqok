@@ -48,7 +48,7 @@ public slots:
 
 protected slots:
     virtual void submitPost( const QString &text );
-    virtual void slotPostSubmited(Account *theAccount, Post* post);
+    virtual void slotPostSubmited(Choqok::Account *theAccount, Choqok::Post* post);
     virtual void editorTextChanged();
     virtual void editorCleared();
 

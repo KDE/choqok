@@ -40,7 +40,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "twitterapipostwidget.h"
 
 TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObject *parent )
-: MicroBlog( instance, parent), countOfPost(20), countOfTimelinesToSave(0)
+: MicroBlog( instance, parent), countOfPost(80), countOfTimelinesToSave(0)
 {
     kDebug();
     setCharLimit(140);

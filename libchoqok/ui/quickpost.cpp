@@ -174,10 +174,11 @@ void QuickPost::loadAccounts()
         Account *current = it.next();
         d->accountsList.insert( current->alias(), current );
         d->comboAccounts->addItem( KIcon(current->microblog()->pluginIcon()), current->alias() );
-        connect(current->microblog(), SIGNAL(postCreated(Account*,Post*)), SLOT(slotSubmitPost(Account*,Post*)) );
+        connect(current->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
+                SLOT(slotSubmitPost(Choqok::Account*,Choqok::Post*)) );
         connect(current->microblog(),
-                SIGNAL(errorPost(Account*,MicroBlog::ErrorType,QString,Post*)),
-                 SLOT(postError(Account*,MicroBlog::ErrorType,QString,Post*)) );
+                SIGNAL(errorPost(Choqok::Account*,MicroBlog::ErrorType,QString,Choqok::Post*)),
+                SLOT(postError(Choqok::Account*,MicroBlog::ErrorType,QString,Choqok::Post*)) );
     }
 }
 

@@ -47,8 +47,8 @@ ComposerWidget::ComposerWidget(Choqok::Account* account, QWidget* parent /*= 0*/
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->addWidget(d->editor);
     connect( d->editor, SIGNAL(returnPressed(QString)), SLOT(submitPost(QString)));
-    connect(d->currentAccount->microblog(), SIGNAL(postCreated(Account*,Post*)),
-            SLOT(slotPostSubmited(Account*,Post*)) );
+    connect(d->currentAccount->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
+            SLOT(slotPostSubmited(Choqok::Account*,Choqok::Post*)) );
     connect(d->editor, SIGNAL(textChanged()), SLOT(editorTextChanged()));
     connect(d->editor, SIGNAL(cleared()), SLOT(editorCleared()));
     editorTextChanged();
@@ -85,6 +85,7 @@ void ComposerWidget::slotPostSubmited(Choqok::Account* theAccount, Choqok::Post*
         d->editor->clear();
         d->replyToId.clear();
         d->editor->setEnabled(true);
+        currentAccount()->microblog()->updateTimelines(currentAccount());
     }
 }
 

@@ -10,5 +10,20 @@ http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
     <entry name="isSmiliesEnabled" type="Bool">
         <default>true</default>
     </entry>
+    <entry name="isCustomUi" type="Bool">
+        <default>false</default>
+    </entry>
+    <entry name="readBackColor" type="Color">
+        <default>white</default>
+    </entry>
+    <entry name="unreadBackColor" type="Color">
+        <default>yellow</default>
+    </entry>
+    <entry name="readForeColor" type="Color">
+        <default>Black</default>
+    </entry>
+    <entry name="unreadForeColor" type="Color">
+        <default>Black</default>
+    </entry>
 </group>
 </kcfg>

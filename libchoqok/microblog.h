@@ -98,7 +98,7 @@ public:
     * @param account is the Account to edit. If it's 0L, then we create a new account
     * @param parent The parent of the 'to be returned' widget
     */
-    virtual ChoqokEditAccountWidget * createEditAccountWidget( Account *account, QWidget *parent ) = 0;
+    virtual ChoqokEditAccountWidget * createEditAccountWidget( Choqok::Account *account, QWidget *parent ) = 0;
 
     /**
     * @brief Create a MicroBlogWidget for this Account
@@ -110,7 +110,7 @@ public:
     * @param account account to use.
     * @param parent The parent of the 'to be returned' widget
     */
-    virtual UI::MicroBlogWidget * createMicroBlogWidget( Account *account, QWidget *parent ) = 0;
+    virtual UI::MicroBlogWidget * createMicroBlogWidget( Choqok::Account *account, QWidget *parent ) = 0;
 
     /**
     * @brief Create a TimelineWidget to use in MicroBlogWidget
@@ -120,7 +120,7 @@ public:
     * @param account account to use.
     * @param parent The parent of the 'to be returned' widget
     */
-    virtual UI::TimelineWidget * createTimelineWidget( Account *account, const QString &timelineName,
+    virtual UI::TimelineWidget * createTimelineWidget( Choqok::Account *account, const QString &timelineName,
                                                    QWidget *parent ) = 0;
 
     /**
@@ -131,7 +131,8 @@ public:
      * @param account account to use.
      * @param parent The parent of the 'to be returned' widget
      */
-    virtual UI::PostWidget * createPostWidget( Account *account, const Post &post, QWidget *parent ) = 0;
+    virtual UI::PostWidget * createPostWidget( Choqok::Account *account,
+                                               const Choqok::Post &post, QWidget *parent ) = 0;
 
     /**
     @brief Save a specific timeline!
@@ -157,26 +158,26 @@ public slots:
     @see postCreated()
     @see abortCreatePost()
     */
-    virtual void createPost( Account *theAccount, Post *post ) = 0;
+    virtual void createPost( Choqok::Account *theAccount, Choqok::Post *post ) = 0;
 
     /**
     \brief Abort all of createPost requests!
     */
-    virtual void abortAllJobs( Account *theAccount ) = 0;
+    virtual void abortAllJobs( Choqok::Account *theAccount ) = 0;
 
     /**
     \brief Fetch a post
 
     @see postFetched()
     */
-    virtual void fetchPost( Account *theAccount, Post *post ) = 0;
+    virtual void fetchPost( Choqok::Account *theAccount, Choqok::Post *post ) = 0;
 
     /**
     \brief Remove a post
 
     @see postRemoved()
     */
-    virtual void removePost( Account *theAccount, Post *post ) = 0;
+    virtual void removePost( Choqok::Account *theAccount, Choqok::Post *post ) = 0;
 
     /**
     Request to update all timelines of account!
@@ -184,7 +185,7 @@ public slots:
 
     @see timelineDataReceived()
     */
-    virtual void updateTimelines( Account *theAccount ) = 0;
+    virtual void updateTimelines( Choqok::Account *theAccount ) = 0;
 
 //     virtual void aboutToUnload();
 signals:
@@ -192,32 +193,33 @@ signals:
     /**
     Emit when data for a timeline recieved! @p type specifies the type of timeline as specifies in timelineTypes()
     */
-    void timelineDataReceived( Account *theAccount, const QString &timelineName, QList<Choqok::Post*> data );
+    void timelineDataReceived( Choqok::Account *theAccount, const QString &timelineName, QList<Choqok::Post*> data );
 
     /**
     Emit when a post successfully created!
     */
-    void postCreated( Account *theAccount, Post *post );
+    void postCreated( Choqok::Account *theAccount, Choqok::Post *post );
 
     /**
     Emit when a post successfully fetched!
     */
-    void postFetched( Account *theAccount, Post *post );
+    void postFetched( Choqok::Account *theAccount, Choqok::Post *post );
 
     /**
     Emit when a post successfully removed!
     */
-    void postRemoved( Account *theAccount, Post *post );
+    void postRemoved( Choqok::Account *theAccount, Choqok::Post *post );
 
     /**
     Emit when an error occured the @p errorMessage will specify the error.
     */
-    void error( Account *theAccount, MicroBlog::ErrorType error, const QString &errorMessage );
+    void error( Choqok::Account *theAccount, MicroBlog::ErrorType error, const QString &errorMessage );
 
     /**
     Emit when an error occured on Post manipulation. e.g. On Creation!
     */
-    void errorPost( Account *theAccount, MicroBlog::ErrorType error, const QString &errorMessage, Post *post );
+    void errorPost( Choqok::Account *theAccount, MicroBlog::ErrorType error,
+                    const QString &errorMessage, Choqok::Post *post );
 
     /**
     Emit when microblog plugin is going to unload, and @ref Choqok::TimelineWidget should save their timelines
@@ -228,9 +230,9 @@ public:
     /**
     return Url to account page on service (Some kind of blog homepage)
     */
-    virtual QString profileUrl( Account *account, const QString &username) const=0;
+    virtual QString profileUrl( Choqok::Account *account, const QString &username) const=0;
 
-    virtual QString postUrl( Account *account, const QString &username, const QString &postId) const = 0;
+    virtual QString postUrl( Choqok::Account *account, const QString &username, const QString &postId) const = 0;
 
     /**
     * @brief Available capabilities

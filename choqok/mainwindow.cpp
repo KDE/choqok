@@ -51,6 +51,7 @@
 #include <QMenu>
 #include <KXMLGUIFactory>
 #include <choqokuiglobal.h>
+#include <choqokappearancesettings.h>
 
 static const int TIMEOUT = 5000;
 
@@ -317,9 +318,11 @@ void MainWindow::settingsChanged()
         Settings::setConfigDialogSize(w->size());
     }
 
-    if ( Settings::isCustomUi() ) {
-    Choqok::UI::PostWidget::setStyle( Settings::unreadForeColor() , Settings::unreadBackColor(),
-                            Settings::readForeColor() , Settings::readBackColor());
+    if ( Choqok::AppearanceSettings::isCustomUi() ) {
+    Choqok::UI::PostWidget::setStyle( Choqok::AppearanceSettings::unreadForeColor() ,
+                                      Choqok::AppearanceSettings::unreadBackColor(),
+                                      Choqok::AppearanceSettings::readForeColor() ,
+                                      Choqok::AppearanceSettings::readBackColor());
     } else {
     QPalette p = window()->palette();
     Choqok::UI::PostWidget::setStyle( p.color(QPalette::WindowText) , p.color(QPalette::Window).lighter() ,
