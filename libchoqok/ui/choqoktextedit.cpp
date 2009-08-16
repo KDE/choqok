@@ -48,7 +48,7 @@ TextEdit::TextEdit(uint charLimit /*= 0*/, QWidget* parent /*= 0*/)
     connect( this, SIGNAL( textChanged() ), this, SLOT( updateRemainingCharsCount() ) );
     setAcceptRichText( false );
     this->setToolTip( i18n( "<strong>Note:</strong><br/><em>Ctrl+P</em> to have the previous text submitted.<br/>\
-    <em>Ctrl+S</em> to enable/disable Auto spell checker." ) );
+    <em>Ctrl+S</em> to enable/disable auto spell checker." ) );
 
     QFont counterF;
     counterF.setBold( true );

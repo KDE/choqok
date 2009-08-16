@@ -79,7 +79,7 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
     // "Shortening" TAB ===============================================================
     d->mPrfsShorten = new BehaviorConfig_Shorten(d->mBehaviorTabCtl);
     addConfig( Choqok::BehaviorSettings::self(), d->mPrfsShorten );
-    d->mBehaviorTabCtl->addTab(d->mPrfsShorten, i18n("&Shortening"));
+    d->mBehaviorTabCtl->addTab(d->mPrfsShorten, i18n("URL &Shortening"));
 
     load();
 
