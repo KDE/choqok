@@ -32,6 +32,7 @@
 #include <klocalizedstring.h>
 #include <kcombobox.h>
 #include <QHBoxLayout>
+#include <notifymanager.h>
 
 using namespace Choqok::UI;
 using namespace Choqok;
@@ -115,7 +116,7 @@ void QuickPost::slotSubmitPost( Account* theAccount, Post* post )
         d->txtPost->setEnabled(true);
         d->txtPost->clear();
         emit newPostSubmitted(Success);
-        //TODO Notify
+        NotifyManager::success(i18n("New post submitted successfully"));
         delete d->submittedPost;
         d->submittedPost = 0L;
 //         d->replyToId.clear();

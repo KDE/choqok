@@ -26,6 +26,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <microblog.h>
 #include <QHBoxLayout>
 #include <KDebug>
+#include <notifymanager.h>
 
 namespace Choqok {
 namespace UI {
@@ -79,9 +80,9 @@ void ComposerWidget::submitPost( const QString &text )
 
 void ComposerWidget::slotPostSubmited(Choqok::Account* theAccount, Choqok::Post* post)
 {
-    kDebug();
     if( currentAccount() == theAccount && post->content == d->editor->toPlainText() ) {
         kDebug()<<"Accepted";
+        NotifyManager::success(i18n("New post submitted successfully"));
         d->editor->clear();
         d->replyToId.clear();
         d->editor->setEnabled(true);

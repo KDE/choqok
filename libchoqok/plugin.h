@@ -31,25 +31,32 @@
 
 class KPluginInfo;
 
+/**
+* Current Choqok plugin interface version. Interfaces declare plugin version
+* to make sure old source (or binary) incompatible plugins are not loaded.
+* Increase this if it is necessary that old plugins stop working.
+*/
+#define CHOQOK_PLUGIN_VERSION 1
+
 namespace Choqok
 {
 
 /**
-* @brief Base class for all plugins or protocols.
+* @brief Base class for all plugins or microblogs.
 *
 * To create a plugin, you need to create a .desktop file which looks like that:
 * \verbatim
 [Desktop Entry]
 Encoding=UTF-8
 Type=Service
-X-Choqok-Version=1000900
+X-Choqok-Version=1
 Icon=icon
 ServiceTypes=Choqok/Plugin
 X-KDE-Library=choqok_myplugin
 X-KDE-PluginInfo-Author=Your Name
 X-KDE-PluginInfo-Email=your@mail.com
 X-KDE-PluginInfo-Name=choqok_myplugin
-X-KDE-PluginInfo-Version=0.0.1
+X-KDE-PluginInfo-Version=0.1
 X-KDE-PluginInfo-Website=http://yoursite.com
 X-KDE-PluginInfo-Category=Plugins
 X-KDE-PluginInfo-Depends=

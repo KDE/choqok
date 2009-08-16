@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Type=Service
-X-Choqok-Version=2305
+X-Choqok-Version=1
 Icon=choqok
 ServiceTypes=Choqok/Plugin
 X-KDE-Library=choqok_tighturl

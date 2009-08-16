@@ -24,7 +24,6 @@
 
 #include "mainwindow.h"
 #include "choqokbehaviorsettings.h"
-#include "choqokversion.h"
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
@@ -35,9 +34,11 @@ static const char description[] =
 Currently supports <a href='http://twitter.com'>Twitter.com</a> and \
 <a href='http://identi.ca'>Identi.ca</a>" );
 
+static const char version[] = "1.0 Alpha1 (0.9.1)";
+
 int main( int argc, char **argv )
 {
-    KAboutData about( "choqok", 0, ki18n( "Choqok" ), CHOQOK_VERSION_STRING, ki18n( description ),
+    KAboutData about( "choqok", 0, ki18n( "Choqok" ), version, ki18n( description ),
                       KAboutData::License_GPL_V3, ki18n( "(C) 2008-2009 Mehrdad Momeny" ),
                       KLocalizedString(), 0  );
     about.addAuthor( ki18n( "Mehrdad Momeny" ), ki18n( "Author and Core Developer" ),
@@ -53,7 +54,7 @@ int main( int argc, char **argv )
 //     options.add("+[URL]", ki18n( "Document to open" ));
 //     KCmdLineArgs::addCmdLineOptions(options);
     KApplication app;
-    qDebug()<<"Choqok "<<CHOQOK_VERSION_STRING<<"\n"<<CHOQOK_VERSION;
+    qDebug()<<"Choqok "<<version;
     app.setQuitOnLastWindowClosed( false );
 
     MainWindow *m_mainWindow = new MainWindow;

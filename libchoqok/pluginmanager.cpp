@@ -36,7 +36,6 @@
 #include <kstandarddirs.h>
 #include <kurl.h>
 #include <kservicetypetrader.h>
-#include "choqokversion.h"
 #include "plugin.h"
 #include "accountmanager.h"
 
@@ -49,8 +48,7 @@ public:
     PluginManagerPrivate() : shutdownMode( StartingUp ), isAllPluginsLoaded(false)
     {
         plugins = KPluginInfo::fromServices( KServiceTypeTrader::self()->query( QLatin1String( "Choqok/Plugin" ),
-                                            QLatin1String( "[X-Choqok-Version] == " +
-                                            QString::number(CHOQOK_VERSION).toLatin1() ) ) );
+                                            QString("[X-Choqok-Version] == %1").arg(CHOQOK_PLUGIN_VERSION) ) );
     }
 
     ~PluginManagerPrivate()
