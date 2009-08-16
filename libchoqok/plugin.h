@@ -118,6 +118,12 @@ public:
     QString pluginId() const;
 
     /**
+    * @brief Returns the pluginName
+    * This is a convenience method that simply calls @ref pluginInfo()->pluginName().
+    */
+    QString pluginName() const;
+
+    /**
     * @brief Prepare for unloading a plugin
     *
     * When unloading a plugin the plugin manager first calls aboutToUnload()

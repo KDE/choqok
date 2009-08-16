@@ -81,6 +81,8 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
     addConfig( Choqok::BehaviorSettings::self(), d->mPrfsShorten );
     d->mBehaviorTabCtl->addTab(d->mPrfsShorten, i18n("URL &Shortening"));
 
+    connect(d->mPrfsShorten, SIGNAL(changed(bool)), this, SIGNAL(changed(bool)) );
+    
     load();
 
 }
@@ -95,7 +97,7 @@ void BehaviorConfig::save()
    kDebug();
 
     KCModule::save();
-
+    d->mPrfsShorten->save();
 //     Choqok::BehaviorSettings::self()->writeConfig();
 
     load();
@@ -104,6 +106,7 @@ void BehaviorConfig::save()
 void BehaviorConfig::load()
 {
     KCModule::load();
+    d->mPrfsShorten->load();
 }
 
 #include "behaviorconfig.moc"

@@ -28,7 +28,6 @@
 #include <ksharedconfig.h>
 #include "passwordmanager.h"
 #include <KDebug>
-#include <KPluginInfo>
 
 namespace Choqok
 {
@@ -77,7 +76,7 @@ void Account::writeConfig()
     d->configGroup->writeEntry( "Username", d->username );
     d->configGroup->writeEntry( "Priority", d->priority );
     d->configGroup->writeEntry( "ReadOnly", d->readonly );
-    d->configGroup->writeEntry( "MicroBlog", microblog()->pluginInfo().pluginName() );
+    d->configGroup->writeEntry( "MicroBlog", microblog()->pluginName() );
     PasswordManager::self()->writePassword( d->alias, password() );
     d->configGroup->sync();
 }

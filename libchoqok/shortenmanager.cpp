@@ -44,11 +44,16 @@ public:
     }
     void reloadConfig()
     {
-        if(backend){
-            backend->deleteLater();
-            backend = 0;
-        }
         const QString pluginId = KGlobal::config()->group("Advanced").readEntry("ShortenPlugin", QString());
+        if(backend){
+            if(backend->pluginName() == pluginId) {
+                return;//Already loaded
+            }else{
+                kDebug()<<backend->pluginName();
+                PluginManager::self()->unloadPlugin(backend->pluginName());
+                backend = 0L;
+            }
+        }
         if(pluginId.isEmpty())
             return;
         Plugin *plugin = PluginManager::self()->loadPlugin(pluginId);
@@ -76,8 +81,8 @@ ShortenManager *ShortenManager::self()
 
 QString ShortenManager::shortenUrl(const QString &url)
 {
-    kDebug()<<url;
     if(_smp->backend){
+        kDebug()<<"Shortening: "<<url;
         NotifyManager::shortening(url);
         return _smp->backend->shorten(url);
     } else {

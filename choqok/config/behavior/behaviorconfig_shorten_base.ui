@@ -34,13 +34,7 @@
       </widget>
      </item>
      <item>
-      <widget class="KComboBox" name="kcfg_plugins">
-       <item>
-        <property name="text">
-         <string>None</string>
-        </property>
-       </item>
-      </widget>
+      <widget class="KComboBox" name="kcfg_plugins"/>
      </item>
     </layout>
    </item>

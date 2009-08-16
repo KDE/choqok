@@ -56,6 +56,11 @@ QString Plugin::displayName() const
     return pluginInfo().isValid() ? pluginInfo().name() : QString();
 }
 
+QString Plugin::pluginName() const
+{
+    return pluginInfo().isValid() ? pluginInfo().pluginName() : QString();
+}
+
 QString Plugin::pluginIcon() const
 {
     return pluginInfo().isValid() ? pluginInfo().icon() : QString();

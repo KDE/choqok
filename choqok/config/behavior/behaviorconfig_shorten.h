@@ -35,6 +35,11 @@ class BehaviorConfig_Shorten: public QWidget, public Ui::BehaviorConfig_ShortenB
 public:
     BehaviorConfig_Shorten( QWidget *parent = 0 );
     ~BehaviorConfig_Shorten();
+    void load();
+    void save();
+
+signals:
+    void changed(bool isChanged);
 
 private slots:
     void currentPluginChanged( int index );

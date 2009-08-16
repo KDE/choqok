@@ -34,38 +34,54 @@ BehaviorConfig_Shorten::BehaviorConfig_Shorten( QWidget *parent )
 {
     kDebug();
     setupUi(this);
+    Choqok::ShortenManager::self();
+    connect(kcfg_plugins, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
+}
+
+BehaviorConfig_Shorten::~BehaviorConfig_Shorten()
+{
+    kDebug();
+}
+
+void BehaviorConfig_Shorten::currentPluginChanged( int index )
+{
+    if( kcfg_plugins->itemData(index).toString() == prevShortener)
+        emit changed(false);
+    else
+        emit changed(true);
+//     if(currentShortener){
+//         layout()->removeWidget(currentShortener->configWidget());
+// //         currentShortener->deleteLater();
+// //         currentShortener = 0;
+//     }
+//     currentShortener = qobject_cast<Choqok::Shortener*>(Choqok::PluginManager::self()->loadPlugin(
+//                                                             kcfg_plugins->itemData(index).toString() ) );
+//     if(currentShortener && currentShortener->configWidget())
+//         layout()->addWidget(currentShortener->configWidget());
+}
+
+void BehaviorConfig_Shorten::load()
+{
     availablePlugins = Choqok::PluginManager::self()->availablePlugins("Shorteners");
+    kcfg_plugins->clear();
+    kcfg_plugins->addItem( i18n("None") );
     foreach(const KPluginInfo& plugin, availablePlugins){
         kcfg_plugins->addItem( KIcon(plugin.icon()), plugin.name(), plugin.pluginName());
     }
     prevShortener = KGlobal::config()->group("Advanced").readEntry("ShortenPlugin", QString());
     if(!prevShortener.isEmpty()) {
         kcfg_plugins->setCurrentIndex(kcfg_plugins->findData(prevShortener));
-//         currentPluginChanged(kcfg_plugins->currentIndex());
+        //         currentPluginChanged(kcfg_plugins->currentIndex());
     }
-//     connect(kcfg_plugins, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
 }
 
-BehaviorConfig_Shorten::~BehaviorConfig_Shorten()
+void BehaviorConfig_Shorten::save()
 {
-    kDebug();
     const QString shorten = kcfg_plugins->itemData(kcfg_plugins->currentIndex()).toString();
     KGlobal::config()->group("Advanced").writeEntry("ShortenPlugin", shorten);
-    if( prevShortener != shorten )
+    if( prevShortener != shorten ) {
+        kDebug()<<prevShortener<<" -> "<<shorten;
         Choqok::ShortenManager::self()->reloadConfig();
-}
-
-void BehaviorConfig_Shorten::currentPluginChanged( int index )
-{
-    kDebug();
-    if(currentShortener){
-        layout()->removeWidget(currentShortener->configWidget());
-//         currentShortener->deleteLater();
-//         currentShortener = 0;
     }
-    currentShortener = qobject_cast<Choqok::Shortener*>(Choqok::PluginManager::self()->loadPlugin(
-                                                            kcfg_plugins->itemData(index).toString() ) );
-    if(currentShortener && currentShortener->configWidget())
-        layout()->addWidget(currentShortener->configWidget());
 }
 

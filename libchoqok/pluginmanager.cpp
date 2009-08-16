@@ -409,6 +409,7 @@ bool PluginManager::unloadPlugin( const QString &spec )
     //kDebug(14010) << spec;
     if( Plugin *thePlugin = plugin( spec ) )
     {
+        kDebug()<<"Unloading "<<spec;
         thePlugin->aboutToUnload();
         return true;
     }
