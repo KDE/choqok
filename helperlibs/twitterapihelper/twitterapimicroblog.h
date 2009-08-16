@@ -86,7 +86,6 @@ public slots:
 signals:
     void favoriteCreated(Choqok::Account *theAccount, const QString &postId);
     void favoriteRemoved(Choqok::Account *theAccount, const QString &postId);
-//     void errorPost( const QString &errorString, const Choqok::Post &post );
 
 protected slots:
     virtual void requestTimeLine(Choqok::Account *theAccount, QString type, QString latestStatusId, int page = 0, QString maxId = 0 );

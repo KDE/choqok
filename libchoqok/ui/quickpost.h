@@ -65,8 +65,8 @@ protected slots:
     void addAccount( Choqok::Account* account );
     void removeAccount( const QString &alias );
     virtual void slotSubmitPost( Choqok::Account *theAccount, Choqok::Post *post );
-    void postError( Choqok::Account *theAccount, MicroBlog::ErrorType error,
-                    const QString &errorMessage, Choqok::Post* post);
+    void postError( Choqok::Account *theAccount, Choqok::Post* post,
+                    MicroBlog::ErrorType error, const QString &errorMessage);
 
 private:
     void setupUi();

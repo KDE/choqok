@@ -22,13 +22,16 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 
 #include "microblogwidget.h"
-#include "microblog.h"
 #include "account.h"
 #include <KDebug>
 #include "timelinewidget.h"
 #include <ktabwidget.h>
 #include "composerwidget.h"
 #include <QVBoxLayout>
+#include <notifymanager.h>
+#include <KMessageBox>
+#include <choqokuiglobal.h>
+#include <kstatusbar.h>
 
 namespace Choqok {
 namespace UI {
@@ -37,8 +40,9 @@ class MicroBlogWidget::Private
 {
 public:
     Private(Account *acc)
-    :account(acc), blog(acc->microblog()), composer(0)
-    {}
+    : account(acc), blog(acc->microblog()), composer(0)
+    {
+    }
     Account *account;
     MicroBlog *blog;
     ComposerWidget *composer;
@@ -56,6 +60,12 @@ MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent, Qt::WindowF
     connect(d->blog, SIGNAL(timelineDataReceived(Choqok::Account*,QString,QList<Choqok::Post*>)),
             this, SLOT(newTimelineDataRecieved(Choqok::Account*,QString,QList<Choqok::Post*>)) );
     initTimelines();
+    connect(d->blog, SIGNAL(error(Choqok::Account*,MicroBlog::ErrorType,QString, MicroBlog::ErrorLevel)),
+            this, SLOT(error(Choqok::Account*,MicroBlog::ErrorType,QString, MicroBlog::ErrorLevel)));
+    connect(d->blog, SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,
+                                    MicroBlog::ErrorType,QString,  MicroBlog::ErrorLevel)),
+            this, SLOT(errorPost(Choqok::Account*,Choqok::Post*,MicroBlog::ErrorType,
+                                    QString, MicroBlog::ErrorLevel)));
 }
 
 Account * MicroBlogWidget::currentAccount() const
@@ -217,6 +227,43 @@ KTabWidget* MicroBlogWidget::timelinesTabWidget()
 QMap< TimelineWidget*, int > MicroBlogWidget::timelineUnreadCount()
 {
     return d->timelineUnreadCount;
+}
+
+void MicroBlogWidget::error(Choqok::Account* theAccount, MicroBlog::ErrorType errorType,
+           QString errorMsg, MicroBlog::ErrorLevel level)
+{
+    if(theAccount == d->account){
+        switch(level){
+        case MicroBlog::Critical:
+            KMessageBox::error( Choqok::UI::Global::mainWindow(), errorMsg, MicroBlog::errorString(errorType) );
+            break;
+        case MicroBlog::Normal:
+            NotifyManager::error( errorMsg, MicroBlog::errorString(errorType) );
+            break;
+        default:
+            if( Choqok::UI::Global::mainWindow()->statusBar() )
+                Choqok::UI::Global::mainWindow()->statusBar()->showMessage(errorMsg, 5000);
+            break;
+        };
+    }
+}
+void MicroBlogWidget::errorPost(Choqok::Account* theAccount, Choqok::Post*, MicroBlog::ErrorType errorType,
+            QString errorMsg, MicroBlog::ErrorLevel level)
+{
+    if(theAccount == d->account){
+        switch(level){
+        case MicroBlog::Critical:
+            KMessageBox::error( Choqok::UI::Global::mainWindow(), errorMsg, MicroBlog::errorString(errorType) );
+            break;
+        case MicroBlog::Normal:
+            NotifyManager::error( errorMsg, MicroBlog::errorString(errorType) );
+            break;
+        default:
+            if( Choqok::UI::Global::mainWindow()->statusBar() )
+                Choqok::UI::Global::mainWindow()->statusBar()->showMessage(errorMsg, 5000);
+            break;
+        };
+    }
 }
 
 }

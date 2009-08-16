@@ -32,6 +32,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "quickpost.h"
 #include <KProcess>
 #include <KToolInvocation>
+#include <KMessageBox>
 
 static const int _15SECS = 15000;
 static const int _MINUTE = 60000;
@@ -325,12 +326,14 @@ QString PostWidget::formatDateTime( const QDateTime& time )
 
 void PostWidget::removeCurrentPost()
 {
-    connect(mCurrentAccount->microblog(), SIGNAL(postRemoved(Account*,Post*)),
-            SLOT(slotCurrentPostRemoved(Account*,Post*)) );
-    connect( mCurrentAccount->microblog(),
-             SIGNAL(errorPost(Account*,Choqok::MicroBlog::ErrorType,QString,const Post*)),
-             this, SLOT(slotPostError(Account*,Choqok::MicroBlog::ErrorType,QString,const Post*)) );
-    mCurrentAccount->microblog()->removePost(mCurrentAccount, &mCurrentPost);
+    if ( KMessageBox::warningYesNo( this, i18n( "Are you sure to remove this post from server?" ) ) == KMessageBox::Yes ) {
+        connect(mCurrentAccount->microblog(), SIGNAL(postRemoved(Choqok::Account*,Choqok::Post*)),
+                SLOT(slotCurrentPostRemoved(Choqok::Account*,Choqok::Post*)) );
+        connect( mCurrentAccount->microblog(),
+                SIGNAL(errorPost(Choqok::Account*, Choqok::Post*,Choqok::MicroBlog::ErrorType,QString)),
+                this, SLOT(slotPostError(Choqok::Account*, Choqok::Post*,Choqok::MicroBlog::ErrorType,QString)) );
+        mCurrentAccount->microblog()->removePost(mCurrentAccount, &mCurrentPost);
+    }
 }
 
 void PostWidget::slotCurrentPostRemoved( Account* theAccount, Post* post )
@@ -393,12 +396,16 @@ QList< KPushButton* >& PostWidget::buttons()
     return mUiButtons;
 }
 
-void PostWidget::slotPostError(Account* theAccount, MicroBlog::ErrorType error,
-                               const QString& errorMessage, const Choqok::Post* post)
+void PostWidget::slotPostError(Account* theAccount, Choqok::Post* post,
+                               MicroBlog::ErrorType , const QString& errorMessage)
 {
     if( theAccount == currentAccount() && post == &mCurrentPost) {
         kError()<<errorMessage;
-        //TODO Manage all errors in MicroBlogWidget and show notify for them.
+        disconnect(mCurrentAccount->microblog(), SIGNAL(postRemoved(Choqok::Account*,Choqok::Post*)),
+                  this, SLOT(slotCurrentPostRemoved(Choqok::Account*,Choqok::Post*)) );
+        disconnect( mCurrentAccount->microblog(),
+                    SIGNAL(errorPost(Account*,Post*,Choqok::MicroBlog::ErrorType,QString)),
+                    this, SLOT(slotPostError(Account*,Post*,Choqok::MicroBlog::ErrorType,QString)) );
     }
 }
 

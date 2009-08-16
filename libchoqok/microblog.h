@@ -78,6 +78,18 @@ public:
     };
 
     /**
+    Enumeration for levels of errors.
+    This could use for user feedback!
+    For @ref Critical errors will show a messagebox,
+    For @ref Normal will show a knotify.
+    For @ref Low just show a message in statusBar
+    */
+    enum ErrorLevel {
+        Low = 0,
+        Normal,
+        Critical
+    };
+    /**
     * @brief Create an empty Account
     *
     * This method is called during the loading of the config file.
@@ -213,13 +225,15 @@ signals:
     /**
     Emit when an error occured the @p errorMessage will specify the error.
     */
-    void error( Choqok::Account *theAccount, MicroBlog::ErrorType error, const QString &errorMessage );
+    void error( Choqok::Account *theAccount, MicroBlog::ErrorType error,
+                const QString &errorMessage, MicroBlog::ErrorLevel level = Normal );
 
     /**
     Emit when an error occured on Post manipulation. e.g. On Creation!
     */
-    void errorPost( Choqok::Account *theAccount, MicroBlog::ErrorType error,
-                    const QString &errorMessage, Choqok::Post *post );
+    void errorPost( Choqok::Account *theAccount, Choqok::Post *post,
+                    MicroBlog::ErrorType error, const QString &errorMessage,
+                    MicroBlog::ErrorLevel level = Normal );
 
     /**
     Emit when microblog plugin is going to unload, and @ref Choqok::TimelineWidget should save their timelines

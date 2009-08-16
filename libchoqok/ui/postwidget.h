@@ -108,10 +108,10 @@ protected slots:
     /**
     Internal slot to remove/close/destroy this post after bing deleted
     */
-    void slotCurrentPostRemoved( Account *theAccount, Post *post );
+    void slotCurrentPostRemoved( Choqok::Account *theAccount, Choqok::Post *post );
 
-    virtual void slotPostError( Account *theAccount, Choqok::MicroBlog::ErrorType error,
-                                const QString &errorMessage, const Post *post);
+    virtual void slotPostError( Choqok::Account *theAccount, Choqok::Post *post,
+                                Choqok::MicroBlog::ErrorType error, const QString &errorMessage);
 
     void avatarFetchError( const QString &remoteUrl, const QString &errMsg );
     void avatarFetched( const QString &remoteUrl, const QPixmap &pixmap );

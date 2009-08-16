@@ -28,6 +28,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "choqok_export.h"
 #include <choqoktypes.h>
 #include <QMap>
+#include "microblog.h"
 
 class KTabWidget;
 
@@ -80,7 +81,10 @@ protected slots:
                                           QList< Choqok::Post* > data );
     void slotUpdateUnreadCount( int change );
     void slotMarkAllAsRead();
-
+    void error(Choqok::Account* theAccount, MicroBlog::ErrorType errorType,
+                                QString errorMsg, MicroBlog::ErrorLevel level);
+    void errorPost(Choqok::Account* theAccount, Choqok::Post*, MicroBlog::ErrorType errorType,
+                                    QString errorMsg, MicroBlog::ErrorLevel level);
 signals:
     /**
     @brief Emit to tell MainWindow to show this MicroBlog

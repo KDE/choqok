@@ -122,8 +122,8 @@ void QuickPost::slotSubmitPost( Account* theAccount, Post* post )
     }
 }
 
-void QuickPost::postError(Account* theAccount, MicroBlog::ErrorType error,
-                          const QString& errorMessage, Choqok::Post* post)
+void QuickPost::postError(Account* theAccount, Choqok::Post* post,
+                          MicroBlog::ErrorType error, const QString& errorMessage)
 {
     if (post == d->submittedPost) {
         d->txtPost->setEnabled(true);
@@ -177,8 +177,8 @@ void QuickPost::loadAccounts()
         connect(current->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
                 SLOT(slotSubmitPost(Choqok::Account*,Choqok::Post*)) );
         connect(current->microblog(),
-                SIGNAL(errorPost(Choqok::Account*,MicroBlog::ErrorType,QString,Choqok::Post*)),
-                SLOT(postError(Choqok::Account*,MicroBlog::ErrorType,QString,Choqok::Post*)) );
+                SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,MicroBlog::ErrorType,QString)),
+                SLOT(postError(Choqok::Account*,Choqok::Post*,MicroBlog::ErrorType,QString)) );
     }
 }
 

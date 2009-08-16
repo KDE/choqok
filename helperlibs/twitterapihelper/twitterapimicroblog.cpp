@@ -201,7 +201,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
         if ( !job ) {
             kError() << "Cannot create a http POST request!";
             QString errMsg = i18n ( "Cannot create an http POST request." );
-            emit errorPost ( theAccount, Choqok::MicroBlog::OtherError, errMsg, post );
+            emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
         }
         job->addMetaData ( "content-type", "Content-Type: application/x-www-form-urlencoded" );
@@ -221,7 +221,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
         if ( !job ) {
             kError() << "Cannot create an http POST request!";
             QString errMsg = i18n ( "Cannot create an http POST request." );
-            emit errorPost ( theAccount, Choqok::MicroBlog::OtherError, errMsg, post );
+            emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
         }
         job->addMetaData ( "content-type", "Content-Type: application/x-www-form-urlencoded" );
@@ -247,15 +247,16 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
     }
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit errorPost ( theAccount, Choqok::MicroBlog::CommunicationError, job->errorString(), post );
+        emit errorPost ( theAccount, post, Choqok::MicroBlog::CommunicationError,
+                         job->errorString(), MicroBlog::Critical );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast< KIO::StoredTransferJob * > ( job );
         if ( !post->isPrivate ) {
             readPostFromXml ( theAccount, stj->data(), post );
             if ( post->isError ) {
                 kDebug() << "XML parsing error" ;
-                emit errorPost ( theAccount, Choqok::MicroBlog::ParsingError,
-                                 i18n ( "Error: Could not parse result data." ), post );
+                emit errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
+                                 i18n ( "Error: Could not parse result data." ), MicroBlog::Critical );
             } else {
                 emit postCreated ( theAccount, post );
             }
@@ -285,7 +286,7 @@ void TwitterApiMicroBlog::fetchPost ( Choqok::Account* theAccount, Choqok::Post*
     if ( !job ) {
         kDebug() << "Cannot create a http GET request!";
         QString errMsg = i18n ( "Cannot create an http GET request." );
-        emit errorPost ( theAccount, Choqok::MicroBlog::OtherError, errMsg, post );
+        emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, Low );
         return;
     }
     mFetchPostMap[ job ] = post;
@@ -305,14 +306,14 @@ void TwitterApiMicroBlog::slotFetchPost ( KJob *job )
     Choqok::Account *theAccount = mAccountJobs.take(job);
     if ( job->error() ) {
         kError() << "Job Error: " << job->errorString();
-        emit error ( theAccount, Choqok::MicroBlog::CommunicationError, job->errorString() );
+        emit error ( theAccount, Choqok::MicroBlog::CommunicationError, job->errorString(), Low );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
         readPostFromXml ( theAccount, stj->data(), post );
         if ( post->isError ) {
             kError() << "Parsing Error";
-            emit errorPost ( theAccount, Choqok::MicroBlog::ParsingError,
-                             i18n ( "Error: Could not parse result data." ), post );
+            emit errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
+                             i18n ( "Error: Could not parse result data." ), Low );
         } else {
             post->isError = true;
             emit postFetched ( theAccount, post );
@@ -335,7 +336,7 @@ void TwitterApiMicroBlog::removePost ( Choqok::Account* theAccount, Choqok::Post
         if ( !job ) {
             kDebug() << "Cannot create a http POST request!";
             QString errMsg = i18n ( "Cannot create an http POST request." );
-            emit errorPost ( theAccount, Choqok::MicroBlog::OtherError, errMsg, post );
+            emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
         }
         mRemovePostMap[job] = post;
@@ -356,7 +357,7 @@ void TwitterApiMicroBlog::slotRemovePost ( KJob *job )
     Choqok::Account *theAccount = mAccountJobs.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit errorPost ( theAccount, CommunicationError, job->errorString(), post );
+        emit errorPost ( theAccount, post, CommunicationError, job->errorString(), MicroBlog::Critical );
     } else {
         emit postRemoved ( theAccount, post );
     }
@@ -462,7 +463,7 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
     if ( !job ) {
         kDebug() << "Cannot create a http GET request!";
         QString errMsg = i18n ( "Cannot create an http GET request." );
-        emit error ( theAccount, OtherError, errMsg );
+        emit error ( theAccount, OtherError, errMsg, Low );
         return;
     }
     mRequestTimelineMap[job] = type;
@@ -481,7 +482,7 @@ void TwitterApiMicroBlog::slotRequestTimeline ( KJob *job )
     Choqok::Account *theAccount = mAccountJobs.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit error( theAccount, CommunicationError, job->errorString() );
+        emit error( theAccount, CommunicationError, job->errorString(), Low );
         return;
     }
     QString type = mRequestTimelineMap.take(job);

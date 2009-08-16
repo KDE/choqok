@@ -28,6 +28,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <ksharedconfig.h>
 #include <kconfiggroup.h>
 #include <KDebug>
+#include "notifymanager.h"
 
 namespace Choqok{
 
@@ -77,9 +78,10 @@ QString ShortenManager::shortenUrl(const QString &url)
 {
     kDebug()<<url;
     if(_smp->backend){
+        NotifyManager::shortening(url);
         return _smp->backend->shorten(url);
     } else {
-        kDebug()<<"There isn't any Shortener plugin.";
+        kError()<<"There isn't any Shortener plugin.";
         return url;
     }
 }

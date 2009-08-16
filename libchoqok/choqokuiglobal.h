@@ -25,7 +25,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef CHOQOKUIGLOBAL_H
 #define CHOQOKUIGLOBAL_H
 
-#include <QtGui/QWidget>
+#include <KMainWindow>
 
 #include "choqok_export.h"
 
@@ -45,12 +45,12 @@ class QuickPost;
         /**
         * Set the main widget to widget
         */
-        CHOQOK_EXPORT void setMainWindow( QWidget *widget );
+        CHOQOK_EXPORT void setMainWindow( KMainWindow *window );
         /**
         * Returns the main widget - this is the widget that message boxes
         * and KNotify stuff should use as a parent.
         */
-        CHOQOK_EXPORT QWidget *mainWindow();
+        CHOQOK_EXPORT KMainWindow *mainWindow();
 
         CHOQOK_EXPORT void setQuickPostWidget( QuickPost *quickPost );
 
