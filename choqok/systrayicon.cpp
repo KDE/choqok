@@ -22,7 +22,6 @@
 
 */
 #include "systrayicon.h"
-#include "settings.h"
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <KDE/KLocale>
@@ -32,9 +31,8 @@
 #include "accountmanager.h"
 #include <kglobalsettings.h>
 #include <mediamanager.h>
-
-// #include <qcoreevent.h>
 #include <QWheelEvent>
+#include <KDebug>
 
 SysTrayIcon::SysTrayIcon( QWidget* parent ): KSystemTrayIcon( parent )
 {

@@ -22,14 +22,14 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 */
 
-#include "advancedconfig.h"
+#include "behaviorconfig_shorten.h"
 #include <pluginmanager.h>
 #include <kplugininfo.h>
 #include <KDebug>
 #include <qlayout.h>
 #include <shortenmanager.h>
 
-AdvancedConfig::AdvancedConfig( QWidget *parent )
+BehaviorConfig_Shorten::BehaviorConfig_Shorten( QWidget *parent )
     :QWidget(parent),currentShortener(0)
 {
     kDebug();
@@ -46,7 +46,7 @@ AdvancedConfig::AdvancedConfig( QWidget *parent )
 //     connect(kcfg_plugins, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
 }
 
-AdvancedConfig::~AdvancedConfig()
+BehaviorConfig_Shorten::~BehaviorConfig_Shorten()
 {
     kDebug();
     const QString shorten = kcfg_plugins->itemData(kcfg_plugins->currentIndex()).toString();
@@ -55,17 +55,17 @@ AdvancedConfig::~AdvancedConfig()
         Choqok::ShortenManager::self()->reloadConfig();
 }
 
-void AdvancedConfig::currentPluginChanged( int index )
+void BehaviorConfig_Shorten::currentPluginChanged( int index )
 {
     kDebug();
     if(currentShortener){
-        tabShortening->layout()->removeWidget(currentShortener->configWidget());
+        layout()->removeWidget(currentShortener->configWidget());
 //         currentShortener->deleteLater();
 //         currentShortener = 0;
     }
     currentShortener = qobject_cast<Choqok::Shortener*>(Choqok::PluginManager::self()->loadPlugin(
                                                             kcfg_plugins->itemData(index).toString() ) );
     if(currentShortener && currentShortener->configWidget())
-        tabShortening->layout()->addWidget(currentShortener->configWidget());
+        layout()->addWidget(currentShortener->configWidget());
 }
 

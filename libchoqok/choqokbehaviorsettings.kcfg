@@ -7,6 +7,24 @@
     <kcfgfile name="choqokrc"/>
 
     <group name="Behavior">
+        <entry name="notifyEnabled" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showAllNotifiesInOne" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="updateInterval" type="Int">
+            <default>10</default>
+        </entry>
+        <entry name="notifyInterval" type="Int">
+            <default>10</default>
+        </entry>
+        <entry name="showMainWinOnStart" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="position" type="Point">
+            <default>QPoint(-1,-1)</default>
+        </entry>
         <entry name="UseKWallet" type="Bool">
             <default>true</default>
         </entry>
@@ -14,6 +32,7 @@
             <default>false</default>
         </entry>
         <entry name="customBrowser" type="String" />
+
         <entry name="shortenOnPaste" type="Bool">
             <default>false</default>
         </entry>

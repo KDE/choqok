@@ -1,0 +1,14 @@
+[Desktop Entry]
+Icon=preferences-desktop-theme
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=kcm_choqok_appearanceconfig
+X-KDE-FactoryName=kcm_choqok_appearanceconfig
+X-KDE-ParentApp=choqok
+X-KDE-ParentComponents=choqok
+
+Name=Appearance
+Comment=Personalize Choqok Look and Feel
+
+

@@ -23,10 +23,6 @@
 */
 
 #include "mainwindow.h"
-#include "ui_prefs_base.h"
-#include "ui_appears_base.h"
-#include "settings.h"
-#include "accountswidget.h"
 #include "accountmanager.h"
 // #include "searchwindow.h"
 #include "systrayicon.h"
@@ -41,7 +37,6 @@
 #include <KDE/KLocale>
 #include <KMessageBox>
 #include <QTimer>
-#include "advancedconfig.h"
 #include <postwidget.h>
 #include <microblogwidget.h>
 #include <pluginmanager.h>
@@ -52,11 +47,14 @@
 #include <KXMLGUIFactory>
 #include <choqokuiglobal.h>
 #include <choqokappearancesettings.h>
+// #include <knotifyconfigwidget.h>
+#include <ksettings/dialog.h>
+#include <choqokbehaviorsettings.h>
 
 static const int TIMEOUT = 5000;
 
 MainWindow::MainWindow()
-    : KXmlGuiWindow(), quickWidget(0)
+    : KXmlGuiWindow(), quickWidget(0), s_settingsDialog(0)
 {
     kDebug();
     setAttribute ( Qt::WA_DeleteOnClose, false );
@@ -73,8 +71,8 @@ MainWindow::MainWindow()
     statusBar()->show();
     setupGUI();
 
-    if ( Settings::updateInterval() > 0 )
-        mPrevUpdateInterval = Settings::updateInterval();
+    if ( Choqok::BehaviorSettings::updateInterval() > 0 )
+        mPrevUpdateInterval = Choqok::BehaviorSettings::updateInterval();
     else
         mPrevUpdateInterval = 10;
 
@@ -90,7 +88,7 @@ MainWindow::MainWindow()
     settingsChanged();
     Choqok::AccountManager::self()->loadAllAccounts();
 
-    QPoint pos = Settings::position();
+    QPoint pos = Choqok::BehaviorSettings::position();
     if(pos.x() != -1 && pos.y() != -1) {
         move(pos);
     }
@@ -158,7 +156,8 @@ void MainWindow::nextTab(const QWheelEvent & event)
 void MainWindow::setupActions()
 {
     KStandardAction::quit( this, SLOT( slotQuit() ), actionCollection() );
-    KAction *prefs = KStandardAction::preferences( this, SLOT( optionsPreferences() ), actionCollection() );
+    KAction *prefs = KStandardAction::preferences( this, SLOT( slotConfigChoqok() ), actionCollection() );
+//     KStandardAction::configureNotifications ( this, SLOT ( slotConfNotifications() ), actionCollection() );
 
     KAction *actUpdate = new KAction( KIcon( "view-refresh" ), i18n( "Update Timelines" ), this );
     actionCollection()->addAction( QLatin1String( "update_timeline" ), actUpdate );
@@ -205,7 +204,7 @@ void MainWindow::setupActions()
     enableNotify->setGlobalShortcutAllowed( true );
     connect( enableNotify, SIGNAL( toggled( bool ) ), this, SLOT( setNotificationsEnabled( bool ) ) );
 
-    KAction *clearAvatarCache = new KAction(KIcon("edit-clear"), i18n( "Clear Avatar cache" ), this );
+    KAction *clearAvatarCache = new KAction(KIcon("edit-clear"), i18n( "Clear Avatar Cache" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_clear_avatar_cache" ), clearAvatarCache );
     QString tip = i18n( "You have to restart Choqok to load avatars again" );
     clearAvatarCache->setToolTip(tip);
@@ -228,6 +227,11 @@ void MainWindow::setupActions()
     connect( sysIcon, SIGNAL(quitSelected()), this, SLOT(slotQuit()) );
     connect(sysIcon,SIGNAL(wheelEvent(const QWheelEvent&)),this,SLOT(nextTab(const QWheelEvent&)));
     sysIcon->show();
+}
+
+void MainWindow::slotConfNotifications()
+{
+//     KNotifyConfigWidget::configure ( this );
 }
 
 void MainWindow::createQuickPostDialog()
@@ -265,6 +269,7 @@ void MainWindow::hideEvent( QHideEvent * event )
     }
 }
 
+/*
 void MainWindow::optionsPreferences()
 {
     kDebug();
@@ -281,7 +286,7 @@ void MainWindow::optionsPreferences()
     dialog->addPage( generalSettingsDlg, i18n( "General" ), "configure" );
 
     AccountsWidget *accountsSettingsDlg = new AccountsWidget( this );
-    dialog->addPage( accountsSettingsDlg, i18n( "Accounts" ), "user-properties" );
+    dialog->addPage( accountsSettingsDlg, i18n( "Accounts" ), "user-properties", QString(), false );
 
     QWidget *appearsSettingsDlg = new QWidget;
     Ui_appears_base ui_appears_base;
@@ -289,13 +294,27 @@ void MainWindow::optionsPreferences()
     dialog->addPage( appearsSettingsDlg, i18n( "Appearance" ), "format-stroke-color" );
 
     AdvancedConfig *advancedSettingsDlg = new AdvancedConfig( this );
-    dialog->addPage( advancedSettingsDlg, i18n("Advanced"), "applications-utilities");
+    dialog->addPage( advancedSettingsDlg, i18n("Advanced"), "applications-utilities", QString(), false);
 
     connect( dialog, SIGNAL( settingsChanged( QString ) ), this, SLOT( settingsChanged() ) );
 
     dialog->setAttribute( Qt::WA_DeleteOnClose );
     dialog->resize(Settings::configDialogSize());
     dialog->show();
+}
+*/
+
+void MainWindow::slotConfigChoqok()
+{
+    if ( !s_settingsDialog )
+    {
+        s_settingsDialog = new KSettings::Dialog( this );
+    }
+    s_settingsDialog->show();
+    connect(Choqok::BehaviorSettings::self(), SIGNAL(configChanged()),
+            SLOT(slotBehaviorConfigChanged()) );
+    connect(Choqok::AppearanceSettings::self(), SIGNAL(configChanged()),
+            SLOT(slotAppearanceConfigChanged()) );
 }
 
 void MainWindow::settingsChanged()
@@ -312,40 +331,41 @@ void MainWindow::settingsChanged()
 //             dia->show();
 //         }
 //     }
+    slotAppearanceConfigChanged();
+    slotBehaviorConfigChanged();
+}
 
-    QWidget *w = qobject_cast< QWidget* >(sender());
-    if( w ) {
-        Settings::setConfigDialogSize(w->size());
-    }
-
+void MainWindow::slotAppearanceConfigChanged()
+{
     if ( Choqok::AppearanceSettings::isCustomUi() ) {
-    Choqok::UI::PostWidget::setStyle( Choqok::AppearanceSettings::unreadForeColor() ,
-                                      Choqok::AppearanceSettings::unreadBackColor(),
-                                      Choqok::AppearanceSettings::readForeColor() ,
-                                      Choqok::AppearanceSettings::readBackColor());
+        Choqok::UI::PostWidget::setStyle( Choqok::AppearanceSettings::unreadForeColor() ,
+                                          Choqok::AppearanceSettings::unreadBackColor(),
+                                          Choqok::AppearanceSettings::readForeColor() ,
+                                          Choqok::AppearanceSettings::readBackColor());
     } else {
-    QPalette p = window()->palette();
-    Choqok::UI::PostWidget::setStyle( p.color(QPalette::WindowText) , p.color(QPalette::Window).lighter() ,
-                            p.color(QPalette::WindowText) , p.color(QPalette::Window));
+        QPalette p = window()->palette();
+        Choqok::UI::PostWidget::setStyle( p.color(QPalette::WindowText) , p.color(QPalette::Window).lighter() ,
+                                          p.color(QPalette::WindowText) , p.color(QPalette::Window));
     }
-
     int count = mainWidget->count();
     for ( int i = 0; i < count; ++i ) {
         qobject_cast<Choqok::UI::MicroBlogWidget *>( mainWidget->widget( i ) )->settingsChanged();
     }
-    if ( Settings::notifyEnabled() ) {
+}
+
+void MainWindow::slotBehaviorConfigChanged()
+{
+    if ( Choqok::BehaviorSettings::notifyEnabled() ) {
         actionCollection()->action( "choqok_enable_notify" )->setChecked( true );
     } else {
         actionCollection()->action( "choqok_enable_notify" )->setChecked( false );
     }
-    if ( Settings::updateInterval() > 0 ) {
-        timelineTimer->setInterval( Settings::updateInterval() *60000 );
+    if ( Choqok::BehaviorSettings::updateInterval() > 0 ) {
+        timelineTimer->setInterval( Choqok::BehaviorSettings::updateInterval() *60000 );
         timelineTimer->start();
-//         kDebug()<<"timelineTimer started";
         actionCollection()->action( "choqok_enable_updates" )->setChecked( true );
     } else {
         timelineTimer->stop();
-//         kDebug()<<"timelineTimer stoped";
         actionCollection()->action( "choqok_enable_updates" )->setChecked( false );
     }
 }
@@ -362,9 +382,8 @@ void MainWindow::showStatusMessage( const QString &message, bool isPermanent )
 void MainWindow::slotQuit()
 {
     kDebug();
-    Settings::setPosition( pos() );
+    Choqok::BehaviorSettings::setPosition( pos() );
     timelineTimer->stop();
-    Settings::self()->writeConfig();
     kDebug () << " shutting down plugin manager";
     Choqok::PluginManager::self()->shutdown();
 //     Choqok::PasswordManager::self()->deleteLater();
@@ -412,7 +431,7 @@ void MainWindow::disableApp()
 void MainWindow::enableApp()
 {
     kDebug();
-    if ( Settings::updateInterval() > 0 ) {
+    if ( Choqok::BehaviorSettings::updateInterval() > 0 ) {
         timelineTimer->start();
 //         kDebug()<<"timelineTimer started";
     }
@@ -500,14 +519,14 @@ void MainWindow::setTimeLineUpdatesEnabled( bool isEnabled )
     kDebug();
     if ( isEnabled ) {
         if( mPrevUpdateInterval > 0 )
-            Settings::setUpdateInterval( mPrevUpdateInterval );
-        timelineTimer->start( Settings::updateInterval() *60000 );
+            Choqok::BehaviorSettings::setUpdateInterval( mPrevUpdateInterval );
+        timelineTimer->start( Choqok::BehaviorSettings::updateInterval() *60000 );
 //         kDebug()<<"timelineTimer started";
     } else {
-        mPrevUpdateInterval = Settings::updateInterval();
+        mPrevUpdateInterval = Choqok::BehaviorSettings::updateInterval();
         timelineTimer->stop();
 //         kDebug()<<"timelineTimer stoped";
-        Settings::setUpdateInterval( 0 );
+        Choqok::BehaviorSettings::setUpdateInterval( 0 );
     }
 }
 
@@ -515,9 +534,9 @@ void MainWindow::setNotificationsEnabled( bool isEnabled )
 {
     kDebug();
     if ( isEnabled ) {
-        Settings::setNotifyEnabled( true );
+        Choqok::BehaviorSettings::setNotifyEnabled( true );
     } else {
-        Settings::setNotifyEnabled( false );
+        Choqok::BehaviorSettings::setNotifyEnabled( false );
     }
 }
 

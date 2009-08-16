@@ -22,25 +22,27 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 */
 
-#ifndef ADVANCEDCONFIG_H
-#define ADVANCEDCONFIG_H
-#include "ui_advanced_base.h"
-#include <QWidget>
-#include <kplugininfo.h>
-#include <shortener.h>
+#ifndef _CHOQOK_BEHAVIOR_H
+#define _CHOQOK_BEHAVIOR_H
 
-class AdvancedConfig: public QWidget, public Ui::advanced_base
+#define KDE3_SUPPORT
+#include <kcmodule.h>
+#undef KDE3_SUPPORT
+
+class BehaviorConfig : public KCModule
 {
-    Q_OBJECT
-public:
-    AdvancedConfig( QWidget *parent = 0 );
-    ~AdvancedConfig();
-private slots:
-    void currentPluginChanged( int index );
-private:
-    QList<KPluginInfo> availablePlugins;
-    Choqok::Shortener *currentShortener;
-    QString prevShortener;
-};
+Q_OBJECT
 
+public:
+    BehaviorConfig(QWidget *parent, const QVariantList &args) ;
+    ~BehaviorConfig();
+
+    virtual void save();
+    virtual void load();
+
+private:
+    class Private;
+    Private *d;
+};
 #endif
+// vim: set noet ts=4 sts=4 sw=4:

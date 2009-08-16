@@ -204,6 +204,7 @@ void QuickPost::checkAll( bool isAll )
 void QuickPost::setText( const QString& text )
 {
     d->txtPost->setPlainText(text);
+    this->show();
 //     if(account)
 //         d->comboAccounts->setCurrentItem(account->alias());
 //     if(!replyToId.isEmpty())

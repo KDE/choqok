@@ -23,7 +23,7 @@
 */
 
 #include "mainwindow.h"
-#include "settings.h"
+#include "choqokbehaviorsettings.h"
 #include "choqokversion.h"
 #include <kapplication.h>
 #include <kaboutdata.h>
@@ -57,7 +57,7 @@ int main( int argc, char **argv )
     app.setQuitOnLastWindowClosed( false );
 
     MainWindow *m_mainWindow = new MainWindow;
-    if ( Settings::showMainWinOnStart() ) {
+    if ( Choqok::BehaviorSettings::showMainWinOnStart() ) {
         m_mainWindow->show();
     }
     return app.exec();

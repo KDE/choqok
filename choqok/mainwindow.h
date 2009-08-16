@@ -32,11 +32,17 @@
 // #include "ui_appears_base.h"
 // #include "searchwindow.h"
 
-namespace Choqok {
-namespace UI{
+namespace Choqok
+{
+namespace UI
+{
     class QuickPost;
 }
 class Plugin;
+}
+namespace KSettings
+{
+    class Dialog;
 }
 
 class QTimer;
@@ -80,7 +86,8 @@ public slots:
     void nextTab(const QWheelEvent&);
 
 protected slots:
-    void optionsPreferences();
+    void slotConfNotifications();
+    void slotConfigChoqok();
     void settingsChanged();
     void showStatusMessage( const QString &message, bool isPermanent = false );
     void slotQuit();
@@ -109,12 +116,16 @@ private slots:
     void triggerQuickPost();
     void toggleMainWindow();
     void slotMarkAllAsRead();
+
+    void slotAppearanceConfigChanged();
+    void slotBehaviorConfigChanged();
 private:
     KTabWidget *mainWidget;
     QTimer *timelineTimer;
     int mPrevUpdateInterval;
     SysTrayIcon *sysIcon;
     Choqok::UI::QuickPost *quickWidget;
+    KSettings::Dialog *s_settingsDialog;
 };
 
 #endif

@@ -36,9 +36,14 @@
 #include "editaccountwidget.h"
 #include "editaccountdialog.h"
 #include <choqokuiglobal.h>
+#include <kpluginfactory.h>
 
-AccountsWidget::AccountsWidget( QWidget *parent )
-        : QWidget( parent )
+K_PLUGIN_FACTORY( ChoqokAccountsConfigFactory,
+                  registerPlugin<AccountsWidget>(); )
+K_EXPORT_PLUGIN( ChoqokAccountsConfigFactory("kcm_choqok_accountsconfig") )
+
+AccountsWidget::AccountsWidget( QWidget* parent, const QVariantList& args )
+        : KCModule( ChoqokAccountsConfigFactory::componentData(), parent, args )
 {
     kDebug();
     setupUi( this );
@@ -59,7 +64,8 @@ AccountsWidget::AccountsWidget( QWidget *parent )
     btnEdit->hide();///FIXME Fix account modify function
     btnRemove->setIcon( KIcon( "list-remove" ) );
     btnAdd->setMenu( createAddAccountMenu() );
-    loadAccountsData();
+    setButtons(Help);
+    load();
 }
 
 AccountsWidget::~ AccountsWidget()
@@ -120,7 +126,7 @@ void AccountsWidget::slotAccountAdded( Choqok::Account *account )
 {
     kDebug();
     addAccountToTable( account->alias(), account->microblog()->serviceName() );
-//     emit accountAdded( account );
+    emit changed( true );
 }
 
 void AccountsWidget::slotAccountRemoved( const QString alias )
@@ -130,6 +136,7 @@ void AccountsWidget::slotAccountRemoved( const QString alias )
     for(int i = 0; i<count; ++i) {
         if(accountsTable->item(i, 0)->text() == alias){
             accountsTable->removeRow(i);
+            emit changed(true);
             break;
         }
     }
@@ -160,10 +167,9 @@ void AccountsWidget::accountsTablestateChanged()
     }
 }
 
-void AccountsWidget::loadAccountsData()
+void AccountsWidget::load()
 {
-    kDebug();
-//     KConfigGroup grp(&conf, "Accounts");
+    accountsTable->clearContents();
     QList<Choqok::Account*> ac = Choqok::AccountManager::self()->accounts();
     QListIterator<Choqok::Account*> it( ac );
     while ( it.hasNext() ) {
@@ -172,7 +178,7 @@ void AccountsWidget::loadAccountsData()
     }
 }
 
-void AccountsWidget::saveAccountsData()
+void AccountsWidget::save()
 {
 }
 
