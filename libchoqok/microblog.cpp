@@ -68,7 +68,7 @@ QString MicroBlog::errorString( ErrorType type )
 {
     switch(type){
         case ServerError:
-            return i18n("Server returned error.");
+            return i18n("The server returned an error.");
             break;
         case CommunicationError:
             return i18n("Error on communication with server.");

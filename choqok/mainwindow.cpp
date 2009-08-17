@@ -247,7 +247,7 @@ void MainWindow::triggerQuickPost()
 {
     if ( Choqok::AccountManager::self()->accounts().isEmpty() )
     {
-        KMessageBox::error( this, i18n ( "Any account created. You must create an account before to make a post." ) );
+        KMessageBox::error( this, i18n ( "No account created. You must create an account before to make a post." ) );
         return;
     }
     if(!quickWidget)
