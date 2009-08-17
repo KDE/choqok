@@ -6,7 +6,6 @@ Comment[x-test]=xxChoqokxx
 
 [Event/new-post-arrived]
 Name=New Post Arrived
-Name[x-test]=xxNew post arrivedxx
 Comment=New post arrived
 Action=Popup
 Persistent=True

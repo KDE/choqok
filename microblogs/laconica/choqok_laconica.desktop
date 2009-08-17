@@ -16,6 +16,7 @@ X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=false
 Name=Laconica
 Comment=Laconi.ca & Identi.ca support
+Comment[fr]=Prise en charge de Laconi.ca et Identi.ca
 Comment[pt]=Suporte para o Laconi.ca & Identi.ca
 Comment[pt_BR]=Suporte para o Laconi.ca & Identi.ca
 Comment[sv]=Stöd för Laconi.ca och Identi.ca
