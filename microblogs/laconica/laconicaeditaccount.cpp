@@ -93,9 +93,9 @@ bool LaconicaEditAccountWidget::verifyCredentials()
     url.setPassword(kcfg_password->text());
     KIO::TransferJob *job = KIO::get( url, KIO::Reload, KIO::HideProgressInfo );
     if ( !job ) {
-        kDebug() << "Cannot create an http GET request.";
-        QString errMsg = i18n ( "Cannot create an http GET request." );
-        KMessageBox::error(this, errMsg);
+        kError() << "Cannot create an http GET request.";
+//         QString errMsg = i18n ( "Cannot create an http GET request, Check your KDE installation." );
+//         KMessageBox::error(this, errMsg);
         return false;
     }
     QByteArray data;

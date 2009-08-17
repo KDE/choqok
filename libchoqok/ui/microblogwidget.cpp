@@ -242,7 +242,7 @@ void MicroBlogWidget::error(Choqok::Account* theAccount, MicroBlog::ErrorType er
             break;
         default:
             if( Choqok::UI::Global::mainWindow()->statusBar() )
-                Choqok::UI::Global::mainWindow()->statusBar()->showMessage(errorMsg, 5000);
+                Choqok::UI::Global::mainWindow()->statusBar()->showMessage(errorMsg);
             break;
         };
     }
@@ -260,7 +260,7 @@ void MicroBlogWidget::errorPost(Choqok::Account* theAccount, Choqok::Post*, Micr
             break;
         default:
             if( Choqok::UI::Global::mainWindow()->statusBar() )
-                Choqok::UI::Global::mainWindow()->statusBar()->showMessage(errorMsg, 5000);
+                Choqok::UI::Global::mainWindow()->statusBar()->showMessage(errorMsg);
             break;
         };
     }

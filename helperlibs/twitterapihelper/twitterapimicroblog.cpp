@@ -199,9 +199,9 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
         data += "&source=choqok";
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
         if ( !job ) {
-            kError() << "Cannot create a http POST request!";
-            QString errMsg = i18n ( "Cannot create an http POST request." );
-            emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
+            kError() << "Cannot create an http POST request!";
+//             QString errMsg = i18n ( "Creating new post failed, Cannot create an http POST request, Check your KDE installation." );
+//             emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
         }
         job->addMetaData ( "content-type", "Content-Type: application/x-www-form-urlencoded" );
@@ -220,7 +220,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
         if ( !job ) {
             kError() << "Cannot create an http POST request!";
-            QString errMsg = i18n ( "Cannot create an http POST request." );
+            QString errMsg = i18n ( "Creating new post failed, Cannot create an http POST request, Check your KDE installation." );
             emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
         }
@@ -248,7 +248,7 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
         emit errorPost ( theAccount, post, Choqok::MicroBlog::CommunicationError,
-                         job->errorString(), MicroBlog::Critical );
+                         i18n("Creating new post failed, %1").arg(job->errorString()), MicroBlog::Critical );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast< KIO::StoredTransferJob * > ( job );
         if ( !post->isPrivate ) {
@@ -256,7 +256,7 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
             if ( post->isError ) {
                 kDebug() << "XML parsing error" ;
                 emit errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
-                                 i18n ( "Error: Could not parse result data." ), MicroBlog::Critical );
+                                 i18n ( "Creating new post failed, Could not parse result data." ), MicroBlog::Critical );
             } else {
                 emit postCreated ( theAccount, post );
             }
@@ -284,9 +284,10 @@ void TwitterApiMicroBlog::fetchPost ( Choqok::Account* theAccount, Choqok::Post*
 
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http GET request!";
-        QString errMsg = i18n ( "Cannot create an http GET request." );
-        emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, Low );
+        kError() << "Cannot create an http GET request!";
+//         QString errMsg = i18n ( "Fetching new post failed, Cannot create an http GET request,"
+//                                 "Check your KDE installation." );
+//         emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, Low );
         return;
     }
     mFetchPostMap[ job ] = post;
@@ -306,14 +307,15 @@ void TwitterApiMicroBlog::slotFetchPost ( KJob *job )
     Choqok::Account *theAccount = mAccountJobs.take(job);
     if ( job->error() ) {
         kError() << "Job Error: " << job->errorString();
-        emit error ( theAccount, Choqok::MicroBlog::CommunicationError, job->errorString(), Low );
+        emit error ( theAccount, Choqok::MicroBlog::CommunicationError,
+                     i18n("Fetching new post failed, %1").arg(job->errorString()), Low );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
         readPostFromXml ( theAccount, stj->data(), post );
         if ( post->isError ) {
             kError() << "Parsing Error";
             emit errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
-                             i18n ( "Error: Could not parse result data." ), Low );
+                             i18n ( "Fetching new post failed, Could not parse result data." ), Low );
         } else {
             post->isError = true;
             emit postFetched ( theAccount, post );
@@ -334,9 +336,9 @@ void TwitterApiMicroBlog::removePost ( Choqok::Account* theAccount, Choqok::Post
         }
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
         if ( !job ) {
-            kDebug() << "Cannot create a http POST request!";
-            QString errMsg = i18n ( "Cannot create an http POST request." );
-            emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
+            kError() << "Cannot create an http POST request!";
+//             QString errMsg = i18n ( "Removing post failed, Cannot create an http POST request, Check your KDE installation." );
+//             emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
         }
         mRemovePostMap[job] = post;
@@ -357,7 +359,8 @@ void TwitterApiMicroBlog::slotRemovePost ( KJob *job )
     Choqok::Account *theAccount = mAccountJobs.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit errorPost ( theAccount, post, CommunicationError, job->errorString(), MicroBlog::Critical );
+        emit errorPost ( theAccount, post, CommunicationError,
+                         i18n("Removing post failed, %1").arg(job->errorString() ), MicroBlog::Critical );
     } else {
         emit postRemoved ( theAccount, post );
     }
@@ -370,9 +373,10 @@ void TwitterApiMicroBlog::createFavorite ( Choqok::Account* theAccount, const QS
     url.addPath ( "/favorites/create/" + postId + ".xml" );
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http POST request!";
-        QString errMsg = i18n ( "Cannot create an http POST request." );
-        emit error ( theAccount, OtherError, errMsg );
+        kError() << "Cannot create an http POST request!";
+//         QString errMsg = i18n ( "Favorite creation failed, Cannot create an http POST request, "
+//                                 "Check your KDE installation." );
+//         emit error ( theAccount, OtherError, errMsg );
         return;
     }
     mFavoriteMap[job] = postId;
@@ -392,7 +396,7 @@ void TwitterApiMicroBlog::slotCreateFavorite ( KJob *job )
     QString postId = mFavoriteMap.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit error ( theAccount, CommunicationError, job->errorString() );
+        emit error ( theAccount, CommunicationError, i18n( "Favorite creation failed, %1", job->errorString() ) );
     } else {
         emit favoriteCreated ( theAccount, postId );
     }
@@ -405,9 +409,10 @@ void TwitterApiMicroBlog::removeFavorite ( Choqok::Account* theAccount, const QS
     url.addPath ( "/favorites/destroy/" + postId + ".xml" );
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http POST request!";
-        QString errMsg = i18n ( "Cannot create an http POST request." );
-        emit error ( theAccount, OtherError, errMsg );
+        kError() << "Cannot create an http POST request!";
+//         QString errMsg = i18n ( "Favorite removing failed, Cannot create an http POST request,"
+//                                 "Check your KDE installation." );
+//         emit error ( theAccount, OtherError, errMsg );
         return;
     }
     mFavoriteMap[job] = postId;
@@ -427,7 +432,7 @@ void TwitterApiMicroBlog::slotRemoveFavorite ( KJob *job )
     Choqok::Account *theAccount = mAccountJobs.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit error ( theAccount, CommunicationError, job->errorString() );
+        emit error ( theAccount, CommunicationError, i18n("Favorite removing failed, %1", job->errorString() ) );
     } else {
         emit favoriteCreated ( theAccount, id );
     }
@@ -461,9 +466,9 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
 
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create a http GET request!";
-        QString errMsg = i18n ( "Cannot create an http GET request." );
-        emit error ( theAccount, OtherError, errMsg, Low );
+        kError() << "Cannot create an http GET request!";
+//         QString errMsg = i18n ( "Cannot create an http GET request, Check your KDE installation." );
+//         emit error ( theAccount, OtherError, errMsg, Low );
         return;
     }
     mRequestTimelineMap[job] = type;
@@ -482,7 +487,8 @@ void TwitterApiMicroBlog::slotRequestTimeline ( KJob *job )
     Choqok::Account *theAccount = mAccountJobs.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit error( theAccount, CommunicationError, job->errorString(), Low );
+        emit error( theAccount, CommunicationError,
+                    i18n("Timeline update failed, %1", job->errorString()), Low );
         return;
     }
     QString type = mRequestTimelineMap.take(job);
