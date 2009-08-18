@@ -18,6 +18,7 @@ Name=Twitter
 Name[nds]=Afkörter för Digg.com
 Name[x-test]=xxTwitterxx
 Comment=A plugin to communicate with Twitter.com service
+Comment[es]=Un complemento para comunicarse con el servicio Twitter.com
 Comment[fr]=Un module externe pour communiquer avec le service Twitter.com
 Comment[it]=Un'estensione per comunicare con il servizio Twitter.com
 Comment[nds]=En Moduul för't Afkörten vun "digg.com"-Adressen

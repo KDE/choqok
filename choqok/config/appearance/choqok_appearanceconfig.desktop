@@ -9,6 +9,16 @@ X-KDE-ParentApp=choqok
 X-KDE-ParentComponents=choqok
 
 Name=Appearance
+Name[pt]=Aparência
+Name[pt_BR]=Aparência
+Name[sv]=Utseende
+Name[uk]=Вигляд
+Name[x-test]=xxAppearancexx
 Comment=Personalize Choqok Look and Feel
+Comment[pt]=Personalizar a Aparência e Comportamento do Choqok
+Comment[pt_BR]=Personalizar a Aparência e Comportamento do Choqok
+Comment[sv]=Anpassa Choqoks utseende och känsla
+Comment[uk]=Налаштувати вигляд і поведінку Choqok
+Comment[x-test]=xxPersonalize Choqok Look and Feelxx
 
 

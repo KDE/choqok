@@ -6,21 +6,61 @@ Comment[x-test]=xxChoqokxx
 
 [Event/new-post-arrived]
 Name=New Post Arrived
+Name[pt]=Chegou uma Nova Publicação
+Name[pt_BR]=Chegou novo post
+Name[sv]=Nytt inlägg har anlänt
+Name[uk]=Надіслано новий допис
+Name[x-test]=xxNew Post Arrivedxx
 Comment=New post arrived
+Comment[pt]=Chegou uma nova publicação
+Comment[pt_BR]=Chegou novo post
+Comment[sv]=Nytt inlägg har anlänt
+Comment[uk]=Надіслано новий допис
+Comment[x-test]=xxNew post arrivedxx
 Action=Popup
 Persistent=True
 
 [Event/job-success]
 Name=Job Success
+Name[pt]=Sucesso da Tarefa
+Name[pt_BR]=Trabalho concluído com sucesso
+Name[sv]=Jobb lyckades
+Name[uk]=Завдання успішно виконано
+Name[x-test]=xxJob Successxx
 Comment=A job finished successfully
+Comment[pt]=Uma tarefa terminou com sucesso
+Comment[pt_BR]=Um trabalho foi concluído com sucesso
+Comment[sv]=Ett jobb avslutades med lyckat resultat.
+Comment[uk]=Виконання завдання успішно завершено
+Comment[x-test]=xxA job finished successfullyxx
 Action=Popup
 
 [Event/job-error]
 Name=Job Error
+Name[pt]=Erro da Tarefa
+Name[pt_BR]=Erro no trabalho
+Name[sv]=Jobbfel
+Name[uk]=Помилка виконання
+Name[x-test]=xxJob Errorxx
 Comment=There was an error while performing a job
+Comment[pt]=Ocorreu um erro ao efectuar uma tarefa
+Comment[pt_BR]=Ocorreu um erro ao efectuar uma tarefa
+Comment[sv]=Ett fel uppstod när ett jobb utfördes
+Comment[uk]=Під час виконання завдання сталася помилка
+Comment[x-test]=xxThere was an error while performing a jobxx
 Action=Popup
 
 [Event/shortening]
 Name=Shortening
+Name[pt]=Redução
+Name[pt_BR]=Encolhimento
+Name[sv]=Avkortning
+Name[uk]=Скорочення
+Name[x-test]=xxShorteningxx
 Comment=Shortening a URL
+Comment[pt]=Redução de um URL
+Comment[pt_BR]=Encolhendo uma URL
+Comment[sv]=Avkortar en webbadress
+Comment[uk]=Скорочення URL
+Comment[x-test]=xxShortening a URLxx
 Action=Popup

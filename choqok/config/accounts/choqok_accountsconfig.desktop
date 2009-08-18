@@ -9,4 +9,14 @@ X-KDE-ParentApp=choqok
 X-KDE-ParentComponents=choqok
 
 Name=Accounts
+Name[pt]=Contas
+Name[pt_BR]=Contas
+Name[sv]=Konton
+Name[uk]=Облікові записи
+Name[x-test]=xxAccountsxx
 Comment=Manage Your Accounts
+Comment[pt]=Gerir as Suas Contas
+Comment[pt_BR]=Gerencie suas contas
+Comment[sv]=Hantera dina konton
+Comment[uk]=Керування вашими обліковими записами
+Comment[x-test]=xxManage Your Accountsxx
