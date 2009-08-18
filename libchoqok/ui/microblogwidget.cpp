@@ -32,6 +32,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KMessageBox>
 #include <choqokuiglobal.h>
 #include <kstatusbar.h>
+#include <ktoolbar.h>
+#include <KPushButton>
+#include <QLabel>
+#include <KMenu>
+#include <KDateTime>
 
 namespace Choqok {
 namespace UI {
@@ -49,6 +54,7 @@ public:
     QMap<QString, TimelineWidget*> timelines;
     QMap<TimelineWidget*, int> timelineUnreadCount;
     KTabWidget *timelinesTabWidget;
+    QLabel *latestUpdate;
 };
 
 MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent, Qt::WindowFlags f)
@@ -60,12 +66,14 @@ MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent, Qt::WindowF
     connect(d->blog, SIGNAL(timelineDataReceived(Choqok::Account*,QString,QList<Choqok::Post*>)),
             this, SLOT(newTimelineDataRecieved(Choqok::Account*,QString,QList<Choqok::Post*>)) );
     initTimelines();
-    connect(d->blog, SIGNAL(error(Choqok::Account*,MicroBlog::ErrorType,QString, MicroBlog::ErrorLevel)),
-            this, SLOT(error(Choqok::Account*,MicroBlog::ErrorType,QString, MicroBlog::ErrorLevel)));
+    connect(d->blog, SIGNAL(error(Choqok::Account*,Choqok::MicroBlog::ErrorType,
+                                  QString, Choqok::MicroBlog::ErrorLevel)),
+            this, SLOT(error(Choqok::Account*,Choqok::MicroBlog::ErrorType,
+                             QString, Choqok::MicroBlog::ErrorLevel)));
     connect(d->blog, SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,
-                                    MicroBlog::ErrorType,QString,  MicroBlog::ErrorLevel)),
-            this, SLOT(errorPost(Choqok::Account*,Choqok::Post*,MicroBlog::ErrorType,
-                                    QString, MicroBlog::ErrorLevel)));
+                                    Choqok::MicroBlog::ErrorType,QString,  Choqok::MicroBlog::ErrorLevel)),
+            this, SLOT(errorPost(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,
+                                    QString, Choqok::MicroBlog::ErrorLevel)));
 }
 
 Account * MicroBlogWidget::currentAccount() const
@@ -76,6 +84,7 @@ Account * MicroBlogWidget::currentAccount() const
 void MicroBlogWidget::setupUi()
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->addLayout( createToolbar() );
     if(d->composer)
         layout->addWidget(d->composer);
     d->timelinesTabWidget = new KTabWidget(this);
@@ -89,7 +98,7 @@ void MicroBlogWidget::setComposerWidget(ComposerWidget *widget)
         d->composer->deleteLater();
     d->composer = widget;
     d->composer->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Maximum);
-    qobject_cast<QVBoxLayout*>( this->layout() )->insertWidget(0, d->composer);
+    qobject_cast<QVBoxLayout*>( this->layout() )->insertWidget(1, d->composer);
     foreach(TimelineWidget *mbw, d->timelines.values()) {
         connect(mbw, SIGNAL(forwardResendPost(QString)), d->composer, SLOT(setText(QString)));
         connect( mbw, SIGNAL(forwardReply(QString,QString)), d->composer, SLOT(setText(QString,QString)) );
@@ -264,6 +273,28 @@ void MicroBlogWidget::errorPost(Choqok::Account* theAccount, Choqok::Post*, Micr
             break;
         };
     }
+}
+
+QLayout * MicroBlogWidget::createToolbar()
+{
+    QHBoxLayout *toolbar = new QHBoxLayout;
+    KPushButton *btnActions = new KPushButton(i18n("Actions"), this);
+
+    QLabel *lblLatestUpdate = new QLabel( i18n("Latest update:"), this);
+    lblLatestUpdate->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    d->latestUpdate = new QLabel( KDateTime::currentLocalTime().toString(), this);
+    QFont fnt = lblLatestUpdate->font();
+    fnt.setPointSize(fnt.pointSize() - 1);
+    lblLatestUpdate->setFont(fnt);
+    fnt.setBold(true);
+    d->latestUpdate->setFont(fnt);
+
+    btnActions->setMenu(d->account->microblog()->createActionsMenu(d->account));
+    toolbar->addWidget(btnActions);
+    toolbar->addSpacerItem(new QSpacerItem(1, 10, QSizePolicy::Expanding));
+    toolbar->addWidget(lblLatestUpdate);
+    toolbar->addWidget(d->latestUpdate);
+    return toolbar;
 }
 
 }

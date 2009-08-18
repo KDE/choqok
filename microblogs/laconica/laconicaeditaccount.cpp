@@ -42,7 +42,6 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
         kcfg_username->setText( mAccount->username() );
         kcfg_password->setText( mAccount->password() );
         kcfg_alias->setText( mAccount->alias() );
-        kcfg_readonly->setChecked( mAccount->isReadOnly() );
         kcfg_secure->setChecked( mAccount->useSecureConnection() );
         kcfg_host->setText( mAccount->host() );
         kcfg_api->setText( mAccount->api() );
@@ -72,7 +71,6 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
     if ( !verifyCredentials() )
         return 0;
     mAccount->setAlias(kcfg_alias->text());
-    mAccount->setReadOnly(kcfg_readonly->isChecked());
     mAccount->setUseSecureConnection(kcfg_secure->isChecked());
     mAccount->writeConfig();
     return mAccount;

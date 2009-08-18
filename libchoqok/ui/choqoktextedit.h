@@ -23,7 +23,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef CHOQOKTEXTEDIT_H
 #define CHOQOKTEXTEDIT_H
 #include <ktextedit.h>
-
+#include <choqok_export.h>
 class QLabel;
 
 namespace Choqok {
@@ -32,7 +32,7 @@ namespace UI {
 
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
-class TextEdit : public KTextEdit
+class CHOQOK_EXPORT TextEdit : public KTextEdit
 {
     Q_OBJECT
 public:

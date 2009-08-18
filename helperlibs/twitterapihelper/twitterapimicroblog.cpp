@@ -38,27 +38,43 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "postwidget.h"
 #include "twitterapiaccount.h"
 #include "twitterapipostwidget.h"
+#include <KMenu>
+#include <KAction>
+#include <choqokuiglobal.h>
+#include <accountmanager.h>
+#include "twitterapidmessagedialog.h"
+#include <choqokbehaviorsettings.h>
 
+class TwitterApiMicroBlog::Private
+{
+public:
+    Private():countOfTimelinesToSave(0), friendsPage(1)
+    {}
+    int countOfTimelinesToSave;
+    int friendsPage;
+    QMap<QString, int> monthes;
+    QStringList friendsList;
+};
 TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObject *parent )
-: MicroBlog( instance, parent), countOfPost(80), countOfTimelinesToSave(0)
+: MicroBlog( instance, parent), d(new Private)
 {
     kDebug();
     setCharLimit(140);
     QStringList timelineTypes;
     timelineTypes<< "Home" << "Reply" << "Inbox" << "Outbox";
     setTimelineTypes(timelineTypes);
-    monthes["Jan"] = 1;
-    monthes["Feb"] = 2;
-    monthes["Mar"] = 3;
-    monthes["Apr"] = 4;
-    monthes["May"] = 5;
-    monthes["Jun"] = 6;
-    monthes["Jul"] = 7;
-    monthes["Aug"] = 8;
-    monthes["Sep"] = 9;
-    monthes["Oct"] = 10;
-    monthes["Nov"] = 11;
-    monthes["Dec"] = 12;
+    d->monthes["Jan"] = 1;
+    d->monthes["Feb"] = 2;
+    d->monthes["Mar"] = 3;
+    d->monthes["Apr"] = 4;
+    d->monthes["May"] = 5;
+    d->monthes["Jun"] = 6;
+    d->monthes["Jul"] = 7;
+    d->monthes["Aug"] = 8;
+    d->monthes["Sep"] = 9;
+    d->monthes["Oct"] = 10;
+    d->monthes["Nov"] = 11;
+    d->monthes["Dec"] = 12;
     timelineApiPath["Home"] = "/statuses/friends_timeline.xml";
     timelineApiPath["Reply"] = "/statuses/replies.xml";
     timelineApiPath["Inbox"] = "/direct_messages.xml";
@@ -71,6 +87,17 @@ TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObje
 TwitterApiMicroBlog::~TwitterApiMicroBlog()
 {
     kDebug();
+    delete d;
+}
+
+QMenu* TwitterApiMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidget* parent)
+{
+    QMenu * menu = MicroBlog::createActionsMenu(theAccount, parent);
+    KAction *directMessge = new KAction( KIcon("mail-message-new"), i18n("Send Private Message"), menu );
+    directMessge->setData( theAccount->alias() );
+    connect( directMessge, SIGNAL(triggered(bool)), SLOT(showSendDirectMessageDialog()) );
+    menu->addAction(directMessge);
+    return menu;
 }
 
 QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *account, const QString& timelineName)
@@ -154,8 +181,8 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
         grp.writeEntry( "authorUrl" , post->author.homePageUrl );
     }
     postsBackup.sync();
-    --countOfTimelinesToSave;
-    if(countOfTimelinesToSave < 1)
+    --d->countOfTimelinesToSave;
+    if(d->countOfTimelinesToSave < 1)
         emit readyForUnload();
 }
 
@@ -206,7 +233,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
         }
         job->addMetaData ( "content-type", "Content-Type: application/x-www-form-urlencoded" );
         mCreatePostMap[ job ] = post;
-        mAccountJobs[job] = theAccount;
+        mJobsAccount[job] = theAccount;
         connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotCreatePost ( KJob* ) ) );
         job->start();
     } else {///Direct message
@@ -226,7 +253,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
         }
         job->addMetaData ( "content-type", "Content-Type: application/x-www-form-urlencoded" );
         mCreatePostMap[ job ] = post;
-        mAccountJobs[job] = theAccount;
+        mJobsAccount[job] = theAccount;
         connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotCreatePost ( KJob* ) ) );
         job->start();
     }
@@ -240,7 +267,7 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
         return;
     }
     Choqok::Post *post = mCreatePostMap.take(job);
-    Choqok::Account *theAccount = mAccountJobs.take(job);
+    Choqok::Account *theAccount = mJobsAccount.take(job);
     if(!post || !theAccount) {
         kError()<<"Account or Post is NULL pointer";
         return;
@@ -268,7 +295,7 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
 
 void TwitterApiMicroBlog::abortAllJobs(Choqok::Account* theAccount)
 {
-    foreach ( KJob *job, mAccountJobs.keys(theAccount) ) {
+    foreach ( KJob *job, mJobsAccount.keys(theAccount) ) {
         job->kill();
     }
 }
@@ -291,7 +318,7 @@ void TwitterApiMicroBlog::fetchPost ( Choqok::Account* theAccount, Choqok::Post*
         return;
     }
     mFetchPostMap[ job ] = post;
-    mAccountJobs[ job ] = theAccount;
+    mJobsAccount[ job ] = theAccount;
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotFetchPost ( KJob* ) ) );
     job->start();
 }
@@ -304,7 +331,7 @@ void TwitterApiMicroBlog::slotFetchPost ( KJob *job )
         return;
     }
     Choqok::Post *post = mFetchPostMap.take(job);
-    Choqok::Account *theAccount = mAccountJobs.take(job);
+    Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
         kError() << "Job Error: " << job->errorString();
         emit error ( theAccount, Choqok::MicroBlog::CommunicationError,
@@ -342,7 +369,7 @@ void TwitterApiMicroBlog::removePost ( Choqok::Account* theAccount, Choqok::Post
             return;
         }
         mRemovePostMap[job] = post;
-        mAccountJobs[job] = theAccount;
+        mJobsAccount[job] = theAccount;
         connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotRemovePost ( KJob* ) ) );
         job->start();
     }
@@ -356,7 +383,7 @@ void TwitterApiMicroBlog::slotRemovePost ( KJob *job )
         return;
     }
     Choqok::Post *post = mRemovePostMap.take(job);
-    Choqok::Account *theAccount = mAccountJobs.take(job);
+    Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
         emit errorPost ( theAccount, post, CommunicationError,
@@ -380,7 +407,7 @@ void TwitterApiMicroBlog::createFavorite ( Choqok::Account* theAccount, const QS
         return;
     }
     mFavoriteMap[job] = postId;
-    mAccountJobs[job] = theAccount;
+    mJobsAccount[job] = theAccount;
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotCreateFavorite ( KJob* ) ) );
     job->start();
 }
@@ -392,7 +419,7 @@ void TwitterApiMicroBlog::slotCreateFavorite ( KJob *job )
         kDebug() << "Job is null pointer.";
         return;
     }
-    Choqok::Account *theAccount = mAccountJobs.take(job);
+    Choqok::Account *theAccount = mJobsAccount.take(job);
     QString postId = mFavoriteMap.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
@@ -416,7 +443,7 @@ void TwitterApiMicroBlog::removeFavorite ( Choqok::Account* theAccount, const QS
         return;
     }
     mFavoriteMap[job] = postId;
-    mAccountJobs[job] = theAccount;
+    mJobsAccount[job] = theAccount;
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotRemoveFavorite ( KJob* ) ) );
     job->start();
 }
@@ -429,12 +456,49 @@ void TwitterApiMicroBlog::slotRemoveFavorite ( KJob *job )
         return;
     }
     QString id = mFavoriteMap.take(job);
-    Choqok::Account *theAccount = mAccountJobs.take(job);
+    Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
         emit error ( theAccount, CommunicationError, i18n("Favorite removing failed, %1", job->errorString() ) );
     } else {
         emit favoriteCreated ( theAccount, id );
+    }
+}
+
+void TwitterApiMicroBlog::listFriendsUsername(TwitterApiAccount* theAccount)
+{
+    d->friendsList.clear();
+    requestFriendsScreenName(theAccount);
+}
+
+void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount, int page)
+{
+    kDebug();
+    KUrl url = apiUrl( theAccount );
+    url.addPath( "/statuses/friends/" + theAccount->username() + ".xml" );
+    url.setQuery( "?page=" + QString::number( page ) );
+
+    KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
+    if ( !job ) {
+        kError() << "Cannot create an http GET request!";
+        return;
+    }
+    mJobsAccount[job] = theAccount;
+    connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFriendsScreenName(KJob*) ) );
+    job->start();
+}
+
+void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
+{
+    kDebug();
+    TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount *>( mJobsAccount.take(job) );
+    KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
+    QStringList newList = readUsersScreenNameFromXml( theAccount, stJob->data() );
+    d->friendsList << newList;
+    if ( newList.count() == 100 ) {
+        requestFriendsScreenName( theAccount, ++d->friendsPage );
+    } else {
+        emit friendsUsernameListed( theAccount, d->friendsList );
     }
 }
 
@@ -452,9 +516,12 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
     kDebug();
     KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
     url.addPath ( timelineApiPath[type] );
+    int countOfPost = Choqok::BehaviorSettings::countOfPosts();
     if ( !latestStatusId.isEmpty() ) {
         url.addQueryItem ( "since_id", latestStatusId );
+        countOfPost = 200;
     }
+
     url.addQueryItem ( "count", QString::number( countOfPost ) );
     if ( !maxId.isEmpty() ) {
         url.addQueryItem ( "max_id", maxId );
@@ -472,7 +539,7 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
         return;
     }
     mRequestTimelineMap[job] = type;
-    mAccountJobs[job] = theAccount;
+    mJobsAccount[job] = theAccount;
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotRequestTimeline ( KJob* ) ) );
     job->start();
 }
@@ -484,7 +551,7 @@ void TwitterApiMicroBlog::slotRequestTimeline ( KJob *job )
         kDebug() << "Job is null pointer";
         return;
     }
-    Choqok::Account *theAccount = mAccountJobs.take(job);
+    Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
         emit error( theAccount, CommunicationError,
@@ -511,7 +578,7 @@ KUrl TwitterApiMicroBlog::apiUrl ( TwitterApiAccount* theAccount )
 {
     if(theAccount) {
         KUrl url( theAccount->apiUrl() );
-        url.setScheme ( qobject_cast<TwitterApiAccount*>(theAccount)->useSecureConnection() ? "https" : "http" );
+        url.setScheme ( theAccount->useSecureConnection() ? "https" : "http" );
         url.setUser ( theAccount->username() );
         url.setPass ( theAccount->password() );
         return url;
@@ -726,12 +793,46 @@ QList<Choqok::Post*> TwitterApiMicroBlog::readDMessagesFromXml (Choqok::Account 
     return postList;
 }
 
+QStringList TwitterApiMicroBlog::readUsersScreenNameFromXml( Choqok::Account* theAccount, const QByteArray& buffer )
+{
+    kDebug();
+    QStringList list;
+    QDomDocument document;
+    document.setContent( buffer );
+    QDomElement root = document.documentElement();
+
+    if ( root.tagName() != "users" ) {
+        QString err = i18n( "Retrieving friends list failed, Data returned from server is corrupted." );
+        kError() << "there's no users tag in XML\t the XML is: \n" << buffer.data();
+        emit error(theAccount, ParsingError, err, Critical);
+        return list;
+    }
+    QDomNode node = root.firstChild();
+    QString timeStr;
+    while ( !node.isNull() ) {
+        if ( node.toElement().tagName() != "user" ) {
+            kError() << "there's no status tag in XML, maybe there is no new status!";
+            return list;
+        }
+        QDomNode node2 = node.firstChild();
+        while ( !node2.isNull() ) {
+            if ( node2.toElement().tagName() == "screen_name" ) {
+                list.append( node2.toElement().text() );
+                break;
+            }
+            node2 = node2.nextSibling();
+        }
+        node = node.nextSibling();
+    }
+    return list;
+}
+
 QDateTime TwitterApiMicroBlog::dateFromString ( const QString &date )
 {
     char s[10];
     int year, day, hours, minutes, seconds;
     sscanf ( qPrintable ( date ), "%*s %s %d %d:%d:%d %*s %d", s, &day, &hours, &minutes, &seconds, &year );
-    int month = monthes[s];
+    int month = d->monthes[s];
     QDateTime recognized ( QDate ( year, month, day ), QTime ( hours, minutes, seconds ) );
     recognized.setTimeSpec( Qt::UTC );
     return recognized.toLocalTime();
@@ -739,12 +840,26 @@ QDateTime TwitterApiMicroBlog::dateFromString ( const QString &date )
 
 void TwitterApiMicroBlog::aboutToUnload()
 {
-    countOfTimelinesToSave = 0;
+    d->countOfTimelinesToSave = 0;
     foreach(Choqok::Account* acc, Choqok::AccountManager::self()->accounts()){
         if(acc->microblog() == this)
-            countOfTimelinesToSave += this->timelineTypes().count();
+            d->countOfTimelinesToSave += this->timelineTypes().count();
     }
     emit saveTimelines();
+}
+
+void TwitterApiMicroBlog::showSendDirectMessageDialog()
+{
+    KAction *act = qobject_cast<KAction *>(sender());
+    if( !act ){
+        kError()<<"This function should call with KAction trigger";
+        Q_ASSERT(act);
+    }
+    TwitterApiAccount *account = qobject_cast<TwitterApiAccount*>(
+                                 Choqok::AccountManager::self()->findAccount( act->data().toString() ) );
+    Q_ASSERT(account);
+    TwitterApiDMessageDialog *dmsg = new TwitterApiDMessageDialog(account, Choqok::UI::Global::mainWindow());
+    dmsg->show();
 }
 
 #include "twitterapimicroblog.moc"

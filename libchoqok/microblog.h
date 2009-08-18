@@ -29,8 +29,10 @@
 #include <QString>
 #include "choqok_export.h"
 #include "choqoktypes.h"
+#include "choqokuiglobal.h"
 
 class ChoqokEditAccountWidget;
+class QMenu;
 
 namespace Choqok
 {
@@ -58,6 +60,13 @@ class CHOQOK_EXPORT MicroBlog : public Plugin
 Q_OBJECT
 public:
     virtual ~MicroBlog();
+
+    /**
+    @brief Return a KMenu contain microblog specific actions.
+    Can use for search facilities, or other things
+    Will add to a button on top of @ref MicroBlogWidget of account/microblog
+    */
+    virtual QMenu *createActionsMenu( Account *theAccount, QWidget *parent = UI::Global::mainWindow() );
 
     /**
     Enumeration for possible errors.
@@ -162,8 +171,6 @@ public:
     */
     virtual QList<Post*> loadTimeline( Choqok::Account *account, const QString &timelineName ) = 0;
 
-public slots:
-
     /**
     \brief Create a new post
 
@@ -225,15 +232,15 @@ signals:
     /**
     Emit when an error occured the @p errorMessage will specify the error.
     */
-    void error( Choqok::Account *theAccount, MicroBlog::ErrorType error,
-                const QString &errorMessage, MicroBlog::ErrorLevel level = Normal );
+    void error( Choqok::Account *theAccount, Choqok::MicroBlog::ErrorType error,
+                const QString &errorMessage, Choqok::MicroBlog::ErrorLevel level = Normal );
 
     /**
     Emit when an error occured on Post manipulation. e.g. On Creation!
     */
     void errorPost( Choqok::Account *theAccount, Choqok::Post *post,
-                    MicroBlog::ErrorType error, const QString &errorMessage,
-                    MicroBlog::ErrorLevel level = Normal );
+                    Choqok::MicroBlog::ErrorType error, const QString &errorMessage,
+                    Choqok::MicroBlog::ErrorLevel level = Normal );
 
     /**
     Emit when microblog plugin is going to unload, and @ref Choqok::TimelineWidget should save their timelines

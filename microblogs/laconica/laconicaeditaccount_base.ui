@@ -166,20 +166,6 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <widget class="QCheckBox" name="kcfg_readonly">
-         <property name="text">
-          <string>Read only</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="kcfg_secure">
-         <property name="text">
-          <string>Use secure connection (HTTPS)</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -198,8 +184,15 @@ p, li { white-space: pre-wrap; }
       <attribute name="title">
        <string>Configuration</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="2" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QCheckBox" name="kcfg_secure">
+         <property name="text">
+          <string>Use secure connection (HTTPS)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="kcfg_doNotShowRepliesOnHome">
          <property name="text">
           <string>Do not show replies to me on the home tab.</string>
@@ -209,7 +202,7 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

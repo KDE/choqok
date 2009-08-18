@@ -22,39 +22,41 @@
 
 */
 
-#ifndef NOTIFYMANAGER_H
-#define NOTIFYMANAGER_H
+#ifndef TWITTERAPIDMESSAGEDIALOG_H
+#define TWITTERAPIDMESSAGEDIALOG_H
 
-#include <KNotification>
-#include <klocalizedstring.h>
-#include "choqok_export.h"
+#include <kdialog.h>
+#include <microblog.h>
 
-namespace Choqok
+namespace Choqok {
+class Account;
+struct Post;
+}
+
+class TwitterApiAccount;
+
+class TwitterApiDMessageDialog : public KDialog
 {
-
-class CHOQOK_EXPORT NotifyManager
-{
+    Q_OBJECT
 public:
-    ~NotifyManager();
-//     static NotifyManager *self();
+    TwitterApiDMessageDialog( TwitterApiAccount *theAccount, QWidget* parent = 0, Qt::WFlags flags = 0);
+    ~TwitterApiDMessageDialog();
 
-    static void error( const QString &message , const QString &title = i18n("Error") );
-    static void success( const QString &message, const QString &title = i18n("Success") );
-
-    static void newPostArrived( const QString& message, const QString& title );
-
-    static void shortening( const QString& message, const QString& title = i18n("Shortening a URL") );
+protected slots:
+    void friendsUsernameListed(TwitterApiAccount*,QStringList);
+    void submitPost(QString);
+    void reloadFriendslist();
+    void postCreated(Choqok::Account*,Choqok::Post*);
+    void errorPost(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,
+                   QString,Choqok::MicroBlog::ErrorLevel);
 
 protected:
-    NotifyManager();
-    static void triggerNotify( const QString &eventId, const QString &title,
-                          const QString &message,
-                          KNotification::NotificationFlags flags = KNotification::CloseOnTimeout );
+    virtual void setupUi( QWidget *mainWidget );
+    virtual void slotButtonClicked(int button);
 
 private:
-//     static NotifyManager *m_self;
     class Private;
     Private *d;
 };
-}
-#endif // NOTIFYMANAGER_H
+
+#endif // TWITTERAPIDMESSAGEDIALOG_H

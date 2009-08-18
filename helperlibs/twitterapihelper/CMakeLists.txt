@@ -7,6 +7,7 @@ set(twitterhelper_LIB_SRCS
 twitterapiaccount.cpp
 twitterapimicroblog.cpp
 twitterapipostwidget.cpp
+twitterapidmessagedialog.cpp
 )
 # kde4_add_kcfg_files(twitterhelper_LIB_SRCS
 # choqokbehaviorsettings.kcfgc

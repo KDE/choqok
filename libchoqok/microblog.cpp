@@ -26,6 +26,7 @@
 #include <KDebug>
 #include "account.h"
 #include <QTimer>
+#include <QMenu>
 
 namespace Choqok
 {
@@ -52,6 +53,11 @@ MicroBlog::~MicroBlog()
 {
     kDebug();
     delete d;
+}
+
+QMenu* MicroBlog::createActionsMenu(Account*, QWidget* parent)
+{
+    return new QMenu(parent);
 }
 
 QString MicroBlog::serviceName() const
@@ -118,6 +124,7 @@ QStringList MicroBlog::timelineTypes() const
 {
     return d->timelineTypes;
 }
+
 void MicroBlog::setTimelineTypes(const QStringList &types)
 {
     d->timelineTypes = types;

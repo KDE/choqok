@@ -81,10 +81,10 @@ protected slots:
                                           QList< Choqok::Post* > data );
     void slotUpdateUnreadCount( int change );
     void slotMarkAllAsRead();
-    void error(Choqok::Account* theAccount, MicroBlog::ErrorType errorType,
-                                QString errorMsg, MicroBlog::ErrorLevel level);
-    void errorPost(Choqok::Account* theAccount, Choqok::Post*, MicroBlog::ErrorType errorType,
-                                    QString errorMsg, MicroBlog::ErrorLevel level);
+    void error(Choqok::Account* theAccount, Choqok::MicroBlog::ErrorType errorType,
+                                QString errorMsg, Choqok::MicroBlog::ErrorLevel level);
+    void errorPost(Choqok::Account* theAccount, Choqok::Post*, Choqok::MicroBlog::ErrorType errorType,
+                                    QString errorMsg, Choqok::MicroBlog::ErrorLevel level);
 signals:
     /**
     @brief Emit to tell MainWindow to show this MicroBlog
@@ -109,6 +109,7 @@ signals:
     void updateUnreadCount( int change, int sum );
 
 protected:
+    virtual QLayout *createToolbar();
     virtual void setupUi();
     virtual TimelineWidget* addTimelineWidgetToUi( const QString &name);
     void initTimelines();

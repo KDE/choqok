@@ -460,8 +460,8 @@ void MainWindow::addBlog( Choqok::Account * account, bool isStartup )
     kDebug()<<"Plugin Icon: "<<account->microblog()->pluginIcon();
     mainWidget->addTab( widget, KIcon(account->microblog()->pluginIcon()), account->alias() );
 
-//     if( !isStartup )///FIXME Cause a crash!
-//         QTimer::singleShot( 1500, widget, SLOT( updateTimelines() ) );
+    if( !isStartup )///FIXME Cause a crash The MicroBlog and Account has been deleted before! :-/
+        QTimer::singleShot( 1500, widget, SLOT( updateTimelines() ) );
     enableApp();
     if( mainWidget->count() > 1)
         mainWidget->setTabBarHidden(false);

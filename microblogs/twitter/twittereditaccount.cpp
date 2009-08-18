@@ -43,7 +43,6 @@ TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
         kcfg_username->setText( mAccount->username() );
         kcfg_password->setText( mAccount->password() );
         kcfg_alias->setText( mAccount->alias() );
-        kcfg_readonly->setChecked( mAccount->isReadOnly() );
         kcfg_secure->setChecked( mAccount->useSecureConnection() );
     } else {
         setAccount( mAccount = new TwitterAccount(microblog, microblog->serviceName()) );
@@ -72,7 +71,6 @@ Choqok::Account* TwitterEditAccountWidget::apply()
     if ( !verifyCredentials() )
         return 0;
     mAccount->setAlias(kcfg_alias->text());
-    mAccount->setReadOnly(kcfg_readonly->isChecked());
     mAccount->setUseSecureConnection(kcfg_secure->isChecked());
     mAccount->writeConfig();
     return mAccount;

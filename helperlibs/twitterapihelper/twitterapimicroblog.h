@@ -38,10 +38,11 @@ Q_OBJECT
 public:
     ~TwitterApiMicroBlog();
 
+    virtual QMenu* createActionsMenu(Choqok::Account* theAccount,
+                                     QWidget* parent = Choqok::UI::Global::mainWindow());
     virtual QList< Choqok::Post* > loadTimeline(Choqok::Account* accountAlias, const QString& timelineName);
     virtual void saveTimeline(Choqok::Account *account, const QString& timelineName,
                               QList< Choqok::UI::PostWidget* > timeline);
-public slots:
 
     /**
     \brief Create a new post
@@ -78,23 +79,37 @@ public slots:
     */
     virtual void updateTimelines(Choqok::Account *theAccount);
 
+    /**
+     add post with Id @p postId to @p theAccount favorite list
+    */
     virtual void createFavorite( Choqok::Account *theAccount, const QString &postId );
+
+    /**
+     remove post with Id @p postId from @p theAccount favorite list
+    */
     virtual void removeFavorite( Choqok::Account *theAccount, const QString &postId );
 
     virtual void aboutToUnload();
 
+    virtual void listFriendsUsername( TwitterApiAccount *theAccount );
+
 signals:
     void favoriteCreated(Choqok::Account *theAccount, const QString &postId);
     void favoriteRemoved(Choqok::Account *theAccount, const QString &postId);
+    void friendsUsernameListed( TwitterApiAccount *theAccount, const QStringList &friendsList );
 
 protected slots:
-    virtual void requestTimeLine(Choqok::Account *theAccount, QString type, QString latestStatusId, int page = 0, QString maxId = 0 );
+    virtual void requestTimeLine(Choqok::Account *theAccount, QString type,
+                                 QString latestStatusId, int page = 0, QString maxId = 0 );
     virtual void slotCreatePost( KJob *job );
     virtual void slotFetchPost( KJob *job );
     virtual void slotRemovePost( KJob *job );
-    virtual void slotCreateFavorite( KJob *job  );
-    virtual void slotRemoveFavorite( KJob *job  );
-    virtual void slotRequestTimeline( KJob *job  );
+    virtual void slotCreateFavorite( KJob *job );
+    virtual void slotRemoveFavorite( KJob *job );
+    virtual void slotRequestTimeline( KJob *job );
+    virtual void showSendDirectMessageDialog();
+    virtual void requestFriendsScreenName( TwitterApiAccount* theAccount, int page = 1 );
+    virtual void slotRequestFriendsScreenName( KJob *job );
 
 protected:
     TwitterApiMicroBlog( const KComponentData &instance, QObject *parent=0 );
@@ -109,9 +124,8 @@ protected:
     virtual Choqok::Post * readDMessageFromXml (Choqok::Account *theAccount, const QByteArray &buffer );
     virtual Choqok::Post * readDMessageFromDomElement (Choqok::Account *theAccount, const QDomElement& root );
     virtual QList<Choqok::Post*> readDMessagesFromXml (Choqok::Account *theAccount, const QByteArray &buffer );
+    virtual QStringList readUsersScreenNameFromXml( Choqok::Account *theAccount, const QByteArray & buffer );
 
-
-    QMap<QString, int> monthes;
     QHash<QString, QString> timelineApiPath;//TimelineType, path
 
     QMap<KJob*, QString> mFavoriteMap;//Job, postId
@@ -120,10 +134,11 @@ protected:
     QMap<KJob*, Choqok::Post*> mFetchPostMap;
     QMap<KJob*, QString> mRequestTimelineMap;//Job, TimelineType
     QMap<QString, QString> mTimelineLatestId;//TimelineType, LatestId
-    QMap<KJob*, Choqok::Account*> mAccountJobs;
+    QMap<KJob*, Choqok::Account*> mJobsAccount;
 
-    uint countOfPost;
-    int countOfTimelinesToSave;
+private:
+    class Private;
+    Private *d;
 };
 
 #endif

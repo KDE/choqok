@@ -110,7 +110,7 @@ void QuickPost::show()
     KDialog::show();
 }
 
-void QuickPost::slotSubmitPost( Account* theAccount, Post* post )
+void QuickPost::slotSubmitPost( Account* , Post* post )
 {
     if (post == d->submittedPost) {
         d->txtPost->setEnabled(true);
@@ -123,8 +123,8 @@ void QuickPost::slotSubmitPost( Account* theAccount, Post* post )
     }
 }
 
-void QuickPost::postError(Account* theAccount, Choqok::Post* post,
-                          MicroBlog::ErrorType error, const QString& errorMessage)
+void QuickPost::postError(Account* , Choqok::Post* post,
+                          Choqok::MicroBlog::ErrorType , const QString& )
 {
     if (post == d->submittedPost) {
         d->txtPost->setEnabled(true);
@@ -178,8 +178,10 @@ void QuickPost::loadAccounts()
         connect(current->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
                 SLOT(slotSubmitPost(Choqok::Account*,Choqok::Post*)) );
         connect(current->microblog(),
-                SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,MicroBlog::ErrorType,QString)),
-                SLOT(postError(Choqok::Account*,Choqok::Post*,MicroBlog::ErrorType,QString)) );
+                SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,
+                                 Choqok::MicroBlog::ErrorType,QString)),
+                SLOT(postError(Choqok::Account*,Choqok::Post*,
+                               Choqok::MicroBlog::ErrorType,QString)) );
     }
 }
 
