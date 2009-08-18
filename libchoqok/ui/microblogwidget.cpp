@@ -140,6 +140,7 @@ void MicroBlogWidget::newTimelineDataRecieved( Choqok::Account* theAccount, cons
         return;
 
     kDebug()<<d->account->alias()<<": "<<type;
+    d->latestUpdate->setText(KDateTime::currentLocalTime().toString());
     if(d->timelines.contains(type)){
         d->timelines.value(type)->addNewPosts(data);
     } else {
