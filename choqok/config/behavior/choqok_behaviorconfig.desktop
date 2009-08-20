@@ -10,12 +10,14 @@ X-KDE-ParentComponents=choqok
 X-KDE-Weight=10
 
 Name=Behavior
+Name[it]=Comportamento
 Name[pt]=Comportamento
 Name[pt_BR]=Comportamento
 Name[sv]=Beteende
 Name[uk]=Поведінка
 Name[x-test]=xxBehaviorxx
 Comment=Personalize Choqok's Behavior
+Comment[it]=Personalizza il comportamento di Choqok
 Comment[pt]=Personalizar o Comportamento do Choqok
 Comment[pt_BR]=Personalizar o Comportamento do Choqok
 Comment[sv]=Anpassa Choqoks beteende

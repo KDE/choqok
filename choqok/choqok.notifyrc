@@ -6,12 +6,14 @@ Comment[x-test]=xxChoqokxx
 
 [Event/new-post-arrived]
 Name=New Post Arrived
+Name[it]=Nuovo messaggio arrivato
 Name[pt]=Chegou uma Nova Publicação
 Name[pt_BR]=Chegou novo post
 Name[sv]=Nytt inlägg har anlänt
 Name[uk]=Надіслано новий допис
 Name[x-test]=xxNew Post Arrivedxx
 Comment=New post arrived
+Comment[it]=Nuovo messaggio arrivato
 Comment[pt]=Chegou uma nova publicação
 Comment[pt_BR]=Chegou novo post
 Comment[sv]=Nytt inlägg har anlänt
@@ -22,12 +24,14 @@ Persistent=True
 
 [Event/job-success]
 Name=Job Success
+Name[it]=Processo terminato correttamente
 Name[pt]=Sucesso da Tarefa
 Name[pt_BR]=Trabalho concluído com sucesso
 Name[sv]=Jobb lyckades
 Name[uk]=Завдання успішно виконано
 Name[x-test]=xxJob Successxx
 Comment=A job finished successfully
+Comment[it]=Un processo è terminato correttamente
 Comment[pt]=Uma tarefa terminou com sucesso
 Comment[pt_BR]=Um trabalho foi concluído com sucesso
 Comment[sv]=Ett jobb avslutades med lyckat resultat.
@@ -37,12 +41,14 @@ Action=Popup
 
 [Event/job-error]
 Name=Job Error
+Name[it]=Errore nel processo
 Name[pt]=Erro da Tarefa
 Name[pt_BR]=Erro no trabalho
 Name[sv]=Jobbfel
 Name[uk]=Помилка виконання
 Name[x-test]=xxJob Errorxx
 Comment=There was an error while performing a job
+Comment[it]=Si è verificato un errore durante l'esecuzione di un processo
 Comment[pt]=Ocorreu um erro ao efectuar uma tarefa
 Comment[pt_BR]=Ocorreu um erro ao efectuar uma tarefa
 Comment[sv]=Ett fel uppstod när ett jobb utfördes
@@ -52,12 +58,14 @@ Action=Popup
 
 [Event/shortening]
 Name=Shortening
+Name[it]=Abbreviazione
 Name[pt]=Redução
 Name[pt_BR]=Encolhimento
 Name[sv]=Avkortning
 Name[uk]=Скорочення
 Name[x-test]=xxShorteningxx
 Comment=Shortening a URL
+Comment[it]=Abbreviazione di un URL
 Comment[pt]=Redução de um URL
 Comment[pt_BR]=Encolhendo uma URL
 Comment[sv]=Avkortar en webbadress
