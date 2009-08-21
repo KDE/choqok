@@ -85,7 +85,6 @@ void AccountsWidget::addAccount()
                                                                                       Choqok::UI::Global::mainWindow()),
                                                         Choqok::UI::Global::mainWindow() );
             d->exec();
-            blog->deleteLater();
         } else {
             KMessageBox::sorry(this, i18n("Cannot load %1 plugin. Check your installation.", name));
         }

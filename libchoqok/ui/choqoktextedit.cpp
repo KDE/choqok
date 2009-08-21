@@ -147,12 +147,14 @@ void TextEdit::setPlainText(const QString& text)
 {
     KTextEdit::setPlainText(text);
     moveCursor(QTextCursor::End);
+    setEnabled(true);
 }
 
 void TextEdit::setText(const QString& text)
 {
     KTextEdit::setText(text);
     moveCursor(QTextCursor::End);
+    setEnabled(true);
 }
 
 }
