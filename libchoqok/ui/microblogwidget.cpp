@@ -137,13 +137,14 @@ void MicroBlogWidget::removeOldPosts()
     }
 }
 
-void MicroBlogWidget::newTimelineDataRecieved( Choqok::Account* theAccount, const QString& type, QList< Choqok::Post* > data )
+void MicroBlogWidget::newTimelineDataRecieved( Choqok::Account* theAccount, const QString& type,
+                                               QList< Choqok::Post* > data )
 {
     if(theAccount != currentAccount())
         return;
 
     kDebug()<<d->account->alias()<<": "<<type;
-    d->latestUpdate->setText(KDateTime::currentLocalTime().toString());
+    d->latestUpdate->setText(KDateTime::currentLocalDateTime().time().toString());
     if(d->timelines.contains(type)){
         d->timelines.value(type)->addNewPosts(data);
     } else {
@@ -165,9 +166,11 @@ TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)
     TimelineWidget *mbw = d->blog->createTimelineWidget(d->account, name, this);
     if(mbw) {
         mbw->setObjectName(name);
+        Choqok::TimelineInfo *info = currentAccount()->microblog()->timelineInfo(name);
         d->timelines.insert(name, mbw);
         d->timelineUnreadCount.insert(mbw, 0);
-        d->timelinesTabWidget->addTab(mbw, name);
+        d->timelinesTabWidget->addTab(mbw, info->name);
+        d->timelinesTabWidget->setTabIcon(d->timelinesTabWidget->indexOf(mbw), KIcon(info->icon));
         connect(this, SIGNAL(markAllAsRead()), mbw, SLOT(markAllAsRead()));
         connect( mbw, SIGNAL(updateUnreadCount(int)),
                     this, SLOT(slotUpdateUnreadCount(int)) );
@@ -296,7 +299,7 @@ QLayout * MicroBlogWidget::createToolbar()
     d->abortAll = new KPushButton(this);
     d->abortAll->setIcon(KIcon("dialog-cancel"));
     d->abortAll->setMaximumWidth(25);
-    d->abortAll->setToolTip(i18n("Abort all jobs"));
+    d->abortAll->setToolTip(i18n("Abort"));
     connect( d->abortAll, SIGNAL(clicked(bool)), SLOT(slotAbortAllJobs()) );
 
     btnActions->setMenu(d->account->microblog()->createActionsMenu(d->account));

@@ -29,6 +29,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "postwidget.h"
 #include <KDebug>
 #include "choqokbehaviorsettings.h"
+#include <QLabel>
 
 namespace Choqok {
 namespace UI {
@@ -70,12 +71,20 @@ void TimelineWidget::setTimelineName(const QString &type)
 
 void TimelineWidget::setupUi()
 {
-    QGridLayout *gridLayout;
+    QLabel *lblDesc = new QLabel(this);
+    lblDesc->setText(currentAccount()->microblog()->timelineInfo(d->timelineName)->description);
+    lblDesc->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    lblDesc->setWordWrap(true);
+    QFont fnt = lblDesc->font();
+    fnt.setBold(true);
+    lblDesc->setFont(fnt);
+
+    QVBoxLayout *gridLayout;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
     QVBoxLayout *verticalLayout_2;
     QSpacerItem *verticalSpacer;
-    gridLayout = new QGridLayout(this);
+    gridLayout = new QVBoxLayout(this);
     gridLayout->setMargin(0);
     gridLayout->setObjectName("gridLayout");
     scrollArea = new QScrollArea(this);
@@ -98,7 +107,8 @@ void TimelineWidget::setupUi()
 
     scrollArea->setWidget(scrollAreaWidgetContents);
 
-    gridLayout->addWidget(scrollArea, 0, 0, 1, 1);
+    gridLayout->addWidget(lblDesc);
+    gridLayout->addWidget(scrollArea);
 
     QPalette p = palette();
 }

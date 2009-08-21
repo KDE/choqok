@@ -80,9 +80,37 @@ TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObje
     timelineApiPath["Reply"] = "/statuses/replies.xml";
     timelineApiPath["Inbox"] = "/direct_messages.xml";
     timelineApiPath["Outbox"] = "/direct_messages/sent.xml";
+    setTimelineInfos();
     foreach(QString tm, this->timelineTypes()) {
         mTimelineLatestId.insert(tm, QString());
     }
+}
+
+void TwitterApiMicroBlog::setTimelineInfos()
+{
+    Choqok::TimelineInfo *t = new Choqok::TimelineInfo;
+    t->name = i18nc("Timeline Name", "Home");
+    t->description = i18nc("Timeline description", "You and your friends");
+    t->icon = "user-home";
+    mTimelineInfos["Home"] = t;
+
+    t = new Choqok::TimelineInfo;
+    t->name = i18nc("Timeline Name", "Reply");
+    t->description = i18nc("Timeline description", "Replies to you");
+    t->icon = "edit-undo";
+    mTimelineInfos["Reply"] = t;
+
+    t = new Choqok::TimelineInfo;
+    t->name = i18nc("Timeline Name", "Inbox");
+    t->description = i18nc("Timeline description", "Your incoming private messages");
+    t->icon = "mail-folder-inbox";
+    mTimelineInfos["Inbox"] = t;
+
+    t = new Choqok::TimelineInfo;
+    t->name = i18nc("Timeline Name", "Outbox");
+    t->description = i18nc("Timeline description", "Private messages you have sent");
+    t->icon = "mail-folder-outbox";
+    mTimelineInfos["Outbox"] = t;
 }
 
 TwitterApiMicroBlog::~TwitterApiMicroBlog()
@@ -869,6 +897,14 @@ void TwitterApiMicroBlog::showSendDirectMessageDialog()
     Q_ASSERT(account);
     TwitterApiDMessageDialog *dmsg = new TwitterApiDMessageDialog(account, Choqok::UI::Global::mainWindow());
     dmsg->show();
+}
+
+Choqok::TimelineInfo * TwitterApiMicroBlog::timelineInfo(const QString& timelineName)
+{
+    if( isValidTimeline(timelineName) )
+        return mTimelineInfos.value(timelineName);
+    else
+        return 0;
 }
 
 #include "twitterapimicroblog.moc"

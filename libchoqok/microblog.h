@@ -212,47 +212,6 @@ public:
     virtual void updateTimelines( Choqok::Account *theAccount ) = 0;
 
 //     virtual void aboutToUnload();
-signals:
-
-    /**
-    Emit when data for a timeline recieved! @p type specifies the type of timeline as specifies in timelineTypes()
-    */
-    void timelineDataReceived( Choqok::Account *theAccount, const QString &timelineName, QList<Choqok::Post*> data );
-
-    /**
-    Emit when a post successfully created!
-    */
-    void postCreated( Choqok::Account *theAccount, Choqok::Post *post );
-
-    /**
-    Emit when a post successfully fetched!
-    */
-    void postFetched( Choqok::Account *theAccount, Choqok::Post *post );
-
-    /**
-    Emit when a post successfully removed!
-    */
-    void postRemoved( Choqok::Account *theAccount, Choqok::Post *post );
-
-    /**
-    Emit when an error occured the @p errorMessage will specify the error.
-    */
-    void error( Choqok::Account *theAccount, Choqok::MicroBlog::ErrorType error,
-                const QString &errorMessage, Choqok::MicroBlog::ErrorLevel level = Normal );
-
-    /**
-    Emit when an error occured on Post manipulation. e.g. On Creation!
-    */
-    void errorPost( Choqok::Account *theAccount, Choqok::Post *post,
-                    Choqok::MicroBlog::ErrorType error, const QString &errorMessage,
-                    Choqok::MicroBlog::ErrorLevel level = Normal );
-
-    /**
-    Emit when microblog plugin is going to unload, and @ref Choqok::TimelineWidget should save their timelines
-    */
-    void saveTimelines();
-
-public:
     /**
     return Url to account page on service (Some kind of blog homepage)
     */
@@ -292,7 +251,12 @@ public:
     Checks if @p timeline is valid for this blog! i.e. there is an entry for it at timelineTypes() list.
     @return True if the timeline is valid, false if not!
     */
-    bool isValidTimeline( const QString &timeline );
+    bool isValidTimeline( const QString &timelineName );
+
+    /**
+    @Return informations about an specific timeline
+    */
+    virtual TimelineInfo * timelineInfo( const QString &timelineName ) = 0;
 
     /**
     Return service homepage Url
@@ -310,6 +274,46 @@ public:
     Indicate character limit for a post. 0 means no limit.
     */
     uint postCharLimit() const;
+
+signals:
+
+    /**
+    Emit when data for a timeline recieved! @p type specifies the type of timeline as specifies in timelineTypes()
+    */
+    void timelineDataReceived( Choqok::Account *theAccount, const QString &timelineName, QList<Choqok::Post*> data );
+
+    /**
+    Emit when a post successfully created!
+    */
+    void postCreated( Choqok::Account *theAccount, Choqok::Post *post );
+
+    /**
+    Emit when a post successfully fetched!
+    */
+    void postFetched( Choqok::Account *theAccount, Choqok::Post *post );
+
+    /**
+    Emit when a post successfully removed!
+    */
+    void postRemoved( Choqok::Account *theAccount, Choqok::Post *post );
+
+    /**
+    Emit when an error occured the @p errorMessage will specify the error.
+    */
+    void error( Choqok::Account *theAccount, Choqok::MicroBlog::ErrorType error,
+                const QString &errorMessage, Choqok::MicroBlog::ErrorLevel level = Normal );
+
+    /**
+    Emit when an error occured on Post manipulation. e.g. On Creation!
+    */
+    void errorPost( Choqok::Account *theAccount, Choqok::Post *post,
+                    Choqok::MicroBlog::ErrorType error, const QString &errorMessage,
+                    Choqok::MicroBlog::ErrorLevel level = Normal );
+
+    /**
+    Emit when microblog plugin is going to unload, and @ref Choqok::TimelineWidget should save their timelines
+    */
+    void saveTimelines();
 
 protected:
 

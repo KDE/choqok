@@ -98,6 +98,7 @@ public:
 
     virtual void listFriendsUsername( TwitterApiAccount *theAccount );
 
+    virtual Choqok::TimelineInfo * timelineInfo(const QString &timelineName);
 signals:
     void favoriteCreated(Choqok::Account *theAccount, const QString &postId);
     void favoriteRemoved(Choqok::Account *theAccount, const QString &postId);
@@ -119,6 +120,7 @@ protected slots:
 protected:
     TwitterApiMicroBlog( const KComponentData &instance, QObject *parent=0 );
 
+    virtual void setTimelineInfos();
     virtual KUrl apiUrl( TwitterApiAccount* theAccount );
     virtual QDateTime dateFromString( const QString &date );
     virtual Choqok::Post * readPostFromDomElement( Choqok::Account* theAccount,
@@ -132,6 +134,7 @@ protected:
     virtual QStringList readUsersScreenNameFromXml( Choqok::Account *theAccount, const QByteArray & buffer );
 
     QHash<QString, QString> timelineApiPath;//TimelineType, path
+    QMap<QString, Choqok::TimelineInfo*> mTimelineInfos;//timelineName, Info
 
     QMap<KJob*, QString> mFavoriteMap;//Job, postId
     QMap<KJob*, Choqok::Post*> mRemovePostMap;

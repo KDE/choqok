@@ -35,7 +35,7 @@ enum JobResult{
     Success = 1
 };
 
-struct CHOQOK_EXPORT User {
+class CHOQOK_EXPORT User {
 public:
     QString userId;
     QString realName;
@@ -48,7 +48,7 @@ public:
     uint followersCount;
 };
 
-struct CHOQOK_EXPORT Post {
+class CHOQOK_EXPORT Post {
 public:
     Post()
     :isFavorited(false), isPrivate(false), isError(false)
@@ -67,6 +67,15 @@ public:
     QString type;
     bool isPrivate;
     bool isError;
+};
+/**
+Describe an specific timeline, Should use by @ref MicroBlog
+*/
+class CHOQOK_EXPORT TimelineInfo {
+public:
+    QString name;
+    QString description;
+    QString icon;
 };
 /*
 enum FilterAction{
