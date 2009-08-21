@@ -42,9 +42,11 @@ class CHOQOK_EXPORT ComposerWidget : public QWidget
 public:
     ComposerWidget(Account *account, QWidget* parent = 0);
     virtual ~ComposerWidget();
+    TextEdit *editor();
 
 public slots:
-    void setText(const QString &text, const QString &replyToId = QString());
+    virtual void setText(const QString &text, const QString &replyToId = QString());
+    virtual void abort();
 
 protected slots:
     virtual void submitPost( const QString &text );
@@ -53,7 +55,6 @@ protected slots:
     virtual void editorCleared();
 
 protected:
-    TextEdit *editor();
     Account *currentAccount();
 
 private:

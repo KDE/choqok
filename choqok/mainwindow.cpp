@@ -65,7 +65,9 @@ MainWindow::MainWindow()
     mainWidget = new KTabWidget( this );
     mainWidget->setDocumentMode(true);
     mainWidget->setMovable(true);
+    connect( mainWidget, SIGNAL(currentChanged(int)), SLOT(slotCurrentBlogChanged(int)) );
     setCentralWidget( mainWidget );
+
     sysIcon = new SysTrayIcon(this);
     setupActions();
     statusBar()->show();
@@ -84,9 +86,10 @@ MainWindow::MainWindow()
              this, SLOT( removeBlog(QString)) );
     connect( Choqok::AccountManager::self(), SIGNAL(allAccountsLoaded()),
              SLOT(loadAllAccounts()) );
-    QTimer::singleShot(0, Choqok::PluginManager::self(), SLOT( loadAllPlugins() ) );
     settingsChanged();
-    Choqok::AccountManager::self()->loadAllAccounts();
+    
+    QTimer::singleShot(0, Choqok::PluginManager::self(), SLOT( loadAllPlugins() ) );
+    QTimer::singleShot(0, Choqok::AccountManager::self(), SLOT( loadAllAccounts() ) );
 
     QPoint pos = Choqok::BehaviorSettings::position();
     if(pos.x() != -1 && pos.y() != -1) {
@@ -562,4 +565,10 @@ void MainWindow::slotMarkAllAsRead()
         mainWidget->setTabText( i, wd->currentAccount()->alias() );
     }
 }
+
+void MainWindow::slotCurrentBlogChanged(int)
+{
+    qobject_cast<Choqok::UI::MicroBlogWidget *>(mainWidget->currentWidget())->setFocus();
+}
+
 #include "mainwindow.moc"

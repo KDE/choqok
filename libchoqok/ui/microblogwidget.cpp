@@ -37,6 +37,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QLabel>
 #include <KMenu>
 #include <KDateTime>
+#include <QKeyEvent>
+#include "choqoktextedit.h"
 
 namespace Choqok {
 namespace UI {
@@ -55,6 +57,7 @@ public:
     QMap<TimelineWidget*, int> timelineUnreadCount;
     KTabWidget *timelinesTabWidget;
     QLabel *latestUpdate;
+    KPushButton *abortAll;
 };
 
 MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent, Qt::WindowFlags f)
@@ -290,12 +293,40 @@ QLayout * MicroBlogWidget::createToolbar()
     fnt.setBold(true);
     d->latestUpdate->setFont(fnt);
 
+    d->abortAll = new KPushButton(this);
+    d->abortAll->setIcon(KIcon("dialog-cancel"));
+    d->abortAll->setMaximumWidth(25);
+    d->abortAll->setToolTip(i18n("Abort all jobs"));
+    connect( d->abortAll, SIGNAL(clicked(bool)), SLOT(slotAbortAllJobs()) );
+
     btnActions->setMenu(d->account->microblog()->createActionsMenu(d->account));
     toolbar->addWidget(btnActions);
+    toolbar->addWidget(d->abortAll);
     toolbar->addSpacerItem(new QSpacerItem(1, 10, QSizePolicy::Expanding));
     toolbar->addWidget(lblLatestUpdate);
     toolbar->addWidget(d->latestUpdate);
     return toolbar;
+}
+
+void MicroBlogWidget::slotAbortAllJobs()
+{
+    currentAccount()->microblog()->abortAllJobs(currentAccount());
+    composer()->abort();
+}
+
+void MicroBlogWidget::keyPressEvent(QKeyEvent* e)
+{
+    if(e->key() == Qt::Key_Escape)
+        composer()->abort();
+    QWidget::keyPressEvent(e);
+}
+
+void MicroBlogWidget::setFocus()
+{
+    if( composer() )
+        composer()->editor()->setFocus( Qt::OtherFocusReason );
+    else
+        QWidget::setFocus();
 }
 
 }

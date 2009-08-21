@@ -55,6 +55,7 @@ public:
     QMap<QString, int> monthes;
     QStringList friendsList;
 };
+
 TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObject *parent )
 : MicroBlog( instance, parent), d(new Private)
 {
@@ -296,7 +297,15 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
 void TwitterApiMicroBlog::abortAllJobs(Choqok::Account* theAccount)
 {
     foreach ( KJob *job, mJobsAccount.keys(theAccount) ) {
-        job->kill();
+        job->kill(KJob::EmitResult);
+    }
+}
+
+void TwitterApiMicroBlog::abortCreatePostJobs(Choqok::Account* theAccount)
+{
+    foreach(KJob *job, mCreatePostMap.keys()){
+        if(mJobsAccount[job] == theAccount)
+            job->kill(KJob::EmitResult);
     }
 }
 

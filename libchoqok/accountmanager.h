@@ -40,7 +40,6 @@ class CHOQOK_EXPORT AccountManager : public QObject
     Q_OBJECT
 public:
     ~AccountManager();
-    void loadAllAccounts();
 
     /**
      * \brief Retrieve the instance of AccountManager.
@@ -85,6 +84,10 @@ public:
 
     QString lastError() const;
     QString generatePostBackupFileName( const QString &alias, QString type );
+
+public slots:
+    void loadAllAccounts();
+
 signals:
     void accountAdded( Choqok::Account *account );
     void accountRemoved( const QString &alias );

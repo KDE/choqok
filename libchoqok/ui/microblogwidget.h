@@ -71,20 +71,11 @@ public slots:
     */
     virtual void updateTimelines();
 
-protected slots:
     /**
-    Connected to @ref MicroBlog::timelineDataReceived() to update timelines
-
-    @see updateTimelines()
+    Using to give focus to composer()->editot() on tab change
     */
-    virtual void newTimelineDataRecieved( Choqok::Account *theAccount, const QString& type,
-                                          QList< Choqok::Post* > data );
-    void slotUpdateUnreadCount( int change );
-    void slotMarkAllAsRead();
-    void error(Choqok::Account* theAccount, Choqok::MicroBlog::ErrorType errorType,
-                                QString errorMsg, Choqok::MicroBlog::ErrorLevel level);
-    void errorPost(Choqok::Account* theAccount, Choqok::Post*, Choqok::MicroBlog::ErrorType errorType,
-                                    QString errorMsg, Choqok::MicroBlog::ErrorLevel level);
+    virtual void setFocus();
+
 signals:
     /**
     @brief Emit to tell MainWindow to show this MicroBlog
@@ -107,6 +98,24 @@ signals:
     @param sum of unread count on this blog
     */
     void updateUnreadCount( int change, int sum );
+
+protected slots:
+    /**
+    Connected to @ref MicroBlog::timelineDataReceived() to update timelines
+
+    @see updateTimelines()
+    */
+    virtual void newTimelineDataRecieved( Choqok::Account *theAccount, const QString& type,
+                                          QList< Choqok::Post* > data );
+    void slotUpdateUnreadCount( int change );
+    void slotMarkAllAsRead();
+    void error(Choqok::Account* theAccount, Choqok::MicroBlog::ErrorType errorType,
+                                QString errorMsg, Choqok::MicroBlog::ErrorLevel level);
+    void errorPost(Choqok::Account* theAccount, Choqok::Post*, Choqok::MicroBlog::ErrorType errorType,
+                                    QString errorMsg, Choqok::MicroBlog::ErrorLevel level);
+    void slotAbortAllJobs();
+
+    virtual void keyPressEvent(QKeyEvent* );
 
 protected:
     virtual QLayout *createToolbar();

@@ -180,10 +180,15 @@ public:
     virtual void createPost( Choqok::Account *theAccount, Choqok::Post *post ) = 0;
 
     /**
-    \brief Abort all of createPost requests!
+    \brief Abort all requests!
     */
     virtual void abortAllJobs( Choqok::Account *theAccount ) = 0;
 
+    /**
+    \brief Abort all createPost jobs
+    \see abortAllJobs()
+    */
+    virtual void abortCreatePostJobs( Choqok::Account *theAccount ) = 0;
     /**
     \brief Fetch a post
 

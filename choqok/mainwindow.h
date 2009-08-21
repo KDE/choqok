@@ -93,6 +93,7 @@ protected slots:
     void slotQuit();
     void showBlog();
     void slotUpdateUnreadCount( int change, int sum );
+    void slotCurrentBlogChanged(int);
 
 protected:
     void hideEvent( QHideEvent * event );

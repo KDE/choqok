@@ -113,6 +113,13 @@ void ComposerWidget::editorCleared()
     d->replyToId.clear();
 }
 
+void ComposerWidget::abort()
+{
+    editor()->setEnabled(true);
+    currentAccount()->microblog()->abortCreatePostJobs(currentAccount());
+    editor()->setFocus();
+}
+
 }
 }
 #include "composerwidget.moc"
