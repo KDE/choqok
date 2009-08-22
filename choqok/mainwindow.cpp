@@ -50,6 +50,7 @@
 // #include <knotifyconfigwidget.h>
 #include <ksettings/dialog.h>
 #include <choqokbehaviorsettings.h>
+#include "accounts/accountswidget.h"
 
 static const int TIMEOUT = 5000;
 
@@ -193,6 +194,10 @@ void MainWindow::setupActions()
     showMain->setText( i18n( "Minimize" ) );
     connect( showMain, SIGNAL( triggered( bool ) ), this, SLOT( toggleMainWindow() ) );
 
+    KAction *manageAccounts = new KAction(KIcon("user-group-properties"), i18n("Manage Accounts..."), this);
+    actionCollection()->addAction(QLatin1String("manage_accounts"), manageAccounts);
+    connect( manageAccounts, SIGNAL(triggered(bool)), this, SLOT(slotManageAccounts()) );
+
     KAction *enableUpdates = new KAction( i18n( "Enable Update Timer" ), this );
     enableUpdates->setCheckable( true );
     actionCollection()->addAction( QLatin1String( "choqok_enable_updates" ), enableUpdates );
@@ -220,7 +225,8 @@ void MainWindow::setupActions()
 
     sysIcon->contextMenu()->addAction( actUpdate );
     sysIcon->contextMenu()->addSeparator();
-
+    sysIcon->contextMenu()->addAction(manageAccounts);
+    sysIcon->contextMenu()->addSeparator();
     connect( enableUpdates, SIGNAL( toggled( bool ) ), sysIcon, SLOT( setTimeLineUpdatesEnabled( bool ) ) );
     sysIcon->contextMenu()->addAction( enableUpdates );
     sysIcon->setTimeLineUpdatesEnabled( enableUpdates->isChecked() );
@@ -569,6 +575,12 @@ void MainWindow::slotMarkAllAsRead()
 void MainWindow::slotCurrentBlogChanged(int)
 {
     qobject_cast<Choqok::UI::MicroBlogWidget *>(mainWidget->currentWidget())->setFocus();
+}
+
+void MainWindow::slotManageAccounts()
+{
+    AccountsWidget *wd = new AccountsWidget(this);
+    wd->show();
 }
 
 #include "mainwindow.moc"

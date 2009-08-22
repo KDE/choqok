@@ -25,20 +25,18 @@
 #define ACCOUNTS_H
 #include "ui_accountswidget_base.h"
 
-#define KDE3_SUPPORT
-#include <kcmodule.h>
-#undef KDE3_SUPPORT
+#include <KDialog>
 
 class KMenu;
 namespace Choqok{
 class Account;
 }
 
-class AccountsWidget: public KCModule, public Ui_AccountsWidgetBase
+class AccountsWidget: public KDialog
 {
     Q_OBJECT
 public:
-    AccountsWidget( QWidget *parent, const QVariantList &args  );
+    AccountsWidget( QWidget *parent );
     ~AccountsWidget();
 
 public slots:
@@ -55,6 +53,7 @@ protected slots:
     void accountsTablestateChanged();
 
 private:
+    Ui_AccountsWidgetBase ui;
     void addAccountToTable( /* bool isEnabled, */const QString &alias, const QString &service );
     KMenu * createAddAccountMenu();
     KMenu *mBlogMenu;

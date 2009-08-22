@@ -35,22 +35,20 @@
 #include "editaccountwidget.h"
 #include "editaccountdialog.h"
 #include <choqokuiglobal.h>
-#include <kpluginfactory.h>
 
-K_PLUGIN_FACTORY( ChoqokAccountsConfigFactory,
-                  registerPlugin<AccountsWidget>(); )
-K_EXPORT_PLUGIN( ChoqokAccountsConfigFactory("kcm_choqok_accountsconfig") )
-
-AccountsWidget::AccountsWidget( QWidget* parent, const QVariantList& args )
-        : KCModule( ChoqokAccountsConfigFactory::componentData(), parent, args )
+AccountsWidget::AccountsWidget( QWidget* parent )
+        : KDialog(parent)
 {
     kDebug();
-    setupUi( this );
+    QWidget *wd = new QWidget(this);
+    ui.setupUi( wd );
+    setMainWidget(wd);
+    setWindowTitle(i18n("Manage Accounts"));
 
 //     connect( btnAdd, SIGNAL( clicked() ), this, SLOT( addAccount() ) );
-    connect( btnEdit, SIGNAL( clicked() ), this, SLOT( editAccount() ) );
-    connect( btnRemove, SIGNAL( clicked() ), this, SLOT( removeAccount() ) );
-    connect( accountsTable, SIGNAL( currentItemChanged( QTableWidgetItem *, QTableWidgetItem * ) ),
+    connect( ui.btnEdit, SIGNAL( clicked() ), this, SLOT( editAccount() ) );
+    connect( ui.btnRemove, SIGNAL( clicked() ), this, SLOT( removeAccount() ) );
+    connect( ui.accountsTable, SIGNAL( currentItemChanged( QTableWidgetItem *, QTableWidgetItem * ) ),
              this, SLOT( accountsTablestateChanged() ) );
 
     connect(Choqok::AccountManager::self(), SIGNAL(accountAdded(Choqok::Account*)),
@@ -58,16 +56,15 @@ AccountsWidget::AccountsWidget( QWidget* parent, const QVariantList& args )
     connect(Choqok::AccountManager::self(), SIGNAL(accountRemoved(QString)),
              SLOT(slotAccountRemoved(QString)) );
 
-    btnAdd->setIcon( KIcon( "list-add" ) );
-    btnEdit->setIcon( KIcon( "edit-rename" ) );
-    btnEdit->hide();///FIXME Fix account modify function
-    btnRemove->setIcon( KIcon( "list-remove" ) );
-    btnAdd->setMenu( createAddAccountMenu() );
-    setButtons(Help);
+    ui.btnAdd->setIcon( KIcon( "list-add" ) );
+    ui.btnEdit->setIcon( KIcon( "edit-rename" ) );
+    ui.btnEdit->hide();///FIXME Fix account modify function
+    ui.btnRemove->setIcon( KIcon( "list-remove" ) );
+    ui.btnAdd->setMenu( createAddAccountMenu() );
     load();
 }
 
-AccountsWidget::~ AccountsWidget()
+AccountsWidget::~AccountsWidget()
 {
     kDebug();
 }
@@ -80,8 +77,8 @@ void AccountsWidget::addAccount()
         QString name = act->data().toString();
         Choqok::MicroBlog *blog = qobject_cast<Choqok::MicroBlog *>(Choqok::PluginManager::self()->loadPlugin(name));
         if(blog){
-            AddAccountDialog *d = new AddAccountDialog( blog->createEditAccountWidget(0,
-                                                                                      Choqok::UI::Global::mainWindow()),
+            AddAccountDialog *d = new AddAccountDialog(
+                                       blog->createEditAccountWidget(0, Choqok::UI::Global::mainWindow()),
                                                         Choqok::UI::Global::mainWindow() );
             d->exec();
         } else {
@@ -94,8 +91,8 @@ void AccountsWidget::editAccount( QString alias )
 {
     kDebug();
     if ( alias.isEmpty() ) {
-        int currentRow = accountsTable->currentRow();
-        alias = accountsTable->item( currentRow, 0 )->text();
+        int currentRow = ui.accountsTable->currentRow();
+        alias = ui.accountsTable->item( currentRow, 0 )->text();
     }
     Choqok::Account *currentAccount = Choqok::AccountManager::self()->findAccount(alias);
     if(!currentAccount) {
@@ -113,7 +110,7 @@ void AccountsWidget::removeAccount( QString alias )
 {
     kDebug() << alias;
     if ( alias.isEmpty() )
-        alias = accountsTable->item( accountsTable->currentRow(), 0 )->text();
+        alias = ui.accountsTable->item( ui.accountsTable->currentRow(), 0 )->text();
     if ( Choqok::AccountManager::self()->removeAccount( alias ) ) {
 //         accountsTable->removeRow( accountsTable->currentRow() );
     } else
@@ -124,17 +121,15 @@ void AccountsWidget::slotAccountAdded( Choqok::Account *account )
 {
     kDebug();
     addAccountToTable( account->alias(), account->microblog()->serviceName() );
-    emit changed( true );
 }
 
 void AccountsWidget::slotAccountRemoved( const QString alias )
 {
     kDebug();
-    int count = accountsTable->rowCount();
+    int count = ui.accountsTable->rowCount();
     for(int i = 0; i<count; ++i) {
-        if(accountsTable->item(i, 0)->text() == alias){
-            accountsTable->removeRow(i);
-            emit changed(true);
+        if(ui.accountsTable->item(i, 0)->text() == alias){
+            ui.accountsTable->removeRow(i);
             break;
         }
     }
@@ -143,31 +138,31 @@ void AccountsWidget::slotAccountRemoved( const QString alias )
 void AccountsWidget::addAccountToTable( /* bool isEnabled, */const QString & alias, const QString & service )
 {
     kDebug();
-    int row = accountsTable->rowCount();
-    accountsTable->setRowCount( row + 1 );
+    int row = ui.accountsTable->rowCount();
+    ui.accountsTable->setRowCount( row + 1 );
 //   accountsTable->insertRow(row);
 //     QCheckBox *check = new QCheckBox ( accountsTable );
 //     check->setChecked ( isEnabled );
 //     accountsTable->setCellWidget ( row, 0, check );
-    accountsTable->setItem( row, 0, new QTableWidgetItem( alias ) );
-    accountsTable->setItem( row, 1, new QTableWidgetItem( service ) );
+    ui.accountsTable->setItem( row, 0, new QTableWidgetItem( alias ) );
+    ui.accountsTable->setItem( row, 1, new QTableWidgetItem( service ) );
 }
 
 void AccountsWidget::accountsTablestateChanged()
 {
     kDebug();
-    if ( accountsTable->currentRow() >= 0 ) {
-        btnEdit->setEnabled( true );
-        btnRemove->setEnabled( true );
+    if ( ui.accountsTable->currentRow() >= 0 ) {
+        ui.btnEdit->setEnabled( true );
+        ui.btnRemove->setEnabled( true );
     } else {
-        btnEdit->setEnabled( false );
-        btnRemove->setEnabled( false );
+        ui.btnEdit->setEnabled( false );
+        ui.btnRemove->setEnabled( false );
     }
 }
 
 void AccountsWidget::load()
 {
-    accountsTable->clearContents();
+    ui.accountsTable->clearContents();
     QList<Choqok::Account*> ac = Choqok::AccountManager::self()->accounts();
     QListIterator<Choqok::Account*> it( ac );
     while ( it.hasNext() ) {

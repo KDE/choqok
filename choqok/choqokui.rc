@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="choqok" version="6">
+<kpartgui name="choqok" version="7">
 <MenuBar>
   <Menu name="file"><text>File</text>
     <Action name="choqok_new_post" />
@@ -7,6 +7,9 @@
     <Action name="choqok_mark_as_read" />
     <Separator/>
     <Action name="toggle_mainwin"/>
+  </Menu>
+  <Menu name="accounts"><text>Accounts</text>
+    <Action name="manage_accounts"/>
   </Menu>
   <Menu name="settings"><text>Settings</text>
     <Action name="choqok_enable_updates"/>

@@ -10,9 +10,12 @@ set(choqok_SRCS
    mainwindow.cpp
    main.cpp
    systrayicon.cpp
+   accounts/accountswidget.cpp
+   accounts/addaccountdialog.cpp
+   accounts/editaccountdialog.cpp
 )
 
-# kde4_add_ui_files(choqok_SRCS )
+kde4_add_ui_files(choqok_SRCS accounts/accountswidget_base.ui)
 
 # kde4_add_kcfg_files(choqok_SRCS settings.kcfgc )
 
