@@ -55,7 +55,6 @@ public:
     /**
     Set a @ref Choqok::ComposerWidget on read/write accounts!
     */
-    void setComposerWidget(ComposerWidget* widget);
     Account * currentAccount() const;
 
 public slots:
@@ -117,12 +116,14 @@ protected slots:
 
     virtual void keyPressEvent(QKeyEvent* );
 
+    void slotAccountModified(Choqok::Account *theAccount);
 protected:
     virtual QLayout *createToolbar();
     virtual void setupUi();
     virtual TimelineWidget* addTimelineWidgetToUi( const QString &name);
     void initTimelines();
 
+    void setComposerWidget(ComposerWidget* widget);
     ComposerWidget *composer();
     QMap<QString, TimelineWidget*> timelines();
     QMap<TimelineWidget*, int> timelineUnreadCount();

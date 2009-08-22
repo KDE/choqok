@@ -41,6 +41,7 @@ namespace UI{
 class PostWidget;
 class TimelineWidget;
 class MicroBlogWidget;
+class ComposerWidget;
 }
 /**
 \brief Base class for MicroBlog plugins
@@ -133,6 +134,15 @@ public:
     */
     virtual UI::MicroBlogWidget * createMicroBlogWidget( Choqok::Account *account, QWidget *parent ) = 0;
 
+    /**
+    * @brief Create a ComposerWidget to use in MicroBlogWidget
+    *
+    * @return A new ComposerWidget to use.
+    *
+    * @param account account to use.
+    * @param parent The parent of the 'to be returned' widget
+    */
+    virtual UI::ComposerWidget * createComposerWidget( Choqok::Account *account, QWidget *parent ) = 0;
     /**
     * @brief Create a TimelineWidget to use in MicroBlogWidget
     *

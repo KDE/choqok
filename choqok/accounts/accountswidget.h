@@ -23,7 +23,6 @@
 */
 #ifndef ACCOUNTS_H
 #define ACCOUNTS_H
-#include "ui_accountswidget_base.h"
 
 #include <KDialog>
 
@@ -44,6 +43,7 @@ public slots:
     virtual void load();
 
 protected slots:
+    virtual void slotButtonClicked(int button);
     void addAccount();
     void editAccount( QString alias = QString() );
     void removeAccount( QString alias = QString() );
@@ -53,10 +53,10 @@ protected slots:
     void accountsTablestateChanged();
 
 private:
-    Ui_AccountsWidgetBase ui;
-    void addAccountToTable( /* bool isEnabled, */const QString &alias, const QString &service );
+    void addAccountToTable( Choqok::Account *account );
     KMenu * createAddAccountMenu();
-    KMenu *mBlogMenu;
+    class Private;
+    Private *d;
 };
 
 #endif

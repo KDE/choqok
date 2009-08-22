@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
-    <height>181</height>
+    <width>535</width>
+    <height>293</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -107,19 +107,13 @@
       <enum>QAbstractItemView::SelectRows</enum>
      </property>
      <property name="columnCount">
-      <number>2</number>
+      <number>4</number>
      </property>
      <attribute name="horizontalHeaderVisible">
       <bool>true</bool>
      </attribute>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
-     </attribute>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="horizontalHeaderVisible">
-      <bool>true</bool>
      </attribute>
      <column>
       <property name="text">
@@ -129,6 +123,22 @@
      <column>
       <property name="text">
        <string>MicroBlog</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Read Only</string>
+      </property>
+      <property name="toolTip">
+       <string>Read Only account</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Quick Post</string>
+      </property>
+      <property name="toolTip">
+       <string>Show in Quick Post</string>
       </property>
      </column>
     </widget>

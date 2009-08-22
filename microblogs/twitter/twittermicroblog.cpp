@@ -83,10 +83,7 @@ ChoqokEditAccountWidget * TwitterMicroBlog::createEditAccountWidget( Choqok::Acc
 
 Choqok::UI::MicroBlogWidget * TwitterMicroBlog::createMicroBlogWidget( Choqok::Account *account, QWidget *parent )
 {
-    Choqok::UI::MicroBlogWidget *wd = new Choqok::UI::MicroBlogWidget(account, parent);
-    if(!account->isReadOnly())
-        wd->setComposerWidget(new Choqok::UI::ComposerWidget(account, wd));
-    return wd;
+    return new Choqok::UI::MicroBlogWidget(account, parent);
 }
 
 Choqok::UI::TimelineWidget * TwitterMicroBlog::createTimelineWidget( Choqok::Account *account,
@@ -99,6 +96,11 @@ Choqok::UI::PostWidget* TwitterMicroBlog::createPostWidget(Choqok::Account* acco
                                                         const Choqok::Post &post, QWidget* parent)
 {
     return new TwitterPostWidget(account, post, parent);
+}
+
+Choqok::UI::ComposerWidget* TwitterMicroBlog::createComposerWidget(Choqok::Account* account, QWidget* parent)
+{
+    return new Choqok::UI::ComposerWidget(account, parent);
 }
 
 QString TwitterMicroBlog::profileUrl(Choqok::Account* account, const QString& username) const

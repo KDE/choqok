@@ -278,41 +278,6 @@ void MainWindow::hideEvent( QHideEvent * event )
     }
 }
 
-/*
-void MainWindow::optionsPreferences()
-{
-    kDebug();
-
-    if ( KConfigDialog::showDialog( "settings" ) )  {
-        return;
-    }
-
-    KConfigDialog *dialog = new KConfigDialog( this, "settings", Settings::self() );
-
-    QWidget *generalSettingsDlg = new QWidget;
-    Ui_prefs_base ui_prefs_base;
-    ui_prefs_base.setupUi( generalSettingsDlg );
-    dialog->addPage( generalSettingsDlg, i18n( "General" ), "configure" );
-
-    AccountsWidget *accountsSettingsDlg = new AccountsWidget( this );
-    dialog->addPage( accountsSettingsDlg, i18n( "Accounts" ), "user-properties", QString(), false );
-
-    QWidget *appearsSettingsDlg = new QWidget;
-    Ui_appears_base ui_appears_base;
-    ui_appears_base.setupUi( appearsSettingsDlg );
-    dialog->addPage( appearsSettingsDlg, i18n( "Appearance" ), "format-stroke-color" );
-
-    AdvancedConfig *advancedSettingsDlg = new AdvancedConfig( this );
-    dialog->addPage( advancedSettingsDlg, i18n("Advanced"), "applications-utilities", QString(), false);
-
-    connect( dialog, SIGNAL( settingsChanged( QString ) ), this, SLOT( settingsChanged() ) );
-
-    dialog->setAttribute( Qt::WA_DeleteOnClose );
-    dialog->resize(Settings::configDialogSize());
-    dialog->show();
-}
-*/
-
 void MainWindow::slotConfigChoqok()
 {
     if ( !s_settingsDialog )

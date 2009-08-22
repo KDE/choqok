@@ -38,6 +38,7 @@ MicroBlog plugins can subclass this class or use it if fill their needs.
 */
 class CHOQOK_EXPORT Account : public QObject
 {
+    Q_OBJECT
 public:
     Account(MicroBlog *parent, const QString& alias);
 
@@ -58,6 +59,12 @@ public:
 
     bool isReadOnly() const;
     void setReadOnly(bool readonly = true);
+
+    bool isEnabled() const;
+    void setEnabled(bool enabled = true);
+
+    bool showInQuickPost() const;
+    void setShowInQuickPost(bool show = true);
 
     virtual void writeConfig();
     /**
@@ -83,6 +90,9 @@ public:
     * for compatibility, try to not use key that start with a uppercase
     */
     KConfigGroup *configGroup() const;
+
+signals:
+    void modified( Choqok::Account *theAccount );
 
 private:
     class Private;

@@ -172,24 +172,25 @@ void QuickPost::loadAccounts()
     QList<Account*> ac = AccountManager::self()->accounts();
     QListIterator<Account*> it( ac );
     while ( it.hasNext() ) {
-        Account *current = it.next();
-        d->accountsList.insert( current->alias(), current );
-        d->comboAccounts->addItem( KIcon(current->microblog()->pluginIcon()), current->alias() );
-        connect(current->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-                SLOT(slotSubmitPost(Choqok::Account*,Choqok::Post*)) );
-        connect(current->microblog(),
-                SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,
-                                 Choqok::MicroBlog::ErrorType,QString)),
-                SLOT(postError(Choqok::Account*,Choqok::Post*,
-                               Choqok::MicroBlog::ErrorType,QString)) );
+        addAccount(it.next());
     }
 }
 
 void QuickPost::addAccount( Choqok::Account* account )
 {
     kDebug();
+    connect(account, SIGNAL(modified(Choqok::Account*)), SLOT(accountModified(Choqok::Account*)) );//Added for later changes
+    if(account->isReadOnly() || !account->showInQuickPost())
+        return;
     d->accountsList.insert( account->alias(), account );
     d->comboAccounts->addItem( KIcon(account->microblog()->pluginIcon()), account->alias() );
+    connect(account->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
+            SLOT(slotSubmitPost(Choqok::Account*,Choqok::Post*)) );
+    connect(account->microblog(),
+            SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,
+                                Choqok::MicroBlog::ErrorType,QString)),
+            SLOT(postError(Choqok::Account*,Choqok::Post*,
+                            Choqok::MicroBlog::ErrorType,QString)) );
 }
 
 void QuickPost::removeAccount( const QString & alias )
@@ -219,6 +220,17 @@ void QuickPost::slotCurrentAccountChanged(int index)
     Q_UNUSED(index)
     if( !d->accountsList.isEmpty() )
         d->txtPost->setCharLimit( d->accountsList.value(d->comboAccounts->currentText())->microblog()->postCharLimit() );
+}
+
+void QuickPost::accountModified(Account* theAccount)
+{
+    kDebug();
+    if( !theAccount->isReadOnly() && theAccount->showInQuickPost() ) {
+        if( !d->accountsList.contains(theAccount->alias()) )
+            addAccount(theAccount);
+    } else if(d->accountsList.contains(theAccount->alias())){
+        removeAccount(theAccount->alias());
+    }
 }
 
 #include "quickpost.moc"

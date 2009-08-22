@@ -37,9 +37,15 @@ class Account::Private
 public:
     Private(Choqok::MicroBlog* parent, const QString& mAlias)
         : alias(mAlias), blog(parent)
-    {}
-    ~Private()
-    {}
+    {
+        configGroup = new KConfigGroup(KGlobal::config(), QString::fromLatin1( "Account_%1" ).arg( alias ));
+        username = configGroup->readEntry("Username", QString());
+        priority = configGroup->readEntry("Priority", (uint)0);
+        readonly = configGroup->readEntry("ReadOnly", false);
+        showInQuickPost = configGroup->readEntry("ShowInQuickPost", true);
+        enable = configGroup->readEntry("Enable", true);
+        password = PasswordManager::self()->readPassword(alias);
+    }
     QString username;
     QString password;
     QString alias;
@@ -47,19 +53,14 @@ public:
     KConfigGroup *configGroup;
     uint priority;
     bool readonly;
+    bool enable;
+    bool showInQuickPost;
 };
 
 Account::Account(Choqok::MicroBlog* parent, const QString& alias)
     : QObject(parent), d(new Private(parent, alias))
 {
     kDebug();
-    d->configGroup = new KConfigGroup(KGlobal::config(), QString::fromLatin1( "Account_%1" ).arg( d->alias ));
-    if(!d->configGroup)
-        kError()<<"ERROR, cannot create a config group";
-    d->username = d->configGroup->readEntry("Username", QString());
-    d->priority = d->configGroup->readEntry("Priority", (uint)0);
-    d->readonly = d->configGroup->readEntry("ReadOnly", false);
-    d->password = PasswordManager::self()->readPassword(d->alias);
 }
 
 Account::~Account()
@@ -76,9 +77,12 @@ void Account::writeConfig()
     d->configGroup->writeEntry( "Username", d->username );
     d->configGroup->writeEntry( "Priority", d->priority );
     d->configGroup->writeEntry( "ReadOnly", d->readonly );
+    d->configGroup->writeEntry( "Enable", d->enable );
+    d->configGroup->writeEntry( "ShowInQuickPost", d->showInQuickPost );
     d->configGroup->writeEntry( "MicroBlog", microblog()->pluginName() );
     PasswordManager::self()->writePassword( d->alias, password() );
     d->configGroup->sync();
+    emit modified(this);
 }
 
 QString Account::username() const
@@ -140,6 +144,25 @@ uint Account::priority() const
     return d->priority;
 }
 
+bool Account::isEnabled() const
+{
+    return d->enable;
+}
+
+void Account::setEnabled(bool enabled)
+{
+    d->enable = enabled;
+}
+
+bool Account::showInQuickPost() const
+{
+    return d->showInQuickPost;
+}
+
+void Account::setShowInQuickPost(bool show)
+{
+    d->showInQuickPost = show;
+}
 
 KConfigGroup* Account::configGroup() const
 {
@@ -147,3 +170,5 @@ KConfigGroup* Account::configGroup() const
 }
 
 }
+
+#include "account.moc"

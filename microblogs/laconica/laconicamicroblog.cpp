@@ -83,10 +83,7 @@ ChoqokEditAccountWidget * LaconicaMicroBlog::createEditAccountWidget( Choqok::Ac
 
 Choqok::UI::MicroBlogWidget * LaconicaMicroBlog::createMicroBlogWidget( Choqok::Account *account, QWidget *parent )
 {
-    Choqok::UI::MicroBlogWidget *wd = new Choqok::UI::MicroBlogWidget(account, parent);
-    if(!account->isReadOnly())
-        wd->setComposerWidget(new Choqok::UI::ComposerWidget(account, wd));
-    return wd;
+    return new Choqok::UI::MicroBlogWidget(account, parent);
 }
 
 Choqok::UI::TimelineWidget * LaconicaMicroBlog::createTimelineWidget( Choqok::Account *account,
@@ -99,6 +96,11 @@ Choqok::UI::PostWidget* LaconicaMicroBlog::createPostWidget(Choqok::Account* acc
                                                         const Choqok::Post &post, QWidget* parent)
 {
     return new LaconicaPostWidget(account, post, parent);
+}
+
+Choqok::UI::ComposerWidget* LaconicaMicroBlog::createComposerWidget(Choqok::Account* account, QWidget* parent)
+{
+    return new Choqok::UI::ComposerWidget(account, parent);
 }
 
 QString LaconicaMicroBlog::profileUrl( Choqok::Account *account, const QString &username) const

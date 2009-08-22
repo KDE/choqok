@@ -347,7 +347,7 @@ void PostWidget::slotResendPost()
     QChar re(0x267B);
     QString text =  QString(re) + " @" + currentPost().author.userName + ": " + currentPost().content;
 
-    if(BehaviorSettings::resendWithQuickPost() && Global::quickPostWidget())
+    if((BehaviorSettings::resendWithQuickPost() || currentAccount()->isReadOnly()) && Global::quickPostWidget())
         Global::quickPostWidget()->setText(text);
     else
         emit resendPost(text);

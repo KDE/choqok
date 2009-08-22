@@ -35,20 +35,29 @@
 #include "editaccountwidget.h"
 #include "editaccountdialog.h"
 #include <choqokuiglobal.h>
+#include "ui_accountswidget_base.h"
+
+class AccountsWidget::Private
+{
+public:
+    Ui_AccountsWidgetBase ui;
+    KMenu *mBlogMenu;
+};
 
 AccountsWidget::AccountsWidget( QWidget* parent )
-        : KDialog(parent)
+        : KDialog(parent), d(new Private)
 {
     kDebug();
+    setAttribute(Qt::WA_DeleteOnClose);
     QWidget *wd = new QWidget(this);
-    ui.setupUi( wd );
+    d->ui.setupUi( wd );
     setMainWidget(wd);
     setWindowTitle(i18n("Manage Accounts"));
-
+    resize(530, 300);
 //     connect( btnAdd, SIGNAL( clicked() ), this, SLOT( addAccount() ) );
-    connect( ui.btnEdit, SIGNAL( clicked() ), this, SLOT( editAccount() ) );
-    connect( ui.btnRemove, SIGNAL( clicked() ), this, SLOT( removeAccount() ) );
-    connect( ui.accountsTable, SIGNAL( currentItemChanged( QTableWidgetItem *, QTableWidgetItem * ) ),
+    connect( d->ui.btnEdit, SIGNAL( clicked() ), this, SLOT( editAccount() ) );
+    connect( d->ui.btnRemove, SIGNAL( clicked() ), this, SLOT( removeAccount() ) );
+    connect( d->ui.accountsTable, SIGNAL( currentItemChanged( QTableWidgetItem *, QTableWidgetItem * ) ),
              this, SLOT( accountsTablestateChanged() ) );
 
     connect(Choqok::AccountManager::self(), SIGNAL(accountAdded(Choqok::Account*)),
@@ -56,11 +65,11 @@ AccountsWidget::AccountsWidget( QWidget* parent )
     connect(Choqok::AccountManager::self(), SIGNAL(accountRemoved(QString)),
              SLOT(slotAccountRemoved(QString)) );
 
-    ui.btnAdd->setIcon( KIcon( "list-add" ) );
-    ui.btnEdit->setIcon( KIcon( "edit-rename" ) );
-    ui.btnEdit->hide();///FIXME Fix account modify function
-    ui.btnRemove->setIcon( KIcon( "list-remove" ) );
-    ui.btnAdd->setMenu( createAddAccountMenu() );
+    d->ui.btnAdd->setIcon( KIcon( "list-add" ) );
+    d->ui.btnEdit->setIcon( KIcon( "edit-rename" ) );
+    d->ui.btnEdit->hide();///FIXME Fix account modify function
+    d->ui.btnRemove->setIcon( KIcon( "list-remove" ) );
+    d->ui.btnAdd->setMenu( createAddAccountMenu() );
     load();
 }
 
@@ -91,8 +100,8 @@ void AccountsWidget::editAccount( QString alias )
 {
     kDebug();
     if ( alias.isEmpty() ) {
-        int currentRow = ui.accountsTable->currentRow();
-        alias = ui.accountsTable->item( currentRow, 0 )->text();
+        int currentRow = d->ui.accountsTable->currentRow();
+        alias = d->ui.accountsTable->item( currentRow, 0 )->text();
     }
     Choqok::Account *currentAccount = Choqok::AccountManager::self()->findAccount(alias);
     if(!currentAccount) {
@@ -110,7 +119,7 @@ void AccountsWidget::removeAccount( QString alias )
 {
     kDebug() << alias;
     if ( alias.isEmpty() )
-        alias = ui.accountsTable->item( ui.accountsTable->currentRow(), 0 )->text();
+        alias = d->ui.accountsTable->item( d->ui.accountsTable->currentRow(), 0 )->text();
     if ( Choqok::AccountManager::self()->removeAccount( alias ) ) {
 //         accountsTable->removeRow( accountsTable->currentRow() );
     } else
@@ -120,74 +129,109 @@ void AccountsWidget::removeAccount( QString alias )
 void AccountsWidget::slotAccountAdded( Choqok::Account *account )
 {
     kDebug();
-    addAccountToTable( account->alias(), account->microblog()->serviceName() );
+    addAccountToTable( account );
 }
 
 void AccountsWidget::slotAccountRemoved( const QString alias )
 {
     kDebug();
-    int count = ui.accountsTable->rowCount();
+    int count = d->ui.accountsTable->rowCount();
     for(int i = 0; i<count; ++i) {
-        if(ui.accountsTable->item(i, 0)->text() == alias){
-            ui.accountsTable->removeRow(i);
+        if(d->ui.accountsTable->item(i, 0)->text() == alias){
+            d->ui.accountsTable->removeRow(i);
             break;
         }
     }
 }
 
-void AccountsWidget::addAccountToTable( /* bool isEnabled, */const QString & alias, const QString & service )
+void AccountsWidget::addAccountToTable( Choqok::Account* account )
 {
     kDebug();
-    int row = ui.accountsTable->rowCount();
-    ui.accountsTable->setRowCount( row + 1 );
+    int row = d->ui.accountsTable->rowCount();
+    d->ui.accountsTable->setRowCount( row + 1 );
 //   accountsTable->insertRow(row);
-//     QCheckBox *check = new QCheckBox ( accountsTable );
-//     check->setChecked ( isEnabled );
-//     accountsTable->setCellWidget ( row, 0, check );
-    ui.accountsTable->setItem( row, 0, new QTableWidgetItem( alias ) );
-    ui.accountsTable->setItem( row, 1, new QTableWidgetItem( service ) );
+//     QCheckBox *enable = new QCheckBox ( d->ui.accountsTable );
+//     enable->setChecked ( account->isEnabled() );
+//     d->ui.accountsTable->setCellWidget ( row, 0, enable );
+    d->ui.accountsTable->setItem( row, 0, new QTableWidgetItem( account->alias() ) );
+    d->ui.accountsTable->setItem( row, 1, new QTableWidgetItem( KIcon(account->microblog()->pluginIcon()), account->microblog()->serviceName() ) );
+    QCheckBox *readOnly = new QCheckBox ( d->ui.accountsTable );
+    readOnly->setChecked ( account->isReadOnly() );
+    d->ui.accountsTable->setCellWidget ( row, 2, readOnly );
+    QCheckBox *quick = new QCheckBox ( d->ui.accountsTable );
+    quick->setChecked ( account->showInQuickPost() );
+    d->ui.accountsTable->setCellWidget ( row, 3, quick );
 }
 
 void AccountsWidget::accountsTablestateChanged()
 {
     kDebug();
-    if ( ui.accountsTable->currentRow() >= 0 ) {
-        ui.btnEdit->setEnabled( true );
-        ui.btnRemove->setEnabled( true );
+    if ( d->ui.accountsTable->currentRow() >= 0 ) {
+        d->ui.btnEdit->setEnabled( true );
+        d->ui.btnRemove->setEnabled( true );
     } else {
-        ui.btnEdit->setEnabled( false );
-        ui.btnRemove->setEnabled( false );
+        d->ui.btnEdit->setEnabled( false );
+        d->ui.btnRemove->setEnabled( false );
     }
 }
 
 void AccountsWidget::load()
 {
-    ui.accountsTable->clearContents();
+    d->ui.accountsTable->clearContents();
     QList<Choqok::Account*> ac = Choqok::AccountManager::self()->accounts();
     QListIterator<Choqok::Account*> it( ac );
     while ( it.hasNext() ) {
         Choqok::Account *current = it.next();
-        addAccountToTable( current->alias(), current->microblog()->serviceName() );
+        addAccountToTable( current );
     }
+    d->ui.accountsTable->resizeColumnsToContents();
 }
 
 void AccountsWidget::save()
 {
+    kDebug();
+    int rowCount = d->ui.accountsTable->rowCount();
+    bool changed;
+    for(int i=0; i<rowCount; ++i){
+        changed = false;
+        Choqok::Account *acc = Choqok::AccountManager::self()->findAccount(d->ui.accountsTable->item(i, 0)->text());
+        if(!acc)
+            continue;
+        QCheckBox *readOnly = qobject_cast<QCheckBox*>(d->ui.accountsTable->cellWidget(i, 2));
+        if(readOnly && acc->isReadOnly() != readOnly->isChecked()){
+            acc->setReadOnly(readOnly->isChecked());
+            changed = true;
+        }
+        QCheckBox *showOnQuick= qobject_cast<QCheckBox*>(d->ui.accountsTable->cellWidget(i, 3));
+        if(showOnQuick && acc->showInQuickPost() != showOnQuick->isChecked()){
+            acc->setShowInQuickPost(showOnQuick->isChecked());
+            changed = true;
+        }
+        if(changed)
+            acc->writeConfig();
+    }
 }
 
 KMenu * AccountsWidget::createAddAccountMenu()
 {
-    mBlogMenu = new KMenu(i18n("Select MicroBlog type"), this);
+    d->mBlogMenu = new KMenu(i18n("Select MicroBlog type"), this);
     const QList<KPluginInfo> list = Choqok::PluginManager::self()->availablePlugins("MicroBlogs");
     foreach(const KPluginInfo& info, list){
-        KAction *act = new KAction(mBlogMenu);
+        KAction *act = new KAction(d->mBlogMenu);
         act->setText(info.name());
         act->setIcon( KIcon(info.icon()) );
         act->setData(info.pluginName());
         connect(act, SIGNAL(triggered(bool)), this, SLOT(addAccount()) );
-        mBlogMenu->addAction(act);
+        d->mBlogMenu->addAction(act);
     }
-    return mBlogMenu;
+    return d->mBlogMenu;
+}
+
+void AccountsWidget::slotButtonClicked(int button)
+{
+    if(button == KDialog::Ok)
+        save();
+    KDialog::slotButtonClicked(button);
 }
 
 #include "accountswidget.moc"

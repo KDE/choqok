@@ -64,6 +64,7 @@ MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent, Qt::WindowF
 {
     kDebug();
     setupUi();
+    connect( account, SIGNAL(modified(Choqok::Account*)), SLOT(slotAccountModified(Choqok::Account*)) );
     connect( this, SIGNAL(markAllAsRead()), SLOT(slotMarkAllAsRead()) );
     connect(d->blog, SIGNAL(timelineDataReceived(Choqok::Account*,QString,QList<Choqok::Post*>)),
             this, SLOT(newTimelineDataRecieved(Choqok::Account*,QString,QList<Choqok::Post*>)) );
@@ -87,8 +88,9 @@ void MicroBlogWidget::setupUi()
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addLayout( createToolbar() );
-    if(d->composer)
-        layout->addWidget(d->composer);
+    if(!d->account->isReadOnly()){
+        setComposerWidget(d->blog->createComposerWidget(currentAccount(), this));
+    }
     d->timelinesTabWidget = new KTabWidget(this);
     layout->addWidget( d->timelinesTabWidget );
     this->layout()->setContentsMargins( 0, 0, 0, 0 );
@@ -98,6 +100,10 @@ void MicroBlogWidget::setComposerWidget(ComposerWidget *widget)
 {
     if(d->composer)
         d->composer->deleteLater();
+    if(!widget){
+        d->composer = 0L;
+        return;
+    }
     d->composer = widget;
     d->composer->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Maximum);
     qobject_cast<QVBoxLayout*>( this->layout() )->insertWidget(1, d->composer);
@@ -329,6 +335,19 @@ void MicroBlogWidget::setFocus()
         composer()->editor()->setFocus( Qt::OtherFocusReason );
     else
         QWidget::setFocus();
+}
+
+void MicroBlogWidget::slotAccountModified(Account* theAccount)
+{
+    if(theAccount == currentAccount()){
+        if(theAccount->isReadOnly()) {
+            if(composer()){
+                setComposerWidget(0L);
+            }
+        } else if(!composer()) {
+            setComposerWidget(theAccount->microblog()->createComposerWidget(theAccount, this));
+        }
+    }
 }
 
 }
