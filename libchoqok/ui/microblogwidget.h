@@ -50,7 +50,7 @@ class CHOQOK_EXPORT MicroBlogWidget : public QWidget
 {
     Q_OBJECT
 public:
-    MicroBlogWidget( Account *account, QWidget* parent = 0, Qt::WindowFlags f = 0);
+    explicit MicroBlogWidget( Account *account, QWidget* parent = 0, Qt::WindowFlags f = 0);
     virtual ~MicroBlogWidget();
     /**
     Set a @ref Choqok::ComposerWidget on read/write accounts!

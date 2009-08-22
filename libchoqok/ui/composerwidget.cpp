@@ -116,7 +116,7 @@ void ComposerWidget::editorCleared()
 void ComposerWidget::abort()
 {
     editor()->setEnabled(true);
-    currentAccount()->microblog()->abortCreatePostJobs(currentAccount());
+    currentAccount()->microblog()->abortCreatePost(currentAccount());
     editor()->setFocus();
 }
 

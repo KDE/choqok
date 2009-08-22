@@ -166,7 +166,7 @@ void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
 uint TimelineWidget::unreadCount()
 {
     uint count = 0;
-    foreach(PostWidget *pw, posts.values()){
+    foreach(const PostWidget *pw, posts.values()){
         if(!pw->isRead())
             ++count;
     }

@@ -31,7 +31,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KAboutData>
 #include <KGenericFactory>
 #include "account.h"
-#include "accountmanager.h"
 #include "microblogwidget.h"
 #include "timelinewidget.h"
 #include "editaccountwidget.h"
@@ -81,7 +80,7 @@ TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObje
     timelineApiPath["Inbox"] = "/direct_messages.xml";
     timelineApiPath["Outbox"] = "/direct_messages/sent.xml";
     setTimelineInfos();
-    foreach(QString tm, this->timelineTypes()) {
+    foreach(const QString &tm, this->timelineTypes()) {
         mTimelineLatestId.insert(tm, QString());
     }
 }
@@ -276,8 +275,8 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
         if ( !job ) {
             kError() << "Cannot create an http POST request!";
-            QString errMsg = i18n ( "Creating new post failed, Cannot create an http POST request, Check your KDE installation." );
-            emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
+//             QString errMsg = i18n ( "Creating new post failed, Cannot create an http POST request, Check your KDE installation." );
+//             emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
         }
         job->addMetaData ( "content-type", "Content-Type: application/x-www-form-urlencoded" );
@@ -304,7 +303,7 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
         emit errorPost ( theAccount, post, Choqok::MicroBlog::CommunicationError,
-                         i18n("Creating new post failed, %1").arg(job->errorString()), MicroBlog::Critical );
+                         i18n("Creating new post failed, %1", job->errorString()), MicroBlog::Critical );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast< KIO::StoredTransferJob * > ( job );
         if ( !post->isPrivate ) {
@@ -329,9 +328,9 @@ void TwitterApiMicroBlog::abortAllJobs(Choqok::Account* theAccount)
     }
 }
 
-void TwitterApiMicroBlog::abortCreatePostJobs(Choqok::Account* theAccount)
+void TwitterApiMicroBlog::abortCreatePost(Choqok::Account* theAccount)
 {
-    foreach(KJob *job, mCreatePostMap.keys()){
+    foreach( KJob *job, mCreatePostMap.keys() ){
         if(mJobsAccount[job] == theAccount)
             job->kill(KJob::EmitResult);
     }
@@ -372,7 +371,7 @@ void TwitterApiMicroBlog::slotFetchPost ( KJob *job )
     if ( job->error() ) {
         kError() << "Job Error: " << job->errorString();
         emit error ( theAccount, Choqok::MicroBlog::CommunicationError,
-                     i18n("Fetching new post failed, %1").arg(job->errorString()), Low );
+                     i18n("Fetching new post failed, %1", job->errorString()), Low );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
         readPostFromXml ( theAccount, stj->data(), post );
@@ -424,7 +423,7 @@ void TwitterApiMicroBlog::slotRemovePost ( KJob *job )
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
         emit errorPost ( theAccount, post, CommunicationError,
-                         i18n("Removing post failed, %1").arg(job->errorString() ), MicroBlog::Critical );
+                         i18n("Removing post failed, %1", job->errorString() ), MicroBlog::Critical );
     } else {
         emit postRemoved ( theAccount, post );
     }
@@ -542,7 +541,7 @@ void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
 void TwitterApiMicroBlog::updateTimelines (Choqok::Account* theAccount)
 {
     kDebug();
-    foreach ( QString tm, timelineTypes() ) {
+    foreach ( const QString &tm, timelineTypes() ) {
         requestTimeLine ( theAccount, tm, mTimelineLatestId.value(tm) );
     }
 }
@@ -878,7 +877,7 @@ QDateTime TwitterApiMicroBlog::dateFromString ( const QString &date )
 void TwitterApiMicroBlog::aboutToUnload()
 {
     d->countOfTimelinesToSave = 0;
-    foreach(Choqok::Account* acc, Choqok::AccountManager::self()->accounts()){
+    foreach(const Choqok::Account* acc, Choqok::AccountManager::self()->accounts()){
         if(acc->microblog() == this)
             d->countOfTimelinesToSave += this->timelineTypes().count();
     }

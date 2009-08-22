@@ -239,7 +239,7 @@ void PostWidget::mousePressEvent(QMouseEvent* ev)
         }
         setRead();
     }
-    QTextBrowser::mousePressEvent(ev);
+    KTextBrowser::mousePressEvent(ev);
 }
 
 void PostWidget::resizeEvent ( QResizeEvent * event )

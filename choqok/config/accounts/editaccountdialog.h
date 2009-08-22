@@ -33,7 +33,7 @@ class EditAccountDialog : public KDialog
 {
     Q_OBJECT
 public:
-    EditAccountDialog( ChoqokEditAccountWidget *editWidget, QWidget* parent = 0, Qt::WFlags flags = 0);
+    explicit EditAccountDialog( ChoqokEditAccountWidget *editWidget, QWidget* parent = 0, Qt::WFlags flags = 0);
     ~EditAccountDialog();
 
 protected:

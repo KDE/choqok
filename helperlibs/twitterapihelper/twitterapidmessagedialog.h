@@ -39,7 +39,7 @@ class TwitterApiDMessageDialog : public KDialog
 {
     Q_OBJECT
 public:
-    TwitterApiDMessageDialog( TwitterApiAccount *theAccount, QWidget* parent = 0, Qt::WFlags flags = 0);
+    explicit TwitterApiDMessageDialog( TwitterApiAccount *theAccount, QWidget* parent = 0, Qt::WFlags flags = 0);
     ~TwitterApiDMessageDialog();
 
 protected slots:

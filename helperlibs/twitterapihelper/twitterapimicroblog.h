@@ -60,7 +60,7 @@ public:
     /**
     \brief Abort all of createPost requests!
     */
-    virtual void abortCreatePostJobs(Choqok::Account* theAccount);
+    virtual void abortCreatePost(Choqok::Account* theAccount);
 
     /**
     \brief Fetch a post

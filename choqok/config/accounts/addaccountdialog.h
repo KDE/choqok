@@ -37,7 +37,7 @@ class AddAccountDialog : public KDialog
 {
     Q_OBJECT
 public:
-    AddAccountDialog( ChoqokEditAccountWidget *addWidget, QWidget* parent = 0, Qt::WFlags flags = 0);
+    explicit AddAccountDialog( ChoqokEditAccountWidget *addWidget, QWidget* parent = 0, Qt::WFlags flags = 0);
     ~AddAccountDialog();
 protected:
     virtual void closeEvent(QCloseEvent* e);

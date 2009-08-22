@@ -57,7 +57,6 @@ public:
     QMap<TimelineWidget*, int> timelineUnreadCount;
     KTabWidget *timelinesTabWidget;
     QLabel *latestUpdate;
-    KPushButton *abortAll;
 };
 
 MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent, Qt::WindowFlags f)
@@ -102,7 +101,7 @@ void MicroBlogWidget::setComposerWidget(ComposerWidget *widget)
     d->composer = widget;
     d->composer->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Maximum);
     qobject_cast<QVBoxLayout*>( this->layout() )->insertWidget(1, d->composer);
-    foreach(TimelineWidget *mbw, d->timelines.values()) {
+    foreach(const TimelineWidget *mbw, d->timelines.values()) {
         connect(mbw, SIGNAL(forwardResendPost(QString)), d->composer, SLOT(setText(QString)));
         connect( mbw, SIGNAL(forwardReply(QString,QString)), d->composer, SLOT(setText(QString,QString)) );
     }
@@ -156,7 +155,7 @@ void MicroBlogWidget::newTimelineDataRecieved( Choqok::Account* theAccount, cons
 void MicroBlogWidget::initTimelines()
 {
     kDebug();
-    foreach( QString timeline, d->blog->timelineTypes() ){
+    foreach( const QString &timeline, d->blog->timelineTypes() ){
         addTimelineWidgetToUi(timeline);
     }
 }
@@ -296,15 +295,15 @@ QLayout * MicroBlogWidget::createToolbar()
     fnt.setBold(true);
     d->latestUpdate->setFont(fnt);
 
-    d->abortAll = new KPushButton(this);
-    d->abortAll->setIcon(KIcon("dialog-cancel"));
-    d->abortAll->setMaximumWidth(25);
-    d->abortAll->setToolTip(i18n("Abort"));
-    connect( d->abortAll, SIGNAL(clicked(bool)), SLOT(slotAbortAllJobs()) );
+//     d->abortAll = new KPushButton(this);
+//     d->abortAll->setIcon(KIcon("dialog-cancel"));
+//     d->abortAll->setMaximumWidth(25);
+//     d->abortAll->setToolTip(i18n("Abort"));
+//     connect( d->abortAll, SIGNAL(clicked(bool)), SLOT(slotAbortAllJobs()) );
 
     btnActions->setMenu(d->account->microblog()->createActionsMenu(d->account));
     toolbar->addWidget(btnActions);
-    toolbar->addWidget(d->abortAll);
+//     toolbar->addWidget(d->abortAll);
     toolbar->addSpacerItem(new QSpacerItem(1, 10, QSizePolicy::Expanding));
     toolbar->addWidget(lblLatestUpdate);
     toolbar->addWidget(d->latestUpdate);

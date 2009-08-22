@@ -188,7 +188,7 @@ public:
     \brief Abort all createPost jobs
     \see abortAllJobs()
     */
-    virtual void abortCreatePostJobs( Choqok::Account *theAccount ) = 0;
+    virtual void abortCreatePost( Choqok::Account *theAccount ) = 0;
     /**
     \brief Fetch a post
 
@@ -278,7 +278,7 @@ public:
 signals:
 
     /**
-    Emit when data for a timeline recieved! @p type specifies the type of timeline as specifies in timelineTypes()
+    Emit when data for a timeline received! @p type specifies the type of timeline as specifies in timelineTypes()
     */
     void timelineDataReceived( Choqok::Account *theAccount, const QString &timelineName, QList<Choqok::Post*> data );
 
@@ -298,13 +298,13 @@ signals:
     void postRemoved( Choqok::Account *theAccount, Choqok::Post *post );
 
     /**
-    Emit when an error occured the @p errorMessage will specify the error.
+    Emit when an error occurred the @p errorMessage will specify the error.
     */
     void error( Choqok::Account *theAccount, Choqok::MicroBlog::ErrorType error,
                 const QString &errorMessage, Choqok::MicroBlog::ErrorLevel level = Normal );
 
     /**
-    Emit when an error occured on Post manipulation. e.g. On Creation!
+    Emit when an error occurred on Post manipulation. e.g. On Creation!
     */
     void errorPost( Choqok::Account *theAccount, Choqok::Post *post,
                     Choqok::MicroBlog::ErrorType error, const QString &errorMessage,

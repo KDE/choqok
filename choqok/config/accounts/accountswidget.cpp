@@ -22,7 +22,6 @@
 
 */
 #include "accountswidget.h"
-#include "accountmanager.h"
 #include <kdebug.h>
 #include <QCheckBox>
 #include <KMessageBox>
