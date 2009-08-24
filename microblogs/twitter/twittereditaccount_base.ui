@@ -68,55 +68,83 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item row="2" column="0" colspan="2">
-        <widget class="KSeparator" name="kseparator"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="textLabel1">
-         <property name="text">
-          <string>&amp;Username:</string>
+        <widget class="QGroupBox" name="kcfg_credentialsBox">
+         <property name="title">
+          <string>Credentials</string>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="buddy">
-          <cstring>kcfg_username</cstring>
-         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <layout class="QGridLayout" name="gridLayout_2">
+              <item row="0" column="0">
+               <widget class="QLabel" name="textLabel1">
+                <property name="text">
+                 <string>&amp;Username:</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="buddy">
+                 <cstring>kcfg_username</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="KLineEdit" name="kcfg_username">
+                <property name="toolTip">
+                 <string>The name you use to connect to the service</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="textLabel1_2">
+                <property name="text">
+                 <string>&amp;Password:</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="buddy">
+                 <cstring>kcfg_password</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="KLineEdit" name="kcfg_password">
+                <property name="toolTip">
+                 <string>The password associated to your user name for the service</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="passwordMode">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="KPushButton" name="kcfg_test">
+              <property name="toolTip">
+               <string>Verify Credential</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="kcfg_secure">
+            <property name="text">
+             <string>Use secure connection (HTTPS)</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="KLineEdit" name="kcfg_username">
-         <property name="toolTip">
-          <string>The name you use to connect to the service</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="textLabel1_2">
-         <property name="text">
-          <string>&amp;Password:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="buddy">
-          <cstring>kcfg_password</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="KLineEdit" name="kcfg_password">
-         <property name="toolTip">
-          <string>The password associated to your user name for the service</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="passwordMode">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="2">
+       <item row="3" column="0" colspan="2">
         <widget class="QGroupBox" name="groupBoxRegister">
          <property name="title">
           <string>Registration</string>
@@ -210,13 +238,6 @@ p, li { white-space: pre-wrap; }
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QCheckBox" name="kcfg_secure">
-         <property name="text">
-          <string>Use secure connection (HTTPS)</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QCheckBox" name="kcfg_doNotShowRepliesOnHome">
          <property name="text">
           <string>Do not show replies to me on the home tab.</string>
@@ -241,13 +262,10 @@ p, li { white-space: pre-wrap; }
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Preferred</enum>
-         </property>
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>0</height>
+           <height>40</height>
           </size>
          </property>
         </spacer>
@@ -260,6 +278,11 @@ p, li { white-space: pre-wrap; }
  </widget>
  <customwidgets>
   <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
+  </customwidget>
+  <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
@@ -270,14 +293,16 @@ p, li { white-space: pre-wrap; }
    <header>ktabwidget.h</header>
    <container>1</container>
   </customwidget>
-  <customwidget>
-   <class>KSeparator</class>
-   <extends>QFrame</extends>
-   <header>kseparator.h</header>
-  </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>kcfg_alias</tabstop>
+  <tabstop>kcfg_username</tabstop>
+  <tabstop>kcfg_password</tabstop>
+  <tabstop>kcfg_test</tabstop>
   <tabstop>kcfg_register</tabstop>
+  <tabstop>ktabwidget</tabstop>
+  <tabstop>kcfg_doNotShowRepliesOnHome</tabstop>
+  <tabstop>kcfg_loadTwitpicImages</tabstop>
  </tabstops>
  <resources/>
  <connections/>

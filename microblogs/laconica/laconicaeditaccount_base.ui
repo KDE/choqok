@@ -72,98 +72,154 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <widget class="KSeparator" name="kseparator"/>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Server</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Laconica Server:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="buddy">
+             <cstring>kcfg_host</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="KLineEdit" name="kcfg_host">
+            <property name="text">
+             <string notr="true">identi.ca</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>API Path:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="buddy">
+             <cstring>kcfg_api</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="KLineEdit" name="kcfg_api">
+            <property name="text">
+             <string notr="true">api</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QCheckBox" name="kcfg_secure">
+            <property name="text">
+             <string>Use secure connection (HTTPS)</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
-        <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Laconica Server:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="KLineEdit" name="kcfg_host">
-           <property name="text">
-            <string notr="true">identi.ca</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_4">
-           <property name="text">
-            <string>API Path:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="KLineEdit" name="kcfg_api">
-           <property name="text">
-            <string notr="true">api</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="KSeparator" name="kseparator_2"/>
-       </item>
-       <item>
-        <layout class="QGridLayout" name="gridLayout_3">
-         <item row="0" column="0">
-          <widget class="QLabel" name="textLabel1">
-           <property name="text">
-            <string>&amp;Username:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="buddy">
-            <cstring>kcfg_username</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="KLineEdit" name="kcfg_username">
-           <property name="toolTip">
-            <string>The name you use to connect to the service</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="textLabel1_2">
-           <property name="text">
-            <string>&amp;Password:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="buddy">
-            <cstring>kcfg_password</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="KLineEdit" name="kcfg_password">
-           <property name="toolTip">
-            <string>The password associated to your user name for the service</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="passwordMode">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QGroupBox" name="kcfg_credentialsBox">
+         <property name="title">
+          <string>Credentials</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <layout class="QGridLayout" name="gridLayout_2">
+              <item row="0" column="0">
+               <widget class="QLabel" name="textLabel1">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>&amp;Username:</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="buddy">
+                 <cstring>kcfg_username</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="KLineEdit" name="kcfg_username">
+                <property name="toolTip">
+                 <string>The name you use to connect to the service</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="textLabel1_2">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>&amp;Password:</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="buddy">
+                 <cstring>kcfg_password</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="KLineEdit" name="kcfg_password">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="toolTip">
+                 <string>The password associated to your user name for the service</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="passwordMode">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="KPushButton" name="kcfg_test">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Verify Credential</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer_2">
@@ -185,13 +241,6 @@ p, li { white-space: pre-wrap; }
        <string>Configuration</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <widget class="QCheckBox" name="kcfg_secure">
-         <property name="text">
-          <string>Use secure connection (HTTPS)</string>
-         </property>
-        </widget>
-       </item>
        <item>
         <widget class="QCheckBox" name="kcfg_doNotShowRepliesOnHome">
          <property name="text">
@@ -223,6 +272,11 @@ p, li { white-space: pre-wrap; }
  </widget>
  <customwidgets>
   <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
+  </customwidget>
+  <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
@@ -233,12 +287,17 @@ p, li { white-space: pre-wrap; }
    <header>ktabwidget.h</header>
    <container>1</container>
   </customwidget>
-  <customwidget>
-   <class>KSeparator</class>
-   <extends>QFrame</extends>
-   <header>kseparator.h</header>
-  </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>kcfg_alias</tabstop>
+  <tabstop>kcfg_host</tabstop>
+  <tabstop>kcfg_api</tabstop>
+  <tabstop>kcfg_username</tabstop>
+  <tabstop>kcfg_password</tabstop>
+  <tabstop>kcfg_test</tabstop>
+  <tabstop>ktabwidget</tabstop>
+  <tabstop>kcfg_doNotShowRepliesOnHome</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

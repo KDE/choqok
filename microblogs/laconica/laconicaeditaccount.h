@@ -28,6 +28,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QWidget>
 #include "ui_laconicaeditaccount_base.h"
 
+class QProgressBar;
+class KJob;
 class LaconicaAccount;
 class LaconicaMicroBlog;
 /**
@@ -54,11 +56,14 @@ public:
     */
     virtual Choqok::Account *apply();
 
-protected:
-    virtual bool verifyCredentials();
+protected slots:
+    virtual void verifyCredentials();
+    void slotVerifyCredentials( KJob *job );
 
+protected:
     LaconicaMicroBlog *mBlog;
     LaconicaAccount *mAccount;
+    QProgressBar *progress;
 };
 
 #endif

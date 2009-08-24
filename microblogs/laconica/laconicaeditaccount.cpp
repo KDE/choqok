@@ -31,13 +31,15 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KMessageBox>
 #include <QDomDocument>
 #include <KToolInvocation>
-
+#include <QProgressBar>
 
 LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblog,
                                                     LaconicaAccount* account, QWidget* parent)
-    : ChoqokEditAccountWidget(account, parent), mAccount(account)
+    : ChoqokEditAccountWidget(account, parent), mAccount(account), progress(0)
 {
     setupUi(this);
+    kcfg_test->setIcon(KIcon("edit-find-user"));
+    connect(kcfg_test, SIGNAL(clicked(bool)), SLOT(verifyCredentials()));
     if(mAccount) {
         kcfg_username->setText( mAccount->username() );
         kcfg_password->setText( mAccount->password() );
@@ -68,17 +70,20 @@ bool LaconicaEditAccountWidget::validateData()
 Choqok::Account* LaconicaEditAccountWidget::apply()
 {
     kDebug();
-    if ( !verifyCredentials() )
-        return 0;
+    mAccount->setUsername( kcfg_username->text() );
+    mAccount->setPassword( kcfg_password->text() );
+    mAccount->setHost( kcfg_host->text() );
+    mAccount->setApi( kcfg_api->text() );
     mAccount->setAlias(kcfg_alias->text());
     mAccount->setUseSecureConnection(kcfg_secure->isChecked());
     mAccount->writeConfig();
     return mAccount;
 }
 
-bool LaconicaEditAccountWidget::verifyCredentials()
+void LaconicaEditAccountWidget::verifyCredentials()
 {
     kDebug();
+    kcfg_test->setIcon(KIcon("edit-find-user"));
     KUrl url;
     url.setHost(kcfg_host->text());
     url.addPath(kcfg_api->text());
@@ -89,53 +94,60 @@ bool LaconicaEditAccountWidget::verifyCredentials()
         url.setScheme("http");
     url.setUserName(kcfg_username->text());
     url.setPassword(kcfg_password->text());
-    KIO::TransferJob *job = KIO::get( url, KIO::Reload, KIO::HideProgressInfo );
+
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
     if ( !job ) {
         kError() << "Cannot create an http GET request.";
+        return;
 //         QString errMsg = i18n ( "Cannot create an http GET request, Check your KDE installation." );
 //         KMessageBox::error(this, errMsg);
-        return false;
     }
-    QByteArray data;
-    if( KIO::NetAccess::synchronousRun(job, this, &data) ) {
-        QDomDocument document;
-        document.setContent ( data );
-        QDomElement root = document.documentElement();
-        if ( root.tagName() == "user" ) {
-            QDomNode node2 = root.firstChild();
-            QString timeStr;
-            while ( !node2.isNull() ) {
-                if ( node2.toElement().tagName() == "id" ) {
-                    mAccount->setUsername( kcfg_username->text() );
-                    mAccount->setPassword( kcfg_password->text() );
-                    mAccount->setUserId( node2.toElement().text() );
-                    mAccount->setHost( kcfg_host->text() );
-                    mAccount->setApi( kcfg_api->text() );
-                    return true;
-                    break;
-                }
-                node2 = node2.nextSibling();
+    progress = new QProgressBar(this);
+    progress->setRange(0, 0);
+    kcfg_credentialsBox->layout()->addWidget(progress);
+    connect(job, SIGNAL(result(KJob*)), SLOT(slotVerifyCredentials(KJob*)));
+    job->start();
+}
+
+void LaconicaEditAccountWidget::slotVerifyCredentials(KJob* job)
+{
+    kDebug();
+    if(progress){
+        progress->deleteLater();
+        progress = 0L;
+    }
+    bool success = false;
+    KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob*>(job);
+    QDomDocument document;
+    document.setContent ( stj->data() );
+    QDomElement root = document.documentElement();
+    if ( root.tagName() == "user" ) {
+        QDomNode node2 = root.firstChild();
+        QString timeStr;
+        while ( !node2.isNull() ) {
+            if ( node2.toElement().tagName() == "id" ) {
+                mAccount->setUserId( node2.toElement().text() );
+                success= true;
+                break;
             }
-        } else if ( root.tagName() == "hash" ) {
-            QDomNode node2 = root.firstChild();
-            while ( !node2.isNull() ) {
-                if ( node2.toElement().tagName() == "error" ) {
-                    KMessageBox::detailedError(this, i18n ( "Authentication failed" ), node2.toElement().text() );
-                    return false;
-                }
-                node2 = node2.nextSibling();
+            node2 = node2.nextSibling();
+        }
+    } else if ( root.tagName() == "hash" ) {
+        QDomNode node2 = root.firstChild();
+        while ( !node2.isNull() ) {
+            if ( node2.toElement().tagName() == "error" ) {
+                KMessageBox::detailedError(this, i18n ( "Authentication failed" ), node2.toElement().text() );
             }
-        } else {
-            kError() << "ERROR, unrecognized result, buffer is: " << data;
-            KMessageBox::error( this, i18n ( "Unrecognized result." ) );
-            return false;
+            node2 = node2.nextSibling();
         }
     } else {
-        KMessageBox::detailedError(this, i18n("Authentication failed"),
-                                    job->errorString());
-        return false;
+        kError() << "ERROR, unrecognized result, buffer is: " << stj->data();
+        KMessageBox::error( this, i18n ( "Unrecognized result." ) );
     }
-    return false;
+    if(success)
+        kcfg_test->setIcon(KIcon("dialog-ok"));
+    else
+        kcfg_test->setIcon(KIcon("dialog-error"));
 }
 
 #include "laconicaeditaccount.moc"

@@ -93,7 +93,7 @@ QString TwitterApiPostWidget::generateSign()
     sign += "<a href=\"" + mCurrentPost.link +
     "\" title=\"" + mCurrentPost.creationDateTime.toString() + "\">%1</a>";
     if ( mCurrentPost.isPrivate ) {
-        if( mCurrentPost.replyToUserId == qobject_cast<TwitterApiAccount*>(mCurrentAccount)->userId() ) {
+        if( mCurrentPost.replyToUserName == mCurrentAccount->username() ) {
             sign.prepend( "From " );
         } else {
             sign.prepend( "To " );

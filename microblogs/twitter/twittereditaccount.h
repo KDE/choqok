@@ -28,6 +28,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QWidget>
 #include "ui_twittereditaccount_base.h"
 
+class KJob;
+class QProgressBar;
 class TwitterAccount;
 class TwitterMicroBlog;
 /**
@@ -56,12 +58,12 @@ public:
 
 protected slots:
     virtual void slotRegisterNewAccount();
-
+    virtual void verifyCredentials();
+    void slotVerifyCredentials( KJob *job );
 protected:
-    virtual bool verifyCredentials();
-
     TwitterMicroBlog *mBlog;
     TwitterAccount *mAccount;
+    QProgressBar *progress;
 };
 
 #endif

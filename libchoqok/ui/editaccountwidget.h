@@ -55,7 +55,6 @@ class ChoqokEditAccountWidgetPrivate;
  *
  * - The password.
  *
- * - The read-only checkbox.
  *
  * You may add other custom fields, e.g. the nickname.
  */

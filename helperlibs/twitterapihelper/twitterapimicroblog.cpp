@@ -790,13 +790,14 @@ Choqok::Post * TwitterApiMicroBlog::readDMessageFromDomElement ( Choqok::Account
             node2 = node2.nextSibling();
     }
     msg->creationDateTime = dateFromString ( timeStr );
-    if ( senderId == qobject_cast<TwitterApiAccount*>( theAccount )->userId() ) {
+    if ( senderScreenName == theAccount->username() ) {
         msg->author.description = recipientDescription;
         msg->author.userName = recipientScreenName;
         msg->author.profileImageUrl = recipientProfileImageUrl;
         msg->author.realName = recipientName;
         msg->author.userId = recipientId;
         msg->replyToUserId = recipientId;
+        msg->replyToUserName = recipientScreenName;
     } else {
         msg->author.description = senderDescription;
         msg->author.userName = senderScreenName;
@@ -804,6 +805,7 @@ Choqok::Post * TwitterApiMicroBlog::readDMessageFromDomElement ( Choqok::Account
         msg->author.realName = senderName;
         msg->author.userId = senderId;
         msg->replyToUserId = recipientId;
+        msg->replyToUserName = recipientScreenName;
     }
     return msg;
 }
