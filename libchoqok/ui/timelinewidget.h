@@ -94,6 +94,7 @@ signals:
 protected slots:
     void slotOnePostReaded();
     virtual void saveTimeline();
+    virtual void loadStoredData();
 
 protected:
     /**

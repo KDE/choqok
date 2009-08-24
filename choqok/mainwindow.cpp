@@ -113,8 +113,9 @@ void MainWindow::loadAllAccounts()
         foreach(Choqok::Account *acc, accList){
             addBlog(acc, true);
         }
-        kDebug()<<"All accounts loaded. Emitting updateTimelines()";
-        emit updateTimelines();
+        kDebug()<<"All accounts loaded.";
+        if(Choqok::BehaviorSettings::updateInterval() > 0)
+            emit updateTimelines();
     }
     createQuickPostDialog();
 }
