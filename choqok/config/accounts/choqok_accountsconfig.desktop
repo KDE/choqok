@@ -1,0 +1,24 @@
+[Desktop Entry]
+Icon=user-properties
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=kcm_choqok_accountsconfig
+X-KDE-FactoryName=kcm_choqok_accountsconfig
+X-KDE-ParentApp=choqok
+X-KDE-ParentComponents=choqok
+
+Name=Accounts
+Name[it]=Account
+Name[pt]=Contas
+Name[pt_BR]=Contas
+Name[sv]=Konton
+Name[uk]=Облікові записи
+Name[x-test]=xxAccountsxx
+Comment=Manage Your Accounts
+Comment[it]=Gestisci i tuoi account
+Comment[pt]=Gerir as Suas Contas
+Comment[pt_BR]=Gerencie suas contas
+Comment[sv]=Hantera dina konton
+Comment[uk]=Керування вашими обліковими записами
+Comment[x-test]=xxManage Your Accountsxx

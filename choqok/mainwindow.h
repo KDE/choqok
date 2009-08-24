@@ -86,7 +86,6 @@ public slots:
     void nextTab(const QWheelEvent&);
 
 protected slots:
-    void slotManageAccounts();
     void slotConfNotifications();
     void slotConfigChoqok();
     void settingsChanged();
