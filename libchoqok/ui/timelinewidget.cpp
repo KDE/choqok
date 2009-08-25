@@ -53,7 +53,7 @@ TimelineWidget::TimelineWidget(Choqok::Account* account, const QString &timeline
     : QWidget(parent), d(new Private(account, timelineName))
 {
     setupUi();
-    QTimer::singleShot(800, this, SLOT(loadTimeline()) );
+    loadTimeline();
 }
 
 TimelineWidget::~TimelineWidget()

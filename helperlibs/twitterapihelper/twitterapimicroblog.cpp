@@ -80,9 +80,6 @@ TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObje
     timelineApiPath["Inbox"] = "/direct_messages.xml";
     timelineApiPath["Outbox"] = "/direct_messages/sent.xml";
     setTimelineInfos();
-    foreach(const QString &tm, this->timelineTypes()) {
-        mTimelineLatestId.insert(tm, QString());
-    }
 }
 
 void TwitterApiMicroBlog::setTimelineInfos()
@@ -167,7 +164,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
 //             }
             list.append( st );
         }
-        mTimelineLatestId[timelineName] = st->postId;
+        mTimelineLatestId[account][timelineName] = st->postId;
     }
     return list;
 }
@@ -542,7 +539,7 @@ void TwitterApiMicroBlog::updateTimelines (Choqok::Account* theAccount)
 {
     kDebug();
     foreach ( const QString &tm, timelineTypes() ) {
-        requestTimeLine ( theAccount, tm, mTimelineLatestId.value(tm) );
+        requestTimeLine ( theAccount, tm, mTimelineLatestId[theAccount][tm] );
     }
 }
 
@@ -604,7 +601,7 @@ void TwitterApiMicroBlog::slotRequestTimeline ( KJob *job )
             list = readDMessagesFromXml( theAccount, j->data() );
         }
         if(!list.isEmpty()) {
-            mTimelineLatestId[type] = list.last()->postId;
+            mTimelineLatestId[theAccount][type] = list.last()->postId;
             emit timelineDataReceived( theAccount, type, list );
         }
     }

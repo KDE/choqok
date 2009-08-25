@@ -66,10 +66,10 @@ MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent, Qt::WindowF
 {
     kDebug();
     setupUi();
+    initTimelines();
     connect( account, SIGNAL(modified(Choqok::Account*)), SLOT(slotAccountModified(Choqok::Account*)) );
     connect(d->blog, SIGNAL(timelineDataReceived(Choqok::Account*,QString,QList<Choqok::Post*>)),
             this, SLOT(newTimelineDataRecieved(Choqok::Account*,QString,QList<Choqok::Post*>)) );
-    initTimelines();
     connect(d->blog, SIGNAL(error(Choqok::Account*,Choqok::MicroBlog::ErrorType,
                                   QString, Choqok::MicroBlog::ErrorLevel)),
             this, SLOT(error(Choqok::Account*,Choqok::MicroBlog::ErrorType,

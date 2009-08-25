@@ -141,7 +141,7 @@ protected:
     QMap<KJob*, Choqok::Post*> mCreatePostMap;//Job, post
     QMap<KJob*, Choqok::Post*> mFetchPostMap;
     QMap<KJob*, QString> mRequestTimelineMap;//Job, TimelineType
-    QMap<QString, QString> mTimelineLatestId;//TimelineType, LatestId
+    QHash< Choqok::Account*, QMap<QString, QString> > mTimelineLatestId;//TimelineType, LatestId
     QMap<KJob*, Choqok::Account*> mJobsAccount;
 
 private:

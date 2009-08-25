@@ -61,6 +61,8 @@ AccountsWidget::AccountsWidget( QWidget* parent, const QVariantList& args )
     btnAdd->setIcon( KIcon( "list-add" ) );
     btnEdit->setIcon( KIcon( "edit-rename" ) );
     btnRemove->setIcon( KIcon( "list-remove" ) );
+    btnUp->setIcon( KIcon("go-up") );
+    btnDown->setIcon( KIcon("go-down") );
     btnAdd->setMenu( createAddAccountMenu() );
 //     load();
 }

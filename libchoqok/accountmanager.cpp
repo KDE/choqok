@@ -110,7 +110,8 @@ bool AccountManager::removeAccount( const QString &alias )
         if ( d->accounts[i]->alias() == alias ) {
             d->conf->deleteGroup( QString::fromLatin1( "Account_%1" ).arg( alias ) );
             d->conf->sync();
-            d->accounts.removeAt( i );
+            Choqok::Account *a = d->accounts.takeAt( i );
+            a->deleteLater();
             PasswordManager::self()->removePassword(alias);
             //TODO Remove data files
             emit accountRemoved( alias );
