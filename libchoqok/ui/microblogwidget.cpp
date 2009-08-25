@@ -47,7 +47,7 @@ class MicroBlogWidget::Private
 {
 public:
     Private(Account *acc)
-    : account(acc), blog(acc->microblog()), composer(0)
+    : account(acc), blog(acc->microblog()), composer(0), btnMarkAllAsRead(0)
     {
     }
     Account *account;
@@ -57,6 +57,8 @@ public:
     QMap<TimelineWidget*, int> timelineUnreadCount;
     KTabWidget *timelinesTabWidget;
     QLabel *latestUpdate;
+    KPushButton *btnMarkAllAsRead;
+    QHBoxLayout *toolbar;
 };
 
 MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent, Qt::WindowFlags f)
@@ -65,7 +67,6 @@ MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent, Qt::WindowF
     kDebug();
     setupUi();
     connect( account, SIGNAL(modified(Choqok::Account*)), SLOT(slotAccountModified(Choqok::Account*)) );
-    connect( this, SIGNAL(markAllAsRead()), SLOT(slotMarkAllAsRead()) );
     connect(d->blog, SIGNAL(timelineDataReceived(Choqok::Account*,QString,QList<Choqok::Post*>)),
             this, SLOT(newTimelineDataRecieved(Choqok::Account*,QString,QList<Choqok::Post*>)) );
     initTimelines();
@@ -176,7 +177,6 @@ TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)
         d->timelineUnreadCount.insert(mbw, 0);
         d->timelinesTabWidget->addTab(mbw, info->name);
         d->timelinesTabWidget->setTabIcon(d->timelinesTabWidget->indexOf(mbw), KIcon(info->icon));
-        connect(this, SIGNAL(markAllAsRead()), mbw, SLOT(markAllAsRead()));
         connect( mbw, SIGNAL(updateUnreadCount(int)),
                     this, SLOT(slotUpdateUnreadCount(int)) );
         if(d->composer) {
@@ -205,6 +205,19 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change)
     if(change != 0)
         emit updateUnreadCount(change, sum);
 
+    if(sum>0) {
+        if (!d->btnMarkAllAsRead){
+            d->btnMarkAllAsRead = new KPushButton(this);
+            d->btnMarkAllAsRead->setIcon(KIcon("mail-mark-read"));
+            d->btnMarkAllAsRead->setToolTip(i18n("Mark all as read"));
+            d->btnMarkAllAsRead->setMaximumWidth(d->btnMarkAllAsRead->height());
+            connect(d->btnMarkAllAsRead, SIGNAL(clicked(bool)), SLOT(markAllAsRead()));
+            d->toolbar->insertWidget(1, d->btnMarkAllAsRead);
+        }
+    } else {
+        d->btnMarkAllAsRead->deleteLater();
+        d->btnMarkAllAsRead = 0L;
+    }
     TimelineWidget *wd = qobject_cast<TimelineWidget*>(sender());
     if(wd) {
         int cn = d->timelineUnreadCount[wd] = d->timelineUnreadCount[wd] + change;
@@ -219,9 +232,18 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change)
     }
 }
 
-void MicroBlogWidget::slotMarkAllAsRead()
+void MicroBlogWidget::markAllAsRead()
 {
+    if(d->btnMarkAllAsRead){
+        d->btnMarkAllAsRead->deleteLater();
+        d->btnMarkAllAsRead = 0L;
+        int sum = 0;
+        foreach(int n, d->timelineUnreadCount.values())
+            sum += n;
+        emit updateUnreadCount(-sum, 0);
+    }
     foreach(TimelineWidget *wd, d->timelines.values()) {
+        wd->markAllAsRead();
         d->timelineUnreadCount[wd] = 0;
         int tabIndex = d->timelinesTabWidget->indexOf(wd);
         if(tabIndex == -1)
@@ -289,7 +311,7 @@ void MicroBlogWidget::errorPost(Choqok::Account* theAccount, Choqok::Post*, Micr
 
 QLayout * MicroBlogWidget::createToolbar()
 {
-    QHBoxLayout *toolbar = new QHBoxLayout;
+    d->toolbar = new QHBoxLayout;
     KPushButton *btnActions = new KPushButton(i18n("Actions"), this);
 
     QLabel *lblLatestUpdate = new QLabel( i18n("Latest update:"), this);
@@ -308,12 +330,12 @@ QLayout * MicroBlogWidget::createToolbar()
 //     connect( d->abortAll, SIGNAL(clicked(bool)), SLOT(slotAbortAllJobs()) );
 
     btnActions->setMenu(d->account->microblog()->createActionsMenu(d->account));
-    toolbar->addWidget(btnActions);
+    d->toolbar->addWidget(btnActions);
 //     toolbar->addWidget(d->abortAll);
-    toolbar->addSpacerItem(new QSpacerItem(1, 10, QSizePolicy::Expanding));
-    toolbar->addWidget(lblLatestUpdate);
-    toolbar->addWidget(d->latestUpdate);
-    return toolbar;
+    d->toolbar->addSpacerItem(new QSpacerItem(1, 10, QSizePolicy::Expanding));
+    d->toolbar->addWidget(lblLatestUpdate);
+    d->toolbar->addWidget(d->latestUpdate);
+    return d->toolbar;
 }
 
 void MicroBlogWidget::slotAbortAllJobs()

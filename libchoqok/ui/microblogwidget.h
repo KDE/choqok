@@ -63,6 +63,12 @@ public slots:
     @brief Manage changed settings on this timeline and forward it to all posts.
     */
     virtual void settingsChanged();
+
+    /**
+    @brief Call markAllAsRead() on all timelines
+    */
+    void markAllAsRead();
+
     /**
     Call for @ref MicroBlog::updateTimelines() to update timelines!
 
@@ -80,10 +86,6 @@ signals:
     @brief Emit to tell MainWindow to show this MicroBlog
     */
     void showMe();
-    /**
-    @brief Emit to tell timelines to mark all posts as read
-    */
-    void markAllAsRead();
     /**
     Emit to show a message on MainWindow::StatusBar
     */
@@ -107,7 +109,6 @@ protected slots:
     virtual void newTimelineDataRecieved( Choqok::Account *theAccount, const QString& type,
                                           QList< Choqok::Post* > data );
     void slotUpdateUnreadCount( int change );
-    void slotMarkAllAsRead();
     void error(Choqok::Account* theAccount, Choqok::MicroBlog::ErrorType errorType,
                                 QString errorMsg, Choqok::MicroBlog::ErrorLevel level);
     void errorPost(Choqok::Account* theAccount, Choqok::Post*, Choqok::MicroBlog::ErrorType errorType,

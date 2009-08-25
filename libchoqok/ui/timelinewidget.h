@@ -28,6 +28,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <choqoktypes.h>
 #include <QMap>
 
+class QHBoxLayout;
 class QVBoxLayout;
 
 namespace Choqok {
@@ -63,7 +64,7 @@ public:
     /**
     @brief Return count of unread posts on this timeline.
     */
-    virtual uint unreadCount();
+    virtual int unreadCount();
 
     /**
     @brief remove old posts, about to user selected count of posts on timelines
@@ -94,7 +95,7 @@ signals:
 protected slots:
     void slotOnePostReaded();
     virtual void saveTimeline();
-    virtual void loadStoredData();
+    virtual void loadTimeline();
 
 protected:
     /**
@@ -106,6 +107,7 @@ protected:
     Account *currentAccount();
     QMap<QString, PostWidget *> posts;
     QVBoxLayout *mainLayout;
+    QHBoxLayout *titleBarLayout;
 
 private:
     class Private;

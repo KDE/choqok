@@ -30,6 +30,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KDebug>
 #include "choqokbehaviorsettings.h"
 #include <QLabel>
+#include <KPushButton>
 
 namespace Choqok {
 namespace UI {
@@ -38,18 +39,21 @@ class TimelineWidget::Private
 {
 public:
     Private(Account *account, const QString &timelineName)
-        :currentAccount(account), timelineName(timelineName)
+        :currentAccount(account), timelineName(timelineName),
+         btnMarkAllAsRead(0), unreadCount(0)
     {}
     Account *currentAccount;
     QString timelineName;
     bool mStartUp;
+    KPushButton *btnMarkAllAsRead;
+    int unreadCount;
 };
 
 TimelineWidget::TimelineWidget(Choqok::Account* account, const QString &timelineName, QWidget* parent /*= 0*/)
     : QWidget(parent), d(new Private(account, timelineName))
 {
     setupUi();
-    QTimer::singleShot(800, this, SLOT(loadStoredData()) );
+    QTimer::singleShot(800, this, SLOT(loadTimeline()) );
 }
 
 TimelineWidget::~TimelineWidget()
@@ -57,7 +61,7 @@ TimelineWidget::~TimelineWidget()
     delete d;
 }
 
-void TimelineWidget::loadStoredData()
+void TimelineWidget::loadTimeline()
 {
     QList<Choqok::Post*> list = currentAccount()->microblog()->loadTimeline(currentAccount(), timelineName());
     connect(currentAccount()->microblog(), SIGNAL(saveTimelines()), SLOT(saveTimeline()));
@@ -108,13 +112,15 @@ void TimelineWidget::setupUi()
     mainLayout->setSpacing(3);
     mainLayout->setMargin(1);
 
+    titleBarLayout = new QHBoxLayout;
+    titleBarLayout->addWidget(lblDesc);
     verticalLayout_2->addLayout(mainLayout);
 
     scrollArea->setWidget(scrollAreaWidgetContents);
 
-    gridLayout->addWidget(lblDesc);
+    gridLayout->addLayout(titleBarLayout);
     gridLayout->addWidget(scrollArea);
-
+    kDebug()<<lblDesc->size();
     QPalette p = palette();
 }
 
@@ -149,8 +155,18 @@ void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList, bool setRead
         }
     }
     removeOldPosts();
-    if(!setRead)
+    if(!setRead && unread){
+        d->unreadCount += unread;
         emit updateUnreadCount(unread);
+        if(!d->btnMarkAllAsRead){
+            d->btnMarkAllAsRead = new KPushButton(this);
+            d->btnMarkAllAsRead->setIcon(KIcon("mail-mark-read"));
+            d->btnMarkAllAsRead->setToolTip(i18n("Mark all as read"));
+            d->btnMarkAllAsRead->setMaximumSize(16, 16);
+            connect(d->btnMarkAllAsRead, SIGNAL(clicked(bool)), SLOT(markAllAsRead()));
+            titleBarLayout->addWidget(d->btnMarkAllAsRead);
+        }
+    }
 }
 
 void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
@@ -169,20 +185,21 @@ void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
 
 }
 
-uint TimelineWidget::unreadCount()
+int TimelineWidget::unreadCount()
 {
-    uint count = 0;
-    foreach(const PostWidget *pw, posts.values()){
-        if(!pw->isRead())
-            ++count;
-    }
-    return count;
+    return d->unreadCount;
 }
 
 void TimelineWidget::markAllAsRead()
 {
-    foreach(PostWidget *pw, posts.values()){
-        pw->setRead();
+    if( d->unreadCount > 0 ) {
+        foreach(PostWidget *pw, posts.values()){
+            pw->setRead();
+        }
+        emit updateUnreadCount(-d->unreadCount);
+        d->unreadCount = 0;
+        d->btnMarkAllAsRead->deleteLater();
+        d->btnMarkAllAsRead = 0L;
     }
 }
 
@@ -202,6 +219,11 @@ void TimelineWidget::slotOnePostReaded()
 {
     kDebug();
     emit updateUnreadCount(-1);
+    d->unreadCount--;
+    if(d->unreadCount == 0){
+        d->btnMarkAllAsRead->deleteLater();
+        d->btnMarkAllAsRead = 0L;
+    }
 }
 
 void TimelineWidget::saveTimeline()

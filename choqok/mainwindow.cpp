@@ -420,7 +420,7 @@ void MainWindow::addBlog( Choqok::Account * account, bool isStartup )
     connect( widget, SIGNAL(updateUnreadCount(int,int)), SLOT(slotUpdateUnreadCount(int,int)) );
 
     connect( this, SIGNAL( updateTimelines() ), widget, SLOT( updateTimelines() ) );
-    connect( this, SIGNAL( markAllAsRead() ), widget, SIGNAL( markAllAsRead() ) );
+    connect( this, SIGNAL( markAllAsRead() ), widget, SLOT( markAllAsRead() ) );
     connect( this, SIGNAL(removeOldPosts()), widget, SLOT(removeOldPosts()) );
     kDebug()<<"Plugin Icon: "<<account->microblog()->pluginIcon();
     mainWidget->addTab( widget, KIcon(account->microblog()->pluginIcon()), account->alias() );
