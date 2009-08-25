@@ -294,16 +294,13 @@ void MainWindow::settingsChanged()
 {
     kDebug();
     ///TODO Check if there is any account and show a message if there isn't any!
-//     if ( AccountManager::self()->accounts().count() < 1 ) {
-//         if ( KMessageBox::questionYesNo( this, i18n( "<qt>In order to use this program you need at \
-// least one account on <a href='http://identi.ca'>Identi.ca</a> or \
-// <a href='http://twitter.com'>Twitter.com</a> services.<br/>Would you like to add your account now?</qt>" )
-//                                        ) == KMessageBox::Yes ) {
-//             AccountsWizard *dia = new AccountsWizard( QString(), this );
-//             dia->setAttribute( Qt::WA_DeleteOnClose );
-//             dia->show();
-//         }
-//     }
+    if ( Choqok::AccountManager::self()->accounts().count() < 1 ) {
+        if ( KMessageBox::questionYesNo( this, i18n( "In order to use Choqok you need at \
+least one account at one of supported microblogging services.\n\
+Would you like to add your account now?" ) ) == KMessageBox::Yes ) {
+            slotConfigChoqok();
+        }
+    }
     slotAppearanceConfigChanged();
     slotBehaviorConfigChanged();
 }

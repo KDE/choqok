@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>387</width>
-    <height>398</height>
+    <height>411</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -298,6 +298,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>kcfg_alias</tabstop>
   <tabstop>kcfg_username</tabstop>
   <tabstop>kcfg_password</tabstop>
+  <tabstop>kcfg_secure</tabstop>
   <tabstop>kcfg_test</tabstop>
   <tabstop>kcfg_register</tabstop>
   <tabstop>ktabwidget</tabstop>
