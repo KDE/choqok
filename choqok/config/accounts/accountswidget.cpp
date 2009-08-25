@@ -47,8 +47,6 @@ AccountsWidget::AccountsWidget( QWidget* parent, const QVariantList& args )
     kDebug();
     setAttribute(Qt::WA_DeleteOnClose);
     setupUi( this );
-    setWindowTitle(i18n("Manage Accounts"));
-    resize(530, 300);
 //     connect( btnAdd, SIGNAL( clicked() ), this, SLOT( addAccount() ) );
     connect( btnEdit, SIGNAL( clicked() ), this, SLOT( editAccount() ) );
     connect( btnRemove, SIGNAL( clicked() ), this, SLOT( removeAccount() ) );
@@ -62,7 +60,6 @@ AccountsWidget::AccountsWidget( QWidget* parent, const QVariantList& args )
 
     btnAdd->setIcon( KIcon( "list-add" ) );
     btnEdit->setIcon( KIcon( "edit-rename" ) );
-    btnEdit->hide();///FIXME Fix account modify function
     btnRemove->setIcon( KIcon( "list-remove" ) );
     btnAdd->setMenu( createAddAccountMenu() );
 //     load();
@@ -104,7 +101,8 @@ void AccountsWidget::editAccount( QString alias )
                                     Choqok::AccountManager::self()->lastError());
         return;
     } else {
-        ChoqokEditAccountWidget *eaw = currentAccount->microblog()->createEditAccountWidget(currentAccount, this);
+        ChoqokEditAccountWidget *eaw = currentAccount->microblog()->createEditAccountWidget(currentAccount,
+                                                                                            this);
         EditAccountDialog *d = new EditAccountDialog(eaw, this);
         d->exec();
     }

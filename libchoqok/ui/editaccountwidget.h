@@ -87,10 +87,6 @@ public:
     */
     virtual Choqok::Account *apply() = 0;
 
-    /**
-    @return previous alias for a modified account.
-    */
-    QString previousAlias() const;
 protected:
     /**
      * Get a pointer to the Choqok::Account passed to the constructor.

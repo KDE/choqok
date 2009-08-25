@@ -28,26 +28,17 @@ class ChoqokEditAccountWidgetPrivate
 {
 public:
     Choqok::Account *account;
-    QString prevAlias;
 };
 
 ChoqokEditAccountWidget::ChoqokEditAccountWidget( Choqok::Account* account, QWidget *parent)
-    :QWidget(parent)
+    :QWidget(parent), d(new ChoqokEditAccountWidgetPrivate)
 {
-    d = new ChoqokEditAccountWidgetPrivate;
     d->account = account;
-    if(account)
-    d->prevAlias = account->alias();
 }
 
 ChoqokEditAccountWidget::~ChoqokEditAccountWidget()
 {
     delete d;
-}
-
-QString ChoqokEditAccountWidget::previousAlias() const
-{
-    return d->prevAlias;
 }
 
 Choqok::Account * ChoqokEditAccountWidget::account() const

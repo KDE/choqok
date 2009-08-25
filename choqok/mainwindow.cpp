@@ -85,8 +85,8 @@ MainWindow::MainWindow()
              this, SLOT( removeBlog(QString)) );
     connect( Choqok::AccountManager::self(), SIGNAL(allAccountsLoaded()),
              SLOT(loadAllAccounts()) );
-    settingsChanged();
-    
+
+
     QTimer::singleShot(0, Choqok::PluginManager::self(), SLOT( loadAllPlugins() ) );
     QTimer::singleShot(0, Choqok::AccountManager::self(), SLOT( loadAllAccounts() ) );
 
@@ -107,6 +107,7 @@ MainWindow::~MainWindow()
 void MainWindow::loadAllAccounts()
 {
     kDebug();
+    settingsChanged();
     QList<Choqok::Account*> accList = Choqok::AccountManager::self()->accounts();
     if(accList.count()>0) {
         foreach(Choqok::Account *acc, accList){
@@ -456,7 +457,6 @@ void MainWindow::slotUpdateUnreadCount(int change, int sum)
 {
     kDebug()<<"Change: "<<change<<" Sum: "<<sum;
     Choqok::UI::MicroBlogWidget *wd = qobject_cast<Choqok::UI::MicroBlogWidget*>(sender());
-    Q_ASSERT(wd);
     sysIcon->updateUnreadCount(change);
     if(wd) {
         int tabIndex = mainWidget->indexOf(wd);

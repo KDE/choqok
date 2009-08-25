@@ -37,7 +37,7 @@ AddAccountDialog::AddAccountDialog( ChoqokEditAccountWidget *addWidget,QWidget* 
         return;
     }
     setMainWidget(widget);
-    setCaption(i18n("Add new account"));
+    setCaption(i18n("Add New Account"));
 }
 
 AddAccountDialog::~AddAccountDialog()
@@ -63,8 +63,8 @@ void AddAccountDialog::slotButtonClicked(int button)
                     accept();
             }
         } else {
-            KMessageBox::sorry(this, i18n("Cannot validate your input information, Please check fields data.\n\
-            Maybe a required field is empty."));
+            KMessageBox::sorry(this, i18n("Cannot validate your input information,\
+            Please check fields data.\n Maybe a required field is empty."));
         }
     } else {
         KDialog::slotButtonClicked(button);

@@ -369,6 +369,10 @@ void MicroBlogWidget::slotAccountModified(Account* theAccount)
         } else if(!composer()) {
             setComposerWidget(theAccount->microblog()->createComposerWidget(theAccount, this));
         }
+        int sum = 0;
+        foreach(int n, d->timelineUnreadCount.values())
+            sum += n;
+        emit updateUnreadCount( 0, sum);
     }
 }
 

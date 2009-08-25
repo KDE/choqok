@@ -38,7 +38,7 @@ EditAccountDialog::EditAccountDialog(ChoqokEditAccountWidget* editWidget, QWidge
         return;
     }
     setMainWidget(widget);
-    setCaption(i18n("Edit account"));
+    setCaption(i18n("Edit Account"));
 }
 
 EditAccountDialog::~EditAccountDialog()
@@ -57,17 +57,11 @@ void EditAccountDialog::slotButtonClicked(int button)
     if(button == KDialog::Ok) {
         if( widget->validateData() ) {
             if( Choqok::Account *acc = widget->apply() ) {
-                if( Choqok::AccountManager::self()->removeAccount(widget->previousAlias()) &&
-                    Choqok::AccountManager::self()->registerAccount( acc ) ) {
                     accept();
-                } else {
-                    KMessageBox::detailedError( this, i18n("Account registration failed."),
-                                                Choqok::AccountManager::self()->lastError() );
                 }
-            }
         } else {
-            KMessageBox::sorry(this, i18n("Cannot validate your input information, Please check fields data.\n\
-            Maybe a required field is empty."));
+            KMessageBox::sorry(this, i18n("Cannot validate your input information,\
+            Please check fields data.\n Maybe a required field is empty."));
         }
     } else {
         KDialog::slotButtonClicked(button);
