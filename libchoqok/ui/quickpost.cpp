@@ -33,6 +33,7 @@
 #include <kcombobox.h>
 #include <QHBoxLayout>
 #include <notifymanager.h>
+#include <shortenmanager.h>
 
 using namespace Choqok::UI;
 using namespace Choqok;
@@ -136,10 +137,15 @@ void QuickPost::postError(Account* , Choqok::Post* post,
     }
 }
 
-void QuickPost::submitPost( const QString & newPost )
+void QuickPost::submitPost( const QString & txt )
 {
     kDebug();
     this->hide();
+    QString newPost = txt;
+    Choqok::Account* currentAccount = d->accountsList.value(d->comboAccounts->currentText());
+    if( currentAccount->microblog()->postCharLimit() &&
+       newPost.size() > currentAccount->microblog()->postCharLimit() )
+        newPost = Choqok::ShortenManager::self()->parseText(newPost);
     if ( d->all->isChecked() ) {
             d->submittedPost = new Post;
             d->submittedPost->content = newPost;
@@ -151,8 +157,8 @@ void QuickPost::submitPost( const QString & newPost )
         d->submittedPost = new Post;
         d->submittedPost->content = newPost;
         d->submittedPost->isPrivate = false;
-        d->accountsList.value(d->comboAccounts->currentText())->microblog()->createPost(d->accountsList.value(d->comboAccounts->currentText()),
-                                                                             d->submittedPost );
+        currentAccount->microblog()->createPost(d->accountsList.value( d->comboAccounts->currentText()),
+                                                                       d->submittedPost );
     }
 }
 

@@ -27,6 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QGridLayout>
 #include <QLabel>
 #include <KDebug>
+#include <choqokbehaviorsettings.h>
 
 namespace Choqok {
 namespace UI{
@@ -109,7 +110,10 @@ void TextEdit::clear()
 
 void TextEdit::insertFromMimeData ( const QMimeData *source )
 {
-    KTextEdit::insertPlainText( ShortenManager::self()->parseText( source->text() ) );
+    if( Choqok::BehaviorSettings::shortenOnPaste() )
+        KTextEdit::insertPlainText( ShortenManager::self()->parseText( source->text() ) );
+    else
+        KTextEdit::insertPlainText( source->text() );
 }
 
 void TextEdit::updateRemainingCharsCount()

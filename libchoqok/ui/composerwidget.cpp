@@ -28,6 +28,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KDebug>
 #include <notifymanager.h>
 #include <KPushButton>
+#include <shortenmanager.h>
 
 namespace Choqok {
 namespace UI {
@@ -69,15 +70,19 @@ void ComposerWidget::setText(const QString& text, const QString& replyToId)
     d->editor->setFocus(Qt::OtherFocusReason);
 }
 
-void ComposerWidget::submitPost( const QString &text )
+void ComposerWidget::submitPost( const QString &txt )
 {
+    editor()->setEnabled(false);
+    QString text = txt;
+    if( currentAccount()->microblog()->postCharLimit() &&
+       text.size() > currentAccount()->microblog()->postCharLimit() )
+        text = Choqok::ShortenManager::self()->parseText(text);
     Choqok::Post *ps = new Choqok::Post;
     ps->content = text;
     if( !d->replyToId.isEmpty() ) {
         ps->replyToPostId = d->replyToId;
     }
     currentAccount()->microblog()->createPost( currentAccount(),ps);
-    editor()->setEnabled(false);
     d->btnAbort = new KPushButton(KIcon("dialog-cancel"), i18n("Abort"), this);
     layout()->addWidget(d->btnAbort);
     connect( d->btnAbort, SIGNAL(clicked(bool)), SLOT(abort()) );
