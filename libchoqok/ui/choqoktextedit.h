@@ -58,6 +58,7 @@ signals:
 
 protected slots:
     void updateRemainingCharsCount();
+    void settingsChanged();
 
 protected:
     QLabel *lblRemainChar;

@@ -64,6 +64,8 @@ TextEdit::TextEdit(uint charLimit /*= 0*/, QWidget* parent /*= 0*/)
     layout->setSpacing(0);
     layout->addWidget(lblRemainChar, 1, 0);
     this->setLayout(layout);
+    settingsChanged();
+    connect(BehaviorSettings::self(), SIGNAL(configChanged()), SLOT(settingsChanged()) );
 }
 
 TextEdit::~TextEdit()
@@ -159,6 +161,11 @@ void TextEdit::setText(const QString& text)
     KTextEdit::setText(text);
     moveCursor(QTextCursor::End);
     setEnabled(true);
+}
+
+void TextEdit::settingsChanged()
+{
+    setCheckSpellingEnabled(BehaviorSettings::enableSpellChecker());
 }
 
 }

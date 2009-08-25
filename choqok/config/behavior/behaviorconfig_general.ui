@@ -35,6 +35,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="kcfg_enableSpellChecker">
+     <property name="text">
+      <string>Enable spell checker (editors).</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QCheckBox" name="kcfg_useCustomBrowser">
