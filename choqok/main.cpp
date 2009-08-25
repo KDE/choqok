@@ -24,7 +24,7 @@
 
 #include "mainwindow.h"
 #include "choqokbehaviorsettings.h"
-#include <kapplication.h>
+#include "choqokapplication.h"
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
 #include <KDE/KLocale>
@@ -38,6 +38,7 @@ static const char version[] = "1.0 Alpha1 (0.9.1)";
 
 int main( int argc, char **argv )
 {
+    qDebug()<<"Choqok "<<version;
     KAboutData about( "choqok", 0, ki18n( "Choqok" ), version, ki18n( description ),
                       KAboutData::License_GPL_V3, ki18n( "(C) 2008-2009 Mehrdad Momeny" ),
                       KLocalizedString(), 0  );
@@ -53,13 +54,6 @@ int main( int argc, char **argv )
 //     KCmdLineOptions options;
 //     options.add("+[URL]", ki18n( "Document to open" ));
 //     KCmdLineArgs::addCmdLineOptions(options);
-    KApplication app;
-    qDebug()<<"Choqok "<<version;
-    app.setQuitOnLastWindowClosed( false );
-
-    MainWindow *m_mainWindow = new MainWindow;
-    if ( Choqok::BehaviorSettings::showMainWinOnStart() ) {
-        m_mainWindow->show();
-    }
+    ChoqokApplication app;
     return app.exec();
 }

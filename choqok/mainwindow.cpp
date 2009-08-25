@@ -47,7 +47,7 @@
 #include <KXMLGUIFactory>
 #include <choqokuiglobal.h>
 #include <choqokappearancesettings.h>
-// #include <knotifyconfigwidget.h>
+#include "choqokapplication.h"
 #include <ksettings/dialog.h>
 #include <choqokbehaviorsettings.h>
 
@@ -61,7 +61,6 @@ MainWindow::MainWindow()
     setAttribute ( Qt::WA_QuitOnClose, false );
     timelineTimer = new QTimer( this );
     setWindowTitle( i18n("Choqok") );
-    Choqok::UI::Global::setMainWindow(this);
     mainWidget = new KTabWidget( this );
     mainWidget->setDocumentMode(true);
     mainWidget->setMovable(true);
@@ -355,15 +354,8 @@ void MainWindow::showStatusMessage( const QString &message, bool isPermanent )
 void MainWindow::slotQuit()
 {
     kDebug();
-    Choqok::BehaviorSettings::setPosition( pos() );
-    timelineTimer->stop();
-    kDebug () << " shutting down plugin manager";
-    Choqok::PluginManager::self()->shutdown();
-//     Choqok::PasswordManager::self()->deleteLater();
-//     Choqok::MediaManager::self()->deleteLater();
-    deleteLater();
-//     ChoqokApplication *app = qobject_cast<ChoqokApplication*>(kapp);
-//     app->quitChoqok();
+    ChoqokApplication *app = qobject_cast<ChoqokApplication*>(kapp);
+    app->quitChoqok();
 }
 
 bool MainWindow::queryClose()
@@ -374,19 +366,19 @@ bool MainWindow::queryClose()
 bool MainWindow::queryExit()
 {
     kDebug();
-    return true;
-//     ChoqokApplication *app = qobject_cast<ChoqokApplication*>(kapp);
-//     if( app->sessionSaving() || app->isShuttingDown() ) {
-//         Settings::setPosition( pos() );
-//         timelineTimer->stop();
-//         Settings::self()->writeConfig();
-//         kDebug () << " shutting down plugin manager";
-//         Choqok::PluginManager::self()->shutdown();
+    ChoqokApplication *app = qobject_cast<ChoqokApplication*>(kapp);
+    if( app->sessionSaving() || app->isShuttingDown() ) {
+        Choqok::BehaviorSettings::setPosition( pos() );
+        timelineTimer->stop();
+        Choqok::BehaviorSettings::self()->writeConfig();
+        kDebug () << " shutting down plugin manager";
+        Choqok::PluginManager::self()->shutdown();
 //         Choqok::PasswordManager::self()->deleteLater();
 //         Choqok::MediaManager::self()->deleteLater();
 //         return true;
-//     } else
-//         return false;
+    }/* else
+        return false;*/
+    return true;
 }
 
 void MainWindow::disableApp()

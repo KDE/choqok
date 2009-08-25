@@ -6,7 +6,7 @@ ${CHOQOK_INCLUDES}
 add_subdirectory( config )
 
 set(choqok_SRCS
-#    choqokapplication.cpp
+   choqokapplication.cpp
    mainwindow.cpp
    main.cpp
    systrayicon.cpp
