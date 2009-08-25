@@ -531,13 +531,9 @@ void MainWindow::slotMarkAllAsRead()
 
 void MainWindow::slotCurrentBlogChanged(int)
 {
-    qobject_cast<Choqok::UI::MicroBlogWidget *>(mainWidget->currentWidget())->setFocus();
+    Choqok::UI::MicroBlogWidget *wd = qobject_cast<Choqok::UI::MicroBlogWidget *>(mainWidget->currentWidget());
+    if( wd )
+        wd->setFocus();
 }
-
-// void MainWindow::slotManageAccounts()
-// {
-//     AccountsWidget *wd = new AccountsWidget(this);
-//     wd->show();
-// }
 
 #include "mainwindow.moc"
