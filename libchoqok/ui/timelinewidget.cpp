@@ -163,6 +163,7 @@ void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList, bool setRead
             d->btnMarkAllAsRead->setIcon(KIcon("mail-mark-read"));
             d->btnMarkAllAsRead->setToolTip(i18n("Mark all as read"));
             d->btnMarkAllAsRead->setMaximumSize(16, 16);
+            d->btnMarkAllAsRead->setIconSize(QSize(12,12));
             connect(d->btnMarkAllAsRead, SIGNAL(clicked(bool)), SLOT(markAllAsRead()));
             titleBarLayout->addWidget(d->btnMarkAllAsRead);
         }

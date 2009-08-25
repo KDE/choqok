@@ -14,7 +14,20 @@
    <item>
     <widget class="QCheckBox" name="kcfg_showMainWinOnStart">
      <property name="text">
-      <string>Show main &amp;window on startup:</string>
+      <string>Show main &amp;window on startup.</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="kcfg_markAllAsReadOnHideToSystray">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="text">
+      <string>Mark all unread posts as read, on hide to system tray.</string>
      </property>
      <property name="checked">
       <bool>true</bool>
