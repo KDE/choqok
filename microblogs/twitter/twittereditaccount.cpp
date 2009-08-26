@@ -32,6 +32,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QDomDocument>
 #include <KToolInvocation>
 #include <QProgressBar>
+#include <accountmanager.h>
 
 
 TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
@@ -48,8 +49,12 @@ TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
         kcfg_alias->setText( mAccount->alias() );
         kcfg_secure->setChecked( mAccount->useSecureConnection() );
     } else {
-        setAccount( mAccount = new TwitterAccount(microblog, microblog->serviceName()) );
-        kcfg_alias->setText( microblog->serviceName() );
+        QString newAccountAlias = microblog->serviceName();
+        int counter = 1;
+        while(Choqok::AccountManager::self()->findAccount(newAccountAlias))
+            newAccountAlias = QString("%1%2").arg(newAccountAlias).arg(counter);
+        setAccount( mAccount = new TwitterAccount(microblog, newAccountAlias) );
+        kcfg_alias->setText( newAccountAlias );
     }
     kcfg_alias->setFocus(Qt::OtherFocusReason);
     connect( kcfg_register, SIGNAL( clicked() ), SLOT( slotRegisterNewAccount() ) );

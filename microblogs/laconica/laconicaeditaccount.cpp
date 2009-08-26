@@ -32,6 +32,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QDomDocument>
 #include <KToolInvocation>
 #include <QProgressBar>
+#include <accountmanager.h>
 
 LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblog,
                                                     LaconicaAccount* account, QWidget* parent)
@@ -48,8 +49,12 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
         kcfg_host->setText( mAccount->host() );
         kcfg_api->setText( mAccount->api() );
     } else {
-        setAccount( mAccount = new LaconicaAccount(microblog, microblog->serviceName()) );
-        kcfg_alias->setText( microblog->serviceName() );
+        QString newAccountAlias = microblog->serviceName();
+        int counter = 1;
+        while(Choqok::AccountManager::self()->findAccount(newAccountAlias))
+            newAccountAlias = QString("%1%2").arg(newAccountAlias).arg(counter);
+        setAccount( mAccount = new LaconicaAccount(microblog, newAccountAlias) );
+        kcfg_alias->setText( newAccountAlias );
     }
     kcfg_alias->setFocus(Qt::OtherFocusReason);
 }
