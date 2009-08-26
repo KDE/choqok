@@ -47,7 +47,8 @@ AccountsWidget::AccountsWidget( QWidget* parent, const QVariantList& args )
     kDebug();
     setAttribute(Qt::WA_DeleteOnClose);
     setupUi( this );
-//     connect( btnAdd, SIGNAL( clicked() ), this, SLOT( addAccount() ) );
+    connect( btnUp, SIGNAL(clicked(bool)), this, SLOT(moveCurrentRowUp()) );
+    connect( btnDown, SIGNAL(clicked(bool)), this, SLOT(moveCurrentRowDown()) );
     connect( btnEdit, SIGNAL( clicked() ), this, SLOT( editAccount() ) );
     connect( btnRemove, SIGNAL( clicked() ), this, SLOT( removeAccount() ) );
     connect( accountsTable, SIGNAL( currentItemChanged( QTableWidgetItem *, QTableWidgetItem * ) ),
@@ -113,12 +114,13 @@ void AccountsWidget::editAccount( QString alias )
 void AccountsWidget::removeAccount( QString alias )
 {
     kDebug() << alias;
-    if ( alias.isEmpty() )
-        alias = accountsTable->item( accountsTable->currentRow(), 0 )->text();
-    if ( Choqok::AccountManager::self()->removeAccount( alias ) ) {
-//         accountsTable->removeRow( accountsTable->currentRow() );
-    } else
-        KMessageBox::detailedSorry( this, i18n( "Cannot remove the account." ), Choqok::AccountManager::self()->lastError() );
+    if( KMessageBox::warningYesNoCancel(this, i18n("Are you sure of removing the selected account?"))
+        == KMessageBox::Yes ){
+        if ( alias.isEmpty() )
+            alias = accountsTable->item( accountsTable->currentRow(), 0 )->text();
+        if ( !Choqok::AccountManager::self()->removeAccount( alias ) )
+            KMessageBox::detailedSorry( this, i18n( "Cannot remove the account." ), Choqok::AccountManager::self()->lastError() );
+    }
 }
 
 void AccountsWidget::slotAccountAdded( Choqok::Account *account )
@@ -158,17 +160,31 @@ void AccountsWidget::addAccountToTable( Choqok::Account* account )
     QCheckBox *quick = new QCheckBox ( accountsTable );
     quick->setChecked ( account->showInQuickPost() );
     accountsTable->setCellWidget ( row, 3, quick );
+    connect(readOnly, SIGNAL(toggled(bool)), SLOT(emitChanged()) );
+    connect(quick, SIGNAL(toggled(bool)), SLOT(emitChanged()) );
 }
 
 void AccountsWidget::accountsTablestateChanged()
 {
     kDebug();
-    if ( accountsTable->currentRow() >= 0 ) {
+    int current = accountsTable->currentRow();
+    kDebug()<<current;
+    if ( current >= 0 ) {
         btnEdit->setEnabled( true );
         btnRemove->setEnabled( true );
+        if(current == 0)
+            btnUp->setEnabled(false);
+        else
+            btnUp->setEnabled(true);
+        if(current == accountsTable->rowCount() - 1)
+            btnDown->setEnabled(false);
+        else
+            btnDown->setEnabled(true);
     } else {
         btnEdit->setEnabled( false );
         btnRemove->setEnabled( false );
+        btnAdd->setEnabled( false );
+        btnDown->setEnabled( false );
     }
 }
 
@@ -194,6 +210,10 @@ void AccountsWidget::save()
         Choqok::Account *acc = Choqok::AccountManager::self()->findAccount(accountsTable->item(i, 0)->text());
         if(!acc)
             continue;
+        if(acc->priority() != (uint)i){
+            acc->setPriority((uint)i);
+            changed = true;
+        }
         QCheckBox *readOnly = qobject_cast<QCheckBox*>(accountsTable->cellWidget(i, 2));
         if(readOnly && acc->isReadOnly() != readOnly->isChecked()){
             acc->setReadOnly(readOnly->isChecked());
@@ -204,7 +224,7 @@ void AccountsWidget::save()
             acc->setShowInQuickPost(showOnQuick->isChecked());
             changed = true;
         }
-        if(changed)
+        if(changed)//Maybe we should call writeConfig() from setShowInQuickPost(), setReadOnly() and setPriority() -Mehrdad
             acc->writeConfig();
     }
 }
@@ -222,6 +242,75 @@ KMenu * AccountsWidget::createAddAccountMenu()
         mBlogMenu->addAction(act);
     }
     return mBlogMenu;
+}
+
+void AccountsWidget::moveCurrentRowUp()
+{
+    move(true);
+}
+
+void AccountsWidget::moveCurrentRowDown()
+{
+    move(false);
+}
+
+void AccountsWidget::move(bool up)
+{
+    if (accountsTable->selectedItems().count()<=0)
+        return;
+    emitChanged();
+    const int sourceRow = accountsTable->row(accountsTable->selectedItems().at(0));
+    bool sourceReadOnly = qobject_cast<QCheckBox*>( accountsTable->cellWidget(sourceRow, 2) )->isChecked();
+    bool sourceQuickPost = qobject_cast<QCheckBox*>( accountsTable->cellWidget(sourceRow, 3) )->isChecked();
+    const int destRow = (up ? sourceRow-1 : sourceRow+1);
+
+    if ( destRow < 0  || (destRow >= accountsTable->rowCount()) )
+        return;
+
+    bool destReadOnly=qobject_cast<QCheckBox*>(accountsTable->cellWidget(destRow, 2))->isChecked();
+    bool destQuickPost=qobject_cast<QCheckBox*>(accountsTable->cellWidget(destRow, 3))->isChecked();
+
+    // take whole rows
+    QList<QTableWidgetItem*> sourceItems = takeRow(sourceRow);
+    QList<QTableWidgetItem*> destItems = takeRow(destRow);
+
+    // set back in reverse order
+    setRow(sourceRow, destItems);
+    setRow(destRow, sourceItems);
+
+    // taking whole row doesn't work! so changing value of checkBoxes take place here.
+    qobject_cast<QCheckBox*>(accountsTable->cellWidget(sourceRow, 2))->setChecked(destReadOnly);
+    qobject_cast<QCheckBox*>(accountsTable->cellWidget(sourceRow, 3))->setChecked(destQuickPost);
+
+    qobject_cast<QCheckBox*>(accountsTable->cellWidget(destRow, 2))->setChecked(sourceReadOnly);
+    qobject_cast<QCheckBox*>(accountsTable->cellWidget(destRow, 3))->setChecked(sourceQuickPost);
+
+    accountsTable->setCurrentCell(destRow,0);
+    KMessageBox::information(this, i18n("Changing accounts priority here, will cause effect after Choqok restart."),
+                             QString(), QLatin1String("ChangeAccountsPriority") );
+}
+
+// takes and returns the whole row
+QList<QTableWidgetItem*> AccountsWidget::takeRow(int row)
+{
+    QList<QTableWidgetItem*> rowItems;
+    for (int col = 0; col < accountsTable->columnCount(); ++col) {
+        rowItems << accountsTable->takeItem(row, col);
+    }
+    return rowItems;
+}
+
+// sets the whole row
+void AccountsWidget::setRow(int row, const QList<QTableWidgetItem*>& rowItems)
+{
+    for (int col = 0; col < accountsTable->columnCount(); ++col) {
+        accountsTable->setItem(row, col, rowItems.at(col));
+    }
+}
+
+void AccountsWidget::emitChanged()
+{
+    emit changed(true);
 }
 
 #include "accountswidget.moc"

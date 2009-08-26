@@ -55,7 +55,15 @@ protected slots:
     void slotAccountRemoved( const QString alias );
     void accountsTablestateChanged();
 
+    void moveCurrentRowUp();
+    void moveCurrentRowDown();
+
+    void emitChanged();
+
 private:
+    void move(bool up);
+    QList<QTableWidgetItem*> takeRow(int row);
+    void setRow(int row, const QList<QTableWidgetItem*>& rowItems);
     void addAccountToTable( Choqok::Account *account );
     KMenu * createAddAccountMenu();
     KMenu *mBlogMenu;

@@ -120,7 +120,7 @@ void TimelineWidget::setupUi()
 
     gridLayout->addLayout(titleBarLayout);
     gridLayout->addWidget(scrollArea);
-    kDebug()<<lblDesc->size();
+
     QPalette p = palette();
 }
 

@@ -37,16 +37,26 @@
 namespace Choqok
 {
 
-    static int compareAccountsByPriority( Account *a, Account *b )
+    static QList<Account*> sortAccountsByPriority( QList<Account*> &accounts )
     {
-        uint priority1 = a->priority();
-        uint priority2 = b->priority();
-        if( a==b ) //two account are equal only if they are equal :-)
-            return 0;
-        else if( priority1 > priority2 )
-            return 1;
-        else
-            return -1;
+        kDebug()<<accounts.count();
+        QList<Account*> result;
+        foreach(Account* ac, accounts){
+            bool inserted = false;
+            int i = 0;
+            while( i < result.count() ){
+                if( ac->priority() < result[i]->priority() ){
+                    result.insert(i, ac);
+                    inserted = true;
+                    break;
+                }
+                ++i;
+            }
+            if(!inserted){
+                result.insert(i, ac);
+            }
+        }
+        return result;
     }
 
 class AccountManager::Private
@@ -141,7 +151,7 @@ Account * AccountManager::registerAccount( Account * account )
         }
     }
     d->accounts.append( account );
-    qSort( d->accounts.begin(), d->accounts.end(), compareAccountsByPriority );
+    d->accounts = sortAccountsByPriority(d->accounts);
 
     emit accountAdded( account );
     return account;
@@ -177,7 +187,7 @@ void AccountManager::loadAllAccounts()
         }
     }
     kDebug() << d->accounts.count() << " accounts loaded.";
-    qSort( d->accounts.begin(), d->accounts.end(), compareAccountsByPriority );
+    d->accounts = sortAccountsByPriority(d->accounts);
     emit allAccountsLoaded();
 }
 

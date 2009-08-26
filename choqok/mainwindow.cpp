@@ -110,9 +110,10 @@ void MainWindow::loadAllAccounts()
     kDebug();
     settingsChanged();
     QList<Choqok::Account*> accList = Choqok::AccountManager::self()->accounts();
-    if(accList.count()>0) {
-        foreach(Choqok::Account *acc, accList){
-            addBlog(acc, true);
+    int count = accList.count();
+    if( count > 0 ) {
+        for( int i=0; i<count; ++i ){
+            addBlog(accList.at(i), true);
         }
         kDebug()<<"All accounts loaded.";
         if(Choqok::BehaviorSettings::updateInterval() > 0)
@@ -425,7 +426,7 @@ void MainWindow::addBlog( Choqok::Account * account, bool isStartup )
     kDebug()<<"Plugin Icon: "<<account->microblog()->pluginIcon();
     mainWidget->addTab( widget, KIcon(account->microblog()->pluginIcon()), account->alias() );
 
-    if( !isStartup )///FIXME Cause a crash The MicroBlog and Account has been deleted before! :-/
+    if( !isStartup )
         QTimer::singleShot( 1500, widget, SLOT( updateTimelines() ) );
     enableApp();
     if( mainWidget->count() > 1)
@@ -484,6 +485,7 @@ void MainWindow::setTimeLineUpdatesEnabled( bool isEnabled )
     if ( isEnabled ) {
         if( mPrevUpdateInterval > 0 )
             Choqok::BehaviorSettings::setUpdateInterval( mPrevUpdateInterval );
+        emit updateTimelines();
         timelineTimer->start( Choqok::BehaviorSettings::updateInterval() *60000 );
 //         kDebug()<<"timelineTimer started";
     } else {
