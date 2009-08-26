@@ -127,7 +127,7 @@ void AccountsWidget::slotAccountAdded( Choqok::Account *account )
 {
     kDebug();
     addAccountToTable( account );
-    emit changed(true);
+    emitChanged();
 }
 
 void AccountsWidget::slotAccountRemoved( const QString alias )
@@ -137,7 +137,7 @@ void AccountsWidget::slotAccountRemoved( const QString alias )
     for(int i = 0; i<count; ++i) {
         if(accountsTable->item(i, 0)->text() == alias){
             accountsTable->removeRow(i);
-            emit changed(true);
+            emitChanged();
             break;
         }
     }

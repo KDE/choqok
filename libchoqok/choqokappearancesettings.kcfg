@@ -7,7 +7,7 @@ http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
 <kcfgfile name="choqokrc"/>
 
 <group name="Appearance">
-    <entry name="isSmiliesEnabled" type="Bool">
+    <entry name="isEmoticonsEnabled" type="Bool">
         <default>true</default>
     </entry>
     <entry name="isCustomUi" type="Bool">

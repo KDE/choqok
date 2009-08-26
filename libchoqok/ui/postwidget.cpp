@@ -33,6 +33,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KProcess>
 #include <KToolInvocation>
 #include <KMessageBox>
+#include <choqokappearancesettings.h>
 
 static const int _15SECS = 15000;
 static const int _MINUTE = 60000;
@@ -274,7 +275,9 @@ QString PostWidget::prepareStatus( const QString &txt )
         text.prepend( "http://" );
     text.replace(mUrlRegExp,"<a href='\\1' title='\\1'>\\1</a>");
 
-    //TODO Add support for PLUGINS! e.g. Smilie, UnTiny, ...
+    if(AppearanceSettings::isEmoticonsEnabled())
+        text = MediaManager::self()->parseEmoticons(text);
+    //TODO Add support for PLUGINS! e.g. UnTiny, ...
 
     return text;
 }

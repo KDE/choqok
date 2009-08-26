@@ -122,7 +122,6 @@ MicroBlogWidget::~MicroBlogWidget()
 
 void MicroBlogWidget::settingsChanged()
 {
-    kDebug();
     foreach(TimelineWidget *wd, d->timelines.values()){
         wd->settingsChanged();
     }
@@ -130,8 +129,6 @@ void MicroBlogWidget::settingsChanged()
 
 void MicroBlogWidget::updateTimelines()
 {
-    if(!d->account)
-        kError()<<"NIST AMU JAN";
     kDebug()<<d->account->alias();
     d->account->microblog()->updateTimelines(currentAccount());
 }
