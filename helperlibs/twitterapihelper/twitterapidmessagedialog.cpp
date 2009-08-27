@@ -47,9 +47,11 @@ public:
     Choqok::Post *sentPost;
 };
 
-TwitterApiDMessageDialog::TwitterApiDMessageDialog(TwitterApiAccount *theAccount, QWidget* parent, Qt::WFlags flags)
+TwitterApiDMessageDialog::TwitterApiDMessageDialog(TwitterApiAccount *theAccount, QWidget* parent,
+                                                   Qt::WFlags flags)
     : KDialog(parent, flags), d(new Private(theAccount))
 {
+    setWindowTitle(i18n("Send Private Message"));
     setAttribute(Qt::WA_DeleteOnClose);
     QWidget *wg = new QWidget(this, flags);
     setMainWidget(wg);
@@ -71,6 +73,7 @@ void TwitterApiDMessageDialog::setupUi( QWidget *mainWidget )
 {
     QLabel *lblTo = new QLabel( i18n("To:"), this);
     d->comboFriendsList = new KComboBox(this);
+    d->comboFriendsList->setDuplicatesEnabled(false);
 
     KPushButton *btnReload = new KPushButton(this);
     btnReload->setToolTip(i18n("Reload friends list"));
@@ -135,7 +138,7 @@ void TwitterApiDMessageDialog::submitPost(QString text)
 void TwitterApiDMessageDialog::friendsUsernameListed(TwitterApiAccount* theAccount, QStringList list)
 {
     if(theAccount == d->account){
-        d->comboFriendsList->clear();
+        d->comboFriendsList->removeItem(0);
         d->comboFriendsList->addItems(list);
     }
 }
@@ -150,12 +153,18 @@ void TwitterApiDMessageDialog::postCreated(Choqok::Account* theAccount, Choqok::
 }
 
 void TwitterApiDMessageDialog::errorPost(Choqok::Account* theAccount, Choqok::Post* thePost,
-                                         Choqok::MicroBlog::ErrorType , QString , Choqok::MicroBlog::ErrorLevel )
+                                         Choqok::MicroBlog::ErrorType , QString ,
+                                         Choqok::MicroBlog::ErrorLevel )
 {
     if(theAccount == d->account && thePost == d->sentPost){
         kDebug();
         show();
     }
+}
+
+void TwitterApiDMessageDialog::setTo(const QString& username)
+{
+    d->comboFriendsList->setCurrentItem(username, true);
 }
 
 #include "twitterapidmessagedialog.moc"

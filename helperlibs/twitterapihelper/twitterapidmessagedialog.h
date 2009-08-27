@@ -41,6 +41,7 @@ class TwitterApiDMessageDialog : public KDialog
 public:
     explicit TwitterApiDMessageDialog( TwitterApiAccount *theAccount, QWidget* parent = 0, Qt::WFlags flags = 0);
     ~TwitterApiDMessageDialog();
+    void setTo(const QString &username);
 
 protected slots:
     void friendsUsernameListed(TwitterApiAccount*,QStringList);

@@ -115,7 +115,13 @@ QString TwitterApiPostWidget::generateSign()
 
 void TwitterApiPostWidget::slotReply()
 {
-    emit reply( QString("@%1 ").arg(mCurrentPost.author.userName), mCurrentPost.postId );
+    if(currentPost().isPrivate){
+        TwitterApiAccount *account= qobject_cast<TwitterApiAccount*>( currentAccount() );
+        TwitterApiMicroBlog *microblog = qobject_cast<TwitterApiMicroBlog*>( currentAccount()->microblog() );
+        microblog->showDirectMessageDialog( account, mCurrentPost.author.userName );
+    } else {
+        emit reply( QString("@%1 ").arg(mCurrentPost.author.userName), mCurrentPost.postId );
+    }
 }
 
 void TwitterApiPostWidget::setFavorite()

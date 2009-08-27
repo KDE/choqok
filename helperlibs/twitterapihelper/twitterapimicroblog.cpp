@@ -118,9 +118,9 @@ TwitterApiMicroBlog::~TwitterApiMicroBlog()
 QMenu* TwitterApiMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidget* parent)
 {
     QMenu * menu = MicroBlog::createActionsMenu(theAccount, parent);
-    KAction *directMessge = new KAction( KIcon("mail-message-new"), i18n("Send Private Message"), menu );
+    KAction *directMessge = new KAction( KIcon("mail-message-new"), i18n("Send Private Message..."), menu );
     directMessge->setData( theAccount->alias() );
-    connect( directMessge, SIGNAL(triggered(bool)), SLOT(showSendDirectMessageDialog()) );
+    connect( directMessge, SIGNAL(triggered(bool)), SLOT(showDirectMessageDialog()) );
     menu->addAction(directMessge);
     return menu;
 }
@@ -866,7 +866,7 @@ QDateTime TwitterApiMicroBlog::dateFromString ( const QString &date )
 {
     char s[10];
     int year, day, hours, minutes, seconds;
-    sscanf ( qPrintable ( date ), "%*s %s %d %d:%d:%d %*s %d", s, &day, &hours, &minutes, &seconds, &year );
+    sscanf( qPrintable ( date ), "%*s %s %d %d:%d:%d %*s %d", s, &day, &hours, &minutes, &seconds, &year );
     int month = d->monthes[s];
     QDateTime recognized ( QDate ( year, month, day ), QTime ( hours, minutes, seconds ) );
     recognized.setTimeSpec( Qt::UTC );
@@ -883,17 +883,20 @@ void TwitterApiMicroBlog::aboutToUnload()
     emit saveTimelines();
 }
 
-void TwitterApiMicroBlog::showSendDirectMessageDialog()
+void TwitterApiMicroBlog::showDirectMessageDialog( TwitterApiAccount *theAccount/* = 0*/,
+                                                   const QString &toUsername/* = QString()*/ )
 {
-    KAction *act = qobject_cast<KAction *>(sender());
-    if( !act ){
-        kError()<<"This function should call with KAction trigger";
+    kDebug();
+    if( !theAccount ) {
+        KAction *act = qobject_cast<KAction *>(sender());
         Q_ASSERT(act);
+        theAccount = qobject_cast<TwitterApiAccount*>(
+                                    Choqok::AccountManager::self()->findAccount( act->data().toString() ) );
+        Q_ASSERT(theAccount);
     }
-    TwitterApiAccount *account = qobject_cast<TwitterApiAccount*>(
-                                 Choqok::AccountManager::self()->findAccount( act->data().toString() ) );
-    Q_ASSERT(account);
-    TwitterApiDMessageDialog *dmsg = new TwitterApiDMessageDialog(account, Choqok::UI::Global::mainWindow());
+    TwitterApiDMessageDialog *dmsg = new TwitterApiDMessageDialog(theAccount, Choqok::UI::Global::mainWindow());
+    if(!toUsername.isEmpty())
+        dmsg->setTo(toUsername);
     dmsg->show();
 }
 

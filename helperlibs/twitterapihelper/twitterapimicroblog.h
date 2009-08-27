@@ -99,6 +99,16 @@ public:
     virtual void listFriendsUsername( TwitterApiAccount *theAccount );
 
     virtual Choqok::TimelineInfo * timelineInfo(const QString &timelineName);
+
+public slots:
+    /**
+    Launch a dialog to send direct message.
+    There are 2 ways to use this function:
+        1. Calling with theAccount option
+        2. Get called by a signal from a KAction (Microblog menu)
+    */
+    virtual void showDirectMessageDialog( TwitterApiAccount *theAccount = 0,
+                                          const QString &toUsername = QString() );
 signals:
     void favoriteCreated(Choqok::Account *theAccount, const QString &postId);
     void favoriteRemoved(Choqok::Account *theAccount, const QString &postId);
@@ -113,7 +123,6 @@ protected slots:
     virtual void slotCreateFavorite( KJob *job );
     virtual void slotRemoveFavorite( KJob *job );
     virtual void slotRequestTimeline( KJob *job );
-    virtual void showSendDirectMessageDialog();
     virtual void requestFriendsScreenName( TwitterApiAccount* theAccount, int page = 1 );
     virtual void slotRequestFriendsScreenName( KJob *job );
 
