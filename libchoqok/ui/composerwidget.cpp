@@ -75,7 +75,7 @@ void ComposerWidget::submitPost( const QString &txt )
     editor()->setEnabled(false);
     QString text = txt;
     if( currentAccount()->microblog()->postCharLimit() &&
-       text.size() > currentAccount()->microblog()->postCharLimit() )
+       text.size() > (int)currentAccount()->microblog()->postCharLimit() )
         text = Choqok::ShortenManager::self()->parseText(text);
     Choqok::Post *ps = new Choqok::Post;
     ps->content = text;

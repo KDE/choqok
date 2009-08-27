@@ -34,6 +34,12 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KToolInvocation>
 #include <KMessageBox>
 #include <choqokappearancesettings.h>
+#include <kaction.h>
+#include <QApplication>
+#include <QClipboard>
+#include <QContextMenuEvent>
+#include <QMenu>
+#include <kmenu.h>
 
 static const int _15SECS = 15000;
 static const int _MINUTE = 60000;
@@ -125,7 +131,7 @@ void PostWidget::setupUi()
     KPushButton *btnResend = addButton("btnResend", i18nc( "@info:tooltip", "ReSend" ), "retweet" );
     connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
 
-    if(mCurrentAccount->username() == mCurrentPost.author.userName) {
+    if(mCurrentAccount->username().toLower() == mCurrentPost.author.userName.toLower()) {
         KPushButton *btnRemove = addButton("btnRemove", i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
         connect(btnRemove, SIGNAL(clicked(bool)), SLOT(removeCurrentPost()));
     }
@@ -234,7 +240,7 @@ void PostWidget::mousePressEvent(QMouseEvent* ev)
 {
     if(!isRead()) {
         kDebug();
-        if(mCurrentPost.author.userName != mCurrentAccount->username()) {
+        if(mCurrentPost.author.userName.toLower() != mCurrentAccount->username().toLower()) {
             kDebug()<<"Emitting postReaded()";
             emit postReaded();
         }
@@ -412,5 +418,20 @@ void PostWidget::slotPostError(Account* theAccount, Choqok::Post* post,
     }
 }
 
+void PostWidget::contextMenuEvent(QContextMenuEvent* event)
+{
+    KAction *copy = new KAction( i18n("Copy Post Text"), this );
+    connect( copy, SIGNAL(triggered(bool)), SLOT(slotCopyPostContent()) );
+    KMenu *menu = new KMenu(this);
+    menu->addAction(copy);
+    menu->addSeparator();
+    menu->addActions( createStandardContextMenu()->actions() );
+    menu->popup(event->globalPos());
+}
+
+void PostWidget::slotCopyPostContent()
+{
+    QApplication::clipboard()->setText( currentPost().content );
+}
 
 #include "postwidget.moc"

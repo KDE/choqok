@@ -87,6 +87,11 @@ signals:
     void reply(const QString &txt, const QString &replyToId);
 
 protected slots:
+    /**
+        @brief Copy post text to clipboard.
+    */
+    void slotCopyPostContent();
+
     virtual void checkAnchor(const QUrl & url);
     /**
     Set height of widget related to text contents
@@ -117,6 +122,7 @@ protected slots:
     void avatarFetched( const QString &remoteUrl, const QPixmap &pixmap );
 
 protected:
+    virtual void contextMenuEvent(QContextMenuEvent* event);
     virtual void setupAvatar();
     virtual void mousePressEvent(QMouseEvent* ev);
     virtual void resizeEvent ( QResizeEvent * event );

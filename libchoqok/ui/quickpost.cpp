@@ -144,7 +144,7 @@ void QuickPost::submitPost( const QString & txt )
     QString newPost = txt;
     Choqok::Account* currentAccount = d->accountsList.value(d->comboAccounts->currentText());
     if( currentAccount->microblog()->postCharLimit() &&
-       newPost.size() > currentAccount->microblog()->postCharLimit() )
+       newPost.size() > (int)currentAccount->microblog()->postCharLimit() )
         newPost = Choqok::ShortenManager::self()->parseText(newPost);
     if ( d->all->isChecked() ) {
             d->submittedPost = new Post;

@@ -173,6 +173,7 @@ void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList, bool setRead
 void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
 {
     widget->initUi();
+    widget->setFocusProxy(this);
     widget->setObjectName(widget->currentPost().postId);
     widget->setAttribute(Qt::WA_DeleteOnClose);
     connect( widget, SIGNAL(resendPost(const QString &)),

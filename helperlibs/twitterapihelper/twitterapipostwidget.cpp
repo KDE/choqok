@@ -65,7 +65,7 @@ void TwitterApiPostWidget::initUi()
         connect( d->btnFav, SIGNAL(clicked(bool)), SLOT(setFavorite()) );
         updateFavStat();
     }
-    if( mCurrentAccount->username() != mCurrentPost.author.userName) {
+    if( mCurrentAccount->username().toLower() != mCurrentPost.author.userName.toLower()) {
         KPushButton *btnRe = addButton( "btnReply",i18nc( "@info:tooltip", "Reply" ), "edit-undo" );
         connect( btnRe, SIGNAL(clicked(bool)), SLOT(slotReply()) );
     }
@@ -93,7 +93,7 @@ QString TwitterApiPostWidget::generateSign()
     sign += "<a href=\"" + mCurrentPost.link +
     "\" title=\"" + mCurrentPost.creationDateTime.toString() + "\">%1</a>";
     if ( mCurrentPost.isPrivate ) {
-        if( mCurrentPost.replyToUserName == mCurrentAccount->username() ) {
+        if( mCurrentPost.replyToUserName.toLower() == mCurrentAccount->username().toLower() ) {
             sign.prepend( "From " );
         } else {
             sign.prepend( "To " );
