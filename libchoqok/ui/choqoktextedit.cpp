@@ -163,6 +163,13 @@ void TextEdit::setText(const QString& text)
     setEnabled(true);
 }
 
+void TextEdit::prependText(const QString& text)
+{
+    QString tmp = text;
+    tmp.append(' '+toPlainText());
+    setPlainText(tmp);
+}
+
 void TextEdit::settingsChanged()
 {
     setCheckSpellingEnabled(BehaviorSettings::enableSpellChecker());

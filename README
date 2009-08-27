@@ -1,16 +1,17 @@
     Choqok
-KDE mono-blogging client,
+KDE Micro-Blogging client,
 Currently supports Identi.ca and Twitter.com
 
 Author:
     Mehrdad Momeny <mehrdad.momeny[AT]gmail.com>
+
 License:
     GNU GPL v3
 
 Requirements to build:
      CMake 2.6
-     KDE 4 library Development packages! (KDEUI and KIO)
-
+     KDE 4 library Development packages! (On (K)Ubuntu/Debian it's kdelibs5-dev)
+     You need GNU GetText to compile translations. (If you don't want them, just remove "po" directory)
 
 How To Build The Project
 -=-=-=-=-=-=-=-=-=-=-=-=-=

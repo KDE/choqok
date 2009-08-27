@@ -65,7 +65,7 @@ ComposerWidget::~ComposerWidget()
 
 void ComposerWidget::setText(const QString& text, const QString& replyToId)
 {
-    d->editor->setPlainText(text);
+    d->editor->prependText(text);
     d->replyToId = replyToId;
     d->editor->setFocus(Qt::OtherFocusReason);
 }

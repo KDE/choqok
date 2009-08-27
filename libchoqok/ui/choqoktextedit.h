@@ -46,6 +46,7 @@ public:
     void setCharLimit(uint charLimit = 0);
     void setPlainText(const QString &text);
     void setText(const QString &text);
+    void prependText(const QString &text);
 
 protected:
     virtual void keyPressEvent(QKeyEvent* );

@@ -131,7 +131,7 @@ void PostWidget::setupUi()
     KPushButton *btnResend = addButton("btnResend", i18nc( "@info:tooltip", "ReSend" ), "retweet" );
     connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
 
-    if(mCurrentAccount->username().toLower() == mCurrentPost.author.userName.toLower()) {
+    if(mCurrentAccount->username() == mCurrentPost.author.userName.toLower()) {
         KPushButton *btnRemove = addButton("btnRemove", i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
         connect(btnRemove, SIGNAL(clicked(bool)), SLOT(removeCurrentPost()));
     }
@@ -239,11 +239,8 @@ void PostWidget::setHeight()
 void PostWidget::mousePressEvent(QMouseEvent* ev)
 {
     if(!isRead()) {
-        kDebug();
-        if(mCurrentPost.author.userName.toLower() != mCurrentAccount->username().toLower()) {
-            kDebug()<<"Emitting postReaded()";
-            emit postReaded();
-        }
+        kDebug()<<"Emitting postReaded()";
+        emit postReaded();
         setRead();
     }
     KTextBrowser::mousePressEvent(ev);

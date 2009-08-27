@@ -65,7 +65,7 @@ void TwitterApiPostWidget::initUi()
         connect( d->btnFav, SIGNAL(clicked(bool)), SLOT(setFavorite()) );
         updateFavStat();
     }
-    if( mCurrentAccount->username().toLower() != mCurrentPost.author.userName.toLower()) {
+    if( mCurrentAccount->username() != mCurrentPost.author.userName.toLower()) {
         KPushButton *btnRe = addButton( "btnReply",i18nc( "@info:tooltip", "Reply" ), "edit-undo" );
         connect( btnRe, SIGNAL(clicked(bool)), SLOT(slotReply()) );
     }
@@ -93,7 +93,7 @@ QString TwitterApiPostWidget::generateSign()
     sign += "<a href=\"" + mCurrentPost.link +
     "\" title=\"" + mCurrentPost.creationDateTime.toString() + "\">%1</a>";
     if ( mCurrentPost.isPrivate ) {
-        if( mCurrentPost.replyToUserName.toLower() == mCurrentAccount->username().toLower() ) {
+        if( mCurrentPost.replyToUserName.toLower() == mCurrentAccount->username() ) {
             sign.prepend( "From " );
         } else {
             sign.prepend( "To " );
@@ -167,7 +167,7 @@ void TwitterApiPostWidget::updateFavStat()
 void TwitterApiPostWidget::checkAnchor(const QUrl & url)
 {
     QString scheme = url.scheme();
-    if(scheme == "user") {
+    if(scheme == "user" || scheme == "tag" || scheme == "group") {
         kDebug()<<"NOT IMPLEMENTED YET";
     } else if( scheme == "replyto" ) {
         if(d->isBasePostShowed) {
