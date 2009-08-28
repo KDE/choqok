@@ -387,8 +387,10 @@ Plugin *PluginManager::loadPluginInternal( const QString &pluginId )
 
         kDebug() << "Successfully loaded plugin '" << pluginId << "'";
 
-        if( plugin->pluginInfo().category() != "MicroBlogs" && plugin->pluginInfo().category() != "Shorteners" )
+        if( plugin->pluginInfo().category() != "MicroBlogs" && plugin->pluginInfo().category() != "Shorteners" ){
+            kDebug()<<"Emitting pluginLoaded()";
             emit pluginLoaded( plugin );
+        }
 
 //         Protocol* protocol = dynamic_cast<Protocol*>( plugin );
 //         if ( protocol )

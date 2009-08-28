@@ -1,0 +1,19 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Service
+X-Choqok-Version=1
+Icon=amarok
+ServiceTypes=Choqok/Plugin
+X-KDE-Library=choqok_nowlistening
+X-KDE-PluginInfo-Author=Mehrdad Momeny
+X-KDE-PluginInfo-Email=mehrdad.momeny@gmail.com
+X-KDE-PluginInfo-Name=choqok_nowlistening
+X-KDE-PluginInfo-Version=0.1
+X-KDE-PluginInfo-Website=http://choqok.gnufolks.org
+X-KDE-PluginInfo-Category=Plugins
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
+Name=Now Listening
+Name[x-test]=xxNow Listeningxx
+Comment=Gather information about current playing track and prepare to submit it via Choqok Quick Post dialog

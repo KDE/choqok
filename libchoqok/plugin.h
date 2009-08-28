@@ -82,7 +82,7 @@ MyPlugin::MyPlugin( QObject *parent, const char *name, const QStringList &  args
 *
 * Choqok::Plugin inherits from KXMLGUIClient.  That client is added
 * to the Choqok's mainwindow KXMLGUIFactory. So you may add actions
-* on the main window (for hinstance in the meta contact popup menu).
+* on the main window.
 * Please note that the client is added right after the plugin is created,
 * so you have to create every actions in the constructor.
 *
