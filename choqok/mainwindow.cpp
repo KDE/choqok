@@ -86,6 +86,8 @@ MainWindow::MainWindow()
     connect( Choqok::AccountManager::self(), SIGNAL(allAccountsLoaded()),
              SLOT(loadAllAccounts()) );
 
+    connect( Choqok::PluginManager::self(), SIGNAL(pluginLoaded(Choqok::Plugin*)),
+             this, SLOT(newPluginAvailable(Choqok::Plugin*)) );
 
     QTimer::singleShot(0, Choqok::PluginManager::self(), SLOT( loadAllPlugins() ) );
     Choqok::AccountManager::self()->loadAllAccounts();
@@ -96,8 +98,6 @@ MainWindow::MainWindow()
         move(pos);
     }
 
-    connect( Choqok::PluginManager::self(), SIGNAL(pluginLoaded(Choqok::Plugin*)),
-             this, SLOT(newPluginAvailable(Choqok::Plugin*)) );
 }
 
 MainWindow::~MainWindow()

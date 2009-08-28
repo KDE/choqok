@@ -1,0 +1,13 @@
+[Desktop Entry]
+Icon=preferences-plugin
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=kcm_choqok_pluginconfig
+X-KDE-FactoryName=kcm_choqok_pluginconfig
+X-KDE-ParentApp=choqok
+X-KDE-ParentComponents=choqok
+X-KDE-Weight=200
+
+Name=Plugins
+Comment=Select and Configure Plugins
