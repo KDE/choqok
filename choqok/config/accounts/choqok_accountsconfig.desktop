@@ -11,6 +11,7 @@ X-KDE-Weight=20
 
 Name=Accounts
 Name[es]=Cuentas
+Name[fr]=Comptes
 Name[it]=Account
 Name[pt]=Contas
 Name[pt_BR]=Contas
@@ -19,6 +20,7 @@ Name[tr]=Hesaplar
 Name[uk]=Облікові записи
 Comment=Manage Your Accounts
 Comment[es]=Gestione sus cuentas
+Comment[fr]=Gérez vos comptes
 Comment[it]=Gestisci i tuoi account
 Comment[pt]=Gerir as Suas Contas
 Comment[pt_BR]=Gerencie suas contas

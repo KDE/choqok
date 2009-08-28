@@ -10,6 +10,7 @@ X-KDE-ParentComponents=choqok
 
 Name=Appearance
 Name[es]=Aspecto
+Name[fr]=Apparence
 Name[it]=Aspetto
 Name[pt]=Aparência
 Name[pt_BR]=Aparência
@@ -19,6 +20,7 @@ Name[uk]=Вигляд
 Name[x-test]=xxAppearancexx
 Comment=Personalize Choqok Look and Feel
 Comment[es]=Personalizar el aspecto de Choqok
+Comment[fr]=Personnalisez l'apparence de Choqok
 Comment[it]=Personalizza l'aspetto di Choqok
 Comment[pt]=Personalizar a Aparência e Comportamento do Choqok
 Comment[pt_BR]=Personalizar a Aparência e Comportamento do Choqok
