@@ -1,0 +1,13 @@
+[Desktop Entry]
+Icon=kaboodle
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=kcm_choqok_nowlistening
+X-KDE-FactoryName=kcm_choqok_nowlistening
+X-KDE-ParentApp=choqok_nowlistening
+X-KDE-ParentComponents=choqok_nowlistening
+
+Name=Now Listening
+Comment=Tells your friends what you're listening to
+

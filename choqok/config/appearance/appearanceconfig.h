@@ -25,9 +25,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef _CHOQOK_APPEARANCE_H
 #define _CHOQOK_APPEARANCE_H
 
-#define KDE3_SUPPORT
 #include <kcmodule.h>
-#undef KDE3_SUPPORT
 
 /**
  * @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>

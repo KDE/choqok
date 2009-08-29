@@ -31,19 +31,24 @@
 #include <QDBusReply>
 #include <choqokuiglobal.h>
 #include <quickpost.h>
+#include "nowlisteningsettings.h"
 
-typedef KGenericFactory<NowListening> MyPluginFactory;
-static const KAboutData aboutdata("choqok_nowlistening", 0, ki18n("Now Listening") , "0.1" );
-K_EXPORT_COMPONENT_FACTORY( choqok_nowlistening, MyPluginFactory( &aboutdata )  )
+K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < NowListening > (); )
+K_EXPORT_PLUGIN( MyPluginFactory( "choqok_nowlistening" ) )
 
-NowListening::NowListening(QObject* parent, const QStringList& args)
+// typedef KGenericFactory<NowListening> MyPluginFactory;
+// static const KAboutData aboutdata("choqok_nowlistening", 0, ki18n("Now Listening") , "0.1",
+//                                   ki18n("Tells your friends what you're listening to"),
+//                                   KAboutData::License_GPL_V3);
+// K_EXPORT_COMPONENT_FACTORY( choqok_nowlistening, MyPluginFactory( &aboutdata )  )
+
+NowListening::NowListening(QObject* parent, const QList<QVariant>& )
     :Choqok::Plugin(MyPluginFactory::componentData(), parent)
 {
-    KAction *action = new KAction(KIcon("amarok"), i18n("Now Listening"), this);
+    KAction *action = new KAction(KIcon("media-playback-start"), i18n("Now Listening"), this);
     actionCollection()->addAction("nowListening", action);
     connect(action, SIGNAL(triggered(bool)), SLOT(slotPrepareNowListening()));
     setXMLFile("nowlisteningui.rc");
-    config = new KConfigGroup( KGlobal::config(), "NowListeningPlugin" );
 }
 
 NowListening::~NowListening()
@@ -56,8 +61,7 @@ void NowListening::slotPrepareNowListening()
     QDBusInterface remoteApp( "org.kde.amarok", "/Player", "org.freedesktop.MediaPlayer" );
     QDBusReply< QMap<QString, QVariant> > reply = remoteApp.call( "GetMetadata" );
     QVariantMap trackInfo = reply.value();
-    QString text = config->readEntry("template",
-                                     QString("Currently listening to %title% by %artist% on %album% [Amarok]."));
+    QString text = NowListeningSettings::templateString();
     text.replace("%track%", trackInfo["tracknumber"].toString());
     text.replace("%title%", trackInfo["title"].toString());
     text.replace("%album%", trackInfo["album"].toString());

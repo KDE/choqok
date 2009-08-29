@@ -26,9 +26,7 @@
 
 #include "ui_accountswidget_base.h"
 
-#define KDE3_SUPPORT
 #include <kcmodule.h>
-#undef KDE3_SUPPORT
 
 class KMenu;
 namespace Choqok{

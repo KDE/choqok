@@ -22,19 +22,24 @@
 
 */
 
-#include <plugin.h>
+#ifndef NOWLISTENINGCONFIG_H
+#define NOWLISTENINGCONFIG_H
 
-class KConfigGroup;
+#include <kcmodule.h>
+#include "ui_nowlisteningprefs.h"
 
-class NowListening : public Choqok::Plugin
+class NowListeningConfig : public KCModule
 {
     Q_OBJECT
 public:
-    NowListening( QObject* parent, const QList< QVariant >& args );
-    ~NowListening();
+    NowListeningConfig(QWidget* parent, const QVariantList& args);
+    ~NowListeningConfig();
 
-protected slots:
-    void slotPrepareNowListening();
-
+    virtual void save();
+    virtual void load();
+    virtual void defaults();
+private:
+    Ui_NowListeningPrefsBase ui;
 };
 
+#endif // NOWLISTENINGCONFIG_H

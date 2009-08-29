@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Type=Service
 X-Choqok-Version=1
-Icon=amarok
+Icon=media-playback-start
 ServiceTypes=Choqok/Plugin
 X-KDE-Library=choqok_nowlistening
 X-KDE-PluginInfo-Author=Mehrdad Momeny
@@ -15,4 +15,4 @@ X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=true
 Name=Now Listening
-Comment=Gather information about current playing track and prepare to submit it via Choqok Quick Post dialog
+Comment=Tells your friends what you're listening to

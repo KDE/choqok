@@ -25,9 +25,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef _CHOQOK_BEHAVIOR_H
 #define _CHOQOK_BEHAVIOR_H
 
-#define KDE3_SUPPORT
 #include <kcmodule.h>
-#undef KDE3_SUPPORT
 
 class BehaviorConfig : public KCModule
 {

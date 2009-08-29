@@ -1,7 +1,7 @@
 ClassName=AppearanceSettings
 File=choqokappearancesettings.kcfg
 GlobalEnums=false
-#Inherits=KConfigSkeleton
+Inherits=KConfigSkeleton
 ItemAccessors=true
 MemberVariables=private
 Mutators=true

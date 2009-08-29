@@ -25,9 +25,7 @@
 #ifndef CHOQOKPLUGINCONFIG_H
 #define CHOQOKPLUGINCONFIG_H
 
-#define KDE3_SUPPORT
 #include <kcmodule.h>
-#undef KDE3_SUPPORT
 
 class KPluginSelector;
 

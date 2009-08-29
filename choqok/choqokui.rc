@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="choqok" version="9">
+<kpartgui name="choqok" version="10">
 <MenuBar>
   <Menu name="file"><text>File</text>
     <Action name="choqok_new_post" />
@@ -9,11 +9,11 @@
     <Action name="toggle_mainwin"/>
   </Menu>
   <Menu name="tools"><text>Tools</text>
+    <Action name="choqok_clear_avatar_cache"/>
   </Menu>
   <Menu name="settings"><text>Settings</text>
     <Action name="choqok_enable_updates"/>
     <Action name="choqok_enable_notify"/>
-    <Action name="choqok_clear_avatar_cache"/>
   </Menu>
 </MenuBar>
 </kpartgui>

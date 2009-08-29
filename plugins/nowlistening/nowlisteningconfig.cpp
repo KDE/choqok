@@ -22,19 +22,44 @@
 
 */
 
-#include <plugin.h>
+#include "nowlisteningconfig.h"
+#include <KPluginFactory>
+#include <klocale.h>
+#include <qlayout.h>
+#include <nowlisteningsettings.h>
+#include <QVBoxLayout>
 
-class KConfigGroup;
+K_PLUGIN_FACTORY( NowListeningConfigFactory, registerPlugin < NowListeningConfig > (); )
+K_EXPORT_PLUGIN( NowListeningConfigFactory( "kcm_choqok_nowlistening" ) )
 
-class NowListening : public Choqok::Plugin
+NowListeningConfig::NowListeningConfig(QWidget* parent, const QVariantList& args):
+        KCModule( NowListeningConfigFactory::componentData(), parent, args)
 {
-    Q_OBJECT
-public:
-    NowListening( QObject* parent, const QList< QVariant >& args );
-    ~NowListening();
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    QWidget *wd = new QWidget(this);
+    ui.setupUi(wd);
+    addConfig( NowListeningSettings::self(), wd);
+    layout->addWidget(wd);
+}
 
-protected slots:
-    void slotPrepareNowListening();
+NowListeningConfig::~NowListeningConfig()
+{
 
-};
+}
 
+void NowListeningConfig::defaults()
+{
+    KCModule::defaults();
+}
+
+void NowListeningConfig::load()
+{
+    KCModule::load();
+}
+
+void NowListeningConfig::save()
+{
+    KCModule::save();
+}
+
+#include "nowlisteningconfig.moc"
