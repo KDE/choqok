@@ -150,7 +150,7 @@ void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList, bool setRead
         if(pw) {
             pw->setRead(setRead);
             addPostWidgetToUi(pw);
-            if( (*it)->author.userName != d->currentAccount->username() )
+            if( (*it)->author.userName.toLower() != d->currentAccount->username() )
                 ++unread;
         }
     }

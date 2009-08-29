@@ -76,7 +76,7 @@ bool TwitterEditAccountWidget::validateData()
 Choqok::Account* TwitterEditAccountWidget::apply()
 {
     kDebug();
-    mAccount->setUsername( kcfg_username->text() );
+    mAccount->setUsername( kcfg_username->text().toLower() );
     mAccount->setPassword( kcfg_password->text() );
     mAccount->setAlias(kcfg_alias->text());
     mAccount->setUseSecureConnection(kcfg_secure->isChecked());
@@ -96,7 +96,7 @@ void TwitterEditAccountWidget::verifyCredentials()
     KUrl url( "http://twitter.com/account/verify_credentials.xml" );
     if(kcfg_secure->isChecked())
         url.setScheme("https");
-    url.setUserName(kcfg_username->text());
+    url.setUserName(kcfg_username->text().toLower());
     url.setPassword(kcfg_password->text());
 
      KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);

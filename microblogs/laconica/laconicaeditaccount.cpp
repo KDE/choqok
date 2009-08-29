@@ -75,7 +75,7 @@ bool LaconicaEditAccountWidget::validateData()
 Choqok::Account* LaconicaEditAccountWidget::apply()
 {
     kDebug();
-    mAccount->setUsername( kcfg_username->text() );
+    mAccount->setUsername( kcfg_username->text().toLower() );
     mAccount->setPassword( kcfg_password->text() );
     mAccount->setHost( kcfg_host->text() );
     mAccount->setApi( kcfg_api->text() );
@@ -97,7 +97,7 @@ void LaconicaEditAccountWidget::verifyCredentials()
         url.setScheme("https");
     else
         url.setScheme("http");
-    url.setUserName(kcfg_username->text());
+    url.setUserName(kcfg_username->text().toLower());
     url.setPassword(kcfg_password->text());
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
