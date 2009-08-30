@@ -34,10 +34,6 @@ Shortener::Shortener( const KComponentData &instance, QObject *parent )
 Shortener::~Shortener()
 {}
 
-QWidget *Shortener::configWidget()
-{
-    return 0;
-}
 QString Shortener::shorten( const QString &url )
 {
     return url;

@@ -38,11 +38,6 @@ Q_OBJECT
 public:
     Shortener( const KComponentData &instance, QObject *parent );
     virtual ~Shortener();
-    /**
-    A small widget will show if not null.
-    Default implementation returns NULL that means there's no config widget.
-    */
-    virtual QWidget *configWidget();
     virtual QString shorten( const QString &url );
 };
 }//End Namespace Choqok
