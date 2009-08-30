@@ -30,6 +30,10 @@ class ChoqokEditAccountWidget;
 class KJob;
 
 /**
+This plugin is to StatusNet service.
+
+@Note StatusNet was called Laconcia previously, So I just renamed it on UI :D
+
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
 class LaconicaMicroBlog : public TwitterApiMicroBlog

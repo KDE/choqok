@@ -49,7 +49,7 @@ LaconicaMicroBlog::LaconicaMicroBlog ( QObject* parent, const QVariantList&  )
 : TwitterApiMicroBlog(MyPluginFactory::componentData(), parent)
 {
     kDebug();
-    setServiceName("Laconica");
+    setServiceName("StatusNet");
 //     setServiceHomepageUrl("http://twitter.com/");
 }
 
