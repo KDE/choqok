@@ -10,4 +10,8 @@ X-KDE-ParentComponents=choqok
 X-KDE-Weight=200
 
 Name=Plugins
+Name[uk]=Додатки
+Name[x-test]=xxPluginsxx
 Comment=Select and Configure Plugins
+Comment[uk]=Оберіть і налаштуйте додатки
+Comment[x-test]=xxSelect and Configure Pluginsxx

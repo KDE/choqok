@@ -9,5 +9,7 @@ X-KDE-ParentApp=choqok_nowlistening
 X-KDE-ParentComponents=choqok_nowlistening
 
 Name=Now Listening
+Name[uk]=Зараз слухаю
+Name[x-test]=xxNow Listeningxx
 Comment=Tells your friends what you're listening to
 

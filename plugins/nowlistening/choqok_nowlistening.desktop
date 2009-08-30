@@ -15,4 +15,6 @@ X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=true
 Name=Now Listening
+Name[uk]=Зараз слухаю
+Name[x-test]=xxNow Listeningxx
 Comment=Tells your friends what you're listening to
