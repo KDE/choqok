@@ -86,7 +86,7 @@ QString ShortenManager::shortenUrl(const QString &url)
         NotifyManager::shortening(url);
         return _smp->backend->shorten(url);
     } else {
-        kError()<<"There isn't any Shortener plugin.";
+        kDebug()<<"There isn't any Shortener plugin.";
         return url;
     }
 }

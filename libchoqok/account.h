@@ -48,6 +48,12 @@ public:
     */
     MicroBlog *microblog() const;
 
+    /**
+    By default this will return @ref microblog() 's timelineNames()
+    Some microblogs may need to change this per account base!
+    */
+    virtual QStringList timelineNames() const;
+
     QString username() const;
     void setUsername( const QString &name );
 

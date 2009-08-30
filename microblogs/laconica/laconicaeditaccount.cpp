@@ -103,7 +103,7 @@ void LaconicaEditAccountWidget::verifyCredentials()
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
     if ( !job ) {
-        kError() << "Cannot create an http GET request.";
+        kDebug() << "Cannot create an http GET request.";
         return;
 //         QString errMsg = i18n ( "Cannot create an http GET request, Check your KDE installation." );
 //         KMessageBox::error(this, errMsg);
@@ -147,7 +147,7 @@ void LaconicaEditAccountWidget::slotVerifyCredentials(KJob* job)
             node2 = node2.nextSibling();
         }
     } else {
-        kError() << "ERROR, unrecognized result, buffer is: " << stj->data();
+        kDebug() << "ERROR, unrecognized result, buffer is: " << stj->data();
         KMessageBox::error( this, i18n ( "Unrecognized result." ) );
     }
     if(success)

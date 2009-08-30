@@ -230,32 +230,13 @@ public:
     virtual QString postUrl( Choqok::Account *account, const QString &username, const QString &postId) const = 0;
 
     /**
-    * @brief Available capabilities
-    *
-    * @ref capabilities() returns an ORed list of these, which
-    * the edit widget interperts to determine what buttons to show
-    */
-    enum Capability
-    {
-        CreatPost = 0x1,
-        RemovePost = 0x3
-    };
-    Q_DECLARE_FLAGS(Capabilities, Capability)
-
-    /**
-    * @brief a bitmask of the capabilities of this protocol
-    * @sa @ref setCapabilities
-    */
-    Capabilities capabilities() const;
-
-    /**
     Return a list of timelines supported by this account!
     It will use to show timelines! and result of timelineDataReceived() signal will be based on these!
 
     @see timelineInfo()
     @see timelineDataReceived()
     */
-    QStringList timelineTypes() const;
+    QStringList timelineNames() const;
 
     /**
     Checks if @p timeline is valid for this blog! i.e. there is an entry for it at timelineTypes() list.
@@ -329,21 +310,10 @@ protected:
 
     MicroBlog( const KComponentData &instance, QObject *parent=0 );
 
-    /**
-    * @brief Sets the capabilities of this microblog.
-    *
-    * The subclass contructor is a good place for calling it.
-    * @sa @ref capabilities()
-    */
-    void setCapabilities( Capabilities );
-    void setTimelineTypes(const QStringList&);
+    void setTimelineNames(const QStringList&);
     void setServiceName(const QString&);
     void setServiceHomepageUrl(const QString&);
-//     void setError(int);
-//     void setErrorString(const QString&);
     void setCharLimit(uint);
-protected slots:
-//     virtual void emitReadyForUnload();
 
 private:
     class Private;

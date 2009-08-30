@@ -75,7 +75,7 @@ ChoqokEditAccountWidget * TwitterMicroBlog::createEditAccountWidget( Choqok::Acc
     if(acc || !account)
         return new TwitterEditAccountWidget(this, acc, parent);
     else{
-        kError()<<"Account passed here is not a TwitterAccount!";
+        kDebug()<<"Account passed here is not a TwitterAccount!";
         return 0L;
     }
 }

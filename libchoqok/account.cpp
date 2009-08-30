@@ -169,6 +169,11 @@ KConfigGroup* Account::configGroup() const
     return d->configGroup;
 }
 
+QStringList Account::timelineNames() const
+{
+    return d->blog->timelineNames();
+}
+
 }
 
 #include "account.moc"

@@ -159,7 +159,7 @@ void MicroBlogWidget::newTimelineDataRecieved( Choqok::Account* theAccount, cons
 void MicroBlogWidget::initTimelines()
 {
     kDebug();
-    foreach( const QString &timeline, d->blog->timelineTypes() ){
+    foreach( const QString &timeline, d->account->timelineNames() ){
         addTimelineWidgetToUi(timeline);
     }
 }
@@ -184,7 +184,7 @@ TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)
         }
         return mbw;
     } else {
-        kError()<<"Cannot Create a new TimelineWidget for timeline "<<name;
+        kDebug()<<"Cannot Create a new TimelineWidget for timeline "<<name;
         return 0L;
     }
     if(d->timelinesTabWidget->count() == 1)

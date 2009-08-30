@@ -62,7 +62,7 @@ TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObje
     setCharLimit(140);
     QStringList timelineTypes;
     timelineTypes<< "Home" << "Reply" << "Inbox" << "Outbox";
-    setTimelineTypes(timelineTypes);
+    setTimelineNames(timelineTypes);
     d->monthes["Jan"] = 1;
     d->monthes["Feb"] = 2;
     d->monthes["Mar"] = 3;
@@ -236,7 +236,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
 {
     kDebug();
     if ( !post || post->content.isEmpty() ) {
-        kError() << "ERROR: Status text is empty!";
+        kDebug() << "ERROR: Status text is empty!";
         return;
     }
     if ( !post->isPrivate ) {///Status Update
@@ -251,7 +251,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
         data += "&source=choqok";
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
         if ( !job ) {
-            kError() << "Cannot create an http POST request!";
+            kDebug() << "Cannot create an http POST request!";
 //             QString errMsg = i18n ( "Creating new post failed, Cannot create an http POST request, Check your KDE installation." );
 //             emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
@@ -271,7 +271,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
         data += QUrl::toPercentEncoding ( post->content );
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
         if ( !job ) {
-            kError() << "Cannot create an http POST request!";
+            kDebug() << "Cannot create an http POST request!";
 //             QString errMsg = i18n ( "Creating new post failed, Cannot create an http POST request, Check your KDE installation." );
 //             emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
@@ -288,13 +288,13 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
 {
     kDebug();
     if ( !job ) {
-        kError() << "Job is null pointer";
+        kDebug() << "Job is null pointer";
         return;
     }
     Choqok::Post *post = mCreatePostMap.take(job);
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if(!post || !theAccount) {
-        kError()<<"Account or Post is NULL pointer";
+        kDebug()<<"Account or Post is NULL pointer";
         return;
     }
     if ( job->error() ) {
@@ -344,7 +344,7 @@ void TwitterApiMicroBlog::fetchPost ( Choqok::Account* theAccount, Choqok::Post*
 
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kError() << "Cannot create an http GET request!";
+        kDebug() << "Cannot create an http GET request!";
 //         QString errMsg = i18n ( "Fetching new post failed, Cannot create an http GET request,"
 //                                 "Check your KDE installation." );
 //         emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, Low );
@@ -366,14 +366,14 @@ void TwitterApiMicroBlog::slotFetchPost ( KJob *job )
     Choqok::Post *post = mFetchPostMap.take(job);
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
-        kError() << "Job Error: " << job->errorString();
+        kDebug() << "Job Error: " << job->errorString();
         emit error ( theAccount, Choqok::MicroBlog::CommunicationError,
                      i18n("Fetching new post failed, %1", job->errorString()), Low );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
         readPostFromXml ( theAccount, stj->data(), post );
         if ( post->isError ) {
-            kError() << "Parsing Error";
+            kDebug() << "Parsing Error";
             emit errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
                              i18n ( "Fetching new post failed, Could not parse result data." ), Low );
         } else {
@@ -396,7 +396,7 @@ void TwitterApiMicroBlog::removePost ( Choqok::Account* theAccount, Choqok::Post
         }
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
         if ( !job ) {
-            kError() << "Cannot create an http POST request!";
+            kDebug() << "Cannot create an http POST request!";
 //             QString errMsg = i18n ( "Removing post failed, Cannot create an http POST request, Check your KDE installation." );
 //             emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
@@ -433,7 +433,7 @@ void TwitterApiMicroBlog::createFavorite ( Choqok::Account* theAccount, const QS
     url.addPath ( "/favorites/create/" + postId + ".xml" );
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kError() << "Cannot create an http POST request!";
+        kDebug() << "Cannot create an http POST request!";
 //         QString errMsg = i18n ( "Favorite creation failed, Cannot create an http POST request, "
 //                                 "Check your KDE installation." );
 //         emit error ( theAccount, OtherError, errMsg );
@@ -469,7 +469,7 @@ void TwitterApiMicroBlog::removeFavorite ( Choqok::Account* theAccount, const QS
     url.addPath ( "/favorites/destroy/" + postId + ".xml" );
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kError() << "Cannot create an http POST request!";
+        kDebug() << "Cannot create an http POST request!";
 //         QString errMsg = i18n ( "Favorite removing failed, Cannot create an http POST request,"
 //                                 "Check your KDE installation." );
 //         emit error ( theAccount, OtherError, errMsg );
@@ -513,7 +513,7 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kError() << "Cannot create an http GET request!";
+        kDebug() << "Cannot create an http GET request!";
         return;
     }
     mJobsAccount[job] = theAccount;
@@ -538,7 +538,7 @@ void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
 void TwitterApiMicroBlog::updateTimelines (Choqok::Account* theAccount)
 {
     kDebug();
-    foreach ( const QString &tm, timelineTypes() ) {
+    foreach ( const QString &tm, theAccount->timelineNames() ) {
         requestTimeLine ( theAccount, tm, mTimelineLatestId[theAccount][tm] );
     }
 }
@@ -566,7 +566,7 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
 
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kError() << "Cannot create an http GET request!";
+        kDebug() << "Cannot create an http GET request!";
 //         QString errMsg = i18n ( "Cannot create an http GET request, Check your KDE installation." );
 //         emit error ( theAccount, OtherError, errMsg, Low );
         return;
@@ -838,7 +838,7 @@ QStringList TwitterApiMicroBlog::readUsersScreenNameFromXml( Choqok::Account* th
 
     if ( root.tagName() != "users" ) {
         QString err = i18n( "Retrieving friends list failed, Data returned from server is corrupted." );
-        kError() << "there's no users tag in XML\t the XML is: \n" << buffer.data();
+        kDebug() << "there's no users tag in XML\t the XML is: \n" << buffer.data();
         emit error(theAccount, ParsingError, err, Critical);
         return list;
     }
@@ -846,7 +846,7 @@ QStringList TwitterApiMicroBlog::readUsersScreenNameFromXml( Choqok::Account* th
     QString timeStr;
     while ( !node.isNull() ) {
         if ( node.toElement().tagName() != "user" ) {
-            kError() << "there's no status tag in XML, maybe there is no new status!";
+            kDebug() << "there's no status tag in XML, maybe there is no new status!";
             return list;
         }
         QDomNode node2 = node.firstChild();
@@ -878,7 +878,7 @@ void TwitterApiMicroBlog::aboutToUnload()
     d->countOfTimelinesToSave = 0;
     foreach(const Choqok::Account* acc, Choqok::AccountManager::self()->accounts()){
         if(acc->microblog() == this)
-            d->countOfTimelinesToSave += this->timelineTypes().count();
+            d->countOfTimelinesToSave += acc->timelineNames().count();
     }
     emit saveTimelines();
 }

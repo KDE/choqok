@@ -56,7 +56,7 @@ void EditAccountDialog::slotButtonClicked(int button)
     kDebug()<<button;
     if(button == KDialog::Ok) {
         if( widget->validateData() ) {
-            if( Choqok::Account *acc = widget->apply() ) {
+            if( widget->apply() ) {
                     accept();
                 }
         } else {

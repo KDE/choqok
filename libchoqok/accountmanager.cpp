@@ -146,7 +146,7 @@ Account * AccountManager::registerAccount( Account * account )
         Account *curracc = it.next();
         if ( account->alias() == curracc->alias() ) {
             d->lastError = i18n( "An account with this alias already exists: a unique alias has to be specified." );
-            kError()<<"An account with this alias already exists: a unique alias has to be specified.";
+            kDebug()<<"An account with this alias already exists: a unique alias has to be specified.";
             return 0L;
         }
     }

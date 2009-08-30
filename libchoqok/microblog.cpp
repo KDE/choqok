@@ -34,9 +34,6 @@ class MicroBlog::Private
 {
 public:
     QString serviceName;
-//     int error;
-//     QString errorString;
-    Capabilities capabilities;
     QString homepage;
     uint charLimit;
     QStringList timelineTypes;
@@ -95,11 +92,6 @@ QString MicroBlog::errorString( ErrorType type )
     return QString();
 }
 
-void MicroBlog::setCapabilities( MicroBlog::Capabilities cap )
-{
-    d->capabilities = cap;
-}
-
 void MicroBlog::setServiceName(const QString& serviceName)
 {
     d->serviceName = serviceName;
@@ -120,12 +112,12 @@ void MicroBlog::setCharLimit(uint limit)
     d->charLimit = limit;
 }
 
-QStringList MicroBlog::timelineTypes() const
+QStringList MicroBlog::timelineNames() const
 {
     return d->timelineTypes;
 }
 
-void MicroBlog::setTimelineTypes(const QStringList &types)
+void MicroBlog::setTimelineNames(const QStringList &types)
 {
     d->timelineTypes = types;
 }

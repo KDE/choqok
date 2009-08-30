@@ -75,7 +75,7 @@ ChoqokEditAccountWidget * LaconicaMicroBlog::createEditAccountWidget( Choqok::Ac
     if(acc || !account)
         return new LaconicaEditAccountWidget(this, acc, parent);
     else{
-        kError()<<"Account passed here is not a LaconicaAccount!";
+        kDebug()<<"Account passed here is not a LaconicaAccount!";
         return 0L;
     }
 }

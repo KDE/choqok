@@ -408,7 +408,7 @@ void PostWidget::slotPostError(Account* theAccount, Choqok::Post* post,
                                MicroBlog::ErrorType , const QString& errorMessage)
 {
     if( theAccount == currentAccount() && post == &mCurrentPost) {
-        kError()<<errorMessage;
+        kDebug()<<errorMessage;
         disconnect(mCurrentAccount->microblog(), SIGNAL(postRemoved(Choqok::Account*,Choqok::Post*)),
                   this, SLOT(slotCurrentPostRemoved(Choqok::Account*,Choqok::Post*)) );
         disconnect( mCurrentAccount->microblog(),
