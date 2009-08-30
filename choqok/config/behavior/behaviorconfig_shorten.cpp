@@ -28,6 +28,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KDebug>
 #include <qlayout.h>
 #include <shortenmanager.h>
+#include "choqokbehaviorsettings.h"
 
 BehaviorConfig_Shorten::BehaviorConfig_Shorten( QWidget *parent )
     :QWidget(parent),currentShortener(0)
@@ -35,7 +36,7 @@ BehaviorConfig_Shorten::BehaviorConfig_Shorten( QWidget *parent )
     kDebug();
     setupUi(this);
     Choqok::ShortenManager::self();
-    connect(kcfg_plugins, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
+    connect(kcfg_shortenPlugins, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
 }
 
 BehaviorConfig_Shorten::~BehaviorConfig_Shorten()
@@ -45,7 +46,7 @@ BehaviorConfig_Shorten::~BehaviorConfig_Shorten()
 
 void BehaviorConfig_Shorten::currentPluginChanged( int index )
 {
-    if( kcfg_plugins->itemData(index).toString() == prevShortener)
+    if( kcfg_shortenPlugins->itemData(index).toString() == prevShortener)
         emit changed(false);
     else
         emit changed(true);
@@ -63,24 +64,25 @@ void BehaviorConfig_Shorten::currentPluginChanged( int index )
 void BehaviorConfig_Shorten::load()
 {
     availablePlugins = Choqok::PluginManager::self()->availablePlugins("Shorteners");
-    kcfg_plugins->clear();
-    kcfg_plugins->addItem( i18n("None") );
+    kcfg_shortenPlugins->clear();
+    kcfg_shortenPlugins->addItem( i18n("None") );
     foreach(const KPluginInfo& plugin, availablePlugins){
-        kcfg_plugins->addItem( KIcon(plugin.icon()), plugin.name(), plugin.pluginName());
+        kcfg_shortenPlugins->addItem( KIcon(plugin.icon()), plugin.name(), plugin.pluginName());
     }
-    prevShortener = KGlobal::config()->group("Advanced").readEntry("ShortenPlugin", QString());
+    prevShortener = Choqok::BehaviorSettings::shortenerPlugin();
     if(!prevShortener.isEmpty()) {
-        kcfg_plugins->setCurrentIndex(kcfg_plugins->findData(prevShortener));
+        kcfg_shortenPlugins->setCurrentIndex(kcfg_shortenPlugins->findData(prevShortener));
         //         currentPluginChanged(kcfg_plugins->currentIndex());
     }
 }
 
 void BehaviorConfig_Shorten::save()
 {
-    const QString shorten = kcfg_plugins->itemData(kcfg_plugins->currentIndex()).toString();
-    KGlobal::config()->group("Advanced").writeEntry("ShortenPlugin", shorten);
+    const QString shorten = kcfg_shortenPlugins->itemData(kcfg_shortenPlugins->currentIndex()).toString();
+    Choqok::BehaviorSettings::setShortenerPlugin(shorten);
     if( prevShortener != shorten ) {
         kDebug()<<prevShortener<<" -> "<<shorten;
+        Choqok::BehaviorSettings::self()->writeConfig();
         Choqok::ShortenManager::self()->reloadConfig();
     }
 }

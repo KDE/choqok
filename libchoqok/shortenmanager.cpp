@@ -29,6 +29,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <kconfiggroup.h>
 #include <KDebug>
 #include "notifymanager.h"
+#include <choqokbehaviorsettings.h>
 
 namespace Choqok{
 
@@ -44,7 +45,7 @@ public:
     }
     void reloadConfig()
     {
-        const QString pluginId = KGlobal::config()->group("Advanced").readEntry("ShortenPlugin", QString());
+        const QString pluginId = Choqok::BehaviorSettings::shortenerPlugin();
         if(backend){
             if(backend->pluginName() == pluginId) {
                 return;//Already loaded
