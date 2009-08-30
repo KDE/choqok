@@ -41,12 +41,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <composerwidget.h>
 #include "twitterpostwidget.h"
 
-typedef KGenericFactory<TwitterMicroBlog> TWPluginFactory;
-static const KAboutData aboutdata("choqok_twitter", 0, ki18n("Twitter MicroBlog") , "0.1" );
-K_EXPORT_COMPONENT_FACTORY( choqok_twitter, TWPluginFactory( &aboutdata )  )
+K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < TwitterMicroBlog > (); )
+K_EXPORT_PLUGIN( MyPluginFactory( "choqok_twitter" ) )
 
-TwitterMicroBlog::TwitterMicroBlog ( QObject* parent, const QStringList&  )
-: TwitterApiMicroBlog(TWPluginFactory::componentData(), parent)
+TwitterMicroBlog::TwitterMicroBlog ( QObject* parent, const QVariantList&  )
+: TwitterApiMicroBlog(MyPluginFactory::componentData(), parent)
 {
     kDebug();
     setServiceName("Twitter");

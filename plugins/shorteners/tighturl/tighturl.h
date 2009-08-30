@@ -25,6 +25,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <shortener.h>
 #include <QString>
+#include <QVariantList>
 /**
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
@@ -32,7 +33,7 @@ class TightUrl : public Choqok::Shortener
 {
     Q_OBJECT
 public:
-    TightUrl( QObject *parent, const QStringList &  args  );
+    TightUrl( QObject* parent, const QVariantList& args  );
     ~TightUrl();
 public slots:
     QString shorten( const QString &url );

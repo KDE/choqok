@@ -30,14 +30,12 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KGenericFactory>
 #include <kglobal.h>
 
-typedef KGenericFactory<TightUrl> MyPluginFactory;
-static const KAboutData aboutdata("choqok_tighturl", 0, ki18n("TightUrl Shortener") , "0.1" );
-K_EXPORT_COMPONENT_FACTORY( choqok_tighturl, MyPluginFactory( &aboutdata )  )
+K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < TightUrl > (); )
+K_EXPORT_PLUGIN( MyPluginFactory( "choqok_tighturl" ) )
 
-TightUrl::TightUrl( QObject *parent, const QStringList &  args  )
+TightUrl::TightUrl( QObject *parent, const QVariantList & )
 : Choqok::Shortener( MyPluginFactory::componentData(), parent )
 {
-    Q_UNUSED(args)
 }
 
 QString TightUrl::shorten( const QString &url )

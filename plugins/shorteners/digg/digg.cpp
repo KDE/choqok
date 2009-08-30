@@ -31,14 +31,12 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <kglobal.h>
 #include <QDomDocument>
 
-typedef KGenericFactory<Digg> MyPluginFactory;
-static const KAboutData aboutdata("choqok_digg", 0, ki18n("Digg.com Shortener") , "0.1" );
-K_EXPORT_COMPONENT_FACTORY( choqok_digg, MyPluginFactory( &aboutdata )  )
+K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Digg > (); )
+K_EXPORT_PLUGIN( MyPluginFactory( "choqok_digg" ) )
 
-Digg::Digg( QObject *parent, const QStringList &  args  )
+Digg::Digg( QObject *parent, const QVariantList &  )
 : Choqok::Shortener( MyPluginFactory::componentData(), parent )
 {
-    Q_UNUSED(args)
 }
 
 QString Digg::shorten( const QString &baseUrl )

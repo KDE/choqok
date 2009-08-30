@@ -42,12 +42,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <twitterapihelper/twitterapipostwidget.h>
 #include "laconicapostwidget.h"
 
-typedef KGenericFactory<LaconicaMicroBlog> TWPluginFactory;
-static const KAboutData aboutdata("choqok_laconica", 0, ki18n("Laconica MicroBlog") , "0.1" );
-K_EXPORT_COMPONENT_FACTORY( choqok_laconica, TWPluginFactory( &aboutdata )  )
+K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < LaconicaMicroBlog > (); )
+K_EXPORT_PLUGIN( MyPluginFactory( "choqok_laconica" ) )
 
-LaconicaMicroBlog::LaconicaMicroBlog ( QObject* parent, const QStringList&  )
-: TwitterApiMicroBlog(TWPluginFactory::componentData(), parent)
+LaconicaMicroBlog::LaconicaMicroBlog ( QObject* parent, const QVariantList&  )
+: TwitterApiMicroBlog(MyPluginFactory::componentData(), parent)
 {
     kDebug();
     setServiceName("Laconica");

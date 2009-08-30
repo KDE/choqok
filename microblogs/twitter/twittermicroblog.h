@@ -36,7 +36,7 @@ class TwitterMicroBlog : public TwitterApiMicroBlog
 {
 Q_OBJECT
 public:
-    TwitterMicroBlog( QObject* parent, const QStringList& args  );
+    TwitterMicroBlog( QObject* parent, const QVariantList& args  );
     ~TwitterMicroBlog();
 
     virtual Choqok::Account *createNewAccount( const QString &alias );

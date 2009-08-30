@@ -36,7 +36,7 @@ class LaconicaMicroBlog : public TwitterApiMicroBlog
 {
 Q_OBJECT
 public:
-    LaconicaMicroBlog( QObject* parent, const QStringList& args  );
+    LaconicaMicroBlog( QObject* parent, const QVariantList& args  );
     ~LaconicaMicroBlog();
 
     virtual Choqok::Account *createNewAccount( const QString &alias );

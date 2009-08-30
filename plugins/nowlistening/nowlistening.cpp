@@ -36,12 +36,6 @@
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < NowListening > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_nowlistening" ) )
 
-// typedef KGenericFactory<NowListening> MyPluginFactory;
-// static const KAboutData aboutdata("choqok_nowlistening", 0, ki18n("Now Listening") , "0.1",
-//                                   ki18n("Tells your friends what you're listening to"),
-//                                   KAboutData::License_GPL_V3);
-// K_EXPORT_COMPONENT_FACTORY( choqok_nowlistening, MyPluginFactory( &aboutdata )  )
-
 NowListening::NowListening(QObject* parent, const QList<QVariant>& )
     :Choqok::Plugin(MyPluginFactory::componentData(), parent)
 {
