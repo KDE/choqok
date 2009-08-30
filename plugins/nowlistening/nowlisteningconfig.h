@@ -38,6 +38,9 @@ public:
     virtual void save();
     virtual void load();
     virtual void defaults();
+
+protected slots:
+    void emitChanged();
 private:
     Ui_NowListeningPrefsBase ui;
 };

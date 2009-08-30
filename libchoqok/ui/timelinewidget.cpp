@@ -65,7 +65,15 @@ void TimelineWidget::loadTimeline()
 {
     QList<Choqok::Post*> list = currentAccount()->microblog()->loadTimeline(currentAccount(), timelineName());
     connect(currentAccount()->microblog(), SIGNAL(saveTimelines()), SLOT(saveTimeline()));
-    addNewPosts(list, true);
+
+    QList<Post*>::const_iterator it, endIt = list.constEnd();
+    for(it = list.constBegin(); it!= endIt; ++it){
+        PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, **it, this);
+        if(pw) {
+            pw->setRead();
+            addPostWidgetToUi(pw);
+        }
+    }
 }
 
 QString TimelineWidget::timelineName()
@@ -138,7 +146,7 @@ void TimelineWidget::removeOldPosts()
     }
 }
 
-void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList, bool setRead )
+void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList)
 {
     kDebug()<<d->currentAccount->alias()<<' '<<d->timelineName<<' '<<postList.count();
     QList<Post*>::const_iterator it, endIt = postList.constEnd();
@@ -148,14 +156,13 @@ void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList, bool setRead
             continue;
         PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, **it, this);
         if(pw) {
-            pw->setRead(setRead);
             addPostWidgetToUi(pw);
-            if( (*it)->author.userName.toLower() != d->currentAccount->username() )
+            if( !pw->isRead() )
                 ++unread;
         }
     }
     removeOldPosts();
-    if(!setRead && unread){
+    if(unread){
         d->unreadCount += unread;
         emit updateUnreadCount(unread);
         if(!d->btnMarkAllAsRead){

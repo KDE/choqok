@@ -62,6 +62,8 @@ PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* par
     :KTextBrowser(parent), mCurrentPost(post), mCurrentAccount(account), mRead(false)
 {
     setAttribute(Qt::WA_DeleteOnClose);
+    if(currentAccount()->username() == currentPost().author.userName.toLower())
+        mRead = true;
     setupUi();
     mTimer.start( _MINUTE );
     connect( &mTimer, SIGNAL( timeout() ), this, SLOT( updateUi()) );
@@ -206,7 +208,7 @@ const Post &PostWidget::currentPost() const
 
 void PostWidget::setRead(bool read/* = true*/)
 {
-    if(currentAccount()->username() == currentPost().author.userName && !mRead) {
+    if( !read && !mRead && currentAccount()->username() == currentPost().author.userName.toLower()) {
         mRead = true; ///Always Set own posts as read.
         setUiStyle();
     } else if( mRead != read ) {

@@ -59,7 +59,7 @@ public:
     /**
      @brief Add new posts to UI.
     */
-    virtual void addNewPosts( QList<Post*> &postList, bool setRead = false );
+    virtual void addNewPosts( QList< Choqok::Post* >& postList );
 
     /**
     @brief Return count of unread posts on this timeline.

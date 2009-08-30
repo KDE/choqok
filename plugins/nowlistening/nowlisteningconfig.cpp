@@ -37,9 +37,12 @@ NowListeningConfig::NowListeningConfig(QWidget* parent, const QVariantList& args
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
+    wd->setObjectName("mNowListeningCtl");
     ui.setupUi(wd);
-    addConfig( NowListeningSettings::self(), wd);
+    addConfig( NowListeningSettings::self(), wd );
     layout->addWidget(wd);
+    setButtons(KCModule::Apply | KCModule::Default);
+    connect( ui.kcfg_templateString, SIGNAL(textChanged()), SLOT(emitChanged()) );
 }
 
 NowListeningConfig::~NowListeningConfig()
@@ -54,12 +57,20 @@ void NowListeningConfig::defaults()
 
 void NowListeningConfig::load()
 {
+    kDebug();
     KCModule::load();
 }
 
 void NowListeningConfig::save()
 {
+    kDebug();
     KCModule::save();
+}
+
+void NowListeningConfig::emitChanged()
+{
+    emit changed(true);
+    disconnect( ui.kcfg_templateString, SIGNAL(textChanged()), this, SLOT(emitChanged()) );
 }
 
 #include "nowlisteningconfig.moc"
