@@ -12,7 +12,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="KTabWidget" name="ktabwidget">
+    <widget class="KTabWidget" name="tabwidget">
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -301,7 +301,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>kcfg_secure</tabstop>
   <tabstop>kcfg_test</tabstop>
   <tabstop>kcfg_register</tabstop>
-  <tabstop>ktabwidget</tabstop>
+  <tabstop>tabwidget</tabstop>
   <tabstop>kcfg_doNotShowRepliesOnHome</tabstop>
   <tabstop>kcfg_loadTwitpicImages</tabstop>
  </tabstops>
