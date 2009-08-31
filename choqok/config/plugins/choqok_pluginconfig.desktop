@@ -10,8 +10,16 @@ X-KDE-ParentComponents=choqok
 X-KDE-Weight=200
 
 Name=Plugins
+Name[pt]='Plugins'
+Name[pt_BR]='Plugins'
+Name[sv]=Insticksprogram
+Name[tr]=Eklentiler
 Name[uk]=Додатки
 Name[x-test]=xxPluginsxx
 Comment=Select and Configure Plugins
+Comment[pt]=Seleccionar e Configurar os 'Plugins'
+Comment[pt_BR]=Seleccionar e Configurar os 'Plugins'
+Comment[sv]=Välj och anpassa insticksprogram
+Comment[tr]=Eklentileri Seç ve Yapılandır
 Comment[uk]=Оберіть і налаштуйте додатки
 Comment[x-test]=xxSelect and Configure Pluginsxx
