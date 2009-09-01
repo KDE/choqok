@@ -10,12 +10,14 @@ X-KDE-ParentComponents=choqok_nowlistening
 
 Name=Now Listening
 Name[pt]=Agora a Ouvir
-Name[pt_BR]=Agora a Ouvir
+Name[pt_BR]=Escutando agora
 Name[sv]=Lyssnar nu
 Name[tr]=Şimdi Dinleniyor
 Name[uk]=Зараз слухаю
 Name[x-test]=xxNow Listeningxx
 Comment=Tells your friends what you're listening to
+Comment[pt]=Diga aos seus amigos o que está a ouvir
+Comment[pt_BR]=Diz a seus colegas o que você está escutando
 Comment[sv]=Samla Information om nuvarande spelat spår och förbered för att skicka in det via Choqoks dialogruta för snabbinlägg
 Comment[uk]=Повідомляє вашим друзям про музику, яку ви слухаєте
 Comment[x-test]=xxTells your friends what you're listening toxx
