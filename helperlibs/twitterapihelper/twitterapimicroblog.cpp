@@ -132,9 +132,31 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
     KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
     QStringList groupList = postsBackup.groupList();
     groupList.sort();
-    int count = groupList.count();
     QList< Choqok::Post* > list;
-    if(count) {
+    int count = groupList.count();
+    if( count ) {
+        /**
+        Checking if QStringList::sort() failed on sorting numbers,
+        This happends when one or more items char count is less/more than other ones
+        */
+        if(groupList.constBegin()->count() != (--(groupList.constEnd()))->count()) {
+            int charCount = groupList[0].count();
+            for(int i=1; i<count; ++i){
+                int tmp = groupList[i].count();
+                if( tmp < charCount ){
+                    int k = 0;
+                    for(int j = i; j<count; ++j){
+                        int tmp2 = groupList[j].count();
+                        if( tmp2 == tmp )
+                            groupList.move(j, k);
+                        else
+                            charCount = tmp2;
+                    }
+                } else
+                    charCount = tmp;
+            }
+        }
+        ///END checking
         Choqok::Post *st;
         for ( int i = 0; i < count; ++i ) {
             st = new Choqok::Post;
