@@ -516,7 +516,7 @@ void TwitterApiMicroBlog::slotRemoveFavorite ( KJob *job )
         kDebug() << "Job Error: " << job->errorString();
         emit error ( theAccount, CommunicationError, i18n("Favorite removing failed, %1", job->errorString() ) );
     } else {
-        emit favoriteCreated ( theAccount, id );
+        emit favoriteRemoved ( theAccount, id );
     }
 }
 

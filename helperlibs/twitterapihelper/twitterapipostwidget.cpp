@@ -132,8 +132,8 @@ void TwitterApiPostWidget::setFavorite()
                 this, SLOT(slotSetFavorite(Choqok::Account*,QString)) );
         mic->removeFavorite(currentAccount(), mCurrentPost.postId);
     } else {
-        connect(mic, SIGNAL(favoriteRemoved(Choqok::Account*,QString)),
-                this, SLOT(slotSetFavorite(Choqok::Account*,QString)) );
+        connect(mic, SIGNAL(favoriteCreated(Choqok::Account*,QString)),
+                   this, SLOT(slotSetFavorite(Choqok::Account*,QString)) );
         mic->createFavorite(currentAccount(), mCurrentPost.postId);
     }
 }
