@@ -58,8 +58,8 @@ ChoqokPluginConfig::ChoqokPluginConfig( QWidget *parent, const QVariantList &arg
 
     m_pluginSelector->addPlugins( Choqok::PluginManager::self()->availablePlugins( "Plugins" ),
                                    KPluginSelector::ReadConfigFile, i18n( "General Plugins" ), "Plugins" );
-    m_pluginSelector->addPlugins( Choqok::PluginManager::self()->availablePlugins( "Shorteners" ),
-                                  KPluginSelector::ReadConfigFile, i18n("Shortener Plugins"), "Shorteners");
+//     m_pluginSelector->addPlugins( Choqok::PluginManager::self()->availablePlugins( "Shorteners" ),
+//                                   KPluginSelector::ReadConfigFile, i18n("Shortener Plugins"), "Shorteners");
     m_pluginSelector->load();
 }
 

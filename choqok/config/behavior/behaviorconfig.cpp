@@ -71,10 +71,11 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
     d->mBehaviorTabCtl->addTab(mPrfsGeneralDlg, i18n("&General"));
 
     // "Notifications" TAB ============================================================
-    QWidget *mPrfsNotifyDlg = new QWidget(d->mBehaviorTabCtl);
-    d->mPrfsNotify.setupUi(mPrfsNotifyDlg);
-    addConfig( Choqok::BehaviorSettings::self(), mPrfsNotifyDlg);
-    d->mBehaviorTabCtl->addTab(mPrfsNotifyDlg, i18n("&Notifications"));
+    //Commented for now!
+//     QWidget *mPrfsNotifyDlg = new QWidget(d->mBehaviorTabCtl);
+//     d->mPrfsNotify.setupUi(mPrfsNotifyDlg);
+//     addConfig( Choqok::BehaviorSettings::self(), mPrfsNotifyDlg);
+//     d->mBehaviorTabCtl->addTab(mPrfsNotifyDlg, i18n("&Notifications"));
 
     // "Shortening" TAB ===============================================================
     d->mPrfsShorten = new BehaviorConfig_Shorten(d->mBehaviorTabCtl);
