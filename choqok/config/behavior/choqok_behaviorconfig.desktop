@@ -10,6 +10,7 @@ X-KDE-ParentComponents=choqok
 X-KDE-Weight=10
 
 Name=Behavior
+Name[bg]=Поведение
 Name[es]=Comportamiento
 Name[fr]=Comportement
 Name[it]=Comportamento
