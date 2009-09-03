@@ -40,6 +40,7 @@ public:
     {}
     uint charLimit;
     QString prevStr;
+    QChar firstChar;
 };
 
 TextEdit::TextEdit(uint charLimit /*= 0*/, QWidget* parent /*= 0*/)
@@ -120,25 +121,35 @@ void TextEdit::insertFromMimeData ( const QMimeData *source )
 
 void TextEdit::updateRemainingCharsCount()
 {
-    int count = this->toPlainText().count();
+    QString txt = this->toPlainText();
+    int count = txt.count();
     if(count){
         lblRemainChar->show();
+        if(d->charLimit){
+            int remain = d->charLimit - count;
+            if( remain < 0 ){
+                lblRemainChar->setStyleSheet( "QLabel {color: red;}" );
+            } else if(remain < 30) {
+                lblRemainChar->setStyleSheet( "QLabel {color: rgb(242, 179, 19);}" );
+            } else {
+                lblRemainChar->setStyleSheet( "QLabel {color: green;}" );
+            }
+            lblRemainChar->setText( QString::number(remain) );
+        } else {
+            lblRemainChar->setText( QString::number(count) );
+            lblRemainChar->setStyleSheet( "QLabel {color: blue;}" );
+        }
+        txt.remove(QRegExp("@([^\\s\\W]+)"));
+        txt = txt.trimmed();
+        if( d->firstChar != txt[0] ) {
+            d->firstChar = txt[0];
+            txt.prepend(' ');
+            QTextBlockFormat f;
+            f.setLayoutDirection( (Qt::LayoutDirection) txt.isRightToLeft() );
+            textCursor().mergeBlockFormat( f );
+        }
     }else{
         lblRemainChar->hide();
-    }
-    if(d->charLimit){
-        int remain = d->charLimit - this->toPlainText().count();
-        if( remain < 0 ){
-            lblRemainChar->setStyleSheet( "QLabel {color: red;}" );
-        } else if(remain < 30) {
-            lblRemainChar->setStyleSheet( "QLabel {color: rgb(242, 179, 19);}" );
-        } else {
-            lblRemainChar->setStyleSheet( "QLabel {color: green;}" );
-        }
-        lblRemainChar->setText( QString::number(remain) );
-    } else {
-        lblRemainChar->setText( QString::number(count) );
-        lblRemainChar->setStyleSheet( "QLabel {color: blue;}" );
     }
 //         emit charsRemain( d->charLimit - this->toPlainText().count() );
 }
