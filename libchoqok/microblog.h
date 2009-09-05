@@ -245,7 +245,7 @@ public:
     bool isValidTimeline( const QString &timelineName );
 
     /**
-    @Return informations about an specific timeline
+    @Return information about an specific timeline
     */
     virtual TimelineInfo * timelineInfo( const QString &timelineName ) = 0;
 

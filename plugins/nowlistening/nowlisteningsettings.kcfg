@@ -7,7 +7,7 @@
     <kcfgfile name="choqokrc"/>
 
     <group name="Now Listening Plugin">
-        <entry name="templateString" typ="String">
+        <entry name="templateString" type="String">
             <default>Currently listening to %title% by %artist% on %album% [Amarok].</default>
         </entry>
     </group>

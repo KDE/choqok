@@ -22,7 +22,7 @@
 
 */
 
-#include <plugin.h>
+#include "plugin.h"
 
 class KConfigGroup;
 

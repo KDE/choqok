@@ -81,7 +81,7 @@ void AccountsWidget::addAccount()
         QString name = act->data().toString();
         Choqok::MicroBlog *blog = qobject_cast<Choqok::MicroBlog *>(Choqok::PluginManager::self()->loadPlugin(name));
         if(blog){
-            AddAccountDialog *d = new AddAccountDialog(
+           QPointer<AddAccountDialog> d = new AddAccountDialog(
                                        blog->createEditAccountWidget(0, Choqok::UI::Global::mainWindow()),
                                                         Choqok::UI::Global::mainWindow() );
             d->exec();
@@ -106,7 +106,7 @@ void AccountsWidget::editAccount( QString alias )
     } else {
         ChoqokEditAccountWidget *eaw = currentAccount->microblog()->createEditAccountWidget(currentAccount,
                                                                                             this);
-        EditAccountDialog *d = new EditAccountDialog(eaw, this);
+       QPointer<EditAccountDialog> d = new EditAccountDialog(eaw, this);
         d->exec();
     }
 }
