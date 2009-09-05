@@ -51,8 +51,8 @@ public:
     void setTimelineName(const QString &type);
 
     /**
-    @brief Return Timeline type name
-    Related to whatever sets previouslly by @ref setTimelineType()
+    @brief Return Timeline name
+    Related to whatever sets previouslly by @ref setTimelineName()
     */
     QString timelineName();
 
@@ -64,7 +64,7 @@ public:
     /**
     @brief Return count of unread posts on this timeline.
     */
-    virtual int unreadCount();
+    int unreadCount() const;
 
     /**
     @brief remove old posts, about to user selected count of posts on timelines

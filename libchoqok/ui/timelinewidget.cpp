@@ -194,7 +194,7 @@ void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
 
 }
 
-int TimelineWidget::unreadCount()
+int TimelineWidget::unreadCount() const
 {
     return d->unreadCount;
 }
@@ -205,8 +205,9 @@ void TimelineWidget::markAllAsRead()
         foreach(PostWidget *pw, posts.values()){
             pw->setRead();
         }
-        emit updateUnreadCount(-d->unreadCount);
+        int unread = -d->unreadCount;
         d->unreadCount = 0;
+        emit updateUnreadCount(unread);
         d->btnMarkAllAsRead->deleteLater();
         d->btnMarkAllAsRead = 0L;
     }
@@ -227,8 +228,8 @@ void TimelineWidget::settingsChanged()
 void TimelineWidget::slotOnePostReaded()
 {
     kDebug();
-    emit updateUnreadCount(-1);
     d->unreadCount--;
+    emit updateUnreadCount(-1);
     if(d->unreadCount == 0){
         d->btnMarkAllAsRead->deleteLater();
         d->btnMarkAllAsRead = 0L;

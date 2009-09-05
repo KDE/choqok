@@ -127,7 +127,6 @@ protected:
     void setComposerWidget(ComposerWidget* widget);
     ComposerWidget *composer();
     QMap<QString, TimelineWidget*> timelines();
-    QMap<TimelineWidget*, int> timelineUnreadCount();
     KTabWidget *timelinesTabWidget();
 
 private:

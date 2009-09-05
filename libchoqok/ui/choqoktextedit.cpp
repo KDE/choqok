@@ -151,7 +151,6 @@ void TextEdit::updateRemainingCharsCount()
     }else{
         lblRemainChar->hide();
     }
-//         emit charsRemain( d->charLimit - this->toPlainText().count() );
 }
 
 void TextEdit::setCharLimit(uint charLimit /*= 0*/)

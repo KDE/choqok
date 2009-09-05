@@ -54,7 +54,6 @@ public:
     MicroBlog *blog;
     ComposerWidget *composer;
     QMap<QString, TimelineWidget*> timelines;
-    QMap<TimelineWidget*, int> timelineUnreadCount;
     KTabWidget *timelinesTabWidget;
     QLabel *latestUpdate;
     KPushButton *btnMarkAllAsRead;
@@ -171,7 +170,6 @@ TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)
         mbw->setObjectName(name);
         Choqok::TimelineInfo *info = currentAccount()->microblog()->timelineInfo(name);
         d->timelines.insert(name, mbw);
-        d->timelineUnreadCount.insert(mbw, 0);
         d->timelinesTabWidget->addTab(mbw, info->name);
         d->timelinesTabWidget->setTabIcon(d->timelinesTabWidget->indexOf(mbw), KIcon(info->icon));
         connect( mbw, SIGNAL(updateUnreadCount(int)),
@@ -196,9 +194,10 @@ TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)
 void MicroBlogWidget::slotUpdateUnreadCount(int change)
 {
     kDebug()<<change;
-    int sum = change;
-    foreach(int n, d->timelineUnreadCount.values())
-        sum += n;
+    int sum = 0;
+    kDebug()<< qobject_cast<TimelineWidget*>(sender())->unreadCount();
+    foreach(const TimelineWidget *mbw, d->timelines.values())
+        sum += mbw->unreadCount();
     if(change != 0)
         emit updateUnreadCount(change, sum);
 
@@ -217,13 +216,12 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change)
     }
     TimelineWidget *wd = qobject_cast<TimelineWidget*>(sender());
     if(wd) {
-        int cn = d->timelineUnreadCount[wd] = d->timelineUnreadCount[wd] + change;
         int tabIndex = d->timelinesTabWidget->indexOf(wd);
         if(tabIndex == -1)
             return;
-        if(cn > 0)
+        if(wd->unreadCount() > 0)
             d->timelinesTabWidget->setTabText( tabIndex, wd->timelineName() +
-                                                QString("(%1)").arg(d->timelineUnreadCount[wd]) );
+                                                QString("(%1)").arg(wd->unreadCount()) );
         else
             d->timelinesTabWidget->setTabText( tabIndex, wd->timelineName() );
     }
@@ -234,14 +232,9 @@ void MicroBlogWidget::markAllAsRead()
     if(d->btnMarkAllAsRead){
         d->btnMarkAllAsRead->deleteLater();
         d->btnMarkAllAsRead = 0L;
-        int sum = 0;
-        foreach(int n, d->timelineUnreadCount.values())
-            sum += n;
-        emit updateUnreadCount(-sum, 0);
     }
     foreach(TimelineWidget *wd, d->timelines.values()) {
         wd->markAllAsRead();
-        d->timelineUnreadCount[wd] = 0;
         int tabIndex = d->timelinesTabWidget->indexOf(wd);
         if(tabIndex == -1)
             continue;
@@ -262,11 +255,6 @@ QMap< QString, TimelineWidget* > MicroBlogWidget::timelines()
 KTabWidget* MicroBlogWidget::timelinesTabWidget()
 {
     return d->timelinesTabWidget;
-}
-
-QMap< TimelineWidget*, int > MicroBlogWidget::timelineUnreadCount()
-{
-    return d->timelineUnreadCount;
 }
 
 void MicroBlogWidget::error(Choqok::Account* theAccount, MicroBlog::ErrorType errorType,
@@ -367,8 +355,8 @@ void MicroBlogWidget::slotAccountModified(Account* theAccount)
             setComposerWidget(theAccount->microblog()->createComposerWidget(theAccount, this));
         }
         int sum = 0;
-        foreach(int n, d->timelineUnreadCount.values())
-            sum += n;
+        foreach(const TimelineWidget *mbw, d->timelines.values())
+            sum += mbw->unreadCount();
         emit updateUnreadCount( 0, sum);
     }
 }

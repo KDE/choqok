@@ -120,7 +120,7 @@ void TwitterApiPostWidget::slotReply()
         TwitterApiMicroBlog *microblog = qobject_cast<TwitterApiMicroBlog*>( currentAccount()->microblog() );
         microblog->showDirectMessageDialog( account, mCurrentPost.author.userName );
     } else {
-        emit reply( QString("@%1 ").arg(mCurrentPost.author.userName), mCurrentPost.postId );
+        emit reply( QString("@%1").arg(mCurrentPost.author.userName), mCurrentPost.postId );
     }
 }
 
