@@ -10,6 +10,7 @@ X-KDE-ParentComponents=choqok
 X-KDE-Weight=20
 
 Name=Accounts
+Name[da]=Konti
 Name[es]=Cuentas
 Name[fr]=Comptes
 Name[it]=Account
@@ -20,6 +21,7 @@ Name[tr]=Hesaplar
 Name[uk]=Облікові записи
 Name[x-test]=xxAccountsxx
 Comment=Manage Your Accounts
+Comment[da]=Håndtér dine konti
 Comment[es]=Gestione sus cuentas
 Comment[fr]=Gérez vos comptes
 Comment[it]=Gestisci i tuoi account

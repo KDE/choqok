@@ -4,6 +4,7 @@ X-KDE-ServiceType=Choqok/MicroBlog
 X-KDE-Derived=Choqok/Plugin
 Comment=Choqok MicroBlog Plugin
 Comment[bg]=Приставка на Choqok за микроблог
+Comment[da]=Choqok mikroblog-plugin
 Comment[es]=Complemento de microblogging Choqok
 Comment[fr]=Module externe de microblogage pour Choqok
 Comment[it]=Estensione MicroBlog di Choqok

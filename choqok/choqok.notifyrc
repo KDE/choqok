@@ -7,6 +7,7 @@ Comment[x-test]=xxChoqokxx
 [Event/new-post-arrived]
 Name=New Post Arrived
 Name[bg]=Получено ново съобщение
+Name[da]=Nyt indlæg ankommet
 Name[es]=Ha llegado un nuevo mensaje
 Name[fr]=Un nouvel article est arrivé
 Name[it]=Nuovo messaggio arrivato
@@ -18,6 +19,7 @@ Name[uk]=Надіслано новий допис
 Name[x-test]=xxNew Post Arrivedxx
 Comment=New post arrived
 Comment[bg]=Получено ново съобщение
+Comment[da]=Nyt indlæg ankommet
 Comment[es]=Ha llegado un nuevo mensaje
 Comment[fr]=Un nouvel article est arrivé
 Comment[it]=Nuovo messaggio arrivato
@@ -32,6 +34,7 @@ Persistent=True
 
 [Event/job-success]
 Name=Job Success
+Name[da]=Job gennemført
 Name[es]=Trabajo terminado con éxito
 Name[fr]=Tâche réussie
 Name[it]=Processo terminato correttamente
@@ -41,6 +44,7 @@ Name[sv]=Jobb lyckades
 Name[uk]=Завдання успішно виконано
 Name[x-test]=xxJob Successxx
 Comment=A job finished successfully
+Comment[da]=Et job blev vellykket gennemført
 Comment[es]=Un trabajo ha finalizado con éxito
 Comment[fr]=Une tâche s'est terminée avec succès
 Comment[it]=Un processo è terminato correttamente
@@ -53,6 +57,7 @@ Action=Popup
 
 [Event/job-error]
 Name=Job Error
+Name[da]=Jobfejl
 Name[es]=Trabajo terminado con un error
 Name[fr]=Erreur lors de la tâche
 Name[it]=Errore nel processo
@@ -63,6 +68,7 @@ Name[tr]=Görev Hatası
 Name[uk]=Помилка виконання
 Name[x-test]=xxJob Errorxx
 Comment=There was an error while performing a job
+Comment[da]=En fejl opstod under udførelse af et job
 Comment[es]=Se produjo un error mientras se efectuaba un trabajo
 Comment[fr]=Il s'est produit une erreur lors de l'exécution d'une tâche
 Comment[it]=Si è verificato un errore durante l'esecuzione di un processo
@@ -77,6 +83,7 @@ Action=Popup
 [Event/shortening]
 Name=Shortening
 Name[bg]=Съкращаване
+Name[da]=Forkorter
 Name[es]=Acortamiento
 Name[fr]=Raccourcissement
 Name[it]=Abbreviazione
@@ -88,6 +95,7 @@ Name[uk]=Скорочення
 Name[x-test]=xxShorteningxx
 Comment=Shortening a URL
 Comment[bg]=Съкращаване на адрес
+Comment[da]=Forkortelse af en URL
 Comment[es]=Acortando un URL
 Comment[fr]=Raccourcissement d'un URL
 Comment[it]=Abbreviazione di un URL
