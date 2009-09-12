@@ -244,7 +244,6 @@ void PluginManager::slotShutdownTimeout()
 void PluginManager::slotShutdownDone()
 {
     kDebug() ;
-    AccountManager::self()->deleteLater();
     _kpmp->shutdownMode = PluginManagerPrivate::DoneShutdown;
 //     qApp->exit();
     KGlobal::deref();

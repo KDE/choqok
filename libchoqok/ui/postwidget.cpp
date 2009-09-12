@@ -40,6 +40,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QContextMenuEvent>
 #include <QMenu>
 #include <kmenu.h>
+#include <qabstracttextdocumentlayout.h>
 
 static const int _15SECS = 15000;
 static const int _MINUTE = 60000;
@@ -69,6 +70,7 @@ PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* par
     connect( &mTimer, SIGNAL( timeout() ), this, SLOT( updateUi()) );
     setOpenLinks(false);
     connect(this,SIGNAL(anchorClicked(QUrl)),this,SLOT(checkAnchor(QUrl)));
+//     setTextInteractionFlags( Qt::TextSelectableByKeyboard | Qt::TextSelectableByMouse );
 }
 
 void PostWidget::checkAnchor(const QUrl & url)
@@ -419,18 +421,42 @@ void PostWidget::slotPostError(Account* theAccount, Choqok::Post* post,
 
 void PostWidget::contextMenuEvent(QContextMenuEvent* event)
 {
-    KAction *copy = new KAction( i18n("Copy Post Text"), this );
-    connect( copy, SIGNAL(triggered(bool)), SLOT(slotCopyPostContent()) );
     KMenu *menu = new KMenu(this);
+    KAction *copy = new KAction( i18n("Copy"), this );
+    copy->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_C ) );
+    connect( copy, SIGNAL(triggered(bool)), SLOT(slotCopyPostContent()) );
     menu->addAction(copy);
+    QString anchor = document()->documentLayout()->anchorAt(event->pos());
+    if( !anchor.isEmpty() ){
+        KAction *copyLink = new KAction( i18n("Copy Link Location"), this );
+        copyLink->setData( anchor );
+        connect( copyLink, SIGNAL(triggered(bool)), SLOT(slotCopyLink()) );
+        menu->addAction(copyLink);
+    }
     menu->addSeparator();
-    menu->addActions( createStandardContextMenu()->actions() );
+    KAction *selectAll = new KAction(i18n("Select All"), this);
+    selectAll->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_A ) );
+    connect( selectAll, SIGNAL(triggered(bool)), SLOT(selectAll()) );
+    menu->addAction(selectAll);
     menu->popup(event->globalPos());
 }
 
 void PostWidget::slotCopyPostContent()
 {
-    QApplication::clipboard()->setText( currentPost().content );
+    QString txt = textCursor().selectedText();
+    if( txt.isEmpty() )
+        QApplication::clipboard()->setText( currentPost().content );
+    else
+        QApplication::clipboard()->setText( txt );
+}
+
+void PostWidget::slotCopyLink()
+{
+    KAction *act = qobject_cast< KAction* >( sender() );
+    if( act ){
+        QString link = act->data().toString();
+        QApplication::clipboard()->setText( link );
+    }
 }
 
 #include "postwidget.moc"

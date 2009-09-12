@@ -121,6 +121,7 @@ protected slots:
     void avatarFetchError( const QString &remoteUrl, const QString &errMsg );
     void avatarFetched( const QString &remoteUrl, const QPixmap &pixmap );
 
+    void slotCopyLink();
 protected:
     virtual void contextMenuEvent(QContextMenuEvent* event);
     virtual void setupAvatar();
