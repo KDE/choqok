@@ -30,15 +30,22 @@ class QWidget;
 
 namespace Choqok{
 /**
+@brief The base class for a Shortener plugin main class.
+
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
 class CHOQOK_EXPORT Shortener : public Plugin
 {
 Q_OBJECT
 public:
-    Shortener( const KComponentData &instance, QObject *parent );
     virtual ~Shortener();
+    /**
+        Shorten the @p url and return the shortened URL
+    */
     virtual QString shorten( const QString &url );
+
+protected:
+    Shortener( const KComponentData &instance, QObject *parent );
 };
 }//End Namespace Choqok
 #endif
