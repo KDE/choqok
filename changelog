@@ -1,5 +1,5 @@
-=== Version 0.9.1 (1.0Alpha1) -- 11-Sep-2009 ===
-+ The whole design has changed. And now, Choqok supports plugins for more Microblog services.
+=== Version 0.9.1 (1.0Alpha1) -- 13-Sep-2009 ===
++ The whole design have changed. And now, Choqok supports plugins for more Microblog services.
 -- Missed features since latest stable:
 - Search API support.
 - Notification for incoming posts.

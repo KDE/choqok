@@ -70,8 +70,7 @@ void SysTrayIcon::updateUnreadCount( int changeOfUnreadPosts )
     kDebug();
     unread += changeOfUnreadPosts;
 
-    this->setToolTip( i18np( "Choqok - 1 unread post", "Choqok - %1 unread posts",
-                             unread > 0 ? unread : 0 ) );
+    this->setToolTip( i18np( "Choqok - 1 unread post", "Choqok - %1 unread posts", unread ) );
 
     if ( unread <= 0 ) {
         setIcon( m_defaultIcon );

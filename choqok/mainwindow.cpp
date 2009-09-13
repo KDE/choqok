@@ -68,6 +68,7 @@ MainWindow::MainWindow()
     setCentralWidget( mainWidget );
 
     sysIcon = new SysTrayIcon(this);
+    sysIcon->show();
     setupActions();
     statusBar()->show();
     setupGUI();
@@ -90,8 +91,8 @@ MainWindow::MainWindow()
              this, SLOT(newPluginAvailable(Choqok::Plugin*)) );
 
     QTimer::singleShot(0, Choqok::PluginManager::self(), SLOT( loadAllPlugins() ) );
-    Choqok::AccountManager::self()->loadAllAccounts();
-//     QTimer::singleShot(0, Choqok::AccountManager::self(), SLOT( loadAllAccounts() ) );
+//     Choqok::AccountManager::self()->loadAllAccounts();
+    QTimer::singleShot(0, Choqok::AccountManager::self(), SLOT( loadAllAccounts() ) );
 
     QPoint pos = Choqok::BehaviorSettings::position();
     if(pos.x() != -1 && pos.y() != -1) {
@@ -236,7 +237,6 @@ void MainWindow::setupActions()
 
     connect( sysIcon, SIGNAL(quitSelected()), this, SLOT(slotQuit()) );
     connect(sysIcon,SIGNAL(wheelEvent(const QWheelEvent&)),this,SLOT(nextTab(const QWheelEvent&)));
-    sysIcon->show();
 }
 
 void MainWindow::slotConfNotifications()
