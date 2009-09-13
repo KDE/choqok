@@ -59,15 +59,36 @@ QString PostWidget::readStyle;
 QString PostWidget::unreadStyle;
 const QString PostWidget::webIconText("&#9794;");
 
+class PostWidget::Private
+{
+public:
+    Private( Account* account, const Choqok::Post& post )
+        : mCurrentPost(post), mCurrentAccount(account), mRead(false)
+    {
+    }
+    QGridLayout *buttonsLayout;
+    QList<KPushButton*> mUiButtons;
+    Post mCurrentPost;
+    Account *mCurrentAccount;
+    bool mRead;
+    QTimer mTimer;
+
+    //BEGIN UI contents:
+    QString mSign;
+    QString mContent;
+    QString mImage;
+    //END UI contents;
+};
+
 PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* parent/* = 0*/ )
-    :KTextBrowser(parent), mCurrentPost(post), mCurrentAccount(account), mRead(false)
+    :KTextBrowser(parent), d(new Private(account, post))
 {
     setAttribute(Qt::WA_DeleteOnClose);
     if(currentAccount()->username() == currentPost().author.userName.toLower())
-        mRead = true;
+        d->mRead = true;
     setupUi();
-    mTimer.start( _MINUTE );
-    connect( &mTimer, SIGNAL( timeout() ), this, SLOT( updateUi()) );
+    d->mTimer.start( _MINUTE );
+    connect( &d->mTimer, SIGNAL( timeout() ), this, SLOT( updateUi()) );
     setOpenLinks(false);
     connect(this,SIGNAL(anchorClicked(QUrl)),this,SLOT(checkAnchor(QUrl)));
 //     setTextInteractionFlags( Qt::TextSelectableByKeyboard | Qt::TextSelectableByMouse );
@@ -92,22 +113,23 @@ PostWidget::~PostWidget()
 
 Account* PostWidget::currentAccount()
 {
-    return mCurrentAccount;
+    return d->mCurrentAccount;
 }
 
 QString PostWidget::generateSign()
 {
     QString ss;
-    ss = "<b><a href='"+ mCurrentAccount->microblog()->profileUrl( mCurrentAccount, mCurrentPost.author.userName )
+    ss = "<b><a href='"+ d->mCurrentAccount->microblog()->profileUrl( d->mCurrentAccount,
+                                                                      d->mCurrentPost.author.userName )
          +"' title=\"" +
-    mCurrentPost.author.description + "\">" + mCurrentPost.author.userName +
+    d->mCurrentPost.author.description + "\">" + d->mCurrentPost.author.userName +
     "</a> - </b>";
 
-    ss += "<a href=\"" + mCurrentPost.link +
-    "\" title=\"" + mCurrentPost.creationDateTime.toString() + "\">%1</a>";
+    ss += "<a href=\"" + d->mCurrentPost.link +
+    "\" title=\"" + d->mCurrentPost.creationDateTime.toString() + "\">%1</a>";
 
-    if( !mCurrentPost.source.isNull() )
-        ss += " - " + mCurrentPost.source;
+    if( !d->mCurrentPost.source.isNull() )
+        ss += " - " + d->mCurrentPost.source;
 
     return ss;
 }
@@ -118,24 +140,24 @@ void PostWidget::setupUi()
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    buttonsLayout = new QGridLayout(this);
-    buttonsLayout->setRowStretch(0,100);
-    buttonsLayout->setColumnStretch(5,100);
-    buttonsLayout->setMargin(0);
-    buttonsLayout->setSpacing(0);
+    d->buttonsLayout = new QGridLayout(this);
+    d->buttonsLayout->setRowStretch(0,100);
+    d->buttonsLayout->setColumnStretch(5,100);
+    d->buttonsLayout->setMargin(0);
+    d->buttonsLayout->setSpacing(0);
 
-    this->setLayout(buttonsLayout);
+    this->setLayout(d->buttonsLayout);
     connect(this,SIGNAL(textChanged()),this,SLOT(setHeight()));
 
     document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
                              MediaManager::self()->defaultImage() );
-                             mImage = "<img src=\"img://profileImage\" title=\""+ mCurrentPost.author.realName +
-                             "\" width=\"48\" height=\"48\" />";
+                             d->mImage = "<img src=\"img://profileImage\" title=\""+
+                             d->mCurrentPost.author.realName + "\" width=\"48\" height=\"48\" />";
 
     KPushButton *btnResend = addButton("btnResend", i18nc( "@info:tooltip", "ReSend" ), "retweet" );
     connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
 
-    if(mCurrentAccount->username() == mCurrentPost.author.userName.toLower()) {
+    if(d->mCurrentAccount->username() == d->mCurrentPost.author.userName.toLower()) {
         KPushButton *btnRemove = addButton("btnRemove", i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
         connect(btnRemove, SIGNAL(clicked(bool)), SLOT(removeCurrentPost()));
     }
@@ -143,9 +165,9 @@ void PostWidget::setupUi()
 
 void PostWidget::initUi()
 {
-    mImage = "<img src=\"img://profileImage\" title=\""+ mCurrentPost.author.realName +"\" width=\"48\" height=\"48\" />";
-    mContent = prepareStatus(mCurrentPost.content);
-    mSign = generateSign();
+    d->mImage = "<img src=\"img://profileImage\" title=\""+ d->mCurrentPost.author.realName +"\" width=\"48\" height=\"48\" />";
+    d->mContent = prepareStatus(d->mCurrentPost.content);
+    d->mSign = generateSign();
     setupAvatar();
     setDirection();
     setUiStyle();
@@ -154,7 +176,7 @@ void PostWidget::initUi()
 
 void PostWidget::updateUi()
 {
-    setHtml( baseText.arg( mImage, mContent, mSign.arg( formatDateTime( mCurrentPost.creationDateTime ) ) ) );
+    setHtml( baseText.arg( d->mImage, d->mContent, d->mSign.arg( formatDateTime( d->mCurrentPost.creationDateTime ) ) ) );
 }
 
 void PostWidget::setStyle(const QColor& color, const QColor& back, const QColor& read, const QColor& readBack)
@@ -181,8 +203,8 @@ KPushButton * PostWidget::addButton(const QString & objName, const QString & too
     button->setVisible(false);
     button->setCursor(Qt::PointingHandCursor);
 
-    mUiButtons.append(button);
-    buttonsLayout->addWidget( button, 1, mUiButtons.count() );
+    d->mUiButtons.append(button);
+    d->buttonsLayout->addWidget( button, 1, d->mUiButtons.count() );
     return button;
 }
 
@@ -198,35 +220,40 @@ KPushButton * PostWidget::addButton(const QString & objName, const QString & too
     button->setVisible(false);
     button->setCursor(Qt::PointingHandCursor);
 
-    mUiButtons.append(button);
-    buttonsLayout->addWidget( button, 1, mUiButtons.count() );
+    d->mUiButtons.append(button);
+    d->buttonsLayout->addWidget( button, 1, d->mUiButtons.count() );
     return button;
 }
 
 const Post &PostWidget::currentPost() const
 {
-    return mCurrentPost;
+    return d->mCurrentPost;
+}
+
+void PostWidget::setCurrentPost(const Choqok::Post& post)
+{
+    d->mCurrentPost = post;
 }
 
 void PostWidget::setRead(bool read/* = true*/)
 {
-    if( !read && !mRead && currentAccount()->username() == currentPost().author.userName.toLower()) {
-        mRead = true; ///Always Set own posts as read.
+    if( !read && !d->mRead && currentAccount()->username() == currentPost().author.userName.toLower()) {
+        d->mRead = true; ///Always Set own posts as read.
         setUiStyle();
-    } else if( mRead != read ) {
-        mRead = read;
+    } else if( d->mRead != read ) {
+        d->mRead = read;
         setUiStyle();
     }
 }
 
 bool PostWidget::isRead() const
 {
-    return mRead;
+    return d->mRead;
 }
 
 void PostWidget::setUiStyle()
 {
-    if(mRead)
+    if(d->mRead)
         setStyleSheet(readStyle);
     else
         setStyleSheet(unreadStyle);
@@ -291,7 +318,7 @@ QString PostWidget::prepareStatus( const QString &txt )
 
 void PostWidget::setDirection()
 {
-    QString txt = mCurrentPost.content;
+    QString txt = d->mCurrentPost.content;
     txt.remove(QRegExp("RT|RD"));
     txt.remove(QRegExp("@([^\\s\\W]+)"));
     txt.remove(QRegExp("#([^\\s\\W]+)"));
@@ -308,28 +335,28 @@ QString PostWidget::formatDateTime( const QDateTime& time )
 {
     int seconds = time.secsTo( QDateTime::currentDateTime() );
     if ( seconds <= 15 ) {
-        mTimer.setInterval( _15SECS );
+        d->mTimer.setInterval( _15SECS );
         return i18n( "Just now" );
     }
 
     if ( seconds <= 45 ) {
-        mTimer.setInterval( _15SECS );
+        d->mTimer.setInterval( _15SECS );
         return i18np( "1 sec ago", "%1 secs ago", seconds );
     }
 
     int minutes = ( seconds - 45 + 59 ) / 60;
     if ( minutes <= 45 ) {
-        mTimer.setInterval( _MINUTE );
+        d->mTimer.setInterval( _MINUTE );
         return i18np( "1 min ago", "%1 mins ago", minutes );
     }
 
     int hours = ( seconds - 45 * 60 + 3599 ) / 3600;
     if ( hours <= 18 ) {
-        mTimer.setInterval( _MINUTE * 15 );
+        d->mTimer.setInterval( _MINUTE * 15 );
         return i18np( "1 hour ago", "%1 hours ago", hours );
     }
 
-    mTimer.setInterval( _HOUR );
+    d->mTimer.setInterval( _HOUR );
     int days = ( seconds - 18 * 3600 + 24 * 3600 - 1 ) / ( 24 * 3600 );
     return i18np( "1 day ago", "%1 days ago", days );
 }
@@ -337,18 +364,18 @@ QString PostWidget::formatDateTime( const QDateTime& time )
 void PostWidget::removeCurrentPost()
 {
     if ( KMessageBox::warningYesNo( this, i18n( "Are you sure to remove this post from server?" ) ) == KMessageBox::Yes ) {
-        connect(mCurrentAccount->microblog(), SIGNAL(postRemoved(Choqok::Account*,Choqok::Post*)),
+        connect(d->mCurrentAccount->microblog(), SIGNAL(postRemoved(Choqok::Account*,Choqok::Post*)),
                 SLOT(slotCurrentPostRemoved(Choqok::Account*,Choqok::Post*)) );
-        connect( mCurrentAccount->microblog(),
+        connect( d->mCurrentAccount->microblog(),
                 SIGNAL(errorPost(Choqok::Account*, Choqok::Post*,Choqok::MicroBlog::ErrorType,QString)),
                 this, SLOT(slotPostError(Choqok::Account*, Choqok::Post*,Choqok::MicroBlog::ErrorType,QString)) );
-        mCurrentAccount->microblog()->removePost(mCurrentAccount, &mCurrentPost);
+        d->mCurrentAccount->microblog()->removePost(d->mCurrentAccount, &d->mCurrentPost);
     }
 }
 
 void PostWidget::slotCurrentPostRemoved( Account* theAccount, Post* post )
 {
-    if( theAccount == currentAccount() && post == &mCurrentPost )
+    if( theAccount == currentAccount() && post == &d->mCurrentPost )
         this->close();
 }
 
@@ -365,10 +392,10 @@ void PostWidget::slotResendPost()
 
 void PostWidget::setupAvatar()
 {
-    QPixmap *pix = MediaManager::self()->fetchImage( mCurrentPost.author.profileImageUrl,
+    QPixmap *pix = MediaManager::self()->fetchImage( d->mCurrentPost.author.profileImageUrl,
                                       MediaManager::Async );
     if(pix)
-        avatarFetched(mCurrentPost.author.profileImageUrl, *pix);
+        avatarFetched(d->mCurrentPost.author.profileImageUrl, *pix);
     else {
         connect( MediaManager::self(), SIGNAL( imageFetched(QString,QPixmap)),
                 this, SLOT(avatarFetched(QString, QPixmap) ) );
@@ -379,7 +406,7 @@ void PostWidget::setupAvatar()
 
 void PostWidget::avatarFetched(const QString& remoteUrl, const QPixmap& pixmap)
 {
-    if ( remoteUrl == mCurrentPost.author.profileImageUrl ) {
+    if ( remoteUrl == d->mCurrentPost.author.profileImageUrl ) {
         QString url = "img://profileImage";
         document()->addResource( QTextDocument::ImageResource, url, pixmap );
         updateUi();
@@ -393,7 +420,7 @@ void PostWidget::avatarFetched(const QString& remoteUrl, const QPixmap& pixmap)
 void PostWidget::avatarFetchError(const QString& remoteUrl, const QString& errMsg)
 {
     Q_UNUSED(errMsg);
-    if( remoteUrl == mCurrentPost.author.profileImageUrl ){
+    if( remoteUrl == d->mCurrentPost.author.profileImageUrl ){
         ///Avatar fetching is failed! but will not disconnect to get the img if it fetches later!
         QString url = "img://profileImage";
         document()->addResource( QTextDocument::ImageResource, url, KIcon("image-missing").pixmap(48) );
@@ -403,17 +430,17 @@ void PostWidget::avatarFetchError(const QString& remoteUrl, const QString& errMs
 
 QList< KPushButton* >& PostWidget::buttons()
 {
-    return mUiButtons;
+    return d->mUiButtons;
 }
 
 void PostWidget::slotPostError(Account* theAccount, Choqok::Post* post,
                                MicroBlog::ErrorType , const QString& errorMessage)
 {
-    if( theAccount == currentAccount() && post == &mCurrentPost) {
+    if( theAccount == currentAccount() && post == &d->mCurrentPost) {
         kDebug()<<errorMessage;
-        disconnect(mCurrentAccount->microblog(), SIGNAL(postRemoved(Choqok::Account*,Choqok::Post*)),
+        disconnect(d->mCurrentAccount->microblog(), SIGNAL(postRemoved(Choqok::Account*,Choqok::Post*)),
                   this, SLOT(slotCurrentPostRemoved(Choqok::Account*,Choqok::Post*)) );
-        disconnect( mCurrentAccount->microblog(),
+        disconnect( d->mCurrentAccount->microblog(),
                     SIGNAL(errorPost(Account*,Post*,Choqok::MicroBlog::ErrorType,QString)),
                     this, SLOT(slotPostError(Account*,Post*,Choqok::MicroBlog::ErrorType,QString)) );
     }
@@ -457,6 +484,36 @@ void PostWidget::slotCopyLink()
         QString link = act->data().toString();
         QApplication::clipboard()->setText( link );
     }
+}
+
+QString PostWidget::avatarText() const
+{
+    return d->mImage;
+}
+
+void PostWidget::setAvatarText(const QString& text)
+{
+    d->mImage = text;
+}
+
+QString PostWidget::content() const
+{
+    return d->mContent;
+}
+
+void PostWidget::setContent(const QString& content)
+{
+    d->mContent = content;
+}
+
+QString PostWidget::sign() const
+{
+    return d->mSign;
+}
+
+void PostWidget::setSign(const QString& sign)
+{
+    d->mSign = sign;
 }
 
 #include "postwidget.moc"

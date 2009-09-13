@@ -59,13 +59,13 @@ TwitterApiPostWidget::~TwitterApiPostWidget()
 void TwitterApiPostWidget::initUi()
 {
     Choqok::UI::PostWidget::initUi();
-    if( !mCurrentPost.isPrivate ) {
+    if( !currentPost().isPrivate ) {
         d->btnFav = addButton( "btnFavorite",i18nc( "@info:tooltip", "Favorite" ), "rating" );
         d->btnFav->setCheckable(true);
         connect( d->btnFav, SIGNAL(clicked(bool)), SLOT(setFavorite()) );
         updateFavStat();
     }
-    if( mCurrentAccount->username() != mCurrentPost.author.userName.toLower()) {
+    if( currentAccount()->username() != currentPost().author.userName.toLower()) {
         KPushButton *btnRe = addButton( "btnReply",i18nc( "@info:tooltip", "Reply" ), "edit-undo" );
         connect( btnRe, SIGNAL(clicked(bool)), SLOT(slotReply()) );
     }
@@ -75,8 +75,8 @@ QString TwitterApiPostWidget::prepareStatus(const QString& text)
 {
     QString res = Choqok::UI::PostWidget::prepareStatus(text);
     res.replace(mUserRegExp,"\\1@<a href='user://\\2'>\\2</a> <a href='"+
-    mCurrentAccount->microblog()->profileUrl( currentAccount(), "\\2") + "' title='" +
-    mCurrentAccount->microblog()->profileUrl( currentAccount(), "\\2") + "'>"+ webIconText +"</a>");
+    currentAccount()->microblog()->profileUrl( currentAccount(), "\\2") + "' title='" +
+    currentAccount()->microblog()->profileUrl( currentAccount(), "\\2") + "'>"+ webIconText +"</a>");
 
     return res;
 }
@@ -84,27 +84,28 @@ QString TwitterApiPostWidget::prepareStatus(const QString& text)
 QString TwitterApiPostWidget::generateSign()
 {
     QString sign;
-    QString profUrl = mCurrentAccount->microblog()->profileUrl(currentAccount(), mCurrentPost.author.userName);
-    sign = "<b><a href='user://"+mCurrentPost.author.userName+"' title=\"" +
-    mCurrentPost.author.description + "\">" + mCurrentPost.author.userName +
+    QString profUrl = currentAccount()->microblog()->profileUrl(currentAccount(),
+                                                                currentPost().author.userName);
+    sign = "<b><a href='user://"+currentPost().author.userName+"' title=\"" +
+    currentPost().author.description + "\">" + currentPost().author.userName +
     "</a> <a href=\"" + profUrl + "\" title=\"" + profUrl
     + "\">"+ webIconText +"</a> - </b>";
     //<img src=\"icon://web\" />
-    sign += "<a href=\"" + mCurrentPost.link +
-    "\" title=\"" + mCurrentPost.creationDateTime.toString() + "\">%1</a>";
-    if ( mCurrentPost.isPrivate ) {
-        if( mCurrentPost.replyToUserName.toLower() == mCurrentAccount->username() ) {
+    sign += "<a href=\"" + currentPost().link +
+    "\" title=\"" + currentPost().creationDateTime.toString() + "\">%1</a>";
+    if ( currentPost().isPrivate ) {
+        if( currentPost().replyToUserName.toLower() == currentAccount()->username() ) {
             sign.prepend( "From " );
         } else {
             sign.prepend( "To " );
         }
     } else {
-        if( !mCurrentPost.source.isNull() )
-            sign += " - " + mCurrentPost.source;
-        if ( !mCurrentPost.replyToPostId.isEmpty() ) {
-            QString link = mCurrentAccount->microblog()->postUrl( currentAccount(), mCurrentPost.replyToUserName,
-                                                                  mCurrentPost.replyToPostId );
-            sign += " - <a href='replyto://" + mCurrentPost.replyToPostId + "'>" +
+        if( !currentPost().source.isNull() )
+            sign += " - " + currentPost().source;
+        if ( !currentPost().replyToPostId.isEmpty() ) {
+            QString link = currentAccount()->microblog()->postUrl( currentAccount(), currentPost().replyToUserName,
+                                                                  currentPost().replyToPostId );
+            sign += " - <a href='replyto://" + currentPost().replyToPostId + "'>" +
             i18n("in reply to")+ "</a>&nbsp;<a href=\"" + link +  "\" title=\""+ link +"\">"+webIconText+"</a>";
         }
     }
@@ -118,33 +119,35 @@ void TwitterApiPostWidget::slotReply()
     if(currentPost().isPrivate){
         TwitterApiAccount *account= qobject_cast<TwitterApiAccount*>( currentAccount() );
         TwitterApiMicroBlog *microblog = qobject_cast<TwitterApiMicroBlog*>( currentAccount()->microblog() );
-        microblog->showDirectMessageDialog( account, mCurrentPost.author.userName );
+        microblog->showDirectMessageDialog( account, currentPost().author.userName );
     } else {
-        emit reply( QString("@%1").arg(mCurrentPost.author.userName), mCurrentPost.postId );
+        emit reply( QString("@%1").arg(currentPost().author.userName), currentPost().postId );
     }
 }
 
 void TwitterApiPostWidget::setFavorite()
 {
-    TwitterApiMicroBlog *mic = qobject_cast<TwitterApiMicroBlog*>(mCurrentAccount->microblog());
-    if(mCurrentPost.isFavorited){
+    TwitterApiMicroBlog *mic = qobject_cast<TwitterApiMicroBlog*>(currentAccount()->microblog());
+    if(currentPost().isFavorited){
         connect(mic, SIGNAL(favoriteRemoved(Choqok::Account*,QString)),
                 this, SLOT(slotSetFavorite(Choqok::Account*,QString)) );
-        mic->removeFavorite(currentAccount(), mCurrentPost.postId);
+        mic->removeFavorite(currentAccount(), currentPost().postId);
     } else {
         connect(mic, SIGNAL(favoriteCreated(Choqok::Account*,QString)),
                    this, SLOT(slotSetFavorite(Choqok::Account*,QString)) );
-        mic->createFavorite(currentAccount(), mCurrentPost.postId);
+        mic->createFavorite(currentAccount(), currentPost().postId);
     }
 }
 
 void TwitterApiPostWidget::slotSetFavorite(Choqok::Account *theAccount, const QString& postId)
 {
-    if(currentAccount() == theAccount && postId == mCurrentPost.postId){
+    if(currentAccount() == theAccount && postId == currentPost().postId){
         kDebug()<<postId;
-        mCurrentPost.isFavorited = !mCurrentPost.isFavorited;
+        Choqok::Post tmp = currentPost();
+        tmp.isFavorited = !tmp.isFavorited;
+        setCurrentPost(tmp);
         updateFavStat();
-        TwitterApiMicroBlog *mic = qobject_cast<TwitterApiMicroBlog*>(mCurrentAccount->microblog());
+        TwitterApiMicroBlog *mic = qobject_cast<TwitterApiMicroBlog*>(currentAccount()->microblog());
         disconnect(mic, SIGNAL(favoriteRemoved(Choqok::Account*,QString)),
                    this, SLOT(slotSetFavorite(Choqok::Account*,QString)) );
         disconnect(mic, SIGNAL(favoriteCreated(Choqok::Account*,QString)),
@@ -155,7 +158,7 @@ void TwitterApiPostWidget::slotSetFavorite(Choqok::Account *theAccount, const QS
 
 void TwitterApiPostWidget::updateFavStat()
 {
-    if(mCurrentPost.isFavorited){
+    if(currentPost().isFavorited){
         d->btnFav->setChecked(true);
         d->btnFav->setIcon(KIcon("rating"));
     } else {
@@ -171,7 +174,7 @@ void TwitterApiPostWidget::checkAnchor(const QUrl & url)
         kDebug()<<"NOT IMPLEMENTED YET";
     } else if( scheme == "replyto" ) {
         if(d->isBasePostShowed) {
-            mContent = prepareStatus(currentPost().content);
+            setContent( prepareStatus(currentPost().content) );
             updateUi();
             d->isBasePostShowed = false;
             return;
@@ -211,7 +214,7 @@ void TwitterApiPostWidget::slotBasePostFetched(Choqok::Account* theAccount, Choq
         post->author.userName + "</a> :</b> ";
 
         baseStatusText += prepareStatus( post->content ) + "</p>";
-        mContent.prepend( baseStatusText );
+        setContent( content().prepend( baseStatusText ) );
         updateUi();
         delete post;
     }

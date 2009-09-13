@@ -144,17 +144,6 @@ protected:
     QList<KPushButton*> &buttons();
 
 protected:
-    Post mCurrentPost;
-    Account *mCurrentAccount;
-    bool mRead;
-    QTimer mTimer;
-
-    //BEGIN UI contents:
-    QString mSign;
-    QString mContent;
-    QString mImage;
-    //END UI contents;
-
     static const QString baseText;
     static const QString baseStyle;
     static QString readStyle;
@@ -162,10 +151,21 @@ protected:
     static const QRegExp mUrlRegExp;
     static const QString webIconText;
 
+    void setCurrentPost( const Post &post );
+
+    void setSign( const QString &sign );
+    QString sign() const;
+
+    void setContent( const QString &content );
+    QString content() const;
+
+    void setAvatarText( const QString &text );
+    QString avatarText() const;
+
 private:
     void setupUi();
-    QGridLayout *buttonsLayout;
-    QList<KPushButton*> mUiButtons;
+    class Private;
+    Private *d;
 };
 }
 }

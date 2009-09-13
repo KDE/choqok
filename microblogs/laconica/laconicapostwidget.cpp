@@ -41,7 +41,7 @@ LaconicaPostWidget::LaconicaPostWidget(Choqok::Account* account, const Choqok::P
 QString LaconicaPostWidget::prepareStatus(const QString& text)
 {
     QString res = TwitterApiPostWidget::prepareStatus(text);
-    QString homepage = qobject_cast<TwitterApiAccount*>(mCurrentAccount)->homepageUrl().prettyUrl(KUrl::RemoveTrailingSlash);
+    QString homepage = qobject_cast<TwitterApiAccount*>(currentAccount())->homepageUrl().prettyUrl(KUrl::RemoveTrailingSlash);
     res.replace(mGroupRegExp,"\\1!<a href='group://\\2'>\\2</a> <a href='"+ homepage +
     "/group/\\2'>"+ webIconText +"</a>");
     res.replace(mHashtagRegExp,"\\1#<a href='tag://\\2'>\\2</a> <a href='"+ homepage +

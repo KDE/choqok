@@ -53,8 +53,9 @@ public:
 
     ~PluginManagerPrivate()
     {
-        if ( shutdownMode != DoneShutdown )
+        if ( shutdownMode != DoneShutdown ) {
             kWarning() << "Destructing plugin manager without going through the shutdown process! Backtrace is: " << endl << kBacktrace();
+        }
 
         // Clean up loadedPlugins manually, because PluginManager can't access our global
         // static once this destructor has started.
@@ -231,11 +232,12 @@ void PluginManager::slotShutdownTimeout()
         return;
 
     QStringList remaining;
-    for ( PluginManagerPrivate::InfoToPluginMap::ConstIterator it = _kpmp->loadedPlugins.constBegin(); it != _kpmp->loadedPlugins.constEnd(); ++it )
+    for ( PluginManagerPrivate::InfoToPluginMap::ConstIterator it = _kpmp->loadedPlugins.constBegin();
+          it != _kpmp->loadedPlugins.constEnd(); ++it )
         remaining.append( it.value()->pluginId() );
 
     kWarning() << "Some plugins didn't shutdown in time!" << endl
-        << "Remaining plugins: " << remaining.join( QLatin1String( ", " ) ) << endl
+        << "Remaining plugins: " << remaining << endl
         << "Forcing Choqok shutdown now." << endl;
 
     slotShutdownDone();
@@ -245,7 +247,6 @@ void PluginManager::slotShutdownDone()
 {
     kDebug() ;
     _kpmp->shutdownMode = PluginManagerPrivate::DoneShutdown;
-//     qApp->exit();
     KGlobal::deref();
 }
 
