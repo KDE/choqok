@@ -192,7 +192,8 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
 }
 
 void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
-                                       const QString& timelineName, QList< Choqok::UI::PostWidget* > timeline)
+                                       const QString& timelineName,
+                                       const QList< Choqok::UI::PostWidget* > &timeline)
 {
     kDebug();
     QString fileName = account->alias() + '_' + timelineName + "_backuprc";
@@ -347,11 +348,15 @@ void TwitterApiMicroBlog::abortAllJobs(Choqok::Account* theAccount)
     }
 }
 
-void TwitterApiMicroBlog::abortCreatePost(Choqok::Account* theAccount)
+void TwitterApiMicroBlog::abortCreatePost(Choqok::Account* theAccount, Choqok::Post *post)
 {
-    foreach( KJob *job, mCreatePostMap.keys() ){
-        if(mJobsAccount[job] == theAccount)
-            job->kill(KJob::EmitResult);
+    if( post ) {
+        mCreatePostMap.key(post)->kill(KJob::EmitResult);
+    } else {
+        foreach( KJob *job, mCreatePostMap.keys() ){
+            if(mJobsAccount[job] == theAccount)
+                job->kill(KJob::EmitResult);
+        }
     }
 }
 

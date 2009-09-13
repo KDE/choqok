@@ -42,7 +42,7 @@ public:
                                      QWidget* parent = Choqok::UI::Global::mainWindow());
     virtual QList< Choqok::Post* > loadTimeline(Choqok::Account* accountAlias, const QString& timelineName);
     virtual void saveTimeline(Choqok::Account *account, const QString& timelineName,
-                              QList< Choqok::UI::PostWidget* > timeline);
+                              const QList< Choqok::UI::PostWidget* > &timeline);
 
     /**
     \brief Create a new post
@@ -60,7 +60,7 @@ public:
     /**
     \brief Abort all of createPost requests!
     */
-    virtual void abortCreatePost(Choqok::Account* theAccount);
+    virtual void abortCreatePost(Choqok::Account* theAccount, Choqok::Post* post = 0);
 
     /**
     \brief Fetch a post

@@ -69,11 +69,10 @@ Comment=Plugin that do some nice stuff
 * The constructor of your plugin should looks like this:
 *
 * \code
-typedef KGenericFactory<MyPlugin> MyPluginFactory;
-static const KAboutData aboutdata("choqok_myplugin", 0, ki18n("MyPlugin") , "1.0" );
-K_EXPORT_COMPONENT_FACTORY( choqok_myplugin, MyPluginFactory( &aboutdata )  )
+K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < MyPlugin > (); )
+K_EXPORT_PLUGIN( MyPluginFactory( "choqok_myplugin" ) )
 
-MyPlugin::MyPlugin( QObject *parent, const char *name, const QStringList &  args  )
+MyPlugin::MyPlugin( QObject *parent, const char *name, const QList\<QVariant\> &  args  )
 : Choqok::Plugin( MyPluginFactory::componentData(), parent, name )
 {
 //...

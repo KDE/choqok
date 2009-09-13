@@ -46,7 +46,7 @@ class ComposerWidget;
 /**
 \brief Base class for MicroBlog plugins
 Every MicroBlog plugin should subclass this they can subclass UI classes to use too, and implement:
-@ref createAccount() To create an account for this microblog, can use @ref Choqok::Account or a subclass of it,
+@ref createNewAccount() To create a new account for this microblog, can use @ref Choqok::Account or a subclass of it,
 @ref createEditAccountWidget() To create a widget/dialog to show to user for create/edit account,
 @ref createMicroBlogWidget() To create a @ref MicroBlogWidget to show on MainWindow
 @ref createTimelineWidget() To create a @ref TimelineWidget to show on MicroBlogWidget
@@ -99,12 +99,12 @@ public:
         Normal,
         Critical
     };
+
     /**
-    * @brief Create an empty Account
+    * @brief Create a new Account
     *
     * This method is called during the loading of the config file.
-    * @param accountId - the account ID to create the account with. This is usually
-    * the login name of the account
+    * @param alias - the alias name to create the account with.
     *
     * you don't need to register the account to the AccountManager in this function.
     *
@@ -115,7 +115,7 @@ public:
     /**
     * @brief Create a new EditAccountWidget
     *
-    * @return A new Choqok::EditAccountWidget to be shown in the account part of the configurations.
+    * @return A new @ref ChoqokEditAccountWidget to be shown in the account part of the configurations.
     *
     * @param account is the Account to edit. If it's 0L, then we create a new account
     * @param parent The parent of the 'to be returned' widget
@@ -172,7 +172,7 @@ public:
     @see loadTimeline()
     */
     virtual void saveTimeline( Choqok::Account *account, const QString &timelineName,
-                               QList<UI::PostWidget*> timeline) = 0;
+                               const QList<UI::PostWidget*> &timeline) = 0;
     /**
     @brief Load a specific timeline!
     @Note Implementation of this is optional, i.e. One microblog may don't have timeline backup
@@ -198,7 +198,7 @@ public:
     \brief Abort all createPost jobs
     \see abortAllJobs()
     */
-    virtual void abortCreatePost( Choqok::Account *theAccount ) = 0;
+    virtual void abortCreatePost( Choqok::Account *theAccount, Choqok::Post *post = 0 ) = 0;
     /**
     \brief Fetch a post
 
@@ -221,12 +221,14 @@ public:
     */
     virtual void updateTimelines( Choqok::Account *theAccount ) = 0;
 
-//     virtual void aboutToUnload();
     /**
     return Url to account page on service (Some kind of blog homepage)
     */
     virtual QString profileUrl( Choqok::Account *account, const QString &username) const=0;
 
+    /**
+    Provide a Web link for post with id @p postId
+    */
     virtual QString postUrl( Choqok::Account *account, const QString &username, const QString &postId) const = 0;
 
     /**
