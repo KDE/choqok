@@ -301,7 +301,7 @@ QLayout * MicroBlogWidget::createToolbar()
 
     QLabel *lblLatestUpdate = new QLabel( i18n("Latest update:"), this);
     lblLatestUpdate->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-    d->latestUpdate = new QLabel( KDateTime::currentLocalTime().toString(), this);
+    d->latestUpdate = new QLabel( KDateTime::currentLocalDateTime().time().toString(), this);
     QFont fnt = lblLatestUpdate->font();
     fnt.setPointSize(fnt.pointSize() - 1);
     lblLatestUpdate->setFont(fnt);
