@@ -814,7 +814,7 @@ Choqok::Post * TwitterApiMicroBlog::readDMessageFromDomElement ( Choqok::Account
             node2 = node2.nextSibling();
     }
     msg->creationDateTime = dateFromString ( timeStr );
-    if ( senderScreenName == theAccount->username() ) {
+    if ( senderScreenName.toLower() == theAccount->username().toLower() ) {
         msg->author.description = recipientDescription;
         msg->author.userName = recipientScreenName;
         msg->author.profileImageUrl = recipientProfileImageUrl;
