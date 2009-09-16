@@ -494,6 +494,7 @@ QString PostWidget::avatarText() const
 void PostWidget::setAvatarText(const QString& text)
 {
     d->mImage = text;
+    updateUi();
 }
 
 QString PostWidget::content() const
@@ -504,6 +505,7 @@ QString PostWidget::content() const
 void PostWidget::setContent(const QString& content)
 {
     d->mContent = content;
+    updateUi();
 }
 
 QString PostWidget::sign() const
@@ -514,6 +516,7 @@ QString PostWidget::sign() const
 void PostWidget::setSign(const QString& sign)
 {
     d->mSign = sign;
+    updateUi();
 }
 
 #include "postwidget.moc"

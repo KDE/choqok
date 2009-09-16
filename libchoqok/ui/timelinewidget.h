@@ -71,6 +71,11 @@ public:
     */
     void removeOldPosts();
 
+    /**
+    @return list of all widgets available on this timeline
+    */
+    QList<PostWidget*> postWidgets();
+
 public slots:
     /**
     @brief Mark all posts as read

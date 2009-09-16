@@ -536,4 +536,9 @@ void MainWindow::slotCurrentBlogChanged(int)
         wd->setFocus();
 }
 
+Choqok::UI::MicroBlogWidget* MainWindow::currentMicroBlog()
+{
+    return qobject_cast<Choqok::UI::MicroBlogWidget*>(mainWidget->currentWidget());
+}
+
 #include "mainwindow.moc"

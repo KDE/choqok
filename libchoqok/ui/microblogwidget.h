@@ -42,7 +42,6 @@ class TimelineWidget;
 /**
  * \brief MicroBlogWidget class.
  * Every MicroBlog plugin can use this or a drived class!
- * ComposerWidget should set on @ref MicroBlog::createMicroBlogWidget if account is not read only
  *
  * @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
  */
@@ -56,6 +55,11 @@ public:
     Set a @ref Choqok::ComposerWidget on read/write accounts!
     */
     Account * currentAccount() const;
+
+    /**
+    @return Current active timeline widget
+    */
+    TimelineWidget * currentTimeline();
 
 public slots:
     void removeOldPosts();

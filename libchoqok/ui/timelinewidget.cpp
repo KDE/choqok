@@ -242,6 +242,11 @@ void TimelineWidget::saveTimeline()
         currentAccount()->microblog()->saveTimeline( currentAccount(), timelineName(), posts.values() );
 }
 
+QList< PostWidget* > TimelineWidget::postWidgets()
+{
+    return posts.values();
+}
+
 }
 }
 #include "timelinewidget.moc"

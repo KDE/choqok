@@ -143,12 +143,14 @@ public:
     * @param parent The parent of the 'to be returned' widget
     */
     virtual UI::ComposerWidget * createComposerWidget( Choqok::Account *account, QWidget *parent ) = 0;
+
     /**
     * @brief Create a TimelineWidget to use in MicroBlogWidget
     *
     * @return A new TimelineWidget to use.
     *
     * @param account account to use.
+    * @param timelineName Name of timeline
     * @param parent The parent of the 'to be returned' widget
     */
     virtual UI::TimelineWidget * createTimelineWidget( Choqok::Account *account, const QString &timelineName,
@@ -160,6 +162,7 @@ public:
      * @return A new PostWidget to use.
      *
      * @param account account to use.
+     * @param post Post object.
      * @param parent The parent of the 'to be returned' widget
      */
     virtual UI::PostWidget * createPostWidget( Choqok::Account *account,

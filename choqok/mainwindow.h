@@ -37,6 +37,7 @@ namespace Choqok
 namespace UI
 {
     class QuickPost;
+class MicroBlogWidget;
 }
 class Plugin;
 }
@@ -71,25 +72,35 @@ public:
     */
     virtual ~MainWindow();
 
+    /**
+    @return current active microblog widget
+    */
+    Choqok::UI::MicroBlogWidget *currentMicroBlog();
 signals:
     void updateTimelines();
-//     void updateSearchResults();
-//     void updateSearchLimits();
-//     void sigSetUnread( int unread );
-//     void abortPostNewStatus();
     void markAllAsRead();
     void removeOldPosts();
 
 public slots:
-//     void systemNotify( const QString &title, const QString &message, const QString &iconUrl );
-//     void search(int type = 0, const QString &search = QString());
     void nextTab(const QWheelEvent&);
+    void showStatusMessage( const QString &message, bool isPermanent = false );
 
-protected slots:
+private slots:
+    void loadAllAccounts();
+    void newPluginAvailable( Choqok::Plugin *plugin );
+    void addBlog( Choqok::Account *account, bool isStartup = false );
+    void removeBlog( const QString &alias );
+    void setTimeLineUpdatesEnabled( bool isEnabled );
+    void setNotificationsEnabled( bool isEnabled );
+    void triggerQuickPost();
+    void toggleMainWindow();
+    void slotMarkAllAsRead();
+
+    void slotAppearanceConfigChanged();
+    void slotBehaviorConfigChanged();
     void slotConfNotifications();
     void slotConfigChoqok();
     void settingsChanged();
-    void showStatusMessage( const QString &message, bool isPermanent = false );
     void slotQuit();
     void showBlog();
     void slotUpdateUnreadCount( int change, int sum );
@@ -107,20 +118,6 @@ private:
     virtual bool queryExit();
     virtual bool queryClose();
 
-private slots:
-    void loadAllAccounts();
-    void newPluginAvailable( Choqok::Plugin *plugin );
-    void addBlog( Choqok::Account *account, bool isStartup = false );
-    void removeBlog( const QString &alias );
-    void setTimeLineUpdatesEnabled( bool isEnabled );
-    void setNotificationsEnabled( bool isEnabled );
-    void triggerQuickPost();
-    void toggleMainWindow();
-    void slotMarkAllAsRead();
-
-    void slotAppearanceConfigChanged();
-    void slotBehaviorConfigChanged();
-private:
     KTabWidget *mainWidget;
     QTimer *timelineTimer;
     int mPrevUpdateInterval;

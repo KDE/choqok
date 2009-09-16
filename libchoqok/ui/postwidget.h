@@ -65,6 +65,15 @@ public:
     static void setStyle(const QColor& unreadColor, const QColor& unreadBack,
                           const QColor& readColor, const QColor& readBack);
 
+    /**
+    @brief Set current post
+
+    @note Use with care!
+
+    After changing current post, Don't forget to call @ref initUi() to update post UI.
+    */
+    void setCurrentPost( const Post &post );
+
 public slots:
     /**
     Set Style sheet of widget to corresponding data->
@@ -102,6 +111,7 @@ protected slots:
     Update UI after changes, such as timestamp
     */
     virtual void updateUi();
+
     /**
     Call microblog() to remove this post!
     */
@@ -151,16 +161,32 @@ protected:
     static const QRegExp mUrlRegExp;
     static const QString webIconText;
 
-    void setCurrentPost( const Post &post );
-
-    void setSign( const QString &sign );
-    QString sign() const;
-
-    void setContent( const QString &content );
-    QString content() const;
-
     void setAvatarText( const QString &text );
     QString avatarText() const;
+
+    /**
+    @brief Sets Post sign
+    sign is the text that showed as sign of this post under post content.
+    */
+    void setSign( const QString &sign );
+
+    /**
+    @return post sign
+    sign is an html text that showed as sign of this post under post content.
+    */
+    QString sign() const;
+
+    /**
+    @brief Sets post content
+    Post content is an html text that showed as post text.
+    */
+    void setContent( const QString &content );
+
+    /**
+    @return post content
+    Post content is an html text that showed as post text.
+    */
+    QString content() const;
 
 private:
     void setupUi();
