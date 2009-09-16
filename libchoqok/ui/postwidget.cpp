@@ -311,7 +311,6 @@ QString PostWidget::prepareStatus( const QString &txt )
 
     if(AppearanceSettings::isEmoticonsEnabled())
         text = MediaManager::self()->parseEmoticons(text);
-    //TODO Add support for PLUGINS! e.g. UnTiny, ...
 
     return text;
 }

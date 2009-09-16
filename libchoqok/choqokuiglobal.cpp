@@ -25,6 +25,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <qpointer.h>
 #include "quickpost.h"
+#include <QApplication>
+#include "postwidget.h"
 
 namespace Choqok
 {
@@ -56,4 +58,31 @@ void UI::Global::setQuickPostWidget(UI::QuickPost* quickPost)
     g_quickPost = quickPost;
 }
 
+UI::Global::SessionManager::SessionManager():
+    QObject(qApp)
+{
+
 }
+
+UI::Global::SessionManager::~SessionManager()
+{
+
+}
+
+UI::Global::SessionManager *UI::Global::SessionManager::m_self = 0L;
+
+UI::Global::SessionManager* UI::Global::SessionManager::self()
+{
+    if(!m_self)
+        m_self = new SessionManager;
+    return m_self;
+}
+
+void UI::Global::SessionManager::emitNewPostWidgetAdded(UI::PostWidget* widget)
+{
+    emit newPostWidgetAdded(widget);
+}
+
+}
+
+#include "choqokuiglobal.moc"

@@ -34,30 +34,47 @@ namespace Choqok
 
 namespace UI
 {
+class PostWidget;
 class QuickPost;
 
     /**
     * This namespace contains the Choqok user interface's global widgets
     * UI Plugins can use these
     */
-    namespace Global
+namespace Global
+{
+    /**
+    * Set the main widget to widget
+    */
+    CHOQOK_EXPORT void setMainWindow( KMainWindow *window );
+    /**
+    * Returns the main widget - this is the widget that message boxes
+    * and KNotify stuff should use as a parent.
+    */
+    CHOQOK_EXPORT KMainWindow *mainWindow();
+
+    CHOQOK_EXPORT void setQuickPostWidget( QuickPost *quickPost );
+
+    CHOQOK_EXPORT QuickPost * quickPostWidget();
+
+    class CHOQOK_EXPORT SessionManager : public QObject
     {
-        /**
-        * Set the main widget to widget
-        */
-        CHOQOK_EXPORT void setMainWindow( KMainWindow *window );
-        /**
-        * Returns the main widget - this is the widget that message boxes
-        * and KNotify stuff should use as a parent.
-        */
-        CHOQOK_EXPORT KMainWindow *mainWindow();
+        Q_OBJECT
+    public:
+        ~SessionManager();
+        static SessionManager *self();
+        void emitNewPostWidgetAdded( Choqok::UI::PostWidget *widget );
 
-        CHOQOK_EXPORT void setQuickPostWidget( QuickPost *quickPost );
+    signals:
+        void newPostWidgetAdded( Choqok::UI::PostWidget *widget );
 
-        CHOQOK_EXPORT QuickPost * quickPostWidget();
-    } //Global::UI
+    private:
+        static SessionManager *m_self;
+        SessionManager();
+    };
+} //Global::UI
 
-    } //UI
+} //UI
 
 }
 

@@ -191,7 +191,7 @@ void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
             this, SLOT(slotOnePostReaded()) );
     mainLayout->insertWidget(0, widget);
     posts.insert(widget->currentPost().postId, widget);
-
+    Global::SessionManager::self()->emitNewPostWidgetAdded(widget);
 }
 
 int TimelineWidget::unreadCount() const
