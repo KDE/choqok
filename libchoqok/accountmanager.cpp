@@ -172,8 +172,6 @@ void AccountManager::loadAllAccounts()
 //         KConfigGroup pluginConfig( d->conf, QLatin1String("Plugins") );
 
         QString blog = cg.readEntry( "MicroBlog", QString() );
-//         if ( protocol.endsWith( QString::fromLatin1( "MicroBlog" ) ) )
-//             protocol = QString::fromLatin1( "kopete_" ) + protocol.toLower().remove( QString::fromLatin1( "protocol" ) );
         Choqok::MicroBlog *mBlog = 0;
         if ( !blog.isEmpty() && cg.readEntry( "Enabled", true ) )
             mBlog = qobject_cast<MicroBlog*>( PluginManager::self()->loadPlugin( blog ) );

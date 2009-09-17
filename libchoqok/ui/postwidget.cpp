@@ -84,7 +84,7 @@ PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* par
     :KTextBrowser(parent), d(new Private(account, post))
 {
     setAttribute(Qt::WA_DeleteOnClose);
-    if(currentAccount()->username() == currentPost().author.userName.toLower())
+    if(currentAccount()->username().compare( currentPost().author.userName, Qt::CaseInsensitive ) == 0 )
         d->mRead = true;
     setupUi();
     d->mTimer.start( _MINUTE );
@@ -157,7 +157,7 @@ void PostWidget::setupUi()
     KPushButton *btnResend = addButton("btnResend", i18nc( "@info:tooltip", "ReSend" ), "retweet" );
     connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
 
-    if(d->mCurrentAccount->username() == d->mCurrentPost.author.userName.toLower()) {
+    if(d->mCurrentAccount->username().compare( d->mCurrentPost.author.userName, Qt::CaseInsensitive ) == 0) {
         KPushButton *btnRemove = addButton("btnRemove", i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
         connect(btnRemove, SIGNAL(clicked(bool)), SLOT(removeCurrentPost()));
     }
@@ -237,7 +237,8 @@ void PostWidget::setCurrentPost(const Choqok::Post& post)
 
 void PostWidget::setRead(bool read/* = true*/)
 {
-    if( !read && !d->mRead && currentAccount()->username() == currentPost().author.userName.toLower()) {
+    if( !read && !d->mRead &&
+        currentAccount()->username().compare( currentPost().author.userName, Qt::CaseInsensitive ) == 0) {
         d->mRead = true; ///Always Set own posts as read.
         setUiStyle();
     } else if( d->mRead != read ) {
