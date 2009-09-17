@@ -51,6 +51,7 @@ class CHOQOK_EXPORT MicroBlogWidget : public QWidget
 public:
     explicit MicroBlogWidget( Account *account, QWidget* parent = 0, Qt::WindowFlags f = 0);
     virtual ~MicroBlogWidget();
+    virtual void initUi();
     /**
     Set a @ref Choqok::ComposerWidget on read/write accounts!
     */
@@ -124,7 +125,6 @@ protected slots:
     void slotAccountModified(Choqok::Account *theAccount);
 protected:
     virtual QLayout *createToolbar();
-    virtual void setupUi();
     virtual TimelineWidget* addTimelineWidgetToUi( const QString &name);
     void initTimelines();
 

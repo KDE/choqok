@@ -169,7 +169,6 @@ void MainWindow::setupActions()
     KAction *actUpdate = new KAction( KIcon( "view-refresh" ), i18n( "Update Timelines" ), this );
     actionCollection()->addAction( QLatin1String( "update_timeline" ), actUpdate );
     actUpdate->setShortcut( Qt::Key_F5 );
-    actUpdate->setGlobalShortcutAllowed( true );
     KShortcut updateGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_F5 );
 //     updateGlobalShortcut.setAlternate ( Qt::MetaModifier | Qt::Key_F5 );
     actUpdate->setGlobalShortcut( updateGlobalShortcut );
@@ -179,7 +178,6 @@ void MainWindow::setupActions()
     KAction *newTwit = new KAction( KIcon( "document-new" ), i18n( "Quick Post" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_new_post" ), newTwit );
     newTwit->setShortcut( KShortcut( Qt::CTRL | Qt::Key_T ) );
-    newTwit->setGlobalShortcutAllowed( true );
     KShortcut quickTwitGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_T );
     newTwit->setGlobalShortcut( quickTwitGlobalShortcut );
     connect( newTwit, SIGNAL( triggered(bool) ), this, SLOT( triggerQuickPost()) );
@@ -192,7 +190,6 @@ void MainWindow::setupActions()
     KAction *showMain = new KAction( this );
     actionCollection()->addAction( QLatin1String( "toggle_mainwin" ), showMain );
     KShortcut toggleMainGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_C );
-    showMain->setGlobalShortcutAllowed( true );
     showMain->setGlobalShortcut( toggleMainGlobalShortcut/*, KAction::DefaultShortcut, KAction::NoAutoloading*/ );
     showMain->setText( i18n( "Minimize" ) );
     connect( showMain, SIGNAL( triggered( bool ) ), this, SLOT( toggleMainWindow() ) );
@@ -413,6 +410,7 @@ void MainWindow::addBlog( Choqok::Account * account, bool isStartup )
     kDebug() << "Adding new Blog, Alias: " << account->alias() << "Blog: " << account->microblog()->serviceName();
 
     Choqok::UI::MicroBlogWidget *widget = account->microblog()->createMicroBlogWidget(account, this);
+    widget->initUi();
 
 //     connect( widget, SIGNAL( sigSetUnread( int ) ), sysIcon, SLOT( slotSetUnread( int ) ) );
     connect( widget, SIGNAL( showStatusMessage(QString,bool)),

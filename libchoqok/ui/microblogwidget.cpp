@@ -64,9 +64,6 @@ MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent, Qt::WindowF
     :QWidget(parent, f), d(new Private(account))
 {
     kDebug();
-    setupUi();
-    initTimelines();
-    connect( account, SIGNAL(modified(Choqok::Account*)), SLOT(slotAccountModified(Choqok::Account*)) );
     connect(d->blog, SIGNAL(timelineDataReceived(Choqok::Account*,QString,QList<Choqok::Post*>)),
             this, SLOT(newTimelineDataRecieved(Choqok::Account*,QString,QList<Choqok::Post*>)) );
     connect(d->blog, SIGNAL(error(Choqok::Account*,Choqok::MicroBlog::ErrorType,
@@ -84,7 +81,7 @@ Account * MicroBlogWidget::currentAccount() const
     return d->account;
 }
 
-void MicroBlogWidget::setupUi()
+void MicroBlogWidget::initUi()
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addLayout( createToolbar() );
@@ -94,6 +91,8 @@ void MicroBlogWidget::setupUi()
     d->timelinesTabWidget = new KTabWidget(this);
     layout->addWidget( d->timelinesTabWidget );
     this->layout()->setContentsMargins( 0, 0, 0, 0 );
+    connect( currentAccount(), SIGNAL(modified(Choqok::Account*)), SLOT(slotAccountModified(Choqok::Account*)) );
+    initTimelines();
 }
 
 void MicroBlogWidget::setComposerWidget(ComposerWidget *widget)

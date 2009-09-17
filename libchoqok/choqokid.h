@@ -37,9 +37,9 @@ class CHOQOK_EXPORT ChoqokId : public QString
 {
 public:
     ChoqokId();
-//     ChoqokId(const QLatin1String &latin1);
-    ChoqokId(const QString &);
     ChoqokId(const ChoqokId &);
+    ChoqokId(const QString &);
+    ChoqokId(const QLatin1String &);
     ~ChoqokId();
     bool operator<(const Choqok::ChoqokId& s) const;
     bool operator>(const Choqok::ChoqokId& s) const;

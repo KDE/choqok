@@ -44,6 +44,12 @@ Choqok::ChoqokId::ChoqokId(const Choqok::ChoqokId& other)
 
 }
 
+ChoqokId::ChoqokId(const QLatin1String& latin1)
+    : QString(latin1)
+{
+
+}
+
 Choqok::ChoqokId::~ChoqokId()
 {
 }
