@@ -24,9 +24,14 @@
 #include "microblog.h"
 #include <klocalizedstring.h>
 #include <KDebug>
-#include "account.h"
 #include <QTimer>
 #include <QMenu>
+#include "account.h"
+#include "timelinewidget.h"
+#include "composerwidget.h"
+#include "postwidget.h"
+#include "microblogwidget.h"
+#include "accountmanager.h"
 
 namespace Choqok
 {
@@ -126,5 +131,97 @@ bool MicroBlog::isValidTimeline( const QString &timeline )
 {
     return d->timelineTypes.contains( timeline );
 }
+
+/// UI Objects:
+
+Account* MicroBlog::createNewAccount(const QString& alias)
+{
+    Choqok::Account *acc = Choqok::AccountManager::self()->findAccount(alias);
+    if(!acc) {
+        return new Choqok::Account(this, alias);
+    } else {
+        return 0;
+    }
+}
+
+UI::MicroBlogWidget* MicroBlog::createMicroBlogWidget(Account* account, QWidget* parent)
+{
+    return new UI::MicroBlogWidget(account, parent);
+}
+
+UI::ComposerWidget* MicroBlog::createComposerWidget(Account* account, QWidget* parent)
+{
+    return new UI::ComposerWidget(account, parent);
+}
+
+UI::TimelineWidget* MicroBlog::createTimelineWidget(Account* account, const QString& timelineName, QWidget* parent)
+{
+    return new UI::TimelineWidget(account, timelineName, parent);
+}
+
+UI::PostWidget* MicroBlog::createPostWidget(Account* account, const Choqok::Post& post, QWidget* parent)
+{
+    return new UI::PostWidget(account, post, parent);
+}
+
+TimelineInfo* MicroBlog::timelineInfo(const QString& )
+{
+    kWarning()<<"MicroBlog Plugin should implement this!";
+    return 0;
+}
+
+void MicroBlog::abortAllJobs(Account* )
+{
+    kWarning()<<"MicroBlog Plugin should implement this!";
+}
+
+void MicroBlog::abortCreatePost(Account* , Post* )
+{
+    kWarning()<<"MicroBlog Plugin should implement this!";
+}
+
+void MicroBlog::createPost(Account* , Post* )
+{
+    kWarning()<<"MicroBlog Plugin should implement this!";
+}
+
+void MicroBlog::fetchPost(Account* , Post* )
+{
+    kWarning()<<"MicroBlog Plugin should implement this!";
+}
+
+void MicroBlog::removePost(Account* , Post* )
+{
+    kWarning()<<"MicroBlog Plugin should implement this!";
+}
+
+void MicroBlog::updateTimelines(Account* )
+{
+    kWarning()<<"MicroBlog Plugin should implement this!";
+}
+
+QList< Post* > MicroBlog::loadTimeline(Account* , const QString& )
+{
+    kWarning()<<"MicroBlog Plugin should implement this!";
+    return QList<Post*>();
+}
+
+void MicroBlog::saveTimeline(Account* , const QString& , const QList< UI::PostWidget* >& )
+{
+    kWarning()<<"MicroBlog Plugin should implement this!";
+}
+
+QString MicroBlog::postUrl(Account* , const QString& , const QString& ) const
+{
+    kWarning()<<"MicroBlog Plugin should implement this!";
+    return QString();
+}
+
+QString MicroBlog::profileUrl(Account* , const QString& ) const
+{
+    kWarning()<<"MicroBlog Plugin should implement this!";
+    return QString();
+}
+
 
 }

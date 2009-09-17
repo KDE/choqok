@@ -110,7 +110,7 @@ public:
     *
     * @return The new @ref Account object created by this function
     */
-    virtual Account *createNewAccount( const QString &alias ) = 0;
+    virtual Account *createNewAccount( const QString &alias );
 
     /**
     * @brief Create a new EditAccountWidget
@@ -132,7 +132,7 @@ public:
     * @param account account to use.
     * @param parent The parent of the 'to be returned' widget
     */
-    virtual UI::MicroBlogWidget * createMicroBlogWidget( Choqok::Account *account, QWidget *parent ) = 0;
+    virtual UI::MicroBlogWidget * createMicroBlogWidget( Choqok::Account *account, QWidget *parent );
 
     /**
     * @brief Create a ComposerWidget to use in MicroBlogWidget
@@ -142,7 +142,7 @@ public:
     * @param account account to use.
     * @param parent The parent of the 'to be returned' widget
     */
-    virtual UI::ComposerWidget * createComposerWidget( Choqok::Account *account, QWidget *parent ) = 0;
+    virtual UI::ComposerWidget * createComposerWidget( Choqok::Account *account, QWidget *parent );
 
     /**
     * @brief Create a TimelineWidget to use in MicroBlogWidget
@@ -154,7 +154,7 @@ public:
     * @param parent The parent of the 'to be returned' widget
     */
     virtual UI::TimelineWidget * createTimelineWidget( Choqok::Account *account, const QString &timelineName,
-                                                   QWidget *parent ) = 0;
+                                                   QWidget *parent );
 
     /**
      * @brief Create a PostWidget to contain one post in TimelineWidget
@@ -166,7 +166,7 @@ public:
      * @param parent The parent of the 'to be returned' widget
      */
     virtual UI::PostWidget * createPostWidget( Choqok::Account *account,
-                                               const Choqok::Post &post, QWidget *parent ) = 0;
+                                               const Choqok::Post &post, QWidget *parent );
 
     /**
     @brief Save a specific timeline!
@@ -175,14 +175,14 @@ public:
     @see loadTimeline()
     */
     virtual void saveTimeline( Choqok::Account *account, const QString &timelineName,
-                               const QList<UI::PostWidget*> &timeline) = 0;
+                               const QList<UI::PostWidget*> &timeline);
     /**
     @brief Load a specific timeline!
     @Note Implementation of this is optional, i.e. One microblog may don't have timeline backup
 
     @see saveTimeline()
     */
-    virtual QList<Post*> loadTimeline( Choqok::Account *account, const QString &timelineName ) = 0;
+    virtual QList<Post*> loadTimeline( Choqok::Account *account, const QString &timelineName );
 
     /**
     \brief Create a new post
@@ -190,31 +190,31 @@ public:
     @see postCreated()
     @see abortCreatePost()
     */
-    virtual void createPost( Choqok::Account *theAccount, Choqok::Post *post ) = 0;
+    virtual void createPost( Choqok::Account *theAccount, Choqok::Post *post );
 
     /**
     \brief Abort all requests!
     */
-    virtual void abortAllJobs( Choqok::Account *theAccount ) = 0;
+    virtual void abortAllJobs( Choqok::Account *theAccount );
 
     /**
     \brief Abort all createPost jobs
     \see abortAllJobs()
     */
-    virtual void abortCreatePost( Choqok::Account *theAccount, Choqok::Post *post = 0 ) = 0;
+    virtual void abortCreatePost( Choqok::Account *theAccount, Choqok::Post *post = 0 );
     /**
     \brief Fetch a post
 
     @see postFetched()
     */
-    virtual void fetchPost( Choqok::Account *theAccount, Choqok::Post *post ) = 0;
+    virtual void fetchPost( Choqok::Account *theAccount, Choqok::Post *post );
 
     /**
     \brief Remove a post
 
     @see postRemoved()
     */
-    virtual void removePost( Choqok::Account *theAccount, Choqok::Post *post ) = 0;
+    virtual void removePost( Choqok::Account *theAccount, Choqok::Post *post );
 
     /**
     Request to update all timelines of account!
@@ -222,17 +222,17 @@ public:
 
     @see timelineDataReceived()
     */
-    virtual void updateTimelines( Choqok::Account *theAccount ) = 0;
+    virtual void updateTimelines( Choqok::Account *theAccount );
 
     /**
     return Url to account page on service (Some kind of blog homepage)
     */
-    virtual QString profileUrl( Choqok::Account *account, const QString &username) const=0;
+    virtual QString profileUrl( Choqok::Account *account, const QString &username) const;
 
     /**
     Provide a Web link for post with id @p postId
     */
-    virtual QString postUrl( Choqok::Account *account, const QString &username, const QString &postId) const = 0;
+    virtual QString postUrl( Choqok::Account *account, const QString &username, const QString &postId) const;
 
     /**
     Return a list of timelines supported by this account!
@@ -252,7 +252,7 @@ public:
     /**
     @Return information about an specific timeline
     */
-    virtual TimelineInfo * timelineInfo( const QString &timelineName ) = 0;
+    virtual TimelineInfo * timelineInfo( const QString &timelineName );
 
     /**
     Return service homepage Url
@@ -276,7 +276,8 @@ signals:
     /**
     Emit when data for a timeline received! @p type specifies the type of timeline as specifies in timelineTypes()
     */
-    void timelineDataReceived( Choqok::Account *theAccount, const QString &timelineName, QList<Choqok::Post*> data );
+    void timelineDataReceived( Choqok::Account *theAccount, const QString &timelineName,
+                               QList<Choqok::Post*> data );
 
     /**
     Emit when a post successfully created!
