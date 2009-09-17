@@ -1,8 +1,28 @@
 [Global]
 IconName=choqok
 Comment=Choqok
+Comment[bg]=Choqok
+Comment[da]=Choqok
+Comment[de]=Choqok
+Comment[en_GB]=Choqok
+Comment[es]=Choqok
+Comment[et]=Choqok
+Comment[fr]=Choqok
+Comment[ga]=Choqok
 Comment[gl]=ChoqoK
+Comment[it]=Choqok
+Comment[km]=Choqok
+Comment[nds]=Choqok
+Comment[nl]=Choqok
+Comment[pt]=Choqok
+Comment[pt_BR]=Choqok
+Comment[ru]=Choqok
+Comment[sv]=Choqok
+Comment[tr]=Choqok
+Comment[uk]=Choqok
 Comment[x-test]=xxChoqokxx
+Comment[zh_CN]=Choqok
+Comment[zh_TW]=Choqok
 
 [Event/new-post-arrived]
 Name=New Post Arrived
@@ -44,6 +64,7 @@ Name[it]=Processo terminato correttamente
 Name[pt]=Sucesso da Tarefa
 Name[pt_BR]=Trabalho concluído com sucesso
 Name[sv]=Jobb lyckades
+Name[tr]=Görev Başarılı
 Name[uk]=Завдання успішно виконано
 Name[x-test]=xxJob Successxx
 Comment=A job finished successfully
@@ -55,6 +76,7 @@ Comment[it]=Un processo è terminato correttamente
 Comment[pt]=Uma tarefa terminou com sucesso
 Comment[pt_BR]=Um trabalho foi concluído com sucesso
 Comment[sv]=Ett jobb avslutades med lyckat resultat.
+Comment[tr]=Bir görev başarıyla tamamlandı
 Comment[uk]=Виконання завдання успішно завершено
 Comment[x-test]=xxA job finished successfullyxx
 Action=Popup
