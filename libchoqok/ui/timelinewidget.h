@@ -110,7 +110,7 @@ protected:
     virtual void addPostWidgetToUi(PostWidget *widget);
     virtual void setupUi();
     Account *currentAccount();
-    QMap<QString, PostWidget *> posts;
+    QMap<ChoqokId, PostWidget *> posts;
     QVBoxLayout *mainLayout;
     QHBoxLayout *titleBarLayout;
 

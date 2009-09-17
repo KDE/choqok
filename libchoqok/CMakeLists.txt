@@ -3,7 +3,7 @@ include_directories(
 ${CHOQOK_INCLUDES}
 )
 
-set(choqok_LIB_SRCS 
+set(choqok_LIB_SRCS
 plugin.cpp
 shortener.cpp
 account.cpp
@@ -15,6 +15,7 @@ passwordmanager.cpp
 mediamanager.cpp
 notifymanager.cpp
 choqokuiglobal.cpp
+choqokid.cpp
 ui/microblogwidget.cpp
 ui/editaccountwidget.cpp
 ui/timelinewidget.cpp

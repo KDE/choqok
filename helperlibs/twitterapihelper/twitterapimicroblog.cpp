@@ -42,7 +42,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <choqokuiglobal.h>
 #include <accountmanager.h>
 #include "twitterapidmessagedialog.h"
-#include <choqokbehaviorsettings.h>
+#include "choqokbehaviorsettings.h"
+#include "choqokid.h"
 
 class TwitterApiMicroBlog::Private
 {
@@ -130,8 +131,11 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
     kDebug();
     QString fileName = account->alias() + '_' + timelineName + "_backuprc";
     KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
-    QStringList groupList = postsBackup.groupList();
-    groupList.sort();
+    QStringList tmpList = postsBackup.groupList();
+    QList<Choqok::ChoqokId> groupList;
+    foreach(const QString &str, tmpList)
+        groupList<<str;
+    qSort(groupList);
     QList< Choqok::Post* > list;
     int count = groupList.count();
     if( count ) {
@@ -139,23 +143,23 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
         Checking if QStringList::sort() failed on sorting numbers,
         This happends when one or more items char count is less/more than other ones
         */
-        if(groupList.constBegin()->count() != (--(groupList.constEnd()))->count()) {
-            int charCount = groupList[0].count();
-            for(int i=1; i<count; ++i){
-                int tmp = groupList[i].count();
-                if( tmp < charCount ){
-                    int k = 0;
-                    for(int j = i; j<count; ++j){
-                        int tmp2 = groupList[j].count();
-                        if( tmp2 == tmp )
-                            groupList.move(j, k);
-                        else
-                            charCount = tmp2;
-                    }
-                } else
-                    charCount = tmp;
-            }
-        }
+//         if(groupList.constBegin()->count() != (--(groupList.constEnd()))->count()) {
+//             int charCount = groupList[0].count();
+//             for(int i=1; i<count; ++i){
+//                 int tmp = groupList[i].count();
+//                 if( tmp < charCount ){
+//                     int k = 0;
+//                     for(int j = i; j<count; ++j){
+//                         int tmp2 = groupList[j].count();
+//                         if( tmp2 == tmp )
+//                             groupList.move(j, k);
+//                         else
+//                             charCount = tmp2;
+//                     }
+//                 } else
+//                     charCount = tmp;
+//             }
+//         }
         ///END checking
         Choqok::Post *st;
         for ( int i = 0; i < count; ++i ) {
@@ -212,14 +216,14 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
         const Choqok::Post *post = &((*it)->currentPost());
         KConfigGroup grp( &postsBackup, post->postId );
         grp.writeEntry( "creationDateTime", post->creationDateTime );
-        grp.writeEntry( "postId", post->postId );
+        grp.writeEntry( "postId", post->postId.toString() );
         grp.writeEntry( "text", post->content );
         grp.writeEntry( "source", post->source );
-        grp.writeEntry( "inReplyToPostId", post->replyToPostId );
-        grp.writeEntry( "inReplyToUserId", post->replyToUserId );
+        grp.writeEntry( "inReplyToPostId", post->replyToPostId.toString() );
+        grp.writeEntry( "inReplyToUserId", post->replyToUserId.toString() );
         grp.writeEntry( "favorited", post->isFavorited );
         grp.writeEntry( "inReplyToUserName", post->replyToUserName );
-        grp.writeEntry( "authorId", post->author.userId );
+        grp.writeEntry( "authorId", post->author.userId.toString() );
         grp.writeEntry( "authorUserName", post->author.userName );
         grp.writeEntry( "authorRealName", post->author.realName );
         grp.writeEntry( "authorProfileImageUrl", post->author.profileImageUrl );

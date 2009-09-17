@@ -26,6 +26,7 @@
 #define CHOQOKTYPES_H
 #include <QDateTime>
 #include "choqok_export.h"
+#include "choqokid.h"
 
 namespace Choqok
 {
@@ -37,7 +38,7 @@ enum JobResult{
 
 class CHOQOK_EXPORT User {
 public:
-    QString userId;
+    ChoqokId userId;
     QString realName;
     QString userName;
     QString location;
@@ -54,13 +55,13 @@ public:
     :isFavorited(false), isPrivate(false), isError(false)
     {}
     QDateTime creationDateTime;
-    QString postId;
+    ChoqokId postId;
     QString title;
     QString link;
     QString content;
     QString source;
-    QString replyToPostId;
-    QString replyToUserId;
+    ChoqokId replyToPostId;
+    ChoqokId replyToUserId;
     bool isFavorited;
     QString replyToUserName;
     User author;
