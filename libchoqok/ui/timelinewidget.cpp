@@ -202,7 +202,7 @@ int TimelineWidget::unreadCount() const
 void TimelineWidget::markAllAsRead()
 {
     if( d->unreadCount > 0 ) {
-        foreach(PostWidget *pw, posts.values()){
+        foreach(PostWidget *pw, posts){
             pw->setRead();
         }
         int unread = -d->unreadCount;
@@ -220,7 +220,7 @@ Account* TimelineWidget::currentAccount()
 
 void TimelineWidget::settingsChanged()
 {
-    foreach(PostWidget *pw, posts.values()){
+    foreach(PostWidget *pw, posts){
         pw->setUiStyle();
     }
 }

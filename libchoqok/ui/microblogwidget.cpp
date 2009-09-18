@@ -106,7 +106,7 @@ void MicroBlogWidget::setComposerWidget(ComposerWidget *widget)
     d->composer = widget;
     d->composer->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Maximum);
     qobject_cast<QVBoxLayout*>( this->layout() )->insertWidget(1, d->composer);
-    foreach(const TimelineWidget *mbw, d->timelines.values()) {
+    foreach(const TimelineWidget *mbw, d->timelines) {
         connect(mbw, SIGNAL(forwardResendPost(QString)), d->composer, SLOT(setText(QString)));
         connect( mbw, SIGNAL(forwardReply(QString,QString)), d->composer, SLOT(setText(QString,QString)) );
     }
@@ -120,7 +120,7 @@ MicroBlogWidget::~MicroBlogWidget()
 
 void MicroBlogWidget::settingsChanged()
 {
-    foreach(TimelineWidget *wd, d->timelines.values()){
+    foreach(TimelineWidget *wd, d->timelines){
         wd->settingsChanged();
     }
 }
@@ -133,7 +133,7 @@ void MicroBlogWidget::updateTimelines()
 
 void MicroBlogWidget::removeOldPosts()
 {
-    foreach(TimelineWidget *wd, d->timelines.values()) {
+    foreach(TimelineWidget *wd, d->timelines) {
         wd->removeOldPosts();
     }
 }
@@ -195,7 +195,7 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change)
     kDebug()<<change;
     int sum = 0;
     kDebug()<< qobject_cast<TimelineWidget*>(sender())->unreadCount();
-    foreach(const TimelineWidget *mbw, d->timelines.values())
+    foreach(const TimelineWidget *mbw, d->timelines)
         sum += mbw->unreadCount();
     if(change != 0)
         emit updateUnreadCount(change, sum);
@@ -232,7 +232,7 @@ void MicroBlogWidget::markAllAsRead()
         d->btnMarkAllAsRead->deleteLater();
         d->btnMarkAllAsRead = 0L;
     }
-    foreach(TimelineWidget *wd, d->timelines.values()) {
+    foreach(TimelineWidget *wd, d->timelines) {
         wd->markAllAsRead();
         int tabIndex = d->timelinesTabWidget->indexOf(wd);
         if(tabIndex == -1)
@@ -354,7 +354,7 @@ void MicroBlogWidget::slotAccountModified(Account* theAccount)
             setComposerWidget(theAccount->microblog()->createComposerWidget(theAccount, this));
         }
         int sum = 0;
-        foreach(const TimelineWidget *mbw, d->timelines.values())
+        foreach(const TimelineWidget *mbw, d->timelines)
             sum += mbw->unreadCount();
         emit updateUnreadCount( 0, sum);
     }
