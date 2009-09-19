@@ -10,6 +10,7 @@ Comment[et]=Choqok
 Comment[fr]=Choqok
 Comment[ga]=Choqok
 Comment[gl]=ChoqoK
+Comment[hr]=Choqok
 Comment[it]=Choqok
 Comment[km]=Choqok
 Comment[nds]=Choqok
@@ -56,6 +57,7 @@ Persistent=True
 
 [Event/job-success]
 Name=Job Success
+Name[bg]=Успешна задача
 Name[da]=Job gennemført
 Name[es]=Trabajo terminado con éxito
 Name[fr]=Tâche réussie
@@ -68,6 +70,7 @@ Name[tr]=Görev Başarılı
 Name[uk]=Завдання успішно виконано
 Name[x-test]=xxJob Successxx
 Comment=A job finished successfully
+Comment[bg]=Успешно приключена задача
 Comment[da]=Et job blev vellykket gennemført
 Comment[es]=Un trabajo ha finalizado con éxito
 Comment[fr]=Une tâche s'est terminée avec succès
@@ -83,6 +86,7 @@ Action=Popup
 
 [Event/job-error]
 Name=Job Error
+Name[bg]=Грешка в задача
 Name[da]=Jobfejl
 Name[es]=Trabajo terminado con un error
 Name[fr]=Erreur lors de la tâche
@@ -95,6 +99,7 @@ Name[tr]=Görev Hatası
 Name[uk]=Помилка виконання
 Name[x-test]=xxJob Errorxx
 Comment=There was an error while performing a job
+Comment[bg]=Грешка при изпълнение на задача
 Comment[da]=En fejl opstod under udførelse af et job
 Comment[es]=Se produjo un error mientras se efectuaba un trabajo
 Comment[fr]=Il s'est produit une erreur lors de l'exécution d'une tâche
