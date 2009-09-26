@@ -32,7 +32,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KGenericFactory>
 #include "account.h"
 #include "accountmanager.h"
-#include "microblogwidget.h"
 #include "timelinewidget.h"
 #include "editaccountwidget.h"
 #include "twittereditaccount.h"
@@ -40,6 +39,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "twitteraccount.h"
 #include <composerwidget.h>
 #include "twitterpostwidget.h"
+#include "twitterapihelper/twitterapimicroblogwidget.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < TwitterMicroBlog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_twitter" ) )
@@ -82,7 +82,7 @@ ChoqokEditAccountWidget * TwitterMicroBlog::createEditAccountWidget( Choqok::Acc
 
 Choqok::UI::MicroBlogWidget * TwitterMicroBlog::createMicroBlogWidget( Choqok::Account *account, QWidget *parent )
 {
-    return new Choqok::UI::MicroBlogWidget(account, parent);
+    return new TwitterApiMicroBlogWidget(account, parent);
 }
 
 Choqok::UI::TimelineWidget * TwitterMicroBlog::createTimelineWidget( Choqok::Account *account,
