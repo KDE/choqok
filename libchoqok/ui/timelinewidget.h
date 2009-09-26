@@ -101,6 +101,7 @@ protected slots:
     void slotOnePostReaded();
     virtual void saveTimeline();
     virtual void loadTimeline();
+    void postWidgetDestroyed( QObject* );
 
 protected:
     /**
@@ -110,9 +111,10 @@ protected:
     virtual void addPostWidgetToUi(PostWidget *widget);
     virtual void setupUi();
     Account *currentAccount();
-    QMap<ChoqokId, PostWidget *> posts;
-    QVBoxLayout *mainLayout;
-    QHBoxLayout *titleBarLayout;
+    QMap<ChoqokId, PostWidget *> &posts() const;
+
+    QVBoxLayout *mainLayout();
+    QHBoxLayout *titleBarLayout();
 
 private:
     class Private;

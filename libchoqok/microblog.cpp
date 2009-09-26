@@ -42,7 +42,6 @@ public:
     QString homepage;
     uint charLimit;
     QStringList timelineTypes;
-    Account *account;
 };
 
 MicroBlog::MicroBlog( const KComponentData &instance, QObject *parent )

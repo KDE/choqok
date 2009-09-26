@@ -41,6 +41,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <composerwidget.h>
 #include <twitterapihelper/twitterapipostwidget.h>
 #include "laconicapostwidget.h"
+#include <twitterapihelper/twitterapimicroblogwidget.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < LaconicaMicroBlog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_laconica" ) )
@@ -82,7 +83,7 @@ ChoqokEditAccountWidget * LaconicaMicroBlog::createEditAccountWidget( Choqok::Ac
 
 Choqok::UI::MicroBlogWidget * LaconicaMicroBlog::createMicroBlogWidget( Choqok::Account *account, QWidget *parent )
 {
-    return new Choqok::UI::MicroBlogWidget(account, parent);
+    return new TwitterApiMicroBlogWidget(account, parent);
 }
 
 Choqok::UI::TimelineWidget * LaconicaMicroBlog::createTimelineWidget( Choqok::Account *account,

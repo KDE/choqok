@@ -47,6 +47,9 @@ public:
     bool mStartUp;
     KPushButton *btnMarkAllAsRead;
     int unreadCount;
+    QMap<ChoqokId, PostWidget *> posts;
+    QVBoxLayout *mainLayout;
+    QHBoxLayout *titleBarLayout;
 };
 
 TimelineWidget::TimelineWidget(Choqok::Account* account, const QString &timelineName, QWidget* parent /*= 0*/)
@@ -113,33 +116,31 @@ void TimelineWidget::setupUi()
     scrollAreaWidgetContents->setGeometry(QRect(0, 0, 254, 300));
     verticalLayout_2 = new QVBoxLayout(scrollAreaWidgetContents);
     verticalLayout_2->setMargin(1);
-    mainLayout = new QVBoxLayout();
+    d->mainLayout = new QVBoxLayout();
     verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-    mainLayout->addItem(verticalSpacer);
-    mainLayout->setSpacing(3);
-    mainLayout->setMargin(1);
+    d->mainLayout->addItem(verticalSpacer);
+    d->mainLayout->setSpacing(3);
+    d->mainLayout->setMargin(1);
 
-    titleBarLayout = new QHBoxLayout;
-    titleBarLayout->addWidget(lblDesc);
-    verticalLayout_2->addLayout(mainLayout);
+    d->titleBarLayout = new QHBoxLayout;
+    d->titleBarLayout->addWidget(lblDesc);
+    verticalLayout_2->addLayout(d->mainLayout);
 
     scrollArea->setWidget(scrollAreaWidgetContents);
 
-    gridLayout->addLayout(titleBarLayout);
+    gridLayout->addLayout(d->titleBarLayout);
     gridLayout->addWidget(scrollArea);
-
-    QPalette p = palette();
 }
 
 void TimelineWidget::removeOldPosts()
 {
-    int count = posts.count() - BehaviorSettings::countOfPosts();
+    int count = d->posts.count() - BehaviorSettings::countOfPosts();
     kDebug()<<count;
-    while( count > 0 && !posts.isEmpty() ){
-        PostWidget *wd = posts.values().first();
+    while( count > 0 && !d->posts.isEmpty() ){
+        PostWidget *wd = d->posts.values().first();
         if(wd && wd->isRead()){
-            posts.remove( posts.key(wd) );
+            d->posts.remove( d->posts.key(wd) );
             wd->close();
         }
         --count;
@@ -152,7 +153,7 @@ void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList)
     QList<Post*>::const_iterator it, endIt = postList.constEnd();
     int unread = 0;
     for(it = postList.constBegin(); it!= endIt; ++it){
-        if(posts.keys().contains((*it)->postId))
+        if(d->posts.keys().contains((*it)->postId))
             continue;
         PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, **it, this);
         if(pw) {
@@ -172,7 +173,7 @@ void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList)
             d->btnMarkAllAsRead->setMaximumSize(16, 16);
             d->btnMarkAllAsRead->setIconSize(QSize(12,12));
             connect(d->btnMarkAllAsRead, SIGNAL(clicked(bool)), SLOT(markAllAsRead()));
-            titleBarLayout->addWidget(d->btnMarkAllAsRead);
+            d->titleBarLayout->addWidget(d->btnMarkAllAsRead);
         }
     }
 }
@@ -189,8 +190,10 @@ void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
             this, SIGNAL(forwardReply(QString,QString)) );
     connect( widget, SIGNAL(postReaded()),
             this, SLOT(slotOnePostReaded()) );
-    mainLayout->insertWidget(0, widget);
-    posts.insert(widget->currentPost().postId, widget);
+    connect( widget, SIGNAL(destroyed(QObject*)),
+             SLOT(postWidgetDestroyed(QObject*)) );
+    d->mainLayout->insertWidget(0, widget);
+    d->posts.insert(widget->currentPost().postId, widget);
     Global::SessionManager::self()->emitNewPostWidgetAdded(widget);
 }
 
@@ -202,7 +205,7 @@ int TimelineWidget::unreadCount() const
 void TimelineWidget::markAllAsRead()
 {
     if( d->unreadCount > 0 ) {
-        foreach(PostWidget *pw, posts){
+        foreach(PostWidget *pw, d->posts){
             pw->setRead();
         }
         int unread = -d->unreadCount;
@@ -220,7 +223,7 @@ Account* TimelineWidget::currentAccount()
 
 void TimelineWidget::settingsChanged()
 {
-    foreach(PostWidget *pw, posts){
+    foreach(PostWidget *pw, d->posts){
         pw->setUiStyle();
     }
 }
@@ -239,12 +242,23 @@ void TimelineWidget::slotOnePostReaded()
 void TimelineWidget::saveTimeline()
 {
     if(currentAccount()->microblog())
-        currentAccount()->microblog()->saveTimeline( currentAccount(), timelineName(), posts.values() );
+        currentAccount()->microblog()->saveTimeline( currentAccount(), timelineName(), posts().values() );
 }
 
 QList< PostWidget* > TimelineWidget::postWidgets()
 {
-    return posts.values();
+    return posts().values();
+}
+
+void TimelineWidget::postWidgetDestroyed(QObject* obj)
+{
+    PostWidget *widget = qobject_cast<PostWidget*>(obj);
+    d->posts.remove(d->posts.key(widget));
+}
+
+QMap< ChoqokId, PostWidget* >& TimelineWidget::posts() const
+{
+    return d->posts;
 }
 
 }

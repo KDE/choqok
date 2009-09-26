@@ -130,7 +130,7 @@ protected:
 
     void setComposerWidget(ComposerWidget* widget);
     ComposerWidget *composer();
-    QMap<QString, TimelineWidget*> timelines();
+    QMap<QString, TimelineWidget*> &timelines();
     KTabWidget *timelinesTabWidget();
 
 private:

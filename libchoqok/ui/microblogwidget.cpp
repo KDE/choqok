@@ -166,7 +166,6 @@ TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)
 {
     TimelineWidget *mbw = d->blog->createTimelineWidget(d->account, name, this);
     if(mbw) {
-        mbw->setObjectName(name);
         Choqok::TimelineInfo *info = currentAccount()->microblog()->timelineInfo(name);
         d->timelines.insert(name, mbw);
         d->timelinesTabWidget->addTab(mbw, info->name);
@@ -179,7 +178,6 @@ TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)
             connect( mbw, SIGNAL(forwardReply(QString,QString)),
                      d->composer, SLOT(setText(QString,QString)) );
         }
-        return mbw;
     } else {
         kDebug()<<"Cannot Create a new TimelineWidget for timeline "<<name;
         return 0L;
@@ -188,6 +186,7 @@ TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)
         d->timelinesTabWidget->setTabBarHidden(true);
     else
         d->timelinesTabWidget->setTabBarHidden(false);
+    return mbw;
 }
 
 void MicroBlogWidget::slotUpdateUnreadCount(int change)
@@ -246,7 +245,7 @@ ComposerWidget* MicroBlogWidget::composer()
     return d->composer;
 }
 
-QMap< QString, TimelineWidget* > MicroBlogWidget::timelines()
+QMap< QString, TimelineWidget* > &MicroBlogWidget::timelines()
 {
     return d->timelines;
 }

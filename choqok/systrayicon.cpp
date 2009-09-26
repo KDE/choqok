@@ -147,7 +147,7 @@ void SysTrayIcon::slotJobDone( Choqok::JobResult result )
     if ( result == Choqok::Success ) {
         setIcon( KIcon( "dialog-ok" ) );
     } else {
-        setIcon( KIcon( "dialog-cancel" ) );
+        setIcon( KIcon( "dialog-error" ) );
     }
     QTimer::singleShot( 5000, this, SLOT( slotRestoreIcon() ) );
 }
