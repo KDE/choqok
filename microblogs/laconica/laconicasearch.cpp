@@ -37,7 +37,7 @@ LaconicaSearch::LaconicaSearch(QObject* parent): TwitterApiSearch(parent)
     kDebug();
     mSearchCode[ReferenceGroup] = '!';
     mSearchCode[ToUser] = '@';
-    mSearchCode[FromUser] = "from:";
+    mSearchCode[FromUser] = QString();
     mSearchCode[ReferenceHashtag] = '#';
 
     mSearchTypes[ReferenceHashtag].first = i18nc( "Dents are Identica posts", "Dents Including This Hashtag" );
@@ -87,13 +87,14 @@ KUrl LaconicaSearch::buildUrl(TwitterApiAccount* theAccount, QString query, int 
     KUrl url;
     if( option == ReferenceHashtag ) {
         url = theAccount->apiUrl();
-        url.addPath("/api/search.atom");
+        url.addPath("/search.atom");
         url.addQueryItem("q", formattedQuery);
         if( !sinceStatusId.isEmpty() )
             url.addQueryItem( "since_id", sinceStatusId );
         if( count && count <= 100 )
             url.addQueryItem( "rpp", QString::number( count ) );
-        url.addQueryItem( "page", QString::number( page ) );
+        if( page>1 )
+            url.addQueryItem( "page", QString::number( page ) );
     } else {
         url = theAccount->homepageUrl();
         url.addPath( formattedQuery );
@@ -108,7 +109,7 @@ void LaconicaSearch::requestSearchResults(TwitterApiAccount* theAccount, const Q
     kDebug();
 
     KUrl url = buildUrl( theAccount, query, option, sinceStatusId, count, page );
-
+    kDebug()<<url;
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo );
     if( !job ) {
         kError() << "Cannot create an http GET request!";
@@ -146,7 +147,7 @@ void LaconicaSearch::searchResultsReturned(KJob* job)
     else
         postsList = parseRss( jj->data() );
 
-
+    kDebug()<<"Emiting searchResultsReceived()";
     emit searchResultsReceived( m.account, m.query, m.option, postsList );
 }
 
@@ -204,10 +205,12 @@ QList< Choqok::Post* > LaconicaSearch::parseAtom(const QByteArray& buffer)
                         status->creationDateTime = recognized;
             } else if ( elm.tagName() == "title" ) {
                 status->content = elm.text();
-            } else if ( elm.tagName() == "link" &&
-                elm.attributeNode( "rel" ).value() == "related") {
-                QDomAttr imageAttr = elm.attributeNode( "href" );
-                status->author.profileImageUrl = imageAttr.value();
+            } else if ( elm.tagName() == "link") {
+                if(elm.attributeNode( "rel" ).value() == "related") {
+                    status->author.profileImageUrl = elm.attribute( "href" );
+                } else if(elm.attributeNode( "rel" ).value() == "alternate") {
+                    status->link = elm.attribute( "href" );
+                }
             } else if ( elm.tagName() == "author") {
                 QDomNode userNode = entryNode.firstChild();
                 while ( !userNode.isNull() )
@@ -297,18 +300,19 @@ QList< Choqok::Post* > LaconicaSearch::parseRss(const QByteArray& buffer)
                 status->creationDateTime = recognized;
             } else if ( itemNode.toElement().tagName() == "dc:creator" ) {
                 status->author.realName = itemNode.toElement().text();
-            } else if ( itemNode.toElement().tagName() == "sioc:has_creator" ) {
+            } else if ( itemNode.toElement().tagName() == "sioc:reply_of" ) {
                 QDomAttr userIdAttr = itemNode.toElement().attributeNode( "rdf:resource" );
                 Choqok::ChoqokId id;
-        if(mIdRegExp.exactMatch(userIdAttr.value())) {
-          id = mIdRegExp.cap(1);
-        }
-/*                sscanf( qPrintable( userIdAttr.value() ),
-                        qPrintable( mSearchUrl + "user/%d" ), &id );*/
-                status->author.userId = id;
-            } else if ( itemNode.toElement().tagName() == "laconica:postIcon" ) {
+                if(mIdRegExp.exactMatch(userIdAttr.value())) {
+                    id = mIdRegExp.cap(1);
+                }
+                status->replyToPostId = id;
+            } else if ( itemNode.toElement().tagName() == "statusnet:postIcon" ) {
                 QDomAttr imageAttr = itemNode.toElement().attributeNode( "rdf:resource" );
                 status->author.profileImageUrl = imageAttr.value();
+            } else if ( itemNode.toElement().tagName() == "link" ) {
+                QDomAttr imageAttr = itemNode.toElement().attributeNode( "rdf:resource" );
+                status->link = itemNode.toElement().text();
             }
 
             itemNode = itemNode.nextSibling();

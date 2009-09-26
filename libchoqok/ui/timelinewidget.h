@@ -28,6 +28,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <choqoktypes.h>
 #include <QMap>
 
+class QLabel;
 class QHBoxLayout;
 class QVBoxLayout;
 
@@ -115,6 +116,7 @@ protected:
 
     QVBoxLayout *mainLayout();
     QHBoxLayout *titleBarLayout();
+    QLabel *timelineDescription();
 
 private:
     class Private;

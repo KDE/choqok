@@ -57,6 +57,8 @@ TwitterApiSearchDialog::TwitterApiSearchDialog(TwitterApiAccount* theAccount, QW
     kDebug();
     setAttribute(Qt::WA_DeleteOnClose);
     createUi();
+    d->searchQuery->setFocus();
+    connect(d->searchTypes, SIGNAL(currentIndexChanged(int)), SLOT(slotSearchTypeChanged(int)) );
 }
 
 TwitterApiSearchDialog::~TwitterApiSearchDialog()
@@ -102,7 +104,14 @@ void TwitterApiSearchDialog::slotButtonClicked(int button)
     if(button == Ok) {
         d->mBlog->searchBackend()->requestSearchResults( d->account, d->searchQuery->text(),
                                                          d->searchTypes->currentIndex());
+        accept();
     } else
         KDialog::slotButtonClicked(button);
 }
 
+void TwitterApiSearchDialog::slotSearchTypeChanged(int )
+{
+    d->searchQuery->setFocus();
+}
+
+#include "twitterapisearchdialog.moc"

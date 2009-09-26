@@ -41,6 +41,9 @@ protected:
     virtual void fillSearchTypes();
     virtual void slotButtonClicked(int button);
 
+protected slots:
+    void slotSearchTypeChanged(int);
+
 private:
     class Private;
     Private *d;

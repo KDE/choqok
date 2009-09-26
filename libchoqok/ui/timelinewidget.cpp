@@ -50,6 +50,7 @@ public:
     QMap<ChoqokId, PostWidget *> posts;
     QVBoxLayout *mainLayout;
     QHBoxLayout *titleBarLayout;
+    QLabel *lblDesc;
 };
 
 TimelineWidget::TimelineWidget(Choqok::Account* account, const QString &timelineName, QWidget* parent /*= 0*/)
@@ -91,13 +92,15 @@ void TimelineWidget::setTimelineName(const QString &type)
 
 void TimelineWidget::setupUi()
 {
-    QLabel *lblDesc = new QLabel(this);
-    lblDesc->setText(currentAccount()->microblog()->timelineInfo(d->timelineName)->description);
-    lblDesc->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    lblDesc->setWordWrap(true);
-    QFont fnt = lblDesc->font();
+    d->lblDesc = new QLabel(this);
+    TimelineInfo *info = currentAccount()->microblog()->timelineInfo(d->timelineName);
+    if(info)
+        d->lblDesc->setText(info->description);
+    d->lblDesc->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    d->lblDesc->setWordWrap(true);
+    QFont fnt = d->lblDesc->font();
     fnt.setBold(true);
-    lblDesc->setFont(fnt);
+    d->lblDesc->setFont(fnt);
 
     QVBoxLayout *gridLayout;
     QScrollArea *scrollArea;
@@ -124,7 +127,7 @@ void TimelineWidget::setupUi()
     d->mainLayout->setMargin(1);
 
     d->titleBarLayout = new QHBoxLayout;
-    d->titleBarLayout->addWidget(lblDesc);
+    d->titleBarLayout->addWidget(d->lblDesc);
     verticalLayout_2->addLayout(d->mainLayout);
 
     scrollArea->setWidget(scrollAreaWidgetContents);
@@ -259,6 +262,21 @@ void TimelineWidget::postWidgetDestroyed(QObject* obj)
 QMap< ChoqokId, PostWidget* >& TimelineWidget::posts() const
 {
     return d->posts;
+}
+
+QLabel* TimelineWidget::timelineDescription()
+{
+    return d->lblDesc;
+}
+
+QVBoxLayout* TimelineWidget::mainLayout()
+{
+    return d->mainLayout;
+}
+
+QHBoxLayout* TimelineWidget::titleBarLayout()
+{
+    return d->titleBarLayout;
 }
 
 }

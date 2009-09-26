@@ -62,7 +62,7 @@ void TwitterSearch::requestSearchResults(TwitterApiAccount* theAccount, const QS
     kDebug();
 
     KUrl url = buildUrl( query, option, sinceStatusId, count, page );
-
+    kDebug()<<url;
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo );
     if( !job ) {
         kError() << "Cannot create an http GET request!";
@@ -151,10 +151,12 @@ QList< Choqok::Post* > TwitterSearch::parseAtom(const QByteArray& buffer)
                 status->content = elm.text();
             } else if ( elm.tagName() == "twitter:source" ) {
                 status->source = elm.text();
-            } else if ( elm.tagName() == "link" &&
-                elm.attributeNode( "rel" ).value() == "image") {
-                QDomAttr imageAttr = elm.attributeNode( "href" );
-            status->author.profileImageUrl = imageAttr.value();
+            } else if ( elm.tagName() == "link") {
+                if(elm.attributeNode( "rel" ).value() == "image") {
+                status->author.profileImageUrl = elm.attribute( "href" );
+                } else if(elm.attributeNode( "rel" ).value() == "alternate") {
+                    status->link = elm.attribute( "href" );
+                }
             } else if ( elm.tagName() == "author") {
                 QDomNode userNode = entryNode.firstChild();
                 while ( !userNode.isNull() )

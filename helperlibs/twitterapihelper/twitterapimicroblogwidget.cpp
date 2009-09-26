@@ -50,6 +50,9 @@ TwitterApiMicroBlogWidget::TwitterApiMicroBlogWidget(Choqok::Account* account, Q
     : MicroBlogWidget(account, parent), d(new Private(account))
 {
     kDebug();
+    connect( d->mBlog->searchBackend(),
+             SIGNAL(searchResultsReceived(Choqok::Account*,QString,int,QList<Choqok::Post*>&)),
+             SLOT(slotSearchResultsReceived(Choqok::Account*,QString,int,QList<Choqok::Post*>&)) );
 }
 
 void TwitterApiMicroBlogWidget::initUi()
@@ -73,7 +76,9 @@ TwitterApiMicroBlogWidget::~TwitterApiMicroBlogWidget()
 void TwitterApiMicroBlogWidget::slotSearchResultsReceived(Choqok::Account* theAccount, const QString& query,
                                                           int option, QList< Choqok::Post* >& postsList)
 {
+    kDebug();
     if( theAccount == currentAccount() ){
+        kDebug()<<postsList.count();
         QString name = QString("%1%2").arg(d->mBlog->searchBackend()->optionCode(option)).arg(query);
         if(mSearchTimelines.contains(name))
             mSearchTimelines.value(name)->addNewPosts(postsList);
@@ -84,6 +89,7 @@ void TwitterApiMicroBlogWidget::slotSearchResultsReceived(Choqok::Account* theAc
 
 TwitterApiSearchTimelineWidget* TwitterApiMicroBlogWidget::addSearchTimelineWidgetToUi(const QString& name)
 {
+    kDebug();
     TwitterApiSearchTimelineWidget *mbw = d->mBlog->createSearchTimelineWidget(currentAccount(), name, this);
     if(mbw) {
         mSearchTimelines.insert(name, mbw);
