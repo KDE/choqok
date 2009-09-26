@@ -44,16 +44,33 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "twitterapidmessagedialog.h"
 #include "choqokbehaviorsettings.h"
 #include "choqokid.h"
+#include "twitterapisearch.h"
+#include "twitterapisearchdialog.h"
+#include "twitterapisearchtimelinewidget.h"
 
 class TwitterApiMicroBlog::Private
 {
 public:
     Private():countOfTimelinesToSave(0), friendsPage(1)
-    {}
+    {
+        monthes["Jan"] = 1;
+        monthes["Feb"] = 2;
+        monthes["Mar"] = 3;
+        monthes["Apr"] = 4;
+        monthes["May"] = 5;
+        monthes["Jun"] = 6;
+        monthes["Jul"] = 7;
+        monthes["Aug"] = 8;
+        monthes["Sep"] = 9;
+        monthes["Oct"] = 10;
+        monthes["Nov"] = 11;
+        monthes["Dec"] = 12;
+    }
     int countOfTimelinesToSave;
     int friendsPage;
     QMap<QString, int> monthes;
     QStringList friendsList;
+    QPointer<TwitterApiSearch> searchBackend;
 };
 
 TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObject *parent )
@@ -64,18 +81,6 @@ TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObje
     QStringList timelineTypes;
     timelineTypes<< "Home" << "Reply" << "Inbox" << "Outbox";
     setTimelineNames(timelineTypes);
-    d->monthes["Jan"] = 1;
-    d->monthes["Feb"] = 2;
-    d->monthes["Mar"] = 3;
-    d->monthes["Apr"] = 4;
-    d->monthes["May"] = 5;
-    d->monthes["Jun"] = 6;
-    d->monthes["Jul"] = 7;
-    d->monthes["Aug"] = 8;
-    d->monthes["Sep"] = 9;
-    d->monthes["Oct"] = 10;
-    d->monthes["Nov"] = 11;
-    d->monthes["Dec"] = 12;
     timelineApiPath["Home"] = "/statuses/friends_timeline.xml";
     timelineApiPath["Reply"] = "/statuses/replies.xml";
     timelineApiPath["Inbox"] = "/direct_messages.xml";
@@ -119,10 +124,17 @@ TwitterApiMicroBlog::~TwitterApiMicroBlog()
 QMenu* TwitterApiMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidget* parent)
 {
     QMenu * menu = MicroBlog::createActionsMenu(theAccount, parent);
+
     KAction *directMessge = new KAction( KIcon("mail-message-new"), i18n("Send Private Message..."), menu );
     directMessge->setData( theAccount->alias() );
     connect( directMessge, SIGNAL(triggered(bool)), SLOT(showDirectMessageDialog()) );
     menu->addAction(directMessge);
+
+    KAction *search = new KAction( KIcon("edit-find"), i18n("Search..."), menu );
+    search->setData( theAccount->alias() );
+    connect( search, SIGNAL(triggered(bool)), SLOT(showSearchDialog()) );
+    menu->addAction(search);
+
     return menu;
 }
 
@@ -238,26 +250,11 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
         emit readyForUnload();
 }
 
-/*
-QMap<QString, QString> timelineInfo ( const QString &timeline )
+TwitterApiSearchTimelineWidget * TwitterApiMicroBlog::createSearchTimelineWidget(Choqok::Account* theAccount,
+                                                                                 QString name, QWidget* parent)
 {
-    QMap<QString, QString> res;
-    if ( timeline == "home" ) {
-        res["title"] = i18n ( "Home" );
-        res["description"] = i18n ( "You and your friends" );
-    } else if ( timeline == "reply" ) {
-        res["title"] = i18n ( "Reply" );
-        res["description"] = i18n ( "Reply to you" );
-    } else if ( timeline == "inbox" ) {
-        res["title"] = i18n ( "Inbox" );
-        res["description"] = i18n ( "Your incoming private messages" );
-    } else if ( timeline == "outbox" ) {
-        res["title"] = i18n ( "Outbox" );
-        res["description"] = i18n ( "Private messages you have sent" );
-    }
-    return res;
+    return new TwitterApiSearchTimelineWidget(theAccount, name, parent);
 }
-*/
 
 void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post* post )
 {
@@ -920,10 +917,8 @@ void TwitterApiMicroBlog::showDirectMessageDialog( TwitterApiAccount *theAccount
     kDebug();
     if( !theAccount ) {
         KAction *act = qobject_cast<KAction *>(sender());
-        Q_ASSERT(act);
         theAccount = qobject_cast<TwitterApiAccount*>(
                                     Choqok::AccountManager::self()->findAccount( act->data().toString() ) );
-        Q_ASSERT(theAccount);
     }
     TwitterApiDMessageDialog *dmsg = new TwitterApiDMessageDialog(theAccount, Choqok::UI::Global::mainWindow());
     if(!toUsername.isEmpty())
@@ -937,6 +932,30 @@ Choqok::TimelineInfo * TwitterApiMicroBlog::timelineInfo(const QString& timeline
         return mTimelineInfos.value(timelineName);
     else
         return 0;
+}
+
+void TwitterApiMicroBlog::showSearchDialog(TwitterApiAccount* theAccount)
+{
+    if( !theAccount ) {
+        KAction *act = qobject_cast<KAction *>(sender());
+        theAccount = qobject_cast<TwitterApiAccount*>(
+                                    Choqok::AccountManager::self()->findAccount( act->data().toString() ) );
+    }
+    QPointer<TwitterApiSearchDialog> searchDlg = new TwitterApiSearchDialog( theAccount,
+                                                                             Choqok::UI::Global::mainWindow() );
+    searchDlg->show();
+}
+
+TwitterApiSearch* TwitterApiMicroBlog::searchBackend()
+{
+    return d->searchBackend;
+}
+
+void TwitterApiMicroBlog::setSearchBackend(TwitterApiSearch* backend)
+{
+    if(d->searchBackend)
+        d->searchBackend->deleteLater();
+    d->searchBackend = backend;
 }
 
 #include "twitterapimicroblog.moc"

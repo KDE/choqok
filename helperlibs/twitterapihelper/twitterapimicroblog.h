@@ -25,7 +25,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <microblog.h>
 #include <KUrl>
+#include "twitterapisearch.h"
 
+class TwitterApiSearchTimelineWidget;
 class TwitterApiAccount;
 class KJob;
 
@@ -100,6 +102,14 @@ public:
 
     virtual Choqok::TimelineInfo * timelineInfo(const QString &timelineName);
 
+    /**
+    Return search backend to use for search.
+    */
+    TwitterApiSearch *searchBackend();
+
+    virtual TwitterApiSearchTimelineWidget * createSearchTimelineWidget(Choqok::Account* theAccount,
+                                                                        QString name, QWidget *parent);
+
 public slots:
     /**
     Launch a dialog to send direct message.
@@ -109,14 +119,14 @@ public slots:
     */
     virtual void showDirectMessageDialog( TwitterApiAccount *theAccount = 0,
                                           const QString &toUsername = QString() );
+
+    void showSearchDialog( TwitterApiAccount *theAccount = 0 );
 signals:
     void favoriteCreated(Choqok::Account *theAccount, const QString &postId);
     void favoriteRemoved(Choqok::Account *theAccount, const QString &postId);
     void friendsUsernameListed( TwitterApiAccount *theAccount, const QStringList &friendsList );
 
 protected slots:
-    virtual void requestTimeLine(Choqok::Account *theAccount, QString type,
-                                 QString latestStatusId, int page = 0, QString maxId = 0 );
     virtual void slotCreatePost( KJob *job );
     virtual void slotFetchPost( KJob *job );
     virtual void slotRemovePost( KJob *job );
@@ -128,6 +138,13 @@ protected slots:
 
 protected:
     TwitterApiMicroBlog( const KComponentData &instance, QObject *parent=0 );
+    void setSearchBackend( TwitterApiSearch *backend );
+    /**
+     Request update for @p timelineName timeline.
+     timelineName should be a valid, previously created timeline.
+    */
+    virtual void requestTimeLine(Choqok::Account *theAccount, QString timelineName,
+                                 QString sincePostId, int page = 1, QString maxId = 0 );
 
     virtual void setTimelineInfos();
     virtual KUrl apiUrl( TwitterApiAccount* theAccount );
