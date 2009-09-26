@@ -59,6 +59,7 @@ TwitterApiDMessageDialog::TwitterApiDMessageDialog(TwitterApiAccount *theAccount
     KConfigGroup grp(KGlobal::config(), "TwitterApi");
     resize( grp.readEntry("DMessageDialogSize", QSize(300, 200)) );
     reloadFriendslist();
+    setButtonText(Ok, i18nc("Send private message", "Send"));
 }
 
 TwitterApiDMessageDialog::~TwitterApiDMessageDialog()

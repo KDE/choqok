@@ -89,6 +89,7 @@ void MicroBlogWidget::initUi()
         setComposerWidget(d->blog->createComposerWidget(currentAccount(), this));
     }
     d->timelinesTabWidget = new KTabWidget(this);
+    d->timelinesTabWidget->setTabCloseActivatePrevious(true);
     layout->addWidget( d->timelinesTabWidget );
     this->layout()->setContentsMargins( 0, 0, 0, 0 );
     connect( currentAccount(), SIGNAL(modified(Choqok::Account*)), SLOT(slotAccountModified(Choqok::Account*)) );

@@ -72,6 +72,7 @@ QuickPost::QuickPost( QWidget* parent )
 
     d->all->setChecked( Choqok::BehaviorSettings::all() );
     slotCurrentAccountChanged(d->comboAccounts->currentIndex());
+    setButtonText(Ok, i18nc("Submit post", "Submit"));
 }
 
 void QuickPost::setupUi()

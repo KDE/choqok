@@ -79,7 +79,7 @@ void TwitterApiSearchDialog::createUi()
 
     QHBoxLayout *queryLayout = new QHBoxLayout;
     layout->addLayout(queryLayout);
-    QLabel *lblType = new QLabel(i18n("Query:"), wd);
+    QLabel *lblType = new QLabel(i18nc("Search query", "Query:"), wd);
     lblType->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     queryLayout->addWidget(lblType);
 
