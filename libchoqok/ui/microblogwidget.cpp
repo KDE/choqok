@@ -60,8 +60,8 @@ public:
     QHBoxLayout *toolbar;
 };
 
-MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent, Qt::WindowFlags f)
-    :QWidget(parent, f), d(new Private(account))
+MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent)
+    :QWidget(parent), d(new Private(account))
 {
     kDebug();
     connect(d->blog, SIGNAL(timelineDataReceived(Choqok::Account*,QString,QList<Choqok::Post*>)),

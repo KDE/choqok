@@ -49,7 +49,7 @@ class CHOQOK_EXPORT MicroBlogWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MicroBlogWidget( Account *account, QWidget* parent = 0, Qt::WindowFlags f = 0);
+    explicit MicroBlogWidget( Account *account, QWidget* parent = 0);
     virtual ~MicroBlogWidget();
     virtual void initUi();
     /**

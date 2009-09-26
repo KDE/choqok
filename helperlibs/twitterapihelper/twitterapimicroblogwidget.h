@@ -33,8 +33,9 @@ class CHOQOK_EXPORT TwitterApiMicroBlogWidget : public Choqok::UI::MicroBlogWidg
 {
     Q_OBJECT
 public:
-    TwitterApiMicroBlogWidget(Choqok::Account* account, QWidget* parent = 0, Qt::WindowFlags f = 0);
+    TwitterApiMicroBlogWidget(Choqok::Account* account, QWidget* parent = 0);
     ~TwitterApiMicroBlogWidget();
+    virtual void initUi();
 
 protected slots:
     void slotCloseCurrentSearch();

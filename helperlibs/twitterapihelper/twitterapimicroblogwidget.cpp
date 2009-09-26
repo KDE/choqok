@@ -30,28 +30,37 @@
 #include "twitterapisearchtimelinewidget.h"
 #include <kicon.h>
 #include <KDebug>
-#include <KPushButton>
+#include <QToolButton>
 
 class TwitterApiMicroBlogWidget::Private
 {
 public:
     Private(Choqok::Account *account)
-        :closeSearch(0)
+        :btnCloseSearch(0)
     {
+        kDebug();
         mBlog = qobject_cast<TwitterApiMicroBlog *>(account->microblog());
     }
     TwitterApiMicroBlog *mBlog;
-    KPushButton *closeSearch;
+    QToolButton *btnCloseSearch;
 };
 
-TwitterApiMicroBlogWidget::TwitterApiMicroBlogWidget(Choqok::Account* account, QWidget* parent, Qt::WindowFlags f)
-    : MicroBlogWidget(account, parent, f), d(new Private(account))
+TwitterApiMicroBlogWidget::TwitterApiMicroBlogWidget(Choqok::Account* account, QWidget* parent)
+    : MicroBlogWidget(account, parent), d(new Private(account))
 {
+    kDebug();
+}
+
+void TwitterApiMicroBlogWidget::initUi()
+{
+    kDebug();
+    Choqok::UI::MicroBlogWidget::initUi();
     connect(timelinesTabWidget(), SIGNAL(currentChanged(int)), SLOT(slotCurrentTimelineChanged(int)) );
-    d->closeSearch = new KPushButton( this );
-    d->closeSearch->setIcon(KIcon("tab-close"));
-    timelinesTabWidget()->setCornerWidget(d->closeSearch, Qt::TopRightCorner);
-    connect(d->closeSearch, SIGNAL(clicked(bool)), SLOT(slotCloseCurrentSearch()) );
+    d->btnCloseSearch = new QToolButton( this );
+    d->btnCloseSearch->setIcon(KIcon("tab-close"));
+    timelinesTabWidget()->setCornerWidget(d->btnCloseSearch, Qt::TopRightCorner);
+    connect(d->btnCloseSearch, SIGNAL(clicked(bool)), SLOT(slotCloseCurrentSearch()) );
+    slotCurrentTimelineChanged(timelinesTabWidget()->currentIndex());
 }
 
 TwitterApiMicroBlogWidget::~TwitterApiMicroBlogWidget()
@@ -103,9 +112,9 @@ void TwitterApiMicroBlogWidget::slotCurrentTimelineChanged(int index)
     TwitterApiSearchTimelineWidget *stw =
             qobject_cast<TwitterApiSearchTimelineWidget *>(timelinesTabWidget()->widget(index));
     if(stw)
-        d->closeSearch->setEnabled(true);
+        d->btnCloseSearch->setEnabled(true);
     else
-        d->closeSearch->setEnabled(false);
+        d->btnCloseSearch->setEnabled(false);
 }
 
 void TwitterApiMicroBlogWidget::slotCloseCurrentSearch()
