@@ -41,6 +41,7 @@ class TwitterApiPostWidget::Private
 {
 public:
     Private()
+        :isBasePostShowed(false)
     {}
     KPushButton *btnFav;
     bool isBasePostShowed;
