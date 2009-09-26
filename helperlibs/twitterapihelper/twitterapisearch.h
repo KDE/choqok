@@ -70,13 +70,20 @@ class KJob;
     @author Stephen Henderson \<hendersonsk@gmail.com\>
     @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
-class TwitterApiSearch : public QObject
+class CHOQOK_EXPORT TwitterApiSearch : public QObject
 {
     Q_OBJECT
 public:
     TwitterApiSearch(QObject* parent = 0);
     virtual ~TwitterApiSearch();
+
+    /**
+    The QString in the QPair is a human readable string describing what the type searches for.
+    The boolean value determines whether or not the search type is traversable
+    (if the forward and back buttons should be displayed).
+    */
     QMap<int, QPair<QString, bool> > getSearchTypes();
+
     /**
     Sub classes should implement this!
     Result will use on Timeline Widget tab name!
@@ -99,10 +106,24 @@ signals:
     void error( const QString &message );
 
 protected:
-    // The QString in the QPair is a human readable string describing what the type searches for. The boolean value
-    // determines whether or not the search type is traversable (if the forward and back buttons should be displayed).
+    /**
+    The QString in the QPair is a human readable string describing what the type searches for.
+    The boolean value determines whether or not the search type is traversable
+    (if the forward and back buttons should be displayed).
+    */
     QMap<int, QPair<QString, bool> > mSearchTypes;
 
+    /**
+    This is an internal container! and used on sub classes!
+    */
+    struct AccountQueryOptionContainer
+    {
+        Choqok::Account *account;
+        QString query;
+        int option;
+    };
+
+    static const QRegExp m_rId;
 private:
     class Private;
     Private *d;

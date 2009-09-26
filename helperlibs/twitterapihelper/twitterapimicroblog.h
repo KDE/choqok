@@ -104,8 +104,9 @@ public:
 
     /**
     Return search backend to use for search.
+    Should be implemented on sub classes
     */
-    TwitterApiSearch *searchBackend();
+    virtual TwitterApiSearch *searchBackend() = 0;
 
     virtual TwitterApiSearchTimelineWidget * createSearchTimelineWidget(Choqok::Account* theAccount,
                                                                         QString name, QWidget *parent);
@@ -138,7 +139,6 @@ protected slots:
 
 protected:
     TwitterApiMicroBlog( const KComponentData &instance, QObject *parent=0 );
-    void setSearchBackend( TwitterApiSearch *backend );
     /**
      Request update for @p timelineName timeline.
      timelineName should be a valid, previously created timeline.

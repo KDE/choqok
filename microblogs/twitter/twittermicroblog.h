@@ -25,7 +25,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <KUrl>
 #include <twitterapihelper/twitterapimicroblog.h>
+#include <QPointer>
 
+class TwitterSearch;
 class ChoqokEditAccountWidget;
 class KJob;
 
@@ -52,6 +54,10 @@ public:
 
     virtual QString profileUrl(Choqok::Account* account, const QString& username) const;
 
+    virtual TwitterApiSearch* searchBackend();
+
+private:
+    QPointer<TwitterSearch> mSearchBackend;
 };
 
 #endif

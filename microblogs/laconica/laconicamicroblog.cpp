@@ -42,6 +42,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <twitterapihelper/twitterapipostwidget.h>
 #include "laconicapostwidget.h"
 #include <twitterapihelper/twitterapimicroblogwidget.h>
+#include "laconicasearch.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < LaconicaMicroBlog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_laconica" ) )
@@ -123,6 +124,13 @@ QString LaconicaMicroBlog::postUrl ( Choqok::Account *account,  const QString &u
         return QString ( url.prettyUrl() );
     } else
         return QString();
+}
+
+TwitterApiSearch* LaconicaMicroBlog::searchBackend()
+{
+    if(!mSearchBackend)
+        mSearchBackend = new LaconicaSearch(this);
+    return mSearchBackend;
 }
 
 #include "laconicamicroblog.moc"

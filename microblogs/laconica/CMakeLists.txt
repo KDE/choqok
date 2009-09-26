@@ -7,7 +7,7 @@ ${CMAKE_CURRENT_BINARY_DIR}
 set( choqok_laconica_SRCS
 laconicaaccount.cpp
 laconicamicroblog.cpp
-# twittercomposer.cpp
+laconicasearch.cpp
 laconicaeditaccount.cpp
 laconicapostwidget.cpp
 )

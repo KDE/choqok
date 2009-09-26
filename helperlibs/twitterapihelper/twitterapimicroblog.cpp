@@ -70,7 +70,6 @@ public:
     int friendsPage;
     QMap<QString, int> monthes;
     QStringList friendsList;
-    QPointer<TwitterApiSearch> searchBackend;
 };
 
 TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObject *parent )
@@ -944,18 +943,6 @@ void TwitterApiMicroBlog::showSearchDialog(TwitterApiAccount* theAccount)
     QPointer<TwitterApiSearchDialog> searchDlg = new TwitterApiSearchDialog( theAccount,
                                                                              Choqok::UI::Global::mainWindow() );
     searchDlg->show();
-}
-
-TwitterApiSearch* TwitterApiMicroBlog::searchBackend()
-{
-    return d->searchBackend;
-}
-
-void TwitterApiMicroBlog::setSearchBackend(TwitterApiSearch* backend)
-{
-    if(d->searchBackend)
-        d->searchBackend->deleteLater();
-    d->searchBackend = backend;
 }
 
 #include "twitterapimicroblog.moc"

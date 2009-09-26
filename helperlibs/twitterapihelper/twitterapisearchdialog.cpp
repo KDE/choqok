@@ -31,6 +31,7 @@
 #include <klocalizedstring.h>
 #include "twitterapisearch.h"
 #include "twitterapimicroblog.h"
+#include <KDebug>
 
 class TwitterApiSearchDialog::Private
 {
@@ -38,7 +39,11 @@ public:
     Private(TwitterApiAccount* theAccount)
         :account(theAccount)
     {
+        kDebug();
         mBlog = qobject_cast<TwitterApiMicroBlog*>(account->microblog());
+        if(!mBlog)
+            kError()<<"microblog is not a TwitterApiMicroBlog";
+        Q_ASSERT(mBlog);
     }
     KComboBox *searchTypes;
     KLineEdit *searchQuery;
@@ -49,9 +54,8 @@ public:
 TwitterApiSearchDialog::TwitterApiSearchDialog(TwitterApiAccount* theAccount, QWidget* parent)
 : KDialog(parent), d(new Private(theAccount))
 {
+    kDebug();
     setAttribute(Qt::WA_DeleteOnClose);
-    QWidget *wd = new QWidget(this);
-    setMainWidget(wd);
     createUi();
 }
 
@@ -62,14 +66,18 @@ TwitterApiSearchDialog::~TwitterApiSearchDialog()
 
 void TwitterApiSearchDialog::createUi()
 {
-    QVBoxLayout *layout = new QVBoxLayout(mainWidget());
-    d->searchTypes = new KComboBox(mainWidget());
+    kDebug();
+    QWidget *wd = new QWidget(this);
+    setMainWidget(wd);
+    QVBoxLayout *layout = new QVBoxLayout(wd);
+    d->searchTypes = new KComboBox(wd);
     fillSearchTypes();
+    kDebug();
     layout->addWidget(d->searchTypes);
 
     QHBoxLayout *queryLayout = new QHBoxLayout;
     layout->addLayout(queryLayout);
-    QLabel *lblType = new QLabel(i18n("Query:"), mainWidget());
+    QLabel *lblType = new QLabel(i18n("Query:"), wd);
     lblType->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     queryLayout->addWidget(lblType);
 
@@ -81,6 +89,7 @@ void TwitterApiSearchDialog::createUi()
 
 void TwitterApiSearchDialog::fillSearchTypes()
 {
+    kDebug();
     QMap<int, QPair<QString, bool> > searchTypes = d->mBlog->searchBackend()->getSearchTypes();
     int count = searchTypes.count();
     for(int i = 0; i < count; ++i){

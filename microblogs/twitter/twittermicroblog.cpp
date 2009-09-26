@@ -40,6 +40,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <composerwidget.h>
 #include "twitterpostwidget.h"
 #include "twitterapihelper/twitterapimicroblogwidget.h"
+#include "twittersearch.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < TwitterMicroBlog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_twitter" ) )
@@ -122,6 +123,13 @@ QString TwitterMicroBlog::postUrl(Choqok::Account* account, const QString& usern
         return url.prettyUrl();
     } else
         return QString ( "http://twitter.com/%1/status/%2" ).arg ( username ).arg ( postId );
+}
+
+TwitterApiSearch* TwitterMicroBlog::searchBackend()
+{
+    if(!mSearchBackend)
+        mSearchBackend = new TwitterSearch(this);
+    return mSearchBackend;
 }
 
 

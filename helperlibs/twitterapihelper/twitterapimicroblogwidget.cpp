@@ -31,6 +31,7 @@
 #include <kicon.h>
 #include <KDebug>
 #include <QToolButton>
+#include <klocalizedstring.h>
 
 class TwitterApiMicroBlogWidget::Private
 {
@@ -58,6 +59,7 @@ void TwitterApiMicroBlogWidget::initUi()
     connect(timelinesTabWidget(), SIGNAL(currentChanged(int)), SLOT(slotCurrentTimelineChanged(int)) );
     d->btnCloseSearch = new QToolButton( this );
     d->btnCloseSearch->setIcon(KIcon("tab-close"));
+    d->btnCloseSearch->setToolTip(i18nc("Close a search timeline", "Close Search"));
     timelinesTabWidget()->setCornerWidget(d->btnCloseSearch, Qt::TopRightCorner);
     connect(d->btnCloseSearch, SIGNAL(clicked(bool)), SLOT(slotCloseCurrentSearch()) );
     slotCurrentTimelineChanged(timelinesTabWidget()->currentIndex());

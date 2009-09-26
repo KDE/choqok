@@ -43,10 +43,12 @@ public:
     uint currentPage;
 };
 
-TwitterApiSearchTimelineWidget::TwitterApiSearchTimelineWidget(Choqok::Account* account, const QString& timelineName, QWidget* parent)
+TwitterApiSearchTimelineWidget::TwitterApiSearchTimelineWidget(Choqok::Account* account,
+                                                               const QString& timelineName,
+                                                               QWidget* parent)
     : TimelineWidget(account, timelineName, parent), d(new Private)
 {
-
+    setAttribute(Qt::WA_DeleteOnClose);
 }
 
 TwitterApiSearchTimelineWidget::~TwitterApiSearchTimelineWidget()

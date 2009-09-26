@@ -25,7 +25,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <KUrl>
 #include <twitterapihelper/twitterapimicroblog.h>
+#include <QPointer>
 
+class LaconicaSearch;
 class ChoqokEditAccountWidget;
 class KJob;
 
@@ -55,6 +57,10 @@ public:
     virtual QString postUrl ( Choqok::Account *account, const QString &username,
                               const QString &postId ) const;
 
+    virtual TwitterApiSearch* searchBackend();
+
+private:
+    QPointer<LaconicaSearch> mSearchBackend;
 };
 
 #endif

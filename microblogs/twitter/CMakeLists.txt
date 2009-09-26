@@ -9,6 +9,7 @@ twitteraccount.cpp
 twittermicroblog.cpp
 twittereditaccount.cpp
 twitterpostwidget.cpp
+twittersearch.cpp
 )
 
 kde4_add_ui_files(choqok_twitter_SRCS twittereditaccount_base.ui )
