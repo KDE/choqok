@@ -23,6 +23,7 @@ ui/postwidget.cpp
 ui/choqoktextedit.cpp
 ui/composerwidget.cpp
 ui/quickpost.cpp
+ui/mainwindow.cpp
 # filtermanager.cpp
 # filter.cpp
 )

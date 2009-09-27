@@ -51,10 +51,8 @@
 #include <ksettings/dialog.h>
 #include <choqokbehaviorsettings.h>
 
-static const int TIMEOUT = 5000;
-
 MainWindow::MainWindow()
-    : KXmlGuiWindow(), quickWidget(0), s_settingsDialog(0)
+    : Choqok::UI::MainWindow(), quickWidget(0), s_settingsDialog(0)
 {
     kDebug();
     setAttribute ( Qt::WA_DeleteOnClose, false );
@@ -202,14 +200,12 @@ void MainWindow::setupActions()
     enableUpdates->setCheckable( true );
     actionCollection()->addAction( QLatin1String( "choqok_enable_updates" ), enableUpdates );
     enableUpdates->setShortcut( KShortcut( Qt::CTRL | Qt::Key_U ) );
-    enableUpdates->setGlobalShortcutAllowed( true );
     connect( enableUpdates, SIGNAL( toggled( bool ) ), this, SLOT( setTimeLineUpdatesEnabled( bool ) ) );
 
     KAction *enableNotify = new KAction( i18n( "Enable Notifications" ), this );
     enableNotify->setCheckable( true );
     actionCollection()->addAction( QLatin1String( "choqok_enable_notify" ), enableNotify );
     enableNotify->setShortcut( KShortcut( Qt::CTRL | Qt::Key_N ) );
-    enableNotify->setGlobalShortcutAllowed( true );
     connect( enableNotify, SIGNAL( toggled( bool ) ), this, SLOT( setNotificationsEnabled( bool ) ) );
 
     KAction *clearAvatarCache = new KAction(KIcon("edit-clear"), i18n( "Clear Avatar Cache" ), this );
@@ -263,17 +259,6 @@ void MainWindow::triggerQuickPost()
         quickWidget->hide();
     } else {
         quickWidget->show();
-    }
-}
-
-void MainWindow::hideEvent( QHideEvent * event )
-{
-    Q_UNUSED(event);
-    if( !this->isVisible() ) {
-        kDebug();
-        if( Choqok::BehaviorSettings::markAllAsReadOnHideToSystray() )
-            emit markAllAsRead();
-        emit removeOldPosts();
     }
 }
 
@@ -337,15 +322,6 @@ void MainWindow::slotBehaviorConfigChanged()
     } else {
         timelineTimer->stop();
         actionCollection()->action( "choqok_enable_updates" )->setChecked( false );
-    }
-}
-
-void MainWindow::showStatusMessage( const QString &message, bool isPermanent )
-{
-    if ( isPermanent ) {
-        statusBar()->showMessage( message );
-    } else {
-        statusBar()->showMessage( message, TIMEOUT );
     }
 }
 
@@ -512,11 +488,6 @@ void MainWindow::toggleMainWindow()
         show();
 }
 
-QSize MainWindow::sizeHint() const
-{
-    return QSize( 350, 380 );
-}
-
 void MainWindow::slotMarkAllAsRead()
 {
     sysIcon->resetUnreadCount();
@@ -532,11 +503,6 @@ void MainWindow::slotCurrentBlogChanged(int)
     Choqok::UI::MicroBlogWidget *wd = qobject_cast<Choqok::UI::MicroBlogWidget *>(mainWidget->currentWidget());
     if( wd )
         wd->setFocus();
-}
-
-Choqok::UI::MicroBlogWidget* MainWindow::currentMicroBlog()
-{
-    return qobject_cast<Choqok::UI::MicroBlogWidget*>(mainWidget->currentWidget());
 }
 
 #include "mainwindow.moc"

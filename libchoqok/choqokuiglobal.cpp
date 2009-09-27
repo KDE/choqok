@@ -34,16 +34,16 @@ namespace Choqok
 
 namespace
 {
-    QPointer<KMainWindow> g_mainWidget;
+    QPointer<Choqok::UI::MainWindow> g_mainWidget;
     QPointer<UI::QuickPost> g_quickPost;
 }
 
-void UI::Global::setMainWindow( KMainWindow* widget )
+void UI::Global::setMainWindow( Choqok::UI::MainWindow* widget )
 {
     g_mainWidget = widget;
 }
 
-KMainWindow *UI::Global::mainWindow()
+Choqok::UI::MainWindow *UI::Global::mainWindow()
 {
     return g_mainWidget;
 }

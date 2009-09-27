@@ -25,9 +25,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef CHOQOKUIGLOBAL_H
 #define CHOQOKUIGLOBAL_H
 
-#include <KMainWindow>
-
 #include "choqok_export.h"
+#include <QObject>
+#include "mainwindow.h"
 
 namespace Choqok
 {
@@ -46,12 +46,12 @@ namespace Global
     /**
     * Set the main widget to widget
     */
-    CHOQOK_EXPORT void setMainWindow( KMainWindow *window );
+    CHOQOK_EXPORT void setMainWindow( Choqok::UI::MainWindow *window );
     /**
     * Returns the main widget - this is the widget that message boxes
     * and KNotify stuff should use as a parent.
     */
-    CHOQOK_EXPORT KMainWindow *mainWindow();
+    CHOQOK_EXPORT Choqok::UI::MainWindow *mainWindow();
 
     CHOQOK_EXPORT void setQuickPostWidget( QuickPost *quickPost );
 

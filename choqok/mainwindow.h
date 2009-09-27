@@ -25,21 +25,17 @@
 #define MAINWINDOW_H
 
 #include <kxmlguiwindow.h>
-// #include "datacontainers.h"
 #include "account.h"
-// #include "ui_prefs_base.h"
-// #include "ui_accounts_base.h"
-// #include "ui_appears_base.h"
-// #include "searchwindow.h"
+#include "ui/mainwindow.h"
 
 namespace Choqok
 {
 namespace UI
 {
     class QuickPost;
-class MicroBlogWidget;
+    class MicroBlogWidget;
 }
-class Plugin;
+    class Plugin;
 }
 namespace KSettings
 {
@@ -58,7 +54,7 @@ class KTabWidget;
  * @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
  */
 
-class MainWindow : public KXmlGuiWindow
+class MainWindow : public Choqok::UI::MainWindow
 {
     Q_OBJECT
 public:
@@ -72,20 +68,8 @@ public:
     */
     virtual ~MainWindow();
 
-    /**
-    @return current active microblog widget
-    */
-    Choqok::UI::MicroBlogWidget *currentMicroBlog();
-signals:
-    void updateTimelines();
-    void markAllAsRead();
-    void removeOldPosts();
-
-public slots:
-    void nextTab(const QWheelEvent&);
-    void showStatusMessage( const QString &message, bool isPermanent = false );
-
 private slots:
+    void nextTab(const QWheelEvent&);
     void loadAllAccounts();
     void newPluginAvailable( Choqok::Plugin *plugin );
     void addBlog( Choqok::Account *account, bool isStartup = false );
@@ -106,10 +90,6 @@ private slots:
     void slotUpdateUnreadCount( int change, int sum );
     void slotCurrentBlogChanged(int);
 
-protected:
-    void hideEvent( QHideEvent * event );
-    QSize sizeHint() const;
-
 private:
     void setupActions();
     void createQuickPostDialog();
@@ -118,8 +98,6 @@ private:
     virtual bool queryExit();
     virtual bool queryClose();
 
-    KTabWidget *mainWidget;
-    QTimer *timelineTimer;
     int mPrevUpdateInterval;
     SysTrayIcon *sysIcon;
     Choqok::UI::QuickPost *quickWidget;
