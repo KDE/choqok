@@ -29,6 +29,7 @@
 #include <kio/jobclasses.h>
 #include <kio/job.h>
 #include <QDomElement>
+#include "choqokbehaviorsettings.h"
 
 const QRegExp TwitterSearch::m_rId("tag:search.twitter.com,[0-9]+:([0-9]+)");
 
@@ -202,9 +203,12 @@ KUrl TwitterSearch::buildUrl( QString query, int option, Choqok::ChoqokId sinceS
     url.addQueryItem("q", formattedQuery);
     if( !sinceStatusId.isEmpty() )
         url.addQueryItem( "since_id", sinceStatusId );
+    int cntStr = Choqok::BehaviorSettings::countOfPosts();
     if( count && count <= 100 )
-        url.addQueryItem( "rpp", QString::number( count ) );
-    url.addQueryItem( "page", QString::number( page ) );
+        cntStr =  count;
+    url.addQueryItem( "rpp", QString::number(cntStr) );
+    if( page > 1 )
+        url.addQueryItem( "page", QString::number( page ) );
 
     return url;
 }

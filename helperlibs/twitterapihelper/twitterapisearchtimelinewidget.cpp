@@ -30,12 +30,16 @@
 #include <klocalizedstring.h>
 #include <KDebug>
 #include <qlayoutitem.h>
+#include "twitterapimicroblog.h"
+#include "account.h"
+#include "postwidget.h"
+#include "choqoktypes.h"
 
 class TwitterApiSearchTimelineWidget::Private
 {
 public:
     Private(const SearchInfo &info)
-        :currentPage(1), searchInfo(info)
+        :currentPage(1), searchInfo(info), loadingAnotherPage(false)
     {}
     QPointer<KPushButton> reload;
     QPointer<KPushButton> next;
@@ -44,6 +48,8 @@ public:
     QPointer<QCheckBox> autoUpdate;
     uint currentPage;
     SearchInfo searchInfo;
+    QPointer<TwitterApiSearch> searchBackend;
+    bool loadingAnotherPage;
 };
 
 TwitterApiSearchTimelineWidget::TwitterApiSearchTimelineWidget(Choqok::Account* account,
@@ -116,6 +122,10 @@ void TwitterApiSearchTimelineWidget::addFooter()
 
 void TwitterApiSearchTimelineWidget::addNewPosts(QList< Choqok::Post* >& postList)
 {
+    if(d->loadingAnotherPage){
+        removeAllPosts();
+        d->loadingAnotherPage = false;
+    }
     bool markRead = false;
     if( posts().count() < 1 )
         markRead = true;
@@ -133,7 +143,14 @@ void TwitterApiSearchTimelineWidget::reloadList()
 
 void TwitterApiSearchTimelineWidget::loadCustomPage(const QString& pageNumber)
 {
-    //TODO
+    int page = pageNumber.toUInt();
+    if( page == 0 )
+        page = 1;
+    d->loadingAnotherPage = true;
+    d->currentPage = page;
+    if(!d->searchBackend)
+        d->searchBackend = qobject_cast<TwitterApiMicroBlog*>(currentAccount()->microblog())->searchBackend();
+    d->searchBackend->requestSearchResults(d->searchInfo, Choqok::ChoqokId(), 0, page);
 }
 
 void TwitterApiSearchTimelineWidget::loadNextPage()
@@ -144,6 +161,14 @@ void TwitterApiSearchTimelineWidget::loadNextPage()
 void TwitterApiSearchTimelineWidget::loadPreviousPage()
 {
     loadCustomPage(QString::number(--d->currentPage));
+}
+
+void TwitterApiSearchTimelineWidget::removeAllPosts()
+{
+    foreach(Choqok::UI::PostWidget *wd, posts()){
+        wd->close();
+    }
+    posts().clear();
 }
 
 #include "twitterapisearchtimelinewidget.moc"
