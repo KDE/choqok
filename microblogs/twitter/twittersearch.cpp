@@ -30,6 +30,8 @@
 #include <kio/job.h>
 #include <QDomElement>
 
+const QRegExp TwitterSearch::m_rId("tag:search.twitter.com,[0-9]+:([0-9]+)");
+
 TwitterSearch::TwitterSearch(QObject* parent): TwitterApiSearch(parent)
 {
     kDebug();
@@ -55,7 +57,7 @@ TwitterSearch::TwitterSearch(QObject* parent): TwitterApiSearch(parent)
     mSearchTypes[ReferenceHashtag].second = true;
 }
 
-void TwitterSearch::requestSearchResults(TwitterApiAccount* theAccount, const QString& query,
+void TwitterSearch::requestSearchResults(Choqok::Account* theAccount, const QString& query,
                                          int option, const Choqok::ChoqokId& sinceStatusId,
                                          uint count, uint page)
 {

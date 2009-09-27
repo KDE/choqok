@@ -93,7 +93,7 @@ public:
     virtual QString optionCode(int option) = 0;
 
 public slots:
-    virtual void requestSearchResults( TwitterApiAccount *theAccount,
+    virtual void requestSearchResults( Choqok::Account *theAccount,
                                        const QString &query,
                                        int option,
                                        const Choqok::ChoqokId &sinceStatusId = QString(),
@@ -123,7 +123,6 @@ protected:
         int option;
     };
 
-    static const QRegExp m_rId;
 private:
     class Private;
     Private *d;

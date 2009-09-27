@@ -30,6 +30,7 @@
 #include <kio/job.h>
 #include <QDomElement>
 
+const QRegExp LaconicaSearch::m_rId("tag:identi.ca,[0-9]+:([0-9]+)");
 const QRegExp LaconicaSearch::mIdRegExp("(?:user|(?:.*notice))/([0-9]+)");
 
 LaconicaSearch::LaconicaSearch(QObject* parent): TwitterApiSearch(parent)
@@ -77,7 +78,7 @@ KUrl LaconicaSearch::buildUrl(TwitterApiAccount* theAccount, QString query, int 
             formattedQuery = "group/" + query + "/rss";
             break;
         case ReferenceHashtag:
-            formattedQuery = "#" + query;
+            formattedQuery = '#' + query;
             break;
         default:
             formattedQuery = query + "/rss";
@@ -102,13 +103,14 @@ KUrl LaconicaSearch::buildUrl(TwitterApiAccount* theAccount, QString query, int 
     return url;
 }
 
-void LaconicaSearch::requestSearchResults(TwitterApiAccount* theAccount, const QString& query,
+void LaconicaSearch::requestSearchResults(Choqok::Account* theAccount, const QString& query,
                                           int option, const Choqok::ChoqokId& sinceStatusId,
                                           uint count, uint page)
 {
     kDebug();
-
-    KUrl url = buildUrl( theAccount, query, option, sinceStatusId, count, page );
+    TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(theAccount);
+    Q_ASSERT(acc);
+    KUrl url = buildUrl( acc, query, option, sinceStatusId, count, page );
     kDebug()<<url;
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo );
     if( !job ) {
@@ -206,9 +208,9 @@ QList< Choqok::Post* > LaconicaSearch::parseAtom(const QByteArray& buffer)
             } else if ( elm.tagName() == "title" ) {
                 status->content = elm.text();
             } else if ( elm.tagName() == "link") {
-                if(elm.attributeNode( "rel" ).value() == "related") {
+                if(elm.attribute( "rel" ) == "related") {
                     status->author.profileImageUrl = elm.attribute( "href" );
-                } else if(elm.attributeNode( "rel" ).value() == "alternate") {
+                } else if(elm.attribute( "rel" ) == "alternate") {
                     status->link = elm.attribute( "href" );
                 }
             } else if ( elm.tagName() == "author") {

@@ -24,8 +24,6 @@
 
 #include "twitterapisearch.h"
 
-const QRegExp TwitterApiSearch::m_rId("tag:search.twitter.com,[0-9]+:([0-9]+)");
-
 class TwitterApiSearch::Private
 {
 public:

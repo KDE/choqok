@@ -41,7 +41,7 @@ public:
     enum SearchType { ReferenceHashtag = 0, ReferenceGroup, FromUser, ToUser };
     LaconicaSearch(QObject* parent = 0);
     ~LaconicaSearch();
-    virtual void requestSearchResults(TwitterApiAccount* theAccount, const QString& query, int option,
+    virtual void requestSearchResults(Choqok::Account* theAccount, const QString& query, int option,
                                       const Choqok::ChoqokId& sinceStatusId = QString(),
                                       uint count = 0, uint page = 1);
     virtual QString optionCode(int option);
@@ -60,6 +60,7 @@ private:
     QMap<int, QString> mSearchCode;
     QMap<KJob*, AccountQueryOptionContainer> mSearchJobs;
     static const QRegExp mIdRegExp;
+    static const QRegExp m_rId;
 };
 
 #endif // LACONICASEARCH_H
