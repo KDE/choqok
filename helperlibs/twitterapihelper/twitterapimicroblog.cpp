@@ -250,9 +250,11 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
 }
 
 TwitterApiSearchTimelineWidget * TwitterApiMicroBlog::createSearchTimelineWidget(Choqok::Account* theAccount,
-                                                                                 QString name, QWidget* parent)
+                                                                                 QString name,
+                                                                                 const SearchInfo &info,
+                                                                                 QWidget* parent)
 {
-    return new TwitterApiSearchTimelineWidget(theAccount, name, parent);
+    return new TwitterApiSearchTimelineWidget(theAccount, name, info, parent);
 }
 
 void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post* post )

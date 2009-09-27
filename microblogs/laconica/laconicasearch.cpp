@@ -61,32 +61,34 @@ LaconicaSearch::~LaconicaSearch()
 
 }
 
-KUrl LaconicaSearch::buildUrl(TwitterApiAccount* theAccount, QString query, int option,
+KUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
                               Choqok::ChoqokId sinceStatusId, uint count, uint page)
 {
     kDebug();
 
     QString formattedQuery;
-    switch ( option ) {
+    switch ( searchInfo.option ) {
         case ToUser:
-            formattedQuery = query + "/replies/rss";
+            formattedQuery = searchInfo.query + "/replies/rss";
             break;
         case FromUser:
-            formattedQuery = query + "/rss";
+            formattedQuery = searchInfo.query + "/rss";
             break;
         case ReferenceGroup:
-            formattedQuery = "group/" + query + "/rss";
+            formattedQuery = "group/" + searchInfo.query + "/rss";
             break;
         case ReferenceHashtag:
-            formattedQuery = '#' + query;
+            formattedQuery = '#' + searchInfo.query;
             break;
         default:
-            formattedQuery = query + "/rss";
+            formattedQuery = searchInfo.query + "/rss";
             break;
     };
 
     KUrl url;
-    if( option == ReferenceHashtag ) {
+    TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount*>(searchInfo.account);
+    Q_ASSERT(theAccount);
+    if( searchInfo.option == ReferenceHashtag ) {
         url = theAccount->apiUrl();
         url.addPath("/search.atom");
         url.addQueryItem("q", formattedQuery);
@@ -103,25 +105,19 @@ KUrl LaconicaSearch::buildUrl(TwitterApiAccount* theAccount, QString query, int 
     return url;
 }
 
-void LaconicaSearch::requestSearchResults(Choqok::Account* theAccount, const QString& query,
-                                          int option, const Choqok::ChoqokId& sinceStatusId,
+void LaconicaSearch::requestSearchResults(const SearchInfo &searchInfo,
+                                          const Choqok::ChoqokId& sinceStatusId,
                                           uint count, uint page)
 {
     kDebug();
-    TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(theAccount);
-    Q_ASSERT(acc);
-    KUrl url = buildUrl( acc, query, option, sinceStatusId, count, page );
+    KUrl url = buildUrl( searchInfo, sinceStatusId, count, page );
     kDebug()<<url;
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo );
     if( !job ) {
         kError() << "Cannot create an http GET request!";
         return;
     }
-    AccountQueryOptionContainer m;
-    m.option = option;
-    m.query = query;
-    m.account = theAccount;
-    mSearchJobs[job] = m;
+    mSearchJobs[job] = searchInfo;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( searchResultsReturned( KJob* ) ) );
     job->start();
 }
@@ -135,7 +131,7 @@ void LaconicaSearch::searchResultsReturned(KJob* job)
         return;
     }
 
-    AccountQueryOptionContainer m = mSearchJobs.take(job);
+    SearchInfo info = mSearchJobs.take(job);
 
     if( job->error() ) {
         kError() << "Error: " << job->errorString();
@@ -144,13 +140,13 @@ void LaconicaSearch::searchResultsReturned(KJob* job)
     }
     KIO::StoredTransferJob *jj = qobject_cast<KIO::StoredTransferJob *>( job );
     QList<Choqok::Post*> postsList;
-    if(m.option == ReferenceHashtag)
+    if(info.option == ReferenceHashtag)
         postsList = parseAtom( jj->data() );
     else
         postsList = parseRss( jj->data() );
 
     kDebug()<<"Emiting searchResultsReceived()";
-    emit searchResultsReceived( m.account, m.query, m.option, postsList );
+    emit searchResultsReceived( info, postsList );
 }
 
 QString LaconicaSearch::optionCode(int option)

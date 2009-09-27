@@ -110,7 +110,6 @@ protected:
     @Note This will call @ref PostWidget::initUi()
     */
     virtual void addPostWidgetToUi(PostWidget *widget);
-    virtual void setupUi();
     Account *currentAccount();
     QMap<ChoqokId, PostWidget *> &posts() const;
 
@@ -119,6 +118,7 @@ protected:
     QLabel *timelineDescription();
 
 private:
+    void setupUi();
     class Private;
     Private *d;
 };

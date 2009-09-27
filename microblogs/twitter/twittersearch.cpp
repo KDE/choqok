@@ -57,24 +57,20 @@ TwitterSearch::TwitterSearch(QObject* parent): TwitterApiSearch(parent)
     mSearchTypes[ReferenceHashtag].second = true;
 }
 
-void TwitterSearch::requestSearchResults(Choqok::Account* theAccount, const QString& query,
-                                         int option, const Choqok::ChoqokId& sinceStatusId,
+void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
+                                         const Choqok::ChoqokId& sinceStatusId,
                                          uint count, uint page)
 {
     kDebug();
 
-    KUrl url = buildUrl( query, option, sinceStatusId, count, page );
+    KUrl url = buildUrl( searchInfo.query, searchInfo.option, sinceStatusId, count, page );
     kDebug()<<url;
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo );
     if( !job ) {
         kError() << "Cannot create an http GET request!";
         return;
     }
-    AccountQueryOptionContainer m;
-    m.option = option;
-    m.query = query;
-    m.account = theAccount;
-    mSearchJobs[job] = m;
+    mSearchJobs[job] = searchInfo;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( searchResultsReturned( KJob* ) ) );
     job->start();
 }
@@ -88,7 +84,7 @@ void TwitterSearch::searchResultsReturned(KJob* job)
         return;
     }
 
-    AccountQueryOptionContainer m = mSearchJobs.take(job);
+    SearchInfo info = mSearchJobs.take(job);
 
     if( job->error() ) {
         kError() << "Error: " << job->errorString();
@@ -99,7 +95,7 @@ void TwitterSearch::searchResultsReturned(KJob* job)
     QList<Choqok::Post*> postsList = parseAtom( jj->data() );
 
 
-    emit searchResultsReceived( m.account, m.query, m.option, postsList );
+    emit searchResultsReceived( info, postsList );
 }
 
 QList< Choqok::Post* > TwitterSearch::parseAtom(const QByteArray& buffer)

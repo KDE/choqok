@@ -26,6 +26,7 @@
 #define TWITTERAPIMICROBLOGWIDGET_H
 
 #include "microblogwidget.h"
+#include "twitterapisearch.h"
 
 class TwitterApiSearchTimelineWidget;
 
@@ -40,11 +41,13 @@ public:
 protected slots:
     void slotCloseCurrentSearch();
     void slotCurrentTimelineChanged(int);
-    virtual void slotSearchResultsReceived( Choqok::Account *theAccount, const QString &query,
-                                            int option, QList<Choqok::Post*> &postsList );
+    virtual void slotSearchResultsReceived( const SearchInfo &info,
+                                            QList<Choqok::Post*> &postsList );
+
 protected:
     QMap<QString, TwitterApiSearchTimelineWidget*> mSearchTimelines;
-    TwitterApiSearchTimelineWidget* addSearchTimelineWidgetToUi(const QString& name);
+    TwitterApiSearchTimelineWidget* addSearchTimelineWidgetToUi(const QString& name,
+                                                                const SearchInfo &info);
 private:
     class Private;
     Private *d;

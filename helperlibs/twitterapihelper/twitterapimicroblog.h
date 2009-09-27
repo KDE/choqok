@@ -109,7 +109,8 @@ public:
     virtual TwitterApiSearch *searchBackend() = 0;
 
     virtual TwitterApiSearchTimelineWidget * createSearchTimelineWidget(Choqok::Account* theAccount,
-                                                                        QString name, QWidget *parent);
+                                                                        QString name, const SearchInfo &info,
+                                                                        QWidget *parent);
 
 public slots:
     /**

@@ -26,17 +26,17 @@
 #define TWITTERAPISEARCHTIMELINEWIDGET_H
 
 #include "timelinewidget.h"
+#include "twitterapisearch.h"
 
 
 class TwitterApiSearchTimelineWidget : public Choqok::UI::TimelineWidget
 {
     Q_OBJECT
 public:
-    TwitterApiSearchTimelineWidget(Choqok::Account* account, const QString& timelineName, QWidget* parent = 0);
+    TwitterApiSearchTimelineWidget(Choqok::Account* account, const QString& timelineName,
+                                   const SearchInfo &info, QWidget* parent = 0);
     ~TwitterApiSearchTimelineWidget();
-
-protected:
-    virtual void setupUi();
+    virtual void addNewPosts(QList< Choqok::Post* >& postList);
 
 protected slots:
     virtual void saveTimeline();
@@ -48,6 +48,7 @@ protected slots:
     void loadCustomPage(const QString&);
 
 private:
+    void addFooter();
     class Private;
     Private *d;
 };

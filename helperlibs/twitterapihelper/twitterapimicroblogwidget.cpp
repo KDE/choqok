@@ -51,8 +51,8 @@ TwitterApiMicroBlogWidget::TwitterApiMicroBlogWidget(Choqok::Account* account, Q
 {
     kDebug();
     connect( d->mBlog->searchBackend(),
-             SIGNAL(searchResultsReceived(Choqok::Account*,QString,int,QList<Choqok::Post*>&)),
-             SLOT(slotSearchResultsReceived(Choqok::Account*,QString,int,QList<Choqok::Post*>&)) );
+             SIGNAL(searchResultsReceived(SearchInfo,QList<Choqok::Post*>&)),
+             SLOT(slotSearchResultsReceived(SearchInfo,QList<Choqok::Post*>&)) );
 }
 
 void TwitterApiMicroBlogWidget::initUi()
@@ -73,24 +73,28 @@ TwitterApiMicroBlogWidget::~TwitterApiMicroBlogWidget()
     delete d;
 }
 
-void TwitterApiMicroBlogWidget::slotSearchResultsReceived(Choqok::Account* theAccount, const QString& query,
-                                                          int option, QList< Choqok::Post* >& postsList)
+void TwitterApiMicroBlogWidget::slotSearchResultsReceived(const SearchInfo &info,
+                                                          QList< Choqok::Post* >& postsList)
 {
     kDebug();
-    if( theAccount == currentAccount() ){
+    if( info.account == currentAccount() ){
         kDebug()<<postsList.count();
-        QString name = QString("%1%2").arg(d->mBlog->searchBackend()->optionCode(option)).arg(query);
-        if(mSearchTimelines.contains(name))
+        QString name = QString("%1%2").arg(d->mBlog->searchBackend()->optionCode(info.option)).arg(info.query);
+        if(mSearchTimelines.contains(name)){
             mSearchTimelines.value(name)->addNewPosts(postsList);
-        else
-            addSearchTimelineWidgetToUi(name)->addNewPosts(postsList);
+        }else{
+//             bool isBrowsable = d->mBlog->searchBackend()->getSearchTypes()[info.option].second;
+            addSearchTimelineWidgetToUi( name, info )->addNewPosts(postsList);
+        }
     }
 }
 
-TwitterApiSearchTimelineWidget* TwitterApiMicroBlogWidget::addSearchTimelineWidgetToUi(const QString& name)
+TwitterApiSearchTimelineWidget* TwitterApiMicroBlogWidget::addSearchTimelineWidgetToUi(const QString& name,
+                                                                                       const SearchInfo &info)
 {
     kDebug();
-    TwitterApiSearchTimelineWidget *mbw = d->mBlog->createSearchTimelineWidget(currentAccount(), name, this);
+    TwitterApiSearchTimelineWidget *mbw = d->mBlog->createSearchTimelineWidget(currentAccount(), name,
+                                                                               info, this);
     if(mbw) {
         mSearchTimelines.insert(name, mbw);
         timelinesTabWidget()->addTab(mbw, name);

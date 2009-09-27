@@ -43,8 +43,8 @@ public:
     TwitterSearch(QObject* parent = 0);
     ~TwitterSearch();
 
-    virtual void requestSearchResults(Choqok::Account* theAccount, const QString& query,
-                                      int option, const Choqok::ChoqokId& sinceStatusId = Choqok::ChoqokId(),
+    virtual void requestSearchResults(const SearchInfo &searchInfo,
+                                      const Choqok::ChoqokId& sinceStatusId = Choqok::ChoqokId(),
                                       uint count = 0, uint page = 1);
     virtual QString optionCode(int option);
 
@@ -58,7 +58,7 @@ protected:
     QList<Choqok::Post*> parseAtom( const QByteArray &buffer );
 
     QMap<int, QString> mSearchCode;
-    QMap<KJob*, AccountQueryOptionContainer> mSearchJobs;
+    QMap<KJob*, SearchInfo> mSearchJobs;
     static const QRegExp m_rId;
 };
 

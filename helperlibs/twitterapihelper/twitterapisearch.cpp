@@ -40,7 +40,16 @@ TwitterApiSearch::~TwitterApiSearch()
     delete d;
 }
 
-QMap< int, QPair< QString, bool > > TwitterApiSearch::getSearchTypes()
+QMap< int, QPair<QString, bool> > &TwitterApiSearch::getSearchTypes()
 {
     return mSearchTypes;
+}
+
+void TwitterApiSearch::requestSearchResults(Choqok::Account* theAccount, const QString& query,
+                                            int option, const Choqok::ChoqokId& sinceStatusId,
+                                            uint count, uint page)
+{
+    bool isB = getSearchTypes()[option].second;
+    SearchInfo info(theAccount, query, option, isB);
+    requestSearchResults(info, sinceStatusId, count, page);
 }

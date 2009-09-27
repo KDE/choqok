@@ -102,8 +102,9 @@ void TwitterApiSearchDialog::fillSearchTypes()
 void TwitterApiSearchDialog::slotButtonClicked(int button)
 {
     if(button == Ok) {
-        d->mBlog->searchBackend()->requestSearchResults( d->account, d->searchQuery->text(),
-                                                         d->searchTypes->currentIndex());
+        bool isB = d->mBlog->searchBackend()->getSearchTypes()[d->searchTypes->currentIndex()].second;
+        SearchInfo info(d->account, d->searchQuery->text(), d->searchTypes->currentIndex(), isB);
+        d->mBlog->searchBackend()->requestSearchResults(info);
         accept();
     } else
         KDialog::slotButtonClicked(button);

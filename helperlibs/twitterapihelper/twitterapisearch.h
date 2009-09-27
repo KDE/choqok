@@ -39,31 +39,31 @@ class Account;
 
 class KJob;
 
-// class SearchInfo
-// {
-// public:
-//     /**
-//     A code that will prepend to query for tabText
-//     Can be used other places as well
-//     */
-//     char code;
-// 
-//     /**
-//     Human readable Search name, Will use on search dialog combobox
-//     */
-//     QString name;
-// 
-//     /**
-//     A human readable description to show on timeline with an arg that will add there to it!
-//     e.g. "Tweets containing %1 hashtag"
-//     */
-//     QString description;
-// 
-//     /**
-//     Show if this search type is browsable, next and prev buttons should be displayed or not!
-//     */
-//     bool isBrowsable;
-// };
+class CHOQOK_EXPORT SearchInfo
+{
+public:
+    SearchInfo()
+    {}
+    SearchInfo( Choqok::Account *theAccount, const QString &queryStr,
+                int optionCode, bool IsBrowsable = false)
+        :account(theAccount), option(optionCode), query(queryStr), isBrowsable(IsBrowsable)
+    {}
+    Choqok::Account *account;
+    /**
+    option code
+    */
+    int option;
+
+    /**
+    Query text to search
+    */
+    QString query;
+
+    /**
+    Show if this search type is browsable, next and prev buttons should be displayed or not!
+    */
+    bool isBrowsable;
+};
 
 /**
     Base class for search feature.
@@ -82,7 +82,7 @@ public:
     The boolean value determines whether or not the search type is traversable
     (if the forward and back buttons should be displayed).
     */
-    QMap<int, QPair<QString, bool> > getSearchTypes();
+    QMap<int, QPair<QString, bool> > &getSearchTypes();
 
     /**
     Sub classes should implement this!
@@ -93,16 +93,21 @@ public:
     virtual QString optionCode(int option) = 0;
 
 public slots:
-    virtual void requestSearchResults( Choqok::Account *theAccount,
-                                       const QString &query,
-                                       int option,
+    virtual void requestSearchResults( const SearchInfo &searchInfo,
                                        const Choqok::ChoqokId &sinceStatusId = QString(),
                                        uint count = 0,
                                        uint page = 1 ) = 0;
+    /**
+    This is for convenience
+    */
+    void requestSearchResults( Choqok::Account *theAccount, const QString &query, int option,
+                                       const Choqok::ChoqokId &sinceStatusId = QString(),
+                                       uint count = 0,
+                                       uint page = 1 );
 
 signals:
-    void searchResultsReceived( Choqok::Account *theAccount, const QString &query,
-                                int option, QList<Choqok::Post*> &postsList );
+    void searchResultsReceived( const SearchInfo &searchInfo,
+                                QList<Choqok::Post*> &postsList );
     void error( const QString &message );
 
 protected:
@@ -112,16 +117,6 @@ protected:
     (if the forward and back buttons should be displayed).
     */
     QMap<int, QPair<QString, bool> > mSearchTypes;
-
-    /**
-    This is an internal container! and used on sub classes!
-    */
-    struct AccountQueryOptionContainer
-    {
-        Choqok::Account *account;
-        QString query;
-        int option;
-    };
 
 private:
     class Private;

@@ -28,27 +28,33 @@
 #include <KRestrictedLine>
 #include <QCheckBox>
 #include <klocalizedstring.h>
+#include <KDebug>
+#include <qlayoutitem.h>
 
 class TwitterApiSearchTimelineWidget::Private
 {
 public:
-    Private()
-        :currentPage(1)
+    Private(const SearchInfo &info)
+        :currentPage(1), searchInfo(info)
     {}
-    KPushButton *reload;
-    KPushButton *next;
-    KPushButton *previous;
-    KRestrictedLine *pageNumber;
-    QCheckBox *autoUpdate;
+    QPointer<KPushButton> reload;
+    QPointer<KPushButton> next;
+    QPointer<KPushButton> previous;
+    QPointer<KRestrictedLine> pageNumber;
+    QPointer<QCheckBox> autoUpdate;
     uint currentPage;
+    SearchInfo searchInfo;
 };
 
 TwitterApiSearchTimelineWidget::TwitterApiSearchTimelineWidget(Choqok::Account* account,
                                                                const QString& timelineName,
+                                                               const SearchInfo &info,
                                                                QWidget* parent)
-    : TimelineWidget(account, timelineName, parent), d(new Private)
+    : TimelineWidget(account, timelineName, parent), d(new Private(info))
 {
     setAttribute(Qt::WA_DeleteOnClose);
+    if(info.isBrowsable)
+        addFooter();
 }
 
 TwitterApiSearchTimelineWidget::~TwitterApiSearchTimelineWidget()
@@ -58,39 +64,66 @@ TwitterApiSearchTimelineWidget::~TwitterApiSearchTimelineWidget()
 
 void TwitterApiSearchTimelineWidget::saveTimeline()
 {
-    Choqok::UI::TimelineWidget::saveTimeline();
+    kDebug();
+//     Choqok::UI::TimelineWidget::saveTimeline();
 }
 
 void TwitterApiSearchTimelineWidget::loadTimeline()
 {
-    Choqok::UI::TimelineWidget::loadTimeline();
+    kDebug();
+//     Choqok::UI::TimelineWidget::loadTimeline();
 }
 
-void TwitterApiSearchTimelineWidget::setupUi()
+void TwitterApiSearchTimelineWidget::addFooter()
 {
     QHBoxLayout *footer = new QHBoxLayout;
-    d->reload = new KPushButton(this);
-    d->reload->setIcon(KIcon("view-refresh"));
+//     d->reload = new KPushButton(this);
+//     d->reload->setIcon(KIcon("view-refresh"));
+//     d->reload->setMaximumSize(28,28);
+//     d->autoUpdate = new QCheckBox(i18n("Auto-update results"), this);
+//     d->autoUpdate->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+
     d->previous = new KPushButton(this);
     d->previous->setIcon(KIcon("go-previous"));
+    d->previous->setMaximumSize(28,28);
+    d->previous->setToolTip(i18n("Previous"));
+
     d->next = new KPushButton(this);
     d->next->setIcon(KIcon("go-next"));
+    d->next->setMaximumSize(28,28);
+    d->next->setToolTip(i18n("Next"));
+
     d->pageNumber = new KRestrictedLine(this);
     d->pageNumber->setValidChars("1234567890");
-    d->autoUpdate = new QCheckBox(i18n("Auto-update results"), this);
+    d->pageNumber->setMaxLength(2);
+    d->pageNumber->setMaximumWidth(40);
+    d->pageNumber->setAlignment(Qt::AlignCenter);
 
-    footer->addWidget(d->reload);
-    footer->addWidget(d->autoUpdate);
+//     footer->addWidget(d->reload);
+    footer->addSpacerItem(new QSpacerItem(10, 20, QSizePolicy::Expanding));
+//     footer->addWidget(d->autoUpdate);
     footer->addWidget(d->previous);
     footer->addWidget(d->pageNumber);
     footer->addWidget(d->next);
 
-    connect( d->reload, SIGNAL(clicked(bool)), SLOT(reloadList()) );
+//     connect( d->reload, SIGNAL(clicked(bool)), SLOT(reloadList()) );
     connect( d->next, SIGNAL(clicked(bool)), SLOT(loadNextPage()) );
     connect( d->previous, SIGNAL(clicked(bool)), SLOT(loadPreviousPage()) );
     connect( d->pageNumber, SIGNAL(returnPressed(QString)), SLOT(loadCustomPage(QString)) );
 
     layout()->addItem(footer);
+}
+
+void TwitterApiSearchTimelineWidget::addNewPosts(QList< Choqok::Post* >& postList)
+{
+    bool markRead = false;
+    if( posts().count() < 1 )
+        markRead = true;
+    Choqok::UI::TimelineWidget::addNewPosts(postList);
+    if(markRead)
+        markAllAsRead();
+    if(d->pageNumber)
+        d->pageNumber->setText(QString::number(d->currentPage));
 }
 
 void TwitterApiSearchTimelineWidget::reloadList()
@@ -100,7 +133,7 @@ void TwitterApiSearchTimelineWidget::reloadList()
 
 void TwitterApiSearchTimelineWidget::loadCustomPage(const QString& pageNumber)
 {
-    
+    //TODO
 }
 
 void TwitterApiSearchTimelineWidget::loadNextPage()
