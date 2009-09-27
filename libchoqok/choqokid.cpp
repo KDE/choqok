@@ -24,7 +24,6 @@
 
 #include "choqokid.h"
 
-using namespace Choqok;
 
 ChoqokId::ChoqokId()
     :QString()
@@ -38,7 +37,7 @@ ChoqokId::ChoqokId(const QString& other )
 
 }
 
-Choqok::ChoqokId::ChoqokId(const Choqok::ChoqokId& other)
+ChoqokId::ChoqokId(const ChoqokId& other)
     : QString(other)
 {
 
@@ -50,11 +49,11 @@ ChoqokId::ChoqokId(const QLatin1String& latin1)
 
 }
 
-Choqok::ChoqokId::~ChoqokId()
+ChoqokId::~ChoqokId()
 {
 }
 
-bool Choqok::ChoqokId::operator<(const ChoqokId& s) const
+bool ChoqokId::operator<(const ChoqokId& s) const
 {
     int dif = length() - s.length();
     if(dif > 0){
@@ -65,7 +64,7 @@ bool Choqok::ChoqokId::operator<(const ChoqokId& s) const
     return QString::operator<(s);
 }
 
-bool Choqok::ChoqokId::operator>(const Choqok::ChoqokId& s) const
+bool ChoqokId::operator>(const ChoqokId& s) const
 {
     int dif = length() - s.length();
     if(dif > 0){

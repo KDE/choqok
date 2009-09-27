@@ -28,7 +28,6 @@
 #include <QString>
 #include "choqok_export.h"
 
-namespace Choqok {
 /**
 Id container object
 An special QString obejct.
@@ -41,11 +40,9 @@ public:
     ChoqokId(const QString &);
     ChoqokId(const QLatin1String &);
     ~ChoqokId();
-    bool operator<(const Choqok::ChoqokId& s) const;
-    bool operator>(const Choqok::ChoqokId& s) const;
+    bool operator<(const ChoqokId& s) const;
+    bool operator>(const ChoqokId& s) const;
     QString toString() const;
 };
-
-}
 
 #endif // CHOQOK_CHOQOKID_H

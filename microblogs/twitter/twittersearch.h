@@ -44,7 +44,7 @@ public:
     ~TwitterSearch();
 
     virtual void requestSearchResults(const SearchInfo &searchInfo,
-                                      const Choqok::ChoqokId& sinceStatusId = Choqok::ChoqokId(),
+                                      const ChoqokId& sinceStatusId = ChoqokId(),
                                       uint count = 0, uint page = 1);
     virtual QString optionCode(int option);
 
@@ -53,7 +53,7 @@ protected slots:
 
 protected:
     virtual KUrl buildUrl( QString query, int option,
-                           Choqok::ChoqokId sinceStatusId = Choqok::ChoqokId(),
+                           ChoqokId sinceStatusId = ChoqokId(),
                            uint count = 0, uint page = 1 );
     QList<Choqok::Post*> parseAtom( const QByteArray &buffer );
 

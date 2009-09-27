@@ -150,7 +150,7 @@ void TwitterApiSearchTimelineWidget::loadCustomPage(const QString& pageNumber)
     d->currentPage = page;
     if(!d->searchBackend)
         d->searchBackend = qobject_cast<TwitterApiMicroBlog*>(currentAccount()->microblog())->searchBackend();
-    d->searchBackend->requestSearchResults(d->searchInfo, Choqok::ChoqokId(), 0, page);
+    d->searchBackend->requestSearchResults(d->searchInfo, ChoqokId(), 0, page);
 }
 
 void TwitterApiSearchTimelineWidget::loadNextPage()

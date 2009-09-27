@@ -143,7 +143,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
     QString fileName = account->alias() + '_' + timelineName + "_backuprc";
     KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
     QStringList tmpList = postsBackup.groupList();
-    QList<Choqok::ChoqokId> groupList;
+    QList<ChoqokId> groupList;
     foreach(const QString &str, tmpList)
         groupList<<str;
     qSort(groupList);

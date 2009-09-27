@@ -94,14 +94,14 @@ public:
 
 public slots:
     virtual void requestSearchResults( const SearchInfo &searchInfo,
-                                       const Choqok::ChoqokId &sinceStatusId = QString(),
+                                       const ChoqokId &sinceStatusId = QString(),
                                        uint count = 0,
                                        uint page = 1 ) = 0;
     /**
     This is for convenience
     */
     void requestSearchResults( Choqok::Account *theAccount, const QString &query, int option,
-                                       const Choqok::ChoqokId &sinceStatusId = QString(),
+                                       const ChoqokId &sinceStatusId = QString(),
                                        uint count = 0,
                                        uint page = 1 );
 

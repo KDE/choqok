@@ -59,7 +59,7 @@ TwitterSearch::TwitterSearch(QObject* parent): TwitterApiSearch(parent)
 }
 
 void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
-                                         const Choqok::ChoqokId& sinceStatusId,
+                                         const ChoqokId& sinceStatusId,
                                          uint count, uint page)
 {
     kDebug();
@@ -130,7 +130,7 @@ QList< Choqok::Post* > TwitterSearch::parseAtom(const QByteArray& buffer)
             QDomElement elm = entryNode.toElement();
             if ( elm.tagName() == "id" ) {
                 // Fomatting example: "tag:search.twitter.com,2005:1235016836"
-                Choqok::ChoqokId id;
+                ChoqokId id;
                 if(m_rId.exactMatch(elm.text())) {
                     id = m_rId.cap(1);
                 }
@@ -194,7 +194,7 @@ TwitterSearch::~TwitterSearch()
 {
 }
 
-KUrl TwitterSearch::buildUrl( QString query, int option, Choqok::ChoqokId sinceStatusId,
+KUrl TwitterSearch::buildUrl( QString query, int option, ChoqokId sinceStatusId,
                               uint count, uint page)
 {
     kDebug();
