@@ -23,6 +23,11 @@
 */
 
 #include "twitterpostwidget.h"
+#include <twitterapihelper/twitterapimicroblog.h>
+#include "twittersearch.h"
+#include <KAction>
+#include <KMenu>
+#include <klocalizedstring.h>
 
 TwitterPostWidget::TwitterPostWidget(Choqok::Account* account, const Choqok::Post& post, QWidget* parent): TwitterApiPostWidget(account, post, parent)
 {
@@ -43,6 +48,43 @@ QString TwitterPostWidget::prepareStatus(const QString& text)
 
 void TwitterPostWidget::checkAnchor(const QUrl& url)
 {
-    TwitterApiPostWidget::checkAnchor(url);
+    QString scheme = url.scheme();
+    TwitterApiMicroBlog* blog = qobject_cast<TwitterApiMicroBlog*>(currentAccount()->microblog());
+    if( scheme == "tag" ) {
+        blog->searchBackend()->requestSearchResults(currentAccount(),
+                                                    url.host(),
+                                                    (int)TwitterSearch::ReferenceHashtag);
+    } else if(scheme == "user") {
+        KMenu menu;
+        KAction * info = new KAction( KIcon("user-identity"), i18nc("Who is user", "Who is %1", url.host()),
+                                      &menu );
+        KAction * from = new KAction(KIcon("edit-find-user"), i18nc("From user", "From %1",url.host()),
+                                     &menu);
+        KAction * to = new KAction(KIcon("meeting-attending"), i18nc("Replies to user", "Replies to %1",
+                                                                     url.host()),
+                                   &menu);
+        KAction *cont = new KAction(KIcon("user-properties"),i18nc("Including user name", "Including %1",
+                                                                   url.host()),
+                                    &menu);
+        from->setData(TwitterSearch::FromUser);
+        to->setData(TwitterSearch::ToUser);
+        cont->setData(TwitterSearch::ReferenceUser);
+        menu.addAction(info);
+        menu.addAction(from);
+        menu.addAction(to);
+        menu.addAction(cont);
+        QAction * ret = menu.exec(QCursor::pos());
+        if(ret == 0)
+            return;
+        if(ret == info) {
+            //TODO Who is
+            return;
+        }
+        int type = ret->data().toInt();
+        blog->searchBackend()->requestSearchResults(currentAccount(),
+                                                    url.host(),
+                                                    type);
+    } else
+        TwitterApiPostWidget::checkAnchor(url);
 }
 

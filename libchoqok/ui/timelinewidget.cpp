@@ -31,6 +31,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "choqokbehaviorsettings.h"
 #include <QLabel>
 #include <KPushButton>
+#include <QPointer>
 
 namespace Choqok {
 namespace UI {
@@ -45,7 +46,7 @@ public:
     Account *currentAccount;
     QString timelineName;
     bool mStartUp;
-    KPushButton *btnMarkAllAsRead;
+    QPointer<KPushButton> btnMarkAllAsRead;
     int unreadCount;
     QMap<ChoqokId, PostWidget *> posts;
     QVBoxLayout *mainLayout;
@@ -215,7 +216,6 @@ void TimelineWidget::markAllAsRead()
         d->unreadCount = 0;
         emit updateUnreadCount(unread);
         d->btnMarkAllAsRead->deleteLater();
-        d->btnMarkAllAsRead = 0L;
     }
 }
 
@@ -238,7 +238,6 @@ void TimelineWidget::slotOnePostReaded()
     emit updateUnreadCount(-1);
     if(d->unreadCount == 0){
         d->btnMarkAllAsRead->deleteLater();
-        d->btnMarkAllAsRead = 0L;
     }
 }
 

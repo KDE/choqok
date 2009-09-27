@@ -25,6 +25,11 @@
 #include "laconicapostwidget.h"
 #include <twitterapihelper/twitterapiaccount.h>
 #include <KDebug>
+#include <twitterapihelper/twitterapimicroblog.h>
+#include "laconicasearch.h"
+#include <KMenu>
+#include <KAction>
+#include <klocalizedstring.h>
 
 const QRegExp LaconicaPostWidget::mGroupRegExp("([\\s]|^)!([^\\s\\W]+)");
 
@@ -32,11 +37,6 @@ LaconicaPostWidget::LaconicaPostWidget(Choqok::Account* account, const Choqok::P
 {
 
 }
-
-// void LaconicaPostWidget::initUi()
-// {
-//     TwitterApiPostWidget::initUi();
-// }
 
 QString LaconicaPostWidget::prepareStatus(const QString& text)
 {
@@ -51,6 +51,39 @@ QString LaconicaPostWidget::prepareStatus(const QString& text)
 
 void LaconicaPostWidget::checkAnchor(const QUrl& url)
 {
-    TwitterApiPostWidget::checkAnchor(url);
+    QString scheme = url.scheme();
+    TwitterApiMicroBlog* blog = qobject_cast<TwitterApiMicroBlog*>(currentAccount()->microblog());
+    if( scheme == "tag" ) {
+        blog->searchBackend()->requestSearchResults(currentAccount(),
+                                                    url.host(),
+                                                    LaconicaSearch::ReferenceHashtag);
+    } else if( scheme == "group" ) {
+        blog->searchBackend()->requestSearchResults(currentAccount(),
+                                                    url.host(),
+                                                    LaconicaSearch::ReferenceGroup);
+    } else if(scheme == "user") {
+        KMenu menu;
+        KAction * info = new KAction( KIcon("user-identity"), i18n("Who is %1", url.host()), &menu );
+        KAction * from = new KAction(KIcon("edit-find-user"), i18n("From %1",url.host()),&menu);
+        KAction * to = new KAction(KIcon("meeting-attending"), i18n("Replies to %1",url.host()),&menu);
+        menu.addAction(info);
+        menu.addAction(from);
+        menu.addAction(to);
+        from->setData(LaconicaSearch::FromUser);
+        to->setData(LaconicaSearch::ToUser);
+        QAction * ret;
+        ret = menu.exec(QCursor::pos());
+        if(ret == 0)
+            return;
+        if(ret == info) {
+            //TODO Who is
+            return;
+        }
+        int type = ret->data().toInt();
+        blog->searchBackend()->requestSearchResults(currentAccount(),
+                                                    url.host(),
+                                                    type);
+    } else
+        TwitterApiPostWidget::checkAnchor(url);
 }
 

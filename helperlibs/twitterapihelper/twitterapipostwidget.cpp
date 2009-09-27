@@ -171,9 +171,7 @@ void TwitterApiPostWidget::updateFavStat()
 void TwitterApiPostWidget::checkAnchor(const QUrl & url)
 {
     QString scheme = url.scheme();
-    if(scheme == "user" || scheme == "tag" || scheme == "group") {
-        kDebug()<<"NOT IMPLEMENTED YET";
-    } else if( scheme == "replyto" ) {
+    if( scheme == "replyto" ) {
         if(d->isBasePostShowed) {
             setContent( prepareStatus(currentPost().content) );
             updateUi();
