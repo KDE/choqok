@@ -42,6 +42,7 @@ public:
 protected slots:
     virtual void saveTimeline();
     virtual void loadTimeline();
+    void slotUpdateSearchResults();
 
     void reloadList();
     void loadNextPage();

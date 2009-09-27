@@ -79,7 +79,7 @@ KUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
             formattedQuery = "group/" + searchInfo.query + "/rss";
             break;
         case ReferenceHashtag:
-            formattedQuery = '#' + searchInfo.query;
+            formattedQuery = searchInfo.query;
             break;
         default:
             formattedQuery = searchInfo.query + "/rss";

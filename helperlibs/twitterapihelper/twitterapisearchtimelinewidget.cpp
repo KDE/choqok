@@ -59,6 +59,9 @@ TwitterApiSearchTimelineWidget::TwitterApiSearchTimelineWidget(Choqok::Account* 
     : TimelineWidget(account, timelineName, parent), d(new Private(info))
 {
     setAttribute(Qt::WA_DeleteOnClose);
+    d->searchBackend = qobject_cast<TwitterApiMicroBlog*>(currentAccount()->microblog())->searchBackend();
+    connect(Choqok::UI::Global::mainWindow(), SIGNAL(updateTimelines()),
+            this, SLOT(slotUpdateSearchResults()) );
     if(info.isBrowsable)
         addFooter();
 }
@@ -148,8 +151,6 @@ void TwitterApiSearchTimelineWidget::loadCustomPage(const QString& pageNumber)
         page = 1;
     d->loadingAnotherPage = true;
     d->currentPage = page;
-    if(!d->searchBackend)
-        d->searchBackend = qobject_cast<TwitterApiMicroBlog*>(currentAccount()->microblog())->searchBackend();
     d->searchBackend->requestSearchResults(d->searchInfo, ChoqokId(), 0, page);
 }
 
@@ -169,6 +170,16 @@ void TwitterApiSearchTimelineWidget::removeAllPosts()
         wd->close();
     }
     posts().clear();
+}
+
+void TwitterApiSearchTimelineWidget::slotUpdateSearchResults()
+{
+    if(d->currentPage == 1) {
+        ChoqokId lastId;
+        if( !postWidgets().isEmpty() )
+            lastId = postWidgets().last()->currentPost().postId;
+        d->searchBackend->requestSearchResults(d->searchInfo, lastId);
+    }
 }
 
 #include "twitterapisearchtimelinewidget.moc"
