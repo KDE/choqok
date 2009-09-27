@@ -69,7 +69,7 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
         from->setData(TwitterSearch::FromUser);
         to->setData(TwitterSearch::ToUser);
         cont->setData(TwitterSearch::ReferenceUser);
-        menu.addAction(info);
+//         menu.addAction(info);
         menu.addAction(from);
         menu.addAction(to);
         menu.addAction(cont);

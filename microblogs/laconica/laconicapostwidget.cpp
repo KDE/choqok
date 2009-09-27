@@ -66,7 +66,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
         KAction * info = new KAction( KIcon("user-identity"), i18n("Who is %1", url.host()), &menu );
         KAction * from = new KAction(KIcon("edit-find-user"), i18n("From %1",url.host()),&menu);
         KAction * to = new KAction(KIcon("meeting-attending"), i18n("Replies to %1",url.host()),&menu);
-        menu.addAction(info);
+//         menu.addAction(info);
         menu.addAction(from);
         menu.addAction(to);
         from->setData(LaconicaSearch::FromUser);
