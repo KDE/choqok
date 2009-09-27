@@ -140,6 +140,7 @@ void TwitterApiDMessageDialog::friendsUsernameListed(TwitterApiAccount* theAccou
 {
     if(theAccount == d->account){
         d->comboFriendsList->removeItem(0);
+        list.sort();
         d->comboFriendsList->addItems(list);
     }
 }

@@ -731,7 +731,7 @@ QList<Choqok::Post*> TwitterApiMicroBlog::readTimelineFromXml ( Choqok::Account*
 
     if ( root.tagName() != "statuses" ) {
         //         QString err = i18n( "Data returned from server is corrupted." );
-        kDebug() << "there's no statuses tag in XML\t the XML is: \n" << buffer.data();
+        kDebug() << "there's no statuses tag in XML\t the XML is: \n" << buffer;
         return postList;
     }
     QDomNode node = root.firstChild();
@@ -867,7 +867,7 @@ QStringList TwitterApiMicroBlog::readUsersScreenNameFromXml( Choqok::Account* th
 
     if ( root.tagName() != "users" ) {
         QString err = i18n( "Retrieving friends list failed, Data returned from server is corrupted." );
-        kDebug() << "there's no users tag in XML\t the XML is: \n" << buffer.data();
+        kDebug() << "there's no users tag in XML\t the XML is: \n" << buffer;
         emit error(theAccount, ParsingError, err, Critical);
         return list;
     }
@@ -875,7 +875,7 @@ QStringList TwitterApiMicroBlog::readUsersScreenNameFromXml( Choqok::Account* th
     QString timeStr;
     while ( !node.isNull() ) {
         if ( node.toElement().tagName() != "user" ) {
-            kDebug() << "there's no status tag in XML, maybe there is no new status!";
+            kDebug() << "there's no user tag in XML!\n"<<buffer;
             return list;
         }
         QDomNode node2 = node.firstChild();
