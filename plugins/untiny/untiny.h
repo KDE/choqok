@@ -25,6 +25,7 @@
 #include "plugin.h"
 #include <qqueue.h>
 #include <KUrl>
+#include <QPointer>
 
 namespace KIO {
 class Job;
@@ -57,7 +58,7 @@ private:
 
     void parse( Choqok::UI::PostWidget *postToParse );
 //     QQueue<Choqok::UI::PostWidget *> postsQueue;
-    QMap<KJob*, Choqok::UI::PostWidget *> mParsingList;
+    QMap<KJob*, QPointer<Choqok::UI::PostWidget> > mParsingList;
 
     static const QRegExp mUrlRegExp;
 };
