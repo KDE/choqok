@@ -144,7 +144,6 @@ void TimelineWidget::removeOldPosts()
     while( count > 0 && !d->posts.isEmpty() ){
         PostWidget *wd = d->posts.values().first();
         if(wd && wd->isRead()){
-            d->posts.remove( d->posts.key(wd) );
             wd->close();
         }
         --count;
@@ -187,15 +186,14 @@ void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
     widget->initUi();
     widget->setFocusProxy(this);
     widget->setObjectName(widget->currentPost().postId);
-    widget->setAttribute(Qt::WA_DeleteOnClose);
     connect( widget, SIGNAL(resendPost(const QString &)),
              this, SIGNAL(forwardResendPost(const QString &)));
     connect( widget, SIGNAL(reply(QString,QString)),
             this, SIGNAL(forwardReply(QString,QString)) );
     connect( widget, SIGNAL(postReaded()),
             this, SLOT(slotOnePostReaded()) );
-    connect( widget, SIGNAL(destroyed(QObject*)),
-             SLOT(postWidgetDestroyed(QObject*)) );
+    connect( widget, SIGNAL(aboutClosing(ChoqokId,PostWidget*)),
+             SLOT(postWidgetClosed(ChoqokId,PostWidget*)) );
     d->mainLayout->insertWidget(0, widget);
     d->posts.insert(widget->currentPost().postId, widget);
     Global::SessionManager::self()->emitNewPostWidgetAdded(widget);
@@ -252,10 +250,11 @@ QList< PostWidget* > TimelineWidget::postWidgets()
     return posts().values();
 }
 
-void TimelineWidget::postWidgetDestroyed(QObject* obj)
+void TimelineWidget::postWidgetClosed(const ChoqokId& postId, PostWidget* widget)
 {
-    PostWidget *widget = qobject_cast<PostWidget*>(obj);
-    d->posts.remove(d->posts.key(widget));
+    kDebug()<<postId<<widget;
+    kDebug()<< d->posts.remove(postId);
+    Q_UNUSED(widget)
 }
 
 QMap< ChoqokId, PostWidget* >& TimelineWidget::posts() const

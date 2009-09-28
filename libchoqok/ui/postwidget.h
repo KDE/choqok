@@ -36,6 +36,8 @@ class KPushButton;
 namespace Choqok {
 namespace UI {
 /**
+Post Widget!
+Attribute "Qt::WA_DeleteOnClose" is enabled at construtor! So please use close() for deleting an object, instead of deleteLater() or delete
 
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
@@ -119,6 +121,12 @@ signals:
     */
     void reply(const QString &txt, const QString &replyToId);
 
+    /**
+    Emitted when this widget is about to close!
+    postId and this returned!
+    */
+    void aboutClosing( const ChoqokId &postId, PostWidget *widget);
+
 protected slots:
     /**
         @brief Copy post text to clipboard.
@@ -157,6 +165,7 @@ protected slots:
 
     void slotCopyLink();
 protected:
+    virtual void closeEvent(QCloseEvent* event);
     virtual void contextMenuEvent(QContextMenuEvent* event);
     virtual void setupAvatar();
     virtual void mousePressEvent(QMouseEvent* ev);

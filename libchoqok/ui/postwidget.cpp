@@ -268,6 +268,13 @@ void PostWidget::setHeight()
     setMaximumHeight(h);
 }
 
+void PostWidget::closeEvent(QCloseEvent* event)
+{
+    kDebug();
+    emit aboutClosing(currentPost().postId, this);
+    event->accept();
+}
+
 void PostWidget::mousePressEvent(QMouseEvent* ev)
 {
     if(!isRead()) {

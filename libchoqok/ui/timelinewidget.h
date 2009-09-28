@@ -102,7 +102,7 @@ protected slots:
     void slotOnePostReaded();
     virtual void saveTimeline();
     virtual void loadTimeline();
-    void postWidgetDestroyed( QObject* );
+    void postWidgetClosed( const ChoqokId &postId, PostWidget* widget );
 
 protected:
     /**
