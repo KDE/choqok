@@ -252,8 +252,8 @@ QList< PostWidget* > TimelineWidget::postWidgets()
 
 void TimelineWidget::postWidgetClosed(const ChoqokId& postId, PostWidget* widget)
 {
-    kDebug()<<postId<<widget;
-    kDebug()<< d->posts.remove(postId);
+    kDebug();
+    d->posts.remove(postId);
     Q_UNUSED(widget)
 }
 
