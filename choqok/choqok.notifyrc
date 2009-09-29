@@ -106,6 +106,7 @@ Name[x-test]=xxJob Errorxx
 Comment=There was an error while performing a job
 Comment[bg]=Грешка при изпълнение на задача
 Comment[da]=En fejl opstod under udførelse af et job
+Comment[de]=Bei der Durchführung der Aktion ist ein Fehler aufgetreten.
 Comment[es]=Se produjo un error mientras se efectuaba un trabajo
 Comment[fr]=Il s'est produit une erreur lors de l'exécution d'une tâche
 Comment[gl]=Produciuse un erro ao realizar un traballo
