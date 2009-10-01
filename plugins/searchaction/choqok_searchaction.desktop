@@ -1,0 +1,18 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Service
+X-Choqok-Version=1
+Icon=edit-find
+ServiceTypes=Choqok/Plugin
+X-KDE-Library=choqok_searchaction
+X-KDE-PluginInfo-Author=Mehrdad Momeny
+X-KDE-PluginInfo-Email=mehrdad.momeny@gmail.com
+X-KDE-PluginInfo-Name=choqok_searchaction
+X-KDE-PluginInfo-Version=0.1
+X-KDE-PluginInfo-Website=http://choqok.gnufolks.org
+X-KDE-PluginInfo-Category=Plugins
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
+Name=Search Action
+Comment=Add a Search action to UI for Twitter Api microblogs. e.g. Twitter and StatusNet
