@@ -35,7 +35,7 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_untiny" ) )
 const QRegExp UnTiny::mUrlRegExp("((ftps?|https?)://[^\\s<>\"]+[^!,\\.\\s<>'\"\\)\\]])");
 
 UnTiny::UnTiny(QObject* parent, const QList< QVariant >& )
-    :Choqok::Plugin(MyPluginFactory::componentData(), parent)//, state(Stopped)
+    :Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped)
 {
     kDebug();
     connect( Choqok::UI::Global::SessionManager::self(),
@@ -51,25 +51,32 @@ UnTiny::~UnTiny()
 
 void UnTiny::slotAddNewPostWidget(Choqok::UI::PostWidget* newWidget)
 {
-    parse(newWidget);
-//     postsQueue.enqueue(newWidget);
-//     if(state == Stopped)
-//         startParsing();
+    postsQueue.enqueue(newWidget);
+    if(state == Stopped){
+        state = Running;
+        QTimer::singleShot(1000, this, SLOT(startParsing()));
+    }
 }
 
-// void UnTiny::startParsing()
-// {
-//     state = Running;
-//     while(!postsQueue.isEmpty()){
-//         kDebug()<<postsQueue.size();
-//         parse(postsQueue.dequeue());
-//     }
-//     state = Stopped;
-// }
+void UnTiny::startParsing()
+{
+    kDebug();
+    int i = 8;
+    while( !postsQueue.isEmpty() && i>0 ){
+        parse(postsQueue.dequeue());
+        --i;
+    }
+
+    if(postsQueue.isEmpty())
+        state = Stopped;
+    else
+        QTimer::singleShot(1000, this, SLOT(startParsing()));
+}
 
 void UnTiny::parse(Choqok::UI::PostWidget* postToParse)
 {
-    // This next block replaces 301 redirects with an appropriate title
+    if(!postToParse)
+        return;
     int pos = 0;
     QStringList redirectList;
     QString content = postToParse->currentPost().content;

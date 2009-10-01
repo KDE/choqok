@@ -47,17 +47,17 @@ public:
     UnTiny( QObject* parent, const QList< QVariant >& args );
     ~UnTiny();
 
-//     void startParsing();
 protected slots:
     void slotAddNewPostWidget( Choqok::UI::PostWidget *newWidget );
     void slot301Redirected(KIO::Job*,KUrl,KUrl);
+    void startParsing();
 
 private:
-//     enum ParserState{ Running = 0, Stopped };
-//     ParserState state;
+    enum ParserState{ Running = 0, Stopped };
+    ParserState state;
 
     void parse( Choqok::UI::PostWidget *postToParse );
-//     QQueue<Choqok::UI::PostWidget *> postsQueue;
+    QQueue< QPointer<Choqok::UI::PostWidget> > postsQueue;
     QMap<KJob*, QPointer<Choqok::UI::PostWidget> > mParsingList;
 
     static const QRegExp mUrlRegExp;

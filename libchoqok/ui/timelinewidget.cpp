@@ -250,11 +250,10 @@ QList< PostWidget* > TimelineWidget::postWidgets()
     return posts().values();
 }
 
-void TimelineWidget::postWidgetClosed(const ChoqokId& postId, PostWidget* widget)
+void TimelineWidget::postWidgetClosed(const ChoqokId& postId, PostWidget*)
 {
     kDebug();
     d->posts.remove(postId);
-    Q_UNUSED(widget)
 }
 
 QMap< ChoqokId, PostWidget* >& TimelineWidget::posts() const

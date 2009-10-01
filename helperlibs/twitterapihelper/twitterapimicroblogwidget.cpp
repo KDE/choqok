@@ -134,6 +134,7 @@ void TwitterApiMicroBlogWidget::slotCloseCurrentSearch()
     TwitterApiSearchTimelineWidget *stw =
             qobject_cast<TwitterApiSearchTimelineWidget *>(timelinesTabWidget()->currentWidget());
     if(stw) {
+        stw->markAllAsRead();
         QString name = mSearchTimelines.key(stw);
         if(name.isEmpty())
             return;
