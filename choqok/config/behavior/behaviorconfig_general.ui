@@ -14,7 +14,7 @@
    <item>
     <widget class="QCheckBox" name="kcfg_showMainWinOnStart">
      <property name="text">
-      <string>Show main &amp;window on startup.</string>
+      <string>Show main &amp;window on startup</string>
      </property>
      <property name="checked">
       <bool>true</bool>
@@ -27,7 +27,7 @@
       <string/>
      </property>
      <property name="text">
-      <string>Mark all unread posts as read, on hide to system tray.</string>
+      <string>Mark all unread posts as read, when hiding to system tray</string>
      </property>
      <property name="checked">
       <bool>true</bool>
@@ -37,7 +37,7 @@
    <item>
     <widget class="QCheckBox" name="kcfg_enableSpellChecker">
      <property name="text">
-      <string>Enable spell checker (editors).</string>
+      <string>Enable automatic spellchecking in the message editor</string>
      </property>
     </widget>
    </item>
@@ -52,7 +52,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Use &amp;custom browser:</string>
+        <string>Use &amp;custom web browser:</string>
        </property>
       </widget>
      </item>
@@ -97,7 +97,7 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>&amp;Number of posts shown in timelines:</string>
+             <string>&amp;Number of posts to show in timelines:</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

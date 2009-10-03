@@ -86,7 +86,7 @@ void AccountsWidget::addAccount()
                                                         Choqok::UI::Global::mainWindow() );
             d->exec();
         } else {
-            KMessageBox::sorry(this, i18n("Cannot load %1 plugin. Check your installation.", name));
+            KMessageBox::sorry(this, i18n("Cannot load %1 plugin. Please check your installation.", name));
         }
     }
 }
@@ -114,7 +114,7 @@ void AccountsWidget::editAccount( QString alias )
 void AccountsWidget::removeAccount( QString alias )
 {
     kDebug() << alias;
-    if( KMessageBox::warningYesNoCancel(this, i18n("Are you sure of removing the selected account?"))
+    if( KMessageBox::warningYesNoCancel(this, i18n("Are you sure you want to remove the selected account?"))
         == KMessageBox::Yes ){
         if ( alias.isEmpty() )
             alias = accountsTable->item( accountsTable->currentRow(), 0 )->text();
@@ -231,7 +231,7 @@ void AccountsWidget::save()
 
 KMenu * AccountsWidget::createAddAccountMenu()
 {
-    mBlogMenu = new KMenu(i18n("Select MicroBlog Service"), this);
+    mBlogMenu = new KMenu(i18n("Select Micro-Blog Service"), this);
     const QList<KPluginInfo> list = Choqok::PluginManager::self()->availablePlugins("MicroBlogs");
     foreach(const KPluginInfo& info, list){
         KAction *act = new KAction(mBlogMenu);
@@ -286,7 +286,7 @@ void AccountsWidget::move(bool up)
     qobject_cast<QCheckBox*>(accountsTable->cellWidget(destRow, 3))->setChecked(sourceQuickPost);
 
     accountsTable->setCurrentCell(destRow,0);
-    KMessageBox::information(this, i18n("Changing accounts priority here, will cause effect after Choqok restart."),
+    KMessageBox::information(this, i18n("You need to restart Choqok for the accounts priority changes to take effect."),
                              QString(), QLatin1String("ChangeAccountsPriority") );
 }
 

@@ -113,7 +113,7 @@ p, li { white-space: pre-wrap; }
               <item row="1" column="1">
                <widget class="KLineEdit" name="kcfg_password">
                 <property name="toolTip">
-                 <string>The password associated to your user name for the service</string>
+                 <string>The password associated to your username for the service</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -128,7 +128,7 @@ p, li { white-space: pre-wrap; }
             <item>
              <widget class="KPushButton" name="kcfg_test">
               <property name="toolTip">
-               <string>Verify Credential</string>
+               <string>Verify Credentials</string>
               </property>
              </widget>
             </item>
@@ -240,7 +240,7 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QCheckBox" name="kcfg_doNotShowRepliesOnHome">
          <property name="text">
-          <string>Do not show replies to me on the home tab.</string>
+          <string>Do not show replies to me on the Home tab</string>
          </property>
          <property name="checked">
           <bool>true</bool>

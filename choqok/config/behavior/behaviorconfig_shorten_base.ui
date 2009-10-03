@@ -23,7 +23,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Shortening &amp;Service:</string>
+        <string>Shortening &amp;service:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

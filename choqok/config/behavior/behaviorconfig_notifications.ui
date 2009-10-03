@@ -23,7 +23,7 @@
      <item>
       <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>&amp;Notify duration:</string>
+        <string>&amp;Notification duration:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
