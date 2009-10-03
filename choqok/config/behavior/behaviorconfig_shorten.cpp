@@ -36,7 +36,7 @@ BehaviorConfig_Shorten::BehaviorConfig_Shorten( QWidget *parent )
     kDebug();
     setupUi(this);
     Choqok::ShortenManager::self();
-    connect(kcfg_shortenPlugins, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
+    connect(shortenPlugins, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
 }
 
 BehaviorConfig_Shorten::~BehaviorConfig_Shorten()
@@ -46,7 +46,7 @@ BehaviorConfig_Shorten::~BehaviorConfig_Shorten()
 
 void BehaviorConfig_Shorten::currentPluginChanged( int index )
 {
-    if( kcfg_shortenPlugins->itemData(index).toString() == prevShortener)
+    if( shortenPlugins->itemData(index).toString() == prevShortener)
         emit changed(false);
     else
         emit changed(true);
@@ -64,21 +64,21 @@ void BehaviorConfig_Shorten::currentPluginChanged( int index )
 void BehaviorConfig_Shorten::load()
 {
     availablePlugins = Choqok::PluginManager::self()->availablePlugins("Shorteners");
-    kcfg_shortenPlugins->clear();
-    kcfg_shortenPlugins->addItem( i18n("None") );
+    shortenPlugins->clear();
+    shortenPlugins->addItem( i18n("None") );
     foreach(const KPluginInfo& plugin, availablePlugins){
-        kcfg_shortenPlugins->addItem( KIcon(plugin.icon()), plugin.name(), plugin.pluginName());
+        shortenPlugins->addItem( KIcon(plugin.icon()), plugin.name(), plugin.pluginName());
     }
     prevShortener = Choqok::BehaviorSettings::shortenerPlugin();
     if(!prevShortener.isEmpty()) {
-        kcfg_shortenPlugins->setCurrentIndex(kcfg_shortenPlugins->findData(prevShortener));
+        shortenPlugins->setCurrentIndex(shortenPlugins->findData(prevShortener));
         //         currentPluginChanged(kcfg_plugins->currentIndex());
     }
 }
 
 void BehaviorConfig_Shorten::save()
 {
-    const QString shorten = kcfg_shortenPlugins->itemData(kcfg_shortenPlugins->currentIndex()).toString();
+    const QString shorten = shortenPlugins->itemData(shortenPlugins->currentIndex()).toString();
     Choqok::BehaviorSettings::setShortenerPlugin(shorten);
     if( prevShortener != shorten ) {
         kDebug()<<prevShortener<<" -> "<<shorten;
