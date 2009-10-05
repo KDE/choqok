@@ -140,7 +140,7 @@ QMenu* TwitterApiMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidg
 QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *account, const QString& timelineName)
 {
     kDebug();
-    QString fileName = account->alias() + '_' + timelineName + "_backuprc";
+    QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
     KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
     QStringList tmpList = postsBackup.groupList();
     QList<ChoqokId> groupList;
@@ -211,7 +211,7 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
                                        const QList< Choqok::UI::PostWidget* > &timeline)
 {
     kDebug();
-    QString fileName = account->alias() + '_' + timelineName + "_backuprc";
+    QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
     KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
 
     ///Clear previous data:

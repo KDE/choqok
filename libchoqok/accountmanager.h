@@ -83,7 +83,7 @@ public:
     bool removeAccount( const QString &alias );
 
     QString lastError() const;
-    QString generatePostBackupFileName( const QString &alias, QString type );
+    static QString generatePostBackupFileName( const QString &alias, const QString &name );
 
 public slots:
     void loadAllAccounts();

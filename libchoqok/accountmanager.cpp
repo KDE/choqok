@@ -25,7 +25,7 @@
 #include <kdebug.h>
 #include <KConfig>
 #include <KConfigGroup>
-#include <kio/deletejob.h>
+#include <kio/netaccess.h>
 #include <kwallet.h>
 #include <kstandarddirs.h>
 #include <KDE/KLocale>
@@ -121,9 +121,20 @@ bool AccountManager::removeAccount( const QString &alias )
             d->conf->deleteGroup( QString::fromLatin1( "Account_%1" ).arg( alias ) );
             d->conf->sync();
             Choqok::Account *a = d->accounts.takeAt( i );
+            if(!a)
+                return false;
+            QStringList names = a->timelineNames();
+            while ( !names.isEmpty() ) {
+                QString tmpFile;
+                tmpFile = KStandardDirs::locate( "data", "choqok/" +
+                        generatePostBackupFileName(a->alias(), names.takeFirst()) );
+                kDebug() << "Will remove " << tmpFile;
+                const KUrl path( tmpFile );
+                if(KIO::NetAccess::exists(path, KIO::NetAccess::SourceSide, UI::Global::mainWindow()))
+                    KIO::NetAccess::del(path, UI::Global::mainWindow());
+            }
             a->deleteLater();
             PasswordManager::self()->removePassword(alias);
-            //TODO Remove data files
             emit accountRemoved( alias );
             return true;
         }
@@ -189,11 +200,9 @@ void AccountManager::loadAllAccounts()
     emit allAccountsLoaded();
 }
 
-QString AccountManager::generatePostBackupFileName( const QString &alias, QString type )
+QString AccountManager::generatePostBackupFileName( const QString& alias, const QString& name )
 {
-    QString name = alias + '_' + type;
-    name += "_postlist";
-    return name;
+    return QString(alias + '_' + name + "_backuprc");
 }
 
 QString AccountManager::lastError() const
