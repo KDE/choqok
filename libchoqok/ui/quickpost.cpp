@@ -144,6 +144,8 @@ void QuickPost::submitPost( const QString & txt )
     this->hide();
     QString newPost = txt;
     Choqok::Account* currentAccount = d->accountsList.value(d->comboAccounts->currentText());
+    if(!currentAccount)
+        return;
     if( currentAccount->microblog()->postCharLimit() &&
        newPost.size() > (int)currentAccount->microblog()->postCharLimit() )
         newPost = Choqok::ShortenManager::self()->parseText(newPost);
@@ -167,8 +169,7 @@ void QuickPost::slotButtonClicked(int button)
 {
     kDebug();
     if(button == KDialog::Ok) {
-        const QString txt = d->txtPost->toPlainText();
-        submitPost( txt );
+        submitPost( d->txtPost->toPlainText() );
     } else
         KDialog::slotButtonClicked(button);
 }

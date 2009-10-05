@@ -38,6 +38,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KMenu>
 #include <KDateTime>
 #include <QKeyEvent>
+#include <QPointer>
 #include "choqoktextedit.h"
 
 namespace Choqok {
@@ -52,7 +53,7 @@ public:
     }
     Account *account;
     MicroBlog *blog;
-    ComposerWidget *composer;
+    QPointer<ComposerWidget> composer;
     QMap<QString, TimelineWidget*> timelines;
     KTabWidget *timelinesTabWidget;
     QLabel *latestUpdate;
@@ -330,7 +331,7 @@ void MicroBlogWidget::slotAbortAllJobs()
 
 void MicroBlogWidget::keyPressEvent(QKeyEvent* e)
 {
-    if(e->key() == Qt::Key_Escape)
+    if(e->key() == Qt::Key_Escape && composer())
         composer()->abort();
     QWidget::keyPressEvent(e);
 }
