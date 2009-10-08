@@ -39,7 +39,7 @@ class Account;
 
 class KJob;
 
-class CHOQOK_EXPORT SearchInfo
+class CHOQOK_HELPER_EXPORT SearchInfo
 {
 public:
     SearchInfo()
@@ -70,7 +70,7 @@ public:
     @author Stephen Henderson \<hendersonsk@gmail.com\>
     @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
-class CHOQOK_EXPORT TwitterApiSearch : public QObject
+class CHOQOK_HELPER_EXPORT TwitterApiSearch : public QObject
 {
     Q_OBJECT
 public:

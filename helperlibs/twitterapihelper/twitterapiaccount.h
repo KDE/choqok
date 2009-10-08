@@ -32,7 +32,7 @@ class TwitterApiMicroBlog;
 /**
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
-class CHOQOK_EXPORT TwitterApiAccount : public Choqok::Account
+class CHOQOK_HELPER_EXPORT TwitterApiAccount : public Choqok::Account
 {
     Q_OBJECT
 public:

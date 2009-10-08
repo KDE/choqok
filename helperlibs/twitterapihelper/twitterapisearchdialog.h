@@ -29,7 +29,7 @@
 #include "choqok_export.h"
 
 class TwitterApiAccount;
-class CHOQOK_EXPORT TwitterApiSearchDialog : public KDialog
+class CHOQOK_HELPER_EXPORT TwitterApiSearchDialog : public KDialog
 {
     Q_OBJECT
 public:

@@ -30,7 +30,7 @@
 /**
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
-class CHOQOK_EXPORT TwitterApiPostWidget : public Choqok::UI::PostWidget
+class CHOQOK_HELPER_EXPORT TwitterApiPostWidget : public Choqok::UI::PostWidget
 {
     Q_OBJECT
 public:

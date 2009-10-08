@@ -34,7 +34,7 @@ class KJob;
 /**
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
-class CHOQOK_EXPORT TwitterApiMicroBlog : public Choqok::MicroBlog
+class CHOQOK_HELPER_EXPORT TwitterApiMicroBlog : public Choqok::MicroBlog
 {
 Q_OBJECT
 public:

@@ -30,7 +30,7 @@
 
 class TwitterApiSearchTimelineWidget;
 
-class CHOQOK_EXPORT TwitterApiMicroBlogWidget : public Choqok::UI::MicroBlogWidget
+class CHOQOK_HELPER_EXPORT TwitterApiMicroBlogWidget : public Choqok::UI::MicroBlogWidget
 {
     Q_OBJECT
 public:
