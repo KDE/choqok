@@ -27,12 +27,6 @@ set_target_properties(twitterapihelper PROPERTIES
 VERSION 0.5
 SOVERSION 0
 )
-if(MSVC)
-    set_target_properties(twitterapihelper PROPERTIES
-    OUTPUT_NAME libtwitterapihelper
-    )
-endif(MSVC)
-
 # install( FILES choqokbehaviorsettings.kcfg choqokappearancesettings.kcfg
 # DESTINATION ${KCFG_INSTALL_DIR})
 
