@@ -58,6 +58,6 @@ void SearchAction::slotSearch()
         mBlog->showSearchDialog(curAccount);
     } else {
         KMessageBox::sorry(Choqok::UI::Global::mainWindow(),
-                           i18n("SearchAction plugin does not support current microblog!"));
+                           i18n("The Search action plugin does not support the current microblog!"));
     }
 }
