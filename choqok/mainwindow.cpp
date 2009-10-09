@@ -250,7 +250,7 @@ void MainWindow::triggerQuickPost()
 {
     if ( Choqok::AccountManager::self()->accounts().isEmpty() )
     {
-        KMessageBox::error( this, i18n ( "No account created. You must create an account before to make a post." ) );
+        KMessageBox::error( this, i18n ( "No account created. You have to create an account before being able to make posts." ) );
         return;
     }
     if(!quickWidget)
@@ -280,8 +280,8 @@ void MainWindow::settingsChanged()
     kDebug();
     ///TODO Check if there is any account and show a message if there isn't any!
     if ( Choqok::AccountManager::self()->accounts().count() < 1 ) {
-        if ( KMessageBox::questionYesNo( this, i18n( "In order to use Choqok you need at \
-least one account at one of supported microblogging services.\n\
+        if ( KMessageBox::questionYesNo( this, i18n( "In order to use Choqok you need \
+an account at one of the supported micro-blogging services.\n\
 Would you like to add your account now?" ) ) == KMessageBox::Yes ) {
             slotConfigChoqok();
         }
