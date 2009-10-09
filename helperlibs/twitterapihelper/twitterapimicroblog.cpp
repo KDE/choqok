@@ -277,7 +277,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
         if ( !job ) {
             kDebug() << "Cannot create an http POST request!";
-//             QString errMsg = i18n ( "Creating new post failed, Cannot create an http POST request, Check your KDE installation." );
+//             QString errMsg = i18n ( "Creating the new post failed. Cannot create an http POST request. Please check your KDE installation." );
 //             emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
         }
@@ -297,7 +297,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
         if ( !job ) {
             kDebug() << "Cannot create an http POST request!";
-//             QString errMsg = i18n ( "Creating new post failed, Cannot create an http POST request, Check your KDE installation." );
+//             QString errMsg = i18n ( "Creating the new post failed. Cannot create an http POST request. Please check your KDE installation." );
 //             emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
         }
@@ -325,7 +325,7 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
         emit errorPost ( theAccount, post, Choqok::MicroBlog::CommunicationError,
-                         i18n("Creating new post failed, %1", job->errorString()), MicroBlog::Critical );
+                         i18n("Creating the new post failed. %1", job->errorString()), MicroBlog::Critical );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast< KIO::StoredTransferJob * > ( job );
         if ( !post->isPrivate ) {
@@ -333,7 +333,7 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
             if ( post->isError ) {
                 kDebug() << "XML parsing error" ;
                 emit errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
-                                 i18n ( "Creating new post failed, Could not parse result data." ), MicroBlog::Critical );
+                                 i18n ( "Creating the new post failed. The result data could not be parsed." ), MicroBlog::Critical );
             } else {
                 emit postCreated ( theAccount, post );
             }
@@ -374,8 +374,8 @@ void TwitterApiMicroBlog::fetchPost ( Choqok::Account* theAccount, Choqok::Post*
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create an http GET request!";
-//         QString errMsg = i18n ( "Fetching new post failed, Cannot create an http GET request,"
-//                                 "Check your KDE installation." );
+//         QString errMsg = i18n ( "Fetching the new post failed. Cannot create an http GET request."
+//                                 "Please check your KDE installation." );
 //         emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, Low );
         return;
     }
@@ -397,14 +397,14 @@ void TwitterApiMicroBlog::slotFetchPost ( KJob *job )
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
         emit error ( theAccount, Choqok::MicroBlog::CommunicationError,
-                     i18n("Fetching new post failed, %1", job->errorString()), Low );
+                     i18n("Fetching the new post failed. %1", job->errorString()), Low );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
         readPostFromXml ( theAccount, stj->data(), post );
         if ( post->isError ) {
             kDebug() << "Parsing Error";
             emit errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
-                             i18n ( "Fetching new post failed, Could not parse result data." ), Low );
+                             i18n ( "Fetching new post failed. The result data could not be parsed." ), Low );
         } else {
             post->isError = true;
             emit postFetched ( theAccount, post );
@@ -449,7 +449,7 @@ void TwitterApiMicroBlog::slotRemovePost ( KJob *job )
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
         emit errorPost ( theAccount, post, CommunicationError,
-                         i18n("Removing post failed, %1", job->errorString() ), MicroBlog::Critical );
+                         i18n("Removing the post failed. %1", job->errorString() ), MicroBlog::Critical );
     } else {
         emit postRemoved ( theAccount, post );
     }
@@ -463,8 +463,8 @@ void TwitterApiMicroBlog::createFavorite ( Choqok::Account* theAccount, const QS
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create an http POST request!";
-//         QString errMsg = i18n ( "Favorite creation failed, Cannot create an http POST request, "
-//                                 "Check your KDE installation." );
+//         QString errMsg = i18n ( "The Favorite creation failed. Cannot create an http POST request. "
+//                                 "Please check your KDE installation." );
 //         emit error ( theAccount, OtherError, errMsg );
         return;
     }
@@ -485,7 +485,7 @@ void TwitterApiMicroBlog::slotCreateFavorite ( KJob *job )
     QString postId = mFavoriteMap.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit error ( theAccount, CommunicationError, i18n( "Favorite creation failed, %1", job->errorString() ) );
+        emit error ( theAccount, CommunicationError, i18n( "Favorite creation failed. %1", job->errorString() ) );
     } else {
         emit favoriteCreated ( theAccount, postId );
     }
@@ -499,8 +499,8 @@ void TwitterApiMicroBlog::removeFavorite ( Choqok::Account* theAccount, const QS
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create an http POST request!";
-//         QString errMsg = i18n ( "Favorite removing failed, Cannot create an http POST request,"
-//                                 "Check your KDE installation." );
+//         QString errMsg = i18n ( "Removing the favorite failed. Cannot create an http POST request. "
+//                                 "Please check your KDE installation." );
 //         emit error ( theAccount, OtherError, errMsg );
         return;
     }
@@ -521,7 +521,7 @@ void TwitterApiMicroBlog::slotRemoveFavorite ( KJob *job )
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit error ( theAccount, CommunicationError, i18n("Favorite removing failed, %1", job->errorString() ) );
+        emit error ( theAccount, CommunicationError, i18n("Removing the favorite failed. %1", job->errorString() ) );
     } else {
         emit favoriteRemoved ( theAccount, id );
     }
@@ -596,7 +596,7 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create an http GET request!";
-//         QString errMsg = i18n ( "Cannot create an http GET request, Check your KDE installation." );
+//         QString errMsg = i18n ( "Cannot create an http GET request. Please check your KDE installation." );
 //         emit error ( theAccount, OtherError, errMsg, Low );
         return;
     }
@@ -866,7 +866,7 @@ QStringList TwitterApiMicroBlog::readUsersScreenNameFromXml( Choqok::Account* th
     QDomElement root = document.documentElement();
 
     if ( root.tagName() != "users" ) {
-        QString err = i18n( "Retrieving friends list failed, Data returned from server is corrupted." );
+        QString err = i18n( "Retrieving the friends list failed. The data returned from the server is corrupted." );
         kDebug() << "there's no users tag in XML\t the XML is: \n" << buffer;
         emit error(theAccount, ParsingError, err, Critical);
         return list;

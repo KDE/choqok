@@ -72,7 +72,7 @@ TwitterApiDMessageDialog::~TwitterApiDMessageDialog()
 
 void TwitterApiDMessageDialog::setupUi( QWidget *mainWidget )
 {
-    QLabel *lblTo = new QLabel( i18n("To:"), this);
+    QLabel *lblTo = new QLabel( i18nc("Send message to", "To:"), this);
     d->comboFriendsList = new KComboBox(this);
     d->comboFriendsList->setDuplicatesEnabled(false);
 
