@@ -58,7 +58,7 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
         KMenu menu;
         KAction * info = new KAction( KIcon("user-identity"), i18nc("Who is user", "Who is %1", url.host()),
                                       &menu );
-        KAction * from = new KAction(KIcon("edit-find-user"), i18nc("From user", "From %1",url.host()),
+        KAction * from = new KAction(KIcon("edit-find-user"), i18nc("Posts from user", "Posts from %1",url.host()),
                                      &menu);
         KAction * to = new KAction(KIcon("meeting-attending"), i18nc("Replies to user", "Replies to %1",
                                                                      url.host()),

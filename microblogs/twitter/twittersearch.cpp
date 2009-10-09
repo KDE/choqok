@@ -51,7 +51,7 @@ TwitterSearch::TwitterSearch(QObject* parent): TwitterApiSearch(parent)
     mSearchTypes[FromUser].first = i18nc( "Tweets are Twitter posts", "Tweets From This User" );
     mSearchTypes[FromUser].second = true;
 
-    mSearchTypes[ReferenceUser].first = i18nc( "Tweets are Twitter posts", "Tweets Including This User's Name" );
+    mSearchTypes[ReferenceUser].first = i18nc( "Tweets are Twitter posts", "Tweets Including This Username" );
     mSearchTypes[ReferenceUser].second = true;
 
     mSearchTypes[ReferenceHashtag].first = i18nc( "Tweets are Twitter posts", "Tweets Including This Hashtag" );
