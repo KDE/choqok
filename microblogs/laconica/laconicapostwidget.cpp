@@ -63,9 +63,9 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
                                                     LaconicaSearch::ReferenceGroup);
     } else if(scheme == "user") {
         KMenu menu;
-        KAction * info = new KAction( KIcon("user-identity"), i18n("Who is %1", url.host()), &menu );
-        KAction * from = new KAction(KIcon("edit-find-user"), i18n("From %1",url.host()),&menu);
-        KAction * to = new KAction(KIcon("meeting-attending"), i18n("Replies to %1",url.host()),&menu);
+        KAction * info = new KAction( KIcon("user-identity"), i18nc("Who is user", "Who is %1", url.host()), &menu );
+        KAction * from = new KAction(KIcon("edit-find-user"), i18nc("Posts from user", "Posts from %1",url.host()),&menu);
+        KAction * to = new KAction(KIcon("meeting-attending"), i18nc("Replies to user", "Replies to %1",url.host()),&menu);
 //         menu.addAction(info);
         menu.addAction(from);
         menu.addAction(to);

@@ -105,7 +105,7 @@ void LaconicaEditAccountWidget::verifyCredentials()
     if ( !job ) {
         kDebug() << "Cannot create an http GET request.";
         return;
-//         QString errMsg = i18n ( "Cannot create an http GET request, Check your KDE installation." );
+//         QString errMsg = i18n ( "Cannot create an http GET request. Please check your KDE installation." );
 //         KMessageBox::error(this, errMsg);
     }
     progress = new QProgressBar(this);
