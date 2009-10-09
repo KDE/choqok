@@ -60,8 +60,8 @@ void EditAccountDialog::slotButtonClicked(int button)
                     accept();
                 }
         } else {
-            KMessageBox::sorry(this, i18n("Cannot validate your input information,\
-            Please check fields data.\n Maybe a required field is empty."));
+            KMessageBox::sorry(this, i18n("Cannot validate your input information.\
+            Please check the field's data.\nMaybe a required field is empty?"));
         }
     } else {
         KDialog::slotButtonClicked(button);

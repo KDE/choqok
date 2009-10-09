@@ -57,14 +57,14 @@ void AddAccountDialog::slotButtonClicked(int button)
         if( widget->validateData() ){
             if( Choqok::Account *acc = widget->apply() ) {
                 if( !Choqok::AccountManager::self()->registerAccount( acc ) )
-                    KMessageBox::detailedError( this, i18n("Account registration failed."),
+                    KMessageBox::detailedError( this, i18n("The Account registration failed."),
                                                 Choqok::AccountManager::self()->lastError() );
                 else
                     accept();
             }
         } else {
-            KMessageBox::sorry(this, i18n("Cannot validate your input information,\
-            Please check fields data.\n Maybe a required field is empty."));
+            KMessageBox::sorry(this, i18n("Cannot validate your input information.\
+            Please check the field's data.\nMaybe a required field is empty?"));
         }
     } else {
         KDialog::slotButtonClicked(button);

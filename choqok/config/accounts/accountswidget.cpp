@@ -86,7 +86,7 @@ void AccountsWidget::addAccount()
                                                         Choqok::UI::Global::mainWindow() );
             d->exec();
         } else {
-            KMessageBox::sorry(this, i18n("Cannot load %1 plugin. Please check your installation.", name));
+            KMessageBox::sorry(this, i18n("Cannot load the %1 plugin. Please check your installation.", name));
         }
     }
 }
@@ -100,7 +100,7 @@ void AccountsWidget::editAccount( QString alias )
     }
     Choqok::Account *currentAccount = Choqok::AccountManager::self()->findAccount(alias);
     if(!currentAccount) {
-        KMessageBox::detailedSorry(this, i18n("Cannot find desired account."),
+        KMessageBox::detailedSorry(this, i18n("Cannot find the desired account."),
                                     Choqok::AccountManager::self()->lastError());
         return;
     } else {
@@ -231,7 +231,7 @@ void AccountsWidget::save()
 
 KMenu * AccountsWidget::createAddAccountMenu()
 {
-    mBlogMenu = new KMenu(i18n("Select Micro-Blog Service"), this);
+    mBlogMenu = new KMenu(i18n("Select Micro-Blogging Service"), this);
     const QList<KPluginInfo> list = Choqok::PluginManager::self()->availablePlugins("MicroBlogs");
     foreach(const KPluginInfo& info, list){
         KAction *act = new KAction(mBlogMenu);
