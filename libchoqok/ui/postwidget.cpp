@@ -370,7 +370,7 @@ QString PostWidget::formatDateTime( const QDateTime& time )
 
 void PostWidget::removeCurrentPost()
 {
-    if ( KMessageBox::warningYesNo( this, i18n( "Are you sure to remove this post from server?" ) ) == KMessageBox::Yes ) {
+    if ( KMessageBox::warningYesNo( this, i18n( "Are you sure you want to remove this post from the server?" ) ) == KMessageBox::Yes ) {
         connect(d->mCurrentAccount->microblog(), SIGNAL(postRemoved(Choqok::Account*,Choqok::Post*)),
                 SLOT(slotCurrentPostRemoved(Choqok::Account*,Choqok::Post*)) );
         connect( d->mCurrentAccount->microblog(),

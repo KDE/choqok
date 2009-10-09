@@ -87,7 +87,7 @@ QString MicroBlog::errorString( ErrorType type )
             return i18n("Authentication error.");
             break;
         case NotSupportedError:
-            return i18n("Server do not support this feature.");
+            return i18n("The server does not support this feature.");
             break;
         case OtherError:
             return i18n("Unknown error.");

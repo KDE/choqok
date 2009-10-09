@@ -96,7 +96,7 @@ QPixmap * MediaManager::fetchImage( const QString& remoteUrl, ReturnMode mode /*
         KIO::Job *job = KIO::storedGet( srcUrl, KIO::NoReload, KIO::HideProgressInfo ) ;
         if ( !job ) {
             kDebug() << "Cannot create a FileCopyJob!";
-            QString errMsg = i18n( "Cannot create a KDE Job, please check your installation.");
+            QString errMsg = i18n( "Cannot create a KDE Job. Please check your installation.");
             emit fetchError( remoteUrl, errMsg );
             return 0L;
         }
@@ -124,7 +124,7 @@ void MediaManager::slotImageFetched( KJob * job )
             d->cache.insert( remote, p );
             emit imageFetched( remote, p );
         } else {
-            emit fetchError( remote, i18n( "Download failed, Returned file is corrupted" ) );
+            emit fetchError( remote, i18n( "The download failed. The returned file is corrupted." ) );
         }
     }
 }
