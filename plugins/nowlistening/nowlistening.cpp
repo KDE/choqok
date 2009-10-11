@@ -55,6 +55,7 @@ void NowListening::slotPrepareNowListening()
     QDBusInterface remoteApp( "org.kde.amarok", "/Player", "org.freedesktop.MediaPlayer" );
     QDBusReply< QMap<QString, QVariant> > reply = remoteApp.call( "GetMetadata" );
     QVariantMap trackInfo = reply.value();
+    NowListeningSettings::self()->readConfig();
     QString text = NowListeningSettings::templateString();
     text.replace("%track%", trackInfo["tracknumber"].toString());
     text.replace("%title%", trackInfo["title"].toString());

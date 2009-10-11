@@ -60,7 +60,7 @@ void UnTiny::slotAddNewPostWidget(Choqok::UI::PostWidget* newWidget)
 
 void UnTiny::startParsing()
 {
-    kDebug();
+//     kDebug();
     int i = 8;
     while( !postsQueue.isEmpty() && i>0 ){
         parse(postsQueue.dequeue());
@@ -70,7 +70,7 @@ void UnTiny::startParsing()
     if(postsQueue.isEmpty())
         state = Stopped;
     else
-        QTimer::singleShot(1000, this, SLOT(startParsing()));
+        QTimer::singleShot(500, this, SLOT(startParsing()));
 }
 
 void UnTiny::parse(Choqok::UI::PostWidget* postToParse)
