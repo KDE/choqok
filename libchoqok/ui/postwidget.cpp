@@ -526,4 +526,9 @@ void PostWidget::setSign(const QString& sign)
     updateUi();
 }
 
+void PostWidget::deleteLater()
+{
+    close();
+}
+
 #include "postwidget.moc"

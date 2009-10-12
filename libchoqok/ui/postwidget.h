@@ -100,6 +100,7 @@ public:
     */
     QString content() const;
 
+    void deleteLater();
 public slots:
     /**
     Set Style sheet of widget to corresponding data->

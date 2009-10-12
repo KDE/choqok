@@ -231,7 +231,6 @@ void TimelineWidget::settingsChanged()
 
 void TimelineWidget::slotOnePostReaded()
 {
-    kDebug();
     d->unreadCount--;
     emit updateUnreadCount(-1);
     if(d->unreadCount == 0){
@@ -252,7 +251,6 @@ QList< PostWidget* > TimelineWidget::postWidgets()
 
 void TimelineWidget::postWidgetClosed(const ChoqokId& postId, PostWidget*)
 {
-    kDebug();
     d->posts.remove(postId);
 }
 
