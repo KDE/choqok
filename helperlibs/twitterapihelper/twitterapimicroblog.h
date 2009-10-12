@@ -112,6 +112,7 @@ public:
                                                                         QString name, const SearchInfo &info,
                                                                         QWidget *parent);
 
+    QDateTime dateFromString( const QString &date );
 public slots:
     /**
     Launch a dialog to send direct message.
@@ -149,7 +150,6 @@ protected:
 
     virtual void setTimelineInfos();
     virtual KUrl apiUrl( TwitterApiAccount* theAccount );
-    virtual QDateTime dateFromString( const QString &date );
     virtual Choqok::Post * readPostFromDomElement( Choqok::Account* theAccount,
                                                    const QDomElement& root, Choqok::Post* post = 0 );
     virtual Choqok::Post * readPostFromXml( Choqok::Account* theAccount,

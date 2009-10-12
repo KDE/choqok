@@ -28,6 +28,8 @@
 #include <KAction>
 #include <KMenu>
 #include <klocalizedstring.h>
+#include <twitterapihelper/twitterapiwhoiswidget.h>
+#include <twitterapihelper/twitterapiaccount.h>
 
 TwitterPostWidget::TwitterPostWidget(Choqok::Account* account, const Choqok::Post& post, QWidget* parent): TwitterApiPostWidget(account, post, parent)
 {
@@ -69,7 +71,7 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
         from->setData(TwitterSearch::FromUser);
         to->setData(TwitterSearch::ToUser);
         cont->setData(TwitterSearch::ReferenceUser);
-//         menu.addAction(info);
+        menu.addAction(info);
         menu.addAction(from);
         menu.addAction(to);
         menu.addAction(cont);
@@ -77,7 +79,9 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
         if(ret == 0)
             return;
         if(ret == info) {
-            //TODO Who is
+            TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(currentAccount());
+            TwitterApiWhoisWidget *wd = new TwitterApiWhoisWidget(acc, url.host(), this);
+            wd->show(QCursor::pos());
             return;
         }
         int type = ret->data().toInt();

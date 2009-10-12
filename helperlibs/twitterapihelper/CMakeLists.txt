@@ -12,6 +12,7 @@ twitterapisearch.cpp
 twitterapisearchdialog.cpp
 twitterapimicroblogwidget.cpp
 twitterapisearchtimelinewidget.cpp
+twitterapiwhoiswidget.cpp
 )
 # kde4_add_kcfg_files(twitterhelper_LIB_SRCS
 # choqokbehaviorsettings.kcfgc
