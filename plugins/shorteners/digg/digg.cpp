@@ -79,4 +79,4 @@ Digg::~Digg()
 {
 }
 
-#include "digg.moc"
+// #include "digg.moc"

@@ -72,4 +72,4 @@ TightUrl::~TightUrl()
 {
 }
 
-#include "tighturl.moc"
+// #include "tighturl.moc"
