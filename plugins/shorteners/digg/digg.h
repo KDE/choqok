@@ -36,7 +36,7 @@ class Digg : public Choqok::Shortener
 public:
     Digg( QObject* parent, const QVariantList& args  );
     ~Digg();
-public slots:
+public:
     QString shorten( const QString &url );
 };
 

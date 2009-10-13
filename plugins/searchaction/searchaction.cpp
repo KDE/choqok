@@ -35,7 +35,7 @@
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < SearchAction > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_untiny" ) )
 
-SearchAction::SearchAction( QObject* parent, const QList< QVariant >& args )
+SearchAction::SearchAction( QObject* parent, const QList< QVariant >& )
     : Plugin(MyPluginFactory::componentData(), parent)
 {
     KAction *action = new KAction(KIcon("edit-find"), i18n("Search..."), this);
