@@ -122,6 +122,9 @@ p, li { white-space: pre-wrap; }
             <property name="text">
              <string>Use secure connection (HTTPS)</string>
             </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
          </layout>

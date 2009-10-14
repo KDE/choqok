@@ -44,7 +44,7 @@ public:
 TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString &alias)
     : Account(parent, alias), d(new Private)
 {
-    d->secure = configGroup()->readEntry("UseSecureConnection", false);
+    d->secure = configGroup()->readEntry("UseSecureConnection", true);
     d->userId = configGroup()->readEntry("UserId", QString());
     d->count = configGroup()->readEntry("CountOfPosts", 20);
     d->host = configGroup()->readEntry("Host", QString());

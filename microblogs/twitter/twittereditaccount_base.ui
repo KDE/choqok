@@ -139,6 +139,9 @@ p, li { white-space: pre-wrap; }
             <property name="text">
              <string>Use secure connection (HTTPS)</string>
             </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
          </layout>
@@ -248,16 +251,6 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="kcfg_loadTwitpicImages">
-         <property name="text">
-          <string>Load Twitpic images</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -303,7 +296,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>kcfg_register</tabstop>
   <tabstop>tabwidget</tabstop>
   <tabstop>kcfg_doNotShowRepliesOnHome</tabstop>
-  <tabstop>kcfg_loadTwitpicImages</tabstop>
  </tabstops>
  <resources/>
  <connections/>
