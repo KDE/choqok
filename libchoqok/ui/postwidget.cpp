@@ -57,7 +57,7 @@ KPushButton{border:0px}");
 const QRegExp PostWidget::mUrlRegExp("((ftps?|https?)://[^\\s<>\"]+[^!,\\.\\s<>'\"\\)\\]])");
 QString PostWidget::readStyle;
 QString PostWidget::unreadStyle;
-const QString PostWidget::webIconText("&#9794;");
+const QString PostWidget::webIconText("&#9755;");
 
 class PostWidget::Private
 {
