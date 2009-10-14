@@ -41,6 +41,7 @@ set_target_properties(choqok PROPERTIES
 VERSION 0.9.3
 SOVERSION 0
 )
+
 if(MSVC)
     set_target_properties(choqok PROPERTIES
     OUTPUT_NAME libchoqok
@@ -53,3 +54,27 @@ install( FILES choqokbehaviorsettings.kcfg choqokappearancesettings.kcfg
 install(TARGETS choqok ${INSTALL_TARGETS_DEFAULT_ARGS})
 install( FILES choqokplugin.desktop choqokshortenerplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 
+install( FILES
+    account.h
+    accountmanager.h
+    choqok_export.h
+    choqokid.h
+    choqoktypes.h
+    choqokuiglobal.h
+    mediamanager.h
+    microblog.h
+    notifymanager.h
+    passwordmanager.h
+    plugin.h
+    pluginmanager.h
+    shortener.h
+    shortenmanager.h
+    ui/choqoktextedit.h
+    ui/composerwidget.h
+    ui/editaccountwidget.h
+    ui/mainwindow.h
+    ui/microblogwidget.h
+    ui/postwidget.h
+    ui/quickpost.h
+    ui/timelinewidget.h
+DESTINATION ${INCLUDE_INSTALL_DIR}/choqok COMPONENT Devel)
