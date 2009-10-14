@@ -55,6 +55,8 @@ install(TARGETS choqok ${INSTALL_TARGETS_DEFAULT_ARGS})
 install( FILES choqokplugin.desktop choqokshortenerplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 
 install( FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/choqokbehaviorsettings.h
+    ${CMAKE_CURRENT_BINARY_DIR}/choqokappearancesettings.h
     account.h
     accountmanager.h
     choqok_export.h
