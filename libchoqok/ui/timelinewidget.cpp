@@ -140,7 +140,7 @@ void TimelineWidget::setupUi()
 void TimelineWidget::removeOldPosts()
 {
     int count = d->posts.count() - BehaviorSettings::countOfPosts();
-    kDebug()<<count;
+//     kDebug()<<count;
     while( count > 0 && !d->posts.isEmpty() ){
         PostWidget *wd = d->posts.values().first();
         if(wd && wd->isRead()){

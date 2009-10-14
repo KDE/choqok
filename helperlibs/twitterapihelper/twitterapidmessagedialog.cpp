@@ -58,7 +58,9 @@ TwitterApiDMessageDialog::TwitterApiDMessageDialog(TwitterApiAccount *theAccount
     setupUi(wg);
     KConfigGroup grp(KGlobal::config(), "TwitterApi");
     resize( grp.readEntry("DMessageDialogSize", QSize(300, 200)) );
-    reloadFriendslist();
+    QStringList list = theAccount->friendsList();
+    list.sort();
+    d->comboFriendsList->addItems(list);
     setButtonText(Ok, i18nc("Send private message", "Send"));
 }
 
@@ -98,6 +100,7 @@ void TwitterApiDMessageDialog::setupUi( QWidget *mainWidget )
 
 void TwitterApiDMessageDialog::reloadFriendslist()
 {
+    d->comboFriendsList->clear();
     TwitterApiMicroBlog * blog = qobject_cast<TwitterApiMicroBlog*>(d->account->microblog());
     if(blog) {
         connect( blog, SIGNAL(friendsUsernameListed(TwitterApiAccount*,QStringList)),

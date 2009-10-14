@@ -43,6 +43,7 @@
 #include <microblog.h>
 #include "twitterapimicroblog.h"
 #include <choqokappearancesettings.h>
+#include <notifymanager.h>
 
 const QString TwitterApiWhoisWidget::baseText("\
 <table width=\"100%\">\
@@ -87,25 +88,29 @@ const QString TwitterApiWhoisWidget::baseText("\
 class TwitterApiWhoisWidget::Private
 {
 public:
-    Private(TwitterApiAccount *account)
-    :currentAccount(account), waitFrame(0), job(0)
-    {}
+    Private(TwitterApiAccount *account, const QString &userN)
+    :currentAccount(account), waitFrame(0), job(0), username(userN)
+    {
+        mBlog = qobject_cast<TwitterApiMicroBlog*>(account->microblog());
+    }
     KTextBrowser *wid;
     TwitterApiAccount *currentAccount;
+    TwitterApiMicroBlog *mBlog;
     QFrame *waitFrame;
     KJob *job;
     Choqok::Post currentPost;
+    QString username;
 
     QString followersCount;
     QString friendsCount;
     QString timeZone;
-    QString lockImg;
+    QString imgActions;
 //     bool isFollowing;
 };
 
 TwitterApiWhoisWidget::TwitterApiWhoisWidget(TwitterApiAccount* theAccount, const QString& username,
                                              QWidget* parent)
-    : QFrame(parent), d(new Private(theAccount))
+    : QFrame(parent), d(new Private(theAccount, username))
 {
     kDebug();
     setAttribute(Qt::WA_DeleteOnClose);
@@ -125,6 +130,7 @@ TwitterApiWhoisWidget::TwitterApiWhoisWidget(TwitterApiAccount* theAccount, cons
     d->wid->setOpenLinks(false);
     connect(d->wid,SIGNAL(anchorClicked(const QUrl)),this,SLOT(checkAnchor(const QUrl)));
     setupUi();
+    setActionImages();
 }
 
 TwitterApiWhoisWidget::~TwitterApiWhoisWidget()
@@ -164,7 +170,7 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
 
     QDomElement root = doc.documentElement();
     if ( root.tagName() != "user" ) {
-        kDebug()<<"There's no user tag in returned document from server! Date is:\n\t"<<stj->data();
+        kDebug()<<"There's no user tag in returned document from server! Data is:\n\t"<<stj->data();
         d->wid->setText(i18n("Sorry, Cannot Load user information!"));
         return;
     }
@@ -191,13 +197,13 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
             d->followersCount = elm.text();
         } else if(elm.tagName() == "friends_count") {
             d->friendsCount = elm.text();
-        } else if( elm.tagName() == "protected" ){
+        }/* else if( elm.tagName() == "protected" ){
             if(elm.text() == "true"){
                 d->lockImg = "<img src=\"icon://lock\">";
                 d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://lock"),
                                                  KIcon("object-locked").pixmap(16) );
             }
-        } else if(elm.tagName() == "status") {
+        }*/ else if(elm.tagName() == "status") {
             QDomNode node2 = elm.firstChild();
             while( !node2.isNull() ){
                 QDomElement elm2 = node2.toElement();
@@ -227,7 +233,7 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
 //     post.creationDateTime = blog->dateFromString( timeStr );
 
     d->currentPost = post;
-    setHtml();
+    updateHtml();
     showForm();
 
     QPixmap *userAvatar = Choqok::MediaManager::self()->fetchImage( post.author.profileImageUrl,
@@ -250,7 +256,7 @@ void TwitterApiWhoisWidget::avatarFetched(const QString& remoteUrl, const QPixma
     if ( remoteUrl == d->currentPost.author.profileImageUrl ) {
         QString url = "img://profileImage";
         d->wid->document()->addResource( QTextDocument::ImageResource, url, pixmap );
-        setHtml();
+        updateHtml();
         disconnect( Choqok::MediaManager::self(), SIGNAL( imageFetched(QString,QPixmap)),
                     this, SLOT(avatarFetched(QString, QPixmap) ) );
         disconnect( Choqok::MediaManager::self(), SIGNAL(fetchError(QString,QString)),
@@ -266,11 +272,11 @@ void TwitterApiWhoisWidget::avatarFetchError(const QString& remoteUrl, const QSt
         ///Avatar fetching is failed! but will not disconnect to get the img if it fetches later!
         QString url = "img://profileImage";
         d->wid->document()->addResource( QTextDocument::ImageResource, url, KIcon("image-missing").pixmap(48) );
-        setHtml();
+        updateHtml();
     }
 }
 
-void TwitterApiWhoisWidget::setHtml()
+void TwitterApiWhoisWidget::updateHtml()
 {
     kDebug();
     QString url = d->currentPost.author.homePageUrl.isEmpty() ? QString()
@@ -286,7 +292,7 @@ void TwitterApiWhoisWidget::setHtml()
                                     .arg(d->currentPost.content)//.arg(dir);
                                     .arg(d->friendsCount)
                                     .arg(d->followersCount)
-                                    .arg(d->lockImg);
+                                    .arg(d->imgActions);
 
     d->wid->setHtml(html);
 }
@@ -337,13 +343,24 @@ void TwitterApiWhoisWidget::checkAnchor( const QUrl url )
 {
     kDebug();
     if(url.scheme()=="choqok"){
-        if(url.host()=="close")
+        if(url.host()=="close"){
             this->close();
-//     else if (url.host() == "follow") {
-//         }
-    } else {
-        KToolInvocation::invokeBrowser(url.toString());
-        close();
+        } else if (url.host() == "subscribe") {
+            d->mBlog->createFriendship(d->currentAccount, d->username);
+            connect(d->mBlog, SIGNAL(friendshipCreated(Choqok::Account*,QString)),
+                    SLOT(slotFriendshipCreated(Choqok::Account*,QString)));
+        } else if (url.host() == "unsubscribe") {
+            d->mBlog->destroyFriendship(d->currentAccount, d->username);
+            connect(d->mBlog, SIGNAL(friendshipDestroyed(Choqok::Account*,QString)),
+                    SLOT(slotFriendshipDestroyed(Choqok::Account*,QString)));
+        } else if (url.host() == "block") {
+            d->mBlog->blockUser(d->currentAccount, d->username);
+            connect(d->mBlog, SIGNAL(userBlocked(Choqok::Account*,QString)),
+                    SLOT(slotUserBlocked(Choqok::Account*,QString)));
+        } else {
+            KToolInvocation::invokeBrowser(url.toString());
+            close();
+        }
     }
 }
 
@@ -352,8 +369,7 @@ void TwitterApiWhoisWidget::setupUi()
     kDebug();
     d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://close"),
                             KIcon("dialog-close").pixmap(16) );
-//     w->document()->addResource( QTextDocument::ImageResource, QUrl("icon://follow"),
-//                             KIcon("list-add-user").pixmap(16) );
+
 
     QString style = "color: %1; background-color: %2";
     if ( Choqok::AppearanceSettings::isCustomUi() ) {
@@ -373,6 +389,59 @@ void TwitterApiWhoisWidget::slotCancel()
     if(d->job)
         d->job->kill();
     this->close();
+}
+
+void TwitterApiWhoisWidget::setActionImages()
+{
+    d->imgActions.clear();
+    if(d->username.compare(d->currentAccount->username(), Qt::CaseInsensitive) != 0){
+        if( d->currentAccount->friendsList().contains(d->username) ){
+            d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://unsubscribe"),
+                            KIcon("list-remove-user").pixmap(16) );
+            d->imgActions += "<a href='choqok://unsubscribe'><img src='icon://unsubscribe' title='"+
+                            i18n("Unsubscribe") +"'></a>";
+        } else {
+            d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://subscribe"),
+                            KIcon("list-add-user").pixmap(16) );
+            d->imgActions += "<a href='choqok://subscribe'><img src='icon://subscribe' title='"+
+                            i18n("Subscribe") +"'></a>";
+        }
+
+        d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://block"),
+                                         KIcon("dialog-cancel").pixmap(16) );
+        d->imgActions += "<a href='choqok://block'><img src='icon://block' title='"+ i18n("Block") +"'></a>";
+    }
+}
+
+void TwitterApiWhoisWidget::slotFriendshipCreated(Choqok::Account* theAccount, const QString &username)
+{
+    if(theAccount == d->currentAccount && username == d->username){
+        Choqok::NotifyManager::success( i18n("You are now listening to %1 posts!", username) );
+        QStringList list = d->currentAccount->friendsList();
+        list.append(username);
+        d->currentAccount->setFriendsList(list);
+        setActionImages();
+        updateHtml();
+    }
+}
+
+void TwitterApiWhoisWidget::slotFriendshipDestroyed(Choqok::Account* theAccount, const QString &username)
+{
+    if(theAccount == d->currentAccount && username == d->username){
+        Choqok::NotifyManager::success( i18n("You will not recieve %1's updates!", username) );
+        QStringList list = d->currentAccount->friendsList();
+        list.removeOne(username);
+        d->currentAccount->setFriendsList(list);
+        setActionImages();
+        updateHtml();
+    }
+}
+
+void TwitterApiWhoisWidget::slotUserBlocked(Choqok::Account* theAccount, const QString &username)
+{
+    if(theAccount == d->currentAccount && username == d->username){
+        Choqok::NotifyManager::success( i18n("Your posts blocked for %1!", username) );
+    }
 }
 
 #include "twitterapiwhoiswidget.moc"

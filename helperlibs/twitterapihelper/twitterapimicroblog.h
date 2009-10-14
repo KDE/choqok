@@ -96,6 +96,23 @@ public:
     */
     virtual void removeFavorite( Choqok::Account *theAccount, const QString &postId );
 
+    /**
+    Create friendship, or Follow/Subscribe to user with username or screen name @p username
+    i.e. Follow / Subscribe
+    */
+    virtual void createFriendship( Choqok::Account *theAccount, const QString &username );
+
+    /**
+    Destroy friendship with user with username or screen name @p username
+    i.e. Un Follow / UnSubscribe
+    */
+    virtual void destroyFriendship( Choqok::Account *theAccount, const QString &username );
+
+    /**
+    Block user with username or screen name @p username
+    */
+    virtual void blockUser( Choqok::Account *theAccount, const QString &username );
+
     virtual void aboutToUnload();
 
     virtual void listFriendsUsername( TwitterApiAccount *theAccount );
@@ -129,6 +146,10 @@ signals:
     void favoriteRemoved(Choqok::Account *theAccount, const QString &postId);
     void friendsUsernameListed( TwitterApiAccount *theAccount, const QStringList &friendsList );
 
+    void friendshipCreated(Choqok::Account *theAccount, const QString &newFriendUsername);
+    void friendshipDestroyed(Choqok::Account *theAccount, const QString &username);
+    void userBlocked(Choqok::Account *theAccount, const QString &blockedUsername);
+
 protected slots:
     virtual void slotCreatePost( KJob *job );
     virtual void slotFetchPost( KJob *job );
@@ -138,6 +159,9 @@ protected slots:
     virtual void slotRequestTimeline( KJob *job );
     virtual void requestFriendsScreenName( TwitterApiAccount* theAccount, int page = 1 );
     virtual void slotRequestFriendsScreenName( KJob *job );
+    virtual void slotCreateFriendship( KJob *job );
+    virtual void slotDestroyFriendship( KJob *job );
+    virtual void slotBlockUser( KJob *job );
 
 protected:
     TwitterApiMicroBlog( const KComponentData &instance, QObject *parent=0 );
@@ -159,6 +183,7 @@ protected:
     virtual Choqok::Post * readDMessageFromDomElement (Choqok::Account *theAccount, const QDomElement& root );
     virtual QList<Choqok::Post*> readDMessagesFromXml (Choqok::Account *theAccount, const QByteArray &buffer );
     virtual QStringList readUsersScreenNameFromXml( Choqok::Account *theAccount, const QByteArray & buffer );
+    virtual Choqok::User *readUserInfoFromXml( const QByteArray &buffer );
 
     QHash<QString, QString> timelineApiPath;//TimelineType, path
     QMap<QString, Choqok::TimelineInfo*> mTimelineInfos;//timelineName, Info
@@ -170,6 +195,7 @@ protected:
     QMap<KJob*, QString> mRequestTimelineMap;//Job, TimelineType
     QHash< Choqok::Account*, QMap<QString, QString> > mTimelineLatestId;//TimelineType, LatestId
     QMap<KJob*, Choqok::Account*> mJobsAccount;
+    QMap<KJob*, QString> mFriendshipMap;
 
 private:
     class Private;

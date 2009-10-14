@@ -38,6 +38,9 @@ enum JobResult{
 
 class CHOQOK_EXPORT User {
 public:
+    User()
+    :isProtected(false)
+    {}
     ChoqokId userId;
     QString realName;
     QString userName;

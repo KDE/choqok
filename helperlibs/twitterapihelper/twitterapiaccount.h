@@ -69,6 +69,10 @@ public:
     KUrl apiUrl() const;
     KUrl homepageUrl() const;
 
+    QStringList friendsList() const;
+
+    void setFriendsList( const QStringList &list );
+
 protected:
     void setApiUrl( const KUrl &apiUrl );
     void setHomepageUrl( const KUrl& homepageUrl );

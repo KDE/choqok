@@ -28,6 +28,10 @@
 #include <QFrame>
 #include "choqok_export.h"
 
+namespace Choqok {
+class Account;
+}
+
 class TwitterApiAccount;
 class KJob;
 class CHOQOK_HELPER_EXPORT TwitterApiWhoisWidget : public QFrame
@@ -45,8 +49,14 @@ protected slots:
     void avatarFetchError( const QString &remoteUrl, const QString &errMsg );
     void avatarFetched( const QString &remoteUrl, const QPixmap &pixmap );
 
+    void slotFriendshipCreated(Choqok::Account*, const QString&);
+    void slotFriendshipDestroyed(Choqok::Account*, const QString&);
+    void slotUserBlocked(Choqok::Account*, const QString&);
+
 protected:
-    void setHtml();
+    void updateHtml();
+    void setActionImages();
+
     static const QString baseText;
 private:
     void setupUi();

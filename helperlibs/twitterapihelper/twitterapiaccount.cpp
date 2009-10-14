@@ -38,6 +38,7 @@ public:
     QString api;
     KUrl apiUrl;
     KUrl homepageUrl;
+    QStringList friendsList;
 };
 
 TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString &alias)
@@ -47,7 +48,13 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString 
     d->userId = configGroup()->readEntry("UserId", QString());
     d->count = configGroup()->readEntry("CountOfPosts", 20);
     d->host = configGroup()->readEntry("Host", QString());
+    d->friendsList = configGroup()->readEntry("Friends", QStringList());
     setApi( configGroup()->readEntry("Api", QString('/') ) );
+
+    if( d->friendsList.isEmpty() ){
+        parent->listFriendsUsername(this);
+        //Result will set on TwitterApiMicroBlog!
+    }
 }
 
 TwitterApiAccount::~TwitterApiAccount()
@@ -62,6 +69,7 @@ void TwitterApiAccount::writeConfig()
     configGroup()->writeEntry("CountOfPosts", d->count);
     configGroup()->writeEntry("Host", d->host);
     configGroup()->writeEntry("Api", d->api);
+    configGroup()->writeEntry("Friends", d->friendsList);
     Choqok::Account::writeConfig();
 }
 
@@ -148,6 +156,16 @@ void TwitterApiAccount::generateApiUrl()
 void TwitterApiAccount::setHomepageUrl(const KUrl& homepageUrl)
 { 
     d->homepageUrl = homepageUrl;
+}
+
+QStringList TwitterApiAccount::friendsList() const
+{
+    return d->friendsList;
+}
+
+void TwitterApiAccount::setFriendsList(const QStringList& list)
+{
+    d->friendsList = list;
 }
 
 #include "twitterapiaccount.moc"

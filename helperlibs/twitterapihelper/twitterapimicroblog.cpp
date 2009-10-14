@@ -172,7 +172,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
 //             }
 //         }
         ///END checking
-        Choqok::Post *st;
+        Choqok::Post *st = 0;
         for ( int i = 0; i < count; ++i ) {
             st = new Choqok::Post;
             KConfigGroup grp( &postsBackup, groupList[i] );
@@ -560,6 +560,7 @@ void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
     if ( newList.count() == 100 ) {
         requestFriendsScreenName( theAccount, ++d->friendsPage );
     } else {
+        theAccount->setFriendsList(d->friendsList);
         emit friendsUsernameListed( theAccount, d->friendsList );
     }
 }
@@ -905,9 +906,11 @@ QDateTime TwitterApiMicroBlog::dateFromString ( const QString &date )
 void TwitterApiMicroBlog::aboutToUnload()
 {
     d->countOfTimelinesToSave = 0;
-    foreach(const Choqok::Account* acc, Choqok::AccountManager::self()->accounts()){
-        if(acc->microblog() == this)
+    foreach(Choqok::Account* acc, Choqok::AccountManager::self()->accounts()){
+        if(acc->microblog() == this){
+            acc->writeConfig();
             d->countOfTimelinesToSave += acc->timelineNames().count();
+        }
     }
     emit saveTimelines();
 }
@@ -945,6 +948,177 @@ void TwitterApiMicroBlog::showSearchDialog(TwitterApiAccount* theAccount)
     QPointer<TwitterApiSearchDialog> searchDlg = new TwitterApiSearchDialog( theAccount,
                                                                              Choqok::UI::Global::mainWindow() );
     searchDlg->show();
+}
+
+void TwitterApiMicroBlog::createFriendship( Choqok::Account *theAccount, const QString& username )
+{
+    kDebug();
+    KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
+    url.addPath( "/friendships/create/"+ username +".xml" );
+    kDebug()<<url;
+
+    KIO::StoredTransferJob *job = KIO::storedHttpPost( QByteArray(), url, KIO::HideProgressInfo) ;
+    if ( !job ) {
+        kError() << "Cannot create an http POST request!";
+        return;
+    }
+
+    mJobsAccount[job] = theAccount;
+    mFriendshipMap[ job ] = username;
+    connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotCreateFriendship(KJob*) ) );
+    job->start();
+}
+
+void TwitterApiMicroBlog::slotCreateFriendship(KJob* job)
+{
+    kDebug();
+    if(!job){
+        kError()<<"Job is a null Pointer!";
+        return;
+    }
+    Choqok::Account *theAccount = mJobsAccount.take(job);
+    QString username = mFriendshipMap.take(job);
+    if(job->error()){
+        kDebug()<<"Job Error:"<<job->errorString();
+        emit error ( theAccount, CommunicationError,
+                     i18n("Creating friendship with %1 failed. %2", username, job->errorString() ) );
+        return;
+    }
+    Choqok::User *user = readUserInfoFromXml(qobject_cast<KIO::StoredTransferJob*>(job)->data());
+    if( user && user->userName == username ){
+        emit friendshipCreated(theAccount, username);
+    } else {
+        emit error( theAccount, ParsingError,
+                     i18n("Creating friendship with %1 failed. Server returned data is not valid!", username ) );
+    }
+}
+
+void TwitterApiMicroBlog::destroyFriendship( Choqok::Account *theAccount, const QString& username )
+{
+    kDebug();
+    KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
+    url.addPath( "/friendships/destroy/" + username + ".xml" );
+    kDebug()<<url;
+
+    KIO::StoredTransferJob *job = KIO::storedHttpPost(QByteArray(), url, KIO::HideProgressInfo) ;
+    if ( !job ) {
+        kError() << "Cannot create an http POST request!";
+        return;
+    }
+
+    mJobsAccount[job] = theAccount;
+    mFriendshipMap[ job ] = username;
+    connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotDestroyFriendship(KJob*) ) );
+    job->start();
+}
+
+void TwitterApiMicroBlog::slotDestroyFriendship(KJob* job)
+{
+    kDebug();
+    if(!job){
+        kError()<<"Job is a null Pointer!";
+        return;
+    }
+    Choqok::Account *theAccount = mJobsAccount.take(job);
+    QString username = mFriendshipMap.take(job);
+    if(job->error()){
+        kDebug()<<"Job Error:"<<job->errorString();
+        emit error ( theAccount, CommunicationError,
+                     i18n("Destroying friendship with %1 failed. %2", username, job->errorString() ) );
+        return;
+    }
+    Choqok::User *user = readUserInfoFromXml(qobject_cast<KIO::StoredTransferJob*>(job)->data());
+    if( user && user->userName == username ){
+        emit friendshipDestroyed(theAccount, username);
+    } else {
+        emit error( theAccount, ParsingError,
+                     i18n("Destroying friendship with %1 failed. Server returned data is not valid!",
+                          username ) );
+    }
+//     Choqok::User *user = readUserInfoFromXml(); TODO Check for failor!
+}
+
+void TwitterApiMicroBlog::blockUser( Choqok::Account *theAccount, const QString& username )
+{
+    kDebug();
+    KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
+    url.addPath( "/blocks/create/"+ username +".xml" );
+
+    KIO::StoredTransferJob *job = KIO::storedHttpPost(QByteArray(), url, KIO::HideProgressInfo) ;
+    if ( !job ) {
+        kError() << "Cannot create an http POST request!";
+        return;
+    }
+
+    mJobsAccount[job] = theAccount;
+    mFriendshipMap[ job ] = username;
+    connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotBlockUser(KJob*) ) );
+    job->start();
+}
+
+void TwitterApiMicroBlog::slotBlockUser(KJob* job)
+{
+    kDebug();
+    if(!job){
+        kError()<<"Job is a null Pointer!";
+        return;
+    }
+    Choqok::Account *theAccount = mJobsAccount.take(job);
+    QString username = mFriendshipMap.take(job);
+    if(job->error()){
+        kDebug()<<"Job Error:"<<job->errorString();
+        emit error ( theAccount, CommunicationError,
+                     i18n("Blocking %1 failed. %2", username, job->errorString() ) );
+        return;
+    }
+    Choqok::User *user = readUserInfoFromXml(qobject_cast<KIO::StoredTransferJob*>(job)->data());
+    if( user && user->userName == username ){
+        emit userBlocked(theAccount, username);
+    } else {
+        emit error( theAccount, ParsingError,
+                     i18n("Blocking %1 failed. Server returned data is not valid!",
+                          username ) );
+    }
+//     Choqok::User *user = readUserInfoFromXml(); TODO Check for failor!
+}
+
+Choqok::User* TwitterApiMicroBlog::readUserInfoFromXml(const QByteArray& buffer)
+{
+    QDomDocument doc;
+    doc.setContent(buffer);
+
+    QDomElement root = doc.documentElement();
+    if ( root.tagName() != "user" ) {
+        kDebug()<<"There's no user tag in returned document from server! Data is:\n\t"<<buffer;
+        return 0;
+    }
+    QDomNode node = root.firstChild();
+    Choqok::User *user = new Choqok::User;
+    QString timeStr;
+    while( !node.isNull() ){
+        QDomElement elm = node.toElement();
+        if(elm.tagName() == "name"){
+            user->realName = elm.text();
+        } else if(elm.tagName() == "screen_name"){
+            user->userName = elm.text();
+        } else if(elm.tagName() == "location"){
+            user->location = elm.text();
+        } else if(elm.tagName() == "description"){
+            user->description = elm.text();
+        } else if(elm.tagName() == "profile_image_url"){
+            user->profileImageUrl = elm.text();
+        } else if(elm.tagName() == "url") {
+            user->homePageUrl = elm.text();
+        } else if(elm.tagName() == "followers_count") {
+            user->followersCount = elm.text().toUInt();
+        } else if( elm.tagName() == "protected" ){
+            if(elm.text() == "true"){
+                user->isProtected = true;
+            }
+        }
+        node = node.nextSibling();
+    }
+    return user;
 }
 
 #include "twitterapimicroblog.moc"
