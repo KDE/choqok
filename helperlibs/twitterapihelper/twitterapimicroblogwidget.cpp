@@ -32,6 +32,7 @@
 #include <KDebug>
 #include <QToolButton>
 #include <klocalizedstring.h>
+#include <KMessageBox>
 
 class TwitterApiMicroBlogWidget::Private
 {
@@ -83,8 +84,11 @@ void TwitterApiMicroBlogWidget::slotSearchResultsReceived(const SearchInfo &info
         if(mSearchTimelines.contains(name)){
             mSearchTimelines.value(name)->addNewPosts(postsList);
         }else{
-//             bool isBrowsable = d->mBlog->searchBackend()->getSearchTypes()[info.option].second;
-            addSearchTimelineWidgetToUi( name, info )->addNewPosts(postsList);
+            if( postsList.isEmpty() ){
+                KMessageBox::sorry(this, i18n("The search result is empty!"));
+            } else {
+                addSearchTimelineWidgetToUi( name, info )->addNewPosts(postsList);
+            }
         }
     }
 }
@@ -141,6 +145,18 @@ void TwitterApiMicroBlogWidget::slotCloseCurrentSearch()
         timelinesTabWidget()->removePage(timelinesTabWidget()->currentWidget());
         mSearchTimelines.value(name)->close();
         mSearchTimelines.remove(name);
+    }
+}
+
+void TwitterApiMicroBlogWidget::markAllAsRead()
+{
+    Choqok::UI::MicroBlogWidget::markAllAsRead();
+    foreach(TwitterApiSearchTimelineWidget *wd, mSearchTimelines) {
+        wd->markAllAsRead();
+        int tabIndex = timelinesTabWidget()->indexOf(wd);
+        if(tabIndex == -1)
+            continue;
+        timelinesTabWidget()->setTabText( tabIndex, wd->timelineName() );
     }
 }
 

@@ -72,7 +72,7 @@ public slots:
     /**
     @brief Call markAllAsRead() on all timelines
     */
-    void markAllAsRead();
+    virtual void markAllAsRead();
 
     /**
     Call for @ref MicroBlog::updateTimelines() to update timelines!

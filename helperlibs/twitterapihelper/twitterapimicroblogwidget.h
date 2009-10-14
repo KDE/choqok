@@ -38,6 +38,9 @@ public:
     ~TwitterApiMicroBlogWidget();
     virtual void initUi();
 
+public slots:
+    virtual void markAllAsRead();
+
 protected slots:
     void slotCloseCurrentSearch();
     void slotCurrentTimelineChanged(int);
