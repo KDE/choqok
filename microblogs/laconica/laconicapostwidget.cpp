@@ -31,18 +31,40 @@
 #include <KAction>
 #include <klocalizedstring.h>
 #include <twitterapihelper/twitterapiwhoiswidget.h>
+#include <choqokbehaviorsettings.h>
+#include <quickpost.h>
+#include "laconicaaccount.h"
+#include "laconicamicroblog.h"
 
 const QRegExp LaconicaPostWidget::mGroupRegExp("([\\s]|^)!([^\\s\\W]+)");
 
-LaconicaPostWidget::LaconicaPostWidget(Choqok::Account* account, const Choqok::Post& post, QWidget* parent): TwitterApiPostWidget(account, post, parent)
+class LaconicaPostWidget::Private
+{
+public:
+    Private(Choqok::Account* theAccount)
+    {
+        account = qobject_cast<LaconicaAccount *>(theAccount);
+        mBlog = qobject_cast<LaconicaMicroBlog *>(account->microblog());
+    }
+    LaconicaAccount *account;
+    LaconicaMicroBlog *mBlog;
+};
+
+LaconicaPostWidget::LaconicaPostWidget(Choqok::Account* account, const Choqok::Post& post, QWidget* parent)
+: TwitterApiPostWidget(account, post, parent), d( new Private(account) )
 {
 
+}
+
+LaconicaPostWidget::~LaconicaPostWidget()
+{
+    delete d;
 }
 
 QString LaconicaPostWidget::prepareStatus(const QString& text)
 {
     QString res = TwitterApiPostWidget::prepareStatus(text);
-    QString homepage = qobject_cast<TwitterApiAccount*>(currentAccount())->homepageUrl().prettyUrl(KUrl::RemoveTrailingSlash);
+    QString homepage = d->account->homepageUrl().prettyUrl(KUrl::RemoveTrailingSlash);
     res.replace(mGroupRegExp,"\\1!<a href='group://\\2'>\\2</a> <a href='"+ homepage +
     "/group/\\2'>"+ webIconText +"</a>");
     res.replace(mHashtagRegExp,"\\1#<a href='tag://\\2'>\\2</a> <a href='"+ homepage +
@@ -53,20 +75,23 @@ QString LaconicaPostWidget::prepareStatus(const QString& text)
 void LaconicaPostWidget::checkAnchor(const QUrl& url)
 {
     QString scheme = url.scheme();
-    TwitterApiMicroBlog* blog = qobject_cast<TwitterApiMicroBlog*>(currentAccount()->microblog());
     if( scheme == "tag" ) {
-        blog->searchBackend()->requestSearchResults(currentAccount(),
+        d->mBlog->searchBackend()->requestSearchResults(currentAccount(),
                                                     url.host(),
                                                     LaconicaSearch::ReferenceHashtag);
     } else if( scheme == "group" ) {
-        blog->searchBackend()->requestSearchResults(currentAccount(),
+        d->mBlog->searchBackend()->requestSearchResults(currentAccount(),
                                                     url.host(),
                                                     LaconicaSearch::ReferenceGroup);
     } else if(scheme == "user") {
         KMenu menu;
-        KAction * info = new KAction( KIcon("user-identity"), i18nc("Who is user", "Who is %1", url.host()), &menu );
-        KAction * from = new KAction(KIcon("edit-find-user"), i18nc("Posts from user", "Posts from %1",url.host()),&menu);
-        KAction * to = new KAction(KIcon("meeting-attending"), i18nc("Replies to user", "Replies to %1",url.host()),&menu);
+        KAction * info = new KAction( KIcon("user-identity"), i18nc("Who is user", "Who is %1", url.host()),
+                                      &menu );
+        KAction * from = new KAction(KIcon("edit-find-user"), i18nc("Posts from user", "Posts from %1",url.host()),
+                                     &menu);
+        KAction * to = new KAction(KIcon("meeting-attending"), i18nc("Replies to user", "Replies to %1",
+                                                                     url.host()),
+                                   &menu);
         menu.addAction(info);
         menu.addAction(from);
         menu.addAction(to);
@@ -77,16 +102,37 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
         if(ret == 0)
             return;
         if(ret == info) {
-            TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(currentAccount());
-            TwitterApiWhoisWidget *wd = new TwitterApiWhoisWidget(acc, url.host(), this);
+            TwitterApiWhoisWidget *wd = new TwitterApiWhoisWidget(d->account, url.host(), this);
             wd->show(QCursor::pos());
             return;
         }
         int type = ret->data().toInt();
-        blog->searchBackend()->requestSearchResults(currentAccount(),
+        d->mBlog->searchBackend()->requestSearchResults(currentAccount(),
                                                     url.host(),
                                                     type);
     } else
         TwitterApiPostWidget::checkAnchor(url);
+}
+
+void LaconicaPostWidget::slotResendPost()
+{
+    QString text = generateResendText();
+
+    if(d->account->isChangeExclamationMark()){
+        int index = 0;
+        while( true ){
+            index = mGroupRegExp.indexIn(text, index);
+            if(index != -1)
+                text.replace( index+1, 1, d->account->changeExclamationMarkToText());
+            else
+                break;
+        }
+    }
+
+    if( (Choqok::BehaviorSettings::resendWithQuickPost() || currentAccount()->isReadOnly()) &&
+        Choqok::UI::Global::quickPostWidget() )
+        Choqok::UI::Global::quickPostWidget()->setText(text);
+    else
+        emit resendPost(text);
 }
 

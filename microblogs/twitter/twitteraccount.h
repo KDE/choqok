@@ -39,10 +39,7 @@ class TwitterAccount : public TwitterApiAccount
 public:
     TwitterAccount(TwitterMicroBlog* parent, const QString& alias);
     ~TwitterAccount();
-    virtual void writeConfig();
 
-    void setLoadTwitPics(bool load);
-    bool isLoadTwitPics() const;
 private:
     class Private;
     Private *d;

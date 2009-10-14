@@ -39,7 +39,8 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
     : ChoqokEditAccountWidget(account, parent), mAccount(account), progress(0)
 {
     setupUi(this);
-    tabwidget->setTabBarHidden(true);//To hide configurations until their be functional :D
+    kcfg_doNotShowRepliesOnHome->hide();//Not implemented yet!
+
     kcfg_test->setIcon(KIcon("edit-find-user"));
     connect(kcfg_test, SIGNAL(clicked(bool)), SLOT(verifyCredentials()));
     if(mAccount) {
@@ -49,6 +50,8 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
         kcfg_secure->setChecked( mAccount->useSecureConnection() );
         kcfg_host->setText( mAccount->host() );
         kcfg_api->setText( mAccount->api() );
+        kcfg_changeExclamationMark->setChecked( mAccount->isChangeExclamationMark() );
+        kcfg_changeToString->setText( mAccount->changeExclamationMarkToText() );
     } else {
         QString newAccountAlias = microblog->serviceName();
         int counter = 1;
@@ -82,6 +85,8 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
     mAccount->setApi( kcfg_api->text() );
     mAccount->setAlias(kcfg_alias->text());
     mAccount->setUseSecureConnection(kcfg_secure->isChecked());
+    mAccount->setChangeExclamationMark(kcfg_changeExclamationMark->isChecked());
+    mAccount->setChangeExclamationMarkToText(kcfg_changeToString->text());
     mAccount->writeConfig();
     return mAccount;
 }

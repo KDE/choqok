@@ -29,11 +29,15 @@
 class LaconicaAccount::Private
 {
 public:
+    bool isChangeExclamationMark;
+    QString changeExclamationMarkToText;
 };
 
 LaconicaAccount::LaconicaAccount(LaconicaMicroBlog* parent, const QString &alias)
     : TwitterApiAccount(parent, alias), d(new Private)
 {
+    d->changeExclamationMarkToText = configGroup()->readEntry("changeExclamationMarkText", QString('#'));
+    d->isChangeExclamationMark = configGroup()->readEntry("isChangeExclamationMark", false);
 }
 
 LaconicaAccount::~LaconicaAccount()
@@ -43,7 +47,29 @@ LaconicaAccount::~LaconicaAccount()
 
 void LaconicaAccount::writeConfig()
 {
+    configGroup()->writeEntry("isChangeExclamationMark", d->isChangeExclamationMark);
+    configGroup()->writeEntry("changeExclamationMarkText", d->changeExclamationMarkToText);
     TwitterApiAccount::writeConfig();
+}
+
+QString LaconicaAccount::changeExclamationMarkToText() const
+{
+    return d->changeExclamationMarkToText;
+}
+
+void LaconicaAccount::setChangeExclamationMarkToText(const QString& text)
+{
+    d->changeExclamationMarkToText = text;
+}
+
+bool LaconicaAccount::isChangeExclamationMark() const
+{
+    return d->isChangeExclamationMark;
+}
+
+void LaconicaAccount::setChangeExclamationMark(bool isChange)
+{
+    d->isChangeExclamationMark = isChange;
 }
 
 #include "laconicaaccount.moc"

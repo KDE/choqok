@@ -257,6 +257,30 @@ p, li { white-space: pre-wrap; }
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QCheckBox" name="kcfg_changeExclamationMark">
+           <property name="toolTip">
+            <string>To prevent spamming on some groups, You can set here to change exclamation mark (that used to refer to a group), to something else! (e.g. nothing)</string>
+           </property>
+           <property name="text">
+            <string>On re-dent, change exclamation mark to:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="kcfg_changeToString">
+           <property name="maxLength">
+            <number>10</number>
+           </property>
+           <property name="frame">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
         <widget class="QCheckBox" name="kcfg_doNotShowRepliesOnHome">
          <property name="text">
           <string>Do not show replies to me on the Home tab</string>

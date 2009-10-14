@@ -388,13 +388,18 @@ void PostWidget::slotCurrentPostRemoved( Account* theAccount, Post* post )
 
 void PostWidget::slotResendPost()
 {
-    QChar re(0x267B);
-    QString text =  QString(re) + " @" + currentPost().author.userName + ": " + currentPost().content;
+    QString text = generateResendText();
 
     if((BehaviorSettings::resendWithQuickPost() || currentAccount()->isReadOnly()) && Global::quickPostWidget())
         Global::quickPostWidget()->setText(text);
     else
         emit resendPost(text);
+}
+
+QString PostWidget::generateResendText()
+{
+    QChar re(0x267B);
+    return QString(re) + " @" + currentPost().author.userName + ": " + currentPost().content;
 }
 
 void PostWidget::setupAvatar()

@@ -29,35 +29,17 @@
 class TwitterAccount::Private
 {
 public:
-    bool loadTwitpics;
 };
 
 TwitterAccount::TwitterAccount(TwitterMicroBlog* parent, const QString &alias)
     : TwitterApiAccount(parent, alias), d(new Private)
 {
     setHost("twitter.com");
-    d->loadTwitpics = configGroup()->readEntry("LoadTwitPics", false);
 }
 
 TwitterAccount::~TwitterAccount()
 {
     delete d;
-}
-
-void TwitterAccount::writeConfig()
-{
-    configGroup()->writeEntry("LoadTwitPics", d->loadTwitpics);
-    TwitterApiAccount::writeConfig();
-}
-
-bool TwitterAccount::isLoadTwitPics() const
-{
-    return d->loadTwitpics;
-}
-
-void TwitterAccount::setLoadTwitPics(bool load)
-{
-    d->loadTwitpics = load;
 }
 
 #include "twitteraccount.moc"

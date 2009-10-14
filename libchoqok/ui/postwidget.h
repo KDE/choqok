@@ -197,6 +197,7 @@ protected:
 
     void setAvatarText( const QString &text );
     QString avatarText() const;
+    virtual QString generateResendText();
 
 private:
     void setupUi();

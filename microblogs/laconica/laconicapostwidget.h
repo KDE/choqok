@@ -30,12 +30,19 @@ class LaconicaPostWidget : public TwitterApiPostWidget
 {
 public:
     LaconicaPostWidget(Choqok::Account* account, const Choqok::Post& post, QWidget* parent = 0);
-//     virtual void initUi();
+    ~LaconicaPostWidget();
 
 protected:
     static const QRegExp mGroupRegExp;
     virtual QString prepareStatus(const QString& text);
     virtual void checkAnchor(const QUrl& url);
+
+protected slots:
+    virtual void slotResendPost();
+
+private:
+    class Private;
+    Private *d;
 };
 
 #endif // LACONICAPOSTWIDGET_H
