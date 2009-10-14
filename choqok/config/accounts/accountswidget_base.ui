@@ -125,9 +125,6 @@
      <attribute name="verticalHeaderVisible">
       <bool>true</bool>
      </attribute>
-     <attribute name="verticalHeaderVisible">
-      <bool>true</bool>
-     </attribute>
      <column>
       <property name="text">
        <string>Alias</string>
@@ -148,7 +145,7 @@
      </column>
      <column>
       <property name="text">
-       <string>Quick Post</string>
+       <string>Include in Quick Post</string>
       </property>
       <property name="toolTip">
        <string>Show in Quick Post</string>

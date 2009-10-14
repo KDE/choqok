@@ -399,12 +399,12 @@ void TwitterApiWhoisWidget::setActionImages()
             d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://unsubscribe"),
                             KIcon("list-remove-user").pixmap(16) );
             d->imgActions += "<a href='choqok://unsubscribe'><img src='icon://unsubscribe' title='"+
-                            i18n("Unsubscribe") +"'></a>";
+                            i18n("Unsubscribe") +"'></a> ";
         } else {
             d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://subscribe"),
                             KIcon("list-add-user").pixmap(16) );
             d->imgActions += "<a href='choqok://subscribe'><img src='icon://subscribe' title='"+
-                            i18n("Subscribe") +"'></a>";
+                            i18n("Subscribe") +"'></a> ";
         }
 
         d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://block"),
