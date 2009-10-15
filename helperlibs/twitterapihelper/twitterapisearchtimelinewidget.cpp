@@ -34,6 +34,7 @@
 #include "account.h"
 #include "postwidget.h"
 #include "choqoktypes.h"
+#include <QLabel>
 
 class TwitterApiSearchTimelineWidget::Private
 {
@@ -64,6 +65,7 @@ TwitterApiSearchTimelineWidget::TwitterApiSearchTimelineWidget(Choqok::Account* 
             this, SLOT(slotUpdateSearchResults()) );
     if(info.isBrowsable)
         addFooter();
+    timelineDescription()->setText(i18n("Search results for %1", timelineName));
 }
 
 TwitterApiSearchTimelineWidget::~TwitterApiSearchTimelineWidget()
@@ -85,7 +87,7 @@ void TwitterApiSearchTimelineWidget::loadTimeline()
 
 void TwitterApiSearchTimelineWidget::addFooter()
 {
-    QHBoxLayout *footer = new QHBoxLayout;
+    QHBoxLayout *footer = titleBarLayout();
 //     d->reload = new KPushButton(this);
 //     d->reload->setIcon(KIcon("view-refresh"));
 //     d->reload->setMaximumSize(28,28);
@@ -107,9 +109,10 @@ void TwitterApiSearchTimelineWidget::addFooter()
     d->pageNumber->setMaxLength(2);
     d->pageNumber->setMaximumWidth(40);
     d->pageNumber->setAlignment(Qt::AlignCenter);
+    d->pageNumber->setToolTip( i18n("Page Number") );
 
 //     footer->addWidget(d->reload);
-    footer->addSpacerItem(new QSpacerItem(10, 20, QSizePolicy::Expanding));
+//     footer->addSpacerItem(new QSpacerItem(10, 20, QSizePolicy::Expanding));
 //     footer->addWidget(d->autoUpdate);
     footer->addWidget(d->previous);
     footer->addWidget(d->pageNumber);
@@ -120,7 +123,7 @@ void TwitterApiSearchTimelineWidget::addFooter()
     connect( d->previous, SIGNAL(clicked(bool)), SLOT(loadPreviousPage()) );
     connect( d->pageNumber, SIGNAL(returnPressed(QString)), SLOT(loadCustomPage(QString)) );
 
-    layout()->addItem(footer);
+//     layout()->addItem(footer);
 }
 
 void TwitterApiSearchTimelineWidget::addNewPosts(QList< Choqok::Post* >& postList)

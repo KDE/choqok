@@ -99,6 +99,7 @@ void TimelineWidget::setupUi()
         d->lblDesc->setText(info->description);
     d->lblDesc->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     d->lblDesc->setWordWrap(true);
+    d->lblDesc->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     QFont fnt = d->lblDesc->font();
     fnt.setBold(true);
     d->lblDesc->setFont(fnt);
