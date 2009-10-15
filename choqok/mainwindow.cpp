@@ -434,6 +434,10 @@ void MainWindow::slotUpdateUnreadCount(int change, int sum)
     kDebug()<<"Change: "<<change<<" Sum: "<<sum;
     Choqok::UI::MicroBlogWidget *wd = qobject_cast<Choqok::UI::MicroBlogWidget*>(sender());
     sysIcon->updateUnreadCount(change);
+    if( sysIcon->unreadCount() )
+        setWindowTitle( i18n("Choqok (%1)", sysIcon->unreadCount()) );
+    else
+        setWindowTitle( i18n("Choqok") );
     if(wd) {
         int tabIndex = mainWidget->indexOf(wd);
         if(tabIndex == -1)
@@ -490,6 +494,7 @@ void MainWindow::toggleMainWindow()
 
 void MainWindow::slotMarkAllAsRead()
 {
+    setWindowTitle( i18n("Choqok") );
     sysIcon->resetUnreadCount();
     int count = mainWidget->count();
     for(int i=0; i<count; ++i) {

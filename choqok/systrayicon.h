@@ -39,8 +39,9 @@ class SysTrayIcon : public KSystemTrayIcon
     Q_OBJECT
 public:
     SysTrayIcon( QWidget* parent = 0 );
-
     ~SysTrayIcon();
+    int unreadCount() const;
+
 public slots:
     void setTimeLineUpdatesEnabled( bool isEnabled );
     void slotJobDone( Choqok::JobResult result );

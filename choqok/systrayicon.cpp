@@ -160,4 +160,9 @@ void SysTrayIcon::slotRestoreIcon()
     isIconChanged = false;
 }
 
+int SysTrayIcon::unreadCount() const
+{
+    return unread;
+}
+
 #include "systrayicon.moc"
