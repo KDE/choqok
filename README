@@ -6,7 +6,7 @@ Author:
     Mehrdad Momeny <mehrdad.momeny[AT]gmail.com>
 
 License:
-    GNU GPL v3
+    GNU GPL v2 or v3 or Later
 
 Requirements to build:
      CMake 2.6

@@ -1,3 +1,11 @@
+=== Version 0.9.4 (1.0 Alpha2) -- 15-Oct-2009 ===
+* Search API embedded into main window.
+* "Who is" dialog added again, with support for Subscribe/Unsubscribe and Block a user!
+* UnTiny plugin implemented.
+* Shortener plugin for Is.gd. (Felix Rohrbach)
+* "Open in web browser" symbole changed to ☛
+* Option for changing "exclamation mark" on group names, when re-sending a post on StatusNet to prevent Spamming!
+
 === Version 0.9.1 (1.0Alpha1) -- 13-Sep-2009 ===
 + The whole design have changed. And now, Choqok supports plugins for more Microblog services.
 -- Missed features since latest stable:
