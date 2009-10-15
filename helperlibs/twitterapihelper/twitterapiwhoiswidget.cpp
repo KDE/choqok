@@ -44,6 +44,7 @@
 #include "twitterapimicroblog.h"
 #include <choqokappearancesettings.h>
 #include <notifymanager.h>
+#include <choqoktools.h>
 
 const QString TwitterApiWhoisWidget::baseText("\
 <table width=\"100%\">\
@@ -357,11 +358,11 @@ void TwitterApiWhoisWidget::checkAnchor( const QUrl url )
             d->mBlog->blockUser(d->currentAccount, d->username);
             connect(d->mBlog, SIGNAL(userBlocked(Choqok::Account*,QString)),
                     SLOT(slotUserBlocked(Choqok::Account*,QString)));
-        } else {
-            KToolInvocation::invokeBrowser(url.toString());
+        }
+    } else {
+            Choqok::openUrl(url);
             close();
         }
-    }
 }
 
 void TwitterApiWhoisWidget::setupUi()

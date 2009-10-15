@@ -16,6 +16,7 @@ mediamanager.cpp
 notifymanager.cpp
 choqokuiglobal.cpp
 choqokid.cpp
+choqoktools.cpp
 ui/microblogwidget.cpp
 ui/editaccountwidget.cpp
 ui/timelinewidget.cpp
@@ -71,6 +72,7 @@ install( FILES
     pluginmanager.h
     shortener.h
     shortenmanager.h
+    choqoktools.h
     ui/choqoktextedit.h
     ui/composerwidget.h
     ui/editaccountwidget.h

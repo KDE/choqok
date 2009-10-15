@@ -33,6 +33,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KToolInvocation>
 #include <QProgressBar>
 #include <accountmanager.h>
+#include <choqoktools.h>
 
 
 TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
@@ -87,7 +88,7 @@ Choqok::Account* TwitterEditAccountWidget::apply()
 
 void TwitterEditAccountWidget::slotRegisterNewAccount()
 {
-    KToolInvocation::invokeBrowser( "http://twitter.com/signup" );
+    Choqok::openUrl( KUrl("http://twitter.com/signup") );
 }
 
 void TwitterEditAccountWidget::verifyCredentials()

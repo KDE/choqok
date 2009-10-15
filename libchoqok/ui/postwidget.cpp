@@ -26,14 +26,14 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KPushButton>
 #include <QGridLayout>
 #include <KDebug>
-#include <mediamanager.h>
+#include "mediamanager.h"
 #include "choqokbehaviorsettings.h"
-#include <choqokuiglobal.h>
+#include "choqokuiglobal.h"
 #include "quickpost.h"
 #include <KProcess>
 #include <KToolInvocation>
 #include <KMessageBox>
-#include <choqokappearancesettings.h>
+#include "choqokappearancesettings.h"
 #include <kaction.h>
 #include <QApplication>
 #include <QClipboard>
@@ -41,6 +41,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QMenu>
 #include <kmenu.h>
 #include <qabstracttextdocumentlayout.h>
+#include "choqoktools.h"
 
 static const int _15SECS = 15000;
 static const int _MINUTE = 60000;
@@ -96,15 +97,7 @@ PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* par
 
 void PostWidget::checkAnchor(const QUrl & url)
 {
-    if( Choqok::BehaviorSettings::useCustomBrowser() ) {
-        QStringList args = Choqok::BehaviorSettings::customBrowser().split(' ');
-        args.append(url.toString());
-        if( KProcess::startDetached( args ) == 0 ) {
-            KToolInvocation::invokeBrowser(url.toString());
-        }
-    } else {
-        KToolInvocation::invokeBrowser(url.toString());
-    }
+    Choqok::openUrl(url);
 }
 
 PostWidget::~PostWidget()
