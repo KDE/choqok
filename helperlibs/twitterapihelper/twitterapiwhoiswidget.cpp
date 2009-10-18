@@ -172,7 +172,7 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
     QDomElement root = doc.documentElement();
     if ( root.tagName() != "user" ) {
         kDebug()<<"There's no user tag in returned document from server! Data is:\n\t"<<stj->data();
-        d->wid->setText(i18n("Sorry, Cannot Load user information!"));
+        d->wid->setText(i18n("Cannot load user information."));
         return;
     }
     QDomNode node = root.firstChild();
@@ -417,7 +417,7 @@ void TwitterApiWhoisWidget::setActionImages()
 void TwitterApiWhoisWidget::slotFriendshipCreated(Choqok::Account* theAccount, const QString &username)
 {
     if(theAccount == d->currentAccount && username == d->username){
-        Choqok::NotifyManager::success( i18n("You are now listening to %1 posts!", username) );
+        Choqok::NotifyManager::success( i18n("You are now listening to %1's posts.", username) );
         QStringList list = d->currentAccount->friendsList();
         list.append(username);
         d->currentAccount->setFriendsList(list);
@@ -429,7 +429,7 @@ void TwitterApiWhoisWidget::slotFriendshipCreated(Choqok::Account* theAccount, c
 void TwitterApiWhoisWidget::slotFriendshipDestroyed(Choqok::Account* theAccount, const QString &username)
 {
     if(theAccount == d->currentAccount && username == d->username){
-        Choqok::NotifyManager::success( i18n("You will not recieve %1's updates!", username) );
+        Choqok::NotifyManager::success( i18n("You will not receive %1's updates.", username) );
         QStringList list = d->currentAccount->friendsList();
         list.removeOne(username);
         d->currentAccount->setFriendsList(list);
@@ -441,7 +441,7 @@ void TwitterApiWhoisWidget::slotFriendshipDestroyed(Choqok::Account* theAccount,
 void TwitterApiWhoisWidget::slotUserBlocked(Choqok::Account* theAccount, const QString &username)
 {
     if(theAccount == d->currentAccount && username == d->username){
-        Choqok::NotifyManager::success( i18n("Your posts blocked for %1!", username) );
+        Choqok::NotifyManager::success( i18n("Your posts are blocked for %1.", username) );
     }
 }
 

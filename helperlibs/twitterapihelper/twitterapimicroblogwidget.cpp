@@ -85,7 +85,7 @@ void TwitterApiMicroBlogWidget::slotSearchResultsReceived(const SearchInfo &info
             mSearchTimelines.value(name)->addNewPosts(postsList);
         }else{
             if( postsList.isEmpty() ){
-                KMessageBox::sorry(this, i18n("The search result is empty!"));
+                KMessageBox::sorry(this, i18n("The search result is empty."));
             } else {
                 addSearchTimelineWidgetToUi( name, info )->addNewPosts(postsList);
             }

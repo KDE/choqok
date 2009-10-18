@@ -989,7 +989,7 @@ void TwitterApiMicroBlog::slotCreateFriendship(KJob* job)
         emit friendshipCreated(theAccount, username);
     } else {
         emit error( theAccount, ParsingError,
-                     i18n("Creating friendship with %1 failed. Server returned data is not valid!", username ) );
+                     i18n("Creating friendship with %1 failed: the server returned invalid data.", username ) );
     }
 }
 
@@ -1032,7 +1032,7 @@ void TwitterApiMicroBlog::slotDestroyFriendship(KJob* job)
         emit friendshipDestroyed(theAccount, username);
     } else {
         emit error( theAccount, ParsingError,
-                     i18n("Destroying friendship with %1 failed. Server returned data is not valid!",
+                     i18n("Destroying friendship with %1 failed: the server returned invalid data.",
                           username ) );
     }
 //     Choqok::User *user = readUserInfoFromXml(); TODO Check for failor!
@@ -1076,7 +1076,7 @@ void TwitterApiMicroBlog::slotBlockUser(KJob* job)
         emit userBlocked(theAccount, username);
     } else {
         emit error( theAccount, ParsingError,
-                     i18n("Blocking %1 failed. Server returned data is not valid!",
+                     i18n("Blocking %1 failed: the server returned invalid data.",
                           username ) );
     }
 //     Choqok::User *user = readUserInfoFromXml(); TODO Check for failor!
