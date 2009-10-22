@@ -34,6 +34,7 @@ Name[tr]=TightUrl Kısaltıcı
 Name[uk]=Скорочувач TightUrl
 Name[x-test]=xxTightUrl Shortenerxx
 Comment=A plugin to shorten URLs via the TightURL service.
+Comment[da]=Et plugin til at forkorte URL'er via tjenesten TightUrl.
 Comment[en_GB]=A plugin to shorten URLs via the TightURL service.
 Comment[it]=Un'estensione per abbreviare le URL con il servizio TightURL.
 Comment[pt]=Um 'plugin' para reduzir os URL's, usando o serviço do TightUrl.

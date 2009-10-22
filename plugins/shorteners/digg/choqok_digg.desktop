@@ -34,6 +34,7 @@ Name[tr]=Digg.com Kısaltıcı
 Name[uk]=Скорочувач Digg.com
 Name[x-test]=xxDigg.com Shortenerxx
 Comment=A plugin to shorten URLs via the digg.com service.
+Comment[da]=Et plugin til at forkorte URL'er via tjenesten digg.com.
 Comment[en_GB]=A plugin to shorten URLs via the digg.com service.
 Comment[it]=Un'estensione per abbreviare le URL con il servizio digg.com.
 Comment[pt]=Um 'plugin' para reduzir os URL's, usando o serviço do digg.com.
