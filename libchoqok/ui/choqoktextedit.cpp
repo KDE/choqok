@@ -65,6 +65,7 @@ TextEdit::TextEdit(uint charLimit /*= 0*/, QWidget* parent /*= 0*/)
     layout->setSpacing(0);
     layout->addWidget(lblRemainChar, 1, 0);
     this->setLayout(layout);
+    setTabChangesFocus(true);
     settingsChanged();
     connect(BehaviorSettings::self(), SIGNAL(configChanged()), SLOT(settingsChanged()) );
 }
