@@ -27,6 +27,7 @@ Name[ja]=URL の逆短縮
 Name[nl]=UnTiny URL's
 Name[pt]=Aumentar os URL's
 Name[sv]=Webbadresser från UnTiny
+Name[tr]=Adresleri Kısaltma
 Name[uk]=Розгортання URL
 Name[x-test]=xxUnTiny URLsxx
 Comment=Extract the full URL and show it as a tooltip

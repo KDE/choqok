@@ -26,6 +26,7 @@ Name[nl]=Zoekactie
 Name[pt]=Acção da Pesquisa
 Name[pt_BR]=Ação de pesquisa
 Name[sv]=Sökåẗgärd
+Name[tr]=Arama Eylemi
 Name[uk]=Дія з пошуку
 Name[x-test]=xxSearch Actionxx
 Comment=Add a Search action to UI for Twitter Api microblogs. e.g. Twitter and StatusNet
