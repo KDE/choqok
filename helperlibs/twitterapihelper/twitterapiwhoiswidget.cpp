@@ -45,6 +45,7 @@
 #include <choqokappearancesettings.h>
 #include <notifymanager.h>
 #include <choqoktools.h>
+#include <kstatusbar.h>
 
 const QString TwitterApiWhoisWidget::baseText("\
 <table width=\"100%\">\
@@ -148,8 +149,7 @@ void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount* theAccount, const QS
     url.setUser ( theAccount->username() );
     url.setPass ( theAccount->password() );
 
-    url.addPath("/users/show.xml");
-    url.addQueryItem("screen_name", username);
+    url.addPath( QString( "/users/show/%1.xml" ).arg(username));
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
     d->job = job;
@@ -162,6 +162,8 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
     kDebug();
     if(job->error()){
         kError()<<"Job Error: "<<job->errorString();
+        if( Choqok::UI::Global::mainWindow()->statusBar() )
+            Choqok::UI::Global::mainWindow()->statusBar()->showMessage(job->errorString());
         slotCancel();
         return;
     }

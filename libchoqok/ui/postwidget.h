@@ -185,7 +185,7 @@ protected:
     */
     KPushButton * addButton(const QString & objName, const QString & toolTip, const QString & icon);
     KPushButton * addButton(const QString & objName, const QString & toolTip, const KIcon & icon);
-    QList<KPushButton*> &buttons();
+    QMap<QString, KPushButton*> &buttons();
 
 protected:
     static const QString baseText;

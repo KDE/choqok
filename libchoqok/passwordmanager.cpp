@@ -118,8 +118,8 @@ bool PasswordManager::removePassword(const QString& alias)
     if( d->openWallet() ) {
         if( !d->wallet->removeEntry(alias) )
             return true;
-    } else
-        return false;
+    }
+    return false;
 }
 
 }

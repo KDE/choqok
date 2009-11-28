@@ -68,7 +68,7 @@ public:
     {
     }
     QGridLayout *buttonsLayout;
-    QList<KPushButton*> mUiButtons;
+    QMap<QString, KPushButton*> mUiButtons;//<Object name, Button>
     Post mCurrentPost;
     Account *mCurrentAccount;
     bool mRead;
@@ -196,7 +196,7 @@ KPushButton * PostWidget::addButton(const QString & objName, const QString & too
     button->setVisible(false);
     button->setCursor(Qt::PointingHandCursor);
 
-    d->mUiButtons.append(button);
+    d->mUiButtons.insert( objName, button );
     d->buttonsLayout->addWidget( button, 1, d->mUiButtons.count() );
     return button;
 }
@@ -213,7 +213,7 @@ KPushButton * PostWidget::addButton(const QString & objName, const QString & too
     button->setVisible(false);
     button->setCursor(Qt::PointingHandCursor);
 
-    d->mUiButtons.append(button);
+    d->mUiButtons.insert(objName, button);
     d->buttonsLayout->addWidget( button, 1, d->mUiButtons.count() );
     return button;
 }
@@ -433,7 +433,7 @@ void PostWidget::avatarFetchError(const QString& remoteUrl, const QString& errMs
     }
 }
 
-QList< KPushButton* >& PostWidget::buttons()
+QMap<QString, KPushButton* >& PostWidget::buttons()
 {
     return d->mUiButtons;
 }
