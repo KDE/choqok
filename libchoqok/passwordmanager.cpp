@@ -115,10 +115,11 @@ bool PasswordManager::writePassword(const QString &alias, const QString &passwor
 
 bool PasswordManager::removePassword(const QString& alias)
 {
-    if( d->wallet->removeEntry(alias) )
+    if( d->openWallet() ) {
+        if( !d->wallet->removeEntry(alias) )
+            return true;
+    } else
         return false;
-    else
-        return true;
 }
 
 }
