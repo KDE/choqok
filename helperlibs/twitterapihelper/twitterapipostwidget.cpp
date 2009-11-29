@@ -93,7 +93,7 @@ QString TwitterApiPostWidget::generateSign()
     + "\">"+ webIconText +"</a> - </b>";
     //<img src=\"icon://web\" />
     sign += "<a href=\"" + currentPost().link +
-    "\" title=\"" + currentPost().creationDateTime.toString() + "\">%1</a>";
+    "\" title=\"" + currentPost().creationDateTime.toString( Qt::DefaultLocaleLongDate ) + "\">%1</a>";
     if ( currentPost().isPrivate ) {
         if( currentPost().replyToUserName.compare( currentAccount()->username(), Qt::CaseInsensitive ) == 0 ) {
             sign.prepend( "From " );

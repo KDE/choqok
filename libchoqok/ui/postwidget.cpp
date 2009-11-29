@@ -119,7 +119,7 @@ QString PostWidget::generateSign()
     "</a> - </b>";
 
     ss += "<a href=\"" + d->mCurrentPost.link +
-    "\" title=\"" + d->mCurrentPost.creationDateTime.toString() + "\">%1</a>";
+    "\" title=\"" + d->mCurrentPost.creationDateTime.toString(Qt::DefaultLocaleLongDate) + "\">%1</a>";
 
     if( !d->mCurrentPost.source.isNull() )
         ss += " - " + d->mCurrentPost.source;
