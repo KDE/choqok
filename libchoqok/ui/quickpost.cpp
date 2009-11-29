@@ -131,9 +131,9 @@ void QuickPost::postError(Account* , Choqok::Post* post,
     if (post == d->submittedPost) {
         d->txtPost->setEnabled(true);
         emit newPostSubmitted(Fail);
-        //TODO Notify
         delete d->submittedPost;
         d->submittedPost = 0L;
+        show();
 //         d->replyToId.clear();
     }
 }
