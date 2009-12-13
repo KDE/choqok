@@ -37,6 +37,7 @@ Comment=A plugin to shorten URLs via the is.gd service.
 Comment[da]=Et plugin til at afkorte URL'er via tjenesten is.gd.
 Comment[en_GB]=A plugin to shorten URLs via the is.gd service.
 Comment[et]=Plugin URL-ide lühendamiseks is.gd teenuse abil.
+Comment[fr]=Un module externe pour raccourcir les URL via le service is.gd.
 Comment[gl]=Un engadido para abreviar URL mediante o servizo is.gd.
 Comment[hr]=Priključak koji skraćuje URL-ove pomoću servisa is.gd.
 Comment[it]=Un'estensione per abbreviare le URL con il servizio is.gd.
