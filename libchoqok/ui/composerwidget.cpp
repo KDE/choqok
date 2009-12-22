@@ -89,10 +89,10 @@ void ComposerWidget::submitPost( const QString &txt )
             SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,
                              QString,Choqok::MicroBlog::ErrorLevel)),
             SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
-    currentAccount()->microblog()->createPost( currentAccount(),d->postToSubmit);
     d->btnAbort = new KPushButton(KIcon("dialog-cancel"), i18n("Abort"), this);
     layout()->addWidget(d->btnAbort);
     connect( d->btnAbort, SIGNAL(clicked(bool)), SLOT(abort()) );
+    currentAccount()->microblog()->createPost( currentAccount(),d->postToSubmit);
 }
 
 void ComposerWidget::slotPostSubmited(Choqok::Account* theAccount, Choqok::Post* post)

@@ -262,6 +262,8 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
     kDebug();
     if ( !post || post->content.isEmpty() ) {
         kDebug() << "ERROR: Status text is empty!";
+        emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError,
+                         i18n ( "Creating the new post failed. Text is empty." ), MicroBlog::Critical );
         return;
     }
     if ( !post->isPrivate ) {///Status Update
@@ -352,6 +354,8 @@ void TwitterApiMicroBlog::abortAllJobs(Choqok::Account* theAccount)
 
 void TwitterApiMicroBlog::abortCreatePost(Choqok::Account* theAccount, Choqok::Post *post)
 {
+    if( mCreatePostMap.isEmpty() )
+        return;
     if( post ) {
         mCreatePostMap.key(post)->kill(KJob::EmitResult);
     } else {

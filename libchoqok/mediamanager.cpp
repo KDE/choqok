@@ -114,16 +114,18 @@ void MediaManager::slotImageFetched( KJob * job )
     QString remote = d->queue.value(job);
     d->queue.remove( job );
     if ( job->error() ) {
-        kDebug() << "Job error!" << job->error() << "\t" << job->errorString();
+        kDebug() << "Job error: " << job->error() << "\t" << job->errorString();
         QString errMsg = i18n( "Cannot download image from %1.",
                                job->errorString() );
         emit fetchError( remote, errMsg );
     } else {
         QPixmap p;
-        if( p.loadFromData( baseJob->data() ) ) {
+        if( !baseJob->data().startsWith(QByteArray("<?xml version=\"")) &&
+            p.loadFromData( baseJob->data() ) ) {
             d->cache.insert( remote, p );
             emit imageFetched( remote, p );
         } else {
+            kDebug()<<"Parse Error: \nBase Url:"<<baseJob->url()<<"\ndata:"<<baseJob->data();
             emit fetchError( remote, i18n( "The download failed. The returned file is corrupted." ) );
         }
     }
