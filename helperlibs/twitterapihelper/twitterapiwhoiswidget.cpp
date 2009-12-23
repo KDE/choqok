@@ -47,7 +47,7 @@
 #include <choqoktools.h>
 #include <kstatusbar.h>
 
-const QString TwitterApiWhoisWidget::baseText("\
+const char * baseText = "\
 <table width=\"100%\">\
     <tr>\
         <td>\
@@ -85,7 +85,7 @@ const QString TwitterApiWhoisWidget::baseText("\
             </table>\
         </td>\
     </tr>\
-</table>");
+</table>";
 
 class TwitterApiWhoisWidget::Private
 {
@@ -286,7 +286,8 @@ void TwitterApiWhoisWidget::updateHtml()
                 : QString("<a title='%1' href='%1'>%1</a>").arg(d->currentPost.author.homePageUrl);
 
 //     QString dir = post.content.isRightToLeft() ? "rtl" : "ltr";
-    QString html = QString(baseText).arg(d->currentPost.author.userName)
+    QString tmpStr = i18n(baseText);
+    QString html = QString(tmpStr).arg(d->currentPost.author.userName)
                                     .arg(d->currentPost.author.realName)
                                     .arg(d->currentPost.author.location)
                                     .arg(d->timeZone)

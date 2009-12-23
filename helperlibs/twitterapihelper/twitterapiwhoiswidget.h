@@ -57,7 +57,7 @@ protected:
     void updateHtml();
     void setActionImages();
 
-    static const QString baseText;
+//     static const QString baseText;
 private:
     void setupUi();
     void showForm();
