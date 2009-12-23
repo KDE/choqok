@@ -35,6 +35,7 @@ Name[x-test]=xxis.gd Shortenerxx
 Name[zh_CN]=is.gd 缩短器
 Comment=A plugin to shorten URLs via the is.gd service.
 Comment[da]=Et plugin til at afkorte URL'er via tjenesten is.gd.
+Comment[de]=Ein Modul, um Adressen (URLs) mit Hilfe des is.gd-Dienstes zu kürzen
 Comment[en_GB]=A plugin to shorten URLs via the is.gd service.
 Comment[et]=Plugin URL-ide lühendamiseks is.gd teenuse abil.
 Comment[fr]=Un module externe pour raccourcir les URL via le service is.gd.

@@ -35,6 +35,7 @@ Name[zh_CN]=展开 URL
 Comment=Extract the full URL and show it as a tooltip
 Comment[bg]=Разширяване на съкратени адреси и показване в подсказка
 Comment[da]=Udtræk den fulde URL og vis den som et værktøjstip
+Comment[de]=Verkürzte Adressen (URLs) in einer Kurzinfo vollständig anzeigen
 Comment[en_GB]=Extract the full URL and show it as a tooltip
 Comment[et]=Täieliku URL-i väljalugemine ja näitamine kohtspikrina
 Comment[fr]=Extraire l'URL complet et l'afficher comme infobulle

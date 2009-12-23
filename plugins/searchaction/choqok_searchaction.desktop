@@ -16,6 +16,7 @@ X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=true
 Name=Search Action
 Name[da]=Søgehandling
+Name[de]=Suchaktion
 Name[en_GB]=Search Action
 Name[et]=Otsimistoiming
 Name[fr]=Action de recherche

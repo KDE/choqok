@@ -39,6 +39,7 @@ Name[x-test]=xxDigg.com Shortenerxx
 Name[zh_CN]=Digg.com 缩短器
 Comment=A plugin to shorten URLs via the digg.com service.
 Comment[da]=Et plugin til at forkorte URL'er via tjenesten digg.com.
+Comment[de]=Ein Modul, um Adressen (URLs) mit Hilfe des digg.com-Dienstes zu kürzen
 Comment[en_GB]=A plugin to shorten URLs via the digg.com service.
 Comment[et]=Plugin URL-ide lühendamiseks digg.com-i teenuse abil.
 Comment[fr]=Un module externe pour raccourcir les URL via le service digg.com.

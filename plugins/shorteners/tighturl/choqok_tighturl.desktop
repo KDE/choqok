@@ -39,6 +39,7 @@ Name[x-test]=xxTightUrl Shortenerxx
 Name[zh_CN]=TightURL 缩短器
 Comment=A plugin to shorten URLs via the TightURL service.
 Comment[da]=Et plugin til at forkorte URL'er via tjenesten TightUrl.
+Comment[de]=Ein Modul, um Adressen (URLs) mit Hilfe des TightURL-Dienstes zu kürzen
 Comment[en_GB]=A plugin to shorten URLs via the TightURL service.
 Comment[et]=Plugin URL-ide lühendamiseks TightURL'i teenuse abil.
 Comment[fr]=Un module externe pour raccourcir les URL via le service TightUrl.
