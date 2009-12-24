@@ -51,7 +51,7 @@ protected slots:
 
     void slotFriendshipCreated(Choqok::Account*, const QString&);
     void slotFriendshipDestroyed(Choqok::Account*, const QString&);
-    void slotUserBlocked(Choqok::Account*, const QString&);
+//     void slotUserBlocked(Choqok::Account*, const QString&);
 
 protected:
     void updateHtml();

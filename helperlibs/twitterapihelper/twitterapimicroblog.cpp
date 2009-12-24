@@ -47,6 +47,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "twitterapisearch.h"
 #include "twitterapisearchdialog.h"
 #include "twitterapisearchtimelinewidget.h"
+#include <notifymanager.h>
 
 class TwitterApiMicroBlog::Private
 {
@@ -80,7 +81,7 @@ TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObje
     QStringList timelineTypes;
     timelineTypes<< "Home" << "Reply" << "Inbox" << "Outbox";
     setTimelineNames(timelineTypes);
-    timelineApiPath["Home"] = "/statuses/friends_timeline.xml";
+    timelineApiPath["Home"] = "/statuses/home_timeline.xml";
     timelineApiPath["Reply"] = "/statuses/replies.xml";
     timelineApiPath["Inbox"] = "/direct_messages.xml";
     timelineApiPath["Outbox"] = "/direct_messages/sent.xml";
@@ -980,7 +981,7 @@ void TwitterApiMicroBlog::slotCreateFriendship(KJob* job)
         kError()<<"Job is a null Pointer!";
         return;
     }
-    Choqok::Account *theAccount = mJobsAccount.take(job);
+    TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount*>( mJobsAccount.take(job) );
     QString username = mFriendshipMap.take(job);
     if(job->error()){
         kDebug()<<"Job Error:"<<job->errorString();
@@ -989,9 +990,13 @@ void TwitterApiMicroBlog::slotCreateFriendship(KJob* job)
         return;
     }
     Choqok::User *user = readUserInfoFromXml(qobject_cast<KIO::StoredTransferJob*>(job)->data());
-    if( user && user->userName == username ){
+    if( user /*&& user->userName.compare(username, Qt::CaseInsensitive)*/ ){
         emit friendshipCreated(theAccount, username);
+        Choqok::NotifyManager::success( i18n("You are now listening to %1's posts.", username) );
+        theAccount->setFriendsList(QStringList());
+        requestFriendsScreenName(theAccount);
     } else {
+        kDebug()<<"Parse Error: "<<qobject_cast<KIO::StoredTransferJob*>(job)->data();
         emit error( theAccount, ParsingError,
                      i18n("Creating friendship with %1 failed: the server returned invalid data.", username ) );
     }
@@ -1023,7 +1028,7 @@ void TwitterApiMicroBlog::slotDestroyFriendship(KJob* job)
         kError()<<"Job is a null Pointer!";
         return;
     }
-    Choqok::Account *theAccount = mJobsAccount.take(job);
+    TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount*>( mJobsAccount.take(job) );
     QString username = mFriendshipMap.take(job);
     if(job->error()){
         kDebug()<<"Job Error:"<<job->errorString();
@@ -1032,14 +1037,17 @@ void TwitterApiMicroBlog::slotDestroyFriendship(KJob* job)
         return;
     }
     Choqok::User *user = readUserInfoFromXml(qobject_cast<KIO::StoredTransferJob*>(job)->data());
-    if( user && user->userName == username ){
+    if( user /*&& user->userName.compare( username, Qt::CaseInsensitive )*/ ){
         emit friendshipDestroyed(theAccount, username);
+        Choqok::NotifyManager::success( i18n("You will not receive %1's updates.", username) );
+        theAccount->setFriendsList(QStringList());
+        requestFriendsScreenName(theAccount);
     } else {
+        kDebug()<<"Parse Error: "<<qobject_cast<KIO::StoredTransferJob*>(job)->data();
         emit error( theAccount, ParsingError,
                      i18n("Destroying friendship with %1 failed: the server returned invalid data.",
                           username ) );
     }
-//     Choqok::User *user = readUserInfoFromXml(); TODO Check for failor!
 }
 
 void TwitterApiMicroBlog::blockUser( Choqok::Account *theAccount, const QString& username )
@@ -1076,9 +1084,11 @@ void TwitterApiMicroBlog::slotBlockUser(KJob* job)
         return;
     }
     Choqok::User *user = readUserInfoFromXml(qobject_cast<KIO::StoredTransferJob*>(job)->data());
-    if( user && user->userName == username ){
+    if( user /*&& user->userName.compare( username, Qt::CaseInsensitive )*/ ){
         emit userBlocked(theAccount, username);
+        Choqok::NotifyManager::success( i18n("Your posts are blocked for %1.", username) );
     } else {
+        kDebug()<<"Parse Error: "<<qobject_cast<KIO::StoredTransferJob*>(job)->data();
         emit error( theAccount, ParsingError,
                      i18n("Blocking %1 failed: the server returned invalid data.",
                           username ) );

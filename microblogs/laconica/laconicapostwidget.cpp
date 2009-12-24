@@ -35,6 +35,7 @@
 #include <quickpost.h>
 #include "laconicaaccount.h"
 #include "laconicamicroblog.h"
+#include <notifymanager.h>
 
 const QRegExp LaconicaPostWidget::mGroupRegExp("([\\s]|^)!([^\\s\\W]+)");
 
@@ -48,6 +49,7 @@ public:
     }
     LaconicaAccount *account;
     LaconicaMicroBlog *mBlog;
+    QString tmpUsername;
 };
 
 LaconicaPostWidget::LaconicaPostWidget(Choqok::Account* account, const Choqok::Post& post, QWidget* parent)
@@ -85,25 +87,62 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
                                                     LaconicaSearch::ReferenceGroup);
     } else if(scheme == "user") {
         KMenu menu;
-        KAction * info = new KAction( KIcon("user-identity"), i18nc("Who is user", "Who is %1", url.host()),
-                                      &menu );
-        KAction * from = new KAction(KIcon("edit-find-user"), i18nc("Posts from user", "Posts from %1",url.host()),
-                                     &menu);
+        KAction * info = new KAction( KIcon("user-identity"), i18nc("Who is user", "Who is %1",
+                                                                    url.host()), &menu );
+        KAction * from = new KAction(KIcon("edit-find-user"), i18nc("Posts from user", "Posts from %1",
+                                                                    url.host()), &menu);
         KAction * to = new KAction(KIcon("meeting-attending"), i18nc("Replies to user", "Replies to %1",
-                                                                     url.host()),
-                                   &menu);
+                                                                     url.host()), &menu);
         menu.addAction(info);
         menu.addAction(from);
         menu.addAction(to);
         from->setData(LaconicaSearch::FromUser);
         to->setData(LaconicaSearch::ToUser);
         QAction * ret;
+
+        //Subscribe/UnSubscribe/Block
+        bool hasBlock = false, isSubscribe = false;
+        QString accountUsername = d->account->username().toLower();
+        QString postUsername = url.host().toLower();
+        KAction *subscribe = 0, *block = 0 ;
+        if(accountUsername != postUsername){
+            menu.addSeparator();
+            if( d->account->friendsList().contains( url.host() ) ){
+                isSubscribe = false;//It's UnSubscribe
+                subscribe = new KAction( KIcon("list-remove-user"),
+                                         i18nc("Unsubscribe from user",
+                                               "Unsubscribe from %1", url.host()), &menu);
+            } else {
+                isSubscribe = true;
+                subscribe = new KAction( KIcon("list-add-user"),
+                                         i18nc("Subscribe to user",
+                                               "Subscribe to %1", url.host()), &menu);
+            }
+            hasBlock = true;
+            block = new KAction( KIcon("dialog-cancel"),
+                                 i18nc("Block user",
+                                       "Block %1", url.host()), &menu);
+            menu.addAction(subscribe);
+            menu.addAction(block);
+        }
         ret = menu.exec(QCursor::pos());
         if(ret == 0)
             return;
         if(ret == info) {
             TwitterApiWhoisWidget *wd = new TwitterApiWhoisWidget(d->account, url.host(), this);
             wd->show(QCursor::pos());
+            return;
+        }
+        if(ret == subscribe){
+            if(isSubscribe) {
+                d->mBlog->createFriendship(d->account, url.host());
+            } else {
+                d->mBlog->destroyFriendship(d->account, url.host());
+            }
+            return;
+        }
+        if(ret == block){
+            d->mBlog->blockUser(d->account, url.host());
             return;
         }
         int type = ret->data().toInt();
@@ -135,4 +174,3 @@ void LaconicaPostWidget::slotResendPost()
     else
         emit resendPost(text);
 }
-

@@ -359,8 +359,7 @@ void TwitterApiWhoisWidget::checkAnchor( const QUrl url )
                     SLOT(slotFriendshipDestroyed(Choqok::Account*,QString)));
         } else if (url.host() == "block") {
             d->mBlog->blockUser(d->currentAccount, d->username);
-            connect(d->mBlog, SIGNAL(userBlocked(Choqok::Account*,QString)),
-                    SLOT(slotUserBlocked(Choqok::Account*,QString)));
+//             connect(d->mBlog, SIGNAL(userBlocked(Choqok::Account*,QString)), SLOT(slotUserBlocked(Choqok::Account*,QString)));
         }
     } else {
             Choqok::openUrl(url);
@@ -399,7 +398,7 @@ void TwitterApiWhoisWidget::setActionImages()
 {
     d->imgActions.clear();
     if(d->username.compare(d->currentAccount->username(), Qt::CaseInsensitive) != 0){
-        if( d->currentAccount->friendsList().contains(d->username) ){
+        if( d->currentAccount->friendsList().contains(d->username, Qt::CaseInsensitive) ){
             d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://unsubscribe"),
                             KIcon("list-remove-user").pixmap(16) );
             d->imgActions += "<a href='choqok://unsubscribe'><img src='icon://unsubscribe' title='"+
@@ -420,10 +419,6 @@ void TwitterApiWhoisWidget::setActionImages()
 void TwitterApiWhoisWidget::slotFriendshipCreated(Choqok::Account* theAccount, const QString &username)
 {
     if(theAccount == d->currentAccount && username == d->username){
-        Choqok::NotifyManager::success( i18n("You are now listening to %1's posts.", username) );
-        QStringList list = d->currentAccount->friendsList();
-        list.append(username);
-        d->currentAccount->setFriendsList(list);
         setActionImages();
         updateHtml();
     }
@@ -432,20 +427,16 @@ void TwitterApiWhoisWidget::slotFriendshipCreated(Choqok::Account* theAccount, c
 void TwitterApiWhoisWidget::slotFriendshipDestroyed(Choqok::Account* theAccount, const QString &username)
 {
     if(theAccount == d->currentAccount && username == d->username){
-        Choqok::NotifyManager::success( i18n("You will not receive %1's updates.", username) );
-        QStringList list = d->currentAccount->friendsList();
-        list.removeOne(username);
-        d->currentAccount->setFriendsList(list);
         setActionImages();
         updateHtml();
     }
 }
 
-void TwitterApiWhoisWidget::slotUserBlocked(Choqok::Account* theAccount, const QString &username)
-{
-    if(theAccount == d->currentAccount && username == d->username){
-        Choqok::NotifyManager::success( i18n("Your posts are blocked for %1.", username) );
-    }
-}
+// void TwitterApiWhoisWidget::slotUserBlocked(Choqok::Account* theAccount, const QString &username)
+// {
+//     if(theAccount == d->currentAccount && username == d->username){
+//         Choqok::NotifyManager::success( i18n("Your posts are blocked for %1.", username) );
+//     }
+// }
 
 #include "twitterapiwhoiswidget.moc"

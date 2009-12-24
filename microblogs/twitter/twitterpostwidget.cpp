@@ -75,6 +75,32 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
         menu.addAction(from);
         menu.addAction(to);
         menu.addAction(cont);
+
+        //Subscribe/UnSubscribe/Block
+        bool isSubscribe = false;
+        QString accountUsername = currentAccount()->username().toLower();
+        QString postUsername = url.host().toLower();
+        KAction *subscribe = 0, *block = 0 ;
+        if(accountUsername != postUsername){
+            menu.addSeparator();
+            if( qobject_cast<TwitterApiAccount*>(currentAccount())->friendsList().contains( url.host(), Qt::CaseInsensitive ) ){
+                isSubscribe = false;//It's UnSubscribe
+                subscribe = new KAction( KIcon("list-remove-user"),
+                                         i18nc("Unfollow user",
+                                               "Unfollow %1", url.host()), &menu);
+            } else {
+                isSubscribe = true;
+                subscribe = new KAction( KIcon("list-add-user"),
+                                         i18nc("Follow user",
+                                               "Follow %1", url.host()), &menu);
+            }
+            block = new KAction( KIcon("dialog-cancel"),
+                                 i18nc("Block user",
+                                       "Block %1", url.host()), &menu);
+                                       menu.addAction(subscribe);
+                                       menu.addAction(block);
+        }
+
         QAction * ret = menu.exec(QCursor::pos());
         if(ret == 0)
             return;
@@ -82,6 +108,19 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
             TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(currentAccount());
             TwitterApiWhoisWidget *wd = new TwitterApiWhoisWidget(acc, url.host(), this);
             wd->show(QCursor::pos());
+            return;
+        }
+        if(ret == subscribe){
+            
+            if(isSubscribe) {
+                blog->createFriendship(currentAccount(), url.host());
+            } else {
+                blog->destroyFriendship(currentAccount(), url.host());
+            }
+            return;
+        }
+        if(ret == block){
+            blog->blockUser(currentAccount(), url.host());
             return;
         }
         int type = ret->data().toInt();
