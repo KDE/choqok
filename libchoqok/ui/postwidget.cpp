@@ -455,7 +455,7 @@ void PostWidget::contextMenuEvent(QContextMenuEvent* event)
 {
     KMenu *menu = new KMenu(this);
     KAction *copy = new KAction( i18n("Copy"), this );
-    copy->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_C ) );
+//     copy->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_C ) );
     connect( copy, SIGNAL(triggered(bool)), SLOT(slotCopyPostContent()) );
     menu->addAction(copy);
     QString anchor = document()->documentLayout()->anchorAt(event->pos());
@@ -467,7 +467,7 @@ void PostWidget::contextMenuEvent(QContextMenuEvent* event)
     }
     menu->addSeparator();
     KAction *selectAll = new KAction(i18n("Select All"), this);
-    selectAll->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_A ) );
+//     selectAll->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_A ) );
     connect( selectAll, SIGNAL(triggered(bool)), SLOT(selectAll()) );
     menu->addAction(selectAll);
     menu->popup(event->globalPos());
