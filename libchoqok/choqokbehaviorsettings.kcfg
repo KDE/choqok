@@ -28,6 +28,9 @@
         <entry name="showMainWinOnStart" type="Bool">
             <default>true</default>
         </entry>
+        <entry name="showSplashScreen" type="Bool">
+            <default>true</default>
+        </entry>
         <entry name="position" type="Point">
             <default>QPoint(-1,-1)</default>
         </entry>

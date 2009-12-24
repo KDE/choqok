@@ -46,9 +46,9 @@ ChoqokApplication::ChoqokApplication()
     setQuitOnLastWindowClosed( false );
 
     m_mainWindow = new MainWindow;
-    if ( Choqok::BehaviorSettings::showMainWinOnStart() ) {
-        m_mainWindow->show();
-    }
+//     if ( Choqok::BehaviorSettings::showMainWinOnStart() ) {
+//         m_mainWindow->show();
+//     }
 
     Choqok::UI::Global::setMainWindow( m_mainWindow );
 
@@ -76,6 +76,7 @@ void ChoqokApplication::quitChoqok()
 
     if ( m_mainWindow )
     {
+        Choqok::BehaviorSettings::setShowMainWinOnStart(m_mainWindow->isVisible());
         m_mainWindow->deleteLater();
         m_mainWindow = 0;
     }

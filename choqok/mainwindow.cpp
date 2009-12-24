@@ -50,13 +50,27 @@
 #include "choqokapplication.h"
 #include <ksettings/dialog.h>
 #include <choqokbehaviorsettings.h>
+#include <kstandarddirs.h>
+#include <KSplashScreen>
 
 MainWindow::MainWindow()
-    : Choqok::UI::MainWindow(), quickWidget(0), s_settingsDialog(0)
+    : Choqok::UI::MainWindow(), quickWidget(0), s_settingsDialog(0), m_splash(0), microblogCounter(0)
 {
     kDebug();
     setAttribute ( Qt::WA_DeleteOnClose, false );
     setAttribute ( Qt::WA_QuitOnClose, false );
+
+    if( Choqok::BehaviorSettings::showSplashScreen() ){
+        KStandardDirs *stdDirs = KGlobal::dirs();
+        QString img = stdDirs->findResource( "data", "choqok/images/splash_screen.png" );
+        kDebug()<<img;
+        QPixmap splashpix( img );
+        if(splashpix.isNull())
+            kDebug()<<"Pixmap is NULL";
+        m_splash = new KSplashScreen( splashpix, Qt::WindowStaysOnTopHint );
+        m_splash->show();
+    }
+
     timelineTimer = new QTimer( this );
     setWindowTitle( i18n("Choqok") );
     mainWidget = new KTabWidget( this );
@@ -109,14 +123,17 @@ void MainWindow::loadAllAccounts()
     kDebug();
     settingsChanged();
     QList<Choqok::Account*> accList = Choqok::AccountManager::self()->accounts();
-    int count = accList.count();
+    int count = microblogCounter = accList.count();
     if( count > 0 ) {
-        for( int i=0; i<count; ++i ){
+        for( int i=0; i < count; ++i ){
             addBlog(accList.at(i), true);
         }
         kDebug()<<"All accounts loaded.";
         if(Choqok::BehaviorSettings::updateInterval() > 0)
             QTimer::singleShot(500, this, SIGNAL(updateTimelines()));
+    } else {
+        delete m_splash;
+        m_splash = 0;
     }
     createQuickPostDialog();
 }
@@ -386,6 +403,7 @@ void MainWindow::addBlog( Choqok::Account * account, bool isStartup )
     kDebug() << "Adding new Blog, Alias: " << account->alias() << "Blog: " << account->microblog()->serviceName();
 
     Choqok::UI::MicroBlogWidget *widget = account->microblog()->createMicroBlogWidget(account, this);
+    connect(widget, SIGNAL(loaded()), SLOT(oneMicroblogLoaded()));
     widget->initUi();
 
 //     connect( widget, SIGNAL( sigSetUnread( int ) ), sysIcon, SLOT( slotSetUnread( int ) ) );
@@ -397,7 +415,7 @@ void MainWindow::addBlog( Choqok::Account * account, bool isStartup )
     connect( this, SIGNAL( updateTimelines() ), widget, SLOT( updateTimelines() ) );
     connect( this, SIGNAL( markAllAsRead() ), widget, SLOT( markAllAsRead() ) );
     connect( this, SIGNAL(removeOldPosts()), widget, SLOT(removeOldPosts()) );
-    kDebug()<<"Plugin Icon: "<<account->microblog()->pluginIcon();
+//     kDebug()<<"Plugin Icon: "<<account->microblog()->pluginIcon();
     mainWidget->addTab( widget, KIcon(account->microblog()->pluginIcon()), account->alias() );
 
     if( !isStartup )
@@ -508,6 +526,19 @@ void MainWindow::slotCurrentBlogChanged(int)
     Choqok::UI::MicroBlogWidget *wd = qobject_cast<Choqok::UI::MicroBlogWidget *>(mainWidget->currentWidget());
     if( wd )
         wd->setFocus();
+}
+
+void MainWindow::oneMicroblogLoaded()
+{
+    kDebug();
+    --microblogCounter;
+    if(microblogCounter < 1){
+        //Everything loaded, So splash screen should be deleted!
+        delete m_splash;
+        m_splash = 0;
+        if( Choqok::BehaviorSettings::showMainWinOnStart() )
+            this->show();
+    }
 }
 
 #include "mainwindow.moc"

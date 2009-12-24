@@ -162,6 +162,8 @@ void MicroBlogWidget::initTimelines()
     foreach( const QString &timeline, d->account->timelineNames() ){
         addTimelineWidgetToUi(timeline);
     }
+//     kDebug()<<"========== Emiting loaded()";
+    emit loaded();
 }
 
 TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)

@@ -105,6 +105,12 @@ signals:
     */
     void updateUnreadCount( int change, int sum );
 
+    /**
+    Emitted when all timelines are loaded fine!
+    @note This will use for splash screen management!
+    */
+    void loaded();
+
 protected slots:
     /**
     Connected to @ref MicroBlog::timelineDataReceived() to update timelines

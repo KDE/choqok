@@ -28,6 +28,7 @@
 #include "account.h"
 #include "ui/mainwindow.h"
 
+class KSplashScreen;
 namespace Choqok
 {
 namespace UI
@@ -90,6 +91,9 @@ private slots:
     void slotUpdateUnreadCount( int change, int sum );
     void slotCurrentBlogChanged(int);
 
+    //Using this for splash screen
+    void oneMicroblogLoaded();
+
 private:
     void setupActions();
     void createQuickPostDialog();
@@ -102,6 +106,9 @@ private:
     SysTrayIcon *sysIcon;
     Choqok::UI::QuickPost *quickWidget;
     KSettings::Dialog *s_settingsDialog;
+    KSplashScreen *m_splash;
+
+    int microblogCounter;
 };
 
 #endif
