@@ -994,7 +994,7 @@ void TwitterApiMicroBlog::slotCreateFriendship(KJob* job)
         emit friendshipCreated(theAccount, username);
         Choqok::NotifyManager::success( i18n("You are now listening to %1's posts.", username) );
         theAccount->setFriendsList(QStringList());
-        requestFriendsScreenName(theAccount);
+        listFriendsUsername(theAccount);
     } else {
         kDebug()<<"Parse Error: "<<qobject_cast<KIO::StoredTransferJob*>(job)->data();
         emit error( theAccount, ParsingError,
@@ -1041,7 +1041,7 @@ void TwitterApiMicroBlog::slotDestroyFriendship(KJob* job)
         emit friendshipDestroyed(theAccount, username);
         Choqok::NotifyManager::success( i18n("You will not receive %1's updates.", username) );
         theAccount->setFriendsList(QStringList());
-        requestFriendsScreenName(theAccount);
+        listFriendsUsername(theAccount);
     } else {
         kDebug()<<"Parse Error: "<<qobject_cast<KIO::StoredTransferJob*>(job)->data();
         emit error( theAccount, ParsingError,
