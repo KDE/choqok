@@ -185,6 +185,11 @@ protected:
     virtual QStringList readUsersScreenNameFromXml( Choqok::Account *theAccount, const QByteArray & buffer );
     virtual Choqok::User *readUserInfoFromXml( const QByteArray &buffer );
 
+    /**
+    Checks xml returned from server for error, and return error string, Or an empty string if nothing found!
+    */
+    virtual QString checkXmlForError(const QByteArray &buffer);
+
     QHash<QString, QString> timelineApiPath;//TimelineType, path
     QMap<QString, Choqok::TimelineInfo*> mTimelineInfos;//timelineName, Info
 
