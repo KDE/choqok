@@ -22,19 +22,18 @@
 
 */
 
-#include "untiny.h"
+#include "imagepreview.h"
 #include <KGenericFactory>
 #include <choqokuiglobal.h>
 #include "postwidget.h"
-#include <kio/jobclasses.h>
-#include <KIO/Job>
+#include <mediamanager.h>
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < UnTiny > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_untiny" ) )
+K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < ImagePreview > (); )
+K_EXPORT_PLUGIN( MyPluginFactory( "choqok_imagepreview" ) )
 
-const QRegExp UnTiny::mUrlRegExp("((ftps?|https?)://[^\\s<>\"]+[^!,\\.\\s<>'\"\\)\\]])");
+const QRegExp ImagePreview::mTwitpicRegExp("(http://twitpic.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
 
-UnTiny::UnTiny(QObject* parent, const QList< QVariant >& )
+ImagePreview::ImagePreview(QObject* parent, const QList< QVariant >& )
     :Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped)
 {
     kDebug();
@@ -44,12 +43,12 @@ UnTiny::UnTiny(QObject* parent, const QList< QVariant >& )
             SLOT(slotAddNewPostWidget(Choqok::UI::PostWidget*)) );
 }
 
-UnTiny::~UnTiny()
+ImagePreview::~ImagePreview()
 {
 
 }
 
-void UnTiny::slotAddNewPostWidget(Choqok::UI::PostWidget* newWidget)
+void ImagePreview::slotAddNewPostWidget(Choqok::UI::PostWidget* newWidget)
 {
     postsQueue.enqueue(newWidget);
     if(state == Stopped){
@@ -58,7 +57,7 @@ void UnTiny::slotAddNewPostWidget(Choqok::UI::PostWidget* newWidget)
     }
 }
 
-void UnTiny::startParsing()
+void ImagePreview::startParsing()
 {
 //     kDebug();
     int i = 8;
@@ -73,39 +72,39 @@ void UnTiny::startParsing()
         QTimer::singleShot(500, this, SLOT(startParsing()));
 }
 
-void UnTiny::parse(Choqok::UI::PostWidget* postToParse)
+void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
 {
     if(!postToParse)
         return;
     int pos = 0;
     QStringList redirectList;
     QString content = postToParse->currentPost().content;
-    while ((pos = mUrlRegExp.indexIn(content, pos)) != -1) {
-        pos += mUrlRegExp.matchedLength();
-        if( mUrlRegExp.matchedLength() < 31 )//Most of shortenned URLs have less than 30 Chars!
-            redirectList << mUrlRegExp.cap(0);
+    while ((pos = mTwitpicRegExp.indexIn(content, pos)) != -1) {
+        pos += mTwitpicRegExp.matchedLength();
+        redirectList << mTwitpicRegExp.cap(0);
+        kDebug()<<mTwitpicRegExp.capturedTexts();
     }
     foreach(const QString &url, redirectList) {
-        KIO::TransferJob *job = KIO::mimetype( url, KIO::HideProgressInfo );
-        if ( !job ) {
-            kDebug() << "Cannot create a http header request!";
-            break;
-        }
-        connect( job, SIGNAL( permanentRedirection( KIO::Job*, KUrl, KUrl ) ),
-                 this, SLOT( slot301Redirected(KIO::Job*,KUrl,KUrl)) );
-        mParsingList.insert(job, postToParse);
-        job->start();
+        QString twitpicUrl = QString( "http://twitpic.com/show/mini%1" ).arg(QString(url).remove("http://twitpic.com"));
+        connect( Choqok::MediaManager::self(),
+                 SIGNAL(imageFetched(QString,QPixmap)),
+                 SLOT(slotImageFetched(QString,QPixmap)) );
+        mParsingList.insert(twitpicUrl, postToParse);
+        mBaseUrlMap.insert(twitpicUrl, url);
+        Choqok::MediaManager::self()->fetchImage(twitpicUrl, Choqok::MediaManager::Async);
     }
 }
 
-void UnTiny::slot301Redirected(KIO::Job* job, KUrl fromUrl, KUrl toUrl)
+void ImagePreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pixmap)
 {
-    Choqok::UI::PostWidget *postToParse = mParsingList.take(job);
-    job->kill();
+    Choqok::UI::PostWidget *postToParse = mParsingList.take(remoteUrl);
+    QString baseUrl = mBaseUrlMap.take(remoteUrl);
     if(!postToParse)
         return;
-//     kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
     QString content = postToParse->content();
-    content.replace(QRegExp("title='" + fromUrl.url() + "'"), "title='" + toUrl.url() + "'");
+    QString imgUrl("img://twitpicImage");
+    postToParse->document()->addResource(QTextDocument::ImageResource, imgUrl, pixmap);
+    content.replace(QRegExp('>'+baseUrl+'<'), "><img src='img://twitpicImage' /><");
     postToParse->setContent(content);
 }
+

@@ -199,7 +199,7 @@ KUrl TwitterSearch::buildUrl( QString query, int option, ChoqokId sinceStatusId,
 {
     kDebug();
     QString formattedQuery = mSearchCode[option] + query;
-    KUrl url( "http://search.twitter.com/search.atom" );
+    KUrl url( "https://search.twitter.com/search.atom" );
     url.addQueryItem("q", formattedQuery);
     if( !sinceStatusId.isEmpty() )
         url.addQueryItem( "since_id", sinceStatusId );
