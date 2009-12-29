@@ -1,0 +1,12 @@
+[Desktop Entry]
+Icon=kaboodle
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=kcm_choqok_twitpic
+X-KDE-FactoryName=kcm_choqok_twitpic
+X-KDE-ParentApp=choqok_twitpic
+X-KDE-ParentComponents=choqok_twitpic
+
+Name=Twitpic
+Comment=Upload image to twitpic.com
