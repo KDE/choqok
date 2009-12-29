@@ -34,6 +34,7 @@
 #include "twitterapimicroblog.h"
 #include <KDebug>
 #include <notifymanager.h>
+#include <KMessageBox>
 
 class TwitterApiDMessageDialog::Private
 {
@@ -59,8 +60,12 @@ TwitterApiDMessageDialog::TwitterApiDMessageDialog(TwitterApiAccount *theAccount
     KConfigGroup grp(KGlobal::config(), "TwitterApi");
     resize( grp.readEntry("DMessageDialogSize", QSize(300, 200)) );
     QStringList list = theAccount->friendsList();
-    list.sort();
-    d->comboFriendsList->addItems(list);
+    if( list.isEmpty() ){
+        reloadFriendslist();
+    } else {
+        list.sort();
+        d->comboFriendsList->addItems(list);
+    }
     setButtonText(Ok, i18nc("Send private message", "Send"));
 }
 
@@ -121,7 +126,7 @@ void TwitterApiDMessageDialog::slotButtonClicked(int button)
 
 void TwitterApiDMessageDialog::submitPost(QString text)
 {
-    if(text.isEmpty())
+    if( d->account->friendsList().isEmpty() || text.isEmpty() || d->comboFriendsList->currentText().isEmpty())
         return;
     hide();
     connect( d->account->microblog(),
