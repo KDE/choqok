@@ -101,29 +101,29 @@ void TwitpicUploadImage::submitImage()
     picUrl.fileName().toUtf8()+"\"");
     QByteArray data;
     data.append(header);
-    
+
     data.append(fileHeader);
     data.append(newLine + "Content-Type: " + fileContentType);
     data.append(newLine);
     data.append(newLine + picData);
-    
+
     data.append(header);
     data.append(formHeader.arg("username").toLatin1());
     data.append(newLine);
     data.append(newLine + TwitpicSettings::username().toLatin1());
-    
+
     data.append(header);
     data.append(formHeader.arg("password").toLatin1());
     data.append(newLine);
     data.append(newLine + Choqok::PasswordManager::self()->readPassword(QString("twitpic_%1").arg(TwitpicSettings::username())).toUtf8());
-    
+
     data.append(header);
     data.append(formHeader.arg("message").toLatin1());
     data.append(newLine);
     data.append(newLine + kcfg_message->toPlainText().toUtf8());
-    
+
     data.append(footer);
-    
+
     KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
     if ( !job ) {
         kError() << "Cannot create a http POST request!";
