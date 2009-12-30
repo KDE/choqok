@@ -48,7 +48,7 @@ TwitpicUploadImage::TwitpicUploadImage(QWidget* parent)
         TwitpicSettings::self()->readConfig();
         if( TwitpicSettings::username().isEmpty() ){
             KMessageBox::sorry( Choqok::UI::Global::mainWindow(),
-                                i18n("You did not set your twitter account!\nIn order to use this plugin, You have to set a twitter account! Please go to Plugin configuration and set it.") );
+                                i18n("You did not set your twitter account.\nIn order to use this plugin, you have to set a twitter account: please go to Plugin Configuration and set it.") );
         }
     }
 
@@ -81,13 +81,13 @@ void TwitpicUploadImage::submitImage()
     KIO::TransferJob *picJob = KIO::get( picUrl, KIO::Reload, KIO::HideProgressInfo);
     if( !KIO::NetAccess::synchronousRun(picJob, 0, &picData) ){
         kError()<<"Job error: " << picJob->errorString();
-        KMessageBox::detailedError(this, i18n( "Uploading media failed: cannot read the media file." ),
+        KMessageBox::detailedError(this, i18n( "Uploading medium failed: cannot read the medium file." ),
                                                picJob->errorString() );
                                                return;
     }
     if ( picData.count() == 0 ) {
         kError() << "Cannot read the media file, please check if it exists.";
-        KMessageBox::error( this, i18n( "Uploading media failed: cannot read the media file." ) );
+        KMessageBox::error( this, i18n( "Uploading medium failed: cannot read the medium file." ) );
         return;
     }
     ///Documentation: http://twitpic.com/api.do
@@ -170,7 +170,7 @@ void TwitpicUploadImage::slotTwitPicCreatePost( KJob *job )
                 while( !node.isNull() ){
                     element = node.toElement();
                     if(element.tagName() == "err") {
-                        QString err = element.attribute( "msg", i18n("Unrecognised result.") );
+                        QString err = element.attribute( "msg", i18n("Unrecognized result.") );
                         kDebug()<<"Server Error: "<<err;
                         KMessageBox::detailedError( Choqok::UI::Global::mainWindow(),
                                                     i18n("Uploading image to Twitpic failed."),
@@ -185,7 +185,7 @@ void TwitpicUploadImage::slotTwitPicCreatePost( KJob *job )
             kError()<<"There isn't any \"rsp\" tag. Buffer:\n"<<buffer;
             KMessageBox::detailedError( Choqok::UI::Global::mainWindow(),
                                         i18n("Uploading image to Twitpic failed."),
-                                        i18n("Unrecognised result.") );
+                                        i18n("Unrecognized result.") );
             show();
         }
     }
