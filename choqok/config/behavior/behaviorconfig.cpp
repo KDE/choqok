@@ -69,6 +69,7 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
     d->mPrfsGeneral.setupUi(mPrfsGeneralDlg);
     addConfig( Choqok::BehaviorSettings::self(), mPrfsGeneralDlg );
     d->mBehaviorTabCtl->addTab(mPrfsGeneralDlg, i18n("&General"));
+    d->mPrfsGeneral.kcfg_updateInterval->setSuffix(ki18np(" Minute", " Minutes"));
 
     // "Notifications" TAB ============================================================
     //Commented for now!
@@ -76,6 +77,7 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
 //     d->mPrfsNotify.setupUi(mPrfsNotifyDlg);
 //     addConfig( Choqok::BehaviorSettings::self(), mPrfsNotifyDlg);
 //     d->mBehaviorTabCtl->addTab(mPrfsNotifyDlg, i18n("&Notifications"));
+    d->mPrfsNotify.kcfg_notifyInterval->setSuffix(ki18np(" Second", " Seconds"));
 
     // "Shortening" TAB ===============================================================
     d->mPrfsShorten = new BehaviorConfig_Shorten(d->mBehaviorTabCtl);

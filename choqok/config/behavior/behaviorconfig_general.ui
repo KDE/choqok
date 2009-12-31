@@ -125,9 +125,6 @@
             <property name="specialValueText">
              <string>Disabled</string>
             </property>
-            <property name="suffix">
-             <string> Minutes</string>
-            </property>
             <property name="minimum">
              <number>0</number>
             </property>

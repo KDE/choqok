@@ -35,9 +35,6 @@
      </item>
      <item>
       <widget class="KIntSpinBox" name="kcfg_notifyInterval">
-       <property name="suffix">
-        <string> Seconds</string>
-       </property>
        <property name="minimum">
         <number>2</number>
        </property>
