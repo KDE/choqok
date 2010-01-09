@@ -77,7 +77,7 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
 //     d->mPrfsNotify.setupUi(mPrfsNotifyDlg);
 //     addConfig( Choqok::BehaviorSettings::self(), mPrfsNotifyDlg);
 //     d->mBehaviorTabCtl->addTab(mPrfsNotifyDlg, i18n("&Notifications"));
-    d->mPrfsNotify.kcfg_notifyInterval->setSuffix(ki18np(" Second", " Seconds"));
+//     d->mPrfsNotify.kcfg_notifyInterval->setSuffix(ki18np(" Second", " Seconds"));
 
     // "Shortening" TAB ===============================================================
     d->mPrfsShorten = new BehaviorConfig_Shorten(d->mBehaviorTabCtl);
