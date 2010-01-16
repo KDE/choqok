@@ -32,6 +32,7 @@ K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < ImagePreview > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_imagepreview" ) )
 
 const QRegExp ImagePreview::mTwitpicRegExp("(http://twitpic.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
+const QRegExp ImagePreview::mYFrogRegExp("(http://yfrog.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])");
 
 ImagePreview::ImagePreview(QObject* parent, const QList< QVariant >& )
     :Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped)
@@ -76,15 +77,19 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
 {
     if(!postToParse)
         return;
+//     kDebug();
     int pos = 0;
-    QStringList redirectList;
+    QStringList twitpicRedirectList;
+    QStringList yfrogRedirectList;
     QString content = postToParse->currentPost().content;
+
+    //Twitpic: http://www.twitpic.com/api.do
     while ((pos = mTwitpicRegExp.indexIn(content, pos)) != -1) {
         pos += mTwitpicRegExp.matchedLength();
-        redirectList << mTwitpicRegExp.cap(0);
+        twitpicRedirectList << mTwitpicRegExp.cap(0);
         kDebug()<<mTwitpicRegExp.capturedTexts();
     }
-    foreach(const QString &url, redirectList) {
+    foreach(const QString &url, twitpicRedirectList) {
         QString twitpicUrl = QString( "http://twitpic.com/show/mini%1" ).arg(QString(url).remove("http://twitpic.com"));
         connect( Choqok::MediaManager::self(),
                  SIGNAL(imageFetched(QString,QPixmap)),
@@ -93,18 +98,39 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
         mBaseUrlMap.insert(twitpicUrl, url);
         Choqok::MediaManager::self()->fetchImage(twitpicUrl, Choqok::MediaManager::Async);
     }
+
+    //YFrog: http://code.google.com/p/imageshackapi/wiki/YFROGurls
+    //       http://code.google.com/p/imageshackapi/wiki/YFROGthumbnails
+    pos = 0;
+    while ((pos = mYFrogRegExp.indexIn(content, pos)) != -1) {
+        pos += mYFrogRegExp.matchedLength();
+        yfrogRedirectList << mYFrogRegExp.cap(0);
+        kDebug()<<mYFrogRegExp.capturedTexts();
+    }
+    foreach(const QString &url, yfrogRedirectList){
+//         if( url.endsWith('j') || url.endsWith('p') || url.endsWith('g') ) //To check if it's Image or not!
+        connect( Choqok::MediaManager::self(),
+                 SIGNAL(imageFetched(QString,QPixmap)),
+                 SLOT(slotImageFetched(QString,QPixmap)) );
+        QString yfrogThumbnailUrl = url + ".th.jpg";
+        kDebug()<<"YFrog Thumbnail Url: "<<yfrogThumbnailUrl;
+        mParsingList.insert(yfrogThumbnailUrl, postToParse);
+        mBaseUrlMap.insert(yfrogThumbnailUrl, url);
+        Choqok::MediaManager::self()->fetchImage(yfrogThumbnailUrl, Choqok::MediaManager::Async);
+    }
 }
 
 void ImagePreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pixmap)
 {
+    kDebug();
     Choqok::UI::PostWidget *postToParse = mParsingList.take(remoteUrl);
     QString baseUrl = mBaseUrlMap.take(remoteUrl);
     if(!postToParse)
         return;
     QString content = postToParse->content();
-    QString imgUrl("img://twitpicImage");
+    QString imgUrl("img://image");
     postToParse->document()->addResource(QTextDocument::ImageResource, imgUrl, pixmap);
-    content.replace(QRegExp('>'+baseUrl+'<'), "><img src='img://twitpicImage' /><");
+    content.replace(QRegExp('>'+baseUrl+'<'), "><img src='img://image' /><");
     postToParse->setContent(content);
 }
 

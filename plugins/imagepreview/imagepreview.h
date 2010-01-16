@@ -62,5 +62,6 @@ private:
     QMap<QString, QString> mBaseUrlMap;//remoteUrl, BaseUrl
 
     static const QRegExp mTwitpicRegExp;
+    static const QRegExp mYFrogRegExp;
 };
 

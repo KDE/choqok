@@ -86,6 +86,7 @@ QPixmap * MediaManager::fetchImage( const QString& remoteUrl, ReturnMode mode /*
 {
     QPixmap *p = new QPixmap();
     if( d->cache.find(remoteUrl,*p) ) {
+        emit imageFetched(remoteUrl, *p);
         return p;
     } else if(mode == Async) {
         if ( d->queue.values().contains( remoteUrl ) ) {
