@@ -194,7 +194,7 @@ void TwitterApiPostWidget::checkAnchor(const QUrl & url)
 
 void TwitterApiPostWidget::slotBasePostFetched(Choqok::Account* theAccount, Choqok::Post* post)
 {
-    if(theAccount == currentAccount() && post->postId == currentPost().replyToPostId){
+    if(theAccount == currentAccount() && post && post->postId == currentPost().replyToPostId){
         kDebug();
         disconnect( currentAccount()->microblog(), SIGNAL(postFetched(Choqok::Account*,Choqok::Post*)),
                    this, SLOT(slotBasePostFetched(Choqok::Account*,Choqok::Post*)) );
