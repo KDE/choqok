@@ -32,12 +32,11 @@ class TwitpicConfig : public KCModule
 {
     Q_OBJECT
 public:
-    TwitpicConfig(QWidget* parent, const QVariantList& args);
+    TwitpicConfig(QWidget* parent, const QVariantList&);
     ~TwitpicConfig();
 
     virtual void save();
     virtual void load();
-    virtual void defaults();
 
 protected slots:
     void emitChanged();

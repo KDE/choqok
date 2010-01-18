@@ -33,8 +33,8 @@
 K_PLUGIN_FACTORY( TwitpicConfigFactory, registerPlugin < TwitpicConfig > (); )
 K_EXPORT_PLUGIN( TwitpicConfigFactory( "kcm_choqok_twitpic" ) )
 
-TwitpicConfig::TwitpicConfig(QWidget* parent, const QVariantList& args):
-        KCModule( TwitpicConfigFactory::componentData(), parent, args)
+TwitpicConfig::TwitpicConfig(QWidget* parent, const QVariantList& ):
+        KCModule( TwitpicConfigFactory::componentData(), parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
@@ -42,19 +42,13 @@ TwitpicConfig::TwitpicConfig(QWidget* parent, const QVariantList& args):
     ui.setupUi(wd);
     addConfig( TwitpicSettings::self(), wd );
     layout->addWidget(wd);
-    setButtons(KCModule::Apply | KCModule::Default);
-    connect( ui.kcfg_username, SIGNAL(textChanged()), SLOT(emitChanged()) );
-    connect( ui.kcfg_password, SIGNAL(textChanged()), SLOT(emitChanged()) );
+    connect( ui.kcfg_username,SIGNAL(textChanged(QString)), SLOT(emitChanged()) );
+    connect( ui.kcfg_password, SIGNAL(textChanged(QString)), SLOT(emitChanged()) );
 }
 
 TwitpicConfig::~TwitpicConfig()
 {
 
-}
-
-void TwitpicConfig::defaults()
-{
-    KCModule::defaults();
 }
 
 void TwitpicConfig::load()
@@ -76,8 +70,8 @@ void TwitpicConfig::save()
 void TwitpicConfig::emitChanged()
 {
     emit changed(true);
-    connect( ui.kcfg_username, SIGNAL(textChanged()), SLOT(emitChanged()) );
-    connect( ui.kcfg_password, SIGNAL(textChanged()), SLOT(emitChanged()) );
+    disconnect( ui.kcfg_username, SIGNAL(textChanged(QString)), this, SLOT(emitChanged()) );
+    disconnect( ui.kcfg_password, SIGNAL(textChanged(QString)), this, SLOT(emitChanged()) );
 }
 
 #include "twitpicconfig.moc"
