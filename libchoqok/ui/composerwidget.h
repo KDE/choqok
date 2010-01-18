@@ -26,7 +26,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QWidget>
 #include "choqok_export.h"
 #include <choqoktypes.h>
+#include <KPushButton>
+#include <QPointer>
 
+class QHBoxLayout;
 namespace Choqok {
 class Account;
 
@@ -51,12 +54,19 @@ public slots:
 protected slots:
     virtual void submitPost( const QString &text );
     virtual void slotPostSubmited(Choqok::Account *theAccount, Choqok::Post* post);
-    void slotErrorPost(Choqok::Account* theAccount,Choqok::Post* post);
+    virtual void slotErrorPost(Choqok::Account* theAccount,Choqok::Post* post);
     virtual void editorTextChanged();
     virtual void editorCleared();
 
 protected:
     Account *currentAccount();
+    QHBoxLayout *editorLayout();
+    Choqok::Post *postToSubmit();
+    void setPostToSubmit( Choqok::Post *post );
+
+
+    QString replyToId;
+    QPointer<KPushButton> btnAbort;
 
 private:
     class Private;

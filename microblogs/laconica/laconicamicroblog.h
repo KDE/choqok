@@ -59,6 +59,8 @@ public:
 
     virtual TwitterApiSearch* searchBackend();
 
+    virtual void createPostWithAttachment(Choqok::Account* theAccount, Choqok::Post* post,
+                            const QString &mediumToAttach = QString());
 private:
     QPointer<LaconicaSearch> mSearchBackend;
 };
