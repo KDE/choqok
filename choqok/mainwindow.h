@@ -80,6 +80,7 @@ private slots:
     void triggerQuickPost();
     void toggleMainWindow();
     void slotMarkAllAsRead();
+    void slotUpdateTimelines();
 
     void slotAppearanceConfigChanged();
     void slotBehaviorConfigChanged();

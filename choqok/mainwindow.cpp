@@ -60,6 +60,7 @@ MainWindow::MainWindow()
     setAttribute ( Qt::WA_DeleteOnClose, false );
     setAttribute ( Qt::WA_QuitOnClose, false );
 
+    connect(this, SIGNAL(updateTimelines()), SLOT(slotUpdateTimelines()));
     if( Choqok::BehaviorSettings::showSplashScreen() ){
         KStandardDirs *stdDirs = KGlobal::dirs();
         QString img = stdDirs->findResource( "data", "choqok/images/splash_screen.png" );
@@ -539,6 +540,11 @@ void MainWindow::oneMicroblogLoaded()
         if( Choqok::BehaviorSettings::showMainWinOnStart() )
             this->show();
     }
+}
+
+void MainWindow::slotUpdateTimelines()
+{
+    showStatusMessage(i18n("Loading timelines..."));
 }
 
 #include "mainwindow.moc"
