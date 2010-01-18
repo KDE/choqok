@@ -67,7 +67,7 @@ LaconicaComposerWidget::LaconicaComposerWidget(Choqok::Account* account, QWidget
 
 LaconicaComposerWidget::~LaconicaComposerWidget()
 {
-
+    delete d;
 }
 
 void LaconicaComposerWidget::submitPost(const QString& txt)
