@@ -117,7 +117,7 @@ void QuickPost::slotSubmitPost( Account* , Post* post )
     if (post == d->submittedPost) {
         d->txtPost->setEnabled(true);
         d->txtPost->clear();
-        emit newPostSubmitted(Success);
+        emit newPostSubmitted(Success, d->submittedPost->content);
         NotifyManager::success(i18n("New post submitted successfully"));
         delete d->submittedPost;
         d->submittedPost = 0L;

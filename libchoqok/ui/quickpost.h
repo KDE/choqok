@@ -53,7 +53,13 @@ public slots:
     void setText( const QString& text/*, Choqok::Account* account = 0, const QString& replyToId = QString()*/ );
 
 signals:
-    void newPostSubmitted( Choqok::JobResult result );
+    /**
+    Emitted when a new post submitted. @p postText is the text that submitted,
+    @p postText will be empty on failure!
+
+    @param result Result of posting, Could be Success or Fail
+    */
+    void newPostSubmitted( Choqok::JobResult result, const QString &postText = QString() );
 
 protected:
     void loadAccounts();
