@@ -61,7 +61,7 @@ LaconicaComposerWidget::LaconicaComposerWidget(Choqok::Account* account, QWidget
     connect(d->btnAttach, SIGNAL(clicked(bool)), this, SLOT(selectMediumToAttach()));
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addWidget(d->btnAttach);
-    vLayout->addSpacerItem(new QSpacerItem(10, 10, QSizePolicy::Preferred, QSizePolicy::MinimumExpanding));
+    vLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Preferred, QSizePolicy::MinimumExpanding));
     editorLayout()->addItem(vLayout);
 }
 
