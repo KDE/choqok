@@ -60,6 +60,7 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
         setAccount( mAccount = new LaconicaAccount(microblog, newAccountAlias) );
         kcfg_alias->setText( newAccountAlias );
     }
+    loadTimelinesTableState();
     kcfg_alias->setFocus(Qt::OtherFocusReason);
 }
 
@@ -87,6 +88,7 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
     mAccount->setUseSecureConnection(kcfg_secure->isChecked());
     mAccount->setChangeExclamationMark(kcfg_changeExclamationMark->isChecked());
     mAccount->setChangeExclamationMarkToText(kcfg_changeToString->text());
+    saveTimelinesTableState();
     mAccount->writeConfig();
     return mAccount;
 }
@@ -159,6 +161,32 @@ void LaconicaEditAccountWidget::slotVerifyCredentials(KJob* job)
         kcfg_test->setIcon(KIcon("dialog-ok"));
     else
         kcfg_test->setIcon(KIcon("dialog-error"));
+}
+
+void LaconicaEditAccountWidget::loadTimelinesTableState()
+{
+    foreach(const QString &timeline, mAccount->microblog()->timelineNames()){
+        int newRow = timelinesTable->rowCount();
+        timelinesTable->insertRow(newRow);
+        timelinesTable->setItem(newRow, 0, new QTableWidgetItem(timeline));
+
+        QCheckBox *enable = new QCheckBox ( timelinesTable );
+        enable->setChecked ( mAccount->timelineNames().contains(timeline) );
+        timelinesTable->setCellWidget ( newRow, 1, enable );
+    }
+}
+
+void LaconicaEditAccountWidget::saveTimelinesTableState()
+{
+    QStringList timelines;
+    int rowCount = timelinesTable->rowCount();
+    for(int i=0; i<rowCount; ++i){
+        QCheckBox *enable = qobject_cast<QCheckBox*>(timelinesTable->cellWidget(i, 1));
+        if(enable && enable->isChecked())
+            timelines<<timelinesTable->item(i, 0)->text();
+    }
+    timelines.removeDuplicates();
+    mAccount->setTimelineNames(timelines);
 }
 
 #include "laconicaeditaccount.moc"

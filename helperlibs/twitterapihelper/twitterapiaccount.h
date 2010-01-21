@@ -73,6 +73,10 @@ public:
 
     void setFriendsList( const QStringList &list );
 
+    virtual QStringList timelineNames() const;
+
+    virtual void setTimelineNames(const QStringList &list);
+
 protected:
     void setApiUrl( const KUrl &apiUrl );
     void setHomepageUrl( const KUrl& homepageUrl );

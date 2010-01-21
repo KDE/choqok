@@ -60,7 +60,11 @@ protected slots:
     virtual void slotRegisterNewAccount();
     virtual void verifyCredentials();
     void slotVerifyCredentials( KJob *job );
+
 protected:
+    void loadTimelinesTableState();
+    void saveTimelinesTableState();
+
     TwitterMicroBlog *mBlog;
     TwitterAccount *mAccount;
     QProgressBar *progress;

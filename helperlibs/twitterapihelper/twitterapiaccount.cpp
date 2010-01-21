@@ -39,6 +39,7 @@ public:
     KUrl apiUrl;
     KUrl homepageUrl;
     QStringList friendsList;
+    QStringList timelineNames;
 };
 
 TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString &alias)
@@ -49,6 +50,7 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString 
     d->count = configGroup()->readEntry("CountOfPosts", 20);
     d->host = configGroup()->readEntry("Host", QString());
     d->friendsList = configGroup()->readEntry("Friends", QStringList());
+    d->timelineNames = configGroup()->readEntry("Timelines", parent->timelineNames());
     setApi( configGroup()->readEntry("Api", QString('/') ) );
 
     if( d->friendsList.isEmpty() ){
@@ -70,6 +72,7 @@ void TwitterApiAccount::writeConfig()
     configGroup()->writeEntry("Host", d->host);
     configGroup()->writeEntry("Api", d->api);
     configGroup()->writeEntry("Friends", d->friendsList);
+    configGroup()->writeEntry("Timelines", d->timelineNames);
     Choqok::Account::writeConfig();
 }
 
@@ -166,6 +169,20 @@ QStringList TwitterApiAccount::friendsList() const
 void TwitterApiAccount::setFriendsList(const QStringList& list)
 {
     d->friendsList = list;
+}
+
+QStringList TwitterApiAccount::timelineNames() const
+{
+    return d->timelineNames;
+}
+
+void TwitterApiAccount::setTimelineNames(const QStringList& list)
+{
+    d->timelineNames.clear();
+    foreach(const QString &name, list){
+        if(microblog()->timelineNames().contains(name))
+            d->timelineNames<<name;
+    }
 }
 
 #include "twitterapiaccount.moc"

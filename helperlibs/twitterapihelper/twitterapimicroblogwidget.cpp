@@ -51,6 +51,8 @@ TwitterApiMicroBlogWidget::TwitterApiMicroBlogWidget(Choqok::Account* account, Q
     : MicroBlogWidget(account, parent), d(new Private(account))
 {
     kDebug();
+    connect( account, SIGNAL(modified(Choqok::Account*)),
+             this, SLOT(slotAccountModified(Choqok::Account*)) );
     connect( d->mBlog->searchBackend(),
              SIGNAL(searchResultsReceived(SearchInfo,QList<Choqok::Post*>&)),
              SLOT(slotSearchResultsReceived(SearchInfo,QList<Choqok::Post*>&)) );
@@ -157,6 +159,20 @@ void TwitterApiMicroBlogWidget::markAllAsRead()
         if(tabIndex == -1)
             continue;
         timelinesTabWidget()->setTabText( tabIndex, wd->timelineName() );
+    }
+}
+
+void TwitterApiMicroBlogWidget::slotAccountModified(Choqok::Account* account)
+{
+    foreach(const QString &timeline, account->microblog()->timelineNames()){
+        if( account->timelineNames().contains(timeline) ){
+            if( !timelines().contains(timeline) ){
+                addTimelineWidgetToUi(timeline);
+            }
+        } else if( timelines().contains(timeline) ) {
+            Choqok::UI::TimelineWidget *tm = timelines().take(timeline);
+            tm->deleteLater();
+        }
     }
 }
 

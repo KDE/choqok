@@ -58,6 +58,7 @@ TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
         setAccount( mAccount = new TwitterAccount(microblog, newAccountAlias) );
         kcfg_alias->setText( newAccountAlias );
     }
+    loadTimelinesTableState();
     kcfg_alias->setFocus(Qt::OtherFocusReason);
     connect( kcfg_register, SIGNAL( clicked() ), SLOT( slotRegisterNewAccount() ) );
 }
@@ -82,6 +83,7 @@ Choqok::Account* TwitterEditAccountWidget::apply()
     mAccount->setPassword( kcfg_password->text() );
     mAccount->setAlias(kcfg_alias->text());
     mAccount->setUseSecureConnection(kcfg_secure->isChecked());
+    saveTimelinesTableState();
     mAccount->writeConfig();
     return mAccount;
 }
@@ -154,4 +156,30 @@ void TwitterEditAccountWidget::slotVerifyCredentials(KJob* job)
         kcfg_test->setIcon(KIcon("dialog-ok"));
     else
         kcfg_test->setIcon(KIcon("dialog-error"));
+}
+
+void TwitterEditAccountWidget::loadTimelinesTableState()
+{
+    foreach(const QString &timeline, mAccount->microblog()->timelineNames()){
+        int newRow = timelinesTable->rowCount();
+        timelinesTable->insertRow(newRow);
+        timelinesTable->setItem(newRow, 0, new QTableWidgetItem(timeline));
+
+        QCheckBox *enable = new QCheckBox ( timelinesTable );
+        enable->setChecked ( mAccount->timelineNames().contains(timeline) );
+        timelinesTable->setCellWidget ( newRow, 1, enable );
+    }
+}
+
+void TwitterEditAccountWidget::saveTimelinesTableState()
+{
+    QStringList timelines;
+    int rowCount = timelinesTable->rowCount();
+    for(int i=0; i<rowCount; ++i){
+        QCheckBox *enable = qobject_cast<QCheckBox*>(timelinesTable->cellWidget(i, 1));
+        if(enable && enable->isChecked())
+            timelines<<timelinesTable->item(i, 0)->text();
+    }
+    timelines.removeDuplicates();
+    mAccount->setTimelineNames(timelines);
 }

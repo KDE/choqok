@@ -61,6 +61,9 @@ protected slots:
     void slotVerifyCredentials( KJob *job );
 
 protected:
+    void loadTimelinesTableState();
+    void saveTimelinesTableState();
+
     LaconicaMicroBlog *mBlog;
     LaconicaAccount *mAccount;
     QProgressBar *progress;

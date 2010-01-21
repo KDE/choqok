@@ -42,6 +42,7 @@ public slots:
     virtual void markAllAsRead();
 
 protected slots:
+    void slotAccountModified(Choqok::Account *account);
     void slotCloseCurrentSearch();
     void slotCurrentTimelineChanged(int);
     virtual void slotSearchResultsReceived( const SearchInfo &info,
