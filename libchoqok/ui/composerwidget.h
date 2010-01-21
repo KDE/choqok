@@ -60,7 +60,7 @@ protected slots:
 
 protected:
     Account *currentAccount();
-    QHBoxLayout *editorLayout();
+    QWidget *editorContainer();
     Choqok::Post *postToSubmit();
     void setPostToSubmit( Choqok::Post *post );
 

@@ -41,20 +41,21 @@
 class LaconicaComposerWidget::Private{
 public:
     Private()
-    :btnAttach(0), mediumName(0), btnCancel(0), mediumLayout(0)
+    :btnAttach(0), mediumName(0), btnCancel(0)
     {}
     QString mediumToAttach;
     KPushButton *btnAttach;
     QPointer<QLabel> mediumName;
     QPointer<KPushButton> btnCancel;
-    QHBoxLayout *mediumLayout;
+    QGridLayout *editorLayout;
 };
 
 
 LaconicaComposerWidget::LaconicaComposerWidget(Choqok::Account* account, QWidget* parent)
     : ComposerWidget(account, parent), d(new Private)
 {
-    d->btnAttach = new KPushButton(this);
+    d->editorLayout = qobject_cast<QGridLayout*>(editorContainer()->layout());
+    d->btnAttach = new KPushButton(editorContainer());
     d->btnAttach->setIcon(KIcon("mail-attachment"));
     d->btnAttach->setToolTip(i18n("Attach a file"));
     d->btnAttach->setMaximumWidth(d->btnAttach->height());
@@ -62,7 +63,7 @@ LaconicaComposerWidget::LaconicaComposerWidget(Choqok::Account* account, QWidget
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addWidget(d->btnAttach);
     vLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Preferred, QSizePolicy::MinimumExpanding));
-    editorLayout()->addItem(vLayout);
+    d->editorLayout->addItem(vLayout, 0, 1, 1, 1);
 }
 
 LaconicaComposerWidget::~LaconicaComposerWidget()
@@ -76,7 +77,7 @@ void LaconicaComposerWidget::submitPost(const QString& txt)
         Choqok::UI::ComposerWidget::submitPost(txt);
     } else {
         kDebug();
-        editorLayout()->setEnabled(false);
+        editorContainer()->setEnabled(false);
         QString text = txt;
         if( currentAccount()->microblog()->postCharLimit() &&
             text.size() > (int)currentAccount()->microblog()->postCharLimit() )
@@ -118,7 +119,7 @@ void LaconicaComposerWidget::slotPostMediaSubmitted(Choqok::Account* theAccount,
         Choqok::NotifyManager::success(i18n("New post submitted successfully"));
         editor()->clear();
         replyToId.clear();
-        editorLayout()->setEnabled(true);
+        editorContainer()->setEnabled(true);
         setPostToSubmit( 0L );
         cancelAttachMedium();
         currentAccount()->microblog()->updateTimelines(currentAccount());
@@ -136,17 +137,15 @@ void LaconicaComposerWidget::selectMediumToAttach()
     QString fileName = KUrl(d->mediumToAttach).fileName();
     if( !d->mediumName ){
         kDebug()<<fileName;
-        d->mediumLayout = new QHBoxLayout;
-        d->mediumName = new QLabel(this);
-        d->btnCancel = new KPushButton(this);
+        d->mediumName = new QLabel(editorContainer());
+        d->btnCancel = new KPushButton(editorContainer());
         d->btnCancel->setIcon(KIcon("list-remove"));
-        d->btnCancel->setToolTip(i18n("Discard"));
+        d->btnCancel->setToolTip(i18n("Discard Attachment"));
         d->btnCancel->setMaximumWidth(d->btnCancel->height());
         connect( d->btnCancel, SIGNAL(clicked(bool)), SLOT(cancelAttachMedium()) );
 
-        d->mediumLayout->addWidget(d->mediumName);
-        d->mediumLayout->addWidget(d->btnCancel);
-        qobject_cast<QVBoxLayout*>(layout())->addLayout(d->mediumLayout);
+        d->editorLayout->addWidget(d->mediumName, 1, 0);
+        d->editorLayout->addWidget(d->btnCancel, 1, 1);
     }
     d->mediumName->setText(fileName);
 }
@@ -155,7 +154,6 @@ void LaconicaComposerWidget::cancelAttachMedium()
 {
     kDebug();
     delete d->mediumName;
-    delete d->mediumLayout;
     delete d->btnCancel;
     d->mediumToAttach.clear();
 }

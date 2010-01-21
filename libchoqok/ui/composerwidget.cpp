@@ -43,16 +43,17 @@ public:
     TextEdit *editor;
     Account *currentAccount;
     Choqok::Post *postToSubmit;
-    QHBoxLayout *editorLayout;
+    QWidget *editorContainer;
 };
 
 ComposerWidget::ComposerWidget(Choqok::Account* account, QWidget* parent /*= 0*/)
 : QWidget(parent), btnAbort(0), d(new Private(account, new TextEdit(account->microblog()->postCharLimit(), this)))
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
-    d->editorLayout = new QHBoxLayout;
-    d->editorLayout->addWidget(d->editor);
-    layout->addLayout(d->editorLayout);
+    d->editorContainer = new QWidget(this);
+    QGridLayout *internalLayout = new QGridLayout(d->editorContainer);
+    internalLayout->addWidget(d->editor, 0, 0);
+    layout->addWidget(editorContainer());
     connect(d->editor, SIGNAL(returnPressed(QString)), SLOT(submitPost(QString)));
     connect(d->editor, SIGNAL(textChanged()), SLOT(editorTextChanged()));
     connect(d->editor, SIGNAL(cleared()), SLOT(editorCleared()));
@@ -74,7 +75,7 @@ void ComposerWidget::setText(const QString& text, const QString& replyTo)
 void ComposerWidget::submitPost( const QString &txt )
 {
     kDebug();
-    editor()->setEnabled(false);
+    editorContainer()->setEnabled(false);
     QString text = txt;
     if( currentAccount()->microblog()->postCharLimit() &&
        text.size() > (int)currentAccount()->microblog()->postCharLimit() )
@@ -114,7 +115,7 @@ void ComposerWidget::slotPostSubmited(Choqok::Account* theAccount, Choqok::Post*
         NotifyManager::success(i18n("New post submitted successfully"));
         d->editor->clear();
         replyToId.clear();
-        d->editor->setEnabled(true);
+        editorContainer()->setEnabled(true);
         delete d->postToSubmit;
         d->postToSubmit = 0L;
         currentAccount()->microblog()->updateTimelines(currentAccount());
@@ -135,7 +136,7 @@ void ComposerWidget::slotErrorPost(Account* theAccount, Post* post)
         if(btnAbort){
             btnAbort->deleteLater();
         }
-        editorLayout()->setEnabled(true);
+        editorContainer()->setEnabled(true);
         editor()->setFocus();
     }
 }
@@ -153,9 +154,9 @@ TextEdit* ComposerWidget::editor()
     return d->editor;
 }
 
-QHBoxLayout* ComposerWidget::editorLayout()
+QWidget* ComposerWidget::editorContainer()
 {
-    return d->editorLayout;
+    return d->editorContainer;
 }
 
 Post* ComposerWidget::postToSubmit()
@@ -184,7 +185,7 @@ void ComposerWidget::abort()
     if(btnAbort){
         btnAbort->deleteLater();
     }
-    editor()->setEnabled(true);
+    editorContainer()->setEnabled(true);
     currentAccount()->microblog()->abortCreatePost(currentAccount(), d->postToSubmit);
     editor()->setFocus();
 }
