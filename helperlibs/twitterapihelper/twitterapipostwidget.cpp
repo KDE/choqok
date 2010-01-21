@@ -60,15 +60,15 @@ TwitterApiPostWidget::~TwitterApiPostWidget()
 void TwitterApiPostWidget::initUi()
 {
     Choqok::UI::PostWidget::initUi();
+    if( currentAccount()->username().compare( currentPost().author.userName, Qt::CaseInsensitive ) != 0 ) {
+        KPushButton *btnRe = addButton( "btnReply",i18nc( "@info:tooltip", "Reply" ), "edit-undo" );
+        connect( btnRe, SIGNAL(clicked(bool)), SLOT(slotReply()) );
+    }
     if( !currentPost().isPrivate ) {
         d->btnFav = addButton( "btnFavorite",i18nc( "@info:tooltip", "Favorite" ), "rating" );
         d->btnFav->setCheckable(true);
         connect( d->btnFav, SIGNAL(clicked(bool)), SLOT(setFavorite()) );
         updateFavStat();
-    }
-    if( currentAccount()->username().compare( currentPost().author.userName, Qt::CaseInsensitive ) != 0 ) {
-        KPushButton *btnRe = addButton( "btnReply",i18nc( "@info:tooltip", "Reply" ), "edit-undo" );
-        connect( btnRe, SIGNAL(clicked(bool)), SLOT(slotReply()) );
     }
 }
 
