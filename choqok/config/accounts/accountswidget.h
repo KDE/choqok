@@ -58,6 +58,7 @@ protected slots:
 
     void emitChanged();
 
+    void accountsTableCellDoubleClicked(int row, int column);
 private:
     void move(bool up);
     QList<QTableWidgetItem*> takeRow(int row);

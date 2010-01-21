@@ -47,6 +47,8 @@ AccountsWidget::AccountsWidget( QWidget* parent, const QVariantList& args )
     kDebug();
     setAttribute(Qt::WA_DeleteOnClose);
     setupUi( this );
+    connect( accountsTable, SIGNAL(cellDoubleClicked(int,int)),
+             this, SLOT(accountsTableCellDoubleClicked(int,int)) );
     connect( btnUp, SIGNAL(clicked(bool)), this, SLOT(moveCurrentRowUp()) );
     connect( btnDown, SIGNAL(clicked(bool)), this, SLOT(moveCurrentRowDown()) );
     connect( btnEdit, SIGNAL( clicked() ), this, SLOT( editAccount() ) );
@@ -311,6 +313,13 @@ void AccountsWidget::setRow(int row, const QList<QTableWidgetItem*>& rowItems)
 void AccountsWidget::emitChanged()
 {
     emit changed(true);
+}
+
+void AccountsWidget::accountsTableCellDoubleClicked(int row, int column)
+{
+    Q_UNUSED(row);
+    Q_UNUSED(column);
+    editAccount();
 }
 
 #include "accountswidget.moc"
