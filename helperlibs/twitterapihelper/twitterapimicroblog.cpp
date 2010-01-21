@@ -79,12 +79,14 @@ TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObje
     kDebug();
     setCharLimit(140);
     QStringList timelineTypes;
-    timelineTypes<< "Home" << "Reply" << "Inbox" << "Outbox";
+    timelineTypes<< "Home" << "Reply" << "Inbox" << "Outbox" << "Favorite" << "Public";
     setTimelineNames(timelineTypes);
     timelineApiPath["Home"] = "/statuses/home_timeline.xml";
     timelineApiPath["Reply"] = "/statuses/replies.xml";
     timelineApiPath["Inbox"] = "/direct_messages.xml";
     timelineApiPath["Outbox"] = "/direct_messages/sent.xml";
+    timelineApiPath["Favorite"] = "/favorites.xml";
+    timelineApiPath["Public"] = "/statuses/public_timeline.xml";
     setTimelineInfos();
 }
 
@@ -113,6 +115,18 @@ void TwitterApiMicroBlog::setTimelineInfos()
     t->description = i18nc("Timeline description", "Private messages you have sent");
     t->icon = "mail-folder-outbox";
     mTimelineInfos["Outbox"] = t;
+
+    t = new Choqok::TimelineInfo;
+    t->name = i18nc("Timeline Name", "Favorite");
+    t->description = i18nc("Timeline description", "Your favorites");
+    t->icon = "favorites";
+    mTimelineInfos["Favorite"] = t;
+
+    t = new Choqok::TimelineInfo;
+    t->name = i18nc("Timeline Name", "Public");
+    t->description = i18nc("Timeline description", "Public timeline");
+    t->icon = "folder-green";
+    mTimelineInfos["Public"] = t;
 }
 
 TwitterApiMicroBlog::~TwitterApiMicroBlog()
@@ -655,10 +669,10 @@ void TwitterApiMicroBlog::slotRequestTimeline ( KJob *job )
     if( isValidTimeline(type) ) {
         KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob*>( job );
         QList<Choqok::Post*> list;
-        if( type=="Home" || type=="Reply" ) {
-            list = readTimelineFromXml( theAccount, j->data() );
-        } else if( type=="Inbox" || type=="Outbox" ) {
+        if( type=="Inbox" || type=="Outbox" ) {
             list = readDMessagesFromXml( theAccount, j->data() );
+        } else {
+            list = readTimelineFromXml( theAccount, j->data() );
         }
         if(!list.isEmpty()) {
             mTimelineLatestId[theAccount][type] = list.last()->postId;
