@@ -39,7 +39,6 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
     : ChoqokEditAccountWidget(account, parent), mAccount(account), progress(0)
 {
     setupUi(this);
-    kcfg_doNotShowRepliesOnHome->hide();//Not implemented yet!
 
     kcfg_test->setIcon(KIcon("edit-find-user"));
     connect(kcfg_test, SIGNAL(clicked(bool)), SLOT(verifyCredentials()));

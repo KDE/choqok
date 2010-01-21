@@ -237,7 +237,7 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QWidget" name="tabTimelines">
       <attribute name="title">
-       <string>Page</string>
+       <string>Timelines</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
@@ -253,36 +253,6 @@ p, li { white-space: pre-wrap; }
           </property>
          </column>
         </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tabConf">
-      <attribute name="title">
-       <string>Configuration</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QCheckBox" name="kcfg_doNotShowRepliesOnHome">
-         <property name="text">
-          <string>Do not show replies to me on the Home tab</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
@@ -316,7 +286,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>kcfg_test</tabstop>
   <tabstop>kcfg_register</tabstop>
   <tabstop>tabwidget</tabstop>
-  <tabstop>kcfg_doNotShowRepliesOnHome</tabstop>
  </tabstops>
  <resources/>
  <connections/>

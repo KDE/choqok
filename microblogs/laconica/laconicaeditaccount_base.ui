@@ -305,16 +305,6 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <widget class="QCheckBox" name="kcfg_doNotShowRepliesOnHome">
-         <property name="text">
-          <string>Do not show replies to me on the Home tab</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -360,7 +350,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>kcfg_password</tabstop>
   <tabstop>kcfg_test</tabstop>
   <tabstop>tabwidget</tabstop>
-  <tabstop>kcfg_doNotShowRepliesOnHome</tabstop>
  </tabstops>
  <resources/>
  <connections/>

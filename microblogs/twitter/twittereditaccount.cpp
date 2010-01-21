@@ -41,7 +41,6 @@ TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
     : ChoqokEditAccountWidget(account, parent), mAccount(account)
 {
     setupUi(this);
-    tabwidget->setTabBarHidden(true);//To hide configurations until their be functional :D
     kcfg_test->setIcon(KIcon("edit-find-user"));
     connect(kcfg_test, SIGNAL(clicked(bool)), SLOT(verifyCredentials()));
     if(mAccount) {

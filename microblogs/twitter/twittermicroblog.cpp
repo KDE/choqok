@@ -52,7 +52,6 @@ TwitterMicroBlog::TwitterMicroBlog ( QObject* parent, const QVariantList&  )
     setServiceName("Twitter");
     setServiceHomepageUrl("http://twitter.com/");
     timelineApiPath["Reply"] = "/statuses/mentions.xml";
-//     timelineApiPath["Home"] = "/statuses/home_timeline.xml";
 }
 
 TwitterMicroBlog::~TwitterMicroBlog()
