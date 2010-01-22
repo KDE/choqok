@@ -28,6 +28,7 @@
 #include "twitterapiaccount.h"
 #include <postwidget.h>
 #include <KDebug>
+#include <klocalizedstring.h>
 
 class TwitterApiShowThread::Private{
 public:
@@ -45,6 +46,7 @@ TwitterApiShowThread::TwitterApiShowThread(Choqok::Account* account, const Choqo
 {
     kDebug();
     setupUi();
+    setWindowTitle(i18n("Conversation"));
     connect( account->microblog(), SIGNAL(postFetched(Choqok::Account*,Choqok::Post*)),
              this, SLOT(slotAddNewPost(Choqok::Account*,Choqok::Post*)) );
     Choqok::UI::PostWidget *widget = d->account->microblog()->createPostWidget(d->account, finalPost, this);
@@ -116,10 +118,15 @@ void TwitterApiShowThread::addPostWidgetToUi(Choqok::UI::PostWidget* widget)
 {
     kDebug();
     widget->initUi();
+    widget->setRead();
     widget->setFocusProxy(this);
     widget->setObjectName(widget->currentPost().postId);
     connect( widget, SIGNAL(resendPost(const QString &)),
              this, SIGNAL(forwardResendPost(const QString &)));
+    connect( widget, SIGNAL(resendPost(QString)),
+             this, SLOT(raiseMainWindow()) );
+    connect( widget, SIGNAL(reply(QString, QString)),
+             this, SLOT(raiseMainWindow()) );
     connect( widget, SIGNAL(reply(QString,QString)),
             this, SIGNAL(forwardReply(QString,QString)) );
 //         connect( widget, SIGNAL(aboutClosing(ChoqokId,PostWidget*)),
@@ -127,6 +134,11 @@ void TwitterApiShowThread::addPostWidgetToUi(Choqok::UI::PostWidget* widget)
     d->mainLayout->insertWidget(0, widget);
     //         d->posts.insert(widget->currentPost().postId, widget);
     Choqok::UI::Global::SessionManager::self()->emitNewPostWidgetAdded(widget);
+}
+
+void TwitterApiShowThread::raiseMainWindow()
+{
+    Choqok::UI::Global::mainWindow()->activateWindow();
 }
 
 #include "twitterapishowthread.moc"

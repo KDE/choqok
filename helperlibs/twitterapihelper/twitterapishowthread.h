@@ -45,6 +45,7 @@ public:
 
 protected slots:
     void slotAddNewPost( Choqok::Account *theAccount, Choqok::Post *post );
+    void raiseMainWindow();
 
 signals:
     void forwardResendPost( const QString &post );

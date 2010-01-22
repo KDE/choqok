@@ -193,6 +193,10 @@ void TwitterApiPostWidget::checkAnchor(const QUrl & url)
     } else if (scheme == "thread") {
         TwitterApiShowThread *wd = new TwitterApiShowThread(currentAccount(), currentPost(), NULL);
         wd->resize(this->width(), wd->height());
+        connect(wd, SIGNAL(forwardReply(QString,QString)),
+                this, SIGNAL(reply(QString,QString)));
+        connect(wd, SIGNAL(forwardResendPost(QString)),
+                this, SIGNAL(resendPost(QString)));
         wd->show();
     } else {
         Choqok::UI::PostWidget::checkAnchor(url);
