@@ -13,6 +13,7 @@ twitterapisearchdialog.cpp
 twitterapimicroblogwidget.cpp
 twitterapisearchtimelinewidget.cpp
 twitterapiwhoiswidget.cpp
+twitterapishowthread.cpp
 )
 
 kde4_add_library(twitterapihelper SHARED ${twitterhelper_LIB_SRCS})
@@ -36,4 +37,5 @@ install( FILES
     twitterapisearchdialog.h
     twitterapisearchtimelinewidget.h
     twitterapiwhoiswidget.h
+    twitterapishowthread.h
 DESTINATION ${INCLUDE_INSTALL_DIR}/choqok/twitterapihelper COMPONENT Devel)

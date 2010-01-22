@@ -32,6 +32,7 @@
 #include <KDebug>
 #include <mediamanager.h>
 #include <choqokappearancesettings.h>
+#include "twitterapishowthread.h"
 
 const QRegExp TwitterApiPostWidget::mUserRegExp("([\\s]|^)@([^\\s\\W]+)");
 const QRegExp TwitterApiPostWidget::mHashtagRegExp("([\\s]|^)#([^\\s\\W]+)");
@@ -50,6 +51,8 @@ public:
 TwitterApiPostWidget::TwitterApiPostWidget(Choqok::Account* account, const Choqok::Post &post, QWidget* parent)
     : PostWidget(account, post, parent), d(new Private)
 {
+    document()->addResource( QTextDocument::ImageResource, QUrl("icon://thread"),
+                             KIcon("go-top").pixmap(8) );
 }
 
 TwitterApiPostWidget::~TwitterApiPostWidget()
@@ -105,9 +108,12 @@ QString TwitterApiPostWidget::generateSign()
             sign += " - " + currentPost().source;
         if ( !currentPost().replyToPostId.isEmpty() ) {
             QString link = currentAccount()->microblog()->postUrl( currentAccount(), currentPost().replyToUserName,
-                                                                  currentPost().replyToPostId );
+                                                                   currentPost().replyToPostId );
+            QString showConMsg = i18n("Show Conversation");
+            QString threadlink = "thread://" + currentPost().postId;
             sign += " - <a href='replyto://" + currentPost().replyToPostId + "'>" +
-            i18n("in reply to")+ "</a>&nbsp;<a href=\"" + link +  "\" title=\""+ link +"\">"+webIconText+"</a>";
+            i18n("in reply to")+ "</a>&nbsp;<a href=\"" + link +  "\" title=\""+ link +"\">"+webIconText+"</a> ";
+            sign += "<a title=\""+ showConMsg +"\" href=\"" + threadlink + "\"><img src=\"icon://thread\" /></a>";
         }
     }
     sign.prepend("<p dir='ltr'>");
@@ -185,7 +191,9 @@ void TwitterApiPostWidget::checkAnchor(const QUrl & url)
             currentAccount()->microblog()->fetchPost(currentAccount(), ps);
         }
     } else if (scheme == "thread") {
-        kDebug()<<"NOT IMPLEMENTED YET";
+        TwitterApiShowThread *wd = new TwitterApiShowThread(currentAccount(), currentPost(), NULL);
+        wd->resize(this->width(), wd->height());
+        wd->show();
     } else {
         Choqok::UI::PostWidget::checkAnchor(url);
     }
