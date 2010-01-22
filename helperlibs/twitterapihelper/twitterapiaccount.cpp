@@ -50,8 +50,15 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString 
     d->count = configGroup()->readEntry("CountOfPosts", 20);
     d->host = configGroup()->readEntry("Host", QString());
     d->friendsList = configGroup()->readEntry("Friends", QStringList());
-    d->timelineNames = configGroup()->readEntry("Timelines", parent->timelineNames());
+    d->timelineNames = configGroup()->readEntry("Timelines", QStringList());
     setApi( configGroup()->readEntry("Api", QString('/') ) );
+
+    if( d->timelineNames.isEmpty() ){
+        QStringList list = parent->timelineNames();
+        list.removeOne("Public");
+        list.removeOne("Favorite");
+        d->timelineNames = list;
+    }
 
     if( d->friendsList.isEmpty() ){
         parent->listFriendsUsername(this);

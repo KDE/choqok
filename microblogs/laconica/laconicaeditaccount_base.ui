@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>415</width>
+    <width>428</width>
     <height>417</height>
    </rect>
   </property>
@@ -256,9 +256,22 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QWidget" name="tabTimelines">
       <attribute name="title">
-       <string>Timelines</string>
+       <string>Timelines Configuration</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Which timelines do you like to be enabled?</string>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QTableWidget" name="timelinesTable">
          <column>
