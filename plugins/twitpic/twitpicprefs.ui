@@ -48,7 +48,7 @@
     <widget class="KLineEdit" name="kcfg_username"/>
    </item>
    <item row="2" column="1">
-    <widget class="KLineEdit" name="kcfg_password">
+    <widget class="KLineEdit" name="cfg_password">
      <property name="passwordMode">
       <bool>true</bool>
      </property>

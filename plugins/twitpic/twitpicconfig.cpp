@@ -43,7 +43,7 @@ TwitpicConfig::TwitpicConfig(QWidget* parent, const QVariantList& ):
     addConfig( TwitpicSettings::self(), wd );
     layout->addWidget(wd);
     connect( ui.kcfg_username,SIGNAL(textChanged(QString)), SLOT(emitChanged()) );
-    connect( ui.kcfg_password, SIGNAL(textChanged(QString)), SLOT(emitChanged()) );
+    connect( ui.cfg_password, SIGNAL(textChanged(QString)), SLOT(emitChanged()) );
 }
 
 TwitpicConfig::~TwitpicConfig()
@@ -55,7 +55,7 @@ void TwitpicConfig::load()
 {
     kDebug();
     KCModule::load();
-    ui.kcfg_password->setText( Choqok::PasswordManager::self()->readPassword( QString("twitpic_%1")
+    ui.cfg_password->setText( Choqok::PasswordManager::self()->readPassword( QString("twitpic_%1")
                                                                       .arg(ui.kcfg_username->text()) ) );
 }
 
@@ -64,14 +64,14 @@ void TwitpicConfig::save()
     kDebug();
     KCModule::save();
     Choqok::PasswordManager::self()->writePassword(QString("twitpic_%1").arg(ui.kcfg_username->text()),
-                                                   ui.kcfg_password->text());
+                                                   ui.cfg_password->text());
 }
 
 void TwitpicConfig::emitChanged()
 {
     emit changed(true);
     disconnect( ui.kcfg_username, SIGNAL(textChanged(QString)), this, SLOT(emitChanged()) );
-    disconnect( ui.kcfg_password, SIGNAL(textChanged(QString)), this, SLOT(emitChanged()) );
+    disconnect( ui.cfg_password, SIGNAL(textChanged(QString)), this, SLOT(emitChanged()) );
 }
 
 #include "twitpicconfig.moc"
