@@ -604,6 +604,7 @@ void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
     if ( newList.count() == 100 ) {
         requestFriendsScreenName( theAccount, ++d->friendsPage );
     } else {
+        d->friendsList.removeDuplicates();
         theAccount->setFriendsList(d->friendsList);
         emit friendsUsernameListed( theAccount, d->friendsList );
     }
