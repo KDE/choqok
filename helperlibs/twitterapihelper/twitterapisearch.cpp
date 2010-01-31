@@ -53,3 +53,31 @@ void TwitterApiSearch::requestSearchResults(Choqok::Account* theAccount, const Q
     SearchInfo info(theAccount, query, option, isB);
     requestSearchResults(info, sinceStatusId, count, page);
 }
+
+SearchInfo::SearchInfo()
+{
+
+}
+
+SearchInfo::SearchInfo(Choqok::Account* theAccount, const QString& queryStr, int optionCode, bool IsBrowsable)
+:account(theAccount), option(optionCode), query(queryStr), isBrowsable(IsBrowsable)
+{
+
+}
+
+bool SearchInfo::fromString(const QString& str)
+{
+    QStringList lis = str.split(",,,");
+    if( lis.count() != 4 )
+        return false;
+    account = Choqok::AccountManager::self()->findAccount(lis[0]);
+    option = lis[1].toInt();
+    query = lis[2];
+    isBrowsable = (bool)lis[3].toInt();
+    return true;
+}
+
+QString SearchInfo::toString()
+{
+    return account->alias() + ",,," + QString::number(option) + ",,," + query + ",,," + QString::number(isBrowsable);
+}

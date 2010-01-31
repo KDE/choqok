@@ -154,7 +154,7 @@ QMenu* TwitterApiMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidg
 
 QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *account, const QString& timelineName)
 {
-    kDebug();
+    kDebug()<<timelineName;
     QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
     KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
     QStringList tmpList = postsBackup.groupList();

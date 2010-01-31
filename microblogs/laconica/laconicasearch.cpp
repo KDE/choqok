@@ -102,7 +102,7 @@ KUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
         if( page > 1 )
             url.addQueryItem( "page", QString::number( page ) );
     } else {
-        url = theAccount->homepageUrl();
+        url = theAccount->apiUrl().url(KUrl::AddTrailingSlash).remove("api/", Qt::CaseInsensitive);
         url.addPath( formattedQuery );
     }
     return url;

@@ -56,6 +56,8 @@ TwitterApiMicroBlogWidget::TwitterApiMicroBlogWidget(Choqok::Account* account, Q
     connect( d->mBlog->searchBackend(),
              SIGNAL(searchResultsReceived(SearchInfo,QList<Choqok::Post*>&)),
              SLOT(slotSearchResultsReceived(SearchInfo,QList<Choqok::Post*>&)) );
+    connect(d->mBlog, SIGNAL(saveTimelines()), SLOT(saveSearchTimelinesState()));
+    loadSearchTimelinesState();
 }
 
 void TwitterApiMicroBlogWidget::initUi()
@@ -173,6 +175,41 @@ void TwitterApiMicroBlogWidget::slotAccountModified(Choqok::Account* account)
             Choqok::UI::TimelineWidget *tm = timelines().take(timeline);
             tm->deleteLater();
         }
+    }
+}
+
+void TwitterApiMicroBlogWidget::saveSearchTimelinesState()
+{
+    kDebug();
+    int count = currentAccount()->configGroup()->readEntry("SearchCount", 0);
+    int i = 0;
+    while(i<count)
+    {
+        currentAccount()->configGroup()->deleteEntry("Search"+QString::number(i));
+        ++i;
+    }
+    i = 0;
+    foreach(TwitterApiSearchTimelineWidget* tm, mSearchTimelines){
+        currentAccount()->configGroup()->writeEntry("Search"+QString::number(i), tm->searchInfo().toString());
+        ++i;
+    }
+    currentAccount()->configGroup()->writeEntry("SearchCount", i);
+}
+
+void TwitterApiMicroBlogWidget::loadSearchTimelinesState()
+{
+    kDebug();
+    int count = currentAccount()->configGroup()->readEntry("SearchCount", 0);
+    int i = 0;
+    while( i < count )
+    {
+        SearchInfo info;
+        if( info.fromString(currentAccount()->configGroup()->readEntry("Search"+QString::number(i), QString())) ){
+            qobject_cast<TwitterApiMicroBlog*>(currentAccount()->microblog())->searchBackend()->requestSearchResults(info);
+//             QString name = QString("%1%2").arg(d->mBlog->searchBackend()->optionCode(info.option)).arg(info.query);
+//             addSearchTimelineWidgetToUi(name, info);
+        }
+        ++i;
     }
 }
 

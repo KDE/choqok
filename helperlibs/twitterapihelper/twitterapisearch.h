@@ -31,6 +31,8 @@
 #include <qregexp.h>
 #include <KUrl>
 #include <choqoktypes.h>
+#include <account.h>
+#include <accountmanager.h>
 
 class TwitterApiAccount;
 namespace Choqok {
@@ -42,12 +44,12 @@ class KJob;
 class CHOQOK_HELPER_EXPORT SearchInfo
 {
 public:
-    SearchInfo()
-    {}
+    SearchInfo();
     SearchInfo( Choqok::Account *theAccount, const QString &queryStr,
-                int optionCode, bool IsBrowsable = false)
-        :account(theAccount), option(optionCode), query(queryStr), isBrowsable(IsBrowsable)
-    {}
+                int optionCode, bool IsBrowsable = false);
+    QString toString();
+    bool fromString(const QString &str);
+
     Choqok::Account *account;
     /**
     option code

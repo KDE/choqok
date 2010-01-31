@@ -45,6 +45,8 @@ protected slots:
     void slotAccountModified(Choqok::Account *account);
     void slotCloseCurrentSearch();
     void slotCurrentTimelineChanged(int);
+    virtual void saveSearchTimelinesState();
+    virtual void loadSearchTimelinesState();
     virtual void slotSearchResultsReceived( const SearchInfo &info,
                                             QList<Choqok::Post*> &postsList );
 
