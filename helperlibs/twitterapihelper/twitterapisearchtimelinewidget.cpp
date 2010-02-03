@@ -35,6 +35,7 @@
 #include "postwidget.h"
 #include "choqoktypes.h"
 #include <QLabel>
+#include <choqokbehaviorsettings.h>
 
 class TwitterApiSearchTimelineWidget::Private
 {
@@ -135,6 +136,12 @@ void TwitterApiSearchTimelineWidget::addNewPosts(QList< Choqok::Post* >& postLis
     bool markRead = false;
     if( posts().count() < 1 )
         markRead = true;
+    int m = postList.count() - Choqok::BehaviorSettings::countOfPosts();
+//     kDebug()<<m<<postList.count();
+    while( m > 0 ){
+        postList.removeFirst();
+        --m;
+    }
     Choqok::UI::TimelineWidget::addNewPosts(postList);
     if(markRead)
         markAllAsRead();
