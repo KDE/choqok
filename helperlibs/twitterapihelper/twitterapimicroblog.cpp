@@ -286,7 +286,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
         url.addPath ( "/statuses/update.xml" );
         QByteArray data = "status=";
         data += QUrl::toPercentEncoding (  post->content );
-        if ( !post->replyToPostId.isEmpty() && post->content.indexOf ( '@' ) > -1 ) {
+        if ( !post->replyToPostId.isEmpty() ) {
             data += "&in_reply_to_status_id=";
             data += post->replyToPostId.toLocal8Bit();
         }

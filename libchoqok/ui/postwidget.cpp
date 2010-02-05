@@ -147,12 +147,12 @@ void PostWidget::setupUi()
                              d->mImage = "<img src=\"img://profileImage\" title=\""+
                              d->mCurrentPost.author.realName + "\" width=\"48\" height=\"48\" />";
 
-    KPushButton *btnResend = addButton("btnResend", i18nc( "@info:tooltip", "ReSend" ), "retweet" );
-    connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
-
     if(d->mCurrentAccount->username().compare( d->mCurrentPost.author.userName, Qt::CaseInsensitive ) == 0) {
         KPushButton *btnRemove = addButton("btnRemove", i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
         connect(btnRemove, SIGNAL(clicked(bool)), SLOT(removeCurrentPost()));
+    } else {
+        KPushButton *btnResend = addButton("btnResend", i18nc( "@info:tooltip", "ReSend" ), "retweet" );
+        connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
     }
 }
 
