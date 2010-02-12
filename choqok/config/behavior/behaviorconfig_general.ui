@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>445</width>
-    <height>318</height>
+    <width>482</width>
+    <height>341</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -74,6 +74,24 @@
         </item>
         <item>
          <widget class="KLineEdit" name="kcfg_customBrowser">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QCheckBox" name="kcfg_useCustomRT">
+          <property name="text">
+           <string>Use custom prefix for ReSend [ReTweet]:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="kcfg_customRT">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -211,12 +229,28 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>145</x>
-     <y>181</y>
+     <x>172</x>
+     <y>146</y>
     </hint>
     <hint type="destinationlabel">
-     <x>211</x>
-     <y>182</y>
+     <x>445</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_useCustomRT</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_customRT</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>28</x>
+     <y>172</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>365</x>
+     <y>171</y>
     </hint>
    </hints>
   </connection>

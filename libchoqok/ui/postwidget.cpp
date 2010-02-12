@@ -399,8 +399,15 @@ void PostWidget::slotResendPost()
 
 QString PostWidget::generateResendText()
 {
-    QChar re(0x267B);
-    return QString(re) + " @" + currentPost().author.userName + ": " + currentPost().content;
+	if (BehaviorSettings::useCustomRT())
+	{
+		return QString(BehaviorSettings::customRT()) + " @" + currentPost().author.userName + ": " + currentPost().content;
+	}
+	else
+	{
+		QChar re(0x267B);
+		return QString(re) + " @" + currentPost().author.userName + ": " + currentPost().content;
+	}
 }
 
 void PostWidget::setupAvatar()
