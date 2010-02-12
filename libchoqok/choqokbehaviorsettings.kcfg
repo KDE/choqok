@@ -19,6 +19,9 @@
         <entry name="markAllAsReadOnHideToSystray" type="Bool">
             <default>true</default>
         </entry>
+        <entry name="markAllAsReadOnExit" type="Bool">
+            <default>true</default>
+        </entry>
         <entry name="updateInterval" type="Int">
             <default>10</default>
         </entry>

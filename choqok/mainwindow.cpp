@@ -405,13 +405,13 @@ void MainWindow::addBlog( Choqok::Account * account, bool isStartup )
 
     Choqok::UI::MicroBlogWidget *widget = account->microblog()->createMicroBlogWidget(account, this);
     connect(widget, SIGNAL(loaded()), SLOT(oneMicroblogLoaded()));
+    connect( widget, SIGNAL(updateUnreadCount(int,int)), SLOT(slotUpdateUnreadCount(int,int)) );
     widget->initUi();
 
 //     connect( widget, SIGNAL( sigSetUnread( int ) ), sysIcon, SLOT( slotSetUnread( int ) ) );
     connect( widget, SIGNAL( showStatusMessage(QString,bool)),
              this, SLOT( showStatusMessage( const QString&, bool ) ) );
     connect( widget, SIGNAL( showMe() ), this, SLOT( showBlog()) );
-    connect( widget, SIGNAL(updateUnreadCount(int,int)), SLOT(slotUpdateUnreadCount(int,int)) );
 
     connect( this, SIGNAL( updateTimelines() ), widget, SLOT( updateTimelines() ) );
     connect( this, SIGNAL( markAllAsRead() ), widget, SLOT( markAllAsRead() ) );

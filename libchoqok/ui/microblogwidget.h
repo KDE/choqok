@@ -119,7 +119,7 @@ protected slots:
     */
     virtual void newTimelineDataRecieved( Choqok::Account *theAccount, const QString& type,
                                           QList< Choqok::Post* > data );
-    void slotUpdateUnreadCount( int change );
+    void slotUpdateUnreadCount( int change, TimelineWidget * widget = 0 );
     void error(Choqok::Account* theAccount, Choqok::MicroBlog::ErrorType errorType,
                                 QString errorMsg, Choqok::MicroBlog::ErrorLevel level);
     void errorPost(Choqok::Account* theAccount, Choqok::Post*, Choqok::MicroBlog::ErrorType errorType,

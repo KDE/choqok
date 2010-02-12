@@ -55,7 +55,7 @@ public:
 class CHOQOK_EXPORT Post {
 public:
     Post()
-    :isFavorited(false), isPrivate(false), isError(false)
+    :isFavorited(false), isPrivate(false), isError(false), isRead(false)
     {}
     QDateTime creationDateTime;
     ChoqokId postId;
@@ -71,6 +71,7 @@ public:
     QString type;
     bool isPrivate;
     bool isError;
+    bool isRead;
 };
 /**
 Describe an specific timeline, Should use by @ref MicroBlog

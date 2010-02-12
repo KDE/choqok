@@ -208,6 +208,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
             st->author.location = grp.readEntry("authorLocation", QString());
             st->author.homePageUrl = grp.readEntry("authorUrl", QString());
             st->link = postUrl( account, st->author.userName, st->postId);
+            st->isRead = grp.readEntry("isRead", true);
             //Sorting The new statuses:
 //             int j = 0;
 //             int count = list.count();
@@ -257,6 +258,7 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
         grp.writeEntry( "isPrivate" , post->isPrivate );
         grp.writeEntry( "authorLocation" , post->author.location );
         grp.writeEntry( "authorUrl" , post->author.homePageUrl );
+        grp.writeEntry( "isRead" , post->isRead );
     }
     postsBackup.sync();
     --d->countOfTimelinesToSave;

@@ -182,6 +182,7 @@ TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)
             connect( mbw, SIGNAL(forwardReply(QString,QString)),
                      d->composer, SLOT(setText(QString,QString)) );
         }
+        slotUpdateUnreadCount(mbw->unreadCount(),mbw);
     } else {
         kDebug()<<"Cannot Create a new TimelineWidget for timeline "<<name;
         return 0L;
@@ -193,11 +194,10 @@ TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)
     return mbw;
 }
 
-void MicroBlogWidget::slotUpdateUnreadCount(int change)
+void MicroBlogWidget::slotUpdateUnreadCount(int change, Choqok::UI::TimelineWidget* widget)
 {
     kDebug()<<change;
     int sum = 0;
-    kDebug()<< qobject_cast<TimelineWidget*>(sender())->unreadCount();
     foreach(const TimelineWidget *mbw, d->timelines)
         sum += mbw->unreadCount();
     if(change != 0)
@@ -216,8 +216,11 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change)
         d->btnMarkAllAsRead->deleteLater();
         d->btnMarkAllAsRead = 0L;
     }
-    TimelineWidget *wd = qobject_cast<TimelineWidget*>(sender());
+    TimelineWidget * wd = qobject_cast<TimelineWidget*>(sender());
+    if(!wd)
+        wd = widget;
     if(wd) {
+        kDebug()<< wd->unreadCount();
         int tabIndex = d->timelinesTabWidget->indexOf(wd);
         if(tabIndex == -1)
             return;

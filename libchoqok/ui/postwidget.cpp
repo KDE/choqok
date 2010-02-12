@@ -55,14 +55,14 @@ class PostWidget::Private
 {
     public:
         Private( Account* account, const Choqok::Post& post )
-        : mCurrentPost(post), mCurrentAccount(account), mRead(false)
+        : mCurrentPost(post), mCurrentAccount(account)//, mRead(false)
         {
         }
         QGridLayout *buttonsLayout;
         QMap<QString, KPushButton*> mUiButtons;//<Object name, Button>
         Post mCurrentPost;
         Account *mCurrentAccount;
-        bool mRead;
+//         bool mRead;
         QTimer mTimer;
 
         static const QString ownText;
@@ -92,7 +92,7 @@ PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* par
 {
     setAttribute(Qt::WA_DeleteOnClose);
     if(currentAccount()->username().compare( currentPost().author.userName, Qt::CaseInsensitive ) == 0 )
-        d->mRead = true;
+        d->mCurrentPost.isRead = true;
     setupUi();
     d->mTimer.start( _MINUTE );
     connect( &d->mTimer, SIGNAL( timeout() ), this, SLOT( updateUi()) );
@@ -238,24 +238,24 @@ void PostWidget::setCurrentPost(const Choqok::Post& post)
 
 void PostWidget::setRead(bool read/* = true*/)
 {
-    if( !read && !d->mRead &&
+    if( !read && !currentPost().isRead &&
         currentAccount()->username().compare( currentPost().author.userName, Qt::CaseInsensitive ) == 0) {
-        d->mRead = true; ///Always Set own posts as read.
+        d->mCurrentPost.isRead = true; ///Always Set own posts as read.
         setUiStyle();
-    } else if( d->mRead != read ) {
-        d->mRead = read;
+    } else if( currentPost().isRead != read ) {
+        d->mCurrentPost.isRead = read;
         setUiStyle();
     }
 }
 
 bool PostWidget::isRead() const
 {
-    return d->mRead;
+    return currentPost().isRead;
 }
 
 void PostWidget::setUiStyle()
 {
-    if(d->mRead)
+    if(currentPost().isRead)
         setStyleSheet(readStyle);
     else
         setStyleSheet(unreadStyle);

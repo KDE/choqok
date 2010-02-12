@@ -70,14 +70,18 @@ void TimelineWidget::loadTimeline()
 {
     QList<Choqok::Post*> list = currentAccount()->microblog()->loadTimeline(currentAccount(), timelineName());
     connect(currentAccount()->microblog(), SIGNAL(saveTimelines()), SLOT(saveTimeline()));
-
-    QList<Post*>::const_iterator it, endIt = list.constEnd();
-    for(it = list.constBegin(); it!= endIt; ++it){
-        PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, **it, this);
-        if(pw) {
-            pw->setRead();
-            addPostWidgetToUi(pw);
-        }
+    
+    if(!BehaviorSettings::markAllAsReadOnExit()) {
+      addNewPosts(list);
+    } else {
+      QList<Post*>::const_iterator it, endIt = list.constEnd();
+      for(it = list.constBegin(); it!= endIt; ++it){
+          PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, **it, this);
+          if(pw) {
+              pw->setRead();
+              addPostWidgetToUi(pw);
+          }
+      }
     }
 }
 

@@ -28,6 +28,16 @@
        </widget>
       </item>
       <item>
+       <widget class="QCheckBox" name="kcfg_markAllAsReadOnExit">
+        <property name="text">
+         <string>Mark all posts as read on exit</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCheckBox" name="kcfg_markAllAsReadOnHideToSystray">
         <property name="toolTip">
          <string/>
