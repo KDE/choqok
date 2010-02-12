@@ -50,7 +50,34 @@ static const int _HOUR = 60*_MINUTE;
 using namespace Choqok;
 using namespace Choqok::UI;
 
-const QString PostWidget::baseText ( "<table width=\"100%\"><tr><td rowspan=\"2\"\
+
+class PostWidget::Private
+{
+    public:
+        Private( Account* account, const Choqok::Post& post )
+        : mCurrentPost(post), mCurrentAccount(account), mRead(false)
+        {
+        }
+        QGridLayout *buttonsLayout;
+        QMap<QString, KPushButton*> mUiButtons;//<Object name, Button>
+        Post mCurrentPost;
+        Account *mCurrentAccount;
+        bool mRead;
+        QTimer mTimer;
+
+        static const QString ownText;
+        static const QString otherText;
+        //BEGIN UI contents:
+        QString mSign;
+        QString mContent;
+        QString mImage;
+        //END UI contents;
+};
+
+const QString PostWidget::Private::ownText ("<table width=\"100%\"><tr><td><p>%2</p></td><td rowspan=\"2\"\
+width=\"48\">%1</td></tr><tr><td style=\"font-size:small;\" align=\"left\">%3</td></tr></table>");
+
+const QString PostWidget::Private::otherText ( "<table width=\"100%\"><tr><td rowspan=\"2\"\
 width=\"48\">%1</td><td><p>%2</p></td></tr><tr><td style=\"font-size:small;\" align=\"right\">%3</td></tr></table>");
 const QString PostWidget::baseStyle ("KTextBrowser {border: 1px solid rgb(150,150,150);\
 border-radius:5px;} KTextBrowser {color:%1; background-color:%2}\
@@ -59,27 +86,6 @@ const QRegExp PostWidget::mUrlRegExp("((ftps?|https?)://[^\\s<>\"]+[^!,\\.\\s<>'
 QString PostWidget::readStyle;
 QString PostWidget::unreadStyle;
 const QString PostWidget::webIconText("&#9755;");
-
-class PostWidget::Private
-{
-public:
-    Private( Account* account, const Choqok::Post& post )
-        : mCurrentPost(post), mCurrentAccount(account), mRead(false)
-    {
-    }
-    QGridLayout *buttonsLayout;
-    QMap<QString, KPushButton*> mUiButtons;//<Object name, Button>
-    Post mCurrentPost;
-    Account *mCurrentAccount;
-    bool mRead;
-    QTimer mTimer;
-
-    //BEGIN UI contents:
-    QString mSign;
-    QString mContent;
-    QString mImage;
-    //END UI contents;
-};
 
 PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* parent/* = 0*/ )
     :KTextBrowser(parent), d(new Private(account, post))
@@ -150,9 +156,11 @@ void PostWidget::setupUi()
     if(d->mCurrentAccount->username().compare( d->mCurrentPost.author.userName, Qt::CaseInsensitive ) == 0) {
         KPushButton *btnRemove = addButton("btnRemove", i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
         connect(btnRemove, SIGNAL(clicked(bool)), SLOT(removeCurrentPost()));
+        baseText = &Private::ownText;
     } else {
         KPushButton *btnResend = addButton("btnResend", i18nc( "@info:tooltip", "ReSend" ), "retweet" );
         connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
+        baseText = &Private::otherText;
     }
 }
 
@@ -169,7 +177,7 @@ void PostWidget::initUi()
 
 void PostWidget::updateUi()
 {
-    setHtml( baseText.arg( d->mImage, d->mContent, d->mSign.arg( formatDateTime( d->mCurrentPost.creationDateTime ) ) ) );
+    setHtml( baseText->arg( d->mImage, d->mContent, d->mSign.arg( formatDateTime( d->mCurrentPost.creationDateTime ) ) ) );
 }
 
 void PostWidget::setStyle(const QColor& color, const QColor& back, const QColor& read, const QColor& readBack)

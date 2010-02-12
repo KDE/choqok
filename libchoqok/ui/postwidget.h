@@ -188,7 +188,7 @@ protected:
     QMap<QString, KPushButton*> &buttons();
 
 protected:
-    static const QString baseText;
+    const QString *baseText;
     static const QString baseStyle;
     static QString readStyle;
     static QString unreadStyle;
