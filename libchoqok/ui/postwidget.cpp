@@ -75,7 +75,7 @@ class PostWidget::Private
 };
 
 const QString PostWidget::Private::ownText ("<table width=\"100%\"><tr><td><p>%2</p></td><td rowspan=\"2\"\
-width=\"48\">%1</td></tr><tr><td style=\"font-size:small;\" align=\"left\">%3</td></tr></table>");
+width=\"48\">%1</td></tr><tr><td style=\"font-size:small;\" align=\"right\">%3</td></tr></table>");
 
 const QString PostWidget::Private::otherText ( "<table width=\"100%\"><tr><td rowspan=\"2\"\
 width=\"48\">%1</td><td><p>%2</p></td></tr><tr><td style=\"font-size:small;\" align=\"right\">%3</td></tr></table>");
