@@ -1,0 +1,12 @@
+[Desktop Entry]
+Icon=kaboodle
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=kcm_choqok_yourls
+X-KDE-FactoryName=kcm_choqok_yourls
+X-KDE-ParentApp=choqok_yourls
+X-KDE-ParentComponents=choqok_yourls
+
+Name=Yourls
+Comment=Yourls
