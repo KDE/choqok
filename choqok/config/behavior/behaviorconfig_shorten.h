@@ -29,6 +29,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <kplugininfo.h>
 #include <shortener.h>
 
+class KCModuleProxy;
 class BehaviorConfig_Shorten: public QWidget, public Ui::BehaviorConfig_ShortenBase
 {
     Q_OBJECT
@@ -44,10 +45,15 @@ signals:
 private slots:
     void currentPluginChanged( int index );
 
+protected slots:
+    void slotAboutClicked();
+    void slotConfigureClicked();
+
 private:
-    QList<KPluginInfo> availablePlugins;
+    QMap<QString, KPluginInfo> availablePlugins;
     Choqok::Shortener *currentShortener;
     QString prevShortener;
+    QList<KCModuleProxy*> moduleProxyList;
 };
 
 #endif
