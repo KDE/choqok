@@ -20,4 +20,4 @@ install(TARGETS choqok_searchaction DESTINATION ${PLUGIN_INSTALL_DIR})
 
 install( FILES choqok_searchaction.desktop
          DESTINATION ${SERVICES_INSTALL_DIR})
-install( FILES searchactionui.rc  DESTINATION  ${DATA_INSTALL_DIR}/choqok )
+install( FILES searchactionui.rc  DESTINATION  ${DATA_INSTALL_DIR}/choqok_searchaction )
