@@ -80,3 +80,9 @@ QString ChoqokId::toString() const
     return QString(toLatin1());
 }
 
+ChoqokId& ChoqokId::operator=(const QString& other)
+{
+    clear();
+    append(other);
+    return *this;
+}
