@@ -2,7 +2,7 @@
     This file is part of Choqok, the KDE micro-blogging client
     Some of below codes are got from Kopete source code.
 
-    Copyright (C) 2008-2009 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    Copyright (C) 2008-2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as

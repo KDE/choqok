@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2008-2009 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    Copyright (C) 2008-2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -32,13 +32,13 @@
 static const char description[] =
     I18N_NOOP( "KDE Micro-Blogging Client." );
 
-static const char version[] = "0.9.45";
+static const char version[] = "0.9.50";
 
 int main( int argc, char **argv )
 {
     qDebug()<<"Choqok "<<version;
     KAboutData about( "choqok", 0, ki18n( "Choqok" ), version, ki18n( description ),
-                      KAboutData::License_GPL_V3, ki18n( "(C) 2008-2009 Mehrdad Momeny" ),
+                      KAboutData::License_GPL_V3, ki18n( "(C) 2008-2010 Mehrdad Momeny" ),
                       KLocalizedString(), 0  );
     about.addAuthor( ki18n( "Mehrdad Momeny" ), ki18n( "Author and Core Developer" ),
                      "mehrdad.momeny@gmail.com", "http://identi.ca/mtux" );
