@@ -1,7 +1,7 @@
 /*
 This file is part of Choqok, the KDE micro-blogging client
 
-Copyright (C) 2008-2009 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+Copyright (C) 2008-2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License as
@@ -94,7 +94,7 @@ signals:
     /**
     Emit to show a message on MainWindow::StatusBar
     */
-    void showStatusMessage( const QString & message, bool isPermanent = false );
+//     void showStatusMessage( const QString & message, bool isPermanent = false );
 
     /**
     @brief Emit to inform MicroBlogWidget about changes on count of unread posts
@@ -121,9 +121,9 @@ protected slots:
                                           QList< Choqok::Post* > data );
     void slotUpdateUnreadCount( int change, TimelineWidget * widget = 0 );
     void error(Choqok::Account* theAccount, Choqok::MicroBlog::ErrorType errorType,
-                                QString errorMsg, Choqok::MicroBlog::ErrorLevel level);
+                                const QString &errorMsg, Choqok::MicroBlog::ErrorLevel level);
     void errorPost(Choqok::Account* theAccount, Choqok::Post*, Choqok::MicroBlog::ErrorType errorType,
-                                    QString errorMsg, Choqok::MicroBlog::ErrorLevel level);
+                                    const QString &errorMsg, Choqok::MicroBlog::ErrorLevel level);
     void slotAbortAllJobs();
 
     virtual void keyPressEvent(QKeyEvent* );

@@ -1,7 +1,7 @@
 /*
 This file is part of Choqok, the KDE micro-blogging client
 
-Copyright (C) 2008-2009 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+Copyright (C) 2008-2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License as
@@ -263,7 +263,7 @@ KTabWidget* MicroBlogWidget::timelinesTabWidget()
 }
 
 void MicroBlogWidget::error(Choqok::Account* theAccount, MicroBlog::ErrorType errorType,
-           QString errorMsg, MicroBlog::ErrorLevel level)
+           const QString &errorMsg, MicroBlog::ErrorLevel level)
 {
     if(theAccount == d->account){
         switch(level){
@@ -274,6 +274,7 @@ void MicroBlogWidget::error(Choqok::Account* theAccount, MicroBlog::ErrorType er
             NotifyManager::error( errorMsg, MicroBlog::errorString(errorType) );
             break;
         default:
+//             emit showStatusMessage(errorMsg);
             if( Choqok::UI::Global::mainWindow()->statusBar() )
                 Choqok::UI::Global::mainWindow()->statusBar()->showMessage(errorMsg);
             break;
@@ -281,7 +282,7 @@ void MicroBlogWidget::error(Choqok::Account* theAccount, MicroBlog::ErrorType er
     }
 }
 void MicroBlogWidget::errorPost(Choqok::Account* theAccount, Choqok::Post*, MicroBlog::ErrorType errorType,
-            QString errorMsg, MicroBlog::ErrorLevel level)
+            const QString &errorMsg, MicroBlog::ErrorLevel level)
 {
     if(theAccount == d->account){
         switch(level){
@@ -292,6 +293,7 @@ void MicroBlogWidget::errorPost(Choqok::Account* theAccount, Choqok::Post*, Micr
             NotifyManager::error( errorMsg, MicroBlog::errorString(errorType) );
             break;
         default:
+//             emit showStatusMessage(errorMsg);
             if( Choqok::UI::Global::mainWindow()->statusBar() )
                 Choqok::UI::Global::mainWindow()->statusBar()->showMessage(errorMsg);
             break;
