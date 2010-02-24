@@ -728,35 +728,37 @@ Choqok::Post * TwitterApiMicroBlog::readPostFromDomElement ( Choqok::Account* th
     QDomNode node2 = root.firstChild();
     QString timeStr;
     while ( !node2.isNull() ) {
-        if ( node2.toElement().tagName() == "created_at" )
-            timeStr = node2.toElement().text();
-        else if ( node2.toElement().tagName() == "text" )
-            post->content = node2.toElement().text();
-        else if ( node2.toElement().tagName() == "id" )
-            post->postId = node2.toElement().text();
-        else if ( node2.toElement().tagName() == "in_reply_to_status_id" )
-            post->replyToPostId = node2.toElement().text();
-        else if ( node2.toElement().tagName() == "in_reply_to_user_id" )
-            post->replyToUserId = node2.toElement().text();
-        else if ( node2.toElement().tagName() == "in_reply_to_screen_name" )
-            post->replyToUserName = node2.toElement().text();
-        else if ( node2.toElement().tagName() == "source" )
-            post->source = node2.toElement().text();
-        else if ( node2.toElement().tagName() == "favorited" )
-            post->isFavorited = ( node2.toElement().text() == "true" ) ? true : false;
-        else if ( node2.toElement().tagName() == "user" ) {
+        QDomElement elm = node2.toElement();
+        if ( elm.tagName() == "created_at" )
+            timeStr = elm.text();
+        else if ( elm.tagName() == "text" )
+            post->content = elm.text();
+        else if ( elm.tagName() == "id" )
+            post->postId = elm.text();
+        else if ( elm.tagName() == "in_reply_to_status_id" )
+            post->replyToPostId = elm.text();
+        else if ( elm.tagName() == "in_reply_to_user_id" )
+            post->replyToUserId = elm.text();
+        else if ( elm.tagName() == "in_reply_to_screen_name" )
+            post->replyToUserName = elm.text();
+        else if ( elm.tagName() == "source" )
+            post->source = elm.text();
+        else if ( elm.tagName() == "favorited" )
+            post->isFavorited = ( elm.text() == "true" ) ? true : false;
+        else if ( elm.tagName() == "user" ) {
             QDomNode node3 = node2.firstChild();
             while ( !node3.isNull() ) {
-                if ( node3.toElement().tagName() == "screen_name" ) {
-                    post->author.userName = node3.toElement().text();
-                } else if ( node3.toElement().tagName() == "profile_image_url" ) {
-                    post->author.profileImageUrl = node3.toElement().text();
-                } else if ( node3.toElement().tagName() == "id" ) {
-                    post->author.userId = node3.toElement().text();
-                } else if ( node3.toElement().tagName() == "name" ) {
-                    post->author.realName = node3.toElement().text();
-                } else if ( node3.toElement().tagName() == QString ( "description" ) ) {
-                    post->author.description = node3.toElement().text();
+                QDomElement elm3 = node3.toElement();
+                if ( elm3.tagName() == "screen_name" ) {
+                    post->author.userName = elm3.text();
+                } else if ( elm3.tagName() == "profile_image_url" ) {
+                    post->author.profileImageUrl = elm3.text();
+                } else if ( elm3.tagName() == "id" ) {
+                    post->author.userId = elm3.text();
+                } else if ( elm3.tagName() == "name" ) {
+                    post->author.realName = elm3.text();
+                } else if ( elm3.tagName() == QString ( "description" ) ) {
+                    post->author.description = elm3.text();
                 }
                 node3 = node3.nextSibling();
             }
@@ -821,42 +823,45 @@ Choqok::Post * TwitterApiMicroBlog::readDMessageFromDomElement ( Choqok::Account
     QString senderId, recipientId, timeStr, senderScreenName, recipientScreenName, senderProfileImageUrl,
     senderName, senderDescription, recipientProfileImageUrl, recipientName, recipientDescription;
     while ( !node2.isNull() ) {
-        if ( node2.toElement().tagName() == "created_at" )
-            timeStr = node2.toElement().text();
-        else if ( node2.toElement().tagName() == "text" )
-            msg->content = node2.toElement().text();
-        else if ( node2.toElement().tagName() == "id" )
-            msg->postId = node2.toElement().text();
-        else if ( node2.toElement().tagName() == "sender_id" )
-            senderId = node2.toElement().text();
-        else if ( node2.toElement().tagName() == "recipient_id" )
-            recipientId = node2.toElement().text();
-        else if ( node2.toElement().tagName() == "sender_screen_name" )
-            senderScreenName = node2.toElement().text();
-        else if ( node2.toElement().tagName() == "recipient_screen_name" )
-            recipientScreenName = node2.toElement().text();
-        else if ( node2.toElement().tagName() == "sender" ) {
+        QDomElement elm = node2.toElement();
+        if ( elm.tagName() == "created_at" )
+            timeStr = elm.text();
+        else if ( elm.tagName() == "text" )
+            msg->content = elm.text();
+        else if ( elm.tagName() == "id" )
+            msg->postId = elm.text();
+        else if ( elm.tagName() == "sender_id" )
+            senderId = elm.text();
+        else if ( elm.tagName() == "recipient_id" )
+            recipientId = elm.text();
+        else if ( elm.tagName() == "sender_screen_name" )
+            senderScreenName = elm.text();
+        else if ( elm.tagName() == "recipient_screen_name" )
+            recipientScreenName = elm.text();
+        else if ( elm.tagName() == "sender" ) {
             QDomNode node3 = node2.firstChild();
             while ( !node3.isNull() ) {
-                if ( node3.toElement().tagName() == "profile_image_url" ) {
-                    senderProfileImageUrl = node3.toElement().text();
-                } else if ( node3.toElement().tagName() == "name" ) {
-                    senderName = node3.toElement().text();
-                } else if ( node3.toElement().tagName() == "description" ) {
-                    senderDescription = node3.toElement().text();
+                QDomElement elm3 = node3.toElement();
+                if ( elm3.tagName() == "profile_image_url" ) {
+                    senderProfileImageUrl = elm3.text();
+                } else if ( elm3.tagName() == "name" ) {
+                    senderName = elm3.text();
+                } else if ( elm3.tagName() == "description" ) {
+                    senderDescription = elm3.text();
                 }
                 node3 = node3.nextSibling();
             }
         } else
-            if ( node2.toElement().tagName() == "recipient" ) {
+            if ( elm.tagName() == "recipient" ) {
                 QDomNode node3 = node2.firstChild();
                 while ( !node3.isNull() ) {
-                    if ( node3.toElement().tagName() == "profile_image_url" ) {
-                        recipientProfileImageUrl = node3.toElement().text();
-                    } else if ( node3.toElement().tagName() == "name" ) {
-                        recipientName = node3.toElement().text();
-                    } else if ( node3.toElement().tagName() == "description" ) {
-                        recipientDescription = node3.toElement().text();
+                    QDomElement elm3 = node3.toElement();
+                    if ( elm3.tagName() == "profile_image_url" ) {
+                        recipientProfileImageUrl = elm3.text();
+                    } else if ( elm3.tagName() == "name" ) {
+                        recipientName = elm3.text();
+                    } else if ( elm3.tagName() == "description" ) {
+                        recipientDescription = elm3.text();
                     }
                     node3 = node3.nextSibling();
                 }
