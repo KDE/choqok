@@ -10,6 +10,7 @@ X-KDE-ParentComponents=choqok_yourls
 
 Name=Yourls
 Name[da]=Yourls
+Name[nb]=Yourls
 Name[pt]=Yourls
 Name[pt_BR]=Yourls
 Name[sv]=Yourls
@@ -17,6 +18,7 @@ Name[uk]=Yourls
 Name[x-test]=xxYourlsxx
 Comment=Yourls
 Comment[da]=Yourls
+Comment[nb]=Yourls
 Comment[pt]=Yourls
 Comment[pt_BR]=Yourls
 Comment[sv]=Yourls
