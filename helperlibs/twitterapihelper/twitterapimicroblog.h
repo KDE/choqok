@@ -175,9 +175,9 @@ protected:
     virtual void setTimelineInfos();
     virtual KUrl apiUrl( TwitterApiAccount* theAccount );
     virtual Choqok::Post * readPostFromDomElement( Choqok::Account* theAccount,
-                                                   const QDomElement& root, Choqok::Post* post = 0 );
+                                                   const QDomElement& root, Choqok::Post* post );
     virtual Choqok::Post * readPostFromXml( Choqok::Account* theAccount,
-                                            const QByteArray& buffer, Choqok::Post* post = 0 );
+                                            const QByteArray& buffer, Choqok::Post* post );
     virtual QList<Choqok::Post*> readTimelineFromXml( Choqok::Account* theAccount, const QByteArray& buffer );
     virtual Choqok::Post * readDMessageFromXml (Choqok::Account *theAccount, const QByteArray &buffer );
     virtual Choqok::Post * readDMessageFromDomElement (Choqok::Account *theAccount, const QDomElement& root );

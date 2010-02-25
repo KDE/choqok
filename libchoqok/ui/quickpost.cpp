@@ -119,8 +119,8 @@ void QuickPost::slotSubmitPost( Account* , Post* post )
         d->txtPost->clear();
         emit newPostSubmitted(Success, d->submittedPost->content);
         NotifyManager::success(i18n("New post submitted successfully"));
-        delete d->submittedPost;
-        d->submittedPost = 0L;
+//         delete d->submittedPost;
+//         d->submittedPost = 0L;
 //         d->replyToId.clear();
     }
 }
@@ -131,8 +131,8 @@ void QuickPost::postError(Account* , Choqok::Post* post,
     if (post == d->submittedPost) {
         d->txtPost->setEnabled(true);
         emit newPostSubmitted(Fail);
-        delete d->submittedPost;
-        d->submittedPost = 0L;
+//         delete d->submittedPost;
+//         d->submittedPost = 0L;
         show();
 //         d->replyToId.clear();
     }
@@ -147,8 +147,9 @@ void QuickPost::submitPost( const QString & txt )
     if(!currentAccount)
         return;
     if( currentAccount->microblog()->postCharLimit() &&
-       newPost.size() > (int)currentAccount->microblog()->postCharLimit() )
+        newPost.size() > (int)currentAccount->microblog()->postCharLimit() )
         newPost = Choqok::ShortenManager::self()->parseText(newPost);
+        delete d->submittedPost;
     if ( d->all->isChecked() ) {
             d->submittedPost = new Post;
             d->submittedPost->content = newPost;

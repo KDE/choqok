@@ -697,7 +697,7 @@ KUrl TwitterApiMicroBlog::apiUrl ( TwitterApiAccount* theAccount )
 }
 
 Choqok::Post * TwitterApiMicroBlog::readPostFromXml ( Choqok::Account* theAccount,
-                                                      const QByteArray& buffer, Choqok::Post* post /*= 0*/ )
+                                                      const QByteArray& buffer, Choqok::Post* post )
 {
     QDomDocument document;
     document.setContent ( buffer );
@@ -706,18 +706,22 @@ Choqok::Post * TwitterApiMicroBlog::readPostFromXml ( Choqok::Account* theAccoun
     if ( !root.isNull() ) {
         return readPostFromDomElement ( theAccount, root.toElement(), post );
     } else {
-        if(!post)
+        if(!post){
+            kError()<<"TwitterApiMicroBlog::readPostFromXml: post is NULL!";
             post = new Choqok::Post;
+        }
         post->isError = true;
         return post;
     }
 }
 
 Choqok::Post * TwitterApiMicroBlog::readPostFromDomElement ( Choqok::Account* theAccount,
-                                                             const QDomElement &root, Choqok::Post* post/* = 0*/ )
+                                                             const QDomElement &root, Choqok::Post* post )
 {
-    if(!post)
-        post = new Choqok::Post;
+    if(!post){
+        kError()<<"TwitterApiMicroBlog::readPostFromDomElement: post is NULL!";
+        return 0;
+    }
 
     if ( root.tagName() != "status" ) {
         kDebug() << "there's no status tag in XML, Error!!\t"
@@ -786,7 +790,7 @@ QList<Choqok::Post*> TwitterApiMicroBlog::readTimelineFromXml ( Choqok::Account*
     }
     QDomNode node = root.firstChild();
     while ( !node.isNull() ) {
-        postList.prepend( readPostFromDomElement ( theAccount, node.toElement() ) );
+        postList.prepend( readPostFromDomElement ( theAccount, node.toElement(), new Choqok::Post ) );
         node = node.nextSibling();
     }
     return postList;
