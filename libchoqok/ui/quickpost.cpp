@@ -50,6 +50,7 @@ public:
 
     QHash< QString, Account* > accountsList;
     Post *submittedPost;
+    QList<Account*> submittedAccounts;
 //     QString replyToId;
 };
 
@@ -112,29 +113,33 @@ void QuickPost::show()
     KDialog::show();
 }
 
-void QuickPost::slotSubmitPost( Account* , Post* post )
+void QuickPost::slotSubmitPost( Account* a, Post* post )
 {
-    if (post == d->submittedPost) {
-        d->txtPost->setEnabled(true);
-        d->txtPost->clear();
+    if (post == d->submittedPost && d->submittedAccounts.contains(a)) {
+        d->submittedAccounts.removeOne(a);
         emit newPostSubmitted(Success, d->submittedPost->content);
         NotifyManager::success(i18n("New post submitted successfully"));
-//         delete d->submittedPost;
-//         d->submittedPost = 0L;
-//         d->replyToId.clear();
+    }
+    if(d->submittedAccounts.isEmpty()){
+        d->txtPost->setEnabled(true);
+        d->txtPost->clear();
+        delete d->submittedPost;
+        d->submittedPost = 0L;
     }
 }
 
-void QuickPost::postError(Account* , Choqok::Post* post,
+void QuickPost::postError(Account* a, Choqok::Post* post,
                           Choqok::MicroBlog::ErrorType , const QString& )
 {
-    if (post == d->submittedPost) {
+    if (post == d->submittedPost && d->submittedAccounts.contains(a)) {
         d->txtPost->setEnabled(true);
         emit newPostSubmitted(Fail);
-//         delete d->submittedPost;
-//         d->submittedPost = 0L;
         show();
-//         d->replyToId.clear();
+    }
+    if(d->submittedAccounts.isEmpty()){
+        d->txtPost->setEnabled(true);
+        delete d->submittedPost;
+        d->submittedPost = 0L;
     }
 }
 
@@ -142,10 +147,12 @@ void QuickPost::submitPost( const QString & txt )
 {
     kDebug();
     this->hide();
+//     d->txtPost->setEnabled(false);
     QString newPost = txt;
     Choqok::Account* currentAccount = d->accountsList.value(d->comboAccounts->currentText());
     if(!currentAccount)
         return;
+    d->submittedAccounts.clear();
     if( currentAccount->microblog()->postCharLimit() &&
         newPost.size() > (int)currentAccount->microblog()->postCharLimit() )
         newPost = Choqok::ShortenManager::self()->parseText(newPost);
@@ -156,11 +163,13 @@ void QuickPost::submitPost( const QString & txt )
             d->submittedPost->isPrivate = false;
         foreach ( Account* acc, d->accountsList ) {
             acc->microblog()->createPost( acc, d->submittedPost );
+            d->submittedAccounts<<acc;
         }
     } else {
         d->submittedPost = new Post;
         d->submittedPost->content = newPost;
         d->submittedPost->isPrivate = false;
+        d->submittedAccounts<<currentAccount;
         currentAccount->microblog()->createPost(d->accountsList.value( d->comboAccounts->currentText()),
                                                                        d->submittedPost );
     }
