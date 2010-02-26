@@ -40,7 +40,7 @@ public:
     ChoqokId(const QString &);
     ChoqokId(const QLatin1String &);
     ~ChoqokId();
-    ChoqokId &operator=(const QString &other);
+//     ChoqokId &operator=(const QString &other);
     bool operator<(const ChoqokId& s) const;
     bool operator>(const ChoqokId& s) const;
     QString toString() const;
