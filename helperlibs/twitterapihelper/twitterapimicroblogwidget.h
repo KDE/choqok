@@ -40,8 +40,10 @@ public:
 
 public slots:
     virtual void markAllAsRead();
+    void slotContextMenu(QWidget *w, const QPoint& pt);
 
 protected slots:
+    void closeAllSearches();
     void slotAccountModified(Choqok::Account *account);
     void slotCloseCurrentSearch();
     void slotCurrentTimelineChanged(int);
@@ -51,6 +53,7 @@ protected slots:
                                             QList<Choqok::Post*> &postsList );
 
 protected:
+    void closeSearch(TwitterApiSearchTimelineWidget *searchWidget);
     QMap<QString, TwitterApiSearchTimelineWidget*> mSearchTimelines;
     TwitterApiSearchTimelineWidget* addSearchTimelineWidgetToUi(const QString& name,
                                                                 const SearchInfo &info);
