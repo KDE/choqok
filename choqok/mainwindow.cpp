@@ -544,7 +544,7 @@ void MainWindow::oneMicroblogLoaded()
 
 void MainWindow::slotUpdateTimelines()
 {
-    showStatusMessage(i18n("Loading timelines..."), true);
+    showStatusMessage(i18n("Loading timelines..."));
 }
 
 #include "mainwindow.moc"
