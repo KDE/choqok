@@ -243,7 +243,7 @@ void MainWindow::setupActions()
     connect( enableUpdates, SIGNAL( toggled( bool ) ), sysIcon, SLOT( setTimeLineUpdatesEnabled( bool ) ) );
     sysIcon->contextMenu()->addAction( enableUpdates );
     sysIcon->setTimeLineUpdatesEnabled( enableUpdates->isChecked() );
-    sysIcon->contextMenu()->addAction( enableNotify );
+//     sysIcon->contextMenu()->addAction( enableNotify );
     sysIcon->contextMenu()->addAction( prefs );
 
     connect( sysIcon, SIGNAL(quitSelected()), this, SLOT(slotQuit()) );
