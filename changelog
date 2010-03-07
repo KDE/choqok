@@ -1,3 +1,26 @@
+=== Version 0.9.55 (1.0 Beta1) -- 07-Mar-2010 ===
+* Actions to subscribe/unsubscribe and block a user, added to User menu.
+* Splash screen on startup.
+* "Attach media" button for StatusNet (Identi.ca) posts! Note: This feature is available in StatusNet >=0.9.x
+* Ability to select which timelines to show. (per account)
+* Favorite and Public timelines added to Available timelines for Twitter and Identica Accounts! (Disabled by default)
+* Ability to see a conversation thread in a separate window (Just like 0.6.6)
+* Saving search tabs and re-open them after restart!
+* Show user's posts avatar at right instead of left! To distinguish them easier.
+* Saving read/unread status of posts on exit.
+* Selectable ReTweet prefix.
+* Configure and About options for shortener plugins!
+* And many improvements and bug fixes.
+
+* New Plugins:
+    - "ImagePreview" plugin to show a preview for images. (Currently: Twitpic.com and YFrog.com)
+    - "Twitpic" plugin to upload and share photos on Twitpic.com service!
+
+* New Shortener Plugins:
+    - ur1.ca (Bhaskar Kandiyal)
+    - Yourls shortener plugin! (Marcello Ceschia)
+
+
 === Version 0.9.4 (1.0 Alpha2) -- 15-Oct-2009 ===
 * Search API embedded into main window.
 * "Who is" dialog added again, with support for Subscribe/Unsubscribe and Block a user!
@@ -6,13 +29,15 @@
 * "Open in web browser" symbol changed to ☛
 * Option for changing "exclamation mark" on group names, when re-sending a post on StatusNet to prevent Spamming!
 
+
 === Version 0.9.1 (1.0Alpha1) -- 13-Sep-2009 ===
-+ The whole design have changed. And now, Choqok supports plugins for more Microblog services.
--- Missed features since latest stable:
-- Search API support.
-- Notification for incoming posts.
-- "Who is" and unTiny
-- TwitPic
+** The whole design have changed. And now, Choqok supports plugins for more Microblog services.
+ * Missed features since latest stable:
+    - Search API support.
+    - Notification for incoming posts.
+    - "Who is" and unTiny
+    - TwitPic
+
 
 === Version 0.6.6 -- 07-Aug-2009 ===
 * Icon improved and made greenish. (Roozbeh Shafiee)
@@ -22,8 +47,10 @@
 * Identica hashtag search problem fixed and works again. (And it's a full text search like Twitter custom)
 * cycle through accounts using the scroll wheel on the system tray icon (Daniel Schaal)
 
+
 === Version 0.6.1 -- 13-Jun-2009 ===
 * Fix for Twitter new situation. (status number exceeded int size) (Tejas Dinkar)
+
 
 === Version 0.6 -- 22-May-2009 ===
 * Add support for smilies in texts.
@@ -38,6 +65,7 @@
 * Image caching improved and some related bugs fixed.
 * + bug fix and other improvements.
 
+
 === Version 0.5 -- 21-Mar-2009 ===
  * Twitter.com search API implemented. (Stephen Henderson)
  * Identi.ca search API implemented. (Stephen Henderson)
@@ -48,6 +76,7 @@
  * Many improvements on UI. (Daniel Schaal)
  * Support for shortening urls on paste. (Stephen Henderson)
  * + bug fix and other improvements.
+
 
 === Version 0.4 -- 12-Feb-2009 ===
  * Support for all functionalities of “Direct Messages” implemented.
@@ -63,6 +92,7 @@
  * An “in reply to” link added to sign of reply statuses, and @USER links points to user account (Instead of main notice/status)
  * Bunch of known bugs fixed.
 
+
 === Version 0.3 -- 11-Jan-2009 ===
  * Support for Multiple Accounts implemented.
  * Support for Identi.ca service implemented. (Using its Twitter compatible API)
@@ -74,6 +104,7 @@
  * Support for Enabling or Disabling Spell checker by a shortcut key on new Tweet fields added. (Ctrl+S)
  * Some reported and known bugs fixed.
 
+
 === Version 0.2 -- 01-Jan-2009 ===
  * Fetching User Images moved to background and make it asynchronous.
  * Support for batch notifying added.
@@ -83,6 +114,7 @@
  * Bug fix on saving statuses list.
  * Support for shortening urls with more than 30 characters implemented.
  * The back-end functions migrated to KIO library.
+
 
 === Version 0.1 -- 24-Dec-2008 ===
  * Initial version.
