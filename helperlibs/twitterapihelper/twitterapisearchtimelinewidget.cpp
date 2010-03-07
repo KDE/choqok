@@ -77,12 +77,14 @@ TwitterApiSearchTimelineWidget::~TwitterApiSearchTimelineWidget()
 void TwitterApiSearchTimelineWidget::saveTimeline()
 {
     kDebug();
+    //There's no implementation because we don't want to have it in Search Timelines :)
 //     Choqok::UI::TimelineWidget::saveTimeline();
 }
 
 void TwitterApiSearchTimelineWidget::loadTimeline()
 {
     kDebug();
+    //There's no implementation because we don't want to have it in Search Timelines :)
 //     Choqok::UI::TimelineWidget::loadTimeline();
 }
 

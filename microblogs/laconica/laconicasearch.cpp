@@ -31,7 +31,7 @@
 #include <QDomElement>
 #include <choqokbehaviorsettings.h>
 
-const QRegExp LaconicaSearch::m_rId("tag:identi.ca,[0-9]+:([0-9]+)");
+const QRegExp LaconicaSearch::m_rId("tag:.+,[\\d-]+:(\\d+)");
 const QRegExp LaconicaSearch::mIdRegExp("(?:user|(?:.*notice))/([0-9]+)");
 
 LaconicaSearch::LaconicaSearch(QObject* parent): TwitterApiSearch(parent)
@@ -159,7 +159,6 @@ QString LaconicaSearch::optionCode(int option)
 
 QList< Choqok::Post* > LaconicaSearch::parseAtom(const QByteArray& buffer)
 {
-    kDebug();
     QDomDocument document;
     QList<Choqok::Post*> statusList;
 
@@ -235,7 +234,6 @@ QList< Choqok::Post* > LaconicaSearch::parseAtom(const QByteArray& buffer)
         statusList.insert( 0, status );
         node = node.nextSibling();
     }
-
     return statusList;
 }
 
