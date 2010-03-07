@@ -42,7 +42,7 @@ class QuickPost::Private
 {
 public:
     Private()
-    : submittedPost(0)
+    : submittedPost(0), isPostSubmitted(false)
     {}
     QCheckBox *all;
     KComboBox *comboAccounts;
@@ -51,6 +51,7 @@ public:
     QHash< QString, Account* > accountsList;
     Post *submittedPost;
     QList<Account*> submittedAccounts;
+    bool isPostSubmitted;
 //     QString replyToId;
 };
 
@@ -115,16 +116,16 @@ void QuickPost::show()
 
 void QuickPost::slotSubmitPost( Account* a, Post* post )
 {
-    if (post == d->submittedPost && d->submittedAccounts.contains(a)) {
-        d->submittedAccounts.removeOne(a);
+    if (post == d->submittedPost && d->submittedAccounts.removeOne(a)) {
         emit newPostSubmitted(Success, d->submittedPost->content);
         NotifyManager::success(i18n("New post submitted successfully"));
     }
-    if(d->submittedAccounts.isEmpty()){
+    if(d->isPostSubmitted && d->submittedAccounts.isEmpty()){
         d->txtPost->setEnabled(true);
         d->txtPost->clear();
         delete d->submittedPost;
         d->submittedPost = 0L;
+        d->isPostSubmitted = false;
     }
 }
 
@@ -173,6 +174,7 @@ void QuickPost::submitPost( const QString & txt )
         currentAccount->microblog()->createPost(d->accountsList.value( d->comboAccounts->currentText()),
                                                                        d->submittedPost );
     }
+    d->isPostSubmitted = true;
 }
 
 void QuickPost::slotButtonClicked(int button)
