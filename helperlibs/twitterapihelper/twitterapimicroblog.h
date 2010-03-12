@@ -170,7 +170,7 @@ protected:
      timelineName should be a valid, previously created timeline.
     */
     virtual void requestTimeLine(Choqok::Account *theAccount, QString timelineName,
-                                 QString sincePostId, int page = 1, QString maxId = 0 );
+                                 QString sincePostId, int page = 1, QString maxId = QString() );
 
     virtual void setTimelineInfos();
     virtual KUrl apiUrl( TwitterApiAccount* theAccount );
