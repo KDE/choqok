@@ -128,9 +128,12 @@ void ImagePreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pix
     if(!postToParse)
         return;
     QString content = postToParse->content();
-    QString imgUrl("img://image");
+    KUrl imgU(remoteUrl);
+    imgU.setScheme("img");
+    QString imgUrl = imgU.prettyUrl();
+//     imgUrl.replace("http://","img://");
     postToParse->document()->addResource(QTextDocument::ImageResource, imgUrl, pixmap);
-    content.replace(QRegExp('>'+baseUrl+'<'), "><img src='img://image' /><");
+    content.replace(QRegExp('>'+baseUrl+'<'), "><img src='"+imgUrl+"' /><");
     postToParse->setContent(content);
 }
 
