@@ -41,6 +41,7 @@ Name[uk]=Скорочувач Digg.com
 Name[x-test]=xxDigg.com Shortenerxx
 Name[zh_CN]=Digg.com 缩短器
 Comment=A plugin to shorten URLs via the digg.com service.
+Comment[bg]=Приставка за съкращаване на адреси чрез услугата digg.com.
 Comment[da]=Et plugin til at forkorte URL'er via tjenesten digg.com.
 Comment[de]=Ein Modul, um Adressen (URLs) mit Hilfe des digg.com-Dienstes zu kürzen
 Comment[en_GB]=A plugin to shorten URLs via the digg.com service.
