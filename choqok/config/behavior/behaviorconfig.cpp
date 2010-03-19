@@ -100,6 +100,7 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
 
 BehaviorConfig::~BehaviorConfig()
 {
+    delete d->proxyModule;
     delete d;
 }
 
@@ -109,6 +110,7 @@ void BehaviorConfig::save()
 
     KCModule::save();
     d->mPrfsShorten->save();
+    d->proxyModule->save();
 //     Choqok::BehaviorSettings::self()->writeConfig();
 
     load();
@@ -118,6 +120,7 @@ void BehaviorConfig::load()
 {
     KCModule::load();
     d->mPrfsShorten->load();
+    d->proxyModule->load();
 }
 
 #include "behaviorconfig.moc"
