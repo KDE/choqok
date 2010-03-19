@@ -64,7 +64,7 @@ MainWindow::MainWindow()
     if( Choqok::BehaviorSettings::showSplashScreen() ){
         KStandardDirs *stdDirs = KGlobal::dirs();
         QString img = stdDirs->findResource( "data", "choqok/images/splash_screen.png" );
-        kDebug()<<img;
+//         kDebug()<<img;
         QPixmap splashpix( img );
         if(splashpix.isNull())
             kDebug()<<"Pixmap is NULL";

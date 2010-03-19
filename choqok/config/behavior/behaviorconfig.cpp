@@ -37,6 +37,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "behaviorconfig_shorten.h"
 
 #include <ktabwidget.h>
+#include <KCModuleProxy>
+#include <KCModuleInfo>
 
 K_PLUGIN_FACTORY( ChoqokBehaviorConfigFactory,
                   registerPlugin <BehaviorConfig>(); )
@@ -50,6 +52,7 @@ public:
     Ui_BehaviorConfig_General mPrfsGeneral;
     Ui_BehaviorConfig_Notifications mPrfsNotify;
     BehaviorConfig_Shorten *mPrfsShorten;
+    KCModuleProxy *proxyModule;
 };
 
 BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
@@ -84,7 +87,12 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
     addConfig( Choqok::BehaviorSettings::self(), d->mPrfsShorten );
     d->mBehaviorTabCtl->addTab(d->mPrfsShorten, i18n("URL &Shortening"));
 
+    KCModuleInfo proxyInfo("proxy.desktop");                                        
+    d->proxyModule = new KCModuleProxy(proxyInfo,parent);
+    d->mBehaviorTabCtl->addTab( d->proxyModule, i18n(proxyInfo.moduleName().toLocal8Bit()) );
+    
     connect(d->mPrfsShorten, SIGNAL(changed(bool)), this, SIGNAL(changed(bool)) );
+    connect(d->proxyModule,   SIGNAL( changed(bool) ), this, SIGNAL( changed(bool) ) );
     
     load();
 
