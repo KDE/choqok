@@ -111,8 +111,9 @@ QString TwitterApiPostWidget::generateSign()
                                                                    currentPost().replyToPostId );
             QString showConMsg = i18n("Show Conversation");
             QString threadlink = "thread://" + currentPost().postId;
-            sign += " - <a href='replyto://" + currentPost().replyToPostId + "'>" +
-            i18n("in reply to")+ "</a>&nbsp;<a href=\"" + link +  "\" title=\""+ link +"\">"+webIconText+"</a> ";
+            sign += " - " +
+            i18n("<a href='replyto://%1'>in reply to</a>&nbsp;<a href=\"%2\" title=\"%2\">%3</a>",
+                currentPost().replyToPostId, link, webIconText) + " ";
             sign += "<a title=\""+ showConMsg +"\" href=\"" + threadlink + "\"><img src=\"icon://thread\" /></a>";
         }
     }
