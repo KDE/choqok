@@ -33,6 +33,7 @@
 #include <mediamanager.h>
 #include <QWheelEvent>
 #include <KDebug>
+#include <notifymanager.h>
 
 SysTrayIcon::SysTrayIcon( Choqok::UI::MainWindow* parent )
 : KStatusNotifierItem( parent ), _mainwin(parent)
@@ -75,6 +76,9 @@ void SysTrayIcon::updateUnreadCount( int changeOfUnreadPosts )
     unread += changeOfUnreadPosts;
 
     this->setToolTip( "choqok", i18n("Choqok"), i18np( "1 unread post", "%1 unread posts", unread ) );
+    if( changeOfUnreadPosts > 0 )
+        Choqok::NotifyManager::newPostArrived( i18nc("1 new post received",
+                                                     "%1 new posts received", changeOfUnreadPosts) );
 
     if ( unread <= 0 ) {
         setIconByPixmap( QIcon(m_defaultIcon) );

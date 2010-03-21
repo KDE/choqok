@@ -64,7 +64,7 @@ void NotifyManager::error( const QString& message, const QString& title )
 
 void NotifyManager::newPostArrived( const QString& message, const QString& title )
 {
-    triggerNotify("new-post-arrived", title, message, KNotification::Persistent);
+    triggerNotify("new-post-arrived", title, message);//, KNotification::Persistent);
 }
 
 void NotifyManager::shortening( const QString& message, const QString& title )

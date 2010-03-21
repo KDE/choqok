@@ -41,7 +41,7 @@ public:
     static void error( const QString &message , const QString &title = i18n("Error") );
     static void success( const QString &message, const QString &title = i18n("Success") );
 
-    static void newPostArrived( const QString& message, const QString& title );
+    static void newPostArrived( const QString& message, const QString& title = i18n("New posts") );
 
     static void shortening( const QString& message, const QString& title = i18n("Shortening a URL") );
 
