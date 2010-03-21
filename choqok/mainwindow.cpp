@@ -52,6 +52,7 @@
 #include <choqokbehaviorsettings.h>
 #include <kstandarddirs.h>
 #include <KSplashScreen>
+#include <KMenu>
 
 MainWindow::MainWindow()
     : Choqok::UI::MainWindow(), quickWidget(0), s_settingsDialog(0), m_splash(0), microblogCounter(0)
@@ -81,7 +82,7 @@ MainWindow::MainWindow()
     setCentralWidget( mainWidget );
 
     sysIcon = new SysTrayIcon(this);
-    sysIcon->show();
+//     sysIcon->show();
     setupActions();
     statusBar()->show();
     setupGUI();
@@ -145,12 +146,12 @@ void MainWindow::newPluginAvailable( Choqok::Plugin *plugin )
     guiFactory()->addClient(plugin);
 }
 
-void MainWindow::nextTab(const QWheelEvent & event)
+void MainWindow::nextTab(int delta,Qt::Orientation orientation)
 {
   if(!isVisible())
     return;
   KTabWidget * widget = 0;
-  switch(event.orientation()) {
+  switch(orientation) {
   case Qt::Vertical:
     widget = mainWidget;
   break;
@@ -168,7 +169,7 @@ void MainWindow::nextTab(const QWheelEvent & event)
   int count = widget->count();
   int index = widget->currentIndex();
   int page;
-  if(event.delta() > 0) {
+  if(delta > 0) {
     page = index>0?index-1:count-1;
   } else {
     page = index<count-1?index+1:0;
@@ -178,7 +179,7 @@ void MainWindow::nextTab(const QWheelEvent & event)
 
 void MainWindow::setupActions()
 {
-    KStandardAction::quit( this, SLOT( slotQuit() ), actionCollection() );
+    KAction *actQuit = KStandardAction::quit( this, SLOT( slotQuit() ), actionCollection() );
     KAction *prefs = KStandardAction::preferences( this, SLOT( slotConfigChoqok() ), actionCollection() );
 //     KStandardAction::configureNotifications ( this, SLOT ( slotConfNotifications() ), actionCollection() );
 
@@ -246,8 +247,11 @@ void MainWindow::setupActions()
 //     sysIcon->contextMenu()->addAction( enableNotify );
     sysIcon->contextMenu()->addAction( prefs );
 
-    connect( sysIcon, SIGNAL(quitSelected()), this, SLOT(slotQuit()) );
-    connect(sysIcon,SIGNAL(wheelEvent(const QWheelEvent&)),this,SLOT(nextTab(const QWheelEvent&)));
+    sysIcon->contextMenu()->addSeparator();
+    sysIcon->contextMenu()->addAction(actQuit);
+//     connect( sysIcon, SIGNAL(quitSelected()), this, SLOT(slotQuit()) );
+    connect(sysIcon, SIGNAL(scrollRequested(int,Qt::Orientation)),
+            this, SLOT(nextTab(int,Qt::Orientation)));
 }
 
 void MainWindow::slotConfNotifications()

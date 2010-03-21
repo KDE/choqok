@@ -1,4 +1,5 @@
-/*
+
+class MainWindow;/*
     This file is part of Choqok, the KDE micro-blogging client
 
     Copyright (C) 2008-2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
@@ -24,21 +25,21 @@
 #ifndef SYSTRAYICON_H
 #define SYSTRAYICON_H
 
-#include <ksystemtrayicon.h>
+// #include <ksystemtrayicon.h>
 #include <choqoktypes.h>
-// #include "mainwindow.h"
-// #include "quicktwit.h"
+#include <kstatusnotifieritem.h>
+#include "mainwindow.h"
 
 /**
 System tray icon!
 
     @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
-class SysTrayIcon : public KSystemTrayIcon
+class SysTrayIcon : public KStatusNotifierItem
 {
     Q_OBJECT
 public:
-    SysTrayIcon( QWidget* parent = 0 );
+    SysTrayIcon( Choqok::UI::MainWindow* parent );
     ~SysTrayIcon();
     int unreadCount() const;
 
@@ -49,13 +50,13 @@ public slots:
     void resetUnreadCount();
 
 signals:
-    void wheelEvent(const QWheelEvent&);
+//     void wheelEvent(const QWheelEvent&);
 
 protected slots:
     void slotRestoreIcon();
 
 protected:
-    virtual bool event(QEvent* event);
+//     virtual bool event(QEvent* event);
 
 private:
     int unread;
@@ -64,6 +65,7 @@ private:
     QIcon prevIcon;
     bool isIconChanged;
     bool isBaseIconChanged;
+    Choqok::UI::MainWindow * _mainwin;
 };
 
 #endif

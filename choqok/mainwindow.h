@@ -70,7 +70,7 @@ public:
     virtual ~MainWindow();
 
 private slots:
-    void nextTab(const QWheelEvent&);
+    void nextTab(int delta, Qt::Orientation orientation);
     void loadAllAccounts();
     void newPluginAvailable( Choqok::Plugin *plugin );
     void addBlog( Choqok::Account *account, bool isStartup = false );

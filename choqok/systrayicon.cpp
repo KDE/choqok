@@ -34,13 +34,17 @@
 #include <QWheelEvent>
 #include <KDebug>
 
-SysTrayIcon::SysTrayIcon( QWidget* parent ): KSystemTrayIcon( parent )
+SysTrayIcon::SysTrayIcon( Choqok::UI::MainWindow* parent )
+: KStatusNotifierItem( parent ), _mainwin(parent)
 {
     kDebug();
     unread = 0;
-
-    m_defaultIcon = parentWidget()->windowIcon().pixmap( 22 );
-    this->setIcon( parentWidget()->windowIcon() );
+//     setAssociatedWidget(parent);
+    setCategory(ApplicationStatus);
+    setStandardActionsEnabled(false);
+    setStatus(Active);
+    m_defaultIcon = _mainwin->windowIcon().pixmap( 22 );
+    this->setIconByPixmap( _mainwin->windowIcon() );
 
     isIconChanged = false;
 }
@@ -50,15 +54,15 @@ SysTrayIcon::~SysTrayIcon()
     kDebug();
 }
 
-bool SysTrayIcon::event(QEvent* event)
-{
-  if(event->type() == QEvent::Wheel) {
-    QWheelEvent * wheel = static_cast<QWheelEvent*>(event);
-    emit wheelEvent(*wheel);
-    return true;
-  }
-  return false;
-}
+// bool SysTrayIcon::event(QEvent* event)
+// {
+//   if(event->type() == QEvent::Wheel) {
+//     QWheelEvent * wheel = static_cast<QWheelEvent*>(event);
+//     emit wheelEvent(*wheel);
+//     return true;
+//   }
+//   return false;
+// }
 
 void SysTrayIcon::resetUnreadCount()
 {
@@ -70,10 +74,10 @@ void SysTrayIcon::updateUnreadCount( int changeOfUnreadPosts )
     kDebug();
     unread += changeOfUnreadPosts;
 
-    this->setToolTip( i18np( "Choqok - 1 unread post", "Choqok - %1 unread posts", unread ) );
+    this->setToolTip( "choqok", i18n("Choqok"), i18np( "1 unread post", "%1 unread posts", unread ) );
 
     if ( unread <= 0 ) {
-        setIcon( m_defaultIcon );
+        setIconByPixmap( QIcon(m_defaultIcon) );
         isBaseIconChanged = true;
         unread = 0;
     } else {
@@ -117,7 +121,7 @@ void SysTrayIcon::updateUnreadCount( int changeOfUnreadPosts )
         p.setOpacity( 1.0 );
         p.drawText( overlayImg.rect(), Qt::AlignCenter, countStr );
 
-        setIcon( QPixmap::fromImage( overlayImg ) );
+        setIconByPixmap( QIcon( QPixmap::fromImage( overlayImg ) ) );
         isBaseIconChanged = true;
     }
 }
@@ -125,14 +129,14 @@ void SysTrayIcon::updateUnreadCount( int changeOfUnreadPosts )
 void SysTrayIcon::setTimeLineUpdatesEnabled( bool isEnabled )
 {
     if ( isEnabled ) {
-        setToolTip( i18n( "Choqok" ) );
-        m_defaultIcon = parentWidget()->windowIcon().pixmap( 22 );
+        setToolTip( "choqok", i18n( "Choqok" ), QString() );
+        m_defaultIcon = _mainwin->windowIcon().pixmap( 22 );
     } else {
-        setToolTip( i18n( "Choqok - Disabled" ) );
+        setToolTip( "choqok", i18n( "Choqok - Disabled" ), QString() );
         ///Generating new Icon:
         m_defaultIcon = Choqok::MediaManager::convertToGrayScale(m_defaultIcon);
     }
-    setIcon( KIcon( m_defaultIcon ) );
+    setIconByPixmap( QIcon( KIcon( m_defaultIcon ) ) );
     updateUnreadCount( 0 );
 }
 
@@ -140,14 +144,14 @@ void SysTrayIcon::slotJobDone( Choqok::JobResult result )
 {
     kDebug();
     if ( !isIconChanged ) {
-        prevIcon = icon();
+        prevIcon = iconPixmap();
         isIconChanged = true;
     }
     isBaseIconChanged = false;
     if ( result == Choqok::Success ) {
-        setIcon( KIcon( "dialog-ok" ) );
+        setIconByName( "dialog-ok" );
     } else {
-        setIcon( KIcon( "dialog-error" ) );
+        setIconByName( "dialog-error" );
     }
     QTimer::singleShot( 5000, this, SLOT( slotRestoreIcon() ) );
 }
@@ -155,7 +159,7 @@ void SysTrayIcon::slotJobDone( Choqok::JobResult result )
 void SysTrayIcon::slotRestoreIcon()
 {
     if ( !isBaseIconChanged ) {
-        setIcon( prevIcon );
+        setIconByPixmap( prevIcon );
     }
     isIconChanged = false;
 }

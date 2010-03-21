@@ -74,11 +74,11 @@ class PostWidget::Private
         //END UI contents;
 };
 
-const QString PostWidget::Private::ownText ("<table width=\"100%\"><tr><td><p align='Justify'>%2</p></td><td rowspan=\"2\"\
+const QString PostWidget::Private::ownText ("<table width=\"100%\"><tr><td><p>%2</p></td><td rowspan=\"2\"\
 width=\"48\">%1</td></tr><tr><td style=\"font-size:small;\" align=\"right\">%3</td></tr></table>");
 
 const QString PostWidget::Private::otherText ( "<table width=\"100%\"><tr><td rowspan=\"2\"\
-width=\"48\">%1</td><td><p align='Justify'>%2</p></td></tr><tr><td style=\"font-size:small;\" align=\"right\">%3</td></tr></table>");
+width=\"48\">%1</td><td><p>%2</p></td></tr><tr><td style=\"font-size:small;\" align=\"right\">%3</td></tr></table>");
 const QString PostWidget::baseStyle ("KTextBrowser {border: 1px solid rgb(150,150,150);\
 border-radius:5px;} KTextBrowser {color:%1; background-color:%2}\
 KPushButton{border:0px}");
