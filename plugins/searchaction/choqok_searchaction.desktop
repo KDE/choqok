@@ -39,6 +39,7 @@ Name[uk]=Дія з пошуку
 Name[x-test]=xxSearch Actionxx
 Name[zh_CN]=搜索动作
 Comment=Add a Search action to the UI for Twitter API microblogs like Twitter and StatusNet
+Comment[da]=Føj en søgehandling til brugerfladen til mikroblogs med Twitter-API, såsom Twitter og StatusNet
 Comment[pt]=Adiciona uma acção de Pesquisa à interface para a API do Twitter, p.ex. Twitter e StatusNet
 Comment[pt_BR]=Adiciona a ação de pesquisa para a interface da API dos micro-blogs Twitter. Por exemplo, Twitter e StatusNet
 Comment[sv]=Lägg till en sökåtgärd i användargränssnitt med Twitters programmeringsgränssnitt, t.ex. Twitter och StatusNet
