@@ -32,6 +32,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QLabel>
 #include <KPushButton>
 #include <QPointer>
+#include <notifymanager.h>
 
 namespace Choqok {
 namespace UI {
@@ -173,6 +174,9 @@ void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList)
     removeOldPosts();
     if(unread){
         d->unreadCount += unread;
+        Choqok::NotifyManager::newPostArrived( i18np( "1 new post in %2(%3)",
+                                                      "%1 new posts in %2(%3)",
+                                                      unread, currentAccount()->alias(), d->timelineName ) );
         emit updateUnreadCount(unread);
         if(!d->btnMarkAllAsRead){
             d->btnMarkAllAsRead = new KPushButton(this);
