@@ -97,12 +97,12 @@ public:
     */
     KConfigGroup *configGroup() const;
 
-signals:
+Q_SIGNALS:
     void modified( Choqok::Account *theAccount );
 
 private:
     class Private;
-    Private *d;
+    Private * const d;
 };
 
 }

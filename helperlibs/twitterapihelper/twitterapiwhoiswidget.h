@@ -42,7 +42,7 @@ public:
     ~TwitterApiWhoisWidget();
     void show(QPoint pos);
 
-protected slots:
+protected Q_SLOTS:
     void checkAnchor( const QUrl url );
     void userInfoReceived( KJob *job );
     void slotCancel();
@@ -63,7 +63,7 @@ private:
     void showForm();
     void loadUserInfo( TwitterApiAccount* thAccount, const QString& username );
     class Private;
-    Private *d;
+    Private * const d;
 };
 
 #endif // TWITTERAPIWHOISWIDGET_H

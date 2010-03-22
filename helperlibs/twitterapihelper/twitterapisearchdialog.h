@@ -33,7 +33,7 @@ class CHOQOK_HELPER_EXPORT TwitterApiSearchDialog : public KDialog
 {
     Q_OBJECT
 public:
-    TwitterApiSearchDialog(TwitterApiAccount* theAccount, QWidget* parent = 0);
+    explicit TwitterApiSearchDialog(TwitterApiAccount* theAccount, QWidget* parent = 0);
     ~TwitterApiSearchDialog();
 
 protected:
@@ -41,12 +41,12 @@ protected:
     virtual void fillSearchTypes();
     virtual void slotButtonClicked(int button);
 
-protected slots:
+protected Q_SLOTS:
     void slotSearchTypeChanged(int);
 
 private:
     class Private;
-    Private *d;
+    Private * const d;
 };
 
 #endif // TWITTERAPISEARCHDIALOG_H

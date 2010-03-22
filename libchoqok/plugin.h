@@ -145,7 +145,7 @@ public:
     */
     virtual void aboutToUnload();
 
-signals:
+Q_SIGNALS:
     /**
     * Notify that the settings of a plugin were changed.
     * These changes are passed on from the new KCDialog code in kdelibs/kutils.

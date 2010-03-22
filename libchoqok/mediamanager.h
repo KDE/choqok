@@ -78,17 +78,17 @@ public:
 
     static QPixmap convertToGrayScale( const QPixmap &pic );
 
-public slots:
+public Q_SLOTS:
     /**
      * @brief Clear image cache
      */
     void clearImageCache();
 
-signals:
+Q_SIGNALS:
     void fetchError( const QString &remoteUrl, const QString &errMsg );
     void imageFetched( const QString &remoteUrl, const QPixmap &pixmap );
 
-protected slots:
+protected Q_SLOTS:
     void slotImageFetched( KJob *job );
 
 protected:
@@ -96,7 +96,7 @@ protected:
 
 private:
     class Private;
-    Private *d;
+    Private * const d;
     static MediaManager * mSelf;
 };
 

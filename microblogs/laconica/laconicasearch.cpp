@@ -39,7 +39,7 @@ LaconicaSearch::LaconicaSearch(QObject* parent): TwitterApiSearch(parent)
     kDebug();
     mSearchCode[ReferenceGroup] = '!';
     mSearchCode[ToUser] = '@';
-    mSearchCode[FromUser] = QString();
+    mSearchCode[FromUser].clear();
     mSearchCode[ReferenceHashtag] = '#';
 
     mSearchTypes[ReferenceHashtag].first = i18nc( "Dents are Identica posts", "Dents Including This Hashtag" );

@@ -85,10 +85,10 @@ public:
     QString lastError() const;
     static QString generatePostBackupFileName( const QString &alias, const QString &name );
 
-public slots:
+public Q_SLOTS:
     void loadAllAccounts();
 
-signals:
+Q_SIGNALS:
     void accountAdded( Choqok::Account *account );
     void accountRemoved( const QString &alias );
     void allAccountsLoaded();

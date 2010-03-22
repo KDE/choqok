@@ -91,7 +91,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="kcfg_customRT">
+         <widget class="KLineEdit" name="kcfg_customRT">
           <property name="enabled">
            <bool>false</bool>
           </property>

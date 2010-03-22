@@ -271,7 +271,7 @@ public:
     */
     uint postCharLimit() const;
 
-signals:
+Q_SIGNALS:
 
     /**
     Emit when data for a timeline received! @p type specifies the type of timeline as specifies in timelineTypes()

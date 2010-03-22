@@ -130,7 +130,7 @@ public:
                                                                         QWidget *parent);
 
     QDateTime dateFromString( const QString &date );
-public slots:
+public Q_SLOTS:
     /**
     Launch a dialog to send direct message.
     There are 2 ways to use this function:
@@ -141,7 +141,7 @@ public slots:
                                           const QString &toUsername = QString() );
 
     void showSearchDialog( TwitterApiAccount *theAccount = 0 );
-signals:
+Q_SIGNALS:
     void favoriteCreated(Choqok::Account *theAccount, const QString &postId);
     void favoriteRemoved(Choqok::Account *theAccount, const QString &postId);
     void friendsUsernameListed( TwitterApiAccount *theAccount, const QStringList &friendsList );
@@ -150,7 +150,7 @@ signals:
     void friendshipDestroyed(Choqok::Account *theAccount, const QString &username);
     void userBlocked(Choqok::Account *theAccount, const QString &blockedUsername);
 
-protected slots:
+protected Q_SLOTS:
     virtual void slotCreatePost( KJob *job );
     virtual void slotFetchPost( KJob *job );
     virtual void slotRemovePost( KJob *job );
@@ -204,7 +204,7 @@ protected:
 
 private:
     class Private;
-    Private *d;
+    Private * const d;
 };
 
 #endif

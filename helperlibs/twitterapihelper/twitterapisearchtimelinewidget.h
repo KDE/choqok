@@ -40,7 +40,7 @@ public:
     void removeAllPosts();
     SearchInfo &searchInfo() const;
 
-protected slots:
+protected Q_SLOTS:
     virtual void saveTimeline();
     virtual void loadTimeline();
     void slotUpdateSearchResults();
@@ -53,7 +53,7 @@ protected slots:
 private:
     void addFooter();
     class Private;
-    Private *d;
+    Private * const d;
 };
 
 #endif // TWITTERAPISEARCHTIMELINEWIDGET_H

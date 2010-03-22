@@ -77,7 +77,7 @@ public:
     */
     QList<PostWidget*> postWidgets();
 
-public slots:
+public Q_SLOTS:
     /**
     @brief Mark all posts as read
     */
@@ -87,7 +87,7 @@ public slots:
     */
     virtual void settingsChanged();
 
-signals:
+Q_SIGNALS:
     void forwardResendPost( const QString &post );
     void forwardReply(const QString &txt, const QString &replyToId);
     /**
@@ -98,7 +98,7 @@ signals:
     */
     void updateUnreadCount(int change);
 
-protected slots:
+protected Q_SLOTS:
     void slotOnePostReaded();
     virtual void saveTimeline();
     virtual void loadTimeline();
@@ -120,7 +120,7 @@ protected:
 private:
     void setupUi();
     class Private;
-    Private *d;
+    Private * const d;
 };
 }
 }

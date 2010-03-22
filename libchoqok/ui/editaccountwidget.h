@@ -100,7 +100,7 @@ protected:
     void setAccount( Choqok::Account *account );
 
 private:
-    ChoqokEditAccountWidgetPrivate *d;
+    ChoqokEditAccountWidgetPrivate * const d;
 };
 
 #endif

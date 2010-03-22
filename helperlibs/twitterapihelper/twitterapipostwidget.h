@@ -38,7 +38,7 @@ public:
     ~TwitterApiPostWidget();
     virtual void initUi();
 
-protected slots:
+protected Q_SLOTS:
     virtual void checkAnchor(const QUrl & url);
     virtual void setFavorite();
     virtual void slotSetFavorite(Choqok::Account *theAccount, const QString &postId);
@@ -56,7 +56,7 @@ protected:
     static const KIcon unFavIcon;
 private:
     class Private;
-    Private *d;
+    Private * const d;
 
 };
 

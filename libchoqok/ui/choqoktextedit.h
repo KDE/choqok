@@ -52,12 +52,12 @@ protected:
     virtual void keyPressEvent(QKeyEvent* );
     virtual void insertFromMimeData ( const QMimeData *source );
 
-signals:
+Q_SIGNALS:
     void returnPressed( const QString &txt );
 //     void charsRemain( int count );
     void cleared();
 
-protected slots:
+protected Q_SLOTS:
     void updateRemainingCharsCount();
     void settingsChanged();
 
@@ -66,7 +66,7 @@ protected:
 
 private:
     class Private;
-    Private *d;
+    Private * const d;
 };
 }
 }

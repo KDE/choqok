@@ -94,7 +94,7 @@ public:
     */
     virtual QString optionCode(int option) = 0;
 
-public slots:
+public Q_SLOTS:
     virtual void requestSearchResults( const SearchInfo &searchInfo,
                                        const ChoqokId &sinceStatusId = QString(),
                                        uint count = 0,
@@ -107,7 +107,7 @@ public slots:
                                        uint count = 0,
                                        uint page = 1 );
 
-signals:
+Q_SIGNALS:
     void searchResultsReceived( const SearchInfo &searchInfo,
                                 QList<Choqok::Post*> &postsList );
     void error( const QString &message );
@@ -122,7 +122,7 @@ protected:
 
 private:
     class Private;
-    Private *d;
+    Private * const d;
 };
 
 #endif // TWITTERAPISEARCH_H

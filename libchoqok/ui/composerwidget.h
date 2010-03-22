@@ -47,11 +47,11 @@ public:
     virtual ~ComposerWidget();
     TextEdit *editor();
 
-public slots:
+public Q_SLOTS:
     virtual void setText(const QString &text, const QString &replyToId = QString());
     virtual void abort();
 
-protected slots:
+protected Q_SLOTS:
     virtual void submitPost( const QString &text );
     virtual void slotPostSubmited(Choqok::Account *theAccount, Choqok::Post* post);
     virtual void slotErrorPost(Choqok::Account* theAccount,Choqok::Post* post);
@@ -70,7 +70,7 @@ protected:
 
 private:
     class Private;
-    Private *d;
+    Private * const d;
 };
 }
 }

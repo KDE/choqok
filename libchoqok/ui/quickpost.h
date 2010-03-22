@@ -47,12 +47,12 @@ public:
     QuickPost( QWidget* parent = 0 );
     virtual ~QuickPost();
 
-public slots:
+public Q_SLOTS:
     void show();
     void submitPost( const QString &newStatus );
     void setText( const QString& text/*, Choqok::Account* account = 0, const QString& replyToId = QString()*/ );
 
-signals:
+Q_SIGNALS:
     /**
     Emitted when a new post submitted. @p postText is the text that submitted,
     @p postText will be empty on failure!
@@ -64,7 +64,7 @@ signals:
 protected:
     void loadAccounts();
 
-protected slots:
+protected Q_SLOTS:
     void slotCurrentAccountChanged(int);
     void checkAll( bool isAll );
     virtual void slotButtonClicked(int button);
@@ -78,7 +78,7 @@ protected slots:
 private:
     void setupUi();
     class Private;
-    Private *d;
+    Private * const d;
 };
 
 }

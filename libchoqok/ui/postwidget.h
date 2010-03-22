@@ -101,14 +101,14 @@ public:
     QString content() const;
 
     void deleteLater();
-public slots:
+public Q_SLOTS:
     /**
     Set Style sheet of widget to corresponding data->
     @see setStyle()
     */
     void setUiStyle();
 
-signals:
+Q_SIGNALS:
     /**
     Emit and contain text to resend.
     */
@@ -128,7 +128,7 @@ signals:
     */
     void aboutClosing( const ChoqokId &postId, PostWidget *widget);
 
-protected slots:
+protected Q_SLOTS:
     /**
         @brief Copy post text to clipboard.
     */
@@ -202,7 +202,7 @@ protected:
 private:
     void setupUi();
     class Private;
-    Private *d;
+    Private *const d;
 };
 }
 }

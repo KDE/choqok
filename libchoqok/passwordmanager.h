@@ -51,7 +51,7 @@ public:
 private:
     PasswordManager();
     class Private;
-    Private *d;
+    Private * const d;
     static PasswordManager *mSelf;
 };
 }

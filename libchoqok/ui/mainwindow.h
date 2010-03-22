@@ -47,10 +47,10 @@ public:
     */
     Choqok::UI::MicroBlogWidget *currentMicroBlog();
 
-public slots:
+public Q_SLOTS:
     void showStatusMessage( const QString &message, bool isPermanent = false );
 
-signals:
+Q_SIGNALS:
     void updateTimelines();
     void markAllAsRead();
     void removeOldPosts();

@@ -106,6 +106,6 @@ void UnTiny::slot301Redirected(KIO::Job* job, KUrl fromUrl, KUrl toUrl)
         return;
 //     kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
     QString content = postToParse->content();
-    content.replace(QRegExp("title='" + fromUrl.url() + "'"), "title='" + toUrl.url() + "'");
+    content.replace(QRegExp("title='" + fromUrl.url() + '\''), "title='" + toUrl.url() + '\'');
     postToParse->setContent(content);
 }

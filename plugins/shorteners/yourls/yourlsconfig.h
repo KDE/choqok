@@ -25,7 +25,8 @@
 #ifndef TWITPICCONFIG_H
 #define TWITPICCONFIG_H
 
-#include <kcmodule.h>
+#include <KCModule>
+#include <QWidget>
 #include "ui_yourlsprefs.h"
 
 class YourlsConfig : public KCModule

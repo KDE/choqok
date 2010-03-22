@@ -34,15 +34,15 @@ class CHOQOK_HELPER_EXPORT TwitterApiMicroBlogWidget : public Choqok::UI::MicroB
 {
     Q_OBJECT
 public:
-    TwitterApiMicroBlogWidget(Choqok::Account* account, QWidget* parent = 0);
+    explicit TwitterApiMicroBlogWidget(Choqok::Account* account, QWidget* parent = 0);
     ~TwitterApiMicroBlogWidget();
     virtual void initUi();
 
-public slots:
+public Q_SLOTS:
     virtual void markAllAsRead();
     void slotContextMenu(QWidget *w, const QPoint& pt);
 
-protected slots:
+protected Q_SLOTS:
     void closeAllSearches();
     void slotAccountModified(Choqok::Account *account);
     void slotCloseCurrentSearch();
@@ -59,7 +59,7 @@ protected:
                                                                 const SearchInfo &info);
 private:
     class Private;
-    Private *d;
+    Private * const d;
 };
 
 #endif // TWITTERAPIMICROBLOGWIDGET_H

@@ -306,12 +306,9 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="kcfg_changeToString">
+          <widget class="KLineEdit" name="kcfg_changeToString">
            <property name="maxLength">
             <number>10</number>
-           </property>
-           <property name="frame">
-            <bool>true</bool>
            </property>
           </widget>
          </item>

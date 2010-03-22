@@ -36,7 +36,7 @@ const QRegExp TwitterSearch::m_rId("tag:search.twitter.com,[0-9]+:([0-9]+)");
 TwitterSearch::TwitterSearch(QObject* parent): TwitterApiSearch(parent)
 {
     kDebug();
-    mSearchCode[CustomSearch] = QString();
+    mSearchCode[CustomSearch].clear();
     mSearchCode[ToUser] = "to:";
     mSearchCode[FromUser] = "from:";
     mSearchCode[ReferenceUser] = '@';

@@ -43,11 +43,11 @@ public:
     TwitterApiShowThread( Choqok::Account *account, const Choqok::Post &finalPost, QWidget* parent = 0);
     ~TwitterApiShowThread();
 
-protected slots:
+protected Q_SLOTS:
     void slotAddNewPost( Choqok::Account *theAccount, Choqok::Post *post );
     void raiseMainWindow();
 
-signals:
+Q_SIGNALS:
     void forwardResendPost( const QString &post );
     void forwardReply(const QString &txt, const QString &replyToId);
 
@@ -57,7 +57,7 @@ private:
     void setupUi();
 
     class Private;
-    Private *d;
+    Private * const d;
 };
 
 #endif // TWITTERAPISHOWTHREAD_H

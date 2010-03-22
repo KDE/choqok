@@ -113,7 +113,7 @@ QString TwitterApiPostWidget::generateSign()
             QString threadlink = "thread://" + currentPost().postId;
             sign += " - " +
             i18n("<a href='replyto://%1'>in reply to</a>&nbsp;<a href=\"%2\" title=\"%2\">%3</a>",
-                currentPost().replyToPostId, link, webIconText) + " ";
+                currentPost().replyToPostId, link, webIconText) + ' ';
             sign += "<a title=\""+ showConMsg +"\" href=\"" + threadlink + "\"><img src=\"icon://thread\" /></a>";
         }
     }

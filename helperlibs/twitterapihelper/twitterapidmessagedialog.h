@@ -43,7 +43,7 @@ public:
     ~TwitterApiDMessageDialog();
     void setTo(const QString &username);
 
-protected slots:
+protected Q_SLOTS:
     void friendsUsernameListed(TwitterApiAccount*,QStringList);
     void submitPost(QString);
     void reloadFriendslist();
@@ -57,7 +57,7 @@ protected:
 
 private:
     class Private;
-    Private *d;
+    Private * const d;
 };
 
 #endif // TWITTERAPIDMESSAGEDIALOG_H

@@ -54,7 +54,7 @@ protected:
 private:
 //     static NotifyManager *m_self;
     class Private;
-    Private *d;
+    Private * const d;
 };
 }
 #endif // NOTIFYMANAGER_H

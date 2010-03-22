@@ -62,7 +62,7 @@ public:
     */
     TimelineWidget * currentTimeline();
 
-public slots:
+public Q_SLOTS:
     void removeOldPosts();
     /**
     @brief Manage changed settings on this timeline and forward it to all posts.
@@ -86,7 +86,7 @@ public slots:
     */
     virtual void setFocus();
 
-signals:
+Q_SIGNALS:
     /**
     @brief Emit to tell MainWindow to show this MicroBlog
     */
@@ -111,7 +111,7 @@ signals:
     */
     void loaded();
 
-protected slots:
+protected Q_SLOTS:
     /**
     Connected to @ref MicroBlog::timelineDataReceived() to update timelines
 
@@ -141,7 +141,7 @@ protected:
 
 private:
     class Private;
-    Private *d;
+    Private * const d;
 };
 }
 }
