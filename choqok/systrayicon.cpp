@@ -74,8 +74,6 @@ void SysTrayIcon::updateUnreadCount( int changeOfUnreadPosts )
     kDebug();
     unread += changeOfUnreadPosts;
 
-    this->setToolTip( "choqok", i18n("Choqok"), i18np( "1 unread post", "%1 unread posts", unread ) );
-
     if ( unread <= 0 ) {
         setIconByPixmap( QIcon(m_defaultIcon) );
         isBaseIconChanged = true;
@@ -124,6 +122,7 @@ void SysTrayIcon::updateUnreadCount( int changeOfUnreadPosts )
         setIconByPixmap( QIcon( QPixmap::fromImage( overlayImg ) ) );
         isBaseIconChanged = true;
     }
+    this->setToolTip( "choqok", i18n("Choqok"), i18np( "1 unread post", "%1 unread posts", unread ) );
 }
 
 void SysTrayIcon::setTimeLineUpdatesEnabled( bool isEnabled )
