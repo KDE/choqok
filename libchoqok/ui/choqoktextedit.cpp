@@ -49,8 +49,7 @@ TextEdit::TextEdit(uint charLimit /*= 0*/, QWidget* parent /*= 0*/)
     kDebug()<<charLimit;
     connect( this, SIGNAL( textChanged() ), this, SLOT( updateRemainingCharsCount() ) );
     setAcceptRichText( false );
-    this->setToolTip( i18n( "<strong>Note:</strong><br/><em>Ctrl+P</em> to have the previous submitted text.<br/>\
-    <em>Ctrl+S</em> to enable/disable auto spell checker." ) );
+    this->setToolTip( i18n( "<strong>Note:</strong><br/><em>Ctrl+S</em> to enable/disable auto spell checker." ) );
 
     QFont counterF;
     counterF.setBold( true );
@@ -84,9 +83,9 @@ void TextEdit::keyPressEvent(QKeyEvent* e)
     } else if ( e->modifiers() == Qt::ControlModifier && e->key() == Qt::Key_S ) {
         this->setCheckSpellingEnabled( !this->checkSpellingEnabled() );
         e->accept();
-    } else if ( e->modifiers() == Qt::ControlModifier && e->key() == Qt::Key_P ) {
-        QString tmp = this->toHtml();
-        this->setHtml( tmp + ' ' + d->prevStr );
+    } else if ( e->modifiers() == Qt::ControlModifier && e->key() == Qt::Key_Z && toPlainText().isEmpty() ) {
+//         QString tmp = this->toHtml();
+        this->setText( d->prevStr );
         e->accept();
     } else if ( e->key() == Qt::Key_Escape ) {
         if ( !this->toPlainText().isEmpty() ) {
