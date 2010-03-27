@@ -113,6 +113,7 @@ Name[x-test]=xxJob Successxx
 Name[zh_CN]=任务成功
 Comment=A job finished successfully
 Comment[bg]=Успешно приключена задача
+Comment[cs]=Úloha úspěšně dokončena
 Comment[da]=Et job blev vellykket gennemført
 Comment[de]=Aktion erfolgreich beendet
 Comment[en_GB]=A job finished successfully
@@ -141,6 +142,7 @@ Action=Popup
 [Event/job-error]
 Name=Job Error
 Name[bg]=Грешка в задача
+Name[cs]=Chyba úlohy
 Name[da]=Jobfejl
 Name[de]=Aktionsfehler
 Name[en_GB]=Job Error
