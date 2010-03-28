@@ -190,6 +190,29 @@ protected:
     */
     virtual QString checkXmlForError(const QByteArray &buffer);
 
+    ///===============================================
+    /// JSON:
+    ///===============================================
+
+    virtual Choqok::Post * readPostFromJsonMap( Choqok::Account* theAccount,
+                                                   const QVariantMap& var, Choqok::Post* post );
+    virtual Choqok::Post * readPostFromJson( Choqok::Account* theAccount,
+                                            const QByteArray& buffer, Choqok::Post* post );
+    virtual QList<Choqok::Post*> readTimelineFromJson( Choqok::Account* theAccount, const QByteArray& buffer );
+    virtual Choqok::Post * readDMessageFromJson(Choqok::Account *theAccount, const QByteArray &buffer );
+    virtual Choqok::Post * readDMessageFromJsonMap(Choqok::Account *theAccount, const QVariantMap& var );
+    virtual QList<Choqok::Post*> readDMessagesFromJson(Choqok::Account *theAccount, const QByteArray &buffer );
+    virtual QStringList readUsersScreenNameFromJson( Choqok::Account *theAccount, const QByteArray & buffer );
+    virtual Choqok::User *readUserInfoFromJson( const QByteArray &buffer );
+
+    /**
+    Checks xml returned from server for error, and return error string, Or an empty string if nothing found!
+    */
+//     virtual QString checkJsonForError(const QByteArray &buffer);
+    ///=================================================
+    /// End JSON
+    ///=================================================
+
     QHash<QString, QString> timelineApiPath;//TimelineType, path
     QMap<QString, Choqok::TimelineInfo*> mTimelineInfos;//timelineName, Info
 

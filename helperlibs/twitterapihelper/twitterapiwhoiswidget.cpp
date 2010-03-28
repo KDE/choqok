@@ -46,6 +46,7 @@
 #include <notifymanager.h>
 #include <choqoktools.h>
 #include <kstatusbar.h>
+#include <qjson/parser.h>
 
 const char * baseText = "\
 <table width=\"100%\">\
@@ -149,7 +150,7 @@ void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount* theAccount, const QS
     url.setUser ( theAccount->username() );
     url.setPass ( theAccount->password() );
 
-    url.addPath( QString( "/users/show/%1.xml" ).arg(username));
+    url.addPath( QString( "/users/show/%1.json" ).arg(username));
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
     d->job = job;
@@ -168,73 +169,36 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
         return;
     }
     KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>(job);
-    QDomDocument doc;
-    doc.setContent(stj->data());
+    QJson::Parser parser;
+    bool ok;
+    QVariantMap map = parser.parse(stj->data(), &ok).toMap();
 
-    QDomElement root = doc.documentElement();
-    if ( root.tagName() != "user" ) {
-        kDebug()<<"There's no user tag in returned document from server! Data is:\n\t"<<stj->data();
+    Choqok::Post post;
+    if ( ok ) {
+        QString timeStr;
+        post.author.realName = map["name"].toString();
+        post.author.userName = map["screen_name"].toString();
+        post.author.location = map["location"].toString();
+        post.author.description = map["description"].toString();
+        post.author.profileImageUrl = map["profile_image_url"].toString();
+        post.author.homePageUrl = map["url"].toString();
+        d->timeZone = map["time_zone"].toString();
+        d->followersCount = map["followers_count"].toString();
+        d->friendsCount = map["friends_count"].toString();
+        QVariantMap var = map["status"].toMap();
+        post.content = var["text"].toString();
+        post.creationDateTime = d->mBlog->dateFromString(var["created_at"].toString());
+        post.isFavorited = var["favorited"].toBool();
+        post.postId = var["id"].toString();
+        post.replyToPostId = var["in_reply_to_status_id"].toString();
+        post.replyToUserId = var["in_reply_to_user_id"].toString();
+        post.replyToUserName = var["in_reply_to_screen_name"].toString();
+        post.source = var["source"].toString();
+    } else {
+        kDebug()<<"JSON parsing failed! Data is:\n\t"<<stj->data();
         d->wid->setText(i18n("Cannot load user information."));
         return;
     }
-    QDomNode node = root.firstChild();
-    Choqok::Post post;
-    QString timeStr;
-    while( !node.isNull() ){
-        QDomElement elm = node.toElement();
-        if(elm.tagName() == "name"){
-            post.author.realName = elm.text();
-        } else if(elm.tagName() == "screen_name"){
-            post.author.userName = elm.text();
-        } else if(elm.tagName() == "location"){
-            post.author.location = elm.text();
-        } else if(elm.tagName() == "description"){
-            post.author.description = elm.text();
-        } else if(elm.tagName() == "profile_image_url"){
-            post.author.profileImageUrl = elm.text();
-        } else if(elm.tagName() == "url") {
-            post.author.homePageUrl = elm.text();
-        } else if(elm.tagName() == "time_zone") {
-            d->timeZone = elm.text();
-        } else if(elm.tagName() == "followers_count") {
-            d->followersCount = elm.text();
-        } else if(elm.tagName() == "friends_count") {
-            d->friendsCount = elm.text();
-        }/* else if( elm.tagName() == "protected" ){
-            if(elm.text() == "true"){
-                d->lockImg = "<img src=\"icon://lock\">";
-                d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://lock"),
-                                                 KIcon("object-locked").pixmap(16) );
-            }
-        }*/ else if(elm.tagName() == "status") {
-            QDomNode node2 = elm.firstChild();
-            while( !node2.isNull() ){
-                QDomElement elm2 = node2.toElement();
-                if ( elm2.tagName() == "created_at" )
-                    timeStr = elm2.text();
-                else if ( elm2.tagName() == "text" )
-                    post.content = elm2.text();
-                else if ( elm2.tagName() == "id" )
-                    post.postId = elm2.text();
-                else if ( elm2.tagName() == "in_reply_to_status_id" )
-                    post.replyToPostId = elm2.text();
-                else if ( elm2.tagName() == "in_reply_to_user_id" )
-                    post.replyToUserId = elm2.text();
-                else if ( elm2.tagName() == "in_reply_to_screen_name" )
-                    post.replyToUserName = elm2.text();
-                else if ( elm2.tagName() == "source" )
-                    post.source = elm2.text();
-                else if ( elm2.tagName() == "favorited" )
-                    post.isFavorited = ( elm2.text() == "true" ) ? true : false;
-                node2 = node2.nextSibling();
-            }
-        }
-        node = node.nextSibling();
-    }
-//     post.link = d->currentAccount->microblog()->postUrl(d->currentAccount, post.author.userName, post.postId);
-//     TwitterApiMicroBlog *blog = qobject_cast<TwitterApiMicroBlog *>(d->currentAccount->microblog());
-//     post.creationDateTime = blog->dateFromString( timeStr );
-
     d->currentPost = post;
     updateHtml();
     showForm();

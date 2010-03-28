@@ -1,6 +1,20 @@
 
+#BEGIN Find QJson library
+#TODO: Move this part to a module.
+find_path(QJSON_INCLUDE_DIR qjson/parser.h)
+
+find_library(QJSON_LIBRARY qjson)
+
+INCLUDE(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS("QJson Library" DEFAULT_MSG QJSON_LIBRARY QJSON_INCLUDE_DIR)
+
+
+MARK_AS_ADVANCED(QJSON_INCLUDE_DIR QJSON_LIBRARY)
+#END
+
 include_directories(
 ${CHOQOK_INCLUDES}
+${QJSON_INCLUDE_DIR}
 )
 
 set(twitterhelper_LIB_SRCS
@@ -18,7 +32,7 @@ twitterapishowthread.cpp
 
 kde4_add_library(twitterapihelper SHARED ${twitterhelper_LIB_SRCS})
 
-target_link_libraries(twitterapihelper ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} choqok)
+target_link_libraries(twitterapihelper ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} ${QJSON_LIBRARY} choqok)
 
 set_target_properties(twitterapihelper PROPERTIES
 VERSION 0.7
