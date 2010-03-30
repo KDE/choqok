@@ -177,7 +177,7 @@ void PostWidget::initUi()
 
 void PostWidget::updateUi()
 {
-    setHtml( baseText->arg( d->mImage, d->mContent, d->mSign.arg( formatDateTime( d->mCurrentPost.creationDateTime ) ) ) );
+    setHtml(baseText->arg(d->mImage, d->mContent, d->mSign.arg(formatDateTime( d->mCurrentPost.creationDateTime ))));
 }
 
 void PostWidget::setStyle(const QColor& color, const QColor& back, const QColor& read, const QColor& readBack)
@@ -194,19 +194,8 @@ QString PostWidget::getColorString(const QColor& color)
 
 KPushButton * PostWidget::addButton(const QString & objName, const QString & toolTip, const QString & icon)
 {
-    KPushButton * button = new KPushButton(KIcon(icon), QString(), this);
-    button->setObjectName(objName);
-    button->setToolTip(toolTip);
-    button->setIconSize(QSize(16,16));
-    button->setMinimumSize(QSize(20, 20));
-    button->setMaximumSize(QSize(20, 20));
-    button->setFlat(true);
-    button->setVisible(false);
-    button->setCursor(Qt::PointingHandCursor);
+    return addButton(objName, toolTip, KIcon(icon));
 
-    d->mUiButtons.insert( objName, button );
-    d->buttonsLayout->addWidget( button, 1, d->mUiButtons.count() );
-    return button;
 }
 
 KPushButton * PostWidget::addButton(const QString & objName, const QString & toolTip, const KIcon & icon)
