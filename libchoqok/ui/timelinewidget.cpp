@@ -130,7 +130,7 @@ void TimelineWidget::setupUi()
     verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
     d->mainLayout->addItem(verticalSpacer);
-    d->mainLayout->setSpacing(3);
+    d->mainLayout->setSpacing(5);
     d->mainLayout->setMargin(1);
 
     d->titleBarLayout = new QHBoxLayout;
