@@ -10,6 +10,7 @@ X-KDE-ParentComponents=choqok
 
 Name=Appearance
 Name[bg]=Изглед
+Name[ca]=Aparença
 Name[cs]=Vzhled
 Name[da]=Udseende
 Name[de]=Erscheinungsbild
@@ -37,6 +38,7 @@ Name[x-test]=xxAppearancexx
 Name[zh_CN]=外观
 Comment=Personalize Choqok Look and Feel
 Comment[bg]=Настройки на изгледа на Choqok
+Comment[ca]=Personalitzeu l'estil del Choqok
 Comment[da]=Tilpas Choqoks fremtoning
 Comment[de]=Anpassung von Choqoks Erscheinungsbild
 Comment[en_GB]=Personalise Choqok Look and Feel

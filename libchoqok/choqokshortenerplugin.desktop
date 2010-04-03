@@ -4,6 +4,7 @@ X-KDE-ServiceType=Choqok/Shortener
 X-KDE-Derived=Choqok/Plugin
 Comment=Choqok Shortener Plugin
 Comment[bg]=Приставка на Choqok за съкращаване на адреси
+Comment[ca]=Connector escurçador del Choqok
 Comment[da]=Choqok forkortelses-plugin
 Comment[de]=Choqok-Kürzungsmodul
 Comment[en_GB]=Choqok Shortener Plugin

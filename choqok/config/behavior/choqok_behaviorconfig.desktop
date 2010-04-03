@@ -11,6 +11,7 @@ X-KDE-Weight=10
 
 Name=Behavior
 Name[bg]=Поведение
+Name[ca]=Comportament
 Name[cs]=Chování
 Name[da]=Opførsel
 Name[de]=Verhalten
@@ -38,6 +39,7 @@ Name[x-test]=xxBehaviorxx
 Name[zh_CN]=行为
 Comment=Personalize Choqok's Behavior
 Comment[bg]=Настройки на поведението на Choqok
+Comment[ca]=Personalitzeu el comportament del Choqok
 Comment[da]=Tilpas Choqoks opførsel
 Comment[de]=Anpassung von Choqoks Verhalten
 Comment[en_GB]=Personalise Choqok's Behaviour

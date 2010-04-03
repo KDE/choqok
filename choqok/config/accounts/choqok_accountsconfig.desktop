@@ -11,6 +11,7 @@ X-KDE-Weight=20
 
 Name=Accounts
 Name[bg]=Сметки
+Name[ca]=Comptes
 Name[cs]=Účty
 Name[da]=Konti
 Name[de]=Zugänge
@@ -38,6 +39,7 @@ Name[x-test]=xxAccountsxx
 Name[zh_CN]=账户
 Comment=Manage Your Accounts
 Comment[bg]=Управление на сметките
+Comment[ca]=Gestioneu els vostres comptes
 Comment[da]=Håndtér dine konti
 Comment[de]=Zugangsverwaltung
 Comment[en_GB]=Manage Your Accounts
