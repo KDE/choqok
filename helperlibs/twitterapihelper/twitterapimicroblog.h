@@ -174,6 +174,10 @@ protected:
 
     virtual void setTimelineInfos();
     virtual KUrl apiUrl( TwitterApiAccount* theAccount );
+
+    ///==============================================
+    /// XML:
+    ///==============================================
     virtual Choqok::Post * readPostFromDomElement( Choqok::Account* theAccount,
                                                    const QDomElement& root, Choqok::Post* post );
     virtual Choqok::Post * readPostFromXml( Choqok::Account* theAccount,
@@ -213,6 +217,8 @@ protected:
     /// End JSON
     ///=================================================
 
+
+    ///==========================================
     QHash<QString, QString> timelineApiPath;//TimelineType, path
     QMap<QString, Choqok::TimelineInfo*> mTimelineInfos;//timelineName, Info
 
@@ -224,6 +230,7 @@ protected:
     QHash< Choqok::Account*, QMap<QString, QString> > mTimelineLatestId;//TimelineType, LatestId
     QMap<KJob*, Choqok::Account*> mJobsAccount;
     QMap<KJob*, QString> mFriendshipMap;
+    QString format;
 
 private:
     class Private;

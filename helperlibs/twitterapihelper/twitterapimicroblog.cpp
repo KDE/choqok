@@ -79,16 +79,19 @@ TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObje
 : MicroBlog( instance, parent), d(new Private)
 {
     kDebug();
+    KConfigGroup grp(KGlobal::config(), "TwitterApi");
+    format = grp.readEntry("format", "xml");
+
     setCharLimit(140);
     QStringList timelineTypes;
     timelineTypes<< "Home" << "Reply" << "Inbox" << "Outbox" << "Favorite" << "Public";
     setTimelineNames(timelineTypes);
-    timelineApiPath["Home"] = "/statuses/home_timeline.json";
-    timelineApiPath["Reply"] = "/statuses/replies.json";
-    timelineApiPath["Inbox"] = "/direct_messages.json";
-    timelineApiPath["Outbox"] = "/direct_messages/sent.json";
-    timelineApiPath["Favorite"] = "/favorites.json";
-    timelineApiPath["Public"] = "/statuses/public_timeline.json";
+    timelineApiPath["Home"] = "/statuses/home_timeline.%1";
+    timelineApiPath["Reply"] = "/statuses/replies.%1";
+    timelineApiPath["Inbox"] = "/direct_messages.%1";
+    timelineApiPath["Outbox"] = "/direct_messages/sent.%1";
+    timelineApiPath["Favorite"] = "/favorites.%1";
+    timelineApiPath["Public"] = "/statuses/public_timeline.%1";
     setTimelineInfos();
 }
 
@@ -154,7 +157,8 @@ QMenu* TwitterApiMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidg
     return menu;
 }
 
-QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *account, const QString& timelineName)
+QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *account,
+                                                          const QString& timelineName)
 {
     kDebug()<<timelineName;
     QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
@@ -287,7 +291,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
     }
     if ( !post->isPrivate ) {///Status Update
         KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
-        url.addPath ( "/statuses/update.json" );
+        url.addPath ( QString("/statuses/update.%1").arg(format) );
         QByteArray data = "status=";
         data += QUrl::toPercentEncoding (  post->content );
         if ( !post->replyToPostId.isEmpty() ) {
@@ -310,7 +314,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
     } else {///Direct message
         QString recipientScreenName = post->replyToUserName;
         KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
-        url.addPath ( "/direct_messages/new.json" );
+        url.addPath ( QString("/direct_messages/new.%1").arg(format) );
         QByteArray data = "user=";
         data += recipientScreenName.toLocal8Bit();
         data += "&text=";
@@ -350,7 +354,11 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
     } else {
         KIO::StoredTransferJob *stj = qobject_cast< KIO::StoredTransferJob * > ( job );
         if ( !post->isPrivate ) {
-            readPostFromJson ( theAccount, stj->data(), post );
+            if(format=="xml"){
+                readPostFromXml ( theAccount, stj->data(), post );
+            } else {
+                readPostFromJson ( theAccount, stj->data(), post );
+            }
             if ( post->isError ) {
                 QString errorMsg = checkXmlForError(stj->data());
                 if( errorMsg.isEmpty() ){
@@ -400,7 +408,7 @@ void TwitterApiMicroBlog::fetchPost ( Choqok::Account* theAccount, Choqok::Post*
         return;
     }
     KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
-    url.addPath ( QString("/statuses/show/%1.json").arg(post->postId) );
+    url.addPath ( QString("/statuses/show/%1.%2").arg(post->postId).arg(format) );
 
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
@@ -431,7 +439,11 @@ void TwitterApiMicroBlog::slotFetchPost ( KJob *job )
                      i18n("Fetching the new post failed. %1", job->errorString()), Low );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
-        readPostFromJson ( theAccount, stj->data(), post );
+        if(format=="json"){
+                readPostFromJson ( theAccount, stj->data(), post );
+            } else {
+                readPostFromXml ( theAccount, stj->data(), post );
+            }
         if ( post->isError ) {
             QString errorMsg = checkXmlForError(stj->data());
             if( errorMsg.isEmpty() ){
@@ -585,7 +597,8 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount
 {
     kDebug();
     KUrl url = apiUrl( theAccount );
-    url.addPath( "/statuses/friends/" + theAccount->username() + ".json" );
+    url.addPath( QString("/statuses/friends/%1.%2").arg(theAccount->username()).
+                                                    arg(format));
     url.setQuery( "?page=" + QString::number( page ) );
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
@@ -603,7 +616,12 @@ void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
     kDebug();
     TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount *>( mJobsAccount.take(job) );
     KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
-    QStringList newList = readUsersScreenNameFromJson( theAccount, stJob->data() );
+    QStringList newList;
+    if(format=="json"){
+        newList = readUsersScreenNameFromJson( theAccount, stJob->data() );
+    } else {
+        newList = readUsersScreenNameFromXml( theAccount, stJob->data() );
+    }
     d->friendsList << newList;
     if ( newList.count() == 100 ) {
         requestFriendsScreenName( theAccount, ++d->friendsPage );
@@ -627,7 +645,7 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
 {
     kDebug();
     KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
-    url.addPath ( timelineApiPath[type] );
+    url.addPath ( timelineApiPath[type].arg(format) );
     int countOfPost = Choqok::BehaviorSettings::countOfPosts();
     if ( !latestStatusId.isEmpty() ) {
         url.addQueryItem ( "since_id", latestStatusId );
@@ -676,9 +694,17 @@ void TwitterApiMicroBlog::slotRequestTimeline ( KJob *job )
         KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob*>( job );
         QList<Choqok::Post*> list;
         if( type=="Inbox" || type=="Outbox" ) {
-            list = readDMessagesFromJson( theAccount, j->data() );
+            if(format=="json"){
+                list = readDMessagesFromJson( theAccount, j->data() );
+            } else {
+                list = readDMessagesFromXml( theAccount, j->data() );
+            }
         } else {
-            list = readTimelineFromJson( theAccount, j->data() );
+            if(format=="json"){
+                list = readTimelineFromJson( theAccount, j->data() );
+            } else {
+                list = readTimelineFromXml( theAccount, j->data() );
+            }
         }
         if(!list.isEmpty()) {
             mTimelineLatestId[theAccount][type] = list.last()->postId;
