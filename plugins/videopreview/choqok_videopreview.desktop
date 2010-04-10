@@ -1,0 +1,22 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Service
+X-Choqok-Version=1
+Icon=video-x-generic
+ServiceTypes=Choqok/Plugin
+X-KDE-Library=choqok_videopreview
+X-KDE-PluginInfo-Author=Emanuele Bigiarini
+X-KDE-PluginInfo-Email=pulmro@gmail.com
+X-KDE-PluginInfo-Name=choqok_videopreview
+X-KDE-PluginInfo-Version=0.1
+X-KDE-PluginInfo-Website=http://choqok.gnufolks.org
+X-KDE-PluginInfo-Category=Plugins
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
+Name=Preview videos
+Name[en_GB]=Preview videos
+Name[it]=Anteprima dei video
+Comment=Load a preview of youtube, vimeo videos
+Comment[en_GB]=Load a preview of youtube, vimeo videos
+Comment[it]=Carica una anteprima dei video youtube, vimeo
