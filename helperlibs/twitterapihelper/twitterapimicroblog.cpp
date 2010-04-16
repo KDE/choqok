@@ -1185,7 +1185,7 @@ void TwitterApiMicroBlog::slotBlockUser(KJob* job)
     Choqok::User *user = readUserInfoFromXml(qobject_cast<KIO::StoredTransferJob*>(job)->data());
     if( user /*&& user->userName.compare( username, Qt::CaseInsensitive )*/ ){
         emit userBlocked(theAccount, username);
-        Choqok::NotifyManager::success( i18n("Your posts are blocked for %1.", username) );
+        Choqok::NotifyManager::success( i18n("You will no longer be disturbed by %1.", username) );
     } else {
         kDebug()<<"Parse Error: "<<qobject_cast<KIO::StoredTransferJob*>(job)->data();
         emit error( theAccount, ParsingError,
