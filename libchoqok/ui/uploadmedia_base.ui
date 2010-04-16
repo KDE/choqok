@@ -7,24 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>403</width>
-    <height>154</height>
+    <height>259</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Medium to upload:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="KUrlRequester" name="imageUrl"/>
-   </item>
-   <item row="1" column="0" colspan="2">
+   <item row="5" column="0" colspan="3">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="label">
@@ -86,7 +73,7 @@
      </item>
     </layout>
    </item>
-   <item row="2" column="0" colspan="2">
+   <item row="6" column="1" colspan="2">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -99,6 +86,22 @@
      </property>
     </spacer>
    </item>
+   <item row="2" column="0" colspan="3">
+    <widget class="KImageFilePreview" name="previewer"/>
+   </item>
+   <item row="3" column="1">
+    <widget class="KUrlRequester" name="imageUrl"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Medium to upload:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -106,6 +109,11 @@
    <class>KUrlRequester</class>
    <extends>QFrame</extends>
    <header>kurlrequester.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KImageFilePreview</class>
+   <extends>QWidget</extends>
+   <header>kimagefilepreview.h</header>
   </customwidget>
   <customwidget>
    <class>KPushButton</class>
@@ -118,9 +126,6 @@
    <header>kcombobox.h</header>
   </customwidget>
  </customwidgets>
- <tabstops>
-  <tabstop>imageUrl</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>

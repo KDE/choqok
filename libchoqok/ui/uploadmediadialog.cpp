@@ -56,7 +56,10 @@ UploadMediaDialog::UploadMediaDialog(QWidget* parent)
     d->ui.setupUi(wd);
     setMainWidget(wd);
     setWindowTitle(i18n("Upload Medium"));
-
+    resize(200,300);
+    setButtonText(Ok, i18n("Upload"));
+    connect(d->ui.imageUrl, SIGNAL(textChanged(QString)),
+            this, SLOT(slotMediumChanged(QString)));
     load();
     connect(d->ui.uploaderPlugin, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
     d->ui.aboutPlugin->setIcon(KIcon("help-about"));
@@ -228,5 +231,9 @@ void Choqok::UI::UploadMediaDialog::slotMediumUploadFailed(const QString& localU
     }
 }
 
+void Choqok::UI::UploadMediaDialog::slotMediumChanged(const QString& url)
+{
+    d->ui.previewer->showPreview(KUrl(url));
+}
 
 #include "uploadmediadialog.moc"
