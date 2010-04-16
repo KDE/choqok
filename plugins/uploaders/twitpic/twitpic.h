@@ -26,18 +26,25 @@
 #define TWITPIC_H
 
 #include "plugin.h"
+#include <uploader.h>
 
+class KJob;
 class KConfigGroup;
 
-class Twitpic : public Choqok::Plugin
+class Twitpic : public Choqok::Uploader
 {
     Q_OBJECT
 public:
     Twitpic( QObject* parent, const QList< QVariant >& args );
     ~Twitpic();
 
+    virtual void upload(const QString &localUrl, const QByteArray& medium, const QByteArray& mediumType);
+
 protected slots:
-    void slotUploadImage();
+    void slotUpload( KJob *job );
+
+private:
+    QMap<KJob*, QString> mUrlMap;
 };
 
 #endif

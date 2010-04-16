@@ -6,10 +6,9 @@ ${CHOQOK_INCLUDES}
 ########### next target ###############
 
 set( choqok_twitpic_PART_SRCS
-twitpic.cpp
-twitpicuploadimage.cpp )
+twitpic.cpp)
 
-kde4_add_ui_files(choqok_twitpic_PART_SRCS twitpicuploadimage_base.ui)
+# kde4_add_ui_files(choqok_twitpic_PART_SRCS twitpicuploadimage_base.ui)
 
 kde4_add_kcfg_files(choqok_twitpic_PART_SRCS twitpicsettings.kcfgc )
 
@@ -39,4 +38,4 @@ install(TARGETS kcm_choqok_twitpic DESTINATION ${PLUGIN_INSTALL_DIR})
 install( FILES twitpicsettings.kcfg  DESTINATION ${KCFG_INSTALL_DIR})
 install( FILES choqok_twitpic_config.desktop choqok_twitpic.desktop
          DESTINATION ${SERVICES_INSTALL_DIR})
-install( FILES twitpicui.rc  DESTINATION  ${DATA_INSTALL_DIR}/choqok_twitpic )
+# install( FILES twitpicui.rc  DESTINATION  ${DATA_INSTALL_DIR}/choqok_twitpic )

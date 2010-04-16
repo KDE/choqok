@@ -1,8 +1,0 @@
-<!DOCTYPE kpartgui>
-<kpartgui name="choqok" version="4">
-    <MenuBar>
-        <Menu name="tools"><text>Tools</text>
-            <Action name="uploadToTwitpic" />
-        </Menu>
-    </MenuBar>
-</kpartgui>

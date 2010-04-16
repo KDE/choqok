@@ -22,90 +22,58 @@
 
 */
 
-#include "twitpicuploadimage.h"
-#include <KDebug>
-#include <kio/jobclasses.h>
-#include <kio/netaccess.h>
+#include "twitpic.h"
+#include <KAction>
+#include <KActionCollection>
+#include <KAboutData>
+#include <KGenericFactory>
+// #include <QDBusInterface>
+// #include <QDBusReply>
+// #include <choqokuiglobal.h>
+// #include <quickpost.h>
+#include "twitpicsettings.h"
+// #include "twitpicuploadimage.h"
 #include <KIO/Job>
-#include <kmimetype.h>
-#include <notifymanager.h>
-#include <KMessageBox>
-#include <twitpicsettings.h>
-#include <QDomDocument>
-#include <choqokuiglobal.h>
-#include <choqoktextedit.h>
+#include <kio/netaccess.h>
+// #include <KMessageBox>
+// #include <kmimetype.h>
 #include <passwordmanager.h>
+// #include <notifymanager.h>
+#include <QDomDocument>
 
-TwitpicUploadImage::TwitpicUploadImage(QWidget* parent)
-    : KDialog(parent)
+K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Twitpic > (); )
+K_EXPORT_PLUGIN( MyPluginFactory( "choqok_twitpic" ) )
+
+Twitpic::Twitpic(QObject* parent, const QList<QVariant>& )
+    :Choqok::Uploader(MyPluginFactory::componentData(), parent)
 {
-    setWindowTitle(i18n("Upload image to Twitpic"));
-    QWidget *widget = new QWidget(this);
-    ui.setupUi(widget);
-    setMainWidget(widget);
-    setAttribute(Qt::WA_DeleteOnClose);
-    if( TwitpicSettings::username().isEmpty() ) {
-        TwitpicSettings::self()->readConfig();
-        if( TwitpicSettings::username().isEmpty() ){
-            KMessageBox::sorry( Choqok::UI::Global::mainWindow(),
-                                i18n("You did not set your twitter account.\nIn order to use this plugin, you have to set a twitter account: please go to Plugin Configuration and set it.") );
-        }
-    }
-
-    kcfg_message = new Choqok::UI::TextEdit(0, widget);
-    ui.gridLayout->addWidget(kcfg_message, 2, 1);
-    connect(kcfg_message, SIGNAL(returnPressed(QString)), this, SLOT(submitImage()));
-    resize(300,200);
+    
 }
 
-TwitpicUploadImage::~TwitpicUploadImage()
+Twitpic::~Twitpic()
 {
 
 }
 
-void TwitpicUploadImage::slotButtonClicked(int button)
+void Twitpic::upload(const QString& localUrl, const QByteArray& medium, const QByteArray& mediumType)
 {
-    if(button == KDialog::Ok){
-        submitImage();
-    } else {
-        KDialog::slotButtonClicked(button);
-    }
-}
-
-void TwitpicUploadImage::submitImage()
-{
-    hide();
-    QByteArray picData;
+    KUrl picUrl(localUrl);
     QString tmp;
-    KUrl picUrl(ui.kcfg_imageUrl->url());
-    KIO::TransferJob *picJob = KIO::get( picUrl, KIO::Reload, KIO::HideProgressInfo);
-    if( !KIO::NetAccess::synchronousRun(picJob, 0, &picData) ){
-        kError()<<"Job error: " << picJob->errorString();
-        KMessageBox::detailedError(this, i18n( "Uploading medium failed: cannot read the medium file." ),
-                                               picJob->errorString() );
-                                               return;
-    }
-    if ( picData.count() == 0 ) {
-        kError() << "Cannot read the media file, please check if it exists.";
-        KMessageBox::error( this, i18n( "Uploading medium failed: cannot read the medium file." ) );
-        return;
-    }
     ///Documentation: http://twitpic.com/api.do
-    KUrl url( "http://twitpic.com/api/uploadAndPost" );
+    KUrl url( "http://twitpic.com/api/upload" );
     QByteArray newLine("\r\n");
     QString formHeader( newLine + "Content-Disposition: form-data; name=\"%1\"" );
     QByteArray header(newLine + "--AaB03x");
     QByteArray footer(newLine + "--AaB03x--");
-    QByteArray fileContentType = KMimeType::findByUrl( picUrl, 0, true )->name().toUtf8();
     QByteArray fileHeader(newLine + "Content-Disposition: file; name=\"media\"; filename=\"" +
     picUrl.fileName().toUtf8()+"\"");
     QByteArray data;
     data.append(header);
 
     data.append(fileHeader);
-    data.append(newLine + "Content-Type: " + fileContentType);
+    data.append(newLine + "Content-Type: " + mediumType);
     data.append(newLine);
-    data.append(newLine + picData);
+    data.append(newLine + medium);
 
     data.append(header);
     data.append(formHeader.arg("username").toLatin1());
@@ -117,10 +85,10 @@ void TwitpicUploadImage::submitImage()
     data.append(newLine);
     data.append(newLine + Choqok::PasswordManager::self()->readPassword(QString("twitpic_%1").arg(TwitpicSettings::username())).toUtf8());
 
-    data.append(header);
-    data.append(formHeader.arg("message").toLatin1());
-    data.append(newLine);
-    data.append(newLine + kcfg_message->toPlainText().toUtf8());
+//     data.append(header);
+//     data.append(formHeader.arg("message").toLatin1());
+//     data.append(newLine);
+//     data.append(newLine + optionalMessage);
 
     data.append(footer);
 
@@ -130,24 +98,24 @@ void TwitpicUploadImage::submitImage()
         return;
     }
     job->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=AaB03x" );
+    mUrlMap[job] = localUrl;
     connect( job, SIGNAL( result( KJob* ) ),
-             SLOT( slotTwitPicCreatePost(KJob*) ) );
+             SLOT( slotUpload(KJob*)) );
     job->start();
 }
 
-void TwitpicUploadImage::slotTwitPicCreatePost( KJob *job )
+void Twitpic::slotUpload(KJob* job)
 {
     kDebug();
+        QString localUrl = mUrlMap.take(job);
     if ( job->error() ) {
         kError() << "Job Error: " << job->errorString();
-        KMessageBox::detailedError( Choqok::UI::Global::mainWindow(),
-                                    i18n("Uploading image to Twitpic failed."),
-                                    job->errorString() );
-        show();
+        emit uploadingFailed(localUrl, job->errorString());
         return;
     } else {
         QDomDocument doc;
         QByteArray buffer = qobject_cast<KIO::StoredTransferJob*>(job)->data();
+        kDebug()<<buffer;
         doc.setContent(buffer);
         QDomElement element = doc.documentElement();
         if( element.tagName() == "rsp" ) {
@@ -157,13 +125,19 @@ void TwitpicUploadImage::slotTwitPicCreatePost( KJob *job )
             else if(element.hasAttribute("status"))
                 result = element.attribute("status" , "fail");
             else {
+                emit uploadingFailed(localUrl, i18n("Malformed response"));
                 kError()<<"Twitpic uploading failed: There isn't any \"stat\" or \"status\" attribute. Buffer:\n" << buffer;
-                show();
                 return;
             }
             if( result == "ok" ) {
-                Choqok::NotifyManager::success( i18n("Image successfully uploaded to Twitpic, and posted to Twitter.") );
-                close();
+                QDomNode node = element.firstChild();
+                while( !node.isNull() ){
+                    element = node.toElement();
+                    if(element.tagName() == "mediaurl") {
+                        emit mediumUploaded(localUrl, element.text());
+                    }
+                    node = node.nextSibling();
+                }
                 return;
             } else {
                 QDomNode node = element.firstChild();
@@ -172,23 +146,15 @@ void TwitpicUploadImage::slotTwitPicCreatePost( KJob *job )
                     if(element.tagName() == "err") {
                         QString err = element.attribute( "msg", i18n("Unrecognized result.") );
                         kDebug()<<"Server Error: "<<err;
-                        KMessageBox::detailedError( Choqok::UI::Global::mainWindow(),
-                                                    i18n("Uploading image to Twitpic failed."),
-                                                    err );
+                        emit uploadingFailed(localUrl, err);
                     }
                     node = node.nextSibling();
                 }
-                show();
                 return;
             }
         } else {
             kError()<<"There isn't any \"rsp\" tag. Buffer:\n"<<buffer;
-            KMessageBox::detailedError( Choqok::UI::Global::mainWindow(),
-                                        i18n("Uploading image to Twitpic failed."),
-                                        i18n("Unrecognized result.") );
-            show();
+            emit uploadingFailed(localUrl, i18n("Malformed response"));
         }
     }
 }
-
-#include "twitpicuploadimage.moc"
