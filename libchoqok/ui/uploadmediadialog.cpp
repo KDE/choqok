@@ -91,6 +91,7 @@ void UploadMediaDialog::slotButtonClicked(int button)
         if(d->ui.uploaderPlugin->currentIndex()==-1)
             return;
         hide();
+        Choqok::BehaviorSettings::setLastUsedUploaderPlugin(d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString());
         d->localUrl = d->ui.imageUrl->text();
         QString plugin = d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString();
         connect(Choqok::MediaManager::self(), SIGNAL(mediumUploaded(QString,QString)),

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Icon=kaboodle
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=kcm_choqok_yfrog
+X-KDE-FactoryName=kcm_choqok_yfrog
+X-KDE-ParentApp=choqok_yfrog
+X-KDE-ParentComponents=choqok_yfrog
+
+Name=YFrog
+Comment=Uploader plugin for yfrog.com service
