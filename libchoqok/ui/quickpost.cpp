@@ -235,6 +235,13 @@ void QuickPost::setText( const QString& text )
 //         d->replyToId = replyToId;
 }
 
+void QuickPost::appendText(const QString& text)
+{
+    d->txtPost->appendText(text);
+    this->show();
+}
+
+
 void QuickPost::slotCurrentAccountChanged(int index)
 {
     Q_UNUSED(index)

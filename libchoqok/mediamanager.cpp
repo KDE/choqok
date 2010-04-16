@@ -36,6 +36,9 @@
 #include "uploader.h"
 #include "pluginmanager.h"
 #include <kmimetype.h>
+#include <kio/netaccess.h>
+#include <KMessageBox>
+#include "choqokuiglobal.h"
 
 namespace Choqok
 {
@@ -165,19 +168,36 @@ void MediaManager::uploadMedium(const QString& localUrl, const QString& pluginId
         emit mediumUploadFailed(localUrl, i18n("No pluginId specified, And last used plugin is null."));
         return;
     }
-    if(!d->uploader || d->uploader->pluginId() != pId){
+    if(!d->uploader){
+        Plugin *plugin = PluginManager::self()->loadPlugin(pId);
+        d->uploader = qobject_cast<Uploader*>(plugin);
+    } else if(d->uploader->pluginId() != pId) {
         PluginManager::self()->unloadPlugin(d->uploader->pluginId());
         Plugin *plugin = PluginManager::self()->loadPlugin(pId);
         d->uploader = qobject_cast<Uploader*>(plugin);
     }
     if(!d->uploader)
         return;
+    KUrl picUrl(localUrl);
+    QByteArray picData;
+    KIO::TransferJob *picJob = KIO::get( picUrl, KIO::Reload, KIO::HideProgressInfo);
+    if( !KIO::NetAccess::synchronousRun(picJob, 0, &picData) ){
+        kError()<<"Job error: " << picJob->errorString();
+        KMessageBox::detailedError(UI::Global::mainWindow(), i18n( "Uploading medium failed: cannot read the medium file." ),
+                                               picJob->errorString() );
+                                               return;
+    }
+    if ( picData.count() == 0 ) {
+        kError() << "Cannot read the media file, please check if it exists.";
+        KMessageBox::error( UI::Global::mainWindow(), i18n( "Uploading medium failed: cannot read the medium file." ) );
+        return;
+    }
     QByteArray type = KMimeType::findByUrl( localUrl, 0, true )->name().toUtf8();
     connect( d->uploader, SIGNAL(mediumUploaded(QString,QString)),
              this, SIGNAL(mediumUploaded(QString,QString)) );
     connect( d->uploader, SIGNAL(uploadingFailed(QString,QString)),
              this, SIGNAL(mediumUploadFailed(QString,QString)) );
-    d->uploader->upload(localUrl, type);
+    d->uploader->upload(localUrl, picData, type);
 }
 
 }

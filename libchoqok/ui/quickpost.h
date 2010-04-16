@@ -50,7 +50,8 @@ public:
 public Q_SLOTS:
     void show();
     void submitPost( const QString &newStatus );
-    void setText( const QString& text/*, Choqok::Account* account = 0, const QString& replyToId = QString()*/ );
+    void setText( const QString& text );
+    void appendText( const QString &text );
 
 Q_SIGNALS:
     /**

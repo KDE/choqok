@@ -47,6 +47,8 @@ protected Q_SLOTS:
     void currentPluginChanged( int index );
     void slotAboutClicked();
     void slotConfigureClicked();
+    void slotMediumUploadFailed(const QString& localUrl, const QString& errorMessage);
+    void slotMediumUploaded(const QString& localUrl,const QString& remoteUrl);
 
 private:
     class Private;

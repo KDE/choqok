@@ -47,6 +47,7 @@ public:
     void setPlainText(const QString &text);
     void setText(const QString &text);
     void prependText(const QString &text);
+    void appendText(const QString &text);
 
 protected:
     virtual void keyPressEvent(QKeyEvent* );

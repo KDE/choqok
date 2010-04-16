@@ -39,11 +39,10 @@ class CHOQOK_EXPORT Uploader : public Plugin
 Q_OBJECT
 public:
     virtual ~Uploader();
-    /**
-    Fetch @p url file and return the shortened URL
-    */
-    virtual void upload( const QString &localUrl, const QByteArray &mediumType,
-                            const QString &optionalMessage = QString() ) = 0;
+
+    /*virtual void upload( const QString &localUrl, const QByteArray &mediumType,
+                            const QString &optionalMessage = QString() )*/;
+    virtual void upload( const QString &localUrl, const QByteArray &medium, const QByteArray &mediumType) = 0;
 
 signals:
     void mediumUploaded( const QString &localUrl, const QString &remoteUrl );

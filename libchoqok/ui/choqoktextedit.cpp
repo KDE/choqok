@@ -180,6 +180,13 @@ void TextEdit::prependText(const QString& text)
     setPlainText(tmp);
 }
 
+void TextEdit::appendText(const QString& text)
+{
+    QString tmp = toPlainText();
+    tmp.append(' '+text);
+    setPlainText(tmp);
+}
+
 void TextEdit::settingsChanged()
 {
     setCheckSpellingEnabled(BehaviorSettings::enableSpellChecker());

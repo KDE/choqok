@@ -33,6 +33,10 @@
 #include <KTabWidget>
 #include <KCModuleInfo>
 #include <KCModuleProxy>
+#include <mediamanager.h>
+#include <choqokuiglobal.h>
+#include "quickpost.h"
+#include <KMessageBox>
 
 using namespace Choqok::UI;
 
@@ -42,6 +46,7 @@ public:
     Ui::UploadMediaBase ui;
     QMap <QString, KPluginInfo> availablePlugins;
     QList<KCModuleProxy*> moduleProxyList;
+    QString localUrl;
 };
 
 UploadMediaDialog::UploadMediaDialog(QWidget* parent)
@@ -52,13 +57,13 @@ UploadMediaDialog::UploadMediaDialog(QWidget* parent)
     setMainWidget(wd);
     setWindowTitle(i18n("Upload Medium"));
 
+    load();
     connect(d->ui.uploaderPlugin, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
     d->ui.aboutPlugin->setIcon(KIcon("help-about"));
     d->ui.configPlugin->setIcon(KIcon("configure"));
     connect( d->ui.aboutPlugin, SIGNAL(clicked(bool)), SLOT(slotAboutClicked()) );
     connect( d->ui.configPlugin, SIGNAL(clicked(bool)), SLOT(slotConfigureClicked()) );
 
-    load();
 }
 
 UploadMediaDialog::~UploadMediaDialog()
@@ -68,19 +73,31 @@ UploadMediaDialog::~UploadMediaDialog()
 
 void UploadMediaDialog::load()
 {
-    QList<KPluginInfo> plugins = Choqok::PluginManager::self()->availablePlugins("Uploader");
+    QList<KPluginInfo> plugins = Choqok::PluginManager::self()->availablePlugins("Uploaders");
+    kDebug()<<plugins.count();
 
-    foreach(const KPluginInfo& plugin, d->availablePlugins){
+    foreach(const KPluginInfo& plugin, plugins){
         d->ui.uploaderPlugin->addItem( KIcon(plugin.icon()), plugin.name(), plugin.pluginName());
         d->availablePlugins.insert(plugin.pluginName(), plugin);
     }
     d->ui.uploaderPlugin->setCurrentIndex( d->ui.uploaderPlugin->findData( Choqok::BehaviorSettings::lastUsedUploaderPlugin() ) );
+    if(d->ui.uploaderPlugin->currentIndex()==-1 && d->ui.uploaderPlugin->count()>0)
+        d->ui.uploaderPlugin->setCurrentIndex(0);
 }
 
 void UploadMediaDialog::slotButtonClicked(int button)
 {
     if(button == KDialog::Ok){
-        
+        if(d->ui.uploaderPlugin->currentIndex()==-1)
+            return;
+        hide();
+        d->localUrl = d->ui.imageUrl->text();
+        QString plugin = d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString();
+        connect(Choqok::MediaManager::self(), SIGNAL(mediumUploaded(QString,QString)),
+                SLOT(slotMediumUploaded(QString,QString)));
+        connect(Choqok::MediaManager::self(), SIGNAL(mediumUploadFailed(QString,QString)),
+                SLOT(slotMediumUploadFailed(QString,QString)));
+        Choqok::MediaManager::self()->uploadMedium(d->localUrl, plugin);
     } else {
         KDialog::slotButtonClicked(button);
     }
@@ -90,16 +107,13 @@ void Choqok::UI::UploadMediaDialog::currentPluginChanged(int index)
 {
     QString key = d->ui.uploaderPlugin->itemData(index).toString();
 //     kDebug()<<key;
-    if( !key.isEmpty() && key != "none" && d->availablePlugins.value(key).kcmServices().count() > 0 )
-        d->ui.configPlugin->setEnabled(true);
-    else
-        d->ui.configPlugin->setEnabled(false);
+    d->ui.configPlugin->setEnabled(!key.isEmpty() && d->availablePlugins.value(key).kcmServices().count() > 0);
 }
 
 void Choqok::UI::UploadMediaDialog::slotAboutClicked()
 {
     const QString shorten = d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString();
-    if(shorten == "none")
+    if(shorten.isEmpty())
         return;
     KPluginInfo info = d->availablePlugins.value(shorten);
 
@@ -195,5 +209,22 @@ void Choqok::UI::UploadMediaDialog::slotConfigureClicked()
         d->moduleProxyList.clear();
     }
 }
+
+void Choqok::UI::UploadMediaDialog::slotMediumUploaded(const QString& localUrl, const QString& remoteUrl)
+{
+    if(d->localUrl == localUrl){
+        Global::quickPostWidget()->setText(remoteUrl);
+        accept();
+    }
+}
+
+void Choqok::UI::UploadMediaDialog::slotMediumUploadFailed(const QString& localUrl, const QString& errorMessage)
+{
+    if(d->localUrl == localUrl){
+        KMessageBox::sorry(Global::mainWindow(), errorMessage, i18n("Medium uploading failed"));
+        show();
+    }
+}
+
 
 #include "uploadmediadialog.moc"
