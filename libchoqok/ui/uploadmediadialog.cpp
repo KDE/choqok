@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2008-2009 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    Copyright (C) 2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -83,6 +83,7 @@ void UploadMediaDialog::load()
     d->ui.uploaderPlugin->setCurrentIndex( d->ui.uploaderPlugin->findData( Choqok::BehaviorSettings::lastUsedUploaderPlugin() ) );
     if(d->ui.uploaderPlugin->currentIndex()==-1 && d->ui.uploaderPlugin->count()>0)
         d->ui.uploaderPlugin->setCurrentIndex(0);
+    d->ui.imageUrl->button()->click();
 }
 
 void UploadMediaDialog::slotButtonClicked(int button)
@@ -214,7 +215,7 @@ void Choqok::UI::UploadMediaDialog::slotConfigureClicked()
 void Choqok::UI::UploadMediaDialog::slotMediumUploaded(const QString& localUrl, const QString& remoteUrl)
 {
     if(d->localUrl == localUrl){
-        Global::quickPostWidget()->setText(remoteUrl);
+        Global::quickPostWidget()->appendText(remoteUrl);
         accept();
     }
 }
@@ -222,7 +223,7 @@ void Choqok::UI::UploadMediaDialog::slotMediumUploaded(const QString& localUrl, 
 void Choqok::UI::UploadMediaDialog::slotMediumUploadFailed(const QString& localUrl, const QString& errorMessage)
 {
     if(d->localUrl == localUrl){
-        KMessageBox::sorry(Global::mainWindow(), errorMessage, i18n("Medium uploading failed"));
+        KMessageBox::detailedSorry(Global::mainWindow(), i18n("Medium uploading failed."), errorMessage );
         show();
     }
 }
