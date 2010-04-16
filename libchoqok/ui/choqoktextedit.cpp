@@ -183,7 +183,10 @@ void TextEdit::prependText(const QString& text)
 void TextEdit::appendText(const QString& text)
 {
     QString tmp = toPlainText();
-    tmp.append(' '+text);
+    if(tmp.isEmpty())
+        tmp = text + ' ';
+    else
+        tmp.append(' '+text);
     setPlainText(tmp);
 }
 
