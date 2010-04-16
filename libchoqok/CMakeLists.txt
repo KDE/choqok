@@ -6,6 +6,7 @@ ${CHOQOK_INCLUDES}
 set(choqok_LIB_SRCS
 plugin.cpp
 shortener.cpp
+uploader.cpp
 account.cpp
 microblog.cpp
 pluginmanager.cpp
@@ -25,14 +26,17 @@ ui/choqoktextedit.cpp
 ui/composerwidget.cpp
 ui/quickpost.cpp
 ui/mainwindow.cpp
+ui/uploadmediadialog.cpp
 # filtermanager.cpp
 # filter.cpp
 )
+
 kde4_add_kcfg_files(choqok_LIB_SRCS
 choqokbehaviorsettings.kcfgc
 choqokappearancesettings.kcfgc
 )
-# kde4_add_ui_files(choqok_LIB_SRCS ui/timelinewidget_base.ui )
+
+kde4_add_ui_files(choqok_LIB_SRCS ui/uploadmedia_base.ui)
 
 kde4_add_library(choqok SHARED ${choqok_LIB_SRCS})
 
@@ -53,7 +57,8 @@ install( FILES choqokbehaviorsettings.kcfg choqokappearancesettings.kcfg
          DESTINATION ${KCFG_INSTALL_DIR})
 
 install(TARGETS choqok ${INSTALL_TARGETS_DEFAULT_ARGS})
-install( FILES choqokplugin.desktop choqokshortenerplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
+install( FILES choqokplugin.desktop choqokshortenerplugin.desktop
+               choqokuploaderplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 
 install( FILES
     ${CMAKE_CURRENT_BINARY_DIR}/choqokbehaviorsettings.h
@@ -71,6 +76,7 @@ install( FILES
     plugin.h
     pluginmanager.h
     shortener.h
+    uploader.h
     shortenmanager.h
     choqoktools.h
     ui/choqoktextedit.h
@@ -81,4 +87,5 @@ install( FILES
     ui/postwidget.h
     ui/quickpost.h
     ui/timelinewidget.h
+    ui/uploadmediadialog.h
 DESTINATION ${INCLUDE_INSTALL_DIR}/choqok COMPONENT Devel)

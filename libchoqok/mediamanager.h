@@ -78,6 +78,14 @@ public:
 
     static QPixmap convertToGrayScale( const QPixmap &pic );
 
+    /**
+    Upload medium at @p localUrl to @p pluginId service or to last used service when @p pluginId is empty.
+
+    @see mediumUploaded()
+    @see mediumUploadFailed()
+    */
+    void uploadMedium( const QString &localUrl, const QString &pluginId = QString() );
+
 public Q_SLOTS:
     /**
      * @brief Clear image cache
@@ -87,6 +95,9 @@ public Q_SLOTS:
 Q_SIGNALS:
     void fetchError( const QString &remoteUrl, const QString &errMsg );
     void imageFetched( const QString &remoteUrl, const QPixmap &pixmap );
+
+    void mediumUploaded( const QString &localUrl, const QString &remoteUrl );
+    void mediumUploadFailed( const QString &localUrl, const QString &errorMessage );
 
 protected Q_SLOTS:
     void slotImageFetched( KJob *job );

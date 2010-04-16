@@ -32,6 +32,10 @@
 #include <KEmoticons>
 #include <KEmoticonsTheme>
 #include <KPixmapCache>
+#include <choqokbehaviorsettings.h>
+#include "uploader.h"
+#include "pluginmanager.h"
+#include <kmimetype.h>
 
 namespace Choqok
 {
@@ -40,12 +44,13 @@ class MediaManager::Private
 {
 public:
     Private()
-    :emoticons(KEmoticons().theme()),cache("choqok-userimages")
+    :emoticons(KEmoticons().theme()),cache("choqok-userimages"), uploader(0)
     {}
     KEmoticonsTheme emoticons;
     KPixmapCache cache;
     QHash<KJob*, QString> queue;
     QPixmap defaultImage;
+    Uploader *uploader;
 };
 
 MediaManager::MediaManager()
@@ -149,6 +154,30 @@ QPixmap MediaManager::convertToGrayScale(const QPixmap& pic)
         }
     }
     return QPixmap::fromImage( result );
+}
+
+void MediaManager::uploadMedium(const QString& localUrl, const QString& pluginId)
+{
+    QString pId = pluginId;
+    if(pId.isEmpty())
+        pId = Choqok::BehaviorSettings::lastUsedUploaderPlugin();
+    if(pId.isEmpty()){
+        emit mediumUploadFailed(localUrl, i18n("No pluginId specified, And last used plugin is null."));
+        return;
+    }
+    if(!d->uploader || d->uploader->pluginId() != pId){
+        PluginManager::self()->unloadPlugin(d->uploader->pluginId());
+        Plugin *plugin = PluginManager::self()->loadPlugin(pId);
+        d->uploader = qobject_cast<Uploader*>(plugin);
+    }
+    if(!d->uploader)
+        return;
+    QByteArray type = KMimeType::findByUrl( localUrl, 0, true )->name().toUtf8();
+    connect( d->uploader, SIGNAL(mediumUploaded(QString,QString)),
+             this, SIGNAL(mediumUploaded(QString,QString)) );
+    connect( d->uploader, SIGNAL(uploadingFailed(QString,QString)),
+             this, SIGNAL(mediumUploadFailed(QString,QString)) );
+    d->uploader->upload(localUrl, type);
 }
 
 }

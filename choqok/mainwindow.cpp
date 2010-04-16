@@ -53,6 +53,7 @@
 #include <kstandarddirs.h>
 #include <KSplashScreen>
 #include <KMenu>
+#include <uploadmediadialog.h>
 
 MainWindow::MainWindow()
     : Choqok::UI::MainWindow(), quickWidget(0), s_settingsDialog(0), m_splash(0), microblogCounter(0)
@@ -234,6 +235,10 @@ void MainWindow::setupActions()
     clearAvatarCache->setStatusTip(tip);
     connect( clearAvatarCache, SIGNAL( triggered() ),
              Choqok::MediaManager::self(), SLOT(clearImageCache()) );
+
+    KAction *uploadMedium = new KAction( KIcon("arrow-up"), i18n( "Upload Medium" ), this );
+    actionCollection()->addAction( QLatin1String( "choqok_upload_medium" ), uploadMedium );
+    connect( uploadMedium, SIGNAL( triggered(bool)), this, SLOT(slotUploadMedium()) );
 
     ///SysTray Actions:
     sysIcon->contextMenu()->addAction( newTwit );
@@ -549,6 +554,12 @@ void MainWindow::oneMicroblogLoaded()
 void MainWindow::slotUpdateTimelines()
 {
     showStatusMessage(i18n("Loading timelines..."));
+}
+
+void MainWindow::slotUploadMedium()
+{
+    QPointer<Choqok::UI::UploadMediaDialog> dlg = new Choqok::UI::UploadMediaDialog(this);
+    dlg->exec();
 }
 
 #include "mainwindow.moc"

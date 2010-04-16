@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=ServiceType
+X-KDE-ServiceType=Choqok/Uploader
+X-KDE-Derived=Choqok/Plugin
+Comment=Choqok Uploader Plugin

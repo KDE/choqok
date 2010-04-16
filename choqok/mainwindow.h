@@ -81,6 +81,7 @@ private slots:
     void toggleMainWindow();
     void slotMarkAllAsRead();
     void slotUpdateTimelines();
+    void slotUploadMedium();
 
     void slotAppearanceConfigChanged();
     void slotBehaviorConfigChanged();

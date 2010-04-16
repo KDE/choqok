@@ -59,6 +59,7 @@
 			<default>false</default>
         </entry>
         <entry name="customRT" type="String" />
+        <entry name="lastUsedUploaderPlugin" type="String" />
     </group>
 
     <group name="QuickPost">
