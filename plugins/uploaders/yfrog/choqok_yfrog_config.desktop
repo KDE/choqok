@@ -9,4 +9,6 @@ X-KDE-ParentApp=choqok_yfrog
 X-KDE-ParentComponents=choqok_yfrog
 
 Name=YFrog
+Name[x-test]=xxYFrogxx
 Comment=Uploader plugin for yfrog.com service
+Comment[x-test]=xxUploader plugin for yfrog.com servicexx
