@@ -9,6 +9,12 @@ X-KDE-ParentApp=choqok_yfrog
 X-KDE-ParentComponents=choqok_yfrog
 
 Name=YFrog
+Name[da]=YFrog
+Name[sv]=Yfrog
+Name[uk]=YFrog
 Name[x-test]=xxYFrogxx
 Comment=Uploader plugin for yfrog.com service
+Comment[da]=Uploader-plugin til tjenesten yfrog.com
+Comment[sv]=Uppladdningsinsticksprogram för tjänsten yfrog.com
+Comment[uk]=Додаток вивантаження для служби yfrog.com
 Comment[x-test]=xxUploader plugin for yfrog.com servicexx
