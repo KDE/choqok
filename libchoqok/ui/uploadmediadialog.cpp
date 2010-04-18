@@ -66,6 +66,10 @@ UploadMediaDialog::UploadMediaDialog(QWidget* parent)
     d->ui.configPlugin->setIcon(KIcon("configure"));
     connect( d->ui.aboutPlugin, SIGNAL(clicked(bool)), SLOT(slotAboutClicked()) );
     connect( d->ui.configPlugin, SIGNAL(clicked(bool)), SLOT(slotConfigureClicked()) );
+    connect(Choqok::MediaManager::self(), SIGNAL(mediumUploaded(QString,QString)),
+            SLOT(slotMediumUploaded(QString,QString)));
+    connect(Choqok::MediaManager::self(), SIGNAL(mediumUploadFailed(QString,QString)),
+            SLOT(slotMediumUploadFailed(QString,QString)));
 
 }
 
@@ -98,10 +102,6 @@ void UploadMediaDialog::slotButtonClicked(int button)
         Choqok::BehaviorSettings::setLastUsedUploaderPlugin(d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString());
         d->localUrl = d->ui.imageUrl->text();
         QString plugin = d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString();
-        connect(Choqok::MediaManager::self(), SIGNAL(mediumUploaded(QString,QString)),
-                SLOT(slotMediumUploaded(QString,QString)));
-        connect(Choqok::MediaManager::self(), SIGNAL(mediumUploadFailed(QString,QString)),
-                SLOT(slotMediumUploadFailed(QString,QString)));
         Choqok::MediaManager::self()->uploadMedium(d->localUrl, plugin);
     } else {
         KDialog::slotButtonClicked(button);
@@ -218,8 +218,9 @@ void Choqok::UI::UploadMediaDialog::slotConfigureClicked()
 void Choqok::UI::UploadMediaDialog::slotMediumUploaded(const QString& localUrl, const QString& remoteUrl)
 {
     if(d->localUrl == localUrl){
+        kDebug();
         Global::quickPostWidget()->appendText(remoteUrl);
-        accept();
+        close();
     }
 }
 

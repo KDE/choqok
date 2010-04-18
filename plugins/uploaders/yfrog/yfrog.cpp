@@ -115,7 +115,7 @@ void YFrog::slotUpload(KJob* job)
     } else {
         QDomDocument doc;
         QByteArray buffer = qobject_cast<KIO::StoredTransferJob*>(job)->data();
-        kDebug()<<buffer;
+//         kDebug()<<buffer;
         doc.setContent(buffer);
         QDomElement element = doc.documentElement();
         if( element.tagName() == "rsp" ) {

@@ -115,7 +115,7 @@ void Twitpic::slotUpload(KJob* job)
     } else {
         QDomDocument doc;
         QByteArray buffer = qobject_cast<KIO::StoredTransferJob*>(job)->data();
-        kDebug()<<buffer;
+//         kDebug()<<buffer;
         doc.setContent(buffer);
         QDomElement element = doc.documentElement();
         if( element.tagName() == "rsp" ) {
@@ -145,7 +145,7 @@ void Twitpic::slotUpload(KJob* job)
                     element = node.toElement();
                     if(element.tagName() == "err") {
                         QString err = element.attribute( "msg", i18n("Unrecognized result.") );
-                        kDebug()<<"Server Error: "<<err;
+                        kDebug()<<"Server Error: "<<err<<" Buffer: "<<buffer;
                         emit uploadingFailed(localUrl, err);
                     }
                     node = node.nextSibling();
