@@ -27,6 +27,7 @@
 #include <QObject>
 #include "choqok_export.h"
 #include <QPixmap>
+#include <KUrl>
 
 namespace KIO
 {
@@ -84,7 +85,7 @@ public:
     @see mediumUploaded()
     @see mediumUploadFailed()
     */
-    void uploadMedium( const QString &localUrl, const QString &pluginId = QString() );
+    void uploadMedium( const KUrl& localUrl, const QString& pluginId = QString() );
 
 public Q_SLOTS:
     /**
@@ -96,8 +97,8 @@ Q_SIGNALS:
     void fetchError( const QString &remoteUrl, const QString &errMsg );
     void imageFetched( const QString &remoteUrl, const QPixmap &pixmap );
 
-    void mediumUploaded( const QString &localUrl, const QString &remoteUrl );
-    void mediumUploadFailed( const QString &localUrl, const QString &errorMessage );
+    void mediumUploaded( const KUrl &localUrl, const QString &remoteUrl );
+    void mediumUploadFailed( const KUrl &localUrl, const QString &errorMessage );
 
 protected Q_SLOTS:
     void slotImageFetched( KJob *job );

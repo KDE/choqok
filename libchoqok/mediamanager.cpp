@@ -159,7 +159,7 @@ QPixmap MediaManager::convertToGrayScale(const QPixmap& pic)
     return QPixmap::fromImage( result );
 }
 
-void MediaManager::uploadMedium(const QString& localUrl, const QString& pluginId)
+void MediaManager::uploadMedium(const KUrl& localUrl, const QString& pluginId)
 {
     QString pId = pluginId;
     if(pId.isEmpty())
@@ -178,9 +178,8 @@ void MediaManager::uploadMedium(const QString& localUrl, const QString& pluginId
     }
     if(!d->uploader)
         return;
-    KUrl picUrl(localUrl);
     QByteArray picData;
-    KIO::TransferJob *picJob = KIO::get( picUrl, KIO::Reload, KIO::HideProgressInfo);
+    KIO::TransferJob *picJob = KIO::get( localUrl, KIO::Reload, KIO::HideProgressInfo);
     if( !KIO::NetAccess::synchronousRun(picJob, 0, &picData) ){
         kError()<<"Job error: " << picJob->errorString();
         KMessageBox::detailedError(UI::Global::mainWindow(), i18n( "Uploading medium failed: cannot read the medium file." ),

@@ -26,6 +26,7 @@
 #define CHOQOK_UPLOADER_H
 
 #include "plugin.h"
+#include <KUrl>
 
 namespace Choqok {
 
@@ -42,11 +43,11 @@ public:
 
     /*virtual void upload( const QString &localUrl, const QByteArray &mediumType,
                             const QString &optionalMessage = QString() )*/;
-    virtual void upload( const QString &localUrl, const QByteArray &medium, const QByteArray &mediumType) = 0;
+    virtual void upload( const KUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType) = 0;
 
 signals:
-    void mediumUploaded( const QString &localUrl, const QString &remoteUrl );
-    void uploadingFailed( const QString &localUrl, const QString &errorMessage );
+    void mediumUploaded( const KUrl &localUrl, const QString &remoteUrl );
+    void uploadingFailed( const KUrl &localUrl, const QString &errorMessage );
 
 protected:
     Uploader( const KComponentData &instance, QObject *parent );

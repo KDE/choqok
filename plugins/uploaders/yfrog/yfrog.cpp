@@ -55,9 +55,8 @@ YFrog::~YFrog()
 
 }
 
-void YFrog::upload(const QString& localUrl, const QByteArray& medium, const QByteArray& mediumType)
+void YFrog::upload(const KUrl& localUrl, const QByteArray& medium, const QByteArray& mediumType)
 {
-    KUrl picUrl(localUrl);
     QString tmp;
     ///Documentation: http://yfrog.com/api.do
     KUrl url( "http://yfrog.com/api/upload" );
@@ -66,7 +65,7 @@ void YFrog::upload(const QString& localUrl, const QByteArray& medium, const QByt
     QByteArray header(newLine + "--AaB03x");
     QByteArray footer(newLine + "--AaB03x--");
     QByteArray fileHeader(newLine + "Content-Disposition: file; name=\"media\"; filename=\"" +
-    picUrl.fileName().toUtf8()+"\"");
+    localUrl.fileName().toUtf8()+"\"");
     QByteArray data;
     data.append(header);
 
@@ -107,7 +106,7 @@ void YFrog::upload(const QString& localUrl, const QByteArray& medium, const QByt
 void YFrog::slotUpload(KJob* job)
 {
     kDebug();
-        QString localUrl = mUrlMap.take(job);
+    KUrl localUrl = mUrlMap.take(job);
     if ( job->error() ) {
         kError() << "Job Error: " << job->errorString();
         emit uploadingFailed(localUrl, job->errorString());

@@ -262,7 +262,7 @@ void PostWidget::setHeight()
 
 void PostWidget::closeEvent(QCloseEvent* event)
 {
-    kDebug();
+//     kDebug();
     emit aboutClosing(currentPost().postId, this);
     event->accept();
 }

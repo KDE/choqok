@@ -38,13 +38,13 @@ public:
     Twitpic( QObject* parent, const QList< QVariant >& args );
     ~Twitpic();
 
-    virtual void upload(const QString &localUrl, const QByteArray& medium, const QByteArray& mediumType);
+    virtual void upload(const KUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType);
 
 protected slots:
     void slotUpload( KJob *job );
 
 private:
-    QMap<KJob*, QString> mUrlMap;
+    QMap<KJob*, KUrl> mUrlMap;
 };
 
 #endif
