@@ -47,6 +47,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KMessageBox>
 #include <kmimetype.h>
 #include "laconicacomposerwidget.h"
+#include <mediamanager.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < LaconicaMicroBlog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_laconica" ) )
@@ -163,43 +164,22 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Ch
         ///Documentation: http://identi.ca/notice/17779990
         KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
         url.addPath ( "/statuses/update.xml" );
-        QByteArray newLine("\r\n");
-        QString formHeader( newLine + "Content-Disposition: form-data; name=\"%1\"" );
-        QByteArray header(newLine + "--AaB03x");
-        QByteArray footer(newLine + "--AaB03x--");
         QByteArray fileContentType = KMimeType::findByUrl( picUrl, 0, true )->name().toUtf8();
-        QByteArray fileHeader(newLine + "Content-Disposition: file; name=\"media\"; filename=\"" +
-        picUrl.fileName().toUtf8()+"\"");
 
-        QByteArray data;
-//         if ( !post->replyToPostId.isEmpty() && post->content.indexOf ( '@' ) > -1 ) {
-//             data += "&in_reply_to_status_id=";
-//             data += post->replyToPostId.toLocal8Bit();
-//         }
-//         data += "&source=choqok";
+        QMap<QString, QByteArray> formdata;
+        formdata["status"] = post->content.toUtf8();
+        formdata["in_reply_to_status_id"] = post->replyToPostId.toLatin1();
+        formdata["source"] = "choqok";
 
-        data.append(header);
-        data.append(fileHeader);
-        data.append(newLine + "Content-Type: " + fileContentType);
-        data.append(newLine);
-        data.append(newLine + picData);
+        QMap<QString, QByteArray> mediafile;
+        mediafile["name"] = "media";
+        mediafile["filename"] = picUrl.fileName().toUtf8();
+        mediafile["mediumType"] = fileContentType;
+        mediafile["medium"] = picData;
+        QList< QMap<QString, QByteArray> > listMediafiles;
+        listMediafiles.append(mediafile);
 
-        data.append(header);
-        data.append(formHeader.arg("status").toLatin1());
-        data.append(newLine);
-        data.append(newLine + post->content.toUtf8() );
-
-        data.append(header);
-        data.append(formHeader.arg("in_reply_to_status_id").toLatin1());
-        data.append(newLine);
-        data.append(newLine + post->replyToPostId.toLatin1());
-
-        data.append(header);
-        data.append(formHeader.arg("source").toLatin1());
-        data.append(newLine);
-        data.append(newLine + "choqok");
-
-        data.append(footer);
+        QByteArray data = Choqok::MediaManager::createMultipartFormData(formdata, listMediafiles);
 
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
         if ( !job ) {

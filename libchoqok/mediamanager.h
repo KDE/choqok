@@ -28,6 +28,7 @@
 #include "choqok_export.h"
 #include <QPixmap>
 #include <KUrl>
+#include <QMap>
 
 namespace KIO
 {
@@ -86,6 +87,24 @@ public:
     @see mediumUploadFailed()
     */
     void uploadMedium( const KUrl& localUrl, const QString& pluginId = QString() );
+
+    /**
+    Create and return a byte array containing a multipart/form-data to send with HTTP POST request
+
+    Boundary is AaB03x
+
+    @param formdata are the "form-data" parts of data.
+                    This map knows as a list of name/value pairs
+    @param mediaFiles are media files attached to form, each file stored in one QMap in list
+
+    @note media file maps should contain these keys:
+        name: The name of entry
+        filename: the file name on server
+        medium: contain the medium data loaded from disk!
+        mediumType: type of medium file
+    */
+    static QByteArray createMultipartFormData(const QMap<QString, QByteArray> &formdata,
+                                       const QList< QMap<QString, QByteArray> > &mediaFiles);
 
 public Q_SLOTS:
     /**

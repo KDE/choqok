@@ -40,6 +40,7 @@
 #include <passwordmanager.h>
 // #include <notifymanager.h>
 #include <QDomDocument>
+#include <mediamanager.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < YFrog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_yfrog" ) )
@@ -60,36 +61,20 @@ void YFrog::upload(const KUrl& localUrl, const QByteArray& medium, const QByteAr
     QString tmp;
     ///Documentation: http://yfrog.com/api.do
     KUrl url( "http://yfrog.com/api/upload" );
-    QByteArray newLine("\r\n");
-    QString formHeader( newLine + "Content-Disposition: form-data; name=\"%1\"" );
-    QByteArray header(newLine + "--AaB03x");
-    QByteArray footer(newLine + "--AaB03x--");
-    QByteArray fileHeader(newLine + "Content-Disposition: file; name=\"media\"; filename=\"" +
-    localUrl.fileName().toUtf8()+"\"");
-    QByteArray data;
-    data.append(header);
 
-    data.append(fileHeader);
-    data.append(newLine + "Content-Type: " + mediumType);
-    data.append(newLine);
-    data.append(newLine + medium);
+    QMap<QString, QByteArray> formdata;
+    formdata["username"] = YFrogSettings::username().toLatin1();
+    formdata["password"] = Choqok::PasswordManager::self()->readPassword( QString("yfrog_%1").arg(YFrogSettings::username()) ).toUtf8();
 
-    data.append(header);
-    data.append(formHeader.arg("username").toLatin1());
-    data.append(newLine);
-    data.append(newLine + YFrogSettings::username().toLatin1());
+    QMap<QString, QByteArray> mediafile;
+    mediafile["name"] = "media";
+    mediafile["filename"] = localUrl.fileName().toUtf8();
+    mediafile["mediumType"] = mediumType;
+    mediafile["medium"] = medium;
+    QList< QMap<QString, QByteArray> > listMediafiles;
+    listMediafiles.append(mediafile);
 
-    data.append(header);
-    data.append(formHeader.arg("password").toLatin1());
-    data.append(newLine);
-    data.append(newLine + Choqok::PasswordManager::self()->readPassword(QString("yfrog_%1").arg(YFrogSettings::username())).toUtf8());
-
-//     data.append(header);
-//     data.append(formHeader.arg("message").toLatin1());
-//     data.append(newLine);
-//     data.append(newLine + optionalMessage);
-
-    data.append(footer);
+    QByteArray data = Choqok::MediaManager::createMultipartFormData(formdata, listMediafiles);
 
     KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
     if ( !job ) {
