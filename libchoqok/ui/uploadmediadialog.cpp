@@ -37,6 +37,7 @@
 #include <choqokuiglobal.h>
 #include "quickpost.h"
 #include <KMessageBox>
+#include <QProgressBar>
 
 using namespace Choqok::UI;
 
@@ -47,6 +48,7 @@ public:
     QMap <QString, KPluginInfo> availablePlugins;
     QList<KCModuleProxy*> moduleProxyList;
     QString localUrl;
+    QPointer<QProgressBar> progress;
 };
 
 UploadMediaDialog::UploadMediaDialog(QWidget* parent)
@@ -55,8 +57,9 @@ UploadMediaDialog::UploadMediaDialog(QWidget* parent)
     QWidget *wd = new QWidget(parent);
     d->ui.setupUi(wd);
     setMainWidget(wd);
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(i18n("Upload Medium"));
-    resize(200,300);
+    resize(400,300);
     setButtonText(Ok, i18n("Upload"));
     connect(d->ui.imageUrl, SIGNAL(textChanged(QString)),
             this, SLOT(slotMediumChanged(QString)));
@@ -98,7 +101,12 @@ void UploadMediaDialog::slotButtonClicked(int button)
     if(button == KDialog::Ok){
         if(d->ui.uploaderPlugin->currentIndex()==-1)
             return;
-        hide();
+        if(d->progress)
+            d->progress->deleteLater();
+        d->progress = new QProgressBar(this);
+        d->progress->setRange(0, 0);
+        d->progress->setFormat(i18n("Uploading..."));
+        mainWidget()->layout()->addWidget(d->progress);
         Choqok::BehaviorSettings::setLastUsedUploaderPlugin(d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString());
         d->localUrl = d->ui.imageUrl->text();
         QString plugin = d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString();

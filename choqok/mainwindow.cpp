@@ -558,7 +558,7 @@ void MainWindow::slotUpdateTimelines()
 void MainWindow::slotUploadMedium()
 {
     QPointer<Choqok::UI::UploadMediaDialog> dlg = new Choqok::UI::UploadMediaDialog(this);
-    dlg->exec();
+    dlg->show();
 }
 
 #include "mainwindow.moc"
