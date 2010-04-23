@@ -547,7 +547,14 @@ void TwitterApiMicroBlog::slotCreateFavorite ( KJob *job )
         kDebug() << "Job Error: " << job->errorString();
         emit error ( theAccount, CommunicationError, i18n( "Favorite creation failed. %1", job->errorString() ) );
     } else {
-        emit favoriteCreated ( theAccount, postId );
+        KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
+        QString err = checkXmlForError(stJob->data());
+        if( !err.isEmpty() ){
+            emit error(theAccount, ServerError, err, Critical);
+            return;
+        } else {
+            emit favoriteCreated ( theAccount, postId );
+        }
     }
 }
 
@@ -583,7 +590,14 @@ void TwitterApiMicroBlog::slotRemoveFavorite ( KJob *job )
         kDebug() << "Job Error: " << job->errorString();
         emit error ( theAccount, CommunicationError, i18n("Removing the favorite failed. %1", job->errorString() ) );
     } else {
-        emit favoriteRemoved ( theAccount, id );
+        KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
+        QString err = checkXmlForError(stJob->data());
+        if( !err.isEmpty() ){
+            emit error(theAccount, ServerError, err, Critical);
+            return;
+        } else {
+            emit favoriteRemoved ( theAccount, id );
+        }
     }
 }
 
@@ -952,9 +966,15 @@ QStringList TwitterApiMicroBlog::readUsersScreenNameFromXml( Choqok::Account* th
     QDomElement root = document.documentElement();
 
     if ( root.tagName() != "users" ) {
-        QString err = i18n( "Retrieving the friends list failed. The data returned from the server is corrupted." );
-        kDebug() << "there's no users tag in XML\t the XML is: \n" << buffer;
-        emit error(theAccount, ParsingError, err, Critical);
+        QString err = checkXmlForError(buffer);
+        if(!err.isEmpty()){
+            emit error(theAccount, ServerError, err, Critical);
+        } else {
+            err = i18n( "Retrieving the friends list failed. The data returned from the server is corrupted." );
+            kDebug() << "there's no users tag in XML\t the XML is: \n" << buffer;
+            emit error(theAccount, ParsingError, err, Critical);
+            list<<QString(' ');
+        }
         return list;
     }
     QDomNode node = root.firstChild();
