@@ -34,7 +34,8 @@ public:
 TwitterAccount::TwitterAccount(TwitterMicroBlog* parent, const QString &alias)
     : TwitterApiAccount(parent, alias), d(new Private)
 {
-    setHost("twitter.com");
+    setHost("api.twitter.com");
+    setApi("1");
 }
 
 TwitterAccount::~TwitterAccount()
