@@ -146,6 +146,7 @@ void PostWidget::setupUi()
     setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
     _mainWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     _mainWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    _mainWidget->setFocusProxy(this);
 
     d->buttonsLayout = new QGridLayout(_mainWidget);
     d->buttonsLayout->setRowStretch(0,100);
