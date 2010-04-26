@@ -30,6 +30,7 @@
 #include "postwidget.h"
 #include "notifymanager.h"
 #include <mediamanager.h>
+#include <textbrowser.h>
 
 
 
@@ -237,7 +238,7 @@ void VideoPreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pix
     KUrl imgU(remoteUrl);
     imgU.setScheme("img");
     QString imgUrl = imgU.prettyUrl();
-    postToParse->document()->addResource(QTextDocument::ImageResource, imgUrl, pixmap);
+    postToParse->mainWidget()->document()->addResource(QTextDocument::ImageResource, imgUrl, pixmap);
 
     //kDebug() << QRegExp('>'+baseUrl+'<').pattern();
 

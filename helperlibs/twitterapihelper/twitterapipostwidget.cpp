@@ -33,6 +33,7 @@
 #include <mediamanager.h>
 #include <choqokappearancesettings.h>
 #include "twitterapishowthread.h"
+#include <textbrowser.h>
 
 const QRegExp TwitterApiPostWidget::mUserRegExp("([\\s]|^)@([^\\s\\W]+)");
 const QRegExp TwitterApiPostWidget::mHashtagRegExp("([\\s]|^)#([^\\s\\W]+)");
@@ -51,7 +52,7 @@ public:
 TwitterApiPostWidget::TwitterApiPostWidget(Choqok::Account* account, const Choqok::Post &post, QWidget* parent)
     : PostWidget(account, post, parent), d(new Private)
 {
-    document()->addResource( QTextDocument::ImageResource, QUrl("icon://thread"),
+    mainWidget()->document()->addResource( QTextDocument::ImageResource, QUrl("icon://thread"),
                              KIcon("go-top").pixmap(8) );
 }
 

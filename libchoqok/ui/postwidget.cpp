@@ -42,6 +42,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <kmenu.h>
 #include <qabstracttextdocumentlayout.h>
 #include "choqoktools.h"
+#include "textbrowser.h"
 
 static const int _15SECS = 15000;
 static const int _MINUTE = 60000;
@@ -90,7 +91,7 @@ QString PostWidget::unreadStyle;
 const QString PostWidget::webIconText("&#9755;");
 
 PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* parent/* = 0*/ )
-    :KTextBrowser(parent), d(new Private(account, post))
+    :QWidget(parent), _mainWidget(new TextBrowser(this)), d(new Private(account, post))
 {
     setAttribute(Qt::WA_DeleteOnClose);
     if(currentAccount()->username().compare( currentPost().author.userName, Qt::CaseInsensitive ) == 0 )
@@ -98,8 +99,9 @@ PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* par
     setupUi();
     d->mTimer.start( _MINUTE );
     connect( &d->mTimer, SIGNAL( timeout() ), this, SLOT( updateUi()) );
-    setOpenLinks(false);
-    connect(this,SIGNAL(anchorClicked(QUrl)),this,SLOT(checkAnchor(QUrl)));
+    _mainWidget->setOpenLinks(false);
+    connect(_mainWidget, SIGNAL(clicked(QMouseEvent*)), SLOT(mousePressEvent(QMouseEvent*)));
+    connect(_mainWidget, SIGNAL(anchorClicked(QUrl)), this, SLOT(checkAnchor(QUrl)));
 //     setTextInteractionFlags( Qt::TextSelectableByKeyboard | Qt::TextSelectableByMouse );
 }
 
@@ -137,20 +139,24 @@ QString PostWidget::generateSign()
 
 void PostWidget::setupUi()
 {
+    setLayout(new QVBoxLayout);
+    layout()->setMargin(0);
+    layout()->setContentsMargins(0,0,0,0);
+    layout()->addWidget(_mainWidget);
     setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
-    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    _mainWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    _mainWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    d->buttonsLayout = new QGridLayout(this);
+    d->buttonsLayout = new QGridLayout(_mainWidget);
     d->buttonsLayout->setRowStretch(0,100);
     d->buttonsLayout->setColumnStretch(5,100);
     d->buttonsLayout->setMargin(0);
     d->buttonsLayout->setSpacing(0);
 
-    this->setLayout(d->buttonsLayout);
-    connect(this,SIGNAL(textChanged()),this,SLOT(setHeight()));
+    _mainWidget->setLayout(d->buttonsLayout);
+    connect(_mainWidget,SIGNAL(textChanged()),this,SLOT(setHeight()));
 
-    document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
+    _mainWidget->document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
                              MediaManager::self()->defaultImage() );
                              d->mImage = "<img src=\"img://profileImage\" title=\""+
                              d->mCurrentPost.author.realName + "\" width=\"48\" height=\"48\" />";
@@ -179,7 +185,8 @@ void PostWidget::initUi()
 
 void PostWidget::updateUi()
 {
-    setHtml(baseText->arg(d->mImage, d->mContent, d->mSign.arg(formatDateTime( d->mCurrentPost.creationDateTime ))));
+    _mainWidget->setHtml(baseText->arg(d->mImage, d->mContent,
+                                      d->mSign.arg(formatDateTime( d->mCurrentPost.creationDateTime ))));
 }
 
 void PostWidget::setStyle(const QColor& color, const QColor& back, const QColor& read, const QColor& readBack)
@@ -202,7 +209,7 @@ KPushButton * PostWidget::addButton(const QString & objName, const QString & too
 
 KPushButton * PostWidget::addButton(const QString & objName, const QString & toolTip, const KIcon & icon)
 {
-    KPushButton * button = new KPushButton(icon, QString(), this);
+    KPushButton * button = new KPushButton(icon, QString(), _mainWidget);
     button->setObjectName(objName);
     button->setToolTip(toolTip);
     button->setIconSize(QSize(16,16));
@@ -254,8 +261,8 @@ void PostWidget::setUiStyle()
 
 void PostWidget::setHeight()
 {
-    document()->setTextWidth(width()-2);
-    int h = document()->size().toSize().height()+2;
+    _mainWidget->document()->setTextWidth(width()-2);
+    int h = _mainWidget->document()->size().toSize().height()+2;
     setMinimumHeight(h);
     setMaximumHeight(h);
 }
@@ -270,17 +277,16 @@ void PostWidget::closeEvent(QCloseEvent* event)
 void PostWidget::mousePressEvent(QMouseEvent* ev)
 {
     if(!isRead()) {
-        kDebug()<<"Emitting postReaded()";
         emit postReaded();
         setRead();
     }
-    KTextBrowser::mousePressEvent(ev);
+    QWidget::mousePressEvent(ev);
 }
 
 void PostWidget::resizeEvent ( QResizeEvent * event )
 {
     setHeight();
-    KTextBrowser::resizeEvent(event);
+    QWidget::resizeEvent(event);
 }
 
 void PostWidget::enterEvent ( QEvent * event )
@@ -288,7 +294,7 @@ void PostWidget::enterEvent ( QEvent * event )
     foreach(KPushButton *btn, buttons()){
         btn->show();
     }
-    KTextBrowser::enterEvent(event);
+    QWidget::enterEvent(event);
 }
 
 void PostWidget::leaveEvent ( QEvent * event )
@@ -296,7 +302,7 @@ void PostWidget::leaveEvent ( QEvent * event )
     foreach(KPushButton *btn, buttons()){
         btn->hide();
     }
-    KTextBrowser::enterEvent(event);
+    QWidget::enterEvent(event);
 }
 
 QString PostWidget::prepareStatus( const QString &txt )
@@ -324,9 +330,9 @@ void PostWidget::setDirection()
     txt.remove(QRegExp("!([^\\s\\W]+)"));
     txt.prepend(' ');
     if( txt.isRightToLeft() ) {
-        QTextOption options(document()->defaultTextOption());
+        QTextOption options(_mainWidget->document()->defaultTextOption());
         options.setTextDirection( Qt::RightToLeft );
-        document()->setDefaultTextOption(options);
+        _mainWidget->document()->setDefaultTextOption(options);
     }
 }
 
@@ -419,7 +425,7 @@ void PostWidget::avatarFetched(const QString& remoteUrl, const QPixmap& pixmap)
 {
     if ( remoteUrl == d->mCurrentPost.author.profileImageUrl ) {
         QString url = "img://profileImage";
-        document()->addResource( QTextDocument::ImageResource, url, pixmap );
+        _mainWidget->document()->addResource( QTextDocument::ImageResource, url, pixmap );
         updateUi();
         disconnect( MediaManager::self(), SIGNAL( imageFetched(QString,QPixmap)),
                     this, SLOT(avatarFetched(QString, QPixmap) ) );
@@ -434,7 +440,8 @@ void PostWidget::avatarFetchError(const QString& remoteUrl, const QString& errMs
     if( remoteUrl == d->mCurrentPost.author.profileImageUrl ){
         ///Avatar fetching is failed! but will not disconnect to get the img if it fetches later!
         QString url = "img://profileImage";
-        document()->addResource( QTextDocument::ImageResource, url, KIcon("image-missing").pixmap(48) );
+        _mainWidget->document()->addResource( QTextDocument::ImageResource,
+                                             url, KIcon("image-missing").pixmap(48) );
         updateUi();
     }
 }
@@ -464,7 +471,7 @@ void PostWidget::contextMenuEvent(QContextMenuEvent* event)
 //     copy->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_C ) );
     connect( copy, SIGNAL(triggered(bool)), SLOT(slotCopyPostContent()) );
     menu->addAction(copy);
-    QString anchor = document()->documentLayout()->anchorAt(event->pos());
+    QString anchor = _mainWidget->document()->documentLayout()->anchorAt(event->pos());
     if( !anchor.isEmpty() ){
         KAction *copyLink = new KAction( i18n("Copy Link Location"), this );
         copyLink->setData( anchor );
@@ -481,7 +488,7 @@ void PostWidget::contextMenuEvent(QContextMenuEvent* event)
 
 void PostWidget::slotCopyPostContent()
 {
-    QString txt = textCursor().selectedText();
+    QString txt = _mainWidget->textCursor().selectedText();
     if( txt.isEmpty() )
         QApplication::clipboard()->setText( currentPost().content );
     else
@@ -533,6 +540,11 @@ void PostWidget::setSign(const QString& sign)
 void PostWidget::deleteLater()
 {
     close();
+}
+
+TextBrowser* PostWidget::mainWidget()
+{
+    return _mainWidget;
 }
 
 #include "postwidget.moc"

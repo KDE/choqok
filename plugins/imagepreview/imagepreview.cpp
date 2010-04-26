@@ -27,6 +27,7 @@
 #include <choqokuiglobal.h>
 #include "postwidget.h"
 #include <mediamanager.h>
+#include <textbrowser.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < ImagePreview > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_imagepreview" ) )
@@ -132,7 +133,7 @@ void ImagePreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pix
     imgU.setScheme("img");
     QString imgUrl = imgU.prettyUrl();
 //     imgUrl.replace("http://","img://");
-    postToParse->document()->addResource(QTextDocument::ImageResource, imgUrl, pixmap);
+    postToParse->mainWidget()->document()->addResource(QTextDocument::ImageResource, imgUrl, pixmap);
     content.replace(QRegExp('>'+baseUrl+'<'), "><img align='left' src='"+imgUrl+"' /><");
     postToParse->setContent(content);
 }

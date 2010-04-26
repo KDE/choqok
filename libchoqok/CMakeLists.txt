@@ -27,6 +27,7 @@ ui/composerwidget.cpp
 ui/quickpost.cpp
 ui/mainwindow.cpp
 ui/uploadmediadialog.cpp
+ui/textbrowser.cpp
 # filtermanager.cpp
 # filter.cpp
 )

@@ -23,7 +23,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef POSTWIDGET_H
 #define POSTWIDGET_H
 
-#include <ktextbrowser.h>
 #include <account.h>
 #include <choqoktypes.h>
 #include <microblog.h>
@@ -35,13 +34,16 @@ class KPushButton;
 
 namespace Choqok {
 namespace UI {
+
+class TextBrowser;
+
 /**
 Post Widget!
 Attribute "Qt::WA_DeleteOnClose" is enabled at construtor! So please use close() for deleting an object, instead of deleteLater() or delete
 
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
-class CHOQOK_EXPORT PostWidget : public KTextBrowser
+class CHOQOK_EXPORT PostWidget : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY (bool read READ isRead)
@@ -101,6 +103,9 @@ public:
     QString content() const;
 
     void deleteLater();
+
+    TextBrowser * mainWidget();
+
 public Q_SLOTS:
     /**
     Set Style sheet of widget to corresponding data->
@@ -165,11 +170,11 @@ protected Q_SLOTS:
     void avatarFetched( const QString &remoteUrl, const QPixmap &pixmap );
 
     void slotCopyLink();
+    virtual void mousePressEvent(QMouseEvent* ev);
 protected:
     virtual void closeEvent(QCloseEvent* event);
     virtual void contextMenuEvent(QContextMenuEvent* event);
     virtual void setupAvatar();
-    virtual void mousePressEvent(QMouseEvent* ev);
     virtual void resizeEvent ( QResizeEvent * event );
     virtual void enterEvent ( QEvent * event );
     virtual void leaveEvent ( QEvent * event );
@@ -188,6 +193,7 @@ protected:
     QMap<QString, KPushButton*> &buttons();
 
 protected:
+    TextBrowser *_mainWidget;
     const QString *baseText;
     static const QString baseStyle;
     static QString readStyle;
