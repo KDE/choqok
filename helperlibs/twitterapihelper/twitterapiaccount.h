@@ -67,7 +67,7 @@ public:
     Combined from @ref host and @ref api to use for connections and queries
     */
     KUrl apiUrl() const;
-    KUrl homepageUrl() const;
+    virtual KUrl homepageUrl() const;
 
     QStringList friendsList() const;
 

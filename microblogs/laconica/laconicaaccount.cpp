@@ -72,4 +72,9 @@ void LaconicaAccount::setChangeExclamationMark(bool isChange)
     d->isChangeExclamationMark = isChange;
 }
 
+KUrl LaconicaAccount::homepageUrl() const
+{
+    return apiUrl().upUrl();
+}
+
 #include "laconicaaccount.moc"
