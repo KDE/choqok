@@ -40,6 +40,7 @@ Name[uk]=Дія з пошуку
 Name[x-test]=xxSearch Actionxx
 Name[zh_CN]=搜索动作
 Comment=Add a Search action to the UI for Twitter API microblogs like Twitter and StatusNet
+Comment[bg]=Добавяне на действието Търсене към потребителския интерфейс за приложно-програмния интерфейс на микроблогове в Twitter или StatusNet
 Comment[ca]=Afegeix una acció de cerca a la IU per l'API de microblocs com ara Twitter i StatusNet
 Comment[da]=Føj en søgehandling til brugerfladen til mikroblogs med Twitter-API, såsom Twitter og StatusNet
 Comment[en_GB]=Add a Search action to the UI for Twitter API microblogs like Twitter and StatusNet

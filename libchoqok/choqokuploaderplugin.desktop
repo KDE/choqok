@@ -3,6 +3,7 @@ Type=ServiceType
 X-KDE-ServiceType=Choqok/Uploader
 X-KDE-Derived=Choqok/Plugin
 Comment=Choqok Uploader Plugin
+Comment[bg]=Приставка на Choqok за качване на медийни файлове
 Comment[da]=Uploader-plugin til Choqok
 Comment[fr]=Module externe d'envoi pour Choqok
 Comment[nb]=Choqok programtillegg for opplasting
