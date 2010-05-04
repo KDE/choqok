@@ -116,6 +116,8 @@ protected:
     QVBoxLayout *mainLayout();
     QHBoxLayout *titleBarLayout();
     QLabel *timelineDescription();
+    virtual void setUnreadCount( int unread );
+    virtual void showMarkAllAsReadButton();
 
 private:
     void setupUi();

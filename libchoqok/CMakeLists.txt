@@ -89,4 +89,5 @@ install( FILES
     ui/quickpost.h
     ui/timelinewidget.h
     ui/uploadmediadialog.h
+    ui/textbrowser.h
 DESTINATION ${INCLUDE_INSTALL_DIR}/choqok COMPONENT Devel)

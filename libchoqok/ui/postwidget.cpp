@@ -66,8 +66,6 @@ class PostWidget::Private
 //         bool mRead;
         QTimer mTimer;
 
-        static const QString ownText;
-        static const QString otherText;
         //BEGIN UI contents:
         QString mSign;
         QString mContent;
@@ -76,9 +74,9 @@ class PostWidget::Private
 };
 
 
-const QString PostWidget::Private::ownText ("<table width=\"100%\" ><tr><td><p>%2</p></td><td width=\"5\"><!-- empty --></td><td width=\"48\" rowspan='2' align='right'>%1</td></tr><tr><td style=\"font-size:small;\" align=\"right\" valign='bottom' >%3</td></tr></table>");
+const QString PostWidget::ownText ("<table width=\"100%\" ><tr><td><p>%2</p></td><td width=\"5\"><!-- empty --></td><td width=\"48\" rowspan='2' align='right'>%1</td></tr><tr><td style=\"font-size:small;\" align=\"right\" valign='bottom' >%3</td></tr></table>");
 
-const QString PostWidget::Private::otherText ( "<table height='100%' width=\"100%\"><tr><td rowspan=\"2\"\
+const QString PostWidget::otherText ( "<table height='100%' width=\"100%\"><tr><td rowspan=\"2\"\
 width=\"48\">%1</td><td width='5'><!-- EMPTY HAHA --></td><td><p>%2</p></td></tr><tr><td><!-- EMPTY HAHA --></td><td style=\"font-size:small;\" align=\"right\" width=\"100%\" valign='bottom'>%3</td></tr></table>");
 
 const QString PostWidget::baseStyle ("KTextBrowser {border: 1px solid rgb(150,150,150);\
@@ -96,10 +94,8 @@ PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* par
     setAttribute(Qt::WA_DeleteOnClose);
     if(currentAccount()->username().compare( currentPost().author.userName, Qt::CaseInsensitive ) == 0 )
         d->mCurrentPost.isRead = true;
-    setupUi();
     d->mTimer.start( _MINUTE );
     connect( &d->mTimer, SIGNAL( timeout() ), this, SLOT( updateUi()) );
-    _mainWidget->setOpenLinks(false);
     connect(_mainWidget, SIGNAL(clicked(QMouseEvent*)), SLOT(mousePressEvent(QMouseEvent*)));
     connect(_mainWidget, SIGNAL(anchorClicked(QUrl)), this, SLOT(checkAnchor(QUrl)));
 //     setTextInteractionFlags( Qt::TextSelectableByKeyboard | Qt::TextSelectableByMouse );
@@ -144,8 +140,6 @@ void PostWidget::setupUi()
     layout()->setContentsMargins(0,0,0,0);
     layout()->addWidget(_mainWidget);
     setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
-    _mainWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    _mainWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     _mainWidget->setFocusProxy(this);
 
     d->buttonsLayout = new QGridLayout(_mainWidget);
@@ -157,6 +151,11 @@ void PostWidget::setupUi()
     _mainWidget->setLayout(d->buttonsLayout);
     connect(_mainWidget,SIGNAL(textChanged()),this,SLOT(setHeight()));
 
+}
+
+void PostWidget::initUi()
+{
+    setupUi();
     _mainWidget->document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
                              MediaManager::self()->defaultImage() );
                              d->mImage = "<img src=\"img://profileImage\" title=\""+
@@ -165,16 +164,12 @@ void PostWidget::setupUi()
     if(d->mCurrentAccount->username().compare( d->mCurrentPost.author.userName, Qt::CaseInsensitive ) == 0) {
         KPushButton *btnRemove = addButton("btnRemove", i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
         connect(btnRemove, SIGNAL(clicked(bool)), SLOT(removeCurrentPost()));
-        baseText = &Private::ownText;
+        baseText = &ownText;
     } else {
         KPushButton *btnResend = addButton("btnResend", i18nc( "@info:tooltip", "ReSend" ), "retweet" );
         connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
-        baseText = &Private::otherText;
+        baseText = &otherText;
     }
-}
-
-void PostWidget::initUi()
-{
     d->mImage = "<img src=\"img://profileImage\" title=\""+ d->mCurrentPost.author.realName +"\" width=\"48\" height=\"48\" />";
     d->mContent = prepareStatus(d->mCurrentPost.content);
     d->mSign = generateSign();
@@ -335,6 +330,11 @@ void PostWidget::setDirection()
         options.setTextDirection( Qt::RightToLeft );
         _mainWidget->document()->setDefaultTextOption(options);
     }
+}
+
+QString PostWidget::formatDateTime(const KDateTime& time)
+{
+    return formatDateTime(time.dateTime());
 }
 
 QString PostWidget::formatDateTime( const QDateTime& time )

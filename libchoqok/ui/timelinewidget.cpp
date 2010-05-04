@@ -178,15 +178,20 @@ void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList)
                                                       "%1 new posts in %2(%3)",
                                                       unread, currentAccount()->alias(), d->timelineName ) );
         emit updateUnreadCount(unread);
-        if(!d->btnMarkAllAsRead){
-            d->btnMarkAllAsRead = new KPushButton(this);
-            d->btnMarkAllAsRead->setIcon(KIcon("mail-mark-read"));
-            d->btnMarkAllAsRead->setToolTip(i18n("Mark all as read"));
-            d->btnMarkAllAsRead->setMaximumSize(16, 16);
-            d->btnMarkAllAsRead->setIconSize(QSize(12,12));
-            connect(d->btnMarkAllAsRead, SIGNAL(clicked(bool)), SLOT(markAllAsRead()));
-            d->titleBarLayout->addWidget(d->btnMarkAllAsRead);
-        }
+        showMarkAllAsReadButton();
+    }
+}
+
+void TimelineWidget::showMarkAllAsReadButton()
+{
+    if(!d->btnMarkAllAsRead){
+        d->btnMarkAllAsRead = new KPushButton(this);
+        d->btnMarkAllAsRead->setIcon(KIcon("mail-mark-read"));
+        d->btnMarkAllAsRead->setToolTip(i18n("Mark all as read"));
+        d->btnMarkAllAsRead->setMaximumSize(16, 16);
+        d->btnMarkAllAsRead->setIconSize(QSize(12,12));
+        connect(d->btnMarkAllAsRead, SIGNAL(clicked(bool)), SLOT(markAllAsRead()));
+        d->titleBarLayout->addWidget(d->btnMarkAllAsRead);
     }
 }
 
@@ -211,6 +216,11 @@ void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
 int TimelineWidget::unreadCount() const
 {
     return d->unreadCount;
+}
+
+void TimelineWidget::setUnreadCount(int unread)
+{
+    d->unreadCount = unread;
 }
 
 void TimelineWidget::markAllAsRead()

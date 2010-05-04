@@ -28,6 +28,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <microblog.h>
 #include <QTimer>
 #include <kicon.h>
+#include <KDateTime>
 
 class QGridLayout;
 class KPushButton;
@@ -51,8 +52,8 @@ public:
     explicit PostWidget( Account *account, const Post &post, QWidget *parent = 0 );
     virtual ~PostWidget();
     const Post &currentPost() const;
-    void setRead(bool read = true);
-    bool isRead() const;
+    virtual void setRead(bool read = true);
+    virtual bool isRead() const;
 
     Account *currentAccount();
     /**
@@ -143,7 +144,7 @@ protected Q_SLOTS:
     /**
     Set height of widget related to text contents
     */
-    void setHeight();
+    virtual void setHeight();
 
     /**
     Update UI after changes, such as timestamp
@@ -172,6 +173,7 @@ protected Q_SLOTS:
     void slotCopyLink();
     virtual void mousePressEvent(QMouseEvent* ev);
 protected:
+    virtual void setupUi();
     virtual void closeEvent(QCloseEvent* event);
     virtual void contextMenuEvent(QContextMenuEvent* event);
     virtual void setupAvatar();
@@ -182,6 +184,7 @@ protected:
     virtual void setDirection();
     virtual QString generateSign();
     virtual QString formatDateTime( const QDateTime &time );
+    virtual QString formatDateTime( const KDateTime &time );
     static QString getColorString(const QColor& color);
     /**
     @brief Create and Add a new button to widget
@@ -200,13 +203,14 @@ protected:
     static QString unreadStyle;
     static const QRegExp mUrlRegExp;
     static const QString webIconText;
+    static const QString ownText;
+    static const QString otherText;
 
     void setAvatarText( const QString &text );
     QString avatarText() const;
     virtual QString generateResendText();
 
 private:
-    void setupUi();
     class Private;
     Private *const d;
 };

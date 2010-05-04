@@ -29,6 +29,9 @@ using namespace Choqok::UI;
 Choqok::UI::TextBrowser::TextBrowser(QWidget* parent)
     : KTextBrowser(parent, true)
 {
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setOpenLinks(false);
 
 }
 

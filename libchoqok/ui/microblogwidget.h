@@ -30,6 +30,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QMap>
 #include "microblog.h"
 
+class QLabel;
 class KTabWidget;
 
 namespace Choqok {
@@ -138,6 +139,7 @@ protected:
     ComposerWidget *composer();
     QMap<QString, TimelineWidget*> &timelines();
     KTabWidget *timelinesTabWidget();
+    QLabel *latestUpdate();
 
 private:
     class Private;

@@ -368,6 +368,11 @@ void MicroBlogWidget::slotAccountModified(Account* theAccount)
     }
 }
 
+QLabel* MicroBlogWidget::latestUpdate()
+{
+    return d->latestUpdate;
+}
+
 }
 }
 #include "microblogwidget.moc"
