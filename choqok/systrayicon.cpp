@@ -110,8 +110,9 @@ void SysTrayIcon::updateUnreadCount( int changeOfUnreadPosts )
         boundingRect.moveTo(( oldWidth - boundingRect.width() ) / 2,
                             (( oldWidth - boundingRect.height() ) / 2 ) - 1 );
         p.setOpacity( 0.7 );
-        p.setBrush( scheme.background( KColorScheme::LinkBackground ) );
-        p.setPen( scheme.background( KColorScheme::LinkBackground ).color() );
+        QBrush br(QColor(255, 255, 255), Qt::SolidPattern);
+        p.setBrush( br );
+        p.setPen( QColor(255, 255, 255) );
         p.drawRoundedRect( boundingRect, 2.0, 2.0 );
 
         p.setBrush( Qt::NoBrush );
