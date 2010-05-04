@@ -64,9 +64,9 @@ private:
     enum ParserState{ Running = 0, Stopped };
     ParserState state;
 
-    void parse( Choqok::UI::PostWidget *postToParse );
-    QString parseYoutube( QString videoid , Choqok::UI::PostWidget *postToParse );
-    QString parseVimeo( QString videoid , Choqok::UI::PostWidget *postToParse );
+    void parse( QPointer< Choqok::UI::PostWidget > postToParse );
+    QString parseYoutube( QString videoid , QPointer< Choqok::UI::PostWidget > postToParse );
+    QString parseVimeo( QString videoid , QPointer< Choqok::UI::PostWidget > postToParse );
 
     QQueue< QPointer<Choqok::UI::PostWidget> > postsQueue;
     QMap<QString, QPointer<Choqok::UI::PostWidget> > mParsingList;//remoteUrl, Post

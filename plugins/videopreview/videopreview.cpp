@@ -83,7 +83,7 @@ void VideoPreview::startParsing()
         QTimer::singleShot(500, this, SLOT(startParsing()));
 }
 
-void VideoPreview::parse(Choqok::UI::PostWidget* postToParse)
+void VideoPreview::parse(QPointer<Choqok::UI::PostWidget> postToParse)
 {
     if (!postToParse)
         return;
@@ -132,7 +132,7 @@ void VideoPreview::parse(Choqok::UI::PostWidget* postToParse)
 
 }
 
-QString VideoPreview::parseYoutube(QString videoid, Choqok::UI::PostWidget* postToParse)
+QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWidget > postToParse)
 {
     QString youtubeUrl = QString( "http://gdata.youtube.com/feeds/api/videos/%1" ).arg(videoid);
 //   kDebug() << youtubeUrl;
@@ -178,7 +178,7 @@ QString VideoPreview::parseYoutube(QString videoid, Choqok::UI::PostWidget* post
     return thumb_url;
 }
 
-QString VideoPreview::parseVimeo(QString videoid, Choqok::UI::PostWidget* postToParse)
+QString VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidget > postToParse)
 {
     QString vimeoUrl = QString( "http://vimeo.com/api/v2/video/%1.xml" ).arg(videoid);
 //   kDebug() << vimeoUrl;
