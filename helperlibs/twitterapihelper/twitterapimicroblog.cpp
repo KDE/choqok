@@ -814,6 +814,7 @@ Choqok::Post * TwitterApiMicroBlog::readPostFromDomElement ( Choqok::Account* th
     }
     post->link = postUrl(theAccount, post->author.userName, post->postId);
     post->creationDateTime = dateFromString ( timeStr );
+    post->isRead = post->isFavorited;
 
     return post;
 }
@@ -924,6 +925,7 @@ Choqok::Post * TwitterApiMicroBlog::readDMessageFromDomElement ( Choqok::Account
         msg->author.userId = recipientId;
         msg->replyToUserId = recipientId;
         msg->replyToUserName = recipientScreenName;
+        msg->isRead = true;
     } else {
         msg->author.description = senderDescription;
         msg->author.userName = senderScreenName;
@@ -1346,6 +1348,7 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromJsonMap(Choqok::Account* theAccou
     post->author.userName = userMap["screen_name"].toString();
     post->author.profileImageUrl = userMap["profile_image_url"].toString();
     post->link = postUrl(theAccount, post->author.userName, post->postId);
+    post->isRead = post->isFavorited;//to mark favorited posts as read!
     return post;
 }
 
@@ -1417,6 +1420,7 @@ Choqok::Post* TwitterApiMicroBlog::readDMessageFromJsonMap(Choqok::Account* theA
         msg->author.userId = recipientId;
         msg->replyToUserId = recipientId;
         msg->replyToUserName = recipientScreenName;
+        msg->isRead = true;
     } else {
         msg->author.description = senderDescription;
         msg->author.userName = senderScreenName;
