@@ -32,6 +32,7 @@
 #include <choqokuiglobal.h>
 #include <quickpost.h>
 #include "nowlisteningsettings.h"
+#include <KMessageBox>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < NowListening > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_nowlistening" ) )
@@ -52,9 +53,53 @@ NowListening::~NowListening()
 
 void NowListening::slotPrepareNowListening()
 {
-    QDBusInterface remoteApp( "org.kde.amarok", "/Player", "org.freedesktop.MediaPlayer" );
-    QDBusReply< QMap<QString, QVariant> > reply = remoteApp.call( "GetMetadata" );
-    QVariantMap trackInfo = reply.value();
+    QVariantMap trackInfo;
+    QString player;
+    QDBusInterface rhythmboxPlayer ("org.gnome.Rhythmbox" ,
+                    "/org/gnome/Rhythmbox/Player",
+                    "org.gnome.Rhythmbox.Player");
+
+    QDBusInterface amarokPlayer( "org.kde.amarok",
+                 "/Player",
+                 "org.freedesktop.MediaPlayer" );
+    QDBusInterface exailePlayer( "org.exaile.Exaile",
+                 "/org/exaile/Exaile",
+                 "org.exaile.Exaile" );
+
+    QDBusReply<bool> rhythmboxRunning = rhythmboxPlayer.call("getPlaying");
+    QDBusReply<bool> exaileRunning = exailePlayer.call("IsPlaying");
+    //TODO Find a way to know if Amarok is playing!?
+
+    if(rhythmboxRunning.value()){
+        QDBusReply<QString> uri = rhythmboxPlayer.call("getPlayingUri" );
+        QDBusInterface rhythmboxShell ("org.gnome.Rhythmbox" ,"/org/gnome/Rhythmbox/Shell", "org.gnome.Rhythmbox.Shell");
+        QDBusReply< QMap<QString, QVariant> > reply = rhythmboxShell.call( "getSongProperties",uri.value() );
+        trackInfo=reply.value();
+        player="Rhythmbox";
+    }else if(exaileRunning.value()){
+        QDBusReply<QString> reply = exailePlayer.call("GetTrackAttr", "tracknumber");
+        trackInfo.insert("tracknumber",reply.value());
+        reply = exailePlayer.call("GetTrackAttr", "title");
+        trackInfo.insert("title",reply.value());
+        reply = exailePlayer.call("GetTrackAttr", "album");
+        trackInfo.insert("album",reply.value());
+        reply = exailePlayer.call("GetTrackAttr", "artist");
+        trackInfo.insert("artist",reply.value());
+        reply = exailePlayer.call("GetTrackAttr", "year");
+        trackInfo.insert("year",reply.value());
+        reply = exailePlayer.call("GetTrackAttr", "genre");
+        trackInfo.insert("genre",reply.value());
+        player="Exaile";
+    }else if(amarokPlayer.isValid()){
+        QDBusReply< QMap<QString, QVariant> > reply = amarokPlayer.call( "GetMetadata" );
+        trackInfo = reply.value();
+        player="Amarok";
+    }
+    if(player.isEmpty()){
+        KMessageBox::sorry(Choqok::UI::Global::mainWindow(),
+                           i18n("No supported player found."));
+        return;
+    }
     NowListeningSettings::self()->readConfig();
     QString text = NowListeningSettings::templateString();
     text.replace("%track%", trackInfo["tracknumber"].toString());
@@ -63,7 +108,9 @@ void NowListening::slotPrepareNowListening()
     text.replace("%artist%", trackInfo["artist"].toString());
     text.replace("%year%", trackInfo["year"].toString());
     text.replace("%genre%", trackInfo["genre"].toString());
-    if( Choqok::UI::Global::quickPostWidget() )
+    text.replace("%player%", player);
+
+    if (Choqok::UI::Global::quickPostWidget() )
         Choqok::UI::Global::quickPostWidget()->setText(text);
 }
 

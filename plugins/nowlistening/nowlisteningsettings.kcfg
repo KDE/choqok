@@ -8,7 +8,7 @@
 
     <group name="Now Listening Plugin">
         <entry name="templateString" type="String">
-            <default>ᐅ %title% by %artist% on %album% [Amarok].</default>
+            <default>ᐅ %title% by %artist% from %album% [%player%]</default>
         </entry>
     </group>
 </kcfg>
