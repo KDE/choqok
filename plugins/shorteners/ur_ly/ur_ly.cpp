@@ -46,30 +46,24 @@ Ur_ly::~Ur_ly()
 
 QString Ur_ly::shorten ( const QString& url )
 {
-  kDebug() << "Using ur.ly";
-  QByteArray data;
-  KUrl reqUrl ( "http://ur.ly/new.json" );
-  reqUrl.addQueryItem( "href", KUrl( url ).url() );
+    kDebug() << "Using ur.ly";
+    QByteArray data;
+    KUrl reqUrl ( "http://ur.ly/new.json" );
+    reqUrl.addQueryItem( "href", KUrl( url ).url() );
 
-  KIO::Job* job = KIO::get ( reqUrl, KIO::Reload, KIO::HideProgressInfo );
+    KIO::Job* job = KIO::get ( reqUrl, KIO::Reload, KIO::HideProgressInfo );
 
-  if ( KIO::NetAccess::synchronousRun ( job, 0, &data ) )
-    {
-      QString output ( data );
-	  QJson::Parser parser;
-	  QByteArray json = output.toUtf8();
-	  bool ok;
-	  QVariantMap result = parser.parse(json, &ok).toMap();
-	  output = "http://ur.ly/" + result["code"].toString();
-      kDebug() << "Short url is: " << output;
-      if ( !output.isEmpty() )
-        {
-          return output;
+    if ( KIO::NetAccess::synchronousRun ( job, 0, &data ) ){
+        QJson::Parser parser;
+        bool ok;
+        QVariantMap result = parser.parse(data, &ok).toMap();
+        if ( ok && result.contains("code") ) {
+            return QString("http://ur.ly/%1").arg(result.value("code").toString());
+        } else{
+            kError()<<"Ur_ly::shorten: Parse error, Job error: "<<job->errorString()<<"\n Data:"<<data;
         }
+    } else {
+        kDebug() << "Cannot create a shortened url.\t" << job->errorString();
     }
-  else
-    {
-      kDebug() << "Cannot create a shortened url.\t" << job->errorString();
-    }
-  return url;
+    return url;
 }
