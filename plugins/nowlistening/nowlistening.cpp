@@ -55,28 +55,44 @@ void NowListening::slotPrepareNowListening()
 {
     QVariantMap trackInfo;
     QString player;
-    QDBusInterface rhythmboxPlayer ("org.gnome.Rhythmbox" ,
-                    "/org/gnome/Rhythmbox/Player",
-                    "org.gnome.Rhythmbox.Player");
+//     QDBusInterface rhythmboxPlayer ( "org.gnome.Rhythmbox" ,
+//                                      "/org/gnome/Rhythmbox/Player",
+//                                      "org.gnome.Rhythmbox.Player" );
 
-    QDBusInterface amarokPlayer( "org.kde.amarok",
-                 "/Player",
-                 "org.freedesktop.MediaPlayer" );
-    QDBusInterface exailePlayer( "org.exaile.Exaile",
-                 "/org/exaile/Exaile",
-                 "org.exaile.Exaile" );
+    QDBusInterface amarokPlayer ( "org.kde.amarok",
+                                  "/Player",
+                                  "org.freedesktop.MediaPlayer" );
 
-    QDBusReply<bool> rhythmboxRunning = rhythmboxPlayer.call("getPlaying");
-    QDBusReply<bool> exaileRunning = exailePlayer.call("IsPlaying");
+    QDBusInterface exailePlayer ( "org.exaile.Exaile",
+                                  "/org/exaile/Exaile",
+                                  "org.exaile.Exaile" );
+
+    // provide for new interface in Banshee 1.0+
+//     QDBusInterface bansheePlayer ( "org.bansheeproject.Banshee",
+//                                    "/org/bansheeproject/Banshee/PlayerEngine",
+//                                    "org.bansheeproject.Banshee.PlayerEngine" );
+
+    QDBusInterface audaciousPlayer ( "org.atheme.audacious",
+                                     "/org/atheme/audacious",
+                                     "org.atheme.audacious" );
+
+//     QDBusReply<bool> rhythmboxRunning = rhythmboxPlayer.call ( "getPlaying" );
+    QDBusReply<bool> exaileRunning = exailePlayer.call ( "IsPlaying" );
+//     QDBusReply<QString> bansheeRunning = bansheePlayer.call ( "GetCurrentState" );
+    QDBusReply<QString> audaciousRunning = audaciousPlayer.call ( "Status" );
     //TODO Find a way to know if Amarok is playing!?
 
-    if(rhythmboxRunning.value()){
-        QDBusReply<QString> uri = rhythmboxPlayer.call("getPlayingUri" );
-        QDBusInterface rhythmboxShell ("org.gnome.Rhythmbox" ,"/org/gnome/Rhythmbox/Shell", "org.gnome.Rhythmbox.Shell");
-        QDBusReply< QMap<QString, QVariant> > reply = rhythmboxShell.call( "getSongProperties",uri.value() );
+/*    if ( rhythmboxRunning.value() ) {
+        QDBusReply<QString> uri = rhythmboxPlayer.call ( "getPlayingUri" );
+
+        QDBusInterface rhythmboxShell ( "org.gnome.Rhythmbox" ,
+                                        "/org/gnome/Rhythmbox/Shell",
+                                        "org.gnome.Rhythmbox.Shell" );
+
+        QDBusReply< QMap<QString, QVariant> > reply = rhythmboxShell.call ( "getSongProperties",uri.value() );
         trackInfo=reply.value();
         player="Rhythmbox";
-    }else if(exaileRunning.value()){
+    }else*/ if(exaileRunning.value()){
         QDBusReply<QString> reply = exailePlayer.call("GetTrackAttr", "tracknumber");
         trackInfo.insert("tracknumber",reply.value());
         reply = exailePlayer.call("GetTrackAttr", "title");
@@ -90,8 +106,34 @@ void NowListening::slotPrepareNowListening()
         reply = exailePlayer.call("GetTrackAttr", "genre");
         trackInfo.insert("genre",reply.value());
         player="Exaile";
-    }else if(amarokPlayer.isValid()){
-        QDBusReply< QMap<QString, QVariant> > reply = amarokPlayer.call( "GetMetadata" );
+    } /*else if ( !bansheeRunning.value().compare ( "playing" ) ) { //if banshee is playing
+        QDBusReply< QMap<QString, QVariant> > reply = bansheePlayer.call ( "GetCurrentTrack" );
+        trackInfo = reply.value();
+        trackInfo.insert ( "title", trackInfo["name"] );
+        player="Banshee";
+    }*/ else if ( !audaciousRunning.value().compare ( "playing" ) ) { //if audacious is playing
+        QDBusReply<uint> pos = audaciousPlayer.call ( "Position" );
+        QDBusReply< QVariant> reply = audaciousPlayer.call ( "SongTuple",pos.value(),"title" );
+
+        trackInfo.insert ( "title",reply.value() );
+        reply = audaciousPlayer.call ( "SongTuple",pos.value(),"track-number" );
+        trackInfo.insert ( "track",reply.value() );
+
+        reply = audaciousPlayer.call ( "SongTuple",pos.value(),"album" );
+        trackInfo.insert ( "album",reply.value() );
+
+        reply = audaciousPlayer.call ( "SongTuple",pos.value(),"artist" );
+        trackInfo.insert ( "artist",reply.value() );
+
+        reply = audaciousPlayer.call ( "SongTuple",pos.value(),"year" );
+        trackInfo.insert ( "year",reply.value() );
+
+        reply = audaciousPlayer.call ( "SongTuple",pos.value(),"genre" );
+        trackInfo.insert ( "genre",reply.value() );
+
+        player="Audacious";
+    } else if ( amarokPlayer.isValid() ) {
+        QDBusReply< QMap<QString, QVariant> > reply = amarokPlayer.call ( "GetMetadata" );
         trackInfo = reply.value();
         player="Amarok";
     }
