@@ -192,10 +192,10 @@ void MediaManager::uploadMedium(const KUrl& localUrl, const QString& pluginId)
         return;
     }
     QByteArray type = KMimeType::findByUrl( localUrl, 0, true )->name().toUtf8();
-    connect( d->uploader, SIGNAL(mediumUploaded(QString,QString)),
-             this, SIGNAL(mediumUploaded(QString,QString)) );
-    connect( d->uploader, SIGNAL(uploadingFailed(QString,QString)),
-             this, SIGNAL(mediumUploadFailed(QString,QString)) );
+    connect( d->uploader, SIGNAL(mediumUploaded(KUrl,QString)),
+             this, SIGNAL(mediumUploaded(KUrl,QString)) );
+    connect( d->uploader, SIGNAL(uploadingFailed(KUrl,QString)),
+             this, SIGNAL(mediumUploadFailed(KUrl,QString)) );
     d->uploader->upload(localUrl, picData, type);
 }
 

@@ -242,7 +242,7 @@ void MainWindow::setupActions()
 
     ///SysTray Actions:
     sysIcon->contextMenu()->addAction( newTwit );
-    sysIcon->contextMenu()->addAction( uploadMedium );
+//     sysIcon->contextMenu()->addAction( uploadMedium );
     sysIcon->contextMenu()->addAction( actUpdate );
     sysIcon->contextMenu()->addSeparator();
     connect( enableUpdates, SIGNAL( toggled( bool ) ), sysIcon, SLOT( setTimeLineUpdatesEnabled( bool ) ) );
