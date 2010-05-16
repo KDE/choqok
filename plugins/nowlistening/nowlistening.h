@@ -1,7 +1,8 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2008-2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    Copyright (C) 2009-2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    Copyright (C) 2010 Ramin Gomari <ramin.gomari@gmail.com>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -25,7 +26,12 @@
 #include <plugin.h>
 
 class KConfigGroup;
+/**
+Now Listening
 
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
+@author Ramin Gomari \<ramin.gomari@gmail.com\>
+*/
 class NowListening : public Choqok::Plugin
 {
     Q_OBJECT
