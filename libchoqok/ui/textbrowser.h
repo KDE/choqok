@@ -42,9 +42,18 @@ public:
 Q_SIGNALS:
     void clicked(QMouseEvent* ev);
 
+protected Q_SLOTS:
+    void slotCopyLink();
+
+    /**
+        @brief Copy post text to clipboard.
+    */
+    void slotCopyPostContent();
+
 protected:
     virtual void mousePressEvent(QMouseEvent* ev);
     virtual void resizeEvent(QResizeEvent* e);
+    virtual void contextMenuEvent(QContextMenuEvent* event);
 };
 
 }

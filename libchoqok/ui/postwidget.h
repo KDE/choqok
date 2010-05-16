@@ -135,10 +135,6 @@ Q_SIGNALS:
     void aboutClosing( const ChoqokId &postId, PostWidget *widget);
 
 protected Q_SLOTS:
-    /**
-        @brief Copy post text to clipboard.
-    */
-    void slotCopyPostContent();
 
     virtual void checkAnchor(const QUrl & url);
     /**
@@ -170,12 +166,10 @@ protected Q_SLOTS:
     void avatarFetchError( const QString &remoteUrl, const QString &errMsg );
     void avatarFetched( const QString &remoteUrl, const QPixmap &pixmap );
 
-    void slotCopyLink();
     virtual void mousePressEvent(QMouseEvent* ev);
 protected:
     virtual void setupUi();
     virtual void closeEvent(QCloseEvent* event);
-    virtual void contextMenuEvent(QContextMenuEvent* event);
     virtual void setupAvatar();
     virtual void resizeEvent ( QResizeEvent * event );
     virtual void enterEvent ( QEvent * event );

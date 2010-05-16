@@ -23,6 +23,13 @@
 */
 
 #include "textbrowser.h"
+#include <KMenu>
+#include <KAction>
+#include <KLocalizedString>
+#include <QApplication>
+#include <QClipboard>
+#include "postwidget.h"
+#include <QAbstractTextDocumentLayout>
 
 using namespace Choqok::UI;
 
@@ -50,5 +57,49 @@ void TextBrowser::resizeEvent(QResizeEvent* e)
 {
     QTextEdit::resizeEvent(e);
 }
+
+void TextBrowser::contextMenuEvent(QContextMenuEvent* event)
+{
+    KMenu *menu = new KMenu(this);
+    KAction *copy = new KAction( i18n("Copy"), this );
+//     copy->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_C ) );
+    connect( copy, SIGNAL(triggered(bool)), SLOT(slotCopyPostContent()) );
+    menu->addAction(copy);
+    QString anchor = document()->documentLayout()->anchorAt(event->pos());
+    if( !anchor.isEmpty() ){
+        KAction *copyLink = new KAction( i18n("Copy Link Location"), this );
+        copyLink->setData( anchor );
+        connect( copyLink, SIGNAL(triggered(bool)), SLOT(slotCopyLink()) );
+        menu->addAction(copyLink);
+    }
+    menu->addSeparator();
+    KAction *selectAll = new KAction(i18n("Select All"), this);
+//     selectAll->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_A ) );
+    connect( selectAll, SIGNAL(triggered(bool)), SLOT(selectAll()) );
+    menu->addAction(selectAll);
+    menu->popup(event->globalPos());
+}
+
+void TextBrowser::slotCopyPostContent()
+{
+    QString txt = textCursor().selectedText();
+    if( txt.isEmpty() ){
+        PostWidget *paPost = qobject_cast<PostWidget*>(parentWidget());
+        if(paPost)
+            QApplication::clipboard()->setText( paPost->currentPost().content );
+     } else {
+        QApplication::clipboard()->setText( txt );
+     }
+}
+
+void TextBrowser::slotCopyLink()
+{
+    KAction *act = qobject_cast< KAction* >( sender() );
+    if( act ){
+        QString link = act->data().toString();
+        QApplication::clipboard()->setText( link );
+    }
+}
+
 
 #include "textbrowser.moc"
