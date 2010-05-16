@@ -66,6 +66,7 @@ protected:
     void loadAccounts();
 
 protected Q_SLOTS:
+    void slotAttachMedium();
     void slotCurrentAccountChanged(int);
     void checkAll( bool isAll );
     virtual void slotButtonClicked(int button);

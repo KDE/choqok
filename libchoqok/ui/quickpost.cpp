@@ -34,6 +34,9 @@
 #include <QHBoxLayout>
 #include <notifymanager.h>
 #include <shortenmanager.h>
+#include <KPushButton>
+#include "uploadmediadialog.h"
+#include <KMessageBox>
 
 using namespace Choqok::UI;
 using namespace Choqok;
@@ -52,6 +55,7 @@ public:
     Post *submittedPost;
     QList<Account*> submittedAccounts;
     bool isPostSubmitted;
+    KPushButton *attach;
 //     QString replyToId;
 };
 
@@ -71,6 +75,8 @@ QuickPost::QuickPost( QWidget* parent )
              this, SLOT( addAccount( Choqok::Account*)) );
     connect( AccountManager::self(), SIGNAL( accountRemoved( const QString& ) ),
              this, SLOT( removeAccount( const QString& ) ) );
+    connect( d->attach, SIGNAL(clicked(bool)),
+             this, SLOT(slotAttachMedium()));
 
     d->all->setChecked( Choqok::BehaviorSettings::all() );
     slotCurrentAccountChanged(d->comboAccounts->currentIndex());
@@ -85,10 +91,14 @@ void QuickPost::setupUi()
     this->resize( Choqok::BehaviorSettings::quickPostDialogSize() );
     d->all = new QCheckBox( i18n("All"), this);
     d->comboAccounts = new KComboBox(this);
+    d->attach = new KPushButton(KIcon("mail-attachment"), QString(), this);
+    d->attach->setMaximumWidth(d->attach->height());
+    d->attach->setToolTip(i18n("Attach a file"));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     QHBoxLayout *hLayout = new QHBoxLayout;
     hLayout->addWidget(d->all);
     hLayout->addWidget(d->comboAccounts);
+    hLayout->addWidget(d->attach);
     mainLayout->addLayout(hLayout);
     d->txtPost = new TextEdit( 0, this );
     d->txtPost->setTabChangesFocus( true );
@@ -259,5 +269,14 @@ void QuickPost::accountModified(Account* theAccount)
         removeAccount(theAccount->alias());
     }
 }
+
+void QuickPost::slotAttachMedium()
+{
+    KMessageBox::information(this, i18n("Link to uploaded medium will add here after uploading process succeed."),
+                             QString(), "quickPostAttachMedium");
+    QPointer<UploadMediaDialog> dlg = new UploadMediaDialog(this);
+    dlg->show();
+}
+
 
 #include "quickpost.moc"
