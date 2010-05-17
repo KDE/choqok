@@ -227,7 +227,7 @@ void NowListening::slotPrepareNowListening()
     if (!isPlaying) {
         if (playerFound)
             KMessageBox::information(Choqok::UI::Global::mainWindow(),
-                                     i18n("Play your music player."));
+                                     i18n("Played by your music player."));
         else
             KMessageBox::sorry(Choqok::UI::Global::mainWindow(),
                                i18n("No supported player found."));

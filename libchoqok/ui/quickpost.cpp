@@ -272,7 +272,7 @@ void QuickPost::accountModified(Account* theAccount)
 
 void QuickPost::slotAttachMedium()
 {
-    KMessageBox::information(this, i18n("Link to uploaded medium will add here after uploading process succeed."),
+    KMessageBox::information(this, i18n("Link to uploaded medium will be added here after uploading process succeed."),
                              QString(), "quickPostAttachMedium");
     QPointer<UploadMediaDialog> dlg = new UploadMediaDialog(this);
     dlg->show();
