@@ -112,7 +112,6 @@ void ComposerWidget::slotPostSubmited(Choqok::Account* theAccount, Choqok::Post*
         if(btnAbort){
             btnAbort->deleteLater();
         }
-        NotifyManager::success(i18n("New post submitted successfully"));
         d->editor->clear();
         replyToId.clear();
         editorContainer()->setEnabled(true);

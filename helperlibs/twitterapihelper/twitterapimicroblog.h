@@ -80,6 +80,11 @@ public:
     virtual void removePost( Choqok::Account *theAccount, Choqok::Post *post );
 
     /**
+    \brief Repeat/Retweet a post using the API
+    */
+    virtual void repeatPost( Choqok::Account *theAccount, const ChoqokId &postId );
+
+    /**
     Request to update all timelines of account!
     They will arrive in several signals! with timelineDataReceived() signal!
 

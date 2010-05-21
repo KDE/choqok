@@ -44,6 +44,7 @@ protected Q_SLOTS:
     virtual void slotSetFavorite(Choqok::Account *theAccount, const QString &postId);
     virtual void slotReply();
     void slotBasePostFetched(Choqok::Account* theAccount, Choqok::Post* post);
+    virtual void repeatPost();
 
 protected:
 //     virtual void updateUi();

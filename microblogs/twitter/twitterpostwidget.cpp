@@ -30,6 +30,7 @@
 #include <klocalizedstring.h>
 #include <twitterapihelper/twitterapiwhoiswidget.h>
 #include <twitterapihelper/twitterapiaccount.h>
+#include <KPushButton>
 
 TwitterPostWidget::TwitterPostWidget(Choqok::Account* account, const Choqok::Post& post, QWidget* parent): TwitterApiPostWidget(account, post, parent)
 {
@@ -39,6 +40,20 @@ TwitterPostWidget::TwitterPostWidget(Choqok::Account* account, const Choqok::Pos
 void TwitterPostWidget::initUi()
 {
     TwitterApiPostWidget::initUi();
+
+    KPushButton *btn = buttons().value("btnResend");
+
+    if(btn){
+        QMenu *menu = new QMenu(btn);
+        QAction *resend = new QAction(i18n("Manual ReSend"), menu);
+        connect( resend, SIGNAL(triggered(bool)), SLOT(slotResendPost()) );
+        QAction *repeat = new QAction(i18n("Retweet"), menu);
+        repeat->setToolTip(i18n("Retweet post using API"));
+        connect( repeat, SIGNAL(triggered(bool)), SLOT(repeatPost()) );
+        menu->addAction(repeat);
+        menu->addAction(resend);
+        btn->setMenu(menu);
+    }
 }
 
 QString TwitterPostWidget::prepareStatus(const QString& text)

@@ -157,7 +157,6 @@ void TwitterApiDMessageDialog::postCreated(Choqok::Account* theAccount, Choqok::
 {
     if(theAccount == d->account && thePost == d->sentPost){
         kDebug();
-        Choqok::NotifyManager::success(i18n("Private message sent successfully"));
         accept();
     }
 }

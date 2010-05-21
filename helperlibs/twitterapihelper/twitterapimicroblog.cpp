@@ -309,6 +309,30 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
     }
 }
 
+void TwitterApiMicroBlog::repeatPost(Choqok::Account* theAccount, const ChoqokId& postId)
+{
+    kDebug();
+    if ( postId.isEmpty() ) {
+        kError() << "ERROR: PostId is empty!";
+        return;
+    }
+    KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
+    url.addPath ( QString("/statuses/retweet/%1.%2").arg(postId).arg(format) );
+        QByteArray data = "source=choqok";
+    KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
+    if ( !job ) {
+        kDebug() << "Cannot create an http POST request!";
+        return;
+    }
+    job->addMetaData ( "content-type", "Content-Type: application/x-www-form-urlencoded" );
+    Choqok::Post *post = new Choqok::Post;
+    post->postId = postId;
+    mCreatePostMap[ job ] = post;
+    mJobsAccount[job] = theAccount;
+    connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotCreatePost ( KJob* ) ) );
+    job->start();
+}
+
 void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
 {
     kDebug();
@@ -347,9 +371,11 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
                                      MicroBlog::Critical );
                 }
             } else {
+                Choqok::NotifyManager::success(i18n("New post submitted successfully"));
                 emit postCreated ( theAccount, post );
             }
         } else {
+            Choqok::NotifyManager::success(i18n("Private message sent successfully"));
             emit postCreated ( theAccount, post );
         }
     }

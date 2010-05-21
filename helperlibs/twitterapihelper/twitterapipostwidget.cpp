@@ -246,4 +246,10 @@ void TwitterApiPostWidget::slotBasePostFetched(Choqok::Account* theAccount, Choq
     }
 }
 
+void TwitterApiPostWidget::repeatPost()
+{
+    d->mBlog->repeatPost(currentAccount(), currentPost().postId);
+}
+
+
 #include "twitterapipostwidget.moc"

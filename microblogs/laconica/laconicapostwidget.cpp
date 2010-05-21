@@ -36,6 +36,7 @@
 #include "laconicaaccount.h"
 #include "laconicamicroblog.h"
 #include <notifymanager.h>
+#include <KPushButton>
 
 const QRegExp LaconicaPostWidget::mGroupRegExp("([\\s]|^)!([^\\s\\W]+)");
 
@@ -56,6 +57,25 @@ LaconicaPostWidget::LaconicaPostWidget(Choqok::Account* account, const Choqok::P
 : TwitterApiPostWidget(account, post, parent), d( new Private(account) )
 {
 
+}
+
+void LaconicaPostWidget::initUi()
+{
+    TwitterApiPostWidget::initUi();
+
+    KPushButton *btn = buttons().value("btnResend");
+
+    if(btn){
+        QMenu *menu = new QMenu(btn);
+        QAction *resend = new QAction(i18n("Manual ReSend"), menu);
+        connect( resend, SIGNAL(triggered(bool)), SLOT(slotResendPost()) );
+        QAction *repeat = new QAction(i18n("Repeat"), menu);
+        repeat->setToolTip(i18n("Repeat post using API"));
+        connect( repeat, SIGNAL(triggered(bool)), SLOT(repeatPost()) );
+        menu->addAction(repeat);
+        menu->addAction(resend);
+        btn->setMenu(menu);
+    }
 }
 
 LaconicaPostWidget::~LaconicaPostWidget()

@@ -128,7 +128,6 @@ void QuickPost::slotSubmitPost( Account* a, Post* post )
 {
     if (post == d->submittedPost && d->submittedAccounts.removeOne(a)) {
         emit newPostSubmitted(Success, d->submittedPost->content);
-        NotifyManager::success(i18n("New post submitted successfully"));
     }
     if(d->isPostSubmitted && d->submittedAccounts.isEmpty()){
         d->txtPost->setEnabled(true);
