@@ -171,28 +171,6 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
     QList< Choqok::Post* > list;
     int count = groupList.count();
     if( count ) {
-        /**
-        Checking if QStringList::sort() failed on sorting numbers,
-        This happends when one or more items char count is less/more than other ones
-        */
-//         if(groupList.constBegin()->count() != (--(groupList.constEnd()))->count()) {
-//             int charCount = groupList[0].count();
-//             for(int i=1; i<count; ++i){
-//                 int tmp = groupList[i].count();
-//                 if( tmp < charCount ){
-//                     int k = 0;
-//                     for(int j = i; j<count; ++j){
-//                         int tmp2 = groupList[j].count();
-//                         if( tmp2 == tmp )
-//                             groupList.move(j, k);
-//                         else
-//                             charCount = tmp2;
-//                     }
-//                 } else
-//                     charCount = tmp;
-//             }
-//         }
-        ///END checking
         Choqok::Post *st = 0;
         for ( int i = 0; i < count; ++i ) {
             st = new Choqok::Post;
@@ -215,12 +193,8 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
             st->author.homePageUrl = grp.readEntry("authorUrl", QString());
             st->link = postUrl( account, st->author.userName, st->postId);
             st->isRead = grp.readEntry("isRead", true);
-            //Sorting The new statuses:
-//             int j = 0;
-//             int count = list.count();
-//             while (( j < count ) && ( st->postId > list[ j ]->postId ) ) {
-//                 ++j;
-//             }
+            st->repeatedByUsername = grp.readEntry("repeatedBy", QString());
+
             list.append( st );
         }
         mTimelineLatestId[account][timelineName] = st->postId;
@@ -265,6 +239,7 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
         grp.writeEntry( "authorLocation" , post->author.location );
         grp.writeEntry( "authorUrl" , post->author.homePageUrl );
         grp.writeEntry( "isRead" , post->isRead );
+        grp.writeEntry( "repeatedBy", post->repeatedByUsername);
     }
     postsBackup.sync();
     --d->countOfTimelinesToSave;
@@ -773,9 +748,17 @@ Choqok::Post * TwitterApiMicroBlog::readPostFromDomElement ( Choqok::Account* th
         return post;
     }
     QDomNode node2 = root.firstChild();
+
+    return readPostFromDomNode(theAccount, node2, post);;
+}
+
+Choqok::Post* TwitterApiMicroBlog::readPostFromDomNode(Choqok::Account* theAccount,
+                                                       QDomNode node, Choqok::Post* post)
+{
     QString timeStr;
-    while ( !node2.isNull() ) {
-        QDomElement elm = node2.toElement();
+    Choqok::Post* repeatedPost = 0;
+    while ( !node.isNull() ) {
+        QDomElement elm = node.toElement();
         if ( elm.tagName() == "created_at" )
             timeStr = elm.text();
         else if ( elm.tagName() == "text" )
@@ -793,7 +776,7 @@ Choqok::Post * TwitterApiMicroBlog::readPostFromDomElement ( Choqok::Account* th
         else if ( elm.tagName() == "favorited" )
             post->isFavorited = ( elm.text() == "true" ) ? true : false;
         else if ( elm.tagName() == "user" ) {
-            QDomNode node3 = node2.firstChild();
+            QDomNode node3 = node.firstChild();
             while ( !node3.isNull() ) {
                 QDomElement elm3 = node3.toElement();
                 if ( elm3.tagName() == "screen_name" ) {
@@ -809,13 +792,22 @@ Choqok::Post * TwitterApiMicroBlog::readPostFromDomElement ( Choqok::Account* th
                 }
                 node3 = node3.nextSibling();
             }
-        }
-        node2 = node2.nextSibling();
+        } else if ( elm.tagName() == "retweeted_status" )
+            repeatedPost = readPostFromDomNode( theAccount, elm.firstChild(), new Choqok::Post);
+
+        node = node.nextSibling();
+    }
+    QString repeatedBy;
+    if(repeatedPost){
+        repeatedBy = post->author.userName;
+        repeatedPost->postId = post->postId;
+        delete post;
+        post = repeatedPost;
+        post->repeatedByUsername = repeatedBy;
     }
     post->link = postUrl(theAccount, post->author.userName, post->postId);
     post->creationDateTime = dateFromString ( timeStr );
     post->isRead = post->isFavorited;
-
     return post;
 }
 

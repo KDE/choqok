@@ -61,6 +61,7 @@ public:
 
     virtual void createPostWithAttachment(Choqok::Account* theAccount, Choqok::Post* post,
                             const QString &mediumToAttach = QString());
+    virtual QString generateRepeatedByUserTooltip(const QString& username);
 private:
     QPointer<LaconicaSearch> mSearchBackend;
 };

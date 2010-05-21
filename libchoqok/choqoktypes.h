@@ -72,6 +72,7 @@ public:
     bool isPrivate;
     bool isError;
     bool isRead;
+    QString repeatedByUsername;
 };
 /**
 Describe an specific timeline, Should use by @ref MicroBlog

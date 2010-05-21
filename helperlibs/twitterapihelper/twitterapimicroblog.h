@@ -26,6 +26,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <microblog.h>
 #include <KUrl>
 #include "twitterapisearch.h"
+#include <QDomElement>
 
 class TwitterApiSearchTimelineWidget;
 class TwitterApiAccount;
@@ -130,6 +131,8 @@ public:
                                                                         QWidget *parent);
 
     QDateTime dateFromString( const QString &date );
+
+    virtual QString generateRepeatedByUserTooltip( const QString &username )=0;
 public Q_SLOTS:
     /**
     Launch a dialog to send direct message.
@@ -180,6 +183,8 @@ protected:
     ///==============================================
     virtual Choqok::Post * readPostFromDomElement( Choqok::Account* theAccount,
                                                    const QDomElement& root, Choqok::Post* post );
+    virtual Choqok::Post *readPostFromDomNode(Choqok::Account* theAccount,
+                                              QDomNode node, Choqok::Post* post);
     virtual Choqok::Post * readPostFromXml( Choqok::Account* theAccount,
                                             const QByteArray& buffer, Choqok::Post* post );
     virtual QList<Choqok::Post*> readTimelineFromXml( Choqok::Account* theAccount, const QByteArray& buffer );
@@ -188,7 +193,6 @@ protected:
     virtual QList<Choqok::Post*> readDMessagesFromXml (Choqok::Account *theAccount, const QByteArray &buffer );
     virtual QStringList readUsersScreenNameFromXml( Choqok::Account *theAccount, const QByteArray & buffer );
     virtual Choqok::User *readUserInfoFromXml( const QByteArray &buffer );
-
     /**
     Checks xml returned from server for error, and return error string, Or an empty string if nothing found!
     */
