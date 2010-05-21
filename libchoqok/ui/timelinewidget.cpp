@@ -44,10 +44,12 @@ public:
         :currentAccount(account), timelineName(timelineName),
          btnMarkAllAsRead(0), unreadCount(0), info(0)
     {
-        info = account->microblog()->timelineInfo(timelineName);
-        if(!info){//It's search timeline
+        if(account->microblog()->isValidTimeline(timelineName)) {
+            info = account->microblog()->timelineInfo(timelineName);
+        } else {//It's search timeline
             info = new Choqok::TimelineInfo;
             info->name = timelineName;
+            info->description = i18n("Search results for %1", timelineName);
         }
     }
     Account *currentAccount;
