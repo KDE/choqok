@@ -34,6 +34,7 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_imagepreview" ) )
 
 const QRegExp ImagePreview::mTwitpicRegExp("(http://twitpic.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
 const QRegExp ImagePreview::mYFrogRegExp("(http://yfrog.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])");
+const QRegExp ImagePreview::mTweetphotoRegExp("(http://tweetphoto.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
 
 ImagePreview::ImagePreview(QObject* parent, const QList< QVariant >& )
     :Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped)
@@ -82,6 +83,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     int pos = 0;
     QStringList twitpicRedirectList;
     QStringList yfrogRedirectList;
+    QStringList TweetphotoRedirectList;
     QString content = postToParse->currentPost().content;
 
     //Twitpic: http://www.twitpic.com/api.do
@@ -118,6 +120,24 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
         mParsingList.insert(yfrogThumbnailUrl, postToParse);
         mBaseUrlMap.insert(yfrogThumbnailUrl, url);
         Choqok::MediaManager::self()->fetchImage(yfrogThumbnailUrl, Choqok::MediaManager::Async);
+    }
+    
+     //Tweetphoto; http://groups.google.com/group/tweetphoto/web/fetch-image-from-tweetphoto-url
+    pos = 0;
+    while ((pos = mTweetphotoRegExp.indexIn(content, pos)) != -1) {
+        pos += mTweetphotoRegExp.matchedLength();
+        TweetphotoRedirectList << mTweetphotoRegExp.cap(0);
+        kDebug()<<mTweetphotoRegExp.capturedTexts();
+    }
+    foreach(const QString &url, TweetphotoRedirectList){
+	connect( Choqok::MediaManager::self(),
+                 SIGNAL(imageFetched(QString,QPixmap)),
+                 SLOT(slotImageFetched(QString,QPixmap)) );
+        //QString TweetphotoUrl = QString( "http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" ).arg(QString(url));
+	QString TweetphotoUrl = "http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url="+ url; 
+        mParsingList.insert(TweetphotoUrl, postToParse);
+        mBaseUrlMap.insert(TweetphotoUrl, url);
+        Choqok::MediaManager::self()->fetchImage(TweetphotoUrl, Choqok::MediaManager::Async);
     }
 }
 
