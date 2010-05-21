@@ -35,6 +35,7 @@
 #include "nowlisteningsettings.h"
 #include <KMessageBox>
 #include <qdbusconnectioninterface.h>
+#include "mpris.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < NowListening > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_nowlistening" ) )
@@ -60,52 +61,59 @@ void NowListening::slotPrepareNowListening()
     bool playerFound = false;
     bool isPlaying = false;
 
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.amarok").value()) {
-
-        QDBusInterface amarokPlayer ( "org.kde.amarok",
-                                      "/Player",
-                                      "org.freedesktop.MediaPlayer" );
-        /*
-        Amarok Player use this enum for GetCaps method
-        see original code @ http://gitorious.org/amarok/amarok/blobs/master/src/dbus/PlayerDBusHandler.h
-        61     enum DBusCaps {
-        62      NONE                  = 0,
-        63      CAN_GO_NEXT           = 1 << 0,
-        64      CAN_GO_PREV           = 1 << 1,
-        65      CAN_PAUSE             = 1 << 2,
-        66      CAN_PLAY              = 1 << 3,
-        67      CAN_SEEK              = 1 << 4,
-        68      CAN_PROVIDE_METADATA  = 1 << 5,
-        69      CAN_HAS_TRACKLIST     = 1 << 6
-        70     };
-    
-        see original code @ http://gitorious.org/amarok/amarok/blobs/master/src/dbus/PlayerDBusHandler.cpp
-        238 int PlayerDBusHandler::GetCaps()
-        239 {
-        240     int caps = NONE;
-        241     Meta::TrackPtr track = The::engineController()->currentTrack();
-        242     caps |= CAN_HAS_TRACKLIST;
-        243     if ( track ) caps |= CAN_PROVIDE_METADATA;
-        244     if ( GetStatus().Play == 0 /playing/ ) caps |= CAN_PAUSE;
-        245     if ( ( GetStatus().Play == 1 /paused/ ) || ( GetStatus().Play == 2 /stoped/ ) ) caps |= CAN_PLAY;
-        246     if ( ( GetStatus().Play == 0 /playing/ ) || ( GetStatus().Play == 1 /paused/ ) ) caps |= CAN_SEEK;
-        247     if ( ( The::playlist()->activeRow() >= 0 ) && ( The::playlist()->activeRow() <= The::playlist()->qaim()->rowCount() ) )
-        248     {
-        249         caps |= CAN_GO_NEXT;
-        250         caps |= CAN_GO_PREV;
-        251     }
-        252     return caps;
-        253 }
-        */
-        if (((QDBusReply<int>)amarokPlayer.call ( "GetCaps" )).value()& (1 << 2 /* defined by amarok*/) ) {
-
-            QDBusReply< QMap<QString, QVariant> > reply = amarokPlayer.call ( "GetMetadata" );
-            trackInfo = reply.value();
+    MPRIS amarok ("amarok");
+    if (amarok.isValid()) {
+        if (amarok.isPlaying()) {
+            trackInfo=amarok.getTrackMetadata();
             isPlaying=true;
         }
         playerFound=true;
         player="Amarok";
     }
+
+    MPRIS audacious ("audacious");
+    if (!isPlaying && audacious.isValid()) {
+        if (audacious.isPlaying()) {
+            trackInfo=audacious.getTrackMetadata();
+            isPlaying=true;
+        }
+        playerFound=true;
+        player="Audacious";
+    }
+
+    MPRIS dragon ("dragonplayer-18262");
+    if (!isPlaying && dragon.isValid()) {
+        if (dragon.isPlaying()) {
+            trackInfo=dragon.getTrackMetadata();
+            isPlaying=true;
+        }
+        playerFound=true;
+        player="Dragon Player";
+    }
+
+    //need to enable MPRIS Plugin (Qmmp +0.4)
+    MPRIS qmmp ("qmmp");
+    if (!isPlaying && qmmp.isValid()) {
+        if (qmmp.isPlaying()) {
+            trackInfo=qmmp.getTrackMetadata();
+            isPlaying=true;
+        }
+        playerFound=true;
+        player="Qmmp";
+    }
+
+    //Mpris not complete supported by Kaffeine Version 1.0-svn3
+    /*
+    MPRIS kaffeine("kaffeine");
+    if(!isPlaying && kaffeine.isValid()){
+      if(kaffeine.isPlaying()){
+    trackInfo=kaffeine.getTrackMetadata();
+    isPlaying=true;
+      }
+      playerFound=true;
+      player="Kaffeine";
+    }
+    */
 
     if (!isPlaying && QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.juk").value()) {
         QDBusInterface jukPlayer ( "org.kde.juk",
@@ -194,40 +202,27 @@ void NowListening::slotPrepareNowListening()
         player="Banshee";
     }
 
-    if (!isPlaying && QDBusConnection::sessionBus().interface()->isServiceRegistered("org.atheme.audacious").value()) {
-        QDBusInterface audaciousPlayer ( "org.atheme.audacious",
-                                         "/org/atheme/audacious",
-                                         "org.atheme.audacious" );
+    //trying to find not supported players that implamented the MPRIS-Dbus interface
+    if (!isPlaying && !MPRIS::getRunningPlayers().isEmpty()) {
+        QStringList players = MPRIS::getRunningPlayers();
 
-        if ( !((QDBusReply<QString>)audaciousPlayer.call ( "Status" )).value().compare ( "playing" ) ) { //if audacious is playing
-            QDBusReply<uint> pos = audaciousPlayer.call ( "Position" );
-            QDBusReply< QVariant> reply = audaciousPlayer.call ( "SongTuple",pos.value(),"title" );
-
-            trackInfo.insert ( "title",reply.value() );
-            reply = audaciousPlayer.call ( "SongTuple",pos.value(),"track-number" );
-            trackInfo.insert ( "track",reply.value() );
-
-            reply = audaciousPlayer.call ( "SongTuple",pos.value(),"album" );
-            trackInfo.insert ( "album",reply.value() );
-
-            reply = audaciousPlayer.call ( "SongTuple",pos.value(),"artist" );
-            trackInfo.insert ( "artist",reply.value() );
-
-            reply = audaciousPlayer.call ( "SongTuple",pos.value(),"year" );
-            trackInfo.insert ( "year",reply.value() );
-
-            reply = audaciousPlayer.call ( "SongTuple",pos.value(),"genre" );
-            trackInfo.insert ( "genre",reply.value() );
-            isPlaying=true;
+        for (int i=0; i<players.size(); i++) { //looking for the first playing player
+            playerFound=true;
+            QString playerName = players.at(i);
+            MPRIS mprisPlayer (playerName);
+            if (mprisPlayer.isValid() && mprisPlayer.isPlaying()) {
+                trackInfo=mprisPlayer.getTrackMetadata();
+                isPlaying=true;
+                player = mprisPlayer.getPlayerIdentification().left(
+                             mprisPlayer.getPlayerIdentification().lastIndexOf(" ")); //remove the version of player
+                break;
+            }
         }
-        playerFound=true;
-        player="Audacious";
     }
-
     if (!isPlaying) {
         if (playerFound)
             KMessageBox::information(Choqok::UI::Global::mainWindow(),
-                                     i18n("Played by your music player."));
+                                     i18n("Play your desired music player."));
         else
             KMessageBox::sorry(Choqok::UI::Global::mainWindow(),
                                i18n("No supported player found."));

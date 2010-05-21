@@ -5,7 +5,7 @@ ${CHOQOK_INCLUDES}
 
 ########### next target ###############
 
-set( choqok_nowlistening_PART_SRCS
+set( choqok_nowlistening_PART_SRCS mpris.cpp
 nowlistening.cpp )
 
 kde4_add_kcfg_files(choqok_nowlistening_PART_SRCS nowlisteningsettings.kcfgc )
