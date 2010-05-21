@@ -28,6 +28,7 @@
 #include "account.h"
 #include "ui/mainwindow.h"
 
+class KAction;
 class KSplashScreen;
 namespace Choqok
 {
@@ -69,6 +70,10 @@ public:
     */
     virtual ~MainWindow();
 
+protected:
+    virtual void hideEvent(QHideEvent* event);
+    virtual void showEvent(QShowEvent* );
+
 private slots:
     void nextTab(int delta, Qt::Orientation orientation);
     void loadAllAccounts();
@@ -109,6 +114,7 @@ private:
     Choqok::UI::QuickPost *quickWidget;
     KSettings::Dialog *s_settingsDialog;
     KSplashScreen *m_splash;
+    KAction *showMain;
 
     int microblogCounter;
 };

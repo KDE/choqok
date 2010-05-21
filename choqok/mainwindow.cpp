@@ -205,11 +205,14 @@ void MainWindow::setupActions()
     markRead->setShortcut( KShortcut( Qt::CTRL | Qt::Key_R ) );
     connect( markRead, SIGNAL( triggered( bool ) ), this, SIGNAL( markAllAsRead()) );
 
-    KAction *showMain = new KAction( this );
+    showMain = new KAction( this );
     actionCollection()->addAction( QLatin1String( "toggle_mainwin" ), showMain );
     KShortcut toggleMainGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_C );
     showMain->setGlobalShortcut( toggleMainGlobalShortcut/*, KAction::DefaultShortcut, KAction::NoAutoloading*/ );
-    showMain->setText( i18n( "Minimize" ) );
+    if(this->isVisible())
+        showMain->setText( i18n( "Minimize" ) );
+    else
+        showMain->setText( i18n("Restore") );
     connect( showMain, SIGNAL( triggered( bool ) ), this, SLOT( toggleMainWindow() ) );
 
 //     KAction *manageAccounts = new KAction(KIcon("user-group-properties"), i18n("Manage Accounts..."), this);
@@ -251,6 +254,8 @@ void MainWindow::setupActions()
 //     sysIcon->contextMenu()->addAction( enableNotify );
     sysIcon->contextMenu()->addAction( prefs );
 
+    sysIcon->contextMenu()->addSeparator();
+    sysIcon->contextMenu()->addAction(showMain);
     sysIcon->contextMenu()->addSeparator();
     sysIcon->contextMenu()->addAction(actQuit);
 //     connect( sysIcon, SIGNAL(quitSelected()), this, SLOT(slotQuit()) );
@@ -517,6 +522,17 @@ void MainWindow::toggleMainWindow()
         hide();
     else
         show();
+}
+void MainWindow::hideEvent(QHideEvent* event)
+{
+    Choqok::UI::MainWindow::hideEvent(event);
+    showMain->setText( i18n("Restore") );
+}
+
+void MainWindow::showEvent(QShowEvent* event)
+{
+    Choqok::UI::MainWindow::showEvent(event);
+    showMain->setText( i18n("Minimize") );
 }
 
 void MainWindow::slotMarkAllAsRead()
