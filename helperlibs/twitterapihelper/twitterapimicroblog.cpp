@@ -84,13 +84,14 @@ TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObje
 
     setCharLimit(140);
     QStringList timelineTypes;
-    timelineTypes<< "Home" << "Reply" << "Inbox" << "Outbox" << "Favorite" << "Public";
+    timelineTypes<< "Home" << "Reply" << "Inbox" << "Outbox" << "Favorite" << "ReTweets" << "Public";
     setTimelineNames(timelineTypes);
     timelineApiPath["Home"] = "/statuses/home_timeline.%1";
     timelineApiPath["Reply"] = "/statuses/replies.%1";
     timelineApiPath["Inbox"] = "/direct_messages.%1";
     timelineApiPath["Outbox"] = "/direct_messages/sent.%1";
     timelineApiPath["Favorite"] = "/favorites.%1";
+    timelineApiPath["ReTweets"] = "/statuses/retweets_of_me.%1";
     timelineApiPath["Public"] = "/statuses/public_timeline.%1";
     setTimelineInfos();
 }
@@ -132,6 +133,12 @@ void TwitterApiMicroBlog::setTimelineInfos()
     t->description = i18nc("Timeline description", "Public timeline");
     t->icon = "folder-green";
     mTimelineInfos["Public"] = t;
+
+    t = new Choqok::TimelineInfo;
+    t->name = i18nc("Timeline Name", "ReTweets");
+    t->description = i18nc("Timeline description", "Your posts that ReTweeted by others");
+    t->icon = "folder-red";
+    mTimelineInfos["ReTweets"] = t;
 }
 
 TwitterApiMicroBlog::~TwitterApiMicroBlog()

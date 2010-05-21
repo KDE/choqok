@@ -58,6 +58,11 @@ public:
     QString timelineName();
 
     /**
+    @brief Return Timeline name for UI
+    */
+    QString timelineInfoName();
+
+    /**
      @brief Add new posts to UI.
     */
     virtual void addNewPosts( QList< Choqok::Post* >& postList );

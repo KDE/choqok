@@ -225,10 +225,10 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change, Choqok::UI::TimelineWidg
         if(tabIndex == -1)
             return;
         if(wd->unreadCount() > 0)
-            d->timelinesTabWidget->setTabText( tabIndex, wd->timelineName() +
+            d->timelinesTabWidget->setTabText( tabIndex, wd->timelineInfoName() +
                                                 QString("(%1)").arg(wd->unreadCount()) );
         else
-            d->timelinesTabWidget->setTabText( tabIndex, wd->timelineName() );
+            d->timelinesTabWidget->setTabText( tabIndex, wd->timelineInfoName() );
     }
 }
 
@@ -243,7 +243,7 @@ void MicroBlogWidget::markAllAsRead()
         int tabIndex = d->timelinesTabWidget->indexOf(wd);
         if(tabIndex == -1)
             continue;
-        d->timelinesTabWidget->setTabText( tabIndex, wd->timelineName() );
+        d->timelinesTabWidget->setTabText( tabIndex, wd->timelineInfoName() );
     }
 }
 

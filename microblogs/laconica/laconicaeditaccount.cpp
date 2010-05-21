@@ -167,7 +167,11 @@ void LaconicaEditAccountWidget::loadTimelinesTableState()
     foreach(const QString &timeline, mAccount->microblog()->timelineNames()){
         int newRow = timelinesTable->rowCount();
         timelinesTable->insertRow(newRow);
-        timelinesTable->setItem(newRow, 0, new QTableWidgetItem(timeline));
+        Choqok::TimelineInfo *info = mAccount->microblog()->timelineInfo(timeline);
+        QTableWidgetItem *item = new QTableWidgetItem(info->name);
+        item->setData(32, timeline);
+        item->setToolTip(info->description);
+        timelinesTable->setItem(newRow, 0, item);
 
         QCheckBox *enable = new QCheckBox ( timelinesTable );
         enable->setChecked ( mAccount->timelineNames().contains(timeline) );
@@ -182,7 +186,7 @@ void LaconicaEditAccountWidget::saveTimelinesTableState()
     for(int i=0; i<rowCount; ++i){
         QCheckBox *enable = qobject_cast<QCheckBox*>(timelinesTable->cellWidget(i, 1));
         if(enable && enable->isChecked())
-            timelines<<timelinesTable->item(i, 0)->text();
+            timelines<<timelinesTable->item(i, 0)->data(32).toString();
     }
     timelines.removeDuplicates();
     mAccount->setTimelineNames(timelines);

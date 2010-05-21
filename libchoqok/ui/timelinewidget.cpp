@@ -43,7 +43,9 @@ public:
     Private(Account *account, const QString &timelineName)
         :currentAccount(account), timelineName(timelineName),
          btnMarkAllAsRead(0), unreadCount(0)
-    {}
+    {
+        info = account->microblog()->timelineInfo(timelineName);
+    }
     Account *currentAccount;
     QString timelineName;
     bool mStartUp;
@@ -53,6 +55,7 @@ public:
     QVBoxLayout *mainLayout;
     QHBoxLayout *titleBarLayout;
     QLabel *lblDesc;
+    Choqok::TimelineInfo *info;
 };
 
 TimelineWidget::TimelineWidget(Choqok::Account* account, const QString &timelineName, QWidget* parent /*= 0*/)
@@ -89,6 +92,11 @@ void TimelineWidget::loadTimeline()
 QString TimelineWidget::timelineName()
 {
     return d->timelineName;
+}
+
+QString TimelineWidget::timelineInfoName()
+{
+    return d->info->name;
 }
 
 void TimelineWidget::setTimelineName(const QString &type)
