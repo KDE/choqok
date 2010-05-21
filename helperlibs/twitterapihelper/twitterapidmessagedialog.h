@@ -35,7 +35,7 @@ struct Post;
 
 class TwitterApiAccount;
 
-class TwitterApiDMessageDialog : public KDialog
+class CHOQOK_HELPER_EXPORT TwitterApiDMessageDialog : public KDialog
 {
     Q_OBJECT
 public:

@@ -29,7 +29,7 @@
 #include "twitterapisearch.h"
 
 
-class TwitterApiSearchTimelineWidget : public Choqok::UI::TimelineWidget
+class CHOQOK_HELPER_EXPORT TwitterApiSearchTimelineWidget : public Choqok::UI::TimelineWidget
 {
     Q_OBJECT
 public:
