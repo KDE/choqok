@@ -1372,8 +1372,19 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromJsonMap(Choqok::Account* theAccou
     post->author.userId = userMap["id"].toString();
     post->author.userName = userMap["screen_name"].toString();
     post->author.profileImageUrl = userMap["profile_image_url"].toString();
+    Choqok::Post* repeatedPost = 0;
+    QVariantMap retweetedMap = var["retweeted_status"].toMap();
+    if( !retweetedMap.isEmpty() ){
+        repeatedPost = readPostFromJsonMap( theAccount, retweetedMap, new Choqok::Post);
+        QString repeatedBy;
+        repeatedBy = post->author.userName;
+        repeatedPost->postId = post->postId;
+        delete post;
+        post = repeatedPost;
+        post->repeatedByUsername = repeatedBy;
+    }
     post->link = postUrl(theAccount, post->author.userName, post->postId);
-    post->isRead = post->isFavorited;//to mark favorited posts as read!
+    post->isRead = post->isFavorited || (post->repeatedByUsername == theAccount->username());
     return post;
 }
 
