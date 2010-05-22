@@ -832,11 +832,12 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromDomNode(Choqok::Account* theAccou
     }
     QString repeatedBy;
     if(repeatedPost){
-        repeatedBy = post->author.userName;
-        repeatedPost->postId = post->postId;
-        delete post;
+        Choqok::Post *tmp = post;
         post = repeatedPost;
-        post->repeatedByUsername = repeatedBy;
+        post->postId = tmp->postId;
+        post->repeatedByUsername = tmp->author.userName;
+        post->source = tmp->source;
+        delete tmp;
     }
     post->link = postUrl(theAccount, post->author.userName, post->postId);
     post->creationDateTime = dateFromString ( timeStr );
@@ -1376,12 +1377,12 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromJsonMap(Choqok::Account* theAccou
     QVariantMap retweetedMap = var["retweeted_status"].toMap();
     if( !retweetedMap.isEmpty() ){
         repeatedPost = readPostFromJsonMap( theAccount, retweetedMap, new Choqok::Post);
-        QString repeatedBy;
-        repeatedBy = post->author.userName;
-        repeatedPost->postId = post->postId;
-        delete post;
+        Choqok::Post *tmp = post;
         post = repeatedPost;
-        post->repeatedByUsername = repeatedBy;
+        post->postId = tmp->postId;
+        post->repeatedByUsername = tmp->author.userName;
+        post->source = tmp->source;
+        delete tmp;
     }
     post->link = postUrl(theAccount, post->author.userName, post->postId);
     post->isRead = post->isFavorited || (post->repeatedByUsername == theAccount->username());
