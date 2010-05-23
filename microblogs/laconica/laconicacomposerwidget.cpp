@@ -52,7 +52,7 @@ public:
 
 
 LaconicaComposerWidget::LaconicaComposerWidget(Choqok::Account* account, QWidget* parent)
-    : ComposerWidget(account, parent), d(new Private)
+    : TwitterApiComposerWidget(account, parent), d(new Private)
 {
     d->editorLayout = qobject_cast<QGridLayout*>(editorContainer()->layout());
     d->btnAttach = new KPushButton(editorContainer());

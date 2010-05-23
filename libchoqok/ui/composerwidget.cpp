@@ -30,6 +30,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KPushButton>
 #include <shortenmanager.h>
 #include <qpointer.h>
+#include <QGridLayout>
 
 namespace Choqok {
 namespace UI {
@@ -37,32 +38,48 @@ namespace UI {
 class ComposerWidget::Private
 {
 public:
-    Private( Account *account, TextEdit *editW = 0 )
-    :editor(editW), currentAccount(account), postToSubmit(0)
+    Private( Account *account)
+    :editor(0), currentAccount(account), postToSubmit(0)
     {}
-    TextEdit *editor;
+    QPointer<TextEdit> editor;
     Account *currentAccount;
     Choqok::Post *postToSubmit;
     QWidget *editorContainer;
 };
 
 ComposerWidget::ComposerWidget(Choqok::Account* account, QWidget* parent /*= 0*/)
-: QWidget(parent), btnAbort(0), d(new Private(account, new TextEdit(account->microblog()->postCharLimit(), this)))
+: QWidget(parent), btnAbort(0), d(new Private(account))
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     d->editorContainer = new QWidget(this);
-    QGridLayout *internalLayout = new QGridLayout(d->editorContainer);
-    internalLayout->addWidget(d->editor, 0, 0);
+    QGridLayout *internalLayout = new QGridLayout;
+    d->editorContainer->setLayout(internalLayout);
     layout->addWidget(editorContainer());
-    connect(d->editor, SIGNAL(returnPressed(QString)), SLOT(submitPost(QString)));
-    connect(d->editor, SIGNAL(textChanged()), SLOT(editorTextChanged()));
-    connect(d->editor, SIGNAL(cleared()), SLOT(editorCleared()));
-    editorTextChanged();
+    setEditor(new TextEdit(account->microblog()->postCharLimit(), this));
 }
 
 ComposerWidget::~ComposerWidget()
 {
     delete d;
+}
+
+void ComposerWidget::setEditor(TextEdit* editor)
+{
+    kDebug();
+    if(d->editor)
+        d->editor->deleteLater();
+    d->editor = editor;
+    kDebug();
+    if(d->editor) {
+        QGridLayout *internalLayout = qobject_cast<QGridLayout*>(d->editorContainer->layout());
+        internalLayout->addWidget(d->editor, 0, 0);
+        connect(d->editor, SIGNAL(returnPressed(QString)), SLOT(submitPost(QString)));
+        connect(d->editor, SIGNAL(textChanged()), SLOT(editorTextChanged()));
+        connect(d->editor, SIGNAL(cleared()), SLOT(editorCleared()));
+        editorTextChanged();
+    } else {
+        kDebug()<<"Editor is NULL!";
+    }
 }
 
 void ComposerWidget::setText(const QString& text, const QString& replyTo)

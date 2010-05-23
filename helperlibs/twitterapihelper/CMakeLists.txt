@@ -15,6 +15,8 @@ twitterapimicroblogwidget.cpp
 twitterapisearchtimelinewidget.cpp
 twitterapiwhoiswidget.cpp
 twitterapishowthread.cpp
+twitterapitextedit.cpp
+twitterapicomposerwidget.cpp
 )
 
 kde4_add_library(twitterapihelper SHARED ${twitterhelper_LIB_SRCS})

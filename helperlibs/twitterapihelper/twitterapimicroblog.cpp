@@ -49,6 +49,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "twitterapisearchdialog.h"
 #include "twitterapisearchtimelinewidget.h"
 #include <notifymanager.h>
+#include "twitterapicomposerwidget.h"
 
 class TwitterApiMicroBlog::Private
 {
@@ -252,6 +253,11 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
     --d->countOfTimelinesToSave;
     if(d->countOfTimelinesToSave < 1)
         emit readyForUnload();
+}
+
+Choqok::UI::ComposerWidget* TwitterApiMicroBlog::createComposerWidget(Choqok::Account* account, QWidget* parent)
+{
+    return new TwitterApiComposerWidget(account, parent);
 }
 
 TwitterApiSearchTimelineWidget * TwitterApiMicroBlog::createSearchTimelineWidget(Choqok::Account* theAccount,

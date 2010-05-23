@@ -59,6 +59,10 @@ protected Q_SLOTS:
     virtual void editorCleared();
 
 protected:
+    /**
+    Sub classes can use another editor! (Should be a subclass of Choqok::Editor)
+    */
+    virtual void setEditor( TextEdit *editor );
     Account *currentAccount();
     QWidget *editorContainer();
     Choqok::Post *postToSubmit();

@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2008-2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    Copyright (C) 2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -22,29 +22,24 @@
 
 */
 
-#ifndef LACONICACOMPOSERWIDGET_H
-#define LACONICACOMPOSERWIDGET_H
+#include "twitterapicomposerwidget.h"
+#include "twitterapitextedit.h"
+#include <QCompleter>
+#include "twitterapiaccount.h"
+#include <KDebug>
 
-#include <twitterapihelper/twitterapicomposerwidget.h>
 
-
-class LaconicaComposerWidget : public TwitterApiComposerWidget
+TwitterApiComposerWidget::TwitterApiComposerWidget(Choqok::Account* account, QWidget* parent)
+: Choqok::UI::ComposerWidget(account, parent)
 {
-    Q_OBJECT
-public:
-    explicit LaconicaComposerWidget(Choqok::Account* account, QWidget* parent = 0);
-    ~LaconicaComposerWidget();
+    kDebug();
+    TwitterApiTextEdit *edit = new TwitterApiTextEdit(140, this);
+    QCompleter *c = new QCompleter(qobject_cast<TwitterApiAccount*>(account)->friendsList(), this);
+    c->setCaseSensitivity(Qt::CaseInsensitive);
+    edit->setCompleter(c);
+    setEditor(edit);
+}
 
-protected slots:
-    virtual void submitPost(const QString& text);
-    virtual void slotPostMediaSubmitted(Choqok::Account *theAccount, Choqok::Post* post);
-//     virtual void slotErrorPost(Choqok::Account* theAccount,Choqok::Post* post);
-    virtual void selectMediumToAttach();
-    virtual void cancelAttachMedium();
+TwitterApiComposerWidget::~TwitterApiComposerWidget()
+{}
 
-private:
-    class Private;
-    Private *d;
-};
-
-#endif // LACONICACOMPOSERWIDGET_H

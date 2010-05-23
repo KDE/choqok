@@ -47,6 +47,7 @@ public:
     virtual void saveTimeline(Choqok::Account *account, const QString& timelineName,
                               const QList< Choqok::UI::PostWidget* > &timeline);
 
+    virtual Choqok::UI::ComposerWidget* createComposerWidget(Choqok::Account* account, QWidget* parent);
     /**
     \brief Create a new post
 

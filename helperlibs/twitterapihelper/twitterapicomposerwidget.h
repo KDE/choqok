@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2008-2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    Copyright (C) 2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -22,29 +22,18 @@
 
 */
 
-#ifndef LACONICACOMPOSERWIDGET_H
-#define LACONICACOMPOSERWIDGET_H
+#ifndef TWITTERAPICOMPOSERWIDGET_H
+#define TWITTERAPICOMPOSERWIDGET_H
 
-#include <twitterapihelper/twitterapicomposerwidget.h>
+#include <composerwidget.h>
 
 
-class LaconicaComposerWidget : public TwitterApiComposerWidget
+class CHOQOK_HELPER_EXPORT TwitterApiComposerWidget : public Choqok::UI::ComposerWidget
 {
-    Q_OBJECT
 public:
-    explicit LaconicaComposerWidget(Choqok::Account* account, QWidget* parent = 0);
-    ~LaconicaComposerWidget();
+    explicit TwitterApiComposerWidget(Choqok::Account* account, QWidget* parent = 0);
+    ~TwitterApiComposerWidget();
 
-protected slots:
-    virtual void submitPost(const QString& text);
-    virtual void slotPostMediaSubmitted(Choqok::Account *theAccount, Choqok::Post* post);
-//     virtual void slotErrorPost(Choqok::Account* theAccount,Choqok::Post* post);
-    virtual void selectMediumToAttach();
-    virtual void cancelAttachMedium();
-
-private:
-    class Private;
-    Private *d;
 };
 
-#endif // LACONICACOMPOSERWIDGET_H
+#endif // TWITTERAPICOMPOSERWIDGET_H
