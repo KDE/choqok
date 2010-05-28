@@ -2,6 +2,7 @@
 Name=Choqok
 Name[bg]=Choqok
 Name[ca]=Choqok
+Name[ca@valencia]=Choqok
 Name[cs]=Choqok
 Name[da]=Choqok
 Name[de]=Choqok
@@ -38,6 +39,7 @@ Categories=Network;
 GenericName=KDE Micro-blogging Client
 GenericName[bg]=KDE клиент за микроблогове
 GenericName[ca]=Client de microblocs KDE
+GenericName[ca@valencia]=Client de microblocs KDE
 GenericName[da]=KDE mikroblogging-klient
 GenericName[de]=Ein KDE-Micro-Blogging-Programm
 GenericName[en_GB]=KDE Micro-blogging Client
