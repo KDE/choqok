@@ -50,7 +50,7 @@ VideoPreview::VideoPreview(QObject* parent, const QList< QVariant >& )
 {
     kDebug();
     connect( Choqok::UI::Global::SessionManager::self(),
-             SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*)),
+             SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
              this,
              SLOT(slotAddNewPostWidget(Choqok::UI::PostWidget*)) );
 }
