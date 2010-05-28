@@ -31,6 +31,7 @@
 #include <QStringList>
 #include <KLocalizedString>
 #include <KConfigGroup>
+#include <KDebug>
 
 FilterSettings *FilterSettings::_self = 0L;
 QMap<Filter::FilterField, QString> FilterSettings::_filterFieldName;
@@ -63,7 +64,7 @@ FilterSettings::~FilterSettings()
 
 }
 
-QList< Filter* > FilterSettings::availableFilters() const
+QList< Filter* > FilterSettings::filters() const
 {
     return _filters;
 }
@@ -72,13 +73,18 @@ void FilterSettings::readConfig()
 {
     _filters.clear();
     //Filter group names are start with Filter_%Text%%Field%%Type%
+    KGlobal::config()->sync();
     QStringList groups = KGlobal::config()->groupList();
     foreach(const QString &grp, groups){
         if(grp.startsWith("Filter_")){
             Filter *f = new Filter(KGlobal::config()->group(grp), this);
+            if(f->filterText().isEmpty())
+                continue;
             _filters << f;
+            kDebug()<<"REEADING A FILTER";
         }
     }
+    kDebug()<<filters().count();
 }
 
 void FilterSettings::setFilters(const QList< Filter* > &filters)

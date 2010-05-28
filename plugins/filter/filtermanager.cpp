@@ -90,8 +90,13 @@ void FilterManager::parse(Choqok::UI::PostWidget* postToParse)
     if(!postToParse)
         return;
 
-    foreach(Filter* filter, FilterSettings::self()->availableFilters()) {
+    foreach(Filter* filter, FilterSettings::self()->filters()) {
+        if(filter->filterText().isEmpty())
+            return;
         switch(filter->filterField()){
+            case Filter::Content:
+                doFiltering( postToParse, filterText(postToParse->currentPost().content, filter) );
+                break;
             case Filter::AuthorUsername:
                 doFiltering( postToParse, filterText(postToParse->currentPost().author.userName, filter) );
                 break;
@@ -101,9 +106,7 @@ void FilterManager::parse(Choqok::UI::PostWidget* postToParse)
             case Filter::Source:
                 doFiltering( postToParse, filterText(postToParse->currentPost().source, filter) );
                 break;
-            case Filter::Content:
             default:
-                doFiltering( postToParse, filterText(postToParse->currentPost().content, filter) );
                 break;
         };
     }
@@ -113,19 +116,29 @@ FilterManager::FilterAction FilterManager::filterText(const QString& textToCheck
 {
     switch(filter->filterType()){
         case Filter::ExactMatch:
-            if(textToCheck == filter->filterText())
+            if(textToCheck == filter->filterText()){
+                kDebug()<<"ExactMatch";
                 return Remove;
+            }
             break;
         case Filter::RegExp:
-            if( textToCheck.contains(QRegExp(filter->filterText())) )
+            if( textToCheck.contains(QRegExp(filter->filterText())) ){
+                kDebug()<<"RegExp";
                 return Remove;
+            }
             break;
         case Filter::Contain:
-            if( textToCheck.contains(filter->filterText()) )
+            if( textToCheck.contains(filter->filterText()) ){
+                kDebug()<<"Contain";
                 return Remove;
+            }
+            break;
         case Filter::DoesNotContain:
-            if( !textToCheck.contains(filter->filterText()) )
+            if( !textToCheck.contains(filter->filterText()) ){
+                kDebug()<<"DoesNotContain";
                 return Remove;
+            }
+            break;
         default:
             return None;
             break;

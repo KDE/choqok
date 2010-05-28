@@ -66,7 +66,7 @@ void ConfigureFilters::slotButtonClicked(int button)
 void ConfigureFilters::reloadFiltersTable()
 {
     ui.filters->clearContents();
-    QList<Filter*> filters = FilterSettings::self()->availableFilters();
+    QList<Filter*> filters = FilterSettings::self()->filters();
     kDebug()<<filters.count();
     foreach(Filter *filter, filters){
         addNewFilter(filter);
@@ -105,16 +105,21 @@ void ConfigureFilters::slotEditFilter()
         type = (Filter::FilterType) ui.filters->item(row, 1)->data(32).toInt();
         QString text = ui.filters->item(row, 2)->text();
         Filter *f = new Filter(text, field, type, this);
-        AddEditFilter *dialog = new AddEditFilter(this, f);
+        QPointer<AddEditFilter> dialog = new AddEditFilter(this, f);
         connect(dialog, SIGNAL(filterUpdated(Filter*)), SLOT(slotUpdateFilter(Filter*)));
-        dialog->show();
+        dialog->exec();
     }
 }
 
 void ConfigureFilters::slotRemoveFilter()
 {
     if(ui.filters->selectedItems().count()>0){
-        ui.filters->removeRow(ui.filters->currentRow());
+        int row = ui.filters->currentRow();
+//         int field = ui.filters->item(row, 0)->data(32).toInt();
+//         int type = ui.filters->item(row, 1)->data(32).toInt();
+//         QString text = ui.filters->item(row, 2)->text();
+//         KGlobal::config()->deleteGroup(QString("%1%2%3").arg(text).arg(field).arg(type));
+        ui.filters->removeRow(row);
     }
 }
 

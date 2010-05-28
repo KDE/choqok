@@ -37,7 +37,7 @@ public:
     static FilterSettings *self();
     virtual ~FilterSettings();
 
-    QList<Filter*> availableFilters() const;
+    QList<Filter*> filters() const;
     void setFilters(const QList< Filter* >& filters);
     void writeConfig();
     void readConfig();

@@ -47,9 +47,9 @@ AddEditFilter::AddEditFilter(QWidget* parent, Filter *filter)
         ui.filterField->setCurrentIndex(ui.filterField->findData(filter->filterField()));
         ui.filterType->setCurrentIndex(ui.filterType->findData(filter->filterType()));
         ui.filterText->setText(filter->filterText());
-        setWindowTitle(i18n("Modify existing filter"));
-
+        setWindowTitle(i18n("Modify filter"));
     }
+    ui.filterText->setFocus();
 }
 
 AddEditFilter::~AddEditFilter()
