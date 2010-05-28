@@ -1,0 +1,11 @@
+[Desktop Entry]
+Icon=kaboodle
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=kcm_choqok_filter
+X-KDE-FactoryName=kcm_choqok_filter
+X-KDE-ParentApp=choqok_filter
+X-KDE-ParentComponents=choqok_filter
+
+Name=Filter Manager
