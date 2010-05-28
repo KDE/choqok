@@ -30,6 +30,10 @@
 #include <choqokuiglobal.h>
 #include <quickpost.h>
 #include <KMessageBox>
+#include <QTimer>
+#include "filtersettings.h"
+#include "filter.h"
+#include <postwidget.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < FilterManager > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_filter" ) )
@@ -37,7 +41,11 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_filter" ) )
 FilterManager::FilterManager(QObject* parent, const QList<QVariant>& )
         :Choqok::Plugin(MyPluginFactory::componentData(), parent)
 {
-    
+    kDebug();
+    connect( Choqok::UI::Global::SessionManager::self(),
+            SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*, Choqok::Account*)),
+             this,
+            SLOT(slotAddNewPostWidget(Choqok::UI::PostWidget*, Choqok::Account*)) );
 }
 
 FilterManager::~FilterManager()
@@ -45,4 +53,86 @@ FilterManager::~FilterManager()
 
 }
 
+
+void FilterManager::slotAddNewPostWidget(Choqok::UI::PostWidget* newWidget, Choqok::Account* theAccount )
+{
+    if(!theAccount->inherits("TwitterApiAccount")){
+        kDebug()<<"Not a TwitterApi like account";
+        return;
+    }
+    postsQueue.enqueue(newWidget);
+    if(state == Stopped){
+        state = Running;
+        QTimer::singleShot(1000, this, SLOT(startParsing()));
+    }
+}
+
+void FilterManager::startParsing()
+{
+    int i = 8;
+    while( !postsQueue.isEmpty() && i>0 ){
+        parse(postsQueue.dequeue());
+        --i;
+    }
+
+    if(postsQueue.isEmpty())
+        state = Stopped;
+    else
+        QTimer::singleShot(500, this, SLOT(startParsing()));
+}
+
+void FilterManager::parse(Choqok::UI::PostWidget* postToParse)
+{
+    if(!postToParse)
+        return;
+
+    foreach(Filter* filter, FilterSettings::self()->availableFilters()) {
+        switch(filter->filterField()){
+            case Filter::AuthorUsername:
+                doFiltering( postToParse, filterText(postToParse->currentPost().author.userName, filter) );
+                break;
+            case Filter::ReplyToUsername:
+                doFiltering( postToParse, filterText(postToParse->currentPost().replyToUserName, filter) );
+                break;
+            case Filter::Source:
+                doFiltering( postToParse, filterText(postToParse->currentPost().source, filter) );
+                break;
+            case Filter::Content:
+            default:
+                doFiltering( postToParse, filterText(postToParse->currentPost().content, filter) );
+                break;
+        };
+    }
+}
+
+FilterManager::FilterAction FilterManager::filterText(const QString& textToCheck, Filter* filter)
+{
+    switch(filter->filterType()){
+        case Filter::ExactMatch:
+            if(textToCheck == filter->filterText())
+                return Remove;
+            break;
+        case Filter::RegExp:
+            if( textToCheck.contains(QRegExp(filter->filterText())) )
+                return Remove;
+            break;
+        case Filter::Contain:
+            if( textToCheck.contains(filter->filterText()) )
+                return Remove;
+        default:
+            break;
+    }
+}
+
+void FilterManager::doFiltering(Choqok::UI::PostWidget* postToFilter, FilterManager::FilterAction action)
+{
+    switch(action){
+        case Remove:
+            postToFilter->close();
+            break;
+        default:
+            //Do nothing
+            break;
+    }
+}
 

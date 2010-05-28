@@ -23,6 +23,17 @@
 */
 
 #include <plugin.h>
+#include <QPixmap>
+#include <QQueue>
+#include <QPointer>
+#include "filter.h"
+
+namespace Choqok {
+namespace UI {
+class PostWidget;
+}
+class Account;
+}
 
 class KConfigGroup;
 /**
@@ -34,10 +45,23 @@ class FilterManager : public Choqok::Plugin
 {
     Q_OBJECT
 public:
+    enum FilterAction { None = 0, Remove};
+
     FilterManager( QObject* parent, const QList< QVariant >& args );
     ~FilterManager();
 
 protected slots:
+    void slotAddNewPostWidget( Choqok::UI::PostWidget *newWidget, Choqok::Account* theAccount );
+    void startParsing();
 
+private:
+    enum ParserState{ Running = 0, Stopped };
+    ParserState state;
+
+    void parse( Choqok::UI::PostWidget *postToParse );
+    QQueue< QPointer<Choqok::UI::PostWidget> > postsQueue;
+
+    FilterAction filterText(const QString &textToCheck, Filter * filter);
+    void doFiltering(Choqok::UI::PostWidget *postToFilter, FilterAction action );
 };
 

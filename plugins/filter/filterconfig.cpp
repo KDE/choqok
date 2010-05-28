@@ -42,7 +42,7 @@ FilteringConfig::FilteringConfig(QWidget* parent, const QVariantList& args):
     wd->setObjectName("mFilteringCtl");
     ui.setupUi(wd);
     layout->addWidget(wd);
-    setButtons(KCModule::Apply | KCModule::Default);
+//     setButtons(KCModule::Apply | KCModule::Default);
 }
 
 FilteringConfig::~FilteringConfig()
