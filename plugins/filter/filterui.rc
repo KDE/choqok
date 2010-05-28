@@ -1,0 +1,8 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="choqok" version="2">
+    <MenuBar>
+        <Menu name="tools"><text>Tools</text>
+            <Action name="configureFilters" />
+        </Menu>
+    </MenuBar>
+</kpartgui>

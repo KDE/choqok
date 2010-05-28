@@ -25,22 +25,25 @@
 #ifndef FILTERINGCONFIG_H
 #define FILTERINGCONFIG_H
 
-#include <kcmodule.h>
+#include <KDialog>
 #include "ui_filterprefs.h"
 
-class FilteringConfig : public KCModule
+class Filter;
+class ConfigureFilters : public KDialog
 {
     Q_OBJECT
 public:
-    FilteringConfig(QWidget* parent, const QVariantList& args);
-    ~FilteringConfig();
-
-    virtual void save();
-    virtual void load();
-    virtual void defaults();
+    ConfigureFilters(QWidget* parent);
+    ~ConfigureFilters();
 
 protected slots:
-    void emitChanged();
+    virtual void slotButtonClicked(int button);
+    void slotAddFilter();
+    void slotEditFilter();
+    void slotRemoveFilter();
+    void addNewFilter(Filter* filter);
+    void slotUpdateFilter(Filter* filter);
+
 private:
     void reloadFiltersTable();
     void saveFiltersTable();

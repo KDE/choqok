@@ -37,8 +37,8 @@ public:
                                                                                            .arg( type ));
     }
 
-    Private(KConfigGroup *configGroup)
-    :config(configGroup)
+    Private(const KConfigGroup &configGroup)
+    :config(new KConfigGroup(configGroup))
     {
         filterText = config->readEntry("Text", QString());
         filterField = (FilterField) config->readEntry("Field", 0);
@@ -58,7 +58,7 @@ Filter::Filter(const QString& filterText, Filter::FilterField field, Filter::Fil
 
 }
 
-Filter::Filter(KConfigGroup* config, QObject* parent)
+Filter::Filter(const KConfigGroup &config, QObject* parent)
     : QObject(parent), d(new Private(config))
 {
 
@@ -104,5 +104,6 @@ void Filter::writeConfig()
     d->config->writeEntry("Text", filterText());
     d->config->writeEntry("Field", (int)filterField());
     d->config->writeEntry("Type", (int)filterType());
+    d->config->sync();
 }
 

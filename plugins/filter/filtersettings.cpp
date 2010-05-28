@@ -30,26 +30,32 @@
 #include <KSharedConfig>
 #include <QStringList>
 #include <KLocalizedString>
+#include <KConfigGroup>
 
-FilterSettings *FilterSettings::_self = new FilterSettings;
+FilterSettings *FilterSettings::_self = 0L;
+QMap<Filter::FilterField, QString> FilterSettings::_filterFieldName;
+QMap<Filter::FilterType, QString> FilterSettings::_filterTypeName;
 
 FilterSettings* FilterSettings::self()
 {
+    if(!_self){
+        _self = new FilterSettings;
+        _filterFieldName[Filter::AuthorUsername] = i18n("Author Username");
+        _filterFieldName[Filter::Content] = i18n("Post Text");
+        _filterFieldName[Filter::Source] = i18n("Author Client");
+        _filterFieldName[Filter::ReplyToUsername] = i18n("Reply to User");
+
+        _filterTypeName[Filter::Contain] = i18n("Contain");
+        _filterTypeName[Filter::DoesNotContain] = i18n("Does Not Contain");
+        _filterTypeName[Filter::ExactMatch] = i18n("Exact Match");
+        _filterTypeName[Filter::RegExp] = i18n("Regular Expression");
+    }
     return _self;
 }
 
 FilterSettings::FilterSettings(): QObject(qApp)
 {
-    reloadFilters();
-
-    _filterFieldName[Filter::AuthorUsername] = i18n("Author Username");
-    _filterFieldName[Filter::Content] = i18n("Post Text");
-    _filterFieldName[Filter::Source] = i18n("Author Client");
-    _filterFieldName[Filter::ReplyToUsername] = i18n("Reply to User");
-
-    _filterTypeName[Filter::Contain] = i18n("Contain");
-    _filterTypeName[Filter::ExactMatch] = i18n("Exact Match");
-    _filterTypeName[Filter::RegExp] = i18n("Regular Expression");
+    readConfig();
 }
 
 FilterSettings::~FilterSettings()
@@ -62,7 +68,7 @@ QList< Filter* > FilterSettings::availableFilters() const
     return _filters;
 }
 
-void FilterSettings::reloadFilters()
+void FilterSettings::readConfig()
 {
     _filters.clear();
     //Filter group names are start with Filter_%Text%%Field%%Type%
@@ -75,12 +81,12 @@ void FilterSettings::reloadFilters()
     }
 }
 
-void FilterSettings::setFilters(QList< Filter* > filters)
+void FilterSettings::setFilters(const QList< Filter* > &filters)
 {
     _filters = filters;
 }
 
-void FilterSettings::saveFilters()
+void FilterSettings::writeConfig()
 {
     QStringList groups = KGlobal::config()->groupList();
     foreach(const QString &grp, groups){
@@ -88,18 +94,41 @@ void FilterSettings::saveFilters()
             KGlobal::config()->deleteGroup(grp);
         }
     }
+    KGlobal::config()->sync();
 
     foreach(Filter *f, _filters){
         f->writeConfig();
     }
+
+    readConfig();
 }
 
-QMap< Filter::FilterField, QString > FilterSettings::filterFieldName()
+QString FilterSettings::filterFieldName(Filter::FilterField field)
+{
+    return _filterFieldName.value(field);
+}
+
+QString FilterSettings::filterTypeName(Filter::FilterType type)
+{
+    return _filterTypeName.value(type);
+}
+
+Filter::FilterField FilterSettings::filterFieldFromName(const QString& name)
+{
+    return _filterFieldName.key(name);
+}
+
+Filter::FilterType FilterSettings::filterTypeFromName(const QString& name)
+{
+    return _filterTypeName.key(name);
+}
+
+QMap< Filter::FilterField, QString > FilterSettings::filterFieldsMap()
 {
     return _filterFieldName;
 }
 
-QMap< Filter::FilterType, QString > FilterSettings::filterTypeName()
+QMap< Filter::FilterType, QString > FilterSettings::filterTypesMap()
 {
     return _filterTypeName;
 }

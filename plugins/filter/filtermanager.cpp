@@ -33,19 +33,23 @@
 #include <QTimer>
 #include "filtersettings.h"
 #include "filter.h"
+#include "configurefilters.h"
 #include <postwidget.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < FilterManager > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_filter" ) )
 
 FilterManager::FilterManager(QObject* parent, const QList<QVariant>& )
-        :Choqok::Plugin(MyPluginFactory::componentData(), parent)
+        :Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped)
 {
     kDebug();
+    KAction *action = new KAction(i18n("Configure Filters..."), this);
+    actionCollection()->addAction("configureFilters", action);
+    connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureFilters()));
+    setXMLFile("filterui.rc");
     connect( Choqok::UI::Global::SessionManager::self(),
-            SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*, Choqok::Account*)),
-             this,
-            SLOT(slotAddNewPostWidget(Choqok::UI::PostWidget*, Choqok::Account*)) );
+            SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
+            SLOT(slotAddNewPostWidget(Choqok::UI::PostWidget*)) );
 }
 
 FilterManager::~FilterManager()
@@ -54,12 +58,12 @@ FilterManager::~FilterManager()
 }
 
 
-void FilterManager::slotAddNewPostWidget(Choqok::UI::PostWidget* newWidget, Choqok::Account* theAccount )
+void FilterManager::slotAddNewPostWidget(Choqok::UI::PostWidget* newWidget)
 {
-    if(!theAccount->inherits("TwitterApiAccount")){
-        kDebug()<<"Not a TwitterApi like account";
-        return;
-    }
+//     if(!theAccount->inherits("TwitterApiAccount")){
+//         kDebug()<<"Not a TwitterApi like account";
+//         return;
+//     }
     postsQueue.enqueue(newWidget);
     if(state == Stopped){
         state = Running;
@@ -119,15 +123,21 @@ FilterManager::FilterAction FilterManager::filterText(const QString& textToCheck
         case Filter::Contain:
             if( textToCheck.contains(filter->filterText()) )
                 return Remove;
+        case Filter::DoesNotContain:
+            if( !textToCheck.contains(filter->filterText()) )
+                return Remove;
         default:
+            return None;
             break;
     }
+    return None;
 }
 
 void FilterManager::doFiltering(Choqok::UI::PostWidget* postToFilter, FilterManager::FilterAction action)
 {
     switch(action){
         case Remove:
+            kDebug()<<"Post filtered: "<<postToFilter->currentPost().content;
             postToFilter->close();
             break;
         default:
@@ -136,3 +146,11 @@ void FilterManager::doFiltering(Choqok::UI::PostWidget* postToFilter, FilterMana
     }
 }
 
+void FilterManager::slotConfigureFilters()
+{
+    QPointer<ConfigureFilters> dlg = new ConfigureFilters(Choqok::UI::Global::mainWindow());
+    dlg->show();
+}
+
+
+#include "filtermanager.moc"

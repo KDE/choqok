@@ -21,51 +21,34 @@
     along with this program; if not, see http://www.gnu.org/licenses/
 
 */
-#ifndef FILTERMANAGER_H
-#define FILTERMANAGER_H
 
-#include <plugin.h>
-#include <QPixmap>
-#include <QQueue>
-#include <QPointer>
-#include "filter.h"
+#ifndef ADDEDITFILTER_H
+#define ADDEDITFILTER_H
 
-namespace Choqok {
-namespace UI {
-class PostWidget;
-}
-class Account;
-}
+#include <kdialog.h>
+#include "ui_addeditfilter_base.h"
 
-class KConfigGroup;
-/**
-Filter Manager
+class Filter;
 
-@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
-*/
-class FilterManager : public Choqok::Plugin
+class AddEditFilter : public KDialog
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    enum FilterAction { None = 0, Remove};
+    AddEditFilter(QWidget* parent, Filter* filter = 0);
+    virtual ~AddEditFilter();
 
-    FilterManager( QObject* parent, const QList< QVariant >& args );
-    ~FilterManager();
+signals:
+    void newFilterRegistered( Filter *filter );
+    void filterUpdated( Filter *filter );
 
-protected slots:
-    void slotAddNewPostWidget( Choqok::UI::PostWidget* newWidget );
-    void startParsing();
-    void slotConfigureFilters();
+protected:
+    virtual void slotButtonClicked(int button);
 
 private:
-    enum ParserState{ Stopped = 0, Running };
-    ParserState state;
-
-    FilterAction filterText(const QString &textToCheck, Filter * filter);
-    void doFiltering(Choqok::UI::PostWidget *postToFilter, FilterAction action );
-
-    void parse( Choqok::UI::PostWidget *postToParse );
-    QQueue< QPointer<Choqok::UI::PostWidget> > postsQueue;
+    void setupFilterFields();
+    void setupFilterTypes();
+    Ui::AddEditFilterBase ui;
+    Filter *currentFilter;
 };
 
-#endif
+#endif // ADDEDITFILTER_H

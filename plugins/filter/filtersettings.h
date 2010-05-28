@@ -28,8 +28,7 @@
 #include <QObject>
 #include <QMap>
 #include "filter.h"
-
-class Filter;
+#include <KConfigSkeleton>
 
 class FilterSettings : public QObject
 {
@@ -39,19 +38,24 @@ public:
     virtual ~FilterSettings();
 
     QList<Filter*> availableFilters() const;
-    void setFilters(QList<Filter*> filters);
+    void setFilters(const QList< Filter* >& filters);
+    void writeConfig();
+    void readConfig();
 
-    QMap<Filter::FilterField, QString> filterFieldName();
-    QMap<Filter::FilterType, QString> filterTypeName();
+    static QMap<Filter::FilterField, QString> filterFieldsMap();
+    static QMap<Filter::FilterType, QString> filterTypesMap();
+
+    static QString filterFieldName(Filter::FilterField field);
+    static Filter::FilterField filterFieldFromName( const QString &name );
+    static QString filterTypeName(Filter::FilterType type);
+    static Filter::FilterType filterTypeFromName( const QString &name );
 private:
     FilterSettings();
     static FilterSettings *_self;
 
-    void reloadFilters();
-    void saveFilters();
     QList<Filter*> _filters;
-    QMap<Filter::FilterField, QString> _filterFieldName;
-    QMap<Filter::FilterType, QString> _filterTypeName;
+    static QMap<Filter::FilterField, QString> _filterFieldName;
+    static QMap<Filter::FilterType, QString> _filterTypeName;
 };
 
 #endif // FILTERSETTINGS_H

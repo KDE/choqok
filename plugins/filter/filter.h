@@ -32,7 +32,7 @@ class Filter : public QObject
 {
     Q_OBJECT
 public:
-    enum FilterType{ Contain = 0, ExactMatch, RegExp };
+    enum FilterType{ Contain = 0, ExactMatch, RegExp, DoesNotContain };
     enum FilterField{ Content = 0, AuthorUsername, ReplyToUsername, Source };
 
     /**
@@ -40,7 +40,7 @@ public:
     */
     explicit Filter(const QString &filterText, FilterField field = Content,
                     FilterType type = Contain, QObject* parent = 0);
-    explicit Filter( KConfigGroup *config, QObject* parent = 0);
+    explicit Filter( const KConfigGroup& config, QObject* parent = 0);
     virtual ~Filter();
 
     QString filterText() const;
