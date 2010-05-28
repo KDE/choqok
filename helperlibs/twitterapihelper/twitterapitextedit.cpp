@@ -108,7 +108,6 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
             case Qt::Key_Enter:
             case Qt::Key_Return:
             case Qt::Key_Escape:
-            case Qt::Key_Tab:
 //             case Qt::Key_Backtab:
                 e->ignore();
                 return; // let the completer do default behavior
@@ -116,6 +115,13 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
 //                 Choqok::UI::TextEdit::keyPressEvent(e);
                 break;
         }
+    } else if(e->text().isEmpty()){
+        Choqok::UI::TextEdit::keyPressEvent(e);
+        return;
+    }
+    if(e->key() == Qt::Key_Tab){
+        e->ignore();
+        return;
     }
 
 //     bool isShortcut = ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_Space); // CTRL+E
@@ -127,7 +133,7 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
     if (!d->c || (ctrlOrShift && e->text().isEmpty()))
         return;
 
-    static QString eow("~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-="); // end of word
+    static QString eow("~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-= "); // end of word
 //     bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
     QString completionPrefix = textUnderCursor();
 
