@@ -32,6 +32,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 namespace Choqok
 {
 
+class Account;
+
+
 namespace UI
 {
 class PostWidget;
@@ -63,10 +66,12 @@ namespace Global
     public:
         ~SessionManager();
         static SessionManager *self();
-        void emitNewPostWidgetAdded( Choqok::UI::PostWidget *widget );
+        void emitNewPostWidgetAdded( Choqok::UI::PostWidget *widget, Choqok::Account *theAccount,
+                                    const QString &timelineName = QString() );
 
     signals:
-        void newPostWidgetAdded( Choqok::UI::PostWidget *widget );
+        void newPostWidgetAdded( Choqok::UI::PostWidget *widget, Choqok::Account *theAccount,
+                                 const QString &timelineName);
 
     private:
         static SessionManager *m_self;

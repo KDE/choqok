@@ -224,7 +224,7 @@ void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
              SLOT(postWidgetClosed(ChoqokId,PostWidget*)) );
     d->mainLayout->insertWidget(0, widget);
     d->posts.insert(widget->currentPost().postId, widget);
-    Global::SessionManager::self()->emitNewPostWidgetAdded(widget);
+    Global::SessionManager::self()->emitNewPostWidgetAdded(widget, currentAccount(), timelineName());
 }
 
 int TimelineWidget::unreadCount() const
