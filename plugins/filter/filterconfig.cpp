@@ -76,12 +76,30 @@ void FilteringConfig::reloadFiltersTable()
 {
     ui.filters->clearContents();
     QList<Filter*> filters = FilterSettings::self()->availableFilters();
-    //TODO
+    foreach(Filter *filter, filters){
+        int row = ui.filters->rowCount();
+        ui.filters->insertRow(row);
+        ui.filters->setItem(row, 0,
+                            new QTableWidgetItem(FilterSettings::self()->filterFieldName()[filter->filterField()]));
+        ui.filters->setItem(row, 1,
+                            new QTableWidgetItem(FilterSettings::self()->filterTypeName()[filter->filterType()]));
+        ui.filters->setItem(row, 2,
+                            new QTableWidgetItem(filter->filterText()));
+    }
 }
 
 void FilteringConfig::saveFiltersTable()
 {
-    //TODO
+    QList<Filter*> list;
+    int count = ui.filters->rowCount();
+    for(int i=0; i<count; ++i){
+        Filter::FilterField field = FilterSettings::self()->filterFieldName().key(ui.filters->item(i, 0)->text());
+        Filter::FilterType type = FilterSettings::self()->filterTypeName().key(ui.filters->item(i, 1)->text());
+        QString text = ui.filters->item(i, 2)->text();
+        Filter *f = new Filter(text, field, type, FilterSettings::self());
+        list << f;
+    }
+    FilterSettings::self()->setFilters(list);
 }
 
 #include "filterconfig.moc"

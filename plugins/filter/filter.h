@@ -52,7 +52,6 @@ public:
     FilterType filterType() const;
     void setFilterType( FilterType type );
 
-protected:
     void writeConfig();
 
 private:

@@ -25,6 +25,11 @@
 #include "filtersettings.h"
 #include <QApplication>
 #include "filter.h"
+#include <KGlobal>
+#include <ksharedptr.h>
+#include <KSharedConfig>
+#include <QStringList>
+#include <KLocalizedString>
 
 FilterSettings *FilterSettings::_self = new FilterSettings;
 
@@ -35,7 +40,16 @@ FilterSettings* FilterSettings::self()
 
 FilterSettings::FilterSettings(): QObject(qApp)
 {
+    reloadFilters();
 
+    _filterFieldName[Filter::AuthorUsername] = i18n("Author Username");
+    _filterFieldName[Filter::Content] = i18n("Post Text");
+    _filterFieldName[Filter::Source] = i18n("Author Client");
+    _filterFieldName[Filter::ReplyToUsername] = i18n("Reply to User");
+
+    _filterTypeName[Filter::Contain] = i18n("Contain");
+    _filterTypeName[Filter::ExactMatch] = i18n("Exact Match");
+    _filterTypeName[Filter::RegExp] = i18n("Regular Expression");
 }
 
 FilterSettings::~FilterSettings()
@@ -43,13 +57,50 @@ FilterSettings::~FilterSettings()
 
 }
 
-QList< Filter* > FilterSettings::availableFilters()
+QList< Filter* > FilterSettings::availableFilters() const
 {
     return _filters;
 }
 
 void FilterSettings::reloadFilters()
 {
+    _filters.clear();
+    //Filter group names are start with Filter_%Text%%Field%%Type%
+    QStringList groups = KGlobal::config()->groupList();
+    foreach(const QString &grp, groups){
+        if(grp.startsWith("Filter_")){
+            Filter *f = new Filter(KGlobal::config()->group(grp), this);
+            _filters << f;
+        }
+    }
+}
 
+void FilterSettings::setFilters(QList< Filter* > filters)
+{
+    _filters = filters;
+}
+
+void FilterSettings::saveFilters()
+{
+    QStringList groups = KGlobal::config()->groupList();
+    foreach(const QString &grp, groups){
+        if(grp.startsWith("Filter_")){
+            KGlobal::config()->deleteGroup(grp);
+        }
+    }
+
+    foreach(Filter *f, _filters){
+        f->writeConfig();
+    }
+}
+
+QMap< Filter::FilterField, QString > FilterSettings::filterFieldName()
+{
+    return _filterFieldName;
+}
+
+QMap< Filter::FilterType, QString > FilterSettings::filterTypeName()
+{
+    return _filterTypeName;
 }
 

@@ -26,6 +26,8 @@
 #define FILTERSETTINGS_H
 
 #include <QObject>
+#include <QMap>
+#include "filter.h"
 
 class Filter;
 
@@ -36,14 +38,20 @@ public:
     static FilterSettings *self();
     virtual ~FilterSettings();
 
-    QList<Filter*> availableFilters();
+    QList<Filter*> availableFilters() const;
+    void setFilters(QList<Filter*> filters);
 
+    QMap<Filter::FilterField, QString> filterFieldName();
+    QMap<Filter::FilterType, QString> filterTypeName();
 private:
     FilterSettings();
     static FilterSettings *_self;
 
     void reloadFilters();
+    void saveFilters();
     QList<Filter*> _filters;
+    QMap<Filter::FilterField, QString> _filterFieldName;
+    QMap<Filter::FilterType, QString> _filterTypeName;
 };
 
 #endif // FILTERSETTINGS_H
