@@ -150,6 +150,7 @@ public Q_SLOTS:
                                           const QString &toUsername = QString() );
 
     void showSearchDialog( TwitterApiAccount *theAccount = 0 );
+
 Q_SIGNALS:
     void favoriteCreated(Choqok::Account *theAccount, const QString &postId);
     void favoriteRemoved(Choqok::Account *theAccount, const QString &postId);
@@ -171,6 +172,7 @@ protected Q_SLOTS:
     virtual void slotCreateFriendship( KJob *job );
     virtual void slotDestroyFriendship( KJob *job );
     virtual void slotBlockUser( KJob *job );
+    virtual void slotUpdateFriendsList();
 
 protected:
     TwitterApiMicroBlog( const KComponentData &instance, QObject *parent=0 );

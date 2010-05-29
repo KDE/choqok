@@ -162,6 +162,11 @@ QMenu* TwitterApiMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidg
     connect( search, SIGNAL(triggered(bool)), SLOT(showSearchDialog()) );
     menu->addAction(search);
 
+    KAction *updateFriendsList = new KAction(KIcon("arrow-down"), i18n("Update Friends List"), menu);
+    search->setData( theAccount->alias() );
+    connect( updateFriendsList, SIGNAL(triggered(bool)), SLOT(slotUpdateFriendsList()) );
+    menu->addAction(updateFriendsList);
+
     return menu;
 }
 
@@ -1087,6 +1092,14 @@ void TwitterApiMicroBlog::showSearchDialog(TwitterApiAccount* theAccount)
     QPointer<TwitterApiSearchDialog> searchDlg = new TwitterApiSearchDialog( theAccount,
                                                                              Choqok::UI::Global::mainWindow() );
     searchDlg->show();
+}
+
+void TwitterApiMicroBlog::slotUpdateFriendsList()
+{
+    KAction *act = qobject_cast<KAction *>(sender());
+    TwitterApiAccount* theAccount = qobject_cast<TwitterApiAccount*>(
+                                        Choqok::AccountManager::self()->findAccount( act->data().toString() ) );
+    listFriendsUsername(theAccount);
 }
 
 void TwitterApiMicroBlog::createFriendship( Choqok::Account *theAccount, const QString& username )
