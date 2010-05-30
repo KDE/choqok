@@ -82,6 +82,7 @@ KPushButton{border:0px}");
 const QRegExp PostWidget::mUrlRegExp("((ftps?|https?)://[^\\s<>\"]+[^!,\\.\\s<>'\"\\)\\]])");
 QString PostWidget::readStyle;
 QString PostWidget::unreadStyle;
+QString PostWidget::ownStyle;
 const QString PostWidget::webIconText("&#9755;");
 
 PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* parent/* = 0*/ )
@@ -172,6 +173,10 @@ void PostWidget::initUi()
     setupAvatar();
     setDirection();
     setUiStyle();
+
+    d->mContent.replace("<a href","<a style=\"text-decoration:none\" href",Qt::CaseInsensitive);
+    d->mSign.replace("<a href","<a style=\"text-decoration:none\" href",Qt::CaseInsensitive);
+
     updateUi();
 }
 
@@ -181,10 +186,11 @@ void PostWidget::updateUi()
                                       d->mSign.arg(formatDateTime( d->mCurrentPost.creationDateTime ))));
 }
 
-void PostWidget::setStyle(const QColor& color, const QColor& back, const QColor& read, const QColor& readBack)
+void PostWidget::setStyle(const QColor& color, const QColor& back, const QColor& read, const QColor& readBack, const QColor& own, const QColor& ownBack)
 {
     unreadStyle = baseStyle.arg( getColorString(color), getColorString(back) );
     readStyle = baseStyle.arg( getColorString(read), getColorString(readBack) );
+    ownStyle = baseStyle.arg( getColorString(own), getColorString(ownBack) );
 }
 
 QString PostWidget::getColorString(const QColor& color)
@@ -245,10 +251,14 @@ bool PostWidget::isRead() const
 
 void PostWidget::setUiStyle()
 {
-    if(currentPost().isRead)
+    if (currentAccount()->username().compare( currentPost().author.userName, Qt::CaseInsensitive ) == 0)
+      setStyleSheet(ownStyle);
+    else {
+      if(currentPost().isRead)
         setStyleSheet(readStyle);
-    else
+      else
         setStyleSheet(unreadStyle);
+    }
 }
 
 void PostWidget::setHeight()

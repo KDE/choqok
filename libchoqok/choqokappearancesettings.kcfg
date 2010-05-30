@@ -19,10 +19,16 @@ http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
     <entry name="unreadBackColor" type="Color">
         <default>yellow</default>
     </entry>
+    <entry name="ownBackColor" type="Color">
+        <default>white</default>
+    </entry>
     <entry name="readForeColor" type="Color">
         <default>Black</default>
     </entry>
     <entry name="unreadForeColor" type="Color">
+        <default>Black</default>
+    </entry>
+    <entry name="ownForeColor" type="Color">
         <default>Black</default>
     </entry>
 </group>

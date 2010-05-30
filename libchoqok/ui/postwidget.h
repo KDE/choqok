@@ -68,7 +68,8 @@ public:
     @see setUiStyle()
     */
     static void setStyle(const QColor& unreadColor, const QColor& unreadBack,
-                          const QColor& readColor, const QColor& readBack);
+                          const QColor& readColor, const QColor& readBack,
+                          const QColor& ownColor, const QColor& ownBack);
 
     /**
     @brief Set current post
@@ -195,6 +196,7 @@ protected:
     static const QString baseStyle;
     static QString readStyle;
     static QString unreadStyle;
+    static QString ownStyle;
     static const QRegExp mUrlRegExp;
     static const QString webIconText;
     static const QString ownText;
