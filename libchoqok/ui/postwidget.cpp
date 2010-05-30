@@ -76,7 +76,7 @@ const QString PostWidget::otherText ( "<table height='100%' width=\"100%\"><tr><
 width=\"48\">%1</td><td width='5'><!-- EMPTY HAHA --></td><td><p>%2</p></td></tr><tr><td><!-- EMPTY HAHA --></td><td style=\"font-size:small;\" dir='ltr' align=\"right\" width=\"100%\" valign='bottom'>%3</td></tr></table>");
 
 const QString PostWidget::baseStyle ("KTextBrowser {border: 1px solid rgb(150,150,150);\
-border-radius:10px;}  KTextBrowser {color:%1; background-color:%2}\
+border-radius:5px;}  KTextBrowser {color:%1; background-color:%2}\
 KPushButton{border:0px}");
 
 const QRegExp PostWidget::mUrlRegExp("((ftps?|https?)://[^\\s<>\"]+[^!,\\.\\s<>'\"\\)\\]])");
