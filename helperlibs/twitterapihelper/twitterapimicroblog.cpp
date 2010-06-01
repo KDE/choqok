@@ -623,7 +623,9 @@ void TwitterApiMicroBlog::slotRemoveFavorite ( KJob *job )
 void TwitterApiMicroBlog::listFriendsUsername(TwitterApiAccount* theAccount)
 {
     d->friendsList.clear();
-    requestFriendsScreenName(theAccount);
+    if ( theAccount ) {
+        requestFriendsScreenName(theAccount);
+    }
 }
 
 void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount, int page)
