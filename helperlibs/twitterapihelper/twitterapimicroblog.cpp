@@ -295,7 +295,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
         if ( !job ) {
             kDebug() << "Cannot create an http POST request!";
-//             QString errMsg = i18n ( "Creating the new post failed. Cannot create an http POST request. Please check your KDE installation." );
+//             QString errMsg = i18n ( "Creating the new post failed. Cannot create an HTTP POST request. Please check your KDE installation." );
 //             emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
         }
@@ -432,7 +432,7 @@ void TwitterApiMicroBlog::fetchPost ( Choqok::Account* theAccount, Choqok::Post*
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create an http GET request!";
-//         QString errMsg = i18n ( "Fetching the new post failed. Cannot create an http GET request."
+//         QString errMsg = i18n ( "Fetching the new post failed. Cannot create an HTTP GET request."
 //                                 "Please check your KDE installation." );
 //         emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, Low );
         return;
@@ -497,7 +497,7 @@ void TwitterApiMicroBlog::removePost ( Choqok::Account* theAccount, Choqok::Post
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
         if ( !job ) {
             kDebug() << "Cannot create an http POST request!";
-//             QString errMsg = i18n ( "Removing post failed, Cannot create an http POST request, Check your KDE installation." );
+//             QString errMsg = i18n ( "Removing the post failed. Cannot create an HTTP POST request. Please check your KDE installation." );
 //             emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
         }
@@ -1345,7 +1345,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::readTimelineFromJson(Choqok::Account
         }
     } else {
         kError() << "JSON parsing failed.\nBuffer was: \n" << buffer;
-        emit error(theAccount, ParsingError, i18n("Could not parse the data has been received from server."));
+        emit error(theAccount, ParsingError, i18n("Could not parse the data that has been received from the server."));
         return postList;
     }
     return postList;
@@ -1365,7 +1365,7 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromJson(Choqok::Account* theAccount,
             kError()<<"TwitterApiMicroBlog::readPostFromXml: post is NULL!";
             post = new Choqok::Post;
         }
-        emit errorPost(theAccount, post, ParsingError, i18n("Could not parse the data has been received from server."));
+        emit errorPost(theAccount, post, ParsingError, i18n("Could not parse the data that has been received from the server."));
         kError()<<"JSon parsing failed. Buffer was:"<<buffer;
         post->isError = true;
         return post;
@@ -1425,7 +1425,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::readDMessagesFromJson(Choqok::Accoun
         }
     } else {
         kError() << "JSON parsing failed.\nBuffer was: \n" << buffer;
-        emit error(theAccount, ParsingError, i18n("Could not parse the data has been received from server."));
+        emit error(theAccount, ParsingError, i18n("Could not parse the data that has been received from the server."));
         return postList;
     }
     return postList;
