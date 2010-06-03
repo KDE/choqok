@@ -137,7 +137,7 @@ void TwitterApiMicroBlog::setTimelineInfos()
 
     t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "ReTweets");
-    t->description = i18nc("Timeline description", "Your posts that ReTweeted by others");
+    t->description = i18nc("Timeline description", "Your posts that were ReTweeted by others");
     t->icon = "folder-red";
     mTimelineInfos["ReTweets"] = t;
 }
