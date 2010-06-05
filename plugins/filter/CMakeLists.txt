@@ -3,8 +3,6 @@ include_directories(
 ${CHOQOK_INCLUDES}
 )
 
-########### next target ###############
-
 set( choqok_filter_PART_SRCS
 filter.cpp
 configurefilters.cpp
@@ -12,7 +10,7 @@ filtersettings.cpp
 filtermanager.cpp
 addeditfilter.cpp )
 
-kde4_add_ui_files(choqok_filter_PART_SRCS addeditfilter_base.ui filterprefs.ui)
+kde4_add_ui_files( choqok_filter_PART_SRCS addeditfilter_base.ui filterprefs.ui )
 
 kde4_add_plugin(choqok_filter ${choqok_filter_PART_SRCS})
 
