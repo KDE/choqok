@@ -57,6 +57,7 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString 
         QStringList list = parent->timelineNames();
         list.removeOne("Public");
         list.removeOne("Favorite");
+        list.removeOne("ReTweets");
         d->timelineNames = list;
     }
 
