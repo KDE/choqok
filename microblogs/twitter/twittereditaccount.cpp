@@ -60,10 +60,18 @@ TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
     loadTimelinesTableState();
     kcfg_alias->setFocus(Qt::OtherFocusReason);
     connect( kcfg_register, SIGNAL( clicked() ), SLOT( slotRegisterNewAccount() ) );
+    
+    connect( kcfg_username, SIGNAL( textChanged(QString) ), SLOT( dataChanged()) );
+    connect( kcfg_password, SIGNAL( textChanged(QString) ), SLOT( dataChanged()) );
 }
 
 TwitterEditAccountWidget::~TwitterEditAccountWidget()
 {
+}
+
+void TwitterEditAccountWidget::dataChanged()
+{
+  kcfg_test->setIcon(KIcon("edit-find-user"));
 }
 
 bool TwitterEditAccountWidget::validateData()

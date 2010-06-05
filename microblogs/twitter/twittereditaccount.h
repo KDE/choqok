@@ -60,6 +60,7 @@ protected slots:
     virtual void slotRegisterNewAccount();
     virtual void verifyCredentials();
     void slotVerifyCredentials( KJob *job );
+    void dataChanged();
 
 protected:
     void loadTimelinesTableState();
