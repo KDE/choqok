@@ -79,7 +79,8 @@ const QString PostWidget::baseStyle ("KTextBrowser {border: 1px solid rgb(150,15
 border-radius:5px;}  KTextBrowser {color:%1; background-color:%2}\
 KPushButton{border:0px}");
 
-const QRegExp PostWidget::mUrlRegExp("((ftps?|https?)://[^\\s<>\"]+[^!,\\.\\s<>'\"\\)\\]])");
+const QRegExp PostWidget::mUrlRegExp("((https?://|ftp://|www\\.)[^\\s<>\"]+[^!,\\.\\s<>'\"\\)\\]])");
+
 QString PostWidget::readStyle;
 QString PostWidget::unreadStyle;
 QString PostWidget::ownStyle;
@@ -312,10 +313,17 @@ QString PostWidget::prepareStatus( const QString &txt )
     QString text = txt;
     text.replace( '<', "&lt;" );
     text.replace( '>', "&gt;" );
-    text.replace( " www.", " http://www." );
-    if ( text.startsWith( QLatin1String("www.") ) )
-        text.prepend( "http://" );
-    text.replace(mUrlRegExp,"<a href='\\1' title='\\1'>\\1</a>");
+    int pos = 0;
+    while(((pos = mUrlRegExp.indexIn(text, pos)) != -1)) {
+        QString link = mUrlRegExp.cap(0);
+        QString tmplink = link;
+        if (tmplink.startsWith("www.", Qt::CaseInsensitive))
+            tmplink.prepend("http://");
+        static const QString hrefTemplate("<a href='%1' title='%1' target='_blank'>%2</a>");
+        tmplink = hrefTemplate.arg(tmplink, link);
+        text.replace(pos, link.length(), tmplink);
+        pos += tmplink.count();
+    }
 
     if(AppearanceSettings::isEmoticonsEnabled())
         text = MediaManager::self()->parseEmoticons(text);
