@@ -27,8 +27,12 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QtCore/QObject>
 #include "shortener.h"
+#include <KUrl>
 
 namespace Choqok{
+  namespace UI {
+    class PostWidget;
+  }
 
 class ShortenManagerPrivate;
 /**
@@ -57,6 +61,12 @@ public:
         Should call after change on shortening plugin!
     */
     void reloadConfig();
+
+    void emitNewUnshortenedUrl( Choqok::UI::PostWidget *widget, const KUrl& fromUrl, const KUrl& toUrl);
+
+  signals:
+    void newUnshortenedUrl( Choqok::UI::PostWidget *widget, const KUrl& fromUrl, const KUrl& toUrl);
+
 private:
     ShortenManager(QObject *parent=0);
     ~ShortenManager();

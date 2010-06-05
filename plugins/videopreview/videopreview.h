@@ -41,6 +41,7 @@ class Job;
 
 //class KJob;
 namespace Choqok {
+  class ShortenManager;
 namespace UI {
 class PostWidget;
 }
@@ -59,6 +60,7 @@ protected slots:
     void slotAddNewPostWidget( Choqok::UI::PostWidget *newWidget );
     void startParsing();
     void slotImageFetched(const QString &remoteUrl,const QPixmap &pixmap);
+    void slotNewUnshortenedUrl(Choqok::UI::PostWidget* widget, const KUrl& fromUrl, const KUrl& toUrl);
 
 private:
     enum ParserState{ Running = 0, Stopped };

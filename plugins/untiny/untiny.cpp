@@ -28,6 +28,7 @@
 #include "postwidget.h"
 #include <kio/jobclasses.h>
 #include <KIO/Job>
+#include <shortenmanager.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < UnTiny > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_untiny" ) )
@@ -105,6 +106,7 @@ void UnTiny::slot301Redirected(KIO::Job* job, KUrl fromUrl, KUrl toUrl)
     if(!postToParse)
         return;
 //     kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
+    Choqok::ShortenManager::self()->emitNewUnshortenedUrl(postToParse, fromUrl, toUrl);
     QString content = postToParse->content();
     content.replace(QRegExp("title='" + fromUrl.url() + '\''), "title='" + toUrl.url() + '\'');
     content.replace(QRegExp("href='" + fromUrl.url() + '\''), "href='" + toUrl.url() + '\'');

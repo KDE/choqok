@@ -120,6 +120,12 @@ QString ShortenManager::parseText(const QString &text)
     return t;
 }
 
+void ShortenManager::emitNewUnshortenedUrl(Choqok::UI::PostWidget* widget, const KUrl& fromUrl, const KUrl& toUrl)
+{
+    emit newUnshortenedUrl(widget, fromUrl, toUrl);
+}
+
+
 }
 
 #include "shortenmanager.moc"

@@ -31,6 +31,7 @@
 #include "notifymanager.h"
 #include <mediamanager.h>
 #include <textbrowser.h>
+#include <shortenmanager.h>
 
 
 
@@ -53,6 +54,10 @@ VideoPreview::VideoPreview(QObject* parent, const QList< QVariant >& )
              SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
              this,
              SLOT(slotAddNewPostWidget(Choqok::UI::PostWidget*)) );
+    connect( Choqok::ShortenManager::self(),
+             SIGNAL(newUnshortenedUrl(Choqok::UI::PostWidget*,KUrl,KUrl)),
+             this,
+             SLOT(slotNewUnshortenedUrl(Choqok::UI::PostWidget*,KUrl,KUrl)) );
 }
 
 VideoPreview::~VideoPreview()
@@ -68,6 +73,28 @@ void VideoPreview::slotAddNewPostWidget(Choqok::UI::PostWidget* newWidget)
         QTimer::singleShot(1000, this, SLOT(startParsing()));
     }
 }
+
+void VideoPreview::slotNewUnshortenedUrl(Choqok::UI::PostWidget* widget, const KUrl &fromUrl, const KUrl &toUrl)
+{
+//     kDebug() << "I have to consider: " << fromUrl << " -> " << toUrl;
+
+    if (mYouTubeRegExp.indexIn(toUrl.prettyUrl()) != -1) {
+        KUrl thisurl(mYouTubeRegExp.cap(0));
+        QString thumbUrl = parseYoutube(thisurl.queryItemValue("v"), widget);
+        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
+                SLOT(slotImageFetched(QString,QPixmap)));
+        Choqok::MediaManager::self()->fetchImage(thumbUrl, Choqok::MediaManager::Async);
+    }
+    else if (mVimeoRegExp.indexIn(toUrl.prettyUrl()) != -1) {
+
+        QString thumbUrl = parseVimeo(mVimeoRegExp.cap(3), widget);
+        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
+                SLOT(slotImageFetched(QString,QPixmap)));
+        Choqok::MediaManager::self()->fetchImage(thumbUrl, Choqok::MediaManager::Async);
+    }
+
+}
+
 
 void VideoPreview::startParsing()
 {
