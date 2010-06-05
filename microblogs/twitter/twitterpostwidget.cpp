@@ -31,6 +31,7 @@
 #include <twitterapihelper/twitterapiwhoiswidget.h>
 #include <twitterapihelper/twitterapiaccount.h>
 #include <KPushButton>
+#include <choqoktools.h>
 
 TwitterPostWidget::TwitterPostWidget(Choqok::Account* account, const Choqok::Post& post, QWidget* parent): TwitterApiPostWidget(account, post, parent)
 {
@@ -67,6 +68,7 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
 {
     QString scheme = url.scheme();
     TwitterApiMicroBlog* blog = qobject_cast<TwitterApiMicroBlog*>(currentAccount()->microblog());
+    TwitterApiAccount *account = qobject_cast<TwitterApiAccount*>(currentAccount());
     if( scheme == "tag" ) {
         blog->searchBackend()->requestSearchResults(currentAccount(),
                                                     url.host(),
@@ -83,6 +85,9 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
         KAction *cont = new KAction(KIcon("user-properties"),i18nc("Including user name", "Including %1",
                                                                    url.host()),
                                     &menu);
+        KAction * openInBrowser = new KAction(KIcon("applications-internet"),
+                                              i18nc("Open profile page in browser",
+                                                    "Open profile in browser"), &menu);
         from->setData(TwitterSearch::FromUser);
         to->setData(TwitterSearch::ToUser);
         cont->setData(TwitterSearch::ReferenceUser);
@@ -90,52 +95,66 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
         menu.addAction(from);
         menu.addAction(to);
         menu.addAction(cont);
+        menu.addAction(openInBrowser);
 
         //Subscribe/UnSubscribe/Block
         bool isSubscribe = false;
         QString accountUsername = currentAccount()->username().toLower();
         QString postUsername = url.host().toLower();
-        KAction *subscribe = 0, *block = 0 ;
+        KAction *subscribe = 0, *block = 0, *replyTo = 0, *dMessage = 0;
         if(accountUsername != postUsername){
             menu.addSeparator();
-            if( qobject_cast<TwitterApiAccount*>(currentAccount())->friendsList().contains( url.host(), Qt::CaseInsensitive ) ){
+            QMenu *actionsMenu = menu.addMenu(KIcon("applications-system"), i18n("Actions"));
+            replyTo = new KAction(KIcon("edit-undo"), i18nc("Create a reply message to user", "Reply to %1",
+                                                          url.host()), actionsMenu);
+            if( account->friendsList().contains( url.host(),
+                Qt::CaseInsensitive ) ){
+                dMessage = new KAction(KIcon("mail-message-new"), i18nc("Send direct message to user",
+                                                                        "Send private message to %1",
+                                                                        url.host()), actionsMenu);
+                actionsMenu->addAction(dMessage);
                 isSubscribe = false;//It's UnSubscribe
                 subscribe = new KAction( KIcon("list-remove-user"),
                                          i18nc("Unfollow user",
-                                               "Unfollow %1", url.host()), &menu);
+                                               "Unfollow %1", url.host()), actionsMenu);
             } else {
                 isSubscribe = true;
                 subscribe = new KAction( KIcon("list-add-user"),
                                          i18nc("Follow user",
-                                               "Follow %1", url.host()), &menu);
+                                               "Follow %1", url.host()), actionsMenu);
             }
             block = new KAction( KIcon("dialog-cancel"),
                                  i18nc("Block user",
-                                       "Block %1", url.host()), &menu);
-                                       menu.addAction(subscribe);
-                                       menu.addAction(block);
+                                       "Block %1", url.host()), actionsMenu);
+            actionsMenu->addAction(subscribe);
+            actionsMenu->addAction(block);
         }
 
         QAction * ret = menu.exec(QCursor::pos());
         if(ret == 0)
             return;
         if(ret == info) {
-            TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(currentAccount());
-            TwitterApiWhoisWidget *wd = new TwitterApiWhoisWidget(acc, url.host(), this);
+            TwitterApiWhoisWidget *wd = new TwitterApiWhoisWidget(account, url.host(), this);
             wd->show(QCursor::pos());
             return;
-        }
-        if(ret == subscribe){
-            
+        } else if(ret == subscribe){
             if(isSubscribe) {
                 blog->createFriendship(currentAccount(), url.host());
             } else {
                 blog->destroyFriendship(currentAccount(), url.host());
             }
             return;
-        }
-        if(ret == block){
+        }else if(ret == block){
             blog->blockUser(currentAccount(), url.host());
+            return;
+        } else if(ret == openInBrowser){
+            Choqok::openUrl( QUrl( currentAccount()->microblog()->profileUrl(currentAccount(), url.host()) ) );
+            return;
+        } else if(ret == replyTo){
+            emit reply( QString("@%1").arg(url.host()), QString() );
+            return;
+        } else if(ret == dMessage){
+                blog->showDirectMessageDialog(account,url.host());
             return;
         }
         int type = ret->data().toInt();

@@ -82,9 +82,7 @@ void TwitterApiPostWidget::initUi()
 QString TwitterApiPostWidget::prepareStatus(const QString& text)
 {
     QString res = Choqok::UI::PostWidget::prepareStatus(text);
-    res.replace(mUserRegExp,"\\1@<a href='user://\\2'>\\2</a> <a href='"+
-    currentAccount()->microblog()->profileUrl( currentAccount(), "\\2") + "' title='" +
-    currentAccount()->microblog()->profileUrl( currentAccount(), "\\2") + "'>"+ webIconText +"</a>");
+    res.replace(mUserRegExp,"\\1@<a href='user://\\2'>\\2</a>");
 
     return res;
 }
@@ -96,8 +94,7 @@ QString TwitterApiPostWidget::generateSign()
                                                                 currentPost().author.userName);
     sign = "<b><a href='user://"+currentPost().author.userName+"' title=\"" +
     currentPost().author.description + "\">" + currentPost().author.userName +
-    "</a> <a href=\"" + profUrl + "\" title=\"" + profUrl
-    + "\">"+ webIconText +"</a> - </b>";
+    "</a> - </b>";
     //<img src=\"icon://web\" />
     sign += "<a href=\"" + currentPost().link +
     "\" title=\"" + currentPost().creationDateTime.toString( Qt::DefaultLocaleLongDate ) + "\">%1</a>";
