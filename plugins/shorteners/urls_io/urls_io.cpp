@@ -53,6 +53,7 @@ QString Urls_io::shorten( const QString& url )
     reqUrl.addQueryItem( "full_url", KUrl( url ).url() );
     reqUrl.addQueryItem( "api_key", "50a311b108bab2e5e44dfac43d7185e1" );
     reqUrl.addQueryItem( "env", "5" );
+    kDebug() << reqUrl.prettyUrl();
 
     KIO::Job* job = KIO::get( reqUrl, KIO::Reload, KIO::HideProgressInfo );
 
@@ -61,12 +62,13 @@ QString Urls_io::shorten( const QString& url )
         QRegExp rx ( QString( "\"status\":\"(.+)\"" ) );
         rx.setMinimal(true);
         rx.indexIn(output);
-        output = rx.cap(1);
-        kDebug() << "Status: " <<output;
-        if( "SUCCEED" == output ) {
-            rx.setPattern( QString( "\"short_url\":\"(.+)\"" ) );
+        QString status = rx.cap(1);
+        kDebug() << "Status: " << status;
+        if( "SUCCEED" == status ) {
+            rx.setPattern( QString( "\"short_key\":\"(.+)\"" ) );
             rx.indexIn(output);
             output = rx.cap(1);
+            output.insert( 0, "http://urls.io/" );
             kDebug() << "Short url is: " << output;
             if( !output.isEmpty() ) {
                return output;
