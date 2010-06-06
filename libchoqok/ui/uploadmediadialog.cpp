@@ -99,7 +99,7 @@ void UploadMediaDialog::load()
 void UploadMediaDialog::slotButtonClicked(int button)
 {
     if(button == KDialog::Ok){
-        if(d->ui.uploaderPlugin->currentIndex()==-1)
+        if(d->ui.uploaderPlugin->currentIndex()==-1 || !QFile::exists(d->ui.imageUrl->url().toLocalFile()))
             return;
         if(d->progress)
             d->progress->deleteLater();

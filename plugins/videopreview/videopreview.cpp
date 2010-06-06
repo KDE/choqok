@@ -77,7 +77,7 @@ void VideoPreview::slotAddNewPostWidget(Choqok::UI::PostWidget* newWidget)
 void VideoPreview::slotNewUnshortenedUrl(Choqok::UI::PostWidget* widget, const KUrl &fromUrl, const KUrl &toUrl)
 {
 //     kDebug() << "I have to consider: " << fromUrl << " -> " << toUrl;
-
+    Q_UNUSED(fromUrl)
     if (mYouTubeRegExp.indexIn(toUrl.prettyUrl()) != -1) {
         KUrl thisurl(mYouTubeRegExp.cap(0));
         QString thumbUrl = parseYoutube(thisurl.queryItemValue("v"), widget);
