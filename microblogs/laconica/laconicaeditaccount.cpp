@@ -58,6 +58,9 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
             newAccountAlias = QString("%1%2").arg(newAccountAlias).arg(counter);
         setAccount( mAccount = new LaconicaAccount(microblog, newAccountAlias) );
         kcfg_alias->setText( newAccountAlias );
+        const QRegExp userRegExp("([a-zA-Z0-9_]){1,64}");
+        QValidator *userVal = new QRegExpValidator(userRegExp, 0);
+        kcfg_username->setValidator(userVal);
     }
     loadTimelinesTableState();
     kcfg_alias->setFocus(Qt::OtherFocusReason);

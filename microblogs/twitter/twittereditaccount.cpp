@@ -56,6 +56,9 @@ TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
             newAccountAlias = QString("%1%2").arg(newAccountAlias).arg(counter);
         setAccount( mAccount = new TwitterAccount(microblog, newAccountAlias) );
         kcfg_alias->setText( newAccountAlias );
+        const QRegExp userRegExp("([a-zA-Z0-9_]){1,20}");
+        QValidator *userVal = new QRegExpValidator(userRegExp, 0);
+        kcfg_username->setValidator(userVal);
     }
     loadTimelinesTableState();
     kcfg_alias->setFocus(Qt::OtherFocusReason);
