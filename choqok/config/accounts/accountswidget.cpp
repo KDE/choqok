@@ -49,6 +49,7 @@ AccountsWidget::AccountsWidget( QWidget* parent, const QVariantList& args )
     setupUi( this );
     connect( accountsTable, SIGNAL(cellDoubleClicked(int,int)),
              this, SLOT(accountsTableCellDoubleClicked(int,int)) );
+    connect( accountsTable, SIGNAL(cellClicked(int,int)), this, SLOT(accountsTableCellClicked(int,int)) );
     connect( btnUp, SIGNAL(clicked(bool)), this, SLOT(moveCurrentRowUp()) );
     connect( btnDown, SIGNAL(clicked(bool)), this, SLOT(moveCurrentRowDown()) );
     connect( btnEdit, SIGNAL( clicked() ), this, SLOT( editAccount() ) );
@@ -324,4 +325,9 @@ void AccountsWidget::accountsTableCellDoubleClicked(int row, int column)
     editAccount();
 }
 
+void AccountsWidget::accountsTableCellClicked(int row, int column)
+{
+    Q_UNUSED(column);
+    accountsTable->selectRow(row);
+}
 #include "accountswidget.moc"
