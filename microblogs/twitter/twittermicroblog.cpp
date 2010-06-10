@@ -41,6 +41,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "twitterpostwidget.h"
 #include "twitterapihelper/twitterapimicroblogwidget.h"
 #include "twittersearch.h"
+#include <twitterapihelper/twitterapicomposerwidget.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < TwitterMicroBlog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_twitter" ) )
@@ -100,7 +101,7 @@ Choqok::UI::PostWidget* TwitterMicroBlog::createPostWidget(Choqok::Account* acco
 
 Choqok::UI::ComposerWidget* TwitterMicroBlog::createComposerWidget(Choqok::Account* account, QWidget* parent)
 {
-    return new Choqok::UI::ComposerWidget(account, parent);
+    return new TwitterApiComposerWidget(account, parent);
 }
 
 QString TwitterMicroBlog::profileUrl(Choqok::Account* account, const QString& username) const
