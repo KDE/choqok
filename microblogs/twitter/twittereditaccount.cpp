@@ -51,9 +51,12 @@ TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
         kcfg_secure->setChecked( mAccount->useSecureConnection() );
     } else {
         QString newAccountAlias = microblog->serviceName();
+	QString servName = newAccountAlias;
         int counter = 1;
-        while(Choqok::AccountManager::self()->findAccount(newAccountAlias))
-            newAccountAlias = QString("%1%2").arg(newAccountAlias).arg(counter);
+        while(Choqok::AccountManager::self()->findAccount(newAccountAlias)){
+            newAccountAlias = QString("%1%2").arg(servName).arg(counter);
+	    counter++;
+	}
         setAccount( mAccount = new TwitterAccount(microblog, newAccountAlias) );
         kcfg_alias->setText( newAccountAlias );
         const QRegExp userRegExp("([a-zA-Z0-9_]){1,20}");

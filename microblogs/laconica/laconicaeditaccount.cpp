@@ -53,9 +53,12 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
         kcfg_changeToString->setText( mAccount->changeExclamationMarkToText() );
     } else {
         QString newAccountAlias = microblog->serviceName();
+        QString servName = newAccountAlias;
         int counter = 1;
-        while(Choqok::AccountManager::self()->findAccount(newAccountAlias))
-            newAccountAlias = QString("%1%2").arg(newAccountAlias).arg(counter);
+        while(Choqok::AccountManager::self()->findAccount(newAccountAlias)){
+            newAccountAlias = QString("%1%2").arg(servName).arg(counter);
+            counter++;
+        }
         setAccount( mAccount = new LaconicaAccount(microblog, newAccountAlias) );
         kcfg_alias->setText( newAccountAlias );
         const QRegExp userRegExp("([a-zA-Z0-9_]){1,64}");
