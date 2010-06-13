@@ -35,7 +35,7 @@
 #include "twitterapishowthread.h"
 #include <textbrowser.h>
 
-const QRegExp TwitterApiPostWidget::mUserRegExp("([\\s]|^)@([a-zA-Z0-9_]+){1,64}");
+const QRegExp TwitterApiPostWidget::mUserRegExp("([\\s\\W]|^)@([a-zA-Z0-9_]+){1,64}");
 const QRegExp TwitterApiPostWidget::mHashtagRegExp("([\\s]|^)#([^\\s\\W]+)");
 const KIcon TwitterApiPostWidget::unFavIcon(Choqok::MediaManager::convertToGrayScale(KIcon("rating").pixmap(16)) );
 
