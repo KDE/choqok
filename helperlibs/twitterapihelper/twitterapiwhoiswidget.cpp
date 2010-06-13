@@ -68,7 +68,7 @@ const char * baseText = "\
                             <td>\
                                 <b>Name:</b> %2<br/>\
                                 <b>Location:</b> %3<br/>\
-                                <b>TimeZone:</b> %4\
+                                <b>Timezone:</b> %4\
                             </td>\
                         </tr></table>\
                     </td>\
@@ -77,9 +77,9 @@ const char * baseText = "\
                     <td>\
                         <b>Web:</b> %5<br/>\
                         <b>Bio:</b> %6<br/>\
-                        <b>Last Status: </b>%7<br/><br/>\
-                        %8 Friends!<br/>\
-                        %9 Followers!\
+                        <b>Last Status:</b> %7<br/><br/>\
+                        %8 Friends<br/>\
+                        %9 Followers\
                         \
                     </td>\
                 </tr>\
