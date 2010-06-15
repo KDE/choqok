@@ -50,6 +50,7 @@ AccountsWidget::AccountsWidget( QWidget* parent, const QVariantList& args )
     connect( accountsTable, SIGNAL(cellDoubleClicked(int,int)),
              this, SLOT(accountsTableCellDoubleClicked(int,int)) );
     connect( accountsTable, SIGNAL(cellClicked(int,int)), this, SLOT(accountsTableCellClicked(int,int)) );
+    accountsTable->horizontalHeader()->setStretchLastSection(true);
     connect( btnUp, SIGNAL(clicked(bool)), this, SLOT(moveCurrentRowUp()) );
     connect( btnDown, SIGNAL(clicked(bool)), this, SLOT(moveCurrentRowDown()) );
     connect( btnEdit, SIGNAL( clicked() ), this, SLOT( editAccount() ) );
@@ -174,21 +175,15 @@ void AccountsWidget::accountsTablestateChanged()
     kDebug();
     int current = accountsTable->currentRow();
     kDebug()<<current;
-    if ( current >= 0 ) {
+    if ( current >= 0 && accountsTable->selectedItems().count() > 0 ) {
         btnEdit->setEnabled( true );
         btnRemove->setEnabled( true );
-        if(current == 0)
-            btnUp->setEnabled(false);
-        else
-            btnUp->setEnabled(true);
-        if(current == accountsTable->rowCount() - 1)
-            btnDown->setEnabled(false);
-        else
-            btnDown->setEnabled(true);
+        btnUp->setEnabled(current != 0);
+        btnDown->setEnabled(current != accountsTable->rowCount() - 1);
     } else {
         btnEdit->setEnabled( false );
         btnRemove->setEnabled( false );
-        btnAdd->setEnabled( false );
+        btnUp->setEnabled( false );
         btnDown->setEnabled( false );
     }
 }
@@ -329,5 +324,6 @@ void AccountsWidget::accountsTableCellClicked(int row, int column)
 {
     Q_UNUSED(column);
     accountsTable->selectRow(row);
+    accountsTablestateChanged();
 }
 #include "accountswidget.moc"
