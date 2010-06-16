@@ -51,7 +51,7 @@ public:
     QPointer<QProgressBar> progress;
 };
 
-UploadMediaDialog::UploadMediaDialog(QWidget* parent)
+UploadMediaDialog::UploadMediaDialog(QWidget* parent, const QString& url)
     : KDialog(parent), d(new Private)
 {
     QWidget *wd = new QWidget(parent);
@@ -64,6 +64,10 @@ UploadMediaDialog::UploadMediaDialog(QWidget* parent)
     connect(d->ui.imageUrl, SIGNAL(textChanged(QString)),
             this, SLOT(slotMediumChanged(QString)));
     load();
+    if (url.isEmpty())
+      d->ui.imageUrl->button()->click();
+    else
+      d->ui.imageUrl->setUrl(KUrl(url));
     connect(d->ui.uploaderPlugin, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
     d->ui.aboutPlugin->setIcon(KIcon("help-about"));
     d->ui.configPlugin->setIcon(KIcon("configure"));
@@ -93,7 +97,6 @@ void UploadMediaDialog::load()
     d->ui.uploaderPlugin->setCurrentIndex( d->ui.uploaderPlugin->findData( Choqok::BehaviorSettings::lastUsedUploaderPlugin() ) );
     if(d->ui.uploaderPlugin->currentIndex()==-1 && d->ui.uploaderPlugin->count()>0)
         d->ui.uploaderPlugin->setCurrentIndex(0);
-    d->ui.imageUrl->button()->click();
 }
 
 void UploadMediaDialog::slotButtonClicked(int button)

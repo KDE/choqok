@@ -36,7 +36,7 @@ class CHOQOK_EXPORT UploadMediaDialog : public KDialog
 {
 Q_OBJECT
 public:
-    UploadMediaDialog(QWidget* parent = 0);
+    UploadMediaDialog(QWidget* parent = 0, const QString &url = QString());
     ~UploadMediaDialog();
 
 protected:

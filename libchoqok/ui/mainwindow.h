@@ -54,6 +54,7 @@ Q_SIGNALS:
     void updateTimelines();
     void markAllAsRead();
     void removeOldPosts();
+    void quickPostCreated();
 
 protected:
     void hideEvent( QHideEvent * event );

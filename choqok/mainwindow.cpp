@@ -108,6 +108,8 @@ MainWindow::MainWindow()
     QTimer::singleShot(0, Choqok::PluginManager::self(), SLOT( loadAllPlugins() ) );
 //     Choqok::AccountManager::self()->loadAllAccounts();
     QTimer::singleShot(0, Choqok::AccountManager::self(), SLOT( loadAllAccounts() ) );
+    
+    
 
     QPoint pos = Choqok::BehaviorSettings::position();
     if(pos.x() != -1 && pos.y() != -1) {
@@ -275,6 +277,7 @@ void MainWindow::createQuickPostDialog()
     quickWidget->setAttribute(Qt::WA_DeleteOnClose, false);
     connect( quickWidget, SIGNAL( newPostSubmitted(Choqok::JobResult)),
              sysIcon, SLOT( slotJobDone(Choqok::JobResult)) );
+    emit(quickPostCreated());
 }
 
 void MainWindow::triggerQuickPost()
