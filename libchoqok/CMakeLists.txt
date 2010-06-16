@@ -18,6 +18,7 @@ notifymanager.cpp
 choqokuiglobal.cpp
 choqokid.cpp
 choqoktools.cpp
+dbushandler.cpp
 ui/microblogwidget.cpp
 ui/editaccountwidget.cpp
 ui/timelinewidget.cpp
@@ -31,6 +32,8 @@ ui/textbrowser.cpp
 # filtermanager.cpp
 # filter.cpp
 )
+
+qt4_add_dbus_adaptor( choqok_LIB_SRCS org.kde.choqok.xml dbushandler.h Choqok::DbusHandler ChoqokAdaptor ) 
 
 kde4_add_kcfg_files(choqok_LIB_SRCS
 choqokbehaviorsettings.kcfgc
@@ -79,6 +82,7 @@ install( FILES
     shortener.h
     uploader.h
     shortenmanager.h
+    dbushandler.h
     choqoktools.h
     ui/choqoktextedit.h
     ui/composerwidget.h

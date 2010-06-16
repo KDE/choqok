@@ -1,0 +1,23 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.kde.choqok">
+    <method name="shareUrl">
+      <arg name="url" type="s" direction="in"/>
+      <arg name="title" type="b" direction="in"/>
+    </method>
+    <method name="uploadFile">
+      <arg name="filename" type="s" direction="in"/>
+    </method>
+    <method name="postText">
+      <arg name="text" type="s" direction="in"/>
+    </method>
+    <method name="updateTimelines">
+    </method>
+    <method name="setShortening">
+      <arg name="flag" type="b" direction="in"/>
+    </method>
+    <method name="getShortening">
+      <arg type="b" direction="out"/>
+    </method>
+  </interface>
+</node>

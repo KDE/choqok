@@ -38,6 +38,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <pluginmanager.h>
 #include "choqokbehaviorsettings.h"
 #include <choqokuiglobal.h>
+#include <dbushandler.h>
 
 ChoqokApplication::ChoqokApplication()
 : KUniqueApplication( true, true ), m_isShuttingDown(false)
@@ -45,6 +46,8 @@ ChoqokApplication::ChoqokApplication()
     kDebug();
     setQuitOnLastWindowClosed( false );
 
+    Choqok::ChoqokDbus();
+    
     m_mainWindow = new MainWindow;
 //     if ( Choqok::BehaviorSettings::showMainWinOnStart() ) {
 //         m_mainWindow->show();
