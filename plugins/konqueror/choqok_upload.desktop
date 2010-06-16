@@ -1,0 +1,13 @@
+[Desktop Entry]
+Actions=ChoqokUploadFile;
+Type=Service
+Icon=
+Name=
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin,image/*
+X-KDE-ExcludeServiceTypes=kdedevice/*
+
+[Desktop Action ChoqokUploadFile]
+Exec=qdbus org.kde.choqok / uploadFile %U
+Icon=choqok
+Name=Upload with Choqok
+Name[it]=Carica con Choqok
