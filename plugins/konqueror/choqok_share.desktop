@@ -12,10 +12,8 @@ X-KDE-Priority=TopLevel
 Icon=choqok
 Exec=qdbus org.kde.choqok / shareUrl %U false
 Name=Share Link with Choqok
-Name[it]=Condividi con Choqok
 
 [Desktop Action ShareLinkandTitle]
 Icon=choqok
 Exec=qdbus org.kde.choqok / shareUrl %U true
 Name=Share Link with Choqok (Title)
-Name[it]=Condividi con Choqok (Titolo)

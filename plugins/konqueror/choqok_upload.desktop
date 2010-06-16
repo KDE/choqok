@@ -10,4 +10,3 @@ X-KDE-ExcludeServiceTypes=kdedevice/*
 Exec=qdbus org.kde.choqok / uploadFile %U
 Icon=choqok
 Name=Upload with Choqok
-Name[it]=Carica con Choqok

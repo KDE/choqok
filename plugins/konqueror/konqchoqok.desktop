@@ -9,6 +9,4 @@ X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=true
 X-KDE-ParentApp=konqueror
 Name=Konqueror Choqok Plugin
-Name[it]=Plugin di Choqok per Konqueror
 Comment=Post to Choqok selected text in Konqueror and other features
-Comment[it]=Invia a Choqok il testo selezionato in Konqueror e altre caratteristiche
