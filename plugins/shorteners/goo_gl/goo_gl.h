@@ -27,6 +27,7 @@
 #include <shortener.h>
 #include <QString>
 #include <QVariant>
+#include <QHttp>
 
 /**
   @author Andrey Esin \<gmlastik@gmail.com\>
@@ -41,11 +42,16 @@ public:
     QString shorten( const QString& url );
     
 private:
-    long first( QString str );
-    long second( QString str );
-    long third( QList<long> &b );
-    QString fourth( long l );
+    qint64 first( QString str );
+    qint64 second( QString str );
+    qint64 third( QList<qint64> &b );
+    QString fourth( qint64 l );
     QString authToken( QString url );
+    QHttp httpClient;
+    QString data;
+    bool readyToParse;
+  private slots:
+    void slotReadyRead();
 };
 
 #endif //U_NU_H

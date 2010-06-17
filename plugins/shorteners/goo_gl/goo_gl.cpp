@@ -18,12 +18,10 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program; if not, see http://www.gnu.org/licenses/
+    aqint64 with this program; if not, see http://www.gnu.org/licenses/
 */
 
 #include "goo_gl.h"
-#include <QString>
-#include <KIO/Job>
 #include <KDebug>
 #include <kio/netaccess.h>
 #include <KAboutData>
@@ -31,22 +29,26 @@
 #include <kglobal.h>
 #include <math.h>
 
+#include <QHttp>
+#include <QtCore/QCoreApplication>
+
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Goo_gl > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_goo_gl" ) )
 
 Goo_gl::Goo_gl( QObject* parent, const QVariantList& )
     : Choqok::Shortener( MyPluginFactory::componentData(), parent )
 {
+    connect(&httpClient, SIGNAL(done(bool)), this, SLOT(slotReadyRead()));
 }
 
 Goo_gl::~Goo_gl()
 {
 }
 
-long Goo_gl::first( QString str ){
-    long m = 5381;
+qint64 Goo_gl::first( QString str ){
+    qint64 m = 5381;
     for ( int o = 0; o < str.length(); o++ ){
-        QList<long> qb;
+        QList<qint64> qb;
         qb.append( m << 5 );
         qb.append( m );
         qb.append( ( int )str.at( o ).toAscii() );
@@ -55,10 +57,10 @@ long Goo_gl::first( QString str ){
     return m;
 }
 
-long Goo_gl::second( QString str ){
-    long m = 0;
+qint64 Goo_gl::second( QString str ){
+    qint64 m = 0;
     for ( int o = 0; o < str.length(); o++ ){
-        QList<long> qb;
+        QList<qint64> qb;
         qb.append( ( int )str.at( o ).toAscii() );
         qb.append( m << 6 );
         qb.append( m << 16 );
@@ -68,10 +70,10 @@ long Goo_gl::second( QString str ){
     return m;
 }
 
-long Goo_gl::third( QList<long> &b ){
-    long l = 0;
+qint64 Goo_gl::third( QList<qint64> &b ){
+    qint64 l = 0;
     for ( int i = 0; i < b.length();i++ ){
-        long val = b.at( i );
+        qint64 val = b.at( i );
         val &= 4294967295;
         val += val > 2147483647 ? -4294967296 : ( val < -2147483647 ? 4294967296 : 0 );
         l += val;
@@ -80,10 +82,10 @@ long Goo_gl::third( QList<long> &b ){
   return l;
 }
 
-QString Goo_gl::fourth( long l ){
+QString Goo_gl::fourth( qint64 l ){
     l = l > 0 ? l : l + 4294967296;
     QString m = QString::number( l );
-    int o = 0;
+    qint64 o = 0;
     bool n = false;
     for ( int p = m.length() - 1;p >= 0;--p ){
         int q = QString( m.at( p ) ).toInt( 0, 10 );
@@ -99,24 +101,25 @@ QString Goo_gl::fourth( long l ){
     o = 0;
     if ( m != 0 ){
         o = 10 - m.toInt( 0, 10 );
-        if ( QString::number( l ).length() % 2 == 1 )
+        if ( QString::number( l ).length() % 2 == 1 ){
             if ( o % 2 == 1 ){
                 o += 9;
             }
         o /= 2;
+        }
     }
     return QString( "%1%2" ).arg( o ).arg( l );
 }
 
 QString Goo_gl::authToken( QString url ){
-        long i = first( url );
+        qint64 i = first( url );
         i = i >> 2 & 1073741823;
         i = ( i >> 4 & 67108800 ) | ( i & 63 );
         i = ( i >> 4 & 4193280 ) | ( i & 1023 );
         i = ( i >> 4 & 245760 ) | ( i & 16383 );
         QString j = "7";
-        long h = second( url );
-        long k = ( i >> 2 & 15 ) << 4 | ( h & 15 );
+        qint64 h = second( url );
+        qint64 k = ( i >> 2 & 15 ) << 4 | ( h & 15 );
         k |= ( i >> 6 & 15 ) << 12 | ( h >> 8 & 15 ) << 8;
         k |= ( i >> 10 & 15 ) << 20 | ( h >> 16 & 15 ) << 16;
         k |= ( i >> 14 & 15 ) << 28 | ( h >> 24 & 15 ) << 24;
@@ -124,34 +127,47 @@ QString Goo_gl::authToken( QString url ){
         return j;
 }
 
+void Goo_gl::slotReadyRead()
+{
+    data = httpClient.readAll();
+    readyToParse = true;
+}
+
 QString Goo_gl::shorten( const QString& url )
 {
     kDebug() << "Using goo.gl";
-    QByteArray data;
+
     QString req;
     req = QString( "user=toolbar@google.com" ) + 
           QString( "&url=" ) + QUrl::toPercentEncoding( KUrl( url ).url() ) + 
           QString( "&auth_token=" ) + authToken( KUrl( url ).url() );
-    
-    KUrl reqUrl( "http://goo.gl/api/url" );
-    
-    KIO::Job* job = KIO::http_post( reqUrl, req.toUtf8(), KIO::HideProgressInfo );
-    job->addMetaData( "content-type", "Content-Type: application/x-www-form-urlencoded" );   
-    
-    if( KIO::NetAccess::synchronousRun( job, 0, &data ) ) {
-        QString output( data );
-        QRegExp rx( QString( "\\{\\\"short_url\\\":\\\"(.*)\\\"" ) );
-        rx.setMinimal(true);
-        rx.indexIn(output);
-        output = rx.cap(1);
-        kDebug() << "Short url is: " << output;
-        if( !output.isEmpty() ) {
-            return output;
-        }
+          
+    readyToParse = false;
+    QHttpRequestHeader header("POST", "/api/url");
+    header.setValue("Host", "goo.gl");
+    header.setValue("Accept","*/*");
+    header.setValue("Content-Length", QString::number(req.length()));
+    header.setValue("Content-Type","application/x-www-form-urlencoded");
+
+    httpClient.setHost("goo.gl");
+    httpClient.request(header,req.toUtf8());
+
+    while (!readyToParse){
+      qApp->processEvents(); //Wait while buffer will be full.
     }
-    else {
-        kDebug() << "Cannot create a shorten url.\t" << "KJob ERROR";
+    if (data.isEmpty()) {
+      return url;
     }
+    QString output( data );
+    QRegExp rx( QString( "\\{\\\"short_url\\\":\\\"(.*)\\\"" ) );
+    rx.setMinimal(true);
+    rx.indexIn(output);
+    output = rx.cap(1);
+    kDebug() << "Short url is: " << output;    
+    if( !output.isEmpty() ) {
+        return output;
+    }
+    
     return url;
 }
 
