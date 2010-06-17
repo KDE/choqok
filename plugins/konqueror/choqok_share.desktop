@@ -4,6 +4,7 @@ Type=Service
 ServiceTypes=KonqPopupMenu/Plugin,all/allfiles
 Actions=ShareLink;ShareLinkandTitle;
 X-KDE-Submenu=Choqok
+X-KDE-Submenu[x-test]=xxChoqokxx
 X-KDE-ExcludeServiceTypes=kdedevice/*
 X-KDE-Protocol=!file
 X-KDE-Priority=TopLevel
@@ -12,8 +13,10 @@ X-KDE-Priority=TopLevel
 Icon=choqok
 Exec=qdbus org.kde.choqok / shareUrl %U false
 Name=Share Link with Choqok
+Name[x-test]=xxShare Link with Choqokxx
 
 [Desktop Action ShareLinkandTitle]
 Icon=choqok
 Exec=qdbus org.kde.choqok / shareUrl %U true
 Name=Share Link with Choqok (Title)
+Name[x-test]=xxShare Link with Choqok (Title)xx
