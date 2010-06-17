@@ -100,6 +100,9 @@ private slots:
 
     //Using this for splash screen
     void oneMicroblogLoaded();
+    
+Q_SIGNALS:
+    void quickPostCreated();
 
 private:
     void setupActions();
