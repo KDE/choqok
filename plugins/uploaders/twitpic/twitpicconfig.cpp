@@ -43,6 +43,9 @@ TwitpicConfig::TwitpicConfig(QWidget* parent, const QVariantList& ):
     addConfig( TwitpicSettings::self(), wd );
     layout->addWidget(wd);
     connect( ui.kcfg_username,SIGNAL(textChanged(QString)), SLOT(emitChanged()) );
+    const QRegExp userRegExp("([a-zA-Z0-9_]){1,20}");
+    QValidator *userVal = new QRegExpValidator(userRegExp, 0);
+    ui.kcfg_username->setValidator(userVal);
     connect( ui.cfg_password, SIGNAL(textChanged(QString)), SLOT(emitChanged()) );
 }
 
