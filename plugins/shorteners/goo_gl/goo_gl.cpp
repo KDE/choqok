@@ -27,9 +27,9 @@
 #include <KAboutData>
 #include <KGenericFactory>
 #include <kglobal.h>
+#include <kio/job.h>
 #include <math.h>
 
-#include <QHttp>
 #include <QtCore/QCoreApplication>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Goo_gl > (); )
@@ -38,7 +38,6 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_goo_gl" ) )
 Goo_gl::Goo_gl( QObject* parent, const QVariantList& )
     : Choqok::Shortener( MyPluginFactory::componentData(), parent )
 {
-    connect(&httpClient, SIGNAL(done(bool)), this, SLOT(slotReadyRead()));
 }
 
 Goo_gl::~Goo_gl()
@@ -51,7 +50,7 @@ qint64 Goo_gl::first( QString str ){
         QList<qint64> qb;
         qb.append( m << 5 );
         qb.append( m );
-        qb.append( ( int )str.at( o ).toAscii() );
+        qb.append( ( int )str.at( o ).toLatin1() );
         m = third( qb );
     }
     return m;
@@ -61,7 +60,7 @@ qint64 Goo_gl::second( QString str ){
     qint64 m = 0;
     for ( int o = 0; o < str.length(); o++ ){
         QList<qint64> qb;
-        qb.append( ( int )str.at( o ).toAscii() );
+        qb.append( ( int )str.at( o ).toLatin1() );
         qb.append( m << 6 );
         qb.append( m << 16 );
         qb.append( -m );
@@ -127,9 +126,9 @@ QString Goo_gl::authToken( QString url ){
         return j;
 }
 
-void Goo_gl::slotReadyRead()
+void Goo_gl::slotReadyRead(KJob *job)
 {
-    data = httpClient.readAll();
+    data = static_cast<KIO::StoredTransferJob *>(job)->data();
     readyToParse = true;
 }
 
@@ -137,20 +136,14 @@ QString Goo_gl::shorten( const QString& url )
 {
     kDebug() << "Using goo.gl";
 
-    QString req;
-    req = QString( "user=toolbar@google.com" ) + 
-          QString( "&url=" ) + QUrl::toPercentEncoding( KUrl( url ).url() ) + 
-          QString( "&auth_token=" ) + authToken( KUrl( url ).url() );
-          
-    readyToParse = false;
-    QHttpRequestHeader header("POST", "/api/url");
-    header.setValue("Host", "goo.gl");
-    header.setValue("Accept","*/*");
-    header.setValue("Content-Length", QString::number(req.length()));
-    header.setValue("Content-Type","application/x-www-form-urlencoded");
+    QByteArray req;
+    req = "user=toolbar@google.com"
+          "&url=" + QUrl::toPercentEncoding( KUrl( url ).url() ) +
+          "&auth_token=" + authToken( KUrl( url ).url() ).toUtf8();
 
-    httpClient.setHost("goo.gl");
-    httpClient.request(header,req.toUtf8());
+    readyToParse = false;
+    KIO::StoredTransferJob *job = KIO::storedHttpPost(req, KUrl("http://goo.gl/api/url"));
+    connect( job, SIGNAL(finished(KJob*)), this, SLOT(slotReadyRead(KJob*)) );
 
     while (!readyToParse){
       qApp->processEvents(); //Wait while buffer will be full.

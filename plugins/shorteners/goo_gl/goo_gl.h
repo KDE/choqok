@@ -27,8 +27,8 @@
 #include <shortener.h>
 #include <QString>
 #include <QVariant>
-#include <QHttp>
 
+class KJob;
 /**
   @author Andrey Esin \<gmlastik@gmail.com\>
 */
@@ -47,11 +47,10 @@ private:
     qint64 third( QList<qint64> &b );
     QString fourth( qint64 l );
     QString authToken( QString url );
-    QHttp httpClient;
     QString data;
     bool readyToParse;
   private slots:
-    void slotReadyRead();
+    void slotReadyRead(KJob*);
 };
 
 #endif //U_NU_H
