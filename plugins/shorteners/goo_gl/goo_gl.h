@@ -42,11 +42,11 @@ public:
     QString shorten( const QString& url );
     
 private:
-    qint64 first( QString str );
-    qint64 second( QString str );
-    qint64 third( QList<qint64> &b );
-    QString fourth( qint64 l );
-    QString authToken( QString url );
+    qint64 first( const QByteArray &str );
+    qint64 second( const QByteArray &str );
+    qint64 third( const QList<qint64> &b );
+    QByteArray fourth( qint64 l );
+    QByteArray authToken( const QString &url );
     QString data;
     bool readyToParse;
   private slots:

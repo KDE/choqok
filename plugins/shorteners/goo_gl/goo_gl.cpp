@@ -44,23 +44,23 @@ Goo_gl::~Goo_gl()
 {
 }
 
-qint64 Goo_gl::first( QString str ){
+qint64 Goo_gl::first( const QByteArray &str ){
     qint64 m = 5381;
     for ( int o = 0; o < str.length(); o++ ){
         QList<qint64> qb;
         qb.append( m << 5 );
         qb.append( m );
-        qb.append( ( int )str.at( o ).toLatin1() );
+        qb.append( ( int )str.at( o ) );
         m = third( qb );
     }
     return m;
 }
 
-qint64 Goo_gl::second( QString str ){
+qint64 Goo_gl::second( const QByteArray &str ){
     qint64 m = 0;
     for ( int o = 0; o < str.length(); o++ ){
         QList<qint64> qb;
-        qb.append( ( int )str.at( o ).toLatin1() );
+        qb.append( ( int )str.at( o ) );
         qb.append( m << 6 );
         qb.append( m << 16 );
         qb.append( -m );
@@ -69,25 +69,25 @@ qint64 Goo_gl::second( QString str ){
     return m;
 }
 
-qint64 Goo_gl::third( QList<qint64> &b ){
+qint64 Goo_gl::third( const QList<qint64> &b ){
     qint64 l = 0;
     for ( int i = 0; i < b.length();i++ ){
         qint64 val = b.at( i );
-        val &= 4294967295;
-        val += val > 2147483647 ? -4294967296 : ( val < -2147483647 ? 4294967296 : 0 );
+        val &= Q_INT64_C(4294967295);
+        val += val > 2147483647 ? Q_INT64_C(-4294967296) : ( val < -2147483647 ? Q_INT64_C(4294967296) : 0 );
         l += val;
-        l += l > 2147483647 ? -4294967296 : ( l < -2147483647 ? 4294967296 : 0 );
+        l += l > 2147483647 ? Q_INT64_C(-4294967296) : ( l < -2147483647 ? Q_INT64_C(4294967296) : 0 );
     }
   return l;
 }
 
-QString Goo_gl::fourth( qint64 l ){
-    l = l > 0 ? l : l + 4294967296;
-    QString m = QString::number( l );
+QByteArray Goo_gl::fourth( qint64 l ){
+    l = l > 0 ? l : l + Q_INT64_C(4294967296);
+    QByteArray m = QByteArray::number( l );
     qint64 o = 0;
     bool n = false;
     for ( int p = m.length() - 1;p >= 0;--p ){
-        int q = QString( m.at( p ) ).toInt( 0, 10 );
+        int q = m.at( p ) - '0';
         if ( n ){
             q *= 2;
             o += floor( q / 10 ) + q % 10;
@@ -96,28 +96,28 @@ QString Goo_gl::fourth( qint64 l ){
         }
         n = !n;
     }
-    m = QString::number( o % 10 );
+    m = QByteArray::number( o % 10 );
     o = 0;
-    if ( m != 0 ){
+    if ( m != 0 ){              // ### this line makes no sense -thiago
         o = 10 - m.toInt( 0, 10 );
-        if ( QString::number( l ).length() % 2 == 1 ){
+        if ( QByteArray::number( l ).length() % 2 == 1 ){
             if ( o % 2 == 1 ){
                 o += 9;
             }
         o /= 2;
         }
     }
-    return QString( "%1%2" ).arg( o ).arg( l );
+    return QByteArray::number(o) + QByteArray::number(l);
 }
 
-QString Goo_gl::authToken( QString url ){
-        qint64 i = first( url );
+QByteArray Goo_gl::authToken( const QString &url ){
+        qint64 i = first( url.toLatin1() );
         i = i >> 2 & 1073741823;
         i = ( i >> 4 & 67108800 ) | ( i & 63 );
         i = ( i >> 4 & 4193280 ) | ( i & 1023 );
         i = ( i >> 4 & 245760 ) | ( i & 16383 );
-        QString j = "7";
-        qint64 h = second( url );
+        QByteArray j = "7";
+        qint64 h = second( url.toLatin1() );
         qint64 k = ( i >> 2 & 15 ) << 4 | ( h & 15 );
         k |= ( i >> 6 & 15 ) << 12 | ( h >> 8 & 15 ) << 8;
         k |= ( i >> 10 & 15 ) << 20 | ( h >> 16 & 15 ) << 16;
@@ -139,7 +139,7 @@ QString Goo_gl::shorten( const QString& url )
     QByteArray req;
     req = "user=toolbar@google.com"
           "&url=" + QUrl::toPercentEncoding( KUrl( url ).url() ) +
-          "&auth_token=" + authToken( KUrl( url ).url() ).toUtf8();
+          "&auth_token=" + authToken( KUrl( url ).url() );
 
     readyToParse = false;
     KIO::StoredTransferJob *job = KIO::storedHttpPost(req, KUrl("http://goo.gl/api/url"));
