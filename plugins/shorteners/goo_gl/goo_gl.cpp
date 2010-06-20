@@ -18,7 +18,7 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    aqint64 with this program; if not, see http://www.gnu.org/licenses/
+    along with this program; if not, see http://www.gnu.org/licenses/
 */
 
 #include "goo_gl.h"
@@ -98,7 +98,7 @@ QByteArray Goo_gl::fourth( qint64 l ){
     }
     m = QByteArray::number( o % 10 );
     o = 0;
-    if ( m != 0 ){              // ### this line makes no sense -thiago
+    if ( ( m.at(0) - '0' ) != 0 ){
         o = 10 - m.toInt( 0, 10 );
         if ( QByteArray::number( l ).length() % 2 == 1 ){
             if ( o % 2 == 1 ){
@@ -142,12 +142,18 @@ QString Goo_gl::shorten( const QString& url )
           "&auth_token=" + authToken( KUrl( url ).url() );
 
     readyToParse = false;
-    KIO::StoredTransferJob *job = KIO::storedHttpPost(req, KUrl("http://goo.gl/api/url"));
+    QMap<QString, QString> metaDatas;
+    metaDatas.insert("accept","*/*");
+    metaDatas.insert("content-type", "Content-Type: application/x-www-form-urlencoded" );
+    
+    KIO::StoredTransferJob *job = KIO::storedHttpPost ( req, KUrl("http://goo.gl/api/url"), KIO::HideProgressInfo ) ;
+    job->setMetaData(KIO::MetaData(metaDatas));
     connect( job, SIGNAL(finished(KJob*)), this, SLOT(slotReadyRead(KJob*)) );
 
-    while (!readyToParse){
-      qApp->processEvents(); //Wait while buffer will be full.
+    while (!readyToParse){      //Wait while buffer will be full.
+      qApp->processEvents(); 
     }
+
     if (data.isEmpty()) {
       return url;
     }
