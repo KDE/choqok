@@ -100,6 +100,7 @@ void Twitpic::slotUpload(KJob* job)
         QDomDocument doc;
         QByteArray buffer = qobject_cast<KIO::StoredTransferJob*>(job)->data();
 //         kDebug()<<buffer;
+        buffer.replace('&', "&amp;");
         doc.setContent(buffer);
         QDomElement element = doc.documentElement();
         if( element.tagName() == "rsp" ) {
