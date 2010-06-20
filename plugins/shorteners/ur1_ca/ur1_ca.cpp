@@ -48,7 +48,7 @@ QString Ur1_ca::shorten ( const QString& url )
   QByteArray data;
   KUrl reqUrl ( "http://ur1.ca/" );
   QString temp;
-  temp = KUrl::encode_string(url);
+  temp = QUrl::toPercentEncoding(url);
 
   QByteArray parg("longurl=");
   parg.append(temp.toAscii());
