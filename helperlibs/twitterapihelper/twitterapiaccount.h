@@ -47,9 +47,6 @@ public:
     QString userId() const;
     void setUserId( const QString &id );
 
-    bool useSecureConnection() const;
-    void setUseSecureConnection(bool use = true);
-
     int countOfPosts() const;
     void setCountOfPosts(int count);
 

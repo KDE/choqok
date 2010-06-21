@@ -34,7 +34,6 @@ public:
     Private()
         :api('/'), usingOauth(true), qoauth(0)
     {}
-    bool secure;
     QString userId;
     int count;
     QString host;
@@ -54,7 +53,6 @@ public:
 TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString &alias)
     : Account(parent, alias), d(new Private)
 {
-    d->secure = configGroup()->readEntry("UseSecureConnection", true);
     d->usingOauth = configGroup()->readEntry("UsingOAuth", false);
     d->userId = configGroup()->readEntry("UserId", QString());
     d->count = configGroup()->readEntry("CountOfPosts", 20);
@@ -98,7 +96,6 @@ TwitterApiAccount::~TwitterApiAccount()
 
 void TwitterApiAccount::writeConfig()
 {
-    configGroup()->writeEntry("UseSecureConnection", d->secure);
     configGroup()->writeEntry("UsingOAuth", d->usingOauth);
     configGroup()->writeEntry("UserId", d->userId);
     configGroup()->writeEntry("CountOfPosts", d->count);
@@ -123,17 +120,6 @@ QString TwitterApiAccount::userId() const
 void TwitterApiAccount::setUserId( const QString &id )
 {
     d->userId = id;
-}
-
-bool TwitterApiAccount::useSecureConnection() const
-{
-    return d->secure;
-}
-
-void TwitterApiAccount::setUseSecureConnection(bool use /*= true*/)
-{
-    d->secure = use;
-    generateApiUrl();
 }
 
 int TwitterApiAccount::countOfPosts() const

@@ -144,9 +144,9 @@ TwitterApiWhoisWidget::~TwitterApiWhoisWidget()
 
 void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount* theAccount, const QString& username)
 {
+    //TODO Move this function to TwitterApiMicroBlog
     kDebug();
     KUrl url( theAccount->apiUrl() );
-    url.setScheme ( theAccount->useSecureConnection() ? "https" : "http" );
     url.setUser ( theAccount->username() );
     url.setPass ( theAccount->password() );
 
