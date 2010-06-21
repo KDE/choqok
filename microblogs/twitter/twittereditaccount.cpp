@@ -125,7 +125,8 @@ void TwitterEditAccountWidget::authorizeUser()
         getPinCode();
     } else {
         kDebug()<<"ERROR: " <<qoauth->error()<<' '<<TwitterApiMicroBlog::qoauthErrorText(qoauth->error());
-        //TODO add Error management
+        KMessageBox::detailedError(this, i18n("Authorization Error"),
+                                   TwitterApiMicroBlog::qoauthErrorText(qoauth->error()));
     }
 }
 
@@ -150,7 +151,9 @@ void TwitterEditAccountWidget::getPinCode()
         isAuthorized = true;
         kcfg_authorize->setIcon(KIcon("object-unlocked"));
     } else {
-        kDebug()<<"ERROR: "<<qoauth->error();
+        kDebug()<<"ERROR: "<<qoauth->error()<<' '<<TwitterApiMicroBlog::qoauthErrorText(qoauth->error());
+        KMessageBox::detailedError(this, i18n("Authorization Error"),
+                                   TwitterApiMicroBlog::qoauthErrorText(qoauth->error()));
     }
 
 }

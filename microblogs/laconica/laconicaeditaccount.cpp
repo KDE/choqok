@@ -171,7 +171,8 @@ void LaconicaEditAccountWidget::authorizeUser()
         btn->show();
     } else {
         kDebug()<<"ERROR: " <<qoauth->error()<<' '<<TwitterApiMicroBlog::qoauthErrorText(qoauth->error());
-        //TODO add Error management
+        KMessageBox::detailedError(this, i18n("Authorization Error"),
+                                   TwitterApiMicroBlog::qoauthErrorText(qoauth->error()));
     }
 }
 
@@ -223,6 +224,8 @@ void LaconicaEditAccountWidget::getAccessToken()
         isAuthorized = false;
         kcfg_authorize->setIcon(KIcon("object-locked"));
         kDebug()<<"ERROR: "<<qoauth->error()<<' '<<TwitterApiMicroBlog::qoauthErrorText(qoauth->error());
+        KMessageBox::detailedError(this, i18n("Authorization Error"),
+                                   TwitterApiMicroBlog::qoauthErrorText(qoauth->error()));
     }
 }
 
