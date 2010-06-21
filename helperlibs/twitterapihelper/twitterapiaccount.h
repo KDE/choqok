@@ -28,6 +28,10 @@
 #include <account.h>
 #include <choqok_export.h>
 
+namespace QOAuth {
+class Interface;
+}
+
 class TwitterApiMicroBlog;
 /**
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
@@ -83,8 +87,16 @@ public:
     QByteArray oauthTokenSecret() const;
     void setOauthTokenSecret( const QByteArray &tokenSecret );
 
-    bool isUsingOAuth() const;
+    QByteArray oauthConsumerKey() const;
+    void setOauthConsumerKey( const QByteArray &consumerKey );
+
+    QByteArray oauthConsumerSecret() const;
+    void setOauthConsumerSecret( const QByteArray &consumerSecret );
+
+    bool usingOAuth() const;
     void setUsingOAuth( bool use = true );
+
+    QOAuth::Interface *oauthInterface();
 protected:
     void setApiUrl( const KUrl &apiUrl );
     void setHomepageUrl( const KUrl& homepageUrl );

@@ -27,6 +27,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KUrl>
 #include "twitterapisearch.h"
 #include <QDomElement>
+#include <QtOAuth/qoauth_namespace.h>
+
+namespace QOAuth {
+class Interface;
+}
 
 class TwitterApiSearchTimelineWidget;
 class TwitterApiAccount;
@@ -184,7 +189,10 @@ protected:
                                  QString sincePostId, int page = 1, QString maxId = QString() );
 
     virtual void setTimelineInfos();
-    virtual KUrl apiUrl( TwitterApiAccount* theAccount );
+
+    virtual QByteArray authorizationHeader( TwitterApiAccount* theAccount,
+                                            const KUrl &requestUrl, QOAuth::HttpMethod method,
+                                            QOAuth::ParamMap params = QOAuth::ParamMap());
 
     ///==============================================
     /// XML:

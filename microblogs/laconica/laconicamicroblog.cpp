@@ -141,7 +141,7 @@ TwitterApiSearch* LaconicaMicroBlog::searchBackend()
 }
 
 void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Choqok::Post* post,
-                                   const QString& mediumToAttach)
+                                                 const QString& mediumToAttach)
 {
     if( mediumToAttach.isEmpty() ){
         TwitterApiMicroBlog::createPost(theAccount, post);
@@ -164,7 +164,8 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Ch
             return;
         }
         ///Documentation: http://identi.ca/notice/17779990
-        KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
+        TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
+        KUrl url = account->apiUrl();
         url.addPath ( "/statuses/update.xml" );
         QByteArray fileContentType = KMimeType::findByUrl( picUrl, 0, true )->name().toUtf8();
 
@@ -189,6 +190,7 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Ch
             return;
         }
         job->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=AaB03x" );
+        job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST));
         mCreatePostMap[ job ] = post;
         mJobsAccount[job] = theAccount;
         connect( job, SIGNAL( result( KJob* ) ),

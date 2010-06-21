@@ -37,6 +37,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QtOAuth/interface.h>
 #include <QtOAuth/qoauth_namespace.h>
 #include <kio/accessmanager.h>
+#include <QCheckBox>
 
 TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
                                                     TwitterAccount* account, QWidget* parent)
@@ -50,7 +51,6 @@ TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
         kcfg_username->setText( mAccount->username() );
         kcfg_password->setText( mAccount->password() );
         kcfg_alias->setText( mAccount->alias() );
-        kcfg_secure->setChecked( mAccount->useSecureConnection() );
     } else {
         QString newAccountAlias = microblog->serviceName();
 	QString servName = newAccountAlias;
@@ -118,7 +118,6 @@ Choqok::Account* TwitterEditAccountWidget::apply()
     mAccount->setOauthToken( token );
     mAccount->setOauthTokenSecret( tokenSecret );
     mAccount->setAlias(kcfg_alias->text());
-    mAccount->setUseSecureConnection(kcfg_secure->isChecked());
     saveTimelinesTableState();
     mAccount->writeConfig();
     return mAccount;

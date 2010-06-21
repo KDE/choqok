@@ -93,7 +93,7 @@ p, li { white-space: pre-wrap; }
           <item row="0" column="1">
            <widget class="KLineEdit" name="kcfg_host">
             <property name="text">
-             <string notr="true">identi.ca</string>
+             <string notr="true">https://identi.ca</string>
             </property>
            </widget>
           </item>
@@ -114,16 +114,6 @@ p, li { white-space: pre-wrap; }
            <widget class="KLineEdit" name="kcfg_api">
             <property name="text">
              <string notr="true">api</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QCheckBox" name="kcfg_secure">
-            <property name="text">
-             <string>Use secure connection (HTTPS)</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -285,7 +275,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>kcfg_alias</tabstop>
   <tabstop>kcfg_host</tabstop>
   <tabstop>kcfg_api</tabstop>
-  <tabstop>kcfg_secure</tabstop>
   <tabstop>tabwidget</tabstop>
  </tabstops>
  <resources/>

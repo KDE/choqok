@@ -51,7 +51,7 @@ TwitterMicroBlog::TwitterMicroBlog ( QObject* parent, const QVariantList&  )
 {
     kDebug();
     setServiceName("Twitter");
-    setServiceHomepageUrl("http://twitter.com/");
+    setServiceHomepageUrl("https://twitter.com/");
     timelineApiPath["Reply"] = "/statuses/mentions.%1";
 }
 

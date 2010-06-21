@@ -47,7 +47,6 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
     if(mAccount) {
         kcfg_username->setText( mAccount->username() );
         kcfg_alias->setText( mAccount->alias() );
-        kcfg_secure->setChecked( mAccount->useSecureConnection() );
         kcfg_host->setText( mAccount->host() );
         kcfg_api->setText( mAccount->api() );
         kcfg_changeExclamationMark->setChecked( mAccount->isChangeExclamationMark() );
@@ -109,7 +108,6 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
     mAccount->setHost( kcfg_host->text() );
     mAccount->setApi( kcfg_api->text() );
     mAccount->setAlias(kcfg_alias->text());
-    mAccount->setUseSecureConnection(kcfg_secure->isChecked());
     mAccount->setChangeExclamationMark(kcfg_changeExclamationMark->isChecked());
     mAccount->setChangeExclamationMarkToText(kcfg_changeToString->text());
     saveTimelinesTableState();

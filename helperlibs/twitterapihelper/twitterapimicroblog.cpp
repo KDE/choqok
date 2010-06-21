@@ -50,6 +50,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "twitterapisearchtimelinewidget.h"
 #include <notifymanager.h>
 #include "twitterapicomposerwidget.h"
+#include <QtOAuth/QtOAuth>
 
 class TwitterApiMicroBlog::Private
 {
@@ -276,6 +277,9 @@ TwitterApiSearchTimelineWidget * TwitterApiMicroBlog::createSearchTimelineWidget
 void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post* post )
 {
     kDebug();
+    TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
+    QByteArray data;
+    QOAuth::ParamMap params;
     if ( !post || post->content.isEmpty() ) {
         kDebug() << "ERROR: Status text is empty!";
         emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError,
@@ -283,15 +287,22 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
         return;
     }
     if ( !post->isPrivate ) {///Status Update
-        KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
+        KUrl url = account->apiUrl();
         url.addPath ( QString("/statuses/update.%1").arg(format) );
-        QByteArray data = "status=";
-        data += QUrl::toPercentEncoding (  post->content );
-        if ( !post->replyToPostId.isEmpty() ) {
-            data += "&in_reply_to_status_id=";
-            data += post->replyToPostId.toLocal8Bit();
+        if(account->usingOAuth()){
+            params.insert("status", QUrl::toPercentEncoding (  post->content ));
+            if(!post->replyToPostId.isEmpty())
+                params.insert("in_reply_to_status_id", post->replyToPostId.toLocal8Bit());
+            params.insert("source", "choqok");//TODO remove this, This should not be need when using OAuth
+        } else {
+            data = "status=";
+            data += QUrl::toPercentEncoding (  post->content );
+            if ( !post->replyToPostId.isEmpty() ) {
+                data += "&in_reply_to_status_id=";
+                data += post->replyToPostId.toLocal8Bit();
+            }
+            data += "&source=choqok";
         }
-        data += "&source=choqok";
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
         if ( !job ) {
             kDebug() << "Cannot create an http POST request!";
@@ -300,18 +311,25 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
             return;
         }
         job->addMetaData ( "content-type", "Content-Type: application/x-www-form-urlencoded" );
+        job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST, params));
         mCreatePostMap[ job ] = post;
         mJobsAccount[job] = theAccount;
         connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotCreatePost ( KJob* ) ) );
         job->start();
     } else {///Direct message
         QString recipientScreenName = post->replyToUserName;
-        KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
+        KUrl url = account->apiUrl();
         url.addPath ( QString("/direct_messages/new.%1").arg(format) );
-        QByteArray data = "user=";
-        data += recipientScreenName.toLocal8Bit();
-        data += "&text=";
-        data += QUrl::toPercentEncoding ( post->content );
+        if( account->usingOAuth() ){
+            params.insert("user", recipientScreenName.toLocal8Bit());
+            params.insert("text", QUrl::toPercentEncoding ( post->content ));
+        } else {
+            data = "user=";
+            data += recipientScreenName.toLocal8Bit();
+            data += "&text=";
+            data += QUrl::toPercentEncoding ( post->content );
+            data += "&source=choqok";
+        }
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
         if ( !job ) {
             kDebug() << "Cannot create an http POST request!";
@@ -320,6 +338,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
             return;
         }
         job->addMetaData ( "content-type", "Content-Type: application/x-www-form-urlencoded" );
+        job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST, params));
         mCreatePostMap[ job ] = post;
         mJobsAccount[job] = theAccount;
         connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotCreatePost ( KJob* ) ) );
@@ -334,15 +353,23 @@ void TwitterApiMicroBlog::repeatPost(Choqok::Account* theAccount, const ChoqokId
         kError() << "ERROR: PostId is empty!";
         return;
     }
-    KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
+    TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
+    KUrl url = account->apiUrl();
     url.addPath ( QString("/statuses/retweet/%1.%2").arg(postId).arg(format) );
-        QByteArray data = "source=choqok";
+    QByteArray data;
+    QOAuth::ParamMap params;
+    if(account->usingOAuth()){
+        params.insert("source","choqok");
+    } else {
+        data = "source=choqok";
+    }
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create an http POST request!";
         return;
     }
     job->addMetaData ( "content-type", "Content-Type: application/x-www-form-urlencoded" );
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST, params));
     Choqok::Post *post = new Choqok::Post;
     post->postId = postId;
     mCreatePostMap[ job ] = post;
@@ -426,7 +453,8 @@ void TwitterApiMicroBlog::fetchPost ( Choqok::Account* theAccount, Choqok::Post*
     if ( !post || post->postId.isEmpty()) {
         return;
     }
-    KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
+    TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
+    KUrl url = account->apiUrl();
     url.addPath ( QString("/statuses/show/%1.%2").arg(post->postId).arg(format) );
 
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
@@ -437,6 +465,7 @@ void TwitterApiMicroBlog::fetchPost ( Choqok::Account* theAccount, Choqok::Post*
 //         emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, Low );
         return;
     }
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::GET));
     mFetchPostMap[ job ] = post;
     mJobsAccount[ job ] = theAccount;
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotFetchPost ( KJob* ) ) );
@@ -488,7 +517,8 @@ void TwitterApiMicroBlog::removePost ( Choqok::Account* theAccount, Choqok::Post
 {
     kDebug();
     if ( !post->postId.isEmpty() ) {
-        KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
+        TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
+        KUrl url = account->apiUrl();
         if ( !post->isPrivate ) {
             url.addPath ( "/statuses/destroy/" + post->postId + ".xml" );
         } else {
@@ -501,6 +531,7 @@ void TwitterApiMicroBlog::removePost ( Choqok::Account* theAccount, Choqok::Post
 //             emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
         }
+        job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST));
         mRemovePostMap[job] = post;
         mJobsAccount[job] = theAccount;
         connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotRemovePost ( KJob* ) ) );
@@ -537,7 +568,8 @@ void TwitterApiMicroBlog::slotRemovePost ( KJob *job )
 void TwitterApiMicroBlog::createFavorite ( Choqok::Account* theAccount, const QString &postId )
 {
     kDebug();
-    KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
+    TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
+    KUrl url = account->apiUrl();
     url.addPath ( "/favorites/create/" + postId + ".xml" );
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
     if ( !job ) {
@@ -547,6 +579,7 @@ void TwitterApiMicroBlog::createFavorite ( Choqok::Account* theAccount, const QS
 //         emit error ( theAccount, OtherError, errMsg );
         return;
     }
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST));
     mFavoriteMap[job] = postId;
     mJobsAccount[job] = theAccount;
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotCreateFavorite ( KJob* ) ) );
@@ -580,7 +613,8 @@ void TwitterApiMicroBlog::slotCreateFavorite ( KJob *job )
 void TwitterApiMicroBlog::removeFavorite ( Choqok::Account* theAccount, const QString& postId )
 {
     kDebug();
-    KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
+    TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
+    KUrl url = account->apiUrl();
     url.addPath ( "/favorites/destroy/" + postId + ".xml" );
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
     if ( !job ) {
@@ -590,6 +624,7 @@ void TwitterApiMicroBlog::removeFavorite ( Choqok::Account* theAccount, const QS
 //         emit error ( theAccount, OtherError, errMsg );
         return;
     }
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST));
     mFavoriteMap[job] = postId;
     mJobsAccount[job] = theAccount;
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotRemoveFavorite ( KJob* ) ) );
@@ -631,16 +666,23 @@ void TwitterApiMicroBlog::listFriendsUsername(TwitterApiAccount* theAccount)
 void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount, int page)
 {
     kDebug();
-    KUrl url = apiUrl( theAccount );
+    TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
+    KUrl url = account->apiUrl();
     url.addPath( QString("/statuses/friends/%1.%2").arg(theAccount->username()).
                                                     arg(format));
-    url.setQuery( "?page=" + QString::number( page ) );
+    QOAuth::ParamMap params;
+    if(account->usingOAuth()){
+        params.insert( "page", QByteArray::number( page ) );
+    } else {
+        url.addQueryItem( "page", QString::number( page ) );
+    }
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create an http GET request!";
         return;
     }
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::GET, params));
     mJobsAccount[job] = theAccount;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFriendsScreenName(KJob*) ) );
     job->start();
@@ -679,20 +721,36 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
                                             QString latestStatusId, int page, QString maxId )
 {
     kDebug();
-    KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
+    TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
+    KUrl url = account->apiUrl();
     url.addPath ( timelineApiPath[type].arg(format) );
     int countOfPost = Choqok::BehaviorSettings::countOfPosts();
-    if ( !latestStatusId.isEmpty() ) {
-        url.addQueryItem ( "since_id", latestStatusId );
-        countOfPost = 200;
-    }
 
-    url.addQueryItem ( "count", QString::number( countOfPost ) );
-    if ( !maxId.isEmpty() ) {
-        url.addQueryItem ( "max_id", maxId );
-    }
-    if ( page ) {
-        url.addQueryItem ( "page", QString::number ( page ) );
+    QOAuth::ParamMap params;
+    if( account->usingOAuth() ){
+        if ( !latestStatusId.isEmpty() ) {
+            params.insert ( "since_id", latestStatusId.toLatin1() );
+            countOfPost = 200;
+        }
+        params.insert ( "count", QByteArray::number( countOfPost ) );
+        if ( !maxId.isEmpty() ) {
+            params.insert ( "max_id", maxId.toLatin1() );
+        }
+        if ( page ) {
+            params.insert ( "page", QByteArray::number ( page ) );
+        }
+    } else {
+        if ( !latestStatusId.isEmpty() ) {
+            url.addQueryItem ( "since_id", latestStatusId );
+            countOfPost = 200;
+        }
+        url.addQueryItem ( "count", QString::number( countOfPost ) );
+        if ( !maxId.isEmpty() ) {
+            url.addQueryItem ( "max_id", maxId );
+        }
+        if ( page ) {
+            url.addQueryItem ( "page", QString::number ( page ) );
+        }
     }
     kDebug() << "Latest " << type << " Id: " << latestStatusId;
 
@@ -703,9 +761,9 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
 //         emit error ( theAccount, OtherError, errMsg, Low );
         return;
     }
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::GET, params));
     mRequestTimelineMap[job] = type;
     mJobsAccount[job] = theAccount;
-//     job->addMetaData("UseProxy", "http");
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotRequestTimeline ( KJob* ) ) );
     job->start();
 }
@@ -748,16 +806,19 @@ void TwitterApiMicroBlog::slotRequestTimeline ( KJob *job )
     }
 }
 
-KUrl TwitterApiMicroBlog::apiUrl ( TwitterApiAccount* theAccount )
+QByteArray TwitterApiMicroBlog::authorizationHeader(TwitterApiAccount* theAccount, const KUrl &requestUrl,
+                                                    QOAuth::HttpMethod method, QOAuth::ParamMap params)
 {
-    if(theAccount) {
-        KUrl url( theAccount->apiUrl() );
-        url.setScheme ( theAccount->useSecureConnection() ? "https" : "http" );
-        url.setUser ( theAccount->username() );
-        url.setPass ( theAccount->password() );
-        return url;
+    QByteArray auth;
+    if(theAccount->usingOAuth()){
+        auth = theAccount->oauthInterface()->createParametersString( requestUrl.url(), method, theAccount->oauthToken(),
+                                                             theAccount->oauthTokenSecret(), QOAuth::HMAC_SHA1,
+                                                             params, QOAuth::ParseForHeaderArguments );
+    } else {
+        auth = theAccount->username().toUtf8() + ":" + theAccount->password().toUtf8();
+        auth = auth.toBase64().prepend( "Basic " );
     }
-    return KUrl();
+    return auth;
 }
 
 Choqok::Post * TwitterApiMicroBlog::readPostFromXml ( Choqok::Account* theAccount,
@@ -1107,7 +1168,8 @@ void TwitterApiMicroBlog::slotUpdateFriendsList()
 void TwitterApiMicroBlog::createFriendship( Choqok::Account *theAccount, const QString& username )
 {
     kDebug();
-    KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
+    TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
+    KUrl url = account->apiUrl();
     url.addPath( "/friendships/create/"+ username +".xml" );
     kDebug()<<url;
 
@@ -1116,7 +1178,7 @@ void TwitterApiMicroBlog::createFriendship( Choqok::Account *theAccount, const Q
         kError() << "Cannot create an http POST request!";
         return;
     }
-
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST));
     mJobsAccount[job] = theAccount;
     mFriendshipMap[ job ] = username;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotCreateFriendship(KJob*) ) );
@@ -1164,7 +1226,8 @@ void TwitterApiMicroBlog::slotCreateFriendship(KJob* job)
 void TwitterApiMicroBlog::destroyFriendship( Choqok::Account *theAccount, const QString& username )
 {
     kDebug();
-    KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
+    TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
+    KUrl url = account->apiUrl();
     url.addPath( "/friendships/destroy/" + username + ".xml" );
     kDebug()<<url;
 
@@ -1173,7 +1236,7 @@ void TwitterApiMicroBlog::destroyFriendship( Choqok::Account *theAccount, const 
         kError() << "Cannot create an http POST request!";
         return;
     }
-
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST));
     mJobsAccount[job] = theAccount;
     mFriendshipMap[ job ] = username;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotDestroyFriendship(KJob*) ) );
@@ -1221,7 +1284,8 @@ void TwitterApiMicroBlog::slotDestroyFriendship(KJob* job)
 void TwitterApiMicroBlog::blockUser( Choqok::Account *theAccount, const QString& username )
 {
     kDebug();
-    KUrl url = apiUrl( qobject_cast<TwitterApiAccount*>(theAccount) );
+    TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
+    KUrl url = account->apiUrl();
     url.addPath( "/blocks/create/"+ username +".xml" );
 
     KIO::StoredTransferJob *job = KIO::storedHttpPost(QByteArray(), url, KIO::HideProgressInfo) ;
@@ -1229,7 +1293,7 @@ void TwitterApiMicroBlog::blockUser( Choqok::Account *theAccount, const QString&
         kError() << "Cannot create an http POST request!";
         return;
     }
-
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST));
     mJobsAccount[job] = theAccount;
     mFriendshipMap[ job ] = username;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotBlockUser(KJob*) ) );
