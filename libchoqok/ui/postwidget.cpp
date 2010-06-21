@@ -522,4 +522,9 @@ TextBrowser* PostWidget::mainWidget()
     return _mainWidget;
 }
 
+void PostWidget::wheelEvent(QWheelEvent* event)
+{
+    event->ignore();
+}
+
 #include "postwidget.moc"

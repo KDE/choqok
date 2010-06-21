@@ -172,6 +172,7 @@ protected:
     virtual void setupUi();
     virtual void closeEvent(QCloseEvent* event);
     virtual void setupAvatar();
+    virtual void wheelEvent(QWheelEvent* );
     virtual void resizeEvent ( QResizeEvent * event );
     virtual void enterEvent ( QEvent * event );
     virtual void leaveEvent ( QEvent * event );

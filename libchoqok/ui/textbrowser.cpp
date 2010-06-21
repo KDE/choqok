@@ -101,5 +101,10 @@ void TextBrowser::slotCopyLink()
     }
 }
 
+void Choqok::UI::TextBrowser::wheelEvent(QWheelEvent* event)
+{
+    event->ignore();
+}
+
 
 #include "textbrowser.moc"
