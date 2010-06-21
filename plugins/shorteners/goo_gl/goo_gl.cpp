@@ -142,12 +142,12 @@ QString Goo_gl::shorten( const QString& url )
           "&auth_token=" + authToken( KUrl( url ).url() );
 
     readyToParse = false;
-    QMap<QString, QString> metaDatas;
-    metaDatas.insert("accept","*/*");
-    metaDatas.insert("content-type", "Content-Type: application/x-www-form-urlencoded" );
+    QMap<QString, QString> metaData;
+    metaData.insert("accept","*/*");
+    metaData.insert("content-type", "Content-Type: application/x-www-form-urlencoded" );
     
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( req, KUrl("http://goo.gl/api/url"), KIO::HideProgressInfo ) ;
-    job->setMetaData(KIO::MetaData(metaDatas));
+    job->setMetaData(KIO::MetaData(metaData));
     connect( job, SIGNAL(finished(KJob*)), this, SLOT(slotReadyRead(KJob*)) );
 
     while (!readyToParse){      //Wait while buffer will be full.
