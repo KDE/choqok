@@ -1123,7 +1123,7 @@ void TwitterApiMicroBlog::aboutToUnload()
     d->countOfTimelinesToSave = 0;
     foreach(Choqok::Account* acc, Choqok::AccountManager::self()->accounts()){
         if(acc->microblog() == this){
-            acc->writeConfig();
+//             acc->writeConfig();
             d->countOfTimelinesToSave += acc->timelineNames().count();
         }
     }

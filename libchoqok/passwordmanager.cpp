@@ -28,6 +28,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <kdebug.h>
 #include <QApplication>
 #include "choqokuiglobal.h"
+#include <KApplication>
 
 namespace Choqok
 {
@@ -41,7 +42,9 @@ public:
     bool openWallet()
     {
         kDebug();
-        if(wallet && wallet->isOpen())
+        if(kapp->sessionSaving())
+            return false;
+        if((wallet && wallet->isOpen()))
             return true;
         WId id = 0;
         if(Choqok::UI::Global::mainWindow())
