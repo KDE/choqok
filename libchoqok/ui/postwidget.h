@@ -191,6 +191,12 @@ protected:
     KPushButton * addButton(const QString & objName, const QString & toolTip, const KIcon & icon);
     QMap<QString, KPushButton*> &buttons();
 
+    /**
+    Sets post widget as read, and emits postReaded() signal
+    Use this from inside PostWidget class and its subclasses
+    */
+    void setReadInternal();
+
 protected:
     TextBrowser *_mainWidget;
     const QString *baseText;

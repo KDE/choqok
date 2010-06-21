@@ -245,6 +245,12 @@ void PostWidget::setRead(bool read/* = true*/)
     }
 }
 
+void PostWidget::setReadInternal()
+{
+    setRead();
+    Q_EMIT postReaded();
+}
+
 bool PostWidget::isRead() const
 {
     return currentPost().isRead;
@@ -273,15 +279,14 @@ void PostWidget::setHeight()
 void PostWidget::closeEvent(QCloseEvent* event)
 {
 //     kDebug();
-    emit aboutClosing(currentPost().postId, this);
+    Q_EMIT aboutClosing(currentPost().postId, this);
     event->accept();
 }
 
 void PostWidget::mousePressEvent(QMouseEvent* ev)
 {
     if(!isRead()) {
-        emit postReaded();
-        setRead();
+        setReadInternal();
     }
     QWidget::mousePressEvent(ev);
 }
@@ -389,6 +394,7 @@ void PostWidget::removeCurrentPost()
         connect( d->mCurrentAccount->microblog(),
                 SIGNAL(errorPost(Choqok::Account*, Choqok::Post*,Choqok::MicroBlog::ErrorType,QString)),
                 this, SLOT(slotPostError(Choqok::Account*, Choqok::Post*,Choqok::MicroBlog::ErrorType,QString)) );
+        setReadInternal();
         d->mCurrentAccount->microblog()->removePost(d->mCurrentAccount, &d->mCurrentPost);
     }
 }
@@ -402,11 +408,11 @@ void PostWidget::slotCurrentPostRemoved( Account* theAccount, Post* post )
 void PostWidget::slotResendPost()
 {
     QString text = generateResendText();
-
+    setReadInternal();
     if((BehaviorSettings::resendWithQuickPost() || currentAccount()->isReadOnly()) && Global::quickPostWidget())
         Global::quickPostWidget()->setText(text);
     else
-        emit resendPost(text);
+        Q_EMIT resendPost(text);
 }
 
 QString PostWidget::generateResendText()

@@ -137,6 +137,7 @@ QString TwitterApiPostWidget::generateSign()
 
 void TwitterApiPostWidget::slotReply()
 {
+    setReadInternal();
     if(currentPost().isPrivate){
         TwitterApiAccount *account= qobject_cast<TwitterApiAccount*>( currentAccount() );
         d->mBlog->showDirectMessageDialog( account, currentPost().author.userName );
@@ -147,6 +148,7 @@ void TwitterApiPostWidget::slotReply()
 
 void TwitterApiPostWidget::setFavorite()
 {
+    setReadInternal();
     TwitterApiMicroBlog *mic = d->mBlog;
     if(currentPost().isFavorited){
         connect(mic, SIGNAL(favoriteRemoved(Choqok::Account*,QString)),
@@ -245,6 +247,7 @@ void TwitterApiPostWidget::slotBasePostFetched(Choqok::Account* theAccount, Choq
 
 void TwitterApiPostWidget::repeatPost()
 {
+    setReadInternal();
     d->mBlog->repeatPost(currentAccount(), currentPost().postId);
 }
 
