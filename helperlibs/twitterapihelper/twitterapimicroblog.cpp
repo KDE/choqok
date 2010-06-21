@@ -290,6 +290,14 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
         KUrl url = account->apiUrl();
         url.addPath ( QString("/statuses/update.%1").arg(format) );
         if(account->usingOAuth()){
+            data = "status=";//NOTE StatusNet need this :-/
+            data += QUrl::toPercentEncoding (  post->content );
+            if ( !post->replyToPostId.isEmpty() ) {
+                data += "&in_reply_to_status_id=";
+                data += post->replyToPostId.toLocal8Bit();
+            }
+//             data += "&source=choqok";
+
             params.insert("status", QUrl::toPercentEncoding (  post->content ));
             if(!post->replyToPostId.isEmpty())
                 params.insert("in_reply_to_status_id", post->replyToPostId.toLocal8Bit());

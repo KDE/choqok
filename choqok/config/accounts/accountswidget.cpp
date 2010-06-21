@@ -88,7 +88,7 @@ void AccountsWidget::addAccount()
            QPointer<AddAccountDialog> d = new AddAccountDialog(
                                        blog->createEditAccountWidget(0, Choqok::UI::Global::mainWindow()),
                                                         Choqok::UI::Global::mainWindow() );
-            d->exec();
+            d->show();
         } else {
             KMessageBox::sorry(this, i18n("Cannot load the %1 plugin. Please check your installation.", name));
         }
@@ -111,7 +111,7 @@ void AccountsWidget::editAccount( QString alias )
         ChoqokEditAccountWidget *eaw = currentAccount->microblog()->createEditAccountWidget(currentAccount,
                                                                                             this);
         QPointer<EditAccountDialog> d = new EditAccountDialog(eaw, this);
-        d->exec();
+        d->show();
         // Needs for update alias after editing account
         accountsTable->setItem( currentRow, 0, new QTableWidgetItem( currentAccount->alias() ) ); 
     }

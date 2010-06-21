@@ -78,6 +78,8 @@ protected:
 
     QByteArray token;
     QByteArray tokenSecret;
+    QByteArray oauthConsumerKey;
+    QByteArray oauthConsumerSecret;
     QOAuth::Interface *qoauth;
 };
 

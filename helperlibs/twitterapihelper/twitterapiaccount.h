@@ -98,6 +98,7 @@ protected:
     void setApiUrl( const KUrl &apiUrl );
     void setHomepageUrl( const KUrl& homepageUrl );
     void generateApiUrl();
+    void initQOAuthInterface();
 
 private:
     class Private;

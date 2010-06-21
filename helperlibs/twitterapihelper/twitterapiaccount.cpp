@@ -27,6 +27,7 @@
 #include <passwordmanager.h>
 #include <QtOAuth/QtOAuth>
 #include <kio/accessmanager.h>
+#include <KDebug>
 
 class TwitterApiAccount::Private
 {
@@ -53,6 +54,7 @@ public:
 TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString &alias)
     : Account(parent, alias), d(new Private)
 {
+    kDebug();
     d->usingOauth = configGroup()->readEntry("UsingOAuth", false);
     d->userId = configGroup()->readEntry("UserId", QString());
     d->count = configGroup()->readEntry("CountOfPosts", 20);
@@ -67,6 +69,11 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString 
                                             QString("%1_tokenSecret").arg(alias) ).toUtf8();
     setApi( configGroup()->readEntry("Api", QString('/') ) );
 
+    kDebug()<<"UsingOAuth: "<<d->usingOauth;
+    if(d->usingOauth){
+        initQOAuthInterface();
+    }
+
     if( d->timelineNames.isEmpty() ){
         QStringList list = parent->timelineNames();
         list.removeOne("Public");
@@ -80,13 +87,6 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString 
         //Result will set on TwitterApiMicroBlog!
     }
 
-    if(d->usingOauth){
-        d->qoauth = new QOAuth::Interface(this);
-        d->qoauth->setManager(new KIO::Integration::AccessManager(this));
-        d->qoauth->setConsumerKey(d->oauthConsumerKey);
-        d->qoauth->setConsumerSecret(d->oauthConsumerSecret);
-        d->qoauth->setRequestTimeout(10000);
-    }
 }
 
 TwitterApiAccount::~TwitterApiAccount()
@@ -255,12 +255,24 @@ bool TwitterApiAccount::usingOAuth() const
 
 void TwitterApiAccount::setUsingOAuth(bool use)
 {
+    initQOAuthInterface();
     d->usingOauth = use;
 }
 
 QOAuth::Interface* TwitterApiAccount::oauthInterface()
 {
     return d->qoauth;
+}
+
+void TwitterApiAccount::initQOAuthInterface()
+{
+    kDebug();
+    if(!d->qoauth)
+        d->qoauth = new QOAuth::Interface(this);
+    d->qoauth->setManager(new KIO::Integration::AccessManager(this));
+    d->qoauth->setConsumerKey(d->oauthConsumerKey);
+    d->qoauth->setConsumerSecret(d->oauthConsumerSecret);
+    d->qoauth->setRequestTimeout(10000);
 }
 
 #include "twitterapiaccount.moc"

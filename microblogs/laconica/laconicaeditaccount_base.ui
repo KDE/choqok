@@ -232,6 +232,9 @@ p, li { white-space: pre-wrap; }
             <property name="toolTip">
              <string>The name you use to connect to the service</string>
             </property>
+            <property name="passwordMode">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item row="1" column="0">

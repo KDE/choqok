@@ -43,6 +43,8 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
     : ChoqokEditAccountWidget(account, parent), mAccount(account), progress(0), isAuthorized(false)
 {
     setupUi(this);
+    oauthConsumerKey = "747d09d8e7b9417f5835f04510cb86ed";//Identi.ca tokens
+    oauthConsumerSecret = "57605f8507a041525a2d5c0abef15b20";
     connect(kcfg_authorize, SIGNAL(clicked(bool)), SLOT(authorizeUser()));
     connect(kcfg_authMethod, SIGNAL(currentIndexChanged(int)), SLOT(slotAuthMethodChanged(int)));
     slotAuthMethodChanged(kcfg_authMethod->currentIndex());
@@ -60,6 +62,10 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
         kcfg_changeToString->setText( mAccount->changeExclamationMarkToText() );
         if(mAccount->usingOAuth()){
             kcfg_authMethod->setCurrentIndex(0);
+            oauthConsumerKey = mAccount->oauthConsumerKey();
+            oauthConsumerSecret = mAccount->oauthConsumerSecret();
+            token = mAccount->oauthToken();
+            tokenSecret = mAccount->oauthTokenSecret();
         } else {
             kcfg_authMethod->setCurrentIndex(1);
         }
@@ -106,6 +112,8 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
     if(kcfg_authMethod->currentIndex() == 0){
         mAccount->setUsername( kcfg_oauthUsername->text() );
         mAccount->setOauthToken( token );
+        mAccount->setOauthConsumerKey( oauthConsumerKey );
+        mAccount->setOauthConsumerSecret( oauthConsumerSecret );
         mAccount->setOauthTokenSecret( tokenSecret );
         mAccount->setUsingOAuth(true);
     } else {
@@ -126,21 +134,25 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
 void LaconicaEditAccountWidget::authorizeUser()
 {
     kDebug();
+//     #if 0
     if(KUrl(kcfg_host->text()).host()!="identi.ca"){
         KMessageBox::sorry(this, i18n("Sorry! OAuth Method just works with Identi.ca server, You have to use basic authentication for other StatusNet servers."));
         kcfg_authMethod->setCurrentIndex(1);
         return;
     }
+//     #endif
     qoauth = new QOAuth::Interface;
     qoauth->setManager(new KIO::Integration::AccessManager(this));
     //TODO change this to have support for self hosted StatusNets
-    qoauth->setConsumerKey( "747d09d8e7b9417f5835f04510cb86ed" );
-    qoauth->setConsumerSecret( "57605f8507a041525a2d5c0abef15b20" );
+    qoauth->setConsumerKey( oauthConsumerKey );
+    qoauth->setConsumerSecret( oauthConsumerSecret );
     qoauth->setRequestTimeout( 10000 );
 
     // send a request for an unauthorized token
+    QString oauthReqTokenUrl = QString("%1/%2/oauth/request_token").arg(kcfg_host->text()).arg(kcfg_api->text());
+//     kDebug()<<oauthReqTokenUrl;
     QOAuth::ParamMap reply =
-        qoauth->requestToken( QString("%1/%2/oauth/request_token").arg(kcfg_host->text()).arg(kcfg_api->text()), QOAuth::GET, QOAuth::HMAC_SHA1 );
+        qoauth->requestToken( oauthReqTokenUrl, QOAuth::GET, QOAuth::HMAC_SHA1 );
     isAuthorized = false;
     kcfg_authorize->setIcon(KIcon("object-locked"));
 
@@ -195,13 +207,13 @@ void LaconicaEditAccountWidget::saveTimelinesTableState()
 
 void LaconicaEditAccountWidget::getAccessToken()
 {
-    sender()->deleteLater();
     // send a request to exchange Request Token for an Access Token
     QOAuth::ParamMap reply =
         qoauth->accessToken( QString("%1/%2/oauth/access_token").arg(kcfg_host->text()).arg(kcfg_api->text()), QOAuth::GET, token, tokenSecret, QOAuth::HMAC_SHA1 );
 
     // if no error occurred, read the Access Token (and other arguments, if applicable)
     if ( qoauth->error() == QOAuth::NoError ) {
+        sender()->deleteLater();
         token = reply.value( QOAuth::tokenParameterName() );
         tokenSecret = reply.value( QOAuth::tokenSecretParameterName() );
         kDebug()<<"token: "<<token<<" tokenSecret: "<<tokenSecret;
