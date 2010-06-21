@@ -61,21 +61,21 @@ public:
     virtual Choqok::Account *apply();
 
 protected slots:
-    virtual void slotRegisterNewAccount();
     virtual void authorizeUser();
-    void dataChanged();
 
 protected:
     void loadTimelinesTableState();
     void saveTimelinesTableState();
+    virtual void getPinCode();
 
     TwitterMicroBlog *mBlog;
     TwitterAccount *mAccount;
     QProgressBar *progress;
-
+    QString username;
     QByteArray token;
     QByteArray tokenSecret;
     QOAuth::Interface *qoauth;
+    bool isAuthorized;
 
 };
 

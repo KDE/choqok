@@ -1583,4 +1583,32 @@ QStringList TwitterApiMicroBlog::readUsersScreenNameFromJson(Choqok::Account* th
     return list;
 }
 
+QString TwitterApiMicroBlog::qoauthErrorText(int code)
+{
+    switch(code){
+        case QOAuth::NoError:
+            return i18n("No Error");
+        case QOAuth::BadRequest:
+            return i18n("Bad request");
+        case QOAuth::ConsumerKeyEmpty:
+        case QOAuth::ConsumerSecretEmpty:
+            return i18n("Consumer Key or Secret has not been provided");
+        case QOAuth::Forbidden:
+            return i18n("Forbidden");
+        case QOAuth::Timeout:
+            return i18n("Timeout on server");
+        case QOAuth::Unauthorized:
+            return i18n("Unauthorized Error");
+        case QOAuth::UnsupportedHttpMethod:
+            return i18n("Internal Error");
+        case QOAuth::OtherError:
+        case QOAuth::RSADecodingError:
+        case QOAuth::RSAKeyFileError:
+        case QOAuth::RSAPrivateKeyEmpty:
+            return i18n("Unknow Error");
+        default:
+            return QString();
+    }
+}
+
 #include "twitterapimicroblog.moc"

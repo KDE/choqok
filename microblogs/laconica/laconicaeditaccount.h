@@ -62,6 +62,9 @@ public:
 
 protected slots:
     virtual void authorizeUser();
+    void slotAuthMethodChanged(int);
+    void slotCheckHostUrl();
+    void getAccessToken();
 
 protected:
     void loadTimelinesTableState();
@@ -76,7 +79,6 @@ protected:
     QByteArray token;
     QByteArray tokenSecret;
     QOAuth::Interface *qoauth;
-
 };
 
 #endif

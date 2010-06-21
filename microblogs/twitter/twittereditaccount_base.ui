@@ -47,7 +47,7 @@
        <item row="1" column="1">
         <widget class="QLabel" name="label">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -67,163 +67,48 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
+       <item row="3" column="0" colspan="2">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="2" column="0" colspan="2">
         <widget class="QGroupBox" name="kcfg_credentialsBox">
          <property name="title">
-          <string>Credentials</string>
+          <string>OAuth Authentication </string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="0">
-           <widget class="QLabel" name="textLabel1">
-            <property name="text">
-             <string>&amp;Username:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="buddy">
-             <cstring>kcfg_username</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="KLineEdit" name="kcfg_username">
-            <property name="toolTip">
-             <string>The name you use to connect to the service</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2" colspan="2">
-           <widget class="KPushButton" name="kcfg_authorize">
-            <property name="toolTip">
-             <string>Verify Credentials</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="4">
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="textLabel1_2">
-            <property name="text">
-             <string>&amp;Verifier:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="buddy">
-             <cstring>kcfg_password</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="KLineEdit" name="kcfg_password">
-            <property name="toolTip">
-             <string>The password associated to your username for the service</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="passwordMode">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="3" column="0" colspan="2">
-        <widget class="QGroupBox" name="groupBoxRegister">
-         <property name="title">
-          <string>Registration</string>
-         </property>
-         <layout class="QGridLayout">
-          <property name="margin">
-           <number>9</number>
-          </property>
-          <property name="spacing">
-           <number>6</number>
-          </property>
-          <item row="0" column="0" colspan="3">
-           <widget class="QLabel" name="textLabel6">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLabel" name="label_2">
             <property name="text">
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'DejaVu Sans'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To connect to the Twitter network, you will need a Twitter account.&lt;br /&gt;&lt;br /&gt;If you do not currently have an account, please click the button to create one.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignVCenter</set>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click on &amp;quot;&lt;span style=&quot; font-style:italic;&quot;&gt;Authorize Choqok&amp;quot;&lt;/span&gt; button, If everything goes well, You'll pointed to Twitter website to allow access to Choqok.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <spacer>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>0</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="1">
-           <widget class="QPushButton" name="kcfg_register">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
+          <item>
+           <widget class="KPushButton" name="kcfg_authorize">
             <property name="toolTip">
-             <string>Register a new account on this network.</string>
-            </property>
-            <property name="whatsThis">
-             <string>Register a new account on this network.</string>
+             <string>Verify Credentials</string>
             </property>
             <property name="text">
-             <string>Register &amp;New Account</string>
+             <string>Authorize Choqok</string>
             </property>
            </widget>
-          </item>
-          <item row="1" column="2">
-           <spacer>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>0</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </widget>
@@ -288,11 +173,9 @@ p, li { white-space: pre-wrap; }
  </customwidgets>
  <tabstops>
   <tabstop>kcfg_alias</tabstop>
-  <tabstop>kcfg_username</tabstop>
-  <tabstop>kcfg_password</tabstop>
   <tabstop>kcfg_authorize</tabstop>
-  <tabstop>kcfg_register</tabstop>
   <tabstop>tabwidget</tabstop>
+  <tabstop>timelinesTable</tabstop>
  </tabstops>
  <resources/>
  <connections/>

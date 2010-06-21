@@ -38,20 +38,24 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QtOAuth/qoauth_namespace.h>
 #include <kio/accessmanager.h>
 #include <QCheckBox>
+#include <QInputDialog>
 
 TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
                                                     TwitterAccount* account, QWidget* parent)
     : ChoqokEditAccountWidget(account, parent), mAccount(account)
 {
     setupUi(this);
-    kcfg_authorize->setIcon(KIcon("edit-find-user"));
     connect(kcfg_authorize, SIGNAL(clicked(bool)), SLOT(authorizeUser()));
     if(mAccount) {
-        groupBoxRegister->hide();
-        kcfg_username->setText( mAccount->username() );
-        kcfg_password->setText( mAccount->password() );
+        kcfg_authorize->setIcon(KIcon("object-unlocked"));
         kcfg_alias->setText( mAccount->alias() );
+        token = mAccount->oauthToken();
+        tokenSecret = mAccount->oauthTokenSecret();
+        username = mAccount->username();
+        isAuthorized = true;
     } else {
+        isAuthorized = false;
+        kcfg_authorize->setIcon(KIcon("object-locked"));
         QString newAccountAlias = microblog->serviceName();
 	QString servName = newAccountAlias;
         int counter = 1;
@@ -61,30 +65,19 @@ TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
 	}
         setAccount( mAccount = new TwitterAccount(microblog, newAccountAlias) );
         kcfg_alias->setText( newAccountAlias );
-        const QRegExp userRegExp("([a-zA-Z0-9_]){1,20}");
-        QValidator *userVal = new QRegExpValidator(userRegExp, 0);
-        kcfg_username->setValidator(userVal);
     }
     loadTimelinesTableState();
     kcfg_alias->setFocus(Qt::OtherFocusReason);
-    connect( kcfg_register, SIGNAL( clicked() ), SLOT( slotRegisterNewAccount() ) );
-    connect( kcfg_username, SIGNAL( textChanged(QString) ), SLOT( dataChanged()) );
-    connect( kcfg_password, SIGNAL( textChanged(QString) ), SLOT( dataChanged()) );
 }
 
 TwitterEditAccountWidget::~TwitterEditAccountWidget()
 {
-}
 
-void TwitterEditAccountWidget::dataChanged()
-{
-  kcfg_authorize->setIcon(KIcon("edit-find-user"));
 }
 
 bool TwitterEditAccountWidget::validateData()
 {
-    if(kcfg_alias->text().isEmpty() || kcfg_username->text().isEmpty() ||
-        kcfg_password->text().isEmpty() )
+    if(kcfg_alias->text().isEmpty() || !isAuthorized )
         return false;
     else
         return true;
@@ -93,39 +86,13 @@ bool TwitterEditAccountWidget::validateData()
 Choqok::Account* TwitterEditAccountWidget::apply()
 {
     kDebug();
-    QOAuth::ParamMap otherArgs;
-    otherArgs.insert( "oauth_verifier", kcfg_password->text().toUtf8() );
-//     otherArgs.insert( "misc_arg2", "value2" );
-
-    // send a request to exchange Request Token for an Access Token
-    QOAuth::ParamMap reply =
-        qoauth->accessToken( "https://api.twitter.com/oauth/access_token", QOAuth::POST, token,
-                            tokenSecret, QOAuth::HMAC_SHA1, otherArgs );
-
-    QString username;
-    // if no error occurred, read the Access Token (and other arguments, if applicable)
-    if ( qoauth->error() == QOAuth::NoError ) {
-        username = reply.value( "screen_name" );
-        token = reply.value( QOAuth::tokenParameterName() );
-        tokenSecret = reply.value( QOAuth::tokenSecretParameterName() );
-        kDebug()<<"token: "<<token<<" tokenSecret: "<<tokenSecret;
-    } else {
-        kDebug()<<"ERROR: "<<qoauth->error();
-        return 0;
-    }
-
+    mAccount->setAlias(kcfg_alias->text());
     mAccount->setUsername( username );
     mAccount->setOauthToken( token );
     mAccount->setOauthTokenSecret( tokenSecret );
-    mAccount->setAlias(kcfg_alias->text());
     saveTimelinesTableState();
     mAccount->writeConfig();
     return mAccount;
-}
-
-void TwitterEditAccountWidget::slotRegisterNewAccount()
-{
-    Choqok::openUrl( KUrl("http://twitter.com/signup") );
 }
 
 void TwitterEditAccountWidget::authorizeUser()
@@ -140,7 +107,6 @@ void TwitterEditAccountWidget::authorizeUser()
     qoauth->setRequestTimeout( 20000 );
 
     QOAuth::ParamMap otherArgs;
-    otherArgs.insert( "oauth_callback", "oob" );
 
     // send a request for an unauthorized token
     QOAuth::ParamMap reply =
@@ -154,12 +120,41 @@ void TwitterEditAccountWidget::authorizeUser()
         kDebug()<<"token: "<<token << " tokenSecret: "<<tokenSecret;
         QUrl url("https://api.twitter.com/oauth/authorize");
         url.addQueryItem("oauth_token", token);
+        url.addQueryItem( "oauth_callback", "oob" );
         Choqok::openUrl(url);
+        getPinCode();
     } else {
-        kDebug()<<"ERROR: " <<qoauth->error();
+        kDebug()<<"ERROR: " <<qoauth->error()<<' '<<TwitterApiMicroBlog::qoauthErrorText(qoauth->error());
         //TODO add Error management
     }
 }
+
+void TwitterEditAccountWidget::getPinCode()
+{
+    QString verifier = QInputDialog::getText(this, i18n("PIN number"),
+                                             i18n("Enter PIN number received from Twitter:"));
+    if(verifier.isEmpty())
+        return;
+    QOAuth::ParamMap otherArgs;
+    otherArgs.insert( "oauth_verifier", verifier.toUtf8() );
+
+    // send a request to exchange Request Token for an Access Token
+    QOAuth::ParamMap reply =
+        qoauth->accessToken( "https://api.twitter.com/oauth/access_token", QOAuth::POST, token,
+                            tokenSecret, QOAuth::HMAC_SHA1, otherArgs );
+    // if no error occurred, read the Access Token (and other arguments, if applicable)
+    if ( qoauth->error() == QOAuth::NoError ) {
+        username = reply.value( "screen_name" );
+        token = reply.value( QOAuth::tokenParameterName() );
+        tokenSecret = reply.value( QOAuth::tokenSecretParameterName() );
+        isAuthorized = true;
+        kcfg_authorize->setIcon(KIcon("object-unlocked"));
+    } else {
+        kDebug()<<"ERROR: "<<qoauth->error();
+    }
+
+}
+
 
 void TwitterEditAccountWidget::loadTimelinesTableState()
 {
