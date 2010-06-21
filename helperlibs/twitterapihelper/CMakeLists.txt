@@ -20,7 +20,11 @@ twitterapicomposerwidget.cpp
 
 kde4_add_library(twitterapihelper SHARED ${twitterhelper_LIB_SRCS})
 
-target_link_libraries(twitterapihelper ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} ${QTOAUTH_LIBRARY} ${QJSON_LIBRARY} choqok)
+target_link_libraries( twitterapihelper
+                       ${QT_QTNETWORK_LIBRARY}
+                       ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS}
+                       ${QTOAUTH_LIBRARY} ${QJSON_LIBRARY}
+                       choqok)
 
 set_target_properties(twitterapihelper PROPERTIES
 VERSION 0.9
