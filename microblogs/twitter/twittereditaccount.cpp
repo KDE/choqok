@@ -45,24 +45,29 @@ TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
     : ChoqokEditAccountWidget(account, parent), mAccount(account)
 {
     setupUi(this);
+    kcfg_credentialsBox->hide();
     connect(kcfg_authorize, SIGNAL(clicked(bool)), SLOT(authorizeUser()));
     if(mAccount) {
         kcfg_authorize->setIcon(KIcon("object-unlocked"));
         kcfg_alias->setText( mAccount->alias() );
+        kcfg_username->setText( mAccount->username() );
+        kcfg_password->setText( mAccount->password() );
+        #if 0
         token = mAccount->oauthToken();
         tokenSecret = mAccount->oauthTokenSecret();
         username = mAccount->username();
         isAuthorized = true;
+        #endif
     } else {
         isAuthorized = false;
         kcfg_authorize->setIcon(KIcon("object-locked"));
         QString newAccountAlias = microblog->serviceName();
-	QString servName = newAccountAlias;
+        QString servName = newAccountAlias;
         int counter = 1;
         while(Choqok::AccountManager::self()->findAccount(newAccountAlias)){
             newAccountAlias = QString("%1%2").arg(servName).arg(counter);
-	    counter++;
-	}
+        counter++;
+    }
         setAccount( mAccount = new TwitterAccount(microblog, newAccountAlias) );
         kcfg_alias->setText( newAccountAlias );
     }
@@ -75,6 +80,8 @@ TwitterEditAccountWidget::~TwitterEditAccountWidget()
 
 }
 
+#if 0
+//NOTE OAuth:
 bool TwitterEditAccountWidget::validateData()
 {
     if(kcfg_alias->text().isEmpty() || !isAuthorized )
@@ -157,7 +164,23 @@ void TwitterEditAccountWidget::getPinCode()
     }
 
 }
+#endif
 
+Choqok::Account* TwitterEditAccountWidget::apply()
+{
+    mAccount->setUsingOAuth(false);
+    mAccount->setAlias(kcfg_alias->text());
+    mAccount->setUsername( kcfg_username->text() );
+    mAccount->setPassword( kcfg_password->text() );
+    saveTimelinesTableState();
+    mAccount->writeConfig();
+    return mAccount;
+}
+
+bool TwitterEditAccountWidget::validateData()
+{
+    return !kcfg_username->text().isEmpty() && !kcfg_password->text().isEmpty();
+}
 
 void TwitterEditAccountWidget::loadTimelinesTableState()
 {

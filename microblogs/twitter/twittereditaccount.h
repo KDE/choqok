@@ -59,15 +59,16 @@ public:
     * @Return new or modified account. OR 0L on failure.
     */
     virtual Choqok::Account *apply();
-
+#if 0
 protected slots:
     virtual void authorizeUser();
-
+#endif
 protected:
     void loadTimelinesTableState();
     void saveTimelinesTableState();
+#if 0
     virtual void getPinCode();
-
+#endif
     TwitterMicroBlog *mBlog;
     TwitterAccount *mAccount;
     QProgressBar *progress;

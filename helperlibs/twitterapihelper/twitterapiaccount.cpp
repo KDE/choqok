@@ -255,7 +255,12 @@ bool TwitterApiAccount::usingOAuth() const
 
 void TwitterApiAccount::setUsingOAuth(bool use)
 {
-    initQOAuthInterface();
+    if(use)
+        initQOAuthInterface();
+    else{
+        delete d->qoauth;
+        d->qoauth = 0L;
+    }
     d->usingOauth = use;
 }
 

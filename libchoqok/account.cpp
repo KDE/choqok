@@ -80,7 +80,8 @@ void Account::writeConfig()
     d->configGroup->writeEntry( "Enable", d->enable );
     d->configGroup->writeEntry( "ShowInQuickPost", d->showInQuickPost );
     d->configGroup->writeEntry( "MicroBlog", microblog()->pluginName() );
-    PasswordManager::self()->writePassword( d->alias, password() );
+    if(!password().isEmpty())
+        PasswordManager::self()->writePassword( d->alias, password() );
     d->configGroup->sync();
     emit modified(this);
 }
