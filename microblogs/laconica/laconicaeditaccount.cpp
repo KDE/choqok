@@ -142,7 +142,7 @@ void LaconicaEditAccountWidget::authorizeUser()
     }
 //     #endif
     qoauth = new QOAuth::Interface;
-    qoauth->setManager(new KIO::Integration::AccessManager(this));
+    qoauth->setNetworkAccessManager(new KIO::Integration::AccessManager(this));
     //TODO change this to have support for self hosted StatusNets
     qoauth->setConsumerKey( oauthConsumerKey );
     qoauth->setConsumerSecret( oauthConsumerSecret );
