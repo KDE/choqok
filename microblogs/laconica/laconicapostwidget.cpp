@@ -39,7 +39,7 @@
 #include <KPushButton>
 #include <choqoktools.h>
 
-const QRegExp LaconicaPostWidget::mGroupRegExp("([\\s]|^)!([^\\s\\W]+)");
+const QRegExp LaconicaPostWidget::mGroupRegExp("([\\s]|^)!([a-zA-Z0-9]+)");
 
 class LaconicaPostWidget::Private
 {
