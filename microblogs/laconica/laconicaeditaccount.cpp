@@ -33,18 +33,19 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KToolInvocation>
 #include <QProgressBar>
 #include <accountmanager.h>
+#include <QtOAuth/interface.h>
+#include <QtOAuth/qoauth_namespace.h>
+#include <choqoktools.h>
+#include <kio/accessmanager.h>
 
 LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblog,
                                                     LaconicaAccount* account, QWidget* parent)
-    : ChoqokEditAccountWidget(account, parent), mAccount(account), progress(0)
+    : ChoqokEditAccountWidget(account, parent), mAccount(account), progress(0), isAuthorized(false)
 {
     setupUi(this);
-
-    kcfg_test->setIcon(KIcon("edit-find-user"));
-    connect(kcfg_test, SIGNAL(clicked(bool)), SLOT(verifyCredentials()));
+    connect(kcfg_authorize, SIGNAL(clicked(bool)), SLOT(authorizeUser()));
     if(mAccount) {
         kcfg_username->setText( mAccount->username() );
-        kcfg_password->setText( mAccount->password() );
         kcfg_alias->setText( mAccount->alias() );
         kcfg_secure->setChecked( mAccount->useSecureConnection() );
         kcfg_host->setText( mAccount->host() );
@@ -75,8 +76,7 @@ LaconicaEditAccountWidget::~LaconicaEditAccountWidget()
 
 bool LaconicaEditAccountWidget::validateData()
 {
-    if(kcfg_alias->text().isEmpty() || kcfg_username->text().isEmpty() ||
-        kcfg_password->text().isEmpty() )
+    if(kcfg_alias->text().isEmpty() || kcfg_username->text().isEmpty() || !isAuthorized)
         return false;
     else
         return true;
@@ -85,8 +85,27 @@ bool LaconicaEditAccountWidget::validateData()
 Choqok::Account* LaconicaEditAccountWidget::apply()
 {
     kDebug();
-    mAccount->setUsername( kcfg_username->text().toLower() );
-    mAccount->setPassword( kcfg_password->text() );
+//     QOAuth::ParamMap otherArgs;
+//     otherArgs.insert( "oauth_verifier", kcfg_password->text().toUtf8() );
+//     otherArgs.insert( "misc_arg2", "value2" );
+
+    // send a request to exchange Request Token for an Access Token
+    QOAuth::ParamMap reply =
+        qoauth->accessToken( QString("http://%1/%2/oauth/access_token").arg(kcfg_host->text()).arg(kcfg_api->text()), QOAuth::GET, token, tokenSecret, QOAuth::HMAC_SHA1 );
+
+    // if no error occurred, read the Access Token (and other arguments, if applicable)
+    if ( qoauth->error() == QOAuth::NoError ) {
+        token = reply.value( QOAuth::tokenParameterName() );
+        tokenSecret = reply.value( QOAuth::tokenSecretParameterName() );
+        kDebug()<<"token: "<<token<<" tokenSecret: "<<tokenSecret;
+    } else {
+        kDebug()<<"ERROR: "<<qoauth->error();
+        return 0;
+    }
+
+    mAccount->setUsername( kcfg_username->text() );
+    mAccount->setOauthToken( token );
+    mAccount->setOauthTokenSecret( tokenSecret );
     mAccount->setHost( kcfg_host->text() );
     mAccount->setApi( kcfg_api->text() );
     mAccount->setAlias(kcfg_alias->text());
@@ -98,74 +117,36 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
     return mAccount;
 }
 
-void LaconicaEditAccountWidget::verifyCredentials()
+void LaconicaEditAccountWidget::authorizeUser()
 {
     kDebug();
-    kcfg_test->setIcon(KIcon("edit-find-user"));
-    KUrl url;
-    url.setHost(kcfg_host->text());
-    url.addPath(kcfg_api->text());
-    url.addPath("/account/verify_credentials.xml");
-    if(kcfg_secure->isChecked())
-        url.setScheme("https");
-    else
-        url.setScheme("http");
-    url.setUserName(kcfg_username->text().toLower());
-    url.setPassword(kcfg_password->text());
+    qoauth = new QOAuth::Interface;
+    qoauth->setManager(new KIO::Integration::AccessManager(this));
+    // set the consumer key and secret
+    //TODO change this to have support for self hosted StatusNets
+    qoauth->setConsumerKey( "747d09d8e7b9417f5835f04510cb86ed" );
+    qoauth->setConsumerSecret( "57605f8507a041525a2d5c0abef15b20" );
+    // set a timeout for requests (in msecs)
+    qoauth->setRequestTimeout( 10000 );
 
-    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
-    if ( !job ) {
-        kDebug() << "Cannot create an http GET request.";
-        return;
-//         QString errMsg = i18n ( "Cannot create an http GET request. Please check your KDE installation." );
-//         KMessageBox::error(this, errMsg);
-    }
-    progress = new QProgressBar(this);
-    progress->setRange(0, 0);
-    kcfg_credentialsBox->layout()->addWidget(progress);
-    connect(job, SIGNAL(result(KJob*)), SLOT(slotVerifyCredentials(KJob*)));
-    job->start();
-}
+    // send a request for an unauthorized token
+    QOAuth::ParamMap reply =
+        qoauth->requestToken( QString("https://%1/%2/oauth/request_token").arg(kcfg_host->text()).arg(kcfg_api->text()), QOAuth::GET, QOAuth::HMAC_SHA1 );
 
-void LaconicaEditAccountWidget::slotVerifyCredentials(KJob* job)
-{
-    kDebug();
-    if(progress){
-        progress->deleteLater();
-        progress = 0L;
-    }
-    bool success = false;
-    KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob*>(job);
-    QDomDocument document;
-    document.setContent ( stj->data() );
-    QDomElement root = document.documentElement();
-    if ( root.tagName() == "user" ) {
-        QDomNode node2 = root.firstChild();
-        QString timeStr;
-        while ( !node2.isNull() ) {
-            if ( node2.toElement().tagName() == "id" ) {
-                mAccount->setUserId( node2.toElement().text() );
-                success= true;
-                break;
-            }
-            node2 = node2.nextSibling();
-        }
-    } else if ( root.tagName() == "hash" ) {
-        QDomNode node2 = root.firstChild();
-        while ( !node2.isNull() ) {
-            if ( node2.toElement().tagName() == "error" ) {
-                KMessageBox::detailedError(this, i18n ( "Authentication failed" ), node2.toElement().text() );
-            }
-            node2 = node2.nextSibling();
-        }
+    // if no error occurred, read the received token and token secret
+    if ( qoauth->error() == QOAuth::NoError ) {
+        token = reply.value( QOAuth::tokenParameterName() );
+        tokenSecret = reply.value( QOAuth::tokenSecretParameterName() );
+        kDebug()<<"token: "<<token << " tokenSecret: "<<tokenSecret;
+        QUrl url(QString("http://%1/%2/oauth/authorize").arg(kcfg_host->text()).arg(kcfg_api->text()));
+        url.addQueryItem( QOAuth::tokenParameterName(), token );
+        url.addQueryItem( "oauth_token", token );
+        Choqok::openUrl(url);
+        isAuthorized = true;
     } else {
-        kDebug() << "ERROR, unrecognized result, buffer is: " << stj->data();
-        KMessageBox::error( this, i18n ( "Unrecognized result." ) );
+        kDebug()<<"ERROR: " <<qoauth->error()<<" reply:"<<reply;
+        //TODO add Error management
     }
-    if(success)
-        kcfg_test->setIcon(KIcon("dialog-ok"));
-    else
-        kcfg_test->setIcon(KIcon("dialog-error"));
 }
 
 void LaconicaEditAccountWidget::loadTimelinesTableState()

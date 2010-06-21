@@ -34,15 +34,17 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QProgressBar>
 #include <accountmanager.h>
 #include <choqoktools.h>
-
+#include <QtOAuth/interface.h>
+#include <QtOAuth/qoauth_namespace.h>
+#include <kio/accessmanager.h>
 
 TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
                                                     TwitterAccount* account, QWidget* parent)
     : ChoqokEditAccountWidget(account, parent), mAccount(account)
 {
     setupUi(this);
-    kcfg_test->setIcon(KIcon("edit-find-user"));
-    connect(kcfg_test, SIGNAL(clicked(bool)), SLOT(verifyCredentials()));
+    kcfg_authorize->setIcon(KIcon("edit-find-user"));
+    connect(kcfg_authorize, SIGNAL(clicked(bool)), SLOT(authorizeUser()));
     if(mAccount) {
         groupBoxRegister->hide();
         kcfg_username->setText( mAccount->username() );
@@ -66,7 +68,6 @@ TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
     loadTimelinesTableState();
     kcfg_alias->setFocus(Qt::OtherFocusReason);
     connect( kcfg_register, SIGNAL( clicked() ), SLOT( slotRegisterNewAccount() ) );
-    
     connect( kcfg_username, SIGNAL( textChanged(QString) ), SLOT( dataChanged()) );
     connect( kcfg_password, SIGNAL( textChanged(QString) ), SLOT( dataChanged()) );
 }
@@ -77,7 +78,7 @@ TwitterEditAccountWidget::~TwitterEditAccountWidget()
 
 void TwitterEditAccountWidget::dataChanged()
 {
-  kcfg_test->setIcon(KIcon("edit-find-user"));
+  kcfg_authorize->setIcon(KIcon("edit-find-user"));
 }
 
 bool TwitterEditAccountWidget::validateData()
@@ -92,8 +93,30 @@ bool TwitterEditAccountWidget::validateData()
 Choqok::Account* TwitterEditAccountWidget::apply()
 {
     kDebug();
-    mAccount->setUsername( kcfg_username->text().toLower() );
-    mAccount->setPassword( kcfg_password->text() );
+    QOAuth::ParamMap otherArgs;
+    otherArgs.insert( "oauth_verifier", kcfg_password->text().toUtf8() );
+//     otherArgs.insert( "misc_arg2", "value2" );
+
+    // send a request to exchange Request Token for an Access Token
+    QOAuth::ParamMap reply =
+        qoauth->accessToken( "https://api.twitter.com/oauth/access_token", QOAuth::POST, token,
+                            tokenSecret, QOAuth::HMAC_SHA1, otherArgs );
+
+    QString username;
+    // if no error occurred, read the Access Token (and other arguments, if applicable)
+    if ( qoauth->error() == QOAuth::NoError ) {
+        username = reply.value( "screen_name" );
+        token = reply.value( QOAuth::tokenParameterName() );
+        tokenSecret = reply.value( QOAuth::tokenSecretParameterName() );
+        kDebug()<<"token: "<<token<<" tokenSecret: "<<tokenSecret;
+    } else {
+        kDebug()<<"ERROR: "<<qoauth->error();
+        return 0;
+    }
+
+    mAccount->setUsername( username );
+    mAccount->setOauthToken( token );
+    mAccount->setOauthTokenSecret( tokenSecret );
     mAccount->setAlias(kcfg_alias->text());
     mAccount->setUseSecureConnection(kcfg_secure->isChecked());
     saveTimelinesTableState();
@@ -106,69 +129,37 @@ void TwitterEditAccountWidget::slotRegisterNewAccount()
     Choqok::openUrl( KUrl("http://twitter.com/signup") );
 }
 
-void TwitterEditAccountWidget::verifyCredentials()
+void TwitterEditAccountWidget::authorizeUser()
 {
     kDebug();
-    kcfg_test->setIcon(KIcon("edit-find-user"));
-    KUrl url( "http://twitter.com/account/verify_credentials.xml" );
-    if(kcfg_secure->isChecked())
-        url.setScheme("https");
-    url.setUserName(kcfg_username->text().toLower());
-    url.setPassword(kcfg_password->text());
+    qoauth = new QOAuth::Interface;
+    qoauth->setManager(new KIO::Integration::AccessManager(this));
+    // set the consumer key and secret
+    qoauth->setConsumerKey( "VyXMf0O7CvciiUQjliYtYg" );
+    qoauth->setConsumerSecret( "uD2HvsOBjzt1Vs6SnouFtuxDeHmvOOVwmn3fBVyCw0" );
+    // set a timeout for requests (in msecs)
+    qoauth->setRequestTimeout( 20000 );
 
-     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
-    if ( !job ) {
-        kDebug() << "Cannot create an http GET request.";
-        return;
-//         QString errMsg = i18n ( "Cannot create an http GET request. Please check your KDE installation." );
-//         KMessageBox::error(this, errMsg);
-    }
-    progress = new QProgressBar(this);
-    progress->setRange(0, 0);
-    kcfg_credentialsBox->layout()->addWidget(progress);
-    connect(job, SIGNAL(result(KJob*)), SLOT(slotVerifyCredentials(KJob*)));
-    job->start();
-}
+    QOAuth::ParamMap otherArgs;
+    otherArgs.insert( "oauth_callback", "oob" );
 
-void TwitterEditAccountWidget::slotVerifyCredentials(KJob* job)
-{
-    kDebug();
-    if(progress){
-        progress->deleteLater();
-        progress = 0L;
-    }
-    bool success = false;
-    KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob*>(job);
-    QDomDocument document;
-    document.setContent ( stj->data() );
-    QDomElement root = document.documentElement();
-    if ( root.tagName() == "user" ) {
-        QDomNode node2 = root.firstChild();
-        QString timeStr;
-        while ( !node2.isNull() ) {
-            if ( node2.toElement().tagName() == "id" ) {
-                mAccount->setUserId( node2.toElement().text() );
-                success= true;
-                break;
-            }
-            node2 = node2.nextSibling();
-        }
-    } else if ( root.tagName() == "hash" ) {
-        QDomNode node2 = root.firstChild();
-        while ( !node2.isNull() ) {
-            if ( node2.toElement().tagName() == "error" ) {
-                KMessageBox::detailedError(this, i18n ( "Authentication failed" ), node2.toElement().text() );
-            }
-            node2 = node2.nextSibling();
-        }
+    // send a request for an unauthorized token
+    QOAuth::ParamMap reply =
+        qoauth->requestToken( "https://api.twitter.com/oauth/request_token",
+                              QOAuth::GET, QOAuth::HMAC_SHA1 );
+
+    // if no error occurred, read the received token and token secret
+    if ( qoauth->error() == QOAuth::NoError ) {
+        token = reply.value( QOAuth::tokenParameterName() );
+        tokenSecret = reply.value( QOAuth::tokenSecretParameterName() );
+        kDebug()<<"token: "<<token << " tokenSecret: "<<tokenSecret;
+        QUrl url("https://api.twitter.com/oauth/authorize");
+        url.addQueryItem("oauth_token", token);
+        Choqok::openUrl(url);
     } else {
-        kDebug() << "ERROR, unrecognized result, buffer is: " << stj->data();
-        KMessageBox::error( this, i18n ( "Unrecognized result." ) );
+        kDebug()<<"ERROR: " <<qoauth->error();
+        //TODO add Error management
     }
-    if(success)
-        kcfg_test->setIcon(KIcon("dialog-ok"));
-    else
-        kcfg_test->setIcon(KIcon("dialog-error"));
 }
 
 void TwitterEditAccountWidget::loadTimelinesTableState()
@@ -196,3 +187,5 @@ void TwitterEditAccountWidget::saveTimelinesTableState()
     timelines.removeDuplicates();
     mAccount->setTimelineNames(timelines);
 }
+
+#include "twittereditaccount.moc"

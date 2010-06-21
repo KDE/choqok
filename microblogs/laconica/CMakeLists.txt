@@ -17,7 +17,7 @@ kde4_add_ui_files(choqok_laconica_SRCS laconicaeditaccount_base.ui )
 
 kde4_add_plugin(choqok_laconica ${choqok_laconica_SRCS})
 
-target_link_libraries(choqok_laconica ${KDE4_KIO_LIBS} choqok twitterapihelper)
+target_link_libraries(choqok_laconica ${KDE4_KIO_LIBS} choqok twitterapihelper ${QTOAUTH_LIBRARY})
 
 # Install
 

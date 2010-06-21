@@ -28,6 +28,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 // #include <QWidget>
 #include "ui_laconicaeditaccount_base.h"
 
+namespace QOAuth {
+class Interface;
+}
+
 class QProgressBar;
 class KJob;
 class LaconicaAccount;
@@ -57,8 +61,7 @@ public:
     virtual Choqok::Account *apply();
 
 protected slots:
-    virtual void verifyCredentials();
-    void slotVerifyCredentials( KJob *job );
+    virtual void authorizeUser();
 
 protected:
     void loadTimelinesTableState();
@@ -67,6 +70,13 @@ protected:
     LaconicaMicroBlog *mBlog;
     LaconicaAccount *mAccount;
     QProgressBar *progress;
+
+    bool isAuthorized;
+
+    QByteArray token;
+    QByteArray tokenSecret;
+    QOAuth::Interface *qoauth;
+
 };
 
 #endif

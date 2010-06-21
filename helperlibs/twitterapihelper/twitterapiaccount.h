@@ -77,6 +77,14 @@ public:
 
     virtual void setTimelineNames(const QStringList &list);
 
+    QByteArray oauthToken() const;
+    void setOauthToken( const QByteArray &token );
+
+    QByteArray oauthTokenSecret() const;
+    void setOauthTokenSecret( const QByteArray &tokenSecret );
+
+    bool isUsingOAuth() const;
+    void setUsingOAuth( bool use = true );
 protected:
     void setApiUrl( const KUrl &apiUrl );
     void setHomepageUrl( const KUrl& homepageUrl );

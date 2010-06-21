@@ -24,12 +24,13 @@
 
 #include "twitterapiaccount.h"
 #include "twitterapimicroblog.h"
+#include <passwordmanager.h>
 
 class TwitterApiAccount::Private
 {
 public:
     Private()
-        :api('/')
+        :api('/'), usingOauth(true)
     {}
     bool secure;
     QString userId;
@@ -40,17 +41,23 @@ public:
     KUrl homepageUrl;
     QStringList friendsList;
     QStringList timelineNames;
+    QByteArray oauthToken;
+    QByteArray oauthTokenSecret;
+    bool usingOauth;
 };
 
 TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString &alias)
     : Account(parent, alias), d(new Private)
 {
     d->secure = configGroup()->readEntry("UseSecureConnection", true);
+    d->usingOauth = configGroup()->readEntry("UsingOAuth", true);
     d->userId = configGroup()->readEntry("UserId", QString());
     d->count = configGroup()->readEntry("CountOfPosts", 20);
     d->host = configGroup()->readEntry("Host", QString());
     d->friendsList = configGroup()->readEntry("Friends", QStringList());
     d->timelineNames = configGroup()->readEntry("Timelines", QStringList());
+    d->oauthToken = Choqok::PasswordManager::self()->readPassword( QString("%1_token").arg(alias) ).toUtf8();
+    d->oauthTokenSecret = Choqok::PasswordManager::self()->readPassword( QString("%1_tokenSecret").arg(alias) ).toUtf8();
     setApi( configGroup()->readEntry("Api", QString('/') ) );
 
     if( d->timelineNames.isEmpty() ){
@@ -75,12 +82,15 @@ TwitterApiAccount::~TwitterApiAccount()
 void TwitterApiAccount::writeConfig()
 {
     configGroup()->writeEntry("UseSecureConnection", d->secure);
+    configGroup()->writeEntry("UsingOAuth", d->usingOauth);
     configGroup()->writeEntry("UserId", d->userId);
     configGroup()->writeEntry("CountOfPosts", d->count);
     configGroup()->writeEntry("Host", d->host);
     configGroup()->writeEntry("Api", d->api);
     configGroup()->writeEntry("Friends", d->friendsList);
     configGroup()->writeEntry("Timelines", d->timelineNames);
+    Choqok::PasswordManager::self()->writePassword( QString("%1_token").arg(alias()), QString::fromUtf8(d->oauthToken) );
+    Choqok::PasswordManager::self()->writePassword( QString("%1_tokenSecret").arg(alias()), QString::fromUtf8( d->oauthTokenSecret) );
     Choqok::Account::writeConfig();
 }
 
@@ -191,6 +201,36 @@ void TwitterApiAccount::setTimelineNames(const QStringList& list)
         if(microblog()->timelineNames().contains(name))
             d->timelineNames<<name;
     }
+}
+
+QByteArray TwitterApiAccount::oauthToken() const
+{
+    return d->oauthToken;
+}
+
+void TwitterApiAccount::setOauthToken(const QByteArray& token)
+{
+    d->oauthToken = token;
+}
+
+QByteArray TwitterApiAccount::oauthTokenSecret() const
+{
+    return d->oauthTokenSecret;
+}
+
+void TwitterApiAccount::setOauthTokenSecret(const QByteArray& tokenSecret)
+{
+    d->oauthTokenSecret = tokenSecret;
+}
+
+bool TwitterApiAccount::isUsingOAuth() const
+{
+    return d->usingOauth;
+}
+
+void TwitterApiAccount::setUsingOAuth(bool use)
+{
+    d->usingOauth = use;
 }
 
 #include "twitterapiaccount.moc"

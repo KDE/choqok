@@ -1,7 +1,6 @@
 
 include_directories(
 ${CHOQOK_INCLUDES}
-${QJSON_INCLUDE_DIR}
 )
 
 set(twitterhelper_LIB_SRCS
@@ -21,10 +20,10 @@ twitterapicomposerwidget.cpp
 
 kde4_add_library(twitterapihelper SHARED ${twitterhelper_LIB_SRCS})
 
-target_link_libraries(twitterapihelper ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} ${QJSON_LIBRARY} choqok)
+target_link_libraries(twitterapihelper ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} ${QTOAUTH_LIBRARY} ${QJSON_LIBRARY} choqok)
 
 set_target_properties(twitterapihelper PROPERTIES
-VERSION 0.8
+VERSION 0.9
 SOVERSION 0
 )
 
