@@ -1613,7 +1613,7 @@ QString TwitterApiMicroBlog::qoauthErrorText(int code)
         case QOAuth::RSADecodingError:
         case QOAuth::RSAKeyFileError:
         case QOAuth::RSAPrivateKeyEmpty:
-            return i18n("Unknow Error");
+            return i18n("Unknown Error");
         default:
             return QString();
     }
