@@ -747,18 +747,17 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
         if ( page ) {
             params.insert ( "page", QByteArray::number ( page ) );
         }
-    } else {
-        if ( !latestStatusId.isEmpty() ) {
-            url.addQueryItem ( "since_id", latestStatusId );
-            countOfPost = 200;
-        }
-        url.addQueryItem ( "count", QString::number( countOfPost ) );
-        if ( !maxId.isEmpty() ) {
-            url.addQueryItem ( "max_id", maxId );
-        }
-        if ( page ) {
-            url.addQueryItem ( "page", QString::number ( page ) );
-        }
+    }
+    if ( !latestStatusId.isEmpty() ) {
+        url.addQueryItem ( "since_id", latestStatusId );
+        countOfPost = 200;
+    }
+    url.addQueryItem ( "count", QString::number( countOfPost ) );
+    if ( !maxId.isEmpty() ) {
+        url.addQueryItem ( "max_id", maxId );
+    }
+    if ( page ) {
+        url.addQueryItem ( "page", QString::number ( page ) );
     }
     kDebug() << "Latest " << type << " Id: " << latestStatusId;
 
