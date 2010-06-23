@@ -24,22 +24,54 @@
 
 #include "twitterapicomposerwidget.h"
 #include "twitterapitextedit.h"
-#include <QCompleter>
+#include <QtGui/QCompleter>
 #include "twitterapiaccount.h"
 #include <KDebug>
+#include <choqokuiglobal.h>
+#include <postwidget.h>
+#include <choqokbehaviorsettings.h>
+#include <QtGui/QStringListModel>
 
+class TwitterApiComposerWidget::Private
+{
+public:
+    Private()
+    :model(0)
+    {}
+    QStringListModel *model;
+};
 
 TwitterApiComposerWidget::TwitterApiComposerWidget(Choqok::Account* account, QWidget* parent)
-: Choqok::UI::ComposerWidget(account, parent)
+: Choqok::UI::ComposerWidget(account, parent), d(new Private)
 {
     kDebug();
+    d->model = new QStringListModel(qobject_cast<TwitterApiAccount*>(account)->friendsList(), this);
+//     d->index = new QModelIndex(d->model->rowCount(), 0, 0, d->model);
+//     kDebug()<<d->index;
     TwitterApiTextEdit *edit = new TwitterApiTextEdit(140, this);
-    QCompleter *c = new QCompleter(qobject_cast<TwitterApiAccount*>(account)->friendsList(), this);
-    c->setCaseSensitivity(Qt::CaseInsensitive);
-    edit->setCompleter(c);
+    QCompleter *completer = new QCompleter(d->model, this);
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
+    edit->setCompleter(completer);
     setEditor(edit);
+    connect( Choqok::UI::Global::SessionManager::self(),
+             SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
+             SLOT(slotNewPostReady(Choqok::UI::PostWidget*,Choqok::Account*)) );
 }
 
 TwitterApiComposerWidget::~TwitterApiComposerWidget()
-{}
+{
+    delete d;
+}
 
+void TwitterApiComposerWidget::slotNewPostReady(Choqok::UI::PostWidget* widget, Choqok::Account* theAccount)
+{
+    if(theAccount == currentAccount()){
+        int row = d->model->rowCount();
+        d->model->insertRow(row);
+        QString name = widget->currentPost().author.userName;
+        if( !d->model->stringList().contains(name) )
+            d->model->setData(d->model->index(row), name);
+    }
+}
+
+#include "twitterapicomposerwidget.moc"

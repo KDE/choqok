@@ -27,13 +27,25 @@
 
 #include <composerwidget.h>
 
+namespace Choqok {
+namespace UI {
+class PostWidget;
+}
+}
 
 class CHOQOK_HELPER_EXPORT TwitterApiComposerWidget : public Choqok::UI::ComposerWidget
 {
+    Q_OBJECT
 public:
     explicit TwitterApiComposerWidget(Choqok::Account* account, QWidget* parent = 0);
     ~TwitterApiComposerWidget();
 
+protected slots:
+    virtual void slotNewPostReady(Choqok::UI::PostWidget *widget, Choqok::Account *theAccount);
+
+private:
+    class Private;
+    Private * const d;
 };
 
 #endif // TWITTERAPICOMPOSERWIDGET_H
