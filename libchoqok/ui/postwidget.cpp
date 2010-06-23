@@ -247,8 +247,10 @@ void PostWidget::setRead(bool read/* = true*/)
 
 void PostWidget::setReadInternal()
 {
-    setRead();
-    Q_EMIT postReaded();
+    if(!isRead()){
+        setRead();
+        Q_EMIT postReaded();
+    }
 }
 
 bool PostWidget::isRead() const
