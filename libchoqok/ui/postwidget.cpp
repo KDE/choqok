@@ -70,10 +70,10 @@ class PostWidget::Private
 };
 
 
-const QString PostWidget::ownText ("<table width=\"100%\" ><tr><td><p>%2</p></td><td width=\"5\"><!-- empty --></td><td width=\"48\" rowspan='2' align='right'>%1</td></tr><tr><td style=\"font-size:small;\" dir='ltr' align=\"right\" valign='bottom' >%3</td></tr></table>");
+const QString PostWidget::ownText ("<table width=\"100%\" ><tr><td><p>%2</p></td><td width=\"5\"><!-- empty --></td><td width=\"48\" rowspan=\"2\" align=\"right\">%1</td></tr><tr><td style=\"font-size:small;\" dir=\"ltr\" align=\"right\" valign=\"bottom\">%3</td></tr></table>");
 
-const QString PostWidget::otherText ( "<table height='100%' width=\"100%\"><tr><td rowspan=\"2\"\
-width=\"48\">%1</td><td width='5'><!-- EMPTY HAHA --></td><td><p>%2</p></td></tr><tr><td><!-- EMPTY HAHA --></td><td style=\"font-size:small;\" dir='ltr' align=\"right\" width=\"100%\" valign='bottom'>%3</td></tr></table>");
+const QString PostWidget::otherText ( "<table height=\"100%\" width=\"100%\"><tr><td rowspan=\"2\"\
+width=\"48\">%1</td><td width=\"5\"><!-- EMPTY HAHA --></td><td><p>%2</p></td></tr><tr><td><!-- EMPTY HAHA --></td><td style=\"font-size:small;\" dir=\"ltr\" align=\"right\" width=\"100%\" valign=\"bottom\">%3</td></tr></table>");
 
 const QString PostWidget::baseStyle ("KTextBrowser {border: 1px solid rgb(150,150,150);\
 border-radius:5px;}  KTextBrowser {color:%1; background-color:%2}\
