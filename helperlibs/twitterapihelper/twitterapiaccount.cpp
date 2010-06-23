@@ -171,6 +171,8 @@ KUrl TwitterApiAccount::homepageUrl() const
 
 void TwitterApiAccount::generateApiUrl()
 {
+    if(!host().startsWith("http"))//NOTE: This is for compatibility by prev versions. remove it after 1.0 release
+        setHost(host().prepend("http://"));
     KUrl url(host());
 
     setHomepageUrl(url);
