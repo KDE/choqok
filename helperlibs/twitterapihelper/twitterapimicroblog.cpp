@@ -207,7 +207,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
             st->author.homePageUrl = grp.readEntry("authorUrl", QString());
             st->link = postUrl( account, st->author.userName, st->postId);
             st->isRead = grp.readEntry("isRead", true);
-            st->repeatedByUsername = grp.readEntry("repeatedBy", QString());
+            st->repeatedFromUsername = grp.readEntry("repeatedFrom", QString());
 
             list.append( st );
         }
@@ -253,7 +253,7 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
         grp.writeEntry( "authorLocation" , post->author.location );
         grp.writeEntry( "authorUrl" , post->author.homePageUrl );
         grp.writeEntry( "isRead" , post->isRead );
-        grp.writeEntry( "repeatedBy", post->repeatedByUsername);
+        grp.writeEntry( "repeatedFrom", post->repeatedFromUsername);
     }
     postsBackup.sync();
     --d->countOfTimelinesToSave;
@@ -911,18 +911,13 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromDomNode(Choqok::Account* theAccou
 
         node = node.nextSibling();
     }
-    QString repeatedBy;
     if(repeatedPost){
-        Choqok::Post *tmp = post;
-        post = repeatedPost;
-        post->postId = tmp->postId;
-        post->repeatedByUsername = tmp->author.userName;
-        post->source = tmp->source;
-        delete tmp;
+        post->setRepeatedOf(repeatedPost);
+        delete repeatedPost;
     }
     post->link = postUrl(theAccount, post->author.userName, post->postId);
     post->creationDateTime = dateFromString ( timeStr );
-    post->isRead = post->isFavorited;
+    post->isRead = post->isFavorited || (post->repeatedFromUsername.compare(theAccount->username(), Qt::CaseInsensitive) == 0);
     return post;
 }
 
@@ -1469,15 +1464,11 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromJsonMap(Choqok::Account* theAccou
     QVariantMap retweetedMap = var["retweeted_status"].toMap();
     if( !retweetedMap.isEmpty() ){
         repeatedPost = readPostFromJsonMap( theAccount, retweetedMap, new Choqok::Post);
-        Choqok::Post *tmp = post;
-        post = repeatedPost;
-        post->postId = tmp->postId;
-        post->repeatedByUsername = tmp->author.userName;
-        post->source = tmp->source;
-        delete tmp;
+        post->setRepeatedOf(repeatedPost);
+        delete repeatedPost;
     }
     post->link = postUrl(theAccount, post->author.userName, post->postId);
-    post->isRead = post->isFavorited || (post->repeatedByUsername == theAccount->username());
+    post->isRead = post->isFavorited || (post->repeatedFromUsername.compare(theAccount->username(), Qt::CaseInsensitive) == 0);
     return post;
 }
 

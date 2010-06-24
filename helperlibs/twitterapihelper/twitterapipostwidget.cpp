@@ -120,14 +120,10 @@ QString TwitterApiPostWidget::generateSign()
     }
 
     //ReTweet detection:
-    if( !currentPost().repeatedByUsername.isEmpty() ){
+    if( !currentPost().repeatedFromUsername.isEmpty() ){
         QString retweet;
-        QPixmap px = Choqok::MediaManager::convertToGrayScale(KIcon("retweet").pixmap(12));
-        mainWidget()->document()->addResource(QTextDocument::ImageResource, QUrl("icon://repeated"),
-                                              px);
-        retweet += " | <a href='user://"+ currentPost().repeatedByUsername
-                +  "'><img src='icon://repeated' title='"
-                +  d->mBlog->generateRepeatedByUserTooltip(currentPost().repeatedByUsername) + "'/></a>";
+        retweet += "<br/>"
+                +  d->mBlog->generateRepeatedByUserTooltip( QString("<a href='user://%1'>%2</a>").arg( currentPost().repeatedFromUsername).arg(currentPost().repeatedFromUsername) );
         sign.append(retweet);
     }
     sign.prepend("<p dir='ltr'>");

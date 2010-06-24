@@ -124,7 +124,7 @@ TwitterApiSearch* TwitterMicroBlog::searchBackend()
 
 QString TwitterMicroBlog::generateRepeatedByUserTooltip(const QString& username)
 {
-    return i18n("Retweeted by %1", username);
+    return i18n("Retweeted from %1", username);
 }
 
 
