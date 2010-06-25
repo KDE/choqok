@@ -201,7 +201,7 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Ch
 
 QString LaconicaMicroBlog::generateRepeatedByUserTooltip(const QString& username)
 {
-    return i18n("Repeated from %1", username);
+    return i18n("Repeat of %1", username);
 }
 
 
