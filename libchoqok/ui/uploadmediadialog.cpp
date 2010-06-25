@@ -82,7 +82,7 @@ UploadMediaDialog::UploadMediaDialog(QWidget* parent, const QString& url)
 
 UploadMediaDialog::~UploadMediaDialog()
 {
-
+    delete d;
 }
 
 void UploadMediaDialog::load()

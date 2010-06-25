@@ -777,7 +777,7 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
 
 void TwitterApiMicroBlog::slotRequestTimeline ( KJob *job )
 {
-    kDebug();//TODO Add error detection for XML "checkXmlForError()"
+    kDebug();//TODO Add error detection for XML "checkXmlForError()" and JSON
     if ( !job ) {
         kDebug() << "Job is null pointer";
         return;

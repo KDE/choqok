@@ -115,6 +115,7 @@ QuickPost::~QuickPost()
     BehaviorSettings::setAll( d->all->isChecked() );
     BehaviorSettings::setQuickPostDialogSize( this->size() );
     BehaviorSettings::self()->writeConfig();
+    delete d;
     kDebug();
 }
 

@@ -106,6 +106,7 @@ void PostWidget::checkAnchor(const QUrl & url)
 
 PostWidget::~PostWidget()
 {
+    delete d;
 }
 
 Account* PostWidget::currentAccount()
