@@ -40,9 +40,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblog,
                                                     LaconicaAccount* account, QWidget* parent)
-    : ChoqokEditAccountWidget(account, parent), mAccount(account), progress(0), isAuthorized(false)
+    : ChoqokEditAccountWidget(account, parent), mAccount(account), progress(0), isAuthenticated(false)
 {
     setupUi(this);
+    setAuthenticated(false);
     oauthConsumerKey = "747d09d8e7b9417f5835f04510cb86ed";//Identi.ca tokens
     oauthConsumerSecret = "57605f8507a041525a2d5c0abef15b20";
     connect(kcfg_authorize, SIGNAL(clicked(bool)), SLOT(authorizeUser()));
@@ -50,17 +51,16 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
     slotAuthMethodChanged(kcfg_authMethod->currentIndex());
     connect(kcfg_host, SIGNAL(editingFinished()), SLOT(slotCheckHostUrl()));
     if(mAccount) {
-        kcfg_authorize->setIcon(KIcon("object-unlocked"));
         kcfg_alias->setText( mAccount->alias() );
         kcfg_host->setText( mAccount->host() );
         kcfg_api->setText( mAccount->api() );
-        isAuthorized = true;
         kcfg_oauthUsername->setText( mAccount->username() );
         kcfg_basicUsername->setText( mAccount->username() );
         kcfg_basicPassword->setText( mAccount->password() );
         kcfg_changeExclamationMark->setChecked( mAccount->isChangeExclamationMark() );
         kcfg_changeToString->setText( mAccount->changeExclamationMarkToText() );
         if(mAccount->usingOAuth()){
+            setAuthenticated(true);
             kcfg_authMethod->setCurrentIndex(0);
             oauthConsumerKey = mAccount->oauthConsumerKey();
             oauthConsumerSecret = mAccount->oauthConsumerSecret();
@@ -70,7 +70,6 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
             kcfg_authMethod->setCurrentIndex(1);
         }
     } else {
-        kcfg_authorize->setIcon(KIcon("object-locked"));
         kcfg_authMethod->setCurrentIndex(0);
         QString newAccountAlias = microblog->serviceName();
         QString servName = newAccountAlias;
@@ -96,7 +95,7 @@ LaconicaEditAccountWidget::~LaconicaEditAccountWidget()
 bool LaconicaEditAccountWidget::validateData()
 {
     if( kcfg_authMethod->currentIndex()==0 ) {//OAuth
-        if(kcfg_alias->text().isEmpty() || kcfg_oauthUsername->text().isEmpty() || !isAuthorized)
+        if(kcfg_alias->text().isEmpty() || kcfg_oauthUsername->text().isEmpty() || !isAuthenticated)
             return false;
     } else {//Basic
         if(kcfg_alias->text().isEmpty() || kcfg_basicUsername->text().isEmpty() ||
@@ -152,25 +151,25 @@ void LaconicaEditAccountWidget::authorizeUser()
 //     kDebug()<<oauthReqTokenUrl;
     QOAuth::ParamMap reply =
         qoauth->requestToken( oauthReqTokenUrl, QOAuth::GET, QOAuth::HMAC_SHA1 );
-    isAuthorized = false;
+    setAuthenticated(false);
     kcfg_authorize->setIcon(KIcon("object-locked"));
 
     // if no error occurred, read the received token and token secret
     if ( qoauth->error() == QOAuth::NoError ) {
         token = reply.value( QOAuth::tokenParameterName() );
         tokenSecret = reply.value( QOAuth::tokenSecretParameterName() );
-        kDebug()<<"token: "<<token << " tokenSecret: "<<tokenSecret;
+        kDebug()<<"token: "<<token;
         QUrl url(QString("%1/%2/oauth/authorize").arg(kcfg_host->text()).arg(kcfg_api->text()));
         url.addQueryItem( QOAuth::tokenParameterName(), token );
         url.addQueryItem( "oauth_token", token );
         Choqok::openUrl(url);
-        KPushButton *btn = new KPushButton(KIcon("dialog-ok"), i18n("Accepted by Identi.ca"));
+        KPushButton *btn = new KPushButton(KIcon("dialog-ok"), i18n("Click here after you have logged in and authorized Choqok"));
         btn->setWindowFlags(Qt::Dialog);
         connect(btn, SIGNAL(clicked(bool)), SLOT(getAccessToken()));
         btn->show();
     } else {
         kDebug()<<"ERROR: " <<qoauth->error()<<' '<<TwitterApiMicroBlog::qoauthErrorText(qoauth->error());
-        KMessageBox::detailedError(this, i18n("Authorization Error"),
+        KMessageBox::detailedError(this, i18n("Authentication Error"),
                                    TwitterApiMicroBlog::qoauthErrorText(qoauth->error()));
     }
 }
@@ -217,13 +216,11 @@ void LaconicaEditAccountWidget::getAccessToken()
         token = reply.value( QOAuth::tokenParameterName() );
         tokenSecret = reply.value( QOAuth::tokenSecretParameterName() );
         kDebug()<<"token: "<<token<<" tokenSecret: "<<tokenSecret;
-        isAuthorized = true;
-        kcfg_authorize->setIcon(KIcon("object-unlocked"));
+        setAuthenticated(true);
     } else {
-        isAuthorized = false;
-        kcfg_authorize->setIcon(KIcon("object-locked"));
+        setAuthenticated(false);
         kDebug()<<"ERROR: "<<qoauth->error()<<' '<<TwitterApiMicroBlog::qoauthErrorText(qoauth->error());
-        KMessageBox::detailedError(this, i18n("Authorization Error"),
+        KMessageBox::detailedError(this, i18n("Authentication Error"),
                                    TwitterApiMicroBlog::qoauthErrorText(qoauth->error()));
     }
 }
@@ -236,6 +233,20 @@ void LaconicaEditAccountWidget::slotAuthMethodChanged(int index)
     } else {
         kcfg_BasicBox->show();
         kcfg_OAuthBox->hide();
+    }
+}
+
+void LaconicaEditAccountWidget::setAuthenticated(bool authenticated)
+{
+    isAuthenticated = authenticated;
+    if(authenticated){
+        kcfg_authorize->setIcon(KIcon("object-unlocked"));
+        kcfg_authenticateLed->on();
+        kcfg_authenticateStatus->setText(i18n("Authenticated"));
+    } else {
+        kcfg_authorize->setIcon(KIcon("object-locked"));
+        kcfg_authenticateLed->off();
+        kcfg_authenticateStatus->setText(i18n("Not Authenticated"));
     }
 }
 

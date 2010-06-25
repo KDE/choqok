@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>444</width>
-    <height>470</height>
+    <height>481</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
@@ -175,6 +175,27 @@ p, li { white-space: pre-wrap; }
            </layout>
           </item>
           <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="KLed" name="kcfg_authenticateLed">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="kcfg_authenticateStatus">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
            <widget class="QLabel" name="label_5">
             <property name="text">
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -194,7 +215,7 @@ p, li { white-space: pre-wrap; }
              <string>Verify Credentials</string>
             </property>
             <property name="text">
-             <string>&amp;Authorize Choqok</string>
+             <string>&amp;Authenticate with StatusNet service</string>
             </property>
            </widget>
           </item>
@@ -348,6 +369,11 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>KLed</class>
+   <extends>QWidget</extends>
+   <header>kled.h</header>
+  </customwidget>
   <customwidget>
    <class>KPushButton</class>
    <extends>QPushButton</extends>

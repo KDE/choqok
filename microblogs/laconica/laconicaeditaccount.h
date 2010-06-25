@@ -69,12 +69,13 @@ protected slots:
 protected:
     void loadTimelinesTableState();
     void saveTimelinesTableState();
+    void setAuthenticated(bool authenticated);
 
     LaconicaMicroBlog *mBlog;
     LaconicaAccount *mAccount;
     QProgressBar *progress;
 
-    bool isAuthorized;
+    bool isAuthenticated;
 
     QByteArray token;
     QByteArray tokenSecret;
