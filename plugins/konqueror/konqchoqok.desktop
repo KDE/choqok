@@ -9,6 +9,7 @@ X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=true
 X-KDE-ParentApp=konqueror
 Name=Konqueror Choqok Plugin
+Name[bg]=Приставка на Choqok за Konqueror
 Name[da]=Choqok-plugin til Konqueror
 Name[en_GB]=Konqueror Choqok Plugin
 Name[es]=Complemento de Choqok para Konqueror
