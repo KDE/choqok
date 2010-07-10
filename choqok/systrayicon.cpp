@@ -39,7 +39,7 @@ SysTrayIcon::SysTrayIcon( Choqok::UI::MainWindow* parent )
 {
     kDebug();
     unread = 0;
-//     setAssociatedWidget(parent);
+    setAssociatedWidget(parent);
     setCategory(ApplicationStatus);
     setStandardActionsEnabled(false);
     setStatus(Active);

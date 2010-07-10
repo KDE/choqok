@@ -258,7 +258,6 @@ void MainWindow::setupActions()
 
     sysIcon->contextMenu()->addSeparator();
     sysIcon->contextMenu()->addAction(showMain);
-    sysIcon->contextMenu()->addSeparator();
     sysIcon->contextMenu()->addAction(actQuit);
 //     connect( sysIcon, SIGNAL(quitSelected()), this, SLOT(slotQuit()) );
     connect(sysIcon, SIGNAL(scrollRequested(int,Qt::Orientation)),
