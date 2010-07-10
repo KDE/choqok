@@ -740,6 +740,7 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
     url.addPath ( timelineApiPath[type].arg(format) );
+    KUrl tmpUrl(url);
     int countOfPost = Choqok::BehaviorSettings::countOfPosts();
 
     QOAuth::ParamMap params;
@@ -776,7 +777,7 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
 //         emit error ( theAccount, OtherError, errMsg, Low );
         return;
     }
-    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::GET, params));
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, tmpUrl, QOAuth::GET, params));
     mRequestTimelineMap[job] = type;
     mJobsAccount[job] = theAccount;
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotRequestTimeline ( KJob* ) ) );
