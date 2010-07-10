@@ -163,10 +163,12 @@ void LaconicaEditAccountWidget::authorizeUser()
         url.addQueryItem( QOAuth::tokenParameterName(), token );
         url.addQueryItem( "oauth_token", token );
         Choqok::openUrl(url);
-        KPushButton *btn = new KPushButton(KIcon("dialog-ok"), i18n("Click here after you have logged in and authorized Choqok"));
-        btn->setWindowFlags(Qt::Dialog);
+        KPushButton *btn = new KPushButton(KIcon("dialog-ok"), i18n("Click here after you have logged in and authorized Choqok"), this);
         connect(btn, SIGNAL(clicked(bool)), SLOT(getAccessToken()));
-        btn->show();
+        btn->setWindowFlags(Qt::Dialog);
+        kcfg_OAuthBox->layout()->addWidget(btn);
+        kcfg_authorize->setEnabled(false);
+//         btn->show();
     } else {
         kDebug()<<"ERROR: " <<qoauth->error()<<' '<<TwitterApiMicroBlog::qoauthErrorText(qoauth->error());
         KMessageBox::detailedError(this, i18n("Authentication Error"),
@@ -213,6 +215,7 @@ void LaconicaEditAccountWidget::getAccessToken()
     // if no error occurred, read the Access Token (and other arguments, if applicable)
     if ( qoauth->error() == QOAuth::NoError ) {
         sender()->deleteLater();
+        kcfg_authorize->setEnabled(true);
         token = reply.value( QOAuth::tokenParameterName() );
         tokenSecret = reply.value( QOAuth::tokenSecretParameterName() );
         kDebug()<<"token: "<<token<<" tokenSecret: "<<tokenSecret;
