@@ -235,7 +235,7 @@ protected:
     /**
     Checks xml returned from server for error, and return error string, Or an empty string if nothing found!
     */
-//     virtual QString checkJsonForError(const QByteArray &buffer);
+    virtual QString checkJsonForError(const QByteArray &buffer);
     ///=================================================
     /// End JSON
     ///=================================================

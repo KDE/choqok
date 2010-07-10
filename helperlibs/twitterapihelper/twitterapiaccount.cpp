@@ -280,6 +280,7 @@ void TwitterApiAccount::initQOAuthInterface()
     d->qoauth->setConsumerKey(d->oauthConsumerKey);
     d->qoauth->setConsumerSecret(d->oauthConsumerSecret);
     d->qoauth->setRequestTimeout(10000);
+    d->qoauth->setIgnoreSslErrors(true);
 }
 
 #include "twitterapiaccount.moc"

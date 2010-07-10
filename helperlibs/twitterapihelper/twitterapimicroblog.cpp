@@ -412,7 +412,11 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
                 readPostFromJson ( theAccount, stj->data(), post );
             }
             if ( post->isError ) {
-                QString errorMsg = checkXmlForError(stj->data());
+                QString errorMsg;
+                if(format == "json")
+                    errorMsg = checkJsonForError(stj->data());
+                else
+                    errorMsg = checkXmlForError(stj->data());
                 if( errorMsg.isEmpty() ){
                     kError() << "Creating post: XML parsing error: "<< stj->data() ;
                     emit errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
@@ -501,7 +505,11 @@ void TwitterApiMicroBlog::slotFetchPost ( KJob *job )
                 readPostFromXml ( theAccount, stj->data(), post );
             }
         if ( post->isError ) {
-            QString errorMsg = checkXmlForError(stj->data());
+                QString errorMsg;
+                if(format == "json")
+                    errorMsg = checkJsonForError(stj->data());
+                else
+                    errorMsg = checkXmlForError(stj->data());
             if( errorMsg.isEmpty() ){
                 kDebug() << "Parsing Error";
                 emit errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
@@ -842,6 +850,7 @@ Choqok::Post * TwitterApiMicroBlog::readPostFromXml ( Choqok::Account* theAccoun
             kError()<<"TwitterApiMicroBlog::readPostFromXml: post is NULL!";
             post = new Choqok::Post;
         }
+        Q_EMIT error(theAccount, ServerError, checkXmlForError(buffer));
         post->isError = true;
         return post;
     }
@@ -932,6 +941,7 @@ QList<Choqok::Post*> TwitterApiMicroBlog::readTimelineFromXml ( Choqok::Account*
     if ( root.tagName() != "statuses" ) {
         //         QString err = i18n( "Data returned from server is corrupted." );
         kDebug() << "there's no statuses tag in XML\t the XML is: \n" << buffer;
+        Q_EMIT error(theAccount, ServerError, checkXmlForError(buffer));
         return postList;
     }
     QDomNode node = root.firstChild();
@@ -953,6 +963,7 @@ Choqok::Post * TwitterApiMicroBlog::readDMessageFromXml (Choqok::Account *theAcc
     } else {
         Choqok::Post *post = new Choqok::Post;
         post->isError = true;
+        Q_EMIT error(theAccount, ServerError, checkXmlForError(buffer));
         return post;
     }
 }
@@ -1051,6 +1062,7 @@ QList<Choqok::Post*> TwitterApiMicroBlog::readDMessagesFromXml (Choqok::Account 
     if ( root.tagName() != "direct-messages" ) {
         //         QString err = i18n( "Data returned from server is corrupted." );
         kDebug() << "there's no statuses tag in XML\t the XML is: \n" << buffer.data();
+        Q_EMIT error(theAccount, ServerError, checkXmlForError(buffer));
         return postList;
     }
     QDomNode node = root.firstChild();
@@ -1396,6 +1408,17 @@ QString TwitterApiMicroBlog::checkXmlForError(const QByteArray& buffer)
 
 ///===================================================================
 
+QString TwitterApiMicroBlog::checkJsonForError(const QByteArray& buffer)
+{
+    bool ok;
+    QVariantMap map = d->parser.parse(buffer, &ok).toMap();
+    if(ok && map.contains("error")){
+        kError()<<"Error at request "<<map.value("request").toString()<<" : "<<map.value("error").toString();
+        return map.value("error").toString();
+    }
+    return QString();
+}
+
 QList< Choqok::Post* > TwitterApiMicroBlog::readTimelineFromJson(Choqok::Account* theAccount,
                                                                  const QByteArray& buffer)
 {
@@ -1410,8 +1433,13 @@ QList< Choqok::Post* > TwitterApiMicroBlog::readTimelineFromJson(Choqok::Account
             postList.prepend(readPostFromJsonMap(theAccount, it->toMap(), new Choqok::Post));
         }
     } else {
-        kError() << "JSON parsing failed.\nBuffer was: \n" << buffer;
-        emit error(theAccount, ParsingError, i18n("Could not parse the data that has been received from the server."));
+        QString err = checkJsonForError(buffer);
+        if(err.isEmpty()){
+            kError() << "JSON parsing failed.\nBuffer was: \n" << buffer;
+            emit error(theAccount, ParsingError, i18n("Could not parse the data that has been received from the server."));
+        } else {
+            Q_EMIT error(theAccount, ServerError, err);
+        }
         return postList;
     }
     return postList;
@@ -1486,8 +1514,13 @@ QList< Choqok::Post* > TwitterApiMicroBlog::readDMessagesFromJson(Choqok::Accoun
             postList.prepend(readDMessageFromJsonMap(theAccount, it->toMap()));
         }
     } else {
-        kError() << "JSON parsing failed.\nBuffer was: \n" << buffer;
-        emit error(theAccount, ParsingError, i18n("Could not parse the data that has been received from the server."));
+        QString err = checkJsonForError(buffer);
+        if(err.isEmpty()){
+            kError() << "JSON parsing failed.\nBuffer was: \n" << buffer;
+            emit error(theAccount, ParsingError, i18n("Could not parse the data that has been received from the server."));
+        } else {
+            Q_EMIT error(theAccount, ServerError, err);
+        }
         return postList;
     }
     return postList;
