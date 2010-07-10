@@ -50,7 +50,9 @@ TwitterApiTextEdit::TwitterApiTextEdit(uint charLimit, QWidget* parent)
 }
 
 TwitterApiTextEdit::~TwitterApiTextEdit()
-{}
+{
+    delete d;
+}
 
 void TwitterApiTextEdit::setCompleter(QCompleter *completer)
 {

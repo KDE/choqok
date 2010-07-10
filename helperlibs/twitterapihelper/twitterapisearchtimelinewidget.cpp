@@ -71,7 +71,7 @@ TwitterApiSearchTimelineWidget::TwitterApiSearchTimelineWidget(Choqok::Account* 
 
 TwitterApiSearchTimelineWidget::~TwitterApiSearchTimelineWidget()
 {
-
+    delete d;
 }
 
 void TwitterApiSearchTimelineWidget::saveTimeline()

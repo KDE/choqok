@@ -62,7 +62,7 @@ TwitterApiShowThread::TwitterApiShowThread(Choqok::Account* account, const Choqo
 
 TwitterApiShowThread::~TwitterApiShowThread()
 {
-
+    delete d;
 }
 
 void TwitterApiShowThread::setupUi()
