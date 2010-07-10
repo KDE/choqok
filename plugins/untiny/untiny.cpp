@@ -101,14 +101,14 @@ void UnTiny::parse(Choqok::UI::PostWidget* postToParse)
 
 void UnTiny::slot301Redirected(KIO::Job* job, KUrl fromUrl, KUrl toUrl)
 {
-    Choqok::UI::PostWidget *postToParse = mParsingList.take(job);
+    if(mParsingList.contains(job)){
+        Choqok::UI::PostWidget *postToParse = mParsingList.take(job);
+        kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
+        Choqok::ShortenManager::self()->emitNewUnshortenedUrl(postToParse, fromUrl, toUrl);
+        QString content = postToParse->content();
+        content.replace(QRegExp("title='" + fromUrl.url() + '\''), "title='" + toUrl.url() + '\'');
+        content.replace(QRegExp("href='" + fromUrl.url() + '\''), "href='" + toUrl.url() + '\'');
+        postToParse->setContent(content);
+    }
     job->kill();
-    if(!postToParse)
-        return;
-//     kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
-    Choqok::ShortenManager::self()->emitNewUnshortenedUrl(postToParse, fromUrl, toUrl);
-    QString content = postToParse->content();
-    content.replace(QRegExp("title='" + fromUrl.url() + '\''), "title='" + toUrl.url() + '\'');
-    content.replace(QRegExp("href='" + fromUrl.url() + '\''), "href='" + toUrl.url() + '\'');
-    postToParse->setContent(content);
 }
