@@ -27,6 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "editaccountwidget.h"
 #include <QWidget>
 #include "ui_twittereditaccount_base.h"
+#define OAUTH
 
 namespace QOAuth {
 class Interface;
@@ -59,15 +60,17 @@ public:
     * @Return new or modified account. OR 0L on failure.
     */
     virtual Choqok::Account *apply();
-#if 0
+#ifdef OAUTH
 protected slots:
     virtual void authorizeUser();
 #endif
 protected:
     void loadTimelinesTableState();
     void saveTimelinesTableState();
-#if 0
+#ifdef OAUTH
     virtual void getPinCode();
+    void setAuthenticated(bool authenticated);
+    bool isAuthenticated;
 #endif
     TwitterMicroBlog *mBlog;
     TwitterAccount *mAccount;
@@ -76,7 +79,6 @@ protected:
     QByteArray token;
     QByteArray tokenSecret;
     QOAuth::Interface *qoauth;
-    bool isAuthorized;
 
 };
 

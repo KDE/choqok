@@ -103,7 +103,7 @@ void UnTiny::slot301Redirected(KIO::Job* job, KUrl fromUrl, KUrl toUrl)
 {
     if(mParsingList.contains(job)){
         Choqok::UI::PostWidget *postToParse = mParsingList.take(job);
-        kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
+//         kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
         Choqok::ShortenManager::self()->emitNewUnshortenedUrl(postToParse, fromUrl, toUrl);
         QString content = postToParse->content();
         content.replace(QRegExp("title='" + fromUrl.url() + '\''), "title='" + toUrl.url() + '\'');
