@@ -40,6 +40,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QCheckBox>
 #include <QInputDialog>
 
+#ifdef OAUTH
+const char * twitterConsumerKey = "VyXMf0O7CvciiUQjliYtYg";
+const char * twitterConsumerSecret = "uD2HvsOBjzt1Vs6SnouFtuxDeHmvOOVwmn3fBVyCw0";
+#endif
+
 TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
                                                     TwitterAccount* account, QWidget* parent)
     : ChoqokEditAccountWidget(account, parent), mAccount(account)
@@ -100,6 +105,9 @@ Choqok::Account* TwitterEditAccountWidget::apply()
     mAccount->setUsername( username );
     mAccount->setOauthToken( token );
     mAccount->setOauthTokenSecret( tokenSecret );
+    mAccount->setOauthConsumerKey( twitterConsumerKey );
+    mAccount->setOauthConsumerSecret( twitterConsumerSecret );
+    mAccount->setUsingOAuth(true);
     saveTimelinesTableState();
     mAccount->writeConfig();
     return mAccount;
@@ -110,8 +118,8 @@ void TwitterEditAccountWidget::authorizeUser()
     kDebug();
     qoauth = new QOAuth::Interface(new KIO::Integration::AccessManager(this), this);
     // set the consumer key and secret
-    qoauth->setConsumerKey( "VyXMf0O7CvciiUQjliYtYg" );
-    qoauth->setConsumerSecret( "uD2HvsOBjzt1Vs6SnouFtuxDeHmvOOVwmn3fBVyCw0" );
+    qoauth->setConsumerKey( twitterConsumerKey );
+    qoauth->setConsumerSecret( twitterConsumerSecret );
     // set a timeout for requests (in msecs)
     qoauth->setRequestTimeout( 10000 );
 
