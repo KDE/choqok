@@ -108,8 +108,7 @@ Choqok::Account* TwitterEditAccountWidget::apply()
 void TwitterEditAccountWidget::authorizeUser()
 {
     kDebug();
-    qoauth = new QOAuth::Interface;
-    qoauth->setNetworkAccessManager(new KIO::Integration::AccessManager(this));
+    qoauth = new QOAuth::Interface(new KIO::Integration::AccessManager(this), this);
     // set the consumer key and secret
     qoauth->setConsumerKey( "VyXMf0O7CvciiUQjliYtYg" );
     qoauth->setConsumerSecret( "uD2HvsOBjzt1Vs6SnouFtuxDeHmvOOVwmn3fBVyCw0" );
@@ -134,9 +133,9 @@ void TwitterEditAccountWidget::authorizeUser()
         Choqok::openUrl(url);
         getPinCode();
     } else {
-        kDebug()<<"ERROR: " <<qoauth->error()<<' '<<TwitterApiMicroBlog::qoauthErrorText(qoauth->error());
+        kDebug()<<"ERROR: " <<qoauth->error()<<' '<<Choqok::qoauthErrorText(qoauth->error());
         KMessageBox::detailedError(this, i18n("Authorization Error"),
-                                   TwitterApiMicroBlog::qoauthErrorText(qoauth->error()));
+                                   Choqok::qoauthErrorText(qoauth->error()));
     }
 }
 
@@ -163,9 +162,9 @@ void TwitterEditAccountWidget::getPinCode()
             KMessageBox::information(this, i18n("Choqok is authorized successfully."),
                                      i18n("Authorized"));
         } else {
-            kDebug()<<"ERROR: "<<qoauth->error()<<' '<<TwitterApiMicroBlog::qoauthErrorText(qoauth->error());
+            kDebug()<<"ERROR: "<<qoauth->error()<<' '<<Choqok::qoauthErrorText(qoauth->error());
             KMessageBox::detailedError(this, i18n("Authorization Error"),
-                                    TwitterApiMicroBlog::qoauthErrorText(qoauth->error()));
+                                    Choqok::qoauthErrorText(qoauth->error()));
         }
     }
 }

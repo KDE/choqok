@@ -157,8 +157,6 @@ void PostWidget::initUi()
     setupUi();
     _mainWidget->document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
                              MediaManager::self()->defaultImage() );
-                             d->mImage = "<img src=\"img://profileImage\" title=\""+
-                             d->mCurrentPost.author.realName + "\" width=\"48\" height=\"48\" />";
 
     if(d->mCurrentAccount->username().compare( d->mCurrentPost.author.userName, Qt::CaseInsensitive ) == 0) {
         KPushButton *btnRemove = addButton("btnRemove", i18nc( "@info:tooltip", "Remove" ), "edit-delete" );

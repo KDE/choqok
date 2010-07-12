@@ -139,8 +139,7 @@ void LaconicaEditAccountWidget::authorizeUser()
         kcfg_authMethod->setCurrentIndex(1);
         return;
     }
-    qoauth = new QOAuth::Interface;
-    qoauth->setNetworkAccessManager(new KIO::Integration::AccessManager(this));
+    qoauth = new QOAuth::Interface(new KIO::Integration::AccessManager(this), this);
     //TODO change this to have support for self hosted StatusNets
     qoauth->setConsumerKey( oauthConsumerKey );
     qoauth->setConsumerSecret( oauthConsumerSecret );
@@ -170,9 +169,9 @@ void LaconicaEditAccountWidget::authorizeUser()
         kcfg_authorize->setEnabled(false);
 //         btn->show();
     } else {
-        kDebug()<<"ERROR: " <<qoauth->error()<<' '<<TwitterApiMicroBlog::qoauthErrorText(qoauth->error());
+        kDebug()<<"ERROR: " <<qoauth->error()<<' '<<Choqok::qoauthErrorText(qoauth->error());
         KMessageBox::detailedError(this, i18n("Authentication Error"),
-                                   TwitterApiMicroBlog::qoauthErrorText(qoauth->error()));
+                                   Choqok::qoauthErrorText(qoauth->error()));
     }
 }
 
@@ -222,9 +221,9 @@ void LaconicaEditAccountWidget::getAccessToken()
         setAuthenticated(true);
     } else {
         setAuthenticated(false);
-        kDebug()<<"ERROR: "<<qoauth->error()<<' '<<TwitterApiMicroBlog::qoauthErrorText(qoauth->error());
+        kDebug()<<"ERROR: "<<qoauth->error()<<' '<<Choqok::qoauthErrorText(qoauth->error());
         KMessageBox::detailedError(this, i18n("Authentication Error"),
-                                   TwitterApiMicroBlog::qoauthErrorText(qoauth->error()));
+                                   Choqok::qoauthErrorText(qoauth->error()));
     }
 }
 

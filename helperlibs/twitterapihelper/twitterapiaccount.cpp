@@ -275,8 +275,7 @@ void TwitterApiAccount::initQOAuthInterface()
 {
     kDebug();
     if(!d->qoauth)
-        d->qoauth = new QOAuth::Interface(this);
-    d->qoauth->setNetworkAccessManager(new KIO::Integration::AccessManager(this));
+        d->qoauth = new QOAuth::Interface(new KIO::Integration::AccessManager(this), this);
     d->qoauth->setConsumerKey(d->oauthConsumerKey);
     d->qoauth->setConsumerSecret(d->oauthConsumerSecret);
     d->qoauth->setRequestTimeout(10000);

@@ -145,8 +145,6 @@ public:
 
     virtual QString generateRepeatedByUserTooltip( const QString &username )=0;
 
-    static QString qoauthErrorText(int code);
-
 public Q_SLOTS:
     /**
     Launch a dialog to send direct message.

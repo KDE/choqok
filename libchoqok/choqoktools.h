@@ -34,6 +34,8 @@ namespace Choqok {
 
 void CHOQOK_EXPORT openUrl( const QUrl &url );
 
+QString CHOQOK_EXPORT qoauthErrorText(int code);
+
 }
 
 #endif // CHOQOK_CHOQOKTOOLS_H
