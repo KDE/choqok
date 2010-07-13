@@ -289,33 +289,20 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
     if ( !post->isPrivate ) {///Status Update
         KUrl url = account->apiUrl();
         url.addPath ( QString("/statuses/update.%1").arg(format) );
-        if(account->usingOAuth()){
-            data = "status=";//NOTE StatusNet need this :-/
-            data += QUrl::toPercentEncoding (  post->content );
-            if ( !post->replyToPostId.isEmpty() ) {
-                data += "&in_reply_to_status_id=";
-                data += post->replyToPostId.toLocal8Bit();
-            }
-//             data += "&source=choqok";
-
-            params.insert("status", QUrl::toPercentEncoding (  post->content ));
-            if(!post->replyToPostId.isEmpty())
-                params.insert("in_reply_to_status_id", post->replyToPostId.toLocal8Bit());
-            params.insert("source", "choqok");//TODO remove this, This should not be need when using OAuth
-        } else {
-            data = "status=";
-            data += QUrl::toPercentEncoding (  post->content );
-            if ( !post->replyToPostId.isEmpty() ) {
-                data += "&in_reply_to_status_id=";
-                data += post->replyToPostId.toLocal8Bit();
-            }
-            data += "&source=choqok";
+        params.insert("status", QUrl::toPercentEncoding (  post->content ));
+        if(!post->replyToPostId.isEmpty())
+            params.insert("in_reply_to_status_id", post->replyToPostId.toLocal8Bit());
+        data = "status=";
+        data += QUrl::toPercentEncoding (  post->content );
+        if ( !post->replyToPostId.isEmpty() ) {
+            data += "&in_reply_to_status_id=";
+            data += post->replyToPostId.toLocal8Bit();
         }
+        if( !account->usingOAuth() )
+            data += "&source=Choqok";
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
         if ( !job ) {
             kDebug() << "Cannot create an http POST request!";
-//             QString errMsg = i18n ( "Creating the new post failed. Cannot create an HTTP POST request. Please check your KDE installation." );
-//             emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
         }
         job->addMetaData ( "content-type", "Content-Type: application/x-www-form-urlencoded" );
@@ -328,16 +315,14 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
         QString recipientScreenName = post->replyToUserName;
         KUrl url = account->apiUrl();
         url.addPath ( QString("/direct_messages/new.%1").arg(format) );
-        if( account->usingOAuth() ){
-            params.insert("user", recipientScreenName.toLocal8Bit());
-            params.insert("text", QUrl::toPercentEncoding ( post->content ));
-        } else {
-            data = "user=";
-            data += recipientScreenName.toLocal8Bit();
-            data += "&text=";
-            data += QUrl::toPercentEncoding ( post->content );
-            data += "&source=choqok";
-        }
+        params.insert("user", recipientScreenName.toLocal8Bit());
+        params.insert("text", QUrl::toPercentEncoding ( post->content ));
+        data = "user=";
+        data += recipientScreenName.toLocal8Bit();
+        data += "&text=";
+        data += QUrl::toPercentEncoding ( post->content );
+        if( !account->usingOAuth() )
+            data += "&source=Choqok";
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
         if ( !job ) {
             kDebug() << "Cannot create an http POST request!";
