@@ -101,6 +101,17 @@ void NowListening::slotPrepareNowListening()
         playerFound=true;
         player="Qmmp";
     }
+    
+    // only works if enabled D-BUS control interface in VLC (VLC 0.9.0+)
+    MPRIS vlc ("vlc");
+    if ( !isPlaying && vlc.isValid() ) {
+        if ( vlc.isPlaying() ) {
+            trackInfo = vlc.getTrackMetadata();
+            isPlaying  =true;
+        }
+        playerFound = true;
+        player = "VLC";
+    }
 
     //Mpris not complete supported by Kaffeine Version 1.0-svn3
     /*
