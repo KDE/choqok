@@ -111,7 +111,8 @@ void AccountsWidget::editAccount( QString alias )
         ChoqokEditAccountWidget *eaw = currentAccount->microblog()->createEditAccountWidget(currentAccount,
                                                                                             this);
         QPointer<EditAccountDialog> d = new EditAccountDialog(eaw, this);
-        d->show();
+        d->setModal(true);
+        d->exec();
         // Needs for update alias after editing account
         accountsTable->setItem( currentRow, 0, new QTableWidgetItem( currentAccount->alias() ) ); 
     }
@@ -326,4 +327,5 @@ void AccountsWidget::accountsTableCellClicked(int row, int column)
     accountsTable->selectRow(row);
     accountsTablestateChanged();
 }
+
 #include "accountswidget.moc"
