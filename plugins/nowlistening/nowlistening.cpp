@@ -80,15 +80,20 @@ void NowListening::slotPrepareNowListening()
         playerFound=true;
         player="Audacious";
     }
-
-    MPRIS dragon ("dragonplayer-18262");
-    if (!isPlaying && dragon.isValid()) {
-        if (dragon.isPlaying()) {
-            trackInfo=dragon.getTrackMetadata();
-            isPlaying=true;
-        }
-        playerFound=true;
-        player="Dragon Player";
+    
+    // MPRIS id of Dragon Player contain pid of it.
+    QStringList playersList = MPRIS::getRunningPlayers();
+    if ( !playersList.isEmpty() && playersList.indexOf( QRegExp( "dragonplayer(.*)" ) ) > -1) {
+      int i = playersList.indexOf( QRegExp( "dragonplayer(.*)" ) );
+      MPRIS dragon ( playersList.at( i ) );
+      if ( !isPlaying && dragon.isValid() ) {
+          if ( dragon.isPlaying() ) {
+              trackInfo = dragon.getTrackMetadata();
+              isPlaying = true;
+          }
+          playerFound = true;
+          player = "Dragon Player";
+      }
     }
 
     //need to enable MPRIS Plugin (Qmmp +0.4)
@@ -103,11 +108,11 @@ void NowListening::slotPrepareNowListening()
     }
     
     // only works if enabled D-BUS control interface in VLC (VLC 0.9.0+)
-    MPRIS vlc ("vlc");
+    MPRIS vlc ( "vlc" );
     if ( !isPlaying && vlc.isValid() ) {
         if ( vlc.isPlaying() ) {
             trackInfo = vlc.getTrackMetadata();
-            isPlaying  =true;
+            isPlaying = true;
         }
         playerFound = true;
         player = "VLC";
