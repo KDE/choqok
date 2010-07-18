@@ -22,8 +22,8 @@
 
 */
 
-#ifndef TWITPICCONFIG_H
-#define TWITPICCONFIG_H
+#ifndef YOURLSCONFIG_H
+#define YOURLSCONFIG_H
 
 #include <KCModule>
 #include <QWidget>
@@ -45,4 +45,4 @@ private:
     Ui_YourlsPrefsBase ui;
 };
 
-#endif // NOWLISTENINGCONFIG_H
+#endif // YOURLSCONFIG_H
