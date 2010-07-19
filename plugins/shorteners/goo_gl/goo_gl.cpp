@@ -29,6 +29,7 @@
 #include <kglobal.h>
 #include <kio/job.h>
 #include <math.h>
+#include "notifymanager.h"
 
 #include <QtCore/QCoreApplication>
 
@@ -155,6 +156,7 @@ QString Goo_gl::shorten( const QString& url )
     }
 
     if (data.isEmpty()) {
+      Choqok::NotifyManager::error( i18n("Cannot create a short url.\n%1", job->errorString()) );   
       return url;
     }
     QString output( data );
@@ -165,8 +167,9 @@ QString Goo_gl::shorten( const QString& url )
     kDebug() << "Short url is: " << output;    
     if( !output.isEmpty() ) {
         return output;
-    }
-    
+    } else {
+        Choqok::NotifyManager::error( i18n("Goo.gl error") );
+    } 
     return url;
 }
 
