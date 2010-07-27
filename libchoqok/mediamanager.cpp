@@ -210,15 +210,18 @@ QByteArray MediaManager::createMultipartFormData(const QMap< QString, QByteArray
     QByteArray data;
 
     data.append(header);
-    QList< QMap< QString, QByteArray > >::const_iterator it1 = mediaFiles.constBegin();
-    QList< QMap< QString, QByteArray > >::const_iterator endIt1 = mediaFiles.constEnd();
-    for(; it1!=endIt1; ++it1){
-        data.append( fileHeader.arg(it1->value("name").data()).arg(it1->value("filename").data()).toUtf8() );
-        data.append(newLine + "Content-Type: " + it1->value("mediumType"));
-        data.append(newLine);
-        data.append(newLine + it1->value("medium"));
+    
+    if ( !mediaFiles.isEmpty() ) {
+        QList< QMap< QString, QByteArray > >::const_iterator it1 = mediaFiles.constBegin();
+        QList< QMap< QString, QByteArray > >::const_iterator endIt1 = mediaFiles.constEnd();
+        for(; it1!=endIt1; ++it1){
+            data.append( fileHeader.arg(it1->value("name").data()).arg(it1->value("filename").data()).toUtf8() );
+            data.append(newLine + "Content-Type: " + it1->value("mediumType"));
+            data.append(newLine);
+            data.append(newLine + it1->value("medium"));
+        }
     }
-
+    
     QMap< QString, QByteArray >::const_iterator it = formdata.constBegin();
     QMap< QString, QByteArray >::const_iterator endIt = formdata.constEnd();
     for(;it!=endIt; ++it){
