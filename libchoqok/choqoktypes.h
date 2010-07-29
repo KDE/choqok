@@ -64,7 +64,7 @@ public:
         replyToUserId = repeatedPost->replyToUserId;
         replyToUserName = repeatedPost->replyToUserName;
         repeatedFromUsername = repeatedPost->author.userName;
-        source = repeatedPost->source;
+//         source = repeatedPost->source;
     }
     QDateTime creationDateTime;
     ChoqokId postId;

@@ -350,19 +350,13 @@ void TwitterApiMicroBlog::repeatPost(Choqok::Account* theAccount, const ChoqokId
     KUrl url = account->apiUrl();
     url.addPath ( QString("/statuses/retweet/%1.%2").arg(postId).arg(format) );
     QByteArray data;
-    QOAuth::ParamMap params;
-    if(account->usingOAuth()){
-        params.insert("source","choqok");
-    } else {
-        data = "source=choqok";
-    }
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create an http POST request!";
         return;
     }
     job->addMetaData ( "content-type", "Content-Type: application/x-www-form-urlencoded" );
-    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST, params));
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST));
     Choqok::Post *post = new Choqok::Post;
     post->postId = postId;
     mCreatePostMap[ job ] = post;
