@@ -830,7 +830,9 @@ Choqok::Post * TwitterApiMicroBlog::readPostFromXml ( Choqok::Account* theAccoun
             kError()<<"TwitterApiMicroBlog::readPostFromXml: post is NULL!";
             post = new Choqok::Post;
         }
-        Q_EMIT error(theAccount, ServerError, checkXmlForError(buffer));
+        QString err = checkXmlForError(buffer);
+        if(!err.isEmpty())
+            Q_EMIT error(theAccount, ServerError, err);
         post->isError = true;
         return post;
     }
@@ -921,7 +923,9 @@ QList<Choqok::Post*> TwitterApiMicroBlog::readTimelineFromXml ( Choqok::Account*
     if ( root.tagName() != "statuses" ) {
         //         QString err = i18n( "Data returned from server is corrupted." );
         kDebug() << "there's no statuses tag in XML\t the XML is: \n" << buffer;
-        Q_EMIT error(theAccount, ServerError, checkXmlForError(buffer));
+        QString err = checkXmlForError(buffer);
+        if(!err.isEmpty())
+            Q_EMIT error(theAccount, ServerError, err);
         return postList;
     }
     QDomNode node = root.firstChild();
@@ -943,7 +947,9 @@ Choqok::Post * TwitterApiMicroBlog::readDMessageFromXml (Choqok::Account *theAcc
     } else {
         Choqok::Post *post = new Choqok::Post;
         post->isError = true;
-        Q_EMIT error(theAccount, ServerError, checkXmlForError(buffer));
+        QString err = checkXmlForError(buffer);
+        if(!err.isEmpty())
+            Q_EMIT error(theAccount, ServerError, err);
         return post;
     }
 }
@@ -1042,7 +1048,9 @@ QList<Choqok::Post*> TwitterApiMicroBlog::readDMessagesFromXml (Choqok::Account 
     if ( root.tagName() != "direct-messages" ) {
         //         QString err = i18n( "Data returned from server is corrupted." );
         kDebug() << "there's no statuses tag in XML\t the XML is: \n" << buffer.data();
-        Q_EMIT error(theAccount, ServerError, checkXmlForError(buffer));
+        QString err = checkXmlForError(buffer);
+        if(!err.isEmpty())
+            Q_EMIT error(theAccount, ServerError, err);
         return postList;
     }
     QDomNode node = root.firstChild();
