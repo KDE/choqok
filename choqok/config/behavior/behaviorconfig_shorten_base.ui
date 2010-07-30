@@ -19,6 +19,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="kcfg_removeHttp">
+     <property name="text">
+      <string>Remove &quot;http://&quot; from shortened URLs</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="label">
@@ -92,6 +99,13 @@
    <header>kcombobox.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>kcfg_shortenOnPaste</tabstop>
+  <tabstop>kcfg_removeHttp</tabstop>
+  <tabstop>shortenPlugins</tabstop>
+  <tabstop>configPlugin</tabstop>
+  <tabstop>aboutPlugin</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

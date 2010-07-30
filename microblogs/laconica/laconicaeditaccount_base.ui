@@ -405,6 +405,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>kcfg_authMethod</tabstop>
   <tabstop>kcfg_oauthUsername</tabstop>
   <tabstop>kcfg_authorize</tabstop>
+  <tabstop>kcfg_basicUsername</tabstop>
   <tabstop>kcfg_basicPassword</tabstop>
   <tabstop>tabwidget</tabstop>
   <tabstop>timelinesTable</tabstop>

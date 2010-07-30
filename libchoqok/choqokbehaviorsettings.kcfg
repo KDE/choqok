@@ -48,6 +48,9 @@
         <entry name="shortenOnPaste" type="Bool">
             <default>false</default>
         </entry>
+        <entry name="removeHttp" type="Bool">
+            <default>true</default>
+        </entry>
         <entry name="shortenerPlugin" type="String" />
         <entry name="countOfPosts" type="Int">
             <default>20</default>

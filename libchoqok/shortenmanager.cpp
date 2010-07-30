@@ -38,9 +38,14 @@ class ShortenManagerPrivate
 public:
     Shortener *backend;
     ShortenManager instance;
+    QRegExp findUrlRegExp;
+    QRegExp removeUrlRegExp;
+
     ShortenManagerPrivate()
     :backend(0)
     {
+        findUrlRegExp.setPattern( "(ftps?|https?)://" );
+        removeUrlRegExp.setPattern( "^(https?)://" );
         reloadConfig();
     }
     void reloadConfig()
@@ -102,15 +107,17 @@ QString ShortenManager::parseText(const QString &text)
     kDebug();
     QString t = "";
     int i = 0, j = 0;
-    QRegExp urlRegExp( "((ftps?|https?)://)" );
-    while (( j = text.indexOf( urlRegExp, i ) ) != -1 ) {
+    while (( j = text.indexOf( _smp->findUrlRegExp, i ) ) != -1 ) {
         t += text.mid( i, j - i );
         int k = text.indexOf( ' ', j );
         if ( k == -1 )
             k = text.length();
         QString baseUrl = text.mid( j, k - j );
         if ( baseUrl.count() > 30 ) {
-            t += Choqok::ShortenManager::self()->shortenUrl(baseUrl);
+            QString tmp = Choqok::ShortenManager::self()->shortenUrl(baseUrl);
+            if(BehaviorSettings::removeHttp())
+                tmp.remove(_smp->removeUrlRegExp);
+            t += tmp;
         } else {
             t += baseUrl;
         }

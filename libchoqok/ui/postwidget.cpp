@@ -344,7 +344,8 @@ QString PostWidget::prepareStatus( const QString &txt )
     while(((pos = mUrlRegExp.indexIn(text, pos)) != -1)) {
         QString link = mUrlRegExp.cap(0);
         QString tmplink = link;
-        if (tmplink.startsWith("www.", Qt::CaseInsensitive))
+        if ( !tmplink.startsWith("http", Qt::CaseInsensitive) &&
+             !tmplink.startsWith("ftp", Qt::CaseInsensitive) )
             tmplink.prepend("http://");
         static const QString hrefTemplate("<a href='%1' title='%1' target='_blank'>%2</a>");
         tmplink = hrefTemplate.arg(tmplink, link);
