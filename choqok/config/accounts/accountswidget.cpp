@@ -88,7 +88,8 @@ void AccountsWidget::addAccount()
            QPointer<AddAccountDialog> d = new AddAccountDialog(
                                        blog->createEditAccountWidget(0, Choqok::UI::Global::mainWindow()),
                                                         Choqok::UI::Global::mainWindow() );
-            d->show();
+        d->setModal(true);
+        d->exec();
         } else {
             KMessageBox::sorry(this, i18n("Cannot load the %1 plugin. Please check your installation.", name));
         }
