@@ -115,7 +115,7 @@ QString ShortenManager::parseText(const QString &text)
         QString baseUrl = text.mid( j, k - j );
         if ( baseUrl.count() > 30 ) {
             QString tmp = Choqok::ShortenManager::self()->shortenUrl(baseUrl);
-            if(BehaviorSettings::removeHttp())
+            if(BehaviorSettings::removeHttp() && tmp != baseUrl)
                 tmp.remove(_smp->removeUrlRegExp);
             t += tmp;
         } else {
