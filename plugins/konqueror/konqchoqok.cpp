@@ -63,16 +63,16 @@ void KonqPluginChoqok::updateActions()
     
     // Is Choqok running?
     if (!QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.choqok")) {
-	((KToggleAction*) actionCollection()->action("shortening_choqok"))->setEnabled(false);
-	return;
+    ((KToggleAction*) actionCollection()->action("shortening_choqok"))->setEnabled(false);
+    return;
     }
     // Choqok is running, so I can connect to it, if I haven't done yet.
     if (!m_interface) {
-	m_interface = new  QDBusInterface("org.kde.choqok",
-					    "/",
-					    "org.kde.choqok",
-					    QDBusConnection::sessionBus());
-	
+    m_interface = new  QDBusInterface("org.kde.choqok",
+                        "/",
+                        "org.kde.choqok",
+                        QDBusConnection::sessionBus());
+    
     }
     QDBusReply<bool> reply = m_interface->call("getShortening");
     if ( reply.isValid() ) {
@@ -93,37 +93,37 @@ void KonqPluginChoqok::slotpostSelectedText()
     QString text;
 
     if ( parent()->inherits("KHTMLPart") ) {
-	m_parentWidget = qobject_cast< KHTMLPart* >(parent())->widget();
-	text = QString(qobject_cast< KHTMLPart* >(parent())->selectedText());
+    m_parentWidget = qobject_cast< KHTMLPart* >(parent())->widget();
+    text = QString(qobject_cast< KHTMLPart* >(parent())->selectedText());
     }
 #ifdef HAVE_KWEBKITPART
     else if ( parent()->inherits("KWebKitPart") ) {
-	m_parentWidget = qobject_cast< KWebKitPart* >(parent())->widget(); 
-	text = QString(qobject_cast< KWebKitPart* >(parent())->view()->selectedText());
+    m_parentWidget = qobject_cast< KWebKitPart* >(parent())->widget();
+    text = QString(qobject_cast< KWebKitPart* >(parent())->view()->selectedText());
     }
 #endif
     else {
-	return;
+    return;
     }
 
     if (text.isEmpty()) {
-	KMessageBox::information( m_parentWidget,
-				  i18n("You need to select text to post."),
-				  i18n("Post Text with Choqok"));
-	return;
+    KMessageBox::information( m_parentWidget,
+                  i18n("You need to select text to post."),
+                  i18n("Post Text with Choqok"));
+    return;
     }
     
     if (!QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.choqok"))
     {
-	kDebug() << "Choqok is not running, starting it!..." << endl;
-	KToolInvocation::startServiceByDesktopName(QString("choqok"),
-						   QStringList());
+    kDebug() << "Choqok is not running, starting it!..." << endl;
+    KToolInvocation::startServiceByDesktopName(QString("choqok"),
+                           QStringList());
     }
     if (!m_interface) {
-	m_interface = new  QDBusInterface("org.kde.choqok",
-					    "/",
-					    "org.kde.choqok",
-					    QDBusConnection::sessionBus());
+    m_interface = new  QDBusInterface("org.kde.choqok",
+                        "/",
+                        "org.kde.choqok",
+                        QDBusConnection::sessionBus());
     }
 
     m_interface->call("postText",text);
@@ -137,7 +137,7 @@ void KonqPluginChoqok::toggleShortening(bool value)
 
 
 K_PLUGIN_FACTORY(KonqPluginChoqokFactory,
-		 registerPlugin<KonqPluginChoqok>(); )
+         registerPlugin<KonqPluginChoqok>(); )
 K_EXPORT_PLUGIN( KonqPluginChoqokFactory( "konqchoqok" ) )
 
 #include "konqchoqok.moc"

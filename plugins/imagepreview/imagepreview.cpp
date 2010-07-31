@@ -130,11 +130,11 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
         kDebug()<<mTweetphotoRegExp.capturedTexts();
     }
     foreach(const QString &url, TweetphotoRedirectList){
-	connect( Choqok::MediaManager::self(),
+    connect( Choqok::MediaManager::self(),
                  SIGNAL(imageFetched(QString,QPixmap)),
                  SLOT(slotImageFetched(QString,QPixmap)) );
         //QString TweetphotoUrl = QString( "http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" ).arg(QString(url));
-	QString TweetphotoUrl = "http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url="+ url; 
+    QString TweetphotoUrl = "http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url="+ url;
         mParsingList.insert(TweetphotoUrl, postToParse);
         mBaseUrlMap.insert(TweetphotoUrl, url);
         Choqok::MediaManager::self()->fetchImage(TweetphotoUrl, Choqok::MediaManager::Async);

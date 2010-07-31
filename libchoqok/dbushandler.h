@@ -35,51 +35,51 @@
 
 namespace Choqok
 {
-  class DbusHandler;
-  
-  CHOQOK_EXPORT Choqok::DbusHandler* ChoqokDbus();
-  
-  class CHOQOK_EXPORT DbusHandler : public QObject
-  {
+class DbusHandler;
+
+CHOQOK_EXPORT Choqok::DbusHandler* ChoqokDbus();
+
+class CHOQOK_EXPORT DbusHandler : public QObject
+{
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.choqok")
-    
+
     /**
      * Retrieve the DBus handler instance if it exists or build up a new one
      */
     friend Choqok::DbusHandler* ChoqokDbus();
-    
-    public:
+
+public:
     DbusHandler();
     ~DbusHandler();
-    
-    public Q_SLOTS:
-     /** Methods exported by the D-Bus interface org.choqok.kde:
-      *   shareUrl: if you want to share an url with the html page title set bool title true;
-      *   getShortening: return a bool for the active configuration of ShortenOnPaste option;
-      *   setShortening: Control ShortenOnPaste option;
-      */
-	  
-      void shareUrl( const QString &url, bool title = false);
-      void uploadFile( const QString &filename );
-      void postText( const QString &text );
-      void updateTimelines();
-      void setShortening( bool flag);
-      bool getShortening();
-      
-    private:
-      static DbusHandler *m_self;
-      QString m_textToPost;
-      QTextDocument m_doc;
-      
-      QString prepareUrl(const QString &url);
-      
-    private Q_SLOTS:
-      void slotcreatedQuickPost();
-      void slotTitleUrl( KJob* job );
 
-  };
-  
+public Q_SLOTS:
+    /** Methods exported by the D-Bus interface org.choqok.kde:
+     *   shareUrl: if you want to share an url with the html page title set bool title true;
+     *   getShortening: return a bool for the active configuration of ShortenOnPaste option;
+     *   setShortening: Control ShortenOnPaste option;
+     */
+
+    void shareUrl( const QString &url, bool title = false);
+    void uploadFile( const QString &filename );
+    void postText( const QString &text );
+    void updateTimelines();
+    void setShortening( bool flag);
+    bool getShortening();
+
+private:
+    static DbusHandler *m_self;
+    QString m_textToPost;
+    QTextDocument m_doc;
+
+    QString prepareUrl(const QString &url);
+
+private Q_SLOTS:
+    void slotcreatedQuickPost();
+    void slotTitleUrl( KJob* job );
+
+};
+
 }
 
 #endif

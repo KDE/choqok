@@ -39,7 +39,7 @@
 
 namespace Choqok
 {
-  
+
 DbusHandler * DbusHandler::m_self=0;
 
 
@@ -61,24 +61,24 @@ DbusHandler::~DbusHandler()
 QString DbusHandler::prepareUrl(const QString& url)
 {
     if (Choqok::BehaviorSettings::shortenOnPaste() && url.count()>30) {
-	return ShortenManager::self()->shortenUrl(url);
+        return ShortenManager::self()->shortenUrl(url);
     }
     else {
-	return url;
+        return url;
     }
 }
 
 void DbusHandler::shareUrl(const QString& url, bool title)
-{ 
+{
     if (title) {
-      QByteArray data;
-      KIO::StoredTransferJob *job = KIO::storedGet ( KUrl(url), KIO::NoReload, KIO::HideProgressInfo) ;
-      if ( !job ) {
-        kDebug() << "Cannot create an http GET request!";
-      }
-      connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotTitleUrl(KJob*)) );
-      job->start();
-      return;
+        QByteArray data;
+        KIO::StoredTransferJob *job = KIO::storedGet ( KUrl(url), KIO::NoReload, KIO::HideProgressInfo) ;
+        if ( !job ) {
+            kDebug() << "Cannot create an http GET request!";
+        }
+        connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotTitleUrl(KJob*)) );
+        job->start();
+        return;
     }
     postText(prepareUrl(url));
 }
@@ -86,19 +86,19 @@ void DbusHandler::shareUrl(const QString& url, bool title)
 void DbusHandler::slotTitleUrl( KJob *job )
 {
     QString text;
-    if(!job) {
-	kWarning()<<"NULL Job returned";
-	return;
+    if (!job) {
+        kWarning()<<"NULL Job returned";
+        return;
     }
     KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
     if ( job->error() ) {
-	kDebug() << "Job Error: " << job->errorString();
+        kDebug() << "Job Error: " << job->errorString();
     }
     else {
-	QByteArray data = stj->data();
-	QTextCodec *codec = QTextCodec::codecForHtml(data);
-	m_doc.setHtml(codec->toUnicode(data));
-	text.append(m_doc.metaInformation(QTextDocument::DocumentTitle));
+        QByteArray data = stj->data();
+        QTextCodec *codec = QTextCodec::codecForHtml(data);
+        m_doc.setHtml(codec->toUnicode(data));
+        text.append(m_doc.metaInformation(QTextDocument::DocumentTitle));
     }
     QString url = stj->url().prettyUrl();
     text.append(" "+prepareUrl(url));
@@ -108,8 +108,8 @@ void DbusHandler::slotTitleUrl( KJob *job )
 
 void DbusHandler::uploadFile(const QString& filename)
 {
-  QPointer<Choqok::UI::UploadMediaDialog> dlg = new Choqok::UI::UploadMediaDialog(0,filename);
-  dlg->show();
+    QPointer<Choqok::UI::UploadMediaDialog> dlg = new Choqok::UI::UploadMediaDialog(0,filename);
+    dlg->show();
 }
 
 
@@ -119,27 +119,27 @@ void DbusHandler::postText(const QString& text)
     // This is necessary when choqok is launched by a D-Bus call, because it can happen
     //  that DBusHandler is ready, but QuickPost widget not yet.
     if (Choqok::UI::Global::quickPostWidget()==0) {
-	m_textToPost = QString(text);
-	connect(Choqok::UI::Global::mainWindow(), SIGNAL(quickPostCreated()),
-		  SLOT(slotcreatedQuickPost()) );
-	return;
+        m_textToPost = QString(text);
+        connect(Choqok::UI::Global::mainWindow(), SIGNAL(quickPostCreated()),
+                SLOT(slotcreatedQuickPost()) );
+        return;
     }
     if (Choqok::UI::Global::quickPostWidget()->isVisible()) {
-      Choqok::UI::Global::quickPostWidget()->appendText(text);
+        Choqok::UI::Global::quickPostWidget()->appendText(text);
     }
     else {
-      Choqok::UI::Global::quickPostWidget()->setText(text);
+        Choqok::UI::Global::quickPostWidget()->setText(text);
     }
 }
 
 void DbusHandler::slotcreatedQuickPost()
 {
-  if (Choqok::UI::Global::quickPostWidget()->isVisible()) {
-    Choqok::UI::Global::quickPostWidget()->appendText(m_textToPost);
-  }
-  else {
-    Choqok::UI::Global::quickPostWidget()->setText(m_textToPost);
-  }
+    if (Choqok::UI::Global::quickPostWidget()->isVisible()) {
+        Choqok::UI::Global::quickPostWidget()->appendText(m_textToPost);
+    }
+    else {
+        Choqok::UI::Global::quickPostWidget()->setText(m_textToPost);
+    }
 }
 
 
@@ -164,7 +164,7 @@ bool DbusHandler::getShortening()
 DbusHandler* ChoqokDbus()
 {
     if (DbusHandler::m_self == 0) {
-	DbusHandler::m_self = new DbusHandler();
+        DbusHandler::m_self = new DbusHandler();
     }
     return DbusHandler::m_self;
 }
