@@ -30,12 +30,12 @@
 #include <KProcess>
 #include <KToolInvocation>
 #include <KApplication>
-#include <QDesktopWidget>
-#include <QVBoxLayout>
+#include <QtGui/QDesktopWidget>
+#include <QtGui/QVBoxLayout>
 #include "twitterapiaccount.h"
 #include <KIO/Job>
 #include <KDebug>
-#include <QDomDocument>
+#include <QtXml/QDomDocument>
 #include <klocalizedstring.h>
 #include <kanimatedbutton.h>
 // <a href='choqok://follow'>%6</a>
@@ -47,6 +47,7 @@
 #include <choqoktools.h>
 #include <kstatusbar.h>
 #include <qjson/parser.h>
+#include <QtCore/QPointer>
 
 const char * baseText = "\
 <table width=\"100%\">\
@@ -100,7 +101,7 @@ public:
     TwitterApiAccount *currentAccount;
     TwitterApiMicroBlog *mBlog;
     QFrame *waitFrame;
-    KJob *job;
+    QPointer<KJob> job;
     Choqok::Post currentPost;
     QString username;
 
