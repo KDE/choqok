@@ -189,7 +189,7 @@ void TwitterApiPostWidget::checkAnchor(const QUrl & url)
     QString scheme = url.scheme();
     if( scheme == "replyto" ) {
         if(d->isBasePostShowed) {
-            setContent( prepareStatus(currentPost().content) );
+            setContent( prepareStatus(currentPost().content).replace("<a href","<a style=\"text-decoration:none\" href",Qt::CaseInsensitive) );
             updateUi();
             d->isBasePostShowed = false;
             return;
@@ -230,12 +230,12 @@ void TwitterApiPostWidget::slotBasePostFetched(Choqok::Account* theAccount, Choq
             color = this->palette().dark().color().name();
         }
         QString baseStatusText = "<p style=\"margin-top:10px; margin-bottom:10px; margin-left:20px;\
-        margin-right:20px; -qt-block-indent:0; text-indent:0px\"><span style=\" color:" + color + ";\">";
+        margin-right:20px; text-indent:0px\"><span style=\" color:" + color + ";\">";
         baseStatusText += "<b><a href='user://"+ post->author.userName +"'>" +
         post->author.userName + "</a> :</b> ";
 
         baseStatusText += prepareStatus( post->content ) + "</p>";
-        setContent( content().prepend( baseStatusText ) );
+        setContent( content().prepend( baseStatusText.replace("<a href","<a style=\"text-decoration:none\" href",Qt::CaseInsensitive) ) );
         updateUi();
         delete post;
     }
