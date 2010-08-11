@@ -93,12 +93,12 @@ const QString zone ("((a(c|d|e|f|g|i|l|m|n|o|q|r|s|t|u|w|x|z))|(b(a|b|d|e|f|g|h|
 const QString ip = "(25[0-5]|[2][0-4][0-9]|[0-1]?[\\d]{1,2})(\\.(25[0-5]|[2][0-4][0-9]|[0-1]?[\\d]{1,2})){3}";
 const QString params = "(((\\/)[\\w:/\\?#\\[\\]@!\\$&\\(\\)\\*%\\+,;=\\._~-]{1,}|%[0-9a-f]{2})?)";
 
-const QRegExp PostWidget::mUrlRegExp("(((" + protocols + "?)" + auth +
+const QRegExp PostWidget::mUrlRegExp("((((" + protocols + "?)" + auth +
                           subdomains +
                           "((" + domains +               
-                          zone + ")|((to|ai)\\.)))|(" + protocols + "(" + ip + ")+))" +
+                          zone + "(?!(\\w)))|((to|ai)\\.)))|(" + protocols + "(" + ip + ")+))" +
                           "(" + port + "?)" + "((\\/)?)"  +
-                          params, Qt::CaseInsensitive);
+                          params + ")", Qt::CaseInsensitive);
 
 QString PostWidget::readStyle;
 QString PostWidget::unreadStyle;
