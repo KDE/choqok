@@ -89,9 +89,9 @@ QString LaconicaPostWidget::prepareStatus(const QString& text)
     QString res = TwitterApiPostWidget::prepareStatus(text);
     QString homepage = d->account->homepageUrl().prettyUrl(KUrl::RemoveTrailingSlash);
     res.replace(mGroupRegExp,"\\1!<a href='group://\\2'>\\2</a> <a href='"+ homepage +
-    "/group/\\2'>"+ webIconText +"</a>");
+    "group/\\2'>"+ webIconText +"</a>");
     res.replace(mHashtagRegExp,"\\1#<a href='tag://\\2'>\\2</a> <a href='"+ homepage +
-    "/tag/\\1'>"+ webIconText +"</a>");
+    "tag/\\1'>"+ webIconText +"</a>");
     return res;
 }
 
