@@ -338,14 +338,13 @@ void PostWidget::leaveEvent ( QEvent * event )
 QString PostWidget::prepareStatus( const QString &txt )
 {
     QString text = txt;
-    text.replace( '&', "&amp;" );
+    text.replace( "&amp;", "&amp;amp;" );
     text.replace( '<', "&lt;" );
     text.replace( '>', "&gt;" );
     int pos = 0;
     while(((pos = mUrlRegExp.indexIn(text, pos)) != -1)) {
         QString link = mUrlRegExp.cap(0);
         text.remove( pos, link.length() );
-        link.replace( "&amp;", "&" );
         QString tmplink = link;
         if ( !tmplink.startsWith("http", Qt::CaseInsensitive) &&
              !tmplink.startsWith("ftp", Qt::CaseInsensitive) )
