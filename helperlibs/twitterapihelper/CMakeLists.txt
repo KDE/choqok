@@ -27,7 +27,7 @@ target_link_libraries( twitterapihelper
                        choqok)
 
 set_target_properties(twitterapihelper PROPERTIES
-VERSION 0.9
+VERSION 0.9.2
 SOVERSION 0
 )
 
@@ -44,4 +44,6 @@ install( FILES
     twitterapisearchtimelinewidget.h
     twitterapiwhoiswidget.h
     twitterapishowthread.h
+    twitterapitextedit.h
+    twitterapicomposerwidget.h
 DESTINATION ${INCLUDE_INSTALL_DIR}/choqok/twitterapihelper COMPONENT Devel)

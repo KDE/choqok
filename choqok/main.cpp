@@ -32,7 +32,7 @@
 static const char description[] =
     I18N_NOOP( "KDE Micro-Blogging Client." );
 
-static const char version[] = "0.9.82";
+static const char version[] = "0.9.85";
 
 int main( int argc, char **argv )
 {
@@ -48,7 +48,7 @@ int main( int argc, char **argv )
     about.addCredit( ki18n( "Tejas Dinkar" ), ki18n( "Developer" ),
                      "tejasdinkar@gmail.com", "http://twitter.com/tdinkar" );
     about.addCredit( ki18n("Emanuele Bigiarini"), ki18n("DBus and konqueror plugin"), "pulmro@gmail.com");
-    about.addCredit( ki18n( "Andrey Esin" ), ki18n( "Bug fixes" ), "gmlastik@gmail.com", "http://twitter.com/la_stik" );
+    about.addCredit( ki18n( "Andrey Esin" ), ki18n( "Developer" ), "gmlastik@gmail.com", "http://twitter.com/la_stik" );
     //TODO before next release, Add new contributers to credits
     KCmdLineArgs::init( argc, argv, &about );
 

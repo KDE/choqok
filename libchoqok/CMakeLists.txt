@@ -29,8 +29,6 @@ ui/quickpost.cpp
 ui/mainwindow.cpp
 ui/uploadmediadialog.cpp
 ui/textbrowser.cpp
-# filtermanager.cpp
-# filter.cpp
 )
 
 qt4_add_dbus_adaptor( choqok_LIB_SRCS org.kde.choqok.xml dbushandler.h Choqok::DbusHandler ChoqokAdaptor ) 
@@ -47,7 +45,7 @@ kde4_add_library(choqok SHARED ${choqok_LIB_SRCS})
 target_link_libraries(choqok ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS})
 
 set_target_properties(choqok PROPERTIES
-VERSION 0.9.80
+VERSION 0.9.85
 SOVERSION 0
 )
 

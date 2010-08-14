@@ -1,3 +1,38 @@
+=== Version 0.9.85 (1.0 Beta2) -- 14-Aug-2010 ===
+* Proxy configuration
+* Using new KDE Tray Icon
+* Ctrl+P shortcut (Quick Post) removed and it's function merged with Ctrl+Z
+* Revised posts look
+* Uploader plugin system added.
+* Better failure detection on TwitterApi
+* Marking outbox and favorite posts as read
+* Support for Amarok, JuK, Exaile, Rhythmbox, Audacious, Dragon Player, Qmmp, VLC, Banshee and any other MPRIS compatible player in "Now Listening" plugin (By Ramin Gomari & Andrey Esin).
+* File attachment function added to QuickPost (Using global uploader dialog).
+* Complete support for ReTweet/Repeat function.
+* Support for Tweetphoto in ImagePreview plugin (By Alexandro Infantes)
+* Nick auto-completion implemented per account base. (Available in main window input boxes)
+* Additional actions for User menu: Reply, Send Private Message, Subscribe/UnSubscribe, Block
+* Better URL detection (By Andrey Esin)
+* D-Bus Interface (By Emanuele Bigiarini)
+* A konqueror plugin to use choqok directly (post selected text, shorten_url_onpaste on/off, share link & upload media servicemenus (By Emanuele Bigiarini)
+* OAuth support for Twitter and Identica authentication. (Using QOauth Lib)
+* Option for "Remove http:// from shortened URL".
+
+* New Plugins:
+    - Post Filtering (To filter out unwanted posts)
+    - Preview Videos (Supports YouTube and Vimeo) (By Emanuele Bigiarini)
+
+* New Shortener Plugins:
+    - ur.ly (A free [Apache 2.0 licensed] URL shorting service) (By Scott Banwart)
+    - u.nu (By Timothy Redaelli)
+    - urls.io (By Boris Tsirkin)
+    - goo.gl (By Andrey Esin)
+    - 3.ly (By Andrey Esin)
+
+* Uploader Plugins:
+    - TwitPic
+    - YFrog
+
 === Version 0.9.55 (1.0 Beta1) -- 07-Mar-2010 ===
 * Actions to subscribe/unsubscribe and block a user, added to User menu.
 * Splash screen on startup.
