@@ -3,6 +3,7 @@ include_directories(
 ${CHOQOK_INCLUDES}
 )
 
+add_subdirectory(icons)
 ########### next target ###############
 
 set( choqok_twitpic_PART_SRCS

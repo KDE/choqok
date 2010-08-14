@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Type=Service
 X-Choqok-Version=1
-Icon=
+Icon=twitpic_uploader
 ServiceTypes=Choqok/Plugin
 X-KDE-Library=choqok_twitpic
 X-KDE-PluginInfo-Author=Mehrdad Momeny
