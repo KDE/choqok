@@ -69,7 +69,7 @@ namespace Global
         void emitNewPostWidgetAdded( Choqok::UI::PostWidget *widget, Choqok::Account *theAccount,
                                     const QString &timelineName = QString() );
 
-    signals:
+    Q_SIGNALS:
         void newPostWidgetAdded( Choqok::UI::PostWidget *widget, Choqok::Account *theAccount,
                                  const QString &timelineName);
 

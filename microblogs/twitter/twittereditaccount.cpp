@@ -38,7 +38,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QtOAuth/qoauth_namespace.h>
 #include <kio/accessmanager.h>
 #include <QCheckBox>
-#include <QInputDialog>
+#include <KInputDialog>
 
 #ifdef OAUTH
 const char * twitterConsumerKey = "VyXMf0O7CvciiUQjliYtYg";
@@ -150,8 +150,8 @@ void TwitterEditAccountWidget::authorizeUser()
 void TwitterEditAccountWidget::getPinCode()
 {
     while(!isAuthenticated){
-        QString verifier = QInputDialog::getText(this, i18n("PIN number"),
-                                                i18n("Enter PIN number received from Twitter:"));
+        QString verifier = KInputDialog::getText( i18n("PIN number"),
+                                                  i18n("Enter PIN number received from Twitter:"));
         if(verifier.isEmpty())
             return;
         QOAuth::ParamMap otherArgs;

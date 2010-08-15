@@ -45,7 +45,7 @@ public:
                             const QString &optionalMessage = QString() )*/;
     virtual void upload( const KUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType) = 0;
 
-signals:
+Q_SIGNALS:
     void mediumUploaded( const KUrl &localUrl, const QString &remoteUrl );
     void uploadingFailed( const KUrl &localUrl, const QString &errorMessage );
 

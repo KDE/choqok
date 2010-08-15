@@ -76,7 +76,7 @@ void FilterSettings::readConfig()
     KGlobal::config()->sync();
     QStringList groups = KGlobal::config()->groupList();
     foreach(const QString &grp, groups){
-        if(grp.startsWith("Filter_")){
+        if(grp.startsWith(QLatin1String("Filter_"))){
             Filter *f = new Filter(KGlobal::config()->group(grp), this);
             if(f->filterText().isEmpty())
                 continue;
@@ -96,7 +96,7 @@ void FilterSettings::writeConfig()
 {
     QStringList groups = KGlobal::config()->groupList();
     foreach(const QString &grp, groups){
-        if(grp.startsWith("Filter_")){
+        if(grp.startsWith(QLatin1String("Filter_"))){
             KGlobal::config()->deleteGroup(grp);
         }
     }

@@ -101,7 +101,7 @@ void DbusHandler::slotTitleUrl( KJob *job )
         text.append(m_doc.metaInformation(QTextDocument::DocumentTitle));
     }
     QString url = stj->url().prettyUrl();
-    text.append(" "+prepareUrl(url));
+    text.append(' '+prepareUrl(url));
     postText(text);
 }
 

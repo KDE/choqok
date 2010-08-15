@@ -23,10 +23,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef TWITTERAPIMICROBLOGPLUGIN_H
 #define TWITTERAPIMICROBLOGPLUGIN_H
 
-#include <microblog.h>
+#include "microblog.h"
 #include <KUrl>
 #include "twitterapisearch.h"
-#include <QDomElement>
+#include <QtXml/QDomElement>
 #include <QtOAuth/qoauth_namespace.h>
 
 namespace QOAuth {

@@ -34,7 +34,7 @@ class AddEditFilter : public KDialog
 {
 Q_OBJECT
 public:
-    AddEditFilter(QWidget* parent, Filter* filter = 0);
+    explicit AddEditFilter(QWidget* parent, Filter* filter = 0);
     virtual ~AddEditFilter();
 
 signals:

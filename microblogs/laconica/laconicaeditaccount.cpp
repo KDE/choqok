@@ -254,7 +254,8 @@ void LaconicaEditAccountWidget::setAuthenticated(bool authenticated)
 
 void LaconicaEditAccountWidget::slotCheckHostUrl()
 {
-    if( !kcfg_host->text().isEmpty() && !kcfg_host->text().startsWith("http", Qt::CaseInsensitive) )
+    if( !kcfg_host->text().isEmpty() && !kcfg_host->text().startsWith(QLatin1String("http"),
+                                                                      Qt::CaseInsensitive) )
         kcfg_host->setText(kcfg_host->text().prepend("http://"));
 }
 

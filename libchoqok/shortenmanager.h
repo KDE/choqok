@@ -64,7 +64,7 @@ public:
 
     void emitNewUnshortenedUrl( Choqok::UI::PostWidget *widget, const KUrl& fromUrl, const KUrl& toUrl);
 
-  signals:
+  Q_SIGNALS:
     void newUnshortenedUrl( Choqok::UI::PostWidget *widget, const KUrl& fromUrl, const KUrl& toUrl);
 
 private:

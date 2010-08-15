@@ -96,9 +96,9 @@ const QString params = "(((\\/)[\\w:/\\?#\\[\\]@!\\$&\\(\\)\\*%\\+,;=\\._~-]{1,}
 const QRegExp PostWidget::mUrlRegExp("((((" + protocols + "?)" + auth +
                           subdomains +
                           "((" + domains +               
-                          zone + "(?!(\\w)))|((to|ai)\\.)))|(" + protocols + "(" + ip + ")+))" +
-                          "(" + port + "?)" + "((\\/)?)"  +
-                          params + ")", Qt::CaseInsensitive);
+                          zone + "(?!(\\w)))|((to|ai)\\.)))|(" + protocols + '(' + ip + ")+))" +
+                          '(' + port + "?)" + "((\\/)?)"  +
+                          params + ')', Qt::CaseInsensitive);
 
 QString PostWidget::readStyle;
 QString PostWidget::unreadStyle;
@@ -346,8 +346,8 @@ QString PostWidget::prepareStatus( const QString &txt )
         QString link = mUrlRegExp.cap(0);
         text.remove( pos, link.length() );
         QString tmplink = link;
-        if ( !tmplink.startsWith("http", Qt::CaseInsensitive) &&
-             !tmplink.startsWith("ftp", Qt::CaseInsensitive) )
+        if ( !tmplink.startsWith(QLatin1String("http"), Qt::CaseInsensitive) &&
+             !tmplink.startsWith(QLatin1String("ftp"), Qt::CaseInsensitive) )
              tmplink.prepend("http://");
         static const QString hrefTemplate("<a href='%1' title='%1' target='_blank'>%2</a>");
         tmplink = hrefTemplate.arg( tmplink, link );

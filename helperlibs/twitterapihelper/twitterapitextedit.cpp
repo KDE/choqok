@@ -99,7 +99,7 @@ void TwitterApiTextEdit::focusInEvent(QFocusEvent *e)
 {
     if (d->c)
         d->c->setWidget(this);
-    QTextEdit::focusInEvent(e);
+    KTextEdit::focusInEvent(e);
 }
 
 void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
@@ -127,7 +127,7 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
     }
 
 //     bool isShortcut = ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_Space); // CTRL+E
-//     if (!d->c )// || !isShortcut) // dont process the shortcut when we have a completer
+//     if (!d->c )// || !isShortcut) // don't process the shortcut when we have a completer
     Choqok::UI::TextEdit::keyPressEvent(e);
 
     const bool ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier | Qt::AltModifier |

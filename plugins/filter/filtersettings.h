@@ -32,7 +32,7 @@
 
 class FilterSettings : public QObject
 {
-
+    Q_OBJECT
 public:
     static FilterSettings *self();
     virtual ~FilterSettings();

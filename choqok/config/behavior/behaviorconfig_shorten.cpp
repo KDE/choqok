@@ -123,8 +123,8 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
     KPluginInfo pluginInfo = availablePlugins.value( shortenPlugins->itemData(shortenPlugins->currentIndex() ).toString() );
     kDebug()<<pluginInfo.name()<<pluginInfo.kcmServices().count();
 
-    KDialog configDialog(this);
-    configDialog.setWindowTitle(pluginInfo.name());
+    QPointer<KDialog> configDialog = new KDialog(this);
+    configDialog->setWindowTitle(pluginInfo.name());
     // The number of KCModuleProxies in use determines whether to use a tabwidget
     KTabWidget *newTabWidget = 0;
     // Widget to use for the setting dialog's main widget,
@@ -132,7 +132,7 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
     QWidget * mainWidget = 0;
     // Widget to use as the KCModuleProxy's parent.
     // The first proxy is owned by the dialog itself
-    QWidget *moduleProxyParentWidget = &configDialog;
+    QWidget *moduleProxyParentWidget = configDialog;
 
     foreach (const KService::Ptr &servicePtr, pluginInfo.kcmServices()) {
         if(!servicePtr->noDisplay()) {
@@ -144,7 +144,7 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
                     // we already created one KCModuleProxy, so we need a tab widget.
                     // Move the first proxy into the tab widget and ensure this and subsequent
                     // proxies are in the tab widget
-                    newTabWidget = new KTabWidget(&configDialog);
+                    newTabWidget = new KTabWidget(configDialog);
                     moduleProxyParentWidget = newTabWidget;
                     mainWidget->setParent( newTabWidget );
                     KCModuleProxy *moduleProxy = qobject_cast<KCModuleProxy*>(mainWidget);
@@ -154,7 +154,7 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
                     } else {
                         delete newTabWidget;
                         newTabWidget = 0;
-                        moduleProxyParentWidget = &configDialog;
+                        moduleProxyParentWidget = configDialog;
                         mainWidget->setParent(0);
                     }
                 }
@@ -172,18 +172,18 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
 
     // it could happen that we had services to show, but none of them were real modules.
     if (moduleProxyList.count()) {
-        configDialog.setButtons(KDialog::Ok | KDialog::Cancel);
+        configDialog->setButtons(KDialog::Ok | KDialog::Cancel);
 
-        QWidget *showWidget = new QWidget(&configDialog);
+        QWidget *showWidget = new QWidget(configDialog);
         QVBoxLayout *layout = new QVBoxLayout;
         showWidget->setLayout(layout);
         layout->addWidget(mainWidget);
         layout->insertSpacing(-1, KDialog::marginHint());
-        configDialog.setMainWidget(showWidget);
+        configDialog->setMainWidget(showWidget);
 
 //         connect(&configDialog, SIGNAL(defaultClicked()), this, SLOT(slotDefaultClicked()));
 
-        if (configDialog.exec() == QDialog::Accepted) {
+        if (configDialog->exec() == QDialog::Accepted) {
             foreach (KCModuleProxy *moduleProxy, moduleProxyList) {
                 QStringList parentComponents = moduleProxy->moduleInfo().service()->property("X-KDE-ParentComponents").toStringList();
                 moduleProxy->save();

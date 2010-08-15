@@ -50,7 +50,7 @@ Choqok::UI::TextBrowser::~TextBrowser()
 void TextBrowser::mousePressEvent(QMouseEvent* ev)
 {
     emit clicked(ev);
-    QTextBrowser::mousePressEvent(ev);
+    KTextBrowser::mousePressEvent(ev);
 }
 
 void TextBrowser::resizeEvent(QResizeEvent* e)

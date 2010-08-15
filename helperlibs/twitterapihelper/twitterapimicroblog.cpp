@@ -810,7 +810,7 @@ QByteArray TwitterApiMicroBlog::authorizationHeader(TwitterApiAccount* theAccoun
                                                              theAccount->oauthTokenSecret(), QOAuth::HMAC_SHA1,
                                                              params, QOAuth::ParseForHeaderArguments );
     } else {
-        auth = theAccount->username().toUtf8() + ":" + theAccount->password().toUtf8();
+        auth = theAccount->username().toUtf8() + ':' + theAccount->password().toUtf8();
         auth = auth.toBase64().prepend( "Basic " );
     }
     return auth;
