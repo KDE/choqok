@@ -108,7 +108,8 @@ const QString PostWidget::webIconText("&#9755;");
 PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* parent/* = 0*/ )
     :QWidget(parent), _mainWidget(new TextBrowser(this)), d(new Private(account, post))
 {
-//     setAttribute(Qt::WA_DeleteOnClose);
+    //     setAttribute(Qt::WA_DeleteOnClose);
+    _mainWidget->setFrameShape(QFrame::NoFrame);
     if(currentAccount()->username().compare( currentPost().author.userName, Qt::CaseInsensitive ) == 0 )
         d->mCurrentPost.isRead = true;
     d->mTimer.start( _MINUTE );
