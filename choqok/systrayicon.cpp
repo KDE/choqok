@@ -98,7 +98,7 @@ void SysTrayIcon::updateUnreadCount( int changeOfUnreadPosts )
         }
 
         // overlay
-        QImage overlayImg = m_defaultIcon.toImage().copy();
+        QPixmap overlayImg = m_defaultIcon;
         QPainter p( &overlayImg );
         p.setFont( f );
         KColorScheme scheme( QPalette::Active, KColorScheme::View );
@@ -120,7 +120,7 @@ void SysTrayIcon::updateUnreadCount( int changeOfUnreadPosts )
         p.setOpacity( 1.0 );
         p.drawText( overlayImg.rect(), Qt::AlignCenter, countStr );
 
-        setIconByPixmap( QIcon( QPixmap::fromImage( overlayImg ) ) );
+        setIconByPixmap( overlayImg );
         isBaseIconChanged = true;
     }
     this->setToolTip( "choqok", i18n("Choqok"), i18np( "1 unread post", "%1 unread posts", unread ) );
