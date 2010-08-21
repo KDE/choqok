@@ -143,7 +143,7 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
         || eow.contains(e->text().right(1)) || !completionPrefix.startsWith('@') ) ) {
         d->c->popup()->hide();
         return;
-    } else {
+    } else  if ((e->key() != Qt::Key_Enter) && (e->key() != Qt::Key_Return)) {
         if (completionPrefix.startsWith('@'))
             completionPrefix.remove(0, 1);
         if (completionPrefix != d->c->completionPrefix()) {
