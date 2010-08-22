@@ -164,7 +164,7 @@ QMenu* TwitterApiMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidg
     menu->addAction(search);
 
     KAction *updateFriendsList = new KAction(KIcon("arrow-down"), i18n("Update Friends List"), menu);
-    search->setData( theAccount->alias() );
+    updateFriendsList->setData( theAccount->alias() );
     connect( updateFriendsList, SIGNAL(triggered(bool)), SLOT(slotUpdateFriendsList()) );
     menu->addAction(updateFriendsList);
 
