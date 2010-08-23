@@ -663,8 +663,7 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount
     kDebug();
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
-    url.addPath( QString("/statuses/friends/%1.%2").arg(theAccount->username()).
-                                                    arg(format));
+    url.addPath( QString("/statuses/friends.%1").arg(format));
     QOAuth::ParamMap params;
     if(account->usingOAuth()){
         params.insert( "page", QByteArray::number( page ) );
