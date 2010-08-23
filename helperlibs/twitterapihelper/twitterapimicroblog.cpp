@@ -662,7 +662,7 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount
     kDebug();
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
-    url.addPath( QString("/statuses/friends.xml").arg(format) );
+    url.addPath( QString("/statuses/friends.xml") );
     url.addQueryItem( "cursor", d->friendsCursor );
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
