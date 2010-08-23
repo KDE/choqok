@@ -53,7 +53,7 @@ K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < LaconicaMicroBlog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_laconica" ) )
 
 LaconicaMicroBlog::LaconicaMicroBlog ( QObject* parent, const QVariantList&  )
-: TwitterApiMicroBlog(MyPluginFactory::componentData(), parent)
+: TwitterApiMicroBlog(MyPluginFactory::componentData(), parent), friendsPage(1)
 {
     kDebug();
     setServiceName("StatusNet");
@@ -202,6 +202,99 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Ch
 QString LaconicaMicroBlog::generateRepeatedByUserTooltip(const QString& username)
 {
     return i18n("Repeat of %1", username);
+}
+
+void LaconicaMicroBlog::listFriendsUsername(TwitterApiAccount* theAccount)
+{
+    friendsList.clear();
+    if ( theAccount ) {
+        requestFriendsScreenName(theAccount);
+    }
+}
+
+void LaconicaMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount, int page)
+{
+    kDebug();
+    TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
+    KUrl url = account->apiUrl();
+    url.addPath( QString("/statuses/friends.%1").arg(format));
+    QOAuth::ParamMap params;
+    if(account->usingOAuth()){
+        params.insert( "page", QByteArray::number( page ) );
+    } else {
+        url.addQueryItem( "page", QString::number( page ) );
+    }
+
+    KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
+    if ( !job ) {
+        kDebug() << "Cannot create an http GET request!";
+        return;
+    }
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::GET, params));
+    mJobsAccount[job] = theAccount;
+    connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFriendsScreenName(KJob*) ) );
+    job->start();
+}
+
+void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob* job)
+{
+    kDebug();
+    TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount *>( mJobsAccount.take(job) );
+    KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
+    QStringList newList;
+    if(format=="json"){
+        newList = readUsersScreenNameFromJson( theAccount, stJob->data() );
+    } else {
+        newList = readUsersScreenNameFromXml( theAccount, stJob->data() );
+    }
+    friendsList << newList;
+    if ( newList.count() == 100 ) {
+        requestFriendsScreenName( theAccount, ++friendsPage );
+    } else {
+        friendsList.removeDuplicates();
+        theAccount->setFriendsList(friendsList);
+        emit friendsUsernameListed( theAccount, friendsList );
+    }
+}
+
+QStringList LaconicaMicroBlog::readUsersScreenNameFromXml(Choqok::Account* theAccount, const QByteArray& buffer)
+{
+    kDebug();
+    QStringList list;
+    QDomDocument document;
+    document.setContent( buffer );
+    QDomElement root = document.documentElement();
+
+    if ( root.tagName() != "users" ) {
+        QString err = checkXmlForError(buffer);
+        if(!err.isEmpty()){
+            emit error(theAccount, ServerError, err, Critical);
+        } else {
+            err = i18n( "Retrieving the friends list failed. The data returned from the server is corrupted." );
+            kDebug() << "there's no users tag in XML\t the XML is: \n" << buffer;
+            emit error(theAccount, ParsingError, err, Critical);
+            list<<QString(' ');
+        }
+        return list;
+    }
+    QDomNode node = root.firstChild();
+    QString timeStr;
+    while ( !node.isNull() ) {
+        if ( node.toElement().tagName() != "user" ) {
+            kDebug() << "there's no user tag in XML!\n"<<buffer;
+            return list;
+        }
+        QDomNode node2 = node.firstChild();
+        while ( !node2.isNull() ) {
+            if ( node2.toElement().tagName() == "screen_name" ) {
+                list.append( node2.toElement().text() );
+                break;
+            }
+            node2 = node2.nextSibling();
+        }
+        node = node.nextSibling();
+    }
+    return list;
 }
 
 

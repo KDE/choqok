@@ -55,7 +55,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 class TwitterApiMicroBlog::Private
 {
 public:
-    Private():countOfTimelinesToSave(0), friendsPage(1)
+    Private():countOfTimelinesToSave(0), friendsCursor("-1")
     {
         monthes["Jan"] = 1;
         monthes["Feb"] = 2;
@@ -71,9 +71,8 @@ public:
         monthes["Dec"] = 12;
     }
     int countOfTimelinesToSave;
-    int friendsPage;
+    QString friendsCursor;
     QMap<QString, int> monthes;
-    QStringList friendsList;
     QJson::Parser parser;
 };
 
@@ -652,31 +651,26 @@ void TwitterApiMicroBlog::slotRemoveFavorite ( KJob *job )
 
 void TwitterApiMicroBlog::listFriendsUsername(TwitterApiAccount* theAccount)
 {
-    d->friendsList.clear();
+    friendsList.clear();
     if ( theAccount ) {
         requestFriendsScreenName(theAccount);
     }
 }
 
-void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount, int page)
+void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount)
 {
     kDebug();
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
-    url.addPath( QString("/statuses/friends.%1").arg(format));
-    QOAuth::ParamMap params;
-    if(account->usingOAuth()){
-        params.insert( "page", QByteArray::number( page ) );
-    } else {
-        url.addQueryItem( "page", QString::number( page ) );
-    }
+    url.addPath( QString("/statuses/friends.xml").arg(format) );
+    url.addQueryItem( "cursor", d->friendsCursor );
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create an http GET request!";
         return;
     }
-    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::GET, params));
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::GET));
     mJobsAccount[job] = theAccount;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFriendsScreenName(KJob*) ) );
     job->start();
@@ -688,18 +682,14 @@ void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
     TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount *>( mJobsAccount.take(job) );
     KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
     QStringList newList;
-    if(format=="json"){
-        newList = readUsersScreenNameFromJson( theAccount, stJob->data() );
-    } else {
-        newList = readUsersScreenNameFromXml( theAccount, stJob->data() );
-    }
-    d->friendsList << newList;
+    newList = readUsersScreenNameFromXml( theAccount, stJob->data() );
+    friendsList << newList;
     if ( newList.count() == 100 ) {
-        requestFriendsScreenName( theAccount, ++d->friendsPage );
+        requestFriendsScreenName( theAccount );
     } else {
-        d->friendsList.removeDuplicates();
-        theAccount->setFriendsList(d->friendsList);
-        emit friendsUsernameListed( theAccount, d->friendsList );
+        friendsList.removeDuplicates();
+        theAccount->setFriendsList(friendsList);
+        emit friendsUsernameListed( theAccount, friendsList );
     }
 }
 
@@ -1068,7 +1058,7 @@ QStringList TwitterApiMicroBlog::readUsersScreenNameFromXml( Choqok::Account* th
     document.setContent( buffer );
     QDomElement root = document.documentElement();
 
-    if ( root.tagName() != "users" ) {
+    if ( root.tagName() != "users_list" ) {
         QString err = checkXmlForError(buffer);
         if(!err.isEmpty()){
             emit error(theAccount, ServerError, err, Critical);
@@ -1080,22 +1070,29 @@ QStringList TwitterApiMicroBlog::readUsersScreenNameFromXml( Choqok::Account* th
         }
         return list;
     }
-    QDomNode node = root.firstChild();
-    QString timeStr;
-    while ( !node.isNull() ) {
-        if ( node.toElement().tagName() != "user" ) {
-            kDebug() << "there's no user tag in XML!\n"<<buffer;
-            return list;
-        }
-        QDomNode node2 = node.firstChild();
-        while ( !node2.isNull() ) {
-            if ( node2.toElement().tagName() == "screen_name" ) {
-                list.append( node2.toElement().text() );
-                break;
-            }
-            node2 = node2.nextSibling();
-        }
-        node = node.nextSibling();
+    QDomNode section = root.firstChild();
+    QDomNode node = section.firstChild();
+    while ( !section.isNull() ) {
+    	if ( section.toElement().tagName() == "users" ) {
+    		while ( !node.isNull() ) {
+    		    if ( node.toElement().tagName() != "user" ) {
+    		        kDebug() << "there's no user tag in XML!\n"<<buffer;
+    		        return list;
+    		    }
+    		    QDomNode node2 = node.firstChild();
+    		    while ( !node2.isNull() ) {
+    		        if ( node2.toElement().tagName() == "screen_name" ) {
+    		            list.append( node2.toElement().text() );
+    		            break;
+    		        }
+    		        node2 = node2.nextSibling();
+    		    }
+    		    node = node.nextSibling();
+    		}
+    	} else if ( section.toElement().tagName() == "next_cursor" ) {
+    		d->friendsCursor = section.toElement().text();
+    	}
+    	section = section.nextSibling();
     }
     return list;
 }

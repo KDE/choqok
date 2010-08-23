@@ -173,7 +173,7 @@ protected Q_SLOTS:
     virtual void slotCreateFavorite( KJob *job );
     virtual void slotRemoveFavorite( KJob *job );
     virtual void slotRequestTimeline( KJob *job );
-    virtual void requestFriendsScreenName( TwitterApiAccount* theAccount, int page = 1 );
+    virtual void requestFriendsScreenName( TwitterApiAccount* theAccount );
     virtual void slotRequestFriendsScreenName( KJob *job );
     virtual void slotCreateFriendship( KJob *job );
     virtual void slotDestroyFriendship( KJob *job );
@@ -252,6 +252,7 @@ protected:
     QMap<KJob*, Choqok::Account*> mJobsAccount;
     QMap<KJob*, QString> mFriendshipMap;
     QString format;
+    QStringList friendsList;
 
 private:
     class Private;

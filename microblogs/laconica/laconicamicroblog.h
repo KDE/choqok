@@ -62,8 +62,18 @@ public:
     virtual void createPostWithAttachment(Choqok::Account* theAccount, Choqok::Post* post,
                             const QString &mediumToAttach = QString());
     virtual QString generateRepeatedByUserTooltip(const QString& username);
+
+protected:
+    virtual void listFriendsUsername(TwitterApiAccount* theAccount);
+    virtual void requestFriendsScreenName(TwitterApiAccount* theAccount, int page = 1);
+
+    virtual QStringList readUsersScreenNameFromXml(Choqok::Account* theAccount, const QByteArray& buffer);
+
+protected slots:
+    virtual void slotRequestFriendsScreenName(KJob* job);
 private:
     QPointer<LaconicaSearch> mSearchBackend;
+    int friendsPage;
 };
 
 #endif
