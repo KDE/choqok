@@ -26,11 +26,11 @@
 #ifndef DBUSHANDLER_H
 #define DBUSHANDLER_H
 
-#include <QObject>
-#include <QString>
+#include <QtCore/QObject>
+#include <QtCore/QString>
+#include <QtGui/QTextDocument>
 #include <kio/job.h>
 #include <choqok_export.h>
-#include <QTextDocument>
 
 
 namespace Choqok
@@ -82,4 +82,4 @@ private Q_SLOTS:
 
 }
 
-#endif
+#endif // DBUSHANDLER_H

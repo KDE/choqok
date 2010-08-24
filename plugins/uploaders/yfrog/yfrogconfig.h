@@ -22,8 +22,8 @@
 
 */
 
-#ifndef TWITPICCONFIG_H
-#define TWITPICCONFIG_H
+#ifndef YFROGCONFIG_H
+#define YFROGCONFIG_H
 
 #include <kcmodule.h>
 #include "ui_yfrogprefs.h"
@@ -44,4 +44,4 @@ private:
     Ui_YFrogPrefsBase ui;
 };
 
-#endif // NOWLISTENINGCONFIG_H
+#endif // YFROGCONFIG_H

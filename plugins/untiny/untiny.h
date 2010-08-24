@@ -22,6 +22,9 @@
 
 */
 
+#ifndef UNTINY_H
+#define UNTINY_H
+
 #include <plugin.h>
 #include <qqueue.h>
 #include <KUrl>
@@ -64,3 +67,4 @@ private:
     QMap<KJob*, QString> mShortUrlsList;
 };
 
+#endif //UNTINY_H

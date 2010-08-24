@@ -24,7 +24,7 @@
 #ifndef ACCOUNTMANAGER_H
 #define ACCOUNTMANAGER_H
 
-#include <QObject>
+#include <QtCore/QObject>
 #include "account.h"
 
 namespace Choqok

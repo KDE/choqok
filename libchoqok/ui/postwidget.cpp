@@ -128,6 +128,7 @@ void PostWidget::checkAnchor(const QUrl & url)
 
 PostWidget::~PostWidget()
 {
+  //Attribute "Qt::WA_DeleteOnClose" is enabled at construtor! So please use close() for deleting an object, instead of deleteLater() or delete
     delete d;
 }
 
@@ -325,7 +326,7 @@ void PostWidget::resizeEvent ( QResizeEvent * event )
 void PostWidget::enterEvent ( QEvent * event )
 {
     foreach(KPushButton *btn, buttons()){
-        btn->show();
+        btn->show(); //!!!!!!!!
     }
     QWidget::enterEvent(event);
 }

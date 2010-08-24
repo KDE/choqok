@@ -22,10 +22,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 */
 
-#ifndef ADVANCEDCONFIG_H
-#define ADVANCEDCONFIG_H
+#ifndef BEHAVIORCONFIG_SHORTEN_H
+#define BEHAVIORCONFIG_SHORTEN_H
+
 #include "ui_behaviorconfig_shorten_base.h"
-#include <QWidget>
+#include <QtGui/QWidget>
 #include <kplugininfo.h>
 #include <shortener.h>
 

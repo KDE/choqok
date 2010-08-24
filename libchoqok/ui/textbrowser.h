@@ -22,10 +22,10 @@
 
 */
 
-#ifndef CHOQOK_UI_TEXTBROWSER_H
-#define CHOQOK_UI_TEXTBROWSER_H
+#ifndef TEXTBROWSER_H
+#define TEXTBROWSER_H
 
-#include <KTextBrowser>
+#include <KDE/KTextBrowser>
 #include "choqok_export.h"
 
 namespace Choqok {

@@ -22,6 +22,9 @@
 
 */
 
+#ifndef IMAGEPREVIEW_H
+#define IMAGEPREVIEW_H
+
 #include "plugin.h"
 #include <qqueue.h>
 #include <KUrl>
@@ -66,3 +69,4 @@ private:
     static const QRegExp mTweetphotoRegExp;
 };
 
+#endif // IMAGEPREVIEW_H

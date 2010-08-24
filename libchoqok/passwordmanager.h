@@ -24,8 +24,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef PASSWORDMANAGER_H
 #define PASSWORDMANAGER_H
 
-#include <QObject>
-#include <qwindowdefs.h>
+#include <QtCore/QObject>
+#include <QtGui/qwindowdefs.h>
 #include "choqok_export.h"
 
 namespace Choqok

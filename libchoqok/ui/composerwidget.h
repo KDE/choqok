@@ -23,11 +23,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef COMPOSERWIDGET_H
 #define COMPOSERWIDGET_H
 
-#include <QWidget>
-#include "choqok_export.h"
+#include <QtGui/QWidget>
+#include <QtCore/QPointer>
+#include <KDE/KPushButton>
 #include <choqoktypes.h>
-#include <KPushButton>
-#include <QPointer>
+#include "choqok_export.h"
 
 class QHBoxLayout;
 namespace Choqok {

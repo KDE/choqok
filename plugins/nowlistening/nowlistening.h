@@ -23,6 +23,9 @@
 
 */
 
+#ifndef NOWLISTENING_H
+#define NOWLISTENING_H
+
 #include <plugin.h>
 
 class KConfigGroup;
@@ -44,3 +47,4 @@ protected slots:
 
 };
 
+#endif //NOWLISTENING_H

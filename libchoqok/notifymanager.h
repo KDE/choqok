@@ -25,7 +25,7 @@
 #ifndef NOTIFYMANAGER_H
 #define NOTIFYMANAGER_H
 
-#include <KNotification>
+#include <KDE/KNotification>
 #include <klocalizedstring.h>
 #include "choqok_export.h"
 

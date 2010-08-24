@@ -24,6 +24,9 @@
 
 */
 
+#ifndef VIDEOPREVIEW_H
+#define VIDEOPREVIEW_H
+
 #include "plugin.h"
 #include <qqueue.h>
 #include <KUrl>
@@ -84,3 +87,4 @@ private:
     //static const QRegExp mYFrogRegExp;
 };
 
+#endif //VIDEOPREVIEW_H

@@ -26,9 +26,8 @@
 #define CHOQOK_CHOQOKTOOLS_H
 
 #include <QtCore/QObject>
+#include <QtCore/QUrl>
 #include "choqok_export.h"
-#include <QUrl>
-
 
 namespace Choqok {
 

@@ -25,7 +25,7 @@
 #ifndef EDITACCOUNTWIDGET_H
 #define EDITACCOUNTWIDGET_H
 
-#include <QWidget>
+#include <QtGui/QWidget>
 #include "choqok_export.h"
 #include "account.h"
 

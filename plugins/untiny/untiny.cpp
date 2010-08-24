@@ -82,7 +82,7 @@ void UnTiny::parse(Choqok::UI::PostWidget* postToParse)
     for( int i=0; i < pureList.count(); ++i) {
         if(pureList[i].length()>30)
             continue;
-        if(!pureList[i].startsWith("http")){
+        if(!pureList[i].startsWith(QString("http"), Qt::CaseInsensitive)){
             pureList[i].prepend("http://");
         }
         redirectList << pureList[i];
@@ -124,7 +124,7 @@ void UnTiny::slotUntinyDotComResult(KJob* job)
     QString toUrl = qobject_cast<KIO::StoredTransferJob *>(job)->data();
     QPointer<Choqok::UI::PostWidget> postToParse = mParsingList.take(job);
     QString fromUrl = mShortUrlsList.take(job);
-    if( postToParse && toUrl.startsWith("http")){
+    if( postToParse && toUrl.startsWith(QString("http"), Qt::CaseInsensitive)){
 //         kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
         Choqok::ShortenManager::self()->emitNewUnshortenedUrl(postToParse, KUrl(fromUrl), KUrl(toUrl));
         QString content = postToParse->content();

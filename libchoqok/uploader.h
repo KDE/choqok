@@ -22,11 +22,11 @@
 
 */
 
-#ifndef CHOQOK_UPLOADER_H
-#define CHOQOK_UPLOADER_H
+#ifndef UPLOADER_H
+#define UPLOADER_H
 
+#include <KDE/KUrl>
 #include "plugin.h"
-#include <KUrl>
 
 namespace Choqok {
 
@@ -55,4 +55,4 @@ protected:
 
 }
 
-#endif // CHOQOK_UPLOADER_H
+#endif // UPLOADER_H

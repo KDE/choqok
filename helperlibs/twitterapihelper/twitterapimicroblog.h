@@ -20,14 +20,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see http://www.gnu.org/licenses/
 */
-#ifndef TWITTERAPIMICROBLOGPLUGIN_H
-#define TWITTERAPIMICROBLOGPLUGIN_H
+#ifndef TWITTERAPIMICROBLOG_H
+#define TWITTERAPIMICROBLOG_H
 
-#include "microblog.h"
-#include <KUrl>
-#include "twitterapisearch.h"
 #include <QtXml/QDomElement>
 #include <QtOAuth/qoauth_namespace.h>
+#include <KDE/KUrl>
+#include <microblog.h>
+#include "twitterapisearch.h"
 
 namespace QOAuth {
 class Interface;

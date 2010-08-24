@@ -21,12 +21,11 @@
     along with this program; if not, see http://www.gnu.org/licenses/
 */
 
-#ifndef MICROBLOGPLUGIN_H
-#define MICROBLOGPLUGIN_H
+#ifndef MICROBLOG_H
+#define MICROBLOG_H
 
-#include "plugin.h"
 #include <QtCore/QString>
-#include <QString>
+#include "plugin.h"
 #include "choqok_export.h"
 #include "choqoktypes.h"
 #include "choqokuiglobal.h"

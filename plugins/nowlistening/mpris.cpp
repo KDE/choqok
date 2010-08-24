@@ -26,8 +26,9 @@
 // Therefore some parts are also
 // (C) 2006 by Diederik van der Boor vdboor" --at-- "codingdomain.com"
 
-#include <QDBusMetaType>
 #include "mpris.h"
+
+#include <QDBusMetaType>
 #include <QDBusConnection>
 #include <QDBusReply>
 #include <QDBusInterface>

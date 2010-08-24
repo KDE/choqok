@@ -22,8 +22,8 @@
 
 */
 
-#ifndef FILTERINGCONFIG_H
-#define FILTERINGCONFIG_H
+#ifndef CONFIGUREFILTERS_H
+#define CONFIGUREFILTERS_H
 
 #include <KDialog>
 #include "ui_filterprefs.h"
@@ -50,4 +50,4 @@ private:
     Ui_FilteringPrefsBase ui;
 };
 
-#endif // FILTERINGCONFIG_H
+#endif // CONFIGUREFILTERS_H

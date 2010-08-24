@@ -22,8 +22,8 @@
 
 */
 
-#ifndef NOWLISTENINGCONFIG_H
-#define NOWLISTENINGCONFIG_H
+#ifndef UNTINYCONFIG_H
+#define UNTINYCONFIG_H
 
 #include <kcmodule.h>
 #include "ui_untinyprefs.h"
@@ -45,4 +45,4 @@ private:
     Ui_UnTinyPrefsBase ui;
 };
 
-#endif // NOWLISTENINGCONFIG_H
+#endif // UNTINYCONFIG_H

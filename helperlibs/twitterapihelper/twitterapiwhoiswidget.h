@@ -24,8 +24,8 @@
 #ifndef TWITTERAPIWHOISWIDGET_H
 #define TWITTERAPIWHOISWIDGET_H
 
-#include <QUrl>
-#include <QFrame>
+#include <QtCore/QUrl>
+#include <QtGui/QFrame>
 #include "choqok_export.h"
 
 namespace Choqok {

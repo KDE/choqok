@@ -23,12 +23,12 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef POSTWIDGET_H
 #define POSTWIDGET_H
 
+#include <QtCore/QTimer>
+#include <KDE/KDateTime>
+#include <kicon.h>
 #include <account.h>
 #include <choqoktypes.h>
 #include <microblog.h>
-#include <QTimer>
-#include <kicon.h>
-#include <KDateTime>
 
 class QGridLayout;
 class KPushButton;

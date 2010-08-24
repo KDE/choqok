@@ -27,7 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QtCore/QObject>
 #include "shortener.h"
-#include <KUrl>
+#include <KDE/KUrl>
 
 namespace Choqok{
   namespace UI {

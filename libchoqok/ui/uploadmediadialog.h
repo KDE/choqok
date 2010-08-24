@@ -22,8 +22,8 @@
 
 */
 
-#ifndef CHOQOK_UI_UPLOADMEDIUM_H
-#define CHOQOK_UI_UPLOADMEDIUM_H
+#ifndef UPLOADMEDIADIALOG_H
+#define UPLOADMEDIADIALOG_H
 
 #include <kdialog.h>
 #include "choqok_export.h"
@@ -60,4 +60,4 @@ private:
 
 }
 
-#endif // CHOQOK_UI_UPLOADMEDIUM_H
+#endif // UPLOADMEDIADIALOG_H

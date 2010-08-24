@@ -24,9 +24,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #define TIMELINEWIDGET_H
 
 #include <QtGui/QWidget>
-#include "choqok_export.h"
+#include <QtCore/QMap>
 #include <choqoktypes.h>
-#include <QMap>
+#include "choqok_export.h"
 
 class QLabel;
 class QHBoxLayout;

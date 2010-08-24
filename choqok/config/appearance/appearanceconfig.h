@@ -22,8 +22,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 */
 
-#ifndef _CHOQOK_APPEARANCE_H
-#define _CHOQOK_APPEARANCE_H
+#ifndef APPEARANCECONFIG_H
+#define APPEARANCECONFIG_H
 
 #include <kcmodule.h>
 

@@ -25,14 +25,14 @@
 #ifndef TWITTERAPISEARCH_H
 #define TWITTERAPISEARCH_H
 
-#include <QObject>
-#include <QPair>
-#include <QMap>
-#include <qregexp.h>
-#include <KUrl>
-#include <choqoktypes.h>
+#include <QtCore/QObject>
+#include <QtCore/QPair>
+#include <QtCore/QMap>
+#include <QtCore/QRegExp>
+#include <KDE/KUrl>
 #include <account.h>
 #include <accountmanager.h>
+#include <choqoktypes.h>
 
 class TwitterApiAccount;
 namespace Choqok {

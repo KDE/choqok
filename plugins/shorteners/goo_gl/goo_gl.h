@@ -21,12 +21,12 @@
     along with this program; if not, see http://www.gnu.org/licenses/
 */
 
-#ifndef U_NU_H
-#define U_NU_H
+#ifndef GOO_GL_H
+#define GOO_GL_H
 
+#include <QtCore/QString>
+#include <QtCore/QVariant>
 #include <shortener.h>
-#include <QString>
-#include <QVariant>
 
 class KJob;
 /**
@@ -53,4 +53,4 @@ private:
     void slotReadyRead(KJob*);
 };
 
-#endif //U_NU_H
+#endif //GOO_GL_H

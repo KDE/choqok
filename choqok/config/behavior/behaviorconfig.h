@@ -22,8 +22,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 */
 
-#ifndef _CHOQOK_BEHAVIOR_H
-#define _CHOQOK_BEHAVIOR_H
+#ifndef BEHAVIORCONFIG_H
+#define BEHAVIORCONFIG_H
 
 #include <kcmodule.h>
 
@@ -42,5 +42,6 @@ private:
     class Private;
     Private *d;
 };
+
 #endif
 // vim: set noet ts=4 sts=4 sw=4:

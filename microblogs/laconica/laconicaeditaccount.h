@@ -21,11 +21,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see http://www.gnu.org/licenses/
 */
 
-#ifndef TWITTEREDITACCOUNT_H
-#define TWITTEREDITACCOUNT_H
+#ifndef LACONICAEDITACCOUNT_H
+#define LACONICAEDITACCOUNT_H
 
-#include "editaccountwidget.h"
-#include <QByteArray>
+#include <QtCore/QByteArray>
+#include <editaccountwidget.h>
 #include "ui_laconicaeditaccount_base.h"
 
 namespace QOAuth {
@@ -84,4 +84,4 @@ protected:
     QOAuth::Interface *qoauth;
 };
 
-#endif
+#endif // LACONICAEDITACCOUNT_H
