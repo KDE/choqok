@@ -1,0 +1,13 @@
+[Desktop Entry]
+Icon=kaboodle
+Type=Service
+ServiceTypes=Choqok/Plugin
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=kcm_choqok_untiny
+X-KDE-FactoryName=kcm_choqok_untiny
+X-KDE-ParentApp=choqok_untiny
+X-KDE-ParentComponents=choqok_untiny
+
+Name=UnTiny URLs
+Comment=Extract the full URL and show it as a tooltip

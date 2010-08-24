@@ -29,6 +29,7 @@
 #include <kio/jobclasses.h>
 #include <KIO/Job>
 #include <shortenmanager.h>
+#include <untinysettings.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < UnTiny > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_untiny" ) )
@@ -76,7 +77,6 @@ void UnTiny::parse(Choqok::UI::PostWidget* postToParse)
 {
     if(!postToParse)
         return;
-    int pos = 0;
     QStringList redirectList, pureList = postToParse->urls();
     QString content = postToParse->currentPost().content;
     for( int i=0; i < pureList.count(); ++i) {
@@ -87,22 +87,57 @@ void UnTiny::parse(Choqok::UI::PostWidget* postToParse)
         }
         redirectList << pureList[i];
     }
-    foreach(const QString &url, redirectList) {
-        KIO::TransferJob *job = KIO::mimetype( url, KIO::HideProgressInfo );
-        if ( !job ) {
-            kDebug() << "Cannot create a http header request!";
-            break;
+    if(UnTinySettings::useUntinyDotCom()) {
+        foreach(const QString &url, redirectList) {
+            QString untinyDotComUrl = QString("http://untiny.com/api/1.0/extract/?url=%1&format=text").arg(url);
+            KIO::StoredTransferJob *job = KIO::storedGet( untinyDotComUrl, KIO::NoReload,
+                                                    KIO::HideProgressInfo );
+            if ( !job ) {
+                kDebug() << "Cannot create a http header request!";
+                break;
+            }
+            connect( job, SIGNAL( result( KJob*) ),
+                    this, SLOT( slotUntinyDotComResult(KJob*) ) );
+            mParsingList.insert(job, postToParse);
+            mShortUrlsList.insert(job, url);
+            job->start();
         }
-        connect( job, SIGNAL( permanentRedirection( KIO::Job*, KUrl, KUrl ) ),
-                 this, SLOT( slot301Redirected(KIO::Job*,KUrl,KUrl)) );
-        mParsingList.insert(job, postToParse);
-        job->start();
+    } else {
+        foreach(const QString &url, redirectList) {
+            KIO::TransferJob *job = KIO::mimetype( url, KIO::HideProgressInfo );
+            if ( !job ) {
+                kDebug() << "Cannot create a http header request!";
+                break;
+            }
+            connect( job, SIGNAL( permanentRedirection( KIO::Job*, KUrl, KUrl ) ),
+                    this, SLOT( slot301Redirected(KIO::Job*,KUrl,KUrl)) );
+            mParsingList.insert(job, postToParse);
+            job->start();
+        }
     }
+}
+
+void UnTiny::slotUntinyDotComResult(KJob* job)
+{
+    if(!job)
+        return;
+    QString toUrl = qobject_cast<KIO::StoredTransferJob *>(job)->data();
+    QPointer<Choqok::UI::PostWidget> postToParse = mParsingList.take(job);
+    QString fromUrl = mShortUrlsList.take(job);
+    if( postToParse && toUrl.startsWith("http")){
+//         kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
+        Choqok::ShortenManager::self()->emitNewUnshortenedUrl(postToParse, KUrl(fromUrl), KUrl(toUrl));
+        QString content = postToParse->content();
+        content.replace(QRegExp("title='" + fromUrl + '\''), "title='" + toUrl + '\'');
+        content.replace(QRegExp("href='" + fromUrl + '\''), "href='" + toUrl + '\'');
+        postToParse->setContent(content);
+    }
+
 }
 
 void UnTiny::slot301Redirected(KIO::Job* job, KUrl fromUrl, KUrl toUrl)
 {
-    Choqok::UI::PostWidget *postToParse = mParsingList.take(job);
+    QPointer<Choqok::UI::PostWidget> postToParse = mParsingList.take(job);
     job->kill();
     if(postToParse){
 //         kDebug()<<"Got redirect: "<<fromUrl<<toUrl;

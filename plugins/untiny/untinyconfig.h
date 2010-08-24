@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2008-2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    Copyright (C) 2009-2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -22,45 +22,27 @@
 
 */
 
-#include <plugin.h>
-#include <qqueue.h>
-#include <KUrl>
-#include <QPointer>
+#ifndef NOWLISTENINGCONFIG_H
+#define NOWLISTENINGCONFIG_H
 
-namespace KIO {
-class Job;
-}
+#include <kcmodule.h>
+#include "ui_untinyprefs.h"
 
-class KJob;
-namespace Choqok {
-    class ShortenManager;
-namespace UI {
-    class PostWidget;
-}
-}
-
-class KConfigGroup;
-
-class UnTiny : public Choqok::Plugin
+class UnTinyConfig : public KCModule
 {
     Q_OBJECT
 public:
-    UnTiny( QObject* parent, const QList< QVariant >& args );
-    ~UnTiny();
+    UnTinyConfig(QWidget* parent, const QVariantList& args);
+    ~UnTinyConfig();
+
+    virtual void save();
+    virtual void load();
+    virtual void defaults();
 
 protected slots:
-    void slotAddNewPostWidget( Choqok::UI::PostWidget *newWidget );
-    void slot301Redirected(KIO::Job*,KUrl,KUrl);
-    void slotUntinyDotComResult(KJob*);
-    void startParsing();
-
+    void emitChanged();
 private:
-    enum ParserState{ Running = 0, Stopped };
-    ParserState state;
-
-    void parse( Choqok::UI::PostWidget *postToParse );
-    QQueue< QPointer<Choqok::UI::PostWidget> > postsQueue;
-    QMap<KJob*, QPointer<Choqok::UI::PostWidget> > mParsingList;
-    QMap<KJob*, QString> mShortUrlsList;
+    Ui_UnTinyPrefsBase ui;
 };
 
+#endif // NOWLISTENINGCONFIG_H
