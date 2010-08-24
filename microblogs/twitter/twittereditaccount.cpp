@@ -121,7 +121,8 @@ void TwitterEditAccountWidget::authorizeUser()
     qoauth->setConsumerKey( twitterConsumerKey );
     qoauth->setConsumerSecret( twitterConsumerSecret );
     // set a timeout for requests (in msecs)
-    qoauth->setRequestTimeout( 10000 );
+    qoauth->setRequestTimeout( 20000 );
+    qoauth->setIgnoreSslErrors(true);
 
     QOAuth::ParamMap otherArgs;
 
@@ -149,6 +150,7 @@ void TwitterEditAccountWidget::authorizeUser()
 
 void TwitterEditAccountWidget::getPinCode()
 {
+    isAuthenticated = false;
     while(!isAuthenticated){
         QString verifier = KInputDialog::getText( i18n("PIN number"),
                                                   i18n("Enter PIN number received from Twitter:"));
