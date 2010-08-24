@@ -28,6 +28,7 @@
 #include <kio/netaccess.h>
 #include <KAboutData>
 #include <KGenericFactory>
+#include <notifymanager.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Three_ly > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_three_ly" ) )
@@ -53,16 +54,18 @@ QString Three_ly::shorten( const QString& url )
     KIO::Job* job = KIO::get( reqUrl, KIO::Reload, KIO::HideProgressInfo );
 
     if( KIO::NetAccess::synchronousRun( job, 0, &data ) ) {
-        QString output(data);
+        QString output( data );
         kDebug() << "Short url is: " << output;
         QRegExp rx( QString( "(http://3.ly/([a-zA-Z0-9])+)" ) );
-        rx.indexIn(output);
-        output = rx.cap(1);
+        rx.indexIn( output );
+        output = rx.cap( 1 );
         if( !output.isEmpty() ) {
             return output;
         }
+        Choqok::NotifyManager::error( QString( data ), i18n("3.ly error") );
     }
     else {
+        Choqok::NotifyManager::error( i18n("Cannot create a short url.\n%1", job->errorString()) );
         kDebug() << "Cannot create a shorten url.\t" << "KJob ERROR";
     }
     return url;
