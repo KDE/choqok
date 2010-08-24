@@ -22,6 +22,7 @@
 */
 
 #include "goo_gl.h"
+#include <QtCore/QCoreApplication>
 #include <KDebug>
 #include <kio/netaccess.h>
 #include <KAboutData>
@@ -29,9 +30,7 @@
 #include <kglobal.h>
 #include <kio/job.h>
 #include <math.h>
-#include "notifymanager.h"
-
-#include <QtCore/QCoreApplication>
+#include <notifymanager.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Goo_gl > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_goo_gl" ) )
@@ -117,7 +116,8 @@ QByteArray Goo_gl::authToken( const QString &url ){
         i = ( i >> 4 & 67108800 ) | ( i & 63 );
         i = ( i >> 4 & 4193280 ) | ( i & 1023 );
         i = ( i >> 4 & 245760 ) | ( i & 16383 );
-        QByteArray j = "7";
+        QByteArray j;
+        j.append( '7' );
         qint64 h = second( url.toLatin1() );
         qint64 k = ( i >> 2 & 15 ) << 4 | ( h & 15 );
         k |= ( i >> 6 & 15 ) << 12 | ( h >> 8 & 15 ) << 8;
