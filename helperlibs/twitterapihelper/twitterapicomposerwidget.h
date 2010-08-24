@@ -40,7 +40,7 @@ public:
     explicit TwitterApiComposerWidget(Choqok::Account* account, QWidget* parent = 0);
     ~TwitterApiComposerWidget();
 
-protected slots:
+protected Q_SLOTS:
     virtual void slotNewPostReady(Choqok::UI::PostWidget *widget, Choqok::Account *theAccount);
 
 private:

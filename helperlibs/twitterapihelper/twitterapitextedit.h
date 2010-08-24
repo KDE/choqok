@@ -45,14 +45,14 @@ protected:
     void keyPressEvent(QKeyEvent *e);
     void focusInEvent(QFocusEvent *e);
 
-private slots:
+private Q_SLOTS:
     void insertCompletion(const QString &completion);
 
 private:
     QString textUnderCursor() const;
 
     class Private;
-    Private *d;
+    Private * const d;
 };
 
 #endif // TWITTERAPITEXTEDIT_H
