@@ -67,6 +67,8 @@ class PostWidget::Private
         QString mContent;
         QString mImage;
         //END UI contents;
+
+        QStringList detectedUrls;
 };
 
 
@@ -347,6 +349,7 @@ QString PostWidget::prepareStatus( const QString &txt )
         QString link = mUrlRegExp.cap(0);
         text.remove( pos, link.length() );
         QString tmplink = link;
+        d->detectedUrls << link;
         if ( !tmplink.startsWith(QLatin1String("http"), Qt::CaseInsensitive) &&
              !tmplink.startsWith(QLatin1String("ftp"), Qt::CaseInsensitive) )
              tmplink.prepend("http://");
@@ -531,6 +534,11 @@ void PostWidget::setContent(const QString& content)
 {
     d->mContent = content;
     updateUi();
+}
+
+QStringList PostWidget::urls()
+{
+    return d->detectedUrls;
 }
 
 QString PostWidget::sign() const

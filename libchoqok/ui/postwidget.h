@@ -108,6 +108,8 @@ public:
 
     TextBrowser * mainWidget();
 
+    QStringList urls();
+
 public Q_SLOTS:
     /**
     Set Style sheet of widget to corresponding data->

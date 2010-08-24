@@ -33,8 +33,6 @@
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < UnTiny > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_untiny" ) )
 
-const QRegExp UnTiny::mUrlRegExp("((ftps?|https?)://[^\\s<>\"]+[^!,\\.\\s<>'\"\\)\\]])");
-
 UnTiny::UnTiny(QObject* parent, const QList< QVariant >& )
     :Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped)
 {
@@ -79,12 +77,15 @@ void UnTiny::parse(Choqok::UI::PostWidget* postToParse)
     if(!postToParse)
         return;
     int pos = 0;
-    QStringList redirectList;
+    QStringList redirectList, pureList = postToParse->urls();
     QString content = postToParse->currentPost().content;
-    while ((pos = mUrlRegExp.indexIn(content, pos)) != -1) {
-        pos += mUrlRegExp.matchedLength();
-        if( mUrlRegExp.matchedLength() < 31 )//Most of shortenned URLs have less than 30 Chars!
-            redirectList << mUrlRegExp.cap(0);
+    for( int i=0; i < pureList.count(); ++i) {
+        if(pureList[i].length()>30)
+            continue;
+        if(!pureList[i].startsWith("http")){
+            pureList[i].prepend("http://");
+        }
+        redirectList << pureList[i];
     }
     foreach(const QString &url, redirectList) {
         KIO::TransferJob *job = KIO::mimetype( url, KIO::HideProgressInfo );
@@ -104,7 +105,7 @@ void UnTiny::slot301Redirected(KIO::Job* job, KUrl fromUrl, KUrl toUrl)
     Choqok::UI::PostWidget *postToParse = mParsingList.take(job);
     job->kill();
     if(postToParse){
-//             kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
+//         kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
         Choqok::ShortenManager::self()->emitNewUnshortenedUrl(postToParse, fromUrl, toUrl);
         QString content = postToParse->content();
         content.replace(QRegExp("title='" + fromUrl.url() + '\''), "title='" + toUrl.url() + '\'');

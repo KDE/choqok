@@ -60,7 +60,5 @@ private:
     void parse( Choqok::UI::PostWidget *postToParse );
     QQueue< QPointer<Choqok::UI::PostWidget> > postsQueue;
     QMap<KJob*, QPointer<Choqok::UI::PostWidget> > mParsingList;
-
-    static const QRegExp mUrlRegExp;
 };
 
