@@ -61,7 +61,7 @@ private:
     enum ParserState{ Running = 0, Stopped };
     ParserState state;
 
-    void parse( Choqok::UI::PostWidget *postToParse );
+    void parse( QPointer< Choqok::UI::PostWidget > postToParse );
     QQueue< QPointer<Choqok::UI::PostWidget> > postsQueue;
     QMap<KJob*, QPointer<Choqok::UI::PostWidget> > mParsingList;
     QMap<KJob*, QString> mShortUrlsList;

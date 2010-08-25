@@ -73,7 +73,7 @@ void UnTiny::startParsing()
         QTimer::singleShot(500, this, SLOT(startParsing()));
 }
 
-void UnTiny::parse(Choqok::UI::PostWidget* postToParse)
+void UnTiny::parse(QPointer<Choqok::UI::PostWidget> postToParse)
 {
     if(!postToParse)
         return;
@@ -126,11 +126,13 @@ void UnTiny::slotUntinyDotComResult(KJob* job)
     QString fromUrl = mShortUrlsList.take(job);
     if( postToParse && toUrl.startsWith(QString("http"), Qt::CaseInsensitive)){
 //         kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
-        Choqok::ShortenManager::self()->emitNewUnshortenedUrl(postToParse, KUrl(fromUrl), KUrl(toUrl));
         QString content = postToParse->content();
         content.replace(QRegExp("title='" + fromUrl + '\''), "title='" + toUrl + '\'');
         content.replace(QRegExp("href='" + fromUrl + '\''), "href='" + toUrl + '\'');
-        postToParse->setContent(content);
+        if(postToParse) {
+            postToParse->setContent(content);
+            Choqok::ShortenManager::self()->emitNewUnshortenedUrl(postToParse, KUrl(fromUrl), KUrl(toUrl));
+        }
     }
 
 }
@@ -140,11 +142,13 @@ void UnTiny::slot301Redirected(KIO::Job* job, KUrl fromUrl, KUrl toUrl)
     QPointer<Choqok::UI::PostWidget> postToParse = mParsingList.take(job);
     job->kill();
     if(postToParse){
-//         kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
-        Choqok::ShortenManager::self()->emitNewUnshortenedUrl(postToParse, fromUrl, toUrl);
         QString content = postToParse->content();
+//         kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
         content.replace(QRegExp("title='" + fromUrl.url() + '\''), "title='" + toUrl.url() + '\'');
         content.replace(QRegExp("href='" + fromUrl.url() + '\''), "href='" + toUrl.url() + '\'');
-        postToParse->setContent(content);
+        if(postToParse) {
+            postToParse->setContent(content);
+            Choqok::ShortenManager::self()->emitNewUnshortenedUrl(postToParse, fromUrl, toUrl);
+        }
     }
 }
