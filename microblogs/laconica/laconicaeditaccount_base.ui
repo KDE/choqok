@@ -340,10 +340,16 @@ p, li { white-space: pre-wrap; }
            <property name="text">
             <string>On re-dent, change exclamation mark to:</string>
            </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
           <widget class="KLineEdit" name="kcfg_changeToString">
+           <property name="text">
+            <string>#</string>
+           </property>
            <property name="maxLength">
             <number>10</number>
            </property>
