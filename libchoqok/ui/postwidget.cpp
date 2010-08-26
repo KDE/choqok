@@ -86,7 +86,7 @@ const QString protocols = "((https?|ftps?)://)";
 const QString subdomains = "(([\\S]\\.)?)";
 const QString auth = "((([\\S]{1,})((:[\\S]{1,})?)@)?)";
 const QString domains = "([a-z0-9-]{1,63}\\.)+";
-const QString port = "(:(6553[0-5]|655[0-2][0-9]|65[0-4][\\d]{2}|6[0-4][\\d]{3}|[1-5][\\d]{4}|[1-9][\\d]{0,3})[\\D])";
+const QString port = "(:(6553[0-5]|655[0-2][0-9]|65[0-4][\\d]{2}|6[0-4][\\d]{3}|[1-5][\\d]{4}|[1-9][\\d]{0,3}))";
 const QString zone ("((a(c|d|e|f|g|i|l|m|n|o|q|r|s|t|u|w|x|z))|(b(a|b|d|e|f|g|h|i|j|l|m|n|o|r|s|t|v|w|y|z))|(c(a|c|d|f|g|h|i|k|l|m|n|o|r|u|v|x|y|z))|\
 (d(e|j|k|m|o|z))|(e(c|e|g|h|r|s|t|u))|(f(i|j|k|m|o|r))|(g(a|b|d|e|f|g|h|i|l|m|n|p|q|r|s|t|u|w|y))|(h(k|m|n|r|t|u))|(i(d|e|l|m|n|o|q|r|s|t))|\
 (j(e|m|o|p))|(k(e|g|h|i|m|n|p|r|w|y|z))|(l(a|b|c|i|k|r|s|t|u|v|y))|(m(a|c|d|e|f|g|h|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z))|(n(a|c|e|f|g|i|l|o|p|r|u|z))|\
@@ -98,9 +98,9 @@ const QString params = "(((\\/)[\\w:/\\?#\\[\\]@!\\$&\\(\\)\\*%\\+,;=\\._~-]{1,}
 const QRegExp PostWidget::mUrlRegExp("((((" + protocols + "?)" + auth +
                           subdomains +
                           "((" + domains +               
-                          zone + "(?!(\\w)))|((to|ai)\\.)))|(" + protocols + '(' + ip + ")+))" +
-                          '(' + port + "?)" + "((\\/)?)"  +
-                          params + ')', Qt::CaseInsensitive);
+                          zone + "(?!(\\w)))|((to|ai)\\.)))|(" + protocols + "(" + ip + ")+))" +
+                          "((" + port + "?)" + "(\\/)?)"  +
+                          params + ")", Qt::CaseInsensitive);
 
 QString PostWidget::readStyle;
 QString PostWidget::unreadStyle;
@@ -348,8 +348,10 @@ QString PostWidget::prepareStatus( const QString &txt )
     int pos = 0;
     while(((pos = mUrlRegExp.indexIn(text, pos)) != -1)) {
         QString link = mUrlRegExp.cap(0);
-        text.remove( pos, link.length() );
         QString tmplink = link;
+        if ( pos - 1 > -1 && ( text.at( pos - 1 ) != '@' && 
+             text.at( pos - 1 ) != '#' && text.at( pos - 1 ) != '!') ) { 
+        text.remove( pos, link.length() );
         d->detectedUrls << link;
         if ( !tmplink.startsWith(QLatin1String("http"), Qt::CaseInsensitive) &&
              !tmplink.startsWith(QLatin1String("ftp"), Qt::CaseInsensitive) )
@@ -357,6 +359,7 @@ QString PostWidget::prepareStatus( const QString &txt )
         static const QString hrefTemplate("<a href='%1' title='%1' target='_blank'>%2</a>");
         tmplink = hrefTemplate.arg( tmplink, link );
         text.insert( pos, tmplink );
+	}
         pos += tmplink.length();
     }
 
