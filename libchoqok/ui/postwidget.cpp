@@ -349,8 +349,9 @@ QString PostWidget::prepareStatus( const QString &txt )
     while(((pos = mUrlRegExp.indexIn(text, pos)) != -1)) {
         QString link = mUrlRegExp.cap(0);
         QString tmplink = link;
-        if ( pos - 1 > -1 && ( text.at( pos - 1 ) != '@' && 
-             text.at( pos - 1 ) != '#' && text.at( pos - 1 ) != '!') ) { 
+        if ( (pos - 1 > -1 && ( text.at( pos - 1 ) != '@' && 
+             text.at( pos - 1 ) != '#' && text.at( pos - 1 ) != '!')) ||
+             pos == 0 ) { 
         text.remove( pos, link.length() );
         d->detectedUrls << link;
         if ( !tmplink.startsWith(QLatin1String("http"), Qt::CaseInsensitive) &&
