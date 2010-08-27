@@ -227,6 +227,8 @@ QList< Choqok::Post* > LaconicaSearch::parseAtom(const QByteArray& buffer)
                     }
                     userNode = userNode.nextSibling();
                 }
+            } else if ( elm.tagName() == "twitter:source" ){
+                status->source = KUrl::fromPercentEncoding(elm.text().toAscii());
             }
             entryNode = entryNode.nextSibling();
         }
@@ -264,15 +266,9 @@ QList< Choqok::Post* > LaconicaSearch::parseRss(const QByteArray& buffer)
 
         QDomAttr statusIdAttr = node.toElement().attributeNode( "rdf:about" );
         ChoqokId statusId;
-    if(mIdRegExp.exactMatch(statusIdAttr.value())) {
-      statusId = mIdRegExp.cap(1);
-    }
-
-//         if( statusId <= mSinceStatusId )
-//         {
-//             node = node.nextSibling();
-//             continue;
-//         }
+        if(mIdRegExp.exactMatch(statusIdAttr.value())) {
+            statusId = mIdRegExp.cap(1);
+        }
 
         status->postId = statusId;
 
@@ -310,8 +306,10 @@ QList< Choqok::Post* > LaconicaSearch::parseRss(const QByteArray& buffer)
                 QDomAttr imageAttr = itemNode.toElement().attributeNode( "rdf:resource" );
                 status->author.profileImageUrl = imageAttr.value();
             } else if ( itemNode.toElement().tagName() == "link" ) {
-                QDomAttr imageAttr = itemNode.toElement().attributeNode( "rdf:resource" );
+//                 QDomAttr imageAttr = itemNode.toElement().attributeNode( "rdf:resource" );
                 status->link = itemNode.toElement().text();
+            } else if ( itemNode.toElement().tagName() == "sioc:has_discussion") {
+                status->title = itemNode.toElement().attributeNode("rdf:resource").value();
             }
 
             itemNode = itemNode.nextSibling();

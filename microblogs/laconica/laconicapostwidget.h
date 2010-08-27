@@ -37,6 +37,7 @@ protected:
     static const QRegExp mGroupRegExp;
     virtual QString prepareStatus(const QString& text);
     virtual void checkAnchor(const QUrl& url);
+    virtual QString generateSign();
 
 protected slots:
     virtual void slotResendPost();

@@ -69,7 +69,7 @@ void TwitterApiComposerWidget::slotNewPostReady(Choqok::UI::PostWidget* widget, 
         int row = d->model->rowCount();
         d->model->insertRow(row);
         QString name = widget->currentPost().author.userName;
-        if( !d->model->stringList().contains(name) )
+        if( !name.isEmpty() && !d->model->stringList().contains(name) )
             d->model->setData(d->model->index(row), name);
     }
 }
