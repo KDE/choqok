@@ -97,8 +97,8 @@ const QString params = "(((\\/)[\\w:/\\?#\\[\\]@!\\$&\\(\\)\\*%\\+,;=\\._~-]{1,}
 
 const QRegExp PostWidget::mUrlRegExp("((((" + protocols + "?)" + auth +
                           subdomains +
-                          "((" + domains +               
-                          zone + "(?!(\\w)))|((to|ai)\\.)))|(" + protocols + '(' + ip + ")+))" +
+                          '(' + domains +               
+                          zone + "(?!(\\w))))|(" + protocols + '(' + ip + ")+))" +
                           '(' + port + "?)" + "((\\/)?)"  +
                           params + ')', Qt::CaseInsensitive);
 
