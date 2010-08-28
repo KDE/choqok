@@ -52,9 +52,6 @@ int main( int argc, char **argv )
     //TODO before next release, Add new contributers to credits
     KCmdLineArgs::init( argc, argv, &about );
 
-//     KCmdLineOptions options;
-//     options.add("+[URL]", ki18n( "Document to open" ));
-//     KCmdLineArgs::addCmdLineOptions(options);
     ChoqokApplication app;
     return app.exec();
 }
