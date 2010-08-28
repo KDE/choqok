@@ -237,7 +237,7 @@ void TwitterApiPostWidget::slotBasePostFetched(Choqok::Account* theAccount, Choq
         baseStatusText += prepareStatus( post->content ) + "</p>";
         setContent( content().prepend( baseStatusText.replace("<a href","<a style=\"text-decoration:none\" href",Qt::CaseInsensitive) ) );
         updateUi();
-        delete post;
+//         delete post;
     }
 }
 
