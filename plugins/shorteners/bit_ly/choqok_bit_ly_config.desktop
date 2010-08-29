@@ -1,0 +1,22 @@
+[Desktop Entry]
+Icon=kaboodle
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=kcm_choqok_bit_ly
+X-KDE-FactoryName=kcm_choqok_bit_ly
+X-KDE-ParentApp=choqok_bit_ly
+X-KDE-ParentComponents=choqok_bit_ly
+
+Name=bit.ly
+Name[pt]=bit.ly
+Name[pt_BR]=bit.ly
+Name[sv]=bit.ly
+Name[uk]=bit.ly
+Name[x-test]=xxbit.lyxx
+Comment=bit.ly
+Comment[pt]=bit.ly
+Comment[pt_BR]=bit.ly
+Comment[sv]=bit.ly
+Comment[uk]=bit.ly
+Comment[x-test]=xxbit.lyxx
