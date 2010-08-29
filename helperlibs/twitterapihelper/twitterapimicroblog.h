@@ -195,6 +195,8 @@ protected:
                                             const KUrl &requestUrl, QOAuth::HttpMethod method,
                                             QOAuth::ParamMap params = QOAuth::ParamMap());
 
+    void setRepeatedOfInfo(Choqok::Post* post, Choqok::Post* repeatedPost);
+
     ///==============================================
     /// XML:
     ///==============================================

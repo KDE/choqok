@@ -51,6 +51,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <notifymanager.h>
 #include "twitterapicomposerwidget.h"
 #include <QtOAuth/QtOAuth>
+#include <choqokappearancesettings.h>
 
 class TwitterApiMicroBlog::Private
 {
@@ -892,7 +893,7 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromDomNode(Choqok::Account* theAccou
         node = node.nextSibling();
     }
     if(repeatedPost){
-        post->setRepeatedOf(repeatedPost);
+        setRepeatedOfInfo(post,repeatedPost);
         delete repeatedPost;
     }
     post->link = postUrl(theAccount, post->author.userName, post->postId);
@@ -1095,6 +1096,24 @@ QStringList TwitterApiMicroBlog::readUsersScreenNameFromXml( Choqok::Account* th
     	section = section.nextSibling();
     }
     return list;
+}
+
+void TwitterApiMicroBlog::setRepeatedOfInfo(Choqok::Post* post, Choqok::Post* repeatedPost)
+{
+    if( Choqok::AppearanceSettings::showRetweetsInChoqokWay() ) {
+        post->content = repeatedPost->content;
+        post->replyToPostId = repeatedPost->replyToPostId;
+        post->replyToUserId = repeatedPost->replyToUserId;
+        post->replyToUserName = repeatedPost->replyToUserName;
+        post->repeatedFromUsername = repeatedPost->author.userName;
+    } else {
+        post->content = repeatedPost->content;
+        post->replyToPostId = repeatedPost->replyToPostId;
+        post->replyToUserId = repeatedPost->replyToUserId;
+        post->replyToUserName = repeatedPost->replyToUserName;
+        post->repeatedFromUsername = post->author.userName;
+        post->author = repeatedPost->author;
+    }
 }
 
 QDateTime TwitterApiMicroBlog::dateFromString ( const QString &date )
@@ -1476,7 +1495,7 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromJsonMap(Choqok::Account* theAccou
     QVariantMap retweetedMap = var["retweeted_status"].toMap();
     if( !retweetedMap.isEmpty() ){
         repeatedPost = readPostFromJsonMap( theAccount, retweetedMap, new Choqok::Post);
-        post->setRepeatedOf(repeatedPost);
+        setRepeatedOfInfo(post, repeatedPost);
         delete repeatedPost;
     }
     post->link = postUrl(theAccount, post->author.userName, post->postId);

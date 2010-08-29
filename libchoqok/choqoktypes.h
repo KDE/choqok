@@ -58,15 +58,6 @@ public:
     Post()
     :isFavorited(false), isPrivate(false), isError(false), isRead(false)
     {}
-    void setRepeatedOf(Choqok::Post *repeatedPost)
-    {
-        content = repeatedPost->content;
-        replyToPostId = repeatedPost->replyToPostId;
-        replyToUserId = repeatedPost->replyToUserId;
-        replyToUserName = repeatedPost->replyToUserName;
-        repeatedFromUsername = repeatedPost->author.userName;
-//         source = repeatedPost->source;
-    }
     QDateTime creationDateTime;
     ChoqokId postId;
     QString title;

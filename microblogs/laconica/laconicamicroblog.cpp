@@ -47,7 +47,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KMessageBox>
 #include <kmimetype.h>
 #include "laconicacomposerwidget.h"
-#include <mediamanager.h>
+#include "mediamanager.h"
+#include <choqokappearancesettings.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < LaconicaMicroBlog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_laconica" ) )
@@ -201,7 +202,10 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Ch
 
 QString LaconicaMicroBlog::generateRepeatedByUserTooltip(const QString& username)
 {
-    return i18n("Repeat of %1", username);
+    if( Choqok::AppearanceSettings::showRetweetsInChoqokWay() )
+        return i18n("Repeat of %1", username);
+    else
+        return i18n("Repeated by %1", username);
 }
 
 void LaconicaMicroBlog::listFriendsUsername(TwitterApiAccount* theAccount)

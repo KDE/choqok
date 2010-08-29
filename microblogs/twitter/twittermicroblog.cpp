@@ -42,6 +42,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "twitterapihelper/twitterapimicroblogwidget.h"
 #include "twittersearch.h"
 #include <twitterapihelper/twitterapicomposerwidget.h>
+#include <choqokappearancesettings.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < TwitterMicroBlog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_twitter" ) )
@@ -124,7 +125,10 @@ TwitterApiSearch* TwitterMicroBlog::searchBackend()
 
 QString TwitterMicroBlog::generateRepeatedByUserTooltip(const QString& username)
 {
-    return i18n("Retweet of %1", username);
+    if( Choqok::AppearanceSettings::showRetweetsInChoqokWay() )
+        return i18n("Retweet of %1", username);
+    else
+        return i18n("Retweeted by %1", username);
 }
 
 

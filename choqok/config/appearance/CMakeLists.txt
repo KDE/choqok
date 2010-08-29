@@ -17,7 +17,7 @@ appearanceconfig_base.ui )
 kde4_add_plugin(kcm_choqok_appearanceconfig ${kcm_choqok_appearanceconfig_PART_SRCS})
 
 
-target_link_libraries(kcm_choqok_appearanceconfig ${KDE4_KUTILS_LIBS} choqok )
+target_link_libraries(kcm_choqok_appearanceconfig ${KDE4_KUTILS_LIBS} choqok)
 
 install(TARGETS kcm_choqok_appearanceconfig  DESTINATION ${PLUGIN_INSTALL_DIR})
 

@@ -19,6 +19,16 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="kcfg_showRetweetsInChoqokWay">
+     <property name="toolTip">
+      <string>You'll see post with retweeter name as author, plus Retweeted from original author note.</string>
+     </property>
+     <property name="text">
+      <string>Show Retweeted/Repeated posts in Choqok way.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="KSeparator" name="kseparator_2"/>
    </item>
    <item>

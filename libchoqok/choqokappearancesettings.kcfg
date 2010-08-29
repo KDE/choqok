@@ -31,5 +31,8 @@ http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
     <entry name="ownForeColor" type="Color">
         <default>Black</default>
     </entry>
+    <entry name="showRetweetsInChoqokWay" type="Bool">
+        <default>false</default>
+    </entry>
 </group>
 </kcfg>

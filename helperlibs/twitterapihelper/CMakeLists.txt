@@ -18,6 +18,10 @@ twitterapitextedit.cpp
 twitterapicomposerwidget.cpp
 )
 
+# kde4_add_kcfg_files(twitterhelper_LIB_SRCS
+# twitterapisettings.kcfgc
+# )
+
 kde4_add_library(twitterapihelper SHARED ${twitterhelper_LIB_SRCS})
 
 target_link_libraries( twitterapihelper
@@ -27,7 +31,7 @@ target_link_libraries( twitterapihelper
                        choqok)
 
 set_target_properties(twitterapihelper PROPERTIES
-VERSION 0.9.2
+VERSION 0.9.5
 SOVERSION 0
 )
 
