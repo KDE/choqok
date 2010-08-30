@@ -208,6 +208,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
             st->link = postUrl( account, st->author.userName, st->postId);
             st->isRead = grp.readEntry("isRead", true);
             st->repeatedFromUsername = grp.readEntry("repeatedFrom", QString());
+            st->repeatedPostId = grp.readEntry("repeatedPostId", QString());
 
             list.append( st );
         }
@@ -254,6 +255,7 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
         grp.writeEntry( "authorUrl" , post->author.homePageUrl );
         grp.writeEntry( "isRead" , post->isRead );
         grp.writeEntry( "repeatedFrom", post->repeatedFromUsername);
+        grp.writeEntry( "repeatedPostId", post->repeatedPostId.toString());
     }
     postsBackup.sync();
     --d->countOfTimelinesToSave;
@@ -1106,6 +1108,7 @@ void TwitterApiMicroBlog::setRepeatedOfInfo(Choqok::Post* post, Choqok::Post* re
         post->replyToUserId = repeatedPost->replyToUserId;
         post->replyToUserName = repeatedPost->replyToUserName;
         post->repeatedFromUsername = repeatedPost->author.userName;
+        post->repeatedPostId = repeatedPost->postId;
     } else {
         post->content = repeatedPost->content;
         post->replyToPostId = repeatedPost->replyToPostId;
@@ -1113,6 +1116,7 @@ void TwitterApiMicroBlog::setRepeatedOfInfo(Choqok::Post* post, Choqok::Post* re
         post->replyToUserName = repeatedPost->replyToUserName;
         post->repeatedFromUsername = post->author.userName;
         post->author = repeatedPost->author;
+        post->repeatedPostId = repeatedPost->postId;
     }
 }
 

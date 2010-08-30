@@ -245,10 +245,15 @@ void TwitterApiPostWidget::slotBasePostFetched(Choqok::Account* theAccount, Choq
 void TwitterApiPostWidget::repeatPost()
 {
     setReadInternal();
+    ChoqokId postId;
+    if(currentPost().repeatedPostId.isEmpty())
+        postId = currentPost().postId;
+    else
+        postId = currentPost().repeatedPostId;
     if( KMessageBox::questionYesNo(Choqok::UI::Global::mainWindow(), d->mBlog->repeatQuestion(),
                                QString(), KStandardGuiItem::yes(), KStandardGuiItem::cancel(),
                                "dontAskRepeatConfirm") == KMessageBox::Yes )
-        d->mBlog->repeatPost(currentAccount(), currentPost().postId);
+        d->mBlog->repeatPost(currentAccount(), postId);
 }
 
 

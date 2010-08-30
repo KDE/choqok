@@ -74,6 +74,7 @@ public:
     bool isError;
     bool isRead;
     QString repeatedFromUsername;
+    ChoqokId repeatedPostId;
 };
 /**
 Describe an specific timeline, Should use by @ref MicroBlog
