@@ -143,7 +143,15 @@ public:
 
     QDateTime dateFromString( const QString &date );
 
+    /**
+     * The text to add under repeated posts, to notice user about it.
+     */
     virtual QString generateRepeatedByUserTooltip( const QString &username )=0;
+
+    /**
+     * The question will show to confirm repeat post.
+     */
+    virtual QString repeatQuestion() = 0;
 
 public Q_SLOTS:
     /**

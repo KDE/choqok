@@ -208,6 +208,11 @@ QString LaconicaMicroBlog::generateRepeatedByUserTooltip(const QString& username
         return i18n("Repeated by %1", username);
 }
 
+QString LaconicaMicroBlog::repeatQuestion()
+{
+    return i18n("Repeat this notice?");
+}
+
 void LaconicaMicroBlog::listFriendsUsername(TwitterApiAccount* theAccount)
 {
     friendsList.clear();

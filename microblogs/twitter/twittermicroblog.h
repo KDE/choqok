@@ -57,6 +57,7 @@ public:
     virtual TwitterApiSearch* searchBackend();
 
     virtual QString generateRepeatedByUserTooltip(const QString& username);
+    virtual QString repeatQuestion();
 
 private:
     QPointer<TwitterSearch> mSearchBackend;

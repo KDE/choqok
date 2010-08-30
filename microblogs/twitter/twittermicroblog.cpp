@@ -131,5 +131,10 @@ QString TwitterMicroBlog::generateRepeatedByUserTooltip(const QString& username)
         return i18n("Retweeted by %1", username);
 }
 
+QString TwitterMicroBlog::repeatQuestion()
+{
+    return i18n("Retweet to your followers?");
+}
+
 
 #include "twittermicroblog.moc"

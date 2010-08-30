@@ -62,6 +62,7 @@ public:
     virtual void createPostWithAttachment(Choqok::Account* theAccount, Choqok::Post* post,
                             const QString &mediumToAttach = QString());
     virtual QString generateRepeatedByUserTooltip(const QString& username);
+    virtual QString repeatQuestion();
 
 protected:
     virtual void listFriendsUsername(TwitterApiAccount* theAccount);

@@ -34,6 +34,7 @@
 #include <choqokappearancesettings.h>
 #include "twitterapishowthread.h"
 #include <textbrowser.h>
+#include <KMessageBox>
 
 const QRegExp TwitterApiPostWidget::mUserRegExp("([\\s\\W]|^)@([a-zA-Z0-9_]+){1,64}");
 const QRegExp TwitterApiPostWidget::mHashtagRegExp("([\\s]|^)#([\\w_]+)");
@@ -244,7 +245,10 @@ void TwitterApiPostWidget::slotBasePostFetched(Choqok::Account* theAccount, Choq
 void TwitterApiPostWidget::repeatPost()
 {
     setReadInternal();
-    d->mBlog->repeatPost(currentAccount(), currentPost().postId);
+    if( KMessageBox::questionYesNo(Choqok::UI::Global::mainWindow(), d->mBlog->repeatQuestion(),
+                               QString(), KStandardGuiItem::yes(), KStandardGuiItem::cancel(),
+                               "dontAskRepeatConfirm") == KMessageBox::Yes )
+        d->mBlog->repeatPost(currentAccount(), currentPost().postId);
 }
 
 
