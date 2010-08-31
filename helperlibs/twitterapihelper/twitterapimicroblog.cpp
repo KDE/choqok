@@ -677,6 +677,7 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount
     mJobsAccount[job] = theAccount;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFriendsScreenName(KJob*) ) );
     job->start();
+    Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Updating friends list for account %1...", theAccount->username().toUtf8());
 }
 
 void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
@@ -684,6 +685,11 @@ void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
     kDebug();
     TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount *>( mJobsAccount.take(job) );
     KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
+    if (stJob->error()) {
+        emit error(theAccount, ServerError, i18n("Friends list for account %1 could not be updated:\n%2",
+            theAccount->username().toUtf8(), stJob->errorString()), Critical);
+        return;
+    }
     QStringList newList;
     newList = readUsersScreenNameFromXml( theAccount, stJob->data() );
     friendsList << newList;
@@ -692,6 +698,8 @@ void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
     } else {
         friendsList.removeDuplicates();
         theAccount->setFriendsList(friendsList);
+        Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Friends list for account %1 has been updated.",
+            theAccount->username().toUtf8()) );
         emit friendsUsernameListed( theAccount, friendsList );
     }
 }
@@ -1076,26 +1084,26 @@ QStringList TwitterApiMicroBlog::readUsersScreenNameFromXml( Choqok::Account* th
     QDomNode section = root.firstChild();
     QDomNode node = section.firstChild();
     while ( !section.isNull() ) {
-    	if ( section.toElement().tagName() == "users" ) {
-    		while ( !node.isNull() ) {
-    		    if ( node.toElement().tagName() != "user" ) {
-    		        kDebug() << "there's no user tag in XML!\n"<<buffer;
-    		        return list;
-    		    }
-    		    QDomNode node2 = node.firstChild();
-    		    while ( !node2.isNull() ) {
-    		        if ( node2.toElement().tagName() == "screen_name" ) {
-    		            list.append( node2.toElement().text() );
-    		            break;
-    		        }
-    		        node2 = node2.nextSibling();
-    		    }
-    		    node = node.nextSibling();
-    		}
-    	} else if ( section.toElement().tagName() == "next_cursor" ) {
-    		d->friendsCursor = section.toElement().text();
-    	}
-    	section = section.nextSibling();
+        if ( section.toElement().tagName() == "users" ) {
+            while ( !node.isNull() ) {
+                if ( node.toElement().tagName() != "user" ) {
+                    kDebug() << "there's no user tag in XML!\n"<<buffer;
+                    return list;
+                }
+                QDomNode node2 = node.firstChild();
+                while ( !node2.isNull() ) {
+                    if ( node2.toElement().tagName() == "screen_name" ) {
+                        list.append( node2.toElement().text() );
+                        break;
+                    }
+                    node2 = node2.nextSibling();
+                }
+                node = node.nextSibling();
+            }
+        } else if ( section.toElement().tagName() == "next_cursor" ) {
+            d->friendsCursor = section.toElement().text();
+        }
+        section = section.nextSibling();
     }
     return list;
 }
