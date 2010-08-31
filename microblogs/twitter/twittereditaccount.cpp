@@ -116,7 +116,7 @@ Choqok::Account* TwitterEditAccountWidget::apply()
 void TwitterEditAccountWidget::authorizeUser()
 {
     kDebug();
-    qoauth = new QOAuth::Interface(new KIO::Integration::AccessManager(this), this);
+    qoauth = new QOAuth::Interface(new KIO::AccessManager(this), this);//TODO KDE 4.5 Change to use new class.
     // set the consumer key and secret
     qoauth->setConsumerKey( twitterConsumerKey );
     qoauth->setConsumerSecret( twitterConsumerSecret );

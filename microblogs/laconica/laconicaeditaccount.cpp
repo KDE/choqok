@@ -139,7 +139,7 @@ void LaconicaEditAccountWidget::authorizeUser()
         kcfg_authMethod->setCurrentIndex(1);
         return;
     }
-    qoauth = new QOAuth::Interface(new KIO::Integration::AccessManager(this), this);
+    qoauth = new QOAuth::Interface(new KIO::AccessManager(this), this);//TODO KDE 4.5 Change to use new class.
     //TODO change this to have support for self hosted StatusNets
     qoauth->setConsumerKey( oauthConsumerKey );
     qoauth->setConsumerSecret( oauthConsumerSecret );
