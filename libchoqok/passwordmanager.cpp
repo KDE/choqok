@@ -36,8 +36,15 @@ class PasswordManager::Private
 {
 public:
     Private()
-    : wallet(0)
+    : wallet(0), conf(0)
     {}
+
+    ~Private() {
+        delete wallet;
+        wallet = 0L;
+        delete conf;
+        conf = 0L;
+    }
 
     bool openWallet()
     {
@@ -58,19 +65,18 @@ public:
             kDebug() << "Wallet successfully opened.";
             return true;
         }
+        if(!conf)
+            conf = new KConfigGroup(KGlobal::config(), QString::fromLatin1( "Secrets" ));
         return false;
     }
-
     KWallet::Wallet *wallet;
+    KConfigGroup *conf;
 };
 
 PasswordManager::PasswordManager()
     :QObject(qApp), d(new Private)
 {
     kDebug();
-//     if(BehaviorSettings::useKWallet()) {
-//         openWallet();
-//     }
 }
 
 PasswordManager::~PasswordManager()
@@ -98,8 +104,10 @@ QString PasswordManager::readPassword(const QString &alias)
             kDebug()<<"Error on reading password from wallet";
             return QString();
         }
+    } else {
+        QByteArray pass = QByteArray::fromBase64(d->conf->readEntry(alias, QByteArray()));
+        return QString::fromUtf8(pass.data(), pass.size());
     }
-    return QString();
 }
 
 bool PasswordManager::writePassword(const QString &alias, const QString &password)
@@ -112,6 +120,9 @@ bool PasswordManager::writePassword(const QString &alias, const QString &passwor
             kDebug()<<"Error on writing password to wallet";
             return false;
         }
+    } else {
+        d->conf->writeEntry(alias, password.toUtf8().toBase64());
+        return true;
     }
     return false;
 }
@@ -121,6 +132,9 @@ bool PasswordManager::removePassword(const QString& alias)
     if( d->openWallet() ) {
         if( !d->wallet->removeEntry(alias) )
             return true;
+    } else {
+        d->conf->deleteEntry(alias);
+        return true;
     }
     return false;
 }
