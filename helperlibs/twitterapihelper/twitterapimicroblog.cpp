@@ -677,7 +677,7 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount
     mJobsAccount[job] = theAccount;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFriendsScreenName(KJob*) ) );
     job->start();
-    Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Updating friends list for account %1...", theAccount->username().toUtf8());
+    Choqok::UI::Global::mainWindow()->showStatusMessage( i18n("Updating friends list for account %1 ...", theAccount->username()) );
 }
 
 void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
@@ -687,7 +687,7 @@ void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
     KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
     if (stJob->error()) {
         emit error(theAccount, ServerError, i18n("Friends list for account %1 could not be updated:\n%2",
-            theAccount->username().toUtf8(), stJob->errorString()), Critical);
+            theAccount->username(), stJob->errorString()), Critical);
         return;
     }
     QStringList newList;
@@ -699,7 +699,7 @@ void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
         friendsList.removeDuplicates();
         theAccount->setFriendsList(friendsList);
         Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Friends list for account %1 has been updated.",
-            theAccount->username().toUtf8()) );
+            theAccount->username()) );
         emit friendsUsernameListed( theAccount, friendsList );
     }
 }
