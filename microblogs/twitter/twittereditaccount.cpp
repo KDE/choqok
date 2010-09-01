@@ -57,12 +57,16 @@ TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
 #endif
     connect(kcfg_authorize, SIGNAL(clicked(bool)), SLOT(authorizeUser()));
     if(mAccount) {
-        setAuthenticated(true);
         kcfg_alias->setText( mAccount->alias() );
         #ifdef OAUTH
-        token = mAccount->oauthToken();
-        tokenSecret = mAccount->oauthTokenSecret();
-        username = mAccount->username();
+        if(mAccount->oauthToken().isEmpty() || mAccount->oauthTokenSecret().isEmpty()) {
+            setAuthenticated(false);
+        } else {
+            setAuthenticated(true);
+            token = mAccount->oauthToken();
+            tokenSecret = mAccount->oauthTokenSecret();
+            username = mAccount->username();
+        }
         #else
         kcfg_username->setText( mAccount->username() );
         kcfg_password->setText( mAccount->password() );

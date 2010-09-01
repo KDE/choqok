@@ -60,12 +60,19 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
         kcfg_changeExclamationMark->setChecked( mAccount->isChangeExclamationMark() );
         kcfg_changeToString->setText( mAccount->changeExclamationMarkToText() );
         if(mAccount->usingOAuth()){
-            setAuthenticated(true);
+            if( !mAccount->oauthConsumerKey().isEmpty() &&
+                !mAccount->oauthConsumerSecret().isEmpty() &&
+                !mAccount->oauthToken().isEmpty() &&
+                !mAccount->oauthTokenSecret().isEmpty() ) {
+                setAuthenticated(true);
+                oauthConsumerKey = mAccount->oauthConsumerKey();
+                oauthConsumerSecret = mAccount->oauthConsumerSecret();
+                token = mAccount->oauthToken();
+                tokenSecret = mAccount->oauthTokenSecret();
+            } else {
+                setAuthenticated(false);
+            }
             kcfg_authMethod->setCurrentIndex(0);
-            oauthConsumerKey = mAccount->oauthConsumerKey();
-            oauthConsumerSecret = mAccount->oauthConsumerSecret();
-            token = mAccount->oauthToken();
-            tokenSecret = mAccount->oauthTokenSecret();
         } else {
             kcfg_authMethod->setCurrentIndex(1);
         }
@@ -217,7 +224,7 @@ void LaconicaEditAccountWidget::getAccessToken()
         kcfg_authorize->setEnabled(true);
         token = reply.value( QOAuth::tokenParameterName() );
         tokenSecret = reply.value( QOAuth::tokenSecretParameterName() );
-        kDebug()<<"token: "<<token<<" tokenSecret: "<<tokenSecret;
+        kDebug()<<"token: "<<token;
         setAuthenticated(true);
     } else {
         setAuthenticated(false);

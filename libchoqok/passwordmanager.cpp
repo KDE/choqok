@@ -29,6 +29,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QApplication>
 #include "choqokuiglobal.h"
 #include <KApplication>
+#include <KMessageBox>
 
 namespace Choqok
 {
@@ -40,10 +41,10 @@ public:
     {}
 
     ~Private() {
+        cfg->sync();
         delete wallet;
-        wallet = 0L;
         delete conf;
-        conf = 0L;
+        delete cfg;
     }
 
     bool openWallet()
@@ -64,13 +65,23 @@ public:
             }
             kDebug() << "Wallet successfully opened.";
             return true;
+        } else if(!conf){
+            cfg = new KConfig( "choqok/secretsrc", KConfig::NoGlobals, "data" );
+            conf = new KConfigGroup(cfg, QString::fromLatin1( "Secrets" ));
+            KMessageBox::error(Choqok::UI::Global::mainWindow(),
+                               i18n("Cannot open KDE Wallet manager, your secrets will be stored as plain text, install KWallet to fix this."), QString(), KMessageBox::Dangerous);
         }
-        if(!conf)
-            conf = new KConfigGroup(KGlobal::config(), QString::fromLatin1( "Secrets" ));
         return false;
+    }
+    void syncConfigs()
+    {
+        cfg->sync();
     }
     KWallet::Wallet *wallet;
     KConfigGroup *conf;
+
+private:
+    KConfig *cfg;
 };
 
 PasswordManager::PasswordManager()
@@ -122,6 +133,7 @@ bool PasswordManager::writePassword(const QString &alias, const QString &passwor
         }
     } else {
         d->conf->writeEntry(alias, password.toUtf8().toBase64());
+        d->syncConfigs();
         return true;
     }
     return false;
