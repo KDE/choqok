@@ -1,0 +1,22 @@
+[Desktop Entry]
+Icon=kaboodle
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=kcm_choqok_tinyarro_ws
+X-KDE-FactoryName=kcm_choqok_tinyarro_ws
+X-KDE-ParentApp=choqok_tinyarro_ws
+X-KDE-ParentComponents=choqok_tinyarro_ws
+
+Name=tinyarro.ws
+Name[pt]=tinyarro.ws
+Name[pt_BR]=tinyarro.ws
+Name[sv]=tinyarro.ws
+Name[uk]=tinyarro.ws
+Name[x-test]=xxtinyarro.wsxx
+Comment=tinyarro.ws
+Comment[pt]=tinyarro.ws
+Comment[pt_BR]=tinyarro.ws
+Comment[sv]=tinyarro.ws
+Comment[uk]=tinyarro.ws
+Comment[x-test]=xxtinyarro.wsxx
