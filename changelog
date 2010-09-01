@@ -1,3 +1,16 @@
+=== Version 0.9.90 (1.0 Beta3) -- 1-Sep-2010 ===
+* Better nick name detection
+* Better URL detection
+* Fetching Friends List problem fixed
+* UnTiny plugin can use untiny.com service instead of its generic way (Configurable)
+* Using the Choqok way to show repeated dents/tweets made optional (Default is Twitter way)
+* Confirm dialog for Retweet
+* When KWallet isn't availabe, Will store sercrets in text files (Not plain text, Base64)
+
+New Shortener Plugins:
+    - TinyArrows (By Andrey Esin)
+    - Bit.ly (By Andrey Esin)
+
 === Version 0.9.85 (1.0 Beta2) -- 15-Aug-2010 ===
 * Proxy configuration
 * Using new KDE Tray Icon
