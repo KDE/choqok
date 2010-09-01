@@ -37,11 +37,12 @@ class PasswordManager::Private
 {
 public:
     Private()
-    : wallet(0), conf(0)
+    : wallet(0), conf(0), cfg(0)
     {}
 
     ~Private() {
-        cfg->sync();
+        if(cfg)
+            cfg->sync();
         delete wallet;
         delete conf;
         delete cfg;
