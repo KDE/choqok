@@ -69,8 +69,9 @@ public:
         } else if(!conf){
             cfg = new KConfig( "choqok/secretsrc", KConfig::NoGlobals, "data" );
             conf = new KConfigGroup(cfg, QString::fromLatin1( "Secrets" ));
-            KMessageBox::error(Choqok::UI::Global::mainWindow(),
-                               i18n("Cannot open KDE Wallet manager, your secrets will be stored as plain text, install KWallet to fix this."), QString(), KMessageBox::Dangerous);
+            KMessageBox::information(Choqok::UI::Global::mainWindow(),
+                               i18n("Cannot open KDE Wallet manager, your secrets will be stored as plain text, install KWallet to fix this."), QString(), "DontShowKWalletProblem",
+                               KMessageBox::Dangerous );
         }
         return false;
     }
