@@ -302,7 +302,8 @@ void PostWidget::setHeight()
 
 void PostWidget::closeEvent(QCloseEvent* event)
 {
-//     kDebug();
+    if( !isRead() )
+        setReadInternal();
     Q_EMIT aboutClosing(currentPost().postId, this);
     event->ignore();
     QWidget::deleteLater();
