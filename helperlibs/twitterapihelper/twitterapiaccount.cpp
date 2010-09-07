@@ -194,6 +194,7 @@ QStringList TwitterApiAccount::friendsList() const
 void TwitterApiAccount::setFriendsList(const QStringList& list)
 {
     d->friendsList = list;
+    writeConfig();
 }
 
 QStringList TwitterApiAccount::timelineNames() const
