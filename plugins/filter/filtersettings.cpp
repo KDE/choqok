@@ -36,6 +36,8 @@
 FilterSettings *FilterSettings::_self = 0L;
 QMap<Filter::FilterField, QString> FilterSettings::_filterFieldName;
 QMap<Filter::FilterType, QString> FilterSettings::_filterTypeName;
+bool FilterSettings::_hideNoneFriendsReplies = false;
+bool FilterSettings::_hideRepliesNotRelatedToMe = false;
 
 FilterSettings* FilterSettings::self()
 {
@@ -56,6 +58,7 @@ FilterSettings* FilterSettings::self()
 
 FilterSettings::FilterSettings(): QObject(qApp)
 {
+    conf = new KConfigGroup(KGlobal::config(), QLatin1String("Filter Plugin"));
     readConfig();
 }
 
@@ -85,6 +88,9 @@ void FilterSettings::readConfig()
         }
     }
     kDebug()<<filters().count();
+
+    _hideNoneFriendsReplies = conf->readEntry("hideNoneFriendsReplies", false);
+    _hideRepliesNotRelatedToMe = conf->readEntry("hideRepliesNotRelatedToMe", false);
 }
 
 void FilterSettings::setFilters(const QList< Filter* > &filters)
@@ -100,6 +106,8 @@ void FilterSettings::writeConfig()
             KGlobal::config()->deleteGroup(grp);
         }
     }
+    conf->writeEntry("hideNoneFriendsReplies", _hideNoneFriendsReplies);
+    conf->writeEntry("hideRepliesNotRelatedToMe", _hideRepliesNotRelatedToMe);
     KGlobal::config()->sync();
 
     foreach(Filter *f, _filters){
@@ -137,5 +145,25 @@ QMap< Filter::FilterField, QString > FilterSettings::filterFieldsMap()
 QMap< Filter::FilterType, QString > FilterSettings::filterTypesMap()
 {
     return _filterTypeName;
+}
+
+bool FilterSettings::hideNoneFriendsReplies()
+{
+    return _hideNoneFriendsReplies;
+}
+
+void FilterSettings::setHideNoneFriendsReplies(bool enable)
+{
+    _hideNoneFriendsReplies = enable;
+}
+
+bool FilterSettings::hideRepliesNotRelatedToMe()
+{
+    return _hideRepliesNotRelatedToMe;
+}
+
+void FilterSettings::setHideRepliesNotRelatedToMe(bool enable)
+{
+    _hideRepliesNotRelatedToMe = enable;
 }
 

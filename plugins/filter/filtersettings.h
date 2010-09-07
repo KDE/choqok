@@ -49,6 +49,12 @@ public:
     static Filter::FilterField filterFieldFromName( const QString &name );
     static QString filterTypeName(Filter::FilterType type);
     static Filter::FilterType filterTypeFromName( const QString &name );
+
+    static bool hideNoneFriendsReplies();
+    static void setHideNoneFriendsReplies(bool enable = true);
+    static bool hideRepliesNotRelatedToMe();
+    static void setHideRepliesNotRelatedToMe(bool enable = true);
+
 private:
     FilterSettings();
     static FilterSettings *_self;
@@ -56,6 +62,11 @@ private:
     QList<Filter*> _filters;
     static QMap<Filter::FilterField, QString> _filterFieldName;
     static QMap<Filter::FilterType, QString> _filterTypeName;
+
+    static bool _hideNoneFriendsReplies;
+    static bool _hideRepliesNotRelatedToMe;
+
+    KConfigGroup *conf;
 };
 
 #endif // FILTERSETTINGS_H

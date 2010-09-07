@@ -48,6 +48,8 @@ ConfigureFilters::ConfigureFilters(QWidget* parent):
     connect( ui.btnAdd, SIGNAL(clicked()), SLOT(slotAddFilter()) );
     connect( ui.btnEdit, SIGNAL(clicked()), SLOT(slotEditFilter()));
     connect( ui.btnRemove, SIGNAL(clicked()), SLOT(slotRemoveFilter()));
+    connect( ui.cfg_hideRepliesNotRelatedToMe, SIGNAL(toggled(bool)),
+             this, SLOT(slotHideRepliesNotRelatedToMeToggled(bool)));
     reloadFiltersTable();
 }
 
@@ -71,6 +73,8 @@ void ConfigureFilters::reloadFiltersTable()
     foreach(Filter *filter, filters){
         addNewFilter(filter);
     }
+    ui.cfg_hideNoneFriendsReplies->setChecked(FilterSettings::hideNoneFriendsReplies());
+    ui.cfg_hideRepliesNotRelatedToMe->setChecked(FilterSettings::hideRepliesNotRelatedToMe());
 }
 
 void ConfigureFilters::saveFiltersTable()
@@ -85,6 +89,8 @@ void ConfigureFilters::saveFiltersTable()
         list << f;
     }
     FilterSettings::self()->setFilters(list);
+    FilterSettings::setHideNoneFriendsReplies(ui.cfg_hideNoneFriendsReplies->isChecked());
+    FilterSettings::setHideRepliesNotRelatedToMe(ui.cfg_hideRepliesNotRelatedToMe->isChecked());
     FilterSettings::self()->writeConfig();
 }
 
@@ -147,6 +153,17 @@ void ConfigureFilters::slotUpdateFilter(Filter* filter)
     ui.filters->item(row, 1)->setData(32, filter->filterType());
 
     ui.filters->item(row, 2)->setText(filter->filterText());
+}
+
+void ConfigureFilters::slotHideRepliesNotRelatedToMeToggled(bool enabled)
+{
+    if(enabled){
+        ui.cfg_hideNoneFriendsReplies->setChecked(false);
+        ui.cfg_hideNoneFriendsReplies->setEnabled(false);
+    } else {
+        ui.cfg_hideNoneFriendsReplies->setEnabled(true);
+        ui.cfg_hideNoneFriendsReplies->setChecked(FilterSettings::hideNoneFriendsReplies());
+    }
 }
 
 

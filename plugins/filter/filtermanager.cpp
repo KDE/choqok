@@ -35,6 +35,7 @@
 #include "filter.h"
 #include "configurefilters.h"
 #include <postwidget.h>
+#include <twitterapihelper/twitterapiaccount.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < FilterManager > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_filter" ) )
@@ -87,6 +88,12 @@ void FilterManager::startParsing()
 
 void FilterManager::parse(Choqok::UI::PostWidget* postToParse)
 {
+    if(!postToParse)
+        return;
+
+    if( parseSpecialRules(postToParse) )
+        return;
+
     if(!postToParse)
         return;
 
@@ -163,6 +170,36 @@ void FilterManager::slotConfigureFilters()
 {
     QPointer<ConfigureFilters> dlg = new ConfigureFilters(Choqok::UI::Global::mainWindow());
     dlg->show();
+}
+
+bool FilterManager::parseSpecialRules(Choqok::UI::PostWidget* postToParse)
+{
+    if(FilterSettings::hideRepliesNotRelatedToMe()){
+        if( !postToParse->currentPost().replyToUserName.isEmpty() &&
+            postToParse->currentPost().replyToUserName != postToParse->currentAccount()->username() ) {
+            if( !postToParse->currentPost().content.contains(postToParse->currentAccount()->username()) ) {
+                postToParse->close();
+                kDebug()<<"NOT RELATE TO ME FILTERING......";
+                return true;
+            }
+        }
+    }
+
+    if( FilterSettings::hideNoneFriendsReplies() ) {
+        TwitterApiAccount *acc = qobject_cast<TwitterApiAccount*>(postToParse->currentAccount());
+        if(!acc)
+            return false;
+        if( !postToParse->currentPost().replyToUserName.isEmpty() &&
+            !acc->friendsList().contains(postToParse->currentPost().replyToUserName) ) {
+            if( !postToParse->currentPost().content.contains(postToParse->currentAccount()->username()) ) {
+                postToParse->close();
+                kDebug()<<"NONE FRIEND FILTERING......";
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 

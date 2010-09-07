@@ -43,6 +43,7 @@ protected slots:
     void slotRemoveFilter();
     void addNewFilter(Filter* filter);
     void slotUpdateFilter(Filter* filter);
+    void slotHideRepliesNotRelatedToMeToggled(bool enabled);
 
 private:
     void reloadFiltersTable();

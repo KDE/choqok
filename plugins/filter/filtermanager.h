@@ -66,6 +66,8 @@ private:
 
     void parse( Choqok::UI::PostWidget *postToParse );
     QQueue< QPointer<Choqok::UI::PostWidget> > postsQueue;
+
+    bool parseSpecialRules( Choqok::UI::PostWidget *postToParse );
 };
 
 #endif
