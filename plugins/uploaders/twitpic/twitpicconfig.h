@@ -44,4 +44,4 @@ private:
     Ui_TwitpicPrefsBase ui;
 };
 
-#endif // NOWLISTENINGCONFIG_H
+#endif // TWITPICCONFIG_H

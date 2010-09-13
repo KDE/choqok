@@ -7,7 +7,6 @@
     <kcfgfile name="choqokrc"/>
 
     <group name="TwitPic Uploader">
-        <entry name="username" type="String">
-        </entry>
+        <entry name="username" type="String"/>
     </group>
 </kcfg>
