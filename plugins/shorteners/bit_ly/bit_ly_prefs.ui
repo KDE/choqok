@@ -78,7 +78,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QComboBox" name="kcfg_domain"/>
+      <widget class="KComboBox" name="kcfg_domain"/>
      </item>
      <item row="0" column="2">
       <widget class="QLabel" name="label">

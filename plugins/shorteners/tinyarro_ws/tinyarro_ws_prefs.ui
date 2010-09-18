@@ -25,7 +25,7 @@
     </spacer>
    </item>
    <item row="0" column="2">
-    <widget class="QComboBox" name="kcfg_tinyarro_ws_host">
+    <widget class="KComboBox" name="kcfg_tinyarro_ws_host">
      <property name="currentIndex">
       <number>-1</number>
      </property>
