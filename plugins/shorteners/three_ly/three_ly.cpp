@@ -49,7 +49,7 @@ QString Three_ly::shorten( const QString& url )
     QString apiKey = "ae2499582394";          // Custom API key by Andrey Esin
     KUrl reqUrl( "http://3.ly" );
     reqUrl.addQueryItem( "api", apiKey.toUtf8() );
-    reqUrl.addQueryItem( "u", KUrl( url ).url() );
+    reqUrl.addQueryItem( "u", KUrl::toPercentEncoding( KUrl( url ).url() ) );
 
     KIO::Job* job = KIO::get( reqUrl, KIO::Reload, KIO::HideProgressInfo );
 
