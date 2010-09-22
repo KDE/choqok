@@ -573,7 +573,8 @@ void MainWindow::oneMicroblogLoaded()
 
 void MainWindow::slotUpdateTimelines()
 {
-    showStatusMessage(i18n("Loading timelines..."));
+  if ( microblogCounter )
+      showStatusMessage(i18n("Loading timelines..."));
 }
 
 void MainWindow::slotUploadMedium()
