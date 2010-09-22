@@ -62,7 +62,6 @@ MainWindow::MainWindow()
     setAttribute ( Qt::WA_DeleteOnClose, false );
     setAttribute ( Qt::WA_QuitOnClose, false );
 
-    connect(this, SIGNAL(updateTimelines()), SLOT(slotUpdateTimelines()));
     if( Choqok::BehaviorSettings::showSplashScreen() ){
         KStandardDirs *stdDirs = KGlobal::dirs();
         QString img = stdDirs->findResource( "data", "choqok/images/splash_screen.png" );
@@ -109,7 +108,7 @@ MainWindow::MainWindow()
 //     Choqok::AccountManager::self()->loadAllAccounts();
     QTimer::singleShot(0, Choqok::AccountManager::self(), SLOT( loadAllAccounts() ) );
     
-    
+    connect(this, SIGNAL(updateTimelines()), SLOT(slotUpdateTimelines()));
 
     QPoint pos = Choqok::BehaviorSettings::position();
     if(pos.x() != -1 && pos.y() != -1) {
@@ -573,8 +572,8 @@ void MainWindow::oneMicroblogLoaded()
 
 void MainWindow::slotUpdateTimelines()
 {
-  if ( microblogCounter )
-      showStatusMessage(i18n("Loading timelines..."));
+    if ( Choqok::AccountManager::self()->accounts().count() )
+         showStatusMessage( i18n( "Loading timelines..." ) );
 }
 
 void MainWindow::slotUploadMedium()
