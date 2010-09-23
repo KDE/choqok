@@ -104,6 +104,7 @@ public:
     QPointer<KJob> job;
     Choqok::Post currentPost;
     QString username;
+    QString errorMessage;
 
     QString followersCount;
     QString friendsCount;
@@ -113,12 +114,12 @@ public:
 };
 
 TwitterApiWhoisWidget::TwitterApiWhoisWidget(TwitterApiAccount* theAccount, const QString& username,
-                                             QWidget* parent)
+                                             const Choqok::Post &post, QWidget* parent)
     : QFrame(parent), d(new Private(theAccount, username))
 {
     kDebug();
     setAttribute(Qt::WA_DeleteOnClose);
-
+    d->currentPost = post;
     loadUserInfo(theAccount, username);
 
     d->wid = new KTextBrowser(this);
@@ -147,13 +148,30 @@ void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount* theAccount, const QS
 {
     //TODO Move this function to TwitterApiMicroBlog
     kDebug();
-    KUrl url( theAccount->apiUrl() );
-    url.setUser ( theAccount->username() );
-    url.setPass ( theAccount->password() );
+    QString urlStr;
+    if( d->currentPost.source == "ostatus" && !d->currentPost.author.homePageUrl.isEmpty() ) {
+        urlStr = d->currentPost.author.homePageUrl;
+        if(urlStr.endsWith(username)) {
+            int len = urlStr.length();
+            int userLen = username.length();
+            urlStr.remove(len - userLen, userLen);
+            kDebug()<<urlStr;
+        }
+        urlStr.append("api");
+    } else {
+        urlStr = theAccount->apiUrl().url();
+    }
+    KUrl url( urlStr );
 
     url.addPath( QString( "/users/show/%1.json" ).arg(username));
 
+    kDebug() << url;
+
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
+    if( d->currentPost.source != "ostatus" )
+        job->addMetaData("customHTTPHeader", "Authorization: " + d->mBlog->authorizationHeader(theAccount,
+                                                                                           url, QOAuth::POST));
+
     d->job = job;
     connect( job, SIGNAL(result(KJob*)), SLOT(userInfoReceived(KJob*)));
     job->start();
@@ -170,6 +188,7 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
         return;
     }
     KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>(job);
+    kDebug()<<stj->data();
     QJson::Parser parser;
     bool ok;
     QVariantMap map = parser.parse(stj->data(), &ok).toMap();
@@ -177,30 +196,33 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
     Choqok::Post post;
     if ( ok ) {
         QString timeStr;
-        post.author.realName = map["name"].toString();
-        post.author.userName = map["screen_name"].toString();
-        post.author.location = map["location"].toString();
-        post.author.description = map["description"].toString();
-        post.author.profileImageUrl = map["profile_image_url"].toString();
-        post.author.homePageUrl = map["url"].toString();
-        d->timeZone = map["time_zone"].toString();
-        d->followersCount = map["followers_count"].toString();
-        d->friendsCount = map["friends_count"].toString();
-        QVariantMap var = map["status"].toMap();
-        post.content = var["text"].toString();
-        post.creationDateTime = d->mBlog->dateFromString(var["created_at"].toString());
-        post.isFavorited = var["favorited"].toBool();
-        post.postId = var["id"].toString();
-        post.replyToPostId = var["in_reply_to_status_id"].toString();
-        post.replyToUserId = var["in_reply_to_user_id"].toString();
-        post.replyToUserName = var["in_reply_to_screen_name"].toString();
-        post.source = var["source"].toString();
+        d->errorMessage = map["error"].toString();
+        if( d->errorMessage.isEmpty() ) { //No Error
+            post.author.realName = map["name"].toString();
+            post.author.userName = map["screen_name"].toString();
+            post.author.location = map["location"].toString();
+            post.author.description = map["description"].toString();
+            post.author.profileImageUrl = map["profile_image_url"].toString();
+            post.author.homePageUrl = map["url"].toString();
+            d->timeZone = map["time_zone"].toString();
+            d->followersCount = map["followers_count"].toString();
+            d->friendsCount = map["friends_count"].toString();
+            QVariantMap var = map["status"].toMap();
+            post.content = var["text"].toString();
+            post.creationDateTime = d->mBlog->dateFromString(var["created_at"].toString());
+            post.isFavorited = var["favorited"].toBool();
+            post.postId = var["id"].toString();
+            post.replyToPostId = var["in_reply_to_status_id"].toString();
+            post.replyToUserId = var["in_reply_to_user_id"].toString();
+            post.replyToUserName = var["in_reply_to_screen_name"].toString();
+            post.source = var["source"].toString();
+            d->currentPost = post;
+        }
     } else {
         kDebug()<<"JSON parsing failed! Data is:\n\t"<<stj->data();
         d->wid->setText(i18n("Cannot load user information."));
         return;
     }
-    d->currentPost = post;
     updateHtml();
     showForm();
 
@@ -247,22 +269,24 @@ void TwitterApiWhoisWidget::avatarFetchError(const QString& remoteUrl, const QSt
 void TwitterApiWhoisWidget::updateHtml()
 {
     kDebug();
-    QString url = d->currentPost.author.homePageUrl.isEmpty() ? QString()
-                : QString("<a title='%1' href='%1'>%1</a>").arg(d->currentPost.author.homePageUrl);
-
-//     QString dir = post.content.isRightToLeft() ? "rtl" : "ltr";
-    QString tmpStr = i18n(baseText);
-    QString html = QString(tmpStr).arg(d->currentPost.author.userName)
-                                    .arg(d->currentPost.author.realName)
-                                    .arg(d->currentPost.author.location)
-                                    .arg(d->timeZone)
-                                    .arg(url)
-                                    .arg(d->currentPost.author.description)
-                                    .arg(d->currentPost.content)//.arg(dir);
-                                    .arg(d->friendsCount)
-                                    .arg(d->followersCount)
-                                    .arg(d->imgActions);
-
+    QString html;
+    if( d->errorMessage.isEmpty() ) {
+        QString url = d->currentPost.author.homePageUrl.isEmpty() ? QString()
+                    : QString("<a title='%1' href='%1'>%1</a>").arg(d->currentPost.author.homePageUrl);
+        QString tmpStr = i18n(baseText);
+        html = QString(tmpStr).arg(d->currentPost.author.userName)
+                                        .arg(d->currentPost.author.realName)
+                                        .arg(d->currentPost.author.location)
+                                        .arg(d->timeZone)
+                                        .arg(url)
+                                        .arg(d->currentPost.author.description)
+                                        .arg(d->currentPost.content)//.arg(dir);
+                                        .arg(d->friendsCount)
+                                        .arg(d->followersCount)
+                                        .arg(d->imgActions);
+    } else {
+        html = i18n("<h1>%1</h1>", d->errorMessage);
+    }
     d->wid->setHtml(html);
 }
 

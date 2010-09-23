@@ -134,7 +134,7 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
         if(ret == 0)
             return;
         if(ret == info) {
-            TwitterApiWhoisWidget *wd = new TwitterApiWhoisWidget(account, url.host(), this);
+            TwitterApiWhoisWidget *wd = new TwitterApiWhoisWidget(account, url.host(),  currentPost(), this);
             wd->show(QCursor::pos());
             return;
         } else if(ret == subscribe){

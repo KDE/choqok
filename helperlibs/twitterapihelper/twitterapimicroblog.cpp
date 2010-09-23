@@ -894,6 +894,8 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromDomNode(Choqok::Account* theAccou
                     post->author.realName = elm3.text();
                 } else if ( elm3.tagName() == QString ( "description" ) ) {
                     post->author.description = elm3.text();
+                } else if ( elm3.tagName() == "statusnet:profile_url" ) {
+                    post->author.homePageUrl = elm3.text();
                 }
                 node3 = node3.nextSibling();
             }
@@ -1503,6 +1505,7 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromJsonMap(Choqok::Account* theAccou
     post->author.userId = userMap["id"].toString();
     post->author.userName = userMap["screen_name"].toString();
     post->author.profileImageUrl = userMap["profile_image_url"].toString();
+    post->author.homePageUrl = userMap["statusnet_profile_url"].toString();
     Choqok::Post* repeatedPost = 0;
     QVariantMap retweetedMap = var["retweeted_status"].toMap();
     if( !retweetedMap.isEmpty() ){

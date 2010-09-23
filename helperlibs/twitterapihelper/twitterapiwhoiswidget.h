@@ -27,6 +27,7 @@
 #include <QtCore/QUrl>
 #include <QtGui/QFrame>
 #include "choqok_export.h"
+#include <choqoktypes.h>
 
 namespace Choqok {
 class Account;
@@ -38,7 +39,8 @@ class CHOQOK_HELPER_EXPORT TwitterApiWhoisWidget : public QFrame
 {
     Q_OBJECT
 public:
-    TwitterApiWhoisWidget( TwitterApiAccount* theAccount, const QString &userName, QWidget *parent=0 );
+    TwitterApiWhoisWidget( TwitterApiAccount* theAccount, const QString &userName,
+                           const Choqok::Post &post, QWidget *parent=0 );
     ~TwitterApiWhoisWidget();
     void show(QPoint pos);
 

@@ -171,7 +171,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
         if(ret == 0)
             return;
         if(ret == info) {
-            TwitterApiWhoisWidget *wd = new TwitterApiWhoisWidget(d->account, url.host(), this);
+            TwitterApiWhoisWidget *wd = new TwitterApiWhoisWidget(d->account, url.host(), currentPost(), this);
             wd->show(QCursor::pos());
             return;
         } else if(ret == subscribe){
@@ -185,7 +185,11 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
             d->mBlog->blockUser(d->account, url.host());
             return;
         } else if(ret == openInBrowser){
-            Choqok::openUrl( QUrl( currentAccount()->microblog()->profileUrl(currentAccount(), url.host()) ) );
+            if( currentPost().author.homePageUrl.isEmpty() ) {
+                Choqok::openUrl( QUrl( currentAccount()->microblog()->profileUrl(currentAccount(), url.host()) ) );
+            } else {
+                Choqok::openUrl( QUrl( currentPost().author.homePageUrl ) );
+            }
             return;
         } else if(ret == replyTo){
             emit reply( QString("@%1").arg(url.host()), QString() );

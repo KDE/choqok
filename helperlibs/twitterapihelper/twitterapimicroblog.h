@@ -153,6 +153,10 @@ public:
      */
     virtual QString repeatQuestion() = 0;
 
+    virtual QByteArray authorizationHeader( TwitterApiAccount* theAccount,
+                                            const KUrl &requestUrl, QOAuth::HttpMethod method,
+                                            QOAuth::ParamMap params = QOAuth::ParamMap());
+
 public Q_SLOTS:
     /**
     Launch a dialog to send direct message.
@@ -198,10 +202,6 @@ protected:
                                  QString sincePostId, int page = 1, QString maxId = QString() );
 
     virtual void setTimelineInfos();
-
-    virtual QByteArray authorizationHeader( TwitterApiAccount* theAccount,
-                                            const KUrl &requestUrl, QOAuth::HttpMethod method,
-                                            QOAuth::ParamMap params = QOAuth::ParamMap());
 
     void setRepeatedOfInfo(Choqok::Post* post, Choqok::Post* repeatedPost);
 
