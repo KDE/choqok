@@ -106,8 +106,16 @@ QString TwitterApiPostWidget::generateSign()
             sign.prepend( "To " );
         }
     } else {
-        if( !currentPost().source.isNull() )
-            sign += " - " + currentPost().source;
+        if( !currentPost().source.isNull() ) {
+            sign += " - ";
+            if(currentPost().source == "ostatus" && !currentPost().author.homePageUrl.isEmpty()) {
+                KUrl srcUrl(currentPost().author.homePageUrl);
+                sign += QString( "<a href='%1' title='Sent from %2 via OStatus'>%2</a>" ).arg(currentPost().author.homePageUrl)
+                 .arg(srcUrl.host());
+            } else {
+                sign += currentPost().source;
+            }
+        }
         if ( !currentPost().replyToPostId.isEmpty() ) {
             QString link = currentAccount()->microblog()->postUrl( currentAccount(), currentPost().replyToUserName,
                                                                    currentPost().replyToPostId );

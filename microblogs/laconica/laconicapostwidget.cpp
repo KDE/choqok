@@ -127,11 +127,13 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
                                               i18nc("Open profile page in browser",
                                                     "Open profile in browser"), &menu);
         menu.addAction(info);
-        menu.addAction(from);
-        menu.addAction(to);
+        if(currentPost().source != "ostatus") {
+            menu.addAction(from);
+            menu.addAction(to);
+            from->setData(LaconicaSearch::FromUser);
+            to->setData(LaconicaSearch::ToUser);
+        }
         menu.addAction(openInBrowser);
-        from->setData(LaconicaSearch::FromUser);
-        to->setData(LaconicaSearch::ToUser);
         QAction * ret;
 
         //Subscribe/UnSubscribe/Block
@@ -164,8 +166,10 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
             block = new KAction( KIcon("dialog-cancel"),
                                  i18nc("Block user",
                                        "Block %1", url.host()), actionsMenu);
-            actionsMenu->addAction(subscribe);
-            actionsMenu->addAction(block);
+            if(currentPost().source != "ostatus") {
+                actionsMenu->addAction(subscribe);
+                actionsMenu->addAction(block);
+            }
         }
         ret = menu.exec(QCursor::pos());
         if(ret == 0)
