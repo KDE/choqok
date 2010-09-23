@@ -110,8 +110,9 @@ QString TwitterApiPostWidget::generateSign()
             sign += " - ";
             if(currentPost().source == "ostatus" && !currentPost().author.homePageUrl.isEmpty()) {
                 KUrl srcUrl(currentPost().author.homePageUrl);
-                sign += QString( "<a href='%1' title='Sent from %2 via OStatus'>%2</a>" ).arg(currentPost().author.homePageUrl)
-                 .arg(srcUrl.host());
+                sign += i18n( "<a href='%1' title='Sent from %2 via OStatus'>%2</a>",
+                              currentPost().author.homePageUrl,
+                              srcUrl.host());
             } else {
                 sign += currentPost().source;
             }
