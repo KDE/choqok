@@ -573,4 +573,9 @@ void PostWidget::wheelEvent(QWheelEvent* event)
     event->ignore();
 }
 
+void PostWidget::addAction(KAction* action)
+{
+    _mainWidget->addAction(action);
+}
+
 #include "postwidget.moc"

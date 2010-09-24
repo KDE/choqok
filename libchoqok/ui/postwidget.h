@@ -30,6 +30,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <choqoktypes.h>
 #include <microblog.h>
 
+class KAction;
 class QGridLayout;
 class KPushButton;
 
@@ -109,6 +110,11 @@ public:
     TextBrowser * mainWidget();
 
     QStringList urls();
+
+    /**
+     * Plugins can add status specific actions and process them internally
+     */
+    void addAction( KAction *action );
 
 public Q_SLOTS:
     /**

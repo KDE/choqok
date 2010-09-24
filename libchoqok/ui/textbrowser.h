@@ -28,6 +28,7 @@
 #include <KDE/KTextBrowser>
 #include "choqok_export.h"
 
+class KAction;
 namespace Choqok {
 
 namespace UI {
@@ -38,6 +39,7 @@ Q_OBJECT
 public:
     TextBrowser(QWidget* parent = 0);
     virtual ~TextBrowser();
+    void addAction( KAction *action);
 
 Q_SIGNALS:
     void clicked(QMouseEvent* ev);
@@ -55,6 +57,10 @@ protected:
     virtual void mousePressEvent(QMouseEvent* ev);
     virtual void resizeEvent(QResizeEvent* e);
     virtual void contextMenuEvent(QContextMenuEvent* event);
+
+private:
+    class Private;
+    Private * const d;
 };
 
 }

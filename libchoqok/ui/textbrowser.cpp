@@ -33,8 +33,13 @@
 
 using namespace Choqok::UI;
 
-Choqok::UI::TextBrowser::TextBrowser(QWidget* parent)
-    : KTextBrowser(parent, true)
+class TextBrowser::Private{
+public:
+    QList<KAction*> actions;
+};
+
+TextBrowser::TextBrowser(QWidget* parent)
+    : KTextBrowser(parent, true), d(new Private)
 {
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -42,9 +47,9 @@ Choqok::UI::TextBrowser::TextBrowser(QWidget* parent)
 
 }
 
-Choqok::UI::TextBrowser::~TextBrowser()
+TextBrowser::~TextBrowser()
 {
-
+    delete d;
 }
 
 void TextBrowser::mousePressEvent(QMouseEvent* ev)
@@ -77,6 +82,9 @@ void TextBrowser::contextMenuEvent(QContextMenuEvent* event)
 //     selectAll->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_A ) );
     connect( selectAll, SIGNAL(triggered(bool)), SLOT(selectAll()) );
     menu->addAction(selectAll);
+    foreach(KAction *act, d->actions) {
+        menu->addAction(act);
+    }
     menu->popup(event->globalPos());
 }
 
@@ -104,6 +112,12 @@ void TextBrowser::slotCopyLink()
 void Choqok::UI::TextBrowser::wheelEvent(QWheelEvent* event)
 {
     event->ignore();
+}
+
+void Choqok::UI::TextBrowser::addAction(KAction* action)
+{
+    if(action)
+        d->actions.append(action);
 }
 
 
