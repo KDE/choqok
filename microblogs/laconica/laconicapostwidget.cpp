@@ -87,11 +87,8 @@ LaconicaPostWidget::~LaconicaPostWidget()
 QString LaconicaPostWidget::prepareStatus(const QString& text)
 {
     QString res = TwitterApiPostWidget::prepareStatus(text);
-    QString homepage = d->account->homepageUrl().prettyUrl(KUrl::RemoveTrailingSlash);
-    res.replace(mGroupRegExp,"\\1!<a href='group://\\2'>\\2</a> <a href='"+ homepage +
-    "group/\\2'>"+ webIconText +"</a>");
-    res.replace(mHashtagRegExp,"\\1#<a href='tag://\\2'>\\2</a> <a href='"+ homepage +
-    "tag/\\1'>"+ webIconText +"</a>");
+    res.replace(mGroupRegExp,"\\1!<a href='group://\\2'>\\2</a>");
+    res.replace(mHashtagRegExp,"\\1#<a href='tag://\\2'>\\2</a>");
     return res;
 }
 
@@ -107,14 +104,43 @@ QString LaconicaPostWidget::generateSign()
 void LaconicaPostWidget::checkAnchor(const QUrl& url)
 {
     QString scheme = url.scheme();
+    QAction * ret;
     if( scheme == "tag" ) {
-        d->mBlog->searchBackend()->requestSearchResults(currentAccount(),
-                                                    url.host(),
-                                                    LaconicaSearch::ReferenceHashtag);
+        KMenu menu;
+        KAction *search = new KAction(KIcon("system-search"),
+                                      i18n("Search for %1", url.host()), &menu);
+        KAction *openInBrowser = new KAction(KIcon("applications-internet"),
+                                             i18n("Open tag page in browser"), &menu);
+        menu.addAction(search);
+        menu.addAction(openInBrowser);
+        menu.setDefaultAction(search);
+        ret = menu.exec(QCursor::pos());
+        if(ret == search){
+            d->mBlog->searchBackend()->requestSearchResults(currentAccount(),
+                                                        url.host(),
+                                                        LaconicaSearch::ReferenceHashtag);
+        } else if(ret == openInBrowser){
+            Choqok::openUrl(QUrl(QString(d->account->homepageUrl().prettyUrl(KUrl::RemoveTrailingSlash)) +
+                                  "tag/" + url.host()));
+        }
     } else if( scheme == "group" ) {
-        d->mBlog->searchBackend()->requestSearchResults(currentAccount(),
-                                                    url.host(),
-                                                    LaconicaSearch::ReferenceGroup);
+        KMenu menu;
+        KAction *search = new KAction(KIcon("system-search"),
+                                      i18n("Show latest group posts", url.host()), &menu);
+        KAction *openInBrowser = new KAction(KIcon("applications-internet"),
+                                             i18n("Open group page in browser"), &menu);
+        menu.addAction(search);
+        menu.addAction(openInBrowser);
+        menu.setDefaultAction(search);
+        ret = menu.exec(QCursor::pos());
+        if(ret == search){
+            d->mBlog->searchBackend()->requestSearchResults(currentAccount(),
+                                                        url.host(),
+                                                        LaconicaSearch::ReferenceGroup);
+        } else if(ret == openInBrowser){
+            Choqok::openUrl(QUrl(QString(d->account->homepageUrl().prettyUrl(KUrl::RemoveTrailingSlash)) +
+                                  "group/" + url.host()));
+        }
     } else if(scheme == "user") {
         KMenu menu;
         KAction * info = new KAction( KIcon("user-identity"), i18nc("Who is user", "Who is %1",
@@ -134,7 +160,6 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
             to->setData(LaconicaSearch::ToUser);
         }
         menu.addAction(openInBrowser);
-        QAction * ret;
 
         //Subscribe/UnSubscribe/Block
         bool hasBlock = false, isSubscribe = false;
