@@ -39,6 +39,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QMenu>
 #include <kmenu.h>
 #include <QCloseEvent>
+#include <qmutex.h>
 
 static const int _15SECS = 15000;
 static const int _MINUTE = 60000;
@@ -302,10 +303,13 @@ void PostWidget::setHeight()
 
 void PostWidget::closeEvent(QCloseEvent* event)
 {
+    QMutex mt;
+    mt.lock();
     if( !isRead() )
         setReadInternal();
     Q_EMIT aboutClosing(currentPost().postId, this);
     event->accept();
+    mt.unlock();
 }
 
 void PostWidget::mousePressEvent(QMouseEvent* ev)

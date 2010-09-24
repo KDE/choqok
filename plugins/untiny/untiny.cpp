@@ -30,6 +30,7 @@
 #include <KIO/Job>
 #include <shortenmanager.h>
 #include <untinysettings.h>
+#include <qmutex.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < UnTiny > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_untiny" ) )
@@ -141,14 +142,15 @@ void UnTiny::slot301Redirected(KIO::Job* job, KUrl fromUrl, KUrl toUrl)
 {
     QPointer<Choqok::UI::PostWidget> postToParse = mParsingList.take(job);
     job->kill();
+    QMutex mt;
     if(postToParse){
+        mt.lock();
         QString content = postToParse->content();
 //         kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
         content.replace(QRegExp("title='" + fromUrl.url() + '\''), "title='" + toUrl.url() + '\'');
         content.replace(QRegExp("href='" + fromUrl.url() + '\''), "href='" + toUrl.url() + '\'');
-        if(postToParse) {
-            postToParse->setContent(content);
-            Choqok::ShortenManager::self()->emitNewUnshortenedUrl(postToParse, fromUrl, toUrl);
-        }
+        postToParse->setContent(content);
+        Choqok::ShortenManager::self()->emitNewUnshortenedUrl(postToParse, fromUrl, toUrl);
+        mt.unlock();
     }
 }

@@ -30,6 +30,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KDebug>
 #include "notifymanager.h"
 #include <choqokbehaviorsettings.h>
+#include <qtconcurrentrun.h>
+#include <QApplication>
 
 namespace Choqok{
 
@@ -72,6 +74,11 @@ public:
 
 K_GLOBAL_STATIC(ShortenManagerPrivate, _smp)
 
+QString shorten(const QString &url)
+{
+    return _smp->backend->shorten(url);
+}
+
 ShortenManager::ShortenManager(QObject *parent)
 : QObject(parent)
 {
@@ -90,7 +97,14 @@ QString ShortenManager::shortenUrl(const QString &url)
     if(_smp->backend){
         kDebug()<<"Shortening: "<<url;
         NotifyManager::shortening(url);
-        return _smp->backend->shorten(url);
+#ifndef QT_NO_CONCURRENT
+        QFuture<QString> res = QtConcurrent::run<QString>( shorten, QString(url));
+        while( !res.isFinished() )
+            QApplication::processEvents();
+        return res.result();
+#else
+        return shorten(url);
+#endif
     } else {
         kDebug()<<"There isn't any Shortener plugin.";
         return url;
