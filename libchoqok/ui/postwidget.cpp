@@ -109,7 +109,7 @@ const QString PostWidget::webIconText("&#9755;");
 PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* parent/* = 0*/ )
     :QWidget(parent), _mainWidget(new TextBrowser(this)), d(new Private(account, post))
 {
-    //     setAttribute(Qt::WA_DeleteOnClose);
+    setAttribute(Qt::WA_DeleteOnClose);
     _mainWidget->setFrameShape(QFrame::NoFrame);
     if(currentAccount()->username().compare( currentPost().author.userName, Qt::CaseInsensitive ) == 0 )
         d->mCurrentPost.isRead = true;
@@ -305,8 +305,7 @@ void PostWidget::closeEvent(QCloseEvent* event)
     if( !isRead() )
         setReadInternal();
     Q_EMIT aboutClosing(currentPost().postId, this);
-    event->ignore();
-    QWidget::deleteLater();
+    event->accept();
 }
 
 void PostWidget::mousePressEvent(QMouseEvent* ev)
@@ -326,7 +325,8 @@ void PostWidget::resizeEvent ( QResizeEvent * event )
 void PostWidget::enterEvent ( QEvent * event )
 {
     foreach(KPushButton *btn, buttons()){
-        btn->show(); //!!!!!!!!
+        if(btn)//A crash happens here :/
+            btn->show();
     }
     QWidget::enterEvent(event);
 }
@@ -334,7 +334,8 @@ void PostWidget::enterEvent ( QEvent * event )
 void PostWidget::leaveEvent ( QEvent * event )
 {
     foreach(KPushButton *btn, buttons()){
-        btn->hide();
+        if(btn)
+            btn->hide();
     }
     QWidget::enterEvent(event);
 }
