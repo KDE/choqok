@@ -58,6 +58,7 @@ public:
     QPointer<KPushButton> btnMarkAllAsRead;
     int unreadCount;
     QMap<ChoqokId, PostWidget *> posts;
+    QMultiMap<QDateTime, PostWidget *>  sortedPostsList;
     QVBoxLayout *mainLayout;
     QHBoxLayout *titleBarLayout;
     QLabel *lblDesc;
@@ -159,10 +160,10 @@ void TimelineWidget::setupUi()
 
 void TimelineWidget::removeOldPosts()
 {
-    int count = d->posts.count() - BehaviorSettings::countOfPosts();
+    int count = d->sortedPostsList.count() - BehaviorSettings::countOfPosts();
 //     kDebug()<<count;
-    while( count > 0 && !d->posts.isEmpty() ){
-        PostWidget *wd = d->posts.values().first();
+    while( count > 0 && !d->sortedPostsList.isEmpty() ){
+        PostWidget *wd = d->sortedPostsList.values().first();
         if(wd && wd->isRead()){
             wd->close();
         }
@@ -224,6 +225,7 @@ void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
              SLOT(postWidgetClosed(ChoqokId,PostWidget*)) );
     d->mainLayout->insertWidget(0, widget);
     d->posts.insert(widget->currentPost().postId, widget);
+    d->sortedPostsList.insert(widget->currentPost().creationDateTime, widget);
     Global::SessionManager::self()->emitNewPostWidgetAdded(widget, currentAccount(), timelineName());
 }
 
@@ -240,7 +242,7 @@ void TimelineWidget::setUnreadCount(int unread)
 void TimelineWidget::markAllAsRead()
 {
     if( d->unreadCount > 0 ) {
-        foreach(PostWidget *pw, d->posts){
+        foreach(PostWidget *pw, d->sortedPostsList){
             pw->setRead();
         }
         int unread = -d->unreadCount;
@@ -257,7 +259,7 @@ Account* TimelineWidget::currentAccount()
 
 void TimelineWidget::settingsChanged()
 {
-    foreach(PostWidget *pw, d->posts){
+    foreach(PostWidget *pw, d->sortedPostsList){
         pw->setUiStyle();
     }
 }
@@ -282,14 +284,20 @@ QList< PostWidget* > TimelineWidget::postWidgets()
     return posts().values();
 }
 
-void TimelineWidget::postWidgetClosed(const ChoqokId& postId, PostWidget*)
+void TimelineWidget::postWidgetClosed(const ChoqokId& postId, PostWidget* post)
 {
     d->posts.remove(postId);
+    d->sortedPostsList.remove(post->currentPost().creationDateTime, post);
 }
 
 QMap< ChoqokId, PostWidget* >& TimelineWidget::posts() const
 {
     return d->posts;
+}
+
+QMultiMap< QDateTime, PostWidget* >& TimelineWidget::sortedPostsList() const
+{
+    return d->sortedPostsList;
 }
 
 QLabel* TimelineWidget::timelineDescription()

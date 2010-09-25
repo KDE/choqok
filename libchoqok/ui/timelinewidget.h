@@ -117,6 +117,7 @@ protected:
     virtual void addPostWidgetToUi(PostWidget *widget);
     Account *currentAccount();
     QMap<ChoqokId, PostWidget *> &posts() const;
+    QMultiMap<QDateTime, PostWidget *> &sortedPostsList() const;
 
     QVBoxLayout *mainLayout();
     QHBoxLayout *titleBarLayout();

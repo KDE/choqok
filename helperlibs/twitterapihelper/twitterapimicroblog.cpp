@@ -175,20 +175,26 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
                                                           const QString& timelineName)
 {
     kDebug()<<timelineName;
+    QList< Choqok::Post* > list;
     QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
     KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
     QStringList tmpList = postsBackup.groupList();
-    QList<ChoqokId> groupList;
+
+/// to don't load old archives
+    if( tmpList.isEmpty() || !(QDateTime::fromString(tmpList.first()).isValid()) )
+        return list;
+///--------------
+
+    QList<QDateTime> groupList;
     foreach(const QString &str, tmpList)
-        groupList<<str;
+        groupList.append(QDateTime::fromString(str) );
     qSort(groupList);
-    QList< Choqok::Post* > list;
     int count = groupList.count();
     if( count ) {
         Choqok::Post *st = 0;
         for ( int i = 0; i < count; ++i ) {
             st = new Choqok::Post;
-            KConfigGroup grp( &postsBackup, groupList[i] );
+            KConfigGroup grp( &postsBackup, groupList[i].toString() );
             st->creationDateTime = grp.readEntry( "creationDateTime", QDateTime::currentDateTime() );
             st->postId = grp.readEntry( "postId", QString() );
             st->content = grp.readEntry( "text", QString() );
@@ -236,7 +242,7 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
     QList< Choqok::UI::PostWidget *>::const_iterator it, endIt = timeline.constEnd();
     for ( it = timeline.constBegin(); it != endIt; ++it ) {
         const Choqok::Post *post = &((*it)->currentPost());
-        KConfigGroup grp( &postsBackup, post->postId );
+        KConfigGroup grp( &postsBackup, post->creationDateTime.toString() );
         grp.writeEntry( "creationDateTime", post->creationDateTime );
         grp.writeEntry( "postId", post->postId.toString() );
         grp.writeEntry( "text", post->content );
