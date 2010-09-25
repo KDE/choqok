@@ -194,35 +194,38 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
     QVariantMap map = parser.parse(stj->data(), &ok).toMap();
 
     Choqok::Post post;
-    if ( ok ) {
-        QString timeStr;
-        d->errorMessage = map["error"].toString();
-        if( d->errorMessage.isEmpty() ) { //No Error
-            post.author.realName = map["name"].toString();
-            post.author.userName = map["screen_name"].toString();
-            post.author.location = map["location"].toString();
-            post.author.description = map["description"].toString();
-            post.author.profileImageUrl = map["profile_image_url"].toString();
-            post.author.homePageUrl = map["url"].toString();
-            d->timeZone = map["time_zone"].toString();
-            d->followersCount = map["followers_count"].toString();
-            d->friendsCount = map["friends_count"].toString();
-            QVariantMap var = map["status"].toMap();
-            post.content = var["text"].toString();
-            post.creationDateTime = d->mBlog->dateFromString(var["created_at"].toString());
-            post.isFavorited = var["favorited"].toBool();
-            post.postId = var["id"].toString();
-            post.replyToPostId = var["in_reply_to_status_id"].toString();
-            post.replyToUserId = var["in_reply_to_user_id"].toString();
-            post.replyToUserName = var["in_reply_to_screen_name"].toString();
-            post.source = var["source"].toString();
-            d->currentPost = post;
-        }
-    } else {
+    if ( !ok ){
         kDebug()<<"JSON parsing failed! Data is:\n\t"<<stj->data();
-        d->wid->setText(i18n("Cannot load user information."));
+        d->errorMessage = i18n("Cannot load user information.");
+        updateHtml();
+        showForm();
         return;
     }
+    
+    QString timeStr;
+    d->errorMessage = map["error"].toString();
+    if( d->errorMessage.isEmpty() ) { //No Error
+        post.author.realName = map["name"].toString();
+        post.author.userName = map["screen_name"].toString();
+        post.author.location = map["location"].toString();
+        post.author.description = map["description"].toString();
+        post.author.profileImageUrl = map["profile_image_url"].toString();
+        post.author.homePageUrl = map["url"].toString();
+        d->timeZone = map["time_zone"].toString();
+        d->followersCount = map["followers_count"].toString();
+        d->friendsCount = map["friends_count"].toString();
+        QVariantMap var = map["status"].toMap();
+        post.content = var["text"].toString();
+        post.creationDateTime = d->mBlog->dateFromString(var["created_at"].toString());
+        post.isFavorited = var["favorited"].toBool();
+        post.postId = var["id"].toString();
+        post.replyToPostId = var["in_reply_to_status_id"].toString();
+        post.replyToUserId = var["in_reply_to_user_id"].toString();
+        post.replyToUserName = var["in_reply_to_screen_name"].toString();
+        post.source = var["source"].toString();
+        d->currentPost = post;
+    }
+        
     updateHtml();
     showForm();
 
