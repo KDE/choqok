@@ -36,7 +36,6 @@
 #include <textbrowser.h>
 #include <KMessageBox>
 
-const QRegExp TwitterApiPostWidget::mUserRegExp("([\\s\\W]|^)@([a-zA-Z0-9_]+){1,64}");
 const QRegExp TwitterApiPostWidget::mHashtagRegExp("([\\s]|^)#([\\w_]+)");
 const KIcon TwitterApiPostWidget::unFavIcon(Choqok::MediaManager::convertToGrayScale(KIcon("rating").pixmap(16)) );
 
@@ -82,10 +81,7 @@ void TwitterApiPostWidget::initUi()
 
 QString TwitterApiPostWidget::prepareStatus(const QString& text)
 {
-    QString res = Choqok::UI::PostWidget::prepareStatus(text);
-    res.replace(mUserRegExp,"\\1@<a href='user://\\2'>\\2</a>");
-
-    return res;
+    return Choqok::UI::PostWidget::prepareStatus(text);
 }
 
 QString TwitterApiPostWidget::generateSign()

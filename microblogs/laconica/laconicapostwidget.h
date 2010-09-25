@@ -35,6 +35,7 @@ public:
 
 protected:
     static const QRegExp mGroupRegExp;
+    static const QRegExp mLaconicaUserRegExp;
     virtual QString prepareStatus(const QString& text);
     virtual void checkAnchor(const QUrl& url);
     virtual QString generateSign();

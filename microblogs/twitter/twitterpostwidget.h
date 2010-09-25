@@ -35,6 +35,8 @@ public:
 protected:
     virtual QString prepareStatus(const QString& text);
     virtual void checkAnchor(const QUrl& url);
+    
+    static const QRegExp mTwitterUserRegExp;
 };
 
 #endif // TWITTERPOSTWIDGET_H

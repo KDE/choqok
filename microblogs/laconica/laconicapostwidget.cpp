@@ -39,7 +39,8 @@
 #include <KPushButton>
 #include <choqoktools.h>
 
-const QRegExp LaconicaPostWidget::mGroupRegExp("([\\s]|^)!([a-zA-Z0-9]+)");
+const QRegExp LaconicaPostWidget::mGroupRegExp("([\\s]|^)!([a-z0-9]+)",  Qt::CaseInsensitive );
+const QRegExp LaconicaPostWidget::mLaconicaUserRegExp( "([\\s\\W]|^)@([a-z0-9]+){1,64}", Qt::CaseInsensitive );
 
 class LaconicaPostWidget::Private
 {
@@ -87,6 +88,7 @@ LaconicaPostWidget::~LaconicaPostWidget()
 QString LaconicaPostWidget::prepareStatus(const QString& text)
 {
     QString res = TwitterApiPostWidget::prepareStatus(text);
+    res.replace(mLaconicaUserRegExp,"\\1@<a href='user://\\2'>\\2</a>");
     res.replace(mGroupRegExp,"\\1!<a href='group://\\2'>\\2</a>");
     res.replace(mHashtagRegExp,"\\1#<a href='tag://\\2'>\\2</a>");
     return res;
