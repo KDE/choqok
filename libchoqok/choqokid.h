@@ -31,6 +31,7 @@
 /**
 Id container object
 An special QString obejct.
+TODO remove this class and use QString due Twitter change in statusId
 */
 class CHOQOK_EXPORT ChoqokId : public QString
 {
