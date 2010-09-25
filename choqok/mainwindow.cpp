@@ -54,6 +54,7 @@
 #include <KSplashScreen>
 #include <KMenu>
 #include <uploadmediadialog.h>
+#include <knotifyconfigwidget.h>
 
 MainWindow::MainWindow()
     : Choqok::UI::MainWindow(), quickWidget(0), s_settingsDialog(0), m_splash(0), microblogCounter(0)
@@ -216,9 +217,9 @@ void MainWindow::setupActions()
         showMain->setText( i18n("Restore") );
     connect( showMain, SIGNAL( triggered( bool ) ), this, SLOT( toggleMainWindow() ) );
 
-//     KAction *manageAccounts = new KAction(KIcon("user-group-properties"), i18n("Manage Accounts..."), this);
-//     actionCollection()->addAction(QLatin1String("manage_accounts"), manageAccounts);
-//     connect( manageAccounts, SIGNAL(triggered(bool)), this, SLOT(slotManageAccounts()) );
+    KAction *act = KStandardAction::configureNotifications ( this, SLOT ( slotConfNotifications() ),
+                                                             actionCollection() );
+    actionCollection()->addAction ( "settings_notifications", act );
 
     KAction *enableUpdates = new KAction( i18n( "Enable Update Timer" ), this );
     enableUpdates->setCheckable( true );
@@ -265,7 +266,7 @@ void MainWindow::setupActions()
 
 void MainWindow::slotConfNotifications()
 {
-//     KNotifyConfigWidget::configure ( this );
+    KNotifyConfigWidget::configure ( this );
 }
 
 void MainWindow::createQuickPostDialog()
@@ -527,6 +528,7 @@ void MainWindow::toggleMainWindow()
     else
         show();
 }
+
 void MainWindow::hideEvent(QHideEvent* event)
 {
     Choqok::UI::MainWindow::hideEvent(event);
