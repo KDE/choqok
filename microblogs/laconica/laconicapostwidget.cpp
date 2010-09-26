@@ -108,9 +108,10 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
     QString scheme = url.scheme();
     QAction * ret;
     if( scheme == "tag" ) {
+        QString unpcode = QUrl::fromPunycode(url.host().toUtf8());
         KMenu menu;
         KAction *search = new KAction(KIcon("system-search"),
-                                      i18n("Search for %1", url.host()), &menu);
+                                      i18n("Search for %1", unpcode), &menu);
         KAction *openInBrowser = new KAction(KIcon("applications-internet"),
                                              i18n("Open tag page in browser"), &menu);
         menu.addAction(search);
@@ -119,11 +120,11 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
         ret = menu.exec(QCursor::pos());
         if(ret == search){
             d->mBlog->searchBackend()->requestSearchResults(currentAccount(),
-                                                        url.host(),
+                                                        unpcode,
                                                         LaconicaSearch::ReferenceHashtag);
         } else if(ret == openInBrowser){
             Choqok::openUrl(QUrl(QString(d->account->homepageUrl().prettyUrl(KUrl::RemoveTrailingSlash)) +
-                                  "tag/" + url.host()));
+                                  "tag/" + unpcode));
         }
     } else if( scheme == "group" ) {
         KMenu menu;
