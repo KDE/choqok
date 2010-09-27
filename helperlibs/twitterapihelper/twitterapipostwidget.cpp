@@ -36,7 +36,6 @@
 #include <textbrowser.h>
 #include <KMessageBox>
 
-const QRegExp TwitterApiPostWidget::mHashtagRegExp("([\\s]|^)#([\\w_]+)");
 const KIcon TwitterApiPostWidget::unFavIcon(Choqok::MediaManager::convertToGrayScale(KIcon("rating").pixmap(16)) );
 
 class TwitterApiPostWidget::Private

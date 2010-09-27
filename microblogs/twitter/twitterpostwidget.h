@@ -37,6 +37,7 @@ protected:
     virtual void checkAnchor(const QUrl& url);
     
     static const QRegExp mTwitterUserRegExp;
+    static const QRegExp mTwitterTagRegExp;
 };
 
 #endif // TWITTERPOSTWIDGET_H
