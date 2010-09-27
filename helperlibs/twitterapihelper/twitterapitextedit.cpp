@@ -144,8 +144,15 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
         d->c->popup()->hide();
         return;
     } else  if ((e->key() != Qt::Key_Enter) && (e->key() != Qt::Key_Return)) {
+
         if (completionPrefix.startsWith('@'))
             completionPrefix.remove(0, 1);
+        
+        if ( textCursor().selectedText().length() && 
+             textCursor().selectedText() != completionPrefix ) {
+          return;
+        }
+        
         if (completionPrefix != d->c->completionPrefix()) {
             d->c->setCompletionPrefix(completionPrefix);
             d->c->popup()->setCurrentIndex(d->c->completionModel()->index(0, 0));
