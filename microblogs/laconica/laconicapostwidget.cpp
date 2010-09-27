@@ -39,9 +39,9 @@
 #include <KPushButton>
 #include <choqoktools.h>
 
-const QRegExp LaconicaPostWidget::mGroupRegExp( "([\\s]|^)!([a-z0-9]+)",  Qt::CaseInsensitive );
+const QRegExp LaconicaPostWidget::mGroupRegExp( "([\\s]|^)!([a-z0-9]+){1,64}",  Qt::CaseInsensitive );
 const QRegExp LaconicaPostWidget::mLaconicaUserRegExp( "([\\s\\W]|^)@([a-z0-9]+){1,64}", Qt::CaseInsensitive );
-const QRegExp LaconicaPostWidget::mLaconicaHashRegExp( "([\\s]|^)#([\\w_]+)", Qt::CaseInsensitive );
+const QRegExp LaconicaPostWidget::mLaconicaHashRegExp( "([\\s]|^)#([\\w_\\.\\-]+)", Qt::CaseInsensitive );
 
 class LaconicaPostWidget::Private
 {
@@ -110,6 +110,10 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
     QAction * ret;
     if( scheme == "tag" ) {
         QString unpcode = QUrl::fromPunycode(url.host().toUtf8());
+        unpcode.remove('.');
+        unpcode.remove('-');
+        unpcode.remove('_');
+        
         KMenu menu;
         KAction *search = new KAction(KIcon("system-search"),
                                       i18n("Search for %1", unpcode), &menu);

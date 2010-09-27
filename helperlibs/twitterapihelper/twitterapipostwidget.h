@@ -52,7 +52,6 @@ protected:
     virtual QString generateSign();
     void updateFavStat();
 
-    static const QRegExp mHashtagRegExp;
     static const KIcon unFavIcon;
 private:
     class Private;
