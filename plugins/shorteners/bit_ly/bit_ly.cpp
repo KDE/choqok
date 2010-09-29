@@ -30,6 +30,7 @@
 #include <KGenericFactory>
 #include "notifymanager.h"
 #include "bit_ly_settings.h"
+#include <passwordmanager.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Bit_ly > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_bit_ly" ) )
@@ -51,10 +52,11 @@ QString Bit_ly::shorten( const QString& url )
     QString apiKey = "R_bdd1ae8b6191dd36e13fc77ca1d4f27f";
     KUrl reqUrl( "http://api.bit.ly/v3/shorten" );
     Bit_ly_Settings::self()->readConfig();
-
-    if( !Bit_ly_Settings::login().isEmpty() && !Bit_ly_Settings::api_key().isEmpty()){
+    QString userApiKey = Choqok::PasswordManager::self()->readPassword( QString("bitly_%1")
+                                                       .arg( Bit_ly_Settings::login() ) );
+    if( !Bit_ly_Settings::login().isEmpty() && !userApiKey.isEmpty() ){
         reqUrl.addQueryItem( "x_login", Bit_ly_Settings::login() );
-        reqUrl.addQueryItem( "x_apiKey", Bit_ly_Settings::api_key() );
+        reqUrl.addQueryItem( "x_apiKey", userApiKey );
     }
 
     if( Bit_ly_Settings::domain() == "j.mp" ) //bit.ly is default domain
