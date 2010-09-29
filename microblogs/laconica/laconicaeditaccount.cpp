@@ -87,7 +87,7 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
         }
         setAccount( mAccount = new LaconicaAccount(microblog, newAccountAlias) );
         kcfg_alias->setText( newAccountAlias );
-        const QRegExp userRegExp("([a-zA-Z0-9_]){1,64}");
+        const QRegExp userRegExp("([a-z0-9]){1,64}", Qt::CaseInsensitive);
         QValidator *userVal = new QRegExpValidator(userRegExp, 0);
         kcfg_basicUsername->setValidator(userVal);
     }
