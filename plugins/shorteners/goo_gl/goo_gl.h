@@ -47,10 +47,6 @@ private:
     qint64 third( const QList<qint64> &b );
     QByteArray fourth( qint64 l );
     QByteArray authToken( const QString &url );
-    QString data;
-    bool readyToParse;
-  private slots:
-    void slotReadyRead(KJob*);
 };
 
 #endif //GOO_GL_H

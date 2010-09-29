@@ -31,12 +31,13 @@
 #include <kio/job.h>
 #include <math.h>
 #include <notifymanager.h>
+#include <qjson/parser.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Goo_gl > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_goo_gl" ) )
 
 Goo_gl::Goo_gl( QObject* parent, const QVariantList& )
-    : Choqok::Shortener( MyPluginFactory::componentData(), parent )
+        : Choqok::Shortener( MyPluginFactory::componentData(), parent )
 {
 }
 
@@ -44,9 +45,9 @@ Goo_gl::~Goo_gl()
 {
 }
 
-qint64 Goo_gl::first( const QByteArray &str ){
+qint64 Goo_gl::first( const QByteArray &str ) {
     qint64 m = 5381;
-    for ( int o = 0; o < str.length(); o++ ){
+    for ( int o = 0; o < str.length(); o++ ) {
         QList<qint64> qb;
         qb.append( m << 5 );
         qb.append( m );
@@ -56,9 +57,9 @@ qint64 Goo_gl::first( const QByteArray &str ){
     return m;
 }
 
-qint64 Goo_gl::second( const QByteArray &str ){
+qint64 Goo_gl::second( const QByteArray &str ) {
     qint64 m = 0;
-    for ( int o = 0; o < str.length(); o++ ){
+    for ( int o = 0; o < str.length(); o++ ) {
         QList<qint64> qb;
         qb.append( ( int )str.at( o ) );
         qb.append( m << 6 );
@@ -69,26 +70,26 @@ qint64 Goo_gl::second( const QByteArray &str ){
     return m;
 }
 
-qint64 Goo_gl::third( const QList<qint64> &b ){
+qint64 Goo_gl::third( const QList<qint64> &b ) {
     qint64 l = 0;
-    for ( int i = 0; i < b.length();i++ ){
+    for ( int i = 0; i < b.length();i++ ) {
         qint64 val = b.at( i );
         val &= Q_INT64_C(4294967295);
         val += val > 2147483647 ? Q_INT64_C(-4294967296) : ( val < -2147483647 ? Q_INT64_C(4294967296) : 0 );
         l += val;
         l += l > 2147483647 ? Q_INT64_C(-4294967296) : ( l < -2147483647 ? Q_INT64_C(4294967296) : 0 );
     }
-  return l;
+    return l;
 }
 
-QByteArray Goo_gl::fourth( qint64 l ){
+QByteArray Goo_gl::fourth( qint64 l ) {
     l = l > 0 ? l : l + Q_INT64_C(4294967296);
     QByteArray m = QByteArray::number( l );
     qint64 o = 0;
     bool n = false;
-    for ( int p = m.length() - 1;p >= 0;--p ){
+    for ( int p = m.length() - 1;p >= 0;--p ) {
         int q = m.at( p ) - '0';
-        if ( n ){
+        if ( n ) {
             q *= 2;
             o += floor( q / 10 ) + q % 10;
         } else {
@@ -98,39 +99,33 @@ QByteArray Goo_gl::fourth( qint64 l ){
     }
     m = QByteArray::number( o % 10 );
     o = 0;
-    if ( ( m.at(0) - '0' ) != 0 ){
+    if ( ( m.at(0) - '0' ) != 0 ) {
         o = 10 - m.toInt( 0, 10 );
-        if ( QByteArray::number( l ).length() % 2 == 1 ){
-            if ( o % 2 == 1 ){
+        if ( QByteArray::number( l ).length() % 2 == 1 ) {
+            if ( o % 2 == 1 ) {
                 o += 9;
             }
-        o /= 2;
+            o /= 2;
         }
     }
     return QByteArray::number(o) + QByteArray::number(l);
 }
 
-QByteArray Goo_gl::authToken( const QString &url ){
-        qint64 i = first( url.toLatin1() );
-        i = i >> 2 & 1073741823;
-        i = ( i >> 4 & 67108800 ) | ( i & 63 );
-        i = ( i >> 4 & 4193280 ) | ( i & 1023 );
-        i = ( i >> 4 & 245760 ) | ( i & 16383 );
-        QByteArray j;
-        j.append( '7' );
-        qint64 h = second( url.toLatin1() );
-        qint64 k = ( i >> 2 & 15 ) << 4 | ( h & 15 );
-        k |= ( i >> 6 & 15 ) << 12 | ( h >> 8 & 15 ) << 8;
-        k |= ( i >> 10 & 15 ) << 20 | ( h >> 16 & 15 ) << 16;
-        k |= ( i >> 14 & 15 ) << 28 | ( h >> 24 & 15 ) << 24;
-        j.append( fourth( k ) );
-        return j;
-}
-
-void Goo_gl::slotReadyRead(KJob *job)
-{
-    data = static_cast<KIO::StoredTransferJob *>(job)->data();
-    readyToParse = true;
+QByteArray Goo_gl::authToken( const QString &url ) {
+    qint64 i = first( url.toLatin1() );
+    i = i >> 2 & 1073741823;
+    i = ( i >> 4 & 67108800 ) | ( i & 63 );
+    i = ( i >> 4 & 4193280 ) | ( i & 1023 );
+    i = ( i >> 4 & 245760 ) | ( i & 16383 );
+    QByteArray j;
+    j.append( '7' );
+    qint64 h = second( url.toLatin1() );
+    qint64 k = ( i >> 2 & 15 ) << 4 | ( h & 15 );
+    k |= ( i >> 6 & 15 ) << 12 | ( h >> 8 & 15 ) << 8;
+    k |= ( i >> 10 & 15 ) << 20 | ( h >> 16 & 15 ) << 16;
+    k |= ( i >> 14 & 15 ) << 28 | ( h >> 24 & 15 ) << 24;
+    j.append( fourth( k ) );
+    return j;
 }
 
 QString Goo_gl::shorten( const QString& url )
@@ -142,34 +137,31 @@ QString Goo_gl::shorten( const QString& url )
           "&url=" + QUrl::toPercentEncoding( KUrl( url ).url() ) +
           "&auth_token=" + authToken( KUrl( url ).url() );
 
-    readyToParse = false;
     QMap<QString, QString> metaData;
     metaData.insert("accept","*/*");
     metaData.insert("content-type", "Content-Type: application/x-www-form-urlencoded" );
-    
+
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( req, KUrl("http://goo.gl/api/url"), KIO::HideProgressInfo ) ;
     job->setMetaData(KIO::MetaData(metaData));
-    connect( job, SIGNAL(finished(KJob*)), this, SLOT(slotReadyRead(KJob*)) );
 
-    while (!readyToParse){      //Wait while buffer will be full.
-      qApp->processEvents(); 
-    }
+    QByteArray data;
+    if ( KIO::NetAccess::synchronousRun( job, 0, &data ) ) {
+        QString output( data );
+        QJson::Parser parser;
+        bool ok;
+        QVariantMap map = parser.parse( data , &ok ).toMap();
 
-    if (data.isEmpty()) {
-      Choqok::NotifyManager::error( i18n("Cannot create a short url.\n%1", job->errorString()) );   
-      return url;
-    }
-    QString output( data );
-    QRegExp rx( QString( "\\{\\\"short_url\\\":\\\"(.*)\\\"" ) );
-    rx.setMinimal(true);
-    rx.indexIn(output);
-    output = rx.cap(1);
-    kDebug() << "Short url is: " << output;    
-    if( !output.isEmpty() ) {
-        return output;
+        if ( ok ) {
+            if ( !map[ "error" ].toString().isEmpty() ) {
+                Choqok::NotifyManager::error( map[ "error" ].toString(), i18n("Goo.gl error") );
+                return url;
+            }
+            return map[ "short_url" ].toString();
+        }
+        Choqok::NotifyManager::error( i18n("Malformed response\n"), i18n("Goo.gl error")  );
     } else {
-        Choqok::NotifyManager::error( i18n("Goo.gl error") );
-    } 
+        Choqok::NotifyManager::error( i18n("Cannot create a short url.\n%1", job->errorString()), i18n("Goo.gl error") );
+    }
     return url;
 }
 
