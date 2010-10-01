@@ -30,16 +30,17 @@
 #include <QClipboard>
 #include "postwidget.h"
 #include <QAbstractTextDocumentLayout>
+#include <QPointer>
 
 using namespace Choqok::UI;
 
 class TextBrowser::Private{
 public:
-    static QList<KAction*> actions;
+    static QList< QPointer<KAction> > actions;
     PostWidget *parent;
 };
 
-QList<KAction*> TextBrowser::Private::actions;
+QList< QPointer<KAction> > TextBrowser::Private::actions;
 
 TextBrowser::TextBrowser(QWidget* parent)
     : KTextBrowser(parent, true), d(new Private)
@@ -87,8 +88,10 @@ void TextBrowser::contextMenuEvent(QContextMenuEvent* event)
     connect( selectAll, SIGNAL(triggered(bool)), SLOT(selectAll()) );
     menu->addAction(selectAll);
     foreach(KAction *act, d->actions) {
-        act->setUserData(32, new PostWidgetUserData(d->parent));
-        menu->addAction(act);
+        if(act) {
+            act->setUserData(32, new PostWidgetUserData(d->parent));
+            menu->addAction(act);
+        }
     }
     menu->popup(event->globalPos());
 }
