@@ -165,7 +165,7 @@ void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount* theAccount, const QS
 
     url.addPath( QString( "/users/show/%1.json" ).arg(username));
 
-    kDebug() << url;
+//     kDebug() << url;
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
     if( d->currentPost.source != "ostatus" )
@@ -188,7 +188,7 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
         return;
     }
     KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>(job);
-    kDebug()<<stj->data();
+//     kDebug()<<stj->data();
     QJson::Parser parser;
     bool ok;
     QVariantMap map = parser.parse(stj->data(), &ok).toMap();
@@ -201,7 +201,7 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
         showForm();
         return;
     }
-    
+
     QString timeStr;
     d->errorMessage = map["error"].toString();
     if( d->errorMessage.isEmpty() ) { //No Error
@@ -225,7 +225,7 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
         post.source = var["source"].toString();
         d->currentPost = post;
     }
-        
+
     updateHtml();
     showForm();
 
