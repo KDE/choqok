@@ -177,7 +177,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
         if(accountUsername != postUsername){
             menu.addSeparator();
             QMenu *actionsMenu = menu.addMenu(KIcon("applications-system"), i18n("Actions"));
-            replyTo = new KAction(KIcon("edit-undo"), i18nc("Create a reply message to user", "Reply to %1",
+            replyTo = new KAction(KIcon("edit-undo"), i18nc("Write a message to user attention", "Write to %1",
                                                           url.host()), actionsMenu);
             actionsMenu->addAction(replyTo);
             if( d->account->friendsList().contains( url.host() ) ){
