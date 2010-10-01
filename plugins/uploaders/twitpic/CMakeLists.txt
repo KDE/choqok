@@ -15,7 +15,7 @@ kde4_add_kcfg_files(choqok_twitpic_PART_SRCS twitpicsettings.kcfgc )
 
 kde4_add_plugin(choqok_twitpic ${choqok_twitpic_PART_SRCS})
 
-target_link_libraries(choqok_twitpic ${KDE4_KIO_LIBS} choqok)
+target_link_libraries(choqok_twitpic ${KDE4_KIO_LIBS} ${QTOAUTH_LIBRARY} ${QJSON_LIBRARY} choqok twitterapihelper)
 
 install(TARGETS choqok_twitpic DESTINATION ${PLUGIN_INSTALL_DIR})
 

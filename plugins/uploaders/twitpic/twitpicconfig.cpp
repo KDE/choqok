@@ -29,6 +29,8 @@
 #include "twitpicsettings.h"
 #include <QVBoxLayout>
 #include <passwordmanager.h>
+#include <accountmanager.h>
+#include <KMessageBox>
 
 K_PLUGIN_FACTORY( TwitpicConfigFactory, registerPlugin < TwitpicConfig > (); )
 K_EXPORT_PLUGIN( TwitpicConfigFactory( "kcm_choqok_twitpic" ) )
@@ -42,39 +44,45 @@ TwitpicConfig::TwitpicConfig(QWidget* parent, const QVariantList& ):
     ui.setupUi(wd);
     addConfig( TwitpicSettings::self(), wd );
     layout->addWidget(wd);
-    connect( ui.kcfg_username,SIGNAL(textChanged(QString)), SLOT(emitChanged()) );
-    const QRegExp userRegExp("([a-zA-Z0-9_]){1,20}");
-    QValidator *userVal = new QRegExpValidator(userRegExp, 0);
-    ui.kcfg_username->setValidator(userVal);
-    connect( ui.cfg_password, SIGNAL(textChanged(QString)), SLOT(emitChanged()) );
+    connect(ui.accountsList, SIGNAL(currentIndexChanged(int)), SLOT(emitChanged()));
 }
 
 TwitpicConfig::~TwitpicConfig()
 {
-
+    kDebug()<<TwitpicSettings::alias();
 }
 
 void TwitpicConfig::load()
 {
     kDebug();
     KCModule::load();
-    ui.cfg_password->setText( Choqok::PasswordManager::self()->readPassword( QString("twitpic_%1")
-                                                                      .arg(ui.kcfg_username->text()) ) );
+    QList<Choqok::Account*> list = Choqok::AccountManager::self()->accounts();
+    foreach(Choqok::Account *acc, list ) {
+        if(acc->inherits("TwitterAccount")){
+            ui.accountsList->addItem(acc->alias());
+        }
+    }
+    TwitpicSettings::self()->readConfig();
+    ui.accountsList->setCurrentItem(TwitpicSettings::alias());
 }
 
 void TwitpicConfig::save()
 {
-    kDebug();
+    kDebug()<<ui.accountsList->currentIndex();
+    if(ui.accountsList->currentIndex() > -1) {
+        TwitpicSettings::setAlias( ui.accountsList->currentText() );
+        kDebug()<<TwitpicSettings::alias();
+    } else {
+        TwitpicSettings::setAlias(QString());
+        KMessageBox::error(this, i18n("You have to configure at least one twitter account to use this plugin."));
+    }
+    TwitpicSettings::self()->writeConfig();
     KCModule::save();
-    Choqok::PasswordManager::self()->writePassword(QString("twitpic_%1").arg(ui.kcfg_username->text()),
-                                                   ui.cfg_password->text());
 }
 
 void TwitpicConfig::emitChanged()
 {
     emit changed(true);
-    disconnect( ui.kcfg_username, SIGNAL(textChanged(QString)), this, SLOT(emitChanged()) );
-    disconnect( ui.cfg_password, SIGNAL(textChanged(QString)), this, SLOT(emitChanged()) );
 }
 
 #include "twitpicconfig.moc"

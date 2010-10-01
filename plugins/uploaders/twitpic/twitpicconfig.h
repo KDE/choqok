@@ -40,6 +40,7 @@ public:
 
 protected slots:
     void emitChanged();
+
 private:
     Ui_TwitpicPrefsBase ui;
 };
