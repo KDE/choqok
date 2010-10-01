@@ -111,6 +111,7 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
             QMenu *actionsMenu = menu.addMenu(KIcon("applications-system"), i18n("Actions"));
             replyTo = new KAction(KIcon("edit-undo"), i18nc("Write a message to user attention", "Write to %1",
                                                           url.host()), actionsMenu);
+            actionsMenu->addAction(replyTo);
             if( account->friendsList().contains( url.host(),
                 Qt::CaseInsensitive ) ){
                 dMessage = new KAction(KIcon("mail-message-new"), i18nc("Send direct message to user",
