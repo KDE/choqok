@@ -579,7 +579,38 @@ void PostWidget::wheelEvent(QWheelEvent* event)
 
 void PostWidget::addAction(KAction* action)
 {
-    _mainWidget->addAction(action);
+    TextBrowser::addAction(action);
 }
+
+class PostWidgetUserData::Private
+{
+public:
+    Private(PostWidget *postwidget)
+    :postWidget(postwidget)
+    {}
+    PostWidget *postWidget;
+};
+
+PostWidgetUserData::PostWidgetUserData( PostWidget *postWidget )
+:QObjectUserData(), d(new Private(postWidget))
+{
+
+}
+
+PostWidgetUserData::~PostWidgetUserData()
+{
+    delete d;
+}
+
+PostWidget* PostWidgetUserData::postWidget()
+{
+    return d->postWidget;
+}
+
+void PostWidgetUserData::setPostWidget(PostWidget* widget)
+{
+    d->postWidget = widget;
+}
+
 
 #include "postwidget.moc"

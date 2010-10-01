@@ -35,12 +35,16 @@ using namespace Choqok::UI;
 
 class TextBrowser::Private{
 public:
-    QList<KAction*> actions;
+    static QList<KAction*> actions;
+    PostWidget *parent;
 };
+
+QList<KAction*> TextBrowser::Private::actions;
 
 TextBrowser::TextBrowser(QWidget* parent)
     : KTextBrowser(parent, true), d(new Private)
 {
+    d->parent = qobject_cast<PostWidget*>(parent);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setOpenLinks(false);
@@ -83,6 +87,7 @@ void TextBrowser::contextMenuEvent(QContextMenuEvent* event)
     connect( selectAll, SIGNAL(triggered(bool)), SLOT(selectAll()) );
     menu->addAction(selectAll);
     foreach(KAction *act, d->actions) {
+        act->setUserData(32, new PostWidgetUserData(d->parent));
         menu->addAction(act);
     }
     menu->popup(event->globalPos());
@@ -117,7 +122,7 @@ void Choqok::UI::TextBrowser::wheelEvent(QWheelEvent* event)
 void Choqok::UI::TextBrowser::addAction(KAction* action)
 {
     if(action)
-        d->actions.append(action);
+        Private::actions.append(action);
 }
 
 

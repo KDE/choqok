@@ -113,8 +113,9 @@ public:
 
     /**
      * Plugins can add status specific actions and process them internally
+     * 
      */
-    void addAction( KAction *action );
+    static void addAction( KAction *action );
 
 public Q_SLOTS:
     /**
@@ -225,6 +226,20 @@ private:
     class Private;
     Private *const d;
 };
+
+class CHOQOK_EXPORT PostWidgetUserData : public QObjectUserData
+{
+public:
+    PostWidgetUserData( PostWidget *postWidget );
+    virtual ~PostWidgetUserData();
+    PostWidget *postWidget();
+    void setPostWidget(PostWidget *widget);
+
+private:
+    class Private;
+    Private * const d;
+};
+
 }
 }
 #endif // POSTWIDGET_H

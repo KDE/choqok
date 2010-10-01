@@ -39,7 +39,7 @@ Q_OBJECT
 public:
     TextBrowser(QWidget* parent = 0);
     virtual ~TextBrowser();
-    void addAction( KAction *action);
+    static void addAction( KAction *action);
 
 Q_SIGNALS:
     void clicked(QMouseEvent* ev);
