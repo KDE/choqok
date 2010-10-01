@@ -170,7 +170,7 @@ void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount* theAccount, const QS
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
     if( d->currentPost.source != "ostatus" )
         job->addMetaData("customHTTPHeader", "Authorization: " + d->mBlog->authorizationHeader(theAccount,
-                                                                                           url, QOAuth::POST));
+                                                                                           url, QOAuth::GET));
 
     d->job = job;
     connect( job, SIGNAL(result(KJob*)), SLOT(userInfoReceived(KJob*)));
