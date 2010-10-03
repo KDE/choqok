@@ -83,8 +83,8 @@ border-radius:5px;}  KTextBrowser {color:%1; background-color:%2}\
 KPushButton{border:0px}");
 
 const QString protocols = "((https?|ftps?)://)";
-const QString subdomains = "(([\\S]\\.)?)";
-const QString auth = "((([\\S]{1,})((:[\\S]{1,})?)@)?)";
+const QString subdomains = "(([a-z0-9-_]\\.)?)";
+const QString auth = "((([a-z0-9-_]{1,})((:[\\S]{1,})?)@)?)";
 const QString domains = "(([a-z0-9-\\x0080-\\xFFFF]){1,63}\\.)+";
 const QString port = "(:(6553[0-5]|655[0-2][0-9]|65[0-4][\\d]{2}|6[0-4][\\d]{3}|[1-5][\\d]{4}|[1-9][\\d]{0,3}))";
 const QString zone ("((a[cdefgilmnoqrstuwxz])|(b[abdefghijlmnorstvwyz])|(c[acdfghiklmnoruvxyz])|(d[ejkmoz])|(e[ceghrstu])|\

@@ -40,8 +40,18 @@
 #include <choqoktools.h>
 
 const QRegExp LaconicaPostWidget::mGroupRegExp( "([\\s]|^)!([a-z0-9]+){1,64}",  Qt::CaseInsensitive );
-const QRegExp LaconicaPostWidget::mLaconicaUserRegExp( "([\\s\\W]|^)@([a-z0-9]+){1,64}", Qt::CaseInsensitive );
+const QRegExp LaconicaPostWidget::mLaconicaUserRegExp( "([\\s\\W]|^)@([a-z0-9]+){1,64}([\\s]|$)", Qt::CaseInsensitive );
 const QRegExp LaconicaPostWidget::mLaconicaHashRegExp( "([\\s]|^)#([\\w_\\.\\-]+)", Qt::CaseInsensitive );
+
+const QString subdomains = "(([a-z0-9-_]\\.)?)";
+const QString dname = "(([a-z0-9-\\x0080-\\xFFFF]){1,63}\\.)+";
+const QString zone ("((a[cdefgilmnoqrstuwxz])|(b[abdefghijlmnorstvwyz])|(c[acdfghiklmnoruvxyz])|(d[ejkmoz])|(e[ceghrstu])|\
+(f[ijkmor])|(g[abdefghilmnpqrstuwy])|(h[kmnrtu])|(i[delmnoqrst])|(j[emop])|(k[eghimnprwyz])|(l[abcikrstuvy])|\
+(m[acdefghklmnopqrstuvwxyz])|(n[acefgilopruz])|(om)|(p[aefghklnrstwy])|(qa)|(r[eosuw])|(s[abcdeghijklmnortuvyz])|\
+(t[cdfghjkmnoprtvwz])|(u[agksyz])|(v[aceginu])|(w[fs])|(ye)|(z[amrw])\
+|(asia|com|info|net|org|biz|name|pro|aero|cat|coop|edu|jobs|mobi|museum|tel|travel|gov|int|mil|local)|(中国)|(公司)|(网络)|(صر)|(امارات)|(рф))");
+const QString domain = '(' + subdomains + dname + zone + ')';
+const QRegExp LaconicaPostWidget::mStatusNetUserRegExp( "([\\s\\W]|^)@(([a-z0-9]+){1,64}@" + domain + ')', Qt::CaseInsensitive );
 
 class LaconicaPostWidget::Private
 {
@@ -89,9 +99,10 @@ LaconicaPostWidget::~LaconicaPostWidget()
 QString LaconicaPostWidget::prepareStatus(const QString& text)
 {
     QString res = TwitterApiPostWidget::prepareStatus(text);
-    res.replace(mLaconicaUserRegExp,"\\1@<a href='user://\\2'>\\2</a>");
+    res.replace(mLaconicaUserRegExp,"\\1@<a href='user://\\2'>\\2</a>\\3");
     res.replace(mGroupRegExp,"\\1!<a href='group://\\2'>\\2</a>");
     res.replace(mLaconicaHashRegExp,"\\1#<a href='tag://\\2'>\\2</a>");
+    res.replace(mStatusNetUserRegExp,"\\1@<a href='user://\\2'>\\2</a>");  
     return res;
 }
 
