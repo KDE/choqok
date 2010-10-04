@@ -96,6 +96,20 @@ LaconicaPostWidget::~LaconicaPostWidget()
     delete d;
 }
 
+void LaconicaPostWidget::slotReplyToAll()
+{
+    QString txt = QString("@%1 ").arg(currentPost().author.userName);
+
+    int pos = 0;
+    while ((pos = mLaconicaUserRegExp.indexIn(currentPost().content, pos)) != -1) {
+        txt += QString("@%1 ").arg(mLaconicaUserRegExp.cap(2));
+        pos += mLaconicaUserRegExp.matchedLength();
+    }
+    txt.chop(1);
+
+    emit reply(txt, currentPost().postId);
+}
+
 QString LaconicaPostWidget::prepareStatus(const QString& text)
 {
     QString res = TwitterApiPostWidget::prepareStatus(text);

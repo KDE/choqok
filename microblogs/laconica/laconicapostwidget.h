@@ -41,6 +41,7 @@ protected:
     virtual QString prepareStatus(const QString& text);
     virtual void checkAnchor(const QUrl& url);
     virtual QString generateSign();
+    virtual void slotReplyToAll();
 
 protected slots:
     virtual void slotResendPost();

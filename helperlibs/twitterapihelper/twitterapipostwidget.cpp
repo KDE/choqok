@@ -35,6 +35,8 @@
 #include "twitterapishowthread.h"
 #include <textbrowser.h>
 #include <KMessageBox>
+#include <KAction>
+#include <QMenu>
 
 const KIcon TwitterApiPostWidget::unFavIcon(Choqok::MediaManager::convertToGrayScale(KIcon("rating").pixmap(16)) );
 
@@ -68,7 +70,25 @@ void TwitterApiPostWidget::initUi()
     Choqok::UI::PostWidget::initUi();
 
     KPushButton *btnRe = addButton( "btnReply",i18nc( "@info:tooltip", "Reply" ), "edit-undo" );
-    connect( btnRe, SIGNAL(clicked(bool)), SLOT(slotReply()) );
+    QMenu *menu = new QMenu(btnRe);
+
+    KAction *actRep = new KAction(KIcon("edit-undo"), i18n("Reply to %1", currentPost().author.userName), menu);
+    menu->addAction(actRep);
+    connect( actRep, SIGNAL(triggered(bool)), SLOT(slotReply()) );
+
+    KAction *actWrite = new KAction( KIcon("document-edit"), i18n("Write to %1", currentPost().author.userName),
+                                     menu );
+    menu->addAction(actWrite);
+    connect( actWrite, SIGNAL(triggered(bool)), SLOT(slotWriteTo()) );
+
+    if( !currentPost().isPrivate ) {
+        KAction *actReplytoAll = new KAction(i18n("Reply to all"), menu);
+        menu->addAction(actReplytoAll);
+        connect( actReplytoAll, SIGNAL(triggered(bool)), SLOT(slotReplyToAll()) );
+    }
+
+    menu->setDefaultAction(actRep);
+    btnRe->setMenu(menu);
 
     if( !currentPost().isPrivate ) {
         d->btnFav = addButton( "btnFavorite",i18nc( "@info:tooltip", "Favorite" ), "rating" );
@@ -145,6 +165,17 @@ void TwitterApiPostWidget::slotReply()
     } else {
         emit reply( QString("@%1").arg(currentPost().author.userName), currentPost().postId );
     }
+}
+
+void TwitterApiPostWidget::slotWriteTo()
+{
+    emit reply( QString("@%1").arg(currentPost().author.userName), QString() );
+}
+
+void TwitterApiPostWidget::slotReplyToAll()
+{
+    QString txt = QString("@%1").arg(currentPost().author.userName);
+    emit reply(txt, currentPost().postId);
 }
 
 void TwitterApiPostWidget::setFavorite()

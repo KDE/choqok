@@ -32,10 +32,13 @@ public:
     TwitterPostWidget(Choqok::Account* account, const Choqok::Post& post, QWidget* parent = 0);
     virtual void initUi();
 
+protected slots:
+    virtual void slotReplyToAll();
+
 protected:
     virtual QString prepareStatus(const QString& text);
     virtual void checkAnchor(const QUrl& url);
-    
+
     static const QRegExp mTwitterUserRegExp;
     static const QRegExp mTwitterTagRegExp;
 };

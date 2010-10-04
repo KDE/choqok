@@ -68,6 +68,20 @@ QString TwitterPostWidget::prepareStatus(const QString& text)
     return res;
 }
 
+void TwitterPostWidget::slotReplyToAll()
+{
+    QString txt = QString("@%1 ").arg(currentPost().author.userName);
+
+    int pos = 0;
+    while ((pos = mTwitterUserRegExp.indexIn(currentPost().content, pos)) != -1) {
+        txt += QString("@%1 ").arg(mTwitterUserRegExp.cap(2));
+        pos += mTwitterUserRegExp.matchedLength();
+    }
+    txt.chop(1);
+
+    emit reply(txt, currentPost().postId);
+}
+
 void TwitterPostWidget::checkAnchor(const QUrl& url)
 {
     QString scheme = url.scheme();
