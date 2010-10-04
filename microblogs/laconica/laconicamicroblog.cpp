@@ -115,6 +115,16 @@ Choqok::UI::ComposerWidget* LaconicaMicroBlog::createComposerWidget(Choqok::Acco
 QString LaconicaMicroBlog::profileUrl( Choqok::Account *account, const QString &username) const
 {
     TwitterApiAccount *acc = qobject_cast<TwitterApiAccount*>(account);
+    if(username.contains('@')){
+        QStringList lst = username.split('@', QString::SkipEmptyParts);
+        if(lst.count() == 2){
+            if(lst[1].endsWith(".status.net")){
+                return QString("http://").arg(lst[1]);
+            } else {
+                return QString("http://%1/%2").arg(lst[1]).arg(lst[0]);
+            }
+        }
+    }
     if(acc){
         return QString( acc->homepageUrl().prettyUrl(KUrl::AddTrailingSlash) + username) ;
     } else

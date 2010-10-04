@@ -146,14 +146,21 @@ TwitterApiWhoisWidget::~TwitterApiWhoisWidget()
 
 void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount* theAccount, const QString& username)
 {
-    //TODO Move this function to TwitterApiMicroBlog
     kDebug();
     QString urlStr;
-    if( d->currentPost.source == "ostatus" && !d->currentPost.author.homePageUrl.isEmpty() ) {
+    QString user = username;
+    if(user.contains('@')) {
+        QStringList lst = user.split('@');
+        if(lst.count() == 2){//USER@HOST
+            QString host = lst[1];
+            urlStr = QString("http://%1/api").arg(host);
+            user = lst[0];
+        }
+    } else if( d->currentPost.source == "ostatus" && !d->currentPost.author.homePageUrl.isEmpty() ) {
         urlStr = d->currentPost.author.homePageUrl;
-        if(urlStr.endsWith(username)) {
+        if(urlStr.endsWith(user)) {
             int len = urlStr.length();
-            int userLen = username.length();
+            int userLen = user.length();
             urlStr.remove(len - userLen, userLen);
             kDebug()<<urlStr;
         }
@@ -163,7 +170,7 @@ void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount* theAccount, const QS
     }
     KUrl url( urlStr );
 
-    url.addPath( QString( "/users/show/%1.json" ).arg(username));
+    url.addPath( QString( "/users/show/%1.json" ).arg(user));
 
 //     kDebug() << url;
 

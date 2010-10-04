@@ -117,7 +117,7 @@ QString LaconicaPostWidget::prepareStatus(const QString& text)
     res.replace(mLaconicaUserRegExp,"\\1@<a href='user://\\2'>\\2</a>");
     res.replace(mGroupRegExp,"\\1!<a href='group://\\2'>\\2</a>");
     res.replace(mLaconicaHashRegExp,"\\1#<a href='tag://\\2'>\\2</a>");
-    
+
     return res;
 }
 
@@ -139,7 +139,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
         unpcode.remove('.');
         unpcode.remove('-');
         unpcode.remove('_');
-        
+
         KMenu menu;
         KAction *search = new KAction(KIcon("system-search"),
                                       i18n("Search for %1", unpcode), &menu);
@@ -176,13 +176,15 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
                                   "group/" + url.host()));
         }
     } else if(scheme == "user") {
+        QString username = ( url.userName().isEmpty() ? "" : QString("%1@").arg(url.userName()) ) +
+                            url.host();
         KMenu menu;
         KAction * info = new KAction( KIcon("user-identity"), i18nc("Who is user", "Who is %1",
-                                                                    url.host()), &menu );
+                                                                    username), &menu );
         KAction * from = new KAction(KIcon("edit-find-user"), i18nc("Posts from user", "Posts from %1",
-                                                                    url.host()), &menu);
+                                                                    username), &menu);
         KAction * to = new KAction(KIcon("meeting-attending"), i18nc("Replies to user", "Replies to %1",
-                                                                     url.host()), &menu);
+                                                                     username), &menu);
         KAction * openInBrowser = new KAction(KIcon("applications-internet"),
                                               i18nc("Open profile page in browser",
                                                     "Open profile in browser"), &menu);
@@ -198,33 +200,33 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
         //Subscribe/UnSubscribe/Block
         bool hasBlock = false, isSubscribe = false;
         QString accountUsername = d->account->username().toLower();
-        QString postUsername = url.host().toLower();
+        QString postUsername = username.toLower();
         KAction *subscribe = 0, *block = 0, *replyTo = 0, *dMessage = 0;
         if(accountUsername != postUsername){
             menu.addSeparator();
             QMenu *actionsMenu = menu.addMenu(KIcon("applications-system"), i18n("Actions"));
             replyTo = new KAction(KIcon("edit-undo"), i18nc("Write a message to user attention", "Write to %1",
-                                                          url.host()), actionsMenu);
+                                                          username), actionsMenu);
             actionsMenu->addAction(replyTo);
-            if( d->account->friendsList().contains( url.host() ) ){
+            if( d->account->friendsList().contains( username ) ){
                 dMessage = new KAction(KIcon("mail-message-new"), i18nc("Send direct message to user",
                                                                         "Send private message to %1",
-                                                                        url.host()), actionsMenu);
+                                                                        username), actionsMenu);
                 actionsMenu->addAction(dMessage);
                 isSubscribe = false;//It's UnSubscribe
                 subscribe = new KAction( KIcon("list-remove-user"),
                                          i18nc("Unsubscribe from user",
-                                               "Unsubscribe from %1", url.host()), actionsMenu);
+                                               "Unsubscribe from %1", username), actionsMenu);
             } else {
                 isSubscribe = true;
                 subscribe = new KAction( KIcon("list-add-user"),
                                          i18nc("Subscribe to user",
-                                               "Subscribe to %1", url.host()), actionsMenu);
+                                               "Subscribe to %1", username), actionsMenu);
             }
             hasBlock = true;
             block = new KAction( KIcon("dialog-cancel"),
                                  i18nc("Block user",
-                                       "Block %1", url.host()), actionsMenu);
+                                       "Block %1", username), actionsMenu);
             if(currentPost().source != "ostatus") {
                 actionsMenu->addAction(subscribe);
                 actionsMenu->addAction(block);
@@ -234,31 +236,32 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
         if(ret == 0)
             return;
         if(ret == info) {
-            TwitterApiWhoisWidget *wd = new TwitterApiWhoisWidget(d->account, url.host(), currentPost(), this);
+            TwitterApiWhoisWidget *wd = new TwitterApiWhoisWidget(d->account, username, currentPost(), this);
             wd->show(QCursor::pos());
             return;
         } else if(ret == subscribe){
             if(isSubscribe) {
-                d->mBlog->createFriendship(d->account, url.host());
+                d->mBlog->createFriendship(d->account, username);
             } else {
-                d->mBlog->destroyFriendship(d->account, url.host());
+                d->mBlog->destroyFriendship(d->account, username);
             }
             return;
         } else if(ret == block){
-            d->mBlog->blockUser(d->account, url.host());
+            d->mBlog->blockUser(d->account, username);
             return;
         } else if(ret == openInBrowser){
-            if( currentPost().author.homePageUrl.isEmpty() ) {
-                Choqok::openUrl( QUrl( currentAccount()->microblog()->profileUrl(currentAccount(), url.host()) ) );
-            } else {
+            kDebug()<<url<<username;
+            if( username == currentPost().author.userName && !currentPost().author.homePageUrl.isEmpty() ) {
                 Choqok::openUrl( QUrl( currentPost().author.homePageUrl ) );
+            } else {
+                Choqok::openUrl( QUrl( currentAccount()->microblog()->profileUrl(currentAccount(), username) ) );
             }
             return;
         } else if(ret == replyTo){
-            emit reply( QString("@%1").arg(url.host()), QString() );
+            emit reply( QString("@%1").arg(username), QString() );
             return;
         } else if(ret == dMessage){
-            d->mBlog->showDirectMessageDialog( d->account, url.host() );
+            d->mBlog->showDirectMessageDialog( d->account, username );
             return;
         }
         int type = ret->data().toInt();
