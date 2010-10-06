@@ -49,46 +49,6 @@
 #include <qjson/parser.h>
 #include <QtCore/QPointer>
 
-const char * baseText = "\
-<table width=\"100%\">\
-    <tr>\
-        <td>\
-            <b>Who is <i>%1</i> ?</b> %10\
-            <a href='choqok://close'><img src='icon://close' title='Close' align='right' /></a>\
-        </td>\
-    </tr>\
-    <tr>\
-        <td>\
-            <table>\
-                <tr>\
-                    <td>\
-                        <table><tr>\
-                            <td width=\"48\">\
-                                <img width=48 height=48 src='img://profileImage'/>\
-                            </td>\
-                            <td>\
-                                <b>Name:</b> %2<br/>\
-                                <b>Location:</b> %3<br/>\
-                                <b>Timezone:</b> %4\
-                            </td>\
-                        </tr></table>\
-                    </td>\
-                </tr>\
-                <tr>\
-                    <td>\
-                        <b>Web:</b> %5<br/>\
-                        <b>Bio:</b> %6<br/>\
-                        <b>Last Status:</b> %7<br/><br/>\
-                        %8 Friends<br/>\
-                        %9 Followers\
-                        \
-                    </td>\
-                </tr>\
-            </table>\
-        </td>\
-    </tr>\
-</table>";
-
 class TwitterApiWhoisWidget::Private
 {
 public:
@@ -108,6 +68,7 @@ public:
 
     QString followersCount;
     QString friendsCount;
+    QString statusesCount;
     QString timeZone;
     QString imgActions;
 //     bool isFollowing;
@@ -221,6 +182,7 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
         d->timeZone = map["time_zone"].toString();
         d->followersCount = map["followers_count"].toString();
         d->friendsCount = map["friends_count"].toString();
+        d->statusesCount = map["statuses_count"].toString();
         QVariantMap var = map["status"].toMap();
         post.content = var["text"].toString();
         post.creationDateTime = d->mBlog->dateFromString(var["created_at"].toString());
@@ -283,19 +245,29 @@ void TwitterApiWhoisWidget::updateHtml()
     if( d->errorMessage.isEmpty() ) {
         QString url = d->currentPost.author.homePageUrl.isEmpty() ? QString()
                     : QString("<a title='%1' href='%1'>%1</a>").arg(d->currentPost.author.homePageUrl);
-        QString tmpStr = i18n(baseText);
-        html = QString(tmpStr).arg(d->currentPost.author.userName)
-                                        .arg(d->currentPost.author.realName)
-                                        .arg(d->currentPost.author.location)
-                                        .arg(d->timeZone)
-                                        .arg(url)
-                                        .arg(d->currentPost.author.description)
-                                        .arg(d->currentPost.content)//.arg(dir);
-                                        .arg(d->friendsCount)
-                                        .arg(d->followersCount)
-                                        .arg(d->imgActions);
+    
+        QString mainTable = QString(i18n("<table width='100%'><tr>\
+        <td width=49><img width=48 height=48 src='img://profileImage'/></td><td>\
+        <font size=5><b>%1</b></font>\
+        <a href='choqok://close'><img src='icon://close' title='Close' align='right' /></a><br/>\
+        <b>@%2</b>&nbsp;<font size=3>%3</font>(<font size=2>%4</font>)<br/>\
+        <i>%5</i><br/>\
+        <font size=3>%6</font></td></tr></table>"))
+        .arg(Qt::escape(d->currentPost.author.realName))
+        .arg(d->currentPost.author.userName).arg(Qt::escape(d->currentPost.author.location)).arg(d->timeZone)
+        .arg(d->currentPost.author.description)
+        .arg(url);
+
+        QString countTable = QString(i18n("<table>\
+        <tr><td><b>%1</b><br>Tweets</td><td><b>%2</b><br>Friends</td><td><b>%3</b><br>Followers</td></tr></table><br/>"))
+                         .arg(d->statusesCount).arg(d->friendsCount).arg(d->followersCount);
+
+        QString otherTabel = QString(i18n("<table><tr>%1</tr></table><br/>\
+        <table><tr><b>Last Status:</b> %2</tr></table>")).arg(d->imgActions).arg(d->currentPost.content);
+        
+        html = mainTable + countTable + otherTabel;
     } else {
-        html = i18n("<h1>%1</h1>", d->errorMessage);
+        html = i18n("<h3>%1</h3>", d->errorMessage);
     }
     d->wid->setHtml(html);
 }
