@@ -195,7 +195,9 @@ void PostWidget::initUi()
     d->mContent = prepareStatus(d->mCurrentPost.content);
     d->mSign = generateSign();
     setupAvatar();
-    setDirection();
+    if(QLatin1String(qVersion()) < "4.7"){//Due Qt 4.7 detects and sets the direction//TODO remove this part at all
+        setDirection();
+    }
     setUiStyle();
 
     d->mContent.replace("<a href","<a style=\"text-decoration:none\" href",Qt::CaseInsensitive);
@@ -382,7 +384,8 @@ void PostWidget::setDirection()
     txt.remove(QRegExp("@([^\\s\\W]+)"));
     txt.remove(QRegExp("#([^\\s\\W]+)"));
     txt.remove(QRegExp("!([^\\s\\W]+)"));
-    txt.prepend(' ');
+    txt = txt.trimmed();
+//     kDebug()<<txt<<txt.isRightToLeft();
     if( txt.isRightToLeft() ) {
         QTextOption options(_mainWidget->document()->defaultTextOption());
         options.setTextDirection( Qt::RightToLeft );
