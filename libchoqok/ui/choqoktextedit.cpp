@@ -28,6 +28,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QLabel>
 #include <KDebug>
 #include <choqokbehaviorsettings.h>
+#include <QAction>
+#include <sonnet/speller.h>
+#include <QMenu>
+#include <QTimer>
 
 namespace Choqok {
 namespace UI{
@@ -36,11 +40,14 @@ class TextEdit::Private
 {
 public:
     Private(uint charLmt)
-    :charLimit(charLmt)
+    : langActions(new QMenu),charLimit(charLmt)
     {}
+    QMenu *langActions;
+    QMap<QString, QAction*> langActionMap;
     uint charLimit;
     QString prevStr;
     QChar firstChar;
+    QString curLang;
 };
 
 TextEdit::TextEdit(uint charLimit /*= 0*/, QWidget* parent /*= 0*/)
@@ -51,6 +58,7 @@ TextEdit::TextEdit(uint charLimit /*= 0*/, QWidget* parent /*= 0*/)
     setAcceptRichText( false );
     this->setToolTip( i18n( "<strong>Note:</strong><br/><em>Ctrl+S</em> to enable/disable auto spell checker." ) );
 
+    enableFindReplace(false);
     QFont counterF;
     counterF.setBold( true );
     counterF.setPointSize( 10 );
@@ -67,10 +75,13 @@ TextEdit::TextEdit(uint charLimit /*= 0*/, QWidget* parent /*= 0*/)
     setTabChangesFocus(true);
     settingsChanged();
     connect(BehaviorSettings::self(), SIGNAL(configChanged()), SLOT(settingsChanged()) );
+
+    QTimer::singleShot(1000, this, SLOT(setupSpeller()));
 }
 
 TextEdit::~TextEdit()
 {
+    BehaviorSettings::setSpellerLanguage(d->curLang);
     delete d;
 }
 
@@ -153,6 +164,32 @@ void TextEdit::updateRemainingCharsCount()
     }
 }
 
+void TextEdit::contextMenuEvent(QContextMenuEvent* event)
+{
+    QMenu *menu = mousePopupMenu();
+    if(menu){
+        kDebug();
+        QAction *act = new QAction(i18n("Set spell check language"), menu);
+        act->setMenu(d->langActions);
+        menu->addAction(act);
+        menu->exec(event->globalPos());
+        event->accept();
+    } else {
+        KTextEdit::contextMenuEvent(event);
+    }
+}
+
+void TextEdit::slotChangeSpellerLanguage()
+{
+    QAction *act = qobject_cast<QAction*>(sender());
+    if(act){
+        QString lang = act->data().toString();
+        setSpellCheckingLanguage(lang);
+        d->langActionMap.value(d->curLang)->setChecked(false);
+        d->curLang = lang;
+    }
+}
+
 void TextEdit::setCharLimit(uint charLimit /*= 0*/)
 {
     d->charLimit = charLimit;
@@ -193,6 +230,29 @@ void TextEdit::appendText(const QString& text)
 void TextEdit::settingsChanged()
 {
     setCheckSpellingEnabled(BehaviorSettings::enableSpellChecker());
+}
+
+void TextEdit::setupSpeller()
+{
+    BehaviorSettings::self()->readConfig();
+    d->curLang = BehaviorSettings::spellerLanguage();
+    Sonnet::Speller s;
+    if(d->curLang.isEmpty()){
+        d->curLang = s.defaultLanguage();
+    }
+    kDebug()<<"Current LANG: "<<d->curLang;
+    QMap<QString, QString> list = s.availableDictionaries();
+    QMap<QString, QString>::const_iterator it = list.constBegin(), endIt = list.constEnd();
+    for(; it!=endIt; ++it){
+        QAction *act = new QAction(it.key(), d->langActions);
+        act->setData(it.value());
+        act->setCheckable(true);
+        if(d->curLang == it.value())
+            act->setChecked(true);
+        connect(act, SIGNAL(triggered(bool)), SLOT(slotChangeSpellerLanguage()));
+        d->langActions->addAction(act);
+        d->langActionMap.insert(it.value(), act);
+    }
 }
 
 }

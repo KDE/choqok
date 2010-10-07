@@ -59,10 +59,11 @@
             <default>false</default>
         </entry>
         <entry name="useCustomRT" type="Bool">
-			<default>false</default>
+            <default>false</default>
         </entry>
         <entry name="customRT" type="String" />
         <entry name="lastUsedUploaderPlugin" type="String" />
+        <entry name="spellerLanguage" type="String" />
     </group>
 
     <group name="QuickPost">

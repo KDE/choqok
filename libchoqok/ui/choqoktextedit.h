@@ -52,6 +52,7 @@ public:
 protected:
     virtual void keyPressEvent(QKeyEvent* );
     virtual void insertFromMimeData ( const QMimeData *source );
+    virtual void contextMenuEvent(QContextMenuEvent* event);
 
 Q_SIGNALS:
     void returnPressed( const QString &txt );
@@ -61,6 +62,8 @@ Q_SIGNALS:
 protected Q_SLOTS:
     void updateRemainingCharsCount();
     void settingsChanged();
+    void slotChangeSpellerLanguage();
+    void setupSpeller();
 
 protected:
     QLabel *lblRemainChar;
