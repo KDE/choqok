@@ -98,13 +98,22 @@ LaconicaPostWidget::~LaconicaPostWidget()
 
 void LaconicaPostWidget::slotReplyToAll()
 {
+    QStringList nicks;
+    nicks.append(currentPost().author.userName);
+
     QString txt = QString("@%1 ").arg(currentPost().author.userName);
 
     int pos = 0;
     while ((pos = mLaconicaUserRegExp.indexIn(currentPost().content, pos)) != -1) {
-        txt += QString("@%1 ").arg(mLaconicaUserRegExp.cap(2));
+        if (mLaconicaUserRegExp.cap(2).toLower() != currentAccount()->username() && 
+            mLaconicaUserRegExp.cap(2).toLower() != currentPost().author.userName &&
+            !nicks.contains(mLaconicaUserRegExp.cap(2).toLower())){
+            nicks.append(mLaconicaUserRegExp.cap(2));
+            txt += QString("@%1 ").arg(mLaconicaUserRegExp.cap(2));
+        }
         pos += mLaconicaUserRegExp.matchedLength();
     }
+    
     txt.chop(1);
 
     emit reply(txt, currentPost().postId);

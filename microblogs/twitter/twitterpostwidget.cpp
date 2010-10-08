@@ -70,13 +70,22 @@ QString TwitterPostWidget::prepareStatus(const QString& text)
 
 void TwitterPostWidget::slotReplyToAll()
 {
+    QStringList nicks;
+    nicks.append(currentPost().author.userName);
+    
     QString txt = QString("@%1 ").arg(currentPost().author.userName);
 
     int pos = 0;
     while ((pos = mTwitterUserRegExp.indexIn(currentPost().content, pos)) != -1) {
-        txt += QString("@%1 ").arg(mTwitterUserRegExp.cap(2));
+        if (mTwitterUserRegExp.cap(2).toLower() != currentAccount()->username() && 
+            mTwitterUserRegExp.cap(2).toLower() != currentPost().author.userName &&
+            !nicks.contains(mTwitterUserRegExp.cap(2).toLower())){
+            nicks.append(mTwitterUserRegExp.cap(2));
+            txt += QString("@%1 ").arg(mTwitterUserRegExp.cap(2));
+        }
         pos += mTwitterUserRegExp.matchedLength();
     }
+
     txt.chop(1);
 
     emit reply(txt, currentPost().postId);
