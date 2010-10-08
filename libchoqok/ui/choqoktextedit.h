@@ -66,6 +66,7 @@ protected Q_SLOTS:
     void setupSpeller();
 
 protected:
+    void undoableClear();
     QLabel *lblRemainChar;
 
 private:

@@ -94,10 +94,6 @@ void TextEdit::keyPressEvent(QKeyEvent* e)
     } else if ( e->modifiers() == Qt::ControlModifier && e->key() == Qt::Key_S ) {
         this->setCheckSpellingEnabled( !this->checkSpellingEnabled() );
         e->accept();
-    } else if ( e->modifiers() == Qt::ControlModifier && e->key() == Qt::Key_Z && toPlainText().isEmpty() ) {
-//         QString tmp = this->toHtml();
-        this->setText( d->prevStr );
-        e->accept();
     } else if ( e->key() == Qt::Key_Escape ) {
         if ( !this->toPlainText().isEmpty() ) {
             this->clear();
@@ -116,10 +112,19 @@ void TextEdit::clear()
     if(toPlainText().isEmpty())
         return;
     else {
-        d->prevStr = toPlainText();
-        KTextEdit::clear();
+        undoableClear();
         emit cleared();
     }
+}
+
+void TextEdit::undoableClear()
+{
+    QTextCursor cursor = textCursor();
+    cursor.beginEditBlock();
+    cursor.movePosition(QTextCursor::Start);
+    cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
+    cursor.removeSelectedText();
+    cursor.endEditBlock();
 }
 
 void TextEdit::insertFromMimeData ( const QMimeData *source )
