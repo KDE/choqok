@@ -35,6 +35,8 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_imagepreview" ) )
 const QRegExp ImagePreview::mTwitpicRegExp("(http://twitpic.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
 const QRegExp ImagePreview::mYFrogRegExp("(http://yfrog.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])");
 const QRegExp ImagePreview::mTweetphotoRegExp("(http://tweetphoto.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
+const QRegExp ImagePreview::mPlixiRegExp("(http://plixi.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
+const QRegExp ImagePreview::mImgLyRegExp("(http://img.ly/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
 
 ImagePreview::ImagePreview(QObject* parent, const QList< QVariant >& )
     :Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped)
@@ -84,6 +86,8 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     QStringList twitpicRedirectList;
     QStringList yfrogRedirectList;
     QStringList TweetphotoRedirectList;
+    QStringList PlixiRedirectList;
+    QStringList ImgLyRedirectList;
     QString content = postToParse->currentPost().content;
 
     //Twitpic: http://www.twitpic.com/api.do
@@ -133,11 +137,45 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     connect( Choqok::MediaManager::self(),
                  SIGNAL(imageFetched(QString,QPixmap)),
                  SLOT(slotImageFetched(QString,QPixmap)) );
-        //QString TweetphotoUrl = QString( "http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" ).arg(QString(url));
     QString TweetphotoUrl = "http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url="+ url;
         mParsingList.insert(TweetphotoUrl, postToParse);
         mBaseUrlMap.insert(TweetphotoUrl, url);
         Choqok::MediaManager::self()->fetchImage(TweetphotoUrl, Choqok::MediaManager::Async);
+    }
+    
+     //Plixy; http://groups.google.com/group/plixi/web/fetch-photos-from-url
+    pos = 0;
+    while ((pos = mPlixiRegExp.indexIn(content, pos)) != -1) {
+        pos += mPlixiRegExp.matchedLength();
+        PlixiRedirectList << mPlixiRegExp.cap(0);
+        kDebug()<<mPlixiRegExp.capturedTexts();
+    }
+    foreach(const QString &url, PlixiRedirectList){
+    connect( Choqok::MediaManager::self(),
+                 SIGNAL(imageFetched(QString,QPixmap)),
+                 SLOT(slotImageFetched(QString,QPixmap)) );
+    QString PlixiUrl = "http://api.plixi.com/api/tpapi.svc/json/imagefromurl?size=thumbnail&url="+ url;
+        mParsingList.insert(PlixiUrl, postToParse);
+        mBaseUrlMap.insert(PlixiUrl, url);
+        Choqok::MediaManager::self()->fetchImage(PlixiUrl, Choqok::MediaManager::Async);
+    }
+    
+    //Img.ly; http://img.ly/api/docs
+    pos = 0;
+    while ((pos = mImgLyRegExp.indexIn(content, pos)) != -1) {
+        pos += mImgLyRegExp.matchedLength();
+        ImgLyRedirectList << mImgLyRegExp.cap(0);
+        kDebug()<<mImgLyRegExp.capturedTexts();
+    }
+    foreach(const QString &url, ImgLyRedirectList){
+    connect( Choqok::MediaManager::self(),
+                 SIGNAL(imageFetched(QString,QPixmap)),
+                 SLOT(slotImageFetched(QString,QPixmap)) );
+    QString ImgLyUrl = QString( "http://img.ly/show/thumb%1" ).arg(QString(url).remove("http://img.ly"));
+    //QString ImgLyUrl = "http://api.plixi.com/api/tpapi.svc/json/imagefromurl?size=thumbnail&url="+ url;
+        mParsingList.insert(ImgLyUrl, postToParse);
+        mBaseUrlMap.insert(ImgLyUrl, url);
+        Choqok::MediaManager::self()->fetchImage(ImgLyUrl, Choqok::MediaManager::Async);
     }
 }
 
