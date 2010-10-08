@@ -55,6 +55,7 @@ protected Q_SLOTS:
 protected:
     virtual void wheelEvent(QWheelEvent* event);
     virtual void mousePressEvent(QMouseEvent* ev);
+    virtual void mouseMoveEvent(QMouseEvent* ev);
     virtual void resizeEvent(QResizeEvent* e);
     virtual void contextMenuEvent(QContextMenuEvent* event);
 

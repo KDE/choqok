@@ -36,8 +36,13 @@ using namespace Choqok::UI;
 
 class TextBrowser::Private{
 public:
+    Private()
+    :isPressedForDrag(false)
+    {}
     static QList< QPointer<KAction> > actions;
     PostWidget *parent;
+    QPoint dragStartPosition;
+    bool isPressedForDrag;
 };
 
 QList< QPointer<KAction> > TextBrowser::Private::actions;
@@ -49,7 +54,6 @@ TextBrowser::TextBrowser(QWidget* parent)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setOpenLinks(false);
-
 }
 
 TextBrowser::~TextBrowser()
@@ -60,7 +64,41 @@ TextBrowser::~TextBrowser()
 void TextBrowser::mousePressEvent(QMouseEvent* ev)
 {
     emit clicked(ev);
+
+    if(ev->button() == Qt::LeftButton) {
+        if( !cursorForPosition(ev->pos()).hasSelection() && !anchorAt(ev->pos()).isEmpty() ) {
+            d->dragStartPosition = ev->pos();
+            d->isPressedForDrag = true;
+        } else {
+            d->isPressedForDrag = false;
+        }
+    }
+    ev->accept();
     KTextBrowser::mousePressEvent(ev);
+}
+
+void TextBrowser::mouseMoveEvent(QMouseEvent* ev)
+{
+    if ( (ev->buttons() & Qt::LeftButton) && d->isPressedForDrag ) {
+        QPoint diff = ev->pos() - d->dragStartPosition;
+        if ( diff.manhattanLength() > QApplication::startDragDistance() ) {
+                QString anchor = anchorAt(d->dragStartPosition);
+                if( !anchor.isEmpty() ){
+                    QDrag *drag = new QDrag(this);
+                    QMimeData *mimeData;
+                    mimeData = new QMimeData;
+                    QList<QUrl> urls;
+                    urls.append(QUrl(anchor));
+                    mimeData->setUrls(urls);
+                    mimeData->setText(anchor);
+                    drag->setMimeData(mimeData);
+                    drag->exec(Qt::CopyAction | Qt::MoveAction);
+                }
+        } else
+            KTextBrowser::mouseMoveEvent(ev);
+    } else
+        KTextBrowser::mouseMoveEvent(ev);
+    ev->accept();
 }
 
 void TextBrowser::resizeEvent(QResizeEvent* e)
