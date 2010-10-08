@@ -83,7 +83,7 @@ void TwitterApiTextEdit::insertCompletion(const QString& completion)
     QTextCursor tc = textCursor();
     tc.movePosition(QTextCursor::EndOfWord);
     tc.select(QTextCursor::WordUnderCursor);
-    tc.insertText(tc.selectedText().at(0) + completion);    
+    tc.insertText(tc.selectedText().at(0) + completion + ' ');    
     setTextCursor(tc);
 }
 
