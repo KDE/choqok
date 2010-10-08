@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Author: Andrey Esin -->
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+    <kcfgfile name="choqokrc"/>
+
+    <group name="Flickr Uploader">
+        <entry name="nsid" type="String"/>
+        <entry name="fullname" type="String"/>
+        <entry name="username" type="String"/>
+        <entry name="shorturl" type="Bool"/>
+        <entry name="forprivate" type="Bool"/>
+        <entry name="forfriends" type="Bool"/>
+        <entry name="forfamily" type="Bool"/>
+        <entry name="forpublic" type="Bool"/>
+        <entry name="safe" type="Bool"/>
+        <entry name="moderate" type="Bool"/>
+        <entry name="restricted" type="Bool"/>
+        <entry name="hidefromsearch" type="Bool"/>
+    </group>
+</kcfg>
