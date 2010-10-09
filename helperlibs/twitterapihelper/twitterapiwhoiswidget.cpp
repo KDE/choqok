@@ -246,21 +246,26 @@ void TwitterApiWhoisWidget::updateHtml()
         QString url = d->currentPost.author.homePageUrl.isEmpty() ? QString()
                     : QString("<a title='%1' href='%1'>%1</a>").arg(d->currentPost.author.homePageUrl);
     
-        QString mainTable = QString(i18n("<table width='100%'><tr>\
+        QString mainTable = QString("<table width='100%'><tr>\
         <td width=49><img width=48 height=48 src='img://profileImage'/></td><td>\
         <font size=5><b>%1</b></font>\
-        <a href='choqok://close'><img src='icon://close' title='Close' align='right' /></a><br/>\
+        <a href='choqok://close'><img src='icon://close' title='" + i18n("Close") + "' align='right' /></a><br/>\
         <b>@%2</b>&nbsp;<font size=3>%3</font>(<font size=2>%4</font>)<br/>\
         <i>%5</i><br/>\
-        <font size=3>%6</font></td></tr></table>"))
+        <font size=3>%6</font></td></tr></table>")
         .arg(Qt::escape(d->currentPost.author.realName))
         .arg(d->currentPost.author.userName).arg(Qt::escape(d->currentPost.author.location)).arg(d->timeZone)
         .arg(d->currentPost.author.description)
         .arg(url);
 
-        QString countTable = QString(i18n("<table>\
-        <tr><td><b>%1</b><br>Tweets</td><td><b>%2</b><br>Friends</td><td><b>%3</b><br>Followers</td></tr></table><br/>"))
-                         .arg(d->statusesCount).arg(d->friendsCount).arg(d->followersCount);
+        QString countTable = QString("<table><tr>\
+        <td><b>%1</b><br>" + i18n("Tweets") + "</td>\
+        <td><b>%2</b><br>" + i18n("Friends") + "</td>\
+        <td><b>%3</b><br>" + i18n("Followers") + "</td>\
+        </tr></table><br/>")
+        .arg(d->statusesCount)
+        .arg(d->friendsCount)
+        .arg(d->followersCount);
 
         QString otherTabel = QString(i18n("<table><tr>%1</tr></table><br/>\
         <table><tr><b>Last Status:</b> %2</tr></table>")).arg(d->imgActions).arg(d->currentPost.content);
