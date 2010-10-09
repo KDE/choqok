@@ -245,7 +245,7 @@ void TwitterApiWhoisWidget::updateHtml()
     if( d->errorMessage.isEmpty() ) {
         QString url = d->currentPost.author.homePageUrl.isEmpty() ? QString()
                     : QString("<a title='%1' href='%1'>%1</a>").arg(d->currentPost.author.homePageUrl);
-    
+
         QString mainTable = QString("<table width='100%'><tr>\
         <td width=49><img width=48 height=48 src='img://profileImage'/></td><td>\
         <font size=5><b>%1</b></font>\
@@ -259,9 +259,9 @@ void TwitterApiWhoisWidget::updateHtml()
         .arg(url);
 
         QString countTable = QString("<table><tr>\
-        <td><b>%1</b><br>" + i18n("Tweets") + "</td>\
-        <td><b>%2</b><br>" + i18n("Friends") + "</td>\
-        <td><b>%3</b><br>" + i18n("Followers") + "</td>\
+        <td><b>%1</b><br>" + i18nc("User posts", "Posts") + "</td>\
+        <td><b>%2</b><br>" + i18nc("User friends", "Friends") + "</td>\
+        <td><b>%3</b><br>" + i18nc("User followers" , "Followers") + "</td>\
         </tr></table><br/>")
         .arg(d->statusesCount)
         .arg(d->friendsCount)
@@ -269,7 +269,7 @@ void TwitterApiWhoisWidget::updateHtml()
 
         QString otherTabel = QString(i18n("<table><tr>%1</tr></table><br/>\
         <table><tr><b>Last Status:</b> %2</tr></table>")).arg(d->imgActions).arg(d->currentPost.content);
-        
+
         html = mainTable + countTable + otherTabel;
     } else {
         html = i18n("<h3>%1</h3>", d->errorMessage);
