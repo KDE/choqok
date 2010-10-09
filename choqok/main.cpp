@@ -38,17 +38,19 @@ int main( int argc, char **argv )
 {
     qDebug()<<"Choqok "<<version;
     KAboutData about( "choqok", 0, ki18n( "Choqok" ), version, ki18n( description ),
-                      KAboutData::License_GPL_V3, ki18n( "(C) 2008-2010 Mehrdad Momeny" ),
+                      KAboutData::License_GPL_V3, ki18n( "(C) 2008-2010 Mehrdad Momeny" ),//set the Copyright holder to Choqok developers from 2011...
                       KLocalizedString(), 0  );
     about.addAuthor( ki18n( "Mehrdad Momeny" ), ki18n( "Author and Core Developer" ),
                      "mehrdad.momeny@gmail.com", "http://identi.ca/mtux" );
+    about.addAuthor( ki18n( "Andrey Esin" ), ki18n( "Developer" ),
+                     "gmlastik@gmail.com", "http://twitter.com/la_stik" );
     about.addCredit( ki18n( "Roozbeh Shafiee" ), ki18n( "Graphic designer" ), "roozbeh@roozbehonline.com" );
     about.addCredit( ki18n( "Daniel Schaal" ), ki18n( "UI improvements" ), "daniel@foto-schaal.de");
     about.addCredit( ki18n( "Stephen Henderson" ), ki18n( "Search API implementation" ), "hendersonsk@gmail.com");
     about.addCredit( ki18n( "Tejas Dinkar" ), ki18n( "Developer" ),
                      "tejasdinkar@gmail.com", "http://twitter.com/tdinkar" );
     about.addCredit( ki18n("Emanuele Bigiarini"), ki18n("DBus and konqueror plugin"), "pulmro@gmail.com");
-    about.addCredit( ki18n( "Andrey Esin" ), ki18n( "Developer" ), "gmlastik@gmail.com", "http://twitter.com/la_stik" );
+
     //TODO before next release, Add new contributers to credits
     KCmdLineArgs::init( argc, argv, &about );
 
