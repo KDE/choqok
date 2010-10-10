@@ -144,7 +144,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
     QString scheme = url.scheme();
     QAction * ret;
     if( scheme == "tag" ) {
-        QString unpcode = QUrl::fromPunycode(url.host().toUtf8());
+        QString unpcode = KUrl::fromPunycode(url.host().toUtf8());
         unpcode.remove('.');
         unpcode.remove('-');
         unpcode.remove('_');

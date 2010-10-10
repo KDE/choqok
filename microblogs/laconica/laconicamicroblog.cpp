@@ -118,7 +118,7 @@ QString LaconicaMicroBlog::profileUrl( Choqok::Account *account, const QString &
     if(username.contains('@')){
         QStringList lst = username.split('@', QString::SkipEmptyParts);
         if(lst.count() == 2){
-            if(lst[1].endsWith(".status.net")){
+            if(lst[1].endsWith(QString(".status.net"))){
                 return QString("http://").arg(lst[1]);
             } else {
                 return QString("http://%1/%2").arg(lst[1]).arg(lst[0]);

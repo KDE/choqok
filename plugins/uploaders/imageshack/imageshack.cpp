@@ -51,7 +51,7 @@ ImageShack::~ImageShack()
 void ImageShack::upload(const KUrl& localUrl, const QByteArray& medium, const QByteArray& mediumType)
 {
     kDebug();
-    if( !mediumType.startsWith("image/") ){
+    if( !mediumType.startsWith(QByteArray("image/")) ){
         emit uploadingFailed(localUrl, i18n("Just supporting image uploading"));
         return;
     }

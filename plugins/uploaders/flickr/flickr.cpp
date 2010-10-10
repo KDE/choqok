@@ -63,41 +63,41 @@ void Flickr::upload(const KUrl& localUrl, const QByteArray& medium, const QByteA
 
     QString preSign;
     if (FlickrSettings::hidefromsearch()) {
-        formdata["hidden"] = "2";
+        formdata["hidden"] = QByteArray("2");
         preSign.append("hidden2");
     } else {
-        formdata["hidden"] = "1";
+        formdata["hidden"] = QByteArray("1");
         preSign.append("hidden1");
     }
 
     if (FlickrSettings::forprivate()) {
 
         if (FlickrSettings::forfamily()) {
-            formdata["is_family"] = "1";
+            formdata["is_family"] = QByteArray("1");
             preSign.append("is_family1");
         }
         
         if (FlickrSettings::forfriends()) {
-            formdata["is_friend"] = "1";
+            formdata["is_friend"] = QByteArray("1");
             preSign.append("is_friend1");
         }
-        formdata["is_public"] = "0";   
+        formdata["is_public"] = QByteArray("0");   
         preSign.append("is_public0");
     } else if (FlickrSettings::forpublic()) {
-        formdata["is_public"] = "1";
+        formdata["is_public"] = QByteArray("1");
         preSign.append("is_public1");
     }
 
     if (FlickrSettings::safe()) {
-        formdata["safety_level"] = "1";
+        formdata["safety_level"] = QByteArray("1");
         preSign.append("safety_level1");
     }
     if (FlickrSettings::moderate()) {
-        formdata["safety_level"] = "2";
+        formdata["safety_level"] = QByteArray("2");
         preSign.append("safety_level2");
     }
     if (FlickrSettings::restricted()) {
-        formdata["safety_level"] = "3";
+        formdata["safety_level"] = QByteArray("3");
         preSign.append("safety_level3");
     }
 
@@ -196,7 +196,7 @@ void Flickr::slotUpload(KJob* job)
                             errMsg = i18n( "The requested service is temporarily unavailable. Try again later" );
                             break;
                         default:
-                            errMsg = i18n( "Something happens wrong. Error %1. Try again later" ).arg( errCode );
+                            errMsg = i18n( "Something happens wrong. Error %1. Try again later", errCode );
                             break;
                         }
                         emit uploadingFailed( localUrl, errMsg );
