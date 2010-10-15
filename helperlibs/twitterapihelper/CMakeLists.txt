@@ -31,7 +31,7 @@ target_link_libraries( twitterapihelper
                        choqok)
 
 set_target_properties(twitterapihelper PROPERTIES
-VERSION 0.9.5
+VERSION 0.9.6
 SOVERSION 0
 )
 

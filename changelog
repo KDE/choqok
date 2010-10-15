@@ -1,3 +1,27 @@
+=== Version 0.9.92 (1.0 Beta4) -- 15-Oct-2010 ===
+* Prevent shortening process to freeze UI
+* Won't show the ☛ sign for tags or groups in StatusNet accounts, using the menu solution like @username
+* "Configure Notifications" in Settings menu.
+* Twitpic plugin fixed to work with new OAuth way.
+* "Reply to USER", "Write to USER", "Reply to all" actions added to reply button menu.
+* New look for Whois dialog.
+* Dictionary switcher in text input fields via context menu.
+* StatusNet: Support for parsing @user@server
+* StatusNet: Infos for users across multiple status.net servers
+* Filter plugin: Option to just show own replies or just show replies to my friends added
+* Image Preview plugin: Support for img.ly and Plixi(By Alex Infantes)
+
+New Plugins:
+    - ImageShack uploader (Just image uploading)
+    - Flickr uploader (Just image uploading)
+
+Dev:
+    - add new/specific KAction to PostWidget (for Plugins)
+
+Plugins removed:
+    - u.nu shortner, due its service discontinued
+    - YFrog uploader (temporary)
+
 === Version 0.9.90 (1.0 Beta3) -- 1-Sep-2010 ===
 * Better nick name detection
 * Better URL detection
