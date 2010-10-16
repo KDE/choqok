@@ -304,7 +304,7 @@ void MicroBlogWidget::errorPost(Choqok::Account* theAccount, Choqok::Post*, Micr
 QLayout * MicroBlogWidget::createToolbar()
 {
     d->toolbar = new QHBoxLayout;
-    KPushButton *btnActions = new KPushButton(i18n("Actions"), this);
+    KPushButton *btnActions = new KPushButton(i18n("More"), this);
 
     QLabel *lblLatestUpdate = new QLabel( i18n("Latest update:"), this);
     lblLatestUpdate->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
