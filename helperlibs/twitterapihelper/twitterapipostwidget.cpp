@@ -75,6 +75,7 @@ void TwitterApiPostWidget::initUi()
     KAction *actRep = new KAction(KIcon("edit-undo"), i18n("Reply to %1", currentPost().author.userName), menu);
     menu->addAction(actRep);
     connect( actRep, SIGNAL(triggered(bool)), SLOT(slotReply()) );
+    connect( btnRe, SIGNAL(clicked(bool)), SLOT(slotReply()) );
 
     KAction *actWrite = new KAction( KIcon("document-edit"), i18n("Write to %1", currentPost().author.userName),
                                      menu );
@@ -88,7 +89,7 @@ void TwitterApiPostWidget::initUi()
     }
 
     menu->setDefaultAction(actRep);
-    btnRe->setMenu(menu);
+    btnRe->setDelayedMenu(menu);
 
     if( !currentPost().isPrivate ) {
         d->btnFav = addButton( "btnFavorite",i18nc( "@info:tooltip", "Favorite" ), "rating" );
