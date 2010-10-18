@@ -2,8 +2,9 @@
 KDE Micro-Blogging client,
 Currently supports Identi.ca and Twitter.com
 
-Author:
+Authors:
     Mehrdad Momeny <mehrdad.momeny[AT]gmail.com>
+    Andrey Esin <gmlastik[AT]gmail.com>
 
 License:
     GNU GPL v2 or v3 or Later
@@ -11,21 +12,22 @@ License:
 Requirements to build:
      CMake 2.6
      KDE 4 library Development packages! (On (K)Ubuntu/Debian it's kdelibs5-dev)
-     QJSon library
-     QOAuth library
-     You need GNU GetText to compile translations. (If you don't want them, just remove "po" directory)
+     QJSon library (Development packages)
+     QOAuth library (Development packages)
+     QCA2 library (Development packages)
+     GetText: You need GNU GetText to compile translations. (If you don't want them, just remove "po" directory)
 
 How To Build The Project
 -=-=-=-=-=-=-=-=-=-=-=-=-=
-cd choqok
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix` ..
-make
-sudo make install OR su -c 'make install'
+$ cd choqok-src-root-dir [It's choqok-VERSION]
+$ mkdir build
+$ cd build
+$ cmake -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix` ..
+$ make
+$ sudo make install OR su -c 'make install'
 
 to uninstall the project:
-make uninstall or su -c 'make uninstall'
+$ make uninstall or su -c 'make uninstall'
 
 
-Feel free to email me.
+Feel free to email us.
