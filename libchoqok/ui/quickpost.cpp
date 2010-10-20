@@ -157,12 +157,13 @@ void QuickPost::postError(Account* a, Choqok::Post* post,
 void QuickPost::submitPost( const QString & txt )
 {
     kDebug();
-    this->hide();
-//     d->txtPost->setEnabled(false);
     QString newPost = txt;
     Choqok::Account* currentAccount = d->accountsList.value(d->comboAccounts->currentText());
-    if(!currentAccount)
+    if(!currentAccount) {
+        KMessageBox::error(choqokMainWindow, i18n("Please configure at least one account to be included in \"Quick Post\".\nSettings -> Configure Choqok... -> Accounts"));
         return;
+    }
+    this->hide();
     d->submittedAccounts.clear();
     if( currentAccount->microblog()->postCharLimit() &&
         newPost.size() > (int)currentAccount->microblog()->postCharLimit() )
