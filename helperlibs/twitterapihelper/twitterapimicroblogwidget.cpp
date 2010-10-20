@@ -35,17 +35,20 @@
 #include <KMessageBox>
 #include <KAction>
 #include <KMenu>
+#include "twitterapiaccount.h"
 
 class TwitterApiMicroBlogWidget::Private
 {
 public:
-    Private(Choqok::Account *account)
+    Private(Choqok::Account *acc)
         :btnCloseSearch(0)
     {
         kDebug();
-        mBlog = qobject_cast<TwitterApiMicroBlog *>(account->microblog());
+        mBlog = qobject_cast<TwitterApiMicroBlog *>(acc->microblog());
+        this->account = qobject_cast<TwitterApiAccount *>(acc);
     }
     TwitterApiMicroBlog *mBlog;
+    TwitterApiAccount *account;
     QToolButton *btnCloseSearch;
 };
 
@@ -72,7 +75,7 @@ void TwitterApiMicroBlogWidget::initUi()
     d->btnCloseSearch = new QToolButton( this );
     d->btnCloseSearch->setIcon(KIcon("tab-close"));
     d->btnCloseSearch->setAutoRaise(true);
-    d->btnCloseSearch->setToolTip(i18nc("Close a search timeline", "Close Search"));
+    d->btnCloseSearch->setToolTip(i18nc("Close a timeline", "Close Timeline"));
     timelinesTabWidget()->setCornerWidget(d->btnCloseSearch, Qt::TopRightCorner);
     connect(d->btnCloseSearch, SIGNAL(clicked(bool)), SLOT(slotCloseCurrentSearch()) );
     slotCurrentTimelineChanged(timelinesTabWidget()->currentIndex());
@@ -135,9 +138,9 @@ TwitterApiSearchTimelineWidget* TwitterApiMicroBlogWidget::addSearchTimelineWidg
 
 void TwitterApiMicroBlogWidget::slotCurrentTimelineChanged(int index)
 {
-    TwitterApiSearchTimelineWidget *stw =
-            qobject_cast<TwitterApiSearchTimelineWidget *>(timelinesTabWidget()->widget(index));
-    if(stw)
+    Choqok::UI::TimelineWidget *stw =
+            qobject_cast<Choqok::UI::TimelineWidget *>(timelinesTabWidget()->widget(index));
+    if(stw->isClosable())
         d->btnCloseSearch->setEnabled(true);
     else
         d->btnCloseSearch->setEnabled(false);
@@ -145,8 +148,8 @@ void TwitterApiMicroBlogWidget::slotCurrentTimelineChanged(int index)
 
 void TwitterApiMicroBlogWidget::slotCloseCurrentSearch()
 {
-    TwitterApiSearchTimelineWidget *stw =
-            qobject_cast<TwitterApiSearchTimelineWidget *>(timelinesTabWidget()->currentWidget());
+    Choqok::UI::TimelineWidget *stw =
+            qobject_cast<Choqok::UI::TimelineWidget *>(timelinesTabWidget()->currentWidget());
     closeSearch(stw);
 }
 
@@ -204,8 +207,6 @@ void TwitterApiMicroBlogWidget::loadSearchTimelinesState()
         SearchInfo info;
         if( info.fromString(currentAccount()->configGroup()->readEntry("Search"+QString::number(i), QString())) ){
             qobject_cast<TwitterApiMicroBlog*>(currentAccount()->microblog())->searchBackend()->requestSearchResults(info);
-//             QString name = QString("%1%2").arg(d->mBlog->searchBackend()->optionCode(info.option)).arg(info.query);
-//             addSearchTimelineWidgetToUi(name, info);
         }
         ++i;
     }
@@ -214,11 +215,11 @@ void TwitterApiMicroBlogWidget::loadSearchTimelinesState()
 void TwitterApiMicroBlogWidget::slotContextMenu(QWidget* w, const QPoint &pt)
 {
     kDebug();
-    TwitterApiSearchTimelineWidget *sWidget = qobject_cast<TwitterApiSearchTimelineWidget*>(w);
-    if(sWidget){
+    Choqok::UI::TimelineWidget *sWidget = qobject_cast<Choqok::UI::TimelineWidget*>(w);
+    if(sWidget->isClosable()){
         KMenu menu;
-        KAction *ac = new KAction(KIcon("tab-close"), i18n("Close Search"), &menu);
-        KAction *closeAll = new KAction(KIcon("tab-close"), i18n("Close All Search Tabs"), &menu);
+        KAction *ac = new KAction(KIcon("tab-close"), i18n("Close Timeline"), &menu);
+        KAction *closeAll = new KAction(KIcon("tab-close"), i18n("Close All"), &menu);
         connect( closeAll, SIGNAL(triggered(Qt::MouseButtons,Qt::KeyboardModifiers)),
                  this, SLOT(closeAllSearches()) );
         menu.addAction(ac);
@@ -230,23 +231,36 @@ void TwitterApiMicroBlogWidget::slotContextMenu(QWidget* w, const QPoint &pt)
     }
 }
 
-void TwitterApiMicroBlogWidget::closeSearch(TwitterApiSearchTimelineWidget* searchWidget)
+void TwitterApiMicroBlogWidget::closeSearch(Choqok::UI::TimelineWidget* searchWidget)
 {
     if(!searchWidget)
         return;
     searchWidget->markAllAsRead();
-    QString name = mSearchTimelines.key(searchWidget);
-    if(name.isEmpty())
-        return;
-    timelinesTabWidget()->removePage(searchWidget);
-    mSearchTimelines.value(name)->close();
-    mSearchTimelines.remove(name);
+    TwitterApiSearchTimelineWidget *tst = qobject_cast<TwitterApiSearchTimelineWidget*>(searchWidget);
+        timelinesTabWidget()->removePage(searchWidget);
+    if(tst) {
+        QString name = mSearchTimelines.key(tst);
+        mSearchTimelines.value(name)->close();
+        mSearchTimelines.remove(name);
+    } else {
+        QStringList lst = d->account->timelineNames();
+        lst.removeOne(searchWidget->timelineName());
+        d->account->setTimelineNames(lst);
+        d->account->writeConfig();
+        timelines().remove(timelines().key(searchWidget));
+        searchWidget->close();
+    }
 }
 
 void TwitterApiMicroBlogWidget::closeAllSearches()
 {
     foreach(TwitterApiSearchTimelineWidget* searchWidget, mSearchTimelines){
         closeSearch(searchWidget);
+    }
+    foreach(Choqok::UI::TimelineWidget* widget, timelines()){
+        if(widget->isClosable()) {
+            closeSearch(widget);
+        }
     }
 }
 

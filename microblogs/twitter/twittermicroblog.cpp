@@ -49,6 +49,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KMessageBox>
 #include <qjson/parser.h>
 #include <choqok/choqoktypes.h>
+#include "twittertimelinewidget.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < TwitterMicroBlog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_twitter" ) )
@@ -97,7 +98,7 @@ Choqok::UI::MicroBlogWidget * TwitterMicroBlog::createMicroBlogWidget( Choqok::A
 Choqok::UI::TimelineWidget * TwitterMicroBlog::createTimelineWidget( Choqok::Account *account,
                                                                  const QString &timelineName, QWidget *parent )
 {
-    return new Choqok::UI::TimelineWidget(account, timelineName, parent);
+    return new TwitterTimelineWidget(account, timelineName, parent);
 }
 
 Choqok::UI::PostWidget* TwitterMicroBlog::createPostWidget(Choqok::Account* account,

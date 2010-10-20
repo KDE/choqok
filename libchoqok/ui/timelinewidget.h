@@ -82,6 +82,13 @@ public:
     */
     QList<PostWidget*> postWidgets();
 
+    /**
+     * @return true if this timeline is closable!
+     */
+    bool isClosable() const;
+
+    void setClosable(bool isClosable = true);
+
 public Q_SLOTS:
     /**
     @brief Mark all posts as read

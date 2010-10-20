@@ -11,6 +11,7 @@ twitterpostwidget.cpp
 twittersearch.cpp
 twittereditaccount.cpp
 twitterlistdialog.cpp
+twittertimelinewidget.cpp
 )
 
 kde4_add_ui_files(choqok_twitter_SRCS

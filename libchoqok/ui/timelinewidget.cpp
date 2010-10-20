@@ -42,7 +42,7 @@ class TimelineWidget::Private
 public:
     Private(Account *account, const QString &timelineName)
         :currentAccount(account), timelineName(timelineName),
-         btnMarkAllAsRead(0), unreadCount(0), info(0)
+         btnMarkAllAsRead(0), unreadCount(0), info(0), isClosable(false)
     {
         if(account->microblog()->isValidTimeline(timelineName)) {
             info = account->microblog()->timelineInfo(timelineName);
@@ -63,11 +63,13 @@ public:
     QHBoxLayout *titleBarLayout;
     QLabel *lblDesc;
     Choqok::TimelineInfo *info;
+    bool isClosable;
 };
 
 TimelineWidget::TimelineWidget(Choqok::Account* account, const QString &timelineName, QWidget* parent /*= 0*/)
     : QWidget(parent), d(new Private(account, timelineName))
 {
+    setAttribute(Qt::WA_DeleteOnClose);
     setupUi();
     loadTimeline();
 }
@@ -313,6 +315,16 @@ QVBoxLayout* TimelineWidget::mainLayout()
 QHBoxLayout* TimelineWidget::titleBarLayout()
 {
     return d->titleBarLayout;
+}
+
+bool TimelineWidget::isClosable() const
+{
+    return d->isClosable;
+}
+
+void TimelineWidget::setClosable(bool isClosable)
+{
+    d->isClosable = isClosable;
 }
 
 }

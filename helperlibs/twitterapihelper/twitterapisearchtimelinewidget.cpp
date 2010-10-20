@@ -67,6 +67,7 @@ TwitterApiSearchTimelineWidget::TwitterApiSearchTimelineWidget(Choqok::Account* 
     if(info.isBrowsable)
         addFooter();
     timelineDescription()->setText(i18n("Search results for %1", timelineName));
+    setClosable();
 }
 
 TwitterApiSearchTimelineWidget::~TwitterApiSearchTimelineWidget()

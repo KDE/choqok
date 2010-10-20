@@ -53,7 +53,7 @@ protected Q_SLOTS:
                                             QList<Choqok::Post*> &postsList );
 
 protected:
-    void closeSearch(TwitterApiSearchTimelineWidget *searchWidget);
+    void closeSearch(Choqok::UI::TimelineWidget* searchWidget);
     QMap<QString, TwitterApiSearchTimelineWidget*> mSearchTimelines;
     TwitterApiSearchTimelineWidget* addSearchTimelineWidgetToUi(const QString& name,
                                                                 const SearchInfo &info);
