@@ -23,12 +23,13 @@
 */
 
 #include "twitteraccount.h"
-#include <KDebug>
 #include "twittermicroblog.h"
+#include <KDebug>
 
 class TwitterAccount::Private
 {
 public:
+//     QStringList lists;
 };
 
 TwitterAccount::TwitterAccount(TwitterMicroBlog* parent, const QString &alias)
@@ -36,11 +37,36 @@ TwitterAccount::TwitterAccount(TwitterMicroBlog* parent, const QString &alias)
 {
     setHost("https://api.twitter.com");
     setApi("1");
+//     d->lists = configGroup()->readEntry("lists", QStringList());
+    QStringList lists;
+    foreach(const QString & tm, timelineNames()){
+        if(tm.startsWith('@'))
+            lists.append(tm);
+    }
+    if(!lists.isEmpty())
+        parent->setListTimelines(this, lists);
 }
 
 TwitterAccount::~TwitterAccount()
 {
     delete d;
 }
+/*
+void TwitterAccount::writeConfig()
+{
+    kDebug()<<d->lists;
+    configGroup()->writeEntry("lists", d->lists);
+    TwitterApiAccount::writeConfig();
+}
+
+void TwitterAccount::addList(const QString& name)
+{
+    d->lists << name;
+}
+
+void TwitterAccount::removeList(const QString& name)
+{
+    d->lists.removeOne(name);
+}*/
 
 #include "twitteraccount.moc"

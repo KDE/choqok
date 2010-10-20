@@ -126,6 +126,11 @@ void MicroBlog::setTimelineNames(const QStringList &types)
     d->timelineTypes = types;
 }
 
+void MicroBlog::addTimelineName(const QString& name)
+{
+    d->timelineTypes << name;
+}
+
 bool MicroBlog::isValidTimeline( const QString &timeline )
 {
     return d->timelineTypes.contains( timeline );

@@ -29,6 +29,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <microblog.h>
 #include "twitterapisearch.h"
 
+namespace QJson {
+class Parser;
+}
+
 namespace QOAuth {
 class Interface;
 }
@@ -229,6 +233,7 @@ protected:
     /// JSON:
     ///===============================================
 
+    QJson::Parser *jsonParser();
     virtual Choqok::Post * readPostFromJsonMap( Choqok::Account* theAccount,
                                                    const QVariantMap& var, Choqok::Post* post );
     virtual Choqok::Post * readPostFromJson( Choqok::Account* theAccount,
@@ -239,7 +244,7 @@ protected:
     virtual QList<Choqok::Post*> readDMessagesFromJson(Choqok::Account *theAccount, const QByteArray &buffer );
     virtual QStringList readUsersScreenNameFromJson( Choqok::Account *theAccount, const QByteArray & buffer );
     virtual Choqok::User *readUserInfoFromJson( const QByteArray &buffer );
-
+    virtual Choqok::User readUserFromJsonMap( Choqok::Account* theAccount, const QVariantMap& map );
     /**
     Checks xml returned from server for error, and return error string, Or an empty string if nothing found!
     */

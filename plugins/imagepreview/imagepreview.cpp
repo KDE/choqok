@@ -181,7 +181,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
 
 void ImagePreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pixmap)
 {
-    kDebug();
+//     kDebug();
     Choqok::UI::PostWidget *postToParse = mParsingList.take(remoteUrl);
     QString baseUrl = mBaseUrlMap.take(remoteUrl);
     if(!postToParse)

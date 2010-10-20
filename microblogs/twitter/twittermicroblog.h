@@ -26,7 +26,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KUrl>
 #include <twitterapihelper/twitterapimicroblog.h>
 #include <QPointer>
+#include "twitterlist.h"
 
+class TwitterAccount;
 class TwitterSearch;
 class ChoqokEditAccountWidget;
 class KJob;
@@ -58,9 +60,31 @@ public:
 
     virtual QString generateRepeatedByUserTooltip(const QString& username);
     virtual QString repeatQuestion();
+    virtual QMenu* createActionsMenu(Choqok::Account* theAccount,
+                                     QWidget* parent = Choqok::UI::Global::mainWindow());
+
+    virtual void fetchUserLists(TwitterAccount* theAccount, const QString& username);
+    virtual void addListTimeline( TwitterAccount* theAccount, const QString& username,
+                                  const QString& listname );
+    virtual void setListTimelines(TwitterAccount* theAccount, const QStringList &lists);
+
+    virtual Choqok::TimelineInfo* timelineInfo(const QString& timelineName);
+
+signals:
+    void userLists(Choqok::Account* theAccount, const QString& username, QList<Twitter::List> lists);
+
+protected slots:
+    void showListDialog(TwitterApiAccount* theAccount = 0);
+    void slotFetchUserLists(KJob *job);
+
+protected:
+    QList<Twitter::List> readUserListsFromJson(Choqok::Account* theAccount, QByteArray buffer);
+    Twitter::List readListFromJsonMap(Choqok::Account* theAccount, QVariantMap map);
+    QMap<KJob*, QString> mFetchUsersListMap;
 
 private:
     QPointer<TwitterSearch> mSearchBackend;
+    QMap<QString, Choqok::TimelineInfo*> mListsInfo;
 };
 
 #endif

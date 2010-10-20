@@ -316,6 +316,7 @@ protected:
     MicroBlog( const KComponentData &instance, QObject *parent=0 );
 
     void setTimelineNames(const QStringList&);
+    void addTimelineName(const QString&);
     void setServiceName(const QString&);
     void setServiceHomepageUrl(const QString&);
     void setCharLimit(uint);

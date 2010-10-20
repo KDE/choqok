@@ -10,15 +10,17 @@ twittermicroblog.cpp
 twitterpostwidget.cpp
 twittersearch.cpp
 twittereditaccount.cpp
+twitterlistdialog.cpp
 )
 
 kde4_add_ui_files(choqok_twitter_SRCS
 twittereditaccount_base.ui
+twitterlistdialog_base.ui
 )
 
 kde4_add_plugin(choqok_twitter ${choqok_twitter_SRCS})
 
-target_link_libraries(choqok_twitter ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} choqok twitterapihelper ${QTOAUTH_LIBRARY})
+target_link_libraries(choqok_twitter ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${QJSON_LIBRARY} ${QTOAUTH_LIBRARY} choqok twitterapihelper)
 
 # Install
 

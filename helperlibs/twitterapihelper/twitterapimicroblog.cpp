@@ -753,7 +753,7 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
     if ( page ) {
         url.addQueryItem ( "page", QString::number ( page ) );
     }
-    kDebug() << "Latest " << type << " Id: " << latestStatusId;
+    kDebug() << "Latest " << type << " Id: " << latestStatusId;// << " apiReq: " << url;
 
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
@@ -1431,6 +1431,11 @@ QString TwitterApiMicroBlog::checkXmlForError(const QByteArray& buffer)
 
 ///===================================================================
 
+QJson::Parser* TwitterApiMicroBlog::jsonParser()
+{
+    return &d->parser;
+}
+
 QString TwitterApiMicroBlog::checkJsonForError(const QByteArray& buffer)
 {
     bool ok;
@@ -1636,6 +1641,22 @@ QStringList TwitterApiMicroBlog::readUsersScreenNameFromJson(Choqok::Account* th
         emit error(theAccount, ParsingError, err, Critical);
     }
     return list;
+}
+
+Choqok::User TwitterApiMicroBlog::readUserFromJsonMap(Choqok::Account* theAccount, const QVariantMap& map)
+{
+    Q_UNUSED(theAccount);
+    Choqok::User u;
+    u.description = map["description"].toString();
+    u.followersCount = map["followers_count"].toUInt();
+    u.homePageUrl = map["url"].toString();
+    u.isProtected = map["protected"].toBool();
+    u.location = map["location"].toString();
+    u.profileImageUrl = map["profile_image_url"].toString();
+    u.realName = map["name"].toString();
+    u.userId = map["id"].toString();
+    u.userName = map["screen_name"].toString();
+    return u;
 }
 
 #include "twitterapimicroblog.moc"
