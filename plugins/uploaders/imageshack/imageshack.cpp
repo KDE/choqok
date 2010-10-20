@@ -106,9 +106,8 @@ void ImageShack::slotUpload(KJob* job)
                     QDomNode node2 = node.firstChild();
                     while( !node2.isNull() ){
                         QDomElement elm2 = node2.toElement();
-                        if(elm2.tagName() == "image_link"){
-                            emit mediumUploaded(localUrl,
-                                                Choqok::ShortenManager::self()->shortenUrl(elm2.text()));
+                        if(elm2.tagName() == "yfrog_link"){
+                            emit mediumUploaded(localUrl, elm2.text());
                             return;
                         }
                         node2 = node2.nextSibling();
