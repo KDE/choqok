@@ -30,6 +30,6 @@ install(TARGETS choqok_bin ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 ########### install files ###############
 
-install( FILES choqok.desktop  DESTINATION ${XDG_APPS_INSTALL_DIR} )
+install( PROGRAMS choqok.desktop  DESTINATION ${XDG_APPS_INSTALL_DIR} )
 # install( FILES choqok.kcfg  DESTINATION  ${KCFG_INSTALL_DIR} )
 install( FILES choqokui.rc choqok.notifyrc  DESTINATION  ${DATA_INSTALL_DIR}/choqok )
