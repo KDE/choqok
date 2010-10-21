@@ -77,6 +77,8 @@ TextEdit::TextEdit(uint charLimit /*= 0*/, QWidget* parent /*= 0*/)
     connect(BehaviorSettings::self(), SIGNAL(configChanged()), SLOT(settingsChanged()) );
 
     QTimer::singleShot(1000, this, SLOT(setupSpeller()));
+    connect(this, SIGNAL(aboutToShowContextMenu(QMenu*)),
+            SLOT(slotAboutToShowContextMenu(QMenu*)));
 }
 
 TextEdit::~TextEdit()
@@ -169,20 +171,16 @@ void TextEdit::updateRemainingCharsCount()
     }
 }
 
-void TextEdit::contextMenuEvent(QContextMenuEvent* event)
+void TextEdit::slotAboutToShowContextMenu(QMenu* menu)
 {
-    QMenu *menu = mousePopupMenu();
     if(menu){
         kDebug();
         QAction *act = new QAction(i18n("Set spell check language"), menu);
         act->setMenu(d->langActions);
         menu->addAction(act);
-        menu->exec(event->globalPos());
-        event->accept();
-    } else {
-        KTextEdit::contextMenuEvent(event);
     }
 }
+
 
 void TextEdit::slotChangeSpellerLanguage()
 {

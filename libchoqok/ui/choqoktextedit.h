@@ -52,7 +52,6 @@ public:
 protected:
     virtual void keyPressEvent(QKeyEvent* );
     virtual void insertFromMimeData ( const QMimeData *source );
-    virtual void contextMenuEvent(QContextMenuEvent* event);
 
 Q_SIGNALS:
     void returnPressed( const QString &txt );
@@ -64,6 +63,7 @@ protected Q_SLOTS:
     void settingsChanged();
     void slotChangeSpellerLanguage();
     void setupSpeller();
+    void slotAboutToShowContextMenu(QMenu* menu);
 
 protected:
     void undoableClear();
