@@ -228,6 +228,7 @@ void TwitterMicroBlog::addListTimeline( TwitterAccount* theAccount, const QStrin
     tms.append(name);
     addTimelineName(name);
     theAccount->setTimelineNames(tms);
+    theAccount->writeConfig();
     QString url = QString("/%1/lists/%2/statuses").arg(username).arg(listname);
     timelineApiPath[name] = url + ".%1";
     updateTimelines(theAccount);
