@@ -36,7 +36,6 @@ class CHOQOK_EXPORT NotifyManager
 {
 public:
     ~NotifyManager();
-//     static NotifyManager *self();
 
     static void error( const QString &message , const QString &title = i18n("Error") );
     static void success( const QString &message, const QString &title = i18n("Success") );
@@ -45,16 +44,8 @@ public:
 
     static void shortening( const QString& message, const QString& title = i18n("Shortening a URL") );
 
-protected:
-    NotifyManager();
-    static void triggerNotify( const QString &eventId, const QString &title,
-                          const QString &message,
-                          KNotification::NotificationFlags flags = KNotification::CloseOnTimeout );
-
 private:
-//     static NotifyManager *m_self;
-    class Private;
-    Private * const d;
+    NotifyManager();
 };
 }
 #endif // NOTIFYMANAGER_H

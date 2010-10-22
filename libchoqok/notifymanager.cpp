@@ -25,54 +25,56 @@
 #include "notifymanager.h"
 #include <QApplication>
 #include "choqokuiglobal.h"
+#include <kglobal.h>
+
 namespace Choqok
 {
 
-class NotifyManager::Private
+class NotifyManagerPrivate
 {
 public:
-    
+    void triggerNotify( const QString &eventId, const QString &title,
+                        const QString &message,
+                        KNotification::NotificationFlags flags = KNotification::CloseOnTimeout );
 };
 
+K_GLOBAL_STATIC(NotifyManagerPrivate, _nmp)
+
 NotifyManager::NotifyManager()
-    : d(new Private)
 {
 
 }
 
 NotifyManager::~NotifyManager()
 {
-    delete d;
 }
-
-// NotifyManager *NotifyManager::m_self = new NotifyManager;
-
-// NotifyManager* NotifyManager::self()
-// {
-//     return m_self;
-// }
 
 void NotifyManager::success( const QString& message, const QString& title )
 {
-    triggerNotify("job-success", title, message);
+    _nmp->triggerNotify("job-success", title, message);
 }
 
 void NotifyManager::error( const QString& message, const QString& title )
 {
-    triggerNotify("job-error", title, message);
+    _nmp->triggerNotify("job-error", title, message);
 }
 
 void NotifyManager::newPostArrived( const QString& message, const QString& title )
 {
-    triggerNotify("new-post-arrived", title, message);//, KNotification::Persistent);
+    QString fullMsg = QString( "<qt><b>%1:</b><br/>%2</qt>" ).arg(title).arg(message);
+    KNotification *n = new KNotification("new-post-arrived", choqokMainWindow);
+    n->setActions(QStringList(i18nc( "Show Choqok MainWindow", "Show Choqok")));
+    n->setText(fullMsg);
+    QObject::connect(n, SIGNAL(activated(uint)), choqokMainWindow, SLOT(show()));
+    n->sendEvent();
 }
 
 void NotifyManager::shortening( const QString& message, const QString& title )
 {
-    triggerNotify("shortening", title, message);
+    _nmp->triggerNotify("shortening", title, message);
 }
 
-void NotifyManager::triggerNotify(const QString& eventId, const QString& title,
+void NotifyManagerPrivate::triggerNotify(const QString& eventId, const QString& title,
                              const QString& message, KNotification::NotificationFlags flags)
 {
     QString fullMsg = QString( "<qt><b>%1:</b><br/>%2</qt>" ).arg(title).arg(message);
