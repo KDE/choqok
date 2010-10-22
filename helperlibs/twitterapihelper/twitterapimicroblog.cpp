@@ -174,8 +174,10 @@ QMenu* TwitterApiMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidg
 QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *account,
                                                           const QString& timelineName)
 {
-    kDebug()<<timelineName;
     QList< Choqok::Post* > list;
+    if(timelineName.compare("Favorite") == 0)
+        return list;//NOTE Won't cache favorites, and this is for compatibility with older versions!
+    kDebug()<<timelineName;
     QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
     KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
     QStringList tmpList = postsBackup.groupList();
@@ -227,6 +229,8 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
                                        const QString& timelineName,
                                        const QList< Choqok::UI::PostWidget* > &timeline)
 {
+    if(timelineName.compare("Favorite") == 0)
+        return;//NOTE Won't cache favorites, and this is for compatibility with older versions!
     kDebug();
     QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
     KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
