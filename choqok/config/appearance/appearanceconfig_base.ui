@@ -19,6 +19,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="kcfg_useReverseOrder">
+     <property name="text">
+      <string>Show posts in reverse order (Needs restart to take effect)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QCheckBox" name="kcfg_showRetweetsInChoqokWay">
      <property name="toolTip">
       <string>You'll see post with retweeter name as author, plus Retweeted from original author note.</string>

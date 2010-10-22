@@ -98,6 +98,10 @@ public Q_SLOTS:
     @brief Manage changed settings on this timeline and forward it to all posts.
     */
     virtual void settingsChanged();
+    /**
+    @brief Scroll to the bottom of the timeline
+    */
+    virtual void scrollToBottom();
 
 Q_SIGNALS:
     void forwardResendPost( const QString &post );

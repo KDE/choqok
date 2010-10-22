@@ -22,17 +22,20 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 #include "timelinewidget.h"
 #include "account.h"
-#include <microblog.h>
+#include "microblog.h"
 #include <QVBoxLayout>
 #include <QScrollArea>
+#include <QScrollBar>
+#include <QTimer>
 #include <qlayoutitem.h>
 #include "postwidget.h"
 #include <KDebug>
-#include "choqokbehaviorsettings.h"
 #include <QLabel>
 #include <KPushButton>
 #include <QPointer>
-#include <notifymanager.h>
+#include "notifymanager.h"
+#include "choqokappearancesettings.h"
+#include "choqokbehaviorsettings.h"
 
 namespace Choqok {
 namespace UI {
@@ -62,6 +65,8 @@ public:
     QVBoxLayout *mainLayout;
     QHBoxLayout *titleBarLayout;
     QLabel *lblDesc;
+    QScrollArea *scrollArea;
+    int order;			// 0: web, -1: natural
     Choqok::TimelineInfo *info;
     bool isClosable;
 };
@@ -127,17 +132,16 @@ void TimelineWidget::setupUi()
     d->lblDesc->setFont(fnt);
 
     QVBoxLayout *gridLayout;
-    QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
     QVBoxLayout *verticalLayout_2;
     QSpacerItem *verticalSpacer;
     gridLayout = new QVBoxLayout(this);
     gridLayout->setMargin(0);
     gridLayout->setObjectName("gridLayout");
-    scrollArea = new QScrollArea(this);
-    scrollArea->setObjectName("scrollArea");
-    scrollArea->setFrameShape(QFrame::NoFrame);
-    scrollArea->setWidgetResizable(true);
+    d->scrollArea = new QScrollArea(this);
+    d->scrollArea->setObjectName("scrollArea");
+    d->scrollArea->setFrameShape(QFrame::NoFrame);
+    d->scrollArea->setWidgetResizable(true);
     scrollAreaWidgetContents = new QWidget();
     scrollAreaWidgetContents->setObjectName("scrollAreaWidgetContents");
     scrollAreaWidgetContents->setGeometry(QRect(0, 0, 254, 300));
@@ -154,10 +158,15 @@ void TimelineWidget::setupUi()
     d->titleBarLayout->addWidget(d->lblDesc);
     verticalLayout_2->addLayout(d->mainLayout);
 
-    scrollArea->setWidget(scrollAreaWidgetContents);
+    d->scrollArea->setWidget(scrollAreaWidgetContents);
 
     gridLayout->addLayout(d->titleBarLayout);
-    gridLayout->addWidget(scrollArea);
+    gridLayout->addWidget(d->scrollArea);
+    if (AppearanceSettings::useReverseOrder()) {
+	d->order = -1;
+	QTimer::singleShot(0, this, SLOT(scrollToBottom()));
+    } else
+	d->order = 0;
 }
 
 void TimelineWidget::removeOldPosts()
@@ -225,7 +234,7 @@ void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
             this, SLOT(slotOnePostReaded()) );
     connect( widget, SIGNAL(aboutClosing(ChoqokId,PostWidget*)),
              SLOT(postWidgetClosed(ChoqokId,PostWidget*)) );
-    d->mainLayout->insertWidget(0, widget);
+    d->mainLayout->insertWidget(d->order, widget);
     d->posts.insert(widget->currentPost().postId, widget);
     d->sortedPostsList.insert(widget->currentPost().creationDateTime, widget);
     Global::SessionManager::self()->emitNewPostWidgetAdded(widget, currentAccount(), timelineName());
@@ -252,6 +261,12 @@ void TimelineWidget::markAllAsRead()
         emit updateUnreadCount(unread);
         d->btnMarkAllAsRead->deleteLater();
     }
+}
+
+void TimelineWidget::scrollToBottom()
+{
+    d->scrollArea->verticalScrollBar()->
+	triggerAction(QAbstractSlider::SliderToMaximum);
 }
 
 Account* TimelineWidget::currentAccount()
