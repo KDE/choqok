@@ -37,18 +37,18 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "twittereditaccount.h"
 #include "postwidget.h"
 #include "twitteraccount.h"
-#include <composerwidget.h>
+#include "composerwidget.h"
 #include "twitterpostwidget.h"
 #include "twitterapihelper/twitterapimicroblogwidget.h"
 #include "twittersearch.h"
-#include <twitterapihelper/twitterapicomposerwidget.h>
-#include <choqokappearancesettings.h>
+#include "twitterapihelper/twitterapicomposerwidget.h"
+#include "choqokappearancesettings.h"
 #include <QMenu>
 #include <KAction>
 #include "twitterlistdialog.h"
 #include <KMessageBox>
 #include <qjson/parser.h>
-#include <choqok/choqoktypes.h>
+#include "choqoktypes.h"
 #include "twittertimelinewidget.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < TwitterMicroBlog > (); )
