@@ -110,7 +110,7 @@ QString TwitterApiPostWidget::generateSign()
     QString profUrl = currentAccount()->microblog()->profileUrl(currentAccount(),
                                                                 currentPost().author.userName);
     sign = "<b><a href='user://"+currentPost().author.userName+"' title=\"" +
-    currentPost().author.description + "\">" + currentPost().author.userName +
+    Qt::escape(currentPost().author.description) + "\">" + currentPost().author.userName +
     "</a> - </b>";
     //<img src=\"icon://web\" />
     sign += "<a href=\"" + currentPost().link +
