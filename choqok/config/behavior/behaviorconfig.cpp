@@ -87,20 +87,19 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
     addConfig( Choqok::BehaviorSettings::self(), d->mPrfsShorten );
     d->mBehaviorTabCtl->addTab(d->mPrfsShorten, i18n("URL &Shortening"));
 
-    KCModuleInfo proxyInfo("proxy.desktop");                                        
+    KCModuleInfo proxyInfo("proxy.desktop");
     d->proxyModule = new KCModuleProxy(proxyInfo,parent);
     d->mBehaviorTabCtl->addTab( d->proxyModule, i18n(proxyInfo.moduleName().toLocal8Bit()) );
-    
+
     connect(d->mPrfsShorten, SIGNAL(changed(bool)), this, SIGNAL(changed(bool)) );
     connect(d->proxyModule,   SIGNAL( changed(bool) ), this, SIGNAL( changed(bool) ) );
-    
+
     load();
 
 }
 
 BehaviorConfig::~BehaviorConfig()
 {
-    delete d->proxyModule;
     delete d;
 }
 

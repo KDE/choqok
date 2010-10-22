@@ -66,7 +66,7 @@ public:
     QHBoxLayout *titleBarLayout;
     QLabel *lblDesc;
     QScrollArea *scrollArea;
-    int order;			// 0: web, -1: natural
+    int order;            // 0: web, -1: natural
     Choqok::TimelineInfo *info;
     bool isClosable;
 };
@@ -163,10 +163,10 @@ void TimelineWidget::setupUi()
     gridLayout->addLayout(d->titleBarLayout);
     gridLayout->addWidget(d->scrollArea);
     if (AppearanceSettings::useReverseOrder()) {
-	d->order = -1;
-	QTimer::singleShot(0, this, SLOT(scrollToBottom()));
+    d->order = -1;
+    QTimer::singleShot(0, this, SLOT(scrollToBottom()));
     } else
-	d->order = 0;
+    d->order = 0;
 }
 
 void TimelineWidget::removeOldPosts()
@@ -266,7 +266,7 @@ void TimelineWidget::markAllAsRead()
 void TimelineWidget::scrollToBottom()
 {
     d->scrollArea->verticalScrollBar()->
-	triggerAction(QAbstractSlider::SliderToMaximum);
+    triggerAction(QAbstractSlider::SliderToMaximum);
 }
 
 Account* TimelineWidget::currentAccount()
