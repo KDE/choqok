@@ -27,7 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QtCore/QObject>
 #include "choqok_export.h"
-#include "mainwindow.h"
+#include "choqokmainwindow.h"
 
 #define choqokMainWindow Choqok::UI::Global::mainWindow()
 

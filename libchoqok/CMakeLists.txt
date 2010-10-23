@@ -26,7 +26,7 @@ ui/postwidget.cpp
 ui/choqoktextedit.cpp
 ui/composerwidget.cpp
 ui/quickpost.cpp
-ui/mainwindow.cpp
+ui/choqokmainwindow.cpp
 ui/uploadmediadialog.cpp
 ui/textbrowser.cpp
 )
@@ -85,7 +85,7 @@ install( FILES
     ui/choqoktextedit.h
     ui/composerwidget.h
     ui/editaccountwidget.h
-    ui/mainwindow.h
+    ui/choqokmainwindow.h
     ui/microblogwidget.h
     ui/postwidget.h
     ui/quickpost.h

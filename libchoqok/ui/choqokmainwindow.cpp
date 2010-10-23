@@ -22,7 +22,7 @@
 
 */
 
-#include "mainwindow.h"
+#include "choqokmainwindow.h"
 #include "choqokbehaviorsettings.h"
 #include <kstatusbar.h>
 #include <KTabWidget>
@@ -73,4 +73,4 @@ Choqok::UI::MicroBlogWidget* MainWindow::currentMicroBlog()
     return qobject_cast<Choqok::UI::MicroBlogWidget*>(mainWidget->currentWidget());
 }
 
-#include "mainwindow.moc"
+#include "choqokmainwindow.moc"

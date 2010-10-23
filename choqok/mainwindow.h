@@ -26,7 +26,7 @@
 
 #include <kxmlguiwindow.h>
 #include "account.h"
-#include "ui/mainwindow.h"
+#include "choqokmainwindow.h"
 
 class KAction;
 class KSplashScreen;
