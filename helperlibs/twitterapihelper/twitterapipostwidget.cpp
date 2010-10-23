@@ -164,7 +164,13 @@ void TwitterApiPostWidget::slotReply()
         TwitterApiAccount *account= qobject_cast<TwitterApiAccount*>( currentAccount() );
         d->mBlog->showDirectMessageDialog( account, currentPost().author.userName );
     } else {
-        emit reply( QString("@%1").arg(currentPost().author.userName), currentPost().postId );
+        QString replyto = QString("@%1").arg(currentPost().author.userName);
+        QString postId = currentPost().postId;
+        if( !currentPost().repeatedFromUsername.isEmpty() ){
+            replyto.prepend(QString("@%1 ").arg(currentPost().repeatedFromUsername));
+            postId = currentPost().repeatedPostId;
+        }
+        emit reply( replyto, postId );
     }
 }
 
