@@ -43,8 +43,8 @@ SysTrayIcon::SysTrayIcon( Choqok::UI::MainWindow* parent )
     setCategory(ApplicationStatus);
     setStandardActionsEnabled(false);
     setStatus(Active);
-    m_defaultIcon = _mainwin->windowIcon().pixmap( 22 );
-    this->setIconByPixmap( _mainwin->windowIcon() );
+    m_defaultIcon = KIcon("choqok").pixmap( 22 );
+    setIconByPixmap( m_defaultIcon );
 
     isIconChanged = false;
 }
@@ -53,16 +53,6 @@ SysTrayIcon::~SysTrayIcon()
 {
     kDebug();
 }
-
-// bool SysTrayIcon::event(QEvent* event)
-// {
-//   if(event->type() == QEvent::Wheel) {
-//     QWheelEvent * wheel = static_cast<QWheelEvent*>(event);
-//     emit wheelEvent(*wheel);
-//     return true;
-//   }
-//   return false;
-// }
 
 void SysTrayIcon::resetUnreadCount()
 {
@@ -75,7 +65,7 @@ void SysTrayIcon::updateUnreadCount( int changeOfUnreadPosts )
     unread += changeOfUnreadPosts;
 
     if ( unread <= 0 ) {
-        setIconByPixmap( QIcon(m_defaultIcon) );
+        setIconByPixmap( m_defaultIcon );
         isBaseIconChanged = true;
         unread = 0;
     } else {
@@ -130,13 +120,13 @@ void SysTrayIcon::setTimeLineUpdatesEnabled( bool isEnabled )
 {
     if ( isEnabled ) {
         setToolTip( "choqok", i18n( "Choqok" ), QString() );
-        m_defaultIcon = _mainwin->windowIcon().pixmap( 22 );
+        m_defaultIcon = KIcon("choqok").pixmap( 22 );
     } else {
         setToolTip( "choqok", i18n( "Choqok - Disabled" ), QString() );
         ///Generating new Icon:
         m_defaultIcon = Choqok::MediaManager::convertToGrayScale(m_defaultIcon);
     }
-    setIconByPixmap( QIcon( KIcon( m_defaultIcon ) ) );
+    setIconByPixmap( m_defaultIcon );
     updateUnreadCount( 0 );
 }
 
