@@ -64,6 +64,7 @@ protected Q_SLOTS:
     void slotChangeSpellerLanguage();
     void setupSpeller();
     void slotAboutToShowContextMenu(QMenu* menu);
+    void shortenUrls();
 
 protected:
     void undoableClear();

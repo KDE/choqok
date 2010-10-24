@@ -32,6 +32,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <sonnet/speller.h>
 #include <QMenu>
 #include <QTimer>
+#include <KAction>
 
 namespace Choqok {
 namespace UI{
@@ -175,12 +176,28 @@ void TextEdit::slotAboutToShowContextMenu(QMenu* menu)
 {
     if(menu){
         kDebug();
-        QAction *act = new QAction(i18n("Set spell check language"), menu);
+        KAction *act = new KAction(i18n("Set spell check language"), menu);
         act->setMenu(d->langActions);
         menu->addAction(act);
+
+        KAction *shorten = new KAction(i18nc("Replcae URLs by a shortened URL", "Shorten URLs"), menu);
+        connect(shorten, SIGNAL(triggered(bool)), SLOT(shortenUrls()));
+        menu->addAction(shorten);
     }
 }
 
+void TextEdit::shortenUrls()
+{
+    kDebug();
+    QTextCursor cur = textCursor();
+    if( !cur.hasSelection() ){
+        cur.select(QTextCursor::BlockUnderCursor);
+    }
+    QString shortened = ShortenManager::self()->parseText( cur.selectedText() );
+    cur.removeSelectedText();
+    cur.insertText(shortened);
+    setTextCursor(cur);
+}
 
 void TextEdit::slotChangeSpellerLanguage()
 {
