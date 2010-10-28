@@ -120,11 +120,11 @@ void TextBrowser::contextMenuEvent(QContextMenuEvent* event)
         connect( copyLink, SIGNAL(triggered(bool)), SLOT(slotCopyLink()) );
         menu->addAction(copyLink);
     }
-    menu->addSeparator();
     KAction *selectAll = new KAction(i18n("Select All"), this);
 //     selectAll->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_A ) );
     connect( selectAll, SIGNAL(triggered(bool)), SLOT(selectAll()) );
     menu->addAction(selectAll);
+    menu->addSeparator();
     foreach(KAction *act, d->actions) {
         if(act) {
             act->setUserData(32, new PostWidgetUserData(d->parent));

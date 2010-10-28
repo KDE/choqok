@@ -27,15 +27,16 @@
 #include <KActionCollection>
 #include <KAboutData>
 #include <KGenericFactory>
-#include <choqokuiglobal.h>
-#include <quickpost.h>
+#include "choqokuiglobal.h"
+#include "quickpost.h"
 #include <KMessageBox>
 #include <QTimer>
 #include "filtersettings.h"
 #include "filter.h"
 #include "configurefilters.h"
-#include <postwidget.h>
-#include <twitterapihelper/twitterapiaccount.h>
+#include "postwidget.h"
+#include "twitterapihelper/twitterapiaccount.h"
+#include "timelinewidget.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < FilterManager > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_filter" ) )
@@ -51,6 +52,10 @@ FilterManager::FilterManager(QObject* parent, const QList<QVariant>& )
     connect( Choqok::UI::Global::SessionManager::self(),
             SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
             SLOT(slotAddNewPostWidget(Choqok::UI::PostWidget*)) );
+
+    hidePost = new KAction(i18n("Hide Post"), this);
+    Choqok::UI::PostWidget::addAction(hidePost);
+    connect( hidePost, SIGNAL(triggered(bool)), SLOT(slotHidePost()) );
 }
 
 FilterManager::~FilterManager()
@@ -200,6 +205,37 @@ bool FilterManager::parseSpecialRules(Choqok::UI::PostWidget* postToParse)
     }
 
     return false;
+}
+
+void FilterManager::slotHidePost()
+{
+    Choqok::UI::PostWidget *wd;
+    wd = dynamic_cast<Choqok::UI::PostWidgetUserData *>(hidePost->userData(32))->postWidget();
+    QString username = wd->currentPost().author.userName;
+    int res = KMessageBox::questionYesNoCancel( choqokMainWindow, i18n("Hide all posts from <b>@%1</b>",
+                                                                       username));
+    if( res == KMessageBox::Cancel ){
+        return;
+    } else if ( res == KMessageBox::Yes ){
+        Filter *fil = new Filter(username, Filter::AuthorUsername, Filter::ExactMatch);
+        fil->writeConfig();
+        QList<Filter*> filterList = FilterSettings::self()->filters();
+        filterList.append(fil);
+        FilterSettings::self()->setFilters(filterList);
+        Choqok::UI::TimelineWidget *tm = wd->timelineWidget();
+        if(tm){
+            kDebug()<<"Closing all posts";
+            foreach(Choqok::UI::PostWidget *pw, tm->postWidgets()){
+                if(pw->currentPost().author.userName == username){
+                    pw->close();
+                }
+            }
+        } else {
+            wd->close();
+        }
+    } else {
+        wd->close();
+    }
 }
 
 

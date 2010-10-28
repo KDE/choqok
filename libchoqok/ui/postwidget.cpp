@@ -40,6 +40,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <kmenu.h>
 #include <QCloseEvent>
 #include <qmutex.h>
+#include "timelinewidget.h"
 
 static const int _15SECS = 15000;
 static const int _MINUTE = 60000;
@@ -53,7 +54,7 @@ class PostWidget::Private
 {
     public:
         Private( Account* account, const Choqok::Post& post )
-        : mCurrentPost(post), mCurrentAccount(account)//, mRead(false)
+        : mCurrentPost(post), mCurrentAccount(account), timeline(0)
         {
         }
         QGridLayout *buttonsLayout;
@@ -70,6 +71,8 @@ class PostWidget::Private
         //END UI contents;
 
         QStringList detectedUrls;
+
+        TimelineWidget *timeline;
 };
 
 
@@ -118,7 +121,8 @@ PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* par
     connect( &d->mTimer, SIGNAL( timeout() ), this, SLOT( updateUi()) );
     connect(_mainWidget, SIGNAL(clicked(QMouseEvent*)), SLOT(mousePressEvent(QMouseEvent*)));
     connect(_mainWidget, SIGNAL(anchorClicked(QUrl)), this, SLOT(checkAnchor(QUrl)));
-//     setTextInteractionFlags( Qt::TextSelectableByKeyboard | Qt::TextSelectableByMouse );
+
+    d->timeline = qobject_cast<TimelineWidget*>(parent);
 }
 
 void PostWidget::checkAnchor(const QUrl & url)
@@ -583,6 +587,11 @@ void PostWidget::wheelEvent(QWheelEvent* event)
 void PostWidget::addAction(KAction* action)
 {
     TextBrowser::addAction(action);
+}
+
+TimelineWidget* PostWidget::timelineWidget() const
+{
+    return d->timeline;
 }
 
 class PostWidgetUserData::Private

@@ -30,6 +30,7 @@
 #include <QPointer>
 #include "filter.h"
 
+class KAction;
 namespace Choqok {
 namespace UI {
 class PostWidget;
@@ -56,6 +57,7 @@ protected slots:
     void slotAddNewPostWidget( Choqok::UI::PostWidget* newWidget );
     void startParsing();
     void slotConfigureFilters();
+    void slotHidePost();
 
 private:
     enum ParserState{ Stopped = 0, Running };
@@ -68,6 +70,8 @@ private:
     QQueue< QPointer<Choqok::UI::PostWidget> > postsQueue;
 
     bool parseSpecialRules( Choqok::UI::PostWidget *postToParse );
+
+    KAction *hidePost;
 };
 
 #endif

@@ -111,6 +111,8 @@ public:
 
     QStringList urls();
 
+    TimelineWidget *timelineWidget() const;
+
     /**
      * Plugins can add status specific actions and process them internally
      * 
