@@ -60,7 +60,7 @@ Q_SIGNALS:
 
     @param result Result of posting, Could be Success or Fail
     */
-    void newPostSubmitted( Choqok::JobResult result, const QString &postText = QString() );
+    void newPostSubmitted( Choqok::JobResult result, Choqok::Post* newPost = 0 );
 
 protected:
     void loadAccounts();
