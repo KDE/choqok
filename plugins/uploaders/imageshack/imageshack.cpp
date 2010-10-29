@@ -58,6 +58,7 @@ void ImageShack::upload(const KUrl& localUrl, const QByteArray& medium, const QB
     KUrl url("http://www.imageshack.us/upload_api.php");
     QMap<QString, QByteArray> formdata;
     formdata["key"] = apiKey;
+    formdata["rembar"] = "1";
 
     QMap<QString, QByteArray> mediafile;
     mediafile["name"] = "fileupload";
