@@ -73,4 +73,11 @@ Choqok::UI::MicroBlogWidget* MainWindow::currentMicroBlog()
     return qobject_cast<Choqok::UI::MicroBlogWidget*>(mainWidget->currentWidget());
 }
 
+void Choqok::UI::MainWindow::activateChoqok()
+{
+    showNormal();
+    activateWindow();
+    raise();
+}
+
 #include "choqokmainwindow.moc"

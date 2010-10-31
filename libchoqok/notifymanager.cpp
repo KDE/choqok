@@ -51,7 +51,11 @@ NotifyManager::~NotifyManager()
 
 void NotifyManager::success( const QString& message, const QString& title )
 {
-    _nmp->triggerNotify("job-success", title, message);
+    if(Choqok::UI::Global::mainWindow()->isActiveWindow()){
+        choqokMainWindow->showStatusMessage(message);
+    } else {
+        _nmp->triggerNotify("job-success", title, message);
+    }
 }
 
 void NotifyManager::error( const QString& message, const QString& title )
@@ -62,11 +66,15 @@ void NotifyManager::error( const QString& message, const QString& title )
 void NotifyManager::newPostArrived( const QString& message, const QString& title )
 {
     QString fullMsg = QString( "<qt><b>%1:</b><br/>%2</qt>" ).arg(title).arg(message);
-    KNotification *n = new KNotification("new-post-arrived", choqokMainWindow);
-    n->setActions(QStringList(i18nc( "Show Choqok MainWindow", "Show Choqok")));
-    n->setText(fullMsg);
-    QObject::connect(n, SIGNAL(activated(uint)), choqokMainWindow, SLOT(show()));
-    n->sendEvent();
+    if(Choqok::UI::Global::mainWindow()->isActiveWindow()){
+        choqokMainWindow->showStatusMessage(message);
+    } else {
+        KNotification *n = new KNotification("new-post-arrived", choqokMainWindow);
+        n->setActions(QStringList(i18nc( "Show Choqok MainWindow", "Show Choqok")));
+        n->setText(fullMsg);
+        QObject::connect(n, SIGNAL(activated(uint)), choqokMainWindow, SLOT(activateChoqok()));
+        n->sendEvent();
+    }
 }
 
 void NotifyManager::shortening( const QString& message, const QString& title )

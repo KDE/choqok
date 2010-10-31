@@ -49,6 +49,7 @@ public:
 
 public Q_SLOTS:
     void showStatusMessage( const QString &message, bool isPermanent = false );
+    void activateChoqok();
 
 Q_SIGNALS:
     void updateTimelines();
