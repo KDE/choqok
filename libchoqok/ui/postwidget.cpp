@@ -54,7 +54,7 @@ class PostWidget::Private
 {
     public:
         Private( Account* account, const Choqok::Post& post )
-        : mCurrentPost(post), mCurrentAccount(account), timeline(0)
+        : mCurrentPost(post), mCurrentAccount(account), dir("ltr"), timeline(0)
         {
         }
         QGridLayout *buttonsLayout;
@@ -68,6 +68,7 @@ class PostWidget::Private
         QString mSign;
         QString mContent;
         QString mImage;
+        QString dir;
         //END UI contents;
 
         QStringList detectedUrls;
@@ -76,10 +77,10 @@ class PostWidget::Private
 };
 
 
-const QString PostWidget::ownText ("<table width=\"100%\" ><tr><td><p>%2</p></td><td width=\"5\"><!-- empty --></td><td width=\"48\" rowspan=\"2\" align=\"right\">%1</td></tr><tr><td style=\"font-size:small;\" dir=\"ltr\" align=\"right\" valign=\"bottom\">%3</td></tr></table>");
+const QString PostWidget::ownText ("<table width=\"100%\" ><tr><td dir=\"%4\"><p>%2</p></td><td width=\"5\"><!-- empty --></td><td width=\"48\" rowspan=\"2\" align=\"right\">%1</td></tr><tr><td style=\"font-size:small;\" dir=\"ltr\" align=\"right\" valign=\"bottom\">%3</td></tr></table>");
 
 const QString PostWidget::otherText ( "<table height=\"100%\" width=\"100%\"><tr><td rowspan=\"2\"\
-width=\"48\">%1</td><td width=\"5\"><!-- EMPTY HAHA --></td><td><p>%2</p></td></tr><tr><td><!-- EMPTY HAHA --></td><td style=\"font-size:small;\" dir=\"ltr\" align=\"right\" width=\"100%\" valign=\"bottom\">%3</td></tr></table>");
+width=\"48\">%1</td><td width=\"5\"><!-- EMPTY HAHA --></td><td dir=\"%4\"><p>%2</p></td></tr><tr><td><!-- EMPTY HAHA --></td><td style=\"font-size:small;\" dir=\"ltr\" align=\"right\" width=\"100%\" valign=\"bottom\">%3</td></tr></table>");
 
 const QString PostWidget::baseStyle ("KTextBrowser {border: 1px solid rgb(150,150,150);\
 border-radius:5px;}  KTextBrowser {color:%1; background-color:%2}\
@@ -199,9 +200,7 @@ void PostWidget::initUi()
     d->mContent = prepareStatus(d->mCurrentPost.content);
     d->mSign = generateSign();
     setupAvatar();
-    if(QLatin1String(qVersion()) < "4.7"){//Due Qt 4.7 detects and sets the direction//TODO remove this part at all
-        setDirection();
-    }
+    setDirection();
     setUiStyle();
 
     d->mContent.replace("<a href","<a style=\"text-decoration:none\" href",Qt::CaseInsensitive);
@@ -212,8 +211,9 @@ void PostWidget::initUi()
 
 void PostWidget::updateUi()
 {
-    _mainWidget->setHtml(baseText->arg(d->mImage, d->mContent,
-                                      d->mSign.arg(formatDateTime( d->mCurrentPost.creationDateTime ))));
+    _mainWidget->setHtml(baseText->arg( d->mImage, d->mContent,
+                                        d->mSign.arg(formatDateTime( d->mCurrentPost.creationDateTime )),
+                                        d->dir ));
 }
 
 void PostWidget::setStyle(const QColor& color, const QColor& back, const QColor& read, const QColor& readBack, const QColor& own, const QColor& ownBack)
@@ -391,9 +391,7 @@ void PostWidget::setDirection()
     txt = txt.trimmed();
 //     kDebug()<<txt<<txt.isRightToLeft();
     if( txt.isRightToLeft() ) {
-        QTextOption options(_mainWidget->document()->defaultTextOption());
-        options.setTextDirection( Qt::RightToLeft );
-        _mainWidget->document()->setDefaultTextOption(options);
+        d->dir = "rtl";
     }
 }
 
