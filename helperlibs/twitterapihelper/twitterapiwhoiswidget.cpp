@@ -247,14 +247,17 @@ void TwitterApiWhoisWidget::updateHtml()
                     : QString("<a title='%1' href='%1'>%1</a>").arg(d->currentPost.author.homePageUrl);
 
         QString mainTable = QString("<table width='100%'><tr>\
-        <td width=49><img width=48 height=48 src='img://profileImage'/></td><td>\
-        <font size=5><b>%1</b></font>\
-        <a href='choqok://close'><img src='icon://close' title='" + i18n("Close") + "' align='right' /></a><br/>\
-        <b>@%2</b>&nbsp;<font size=3>%3</font>(<font size=2>%4</font>)<br/>\
-        <i>%5</i><br/>\
-        <font size=3>%6</font></td></tr></table>")
+        <td width=49><img width=48 height=48 src='img://profileImage'/>\
+        <center><table width='100%' cellpadding='3'><tr>%1</tr></table></center></td>\
+        <td><table width='100%'><tr><td><font size=5><b>%2</b></font></td>\
+        <td><a href='choqok://close'><img src='icon://close' title='" + i18n("Close") + "' align='right' /></a></td></tr></table><br/>\
+        <b>@%3</b>&nbsp;<font size=3>%4</font><font size=2>%5</font><br/>\
+        <i>%6</i><br/>\
+        <font size=3>%7</font></td></tr></table>")
+        .arg(d->imgActions)
         .arg(Qt::escape(d->currentPost.author.realName))
-        .arg(d->currentPost.author.userName).arg(Qt::escape(d->currentPost.author.location)).arg(d->timeZone)
+        .arg(d->currentPost.author.userName).arg(Qt::escape(d->currentPost.author.location))
+        .arg(!d->timeZone.isEmpty() ? '(' + d->timeZone + ')' : QString())
         .arg(d->currentPost.author.description)
         .arg(url);
 
@@ -266,11 +269,13 @@ void TwitterApiWhoisWidget::updateHtml()
         .arg(d->statusesCount)
         .arg(d->friendsCount)
         .arg(d->followersCount);
+        
+        html = mainTable + countTable;
+        
+        if (!d->currentPost.content.isEmpty()){
+            html.append(QString(i18n("<table><tr><b>Last Status:</b> %1</tr></table>")).arg(d->currentPost.content));
+        }
 
-        QString otherTabel = QString(i18n("<table><tr>%1</tr></table><br/>\
-        <table><tr><b>Last Status:</b> %2</tr></table>")).arg(d->imgActions).arg(d->currentPost.content);
-
-        html = mainTable + countTable + otherTabel;
     } else {
         html = i18n("<h3>%1</h3>", d->errorMessage);
     }
@@ -284,6 +289,7 @@ void TwitterApiWhoisWidget::showForm()
     d->waitFrame->deleteLater();
     d->wid->resize(320, 200);
     d->wid->document()->setTextWidth(width()-2);
+    d->wid->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     int h = d->wid->document()->size().toSize().height() + 10;
     d->wid->setMinimumHeight(h);
     d->wid->setMaximumHeight(h);
