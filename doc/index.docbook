@@ -1,0 +1,423 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
+"dtd/kdex.dtd" [
+  <!ENTITY kappname "&choqok;">
+  <!ENTITY package "extragear">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE">
+]>
+
+<book lang="&language;">
+
+<bookinfo>
+<title>The &choqok; Handbook</title>
+
+<authorgroup>
+<author>
+<firstname>Mehrdad</firstname>
+<surname>Momeny</surname>
+<affiliation>
+<address>mehrdad.momeny@gmail.com</address>
+</affiliation>
+</author>
+<author>
+<firstname>Anne-Marie</firstname>
+<surname>Mahfouf</surname>
+<affiliation>
+<address>&Anne-Marie.Mahfouf.mail;</address>
+</affiliation>
+</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<legalnotice>&FDLNotice;</legalnotice>
+
+<date>2009-03-25</date>
+<releaseinfo>0.5</releaseinfo>
+
+
+
+<abstract>
+<para>&choqok; is a micro-blogging client for KDE
+(http://choqok.gnufolks.org).</para>
+</abstract>
+
+
+<keywordset>
+<keyword>KDE</keyword>
+<keyword>micro-blogging</keyword>
+<keyword>client</keyword>
+<keyword>Twitter</keyword>
+<keyword>Identi.ca</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction"> 
+<title>Introduction</title>
+
+<para>&choqok; is a micro-blogging client which currently supports
+Identi.ca/Laconica and Twitter.com services.</para>
+<para>Micro-blogging is a form of multimedia blogging that allows users to
+send brief text updates or micro media such as photos or audio clips and publish
+them. These can be viewed either by anyone or by a restricted group, which can
+be decided by the user. These messages can be submitted by a variety of means,
+including text messaging, instant messaging, email, digital audio or the
+web.</para>
+</chapter>
+
+<chapter id="using"> 
+<title>Using &choqok;</title>
+
+<sect1 id="getting-started"> 
+<title>Getting Started</title>
+
+<para>In the &choqok; main window there are some timelines allowing you to see
+what your friends have posted, replies to them and direct messages sent and
+received from friends. You can also post a new message.</para>
+
+<para>All of this will be available when you configure at least one account
+in &choqok;.</para>
+
+<screenshot>
+<screeninfo>Here's a screenshot of the &choqok; main window</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase>&choqok; main window</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para>You have one tab per account, on the screenshot you can see a tab with the
+alias <guilabel>identica</guilabel> and another with the alias
+<guilabel>twitter</guilabel>.</para>
+
+<para>On top of the tab you can choose to send a direct message to someone who
+is subscribed to your account. You can send direct messages to other users of
+the same service, as long as both of you are subscribed to each other. If you
+leave <guilabel>Direct message to</guilabel> unchecked your message will be
+posted publicly and all your friends will read it. If you check it, you will
+then choose a name in the list and the private message will only be posted to
+this person.</para>
+
+<para>The text area allows you to post your message which must have less than
+140 characters. The number of characters left is displayed in green on bottom
+right under the text area. The color changes to orange when you reach the 30
+characters limit then to red when you reach 0. If your message is longer
+than 140 characters, you'll be asked if you want to post it anyway. If you
+agree, it'll be posted up to 140 characters.</para>
+
+<para>The <guilabel>Home</guilabel> tab displays the timeline which consists in
+all posts you and your friends wrote. A post using Identi.ca is called a dent
+while a post using Twitter is called a tweet.</para>
+
+<para>The <guilabel>Reply</guilabel> tab displays posts that are replies to
+you.</para>
+
+<para>All the private messages you sent will be displayed in the
+<guilabel>Outbox</guilabel> tab while the received ones will be displayed in the
+<guilabel>Inbox tab</guilabel>.</para>
+
+</sect1>
+
+<sect1 id="search"> 
+<title>Searching</title>
+
+<para>You can search through services for something (anything that
+the service-search api can offer to a client).</para>
+
+<para>This function is available via the <menuchoice><guimenu>File</guimenu>
+<guimenuitem> Search</guimenuitem> </menuchoice> menu (shortcut:
+<keycombo action="simul">&Ctrl;
+<keycap>F</keycap></keycombo>)
+For example you can search for a special word in all users' posts:</para>
+
+<screenshot>
+<screeninfo>&choqok; search feature</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_search.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase>&choqok; search feature</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="configuring-account"> 
+<title>Configuring an Account</title>
+
+<para>Open the &choqok; configuration window via
+<menuchoice><guimenu>Settings</guimenu> <guimenuitem> Configure
+&choqok;...</guimenuitem> </menuchoice> then go to the
+<guilabel>Accounts</guilabel> tab and click the <guibutton>Add</guibutton>
+button, the <guilabel>Add a new account</guilabel> window will appear.
+</para>
+
+<screenshot>
+<screeninfo>Adding an account</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="add_account.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase>Adding an account</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para>Simply enter your desired unique alias, username and password and click
+the <guibutton>OK</guibutton> button. This will check your credentials and, if
+everything is okay, your account will be ready to use.</para>
+<para>You can configure other accounts subsequently.</para>
+</sect1>
+
+<sect1 id="special-features"> 
+<title>Special Features</title>
+
+<itemizedlist>
+<listitem><para>
+You can disable the timeline updating of &choqok; (the timeline is the list of
+posts by you and your friends). 
+</para></listitem>
+<listitem><para>
+Another special feature is the ability to notify the user about new
+received posts.
+</para></listitem>
+<listitem><para>
+You can do a quick post by pressing
+<keycombo action="simul">&Ctrl;
+<keycap>Meta</keycap><keycap>T</keycap></keycombo>
+to open the quick micro-blog window and write your post:
+<screenshot>
+<screeninfo>Quick posting dialog</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_quick.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase>Quick posting dialog</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+<note><para>You can post the same text to all accounts at once.</para></note>
+</para></listitem>
+<listitem><para>
+When new posts are received, &choqok; marks them as unread and shows the number
+of unread posts in the system tray icon. When the main window is shown and
+then minimized to system tray it then marks all new messages as read.
+</para></listitem>
+</itemizedlist>
+</sect1>
+
+</chapter>
+
+<chapter id="commands">
+
+<title>Command Reference</title>
+
+<sect1 id="filemenu">
+<title>The <guimenu>File</guimenu> Menu</title>
+<para>
+<variablelist>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>T</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Quick Tweet</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Open the quick tweet window.</action>
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>F5</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Update Timelines</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Update timelines.</action>
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>R</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Mark All As Read</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Mark all messages as read.</action>
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>F</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Search</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Open search window for current account.</action>
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guimenuitem>Minimize</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Minimize &choqok; window to tray.</action>
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>Q</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Quit</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Quit</action> &choqok;.</para></listitem>
+</varlistentry>
+</variablelist>
+</para>
+
+</sect1>
+<sect1 id="settingsmenu">
+<title>The <guimenu>Settings</guimenu> Menu</title>
+<para><variablelist>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>U</keycap></keycombo>
+</shortcut>
+<guimenu>Settings</guimenu>
+<guimenuitem>Enable Update Timer</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Toggle</action> update timeline timer.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>N</keycap></keycombo>
+</shortcut>
+<guimenu>Settings</guimenu>
+<guimenuitem>Enable Notifications</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Toggle</action> notifications.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Show Statusbar</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Toggle</action> the statusbar.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Configure Shortcuts...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action><action>Configure</action> the keyboard shortcuts used
+by &choqok;.
+</action> 
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Configure Toolbars...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Configure</action> the items you want to put in the
+toolbar.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Configure &choqok;...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Display</action> the &choqok; settings dialog.
+</para></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+</sect1>
+
+<sect1 id="helpmenu">
+<title>The <guimenu>Help</guimenu> Menu</title>
+
+&help.menu.documentation;
+
+</sect1>
+
+</chapter>
+
+
+<chapter id="credits-and-license">
+<title>Credits and Licenses</title>
+
+<para>&choqok; copyright 2008-2009 Mehrdad Momeny (mehrdad.momeny AT gmail.com)
+</para>
+<para>Documentation copyright 2009 Mehrdad Momeny (mehrdad.momeny AT
+gmail.com)</para>
+
+<!-- TRANS:CREDIT_FOR_TRANSLATORS -->
+
+&underFDL;
+&underGPL;
+
+</chapter>
+
+<appendix id="installation">
+<title>Installation</title>
+
+<sect1 id="getting-chokoq">
+<title>How to Obtain &choqok;</title>
+
+&install.intro.documentation;
+
+</sect1>
+
+<sect1 id="compilation">
+<title>Compilation and Installation</title>
+
+&install.compile.documentation;
+
+</sect1>
+</appendix>
+
+&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes: nil
+sgml-general-insert-case: lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->
