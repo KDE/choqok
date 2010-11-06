@@ -52,9 +52,24 @@ public:
 
 private:
     NotifyManager();
+};
+
+class CHOQOK_EXPORT MessageIndicatorManager : public QObject
+{
+  Q_OBJECT
+  public:
+    static MessageIndicatorManager* self();
+    ~MessageIndicatorManager();
+    void newPostInc( int unread, const QString& alias, const QString& timeline );
+
 #ifdef HAVE_INDICATEQT
     QIndicate::Server *iServer;
+    QIndicate::Indicator *iIndicator;
 #endif
+
+  private:
+    MessageIndicatorManager();
+    static MessageIndicatorManager *mSelf;
 };
 }
 #endif // NOTIFYMANAGER_H

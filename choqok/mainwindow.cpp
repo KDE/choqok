@@ -55,6 +55,7 @@
 #include <KMenu>
 #include <uploadmediadialog.h>
 #include <knotifyconfigwidget.h>
+#include <notifymanager.h>
 
 MainWindow::MainWindow()
     : Choqok::UI::MainWindow(), quickWidget(0), s_settingsDialog(0), m_splash(0), microblogCounter(0)
@@ -115,7 +116,10 @@ MainWindow::MainWindow()
     if(pos.x() != -1 && pos.y() != -1) {
         move(pos);
     }
-
+    
+#ifdef HAVE_INDICATEQT
+    Choqok::MessageIndicatorManager::self();
+#endif
 }
 
 MainWindow::~MainWindow()

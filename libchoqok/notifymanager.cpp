@@ -64,17 +64,9 @@ void NotifyManager::error( const QString& message, const QString& title )
     _nmp->triggerNotify("job-error", title, message);
 }
 
-void NotifyManager::newPostIndicator(int unread, const QString& alias, const QString& timeline)
+void NotifyManager::newPostIndicator( int unread, const QString& alias, const QString& timeline )
 {
-  qDebug() << "newPostIndicator";
-//     if (!iServer.defaultInstance()){
-//     iServer = QIndicate::Server::defaultInstance();
-//     iServer->setType("message.irc");
-//     iServer->setDesktopFile("/usr/share/applications/kde4/choqok.desktop");
-//     iServer->show();
-//     }
-  //iServer = QIndicate::Server::defaultInstance();
-  //iServer = new QIndicate::Server();
+  MessageIndicatorManager::self()->newPostInc( unread, alias, timeline );
 }
 
 void NotifyManager::newPostArrived( const QString& message, const QString& title )
@@ -101,6 +93,32 @@ void NotifyManagerPrivate::triggerNotify(const QString& eventId, const QString& 
 {
     QString fullMsg = QString( "<qt><b>%1:</b><br/>%2</qt>" ).arg(title).arg(message);
     KNotification::event(eventId, fullMsg, QPixmap(), Choqok::UI::Global::mainWindow(), flags);
+}
+
+MessageIndicatorManager::MessageIndicatorManager()
+{
+    iServer = QIndicate::Server::defaultInstance();
+    iServer->setType("message.irc");
+    iServer->setDesktopFile("/usr/share/applications/kde4/choqok.desktop");
+    iServer->show();
+}
+
+MessageIndicatorManager::~MessageIndicatorManager()
+{
+}
+
+void MessageIndicatorManager::newPostInc( int unread, const QString& alias, const QString& timeline )
+{
+  
+}
+
+MessageIndicatorManager * MessageIndicatorManager::mSelf = NULL;
+
+MessageIndicatorManager * MessageIndicatorManager::self()
+{
+    if ( !mSelf )
+        mSelf = new MessageIndicatorManager;
+    return mSelf;
 }
 
 }
