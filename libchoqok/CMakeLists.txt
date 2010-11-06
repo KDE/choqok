@@ -31,6 +31,14 @@ ui/uploadmediadialog.cpp
 ui/textbrowser.cpp
 )
 
+if(INDICATEQT_FOUND)
+#      set(HAVE_INDICATEQT true)
+       include_directories(${INDICATEQT_INCLUDE_DIRS})
+       add_definitions(-DHAVE_INDICATEQT)
+       link_directories(${INDICATEQT_LIBRARY_DIRS})
+#      set(choqok_LIB_SRCS ${INDICATEQT_LIBRARIES})
+endif(INDICATEQT_FOUND)
+
 qt4_add_dbus_adaptor( choqok_LIB_SRCS org.kde.choqok.xml dbushandler.h Choqok::DbusHandler ChoqokAdaptor ) 
 
 kde4_add_kcfg_files(choqok_LIB_SRCS
@@ -43,6 +51,10 @@ kde4_add_ui_files(choqok_LIB_SRCS ui/uploadmedia_base.ui)
 kde4_add_library(choqok SHARED ${choqok_LIB_SRCS})
 
 target_link_libraries(choqok ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS})
+
+if(INDICATEQT_FOUND)
+       target_link_libraries(choqok ${INDICATEQT_LIBRARIES})
+endif(INDICATEQT_FOUND)
 
 set_target_properties(choqok PROPERTIES
 VERSION 0.9.92

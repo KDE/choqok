@@ -27,6 +27,8 @@
 #include "choqokuiglobal.h"
 #include <kglobal.h>
 
+#include <QDebug>
+
 namespace Choqok
 {
 
@@ -42,7 +44,6 @@ K_GLOBAL_STATIC(NotifyManagerPrivate, _nmp)
 
 NotifyManager::NotifyManager()
 {
-
 }
 
 NotifyManager::~NotifyManager()
@@ -61,6 +62,19 @@ void NotifyManager::success( const QString& message, const QString& title )
 void NotifyManager::error( const QString& message, const QString& title )
 {
     _nmp->triggerNotify("job-error", title, message);
+}
+
+void NotifyManager::newPostIndicator(int unread, const QString& alias, const QString& timeline)
+{
+  qDebug() << "newPostIndicator";
+//     if (!iServer.defaultInstance()){
+//     iServer = QIndicate::Server::defaultInstance();
+//     iServer->setType("message.irc");
+//     iServer->setDesktopFile("/usr/share/applications/kde4/choqok.desktop");
+//     iServer->show();
+//     }
+  //iServer = QIndicate::Server::defaultInstance();
+  //iServer = new QIndicate::Server();
 }
 
 void NotifyManager::newPostArrived( const QString& message, const QString& title )

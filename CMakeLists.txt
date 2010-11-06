@@ -12,6 +12,9 @@ find_package(QJson REQUIRED)
 find_package(QCA2 REQUIRED)
 find_package(QtOAuth REQUIRED)
 
+find_package(PkgConfig)
+pkg_check_modules(INDICATEQT indicate-qt>=0.2.1)
+
 set(CHOQOK_INCLUDES
 ${KDE4_INCLUDES}
 ${QT_INCLUDES}
