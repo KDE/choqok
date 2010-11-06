@@ -50,7 +50,6 @@ MessageIndicatorManager::MessageIndicatorManager()
     iIndicator->setNameProperty( "Home" );
     iIndicator->setIconProperty(KIcon( "user-home" ).pixmap(QSize(16, 16), QIcon::Normal, QIcon::On).toImage());
     
-    //iIndicator->show();
     connect( iIndicator, SIGNAL(display(QIndicate::Indicator*)), SLOT(slotDisplay(QIndicate::Indicator*)));
     allUnread = 0;
     
@@ -62,9 +61,9 @@ MessageIndicatorManager::~MessageIndicatorManager()
 
 void MessageIndicatorManager::newPostInc( int unread, const QString& alias, const QString& timeline )
 {
-  Q_UNUSED(unread);
-  Q_UNUSED(alias);
-
+  //Q_UNUSED(unread);
+  //Q_UNUSED(alias);
+  qDebug() << alias << timeline << unread;
   if ( timeline == QString( "Home" )){
     iIndicator->setDrawAttentionProperty( true );
     iIndicator->show();
@@ -76,6 +75,7 @@ void MessageIndicatorManager::slotDisplay(QIndicate::Indicator* )
 {
   iIndicator->hide();
   iIndicator->setDrawAttentionProperty(false);
+  allUnread = 0;
   choqokMainWindow->activateChoqok();
 }
 
