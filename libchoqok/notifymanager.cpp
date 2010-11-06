@@ -26,6 +26,7 @@
 #include <QApplication>
 #include "choqokuiglobal.h"
 #include <kglobal.h>
+#include <indicatormanager.h>
 
 #include <QDebug>
 
@@ -66,7 +67,10 @@ void NotifyManager::error( const QString& message, const QString& title )
 
 void NotifyManager::newPostIndicator( int unread, const QString& alias, const QString& timeline )
 {
-  MessageIndicatorManager::self()->newPostInc( unread, alias, timeline );
+    //MessageIndicatorManager::self()->newPostInc( unread, alias, timeline );
+    Q_UNUSED(unread);
+    Q_UNUSED(alias);
+    Q_UNUSED(timeline);
 }
 
 void NotifyManager::newPostArrived( const QString& message, const QString& title )
@@ -93,32 +97,6 @@ void NotifyManagerPrivate::triggerNotify(const QString& eventId, const QString& 
 {
     QString fullMsg = QString( "<qt><b>%1:</b><br/>%2</qt>" ).arg(title).arg(message);
     KNotification::event(eventId, fullMsg, QPixmap(), Choqok::UI::Global::mainWindow(), flags);
-}
-
-MessageIndicatorManager::MessageIndicatorManager()
-{
-    iServer = QIndicate::Server::defaultInstance();
-    iServer->setType("message.irc");
-    iServer->setDesktopFile("/usr/share/applications/kde4/choqok.desktop");
-    iServer->show();
-}
-
-MessageIndicatorManager::~MessageIndicatorManager()
-{
-}
-
-void MessageIndicatorManager::newPostInc( int unread, const QString& alias, const QString& timeline )
-{
-  
-}
-
-MessageIndicatorManager * MessageIndicatorManager::mSelf = NULL;
-
-MessageIndicatorManager * MessageIndicatorManager::self()
-{
-    if ( !mSelf )
-        mSelf = new MessageIndicatorManager;
-    return mSelf;
 }
 
 }

@@ -14,6 +14,10 @@ find_package(QtOAuth REQUIRED)
 
 find_package(PkgConfig)
 pkg_check_modules(INDICATEQT indicate-qt>=0.2.1)
+if(INDICATEQT_FOUND)
+       set(HAVE_INDICATEQT true)
+       add_definitions(-DHAVE_INDICATEQT)
+endif(INDICATEQT_FOUND)
 
 set(CHOQOK_INCLUDES
 ${KDE4_INCLUDES}

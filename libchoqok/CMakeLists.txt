@@ -19,6 +19,7 @@ choqokuiglobal.cpp
 choqokid.cpp
 choqoktools.cpp
 dbushandler.cpp
+indicatormanager.cpp
 ui/microblogwidget.cpp
 ui/editaccountwidget.cpp
 ui/timelinewidget.cpp
@@ -53,6 +54,7 @@ kde4_add_library(choqok SHARED ${choqok_LIB_SRCS})
 target_link_libraries(choqok ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS})
 
 if(INDICATEQT_FOUND)
+       add_definitions(-DXDG_APPS_INSTALL_DIR=${XDG_APPS_INSTALL_DIR})
        target_link_libraries(choqok ${INDICATEQT_LIBRARIES})
 endif(INDICATEQT_FOUND)
 
