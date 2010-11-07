@@ -80,21 +80,22 @@ void MessageIndicatorManager::newPostInc ( int unread, const QString& alias, con
       newIndicator->setCountProperty(unread);
       newIndicator->setDrawAttentionProperty(true);
       newIndicator->show();
-      connect ( newIndicator, SIGNAL ( display ( QIndicate::Indicator* ) ), SLOT ( slotDisplay ( QIndicate::Indicator* ) ) );
       iList.insert(alias, newIndicator);
+      connect ( iList.value(alias), SIGNAL ( display ( QIndicate::Indicator* ) ), SLOT ( slotDisplay ( QIndicate::Indicator* ) ) );
     }
     else {
       showList[ alias ] += unread;
       iList.value(alias)->setCountProperty(showList.value( alias ));
       iList.value(alias)->setDrawAttentionProperty ( true );
+      iList.value(alias)->show();
     }
 }
 
-void MessageIndicatorManager::slotDisplay ( QIndicate::Indicator* )
+void MessageIndicatorManager::slotDisplay ( QIndicate::Indicator* indicator)
 {
-    iIndicator->hide();
-    iIndicator->setDrawAttentionProperty ( false );
-    allUnread = 0;
+    //indicator->hide();
+    //indicator->setDrawAttentionProperty ( false );
+    //allUnread = 0;
     slotShowMainWindow();
 }
 
