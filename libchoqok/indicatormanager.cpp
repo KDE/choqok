@@ -32,6 +32,10 @@
 #define STR(x) #x
 #define XSTR(x) STR(x)
 
+#include <accountmanager.h>
+#include <account.h>
+#include "microblog.h"
+
 namespace Choqok
 {
 
@@ -46,13 +50,17 @@ MessageIndicatorManager::MessageIndicatorManager()
     connect ( iServer, SIGNAL ( serverDisplay() ), SLOT ( slotShowMainWindow() ) );
     iServer->show();
 
-    iIndicator = new QIndicate::Indicator ( this );
-    iIndicator->setNameProperty ( "Home" );
-    iIndicator->setIconProperty ( KIcon ( "user-home" ).pixmap ( QSize ( 16, 16 ), QIcon::Normal, QIcon::On ).toImage() );
-
-    connect ( iIndicator, SIGNAL ( display ( QIndicate::Indicator* ) ), SLOT ( slotDisplay ( QIndicate::Indicator* ) ) );
+    //iIndicator->setIconProperty ( KIcon ( "user-home" ).pixmap ( QSize ( 16, 16 ), QIcon::Normal, QIcon::On ).toImage() );
     allUnread = 0;
-
+    
+//     QList<Choqok::Account*> accList = Choqok::AccountManager::self()->accounts();
+//     qDebug() << accList.count();
+//     for (int i = 0; i < accList.count(); i++)
+//     {
+//       Choqok::Account* acc = accList.at(i);
+//       qDebug() << acc->alias();
+//       qDebug() << acc->timelineNames();
+//     }
 }
 
 MessageIndicatorManager::~MessageIndicatorManager()
@@ -63,11 +71,22 @@ void MessageIndicatorManager::newPostInc ( int unread, const QString& alias, con
 {
     //Q_UNUSED(unread);
     //Q_UNUSED(alias);
-    qDebug() << alias << timeline << unread;
-    if ( timeline == QString ( "Home" ) ) {
-        iIndicator->setDrawAttentionProperty ( true );
-        iIndicator->show();
-        iIndicator->setCountProperty ( allUnread += unread );
+    Q_UNUSED(timeline);
+    
+    if ( !showList.contains( alias ) ){
+      showList.insert( alias, unread );
+      QIndicate::Indicator *newIndicator = new QIndicate::Indicator ( this );
+      newIndicator->setNameProperty(alias);
+      newIndicator->setCountProperty(unread);
+      newIndicator->setDrawAttentionProperty(true);
+      newIndicator->show();
+      connect ( newIndicator, SIGNAL ( display ( QIndicate::Indicator* ) ), SLOT ( slotDisplay ( QIndicate::Indicator* ) ) );
+      iList.insert(alias, newIndicator);
+    }
+    else {
+      showList[ alias ] += unread;
+      iList.value(alias)->setCountProperty(showList.value( alias ));
+      iList.value(alias)->setDrawAttentionProperty ( true );
     }
 }
 

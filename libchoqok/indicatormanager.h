@@ -54,6 +54,8 @@ private:
     MessageIndicatorManager();
     static MessageIndicatorManager *mSelf;
     int allUnread;
+    QMap<QString, int> showList;
+    QMap<QString, QIndicate::Indicator *> iList;
 public slots:
     void slotDisplay ( QIndicate::Indicator* );
     void slotShowMainWindow();
