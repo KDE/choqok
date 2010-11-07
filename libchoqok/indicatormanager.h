@@ -56,6 +56,7 @@ class CHOQOK_EXPORT MessageIndicatorManager : public QObject
     int allUnread;
 public slots:
     void slotDisplay(QIndicate::Indicator*);
+    void slotShowMainWindow();
 };
 }
 #endif // INDICATORMANAGER_H

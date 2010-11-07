@@ -42,8 +42,8 @@ MessageIndicatorManager::MessageIndicatorManager()
     QString desktopFile = QString("%1/%2.desktop")
     .arg(XSTR(XDG_APPS_INSTALL_DIR))
     .arg(QCoreApplication::applicationFilePath().section('/', -1));    
-
     iServer->setDesktopFile(desktopFile);
+    connect( iServer, SIGNAL(serverDisplay()), SLOT( slotShowMainWindow() ) );
     iServer->show();
     
     iIndicator = new QIndicate::Indicator(this);
@@ -76,7 +76,12 @@ void MessageIndicatorManager::slotDisplay(QIndicate::Indicator* )
   iIndicator->hide();
   iIndicator->setDrawAttentionProperty(false);
   allUnread = 0;
-  choqokMainWindow->activateChoqok();
+  slotShowMainWindow();
+}
+
+void MessageIndicatorManager::slotShowMainWindow()
+{
+    choqokMainWindow->activateChoqok();
 }
 
 MessageIndicatorManager * MessageIndicatorManager::mSelf = NULL;
