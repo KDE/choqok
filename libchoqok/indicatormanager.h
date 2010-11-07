@@ -30,32 +30,32 @@
 #include "choqok_export.h"
 
 #ifdef HAVE_INDICATEQT
- #include <qindicateserver.h>
- #include <qindicateindicator.h>
+#include <qindicateserver.h>
+#include <qindicateindicator.h>
 #endif
 
 namespace Choqok
 {
-  
+
 class CHOQOK_EXPORT MessageIndicatorManager : public QObject
 {
-  Q_OBJECT
-  public:
+    Q_OBJECT
+public:
     static MessageIndicatorManager* self();
     ~MessageIndicatorManager();
-    void newPostInc( int unread, const QString& alias, const QString& timeline );
+    void newPostInc ( int unread, const QString& alias, const QString& timeline );
 
 #ifdef HAVE_INDICATEQT
     QIndicate::Server *iServer;
     QIndicate::Indicator *iIndicator;
 #endif
 
-  private:
+private:
     MessageIndicatorManager();
     static MessageIndicatorManager *mSelf;
     int allUnread;
 public slots:
-    void slotDisplay(QIndicate::Indicator*);
+    void slotDisplay ( QIndicate::Indicator* );
     void slotShowMainWindow();
 };
 }

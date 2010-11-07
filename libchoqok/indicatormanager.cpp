@@ -38,45 +38,45 @@ namespace Choqok
 MessageIndicatorManager::MessageIndicatorManager()
 {
     iServer = QIndicate::Server::defaultInstance();
-    iServer->setType("message.irc");
-    QString desktopFile = QString("%1/%2.desktop")
-    .arg(XSTR(XDG_APPS_INSTALL_DIR))
-    .arg(QCoreApplication::applicationFilePath().section('/', -1));    
-    iServer->setDesktopFile(desktopFile);
-    connect( iServer, SIGNAL(serverDisplay()), SLOT( slotShowMainWindow() ) );
+    iServer->setType ( "message.irc" );
+    QString desktopFile = QString ( "%1/%2.desktop" )
+                          .arg ( XSTR ( XDG_APPS_INSTALL_DIR ) )
+                          .arg ( QCoreApplication::applicationFilePath().section ( '/', -1 ) );
+    iServer->setDesktopFile ( desktopFile );
+    connect ( iServer, SIGNAL ( serverDisplay() ), SLOT ( slotShowMainWindow() ) );
     iServer->show();
-    
-    iIndicator = new QIndicate::Indicator(this);
-    iIndicator->setNameProperty( "Home" );
-    iIndicator->setIconProperty(KIcon( "user-home" ).pixmap(QSize(16, 16), QIcon::Normal, QIcon::On).toImage());
-    
-    connect( iIndicator, SIGNAL(display(QIndicate::Indicator*)), SLOT(slotDisplay(QIndicate::Indicator*)));
+
+    iIndicator = new QIndicate::Indicator ( this );
+    iIndicator->setNameProperty ( "Home" );
+    iIndicator->setIconProperty ( KIcon ( "user-home" ).pixmap ( QSize ( 16, 16 ), QIcon::Normal, QIcon::On ).toImage() );
+
+    connect ( iIndicator, SIGNAL ( display ( QIndicate::Indicator* ) ), SLOT ( slotDisplay ( QIndicate::Indicator* ) ) );
     allUnread = 0;
-    
+
 }
 
 MessageIndicatorManager::~MessageIndicatorManager()
 {
 }
 
-void MessageIndicatorManager::newPostInc( int unread, const QString& alias, const QString& timeline )
+void MessageIndicatorManager::newPostInc ( int unread, const QString& alias, const QString& timeline )
 {
-  //Q_UNUSED(unread);
-  //Q_UNUSED(alias);
-  qDebug() << alias << timeline << unread;
-  if ( timeline == QString( "Home" )){
-    iIndicator->setDrawAttentionProperty( true );
-    iIndicator->show();
-    iIndicator->setCountProperty( allUnread += unread );
-  }
+    //Q_UNUSED(unread);
+    //Q_UNUSED(alias);
+    qDebug() << alias << timeline << unread;
+    if ( timeline == QString ( "Home" ) ) {
+        iIndicator->setDrawAttentionProperty ( true );
+        iIndicator->show();
+        iIndicator->setCountProperty ( allUnread += unread );
+    }
 }
 
-void MessageIndicatorManager::slotDisplay(QIndicate::Indicator* )
+void MessageIndicatorManager::slotDisplay ( QIndicate::Indicator* )
 {
-  iIndicator->hide();
-  iIndicator->setDrawAttentionProperty(false);
-  allUnread = 0;
-  slotShowMainWindow();
+    iIndicator->hide();
+    iIndicator->setDrawAttentionProperty ( false );
+    allUnread = 0;
+    slotShowMainWindow();
 }
 
 void MessageIndicatorManager::slotShowMainWindow()
