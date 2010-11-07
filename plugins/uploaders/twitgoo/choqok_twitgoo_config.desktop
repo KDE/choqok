@@ -1,0 +1,12 @@
+[Desktop Entry]
+Icon=kaboodle
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=kcm_choqok_twitgoo
+X-KDE-FactoryName=kcm_choqok_twitgoo
+X-KDE-ParentApp=choqok_twitgoo
+X-KDE-ParentComponents=choqok_twitgoo
+
+Name=Twitgoo
+Comment=Upload image to twitgoo.com
