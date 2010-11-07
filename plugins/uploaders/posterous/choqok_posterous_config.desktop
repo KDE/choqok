@@ -1,0 +1,14 @@
+[Desktop Entry]
+Icon=kaboodle
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=kcm_choqok_posterous
+X-KDE-FactoryName=kcm_choqok_posterous
+X-KDE-ParentApp=choqok_posterous
+X-KDE-ParentComponents=choqok_posterous
+
+Name=Posterous
+Name[x-test]=xxPosterousxx
+Comment=Upload image to posterous.com
+Comment[x-test]=xxUpload image to posterous.comxx

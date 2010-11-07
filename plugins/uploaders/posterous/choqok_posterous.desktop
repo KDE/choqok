@@ -1,0 +1,20 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Service
+X-Choqok-Version=1
+Icon=posterous_uploader
+ServiceTypes=Choqok/Plugin
+X-KDE-Library=choqok_posterous
+X-KDE-PluginInfo-Author=Andrey Esin
+X-KDE-PluginInfo-Email=gmlastik@gmail.com
+X-KDE-PluginInfo-Name=choqok_posterous
+X-KDE-PluginInfo-Version=0.1
+X-KDE-PluginInfo-Website=http://esin.name
+X-KDE-PluginInfo-Category=Uploaders
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=false
+Name=Posterous
+Name[x-test]=xxPosterousxx
+Comment=Upload image to posterous.com
+Comment[x-test]=xxUpload image to posterous.comxx
