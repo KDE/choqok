@@ -68,9 +68,6 @@ void NotifyManager::error( const QString& message, const QString& title )
 void NotifyManager::newPostIndicator( int unread, const QString& alias, const QString& timeline )
 {
     MessageIndicatorManager::self()->newPostInc( unread, alias, timeline );
-    Q_UNUSED(unread);
-    //Q_UNUSED(alias);
-    //Q_UNUSED(timeline);
 }
 
 void NotifyManager::newPostArrived( const QString& message, const QString& title )

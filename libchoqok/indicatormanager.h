@@ -28,6 +28,7 @@
 #include <KDE/KNotification>
 #include <klocalizedstring.h>
 #include "choqok_export.h"
+#include <account.h>
 
 #ifdef HAVE_INDICATEQT
 #include <qindicateserver.h>
@@ -56,9 +57,13 @@ private:
     int allUnread;
     QMap<QString, int> showList;
     QMap<QString, QIndicate::Indicator *> iList;
+    QList<Choqok::Account*> accList;
+    QImage getIconByAlias( const QString& alias );
+
 public slots:
     void slotDisplay ( QIndicate::Indicator* );
     void slotShowMainWindow();
+    void slotCanWorkWithAccs();
 };
 }
 #endif // INDICATORMANAGER_H
