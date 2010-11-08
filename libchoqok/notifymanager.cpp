@@ -65,11 +65,6 @@ void NotifyManager::error( const QString& message, const QString& title )
     _nmp->triggerNotify("job-error", title, message);
 }
 
-void NotifyManager::newPostIndicator( int unread, const QString& alias, const QString& timeline )
-{
-    MessageIndicatorManager::self()->newPostInc( unread, alias, timeline );
-}
-
 void NotifyManager::newPostArrived( const QString& message, const QString& title )
 {
     QString fullMsg = QString( "<qt><b>%1:</b><br/>%2</qt>" ).arg(title).arg(message);

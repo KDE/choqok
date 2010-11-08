@@ -41,8 +41,6 @@ public:
     static void success( const QString &message, const QString &title = i18n("Success") );
 
     static void newPostArrived( const QString& message, const QString& title = i18n("New posts") );
-    static void newPostIndicator( int unread, const QString& alias, const QString& timeline );
-
     static void shortening( const QString& message, const QString& title = i18n("Shortening a URL") );
 
 private:
