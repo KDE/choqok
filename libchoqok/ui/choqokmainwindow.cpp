@@ -80,4 +80,12 @@ void Choqok::UI::MainWindow::activateChoqok()
     raise();
 }
 
+QList<Choqok::UI::MicroBlogWidget*> Choqok::UI::MainWindow::microBlogsWidgetsList()
+{
+   QList<Choqok::UI::MicroBlogWidget*> lst;
+   for ( int i = 0;i < mainWidget->count();i++ )
+     lst.append(qobject_cast<Choqok::UI::MicroBlogWidget*>(mainWidget->widget(i)));
+   return lst;
+}
+
 #include "choqokmainwindow.moc"

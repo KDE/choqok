@@ -63,6 +63,7 @@ public slots:
     void slotDisplay ( QIndicate::Indicator* );
     void slotShowMainWindow();
     void slotCanWorkWithAccs();
+    void slotupdateUnreadCount(int change, int sum);
 };
 }
 #endif // INDICATORMANAGER_H

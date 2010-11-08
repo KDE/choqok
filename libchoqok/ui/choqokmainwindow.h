@@ -46,6 +46,7 @@ public:
     @return current active microblog widget
     */
     Choqok::UI::MicroBlogWidget *currentMicroBlog();
+    QList<Choqok::UI::MicroBlogWidget*> microBlogsWidgetsList();
 
 public Q_SLOTS:
     void showStatusMessage( const QString &message, bool isPermanent = false );

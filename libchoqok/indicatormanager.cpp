@@ -35,6 +35,7 @@
 #include <accountmanager.h>
 #include <account.h>
 #include "microblog.h"
+#include <microblogwidget.h>
 
 namespace Choqok
 {
@@ -60,7 +61,19 @@ MessageIndicatorManager::~MessageIndicatorManager()
 void MessageIndicatorManager::slotCanWorkWithAccs()
 {
     accList = Choqok::AccountManager::self()->accounts();
+
+    QList<Choqok::UI::MicroBlogWidget*> lst = choqokMainWindow->microBlogsWidgetsList();
+    for (int i = 0;i < choqokMainWindow->microBlogsWidgetsList().count();i++){
+     connect(lst.at(i), SIGNAL(updateUnreadCount(int,int)), SLOT(slotupdateUnreadCount(int,int)));
+    }
 }
+
+void MessageIndicatorManager::slotupdateUnreadCount(int change, int sum)
+{
+  QString alias = qobject_cast<Choqok::UI::MicroBlogWidget*>(sender())->currentAccount()->alias();
+  newPostInc( sum, alias, QString() );
+}
+
 
 QImage MessageIndicatorManager::getIconByAlias ( const QString& alias )
 {
@@ -70,8 +83,6 @@ QImage MessageIndicatorManager::getIconByAlias ( const QString& alias )
 
 void MessageIndicatorManager::newPostInc ( int unread, const QString& alias, const QString& timeline )
 {
-    //Q_UNUSED(unread);
-    //Q_UNUSED(alias);
     Q_UNUSED ( timeline );
 
     if ( !showList.contains ( alias ) ) {
@@ -84,27 +95,24 @@ void MessageIndicatorManager::newPostInc ( int unread, const QString& alias, con
         newIndicator->setIconProperty ( getIconByAlias ( alias ) );
         iList.insert ( alias, newIndicator );
         connect ( iList.value ( alias ), SIGNAL ( display ( QIndicate::Indicator* ) ), SLOT ( slotDisplay ( QIndicate::Indicator* ) ) );
-    }
-    else {
-        showList[ alias ] += unread;
+    } else {
+        showList[ alias ] = unread;
         iList.value ( alias )->setCountProperty ( showList.value ( alias ) );
-        iList.value ( alias )->setDrawAttentionProperty ( true );
+        iList.value ( alias )->setDrawAttentionProperty ( unread != 0 );
         iList.value ( alias )->show();
     }
+    
+    
 }
 
 void MessageIndicatorManager::slotDisplay ( QIndicate::Indicator* indicator )
 {
-    //indicator->hide();
-    //indicator->setDrawAttentionProperty ( false );
     Q_UNUSED ( indicator );
     slotShowMainWindow();
 }
 
 void MessageIndicatorManager::slotShowMainWindow()
 {
-    //Choqok::UI::Global::mainWindow()->
-    
     choqokMainWindow->activateChoqok();
 }
 
