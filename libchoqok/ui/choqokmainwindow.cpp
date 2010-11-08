@@ -88,4 +88,10 @@ QList<Choqok::UI::MicroBlogWidget*> Choqok::UI::MainWindow::microBlogsWidgetsLis
    return lst;
 }
 
+void Choqok::UI::MainWindow::activateTab( int k )
+{
+   if ( mainWidget->count() >= k )
+       mainWidget->setCurrentIndex( k );
+}
+
 #include "choqokmainwindow.moc"

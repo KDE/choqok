@@ -101,7 +101,9 @@ void MessageIndicatorManager::newPostInc ( int unread, const QString& alias, con
 
 void MessageIndicatorManager::slotDisplay ( QIndicate::Indicator* indicator )
 {
-    Q_UNUSED ( indicator );
+    QString alias = indicator->nameProperty();
+    Choqok::Account* acc = Choqok::AccountManager::self()->findAccount ( alias );
+    choqokMainWindow->activateTab( acc->priority() );
     slotShowMainWindow();
 }
 
