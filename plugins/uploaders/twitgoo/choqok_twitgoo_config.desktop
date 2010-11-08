@@ -9,4 +9,6 @@ X-KDE-ParentApp=choqok_twitgoo
 X-KDE-ParentComponents=choqok_twitgoo
 
 Name=Twitgoo
+Name[x-test]=xxTwitgooxx
 Comment=Upload image to twitgoo.com
+Comment[x-test]=xxUpload image to twitgoo.comxx
