@@ -24,18 +24,17 @@
 
 #include "indicatormanager.h"
 #include <QApplication>
+#include <KIcon>
 #include "choqokuiglobal.h"
+#include "accountmanager.h"
+#include "account.h"
+#include "microblog.h"
+#include <microblogwidget.h>
 
 #include <QDebug>
-#include <KIcon>
 
 #define STR(x) #x
 #define XSTR(x) STR(x)
-
-#include <accountmanager.h>
-#include <account.h>
-#include "microblog.h"
-#include <microblogwidget.h>
 
 namespace Choqok
 {
@@ -60,8 +59,6 @@ MessageIndicatorManager::~MessageIndicatorManager()
 
 void MessageIndicatorManager::slotCanWorkWithAccs()
 {
-    accList = Choqok::AccountManager::self()->accounts();
-
     QList<Choqok::UI::MicroBlogWidget*> lst = choqokMainWindow->microBlogsWidgetsList();
     for ( int i = 0;i < choqokMainWindow->microBlogsWidgetsList().count();i++ ) {
         connect ( lst.at ( i ), SIGNAL ( updateUnreadCount ( int, int ) ), SLOT ( slotupdateUnreadCount ( int, int ) ) );

@@ -29,11 +29,8 @@
 #include <klocalizedstring.h>
 #include "choqok_export.h"
 #include <account.h>
-
-#ifdef HAVE_INDICATEQT
 #include <qindicateserver.h>
 #include <qindicateindicator.h>
-#endif
 
 namespace Choqok
 {
@@ -45,18 +42,14 @@ public:
     static MessageIndicatorManager* self();
     ~MessageIndicatorManager();
     void newPostInc ( int unread, const QString& alias, const QString& timeline );
-
-#ifdef HAVE_INDICATEQT
     QIndicate::Server *iServer;
     QIndicate::Indicator *iIndicator;
-#endif
 
 private:
     MessageIndicatorManager();
     static MessageIndicatorManager *mSelf;
     QMap<QString, int> showList;
     QMap<QString, QIndicate::Indicator *> iList;
-    QList<Choqok::Account*> accList;
     QImage getIconByAlias( const QString& alias );
 
 public slots:
