@@ -54,7 +54,6 @@ public:
 private:
     MessageIndicatorManager();
     static MessageIndicatorManager *mSelf;
-    int allUnread;
     QMap<QString, int> showList;
     QMap<QString, QIndicate::Indicator *> iList;
     QList<Choqok::Account*> accList;

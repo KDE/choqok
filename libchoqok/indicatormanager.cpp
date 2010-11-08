@@ -49,7 +49,6 @@ MessageIndicatorManager::MessageIndicatorManager()
     iServer->setDesktopFile ( desktopFile );
     connect ( iServer, SIGNAL ( serverDisplay() ), SLOT ( slotShowMainWindow() ) );
     iServer->show();
-    allUnread = 0;
 
     connect ( Choqok::AccountManager::self(), SIGNAL ( allAccountsLoaded() ), SLOT ( slotCanWorkWithAccs() ) );
 }
@@ -98,13 +97,14 @@ void MessageIndicatorManager::slotDisplay ( QIndicate::Indicator* indicator )
 {
     //indicator->hide();
     //indicator->setDrawAttentionProperty ( false );
-    //allUnread = 0;
     Q_UNUSED ( indicator );
     slotShowMainWindow();
 }
 
 void MessageIndicatorManager::slotShowMainWindow()
 {
+    //Choqok::UI::Global::mainWindow()->
+    
     choqokMainWindow->activateChoqok();
 }
 
