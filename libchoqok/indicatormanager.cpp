@@ -67,6 +67,7 @@ void MessageIndicatorManager::slotCanWorkWithAccs()
 
 void MessageIndicatorManager::slotupdateUnreadCount ( int change, int sum )
 {
+    Q_UNUSED ( change );
     QString alias = qobject_cast<Choqok::UI::MicroBlogWidget*> ( sender() )->currentAccount()->alias();
     newPostInc ( sum, alias, QString() );
 }
@@ -82,23 +83,19 @@ void MessageIndicatorManager::newPostInc ( int unread, const QString& alias, con
 {
     Q_UNUSED ( timeline );
 
-    if ( !showList.contains ( alias ) ) {
-        showList.insert ( alias, unread );
+    if ( !iList.contains ( alias ) ) {
         QIndicate::Indicator *newIndicator = new QIndicate::Indicator ( this );
         newIndicator->setNameProperty ( alias );
-        newIndicator->setCountProperty ( unread );
-        newIndicator->setDrawAttentionProperty ( true );
-        newIndicator->show();
         newIndicator->setIconProperty ( getIconByAlias ( alias ) );
         iList.insert ( alias, newIndicator );
         connect ( iList.value ( alias ), SIGNAL ( display ( QIndicate::Indicator* ) ), SLOT ( slotDisplay ( QIndicate::Indicator* ) ) );
-    } else {
-        showList[ alias ] = unread;
-        iList.value ( alias )->setCountProperty ( showList.value ( alias ) );
+    } 
+        iList.value ( alias )->setCountProperty ( unread );
         iList.value ( alias )->setDrawAttentionProperty ( unread != 0 );
-        iList.value ( alias )->show();
-    }
-
+        if ( unread == 0 )
+            iList.value ( alias )->hide();
+        else
+            iList.value ( alias )->show();
 
 }
 
