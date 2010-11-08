@@ -63,15 +63,15 @@ void MessageIndicatorManager::slotCanWorkWithAccs()
     accList = Choqok::AccountManager::self()->accounts();
 
     QList<Choqok::UI::MicroBlogWidget*> lst = choqokMainWindow->microBlogsWidgetsList();
-    for (int i = 0;i < choqokMainWindow->microBlogsWidgetsList().count();i++){
-     connect(lst.at(i), SIGNAL(updateUnreadCount(int,int)), SLOT(slotupdateUnreadCount(int,int)));
+    for ( int i = 0;i < choqokMainWindow->microBlogsWidgetsList().count();i++ ) {
+        connect ( lst.at ( i ), SIGNAL ( updateUnreadCount ( int, int ) ), SLOT ( slotupdateUnreadCount ( int, int ) ) );
     }
 }
 
-void MessageIndicatorManager::slotupdateUnreadCount(int change, int sum)
+void MessageIndicatorManager::slotupdateUnreadCount ( int change, int sum )
 {
-  QString alias = qobject_cast<Choqok::UI::MicroBlogWidget*>(sender())->currentAccount()->alias();
-  newPostInc( sum, alias, QString() );
+    QString alias = qobject_cast<Choqok::UI::MicroBlogWidget*> ( sender() )->currentAccount()->alias();
+    newPostInc ( sum, alias, QString() );
 }
 
 
@@ -101,8 +101,8 @@ void MessageIndicatorManager::newPostInc ( int unread, const QString& alias, con
         iList.value ( alias )->setDrawAttentionProperty ( unread != 0 );
         iList.value ( alias )->show();
     }
-    
-    
+
+
 }
 
 void MessageIndicatorManager::slotDisplay ( QIndicate::Indicator* indicator )
