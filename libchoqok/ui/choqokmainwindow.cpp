@@ -84,7 +84,7 @@ QList<Choqok::UI::MicroBlogWidget*> Choqok::UI::MainWindow::microBlogsWidgetsLis
 {
    QList<Choqok::UI::MicroBlogWidget*> lst;
    for ( int i = 0;i < mainWidget->count();i++ )
-     lst.append(qobject_cast<Choqok::UI::MicroBlogWidget*>(mainWidget->widget(i)));
+       lst.append( qobject_cast<Choqok::UI::MicroBlogWidget*>( mainWidget->widget( i ) ) );
    return lst;
 }
 
