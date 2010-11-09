@@ -87,9 +87,9 @@ border-radius:5px;}  KTextBrowser {color:%1; background-color:%2}\
 KPushButton{border:0px}");
 
 const QString protocols = "((https?|ftps?)://)";
-const QString subdomains = "(([a-z0-9-_]\\.)?)";
-const QString auth = "((([a-z0-9-_]{1,})((:[\\S]{1,})?)@)?)";
-const QString domains = "(([a-z0-9-\\x0080-\\xFFFF]){1,63}\\.)+";
+const QString subdomains = "(([a-z0-9\\-_]{1,}\\.)?)";
+const QString auth = "((([a-z0-9\\-_]{1,})((:[\\S]{1,})?)@)?)";
+const QString domains = "(([a-z0-9\\-\\x0080-\\xFFFF_]){1,63}\\.)+";
 const QString port = "(:(6553[0-5]|655[0-2][0-9]|65[0-4][\\d]{2}|6[0-4][\\d]{3}|[1-5][\\d]{4}|[1-9][\\d]{0,3}))";
 const QString zone ("((a[cdefgilmnoqrstuwxz])|(b[abdefghijlmnorstvwyz])|(c[acdfghiklmnoruvxyz])|(d[ejkmoz])|(e[ceghrstu])|\
 (f[ijkmor])|(g[abdefghilmnpqrstuwy])|(h[kmnrtu])|(i[delmnoqrst])|(j[emop])|(k[eghimnprwyz])|(l[abcikrstuvy])|\
@@ -133,7 +133,6 @@ void PostWidget::checkAnchor(const QUrl & url)
 
 PostWidget::~PostWidget()
 {
-  //Attribute "Qt::WA_DeleteOnClose" is enabled at construtor! So please use close() for deleting an object, instead of deleteLater() or delete
     delete d;
 }
 
@@ -371,7 +370,7 @@ QString PostWidget::prepareStatus( const QString &txt )
         static const QString hrefTemplate("<a href='%1' title='%1' target='_blank'>%2</a>");
         tmplink = hrefTemplate.arg( tmplink, link );
         text.insert( pos, tmplink );
-	}
+        }
         pos += tmplink.length();
     }
 
