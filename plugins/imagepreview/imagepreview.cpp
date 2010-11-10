@@ -37,6 +37,9 @@ const QRegExp ImagePreview::mYFrogRegExp("(http://yfrog.[^\\s<>\"]+[^!,\\.\\s<>'
 const QRegExp ImagePreview::mTweetphotoRegExp("(http://tweetphoto.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
 const QRegExp ImagePreview::mPlixiRegExp("(http://plixi.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
 const QRegExp ImagePreview::mImgLyRegExp("(http://img.ly/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
+const QRegExp ImagePreview::mTwitgooRegExp("(http://(([a-zA-Z0-9]+\\.)?)twitgoo.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
+
+
 
 ImagePreview::ImagePreview(QObject* parent, const QList< QVariant >& )
     :Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped)
@@ -88,6 +91,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     QStringList TweetphotoRedirectList;
     QStringList PlixiRedirectList;
     QStringList ImgLyRedirectList;
+    QStringList TwitgooRedirectList;
     QString content = postToParse->currentPost().content;
 
     //Twitpic: http://www.twitpic.com/api.do
@@ -172,11 +176,28 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
                  SIGNAL(imageFetched(QString,QPixmap)),
                  SLOT(slotImageFetched(QString,QPixmap)) );
     QString ImgLyUrl = QString( "http://img.ly/show/thumb%1" ).arg(QString(url).remove("http://img.ly"));
-    //QString ImgLyUrl = "http://api.plixi.com/api/tpapi.svc/json/imagefromurl?size=thumbnail&url="+ url;
         mParsingList.insert(ImgLyUrl, postToParse);
         mBaseUrlMap.insert(ImgLyUrl, url);
         Choqok::MediaManager::self()->fetchImage(ImgLyUrl, Choqok::MediaManager::Async);
     }
+    
+    //Twitgoo; http://twitgoo.com/docs/TwitgooHelp.htm
+    pos = 0;
+    while ((pos = mTwitgooRegExp.indexIn(content, pos)) != -1) {
+        pos += mTwitgooRegExp.matchedLength();
+        TwitgooRedirectList << mTwitgooRegExp.cap(0);
+        kDebug()<<mTwitgooRegExp.capturedTexts();
+    }
+    foreach(const QString &url, TwitgooRedirectList){
+    connect( Choqok::MediaManager::self(),
+                 SIGNAL(imageFetched(QString,QPixmap)),
+                 SLOT(slotImageFetched(QString,QPixmap)) );
+    QString TwitgooUrl = url + "/thumb";
+        mParsingList.insert(TwitgooUrl, postToParse);
+        mBaseUrlMap.insert(TwitgooUrl, url);
+        Choqok::MediaManager::self()->fetchImage(TwitgooUrl, Choqok::MediaManager::Async);
+    }
+    
 }
 
 void ImagePreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pixmap)

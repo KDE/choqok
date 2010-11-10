@@ -69,6 +69,7 @@ private:
     static const QRegExp mTweetphotoRegExp;
     static const QRegExp mPlixiRegExp;
     static const QRegExp mImgLyRegExp;
+    static const QRegExp mTwitgooRegExp;
 };
 
 #endif // IMAGEPREVIEW_H
