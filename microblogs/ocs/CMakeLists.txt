@@ -10,10 +10,13 @@ IF(LIBATTICA_FOUND)
     )
 
     set( choqok_ocs_SRCS
+    ocsaccount.cpp
     ocsmicroblog.cpp
+    ocsconfigurewidget.cpp
     )
 
     kde4_add_ui_files(choqok_ocs_SRCS
+    ocsconfigurebase.ui
     )
 
     kde4_add_plugin(choqok_ocs ${choqok_ocs_SRCS})

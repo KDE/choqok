@@ -27,10 +27,15 @@ if not, see http://www.gnu.org/licenses/
 
 #ifndef OCSMICROBLOG_H
 #define OCSMICROBLOG_H
-#include <microblog.h>
+#include "microblog.h"
+
+namespace Attica {
+class ProviderManager;
+}
 
 class OCSMicroblog : public Choqok::MicroBlog
 {
+Q_OBJECT
 public:
     OCSMicroblog(QObject* parent, const QVariantList& args);
     virtual ~OCSMicroblog();
@@ -45,7 +50,10 @@ public:
     virtual QList< Choqok::Post* > loadTimeline(Choqok::Account* account, const QString& timelineName);
     virtual Choqok::Account* createNewAccount(const QString& alias);
 
+    Attica::ProviderManager* providerManager();
 private:
+
+    Attica::ProviderManager* mProviderManager;
 };
 
 #endif // OCSMICROBLOG_H

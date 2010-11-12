@@ -28,19 +28,24 @@ if not, see http://www.gnu.org/licenses/
 #include "ocsmicroblog.h"
 #include <KAboutData>
 #include <KGenericFactory>
+#include <attica/providermanager.h>
+#include <accountmanager.h>
+#include "ocsaccount.h"
+#include <editaccountwidget.h>
+#include "ocsconfigurewidget.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < OCSMicroblog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_ocs" ) )
 
 OCSMicroblog::OCSMicroblog( QObject* parent, const QVariantList&  )
-    : MicroBlog(MyPluginFactory::componentData(), parent)
+    : MicroBlog(MyPluginFactory::componentData(), parent), mProviderManager(new Attica::ProviderManager)
 {
-
+    setServiceName("Social Desktop Activities");
 }
 
 OCSMicroblog::~OCSMicroblog()
 {
-
+    delete mProviderManager;
 }
 
 void OCSMicroblog::saveTimeline(Choqok::Account* account, const QString& timelineName, const QList< Choqok::UI::PostWidget* >& timeline)
@@ -55,12 +60,24 @@ QList< Choqok::Post* > OCSMicroblog::loadTimeline(Choqok::Account* account, cons
 
 Choqok::Account* OCSMicroblog::createNewAccount(const QString& alias)
 {
-    return Choqok::MicroBlog::createNewAccount(alias);
+    OCSAccount *acc = qobject_cast<OCSAccount*>( Choqok::AccountManager::self()->findAccount(alias) );
+    if(!acc) {//Why do we don't return the "acc"!? :/
+        return new OCSAccount(this, alias);
+    } else {
+        return 0;
+    }
 }
 
 ChoqokEditAccountWidget* OCSMicroblog::createEditAccountWidget(Choqok::Account* account, QWidget* parent)
 {
-
+    kDebug();
+    OCSAccount *acc = qobject_cast<OCSAccount*>(account);
+    if(acc || !account)
+        return new OCSConfigureWidget(this, acc, parent);
+    else{
+        kDebug()<<"Account passed here was not a valid OCSAccount!";
+        return 0L;
+    }
 }
 
 void OCSMicroblog::createPost(Choqok::Account* theAccount, Choqok::Post* post)
@@ -83,5 +100,9 @@ void OCSMicroblog::removePost(Choqok::Account* theAccount, Choqok::Post* post)
     Choqok::MicroBlog::removePost(theAccount, post);
 }
 
+Attica::ProviderManager* OCSMicroblog::providerManager()
+{
+    return mProviderManager;
+}
 
-#include "ocsmicroblog.moc"
+// #include "ocsmicroblog.moc"
