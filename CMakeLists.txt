@@ -33,4 +33,6 @@ add_subdirectory( plugins )
 add_subdirectory( microblogs )
 add_subdirectory( images )
 add_subdirectory( cmake )
-add_subdirectory( doc )
+
+include(MacroOptionalAddSubdirectory)
+macro_optional_add_subdirectory( doc )
