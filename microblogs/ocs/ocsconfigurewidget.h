@@ -44,6 +44,7 @@ protected slots:
 private:
     OCSAccount* mAccount;
     OCSMicroblog* mMicroblog;
+    bool providersLoaded;
 };
 
 #endif // OCSCONFIGUREWIDGET_H

@@ -27,9 +27,10 @@
 #include "ocsmicroblog.h"
 #include <KDebug>
 #include <accountmanager.h>
+#include <KMessageBox>
 
 OCSConfigureWidget::OCSConfigureWidget(OCSMicroblog *microblog, OCSAccount* account, QWidget* parent)
-    : ChoqokEditAccountWidget(account, parent), mMicroblog(microblog), mAccount(account)
+    : ChoqokEditAccountWidget(account, parent), mAccount(account), mMicroblog(microblog), providersLoaded(false)
 {
     setupUi(this);
     connect(microblog->providerManager(), SIGNAL(defaultProvidersLoaded()), SLOT(slotprovidersLoaded()));
@@ -57,6 +58,10 @@ OCSConfigureWidget::~OCSConfigureWidget()
 
 bool OCSConfigureWidget::validateData()
 {
+    if(!providersLoaded){
+        KMessageBox::sorry(choqokMainWindow, i18n("You have to wait for providers list to be loaded."));
+        return false;
+    }
     if( !cfg_alias->text().isEmpty() && cfg_provider->currentIndex() >= 0 )
         return true;
     else
@@ -74,6 +79,7 @@ void OCSConfigureWidget::slotprovidersLoaded()
 {
     kDebug();
     cfg_provider->removeItem(0);
+    providersLoaded = true;
     QList <Attica::Provider> providerList = mMicroblog->providerManager()->providers();
     int selectedIndex = 0;
     foreach(const Attica::Provider &p, providerList){

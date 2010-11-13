@@ -85,7 +85,18 @@ void OCSMicroblog::createPost(Choqok::Account* theAccount, Choqok::Post* post)
 {
     kDebug();
     OCSAccount* acc = qobject_cast<OCSAccount*>(theAccount);
-    acc->provider().postActivity(post->content);
+    Attica::PostJob* job = acc->provider().postActivity(post->content);
+    mJobsAccount.insert(job, acc);
+    mJobsPost.insert(job, post);
+    connect(job, SIGNAL(finished(Attica::BaseJob*)), SLOT(slotCreatePost(Attica::BaseJob*)));
+    job->start();
+}
+
+void OCSMicroblog::slotCreatePost(Attica::BaseJob* job)
+{
+    OCSAccount* acc = mJobsAccount.take(job);
+    Choqok::Post* post = mJobsPost.take(job);
+    emit postCreated ( acc, post );
 }
 
 void OCSMicroblog::abortCreatePost(Choqok::Account* theAccount, Choqok::Post* post)
@@ -121,8 +132,14 @@ void OCSMicroblog::updateTimelines(Choqok::Account* theAccount)
     kDebug();
     OCSAccount* acc = qobject_cast<OCSAccount*>(theAccount);
     Attica::ListJob <Attica::Activity>* job = acc->provider().requestActivities();
+    if(!job){
+        kError()<<"\tOCSMicroblog::updateTimelines: ERROR: job is null pointer";
+        return;
+    }
     mJobsAccount.insert(job, acc);
     connect(job, SIGNAL(finished(Attica::BaseJob*)), SLOT(slotTimelineLoaded(Attica::BaseJob*)));
+    job->start();
+    kDebug();
 }
 
 void OCSMicroblog::slotTimelineLoaded(Attica::BaseJob* job)

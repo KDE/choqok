@@ -58,11 +58,13 @@ public:
 
 protected slots:
     void slotTimelineLoaded(Attica::BaseJob*);
+    void slotCreatePost(Attica::BaseJob*);
 
 private:
     QList <Choqok::Post*> parseActivityList(const Attica::Activity::List &list);
     Attica::ProviderManager* mProviderManager;
     QMap<Attica::BaseJob*, OCSAccount*> mJobsAccount;
+    QMap<Attica::BaseJob*, Choqok::Post*> mJobsPost;
 };
 
 #endif // OCSMICROBLOG_H
