@@ -85,3 +85,4 @@ void OCSConfigureWidget::slotprovidersLoaded()
     cfg_provider->setCurrentIndex(selectedIndex);
 }
 
+#include "ocsconfigurewidget.moc"

@@ -68,3 +68,4 @@ Attica::Provider OCSAccount::provider()
     return d->provider;
 }
 
+#include "ocsaccount.moc"

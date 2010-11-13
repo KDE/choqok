@@ -28,9 +28,12 @@ if not, see http://www.gnu.org/licenses/
 #ifndef OCSMICROBLOG_H
 #define OCSMICROBLOG_H
 #include "microblog.h"
+#include <attica/activity.h>
 
+class OCSAccount;
 namespace Attica {
 class ProviderManager;
+class BaseJob;
 }
 
 class OCSMicroblog : public Choqok::MicroBlog
@@ -49,11 +52,17 @@ public:
                               const QList< Choqok::UI::PostWidget* >& timeline);
     virtual QList< Choqok::Post* > loadTimeline(Choqok::Account* account, const QString& timelineName);
     virtual Choqok::Account* createNewAccount(const QString& alias);
+    virtual void updateTimelines(Choqok::Account* theAccount);
 
     Attica::ProviderManager* providerManager();
-private:
 
+protected slots:
+    void slotTimelineLoaded(Attica::BaseJob*);
+
+private:
+    QList <Choqok::Post*> parseActivityList(const Attica::Activity::List &list);
     Attica::ProviderManager* mProviderManager;
+    QMap<Attica::BaseJob*, OCSAccount*> mJobsAccount;
 };
 
 #endif // OCSMICROBLOG_H

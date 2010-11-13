@@ -33,6 +33,7 @@ if not, see http://www.gnu.org/licenses/
 #include "ocsaccount.h"
 #include <editaccountwidget.h>
 #include "ocsconfigurewidget.h"
+#include <KMessageBox>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < OCSMicroblog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_ocs" ) )
@@ -82,22 +83,32 @@ ChoqokEditAccountWidget* OCSMicroblog::createEditAccountWidget(Choqok::Account* 
 
 void OCSMicroblog::createPost(Choqok::Account* theAccount, Choqok::Post* post)
 {
-    Choqok::MicroBlog::createPost(theAccount, post);
+    kDebug();
+    OCSAccount* acc = qobject_cast<OCSAccount*>(theAccount);
+    acc->provider().postActivity(post->content);
 }
 
 void OCSMicroblog::abortCreatePost(Choqok::Account* theAccount, Choqok::Post* post)
 {
-    Choqok::MicroBlog::abortCreatePost(theAccount, post);
+    kDebug();
+    OCSAccount* acc = qobject_cast<OCSAccount*>(theAccount);
+    Attica::BaseJob* job = mJobsAccount.key(acc);
+    if(job)
+        job->abort();
 }
 
 void OCSMicroblog::fetchPost(Choqok::Account* theAccount, Choqok::Post* post)
 {
-    Choqok::MicroBlog::fetchPost(theAccount, post);
+    Q_UNUSED(theAccount);
+    Q_UNUSED(post);
+    KMessageBox::sorry(choqokMainWindow, i18n("Not Supported"));
 }
 
 void OCSMicroblog::removePost(Choqok::Account* theAccount, Choqok::Post* post)
 {
-    Choqok::MicroBlog::removePost(theAccount, post);
+    Q_UNUSED(theAccount);
+    Q_UNUSED(post);
+    KMessageBox::sorry(choqokMainWindow, i18n("Not Supported"));
 }
 
 Attica::ProviderManager* OCSMicroblog::providerManager()
@@ -105,4 +116,44 @@ Attica::ProviderManager* OCSMicroblog::providerManager()
     return mProviderManager;
 }
 
-// #include "ocsmicroblog.moc"
+void OCSMicroblog::updateTimelines(Choqok::Account* theAccount)
+{
+    kDebug();
+    OCSAccount* acc = qobject_cast<OCSAccount*>(theAccount);
+    Attica::ListJob <Attica::Activity>* job = acc->provider().requestActivities();
+    mJobsAccount.insert(job, acc);
+    connect(job, SIGNAL(finished(Attica::BaseJob*)), SLOT(slotTimelineLoaded(Attica::BaseJob*)));
+}
+
+void OCSMicroblog::slotTimelineLoaded(Attica::BaseJob* job)
+{
+    kDebug();
+    OCSAccount* acc = mJobsAccount.take(job);
+    Attica::Activity::List actList = static_cast<Attica::ListJob<Attica::Activity>*>(job)->itemList();
+    emit timelineDataReceived( acc, i18n("Activity"), parseActivityList(actList) );
+}
+
+QList< Choqok::Post* > OCSMicroblog::parseActivityList(const Attica::Activity::List& list)
+{
+    kDebug();
+    QList< Choqok::Post* > resultList;
+    Attica::Activity::List::const_iterator it = list.constBegin();
+    Attica::Activity::List::const_iterator endIt = list.constEnd();
+    Choqok::Post* pst;
+    for(;it!=endIt; ++it){
+        pst = new Choqok::Post;
+        pst->content = it->message();
+        pst->creationDateTime = it->timestamp();
+        pst->link = it->link().toString();
+        pst->isError = !it->isValid();
+        pst->author.userName = it->associatedPerson().id();
+        pst->author.homePageUrl = it->associatedPerson().homepage();
+        pst->author.location = QString("%1(%2)").arg(it->associatedPerson().country()).arg(it->associatedPerson().city());
+        pst->author.profileImageUrl = it->associatedPerson().avatarUrl().toString();
+        pst->author.realName = QString("%1 %2").arg(it->associatedPerson().firstName()).arg(it->associatedPerson().lastName());
+        resultList.append(pst);
+    }
+    return resultList;
+}
+
+#include "ocsmicroblog.moc"
