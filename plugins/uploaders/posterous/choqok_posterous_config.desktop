@@ -10,6 +10,7 @@ X-KDE-ParentComponents=choqok_posterous
 
 Name=Posterous
 Name[da]=Posterous
+Name[et]=Posterous
 Name[nl]=Posterous
 Name[pt]=Posterous
 Name[pt_BR]=Posterous
@@ -18,6 +19,7 @@ Name[uk]=Posterous
 Name[x-test]=xxPosterousxx
 Comment=Upload image to posterous.com
 Comment[da]=Upload billede til posterous.com
+Comment[et]=Piltide üleslaadimine posterous.com-i
 Comment[nl]=Afbeelding uploaden naar posterous.com
 Comment[pt]=Enviar a imagem para o posterous.com
 Comment[pt_BR]=Enviar imagem para o posterous.com
