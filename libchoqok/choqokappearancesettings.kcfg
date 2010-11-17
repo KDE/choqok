@@ -37,5 +37,11 @@ http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
     <entry name="useReverseOrder" type="Bool">
         <default>false</default>
     </entry>
+    <entry name="standartNotification" type="Bool">
+        <default>true</default>
+    </entry>
+    <entry name="libindicateNotification" type="Bool">
+        <default>false</default>
+    </entry>
 </group>
 </kcfg>

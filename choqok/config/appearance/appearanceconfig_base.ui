@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>492</width>
-    <height>269</height>
+    <height>391</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -33,6 +33,29 @@
      <property name="text">
       <string>Show Retweeted/Repeated posts in Choqok way.</string>
      </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Notifications</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QCheckBox" name="kcfg_standartNotification">
+        <property name="text">
+         <string>Use standard notifications</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_libindicateNotification">
+        <property name="text">
+         <string>Use Message Indicator widget</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
@@ -237,6 +260,7 @@
    <class>KSeparator</class>
    <extends>QFrame</extends>
    <header>kseparator.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

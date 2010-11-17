@@ -30,6 +30,7 @@
 #include "account.h"
 #include "microblog.h"
 #include <microblogwidget.h>
+#include <choqokappearancesettings.h>
 
 #include <QDebug>
 
