@@ -57,6 +57,7 @@ public slots:
     void slotShowMainWindow();
     void slotCanWorkWithAccs();
     void slotupdateUnreadCount(int change, int sum);
+    void slotConfigChanged();
 };
 }
 #endif // INDICATORMANAGER_H

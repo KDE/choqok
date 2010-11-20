@@ -30,6 +30,7 @@
 #include "account.h"
 #include "microblog.h"
 #include <microblogwidget.h>
+#include <choqokbehaviorsettings.h>
 
 #include <QDebug>
 
@@ -41,16 +42,18 @@ namespace Choqok
 
 MessageIndicatorManager::MessageIndicatorManager()
 {
-    iServer = QIndicate::Server::defaultInstance();
-    iServer->setType ( "message.irc" );
-    QString desktopFile = QString ( "%1/%2.desktop" )
-                          .arg ( XSTR ( XDG_APPS_INSTALL_DIR ) )
-                          .arg ( QCoreApplication::applicationFilePath().section ( '/', -1 ) );
-    iServer->setDesktopFile ( desktopFile );
-    connect ( iServer, SIGNAL ( serverDisplay() ), SLOT ( slotShowMainWindow() ) );
-    iServer->show();
-
-    connect ( Choqok::AccountManager::self(), SIGNAL ( allAccountsLoaded() ), SLOT ( slotCanWorkWithAccs() ) );
+    if ( Choqok::BehaviorSettings::libindicate() ) {
+        iServer = QIndicate::Server::defaultInstance();
+        iServer->setType ( "message.irc" );
+        QString desktopFile = QString ( "%1/%2.desktop" )
+                              .arg ( XSTR ( XDG_APPS_INSTALL_DIR ) )
+                              .arg ( QCoreApplication::applicationFilePath().section ( '/', -1 ) );
+        iServer->setDesktopFile ( desktopFile );
+        connect ( iServer, SIGNAL ( serverDisplay() ), SLOT ( slotShowMainWindow() ) );
+        iServer->show();
+        connect ( Choqok::AccountManager::self(), SIGNAL ( allAccountsLoaded() ), SLOT ( slotCanWorkWithAccs() ) );
+    }
+    connect ( Choqok::BehaviorSettings::self(), SIGNAL(configChanged()), SLOT(slotConfigChanged()) );
 }
 
 MessageIndicatorManager::~MessageIndicatorManager()
@@ -65,6 +68,11 @@ void MessageIndicatorManager::slotCanWorkWithAccs()
     }
 }
 
+void MessageIndicatorManager::slotConfigChanged()
+{
+//     if ( !Choqok::BehaviorSettings::libindicate() )
+//       iServer->hide();
+}
 void MessageIndicatorManager::slotupdateUnreadCount ( int change, int sum )
 {
     Q_UNUSED ( change );
@@ -89,13 +97,13 @@ void MessageIndicatorManager::newPostInc ( int unread, const QString& alias, con
         newIndicator->setIconProperty ( getIconByAlias ( alias ) );
         iList.insert ( alias, newIndicator );
         connect ( iList.value ( alias ), SIGNAL ( display ( QIndicate::Indicator* ) ), SLOT ( slotDisplay ( QIndicate::Indicator* ) ) );
-    } 
-        iList.value ( alias )->setCountProperty ( unread );
-        iList.value ( alias )->setDrawAttentionProperty ( unread != 0 );
-        if ( unread == 0 )
-            iList.value ( alias )->hide();
-        else
-            iList.value ( alias )->show();
+    }
+    iList.value ( alias )->setCountProperty ( unread );
+    iList.value ( alias )->setDrawAttentionProperty ( unread != 0 );
+    if ( unread == 0 )
+        iList.value ( alias )->hide();
+    else
+        iList.value ( alias )->show();
 
 }
 
