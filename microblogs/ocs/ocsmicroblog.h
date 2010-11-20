@@ -55,6 +55,8 @@ public:
     virtual void updateTimelines(Choqok::Account* theAccount);
     virtual Choqok::TimelineInfo* timelineInfo(const QString& timelineName);
 
+    virtual QString profileUrl(Choqok::Account* account, const QString& username) const;
+
     Attica::ProviderManager* providerManager();
 
     bool isOperational();

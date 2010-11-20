@@ -89,8 +89,10 @@ ChoqokEditAccountWidget* OCSMicroblog::createEditAccountWidget(Choqok::Account* 
 
 void OCSMicroblog::createPost(Choqok::Account* theAccount, Choqok::Post* post)
 {
-    if(!mIsOperational)
+    if(!mIsOperational){
+        emit errorPost(theAccount, post, OtherError, i18n("OCS plugin is not initialized yet, Try again later."));
         return;
+    }
     kDebug();
     OCSAccount* acc = qobject_cast<OCSAccount*>(theAccount);
     Attica::PostJob* job = acc->provider().postActivity(post->content);
@@ -138,7 +140,7 @@ Attica::ProviderManager* OCSMicroblog::providerManager()
 void OCSMicroblog::updateTimelines(Choqok::Account* theAccount)
 {
     if(!mIsOperational)
-        return;
+        return;//TODO schedule job for later
     kDebug();
     OCSAccount* acc = qobject_cast<OCSAccount*>(theAccount);
     if(!acc){
@@ -170,6 +172,7 @@ QList< Choqok::Post* > OCSMicroblog::parseActivityList(const Attica::Activity::L
     foreach(Attica::Activity act, list){
         kDebug();
         Choqok::Post* pst = new Choqok::Post;
+        pst->postId = act.id();
         pst->content = act.message();
         pst->creationDateTime = act.timestamp();
         pst->link = act.link().toString();
@@ -181,7 +184,7 @@ QList< Choqok::Post* > OCSMicroblog::parseActivityList(const Attica::Activity::L
         pst->author.profileImageUrl = act.associatedPerson().avatarUrl().toString();
         pst->author.realName = QString("%1 %2").arg(act.associatedPerson().firstName())
                                                .arg(act.associatedPerson().lastName());
-        resultList.append(pst);
+        resultList.insert(0, pst);
     }
     kDebug()<<resultList.count();
     return resultList;
@@ -192,7 +195,7 @@ Choqok::TimelineInfo* OCSMicroblog::timelineInfo(const QString& timelineName)
     if(timelineName == "Activity") {
         Choqok::TimelineInfo* info = new Choqok::TimelineInfo;
         info->name = i18nc("Timeline Name", "Activity");
-        info->description = i18n("Your social activities");
+        info->description = i18n("Social activities");
         info->icon = "user-home";
         return info;
     } else {
@@ -211,6 +214,15 @@ void OCSMicroblog::slotDefaultProvidersLoaded()
     kDebug();
     mIsOperational = true;
     emit initialized();
+}
+
+QString OCSMicroblog::profileUrl(Choqok::Account* account, const QString& username) const
+{
+    OCSAccount* acc = qobject_cast<OCSAccount*>(account);
+    if(acc->providerUrl().host().contains("opendesktop.org")){
+        return QString("http://opendesktop.org/usermanager/search.php?username=%1").arg(username);
+    }
+    return QString();
 }
 
 #include "ocsmicroblog.moc"
