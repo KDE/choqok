@@ -139,8 +139,10 @@ Attica::ProviderManager* OCSMicroblog::providerManager()
 
 void OCSMicroblog::updateTimelines(Choqok::Account* theAccount)
 {
-    if(!mIsOperational)
-        return;//TODO schedule job for later
+    if(!mIsOperational) {
+        scheduledTasks.insertMulti(theAccount, Update);
+        return;
+    }
     kDebug();
     OCSAccount* acc = qobject_cast<OCSAccount*>(theAccount);
     if(!acc){
@@ -214,6 +216,18 @@ void OCSMicroblog::slotDefaultProvidersLoaded()
     kDebug();
     mIsOperational = true;
     emit initialized();
+
+    QMultiMap<Choqok::Account*, Task>::const_iterator it = scheduledTasks.constBegin();
+    QMultiMap<Choqok::Account*, Task>::const_iterator endIt = scheduledTasks.constEnd();
+    for(; it != endIt; ++it){
+        switch(it.value()){
+            case Update:
+                updateTimelines(it.key());
+                break;
+            default:
+                break;
+        };
+    }
 }
 
 QString OCSMicroblog::profileUrl(Choqok::Account* account, const QString& username) const

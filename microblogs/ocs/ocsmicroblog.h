@@ -70,10 +70,12 @@ protected slots:
     void slotDefaultProvidersLoaded();
 
 private:
+    enum Task{Update};
     QList <Choqok::Post*> parseActivityList(const Attica::Activity::List &list);
     Attica::ProviderManager* mProviderManager;
     QMap<Attica::BaseJob*, OCSAccount*> mJobsAccount;
     QMap<Attica::BaseJob*, Choqok::Post*> mJobsPost;
+    QMultiMap<Choqok::Account*, Task> scheduledTasks;
     bool mIsOperational;
 };
 
