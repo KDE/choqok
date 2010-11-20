@@ -60,6 +60,7 @@ public:
     Attica::ProviderManager* providerManager();
 
     bool isOperational();
+    virtual void aboutToUnload();
 
 signals:
     void initialized();

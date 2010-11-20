@@ -29,11 +29,12 @@ if not, see http://www.gnu.org/licenses/
 #include <KAboutData>
 #include <KGenericFactory>
 #include <attica/providermanager.h>
-#include <accountmanager.h>
+#include "accountmanager.h"
 #include "ocsaccount.h"
-#include <editaccountwidget.h>
+#include "editaccountwidget.h"
 #include "ocsconfigurewidget.h"
 #include <KMessageBox>
+#include "postwidget.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < OCSMicroblog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_ocs" ) )
@@ -56,13 +57,74 @@ OCSMicroblog::~OCSMicroblog()
 void OCSMicroblog::saveTimeline(Choqok::Account* account, const QString& timelineName,
                                 const QList< Choqok::UI::PostWidget* >& timeline)
 {
-    //TODO implement
+    kDebug();
+    QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
+    KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
+
+    ///Clear previous data:
+    QStringList prevList = postsBackup.groupList();
+    int c = prevList.count();
+    if ( c > 0 ) {
+        for ( int i = 0; i < c; ++i ) {
+            postsBackup.deleteGroup( prevList[i] );
+        }
+    }
+    QList< Choqok::UI::PostWidget *>::const_iterator it, endIt = timeline.constEnd();
+    for ( it = timeline.constBegin(); it != endIt; ++it ) {
+        const Choqok::Post *post = &((*it)->currentPost());
+        KConfigGroup grp( &postsBackup, post->creationDateTime.toString() );
+        grp.writeEntry( "creationDateTime", post->creationDateTime );
+        grp.writeEntry( "postId", post->postId.toString() );
+        grp.writeEntry( "text", post->content );
+        grp.writeEntry( "authorId", post->author.userId.toString() );
+        grp.writeEntry( "authorUserName", post->author.userName );
+        grp.writeEntry( "authorRealName", post->author.realName );
+        grp.writeEntry( "authorProfileImageUrl", post->author.profileImageUrl );
+        grp.writeEntry( "authorDescription" , post->author.description );
+        grp.writeEntry( "authorLocation" , post->author.location );
+        grp.writeEntry( "authorUrl" , post->author.homePageUrl );
+        grp.writeEntry( "link", post->link );
+        grp.writeEntry( "isRead" , post->isRead );
+    }
+    postsBackup.sync();
+    emit readyForUnload();
 }
 
 QList< Choqok::Post* > OCSMicroblog::loadTimeline(Choqok::Account* account, const QString& timelineName)
 {
-    //TODO implement
-    return QList< Choqok::Post* >();
+    kDebug()<<timelineName;
+    QList< Choqok::Post* > list;
+    QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
+    KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
+    QStringList tmpList = postsBackup.groupList();
+
+    QList<QDateTime> groupList;
+    foreach(const QString &str, tmpList)
+        groupList.append(QDateTime::fromString(str) );
+    qSort(groupList);
+    int count = groupList.count();
+    if( count ) {
+        Choqok::Post *st = 0;
+        for ( int i = 0; i < count; ++i ) {
+            st = new Choqok::Post;
+            KConfigGroup grp( &postsBackup, groupList[i].toString() );
+            st->creationDateTime = grp.readEntry( "creationDateTime", QDateTime::currentDateTime() );
+            st->postId = grp.readEntry( "postId", QString() );
+            st->content = grp.readEntry( "text", QString() );
+            st->author.userId = grp.readEntry( "authorId", QString() );
+            st->author.userName = grp.readEntry( "authorUserName", QString() );
+            st->author.realName = grp.readEntry( "authorRealName", QString() );
+            st->author.profileImageUrl = grp.readEntry( "authorProfileImageUrl", QString() );
+            st->author.description = grp.readEntry( "authorDescription" , QString() );
+            st->author.location = grp.readEntry("authorLocation", QString());
+            st->author.homePageUrl = grp.readEntry("authorUrl", QString());
+            st->link = grp.readEntry("link", QString());
+            st->isRead = grp.readEntry("isRead", true);
+
+            list.append( st );
+        }
+    }
+    return list;
 }
 
 Choqok::Account* OCSMicroblog::createNewAccount(const QString& alias)
@@ -112,6 +174,7 @@ void OCSMicroblog::slotCreatePost(Attica::BaseJob* job)
 void OCSMicroblog::abortCreatePost(Choqok::Account* theAccount, Choqok::Post* post)
 {
     kDebug();
+    Q_UNUSED(post);
     OCSAccount* acc = qobject_cast<OCSAccount*>(theAccount);
     Attica::BaseJob* job = mJobsAccount.key(acc);
     if(job)
@@ -172,13 +235,13 @@ QList< Choqok::Post* > OCSMicroblog::parseActivityList(const Attica::Activity::L
     kDebug()<<list.count();
     QList< Choqok::Post* > resultList;
     foreach(Attica::Activity act, list){
-        kDebug();
         Choqok::Post* pst = new Choqok::Post;
         pst->postId = act.id();
         pst->content = act.message();
         pst->creationDateTime = act.timestamp();
         pst->link = act.link().toString();
         pst->isError = !act.isValid();
+        pst->author.userId = act.associatedPerson().id();
         pst->author.userName = act.associatedPerson().id();
         pst->author.homePageUrl = act.associatedPerson().homepage();
         pst->author.location = QString("%1(%2)").arg(act.associatedPerson().country())
@@ -188,7 +251,6 @@ QList< Choqok::Post* > OCSMicroblog::parseActivityList(const Attica::Activity::L
                                                .arg(act.associatedPerson().lastName());
         resultList.insert(0, pst);
     }
-    kDebug()<<resultList.count();
     return resultList;
 }
 
@@ -237,6 +299,11 @@ QString OCSMicroblog::profileUrl(Choqok::Account* account, const QString& userna
         return QString("http://opendesktop.org/usermanager/search.php?username=%1").arg(username);
     }
     return QString();
+}
+
+void OCSMicroblog::aboutToUnload()
+{
+    emit saveTimelines();
 }
 
 #include "ocsmicroblog.moc"
