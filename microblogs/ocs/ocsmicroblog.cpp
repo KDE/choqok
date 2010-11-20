@@ -39,8 +39,12 @@ K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < OCSMicroblog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_ocs" ) )
 
 OCSMicroblog::OCSMicroblog( QObject* parent, const QVariantList&  )
-    : MicroBlog(MyPluginFactory::componentData(), parent), mProviderManager(new Attica::ProviderManager)
+    : MicroBlog(MyPluginFactory::componentData(), parent), mProviderManager(new Attica::ProviderManager),
+    mIsOperational(false)
 {
+    connect( mProviderManager, SIGNAL(defaultProvidersLoaded()),
+             this, SLOT(slotDefaultProvidersLoaded()) );
+    mProviderManager->loadDefaultProviders();
     setServiceName("Social Desktop Activities");
 }
 
@@ -49,23 +53,25 @@ OCSMicroblog::~OCSMicroblog()
     delete mProviderManager;
 }
 
-void OCSMicroblog::saveTimeline(Choqok::Account* account, const QString& timelineName, const QList< Choqok::UI::PostWidget* >& timeline)
+void OCSMicroblog::saveTimeline(Choqok::Account* account, const QString& timelineName,
+                                const QList< Choqok::UI::PostWidget* >& timeline)
 {
-    Choqok::MicroBlog::saveTimeline(account, timelineName, timeline);
+    //TODO implement
 }
 
 QList< Choqok::Post* > OCSMicroblog::loadTimeline(Choqok::Account* account, const QString& timelineName)
 {
-    return Choqok::MicroBlog::loadTimeline(account, timelineName);
+    //TODO implement
+    return QList< Choqok::Post* >();
 }
 
 Choqok::Account* OCSMicroblog::createNewAccount(const QString& alias)
 {
     OCSAccount *acc = qobject_cast<OCSAccount*>( Choqok::AccountManager::self()->findAccount(alias) );
-    if(!acc) {//Why do we don't return the "acc"!? :/
+    if(!acc) {
         return new OCSAccount(this, alias);
     } else {
-        return 0;
+        return 0;//If there's an account with this alias, So We can't create a new one
     }
 }
 
@@ -83,6 +89,8 @@ ChoqokEditAccountWidget* OCSMicroblog::createEditAccountWidget(Choqok::Account* 
 
 void OCSMicroblog::createPost(Choqok::Account* theAccount, Choqok::Post* post)
 {
+    if(!mIsOperational)
+        return;
     kDebug();
     OCSAccount* acc = qobject_cast<OCSAccount*>(theAccount);
     Attica::PostJob* job = acc->provider().postActivity(post->content);
@@ -129,48 +137,80 @@ Attica::ProviderManager* OCSMicroblog::providerManager()
 
 void OCSMicroblog::updateTimelines(Choqok::Account* theAccount)
 {
+    if(!mIsOperational)
+        return;
     kDebug();
     OCSAccount* acc = qobject_cast<OCSAccount*>(theAccount);
-    Attica::ListJob <Attica::Activity>* job = acc->provider().requestActivities();
-    if(!job){
-        kError()<<"\tOCSMicroblog::updateTimelines: ERROR: job is null pointer";
+    if(!acc){
+        kError()<<"OCSMicroblog::updateTimelines: acc is not an OCSAccount";
         return;
     }
+    Attica::ListJob <Attica::Activity>* job = acc->provider().requestActivities();
     mJobsAccount.insert(job, acc);
     connect(job, SIGNAL(finished(Attica::BaseJob*)), SLOT(slotTimelineLoaded(Attica::BaseJob*)));
     job->start();
-    kDebug();
 }
 
 void OCSMicroblog::slotTimelineLoaded(Attica::BaseJob* job)
 {
     kDebug();
     OCSAccount* acc = mJobsAccount.take(job);
-    Attica::Activity::List actList = static_cast<Attica::ListJob<Attica::Activity>*>(job)->itemList();
-    emit timelineDataReceived( acc, i18n("Activity"), parseActivityList(actList) );
+    if(job->metadata().error() == Attica::Metadata::NoError) {
+        Attica::Activity::List actList = static_cast< Attica::ListJob<Attica::Activity> * >(job)->itemList();
+        emit timelineDataReceived( acc, "Activity", parseActivityList(actList) );
+    } else {
+        //TODO
+    }
 }
 
 QList< Choqok::Post* > OCSMicroblog::parseActivityList(const Attica::Activity::List& list)
 {
-    kDebug();
+    kDebug()<<list.count();
     QList< Choqok::Post* > resultList;
-    Attica::Activity::List::const_iterator it = list.constBegin();
-    Attica::Activity::List::const_iterator endIt = list.constEnd();
-    Choqok::Post* pst;
-    for(;it!=endIt; ++it){
-        pst = new Choqok::Post;
-        pst->content = it->message();
-        pst->creationDateTime = it->timestamp();
-        pst->link = it->link().toString();
-        pst->isError = !it->isValid();
-        pst->author.userName = it->associatedPerson().id();
-        pst->author.homePageUrl = it->associatedPerson().homepage();
-        pst->author.location = QString("%1(%2)").arg(it->associatedPerson().country()).arg(it->associatedPerson().city());
-        pst->author.profileImageUrl = it->associatedPerson().avatarUrl().toString();
-        pst->author.realName = QString("%1 %2").arg(it->associatedPerson().firstName()).arg(it->associatedPerson().lastName());
+    foreach(Attica::Activity act, list){
+        kDebug();
+        Choqok::Post* pst = new Choqok::Post;
+        pst->content = act.message();
+        pst->creationDateTime = act.timestamp();
+        pst->link = act.link().toString();
+        pst->isError = !act.isValid();
+        pst->author.userName = act.associatedPerson().id();
+        pst->author.homePageUrl = act.associatedPerson().homepage();
+        pst->author.location = QString("%1(%2)").arg(act.associatedPerson().country())
+                                                .arg(act.associatedPerson().city());
+        pst->author.profileImageUrl = act.associatedPerson().avatarUrl().toString();
+        pst->author.realName = QString("%1 %2").arg(act.associatedPerson().firstName())
+                                               .arg(act.associatedPerson().lastName());
         resultList.append(pst);
     }
+    kDebug()<<resultList.count();
     return resultList;
+}
+
+Choqok::TimelineInfo* OCSMicroblog::timelineInfo(const QString& timelineName)
+{
+    if(timelineName == "Activity") {
+        Choqok::TimelineInfo* info = new Choqok::TimelineInfo;
+        info->name = i18nc("Timeline Name", "Activity");
+        info->description = i18n("Your social activities");
+        info->icon = "user-home";
+        return info;
+    } else {
+        kError()<<"timelineName is not valid!";
+        return 0;
+    }
+}
+
+bool OCSMicroblog::isOperational()
+{
+    return mIsOperational;
+}
+
+void OCSMicroblog::slotDefaultProvidersLoaded()
+{
+    kDebug();
+    mIsOperational = true;
+    emit initialized();
 }
 
 #include "ocsmicroblog.moc"

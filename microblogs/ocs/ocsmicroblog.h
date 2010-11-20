@@ -53,18 +53,26 @@ public:
     virtual QList< Choqok::Post* > loadTimeline(Choqok::Account* account, const QString& timelineName);
     virtual Choqok::Account* createNewAccount(const QString& alias);
     virtual void updateTimelines(Choqok::Account* theAccount);
+    virtual Choqok::TimelineInfo* timelineInfo(const QString& timelineName);
 
     Attica::ProviderManager* providerManager();
+
+    bool isOperational();
+
+signals:
+    void initialized();
 
 protected slots:
     void slotTimelineLoaded(Attica::BaseJob*);
     void slotCreatePost(Attica::BaseJob*);
+    void slotDefaultProvidersLoaded();
 
 private:
     QList <Choqok::Post*> parseActivityList(const Attica::Activity::List &list);
     Attica::ProviderManager* mProviderManager;
     QMap<Attica::BaseJob*, OCSAccount*> mJobsAccount;
     QMap<Attica::BaseJob*, Choqok::Post*> mJobsPost;
+    bool mIsOperational;
 };
 
 #endif // OCSMICROBLOG_H

@@ -25,6 +25,7 @@
 #include <attica/provider.h>
 #include "ocsmicroblog.h"
 #include <attica/providermanager.h>
+#include <KDebug>
 
 class OCSAccount::Private
 {
@@ -37,8 +38,9 @@ public:
 OCSAccount::OCSAccount(OCSMicroblog* parent, const QString& alias)
 : Account(parent, alias), d(new Private)
 {
+    kDebug()<<alias;
     d->mBlog = parent;
-    setProviderUrl( configGroup()->readEntry("ProviderUrl", QString()) );
+    setProviderUrl( QUrl(configGroup()->readEntry("ProviderUrl", QString())) );
 }
 
 OCSAccount::~OCSAccount()
@@ -59,13 +61,22 @@ QUrl OCSAccount::providerUrl() const
 
 void OCSAccount::setProviderUrl(const QUrl& url)
 {
+    kDebug()<<url;
     d->providerUrl = url;
-    d->provider = d->mBlog->providerManager()->providerByUrl(url);
+    if(d->mBlog->isOperational())
+        slotDefaultProvidersLoaded();
+    else
+        connect(d->mBlog, SIGNAL(initialized()), SLOT(slotDefaultProvidersLoaded()));
 }
 
 Attica::Provider OCSAccount::provider()
 {
     return d->provider;
+}
+
+void OCSAccount::slotDefaultProvidersLoaded()
+{
+    d->provider = d->mBlog->providerManager()->providerByUrl(d->providerUrl);
 }
 
 #include "ocsaccount.moc"

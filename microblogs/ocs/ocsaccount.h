@@ -43,6 +43,9 @@ public:
 
     virtual void writeConfig();
 
+protected slots:
+    void slotDefaultProvidersLoaded();
+
 private:
     class Private;
     Private * const d;

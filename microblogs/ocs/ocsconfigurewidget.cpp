@@ -33,9 +33,12 @@ OCSConfigureWidget::OCSConfigureWidget(OCSMicroblog *microblog, OCSAccount* acco
     : ChoqokEditAccountWidget(account, parent), mAccount(account), mMicroblog(microblog), providersLoaded(false)
 {
     setupUi(this);
-    connect(microblog->providerManager(), SIGNAL(defaultProvidersLoaded()), SLOT(slotprovidersLoaded()));
     cfg_provider->setCurrentItem(i18n("Loading..."), true);
-    microblog->providerManager()->loadDefaultProviders();
+    if( microblog->isOperational() ) {
+        slotprovidersLoaded();
+    } else {
+        connect(microblog, SIGNAL(initialized()), SLOT(slotprovidersLoaded()));
+    }
     if(mAccount){
         cfg_alias->setText(mAccount->alias());
     } else {
@@ -70,6 +73,7 @@ bool OCSConfigureWidget::validateData()
 
 Choqok::Account* OCSConfigureWidget::apply()
 {
+    mAccount->setAlias( cfg_alias->text() );
     mAccount->setProviderUrl( cfg_provider->itemData(cfg_provider->currentIndex()).toString() );
     mAccount->writeConfig();
     return mAccount;
