@@ -16,6 +16,7 @@ twitterapiwhoiswidget.cpp
 twitterapishowthread.cpp
 twitterapitextedit.cpp
 twitterapicomposerwidget.cpp
+twitterapitimelinewidget.cpp
 )
 
 # kde4_add_kcfg_files(twitterhelper_LIB_SRCS

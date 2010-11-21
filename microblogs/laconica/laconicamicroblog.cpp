@@ -49,6 +49,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "laconicacomposerwidget.h"
 #include "mediamanager.h"
 #include <choqokappearancesettings.h>
+#include "twitterapihelper/twitterapitimelinewidget.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < LaconicaMicroBlog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_laconica" ) )
@@ -98,7 +99,7 @@ Choqok::UI::MicroBlogWidget * LaconicaMicroBlog::createMicroBlogWidget( Choqok::
 Choqok::UI::TimelineWidget * LaconicaMicroBlog::createTimelineWidget( Choqok::Account *account,
                                                                  const QString &timelineName, QWidget *parent )
 {
-    return new Choqok::UI::TimelineWidget(account, timelineName, parent);
+    return new TwitterApiTimelineWidget(account, timelineName, parent);
 }
 
 Choqok::UI::PostWidget* LaconicaMicroBlog::createPostWidget(Choqok::Account* account,

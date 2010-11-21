@@ -25,7 +25,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 TwitterTimelineWidget::TwitterTimelineWidget(Choqok::Account* account, const QString& timelineName,
                                              QWidget* parent)
-: TimelineWidget(account, timelineName, parent)
+: TwitterApiTimelineWidget(account, timelineName, parent)
 {
     if(timelineName.startsWith('@'))
         setClosable();

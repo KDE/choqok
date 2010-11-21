@@ -24,10 +24,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef TWITTERTIMELINEWIDGET_H
 #define TWITTERTIMELINEWIDGET_H
 
-#include <timelinewidget.h>
+#include "twitterapihelper/twitterapitimelinewidget.h"
 
 
-class TwitterTimelineWidget : public Choqok::UI::TimelineWidget
+class TwitterTimelineWidget : public TwitterApiTimelineWidget
 {
 
 public:
