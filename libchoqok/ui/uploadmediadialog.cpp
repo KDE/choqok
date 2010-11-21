@@ -115,6 +115,7 @@ void UploadMediaDialog::slotButtonClicked(int button)
         Choqok::BehaviorSettings::setLastUsedUploaderPlugin(d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString());
         d->localUrl = d->ui.imageUrl->url();
         QString plugin = d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString();
+        showed = true;
         Choqok::MediaManager::self()->uploadMedium(d->localUrl, plugin);
     } else {
         KDialog::slotButtonClicked(button);
@@ -230,16 +231,18 @@ void Choqok::UI::UploadMediaDialog::slotConfigureClicked()
 
 void Choqok::UI::UploadMediaDialog::slotMediumUploaded(const KUrl& localUrl, const QString& remoteUrl)
 {
-    if(d->localUrl == localUrl){
+    if(d->localUrl == localUrl && showed){
         kDebug();
         Global::quickPostWidget()->appendText(remoteUrl);
+        showed = false;
         close();
     }
 }
 
 void Choqok::UI::UploadMediaDialog::slotMediumUploadFailed(const KUrl& localUrl, const QString& errorMessage)
 {
-    if(d->localUrl == localUrl){
+    if(d->localUrl == localUrl && showed){
+        showed = false;
         KMessageBox::detailedSorry(Global::mainWindow(), i18n("Medium uploading failed."), errorMessage );
         show();
         d->progress->deleteLater();

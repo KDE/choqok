@@ -42,6 +42,7 @@ public:
 protected:
     virtual void slotButtonClicked(int button);
     void load();
+    bool showed;
 
 protected Q_SLOTS:
     void currentPluginChanged( int index );
