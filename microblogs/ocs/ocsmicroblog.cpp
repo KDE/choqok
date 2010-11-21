@@ -148,7 +148,7 @@ ChoqokEditAccountWidget* OCSMicroblog::createEditAccountWidget(Choqok::Account* 
 void OCSMicroblog::createPost(Choqok::Account* theAccount, Choqok::Post* post)
 {
     if(!mIsOperational){
-        emit errorPost(theAccount, post, OtherError, i18n("OCS plugin is not initialized yet, Try again later."));
+        emit errorPost(theAccount, post, OtherError, i18n("OCS plugin is not initialized yet. Try again later."));
         return;
     }
     kDebug();
