@@ -43,16 +43,16 @@ namespace Choqok
 MessageIndicatorManager::MessageIndicatorManager()
 {
 
-        iServer = QIndicate::Server::defaultInstance();
-        iServer->setType ( "message.irc" );
-        QString desktopFile = QString ( "%1/%2.desktop" )
-                              .arg ( XSTR ( XDG_APPS_INSTALL_DIR ) )
-                              .arg ( QCoreApplication::applicationFilePath().section ( '/', -1 ) );
-        iServer->setDesktopFile ( desktopFile );
-        connect ( iServer, SIGNAL ( serverDisplay() ), SLOT ( slotShowMainWindow() ) );
-        if ( Choqok::BehaviorSettings::libindicate() )
-             iServer->show();
-        connect ( Choqok::AccountManager::self(), SIGNAL ( allAccountsLoaded() ), SLOT ( slotCanWorkWithAccs() ) );
+    iServer = QIndicate::Server::defaultInstance();
+    iServer->setType ( "message.irc" );
+    QString desktopFile = QString ( "%1/%2.desktop" )
+                          .arg ( XSTR ( XDG_APPS_INSTALL_DIR ) )
+                          .arg ( QCoreApplication::applicationFilePath().section ( '/', -1 ) );
+    iServer->setDesktopFile ( desktopFile );
+    connect ( iServer, SIGNAL ( serverDisplay() ), SLOT ( slotShowMainWindow() ) );
+    if ( Choqok::BehaviorSettings::libindicate() )
+        iServer->show();
+    connect ( Choqok::AccountManager::self(), SIGNAL ( allAccountsLoaded() ), SLOT ( slotCanWorkWithAccs() ) );
 
     connect ( Choqok::BehaviorSettings::self(), SIGNAL(configChanged()), SLOT(slotConfigChanged()) );
 }
@@ -71,10 +71,10 @@ void MessageIndicatorManager::slotCanWorkWithAccs()
 
 void MessageIndicatorManager::slotConfigChanged()
 {
-     if ( !Choqok::BehaviorSettings::libindicate() )
-       iServer->hide();
-     if ( Choqok::BehaviorSettings::libindicate() )
-       iServer->show();
+    if ( !Choqok::BehaviorSettings::libindicate() )
+        iServer->hide();
+    if ( Choqok::BehaviorSettings::libindicate() )
+        iServer->show();
 }
 void MessageIndicatorManager::slotupdateUnreadCount ( int change, int sum )
 {
