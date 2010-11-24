@@ -76,7 +76,7 @@ void Mobypicture::upload ( const KUrl& localUrl, const QByteArray& medium, const
         formdata["message"] = QString().toUtf8();
 
         QMap<QString, QByteArray> mediafile;
-        mediafile["name"] = "i";
+        mediafile["name"] = "media";
         mediafile["filename"] = localUrl.fileName().toUtf8();
         mediafile["mediumType"] = mediumType;
         mediafile["medium"] = medium;
