@@ -116,6 +116,7 @@ void UploadMediaDialog::slotButtonClicked(int button)
         d->localUrl = d->ui.imageUrl->url();
         QString plugin = d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString();
         showed = true;
+        winSize = size();
         Choqok::MediaManager::self()->uploadMedium(d->localUrl, plugin);
     } else {
         KDialog::slotButtonClicked(button);
@@ -247,6 +248,7 @@ void Choqok::UI::UploadMediaDialog::slotMediumUploadFailed(const KUrl& localUrl,
         show();
         d->progress->deleteLater();
     }
+    resize(winSize);
 }
 
 void Choqok::UI::UploadMediaDialog::slotMediumChanged(const QString& url)
