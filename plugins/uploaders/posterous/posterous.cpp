@@ -91,7 +91,7 @@ void Posterous::upload ( const KUrl& localUrl, const QByteArray& medium, const Q
                              QOAuth::HMAC_SHA1,
                              params, QOAuth::ParseForHeaderArguments );
 
-    QString cHeader = "X1-Verify-Credentials-Authorization: " +  QString ( credentials ) + "\r\n";
+    QString cHeader = "X-Verify-Credentials-Authorization: " +  QString ( credentials ) + "\r\n";
     cHeader.append ( "X-Auth-Service-Provider: https://api.twitter.com/1/account/verify_credentials.json" );
     job->addMetaData ( "customHTTPHeader", cHeader );
     if ( !job ) {
