@@ -80,7 +80,8 @@ void MessageIndicatorManager::slotupdateUnreadCount ( int change, int sum )
 {
     Q_UNUSED ( change );
     QString alias = qobject_cast<Choqok::UI::MicroBlogWidget*> ( sender() )->currentAccount()->alias();
-    newPostInc ( sum, alias, QString() );
+    if ( Choqok::BehaviorSettings::libindicate() )
+        newPostInc ( sum, alias, QString() );
 }
 
 

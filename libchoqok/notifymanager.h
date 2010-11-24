@@ -28,6 +28,7 @@
 #include <KDE/KNotification>
 #include <klocalizedstring.h>
 #include "choqok_export.h"
+#include <QObject>
 
 namespace Choqok
 {
@@ -42,6 +43,9 @@ public:
 
     static void newPostArrived( const QString& message, const QString& title = i18n("New posts") );
     static void shortening( const QString& message, const QString& title = i18n("Shortening a URL") );
+
+private Q_SLOTS:
+    void slotConfigChanged();
 
 private:
     NotifyManager();
