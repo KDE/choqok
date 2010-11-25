@@ -41,6 +41,7 @@ Name[tr]=Davranış
 Name[uk]=Поведінка
 Name[x-test]=xxBehaviorxx
 Name[zh_CN]=行为
+Name[zh_TW]=行為
 Comment=Personalize Choqok's Behavior
 Comment[bg]=Настройки на поведението на Choqok
 Comment[ca]=Personalitzeu el comportament del Choqok
@@ -67,4 +68,5 @@ Comment[tr]=Choqok Davranışlarını Kişiselleştir
 Comment[uk]=Налаштувати поведінку Choqok
 Comment[x-test]=xxPersonalize Choqok's Behaviorxx
 Comment[zh_CN]=个性化 Choqok 的行为
+Comment[zh_TW]=個人化 Choqok 的行為
 

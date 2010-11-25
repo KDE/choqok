@@ -40,6 +40,7 @@ Name[tr]=Görünüm
 Name[uk]=Вигляд
 Name[x-test]=xxAppearancexx
 Name[zh_CN]=外观
+Name[zh_TW]=外觀
 Comment=Personalize Choqok Look and Feel
 Comment[bg]=Настройки на изгледа на Choqok
 Comment[ca]=Personalitzeu l'estil del Choqok
@@ -66,5 +67,6 @@ Comment[tr]=Choqok Görünümünü Kişiselleştir
 Comment[uk]=Налаштувати вигляд і поведінку Choqok
 Comment[x-test]=xxPersonalize Choqok Look and Feelxx
 Comment[zh_CN]=个性化 Choqok 的感观
+Comment[zh_TW]=個人化 Choqok 的外觀
 
 
