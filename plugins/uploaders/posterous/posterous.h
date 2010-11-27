@@ -39,7 +39,7 @@ public:
     ~Posterous();
 
     virtual void upload ( const KUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType );
-
+    QString getAuthToken(const KUrl& localUrl);
 protected slots:
     void slotUpload ( KJob *job );
 

@@ -44,7 +44,12 @@ PosterousConfig::PosterousConfig ( QWidget* parent, const QVariantList& ) :
     ui.setupUi ( wd );
     addConfig ( PosterousSettings::self(), wd );
     layout->addWidget ( wd );
-    connect ( ui.accountsList, SIGNAL ( currentIndexChanged ( int ) ), SLOT ( emitChanged() ) );
+    ui.cfg_password->setEchoMode( QLineEdit::Password );
+    connect ( ui.cfg_basic, SIGNAL ( clicked(bool) ), SLOT ( emitChanged() ) );
+    connect ( ui.cfg_login, SIGNAL ( textChanged(QString)), SLOT ( emitChanged() ) );
+    connect ( ui.cfg_password, SIGNAL ( textChanged(QString)), SLOT ( emitChanged() ) );
+    connect ( ui.cfg_oauth, SIGNAL ( clicked(bool)), SLOT ( emitChanged() ) );
+    connect ( ui.cfg_accountsList, SIGNAL ( currentIndexChanged ( int ) ), SLOT ( emitChanged() ) );
 }
 
 PosterousConfig::~PosterousConfig()
@@ -59,28 +64,43 @@ void PosterousConfig::load()
     QList<Choqok::Account*> list = Choqok::AccountManager::self()->accounts();
     foreach ( Choqok::Account *acc, list ) {
         if ( acc->inherits ( "TwitterAccount" ) ) {
-            ui.accountsList->addItem ( acc->alias() );
+            ui.cfg_accountsList->addItem ( acc->alias() );
         }
     }
     PosterousSettings::self()->readConfig();
-    ui.accountsList->setCurrentItem ( PosterousSettings::alias() );
+    ui.cfg_basic->setChecked(PosterousSettings::basic());
+    ui.cfg_login->setText(PosterousSettings::login());
+    ui.cfg_password->setText( Choqok::PasswordManager::self()->readPassword ( QString ( "posterous_%1" )
+                          .arg ( ui.cfg_login->text() ) ));
+    ui.cfg_oauth->setChecked(PosterousSettings::oauth());
+    ui.cfg_accountsList->setCurrentItem ( PosterousSettings::alias() );
+    emitChanged();
 }
 
 void PosterousConfig::save()
 {
-    if ( ui.accountsList->currentIndex() > -1 ) {
-        PosterousSettings::setAlias ( ui.accountsList->currentText() );
+    if ( ui.cfg_accountsList->currentIndex() > -1 ) {
+        PosterousSettings::setAlias ( ui.cfg_accountsList->currentText() );
         kDebug() << PosterousSettings::alias();
     } else {
         PosterousSettings::setAlias ( QString() );
         KMessageBox::error ( this, i18n ( "You have to configure at least one twitter account to use this plugin." ) );
     }
+    
+    PosterousSettings::setBasic(ui.cfg_basic->isChecked());
+    PosterousSettings::setLogin(ui.cfg_login->text());
+    Choqok::PasswordManager::self()->writePassword(QString("posterous_%1").arg(ui.cfg_login->text()),
+                                                   ui.cfg_password->text());
+    PosterousSettings::setOauth(ui.cfg_oauth->isChecked());
     PosterousSettings::self()->writeConfig();
     KCModule::save();
 }
 
 void PosterousConfig::emitChanged()
 {
+    ui.cfg_login->setEnabled(ui.cfg_basic->isChecked());
+    ui.cfg_password->setEnabled(ui.cfg_basic->isChecked());
+    ui.cfg_accountsList->setEnabled(ui.cfg_oauth->isChecked());
     emit changed ( true );
 }
 
