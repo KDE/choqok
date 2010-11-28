@@ -40,25 +40,18 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QCheckBox>
 #include <KInputDialog>
 
-#ifdef OAUTH
 const char * twitterConsumerKey = "VyXMf0O7CvciiUQjliYtYg";
 const char * twitterConsumerSecret = "uD2HvsOBjzt1Vs6SnouFtuxDeHmvOOVwmn3fBVyCw0";
-#endif
 
 TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
                                                     TwitterAccount* account, QWidget* parent)
     : ChoqokEditAccountWidget(account, parent), mAccount(account)
 {
     setupUi(this);
-#ifdef OAUTH
     kcfg_basicAuth->hide();
-#else
-    kcfg_credentialsBox->hide();
-#endif
     connect(kcfg_authorize, SIGNAL(clicked(bool)), SLOT(authorizeUser()));
     if(mAccount) {
         kcfg_alias->setText( mAccount->alias() );
-        #ifdef OAUTH
         if(mAccount->oauthToken().isEmpty() || mAccount->oauthTokenSecret().isEmpty()) {
             setAuthenticated(false);
         } else {
@@ -67,10 +60,6 @@ TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
             tokenSecret = mAccount->oauthTokenSecret();
             username = mAccount->username();
         }
-        #else
-        kcfg_username->setText( mAccount->username() );
-        kcfg_password->setText( mAccount->password() );
-        #endif
     } else {
         setAuthenticated(false);
         QString newAccountAlias = microblog->serviceName();
@@ -92,8 +81,6 @@ TwitterEditAccountWidget::~TwitterEditAccountWidget()
 
 }
 
-#ifdef OAUTH
-//NOTE OAuth:
 bool TwitterEditAccountWidget::validateData()
 {
     if(kcfg_alias->text().isEmpty() || !isAuthenticated )
@@ -196,26 +183,6 @@ void TwitterEditAccountWidget::setAuthenticated(bool authenticated)
         kcfg_authenticateStatus->setText(i18n("Not Authenticated"));
     }
 }
-
-#else
-
-bool TwitterEditAccountWidget::validateData()
-{
-    return !kcfg_username->text().isEmpty() && !kcfg_password->text().isEmpty();
-}
-
-Choqok::Account* TwitterEditAccountWidget::apply()
-{
-    mAccount->setUsingOAuth(false);
-    mAccount->setAlias(kcfg_alias->text());
-    mAccount->setUsername( kcfg_username->text() );
-    mAccount->setPassword( kcfg_password->text() );
-    saveTimelinesTableState();
-    mAccount->writeConfig();
-    return mAccount;
-}
-
-#endif
 
 void TwitterEditAccountWidget::loadTimelinesTableState()
 {
