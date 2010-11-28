@@ -83,7 +83,7 @@ void TwitterApiTextEdit::insertCompletion(const QString& completion)
     QTextCursor tc = textCursor();
     tc.movePosition(QTextCursor::EndOfWord);
     tc.select(QTextCursor::WordUnderCursor);
-    tc.insertText(tc.selectedText().at(0) + completion + ' ');    
+    tc.insertText(/*tc.selectedText().at(0) +*/ completion + ' ');
     setTextCursor(tc);
 }
 
@@ -124,7 +124,6 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
         e->ignore();
         return;
     }
-
 //     bool isShortcut = ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_Space); // CTRL+E
 //     if (!d->c )// || !isShortcut) // don't process the shortcut when we have a completer
     Choqok::UI::TextEdit::keyPressEvent(e);
@@ -138,20 +137,17 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
 //     bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
     QString completionPrefix = textUnderCursor();
 
-    if ( !e->text().isEmpty() && ( completionPrefix.length() < 2
-        || eow.contains(e->text().right(1)) || !completionPrefix.startsWith('@') ) ) {
+    if ( !e->text().isEmpty() && (eow.contains(e->text().right(1)) || textUnderCursor().length() < 1 ) ) {
         d->c->popup()->hide();
         return;
-    } else  if ((e->key() != Qt::Key_Enter) && (e->key() != Qt::Key_Return)) {
-
-        if (completionPrefix.startsWith('@'))
-            completionPrefix.remove(0, 1);
-        
+    } else if ((e->key() != Qt::Key_Enter) && (e->key() != Qt::Key_Return)) {
+//         if (completionPrefix.startsWith('@'))
+//             completionPrefix.remove(0, 1);
         if ( textCursor().selectedText().length() && 
              textCursor().selectedText() != completionPrefix ) {
-          return;
+            return;
         }
-        
+
         if (completionPrefix != d->c->completionPrefix()) {
             d->c->setCompletionPrefix(completionPrefix);
             d->c->popup()->setCurrentIndex(d->c->completionModel()->index(0, 0));
