@@ -26,6 +26,9 @@
 #include <QApplication>
 #include "choqokuiglobal.h"
 #include <kglobal.h>
+#include <indicatormanager.h>
+
+#include <QDebug>
 
 namespace Choqok
 {
@@ -42,7 +45,6 @@ K_GLOBAL_STATIC(NotifyManagerPrivate, _nmp)
 
 NotifyManager::NotifyManager()
 {
-
 }
 
 NotifyManager::~NotifyManager()
