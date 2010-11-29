@@ -64,9 +64,10 @@ protected slots:
     virtual void authorizeUser();
     void slotAuthMethodChanged(int);
     void slotCheckHostUrl();
-    void getAccessToken();
+//     void getAccessToken();
 
 protected:
+    virtual void getPinCode();
     void loadTimelinesTableState();
     void saveTimelinesTableState();
     void setAuthenticated(bool authenticated);

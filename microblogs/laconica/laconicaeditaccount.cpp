@@ -37,6 +37,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <choqoktools.h>
 #include "laconicamicroblog.h"
 #include "laconicaaccount.h"
+#include <KInputDialog>
 
 LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblog,
                                                     LaconicaAccount* account, QWidget* parent)
@@ -155,8 +156,10 @@ void LaconicaEditAccountWidget::authorizeUser()
     // send a request for an unauthorized token
     QString oauthReqTokenUrl = QString("%1/%2/oauth/request_token").arg(kcfg_host->text()).arg(kcfg_api->text());
 //     kDebug()<<oauthReqTokenUrl;
+    QOAuth::ParamMap params;
+    params.insert("oauth_callback", "oob");
     QOAuth::ParamMap reply =
-        qoauth->requestToken( oauthReqTokenUrl, QOAuth::GET, QOAuth::HMAC_SHA1 );
+        qoauth->requestToken( oauthReqTokenUrl, QOAuth::POST, QOAuth::HMAC_SHA1, params );
     setAuthenticated(false);
     kcfg_authorize->setIcon(KIcon("object-locked"));
 
@@ -169,16 +172,46 @@ void LaconicaEditAccountWidget::authorizeUser()
         url.addQueryItem( QOAuth::tokenParameterName(), token );
         url.addQueryItem( "oauth_token", token );
         Choqok::openUrl(url);
-        KPushButton *btn = new KPushButton(KIcon("dialog-ok"), i18n("Click here after you have logged in and authorized Choqok"), this);
-        connect(btn, SIGNAL(clicked(bool)), SLOT(getAccessToken()));
-        btn->setWindowFlags(Qt::Dialog);
-        kcfg_OAuthBox->layout()->addWidget(btn);
         kcfg_authorize->setEnabled(false);
-//         btn->show();
+        getPinCode();
     } else {
         kDebug()<<"ERROR: " <<qoauth->error()<<' '<<Choqok::qoauthErrorText(qoauth->error());
         KMessageBox::detailedError(this, i18n("Authentication Error"),
                                    Choqok::qoauthErrorText(qoauth->error()));
+    }
+}
+
+void LaconicaEditAccountWidget::getPinCode()
+{
+    isAuthenticated = false;
+    while(!isAuthenticated){
+        QString verifier = KInputDialog::getText( i18n("Security code"),
+                                                  i18nc("Security code recieved from StatusNet",
+                                                        "Enter security code:"));
+        if(verifier.isEmpty())
+            return;
+        QOAuth::ParamMap otherArgs;
+        otherArgs.insert( "oauth_verifier", verifier.toUtf8() );
+
+        QOAuth::ParamMap reply =
+        qoauth->accessToken( QString("%1/%2/oauth/access_token").arg(kcfg_host->text()).arg(kcfg_api->text()),
+                             QOAuth::GET, token, tokenSecret, QOAuth::HMAC_SHA1, otherArgs );
+        // if no error occurred, read the Access Token (and other arguments, if applicable)
+        if ( qoauth->error() == QOAuth::NoError ) {
+            sender()->deleteLater();
+            kcfg_authorize->setEnabled(true);
+            token = reply.value( QOAuth::tokenParameterName() );
+            tokenSecret = reply.value( QOAuth::tokenSecretParameterName() );
+            kDebug()<<"token: "<<token;
+            setAuthenticated(true);
+            KMessageBox::information(this, i18n("Choqok is authorized successfully."),
+                                     i18n("Authorized"));
+        } else {
+            setAuthenticated(false);
+            kDebug()<<"ERROR: "<<qoauth->error()<<' '<<Choqok::qoauthErrorText(qoauth->error());
+            KMessageBox::detailedError(this, i18n("Authentication Error"),
+            Choqok::qoauthErrorText(qoauth->error()));
+        }
     }
 }
 
@@ -210,28 +243,6 @@ void LaconicaEditAccountWidget::saveTimelinesTableState()
     }
     timelines.removeDuplicates();
     mAccount->setTimelineNames(timelines);
-}
-
-void LaconicaEditAccountWidget::getAccessToken()
-{
-    // send a request to exchange Request Token for an Access Token
-    QOAuth::ParamMap reply =
-        qoauth->accessToken( QString("%1/%2/oauth/access_token").arg(kcfg_host->text()).arg(kcfg_api->text()), QOAuth::GET, token, tokenSecret, QOAuth::HMAC_SHA1 );
-
-    // if no error occurred, read the Access Token (and other arguments, if applicable)
-    if ( qoauth->error() == QOAuth::NoError ) {
-        sender()->deleteLater();
-        kcfg_authorize->setEnabled(true);
-        token = reply.value( QOAuth::tokenParameterName() );
-        tokenSecret = reply.value( QOAuth::tokenSecretParameterName() );
-        kDebug()<<"token: "<<token;
-        setAuthenticated(true);
-    } else {
-        setAuthenticated(false);
-        kDebug()<<"ERROR: "<<qoauth->error()<<' '<<Choqok::qoauthErrorText(qoauth->error());
-        KMessageBox::detailedError(this, i18n("Authentication Error"),
-                                   Choqok::qoauthErrorText(qoauth->error()));
-    }
 }
 
 void LaconicaEditAccountWidget::slotAuthMethodChanged(int index)
