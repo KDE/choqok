@@ -19,7 +19,6 @@ choqokuiglobal.cpp
 choqokid.cpp
 choqoktools.cpp
 dbushandler.cpp
-indicatormanager.cpp
 ui/microblogwidget.cpp
 ui/editaccountwidget.cpp
 ui/timelinewidget.cpp
