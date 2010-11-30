@@ -26,7 +26,11 @@
 #include <QApplication>
 #include "choqokuiglobal.h"
 #include <kglobal.h>
+
+#ifdef HAVE_INDICATEQT
 #include <indicatormanager.h>
+#endif
+
 #include <choqokbehaviorsettings.h>
 
 #include <QDebug>

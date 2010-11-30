@@ -57,9 +57,9 @@
 #include <knotifyconfigwidget.h>
 
 #ifdef HAVE_INDICATEQT
- #include <indicatormanager.h>
- #include <qindicateserver.h>
- #include <qindicateindicator.h>
+#include "indicatormanager.h"
+#include <qindicateserver.h>
+#include <qindicateindicator.h>
 #endif
 
 MainWindow::MainWindow()
