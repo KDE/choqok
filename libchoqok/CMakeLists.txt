@@ -33,11 +33,10 @@ ui/textbrowser.cpp
 )
 
 if(INDICATEQT_FOUND)
-#      set(HAVE_INDICATEQT true)
        include_directories(${INDICATEQT_INCLUDE_DIRS})
        add_definitions(-DHAVE_INDICATEQT)
        link_directories(${INDICATEQT_LIBRARY_DIRS})
-#      set(choqok_LIB_SRCS ${INDICATEQT_LIBRARIES})
+       set(choqok_LIB_SRCS ${choqok_LIB_SRCS} indicatormanager.cpp)
 endif(INDICATEQT_FOUND)
 
 qt4_add_dbus_adaptor( choqok_LIB_SRCS org.kde.choqok.xml dbushandler.h Choqok::DbusHandler ChoqokAdaptor ) 
