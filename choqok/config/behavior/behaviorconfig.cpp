@@ -75,12 +75,16 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
     d->mPrfsGeneral.kcfg_updateInterval->setSuffix(ki18np(" Minute", " Minutes"));
 
     // "Notifications" TAB ============================================================
-    //Commented for now!
-//     QWidget *mPrfsNotifyDlg = new QWidget(d->mBehaviorTabCtl);
-//     d->mPrfsNotify.setupUi(mPrfsNotifyDlg);
-//     addConfig( Choqok::BehaviorSettings::self(), mPrfsNotifyDlg);
-//     d->mBehaviorTabCtl->addTab(mPrfsNotifyDlg, i18n("&Notifications"));
-//     d->mPrfsNotify.kcfg_notifyInterval->setSuffix(ki18np(" Second", " Seconds"));
+    QWidget *mPrfsNotifyDlg = new QWidget(d->mBehaviorTabCtl);
+    d->mPrfsNotify.setupUi(mPrfsNotifyDlg);
+    addConfig( Choqok::BehaviorSettings::self(), mPrfsNotifyDlg);
+    d->mBehaviorTabCtl->addTab(mPrfsNotifyDlg, i18n("&Notifications"));
+    d->mPrfsNotify.kcfg_notifyInterval->setSuffix(ki18np(" Second", " Seconds"));
+    /* Remove below code, when all functions on tab will work*/
+    d->mPrfsNotify.kcfg_notifyInterval->setVisible(false);
+    d->mPrfsNotify.kcfg_showAllNotifiesInOne->setVisible(false);
+    d->mPrfsNotify.label_4->setVisible(false);
+    /*     */
 
     // "Shortening" TAB ===============================================================
     d->mPrfsShorten = new BehaviorConfig_Shorten(d->mBehaviorTabCtl);

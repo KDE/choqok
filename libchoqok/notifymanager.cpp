@@ -26,6 +26,10 @@
 #include <QApplication>
 #include "choqokuiglobal.h"
 #include <kglobal.h>
+#include <indicatormanager.h>
+#include <choqokbehaviorsettings.h>
+
+#include <QDebug>
 
 namespace Choqok
 {
@@ -42,7 +46,6 @@ K_GLOBAL_STATIC(NotifyManagerPrivate, _nmp)
 
 NotifyManager::NotifyManager()
 {
-
 }
 
 NotifyManager::~NotifyManager()
@@ -66,14 +69,16 @@ void NotifyManager::error( const QString& message, const QString& title )
 void NotifyManager::newPostArrived( const QString& message, const QString& title )
 {
     QString fullMsg = QString( "<qt><b>%1:</b><br/>%2</qt>" ).arg(title).arg(message);
-    if(Choqok::UI::Global::mainWindow()->isActiveWindow()){
+    if(Choqok::UI::Global::mainWindow()->isActiveWindow() || Choqok::BehaviorSettings::knotify()){
         choqokMainWindow->showStatusMessage(message);
     } else {
-        KNotification *n = new KNotification("new-post-arrived", choqokMainWindow);
-        n->setActions(QStringList(i18nc( "Show Choqok MainWindow", "Show Choqok")));
-        n->setText(fullMsg);
-        QObject::connect(n, SIGNAL(activated(uint)), choqokMainWindow, SLOT(activateChoqok()));
-        n->sendEvent();
+        if ( Choqok::BehaviorSettings::knotify() ){
+             KNotification *n = new KNotification("new-post-arrived", choqokMainWindow);
+             n->setActions(QStringList(i18nc( "Show Choqok MainWindow", "Show Choqok")));
+             n->setText(fullMsg);
+             QObject::connect(n, SIGNAL(activated(uint)), choqokMainWindow, SLOT(activateChoqok()));
+             n->sendEvent();
+        }
     }
 }
 

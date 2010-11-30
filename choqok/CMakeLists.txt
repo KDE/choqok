@@ -13,6 +13,12 @@ set(choqok_SRCS
    systrayicon.cpp
 )
 
+if(INDICATEQT_FOUND)
+       include_directories(${INDICATEQT_INCLUDE_DIRS})
+       add_definitions(-DHAVE_INDICATEQT)
+       link_directories(${INDICATEQT_LIBRARY_DIRS})
+endif(INDICATEQT_FOUND)
+
 # kde4_add_ui_files(choqok_SRCS accounts/accountswidget_base.ui)
 
 # kde4_add_kcfg_files(choqok_SRCS settings.kcfgc )
@@ -25,6 +31,9 @@ set_target_properties(choqok_bin PROPERTIES OUTPUT_NAME choqok)
 
 target_link_libraries(choqok_bin ${KDE4_KDEUI_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KNOTIFYCONFIG_LIBS}
                                  ${KDE4_KIO_LIBS} choqok)
+if(INDICATEQT_FOUND)
+       target_link_libraries(choqok_bin ${INDICATEQT_LIBRARIES})
+endif(INDICATEQT_FOUND)
 
 install(TARGETS choqok_bin ${INSTALL_TARGETS_DEFAULT_ARGS})
 

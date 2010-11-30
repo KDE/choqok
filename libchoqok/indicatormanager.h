@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2008-2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    Copyright (C) 2010 Andrey Esin <gmlastik@gmail.com>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -22,33 +22,42 @@
 
 */
 
-#ifndef NOTIFYMANAGER_H
-#define NOTIFYMANAGER_H
+#ifndef INDICATORMANAGER_H
+#define INDICATORMANAGER_H
 
 #include <KDE/KNotification>
 #include <klocalizedstring.h>
 #include "choqok_export.h"
-#include <QObject>
+#include <account.h>
+#include <qindicateserver.h>
+#include <qindicateindicator.h>
 
 namespace Choqok
 {
 
-class CHOQOK_EXPORT NotifyManager
+class CHOQOK_EXPORT MessageIndicatorManager : public QObject
 {
+    Q_OBJECT
 public:
-    ~NotifyManager();
-
-    static void error( const QString &message , const QString &title = i18n("Error") );
-    static void success( const QString &message, const QString &title = i18n("Success") );
-
-    static void newPostArrived( const QString& message, const QString& title = i18n("New posts") );
-    static void shortening( const QString& message, const QString& title = i18n("Shortening a URL") );
-
-private Q_SLOTS:
-    void slotConfigChanged();
+    static MessageIndicatorManager* self();
+    ~MessageIndicatorManager();
+    void newPostInc ( int unread, const QString& alias, const QString& timeline );
+    QIndicate::Server *iServer;
+    QIndicate::Indicator *iIndicator;
 
 private:
-    NotifyManager();
+    MessageIndicatorManager();
+    static MessageIndicatorManager *mSelf;
+    QMap<QString, int> showList;
+    QMap<QString, QIndicate::Indicator *> iList;
+    QImage getIconByAlias( const QString& alias );
+
+public slots:
+    void slotDisplay ( QIndicate::Indicator* );
+    void slotShowMainWindow();
+    void slotCanWorkWithAccs();
+    void slotupdateUnreadCount(int change, int sum);
+    void slotConfigChanged();
 };
 }
-#endif // NOTIFYMANAGER_H
+#endif // INDICATORMANAGER_H
