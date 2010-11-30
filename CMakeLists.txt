@@ -15,8 +15,11 @@ find_package(QtOAuth REQUIRED)
 find_package(PkgConfig)
 pkg_check_modules(INDICATEQT indicate-qt>=0.2.1)
 if(INDICATEQT_FOUND)
+       message(STATUS "FOUND libindicate-qt: Will be support of showing notifications with libindicate")
        set(HAVE_INDICATEQT true)
        add_definitions(-DHAVE_INDICATEQT)
+else(INDICATEQT_FOUND)
+       message(STATUS "libindicate-qt NOT FOUND: Won't be support of showing notifications with libindicate")
 endif(INDICATEQT_FOUND)
 
 set(CHOQOK_INCLUDES
