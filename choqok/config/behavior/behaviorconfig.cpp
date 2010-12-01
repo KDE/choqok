@@ -74,6 +74,7 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
     d->mBehaviorTabCtl->addTab(mPrfsGeneralDlg, i18n("&General"));
     d->mPrfsGeneral.kcfg_updateInterval->setSuffix(ki18np(" Minute", " Minutes"));
 
+#ifdef HAVE_INDICATEQT
     // "Notifications" TAB ============================================================
     QWidget *mPrfsNotifyDlg = new QWidget(d->mBehaviorTabCtl);
     d->mPrfsNotify.setupUi(mPrfsNotifyDlg);
@@ -85,6 +86,7 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
     d->mPrfsNotify.kcfg_showAllNotifiesInOne->setVisible(false);
     d->mPrfsNotify.label_4->setVisible(false);
     /*     */
+#endif
 
     // "Shortening" TAB ===============================================================
     d->mPrfsShorten = new BehaviorConfig_Shorten(d->mBehaviorTabCtl);

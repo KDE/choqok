@@ -28,6 +28,10 @@
 #include <KTabWidget>
 #include "microblogwidget.h"
 
+#ifdef HAVE_INDICATEQT
+#include "indicatormanager.h"
+#endif
+
 using namespace Choqok::UI;
 
 static const int TIMEOUT = 5000;
@@ -35,7 +39,9 @@ static const int TIMEOUT = 5000;
 Choqok::UI::MainWindow::MainWindow()
     :KXmlGuiWindow()
 {
-
+#ifdef HAVE_INDICATEQT
+    Choqok::MessageIndicatorManager::self();
+#endif
 }
 
 Choqok::UI::MainWindow::~MainWindow()

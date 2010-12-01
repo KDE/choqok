@@ -15,10 +15,10 @@ find_package(QtOAuth REQUIRED)
 find_package(QtIndicate QUIET)
 
 if(QTINDICATE_FOUND)
-       message(STATUS "Found libindicate-qt: Will be support of showing notifications with libindicate")
-       set(HAVE_INDICATEQT true)
+    message(STATUS "Found libindicate-qt: Will support notifications via indicator")
+    set(HAVE_INDICATEQT true)
 else(QTINDICATE_FOUND)
-       message(STATUS "libindicate-qt NOT FOUND: Won't support showing notifications with libindicate")
+    message(STATUS "Optional dependency not found: libindicate-qt\nWon't support notifications via indicator")
 endif(QTINDICATE_FOUND)
 
 set(CHOQOK_INCLUDES

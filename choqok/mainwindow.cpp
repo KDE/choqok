@@ -56,12 +56,6 @@
 #include <uploadmediadialog.h>
 #include <knotifyconfigwidget.h>
 
-#ifdef HAVE_INDICATEQT
-#include "indicatormanager.h"
-#include <qindicateserver.h>
-#include <qindicateindicator.h>
-#endif
-
 MainWindow::MainWindow()
     : Choqok::UI::MainWindow(), quickWidget(0), s_settingsDialog(0), m_splash(0), microblogCounter(0)
 {
@@ -114,17 +108,14 @@ MainWindow::MainWindow()
     QTimer::singleShot(0, Choqok::PluginManager::self(), SLOT( loadAllPlugins() ) );
 //     Choqok::AccountManager::self()->loadAllAccounts();
     QTimer::singleShot(0, Choqok::AccountManager::self(), SLOT( loadAllAccounts() ) );
-    
+
     connect(this, SIGNAL(updateTimelines()), SLOT(slotUpdateTimelines()));
 
     QPoint pos = Choqok::BehaviorSettings::position();
     if(pos.x() != -1 && pos.y() != -1) {
         move(pos);
     }
-    
-#ifdef HAVE_INDICATEQT
-    Choqok::MessageIndicatorManager::self();
-#endif
+
 }
 
 MainWindow::~MainWindow()
