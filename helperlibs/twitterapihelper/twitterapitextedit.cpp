@@ -87,12 +87,12 @@ void TwitterApiTextEdit::insertCompletion(const QString& completion)
     setTextCursor(tc);
 }
 
-QString TwitterApiTextEdit::textUnderCursor() const
-{
-    QTextCursor tc = textCursor();
-    tc.select(QTextCursor::WordUnderCursor);
-    return tc.selectedText();
-}
+// QString TwitterApiTextEdit::textUnderCursor() const
+// {
+//     QTextCursor tc = textCursor();
+//     tc.select(QTextCursor::WordUnderCursor);
+//     return tc.selectedText();
+// }
 
 void TwitterApiTextEdit::focusInEvent(QFocusEvent *e)
 {
@@ -135,14 +135,23 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
 
     static QString eow("~!@#$%^&*()+{}|:\"<>?,./;'[]\\-= "); // end of word
 //     bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
-    QString completionPrefix = textUnderCursor();
+    //Implemented internally to get the char before selection :D
+    QTextCursor tc = textCursor();
+    tc.select(QTextCursor::WordUnderCursor);
+    QString completionPrefix = tc.selectedText();
+    QChar charBeforeSelection;
+    if(completionPrefix.startsWith('@')){
+        charBeforeSelection = completionPrefix.at(0);
+        completionPrefix.remove(0,1);
+    } else {
+        charBeforeSelection = toPlainText()[tc.selectionStart()-1];
+    }
 
-    if ( !e->text().isEmpty() && (eow.contains(e->text().right(1)) || textUnderCursor().length() < 1 ) ) {
+    if ( !e->text().isEmpty() && (eow.contains(e->text().right(1)) || completionPrefix.length() < 1 ||
+                                  charBeforeSelection != '@') ) {
         d->c->popup()->hide();
         return;
     } else if ((e->key() != Qt::Key_Enter) && (e->key() != Qt::Key_Return)) {
-//         if (completionPrefix.startsWith('@'))
-//             completionPrefix.remove(0, 1);
         if ( textCursor().selectedText().length() && 
              textCursor().selectedText() != completionPrefix ) {
             return;

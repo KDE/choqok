@@ -49,7 +49,7 @@ private Q_SLOTS:
     void insertCompletion(const QString &completion);
 
 private:
-    QString textUnderCursor() const;
+//     QString textUnderCursor() const;
 
     class Private;
     Private * const d;
