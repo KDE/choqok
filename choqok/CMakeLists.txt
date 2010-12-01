@@ -14,8 +14,8 @@ set(choqok_SRCS
 )
 
 if(QTINDICATE_FOUND)
-    include_directories(${QTINDICATE_INCLUDE_DIR})
-       add_definitions(-DHAVE_INDICATEQT)
+    include_directories(${QTINDICATE_INCLUDE_DIRS})
+    add_definitions(-DHAVE_INDICATEQT)
 endif(QTINDICATE_FOUND)
 
 # kde4_add_ui_files(choqok_SRCS accounts/accountswidget_base.ui)

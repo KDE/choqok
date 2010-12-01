@@ -12,7 +12,7 @@ find_package(QJson REQUIRED)
 find_package(QCA2 REQUIRED)
 find_package(QtOAuth REQUIRED)
 
-find_package(QtIndicate)
+find_package(QtIndicate QUIET)
 
 if(QTINDICATE_FOUND)
        message(STATUS "Found libindicate-qt: Will be support of showing notifications with libindicate")

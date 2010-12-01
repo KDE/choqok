@@ -33,7 +33,7 @@ ui/textbrowser.cpp
 
 if(QTINDICATE_FOUND)
     set(choqok_LIB_SRCS ${choqok_LIB_SRCS} indicatormanager.cpp)
-    include_directories(${QTINDICATE_INCLUDE_DIR})
+    include_directories(${QTINDICATE_INCLUDE_DIRS})
     add_definitions(-DHAVE_INDICATEQT)
     link_directories(${QTINDICATE_LIBRARY})
 endif(QTINDICATE_FOUND)
