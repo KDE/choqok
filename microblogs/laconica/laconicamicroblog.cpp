@@ -239,9 +239,8 @@ void LaconicaMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount, 
     KUrl url = account->apiUrl();
     url.addPath( QString("/statuses/friends.%1").arg(format));
     QOAuth::ParamMap params;
-    if(account->usingOAuth()){
+    if( page > 1 ) {
         params.insert( "page", QByteArray::number( page ) );
-    } else {
         url.addQueryItem( "page", QString::number( page ) );
     }
 
@@ -250,7 +249,8 @@ void LaconicaMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount, 
         kDebug() << "Cannot create an http GET request!";
         return;
     }
-    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::GET, params));
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url,
+                                                                                 QOAuth::GET, params));
     mJobsAccount[job] = theAccount;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFriendsScreenName(KJob*) ) );
     job->start();
