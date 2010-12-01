@@ -26,14 +26,7 @@
 #include <QApplication>
 #include "choqokuiglobal.h"
 #include <kglobal.h>
-
-#ifdef HAVE_INDICATEQT
-#include <indicatormanager.h>
-#endif
-
 #include <choqokbehaviorsettings.h>
-
-#include <QDebug>
 
 namespace Choqok
 {
@@ -73,7 +66,7 @@ void NotifyManager::error( const QString& message, const QString& title )
 void NotifyManager::newPostArrived( const QString& message, const QString& title )
 {
     QString fullMsg = QString( "<qt><b>%1:</b><br/>%2</qt>" ).arg(title).arg(message);
-    if(Choqok::UI::Global::mainWindow()->isActiveWindow() || Choqok::BehaviorSettings::knotify()){
+    if(Choqok::UI::Global::mainWindow()->isActiveWindow()){
         choqokMainWindow->showStatusMessage(message);
     } else {
         if ( Choqok::BehaviorSettings::knotify() ){
