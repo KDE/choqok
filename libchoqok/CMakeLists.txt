@@ -35,7 +35,6 @@ if(QTINDICATE_FOUND)
     set(choqok_LIB_SRCS ${choqok_LIB_SRCS} indicatormanager.cpp)
     include_directories(${QTINDICATE_INCLUDE_DIRS})
     add_definitions(-DHAVE_INDICATEQT)
-    link_directories(${QTINDICATE_LIBRARY})
 endif(QTINDICATE_FOUND)
 
 qt4_add_dbus_adaptor( choqok_LIB_SRCS org.kde.choqok.xml dbushandler.h Choqok::DbusHandler ChoqokAdaptor ) 
@@ -53,7 +52,7 @@ target_link_libraries(choqok ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_L
 
 if(QTINDICATE_FOUND)
        add_definitions(-DXDG_APPS_INSTALL_DIR=${XDG_APPS_INSTALL_DIR})
-       target_link_libraries(choqok ${INDICATEQT_LIBRARIES})
+       target_link_libraries(choqok ${QTINDICATE_LIBRARY})
 endif(QTINDICATE_FOUND)
 
 set_target_properties(choqok PROPERTIES
