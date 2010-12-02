@@ -31,6 +31,7 @@
 #include "microblog.h"
 #include <microblogwidget.h>
 #include <choqokbehaviorsettings.h>
+#include <QTimer>
 
 #include <QDebug>
 
@@ -52,9 +53,10 @@ MessageIndicatorManager::MessageIndicatorManager()
     connect ( iServer, SIGNAL ( serverDisplay() ), SLOT ( slotShowMainWindow() ) );
     if ( Choqok::BehaviorSettings::libindicate() )
         iServer->show();
-    connect ( Choqok::AccountManager::self(), SIGNAL ( allAccountsLoaded() ), SLOT ( slotCanWorkWithAccs() ) );
+    //connect ( Choqok::AccountManager::self(), SIGNAL ( allAccountsLoaded() ), SLOT ( slotCanWorkWithAccs() ) );
+    QTimer::singleShot ( 500, this, SLOT ( slotCanWorkWithAccs() ) );
 
-    connect ( Choqok::BehaviorSettings::self(), SIGNAL(configChanged()), SLOT(slotConfigChanged()) );
+    connect ( Choqok::BehaviorSettings::self(), SIGNAL ( configChanged() ), SLOT ( slotConfigChanged() ) );
 }
 
 MessageIndicatorManager::~MessageIndicatorManager()
@@ -64,8 +66,13 @@ MessageIndicatorManager::~MessageIndicatorManager()
 void MessageIndicatorManager::slotCanWorkWithAccs()
 {
     QList<Choqok::UI::MicroBlogWidget*> lst = choqokMainWindow->microBlogsWidgetsList();
-    for ( int i = 0;i < choqokMainWindow->microBlogsWidgetsList().count();i++ ) {
-        connect ( lst.at ( i ), SIGNAL ( updateUnreadCount ( int, int ) ), SLOT ( slotupdateUnreadCount ( int, int ) ) );
+    QList< Choqok::Account* > accs = Choqok::AccountManager::self()->accounts();
+    if ( lst.count() == accs.count() ) {
+        for ( int i = 0;i < choqokMainWindow->microBlogsWidgetsList().count();i++ ) {
+            connect ( lst.at ( i ), SIGNAL ( updateUnreadCount ( int, int ) ), SLOT ( slotupdateUnreadCount ( int, int ) ) );
+        }
+    } else {
+        QTimer::singleShot ( 500, this, SLOT ( slotCanWorkWithAccs() ) );
     }
 }
 
