@@ -113,7 +113,7 @@ void TwitterListDialog::slotLoadUserlists(Choqok::Account* theAccount, QString u
             else
                 iText = QString("%1 [%2]").arg(it->fullname).arg(it->description);
             item->setText(iText);
-            item->setData(32, it->name);
+            item->setData(32, it->slug);
             listWidget->addItem(item);
         }
         mainWidget->layout()->addWidget(listWidget);
