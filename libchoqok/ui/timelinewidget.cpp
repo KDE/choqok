@@ -36,6 +36,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "notifymanager.h"
 #include "choqokappearancesettings.h"
 #include "choqokbehaviorsettings.h"
+#include <QTextDocument>
 
 namespace Choqok {
 namespace UI {
@@ -123,7 +124,7 @@ void TimelineWidget::setupUi()
     d->lblDesc = new QLabel(this);
     TimelineInfo *info = currentAccount()->microblog()->timelineInfo(d->timelineName);
     if(info)
-        d->lblDesc->setText(info->description);
+        d->lblDesc->setText(Qt::escape(info->description));
     d->lblDesc->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     d->lblDesc->setWordWrap(true);
     d->lblDesc->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
