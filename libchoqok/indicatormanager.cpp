@@ -122,7 +122,7 @@ void MessageIndicatorManager::slotDisplay ( QIndicate::Indicator* indicator )
 {
     QString alias = indicator->nameProperty();
     Choqok::Account* acc = Choqok::AccountManager::self()->findAccount ( alias );
-    choqokMainWindow->activateTab( acc->priority() );
+    choqokMainWindow->activateTab ( acc->priority() );
     slotShowMainWindow();
 }
 
