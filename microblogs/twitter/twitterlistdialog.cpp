@@ -55,6 +55,9 @@ TwitterListDialog::TwitterListDialog(TwitterApiAccount* theAccount, QWidget* par
     setMainWidget(mainWidget);
     connect(ui.username, SIGNAL(textChanged(QString)), SLOT(slotUsernameChanged(QString)));
     connect(ui.loadUserLists, SIGNAL(clicked(bool)), SLOT(loadUserLists()));
+    QRegExp rx("([a-z0-9_]){1,20}(\\/)", Qt::CaseInsensitive);
+    QValidator *val = new QRegExpValidator(rx, 0);
+    ui.username->setValidator(val);
     ui.username->setFocus();
     setButtonText(Ok, i18n("Add"));
     setButtonGuiItem(Cancel, KStandardGuiItem::close());
