@@ -53,8 +53,8 @@ MessageIndicatorManager::MessageIndicatorManager()
     connect ( iServer, SIGNAL ( serverDisplay() ), SLOT ( slotShowMainWindow() ) );
     if ( Choqok::BehaviorSettings::libindicate() )
         iServer->show();
-    //connect ( Choqok::AccountManager::self(), SIGNAL ( allAccountsLoaded() ), SLOT ( slotCanWorkWithAccs() ) );
-    QTimer::singleShot ( 500, this, SLOT ( slotCanWorkWithAccs() ) );
+    connect ( Choqok::AccountManager::self(), SIGNAL ( allAccountsLoaded() ), SLOT ( slotCanWorkWithAccs() ) );
+    //QTimer::singleShot ( 500, this, SLOT ( slotCanWorkWithAccs() ) );
 
     connect ( Choqok::BehaviorSettings::self(), SIGNAL ( configChanged() ), SLOT ( slotConfigChanged() ) );
 }
