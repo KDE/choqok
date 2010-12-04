@@ -62,8 +62,11 @@ TwitterListDialog::TwitterListDialog(TwitterApiAccount* theAccount, QWidget* par
     setButtonText(Ok, i18n("Add"));
     setButtonGuiItem(Cancel, KStandardGuiItem::close());
     listWidget = new QListWidget(this);
-    listWidget->setVisible(false);
+    listWidget->show();
     mainWidget->layout()->addWidget(listWidget);
+    listname = new KLineEdit(this);
+    listname->show();
+    mainWidget->layout()->addWidget(listname);
 }
 
 TwitterListDialog::~TwitterListDialog()
@@ -74,10 +77,10 @@ TwitterListDialog::~TwitterListDialog()
 void TwitterListDialog::slotButtonClicked(int button)
 {
     if(button == KDialog::Ok){
-        if(ui.listname->text().isEmpty() || ui.username->text().isEmpty()){
+        if(listname->text().isEmpty() || ui.username->text().isEmpty()){
             KMessageBox::error(this, i18n("You should provide both list author username and list name."));
         } else {
-            blog->addListTimeline(account, ui.username->text(), ui.listname->text());
+            blog->addListTimeline(account, ui.username->text(), listname->text());
         }
     } else
         KDialog::slotButtonClicked(button);
@@ -89,9 +92,9 @@ void TwitterListDialog::slotUsernameChanged(const QString& name)
         QString n = name;
         n.chop(1);
         ui.username->setText(n);
-        ui.listname->setFocus();
+        listname->setFocus();
     }
-    listWidget->setVisible(false);
+    listWidget->clear();
 }
 
 void TwitterListDialog::loadUserLists()
@@ -109,8 +112,7 @@ void TwitterListDialog::slotLoadUserlists(Choqok::Account* theAccount, QString u
                                           QList<Twitter::List> list)
 {
     if(theAccount == account && username == ui.username->text() && !list.isEmpty()){
-        //QListWidget *listWidget = new QListWidget(this);
-	listWidget->clear();
+        listWidget->clear();
         QList<Twitter::List>::const_iterator it = list.constBegin();
         QList<Twitter::List>::const_iterator endIt = list.constEnd();
         for(; it != endIt; ++it){
@@ -124,7 +126,6 @@ void TwitterListDialog::slotLoadUserlists(Choqok::Account* theAccount, QString u
             item->setData(32, it->slug);
             listWidget->addItem(item);
         }
-        listWidget->show();
         connect( listWidget, SIGNAL(itemClicked(QListWidgetItem*)),
                  SLOT(slotListItemChanged(QListWidgetItem*)) );
     }
@@ -132,7 +133,7 @@ void TwitterListDialog::slotLoadUserlists(Choqok::Account* theAccount, QString u
 
 void TwitterListDialog::slotListItemChanged(QListWidgetItem* item)
 {
-    ui.listname->setText(item->data(32).toString());
+    listname->setText(item->data(32).toString());
 }
 
 

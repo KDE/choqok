@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>277</width>
-    <height>61</height>
+    <width>446</width>
+    <height>46</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -36,19 +36,6 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0" colspan="2">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>List name:</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2" colspan="2">
-      <widget class="KLineEdit" name="listname"/>
-     </item>
     </layout>
    </item>
   </layout>
@@ -68,7 +55,6 @@
  <tabstops>
   <tabstop>username</tabstop>
   <tabstop>loadUserLists</tabstop>
-  <tabstop>listname</tabstop>
  </tabstops>
  <resources/>
  <connections/>
