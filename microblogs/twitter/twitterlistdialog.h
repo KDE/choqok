@@ -28,6 +28,7 @@
 #include <KDialog>
 #include "ui_twitterlistdialog_base.h"
 #include "twitterlist.h"
+#include <QListWidget>
 
 namespace Choqok {
 class Account;
@@ -60,6 +61,7 @@ private:
     TwitterAccount *account;
     TwitterMicroBlog *blog;
     QWidget *mainWidget;
+    QListWidget *listWidget;
 };
 
 #endif // TWITTERLISTDIALOG_H
