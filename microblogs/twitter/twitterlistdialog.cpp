@@ -55,9 +55,15 @@ TwitterListDialog::TwitterListDialog(TwitterApiAccount* theAccount, QWidget* par
     setMainWidget(mainWidget);
     connect(ui.username, SIGNAL(textChanged(QString)), SLOT(slotUsernameChanged(QString)));
     connect(ui.loadUserLists, SIGNAL(clicked(bool)), SLOT(loadUserLists()));
+    QRegExp rx("([a-z0-9_]){1,20}(\\/)", Qt::CaseInsensitive);
+    QValidator *val = new QRegExpValidator(rx, 0);
+    ui.username->setValidator(val);
     ui.username->setFocus();
     setButtonText(Ok, i18n("Add"));
     setButtonGuiItem(Cancel, KStandardGuiItem::close());
+    listWidget = new QListWidget(this);
+    listWidget->setVisible(false);
+    mainWidget->layout()->addWidget(listWidget);
 }
 
 TwitterListDialog::~TwitterListDialog()
@@ -85,6 +91,7 @@ void TwitterListDialog::slotUsernameChanged(const QString& name)
         ui.username->setText(n);
         ui.listname->setFocus();
     }
+    listWidget->setVisible(false);
 }
 
 void TwitterListDialog::loadUserLists()
@@ -102,7 +109,8 @@ void TwitterListDialog::slotLoadUserlists(Choqok::Account* theAccount, QString u
                                           QList<Twitter::List> list)
 {
     if(theAccount == account && username == ui.username->text() && !list.isEmpty()){
-        QListWidget *listWidget = new QListWidget(this);
+        //QListWidget *listWidget = new QListWidget(this);
+	listWidget->clear();
         QList<Twitter::List>::const_iterator it = list.constBegin();
         QList<Twitter::List>::const_iterator endIt = list.constEnd();
         for(; it != endIt; ++it){
@@ -113,14 +121,12 @@ void TwitterListDialog::slotLoadUserlists(Choqok::Account* theAccount, QString u
             else
                 iText = QString("%1 [%2]").arg(it->fullname).arg(it->description);
             item->setText(iText);
-            item->setData(32, it->name);
+            item->setData(32, it->slug);
             listWidget->addItem(item);
         }
-        mainWidget->layout()->addWidget(listWidget);
+        listWidget->show();
         connect( listWidget, SIGNAL(itemClicked(QListWidgetItem*)),
                  SLOT(slotListItemChanged(QListWidgetItem*)) );
-        connect( ui.username, SIGNAL(textChanged(QString)),
-                 listWidget, SLOT(deleteLater()) );
     }
 }
 

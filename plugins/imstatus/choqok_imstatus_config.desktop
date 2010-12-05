@@ -1,0 +1,24 @@
+[Desktop Entry]
+Icon=kaboodle
+Type=Service
+X-KDE-ServiceTypes=KCModule
+X-KDE-Library=kcm_choqok_imstatus
+X-KDE-FactoryName=kcm_choqok_imstatus
+X-KDE-ParentApp=choqok_imstatus
+X-KDE-ParentComponents=choqok_imstatus
+Name=IMStatus
+Name[da]=IMStatus
+Name[nl]=IMStatus
+Name[pt]=Estado IM
+Name[pt_BR]=Estado IM
+Name[sv]=Meddelandestatus
+Name[uk]=Стан у мережі МП
+Name[x-test]=xxIMStatusxx
+Comment=Sets status of your instant messenger as your status in micro-blog.
+Comment[da]=Sætter status i din instant messenger til status fra din mikroblog.
+Comment[nl]=Uw status van uw instant-messenger instellen als uw status in de micro-blog.
+Comment[pt]=Muda o estado do seu mensageiro instantâneo para o seu estado no micro-blog.
+Comment[pt_BR]=Define o estado do seu mensageiro instantâneo para o seu estado no micro-blog.
+Comment[sv]= Anger status för direktmeddelanden som din status i mikroblogg.
+Comment[uk]=Встановлення у вашому мікроблозі стану, тотожного до стану у програмі для миттєвого обміну повідомленнями.
+Comment[x-test]=xxSets status of your instant messenger as your status in micro-blog.xx
