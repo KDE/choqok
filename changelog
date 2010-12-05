@@ -15,7 +15,7 @@ New Plugins:
     - OCS Plugin to support "Open Collaboration Services API" provided by opendesktop.org and its partners
     - IMStatus plugin to set your post as current status in IM clients (Kopete, Pidgin, PSI, Skype)
     - Twitgoo image uploader
-    - Mobilepicture uploader
+    - Mobypicture uploader
     - Posterous uploader
 
 === Version 0.9.92 (1.0 Beta4) -- 15-Oct-2010 ===
