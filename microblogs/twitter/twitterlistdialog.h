@@ -62,7 +62,6 @@ private:
     TwitterMicroBlog *blog;
     QWidget *mainWidget;
     QListWidget *listWidget;
-    KLineEdit *listname;
 };
 
 #endif // TWITTERLISTDIALOG_H

@@ -24,7 +24,6 @@
 
 #include "twitterlistdialog.h"
 #include <KDebug>
-#include <QVBoxLayout>
 #include <QListWidget>
 #include <kcombobox.h>
 #include <QLabel>
@@ -62,11 +61,14 @@ TwitterListDialog::TwitterListDialog(TwitterApiAccount* theAccount, QWidget* par
     setButtonText(Ok, i18n("Add"));
     setButtonGuiItem(Cancel, KStandardGuiItem::close());
     listWidget = new QListWidget(this);
-    listWidget->show();
-    mainWidget->layout()->addWidget(listWidget);
-    listname = new KLineEdit(this);
-    listname->show();
-    mainWidget->layout()->addWidget(listname);
+    QGridLayout *layout = new QGridLayout;
+    layout->addWidget(ui.label, 0, 0);
+    layout->addWidget(ui.username, 0, 1);
+    layout->addWidget(ui.loadUserLists, 0, 2);
+    layout->addWidget(listWidget, 1, 0, 1, 3);
+    layout->addWidget(ui.label_2, 2, 0);
+    layout->addWidget(ui.listname, 2, 1, 2, 3);
+    mainWidget->setLayout(layout);
 }
 
 TwitterListDialog::~TwitterListDialog()
@@ -77,10 +79,10 @@ TwitterListDialog::~TwitterListDialog()
 void TwitterListDialog::slotButtonClicked(int button)
 {
     if(button == KDialog::Ok){
-        if(listname->text().isEmpty() || ui.username->text().isEmpty()){
+        if(ui.listname->text().isEmpty() || ui.username->text().isEmpty()){
             KMessageBox::error(this, i18n("You should provide both list author username and list name."));
         } else {
-            blog->addListTimeline(account, ui.username->text(), listname->text());
+            blog->addListTimeline(account, ui.username->text(), ui.listname->text());
         }
     } else
         KDialog::slotButtonClicked(button);
@@ -92,9 +94,10 @@ void TwitterListDialog::slotUsernameChanged(const QString& name)
         QString n = name;
         n.chop(1);
         ui.username->setText(n);
-        listname->setFocus();
+        ui.listname->setFocus();
     }
     listWidget->clear();
+    ui.listname->clear();
 }
 
 void TwitterListDialog::loadUserLists()
@@ -133,8 +136,7 @@ void TwitterListDialog::slotLoadUserlists(Choqok::Account* theAccount, QString u
 
 void TwitterListDialog::slotListItemChanged(QListWidgetItem* item)
 {
-    listname->setText(item->data(32).toString());
+    ui.listname->setText(item->data(32).toString());
 }
-
 
 #include "twitterlistdialog.moc"
