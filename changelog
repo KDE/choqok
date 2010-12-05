@@ -1,3 +1,23 @@
+=== Version 0.9.98 (1.0 RC1) -- 06-Dec-2010 ===
+* Twitter Lists support in Choqok [FEATURE:216249]
+* Option to show timelines in reverse order [FEATURE:241743]
+* Additional action in input boxes' context menu that will shorten all selected URLs or all URLs if there's no selection.
+* "Hide Post" option for post widgets.
+* BiDi support is back.
+* Whois widget redesigned.
+* Support for Twitgoo service in imagepreview plugin. (Alex Infantes)
+* Digg shortener plugin removed.
+* Support for LibIndicate to use as an alternate notification system. (It's Optional)
+* Send reply to original author of repeated posts + cc to repeater.
+* And so many fixes and improvements around current functionalities.
+
+New Plugins:
+    - OCS Plugin to support "Open Collaboration Services API" provided by opendesktop.org and its partners
+    - IMStatus plugin to set your post as current status in IM clients (Kopete, Pidgin, PSI, Skype)
+    - Twitgoo image uploader
+    - Mobilepicture uploader
+    - Posterous uploader
+
 === Version 0.9.92 (1.0 Beta4) -- 15-Oct-2010 ===
 * Prevent shortening process to freeze UI
 * Won't show the ☛ sign for tags or groups in StatusNet accounts, using the menu solution like @username
