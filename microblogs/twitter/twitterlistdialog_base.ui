@@ -6,52 +6,78 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>277</width>
-    <height>61</height>
+    <width>293</width>
+    <height>85</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0" colspan="2">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>User name:</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="KLineEdit" name="username"/>
-     </item>
-     <item row="0" column="3">
-      <widget class="KPushButton" name="loadUserLists">
-       <property name="toolTip">
-        <string>Load User Lists</string>
-       </property>
-       <property name="text">
-        <string>Load lists</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" colspan="2">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>List name:</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2" colspan="2">
-      <widget class="KLineEdit" name="listname"/>
-     </item>
-    </layout>
-   </item>
-  </layout>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>40</y>
+     <width>71</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>List name:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="KLineEdit" name="listname">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>40</y>
+     <width>110</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>72</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>User name:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="KLineEdit" name="username">
+   <property name="geometry">
+    <rect>
+     <x>88</x>
+     <y>10</y>
+     <width>110</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="KPushButton" name="loadUserLists">
+   <property name="geometry">
+    <rect>
+     <x>204</x>
+     <y>10</y>
+     <width>80</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Load User Lists</string>
+   </property>
+   <property name="text">
+    <string>Load lists</string>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
@@ -68,7 +94,6 @@
  <tabstops>
   <tabstop>username</tabstop>
   <tabstop>loadUserLists</tabstop>
-  <tabstop>listname</tabstop>
  </tabstops>
  <resources/>
  <connections/>

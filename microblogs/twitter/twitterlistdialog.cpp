@@ -24,7 +24,6 @@
 
 #include "twitterlistdialog.h"
 #include <KDebug>
-#include <QVBoxLayout>
 #include <QListWidget>
 #include <kcombobox.h>
 #include <QLabel>
@@ -62,8 +61,14 @@ TwitterListDialog::TwitterListDialog(TwitterApiAccount* theAccount, QWidget* par
     setButtonText(Ok, i18n("Add"));
     setButtonGuiItem(Cancel, KStandardGuiItem::close());
     listWidget = new QListWidget(this);
-    listWidget->setVisible(false);
-    mainWidget->layout()->addWidget(listWidget);
+    QGridLayout *layout = new QGridLayout;
+    layout->addWidget(ui.label, 0, 0);
+    layout->addWidget(ui.username, 0, 1);
+    layout->addWidget(ui.loadUserLists, 0, 2);
+    layout->addWidget(listWidget, 1, 0, 1, 3);
+    layout->addWidget(ui.label_2, 2, 0);
+    layout->addWidget(ui.listname, 2, 1, 2, 3);
+    mainWidget->setLayout(layout);
 }
 
 TwitterListDialog::~TwitterListDialog()
@@ -91,7 +96,8 @@ void TwitterListDialog::slotUsernameChanged(const QString& name)
         ui.username->setText(n);
         ui.listname->setFocus();
     }
-    listWidget->setVisible(false);
+    listWidget->clear();
+    ui.listname->clear();
 }
 
 void TwitterListDialog::loadUserLists()
@@ -109,8 +115,7 @@ void TwitterListDialog::slotLoadUserlists(Choqok::Account* theAccount, QString u
                                           QList<Twitter::List> list)
 {
     if(theAccount == account && username == ui.username->text() && !list.isEmpty()){
-        //QListWidget *listWidget = new QListWidget(this);
-	listWidget->clear();
+        listWidget->clear();
         QList<Twitter::List>::const_iterator it = list.constBegin();
         QList<Twitter::List>::const_iterator endIt = list.constEnd();
         for(; it != endIt; ++it){
@@ -124,7 +129,6 @@ void TwitterListDialog::slotLoadUserlists(Choqok::Account* theAccount, QString u
             item->setData(32, it->slug);
             listWidget->addItem(item);
         }
-        listWidget->show();
         connect( listWidget, SIGNAL(itemClicked(QListWidgetItem*)),
                  SLOT(slotListItemChanged(QListWidgetItem*)) );
     }
@@ -134,6 +138,5 @@ void TwitterListDialog::slotListItemChanged(QListWidgetItem* item)
 {
     ui.listname->setText(item->data(32).toString());
 }
-
 
 #include "twitterlistdialog.moc"
