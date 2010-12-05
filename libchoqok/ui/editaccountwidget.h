@@ -87,12 +87,13 @@ public:
     */
     virtual Choqok::Account *apply() = 0;
 
-protected:
     /**
      * Get a pointer to the Choqok::Account passed to the constructor.
      * You can modify it any way you like, just don't delete the object.
      */
     Choqok::Account * account() const;
+
+protected:
 
     /**
     * Set the account

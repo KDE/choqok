@@ -66,6 +66,7 @@ void AddAccountDialog::slotButtonClicked(int button)
             KMessageBox::sorry(this, i18n("Cannot validate your input information.\nPlease check the fields' data.\nMaybe a required field is empty?"));
         }
     } else {
+        Choqok::AccountManager::self()->removeAccount(widget->account()->alias());
         KDialog::slotButtonClicked(button);
     }
 }

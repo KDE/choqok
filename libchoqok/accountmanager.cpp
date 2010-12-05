@@ -116,10 +116,10 @@ bool AccountManager::removeAccount( const QString &alias )
 {
     kDebug() << "Removing " << alias;
     int count = d->accounts.count();
+    d->conf->deleteGroup( QString::fromLatin1( "Account_%1" ).arg( alias ) );
+    d->conf->sync();
     for ( int i = 0; i < count; ++i ) {
         if ( d->accounts[i]->alias() == alias ) {
-            d->conf->deleteGroup( QString::fromLatin1( "Account_%1" ).arg( alias ) );
-            d->conf->sync();
             Choqok::Account *a = d->accounts.takeAt( i );
             if(!a)
                 return false;

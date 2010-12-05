@@ -1,5 +1,4 @@
-
-class MainWindow;/*
+/*
     This file is part of Choqok, the KDE micro-blogging client
 
     Copyright (C) 2008-2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
