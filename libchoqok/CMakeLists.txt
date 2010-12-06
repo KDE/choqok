@@ -56,7 +56,7 @@ if(QTINDICATE_FOUND)
 endif(QTINDICATE_FOUND)
 
 set_target_properties(choqok PROPERTIES
-VERSION 0.9.92
+VERSION 0.9.98
 SOVERSION 0
 )
 

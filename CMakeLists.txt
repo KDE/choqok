@@ -18,7 +18,7 @@ if(QTINDICATE_FOUND)
     message(STATUS "Found libindicate-qt: Will support notifications via indicator")
     set(HAVE_INDICATEQT true)
 else(QTINDICATE_FOUND)
-    message(STATUS "Optional dependency not found: libindicate-qt\nWon't support notifications via indicator")
+    message(STATUS "Optional dependency libindicate-qt not found: Won't support notifications via indicator")
 endif(QTINDICATE_FOUND)
 
 set(CHOQOK_INCLUDES
