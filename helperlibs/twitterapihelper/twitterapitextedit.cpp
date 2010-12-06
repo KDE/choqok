@@ -144,7 +144,8 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
         charBeforeSelection = completionPrefix.at(0);
         completionPrefix.remove(0,1);
     } else {
-        charBeforeSelection = toPlainText()[tc.selectionStart()-1];
+      if (!toPlainText().isEmpty() && tc.selectionStart() > 0)
+        charBeforeSelection = toPlainText()[tc.selectionStart() - 1];
     }
 
     if ( !e->text().isEmpty() && (eow.contains(e->text().right(1)) || completionPrefix.length() < 1 ||
