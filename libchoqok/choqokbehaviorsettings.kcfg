@@ -49,7 +49,7 @@
             <default>false</default>
         </entry>
         <entry name="removeHttp" type="Bool">
-            <default>true</default>
+            <default>false</default>
         </entry>
         <entry name="shortenerPlugin" type="String" />
         <entry name="countOfPosts" type="Int">
