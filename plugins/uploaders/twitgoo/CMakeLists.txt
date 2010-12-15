@@ -37,3 +37,4 @@ install( FILES twitgoosettings.kcfg  DESTINATION ${KCFG_INSTALL_DIR})
 install( FILES choqok_twitgoo_config.desktop choqok_twitgoo.desktop
          DESTINATION ${SERVICES_INSTALL_DIR})
 
+add_subdirectory(icons)

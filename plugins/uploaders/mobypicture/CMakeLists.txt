@@ -36,3 +36,5 @@ install(TARGETS kcm_choqok_mobypicture DESTINATION ${PLUGIN_INSTALL_DIR})
 install( FILES mobypicturesettings.kcfg  DESTINATION ${KCFG_INSTALL_DIR})
 install( FILES choqok_mobypicture_config.desktop choqok_mobypicture.desktop
          DESTINATION ${SERVICES_INSTALL_DIR})
+
+add_subdirectory(icons)

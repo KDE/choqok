@@ -28,7 +28,7 @@ IF(LIBATTICA_FOUND)
     install(TARGETS choqok_ocs DESTINATION ${PLUGIN_INSTALL_DIR})
     install( FILES choqok_ocs.desktop  DESTINATION ${SERVICES_INSTALL_DIR})
 
-#     add_subdirectory(icons)
+    add_subdirectory(icons)
 ELSE(LIBATTICA_FOUND)
     message(WARNING "LibAttica NOT FOUND, won't build OCS plugin")
 ENDIF(LIBATTICA_FOUND)
