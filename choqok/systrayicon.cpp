@@ -43,8 +43,8 @@ SysTrayIcon::SysTrayIcon( Choqok::UI::MainWindow* parent )
     setCategory(ApplicationStatus);
     setStandardActionsEnabled(false);
     setStatus(Active);
-    m_defaultIcon = KIcon("choqok_tray").pixmap( 22 );
-    setIconByName( "choqok_tray" );
+    m_defaultIcon = KIcon("choqok").pixmap( 22 );
+    setIconByName( "choqok" );
 
     isIconChanged = false;
 }
@@ -120,11 +120,11 @@ void SysTrayIcon::setTimeLineUpdatesEnabled( bool isEnabled )
 {
     if ( isEnabled ) {
         setToolTip( "choqok", i18n( "Choqok" ), QString() );
-        m_defaultIcon = KIcon("choqok_tray").pixmap( 22 );
+        m_defaultIcon = KIcon("choqok").pixmap( 22 );
     } else {
         setToolTip( "choqok", i18n( "Choqok - Disabled" ), QString() );
         ///Generating new Icon:
-        m_defaultIcon = KIcon("choqok_tray_disabled").pixmap( 22 ); //Choqok::MediaManager::convertToGrayScale(m_defaultIcon);
+        m_defaultIcon = Choqok::MediaManager::convertToGrayScale(m_defaultIcon);
     }
     setIconByPixmap( m_defaultIcon );
     updateUnreadCount( 0 );
