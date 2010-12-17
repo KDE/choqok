@@ -50,14 +50,17 @@ QString Goo_gl::shorten( const QString& url )
     kDebug() << "Using goo.gl";
 
     QByteArray req;
-    req = "url=" + QUrl::toPercentEncoding( KUrl( url ).url() );// +
-          "&user=toolbar";
+    req = "url=" + QUrl::toPercentEncoding( KUrl( url ).url() );
 
     QMap<QString, QString> metaData;
     metaData.insert("accept","*/*");
     metaData.insert("content-type", "Content-Type: application/x-www-form-urlencoded" );
 
-    KIO::StoredTransferJob *job = KIO::storedHttpPost ( req, KUrl("http://goo.gl/api/url"), KIO::HideProgressInfo ) ;
+    KIO::StoredTransferJob *job = KIO::storedHttpPost ( req, KUrl("http://goo.gl/api/url"), KIO::HideProgressInfo ) ;  
+    if (!job){
+      Choqok::NotifyManager::error( i18n("Error when creating job"), i18n("Goo.gl error") );
+      return url;
+    }
     job->setMetaData(KIO::MetaData(metaData));
 
     QByteArray data;
