@@ -40,13 +40,6 @@ public:
     Goo_gl( QObject* parent, const QVariantList& args );
     ~Goo_gl();
     QString shorten( const QString& url );
-    
-private:
-    qint64 first( const QByteArray &str );
-    qint64 second( const QByteArray &str );
-    qint64 third( const QList<qint64> &b );
-    QByteArray fourth( qint64 l );
-    QByteArray authToken( const QString &url );
 };
 
 #endif //GOO_GL_H
