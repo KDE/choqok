@@ -99,7 +99,7 @@ QString ShortenManager::shortenUrl(const QString &url)
         NotifyManager::shortening(url);
 #ifndef QT_NO_CONCURRENT
         QFuture<QString> res = QtConcurrent::run<QString>( shorten, QString(url));
-        while( !res.isFinished() )
+        while( res.isRunning() )
             QApplication::processEvents();
         return res.result();
 #else

@@ -222,7 +222,7 @@ void OCSMicroblog::slotTimelineLoaded(Attica::BaseJob* job)
         Attica::Activity::List actList = static_cast< Attica::ListJob<Attica::Activity> * >(job)->itemList();
         emit timelineDataReceived( acc, "Activity", parseActivityList(actList) );
     } else {
-        //TODO
+        emit error(acc, ServerError, job->metadata().message(), Low);
     }
 }
 

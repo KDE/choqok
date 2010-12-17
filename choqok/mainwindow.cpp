@@ -311,7 +311,6 @@ void MainWindow::slotConfigChoqok()
 void MainWindow::settingsChanged()
 {
     kDebug();
-    ///TODO Check if there is any account and show a message if there isn't any!
     if ( Choqok::AccountManager::self()->accounts().count() < 1 ) {
         if ( KMessageBox::questionYesNo( this, i18n( "In order to use Choqok you need \
 an account at one of the supported micro-blogging services.\n\

@@ -212,7 +212,6 @@ void TwitterApiPostWidget::slotSetFavorite(Choqok::Account *theAccount, const QS
                    this, SLOT(slotSetFavorite(Choqok::Account*,QString)) );
         disconnect(d->mBlog, SIGNAL(favoriteCreated(Choqok::Account*,QString)),
                    this, SLOT(slotSetFavorite(Choqok::Account*,QString)) );
-        ///TODO Notify!
     }
 }
 

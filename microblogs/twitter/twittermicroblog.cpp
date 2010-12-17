@@ -174,7 +174,7 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount* theAccount, const QString&
         return;
     }
     KUrl url = theAccount->apiUrl();
-    url.addPath ( QString("/%1/lists.json").arg(username) );//TODO Add support for XML too
+    url.addPath ( QString("/%1/lists.json").arg(username) );
 
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
