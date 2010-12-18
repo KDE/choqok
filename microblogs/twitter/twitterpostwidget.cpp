@@ -54,7 +54,9 @@ void TwitterPostWidget::initUi()
         QAction *repeat = new QAction(i18n("Retweet"), menu);
         repeat->setToolTip(i18n("Retweet post using API"));
         connect( repeat, SIGNAL(triggered(bool)), SLOT(repeatPost()) );
-        menu->addAction(repeat);
+        // If person protects their acc, we will use simple adding RT before message
+        if (!currentPost().author.isProtected)
+            menu->addAction(repeat);
         menu->addAction(resend);
         btn->setMenu(menu);
     }
