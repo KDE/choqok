@@ -28,6 +28,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KAboutData>
 #include <KGenericFactory>
 #include <kglobal.h>
+#include <qeventloop.h>
 
 K_PLUGIN_FACTORY ( MyPluginFactory, registerPlugin < Ur1_ca> (); )
 K_EXPORT_PLUGIN ( MyPluginFactory ( "choqok_ur1_ca" ) )
@@ -45,7 +46,6 @@ Ur1_ca::~Ur1_ca()
 QString Ur1_ca::shorten ( const QString& url )
 {
   kDebug() << "Using ur1.ca";
-  QByteArray data;
   KUrl reqUrl ( "http://ur1.ca/" );
   QString temp;
   temp = QUrl::toPercentEncoding(url);
@@ -53,12 +53,16 @@ QString Ur1_ca::shorten ( const QString& url )
   QByteArray parg("longurl=");
   parg.append(temp.toAscii());
 
-  KIO::Job* job = KIO::http_post ( reqUrl, parg, KIO::HideProgressInfo );
+  QEventLoop loop;
+  KIO::StoredTransferJob* job = KIO::storedHttpPost ( parg, reqUrl, KIO::HideProgressInfo );
   job->addMetaData("content-type","Content-Type: application/x-www-form-urlencoded");
+  connect(job, SIGNAL(result(KJob*)), &loop, SLOT(quit()));
+  job->start();
+  loop.exec();
 
-  if ( KIO::NetAccess::synchronousRun ( job, 0, &data ) )
+  if ( job->error() == KJob::NoError )
     {
-      QString output ( data );
+      QString output ( job->data() );
       QRegExp rx(QString("<p class=[\'\"]success[\'\"]>(.*)</p>"));
       rx.setMinimal(true);
       rx.indexIn(output);

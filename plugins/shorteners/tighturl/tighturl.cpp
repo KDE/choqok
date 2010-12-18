@@ -29,6 +29,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KAboutData>
 #include <KGenericFactory>
 #include <kglobal.h>
+#include <qeventloop.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < TightUrl > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_tighturl" ) )
@@ -41,15 +42,18 @@ TightUrl::TightUrl( QObject *parent, const QVariantList & )
 QString TightUrl::shorten( const QString &url )
 {
     kDebug()<<"Using 2tu.us";
-    QByteArray data;//output
     KUrl reqUrl( "http://2tu.us/" );
     reqUrl.addQueryItem( "save", "y" );
     reqUrl.addQueryItem( "url", KUrl( url ).url() );
 
-    KIO::Job *job = KIO::get( reqUrl, KIO::Reload, KIO::HideProgressInfo );
+    QEventLoop loop;
+    KIO::StoredTransferJob *job = KIO::storedGet( reqUrl, KIO::Reload, KIO::HideProgressInfo );
+    connect(job, SIGNAL(result(KJob*)), &loop, SLOT(quit()));
+    job->start();
+    loop.exec();
 
-    if ( KIO::NetAccess::synchronousRun( job, 0, &data ) ) {
-        QString output(data);
+    if ( job->error() == KJob::NoError ) {
+        QString output(job->data());
         QRegExp rx( QString( "<code>(.+)</code>" ) );
         rx.setMinimal(true);
         rx.indexIn(output);
@@ -63,7 +67,7 @@ QString TightUrl::shorten( const QString &url )
             return output;
         }
     } else {
-        kDebug() << "Cannot create a shorten url.\t" << "KJob ERROR";
+        kDebug() << "KJob ERROR: " << job->errorString() ;
     }
     return url;
 }
