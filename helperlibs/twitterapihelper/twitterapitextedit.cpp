@@ -85,7 +85,7 @@ void TwitterApiTextEdit::insertCompletion(const QString& completion)
     tc.movePosition(QTextCursor::EndOfWord);
     tc.select(QTextCursor::WordUnderCursor);
     bool startWithAt;
-    if(qVersion() >= "4.7.0")
+    if(QString(qVersion()) >= "4.7.0")
         startWithAt = toPlainText()[tc.selectionStart()-1] != '@';
     else
         startWithAt = !completion.startsWith('@');
