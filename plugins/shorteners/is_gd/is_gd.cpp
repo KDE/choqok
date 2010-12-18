@@ -29,6 +29,7 @@
 #include <KAboutData>
 #include <KGenericFactory>
 #include <kglobal.h>
+#include <qeventloop.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Is_gd > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_is_gd" ) )
@@ -45,21 +46,24 @@ Is_gd::~Is_gd()
 QString Is_gd::shorten( const QString& url )
 {
     kDebug() << "Using is.gd";
-    QByteArray data;
     KUrl reqUrl( "http://is.gd/api.php" );
     reqUrl.addQueryItem( "longurl", KUrl( url ).url() );
 
-    KIO::Job* job = KIO::get( reqUrl, KIO::Reload, KIO::HideProgressInfo );
+    QEventLoop loop;
+    KIO::StoredTransferJob* job = KIO::storedGet( reqUrl, KIO::Reload, KIO::HideProgressInfo );
+    connect(job, SIGNAL(result(KJob*)), &loop, SLOT(quit()));
+    job->start();
+    loop.exec();
 
-    if( KIO::NetAccess::synchronousRun( job, 0, &data ) ) {
-        QString output(data);
+    if( job->error() == KJob::NoError ) {
+        QString output(job->data());
         kDebug() << "Short url is: " << output;
         if( !output.isEmpty() ) {
             return output;
         }
     }
     else {
-        kDebug() << "Cannot create a shorten url.\t" << "KJob ERROR";
+        kDebug() << "KJob ERROR" << job->errorString();
     }
     return url;
 }
