@@ -80,11 +80,18 @@ void TwitterApiTextEdit::insertCompletion(const QString& completion)
 {
     if (d->c->widget() != this)
         return;
+    QString textToInsert = completion + ' ';
     QTextCursor tc = textCursor();
     tc.movePosition(QTextCursor::EndOfWord);
     tc.select(QTextCursor::WordUnderCursor);
-    QChar c = !completion.startsWith('@') ? '@' : QChar();
-    tc.insertText(c + completion + ' ');
+    bool startWithAt;
+    if(qVersion() >= "4.7.0")
+        startWithAt = toPlainText()[tc.selectionStart()-1] != '@';
+    else
+        startWithAt = !completion.startsWith('@');
+    if(startWithAt)
+        textToInsert.prepend('@');
+    tc.insertText(textToInsert);
     setTextCursor(tc);
 }
 
