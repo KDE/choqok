@@ -210,6 +210,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
             st->author.realName = grp.readEntry( "authorRealName", QString() );
             st->author.profileImageUrl = grp.readEntry( "authorProfileImageUrl", QString() );
             st->author.description = grp.readEntry( "authorDescription" , QString() );
+            st->author.isProtected = grp.readEntry("isProtected", false);
             st->isPrivate = grp.readEntry( "isPrivate" , false );
             st->author.location = grp.readEntry("authorLocation", QString());
             st->author.homePageUrl = grp.readEntry("authorUrl", QString());
@@ -262,6 +263,7 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
         grp.writeEntry( "authorDescription" , post->author.description );
         grp.writeEntry( "isPrivate" , post->isPrivate );
         grp.writeEntry( "authorLocation" , post->author.location );
+        grp.writeEntry( "isProtected" , post->author.isProtected );
         grp.writeEntry( "authorUrl" , post->author.homePageUrl );
         grp.writeEntry( "isRead" , post->isRead );
         grp.writeEntry( "repeatedFrom", post->repeatedFromUsername);
@@ -906,6 +908,8 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromDomNode(Choqok::Account* theAccou
                     post->author.description = elm3.text();
                 } else if ( elm3.tagName() == "statusnet:profile_url" ) {
                     post->author.homePageUrl = elm3.text();
+                } else if ( elm3.tagName() == "protected" ) {
+                    post->author.isProtected = elm3.text().contains("true") ? true : false;
                 }
                 node3 = node3.nextSibling();
             }
