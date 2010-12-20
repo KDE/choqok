@@ -101,14 +101,15 @@ void FilterManager::parse(Choqok::UI::PostWidget* postToParse)
 
     if(!postToParse)
         return;
-
+    kDebug()<<"Processing: "<<postToParse->content();
     foreach(Filter* filter, FilterSettings::self()->filters()) {
         if(filter->filterText().isEmpty())
             return;
         if(filter->dontHideReplies() &&
             (postToParse->currentPost().replyToUserName.compare(postToParse->currentAccount()->username(),
-                                                                Qt::CaseInsensitive) ||
-             postToParse->content().contains(QString("@%1").arg(postToParse->currentAccount()->username()))))
+                                                                Qt::CaseInsensitive) == 0 ||
+             postToParse->currentPost().content.contains(QString("@%1").arg(postToParse->currentAccount()->username())))
+          )
             continue;
         switch(filter->filterField()){
             case Filter::Content:
