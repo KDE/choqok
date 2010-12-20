@@ -29,8 +29,8 @@
 
 class Filter::Private{
 public:
-    Private(const QString& text, Filter::FilterField field, Filter::FilterType type)
-    :filterField(field), filterText(text), filterType(type)
+    Private(const QString& text, Filter::FilterField field, Filter::FilterType type, bool dontHide)
+    :filterField(field), filterText(text), filterType(type), dontHideReplies(dontHide)
     {
         config = new KConfigGroup(KGlobal::config(), QString::fromLatin1( "Filter_%1%2%3" ).arg( text )
                                                                                            .arg( field )
@@ -43,20 +43,20 @@ public:
         filterText = config->readEntry("Text", QString());
         filterField = (FilterField) config->readEntry("Field", 0);
         filterType = (FilterType) config->readEntry("Type", 0);
+        dontHideReplies = config->readEntry("DontHideReplies", false);
     }
 
     FilterField filterField;
     QString filterText;
     FilterType filterType;
+    bool dontHideReplies;
     KConfigGroup *config;
 };
 
 Filter::Filter(const QString& filterText, Filter::FilterField field, Filter::FilterType type,
-               QObject* parent)
-               : QObject(parent), d(new Private(filterText, field, type))
-{
-
-}
+               bool dontHide, QObject* parent)
+               : QObject(parent), d(new Private(filterText, field, type, dontHide))
+{}
 
 Filter::Filter(const KConfigGroup &config, QObject* parent)
     : QObject(parent), d(new Private(config))
@@ -99,11 +99,22 @@ void Filter::setFilterType(Filter::FilterType type)
     d->filterType = type;
 }
 
+bool Filter::dontHideReplies() const
+{
+    return d->dontHideReplies;
+}
+
+void Filter::setDontHideReplies(bool dontHide)
+{
+    d->dontHideReplies = dontHide;
+}
+
 void Filter::writeConfig()
 {
     d->config->writeEntry("Text", filterText());
     d->config->writeEntry("Field", (int)filterField());
     d->config->writeEntry("Type", (int)filterType());
+    d->config->writeEntry("DontHideReplies", dontHideReplies());
     d->config->sync();
 }
 

@@ -85,7 +85,8 @@ void ConfigureFilters::saveFiltersTable()
         Filter::FilterField field = FilterSettings::self()->filterFieldFromName(ui.filters->item(i, 0)->text());
         Filter::FilterType type = FilterSettings::self()->filterTypeFromName(ui.filters->item(i, 1)->text());
         QString text = ui.filters->item(i, 2)->text();
-        Filter *f = new Filter(text, field, type, FilterSettings::self());
+        bool dontHideReplies = ui.filters->item(i, 2)->data(32).toBool();
+        Filter *f = new Filter(text, field, type, dontHideReplies, FilterSettings::self());
         list << f;
     }
     FilterSettings::self()->setFilters(list);
@@ -109,8 +110,9 @@ void ConfigureFilters::slotEditFilter()
         Filter::FilterType type;
         field = (Filter::FilterField) ui.filters->item(row, 0)->data(32).toInt();
         type = (Filter::FilterType) ui.filters->item(row, 1)->data(32).toInt();
+        bool dontHideReplies = ui.filters->item(row, 2)->data(32).toBool();
         QString text = ui.filters->item(row, 2)->text();
-        Filter *f = new Filter(text, field, type, this);
+        Filter *f = new Filter(text, field, type, dontHideReplies, this);
         QPointer<AddEditFilter> dialog = new AddEditFilter(this, f);
         connect(dialog, SIGNAL(filterUpdated(Filter*)), SLOT(slotUpdateFilter(Filter*)));
         dialog->exec();
@@ -140,6 +142,7 @@ void ConfigureFilters::addNewFilter(Filter* filter)
     item2->setData(32, filter->filterType());
     ui.filters->setItem(row, 1, item2);
     QTableWidgetItem *item3 = new QTableWidgetItem(filter->filterText());
+    item3->setData(32, filter->dontHideReplies());
     ui.filters->setItem(row, 2, item3);
 }
 
@@ -153,6 +156,7 @@ void ConfigureFilters::slotUpdateFilter(Filter* filter)
     ui.filters->item(row, 1)->setData(32, filter->filterType());
 
     ui.filters->item(row, 2)->setText(filter->filterText());
+    ui.filters->item(row, 2)->setData(32, filter->dontHideReplies());
 }
 
 void ConfigureFilters::slotHideRepliesNotRelatedToMeToggled(bool enabled)

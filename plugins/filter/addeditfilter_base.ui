@@ -50,6 +50,13 @@
    <item row="2" column="1">
     <widget class="KLineEdit" name="filterText"/>
    </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QCheckBox" name="dontHideReplies">
+     <property name="text">
+      <string>Do not hide replies to me</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>

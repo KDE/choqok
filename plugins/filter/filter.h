@@ -39,7 +39,7 @@ public:
         Just use this constructor when filter is new
     */
     explicit Filter(const QString &filterText, FilterField field = Content,
-                    FilterType type = Contain, QObject* parent = 0);
+                    FilterType type = Contain, bool dontHide = false, QObject* parent = 0);
     explicit Filter( const KConfigGroup& config, QObject* parent = 0);
     virtual ~Filter();
 
@@ -51,6 +51,9 @@ public:
 
     FilterType filterType() const;
     void setFilterType( FilterType type );
+
+    bool dontHideReplies() const;
+    void setDontHideReplies(bool dontHide);
 
     void writeConfig();
 

@@ -105,6 +105,11 @@ void FilterManager::parse(Choqok::UI::PostWidget* postToParse)
     foreach(Filter* filter, FilterSettings::self()->filters()) {
         if(filter->filterText().isEmpty())
             return;
+        if(filter->dontHideReplies() &&
+            (postToParse->currentPost().replyToUserName.compare(postToParse->currentAccount()->username(),
+                                                                Qt::CaseInsensitive) ||
+             postToParse->content().contains(QString("@%1").arg(postToParse->currentAccount()->username()))))
+            continue;
         switch(filter->filterField()){
             case Filter::Content:
                 doFiltering( postToParse, filterText(postToParse->currentPost().content, filter) );
@@ -129,25 +134,25 @@ FilterManager::FilterAction FilterManager::filterText(const QString& textToCheck
     switch(filter->filterType()){
         case Filter::ExactMatch:
             if(textToCheck == filter->filterText()){
-                kDebug()<<"ExactMatch";
+                kDebug()<<"ExactMatch: " << filter->filterText();
                 return Remove;
             }
             break;
         case Filter::RegExp:
             if( textToCheck.contains(QRegExp(filter->filterText())) ){
-                kDebug()<<"RegExp";
+                kDebug()<<"RegExp: " << filter->filterText();
                 return Remove;
             }
             break;
         case Filter::Contain:
             if( textToCheck.contains(filter->filterText()) ){
-                kDebug()<<"Contain";
+                kDebug()<<"Contain: " << filter->filterText();
                 return Remove;
             }
             break;
         case Filter::DoesNotContain:
             if( !textToCheck.contains(filter->filterText()) ){
-                kDebug()<<"DoesNotContain";
+                kDebug()<<"DoesNotContain: " << filter->filterText();
                 return Remove;
             }
             break;

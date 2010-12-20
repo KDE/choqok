@@ -31,7 +31,6 @@
 AddEditFilter::AddEditFilter(QWidget* parent, Filter *filter)
     : KDialog(parent), currentFilter(filter)
 {
-//     setAttribute(Qt::WA_DeleteOnClose, false);
     QWidget *wd = new QWidget(this);
     ui.setupUi(wd);
     setMainWidget(wd);
@@ -39,7 +38,7 @@ AddEditFilter::AddEditFilter(QWidget* parent, Filter *filter)
     setupFilterFields();
     setupFilterTypes();
 
-    setWindowTitle(i18n("Define new filter"));
+    setWindowTitle(i18n("Define new filter rules"));
 
     if(filter){
         kDebug()<<filter->filterField();
@@ -47,7 +46,8 @@ AddEditFilter::AddEditFilter(QWidget* parent, Filter *filter)
         ui.filterField->setCurrentIndex(ui.filterField->findData(filter->filterField()));
         ui.filterType->setCurrentIndex(ui.filterType->findData(filter->filterType()));
         ui.filterText->setText(filter->filterText());
-        setWindowTitle(i18n("Modify filter"));
+        ui.dontHideReplies->setChecked(filter->dontHideReplies());
+        setWindowTitle(i18n("Modify filter rules"));
     }
     ui.filterText->setFocus();
 }
@@ -63,13 +63,15 @@ void AddEditFilter::slotButtonClicked(int button)
         Filter::FilterField field = (Filter::FilterField) ui.filterField->itemData(ui.filterField->currentIndex()).toInt();
         Filter::FilterType type = (Filter::FilterType) ui.filterType->itemData(ui.filterType->currentIndex()).toInt();
         QString fText = ui.filterText->text();
+        bool dontHideReplies = ui.dontHideReplies->isChecked();
         if(currentFilter){
             currentFilter->setFilterField(field);
             currentFilter->setFilterText(fText);
             currentFilter->setFilterType(type);
+            currentFilter->setDontHideReplies(dontHideReplies);
             emit filterUpdated(currentFilter);
         } else {
-            currentFilter = new Filter(fText, field, type);
+            currentFilter = new Filter(fText, field, type, dontHideReplies);
             emit newFilterRegistered(currentFilter);
         }
         accept();
