@@ -48,23 +48,15 @@ public slots:
     void updateUnreadCount( int changeOfUnreadPosts );
     void resetUnreadCount();
 
-signals:
-//     void wheelEvent(const QWheelEvent&);
-
 protected slots:
     void slotRestoreIcon();
 
-protected:
-//     virtual bool event(QEvent* event);
-
 private:
+    QString currentIconName();
     int unread;
 
-    QPixmap m_defaultIcon;
-    QIcon prevIcon;
-    bool isIconChanged;
-    bool isBaseIconChanged;
     Choqok::UI::MainWindow * _mainwin;
+    bool isOffline;
 };
 
 #endif
