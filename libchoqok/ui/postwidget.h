@@ -219,6 +219,7 @@ protected:
     static const QString webIconText;
     static const QString ownText;
     static const QString otherText;
+    static const QRegExp dirRegExp;
 
     void setAvatarText( const QString &text );
     QString avatarText() const;
