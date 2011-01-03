@@ -105,6 +105,7 @@ const QRegExp PostWidget::mUrlRegExp("((((" + protocols + "?)" + auth +
                           zone + "(?!(\\w))))|(" + protocols + '(' + ip + ")+))" +
                           '(' + port + "?)" + "((\\/)?)"  +
                           params + ')', Qt::CaseInsensitive);
+const QRegExp PostWidget::dirRegExp("(RT|RD)|(@([^\\s\\W]+))|(#([^\\s\\W]+))|(!([^\\s\\W]+))");
 
 QString PostWidget::readStyle;
 QString PostWidget::unreadStyle;
@@ -383,12 +384,8 @@ QString PostWidget::prepareStatus( const QString &txt )
 void PostWidget::setDirection()
 {
     QString txt = d->mCurrentPost.content;
-    txt.remove(QRegExp("RT|RD"));
-    txt.remove(QRegExp("@([^\\s\\W]+)"));
-    txt.remove(QRegExp("#([^\\s\\W]+)"));
-    txt.remove(QRegExp("!([^\\s\\W]+)"));
+    txt.remove(dirRegExp);
     txt = txt.trimmed();
-//     kDebug()<<txt<<txt.isRightToLeft();
     if( txt.isRightToLeft() ) {
         d->dir = "rtl";
     }
