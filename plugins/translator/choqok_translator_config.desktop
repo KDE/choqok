@@ -10,5 +10,4 @@ X-KDE-ParentApp=choqok_translator
 X-KDE-ParentComponents=choqok_translator
 
 Name=Translator
-Name[x-test]=xxTranslatorxx
 Comment=Translate posts into your language (Powered by Google® Translate)

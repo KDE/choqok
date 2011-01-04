@@ -15,5 +15,4 @@ X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=true
 Name=Translator
-Name[x-test]=xxTranslatorxx
 Comment=Translate posts into your language (Powered by Google® Translate)
