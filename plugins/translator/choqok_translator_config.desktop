@@ -10,4 +10,16 @@ X-KDE-ParentApp=choqok_translator
 X-KDE-ParentComponents=choqok_translator
 
 Name=Translator
+Name[nl]=Vertaler
+Name[pt]=Tradutor
+Name[pt_BR]=Tradutor
+Name[sv]=Översättare
+Name[uk]=Перекладач
+Name[x-test]=xxTranslatorxx
 Comment=Translate posts into your language (Powered by Google® Translate)
+Comment[nl]=Geposte berichten vertalen in uw taal (Door Google® Translate)
+Comment[pt]=Traduzir as publicações para a sua língua (Suportado pelo Google® Translate)
+Comment[pt_BR]=Traduzir as mensagens para o seu idioma (Suportado pelo Google® Tradutor)
+Comment[sv]=Översätter inlägg till ditt modersmål (med hjälp av Google® översättning)
+Comment[uk]=Переклад дописів вашою мовою (за допомогою Google® Перекладач)
+Comment[x-test]=xxTranslate posts into your language (Powered by Google® Translate)xx
