@@ -173,7 +173,7 @@
        <item>
         <widget class="QCheckBox" name="cfg_shorturl">
          <property name="text">
-          <string>Use Flic.kr to short URLs.</string>
+          <string>Use Flic.kr to short URLs</string>
          </property>
          <property name="checked">
           <bool>true</bool>
