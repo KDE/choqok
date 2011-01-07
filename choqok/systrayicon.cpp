@@ -143,7 +143,7 @@ void SysTrayIcon::slotJobDone( Choqok::JobResult result )
 
 void SysTrayIcon::slotRestoreIcon()
 {
-    setIconByName(currentIconName());
+    setOverlayIconByName(QString());
     updateUnreadCount( 0 );
 }
 
