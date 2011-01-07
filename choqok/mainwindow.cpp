@@ -241,7 +241,7 @@ void MainWindow::setupActions()
     connect( clearAvatarCache, SIGNAL( triggered() ),
              Choqok::MediaManager::self(), SLOT(clearImageCache()) );
 
-    KAction *uploadMedium = new KAction( KIcon("arrow-up"), i18n( "Upload Medium" ), this );
+    KAction *uploadMedium = new KAction( KIcon("arrow-up"), i18n( "Upload Medium..." ), this );
     actionCollection()->addAction( QLatin1String( "choqok_upload_medium" ), uploadMedium );
     connect( uploadMedium, SIGNAL( triggered(bool)), this, SLOT(slotUploadMedium()) );
 
