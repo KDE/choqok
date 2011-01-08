@@ -165,17 +165,18 @@ QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWi
     QString youtubeUrl = QString( "http://gdata.youtube.com/feeds/api/videos/%1" ).arg(videoid);
 //   kDebug() << youtubeUrl;
     KUrl th_url(youtubeUrl);
-    KIO::StoredTransferJob *job = KIO::storedGet( th_url, KIO::Reload, KIO::HideProgressInfo );
+    KIO::TransferJob *job = KIO::get( th_url, KIO::NoReload, KIO::HideProgressInfo );
     QString title, description, thumb_url;
-    QEventLoop loop;
-    connect(job, SIGNAL(result(KJob*)), &loop, SLOT(quit()));
-    job->start();
-    loop.exec();
+//     QEventLoop loop;
+//     connect(job, SIGNAL(result(KJob*)), &loop, SLOT(quit()));
+//     job->start();
+//     loop.exec();
+    QByteArray data;
 
-    if ( job->error() == KJob::NoError ) {
+    if ( KIO::NetAccess::synchronousRun(job, Choqok::UI::Global::mainWindow(), &data) ) {
         QDomDocument document;
 //         kDebug()<<job->data();
-        document.setContent ( job->data() );
+        document.setContent ( data );
         QDomElement root = document.documentElement();
         if ( !root.isNull() ) {
             QDomElement node;
@@ -216,15 +217,16 @@ QString VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidg
 //   kDebug() << vimeoUrl;
     KUrl th_url(vimeoUrl);
     QEventLoop loop;
-    KIO::StoredTransferJob *job = KIO::storedGet( th_url, KIO::Reload, KIO::HideProgressInfo );
+    KIO::TransferJob *job = KIO::get( th_url, KIO::NoReload, KIO::HideProgressInfo );
     QString title, description, thumb_url;
-    connect(job, SIGNAL(result(KJob*)), &loop, SLOT(quit()));
-    job->start();
-    loop.exec();
+//     connect(job, SIGNAL(result(KJob*)), &loop, SLOT(quit()));
+//     job->start();
+//     loop.exec();
+    QByteArray data;
 
-    if ( job->error() == KJob::NoError ) {
+    if ( KIO::NetAccess::synchronousRun(job, Choqok::UI::Global::mainWindow(), &data) ) {
         QDomDocument document;
-        document.setContent ( job->data() );
+        document.setContent ( data );
         QDomElement root = document.documentElement();
         if ( !root.isNull() ) {
             QDomElement videotag;
