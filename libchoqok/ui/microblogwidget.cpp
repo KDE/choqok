@@ -40,6 +40,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QKeyEvent>
 #include <QPointer>
 #include "choqoktextedit.h"
+#include <QLayout>
 
 namespace Choqok {
 namespace UI {
@@ -92,7 +93,7 @@ void MicroBlogWidget::initUi()
     d->timelinesTabWidget = new KTabWidget(this);
     d->timelinesTabWidget->setTabCloseActivatePrevious(true);
     layout->addWidget( d->timelinesTabWidget );
-    this->layout()->setContentsMargins( 0, 0, 0, 0 );
+    this->layout()->setContentsMargins( 3, 1, 3, 1 );
     connect( currentAccount(), SIGNAL(modified(Choqok::Account*)), SLOT(slotAccountModified(Choqok::Account*)) );
     initTimelines();
 }

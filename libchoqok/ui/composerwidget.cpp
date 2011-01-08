@@ -51,8 +51,10 @@ ComposerWidget::ComposerWidget(Choqok::Account* account, QWidget* parent /*= 0*/
 : QWidget(parent), btnAbort(0), d(new Private(account))
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
     d->editorContainer = new QWidget(this);
     QGridLayout *internalLayout = new QGridLayout;
+    internalLayout->setContentsMargins(0, 0, 0, 0);
     d->editorContainer->setLayout(internalLayout);
     layout->addWidget(editorContainer());
     setEditor(new TextEdit(account->microblog()->postCharLimit(), this));
