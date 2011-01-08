@@ -37,8 +37,8 @@ TwitterSearch::TwitterSearch(QObject* parent): TwitterApiSearch(parent)
 {
     kDebug();
     mSearchCode[CustomSearch].clear();
-    mSearchCode[ToUser] = "to:";
-    mSearchCode[FromUser] = "from:";
+    mSearchCode[ToUser] = i18nc("Posts sent to user", "To:");
+    mSearchCode[FromUser] = i18nc("Posts from user, Sent by user", "From:");
     mSearchCode[ReferenceUser] = '@';
     mSearchCode[ReferenceHashtag] = '#';
 
