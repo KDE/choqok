@@ -103,7 +103,7 @@ void AccountsWidget::editAccount( QString alias )
     if ( alias.isEmpty() )
         alias = accountsTable->item( currentRow, 0 )->text();
 
-    Choqok::Account *currentAccount = Choqok::AccountManager::self()->findAccount(alias);
+    QPointer<Choqok::Account> currentAccount = Choqok::AccountManager::self()->findAccount(alias);
     if(!currentAccount) {
         KMessageBox::detailedSorry(this, i18n("Cannot find the desired account."),
                                     Choqok::AccountManager::self()->lastError());
@@ -115,7 +115,8 @@ void AccountsWidget::editAccount( QString alias )
         d->setModal(true);
         d->exec();
         // Needs for update alias after editing account
-        accountsTable->setItem( currentRow, 0, new QTableWidgetItem( currentAccount->alias() ) ); 
+        if(currentAccount)
+            accountsTable->setItem( currentRow, 0, new QTableWidgetItem( currentAccount->alias() ) ); 
     }
 }
 
