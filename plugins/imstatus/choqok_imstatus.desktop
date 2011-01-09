@@ -32,6 +32,7 @@ Name[uk]=Стан у мережі МП
 Name[x-test]=xxIMStatusxx
 Name[zh_TW]=IMStatus
 Comment=Sets status of your instant messenger as your status in micro-blog
+Comment[da]=Sætter status i din instant messenger til status fra din mikroblog
 Comment[nl]=De status van uw instant-messenger instellen als uw status in de micro-blog
 Comment[pt]=Muda o estado do seu mensageiro instantâneo para o seu estado no micro-blog
 Comment[sv]= Anger status för direktmeddelanden som din status i mikroblogg

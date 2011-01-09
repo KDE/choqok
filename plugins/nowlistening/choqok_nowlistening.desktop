@@ -49,6 +49,7 @@ Name[x-test]=xxNow Listeningxx
 Name[zh_CN]=正在收听
 Name[zh_TW]=正在收聽
 Comment=Tells your friends what you are listening to
+Comment[da]=Fortæller dine venner hvad du lytter til
 Comment[nl]=Vertelt uw vrienden waarnaar u naar luistert.
 Comment[pt]=Diga aos seus amigos o que está a ouvir
 Comment[sv]=Talar om för dina vänner vad du lyssnar på
