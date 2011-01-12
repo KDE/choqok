@@ -58,6 +58,7 @@ protected:
     QList<Choqok::Post*> parseAtom( const QByteArray &buffer );
 
     QMap<int, QString> mSearchCode;
+    QMap<int, QString> mI18nSearchCode;
     QMap<KJob*, SearchInfo> mSearchJobs;
     static const QRegExp m_rId;
 };

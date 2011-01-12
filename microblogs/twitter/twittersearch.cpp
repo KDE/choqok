@@ -42,6 +42,12 @@ TwitterSearch::TwitterSearch(QObject* parent): TwitterApiSearch(parent)
     mSearchCode[ReferenceUser] = '@';
     mSearchCode[ReferenceHashtag] = '#';
 
+    mI18nSearchCode[CustomSearch].clear();
+    mI18nSearchCode[ReferenceUser] = '@';
+    mI18nSearchCode[ReferenceHashtag] = '#';
+    mI18nSearchCode[ToUser] = i18nc("Posts sent to user", "To:");
+    mI18nSearchCode[FromUser] = i18nc("Posts from user, Sent by user", "From:");
+
     mSearchTypes[CustomSearch].first = i18n( "Custom Search" );
     mSearchTypes[CustomSearch].second = true;
 
@@ -187,7 +193,7 @@ QList< Choqok::Post* > TwitterSearch::parseAtom(const QByteArray& buffer)
 
 QString TwitterSearch::optionCode(int option)
 {
-    return mSearchCode[option];
+    return mI18nSearchCode[option];
 }
 
 TwitterSearch::~TwitterSearch()
