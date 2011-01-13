@@ -36,6 +36,7 @@ Name[x-test]=xxIMStatusxx
 Name[zh_TW]=IMStatus
 Comment=Sets status of your instant messenger as your status in micro-blog
 Comment[da]=Sætter status i din instant messenger til status fra din mikroblog
+Comment[et]=Kiirsuhtlusrakenduse oleku määramine mikroblogi olekuks
 Comment[hu]=Az azonnali üzenetküldő állapotüzenetének beállítása mikroblog-állapotként
 Comment[nds]=Stellt för Dien Kortnarichten-Maker den Lüttdaagbook-Status in.
 Comment[nl]=De status van uw instant-messenger instellen als uw status in de micro-blog
