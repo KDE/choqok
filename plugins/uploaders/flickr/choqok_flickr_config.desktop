@@ -9,6 +9,7 @@ X-KDE-ParentApp=choqok_flickr
 X-KDE-ParentComponents=choqok_flickr
 
 Name=Flickr
+Name[ca]=Flickr
 Name[da]=Flickr
 Name[de]=Flickr
 Name[en_GB]=Flickr
@@ -32,6 +33,7 @@ Name[uk]=Flickr
 Name[x-test]=xxFlickrxx
 Name[zh_TW]=Flickr
 Comment=Upload image to flickr.com
+Comment[ca]=Puja imatges a flickr.com
 Comment[da]=Upload billede til flickr.com
 Comment[de]=Bild auf flickr.com hochladen
 Comment[en_GB]=Upload image to flickr.com
