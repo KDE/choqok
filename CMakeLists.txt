@@ -8,19 +8,24 @@ set(CHOQOK_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 set(CMAKE_MODULE_PATH ${CHOQOK_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
 
-option(QTINDICATE_ENABLE "Enable support for notifications via indicator")
+option(QTINDICATE_DISABLE "Disable support for notifications via indicator")
 
 find_package(QJson REQUIRED)
 find_package(QCA2 REQUIRED)
 find_package(QtOAuth REQUIRED)
 
-if(QTINDICATE_ENABLE)
-    find_package(QtIndicate QUIET)
+if(NOT QTINDICATE_DISABLE)
+    find_package(QtIndicate)
+    if(QtIndicate_FOUND)
+        set(QTINDICATE_BUILD TRUE)
+	endif(QtIndicate_FOUND)
+endif(NOT QTINDICATE_DISABLE)
+
+if(QTINDICATE_BUILD)
     message(STATUS "Found libindicate-qt: Will support notifications via indicator")
-    set(HAVE_INDICATEQT true)
-else(QTINDICATE_ENABLE)
+else(QTINDICATE_BUILD)
     message(STATUS "Optional dependency libindicate-qt not found: Won't support notifications via indicator")
-endif(QTINDICATE_ENABLE)
+endif(QTINDICATE_BUILD)
 
 set(CHOQOK_INCLUDES
 ${KDE4_INCLUDES}
