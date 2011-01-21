@@ -31,11 +31,11 @@ ui/uploadmediadialog.cpp
 ui/textbrowser.cpp
 )
 
-if(QTINDICATE_FOUND)
+if(QtIndicate_FOUND)
     set(choqok_LIB_SRCS ${choqok_LIB_SRCS} indicatormanager.cpp)
     include_directories(${QTINDICATE_INCLUDE_DIRS})
-    add_definitions(-DHAVE_INDICATEQT)
-endif(QTINDICATE_FOUND)
+    add_definitions(-DQTINDICATE_BUILD)
+endif(QtIndicate_FOUND)
 
 qt4_add_dbus_adaptor( choqok_LIB_SRCS org.kde.choqok.xml dbushandler.h Choqok::DbusHandler ChoqokAdaptor ) 
 
@@ -50,10 +50,10 @@ kde4_add_library(choqok SHARED ${choqok_LIB_SRCS})
 
 target_link_libraries(choqok ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS})
 
-if(QTINDICATE_FOUND)
+if(QtIndicate_FOUND)
        add_definitions(-DXDG_APPS_INSTALL_DIR=${XDG_APPS_INSTALL_DIR})
        target_link_libraries(choqok ${QTINDICATE_LIBRARY})
-endif(QTINDICATE_FOUND)
+endif(QtIndicate_FOUND)
 
 set_target_properties(choqok PROPERTIES
 VERSION 0.9.98

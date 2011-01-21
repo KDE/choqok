@@ -3,9 +3,9 @@ include_directories(
 ${CHOQOK_INCLUDES}
 )
 
-if(QTINDICATE_FOUND)
-    add_definitions(-DHAVE_INDICATEQT)
-endif(QTINDICATE_FOUND)
+if(QtIndicate_FOUND)
+	add_definitions(-DQTINDICATE_BUILD)
+endif(QtIndicate_FOUND)
 
 ########### next target ###############
 
