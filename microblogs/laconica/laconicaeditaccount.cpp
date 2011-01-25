@@ -159,7 +159,7 @@ void LaconicaEditAccountWidget::authorizeUser()
     QOAuth::ParamMap params;
     params.insert("oauth_callback", "oob");
     QOAuth::ParamMap reply =
-        qoauth->requestToken( oauthReqTokenUrl, QOAuth::POST, QOAuth::HMAC_SHA1, params );
+        qoauth->requestToken( oauthReqTokenUrl, QOAuth::GET, QOAuth::HMAC_SHA1, params );
     setAuthenticated(false);
     kcfg_authorize->setIcon(KIcon("object-locked"));
 
