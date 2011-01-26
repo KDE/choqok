@@ -32,7 +32,7 @@
 static const char description[] =
     I18N_NOOP( "KDE Micro-Blogging Client." );
 
-static const char version[] = "0.9.98 (1.0 RC1)";
+static const char version[] = "1.0";
 
 int main( int argc, char **argv )
 {

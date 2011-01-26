@@ -1,3 +1,7 @@
+=== Version 1.0 -- 26-Jan-2011 ===
+* Several bug fixes and improvements around RC1
+* Redesigned Icon and splash screen
+
 === Version 0.9.98 (1.0 RC1) -- 06-Dec-2010 ===
 * Twitter Lists support in Choqok [FEATURE:216249]
 * Option to show timelines in reverse order [FEATURE:241743]

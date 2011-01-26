@@ -15,7 +15,7 @@ find_package(QCA2 REQUIRED)
 find_package(QtOAuth REQUIRED)
 
 if(NOT QTINDICATE_DISABLE)
-    find_package(QtIndicate)
+    find_package(QtIndicate QUIET)
     if(QtIndicate_FOUND)
         set(QTINDICATE_BUILD TRUE)
 	endif(QtIndicate_FOUND)

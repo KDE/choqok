@@ -1,5 +1,5 @@
 
-find_package(LibAttica)
+find_package(LibAttica QUIET)
 
 IF(LIBATTICA_FOUND)
     message(STATUS "FOUND LibAttica: Will build OCS plugin")
@@ -30,5 +30,5 @@ IF(LIBATTICA_FOUND)
 
     add_subdirectory(icons)
 ELSE(LIBATTICA_FOUND)
-    message(WARNING "LibAttica NOT FOUND, won't build OCS plugin")
+    message(STATUS "Optional dependency LibAttica not found, won't build OCS plugin")
 ENDIF(LIBATTICA_FOUND)

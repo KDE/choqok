@@ -32,8 +32,8 @@ target_link_libraries( twitterapihelper
                        choqok)
 
 set_target_properties(twitterapihelper PROPERTIES
-VERSION 0.9.8
-SOVERSION 0
+VERSION 1.0.0
+SOVERSION 1
 )
 
 install(TARGETS twitterapihelper ${INSTALL_TARGETS_DEFAULT_ARGS})
