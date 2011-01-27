@@ -56,8 +56,8 @@ if(QtIndicate_FOUND)
 endif(QtIndicate_FOUND)
 
 set_target_properties(choqok PROPERTIES
-VERSION 0.9.98
-SOVERSION 0
+VERSION 1.0.1
+SOVERSION 1
 )
 
 if(MSVC)
