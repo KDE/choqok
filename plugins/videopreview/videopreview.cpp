@@ -276,11 +276,12 @@ void VideoPreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pix
     imgU.setScheme("img");
     QString imgUrl = imgU.prettyUrl();
     postToParse->mainWidget()->document()->addResource(QTextDocument::ImageResource, imgUrl, pixmap);
-
+    
     //kDebug() << QRegExp('>'+baseUrl+'<').pattern();
-
-    QString temp("<br><b>"+title+"</b><table><tr><td><img align='left' src='"+imgUrl+"' /></td>");
-    temp.append("<td><font size=\"-1\">"+description+"</font><a href='"+baseUrl+"' title='"+baseUrl+"'>&#9755;</a></td></tr></table>");
+    
+    QString temp("<br><table><tr><td rowspan=2><img align='left' height=64 src='" + imgUrl + "' /></td>");
+    temp.append("<td><a href='" + baseUrl + "' title='" + baseUrl + "'><b>" + title + "</b></a></td></tr>");
+    temp.append("<tr><font size=\"-1\">" + description + "</font></tr></table>");
 
     content.append(temp);
     postToParse->setContent(content);
