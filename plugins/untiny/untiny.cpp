@@ -31,6 +31,7 @@
 #include <shortenmanager.h>
 #include <untinysettings.h>
 #include <qmutex.h>
+#include <QDomDocument>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < UnTiny > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_untiny" ) )
@@ -90,7 +91,7 @@ void UnTiny::parse(QPointer<Choqok::UI::PostWidget> postToParse)
     }
     if(UnTinySettings::useUntinyDotCom()) {
         foreach(const QString &url, redirectList) {
-            QString untinyDotComUrl = QString("http://untiny.com/api/1.0/extract/?url=%1&format=text").arg(url);
+            QString untinyDotComUrl = QString("http://untiny.com/api/1.0/extract/?url=%1&format=xml").arg(url);
             KIO::StoredTransferJob *job = KIO::storedGet( untinyDotComUrl, KIO::NoReload,
                                                     KIO::HideProgressInfo );
             if ( !job ) {
@@ -122,9 +123,23 @@ void UnTiny::slotUntinyDotComResult(KJob* job)
 {
     if(!job)
         return;
-    QString toUrl = qobject_cast<KIO::StoredTransferJob *>(job)->data();
+    QByteArray reply = qobject_cast<KIO::StoredTransferJob *>(job)->data();
     QPointer<Choqok::UI::PostWidget> postToParse = mParsingList.take(job);
     QString fromUrl = mShortUrlsList.take(job);
+    QString toUrl;
+
+    QDomDocument doc;
+    if (doc.setContent(reply)){
+        QDomNode n = doc.documentElement().firstChild();
+        while(!n.isNull()) {
+            QDomElement e = n.toElement();
+            if(!e.isNull())
+                if (e.tagName() == "org_url")
+                    toUrl = e.text();
+            n = n.nextSibling();
+        }
+    }
+
     if( postToParse && toUrl.startsWith(QString("http"), Qt::CaseInsensitive)){
 //         kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
         QString content = postToParse->content();
