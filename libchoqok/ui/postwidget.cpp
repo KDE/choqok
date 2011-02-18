@@ -39,7 +39,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QMenu>
 #include <kmenu.h>
 #include <QCloseEvent>
-#include <qmutex.h>
 #include "timelinewidget.h"
 
 static const int _15SECS = 15000;
@@ -309,13 +308,11 @@ void PostWidget::setHeight()
 
 void PostWidget::closeEvent(QCloseEvent* event)
 {
-    QMutex mt;
-    mt.lock();
+    clearFocus();
     if( !isRead() )
         setReadInternal();
     Q_EMIT aboutClosing(currentPost().postId, this);
     event->accept();
-    mt.unlock();
 }
 
 void PostWidget::mousePressEvent(QMouseEvent* ev)
