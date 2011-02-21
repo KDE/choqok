@@ -167,15 +167,10 @@ QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWi
     KUrl th_url(youtubeUrl);
     KIO::TransferJob *job = KIO::get( th_url, KIO::NoReload, KIO::HideProgressInfo );
     QString title, description, thumb_url;
-//     QEventLoop loop;
-//     connect(job, SIGNAL(result(KJob*)), &loop, SLOT(quit()));
-//     job->start();
-//     loop.exec();
     QByteArray data;
 
-    if ( KIO::NetAccess::synchronousRun(job, Choqok::UI::Global::mainWindow(), &data) ) {
+    if ( job && KIO::NetAccess::synchronousRun(job, Choqok::UI::Global::mainWindow(), &data) ) {
         QDomDocument document;
-//         kDebug()<<job->data();
         document.setContent ( data );
         QDomElement root = document.documentElement();
         if ( !root.isNull() ) {
@@ -219,12 +214,9 @@ QString VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidg
     QEventLoop loop;
     KIO::TransferJob *job = KIO::get( th_url, KIO::NoReload, KIO::HideProgressInfo );
     QString title, description, thumb_url;
-//     connect(job, SIGNAL(result(KJob*)), &loop, SLOT(quit()));
-//     job->start();
-//     loop.exec();
     QByteArray data;
 
-    if ( KIO::NetAccess::synchronousRun(job, Choqok::UI::Global::mainWindow(), &data) ) {
+    if ( job && KIO::NetAccess::synchronousRun(job, Choqok::UI::Global::mainWindow(), &data) ) {
         QDomDocument document;
         document.setContent ( data );
         QDomElement root = document.documentElement();
