@@ -32,13 +32,14 @@
 static const char description[] =
     I18N_NOOP( "KDE Micro-Blogging Client." );
 
-static const char version[] = "1.0";
+static const char version[] = "1.0.1";
 
 int main( int argc, char **argv )
 {
     qDebug()<<"Choqok "<<version;
     KAboutData about( "choqok", 0, ki18n( "Choqok" ), version, ki18n( description ),
-                      KAboutData::License_GPL_V3, ki18n( "(C) 2008-2010 Mehrdad Momeny" ),//set the Copyright holder to Choqok developers from 2011...
+                      KAboutData::License_GPL_V3,
+                      ki18n( "(C) 2008-2010 Mehrdad Momeny\n(C) 2011 Choqok Developers" ),
                       KLocalizedString(), 0  );
     about.addAuthor( ki18n( "Mehrdad Momeny" ), ki18n( "Author and Core Developer" ),
                      "mehrdad.momeny@gmail.com", "http://identi.ca/mtux" );
