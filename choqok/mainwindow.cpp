@@ -63,17 +63,6 @@ MainWindow::MainWindow()
     setAttribute ( Qt::WA_DeleteOnClose, false );
     setAttribute ( Qt::WA_QuitOnClose, false );
 
-    if( Choqok::BehaviorSettings::showSplashScreen() ){
-        KStandardDirs *stdDirs = KGlobal::dirs();
-        QString img = stdDirs->findResource( "data", "choqok/images/splash_screen.png" );
-//         kDebug()<<img;
-        QPixmap splashpix( img );
-        if(splashpix.isNull())
-            kDebug()<<"Pixmap is NULL";
-        m_splash = new KSplashScreen( splashpix, Qt::WindowStaysOnTopHint );
-        m_splash->show();
-    }
-
     timelineTimer = new QTimer( this );
     setWindowTitle( i18n("Choqok") );
     mainWidget = new KTabWidget( this );
@@ -115,7 +104,6 @@ MainWindow::MainWindow()
     if(pos.x() != -1 && pos.y() != -1) {
         move(pos);
     }
-
 }
 
 MainWindow::~MainWindow()
@@ -126,6 +114,18 @@ MainWindow::~MainWindow()
 void MainWindow::loadAllAccounts()
 {
     kDebug();
+
+    if( Choqok::BehaviorSettings::showSplashScreen() ){
+        KStandardDirs *stdDirs = KGlobal::dirs();
+        QString img = stdDirs->findResource( "data", "choqok/images/splash_screen.png" );
+        //         kDebug()<<img;
+        QPixmap splashpix( img );
+        if(splashpix.isNull())
+            kDebug()<<"Pixmap is NULL";
+        m_splash = new KSplashScreen( splashpix, Qt::WindowStaysOnTopHint );
+        m_splash->show();
+    }
+
     settingsChanged();
     QList<Choqok::Account*> accList = Choqok::AccountManager::self()->accounts();
     int count = microblogCounter = accList.count();
