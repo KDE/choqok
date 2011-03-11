@@ -53,8 +53,9 @@
 #include <kstandarddirs.h>
 #include <KSplashScreen>
 #include <KMenu>
-#include <uploadmediadialog.h>
+#include "uploadmediadialog.h"
 #include <knotifyconfigwidget.h>
+#include <KMenuBar>
 
 MainWindow::MainWindow()
     : Choqok::UI::MainWindow(), quickWidget(0), s_settingsDialog(0), m_splash(0), microblogCounter(0)
@@ -232,6 +233,12 @@ void MainWindow::setupActions()
     actionCollection()->addAction( QLatin1String( "choqok_enable_notify" ), enableNotify );
     enableNotify->setShortcut( KShortcut( Qt::CTRL | Qt::Key_N ) );
     connect( enableNotify, SIGNAL( toggled( bool ) ), this, SLOT( setNotificationsEnabled( bool ) ) );
+
+    KAction* hideMenuBar = new KAction( i18n("Hide Menubar"), this );
+    hideMenuBar->setCheckable(true);
+    actionCollection()->addAction( QLatin1String( "choqok_hide_menubar" ), hideMenuBar );
+    hideMenuBar->setShortcut( KShortcut(Qt::ControlModifier | Qt::Key_M) );
+    connect( hideMenuBar, SIGNAL(toggled(bool)), menuBar(), SLOT(setHidden(bool)) );
 
     KAction *clearAvatarCache = new KAction(KIcon("edit-clear"), i18n( "Clear Avatar Cache" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_clear_avatar_cache" ), clearAvatarCache );
