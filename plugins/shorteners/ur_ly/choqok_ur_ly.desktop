@@ -41,6 +41,7 @@ Name[sv]=ur.ly
 Name[tr]=ur.ly
 Name[uk]=ur.ly
 Name[x-test]=xxur.lyxx
+Name[zh_CN]=ur.ly
 Name[zh_TW]=ur.ly
 Comment=A plugin to shorten URLs via the ur.ly service.
 Comment[bg]=Приставка за съкращаване на адреси чрез услугата ur.ly.

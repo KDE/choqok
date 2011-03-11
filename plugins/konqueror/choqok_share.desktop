@@ -29,6 +29,7 @@ X-KDE-Submenu[sv]=Choqok
 X-KDE-Submenu[tr]=Choqok
 X-KDE-Submenu[uk]=Choqok
 X-KDE-Submenu[x-test]=xxChoqokxx
+X-KDE-Submenu[zh_CN]=Choqok
 X-KDE-Submenu[zh_TW]=Choqok
 X-KDE-ExcludeServiceTypes=kdedevice/*
 X-KDE-Protocol=!file
@@ -58,6 +59,7 @@ Name[ru]=Поделиться ссылкой с помощью Choqok
 Name[sv]=Dela länk med Choqok
 Name[uk]=Оприлюднити посилання за допомогою Choqok
 Name[x-test]=xxShare Link with Choqokxx
+Name[zh_CN]=用 Choqok 分享链接
 Name[zh_TW]=用 Choqok 分享連結
 
 [Desktop Action ShareLinkandTitle]
@@ -84,4 +86,5 @@ Name[ru]=Поделиться ссылкой (с названием) с помо
 Name[sv]=Dela länk med Choqok (rubrik)
 Name[uk]=Оприлюднити посилання за допомогою Choqok (заголовок)
 Name[x-test]=xxShare Link with Choqok (Title)xx
+Name[zh_CN]=用 Choqok 分享链接(标题)
 Name[zh_TW]=用 Choqok 分享連結（標題）

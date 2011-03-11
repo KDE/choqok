@@ -41,6 +41,7 @@ Name[sv]=TightUrl
 Name[tr]=TightUrl
 Name[uk]=TightUrl
 Name[x-test]=xxTightUrlxx
+Name[zh_CN]=TightUrl
 Name[zh_TW]=TightUrl
 Comment=A plugin to shorten URLs via the TightURL service.
 Comment[bg]=Приставка за съкращаване на адреси чрез услугата TightUrl.
