@@ -166,15 +166,6 @@ void PluginManager::shutdown()
 
     _kpmp->shutdownMode = PluginManagerPrivate::ShuttingDown;
 
-
-    /* save the contact list now, just in case a change was made very recently
-       and it hasn't autosaved yet
-       from a OO point of view, theses lines should not be there, but i don't
-       see better place -Olivier
-    */
-//     Choqok::ContactList::self()->save();
-//     Choqok::AccountManager::self()->save();
-
     // Remove any pending plugins to load, we're shutting down now :)
     _kpmp->pluginsToLoad.clear();
 
@@ -218,9 +209,12 @@ void PluginManager::slotPluginReadyForUnload()
         return;
     }
     kDebug() << plugin->pluginId() << "ready for unload";
-
+    _kpmp->loadedPlugins.remove(_kpmp->loadedPlugins.key(plugin));
     plugin->deleteLater();
     plugin = 0L;
+    if(_kpmp->loadedPlugins.count() < 1){
+        slotShutdownDone();
+    }
 }
 
 void PluginManager::slotShutdownTimeout()
