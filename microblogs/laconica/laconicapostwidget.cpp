@@ -169,7 +169,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
     } else if( scheme == "group" ) {
         KMenu menu;
         KAction *search = new KAction(KIcon("system-search"),
-                                      i18n("Show latest group posts", url.host()), &menu);
+                                      i18n("Show latest group posts"), &menu);
         KAction *openInBrowser = new KAction(KIcon("applications-internet"),
                                              i18n("Open group page in browser"), &menu);
         menu.addAction(search);
