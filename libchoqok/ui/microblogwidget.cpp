@@ -379,6 +379,11 @@ QLabel* MicroBlogWidget::latestUpdate()
     return d->latestUpdate;
 }
 
+TimelineWidget* MicroBlogWidget::currentTimeline()
+{
+ return qobject_cast<TimelineWidget*>(d->timelinesTabWidget->currentWidget());
+}
+
 }
 }
 #include "microblogwidget.moc"

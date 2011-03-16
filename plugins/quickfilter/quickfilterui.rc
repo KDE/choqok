@@ -1,0 +1,9 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="choqok" version="17">
+    <MenuBar>
+        <Menu name="tools"><text>Tools</text>
+            <Action name="filterByAuthor" />
+	    <Action name="filterByText" />
+        </Menu>
+    </MenuBar>
+</kpartgui>
