@@ -22,6 +22,7 @@
 #include <plugin.h>
 #include <QList>
 
+class KAction;
 namespace Choqok {
     class ShortenManager;
 namespace UI {
@@ -44,6 +45,8 @@ public slots:
   void createUiInterface();
   void showAuthorFilterUiInterface(bool);
   void showTextFilterUiInterface(bool);
+  void hideTextFilterbar();
+  void hideAuthorFilterbar();
 
 protected slots:
   void filterByAuthor();
@@ -60,6 +63,8 @@ private:
   KLineEdit *m_tledit;
   QToolBar *m_authorToolbar;
   QToolBar *m_textToolbar;
+  KAction *m_authorAction;
+  KAction *m_textAction;
 };
 
 #endif // QUICKFILTER_H

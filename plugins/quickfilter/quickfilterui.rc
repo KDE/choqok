@@ -3,7 +3,7 @@
     <MenuBar>
         <Menu name="tools"><text>Tools</text>
             <Action name="filterByAuthor" />
-	    <Action name="filterByText" />
+	    <Action name="filterByContent" />
         </Menu>
     </MenuBar>
 </kpartgui>
