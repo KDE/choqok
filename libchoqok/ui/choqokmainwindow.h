@@ -58,6 +58,7 @@ Q_SIGNALS:
     void markAllAsRead();
     void removeOldPosts();
     void quickPostCreated();
+    void currentMicroBlogWidgetChanged(Choqok::UI::MicroBlogWidget *widget);
 
 protected:
     void hideEvent( QHideEvent * event );

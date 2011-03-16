@@ -121,6 +121,11 @@ MicroBlogWidget::~MicroBlogWidget()
     delete d;
 }
 
+TimelineWidget* MicroBlogWidget::currentTimeline()
+{
+    return qobject_cast<TimelineWidget*>(d->timelinesTabWidget->currentWidget());
+}
+
 void MicroBlogWidget::settingsChanged()
 {
     foreach(TimelineWidget *wd, d->timelines){

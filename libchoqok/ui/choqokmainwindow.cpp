@@ -39,6 +39,9 @@ static const int TIMEOUT = 5000;
 Choqok::UI::MainWindow::MainWindow()
     :KXmlGuiWindow()
 {
+    mainWidget = new KTabWidget( this );
+    mainWidget->setDocumentMode(true);
+    mainWidget->setMovable(true);
 #ifdef QTINDICATE_BUILD
     Choqok::MessageIndicatorManager::self();
 #endif

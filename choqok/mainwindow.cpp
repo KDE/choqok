@@ -66,9 +66,6 @@ MainWindow::MainWindow()
 
     timelineTimer = new QTimer( this );
     setWindowTitle( i18n("Choqok") );
-    mainWidget = new KTabWidget( this );
-    mainWidget->setDocumentMode(true);
-    mainWidget->setMovable(true);
     connect( mainWidget, SIGNAL(currentChanged(int)), SLOT(slotCurrentBlogChanged(int)) );
     setCentralWidget( mainWidget );
 
@@ -561,8 +558,10 @@ void MainWindow::slotMarkAllAsRead()
 void MainWindow::slotCurrentBlogChanged(int)
 {
     Choqok::UI::MicroBlogWidget *wd = qobject_cast<Choqok::UI::MicroBlogWidget *>(mainWidget->currentWidget());
-    if( wd )
+    if( wd ) {
         wd->setFocus();
+        emit currentMicroBlogWidgetChanged(wd);
+    }
 }
 
 void MainWindow::oneMicroblogLoaded()
