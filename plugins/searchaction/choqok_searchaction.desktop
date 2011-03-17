@@ -49,6 +49,7 @@ Comment[bg]=Добавяне на действието Търсене към п�
 Comment[ca]=Afegeix una acció de cerca a la IU per l'API de microblocs com ara Twitter i StatusNet
 Comment[ca@valencia]=Afig una acció de cerca a la IU per l'API de microblocs com ara Twitter i StatusNet
 Comment[da]=Føj en søgehandling til brugerfladen til mikroblogs med Twitter-API, såsom Twitter og StatusNet
+Comment[de]=Eine Suchaktion für Microblogs mit einer Twitter-API, wie Twitter oder StatusNet, zur Oberfläche hinzufügen
 Comment[en_GB]=Add a Search action to the UI for Twitter API microblogs like Twitter and StatusNet
 Comment[es]=Añadir una acción de búsqueda a la interfaz del API de microblogs de Twitter, como Twitter y StatusNet
 Comment[et]=Otsimistoimingu lisamine Twitteri API mikroblogide, nt. Twitteri ja StatusNeti kasutajaliidesele
