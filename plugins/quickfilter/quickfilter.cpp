@@ -46,8 +46,6 @@ QuickFilter::QuickFilter(QObject* parent, const QList< QVariant >& args) : Choqo
     m_textAction->setCheckable(true);
     actionCollection()->addAction("filterByAuthor", m_authorAction);
     actionCollection()->addAction("filterByContent", m_textAction);
-    connect(m_authorAction, SIGNAL(toggled(bool)), SLOT(showAuthorFilterUiInterface(bool)));
-    connect(m_textAction, SIGNAL(toggled(bool)), SLOT(showContentFilterUiInterface(bool)));
     setXMLFile("quickfilterui.rc");
     createUiInterface();
     connect(Choqok::UI::Global::mainWindow(), SIGNAL(currentMicroBlogWidgetChanged(Choqok::UI::MicroBlogWidget*)), this, SLOT(showAllPosts()));
@@ -91,7 +89,13 @@ void QuickFilter::filterByContent()
 void QuickFilter::createUiInterface()
 {
     m_authorToolbar = new QToolBar(Choqok::UI::Global::mainWindow());
+    m_authorToolbar->setObjectName("authorFilterToolbar");
     m_textToolbar = new QToolBar(Choqok::UI::Global::mainWindow());
+    m_textToolbar->setObjectName("textFilterToolbar");
+    connect(m_authorAction, SIGNAL(toggled(bool)), m_authorToolbar, SLOT(setVisible(bool)));
+    connect(m_textAction, SIGNAL(toggled(bool)), m_textToolbar, SLOT(setVisible(bool)));
+    connect(m_authorToolbar, SIGNAL(visibilityChanged(bool)), SLOT(showAuthorFilterUiInterface(bool)));
+    connect(m_textToolbar, SIGNAL(visibilityChanged(bool)), SLOT(showContentFilterUiInterface(bool)));
     m_aledit = new KLineEdit(m_authorToolbar);
     m_aledit->setClearButtonShown(true);
     
@@ -129,22 +133,22 @@ void QuickFilter::createUiInterface()
 
 void QuickFilter::showAuthorFilterUiInterface(bool show)
 {
+    m_authorToolbar->setVisible(show);
     if (show) {
-        m_authorToolbar->show();
         m_aledit->setFocus();
+    } else {
+        m_aledit->clear();
     }
-    else
-        m_authorToolbar->hide();
 }
 
 void QuickFilter::showContentFilterUiInterface(bool show)
 {
+    m_textToolbar->setVisible(show);
     if (show) {
-        m_textToolbar->show();
         m_tledit->setFocus();
+    } else {
+        m_tledit->clear();
     }
-    else
-        m_textToolbar->hide();
 }
 
 void QuickFilter::updateUser(QString user)
@@ -178,6 +182,8 @@ void QuickFilter::showAllPosts()
     foreach(Choqok::UI::PostWidget* postwidget, Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()->postWidgets()) {
         postwidget->show();
     }
+    m_aledit->clear();
+    m_tledit->clear();
 }
 
 

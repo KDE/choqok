@@ -43,7 +43,6 @@ SysTrayIcon::SysTrayIcon( Choqok::UI::MainWindow* parent )
     setCategory(ApplicationStatus);
     setStandardActionsEnabled(false);
     setStatus(Active);
-//     isIconChanged = false;
     setIconByName( currentIconName() );
 }
 
@@ -112,7 +111,6 @@ void SysTrayIcon::updateUnreadCount( int changeOfUnreadPosts )
         p.setOpacity( 1.0 );
         p.drawText( overlayImg.rect(), Qt::AlignCenter, countStr );
         setIconByPixmap( overlayImg );
-        kDebug()<< iconPixmap().isNull();
     }
     this->setToolTip( "choqok", i18n("Choqok"), i18np( "1 unread post", "%1 unread posts", unread ) );
 }
