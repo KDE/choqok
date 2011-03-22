@@ -45,6 +45,13 @@ TranslatorConfig::TranslatorConfig(QWidget* parent, const QVariantList& args):
     layout->addWidget(wd);
     setButtons(KCModule::Apply | KCModule::Default);
     connect(ui.languagesList, SIGNAL(itemSelectionChanged()), SLOT(emitChanged()));
+
+    missingLangs.insert("zh-CN", i18nc("Translation Language", "Chinese Simplified"));
+    missingLangs.insert("zh-TW", i18nc("Translation Language", "Chinese Traditional"));
+    missingLangs.insert("tl", i18nc("Translation Language", "Filipino"));
+    missingLangs.insert("ht", i18nc("Translation Language", "Haitian Creole"));
+    missingLangs.insert("iw", i18nc("Translation Language", "Hebrew"));
+    missingLangs.insert("no", i18nc("Translation Language", "Norwegian"));
 }
 
 TranslatorConfig::~TranslatorConfig()
@@ -60,13 +67,7 @@ void TranslatorConfig::defaults()
 void TranslatorConfig::load()
 {
     kDebug();
-    QFile file(KStandardDirs::locate("data", "languagecodes"));
-    if(file.exists()) {
-        file.open(QFile::ReadOnly);
-        while (!file.atEnd()) {
-            langs << QLatin1String(file.readLine().trimmed());
-        }
-    }
+    langs << "af" << "sq" << "ar" << "be" << "bg" << "ca" << "zh-CN" << "zh-TW" << "hr" << "cs" << "da" << "nl" << "en" << "et" << "tl" << "fi" << "fr" << "gl" << "de" << "el" << "ht" << "iw" << "hi" << "hu" << "is" << "id" << "ga" << "it" << "ja" << "lv" << "lt" << "mk" << "ms" << "mt" << "no" << "fa" << "pl" << "pt" << "ro" << "ru" << "sr" << "sk" << "sl" << "es" << "sw" << "sv" << "th" << "tr" << "uk" << "vi" << "cy" << "yi";
     QStringList selected = TranslatorSettings::languages();
     foreach(const QString& ln, langs){
         QString flag = KStandardDirs::locate( "locale", QString( "l10n/%1/flag.png" ).arg( ln.toLower() ) );
@@ -74,7 +75,7 @@ void TranslatorConfig::load()
         if ( QFile::exists( flag ) )
             icon.addPixmap(QPixmap( flag ));
         QString langStr = KGlobal::locale()->languageCodeToName(ln.toLower());
-        QListWidgetItem* item = new QListWidgetItem(icon, langStr.isEmpty() ? ln : langStr);
+        QListWidgetItem* item = new QListWidgetItem(icon, langStr.isEmpty() ? missingLangs.value(ln) : langStr);
         item->setData(32, ln);
         ui.languagesList->addItem(item);
         if(selected.contains(ln))

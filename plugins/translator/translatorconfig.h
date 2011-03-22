@@ -44,6 +44,7 @@ protected slots:
 private:
     QStringList langs;
     Ui_TranslatorPrefsBase ui;
+	QMap<QString, QString> missingLangs;
 };
 
 #endif // TRANSLATORCONFIG_H
