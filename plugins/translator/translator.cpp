@@ -42,6 +42,7 @@
 #include <QVBoxLayout>
 #include <KDialog>
 #include <KTabWidget>
+#include "sharedtools.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Translator > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_translator" ) )
@@ -118,23 +119,22 @@ void Translator::slotTranslated(KJob* job)
 QMenu* Translator::setupTranslateMenu()
 {
     QMenu *menu = new QMenu;
-    KAction* setup = new KAction(KIcon("configure"), i18n("Configure Translator"), menu);
-    connect(setup, SIGNAL(triggered(bool)), this, SLOT(slotConfigureTranslator()));
-    menu->addAction(setup);
-    menu->addSeparator();
     TranslatorSettings::self()->readConfig();
     langs =  TranslatorSettings::languages();
     foreach(const QString& lang, langs){
-        QString flag = KStandardDirs::locate( "locale", QString( "l10n/%1/flag.png" ).arg( lang.toLower() ) );
         KIcon icon;
-        if ( QFile::exists( flag ) )
-            icon.addPixmap(QPixmap( flag ));
+		icon.addPixmap(QPixmap(SharedTools::self()->languageFlag(lang)));
         QString langStr = KGlobal::locale()->languageCodeToName(lang);
-        KAction* act = new KAction(icon, langStr.isEmpty() ? lang : langStr, 0);
+        KAction* act =
+        new KAction(icon, langStr.isEmpty() ? SharedTools::self()->missingLangs().value(lang) : langStr, 0);
         act->setData(lang);
         connect( act, SIGNAL(triggered(bool)), SLOT(translate()));
         menu->addAction(act);
     }
+    menu->addSeparator();
+    KAction* setup = new KAction(KIcon("configure"), i18n("Configure Translator"), menu);
+    connect(setup, SIGNAL(triggered(bool)), this, SLOT(slotConfigureTranslator()));
+    menu->addAction(setup);
     return menu;
 }
 

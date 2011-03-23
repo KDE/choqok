@@ -6,6 +6,7 @@ ${CHOQOK_INCLUDES}
 ########### next target ###############
 
 set( choqok_translator_PART_SRCS
+sharedtools.cpp
 translator.cpp )
 
 kde4_add_kcfg_files(choqok_translator_PART_SRCS translatorsettings.kcfgc)
@@ -20,7 +21,8 @@ install(FILES languagecodes DESTINATION ${DATA_INSTALL_DIR}/choqok)
 ########### next target ###############
 
 set( kcm_choqok_translator_PART_SRCS
-translatorconfig.cpp )
+translatorconfig.cpp
+sharedtools.cpp )
 
 kde4_add_ui_files(kcm_choqok_translator_PART_SRCS translatorprefs.ui )
 

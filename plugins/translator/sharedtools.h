@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2009-2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    Copyright (C) 2011 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -21,29 +21,27 @@
     along with this program; if not, see http://www.gnu.org/licenses/
 
 */
+#ifndef SHAREDTOOLS_H
+#define SHAREDTOOLS_H
 
-#ifndef TRANSLATORCONFIG_H
-#define TRANSLATORCONFIG_H
+#include <QObject>
+#include <QMap>
+#include <QStringList>
 
-#include <kcmodule.h>
-#include "ui_translatorprefs.h"
-
-class TranslatorConfig : public KCModule
+class SharedTools : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    TranslatorConfig(QWidget* parent, const QVariantList& args);
-    ~TranslatorConfig();
-
-    virtual void save();
-    virtual void load();
-    virtual void defaults();
-
-protected slots:
-    void emitChanged();
+    static SharedTools* self();
+    virtual ~SharedTools();
+    QMap<QString, QString> missingLangs() const;
+    QStringList languageCodes() const;
+	QString languageFlag( const QString& languageCode ) const;
 private:
-    QStringList langs;
-    Ui_TranslatorPrefsBase ui;
+    static SharedTools* _self;
+    SharedTools();
+    QMap<QString, QString> _missingLangs;
+    QStringList _languageCodes;
 };
 
-#endif // TRANSLATORCONFIG_H
+#endif // SHAREDTOOLS_H
