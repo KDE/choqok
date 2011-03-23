@@ -12,7 +12,7 @@ kde4_add_kcfg_files(choqok_translator_PART_SRCS translatorsettings.kcfgc)
 
 kde4_add_plugin(choqok_translator ${choqok_translator_PART_SRCS})
 
-target_link_libraries(choqok_translator ${KDE4_KIO_LIBS} ${QJSON_LIBRARY} choqok)
+target_link_libraries(choqok_translator ${KDE4_KUTILS_LIBS} ${KDE4_KIO_LIBS} ${QJSON_LIBRARY} choqok)
 
 install(TARGETS choqok_translator DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES languagecodes DESTINATION ${DATA_INSTALL_DIR}/choqok)

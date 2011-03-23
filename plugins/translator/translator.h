@@ -56,6 +56,8 @@ public:
 protected slots:
     void translate();
     void slotTranslated(KJob*);
+    void slotConfigureTranslator();
+    void slotUpdateMenu();
 
 private:
     QMenu *setupTranslateMenu();

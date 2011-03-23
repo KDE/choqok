@@ -36,6 +36,12 @@
 #include <QFile>
 #include <qjson/parser.h>
 #include <choqokappearancesettings.h>
+#include <KPluginInfo>
+#include <KCModuleProxy>
+#include <KCModuleInfo>
+#include <QVBoxLayout>
+#include <KDialog>
+#include <KTabWidget>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Translator > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_translator" ) )
@@ -47,6 +53,7 @@ Translator::Translator(QObject* parent, const QList< QVariant >& )
     translateAction = new KAction(i18n("Translate to ..."), this);
     Choqok::UI::PostWidget::addAction(translateAction);
     translateAction->setMenu(setupTranslateMenu());
+    connect(TranslatorSettings::self(), SIGNAL(configChanged()), SLOT(slotUpdateMenu()));
 }
 
 Translator::~Translator()
@@ -111,19 +118,12 @@ void Translator::slotTranslated(KJob* job)
 QMenu* Translator::setupTranslateMenu()
 {
     QMenu *menu = new QMenu;
-    if(TranslatorSettings::languages().isEmpty()){
-        langs.clear();
-        QFile file(KStandardDirs::locate("data", "languagecodes"));
-        if(file.exists()) {
-            file.open(QFile::ReadOnly);
-            while (!file.atEnd()) {
-                langs << QLatin1String(file.readLine().trimmed());
-            }
-        }
-    } else {
-        langs =  TranslatorSettings::languages();
-    }
-//     kDebug()<<langs;
+    KAction* setup = new KAction(KIcon("configure"), i18n("Configure Translator"), menu);
+    connect(setup, SIGNAL(triggered(bool)), this, SLOT(slotConfigureTranslator()));
+    menu->addAction(setup);
+    menu->addSeparator();
+    TranslatorSettings::self()->readConfig();
+    langs =  TranslatorSettings::languages();
     foreach(const QString& lang, langs){
         QString flag = KStandardDirs::locate( "locale", QString( "l10n/%1/flag.png" ).arg( lang.toLower() ) );
         KIcon icon;
@@ -137,5 +137,92 @@ QMenu* Translator::setupTranslateMenu()
     }
     return menu;
 }
+
+void Translator::slotUpdateMenu()
+{
+    qDeleteAll(translateAction->menu()->actions());
+    translateAction->menu()->clear();
+    translateAction->setMenu(setupTranslateMenu());
+}
+
+void Translator::slotConfigureTranslator()
+{
+    KPluginInfo pluginInfo = this->pluginInfo();
+    QPointer<KDialog> configDialog = new KDialog(Choqok::UI::Global::mainWindow());
+    configDialog->setWindowTitle(pluginInfo.name());
+    // The number of KCModuleProxies in use determines whether to use a tabwidget
+    KTabWidget *newTabWidget = 0;
+    // Widget to use for the setting dialog's main widget,
+    // either a KTabWidget or a KCModuleProxy
+    QWidget * mainWidget = 0;
+    // Widget to use as the KCModuleProxy's parent.
+    // The first proxy is owned by the dialog itself
+    QWidget *moduleProxyParentWidget = configDialog;
+
+    QList<KCModuleProxy*> moduleProxyList;
+
+    foreach (const KService::Ptr &servicePtr, pluginInfo.kcmServices()) {
+        if(!servicePtr->noDisplay()) {
+            KCModuleInfo moduleInfo(servicePtr);
+            KCModuleProxy *currentModuleProxy = new KCModuleProxy(moduleInfo, moduleProxyParentWidget);
+            if (currentModuleProxy->realModule()) {
+                moduleProxyList << currentModuleProxy;
+                if (mainWidget && !newTabWidget) {
+                    // we already created one KCModuleProxy, so we need a tab widget.
+                    // Move the first proxy into the tab widget and ensure this and subsequent
+                    // proxies are in the tab widget
+                    newTabWidget = new KTabWidget(configDialog);
+                    moduleProxyParentWidget = newTabWidget;
+                    mainWidget->setParent( newTabWidget );
+                    KCModuleProxy *moduleProxy = qobject_cast<KCModuleProxy*>(mainWidget);
+                    if (moduleProxy) {
+                        newTabWidget->addTab(mainWidget, moduleProxy->moduleInfo().moduleName());
+                        mainWidget = newTabWidget;
+                    } else {
+                        delete newTabWidget;
+                        newTabWidget = 0;
+                        moduleProxyParentWidget = configDialog;
+                        mainWidget->setParent(0);
+                    }
+                }
+
+                if (newTabWidget) {
+                    newTabWidget->addTab(currentModuleProxy, servicePtr->name());
+                } else {
+                    mainWidget = currentModuleProxy;
+                }
+            } else {
+                delete currentModuleProxy;
+            }
+        }
+    }
+        // it could happen that we had services to show, but none of them were real modules.
+    if (moduleProxyList.count()) {
+        configDialog->setButtons(KDialog::Ok | KDialog::Cancel);
+
+        QWidget *showWidget = new QWidget(configDialog);
+        QVBoxLayout *layout = new QVBoxLayout;
+        showWidget->setLayout(layout);
+        layout->addWidget(mainWidget);
+        layout->insertSpacing(-1, KDialog::marginHint());
+        configDialog->setMainWidget(showWidget);
+
+        if (configDialog->exec() == QDialog::Accepted) {
+            foreach (KCModuleProxy *moduleProxy, moduleProxyList) {
+                QStringList parentComponents = moduleProxy->moduleInfo().service()->property("X-KDE-ParentComponents").toStringList();
+                moduleProxy->save();
+                slotUpdateMenu();
+            }
+        } else {
+            foreach (KCModuleProxy *moduleProxy, moduleProxyList) {
+                moduleProxy->load();
+            }
+        }
+
+        qDeleteAll(moduleProxyList);
+        moduleProxyList.clear();
+    }
+}
+
 
 #include "translator.moc"
