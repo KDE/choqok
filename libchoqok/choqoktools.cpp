@@ -58,7 +58,7 @@ QString Choqok::qoauthErrorText(int code)
         case QOAuth::Timeout:
             return i18n("Timeout on server");
         case QOAuth::Unauthorized:
-            return i18n("Unauthorized Error");
+            return i18n("Authorization Error");
         case QOAuth::UnsupportedHttpMethod:
             return i18n("Internal Error");
         case QOAuth::OtherError:
