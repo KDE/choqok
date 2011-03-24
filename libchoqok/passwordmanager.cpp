@@ -58,7 +58,7 @@ public:
         WId id = 0;
         if(Choqok::UI::Global::mainWindow())
             id = Choqok::UI::Global::mainWindow()->winId();
-        wallet = KWallet::Wallet::openWallet(KWallet::Wallet::LocalWallet(), id);
+        wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), id);
         if ( wallet ) {
             if ( !wallet->setFolder( "choqok" ) ) {
                 wallet->createFolder( "choqok" );
