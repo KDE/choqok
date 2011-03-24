@@ -271,7 +271,7 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
         grp.writeEntry( "repeatedPostId", post->repeatedPostId.toString());
     }
     postsBackup.sync();
-    if(qobject_cast<Choqok::Application*>(Choqok::Application::instance())->isShuttingDown()) {
+    if(Choqok::Application::isShuttingDown()) {
         --d->countOfTimelinesToSave;
         if(d->countOfTimelinesToSave < 1)
             emit readyForUnload();
