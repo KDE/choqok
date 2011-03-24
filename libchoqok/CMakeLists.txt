@@ -4,6 +4,7 @@ ${CHOQOK_INCLUDES}
 )
 
 set(choqok_LIB_SRCS
+application.cpp
 plugin.cpp
 shortener.cpp
 uploader.cpp
@@ -76,6 +77,7 @@ install( FILES choqokplugin.desktop choqokshortenerplugin.desktop
 install( FILES
     ${CMAKE_CURRENT_BINARY_DIR}/choqokbehaviorsettings.h
     ${CMAKE_CURRENT_BINARY_DIR}/choqokappearancesettings.h
+    application.h
     account.h
     accountmanager.h
     choqok_export.h

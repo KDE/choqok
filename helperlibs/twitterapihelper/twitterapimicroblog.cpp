@@ -52,6 +52,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "twitterapicomposerwidget.h"
 #include <QtOAuth/QtOAuth>
 #include <choqokappearancesettings.h>
+#include "application.h"
 
 class TwitterApiMicroBlog::Private
 {
@@ -270,9 +271,11 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
         grp.writeEntry( "repeatedPostId", post->repeatedPostId.toString());
     }
     postsBackup.sync();
-    --d->countOfTimelinesToSave;
-    if(d->countOfTimelinesToSave < 1)
-        emit readyForUnload();
+    if(qobject_cast<Choqok::Application*>(Choqok::Application::instance())->isShuttingDown()) {
+        --d->countOfTimelinesToSave;
+        if(d->countOfTimelinesToSave < 1)
+            emit readyForUnload();
+    }
 }
 
 Choqok::UI::ComposerWidget* TwitterApiMicroBlog::createComposerWidget(Choqok::Account* account, QWidget* parent)

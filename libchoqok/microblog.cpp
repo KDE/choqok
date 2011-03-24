@@ -32,6 +32,7 @@
 #include "postwidget.h"
 #include "microblogwidget.h"
 #include "accountmanager.h"
+#include <choqokbehaviorsettings.h>
 
 namespace Choqok
 {
@@ -42,12 +43,18 @@ public:
     QString homepage;
     uint charLimit;
     QStringList timelineTypes;
+    QTimer* saveTimelinesTimer;
 };
 
 MicroBlog::MicroBlog( const KComponentData &instance, QObject *parent )
     :Plugin(instance, parent), d(new Private)
 {
     kDebug();
+    d->saveTimelinesTimer = new QTimer(this);
+    d->saveTimelinesTimer->setInterval(BehaviorSettings::notifyInterval() * 60000);
+    connect(d->saveTimelinesTimer, SIGNAL(timeout()), SIGNAL(saveTimelines()));
+    connect(BehaviorSettings::self(), SIGNAL(configChanged()), this, SLOT(slotConfigChanged()));
+	d->saveTimelinesTimer->start();
 }
 
 MicroBlog::~MicroBlog()
@@ -134,6 +141,11 @@ void MicroBlog::addTimelineName(const QString& name)
 bool MicroBlog::isValidTimeline( const QString &timeline )
 {
     return d->timelineTypes.contains( timeline );
+}
+
+void MicroBlog::slotConfigChanged()
+{
+    d->saveTimelinesTimer->setInterval(BehaviorSettings::notifyInterval() * 60000);
 }
 
 /// UI Objects:

@@ -321,6 +321,9 @@ protected:
     void setServiceHomepageUrl(const QString&);
     void setCharLimit(uint);
 
+protected slots:
+    void slotConfigChanged();
+
 private:
     class Private;
     Private * const d;

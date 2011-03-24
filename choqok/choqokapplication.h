@@ -27,7 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <qpointer.h>
 
-#include <kuniqueapplication.h>
+#include "application.h"
 
 class MainWindow;
 class QSessionManager;
@@ -35,19 +35,13 @@ class QSessionManager;
 /**
  * @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
  */
-class ChoqokApplication : public KUniqueApplication
+class ChoqokApplication : public Choqok::Application
 {
     Q_OBJECT
 
 public:
     ChoqokApplication();
     ~ChoqokApplication();
-
-    /**
-     * Method to return whether or not we're shutting down
-     * or not at this point.
-     */
-    bool isShuttingDown() const { return m_isShuttingDown; }
 
     virtual int newInstance();
 
@@ -76,7 +70,6 @@ private:
     // The main window might get deleted behind our back (W_DestructiveClose),
     // so use a guarded pointer
     QPointer<MainWindow> m_mainWindow;
-    bool m_isShuttingDown;
 };
 
 #endif

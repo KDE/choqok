@@ -31,6 +31,7 @@
 #include "ocsconfigurewidget.h"
 #include <KMessageBox>
 #include "postwidget.h"
+#include <application.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < OCSMicroblog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_ocs" ) )
@@ -83,7 +84,8 @@ void OCSMicroblog::saveTimeline(Choqok::Account* account, const QString& timelin
         grp.writeEntry( "isRead" , post->isRead );
     }
     postsBackup.sync();
-    emit readyForUnload();
+	if(Choqok::Application::isShuttingDown())
+		emit readyForUnload();
 }
 
 QList< Choqok::Post* > OCSMicroblog::loadTimeline(Choqok::Account* account, const QString& timelineName)

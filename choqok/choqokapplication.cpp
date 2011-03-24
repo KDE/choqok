@@ -41,7 +41,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <dbushandler.h>
 
 ChoqokApplication::ChoqokApplication()
-: KUniqueApplication( true, true ), m_isShuttingDown(false)
+: Choqok::Application()
 {
     kDebug();
     setQuitOnLastWindowClosed( false );
@@ -49,9 +49,6 @@ ChoqokApplication::ChoqokApplication()
     Choqok::ChoqokDbus();
     
     m_mainWindow = new MainWindow;
-//     if ( Choqok::BehaviorSettings::showMainWinOnStart() ) {
-//         m_mainWindow->show();
-//     }
 
     Choqok::UI::Global::setMainWindow( m_mainWindow );
 
@@ -75,7 +72,7 @@ void ChoqokApplication::quitChoqok()
 {
     kDebug() ;
 
-    m_isShuttingDown = true;
+    setShuttingDown(true);
 
     if ( m_mainWindow )
     {
@@ -88,7 +85,7 @@ void ChoqokApplication::quitChoqok()
 
 void ChoqokApplication::commitData( QSessionManager &sm )
 {
-    m_isShuttingDown = true;
+    setShuttingDown(true);
     KUniqueApplication::commitData( sm );
 }
 
