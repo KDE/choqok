@@ -64,8 +64,9 @@ QuickFilter::~QuickFilter()
 void QuickFilter::filterByAuthor()
 {
     m_filterUser = m_aledit->text();
-    if (!m_filterUser.isEmpty()) {
-        foreach(Choqok::UI::PostWidget* postwidget, Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()->postWidgets()) {
+    if (!m_filterUser.isEmpty() && Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()) {
+        foreach(Choqok::UI::PostWidget* postwidget,
+                Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()->postWidgets()) {
             if (postwidget->currentPost().author.userName != m_filterUser) {
                 postwidget->hide();
             }
@@ -82,8 +83,9 @@ void QuickFilter::filterByAuthor()
 void QuickFilter::filterByContent()
 {
     m_filterText = m_tledit->text();
-    if (!m_filterText.isEmpty()) {
-        foreach(Choqok::UI::PostWidget* postwidget, Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()->postWidgets()) {
+    if (!m_filterText.isEmpty() && Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()) {
+        foreach(Choqok::UI::PostWidget* postwidget,
+                Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()->postWidgets()) {
             if ( ! postwidget->currentPost().content.contains(m_filterText, Qt::CaseInsensitive) ) {
                 postwidget->hide();
             }
@@ -190,11 +192,14 @@ void QuickFilter::hideContentFilterbar()
 
 void QuickFilter::showAllPosts()
 {
-    foreach(Choqok::UI::PostWidget* postwidget, Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()->postWidgets()) {
-        postwidget->show();
+    if(Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()) {
+        foreach(Choqok::UI::PostWidget* postwidget,
+                Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()->postWidgets()) {
+            postwidget->show();
+        }
+        m_aledit->clear();
+        m_tledit->clear();
     }
-    m_aledit->clear();
-    m_tledit->clear();
 }
 
 
