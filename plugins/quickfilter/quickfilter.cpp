@@ -64,6 +64,9 @@ void QuickFilter::filterByAuthor()
             if (postwidget->currentPost().author.userName != m_filterUser) {
                 postwidget->hide();
             }
+            else {
+                postwidget->show();
+            }
         }
     }
     else {
@@ -78,6 +81,9 @@ void QuickFilter::filterByContent()
         foreach(Choqok::UI::PostWidget* postwidget, Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()->postWidgets()) {
             if ( ! postwidget->currentPost().content.contains(m_filterText, Qt::CaseInsensitive) ) {
                 postwidget->hide();
+            }
+            else {
+                postwidget->show();
             }
         }
     }
