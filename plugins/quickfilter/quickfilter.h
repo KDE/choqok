@@ -57,6 +57,7 @@ public slots:
 protected slots:
     void filterByAuthor();
     void filterByContent();
+    void filterNewPost(Choqok::UI::PostWidget*);
     
 private slots:
     void updateUser(QString user);

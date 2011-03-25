@@ -54,6 +54,7 @@ QuickFilter::QuickFilter(QObject* parent, const QList< QVariant >& args) : Choqo
     setXMLFile("quickfilterui.rc");
     createUiInterface();
     connect(Choqok::UI::Global::mainWindow(), SIGNAL(currentMicroBlogWidgetChanged(Choqok::UI::MicroBlogWidget*)), this, SLOT(showAllPosts()));
+    connect(Choqok::UI::Global::SessionManager::self(), SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)), this, SLOT(filterNewPost(Choqok::UI::PostWidget*)));
 }
 
 QuickFilter::~QuickFilter()
@@ -180,12 +181,14 @@ void QuickFilter::updateContent(QString text)
 
 void QuickFilter::hideAuthorFilterbar()
 {
+    m_aledit->clear();
     m_authorToolbar->hide();
     m_authorAction->setChecked(false);
 }
 
 void QuickFilter::hideContentFilterbar()
 {
+    m_tledit->clear();
     m_textToolbar->hide();
     m_textAction->setChecked(false);
 }
@@ -202,5 +205,20 @@ void QuickFilter::showAllPosts()
     }
 }
 
+void QuickFilter::filterNewPost(Choqok::UI::PostWidget* np)
+{
+    if (!m_aledit->text().isEmpty()) {
+        if (!np->content().contains(m_aledit->text()))
+            np->hide();
+        else
+            np->show();
+    }
+    if (!m_tledit->text().isEmpty()) {
+        if (!np->content().contains(m_tledit->text()))
+            np->hide();
+        else
+            np->show();
+    }
+}
 
 
