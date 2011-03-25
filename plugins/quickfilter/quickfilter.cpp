@@ -45,6 +45,7 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_quickfilter" ) )
 
 QuickFilter::QuickFilter(QObject* parent, const QList< QVariant >& args) : Choqok::Plugin(MyPluginFactory::componentData(), parent)
 {
+    Q_UNUSED(args);
     m_authorAction = new KAction(KIcon("document-preview"), i18n("Filter by author"), this);
     m_authorAction->setCheckable(true);
     m_textAction = new KAction(KIcon("document-preview"), i18n("Filter by content"), this);
