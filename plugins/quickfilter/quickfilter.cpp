@@ -69,7 +69,7 @@ void QuickFilter::filterByAuthor()
     if (!m_filterUser.isEmpty() && Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()) {
         foreach(Choqok::UI::PostWidget* postwidget,
                 Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()->postWidgets()) {
-            if (postwidget->currentPost().author.userName != m_filterUser) {
+            if ( !postwidget->currentPost().author.userName.contains(m_filterUser, Qt::CaseInsensitive) ) {
                 postwidget->hide();
             }
             else {
@@ -88,7 +88,7 @@ void QuickFilter::filterByContent()
     if (!m_filterText.isEmpty() && Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()) {
         foreach(Choqok::UI::PostWidget* postwidget,
                 Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()->postWidgets()) {
-            if ( ! postwidget->currentPost().content.contains(m_filterText, Qt::CaseInsensitive) ) {
+            if ( !postwidget->currentPost().content.contains(m_filterText, Qt::CaseInsensitive) ) {
                 postwidget->hide();
             }
             else {
