@@ -30,6 +30,7 @@
 class KAction;
 namespace Choqok {
     class ShortenManager;
+    class Account;
     namespace UI {
         class PostWidget;
         class MicroBlogWidget;
@@ -57,7 +58,7 @@ public slots:
 protected slots:
     void filterByAuthor();
     void filterByContent();
-    void filterNewPost(Choqok::UI::PostWidget*);
+    void filterNewPost(Choqok::UI::PostWidget*, Choqok::Account*, QString);
     
 private slots:
     void updateUser(QString user);

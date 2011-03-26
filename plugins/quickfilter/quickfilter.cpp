@@ -55,7 +55,7 @@ QuickFilter::QuickFilter(QObject* parent, const QList< QVariant >& args) : Choqo
     setXMLFile("quickfilterui.rc");
     createUiInterface();
     connect(Choqok::UI::Global::mainWindow(), SIGNAL(currentMicroBlogWidgetChanged(Choqok::UI::MicroBlogWidget*)), this, SLOT(showAllPosts()));
-    connect(Choqok::UI::Global::SessionManager::self(), SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)), this, SLOT(filterNewPost(Choqok::UI::PostWidget*)));
+    connect(Choqok::UI::Global::SessionManager::self(), SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)), this, SLOT(filterNewPost(Choqok::UI::PostWidget*,Choqok::Account*,QString)));
 }
 
 QuickFilter::~QuickFilter()
@@ -206,19 +206,22 @@ void QuickFilter::showAllPosts()
     }
 }
 
-void QuickFilter::filterNewPost(Choqok::UI::PostWidget* np)
+void QuickFilter::filterNewPost(Choqok::UI::PostWidget* np, Choqok::Account* acc, QString timeline)
 {
-    if (!m_aledit->text().isEmpty()) {
-        if (!np->content().contains(m_aledit->text()))
-            np->hide();
-        else
-            np->show();
-    }
-    if (!m_tledit->text().isEmpty()) {
-        if (!np->content().contains(m_tledit->text()))
-            np->hide();
-        else
-            np->show();
+    if (Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentAccount() == acc &&
+        Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()->timelineName() == timeline) {
+        if (!m_aledit->text().isEmpty()) {
+            if (!np->content().contains(m_aledit->text()))
+                np->hide();
+            else
+                np->show();
+        }
+        if (!m_tledit->text().isEmpty()) {
+            if (!np->content().contains(m_tledit->text()))
+                np->hide();
+            else
+                np->show();
+        }
     }
 }
 
