@@ -51,8 +51,6 @@ public slots:
     void createUiInterface();
     void showAuthorFilterUiInterface(bool);
     void showContentFilterUiInterface(bool);
-    void hideContentFilterbar();
-    void hideAuthorFilterbar();
     void showAllPosts();
     
 protected slots:

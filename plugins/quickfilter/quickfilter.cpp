@@ -55,7 +55,6 @@ QuickFilter::QuickFilter(QObject* parent, const QList< QVariant >& args) : Choqo
     setXMLFile("quickfilterui.rc");
     createUiInterface();
     connect(Choqok::UI::Global::mainWindow(), SIGNAL(currentMicroBlogWidgetChanged(Choqok::UI::MicroBlogWidget*)), this, SLOT(showAllPosts()));
-    connect(Choqok::UI::Global::SessionManager::self(), SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)), this, SLOT(filterNewPost(Choqok::UI::PostWidget*,Choqok::Account*,QString)));
 }
 
 QuickFilter::~QuickFilter()
@@ -76,6 +75,9 @@ void QuickFilter::filterByAuthor()
                 postwidget->show();
             }
         }
+        connect(Choqok::UI::Global::SessionManager::self(),
+                SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
+                this, SLOT(filterNewPost(Choqok::UI::PostWidget*,Choqok::Account*,QString)));
     }
     else {
         showAllPosts();
@@ -95,6 +97,9 @@ void QuickFilter::filterByContent()
                 postwidget->show();
             }
         }
+        connect(Choqok::UI::Global::SessionManager::self(),
+                SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
+                this, SLOT(filterNewPost(Choqok::UI::PostWidget*,Choqok::Account*,QString)));
     }
     else {
         showAllPosts();
@@ -124,14 +129,14 @@ void QuickFilter::createUiInterface()
     m_authorToolbar->addWidget(m_aledit);
     QPushButton *authorCloseButton = new QPushButton(KIcon("dialog-close"), QString() , m_authorToolbar);
     authorCloseButton->setMaximumWidth(authorCloseButton->height());
-    connect(authorCloseButton, SIGNAL(clicked(bool)), this, SLOT(hideAuthorFilterbar()));
+    connect(authorCloseButton, SIGNAL(clicked(bool)), m_authorToolbar, SLOT(hide()));
     m_authorToolbar->addWidget(authorCloseButton);
     
     m_textToolbar->addWidget(tlabel);
     m_textToolbar->addWidget(m_tledit);
     QPushButton *textCloseButton = new QPushButton(KIcon("dialog-close"), QString() , m_textToolbar);
     textCloseButton->setMaximumWidth(textCloseButton->height());
-    connect(textCloseButton, SIGNAL(clicked(bool)), this, SLOT(hideContentFilterbar()));
+    connect(textCloseButton, SIGNAL(clicked(bool)), m_textToolbar, SLOT(hide()));
     m_textToolbar->addWidget(textCloseButton);
     
     connect(m_aledit, SIGNAL(editingFinished()), this , SLOT(filterByAuthor()));
@@ -153,6 +158,7 @@ void QuickFilter::showAuthorFilterUiInterface(bool show)
         m_aledit->setFocus();
     } else {
         m_aledit->clear();
+        m_authorAction->setChecked(false);
     }
 }
 
@@ -163,6 +169,7 @@ void QuickFilter::showContentFilterUiInterface(bool show)
         m_tledit->setFocus();
     } else {
         m_tledit->clear();
+        m_textAction->setChecked(false);
     }
 }
 
@@ -180,20 +187,6 @@ void QuickFilter::updateContent(QString text)
     }
 }
 
-void QuickFilter::hideAuthorFilterbar()
-{
-    m_aledit->clear();
-    m_authorToolbar->hide();
-    m_authorAction->setChecked(false);
-}
-
-void QuickFilter::hideContentFilterbar()
-{
-    m_tledit->clear();
-    m_textToolbar->hide();
-    m_textAction->setChecked(false);
-}
-
 void QuickFilter::showAllPosts()
 {
     if(Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()) {
@@ -203,21 +196,26 @@ void QuickFilter::showAllPosts()
         }
         m_aledit->clear();
         m_tledit->clear();
+        disconnect(Choqok::UI::Global::SessionManager::self(),
+                SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
+                this, SLOT(filterNewPost(Choqok::UI::PostWidget*,Choqok::Account*,QString)));
     }
 }
 
 void QuickFilter::filterNewPost(Choqok::UI::PostWidget* np, Choqok::Account* acc, QString timeline)
 {
+    kDebug()<<Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentAccount()->alias()<<acc->alias()<<timeline;
     if (Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentAccount() == acc &&
         Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()->timelineName() == timeline) {
+        kDebug()<<"pass1";
         if (!m_aledit->text().isEmpty()) {
-            if (!np->content().contains(m_aledit->text()))
+            if (!np->currentPost().author.userName.contains(m_aledit->text()))
                 np->hide();
             else
                 np->show();
         }
         if (!m_tledit->text().isEmpty()) {
-            if (!np->content().contains(m_tledit->text()))
+            if (!np->currentPost().content.contains(m_tledit->text()))
                 np->hide();
             else
                 np->show();
