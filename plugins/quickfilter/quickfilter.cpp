@@ -155,6 +155,7 @@ void QuickFilter::showAuthorFilterUiInterface(bool show)
 {
     m_authorToolbar->setVisible(show);
     if (show) {
+        m_textAction->setChecked(false);
         m_aledit->setFocus();
     } else {
         m_aledit->clear();
@@ -166,6 +167,7 @@ void QuickFilter::showContentFilterUiInterface(bool show)
 {
     m_textToolbar->setVisible(show);
     if (show) {
+        m_authorAction->setChecked(false);
         m_tledit->setFocus();
     } else {
         m_tledit->clear();
