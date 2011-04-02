@@ -1,3 +1,17 @@
+=== Version 1.1 -- 2-Apr-2011 ===
+* System tray icon problem in Gnome fixed.
+* Hide Menu-bar option.
+* Choqok caches posts automatically and not just at exit!
+* Annoying video preview plugin problem that causes Choqok to crash fixed!
+* Bug fixes: 243368, 250774, 237265, 265013, 267852, 268128, 264255, 267878
+
+New Plugins:
+    - Translator plugin
+    - Quick (local) Filter (Farhad Hedayati Fard)
+
+=== Version 1.0 -- 27-Jan-2011 ===
+* Bug fixes
+
 === Version 0.9.98 (1.0 RC1) -- 06-Dec-2010 ===
 * Twitter Lists support in Choqok [FEATURE:216249]
 * Option to show timelines in reverse order [FEATURE:241743]
