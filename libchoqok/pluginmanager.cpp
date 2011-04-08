@@ -67,7 +67,7 @@ public:
             Plugin *plugin = it.value();
             loadedPlugins.remove(info);
             plugin->disconnect(&instance, SLOT(slotPluginDestroyed(QObject*)));
-            delete plugin;
+            plugin->deleteLater();;
         }
     }
 
