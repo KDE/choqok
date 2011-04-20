@@ -138,12 +138,14 @@ TwitterApiSearchTimelineWidget* TwitterApiMicroBlogWidget::addSearchTimelineWidg
 
 void TwitterApiMicroBlogWidget::slotCurrentTimelineChanged(int index)
 {
-    Choqok::UI::TimelineWidget *stw =
-            qobject_cast<Choqok::UI::TimelineWidget *>(timelinesTabWidget()->widget(index));
-    if(stw->isClosable())
-        d->btnCloseSearch->setEnabled(true);
-    else
-        d->btnCloseSearch->setEnabled(false);
+  if ( index > -1 ) {
+      Choqok::UI::TimelineWidget *stw =
+              qobject_cast<Choqok::UI::TimelineWidget *>(timelinesTabWidget()->widget(index));
+      if(stw->isClosable())
+          d->btnCloseSearch->setEnabled(true);
+      else
+          d->btnCloseSearch->setEnabled(false);
+  }
 }
 
 void TwitterApiMicroBlogWidget::slotCloseCurrentSearch()
