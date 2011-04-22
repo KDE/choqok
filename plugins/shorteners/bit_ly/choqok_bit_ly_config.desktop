@@ -10,6 +10,7 @@ X-KDE-ParentComponents=choqok_bit_ly
 
 Name=bit.ly
 Name[ca]=bit.ly
+Name[ca@valencia]=bit.ly
 Name[da]=bit.ly
 Name[de]=bit.ly
 Name[el]=bit.ly
@@ -36,6 +37,7 @@ Name[x-test]=xxbit.lyxx
 Name[zh_TW]=bit.ly
 Comment=bit.ly
 Comment[ca]=bit.ly
+Comment[ca@valencia]=bit.ly
 Comment[da]=bit.ly
 Comment[de]=bit.ly
 Comment[el]=bit.ly
