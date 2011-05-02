@@ -40,7 +40,7 @@
 #include <choqoktools.h>
 
 const QRegExp LaconicaPostWidget::mGroupRegExp( "([\\s]|^)!([a-z0-9]+){1,64}",  Qt::CaseInsensitive );
-const QRegExp LaconicaPostWidget::mLaconicaUserRegExp( "([\\s\\W]|^)@([a-z0-9]+){1,64}(?!(@))", Qt::CaseInsensitive );
+const QRegExp LaconicaPostWidget::mLaconicaUserRegExp( "([\\s\\W]|^)@([a-z0-9_]+){1,64}(?!(@))", Qt::CaseInsensitive );
 const QRegExp LaconicaPostWidget::mLaconicaHashRegExp( "([\\s]|^)#([\\w_\\.\\-]+)", Qt::CaseInsensitive );
 
 const QString subdomains = "(([a-z0-9-_]\\.)?)";
