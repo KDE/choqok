@@ -10,6 +10,7 @@ X-KDE-ParentComponents=choqok_twitpic
 
 Name=Twitpic
 Name[bg]=Twitpic
+Name[bs]=Twitpic
 Name[ca]=Twitpic
 Name[ca@valencia]=Twitpic
 Name[da]=Twitpic
@@ -42,6 +43,7 @@ Name[zh_CN]=Twitpic
 Name[zh_TW]=Twitpic
 Comment=Upload image to twitpic.com
 Comment[bg]=Качване на изображение в twitpic.com
+Comment[bs]=Šalje sliku na twitpic.com
 Comment[ca]=Puja imatges a twitpic.com
 Comment[ca@valencia]=Puja imatges a twitpic.com
 Comment[da]=Upload billede til twitpic.com

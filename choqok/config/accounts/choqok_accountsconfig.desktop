@@ -11,6 +11,7 @@ X-KDE-Weight=20
 
 Name=Accounts
 Name[bg]=Сметки
+Name[bs]=Nalozi
 Name[ca]=Comptes
 Name[ca@valencia]=Comptes
 Name[cs]=Účty
@@ -47,6 +48,7 @@ Name[zh_CN]=账户
 Name[zh_TW]=帳號
 Comment=Manage Your Accounts
 Comment[bg]=Управление на сметките
+Comment[bs]=Upravljalj svojim nalozima
 Comment[ca]=Gestioneu els vostres comptes
 Comment[ca@valencia]=Gestioneu els vostres comptes
 Comment[da]=Håndtér dine konti
