@@ -101,7 +101,7 @@ void FilterManager::parse(Choqok::UI::PostWidget* postToParse)
 
     if(!postToParse)
         return;
-    kDebug()<<"Processing: "<<postToParse->content();
+//     kDebug()<<"Processing: "<<postToParse->content();
     foreach(Filter* filter, FilterSettings::self()->filters()) {
         if(filter->filterText().isEmpty())
             return;
