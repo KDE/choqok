@@ -138,6 +138,7 @@ void MainWindow::loadAllAccounts()
         delete m_splash;
         m_splash = 0;
     }
+    ChoqokApplication::setStartingUp(false);
     createQuickPostDialog();
 }
 

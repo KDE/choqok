@@ -29,9 +29,11 @@ class Application::Private
 {
 public:
     static bool isShuttingDown;
+    static bool isStartingUp;
 };
 
 bool Application::Private::isShuttingDown = false;
+bool Application::Private::isStartingUp = true;
 
 Application::Application()
 : KUniqueApplication(true, true), d(new Private)
@@ -51,6 +53,16 @@ bool Application::isShuttingDown()
 void Application::setShuttingDown(bool isShuttingDown)
 {
     Private::isShuttingDown = isShuttingDown;
+}
+
+bool Application::isStartingUp()
+{
+    return Private::isStartingUp;
+}
+
+void Application::setStartingUp(bool startingUp)
+{
+    Private::isStartingUp = startingUp;
 }
 
 #include "application.moc"

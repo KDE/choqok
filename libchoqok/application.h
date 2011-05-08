@@ -41,7 +41,10 @@ public:
      * or not at this point.
      */
     static bool isShuttingDown();
-    
+
+    static bool isStartingUp();
+    static void setStartingUp(bool startingUp);
+
 protected:
     static void setShuttingDown(bool isShuttingDown = true);
 
