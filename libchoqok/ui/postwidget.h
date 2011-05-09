@@ -54,6 +54,12 @@ public:
     virtual ~PostWidget();
     const Post &currentPost() const;
     virtual void setRead(bool read = true);
+
+    /**
+     Sets post widget as read, and emits postReaded() signal
+     */
+    void setReadWithSignal();
+
     virtual bool isRead() const;
 
     Account *currentAccount();
@@ -201,12 +207,6 @@ protected:
     KPushButton * addButton(const QString & objName, const QString & toolTip, const QString & icon);
     KPushButton * addButton(const QString & objName, const QString & toolTip, const KIcon & icon);
     QMap<QString, KPushButton*> &buttons();
-
-    /**
-    Sets post widget as read, and emits postReaded() signal
-    Use this from inside PostWidget class and its subclasses
-    */
-    void setReadInternal();
 
 protected:
     TextBrowser *_mainWidget;

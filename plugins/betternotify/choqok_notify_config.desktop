@@ -1,0 +1,13 @@
+[Desktop Entry]
+Icon=kaboodle
+Type=Service
+ServiceTypes=Choqok/Plugin
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=kcm_choqok_betternotify
+X-KDE-FactoryName=kcm_choqok_betternotify
+X-KDE-ParentApp=choqok_betternotify
+X-KDE-ParentComponents=choqok_betternotify
+
+Name=Better Notify
+Comment=Notify Important Posts
