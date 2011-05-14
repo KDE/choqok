@@ -10,4 +10,12 @@ X-KDE-ParentApp=choqok_betternotify
 X-KDE-ParentComponents=choqok_betternotify
 
 Name=Better Notify
+Name[pt]=Notificar as Melhores
+Name[sv]=Bör underrätta
+Name[uk]=Кращі сповіщення
+Name[x-test]=xxBetter Notifyxx
 Comment=Notify Important Posts
+Comment[pt]=Notificar as Publicações Importantes
+Comment[sv]=Underrätta om viktiga inlägg
+Comment[uk]=Сповіщення щодо важливих дописів
+Comment[x-test]=xxNotify Important Postsxx
