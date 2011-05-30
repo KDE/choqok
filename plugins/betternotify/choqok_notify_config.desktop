@@ -11,6 +11,7 @@ X-KDE-ParentComponents=choqok_betternotify
 
 Name=Better Notify
 Name[da]=Bedre bekendtgørelse
+Name[el]=Βελτιωμένη ειδοποίηση
 Name[nb]=Best å varsle
 Name[nl]=Beter melden
 Name[pt]=Notificar as Melhores
@@ -21,6 +22,7 @@ Name[x-test]=xxBetter Notifyxx
 Name[zh_TW]=較佳的通知
 Comment=Notify Important Posts
 Comment[da]=Bekendtgør om vigtige indlæg
+Comment[el]=Ειδοποίηση για σημαντικές αναρτήσεις
 Comment[nb]=Varsle om viktige poster
 Comment[nl]=Belangrijke geposte berichten melden
 Comment[pt]=Notificar as Publicações Importantes
