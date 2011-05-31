@@ -39,7 +39,7 @@ public:
     virtual void initUi();
 
 public Q_SLOTS:
-    virtual void markAllAsRead();
+//     virtual void markAllAsRead();
     void slotContextMenu(QWidget *w, const QPoint& pt);
 
 protected Q_SLOTS:

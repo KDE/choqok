@@ -114,6 +114,7 @@ TwitterApiSearchTimelineWidget* TwitterApiMicroBlogWidget::addSearchTimelineWidg
     if(mbw) {
         mbw->setObjectName(name);
         mSearchTimelines.insert(name, mbw);
+        timelines().insert(name, mbw);
         timelinesTabWidget()->addTab(mbw, name);
         timelinesTabWidget()->setTabIcon(timelinesTabWidget()->indexOf(mbw), KIcon("edit-find"));
         connect( mbw, SIGNAL(updateUnreadCount(int)),
@@ -155,17 +156,17 @@ void TwitterApiMicroBlogWidget::slotCloseCurrentSearch()
     closeSearch(stw);
 }
 
-void TwitterApiMicroBlogWidget::markAllAsRead()
-{
-    Choqok::UI::MicroBlogWidget::markAllAsRead();
-    foreach(TwitterApiSearchTimelineWidget *wd, mSearchTimelines) {
-        wd->markAllAsRead();
-        int tabIndex = timelinesTabWidget()->indexOf(wd);
-        if(tabIndex == -1)
-            continue;
-        timelinesTabWidget()->setTabText( tabIndex, wd->timelineName() );
-    }
-}
+// void TwitterApiMicroBlogWidget::markAllAsRead()
+// {
+//     Choqok::UI::MicroBlogWidget::markAllAsRead();
+//     foreach(TwitterApiSearchTimelineWidget *wd, mSearchTimelines) {
+//         wd->markAllAsRead();
+//         int tabIndex = timelinesTabWidget()->indexOf(wd);
+//         if(tabIndex == -1)
+//             continue;
+//         timelinesTabWidget()->setTabText( tabIndex, wd->timelineName() );
+//     }
+// }
 
 void TwitterApiMicroBlogWidget::slotAccountModified(Choqok::Account* account)
 {
@@ -244,6 +245,7 @@ void TwitterApiMicroBlogWidget::closeSearch(Choqok::UI::TimelineWidget* searchWi
         QString name = mSearchTimelines.key(tst);
         mSearchTimelines.value(name)->close();
         mSearchTimelines.remove(name);
+        timelines().remove(name);
     } else {
         QStringList lst = d->account->timelineNames();
         lst.removeOne(searchWidget->timelineName());
