@@ -74,7 +74,7 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
     d->mBehaviorTabCtl->addTab(mPrfsGeneralDlg, i18n("&General"));
     d->mPrfsGeneral.kcfg_updateInterval->setSuffix(ki18np(" Minute", " Minutes"));
 
-#ifdef INDICATEQT_BUILD
+#ifdef QTINDICATE_BUILD
     // "Notifications" TAB ============================================================
     QWidget *mPrfsNotifyDlg = new QWidget(d->mBehaviorTabCtl);
     d->mPrfsNotify.setupUi(mPrfsNotifyDlg);
