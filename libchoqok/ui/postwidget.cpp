@@ -128,7 +128,14 @@ PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* par
 
 void PostWidget::checkAnchor(const QUrl & url)
 {
-    Choqok::openUrl(url);
+    if(url.scheme() == "choqok"){
+        if(url.host() == "showoriginalpost"){
+            setContent( prepareStatus(currentPost().content).replace("<a href","<a style=\"text-decoration:none\" href",Qt::CaseInsensitive) );
+            updateUi();
+        }
+    } else {
+        Choqok::openUrl(url);
+    }
 }
 
 PostWidget::~PostWidget()

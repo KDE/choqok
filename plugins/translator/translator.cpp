@@ -89,7 +89,7 @@ void Translator::slotTranslated(KJob* job)
     if(!wd || !stj)
         return;
     QByteArray data = stj->data();
-    kDebug()<<data;
+//     kDebug()<<data;
     QVariantMap json = QJson::Parser().parse(data).toMap();
     QString errorMessage;
     if(job->error() == KJob::NoError){
@@ -102,7 +102,8 @@ void Translator::slotTranslated(KJob* job)
             } else {
                 color = wd->palette().dark().color().name();
             }
-            QString translatedNotice = i18n("<span style=\"color:%2; font-size:small;\">Translated from %1:</span>", srcLang, color);
+            QString translatedNotice =
+            i18n("<span style=\"color:%2; font-size:small;\">Translated from %1: (<a href='choqok://showoriginalpost' style=\"text-decoration:none\" >original post</a>)</span>", srcLang, color);
             wd->setContent(QString("%1<br/>%2").arg(translatedNotice)
                                             .arg(trMap["translatedText"].toString()));
             return;
