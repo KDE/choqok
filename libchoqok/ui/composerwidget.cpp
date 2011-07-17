@@ -84,11 +84,12 @@ void ComposerWidget::setEditor(TextEdit* editor)
     }
 }
 
-void ComposerWidget::setText(const QString& text, const QString& replyTo)
+void ComposerWidget::setText(const QString& text, const QString& replyToId, const QString& replyToUsername)
 {
     d->editor->prependText(text);
-    replyToId = replyTo;
-    d->editor->setFocus(Qt::OtherFocusReason);
+    this->replyToId = replyToId;
+    this->replyToUsername = replyToUsername;
+    d->editor->setFocus();
 }
 
 void ComposerWidget::submitPost( const QString &txt )
@@ -132,7 +133,7 @@ void ComposerWidget::slotPostSubmited(Choqok::Account* theAccount, Choqok::Post*
             btnAbort->deleteLater();
         }
         d->editor->clear();
-        replyToId.clear();
+        editorCleared();
         editorContainer()->setEnabled(true);
         delete d->postToSubmit;
         d->postToSubmit = 0L;
@@ -200,6 +201,7 @@ Account* ComposerWidget::currentAccount()
 void ComposerWidget::editorCleared()
 {
     replyToId.clear();
+    replyToUsername.clear();
 }
 
 void ComposerWidget::abort()
