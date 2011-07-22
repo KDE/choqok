@@ -158,7 +158,7 @@ void FlickrConfig::getFrob()
                         switch (errCode) {
                         case 96:
                         case 97:
-                            errMsg = i18n( "Something happens with signature. Please retry" );
+                            errMsg = i18n( "Signature problem. Please try again later" );
                             break;
                         case 105:
                             errMsg = i18n( "The requested service is temporarily unavailable. Try again later" );
