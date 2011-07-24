@@ -129,7 +129,7 @@ you.</para>
 <para>You can search through services for something (anything that
 the service-search api can offer to a client).</para>
 
-<para>This function is available via the <menuchoice><guimenu>File</guimenu>
+<para>This function is available via the <menuchoice><guimenu>Tools</guimenu>
 <guimenuitem> Search</guimenuitem> </menuchoice> menu (shortcut:
 <keycombo action="simul">&Ctrl;
 <keycap>F</keycap></keycombo>)
@@ -192,7 +192,7 @@ received posts.
 <listitem><para>
 You can do a quick post by pressing
 <keycombo action="simul">&Ctrl;
-<keycap>Meta</keycap><keycap>T</keycap></keycombo>
+<keycap>T</keycap></keycombo>
 to open the quick micro-blog window and write your post:
 <screenshot>
 <screeninfo>Quick posting dialog</screeninfo>
@@ -221,20 +221,20 @@ then minimized to system tray it then marks all new messages as read.
 
 <title>Command Reference</title>
 
-<sect1 id="filemenu">
-<title>The <guimenu>File</guimenu> Menu</title>
-<para>
-<variablelist>
+<sect1 id="menu">
+<title>The Menu Items</title>
 
+<variablelist>
+<title>The <guimenu>File</guimenu> Menu</title>
 <varlistentry>
 <term><menuchoice>
 <shortcut>
 <keycombo action="simul">&Ctrl;<keycap>T</keycap></keycombo>
 </shortcut>
 <guimenu>File</guimenu>
-<guimenuitem>Quick Tweet</guimenuitem>
+<guimenuitem>Quick Post</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Open the quick tweet window.</action>
+<listitem><para><action>Open the quick posting window.</action>
 </para></listitem>
 </varlistentry>
 
@@ -264,18 +264,6 @@ then minimized to system tray it then marks all new messages as read.
 
 <varlistentry>
 <term><menuchoice>
-<shortcut>
-<keycombo action="simul">&Ctrl;<keycap>F</keycap></keycombo>
-</shortcut>
-<guimenu>File</guimenu>
-<guimenuitem>Search</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Open search window for current account.</action>
-</para></listitem>
-</varlistentry>
-
-<varlistentry>
-<term><menuchoice>
 <guimenu>File</guimenu>
 <guimenuitem>Minimize</guimenuitem>
 </menuchoice></term>
@@ -294,13 +282,24 @@ then minimized to system tray it then marks all new messages as read.
 <listitem><para><action>Quit</action> &choqok;.</para></listitem>
 </varlistentry>
 </variablelist>
-</para>
 
-</sect1>
-<sect1 id="settingsmenu">
+<variablelist>
+<title>The <guimenu>Tools</guimenu> Menu</title>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>F</keycap></keycombo>
+</shortcut>
+<guimenu>Tools</guimenu>
+<guimenuitem>Search</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Open search window for current account.</action>
+</para></listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
 <title>The <guimenu>Settings</guimenu> Menu</title>
-<para><variablelist>
-
 <varlistentry>
 <term><menuchoice>
 <shortcut>
@@ -362,14 +361,9 @@ toolbar.
 </varlistentry>
 
 </variablelist>
+
+<para>In addition &choqok; has the well known <guimenu>Help</guimenu> menu items.
 </para>
-</sect1>
-
-<sect1 id="helpmenu">
-<title>The <guimenu>Help</guimenu> Menu</title>
-
-&help.menu.documentation;
-
 </sect1>
 
 </chapter>
