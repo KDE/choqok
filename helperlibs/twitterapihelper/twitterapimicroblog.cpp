@@ -681,14 +681,18 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
     url.addPath( QString("/statuses/friends.xml") );
+    KUrl tmpUrl(url);
     url.addQueryItem( "cursor", d->friendsCursor );
+    QOAuth::ParamMap params;
+    params.insert("cursor", d->friendsCursor.toLatin1());
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create an http GET request!";
         return;
     }
-    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::GET));
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, tmpUrl,
+                                                                                 QOAuth::GET, params));
     mJobsAccount[job] = theAccount;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFriendsScreenName(KJob*) ) );
     job->start();

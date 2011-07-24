@@ -164,7 +164,7 @@ void FlickrConfig::getFrob()
                             errMsg = i18n( "The requested service is temporarily unavailable. Try again later" );
                             break;
                         default:
-                            errMsg = i18n( "Something happens wrong. Error %1. Try again later" ).arg( errCode );
+                            errMsg = i18n( "Unknown Error: %1. Please try again later" ).arg( errCode );
                             break;
                         }
                     }

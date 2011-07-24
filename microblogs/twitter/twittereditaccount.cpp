@@ -143,8 +143,8 @@ void TwitterEditAccountWidget::getPinCode()
 {
     isAuthenticated = false;
     while(!isAuthenticated){
-        QString verifier = KInputDialog::getText( i18n("PIN number"),
-                                                  i18n("Enter PIN number received from Twitter:"));
+        QString verifier = KInputDialog::getText( i18n("PIN"),
+                                                  i18n("Enter the PIN received from Twitter:"));
         if(verifier.isEmpty())
             return;
         QOAuth::ParamMap otherArgs;
