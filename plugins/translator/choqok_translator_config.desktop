@@ -10,6 +10,7 @@ X-KDE-ParentApp=choqok_translator
 X-KDE-ParentComponents=choqok_translator
 
 Name=Translator
+Name[bg]=Преводач
 Name[bs]=Prevodilac
 Name[da]=Oversætter
 Name[de]=Übersetzer
