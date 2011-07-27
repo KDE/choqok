@@ -10,6 +10,7 @@ X-KDE-ParentApp=choqok_betternotify
 X-KDE-ParentComponents=choqok_betternotify
 
 Name=Better Notify
+Name[bg]=По-добро известяване
 Name[da]=Bedre bekendtgørelse
 Name[el]=Βελτιωμένη ειδοποίηση
 Name[et]=Paremad märguanded
@@ -26,6 +27,7 @@ Name[uk]=Кращі сповіщення
 Name[x-test]=xxBetter Notifyxx
 Name[zh_TW]=較佳的通知
 Comment=Notify Important Posts
+Comment[bg]=Известяване за важни публикации
 Comment[da]=Bekendtgør om vigtige indlæg
 Comment[el]=Ειδοποίηση για σημαντικές αναρτήσεις
 Comment[et]=Märguanded tähtsate postituste kohta
