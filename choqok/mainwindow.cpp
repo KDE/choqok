@@ -118,7 +118,7 @@ MainWindow::MainWindow()
     if(pos.x() != -1 && pos.y() != -1) {
         move(pos);
     }
-    slotShowSpecialMenu(menuBar()->isHidden());
+    actionCollection()->action("choqok_hide_menubar")->setChecked(menuBar()->isHidden());
 }
 
 MainWindow::~MainWindow()
