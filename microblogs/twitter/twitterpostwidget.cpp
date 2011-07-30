@@ -34,7 +34,7 @@
 #include <choqoktools.h>
 
 const QRegExp TwitterPostWidget::mTwitterUserRegExp( "([\\s\\W]|^)@([a-z0-9_]+){1,20}", Qt::CaseInsensitive );
-const QRegExp TwitterPostWidget::mTwitterTagRegExp("([\\s]|^)#([a-z0-9_\\x00c4\\x00e4\\x00d6\\x00f6\\x00dc\\x00fc\\x00df]+)", Qt::CaseInsensitive );
+const QRegExp TwitterPostWidget::mTwitterTagRegExp("([\\s]|^)#([a-z0-9_\\x00c4\\x00e4\\x00d6\\x00f6\\x00dc\\x00fc\\x00df\\x0410-\\x044f\\x0401\\x0451]+)", Qt::CaseInsensitive );
 
 TwitterPostWidget::TwitterPostWidget(Choqok::Account* account, const Choqok::Post& post, QWidget* parent): TwitterApiPostWidget(account, post, parent)
 {

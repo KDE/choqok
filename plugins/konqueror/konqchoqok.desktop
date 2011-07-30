@@ -41,6 +41,7 @@ Name[x-test]=xxKonqueror Choqok Pluginxx
 Name[zh_CN]=Konqueror Choqok 插件
 Name[zh_TW]=Konqueror Choqok 外掛程式
 Comment=Post to Choqok the selected text in Konqueror, and other features
+Comment[bg]=Публикуване в Choqok на избран текст от Konqueror и други подобни действия
 Comment[bs]=Ubacivanje izabranog teksta u Konqueror-u u Choqok i druge mogućnosti
 Comment[ca]=Publica al Choqok el text seleccionat al Konqueror i altres funcionalitats
 Comment[ca@valencia]=Publica al Choqok el text seleccionat al Konqueror i altres funcionalitats
