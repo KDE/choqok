@@ -58,6 +58,20 @@
 #include <KMenuBar>
 #include <KPushButton>
 
+const char* mainButtonStyleSheet = "QPushButton{\
+background-color: qlineargradient(spread:reflect, x1:0.449382, y1:0, x2:0.448, y2:1, stop:0.15 rgba(255, 255, 255, 100), stop:1 rgba(61, 158, 0, 255));\
+    border: none;\
+    border-radius: 4px;\
+    width: 70px;\
+    height: 20px;\
+    }\
+    QPushButton:hover{\
+        border: 2px solid rgba(170,170,255,180);\
+    }\
+    QPushButton:pressed{\
+    background-color: qlineargradient(spread:reflect, x1:0.449382, y1:0, x2:0.448, y2:1, stop:0.3 rgba(255, 255, 255, 100), stop:1 rgba(61, 158, 0, 255));\
+    }";
+
 MainWindow::MainWindow()
     : Choqok::UI::MainWindow(), quickWidget(0), s_settingsDialog(0), m_splash(0),
     choqokMainButton(0), microblogCounter(0)
@@ -104,6 +118,7 @@ MainWindow::MainWindow()
     if(pos.x() != -1 && pos.y() != -1) {
         move(pos);
     }
+    slotShowSpecialMenu(menuBar()->isHidden());
 }
 
 MainWindow::~MainWindow()
@@ -596,7 +611,8 @@ void MainWindow::slotShowSpecialMenu(bool show)
 {
     if(show) {
         if(!choqokMainButton) {
-            choqokMainButton = new KPushButton(KIcon("choqok"), i18n("Choqok"), mainWidget);
+            choqokMainButton = new KPushButton(KIcon(), i18n("Choqok"), mainWidget);
+            choqokMainButton->setStyleSheet(mainButtonStyleSheet);
             KMenu* menu = new KMenu(i18n("Choqok"), choqokMainButton);
             menu->addAction(actionCollection()->action("choqok_new_post"));
             menu->addAction(actionCollection()->action("update_timeline"));
@@ -611,10 +627,10 @@ void MainWindow::slotShowSpecialMenu(bool show)
             menu->addAction(actQuit);
             choqokMainButton->setMenu(menu);
         }
-        mainWidget->setCornerWidget(choqokMainButton, Qt::TopLeftCorner);
+        mainWidget->setCornerWidget(choqokMainButton/*, Qt::TopLeftCorner*/);
         choqokMainButton->show();
     } else {
-        mainWidget->setCornerWidget(0, Qt::TopLeftCorner);
+        mainWidget->setCornerWidget(0/*, Qt::TopLeftCorner*/);
     }
 }
 
