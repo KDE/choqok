@@ -56,9 +56,11 @@
 #include "uploadmediadialog.h"
 #include <knotifyconfigwidget.h>
 #include <KMenuBar>
+#include <KPushButton>
 
 MainWindow::MainWindow()
-    : Choqok::UI::MainWindow(), quickWidget(0), s_settingsDialog(0), m_splash(0), microblogCounter(0)
+    : Choqok::UI::MainWindow(), quickWidget(0), s_settingsDialog(0), m_splash(0),
+    choqokMainButton(0), microblogCounter(0)
 {
     kDebug();
     setAttribute ( Qt::WA_DeleteOnClose, false );
@@ -181,9 +183,8 @@ void MainWindow::nextTab(int delta,Qt::Orientation orientation)
 
 void MainWindow::setupActions()
 {
-    KAction *actQuit = KStandardAction::quit( this, SLOT( slotQuit() ), actionCollection() );
-    KAction *prefs = KStandardAction::preferences( this, SLOT( slotConfigChoqok() ), actionCollection() );
-//     KStandardAction::configureNotifications ( this, SLOT ( slotConfNotifications() ), actionCollection() );
+    actQuit = KStandardAction::quit( this, SLOT( slotQuit() ), actionCollection() );
+    prefs = KStandardAction::preferences( this, SLOT( slotConfigChoqok() ), actionCollection() );
 
     KAction *actUpdate = new KAction( KIcon( "view-refresh" ), i18n( "Update Timelines" ), this );
     actionCollection()->addAction( QLatin1String( "update_timeline" ), actUpdate );
@@ -237,6 +238,7 @@ void MainWindow::setupActions()
     actionCollection()->addAction( QLatin1String( "choqok_hide_menubar" ), hideMenuBar );
     hideMenuBar->setShortcut( KShortcut(Qt::ControlModifier | Qt::Key_M) );
     connect( hideMenuBar, SIGNAL(toggled(bool)), menuBar(), SLOT(setHidden(bool)) );
+    connect( hideMenuBar, SIGNAL(toggled(bool)), this, SLOT(slotShowSpecialMenu(bool)) );
 
     KAction *clearAvatarCache = new KAction(KIcon("edit-clear"), i18n( "Clear Avatar Cache" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_clear_avatar_cache" ), clearAvatarCache );
@@ -588,6 +590,32 @@ void MainWindow::slotUploadMedium()
 {
     QPointer<Choqok::UI::UploadMediaDialog> dlg = new Choqok::UI::UploadMediaDialog(this);
     dlg->show();
+}
+
+void MainWindow::slotShowSpecialMenu(bool show)
+{
+    if(show) {
+        if(!choqokMainButton) {
+            choqokMainButton = new KPushButton(KIcon("choqok"), i18n("Choqok"), mainWidget);
+            KMenu* menu = new KMenu(i18n("Choqok"), choqokMainButton);
+            menu->addAction(actionCollection()->action("choqok_new_post"));
+            menu->addAction(actionCollection()->action("update_timeline"));
+            menu->addAction(actionCollection()->action("choqok_mark_as_read"));
+            menu->addAction(actionCollection()->action("choqok_upload_medium"));
+            menu->addSeparator();
+            menu->addAction(actionCollection()->action("choqok_enable_updates"));
+            menu->addAction(actionCollection()->action("choqok_hide_menubar"));
+            menu->addAction(prefs);
+            menu->addSeparator();
+            menu->addAction(showMain);
+            menu->addAction(actQuit);
+            choqokMainButton->setMenu(menu);
+        }
+        mainWidget->setCornerWidget(choqokMainButton, Qt::TopLeftCorner);
+        choqokMainButton->show();
+    } else {
+        mainWidget->setCornerWidget(0, Qt::TopLeftCorner);
+    }
 }
 
 #include "mainwindow.moc"

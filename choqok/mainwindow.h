@@ -28,6 +28,7 @@
 #include "account.h"
 #include "choqokmainwindow.h"
 
+class KPushButton;
 class KAction;
 class KSplashScreen;
 namespace Choqok
@@ -100,7 +101,8 @@ private slots:
 
     //Using this for splash screen
     void oneMicroblogLoaded();
-    
+    void slotShowSpecialMenu(bool show);
+
 Q_SIGNALS:
     void quickPostCreated();
 
@@ -118,6 +120,10 @@ private:
     KSettings::Dialog *s_settingsDialog;
     KSplashScreen *m_splash;
     KAction *showMain;
+    KAction *actQuit;
+    KAction *prefs;
+    KAction *aboutChoqok;
+    KPushButton *choqokMainButton;
 
     int microblogCounter;
 };
