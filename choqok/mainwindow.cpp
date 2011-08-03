@@ -611,8 +611,12 @@ void MainWindow::slotShowSpecialMenu(bool show)
 {
     if(show) {
         if(!choqokMainButton) {
-            choqokMainButton = new KPushButton(KIcon(), i18n("Choqok"), mainWidget);
-            choqokMainButton->setStyleSheet(mainButtonStyleSheet);
+            choqokMainButton = new KPushButton(KIcon("choqok"), QString(), mainWidget);
+//             choqokMainButton->setFixedWidth(50);
+//             choqokMainButton->setStyleSheet(mainButtonStyleSheet);
+//             QPalette p = choqokMainButton->palette();
+//             p.setColor(QPalette::Button, QColor(/*244, 165, 5*/10, 207, 135));
+//             choqokMainButton->setPalette(p);
             KMenu* menu = new KMenu(i18n("Choqok"), choqokMainButton);
             menu->addAction(actionCollection()->action("choqok_new_post"));
             menu->addAction(actionCollection()->action("update_timeline"));
