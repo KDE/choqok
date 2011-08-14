@@ -43,6 +43,7 @@ Icon=choqok
 Type=Application
 Categories=Network;
 GenericName=Micro-blogging Client
+GenericName[da]=Mikroblogging-klient
 GenericName[pt]=Cliente de micro-blogs
 GenericName[pt_BR]=Cliente de microblogging
 GenericName[sv]=Klient för mikrobloggar
