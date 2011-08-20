@@ -212,7 +212,14 @@ void ImagePreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pix
     imgU.setScheme("img");
     QString imgUrl = imgU.prettyUrl();
 //     imgUrl.replace("http://","img://");
-    postToParse->mainWidget()->document()->addResource(QTextDocument::ImageResource, imgUrl, pixmap);
+    QString size;
+    QPixmap pix = pixmap;
+    if(pixmap.width() > 200) {
+        pix = pixmap.scaledToWidth(200);
+    } else if(pixmap.height() > 200) {
+        pix = pixmap.scaledToHeight(200);
+    }
+    postToParse->mainWidget()->document()->addResource(QTextDocument::ImageResource, imgUrl, pix);
     content.replace(QRegExp('>'+baseUrl+'<'), "><img align='left' src='"+imgUrl+"' /><");
     postToParse->setContent(content);
 }
