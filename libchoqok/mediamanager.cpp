@@ -31,7 +31,7 @@
 #include <QHash>
 #include <KEmoticons>
 #include <KEmoticonsTheme>
-#include <KPixmapCache>
+#include <KImageCache>
 #include <choqokbehaviorsettings.h>
 #include "uploader.h"
 #include "pluginmanager.h"
@@ -47,10 +47,10 @@ class MediaManager::Private
 {
 public:
     Private()
-    :emoticons(KEmoticons().theme()),cache("choqok-userimages"), uploader(0)
+    :emoticons(KEmoticons().theme()),cache("choqok-userimages", 20000000), uploader(0)
     {}
     KEmoticonsTheme emoticons;
-    KPixmapCache cache;
+    KImageCache cache;
     QHash<KJob*, QString> queue;
     QPixmap defaultImage;
     Uploader *uploader;
@@ -61,7 +61,6 @@ MediaManager::MediaManager()
 {
   KIcon icon("image-loading");
   d->defaultImage = icon.pixmap(48);
-  d->cache.setCacheLimit(20000);
 }
 
 MediaManager::~MediaManager()
@@ -93,7 +92,7 @@ QString MediaManager::parseEmoticons(const QString& text)
 QPixmap * MediaManager::fetchImage( const QString& remoteUrl, ReturnMode mode /*= Sync*/ )
 {
     QPixmap *p = new QPixmap();
-    if( d->cache.find(remoteUrl,*p) ) {
+    if( d->cache.findPixmap(remoteUrl,p) ) {
         emit imageFetched(remoteUrl, *p);
         return p;
     } else if(mode == Async) {
@@ -131,7 +130,7 @@ void MediaManager::slotImageFetched( KJob * job )
         QPixmap p;
         if( !baseJob->data().startsWith(QByteArray("<?xml version=\"")) &&
             p.loadFromData( baseJob->data() ) ) {
-            d->cache.insert( remote, p );
+            d->cache.insertPixmap( remote, p );
             emit imageFetched( remote, p );
         } else {
             kDebug()<<"Parse Error: \nBase Url:"<<baseJob->url()<<"\ndata:"<<baseJob->data();
@@ -142,7 +141,7 @@ void MediaManager::slotImageFetched( KJob * job )
 
 void MediaManager::clearImageCache()
 {
-  d->cache.discard();
+  d->cache.clear();
 }
 
 QPixmap MediaManager::convertToGrayScale(const QPixmap& pic)
