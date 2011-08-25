@@ -108,9 +108,9 @@ void QuickFilter::filterByContent()
 
 void QuickFilter::createUiInterface()
 {
-    m_authorToolbar = new QToolBar(Choqok::UI::Global::mainWindow());
+    m_authorToolbar = new QToolBar(i18n("Filter out timeline by author"),Choqok::UI::Global::mainWindow());
     m_authorToolbar->setObjectName("authorFilterToolbar");
-    m_textToolbar = new QToolBar(Choqok::UI::Global::mainWindow());
+    m_textToolbar = new QToolBar(i18n("Filter out timeline by text"), Choqok::UI::Global::mainWindow());
     m_textToolbar->setObjectName("textFilterToolbar");
     connect(m_authorAction, SIGNAL(toggled(bool)), m_authorToolbar, SLOT(setVisible(bool)));
     connect(m_textAction, SIGNAL(toggled(bool)), m_textToolbar, SLOT(setVisible(bool)));
