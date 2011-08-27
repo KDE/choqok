@@ -56,6 +56,7 @@ NotifyConfig::~NotifyConfig()
 
 void NotifyConfig::updateTimelinesList()
 {
+    ui.timelinesList->blockSignals(true);
     ui.timelinesList->clear();
     QString acc = ui.accountsList->currentItem()->text();
     Choqok::Account* account = Choqok::AccountManager::self()->findAccount(acc);
@@ -64,6 +65,7 @@ void NotifyConfig::updateTimelinesList()
         if(accounts[acc].contains(tm))
             ui.timelinesList->item(ui.timelinesList->count()-1)->setSelected(true);
     }
+    ui.timelinesList->blockSignals(false);
 }
 
 void NotifyConfig::timelineSelectionChanged()
@@ -73,7 +75,6 @@ void NotifyConfig::timelineSelectionChanged()
         lst.append(item->text());
     }
     accounts[ui.accountsList->currentItem()->text()] = lst;
-    kDebug()<<accounts[ui.accountsList->currentItem()->text()];
     emit changed();
 }
 
