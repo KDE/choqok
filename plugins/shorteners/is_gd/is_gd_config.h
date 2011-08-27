@@ -36,7 +36,6 @@ public:
     Is_gd_Config(QWidget* parent, const QVariantList&);
     ~Is_gd_Config();
 
-    QStringList domains;
     virtual void save();
     virtual void load();
 

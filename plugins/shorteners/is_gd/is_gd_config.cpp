@@ -47,8 +47,6 @@ Is_gd_Config::Is_gd_Config(QWidget* parent, const QVariantList& ):
     ui.setupUi(wd);
     addConfig( Is_gd_Settings::self(), wd );
     layout->addWidget(wd);
-
-    //connect( ui.kcfg_logstats, SIGNAL( stateChanged() ), SLOT( emitChanged() ) );
 }
 
 Is_gd_Config::~Is_gd_Config()
@@ -57,18 +55,12 @@ Is_gd_Config::~Is_gd_Config()
 
 void Is_gd_Config::load()
 {
-//     kDebug();
     KCModule::load();
-    KConfigGroup grp( KGlobal::config(), "is.gd Shortener" );
-    ui.kcfg_logstats->setChecked( grp.readEntry( "logstats", QVariant(false) ).toBool() );
 }
 
 void Is_gd_Config::save()
 {
-//     kDebug();
     KCModule::save();
-    KConfigGroup grp( KGlobal::config(), "is.gd Shortener" );
-    grp.writeEntry( "logstats", ui.kcfg_logstats->isChecked() );
 }
 
 void Is_gd_Config::emitChanged()
