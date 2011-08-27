@@ -82,7 +82,7 @@ const QString PostWidget::otherText ( "<table height=\"100%\" width=\"100%\"><tr
 width=\"48\">%1</td><td width=\"5\"><!-- EMPTY HAHA --></td><td dir=\"%4\"><p>%2</p></td></tr><tr><td><!-- EMPTY HAHA --></td><td style=\"font-size:small;\" dir=\"ltr\" align=\"right\" width=\"100%\" valign=\"bottom\">%3</td></tr></table>");
 
 const QString PostWidget::baseStyle ("KTextBrowser {border: 1px solid rgb(150,150,150);\
-border-radius:5px;}  KTextBrowser {color:%1; background-color:%2}\
+border-radius:5px; color:%1; background-color:%2; %3}\
 KPushButton{border:0px}");
 
 const QString protocols = "((https?|ftps?)://)";
@@ -222,11 +222,13 @@ void PostWidget::updateUi()
                                         d->dir ));
 }
 
-void PostWidget::setStyle(const QColor& color, const QColor& back, const QColor& read, const QColor& readBack, const QColor& own, const QColor& ownBack)
+void PostWidget::setStyle(const QColor& color, const QColor& back, const QColor& read, const QColor& readBack, const QColor& own, const QColor& ownBack, const QFont& font)
 {
-    unreadStyle = baseStyle.arg( getColorString(color), getColorString(back) );
-    readStyle = baseStyle.arg( getColorString(read), getColorString(readBack) );
-    ownStyle = baseStyle.arg( getColorString(own), getColorString(ownBack) );
+    QString fntStr = "font-family:\"" + font.family() + "\"; font-size:" + QString::number(font.pointSize()) + ";";
+    fntStr += (font.bold() ? " font-weight:bold;" : QString()) + (font.italic() ? " font-style:italic;" : QString());
+    unreadStyle = baseStyle.arg( getColorString(color), getColorString(back), fntStr);
+    readStyle = baseStyle.arg( getColorString(read), getColorString(readBack), fntStr );
+    ownStyle = baseStyle.arg( getColorString(own), getColorString(ownBack), fntStr );
 }
 
 QString PostWidget::getColorString(const QColor& color)

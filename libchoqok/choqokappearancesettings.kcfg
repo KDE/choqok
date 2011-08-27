@@ -37,5 +37,8 @@ http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
     <entry name="useReverseOrder" type="Bool">
         <default>false</default>
     </entry>
+    <entry name="font" type="Font">
+        <default>QFont("DejaVu Sans", 9)</default>
+    </entry>
 </group>
 </kcfg>

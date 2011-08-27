@@ -352,12 +352,14 @@ void MainWindow::slotAppearanceConfigChanged()
                                           Choqok::AppearanceSettings::readForeColor() ,
                                           Choqok::AppearanceSettings::readBackColor() ,
                                          Choqok::AppearanceSettings::ownForeColor() ,
-                                         Choqok::AppearanceSettings::ownBackColor());
+                                         Choqok::AppearanceSettings::ownBackColor(),
+                                         Choqok::AppearanceSettings::font() );
     } else {
         QPalette p = window()->palette();
         Choqok::UI::PostWidget::setStyle( p.color(QPalette::WindowText) , p.color(QPalette::Window).lighter() ,
                                           p.color(QPalette::WindowText) , p.color(QPalette::Window) ,
-                                         p.color(QPalette::WindowText) , p.color(QPalette::Window));
+                                          p.color(QPalette::WindowText) , p.color(QPalette::Window),
+                                          font() );
     }
     int count = mainWidget->count();
     for ( int i = 0; i < count; ++i ) {

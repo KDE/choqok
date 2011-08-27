@@ -74,9 +74,10 @@ public:
 
     @see setUiStyle()
     */
-    static void setStyle(const QColor& unreadColor, const QColor& unreadBack,
+    static void setStyle( const QColor& unreadColor, const QColor& unreadBack,
                           const QColor& readColor, const QColor& readBack,
-                          const QColor& ownColor, const QColor& ownBack);
+                          const QColor& ownColor, const QColor& ownBack,
+                          const QFont& font);
 
     /**
     @brief Set current post
