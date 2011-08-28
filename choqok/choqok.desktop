@@ -46,6 +46,7 @@ Categories=Network;
 GenericName=Micro-blogging Client
 GenericName[da]=Mikroblogging-klient
 GenericName[de]=Micro-Blogging-Programm
+GenericName[nb]=Klient for mikroblogging
 GenericName[nl]=Micro-blogging-client
 GenericName[pt]=Cliente de micro-blogs
 GenericName[pt_BR]=Cliente de microblogging
