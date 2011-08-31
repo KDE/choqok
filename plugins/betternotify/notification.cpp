@@ -52,7 +52,7 @@ Notification::Notification(Choqok::UI::PostWidget* postWidget)
     setMouseTracking(true);
     setStyleSheet( "KTextBrowser{background-color: rgba(0, 0, 0, 160); color: rgb(255, 255, 255);}"
                    "QWidget{border-radius:6px;}");
-    resize(300, 70);
+    resize(NOTIFICATION_WIDTH, 70);
     init();
     connect(&mainWidget, SIGNAL(anchorClicked(QUrl)), SLOT(slotProcessAnchor(QUrl)));
 }
@@ -64,7 +64,7 @@ Notification::~Notification()
 
 QSize Notification::sizeHint() const
 {
-    return QSize(300, 70);
+    return QSize(NOTIFICATION_WIDTH, 70);
 }
 
 void Notification::init()

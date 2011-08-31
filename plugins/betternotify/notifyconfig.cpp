@@ -47,12 +47,20 @@ NotifyConfig::NotifyConfig(QWidget* parent, const QVariantList& args):
     layout->addWidget(wd);
     connect(ui.accountsList, SIGNAL(currentRowChanged(int)), SLOT(updateTimelinesList()));
     connect(ui.timelinesList, SIGNAL(itemSelectionChanged()), SLOT(timelineSelectionChanged()));
+    connect(ui.interval, SIGNAL(valueChanged(int)), this, SLOT(emitChanged()));
+    settings = new NotifySettings(this);
 }
 
 NotifyConfig::~NotifyConfig()
 {
 
 }
+
+void NotifyConfig::emitChanged()
+{
+    emit changed(true);
+}
+
 
 void NotifyConfig::updateTimelinesList()
 {
@@ -80,7 +88,9 @@ void NotifyConfig::timelineSelectionChanged()
 
 void NotifyConfig::load()
 {
-    accounts = NotifySettings().accounts();
+    accounts = settings->accounts();
+
+    ui.interval->setValue(settings->notifyInterval());
 
     foreach(const QString& acc, accounts.keys()){
         ui.accountsList->addItem(acc);
@@ -94,9 +104,9 @@ void NotifyConfig::load()
 void NotifyConfig::save()
 {
     kDebug()<< accounts.keys();
-    NotifySettings s;
-    s.setAccounts(accounts);
-    s.save();
+    settings->setAccounts(accounts);
+    settings->setNotifyInterval(ui.interval->value());
+    settings->save();
 }
 
 #include "notifyconfig.moc"

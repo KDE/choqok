@@ -29,6 +29,7 @@
 #include "ui_notifyprefs.h"
 #include <QMap>
 
+class NotifySettings;
 class NotifyConfig : public KCModule
 {
     Q_OBJECT
@@ -42,10 +43,13 @@ public:
 protected slots:
     void updateTimelinesList();
     void timelineSelectionChanged();
+    void emitChanged();
+
 private:
     QStringList langs;
     Ui_NotifyPrefsBase ui;
     QMap<QString, QStringList> accounts;
+    NotifySettings *settings;
 };
 
 #endif // NOTIFYCONFIG_H

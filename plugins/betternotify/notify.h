@@ -29,6 +29,7 @@
 #include <KUrl>
 #include <QPointer>
 #include <QTimer>
+#include <QPoint>
 
 class Notification;
 namespace Choqok {
@@ -53,12 +54,13 @@ protected slots:
 
 private:
     void notify( QPointer< Choqok::UI::PostWidget > post );
-    void hideNotification(Notification* nextNotificationToShow = 0);
+    void hideLastNotificationAndShowThis(Notification* nextNotificationToShow = 0);
 
     QTimer timer;
     QMap<QString, QStringList> accountsList;
     QQueue<Choqok::UI::PostWidget*> postQueueToNotify;
     Notification *notification;
+    QPoint notifyPosition;
 };
 
 #endif //NOTIFY_H

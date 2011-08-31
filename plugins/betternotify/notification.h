@@ -29,6 +29,8 @@
 #include <KPushButton>
 #include "mytextbrowser.h"
 
+#define NOTIFICATION_WIDTH 300
+
 
 class Notification : public QWidget
 {

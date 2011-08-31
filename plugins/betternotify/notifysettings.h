@@ -35,8 +35,12 @@ class NotifySettings : public QObject
 public:
     NotifySettings(QObject* parent = 0);
     virtual ~NotifySettings();
+
     QMap<QString, QStringList> accounts();
     void setAccounts(QMap<QString, QStringList> accounts);
+
+    int notifyInterval();
+    void setNotifyInterval(int interval);
 
     void load();
     void save();

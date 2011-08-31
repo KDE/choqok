@@ -34,20 +34,24 @@ class NotifySettings::Private
 {
 public:
     QMap<QString, QStringList> accounts;
+    KConfigGroup *accountsConf;
     KConfigGroup *conf;
+    int interval;
 };
 
 NotifySettings::NotifySettings(QObject* parent)
 :QObject(parent), d(new Private)
 {
     d->conf = new KConfigGroup(KGlobal::config(), QString::fromLatin1( "BetterNotify Plugin" ));
+    d->accountsConf = new KConfigGroup(KGlobal::config(), QString::fromLatin1( "BetterNotify Accounts Config" ));
+    d->interval = 5;
     load();
 }
 
 NotifySettings::~NotifySettings()
 {
     save();
-    delete d->conf;
+    delete d->accountsConf;
 }
 
 QMap< QString, QStringList > NotifySettings::accounts()
@@ -63,16 +67,30 @@ void NotifySettings::setAccounts(QMap< QString, QStringList > accounts)
 void NotifySettings::load()
 {
     d->accounts.clear();
-    d->conf->sync();
+    d->accountsConf->sync();
     foreach(Choqok::Account* acc, Choqok::AccountManager::self()->accounts()) {
-        d->accounts.insert( acc->alias(), d->conf->readEntry(acc->alias(), QStringList()));
+        d->accounts.insert( acc->alias(), d->accountsConf->readEntry(acc->alias(), QStringList()));
     }
+    d->conf->sync();
+    d->interval = d->conf->readEntry("Interval", 7);
 }
 
 void NotifySettings::save()
 {
     foreach(Choqok::Account* acc, Choqok::AccountManager::self()->accounts()) {
-        d->conf->writeEntry(acc->alias(), d->accounts.value(acc->alias()));
+        d->accountsConf->writeEntry(acc->alias(), d->accounts.value(acc->alias()));
     }
-    d->conf->sync();
+    d->conf->writeEntry("Interval", d->interval);
+    d->accountsConf->sync();
 }
+
+int NotifySettings::notifyInterval()
+{
+    return d->interval;
+}
+
+void NotifySettings::setNotifyInterval(int interval)
+{
+    d->interval = interval;
+}
+
