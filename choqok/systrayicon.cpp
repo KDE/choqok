@@ -42,7 +42,7 @@ SysTrayIcon::SysTrayIcon( Choqok::UI::MainWindow* parent )
     setAssociatedWidget(parent);
     setCategory(ApplicationStatus);
     setStandardActionsEnabled(false);
-    setStatus(Active);
+//     setStatus(Active);
     setIconByName( currentIconName() );
 }
 
@@ -72,8 +72,9 @@ void SysTrayIcon::updateUnreadCount( int changeOfUnreadPosts )
     if ( unread <= 0 ) {
         setIconByName(currentIconName());
         unread = 0;
+        setStatus(Passive);
     } else {
-        // adapted from KMSystemTray::updateCount()
+        setStatus(Active);
         int oldWidth = 22;
 
         QString countStr = QString::number( unread );
