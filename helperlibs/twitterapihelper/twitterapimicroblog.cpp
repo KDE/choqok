@@ -899,6 +899,8 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromDomNode(Choqok::Account* theAccou
             post->source = elm.text();
         else if ( elm.tagName() == "favorited" )
             post->isFavorited = ( elm.text() == "true" ) ? true : false;
+        else if ( elm.tagName() == "statusnet:conversation_id" )
+            post->conversationId = elm.text();
         else if ( elm.tagName() == "user" ) {
             QDomNode node3 = node.firstChild();
             while ( !node3.isNull() ) {

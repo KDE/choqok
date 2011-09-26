@@ -132,11 +132,7 @@ QString LaconicaPostWidget::prepareStatus(const QString& text)
 
 QString LaconicaPostWidget::generateSign()
 {
-    QString s = TwitterApiPostWidget::generateSign();
-    if( !currentPost().title.isEmpty() ){
-        s += i18n("<a href='%1'>in context</a>", currentPost().title);
-    }
-    return s;
+    return TwitterApiPostWidget::generateSign();
 }
 
 void LaconicaPostWidget::checkAnchor(const QUrl& url)

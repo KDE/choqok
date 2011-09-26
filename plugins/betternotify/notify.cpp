@@ -49,7 +49,7 @@ Notify::Notify(QObject* parent, const QList< QVariant >& )
     kDebug();
     NotifySettings set;
     accountsList = set.accounts();
-    timer.setInterval(set.notifyInterval());
+    timer.setInterval(set.notifyInterval()*1000);
     connect(Choqok::UI::Global::SessionManager::self(),
             SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
             this,

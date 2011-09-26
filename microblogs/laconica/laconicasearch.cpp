@@ -309,7 +309,7 @@ QList< Choqok::Post* > LaconicaSearch::parseRss(const QByteArray& buffer)
 //                 QDomAttr imageAttr = itemNode.toElement().attributeNode( "rdf:resource" );
                 status->link = itemNode.toElement().text();
             } else if ( itemNode.toElement().tagName() == "sioc:has_discussion") {
-                status->title = itemNode.toElement().attributeNode("rdf:resource").value();
+                status->conversationId = itemNode.toElement().attributeNode("rdf:resource").value();
             }
 
             itemNode = itemNode.nextSibling();

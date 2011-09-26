@@ -42,6 +42,7 @@ public:
     User()
     :isProtected(false)
     {}
+    virtual ~User() {}
     ChoqokId userId;
     QString realName;
     QString userName;
@@ -58,9 +59,9 @@ public:
     Post()
     :isFavorited(false), isPrivate(false), isError(false), isRead(false)
     {}
+    virtual ~Post() {}
     QDateTime creationDateTime;
     ChoqokId postId;
-    QString title;
     QString link;
     QString content;
     QString source;
@@ -75,6 +76,7 @@ public:
     bool isRead;
     QString repeatedFromUsername;
     ChoqokId repeatedPostId;
+    ChoqokId conversationId;
 };
 /**
 Describe an specific timeline, Should use by @ref MicroBlog

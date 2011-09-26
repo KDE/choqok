@@ -137,10 +137,14 @@ QString TwitterApiPostWidget::generateSign()
             QString link = currentAccount()->microblog()->postUrl( currentAccount(), currentPost().replyToUserName,
                                                                    currentPost().replyToPostId );
             QString showConMsg = i18n("Show Conversation");
-            QString threadlink = "thread://" + currentPost().postId;
+            QString threadlink;
+            if( currentPost().conversationId.isEmpty() )
+                threadlink = "thread://" + currentPost().postId;
+            else
+                threadlink = "http://identi.ca/conversation/" + currentPost().conversationId;
             sign += " - " +
-            i18n("<a href='replyto://%1'>in reply to</a>&nbsp;<a href=\"%2\" title=\"%2\">%3</a>",
-                currentPost().replyToPostId, link, webIconText) + ' ';
+            i18n("<a href='replyto://%1'>in reply to</a> @<a href='user://%4'>%4</a>&nbsp;<a href=\"%2\" title=\"%2\">%3</a>",
+                 currentPost().replyToPostId, link, webIconText, currentPost().replyToUserName) + ' ';
             sign += "<a title=\""+ showConMsg +"\" href=\"" + threadlink + "\"><img src=\"icon://thread\" /></a>";
         }
     }
