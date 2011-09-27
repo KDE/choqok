@@ -219,6 +219,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
             st->isRead = grp.readEntry("isRead", true);
             st->repeatedFromUsername = grp.readEntry("repeatedFrom", QString());
             st->repeatedPostId = grp.readEntry("repeatedPostId", QString());
+            st->conversationId = grp.readEntry("conversationId", QString());
 
             list.append( st );
         }
@@ -269,6 +270,7 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
         grp.writeEntry( "isRead" , post->isRead );
         grp.writeEntry( "repeatedFrom", post->repeatedFromUsername);
         grp.writeEntry( "repeatedPostId", post->repeatedPostId.toString());
+        grp.writeEntry( "conversationId", post->conversationId.toString() );
     }
     postsBackup.sync();
     if(Choqok::Application::isShuttingDown()) {
