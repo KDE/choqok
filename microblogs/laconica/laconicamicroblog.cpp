@@ -317,5 +317,53 @@ QStringList LaconicaMicroBlog::readUsersScreenNameFromXml(Choqok::Account* theAc
     return list;
 }
 
+void LaconicaMicroBlog::fetchConversation(Choqok::Account* theAccount, const ChoqokId& conversationId)
+{
+    kDebug();
+    if ( conversationId.isEmpty()) {
+        return;
+    }
+    TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
+    KUrl url = account->apiUrl();
+    url.addPath ( QString("/statusnet/conversation/%1.%2").arg(conversationId).arg(format) );
+
+    KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
+    if ( !job ) {
+        kDebug() << "Cannot create an http GET request!";
+        return;
+    }
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::GET));
+    mFetchConversationMap[ job ] = conversationId;
+    mJobsAccount[ job ] = theAccount;
+    connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotFetchConversation ( KJob* ) ) );
+    job->start();
+}
+
+void LaconicaMicroBlog::slotFetchConversation(KJob* job)
+{
+    kDebug();
+    if(!job) {
+        kWarning()<<"NULL Job returned";
+        return;
+    }
+    QList<Choqok::Post*> posts;
+    ChoqokId conversationId = mFetchConversationMap.take(job);
+    Choqok::Account *theAccount = mJobsAccount.take(job);
+    if ( job->error() ) {
+        kDebug() << "Job Error: " << job->errorString();
+        emit error ( theAccount, Choqok::MicroBlog::CommunicationError,
+                     i18n("Fetching conversation failed. %1", job->errorString()), Normal );
+    } else {
+        KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
+        if(format=="json"){
+            posts = readTimelineFromJson ( theAccount, stj->data() );
+        } else {
+            posts = readTimelineFromXml ( theAccount, stj->data() );
+        }
+        if( !posts.isEmpty() ){
+            emit conversationFetched(theAccount, conversationId, posts);
+        }
+    }
+}
 
 #include "laconicamicroblog.moc"

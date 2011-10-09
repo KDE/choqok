@@ -33,7 +33,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <klocale.h>
 #include <kcmdlineargs.h>
 #include <kmessagebox.h>
-#include <solid/networking.h>
 #include "mainwindow.h"
 #include <pluginmanager.h>
 #include "choqokbehaviorsettings.h"

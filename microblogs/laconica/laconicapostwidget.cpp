@@ -38,6 +38,7 @@
 #include <notifymanager.h>
 #include <KPushButton>
 #include <choqoktools.h>
+#include "laconicaconversationtimelinewidget.h"
 
 const QRegExp LaconicaPostWidget::mGroupRegExp( "([\\s]|^)!([a-z0-9]+){1,64}",  Qt::CaseInsensitive );
 const QRegExp LaconicaPostWidget::mLaconicaUserRegExp( "([\\s\\W]|^)@([a-z0-9_]+){1,64}(?!(@))", Qt::CaseInsensitive );
@@ -273,8 +274,13 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
         d->mBlog->searchBackend()->requestSearchResults(currentAccount(),
                                                     url.host(),
                                                     type);
-    } else
+    } else if( scheme == "conversation" ){
+        LaconicaConversationTimelineWidget* tm = new LaconicaConversationTimelineWidget(currentAccount(),
+                                                                                        url.host());
+        tm->show();
+    } else {
         TwitterApiPostWidget::checkAnchor(url);
+    }
 }
 
 void LaconicaPostWidget::slotResendPost()

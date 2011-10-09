@@ -27,6 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <twitterapihelper/twitterapimicroblog.h>
 #include <QPointer>
 
+class LaconicaAccount;
 class LaconicaSearch;
 class ChoqokEditAccountWidget;
 class KJob;
@@ -64,15 +65,23 @@ public:
     virtual QString generateRepeatedByUserTooltip(const QString& username);
     virtual QString repeatQuestion();
 
+    virtual void fetchConversation(Choqok::Account* theAccount, const ChoqokId& conversationId);
+
+Q_SIGNALS:
+    void conversationFetched( Choqok::Account* theAccount, const ChoqokId& conversationId,
+                              QList<Choqok::Post*> posts );
+
 protected:
     virtual void listFriendsUsername(TwitterApiAccount* theAccount);
     virtual void requestFriendsScreenName(TwitterApiAccount* theAccount, int page = 1);
 
     virtual QStringList readUsersScreenNameFromXml(Choqok::Account* theAccount, const QByteArray& buffer);
 
-protected slots:
+protected Q_SLOTS:
+    virtual void slotFetchConversation( KJob* job );
     virtual void slotRequestFriendsScreenName(KJob* job);
 private:
+    QMap<KJob*, ChoqokId> mFetchConversationMap;
     QPointer<LaconicaSearch> mSearchBackend;
     int friendsPage;
 };

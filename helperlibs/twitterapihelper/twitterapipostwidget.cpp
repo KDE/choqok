@@ -141,7 +141,7 @@ QString TwitterApiPostWidget::generateSign()
             if( currentPost().conversationId.isEmpty() )
                 threadlink = "thread://" + currentPost().postId;
             else
-                threadlink = "http://identi.ca/conversation/" + currentPost().conversationId;
+                threadlink = "conversation://" + currentPost().conversationId;
             sign += " - " +
             i18n("<a href='replyto://%1'>in reply to</a> @<a href='user://%4'>%4</a>&nbsp;<a href=\"%2\" title=\"%2\">%3</a>",
                  currentPost().replyToPostId, link, webIconText, currentPost().replyToUserName) + ' ';

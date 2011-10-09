@@ -11,6 +11,7 @@ laconicasearch.cpp
 laconicaeditaccount.cpp
 laconicapostwidget.cpp
 laconicacomposerwidget.cpp
+laconicaconversationtimelinewidget.cpp
 )
 
 kde4_add_ui_files(choqok_laconica_SRCS laconicaeditaccount_base.ui )
