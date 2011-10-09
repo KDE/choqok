@@ -1165,7 +1165,6 @@ QDateTime TwitterApiMicroBlog::dateFromString ( const QString &date )
     QDateTime recognized ( QDate ( year, month, day ), QTime ( hours, minutes, seconds ) );
     if(tz == 0)//tz is the timezone, in Twitter it's always UTC(0) in Identica it's local +/-NUMBER
         recognized.setTimeSpec( Qt::UTC );
-    qDebug()<<"Date: "<<date << " Recognized: "<<recognized.toLocalTime();
     return recognized.toLocalTime();
 }
 
