@@ -1159,11 +1159,13 @@ void TwitterApiMicroBlog::setRepeatedOfInfo(Choqok::Post* post, Choqok::Post* re
 QDateTime TwitterApiMicroBlog::dateFromString ( const QString &date )
 {
     char s[10];
-    int year, day, hours, minutes, seconds;
-    sscanf( qPrintable ( date ), "%*s %s %d %d:%d:%d %*s %d", s, &day, &hours, &minutes, &seconds, &year );
+    int year, day, hours, minutes, seconds, tz;
+    sscanf( qPrintable ( date ), "%*s %s %d %d:%d:%d %d %d", s, &day, &hours, &minutes, &seconds, &tz, &year );
     int month = d->monthes[s];
     QDateTime recognized ( QDate ( year, month, day ), QTime ( hours, minutes, seconds ) );
-    recognized.setTimeSpec( Qt::UTC );
+    if(tz == 0)//tz is the timezone, in Twitter it's always UTC(0) in Identica it's local +/-NUMBER
+        recognized.setTimeSpec( Qt::UTC );
+    qDebug()<<"Date: "<<date << " Recognized: "<<recognized.toLocalTime();
     return recognized.toLocalTime();
 }
 
