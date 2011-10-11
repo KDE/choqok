@@ -277,6 +277,8 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
     } else if( scheme == "conversation" ){
         LaconicaConversationTimelineWidget* tm = new LaconicaConversationTimelineWidget(currentAccount(),
                                                                                         url.host());
+        connect(tm, SIGNAL(forwardReply(QString,QString)), this, SIGNAL(reply(QString,QString)));
+        connect(tm, SIGNAL(forwardResendPost(QString)), this, SIGNAL(resendPost(QString)));
         tm->show();
     } else {
         TwitterApiPostWidget::checkAnchor(url);

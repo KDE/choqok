@@ -26,15 +26,17 @@
 #include <KLocalizedString>
 #include "laconicamicroblog.h"
 #include <postwidget.h>
+#include <choqokappearancesettings.h>
 
 
 LaconicaConversationTimelineWidget::LaconicaConversationTimelineWidget(Choqok::Account* curAccount,
                                                                        const ChoqokId& convId, QWidget* parent)
 : TwitterApiTimelineWidget(curAccount, i18n("Conversation %1", convId), parent)
 {
-    setWindowTitle(i18n("Conversation"));
+    setWindowTitle(i18n("Please wait..."));
     LaconicaMicroBlog* mBlog = qobject_cast<LaconicaMicroBlog*>(curAccount->microblog());
     resize(choqokMainWindow->width(), 500);
+    move(choqokMainWindow->pos());
     conversationId = convId;
     connect( mBlog, SIGNAL(conversationFetched(Choqok::Account*,ChoqokId,QList<Choqok::Post*>)),
              this, SLOT(slotConversationFetched(Choqok::Account*,ChoqokId,QList<Choqok::Post*>)) );
@@ -59,9 +61,26 @@ void LaconicaConversationTimelineWidget::slotConversationFetched(Choqok::Account
                                                                  QList< Choqok::Post* > posts)
 {
     if( currentAccount() == theAccount && convId == this->conversationId){
+        setWindowTitle(i18n("Conversation"));
         addNewPosts(posts);
         foreach(Choqok::UI::PostWidget* post, postWidgets()){
             post->setReadWithSignal();
         }
+        QTimer::singleShot(0, this, SLOT(updateHeight()));
     }
 }
+
+void LaconicaConversationTimelineWidget::updateHeight()
+{
+    int height = 25;
+    foreach(Choqok::UI::PostWidget* wd, postWidgets()){
+        height += wd->height() + 5;
+    }
+    if(height > choqokMainWindow->height())
+        height = choqokMainWindow->height();
+    resize(width(), height);
+    if( !Choqok::AppearanceSettings::useReverseOrder() )
+        scrollToBottom();
+}
+
+#include "laconicaconversationtimelinewidget.moc"

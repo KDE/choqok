@@ -38,6 +38,7 @@ const QRegExp Notification::dirRegExp("(RT|RD)|(@([^\\s\\W]+))|(#([^\\s\\W]+))|(
 Notification::Notification(Choqok::UI::PostWidget* postWidget)
 : QWidget(), post(postWidget), dir("ltr")
 {
+    kDebug();
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 //     setAttribute(Qt::WA_TranslucentBackground);
     setWindowOpacity(0.8);
@@ -59,16 +60,18 @@ Notification::Notification(Choqok::UI::PostWidget* postWidget)
 
 Notification::~Notification()
 {
-
+    kDebug();
 }
 
 QSize Notification::sizeHint() const
 {
+    kDebug();
     return QSize(NOTIFICATION_WIDTH, 70);
 }
 
 void Notification::init()
 {
+    kDebug();
     QPixmap *pix = Choqok::MediaManager::self()->fetchImage(post->currentPost().author.profileImageUrl);
     if( !pix )
         pix = new QPixmap( Choqok::MediaManager::self()->defaultImage() );
@@ -93,6 +96,7 @@ void Notification::init()
 
 void Notification::slotProcessAnchor(const QUrl& url)
 {
+    kDebug();
     if(url.scheme() == "choqok"){
         if(url.host() == "close"){
             emit ignored();
@@ -102,12 +106,14 @@ void Notification::slotProcessAnchor(const QUrl& url)
 
 void Notification::slotClicked()
 {
+    kDebug();
     post->setReadWithSignal();
     emit postReaded();
 }
 
 void Notification::setHeight()
 {
+    kDebug();
     mainWidget.document()->setTextWidth(mainWidget.width()-2);
     int h = mainWidget.document()->size().toSize().height() + 30;
     setMinimumHeight(h);
@@ -116,6 +122,7 @@ void Notification::setHeight()
 
 void Notification::setDirection()
 {
+    kDebug();
     QString txt = post->currentPost().content;
     txt.remove(dirRegExp);
     txt = txt.trimmed();
@@ -126,7 +133,7 @@ void Notification::setDirection()
 
 void Notification::mouseMoveEvent(QMouseEvent* e)
 {
-    kDebug()<<e->pos();
+    kDebug();
     e->accept();
 }
 

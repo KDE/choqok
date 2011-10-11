@@ -43,6 +43,7 @@ protected:
 protected slots:
     void slotConversationFetched(Choqok::Account* theAccount,const ChoqokId& conversationId,
                                  QList<Choqok::Post*> posts);
+    void updateHeight();
 };
 
 #endif // LACONICACONVERSATIONTIMELINEWIDGET_H
