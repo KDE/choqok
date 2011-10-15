@@ -57,6 +57,7 @@
 #include <knotifyconfigwidget.h>
 #include <KMenuBar>
 #include <KPushButton>
+#include <choqoktools.h>
 
 const char* mainButtonStyleSheet = "QPushButton{\
 background-color: qlineargradient(spread:reflect, x1:0.449382, y1:0, x2:0.448, y2:1, stop:0.15 rgba(255, 255, 255, 100), stop:1 rgba(61, 158, 0, 255));\
@@ -205,10 +206,8 @@ void MainWindow::setupActions()
     actionCollection()->addAction( QLatin1String( "update_timeline" ), actUpdate );
     actUpdate->setShortcut( Qt::Key_F5 );
     KShortcut updateGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_F5 );
-//     updateGlobalShortcut.setAlternate ( Qt::MetaModifier | Qt::Key_F5 );
     actUpdate->setGlobalShortcut( updateGlobalShortcut );
     connect( actUpdate, SIGNAL( triggered( bool ) ), this, SIGNAL( updateTimelines() ) );
-//     connect( actUpdate, SIGNAL( triggered( bool ) ), this, SIGNAL( updateSearchResults() ) );
 
     KAction *newTwit = new KAction( KIcon( "document-new" ), i18n( "Quick Post" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_new_post" ), newTwit );
@@ -225,7 +224,7 @@ void MainWindow::setupActions()
     showMain = new KAction( this );
     actionCollection()->addAction( QLatin1String( "toggle_mainwin" ), showMain );
     KShortcut toggleMainGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_C );
-    showMain->setGlobalShortcut( toggleMainGlobalShortcut/*, KAction::DefaultShortcut, KAction::NoAutoloading*/ );
+    showMain->setGlobalShortcut( toggleMainGlobalShortcut );
     if(this->isVisible())
         showMain->setText( i18n( "Minimize" ) );
     else
@@ -266,6 +265,10 @@ void MainWindow::setupActions()
     KAction *uploadMedium = new KAction( KIcon("arrow-up"), i18n( "Upload Medium..." ), this );
     actionCollection()->addAction( QLatin1String( "choqok_upload_medium" ), uploadMedium );
     connect( uploadMedium, SIGNAL( triggered(bool)), this, SLOT(slotUploadMedium()) );
+
+    KAction *donate = new KAction( KIcon("help-donate"), i18n("Donate"), this );
+    actionCollection()->addAction( QLatin1String( "choqok_donate" ), donate);
+    connect( donate, SIGNAL(triggered(bool)), this, SLOT(slotDonate()));
 
     ///SysTray Actions:
     sysIcon->contextMenu()->addAction( newTwit );
@@ -638,6 +641,11 @@ void MainWindow::slotShowSpecialMenu(bool show)
     } else {
         mainWidget->setCornerWidget(0/*, Qt::TopLeftCorner*/);
     }
+}
+
+void MainWindow::slotDonate()
+{
+    Choqok::openUrl(QUrl("http://choqok.gnufolks.org/about/contribute/"));
 }
 
 #include "mainwindow.moc"

@@ -102,6 +102,7 @@ private slots:
     //Using this for splash screen
     void oneMicroblogLoaded();
     void slotShowSpecialMenu(bool show);
+    void slotDonate();
 
 Q_SIGNALS:
     void quickPostCreated();

@@ -17,5 +17,8 @@
     <Action name="choqok_hide_menubar"/>
     <Action name="settings_notifications" append="configure_merge"/>
   </Menu>
+  <Menu name="help"><text>Help</text>
+    <Action name="choqok_donate" append="about_merge"/>
+  </Menu>
 </MenuBar>
 </kpartgui>
