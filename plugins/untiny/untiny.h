@@ -54,7 +54,6 @@ public:
 protected slots:
     void slotAddNewPostWidget( Choqok::UI::PostWidget *newWidget );
     void slot301Redirected(KIO::Job*,KUrl,KUrl);
-    void slotUntinyDotComResult(KJob*);
     void startParsing();
 
 private:

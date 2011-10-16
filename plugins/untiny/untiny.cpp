@@ -89,22 +89,6 @@ void UnTiny::parse(QPointer<Choqok::UI::PostWidget> postToParse)
         }
         redirectList << pureList[i];
     }
-    if(UnTinySettings::useUntinyDotCom()) {
-        foreach(const QString &url, redirectList) {
-            QString untinyDotComUrl = QString("http://untiny.com/api/1.0/extract/?url=%1&format=xml").arg(url);
-            KIO::StoredTransferJob *job = KIO::storedGet( untinyDotComUrl, KIO::NoReload,
-                                                    KIO::HideProgressInfo );
-            if ( !job ) {
-                kDebug() << "Cannot create a http header request!";
-                break;
-            }
-            connect( job, SIGNAL( result( KJob*) ),
-                    this, SLOT( slotUntinyDotComResult(KJob*) ) );
-            mParsingList.insert(job, postToParse);
-            mShortUrlsList.insert(job, url);
-            job->start();
-        }
-    } else {
         foreach(const QString &url, redirectList) {
             KIO::TransferJob *job = KIO::mimetype( url, KIO::HideProgressInfo );
             if ( !job ) {
@@ -116,56 +100,28 @@ void UnTiny::parse(QPointer<Choqok::UI::PostWidget> postToParse)
             mParsingList.insert(job, postToParse);
             job->start();
         }
-    }
-}
-
-void UnTiny::slotUntinyDotComResult(KJob* job)
-{
-    if(!job)
-        return;
-    QByteArray reply = qobject_cast<KIO::StoredTransferJob *>(job)->data();
-    QPointer<Choqok::UI::PostWidget> postToParse = mParsingList.take(job);
-    QString fromUrl = mShortUrlsList.take(job);
-    QString toUrl;
-
-    QDomDocument doc;
-    if (doc.setContent(reply)){
-        QDomNode n = doc.documentElement().firstChild();
-        while(!n.isNull()) {
-            QDomElement e = n.toElement();
-            if(!e.isNull())
-                if (e.tagName() == "org_url")
-                    toUrl = e.text();
-            n = n.nextSibling();
-        }
-    }
-
-    if( postToParse && toUrl.startsWith(QString("http"), Qt::CaseInsensitive)){
-//         kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
-        QString content = postToParse->content();
-        content.replace(QRegExp("title='" + fromUrl + '\''), "title='" + toUrl + '\'');
-        content.replace(QRegExp("href='" + fromUrl + '\''), "href='" + toUrl + '\'');
-        if(postToParse) {
-            postToParse->setContent(content);
-            Choqok::ShortenManager::self()->emitNewUnshortenedUrl(postToParse, KUrl(fromUrl), KUrl(toUrl));
-        }
-    }
-
 }
 
 void UnTiny::slot301Redirected(KIO::Job* job, KUrl fromUrl, KUrl toUrl)
 {
     QPointer<Choqok::UI::PostWidget> postToParse = mParsingList.take(job);
     job->kill();
-    QMutex mt;
     if(postToParse){
-        mt.lock();
         QString content = postToParse->content();
-//         kDebug()<<"Got redirect: "<<fromUrl<<toUrl;
-        content.replace(QRegExp("title='" + fromUrl.url() + '\''), "title='" + toUrl.url() + '\'');
-        content.replace(QRegExp("href='" + fromUrl.url() + '\''), "href='" + toUrl.url() + '\'');
+        QString fromUrlStr = fromUrl.url();
+        content.replace(QRegExp("title='" + fromUrlStr + '\''), "title='" + toUrl.url() + '\'');
+        content.replace(QRegExp("href='" + fromUrlStr + '\''), "href='" + toUrl.url() + '\'');
         postToParse->setContent(content);
         Choqok::ShortenManager::self()->emitNewUnshortenedUrl(postToParse, fromUrl, toUrl);
-        mt.unlock();
+        if(toUrl.url().length() < 30 && fromUrl.url().startsWith("http://t.co/")){
+            KIO::TransferJob *job = KIO::mimetype( toUrl, KIO::HideProgressInfo );
+            if ( !job ) {
+                kDebug() << "Cannot create a http header request!";
+            }
+            connect( job, SIGNAL( permanentRedirection( KIO::Job*, KUrl, KUrl ) ),
+                     this, SLOT( slot301Redirected(KIO::Job*,KUrl,KUrl)) );
+            mParsingList.insert(job, postToParse);
+            job->start();
+        }
     }
 }
