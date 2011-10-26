@@ -114,6 +114,11 @@ QString TimelineWidget::timelineInfoName()
     return d->info->name;
 }
 
+QString TimelineWidget::timelineIcon()
+{
+    return d->info->icon;
+}
+
 void TimelineWidget::setTimelineName(const QString &type)
 {
     d->timelineName = type;

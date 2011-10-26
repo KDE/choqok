@@ -76,7 +76,10 @@ void TwitterApiMicroBlogWidget::initUi()
     d->btnCloseSearch->setIcon(KIcon("tab-close"));
     d->btnCloseSearch->setAutoRaise(true);
     d->btnCloseSearch->setToolTip(i18nc("Close a timeline", "Close Timeline"));
-    timelinesTabWidget()->setCornerWidget(d->btnCloseSearch, Qt::TopRightCorner);
+    d->btnCloseSearch->setFixedWidth( 32 );
+    
+    timelinesTabWidget()->setTabAlongsideWidget( d->btnCloseSearch );
+    
     connect(d->btnCloseSearch, SIGNAL(clicked(bool)), SLOT(slotCloseCurrentSearch()) );
     slotCurrentTimelineChanged(timelinesTabWidget()->currentIndex());
 }

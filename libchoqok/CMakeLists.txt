@@ -30,6 +30,7 @@ ui/quickpost.cpp
 ui/choqokmainwindow.cpp
 ui/uploadmediadialog.cpp
 ui/textbrowser.cpp
+ui/choqoktabbar.cpp
 )
 
 if(QtIndicate_FOUND)
@@ -105,4 +106,5 @@ install( FILES
     ui/timelinewidget.h
     ui/uploadmediadialog.h
     ui/textbrowser.h
+    ui/choqoktabbar.h
 DESTINATION ${INCLUDE_INSTALL_DIR}/choqok COMPONENT Devel)

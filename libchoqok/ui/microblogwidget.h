@@ -29,6 +29,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <choqoktypes.h>
 #include "choqok_export.h"
 #include "microblog.h"
+#include "choqoktabbar.h"
 
 class QLabel;
 class KTabWidget;
@@ -138,7 +139,7 @@ protected:
     void setComposerWidget(ComposerWidget* widget);
     ComposerWidget *composer();
     QMap<QString, TimelineWidget*> &timelines();
-    KTabWidget *timelinesTabWidget();
+    Choqok::UI::ChoqokTabBar *timelinesTabWidget();
     QLabel *latestUpdate();
 
 private:
