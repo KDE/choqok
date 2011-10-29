@@ -156,6 +156,7 @@ private slots:
 
 private: // Private Functions
     void init_style();
+    void init_position( TabPosition position );
     void init_extra_widget( const QSize & size );
     void init_alongside_widget( const QSize & size );
 

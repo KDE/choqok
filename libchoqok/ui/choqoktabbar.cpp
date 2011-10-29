@@ -93,7 +93,6 @@ ChoqokTabBar::ChoqokTabBar(QWidget *parent) :
     p->main_layout = new QGridLayout( this );
     p->main_layout->setSpacing( 0 );
     p->main_layout->setContentsMargins( 0 , 0 , 0 , 0 );
-    p->main_layout->addWidget( p->toolbar , 0 , 1 );
     p->main_layout->addLayout( p->stack_wgt_layout , 1 , 1 );
 
     connect( p->toolbar , SIGNAL(actionTriggered(QAction*))          , SLOT(action_triggered(QAction*)) );
@@ -103,6 +102,8 @@ ChoqokTabBar::ChoqokTabBar(QWidget *parent) :
     int iconSize = Choqok::AppearanceSettings::tabBarSize();
     if(iconSize != ICON_BIG_SIZE && iconSize != ICON_MEDIUM_SIZE && iconSize != ICON_SMALL_SIZE)
         iconSize = ICON_MEDIUM_SIZE;
+    
+    init_position( p->position );
     setIconSize( QSize(iconSize,iconSize) );
     init_style();
 }
@@ -113,6 +114,23 @@ void ChoqokTabBar::setTabPosition( ChoqokTabBar::TabPosition position )
         return;
 
     p->main_layout->removeWidget( p->toolbar );
+
+    init_position( position );
+    init_style();
+    init_alongside_widget( size() );
+
+
+    /*! ----------- Setting Up All Linked ChoqokTabBars ------------ */
+    if( linkedTabBar() )
+        for( int i=0 ; i<choqok_tabbars_list.count() ; i++ )
+            choqok_tabbars_list.at(i)->setTabPosition( position );
+    /*! ------------------------------------------------------------ */
+
+    emit tabPositionChanged( position );
+}
+
+void ChoqokTabBar::init_position( ChoqokTabBar::TabPosition position )
+{
     p->position = position;
 
     /*! ---------- Adding to the New Layout -------------- */
@@ -142,18 +160,6 @@ void ChoqokTabBar::setTabPosition( ChoqokTabBar::TabPosition position )
         p->toolbar->setSizePolicy( QSizePolicy::Minimum , QSizePolicy::MinimumExpanding );
         break;
     }
-
-    init_style();
-    init_alongside_widget( size() );
-
-
-    /*! ----------- Setting Up All Linked ChoqokTabBars ------------ */
-    if( linkedTabBar() )
-        for( int i=0 ; i<choqok_tabbars_list.count() ; i++ )
-            choqok_tabbars_list.at(i)->setTabPosition( position );
-    /*! ------------------------------------------------------------ */
-
-    emit tabPositionChanged( position );
 }
 
 ChoqokTabBar::TabPosition ChoqokTabBar::tabPosition() const
@@ -726,7 +732,7 @@ void ChoqokTabBar::paintEvent( QPaintEvent * )
         init_style();
 }
 
-void ChoqokTabBar::contextMenuRequest( const QPoint & point )
+void ChoqokTabBar::contextMenuRequest( const QPoint & )
 {
     KAction north( tr("Top") , this );
     KAction west(  tr("Left")  , this );
@@ -804,7 +810,7 @@ void ChoqokTabBar::contextMenuRequest( const QPoint & point )
         
 
     
-    QAction *result = menu.exec(mapToGlobal(point));
+    QAction *result = menu.exec(QCursor::pos());
     if( !result )
         return;
     
