@@ -122,8 +122,8 @@ TwitterApiSearchTimelineWidget* TwitterApiMicroBlogWidget::addSearchTimelineWidg
         if(composer()) {
             connect( mbw, SIGNAL(forwardResendPost(QString)),
                      composer(), SLOT(setText(QString)) );
-            connect( mbw, SIGNAL(forwardReply(QString,QString)),
-                     composer(), SLOT(setText(QString,QString)) );
+            connect( mbw, SIGNAL(forwardReply(QString,QString,QString)),
+                     composer(), SLOT(setText(QString,QString,QString)) );
         }
         timelinesTabWidget()->setCurrentWidget(mbw);
     } else {

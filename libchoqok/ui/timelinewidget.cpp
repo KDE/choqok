@@ -230,8 +230,8 @@ void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
     widget->setObjectName(widget->currentPost().postId);
     connect( widget, SIGNAL(resendPost(const QString &)),
              this, SIGNAL(forwardResendPost(const QString &)));
-    connect( widget, SIGNAL(reply(QString,QString)),
-            this, SIGNAL(forwardReply(QString,QString)) );
+    connect( widget, SIGNAL(reply(QString,QString,QString)),
+             this, SIGNAL(forwardReply(QString,QString,QString)) );
     connect( widget, SIGNAL(postReaded()),
             this, SLOT(slotOnePostReaded()) );
     connect( widget, SIGNAL(aboutClosing(ChoqokId,PostWidget*)),

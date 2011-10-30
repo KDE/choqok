@@ -144,7 +144,7 @@ Q_SIGNALS:
     /**
     Carry reply information, to reply to a post.
     */
-    void reply(const QString &txt, const QString &replyToId);
+    void reply(const QString &txt, const QString &replyToId, const QString &replyToUsername);
 
     /**
     Emitted when this widget is about to close!
