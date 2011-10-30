@@ -217,6 +217,7 @@ protected:
     static QString unreadStyle;
     static QString ownStyle;
     static const QRegExp mUrlRegExp;
+    static const QRegExp mEmailRegExp;
     static const QString webIconText;
     static const QString ownText;
     static const QString otherText;

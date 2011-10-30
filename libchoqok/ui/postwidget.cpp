@@ -87,7 +87,7 @@ KPushButton{border:0px}");
 
 const QString protocols = "((https?|ftps?)://)";
 const QString subdomains = "(([a-z0-9\\-_]{1,}\\.)?)";
-const QString auth = "((([a-z0-9\\-_]{1,})((:[\\S]{1,})?)@)?)";
+const QString auth = "(([a-z0-9\\-_]{1,})((:[\\S]{1,})?)@)";
 const QString domains = "(([a-z0-9\\-\\x0080-\\xFFFF_]){1,63}\\.)+";
 const QString port = "(:(6553[0-5]|655[0-2][0-9]|65[0-4][\\d]{2}|6[0-4][\\d]{3}|[1-5][\\d]{4}|[1-9][\\d]{0,3}))";
 const QString zone ("((a[cdefgilmnoqrstuwxz])|(b[abdefghijlmnorstvwyz])|(c[acdfghiklmnoruvxyz])|(d[ejkmoz])|(e[ceghrstu])|\
@@ -98,12 +98,13 @@ const QString zone ("((a[cdefgilmnoqrstuwxz])|(b[abdefghijlmnorstvwyz])|(c[acdfg
 const QString ip = "(25[0-5]|[2][0-4][0-9]|[0-1]?[\\d]{1,2})(\\.(25[0-5]|[2][0-4][0-9]|[0-1]?[\\d]{1,2})){3}";
 const QString params = "(((\\/)[\\w:/\\?#\\[\\]@!\\$&\\(\\)\\*%\\+,;=\\._~\\x0080-\\xFFFF\\-\\|]{1,}|%[0-9a-f]{2})?)";
 
-const QRegExp PostWidget::mUrlRegExp("((((" + protocols + "?)" + auth +
+const QRegExp PostWidget::mUrlRegExp("(((((" + protocols + auth + "?)?)" +
                           subdomains +
-                          '(' + domains +               
+                          '(' + domains +
                           zone + "(?!(\\w))))|(" + protocols + '(' + ip + ")+))" +
                           '(' + port + "?)" + "((\\/)?)"  +
                           params + ')', Qt::CaseInsensitive);
+const QRegExp PostWidget::mEmailRegExp('^' + auth + subdomains + domains + zone);
 const QRegExp PostWidget::dirRegExp("(RT|RD)|(@([^\\s\\W]+))|(#([^\\s\\W]+))|(!([^\\s\\W]+))");
 
 QString PostWidget::readStyle;
@@ -379,6 +380,22 @@ QString PostWidget::prepareStatus( const QString &txt )
         text.insert( pos, tmplink );
         }
         pos += tmplink.length();
+    }
+
+    pos = 0;
+    while(((pos = mEmailRegExp.indexIn(text, pos)) != -1)) {
+        QString link = mEmailRegExp.cap(0);
+        QString tmplink = link;
+        if ( (pos - 1 > -1 && ( text.at( pos - 1 ) != '@' &&
+            text.at( pos - 1 ) != '#' && text.at( pos - 1 ) != '!')) ||
+            pos == 0 ) {
+            tmplink.prepend("mailto:");
+            text.remove( pos, link.length() );
+            static const QString hrefTemplate("<a href='%1' title='%1'>%2</a>");
+            tmplink = hrefTemplate.arg( tmplink, link );
+            text.insert( pos, tmplink );
+            }
+            pos += tmplink.length();
     }
 
     if(AppearanceSettings::isEmoticonsEnabled())
