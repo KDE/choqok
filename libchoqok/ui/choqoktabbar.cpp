@@ -333,7 +333,10 @@ int ChoqokTabBar::insertTab( int index , QWidget *widget , const QIcon & input_i
     refreshTabBar();
     
     if( count() == 1 )
+    {
         action->trigger();
+	p->history_list << 0;
+    }
 
     return index;
 }
@@ -734,6 +737,17 @@ void ChoqokTabBar::paintEvent( QPaintEvent * )
 
 void ChoqokTabBar::contextMenuRequest( const QPoint & )
 {
+    const QPoint & global_point = QCursor::pos();
+    const QPoint & local_point  = mapFromGlobal( global_point );
+    
+    QAction *action = p->toolbar->actionAt( local_point );
+    if( action )
+    {
+        emit contextMenu( global_point );
+        emit contextMenu( widget(p->actions_list.indexOf(action)) , global_point );
+        return;
+    }
+    
     KAction north( tr("Top") , this );
     KAction west(  tr("Left")  , this );
     KAction east(  tr("Right")  , this );
@@ -810,7 +824,7 @@ void ChoqokTabBar::contextMenuRequest( const QPoint & )
         
 
     
-    QAction *result = menu.exec(QCursor::pos());
+    QAction *result = menu.exec( global_point );
     if( !result )
         return;
     
