@@ -147,7 +147,8 @@ void LaconicaComposerWidget::selectMediumToAttach()
         d->editorLayout->addWidget(d->mediumName, 1, 0);
         d->editorLayout->addWidget(d->btnCancel, 1, 1);
     }
-    d->mediumName->setText(fileName);
+    d->mediumName->setText(i18n("Attaching <b>%1</b>", fileName));
+    editor()->setFocus();
 }
 
 void LaconicaComposerWidget::cancelAttachMedium()

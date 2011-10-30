@@ -52,7 +52,7 @@ class ChoqokTabBarPrivate
 public:
     QToolBar *toolbar;
     QStackedWidget *st_widget;
-    QWidget *tab_widget;
+//     QWidget *tab_widget;
     QWidget *tab_alongside_widget;
 
     QGridLayout *main_layout;
@@ -81,7 +81,7 @@ ChoqokTabBar::ChoqokTabBar(QWidget *parent) :
     p->styled_tabbar = Choqok::AppearanceSettings::tabBarIsStyled();
     p->tab_alongside_widget = 0;
 
-    p->tab_widget = new QWidget();
+//     p->tab_widget = new QWidget();
     p->st_widget = new QStackedWidget();
     p->toolbar = new QToolBar();
     p->toolbar->setContextMenuPolicy( Qt::CustomContextMenu );

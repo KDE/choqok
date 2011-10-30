@@ -111,7 +111,7 @@ public:
     QLabel *latestUpdate;
     KPushButton *btnMarkAllAsRead;
     QHBoxLayout *toolbar;
-    QWidget *toolbar_widget;
+    QFrame *toolbar_widget;
 };
 
 MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent)
@@ -137,7 +137,9 @@ Account * MicroBlogWidget::currentAccount() const
 
 void MicroBlogWidget::initUi()
 {
-    d->toolbar_widget = new QWidget();
+    d->toolbar_widget = new QFrame();
+    d->toolbar_widget->setFrameShape(QFrame::StyledPanel);
+    d->toolbar_widget->setFrameShadow(QFrame::Sunken);
     
     QVBoxLayout *layout = new QVBoxLayout(this);
     QVBoxLayout *toolbar_layout = new QVBoxLayout( d->toolbar_widget );
