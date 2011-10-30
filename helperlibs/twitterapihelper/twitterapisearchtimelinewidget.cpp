@@ -36,6 +36,7 @@
 #include "choqoktypes.h"
 #include <QLabel>
 #include <choqokbehaviorsettings.h>
+#include <kseparator.h>
 
 class TwitterApiSearchTimelineWidget::Private
 {
@@ -43,7 +44,7 @@ public:
     Private(const SearchInfo &info)
         :currentPage(1), searchInfo(info), loadingAnotherPage(false)
     {}
-    QPointer<KPushButton> reload;
+    QPointer<KPushButton> close;
     QPointer<KPushButton> next;
     QPointer<KPushButton> previous;
     QPointer<KRestrictedLine> pageNumber;
@@ -64,8 +65,7 @@ TwitterApiSearchTimelineWidget::TwitterApiSearchTimelineWidget(Choqok::Account* 
     d->searchBackend = qobject_cast<TwitterApiMicroBlog*>(currentAccount()->microblog())->searchBackend();
     connect(Choqok::UI::Global::mainWindow(), SIGNAL(updateTimelines()),
             this, SLOT(slotUpdateSearchResults()) );
-    if(info.isBrowsable)
-        addFooter();
+    addFooter();
     timelineDescription()->setText(i18n("Search results for %1", timelineName));
     setClosable();
 }
@@ -92,42 +92,41 @@ void TwitterApiSearchTimelineWidget::loadTimeline()
 void TwitterApiSearchTimelineWidget::addFooter()
 {
     QHBoxLayout *footer = titleBarLayout();
-//     d->reload = new KPushButton(this);
-//     d->reload->setIcon(KIcon("view-refresh"));
-//     d->reload->setMaximumSize(28,28);
-//     d->autoUpdate = new QCheckBox(i18n("Auto-update results"), this);
-//     d->autoUpdate->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 
-    d->previous = new KPushButton(this);
-    d->previous->setIcon(KIcon("go-previous"));
-    d->previous->setMaximumSize(28,28);
-    d->previous->setToolTip(i18n("Previous"));
+    d->close = new KPushButton(KIcon("dialog-close"), QString(), this);
+    d->close->setFixedSize(28,28);
+    d->close->setToolTip(i18n("Close Search"));
 
-    d->next = new KPushButton(this);
-    d->next->setIcon(KIcon("go-next"));
-    d->next->setMaximumSize(28,28);
-    d->next->setToolTip(i18n("Next"));
+    if(d->searchInfo.isBrowsable)
+    {
+        d->previous = new KPushButton(this);
+        d->previous->setIcon(KIcon("go-previous"));
+        d->previous->setMaximumSize(28,28);
+        d->previous->setToolTip(i18n("Previous"));
 
-    d->pageNumber = new KRestrictedLine(this);
-    d->pageNumber->setValidChars("1234567890");
-    d->pageNumber->setMaxLength(2);
-    d->pageNumber->setMaximumWidth(40);
-    d->pageNumber->setAlignment(Qt::AlignCenter);
-    d->pageNumber->setToolTip( i18n("Page Number") );
+        d->next = new KPushButton(this);
+        d->next->setIcon(KIcon("go-next"));
+        d->next->setMaximumSize(28,28);
+        d->next->setToolTip(i18n("Next"));
 
-//     footer->addWidget(d->reload);
-//     footer->addSpacerItem(new QSpacerItem(10, 20, QSizePolicy::Expanding));
-//     footer->addWidget(d->autoUpdate);
-    footer->addWidget(d->previous);
-    footer->addWidget(d->pageNumber);
-    footer->addWidget(d->next);
+        d->pageNumber = new KRestrictedLine(this);
+        d->pageNumber->setValidChars("1234567890");
+        d->pageNumber->setMaxLength(2);
+        d->pageNumber->setMaximumWidth(40);
+        d->pageNumber->setAlignment(Qt::AlignCenter);
+        d->pageNumber->setToolTip( i18n("Page Number") );
 
-//     connect( d->reload, SIGNAL(clicked(bool)), SLOT(reloadList()) );
-    connect( d->next, SIGNAL(clicked(bool)), SLOT(loadNextPage()) );
-    connect( d->previous, SIGNAL(clicked(bool)), SLOT(loadPreviousPage()) );
-    connect( d->pageNumber, SIGNAL(returnPressed(QString)), SLOT(loadCustomPage(QString)) );
+        footer->addWidget(d->previous);
+        footer->addWidget(d->pageNumber);
+        footer->addWidget(d->next);
+        footer->addWidget(new KSeparator(Qt::Vertical, this));
+        connect( d->next, SIGNAL(clicked(bool)), SLOT(loadNextPage()) );
+        connect( d->previous, SIGNAL(clicked(bool)), SLOT(loadPreviousPage()) );
+        connect( d->pageNumber, SIGNAL(returnPressed(QString)), SLOT(loadCustomPage(QString)) );
+    }
+    footer->addWidget(d->close);
+    connect(d->close, SIGNAL(clicked(bool)), this, SIGNAL(closeMe()));
 
-//     layout()->addItem(footer);
 }
 
 void TwitterApiSearchTimelineWidget::addNewPosts(QList< Choqok::Post* >& postList)

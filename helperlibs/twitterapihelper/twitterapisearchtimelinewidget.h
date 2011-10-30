@@ -40,6 +40,9 @@ public:
     void removeAllPosts();
     SearchInfo &searchInfo() const;
 
+Q_SIGNALS:
+    void closeMe();
+
 protected Q_SLOTS:
     virtual void saveTimeline();
     virtual void loadTimeline();

@@ -39,11 +39,62 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KDateTime>
 #include <QKeyEvent>
 #include <QPointer>
-#include "choqoktextedit.h"
 #include <QLayout>
+#include <QPainter>
+#include <QLinearGradient>
+#include <QPainterPath>
+
+#include "choqoktextedit.h"
+#include <choqokappearancesettings.h>
 
 namespace Choqok {
 namespace UI {
+  
+
+QIcon addNumToIcon( const QIcon & big , int number , const QSize & result_size , const QPalette & palette )
+{
+    QIcon result;
+
+    QList<QIcon::Mode> mods;
+        mods << QIcon::Active << QIcon::Disabled << QIcon::Disabled << QIcon::Selected;
+
+    for( int i=0 ; i<mods.count() ; i++ )
+    {
+        QPixmap pixmap = big.pixmap( result_size );
+
+        QColor color1( palette.color( QPalette::Active , QPalette::HighlightedText ) );
+        QColor color2( palette.color( QPalette::Active , QPalette::Window          ) );
+
+        QRect rct( result_size.width()/2 , result_size.width()/2 ,
+                   result_size.width()/2 , result_size.height()/2 );
+        QPointF center( rct.x() + rct.width()/2 , rct.y() + rct.height()/2 );
+
+        QLinearGradient gradiant(QPointF(0,0), QPointF(result_size.width(),result_size.height()));
+        gradiant.setColorAt(0, color1);
+        gradiant.setColorAt(1, color2);
+
+        QPainterPath cyrcle_path;
+        cyrcle_path.moveTo( center );
+        cyrcle_path.arcTo( rct, 0, 360 );
+
+        QFont font;
+        font.setWeight( rct.height() );
+        font.setBold( true );
+        font.setItalic( true );
+
+        QPainter painter( &pixmap );
+        painter.setRenderHint( QPainter::Antialiasing );
+        painter.fillPath( cyrcle_path , gradiant );
+        painter.setPen( palette.color( QPalette::Active , QPalette::Highlight ) );
+        painter.setFont( font );
+        painter.drawText( rct , Qt::AlignHCenter|Qt::AlignVCenter , QString::number(number) );
+
+        result.addPixmap( pixmap , mods.at(i) );
+    }
+
+    return result;
+}
+
 
 class MicroBlogWidget::Private
 {
@@ -56,10 +107,11 @@ public:
     MicroBlog *blog;
     QPointer<ComposerWidget> composer;
     QMap<QString, TimelineWidget*> timelines;
-    KTabWidget *timelinesTabWidget;
+    Choqok::UI::ChoqokTabBar *timelinesTabWidget;
     QLabel *latestUpdate;
     KPushButton *btnMarkAllAsRead;
     QHBoxLayout *toolbar;
+    QWidget *toolbar_widget;
 };
 
 MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent)
@@ -85,15 +137,23 @@ Account * MicroBlogWidget::currentAccount() const
 
 void MicroBlogWidget::initUi()
 {
+    d->toolbar_widget = new QWidget();
+    
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->addLayout( createToolbar() );
+    QVBoxLayout *toolbar_layout = new QVBoxLayout( d->toolbar_widget );
+        toolbar_layout->addLayout( createToolbar() );
+        
+    d->timelinesTabWidget = new Choqok::UI::ChoqokTabBar(this);
+    d->timelinesTabWidget->setLinkedTabBar( true );
+    d->timelinesTabWidget->setTabCloseActivatePrevious(true);
+    d->timelinesTabWidget->setExtraWidget( d->toolbar_widget , Choqok::UI::ChoqokTabBar::Top  );
+    
     if(!d->account->isReadOnly()){
         setComposerWidget(d->blog->createComposerWidget(currentAccount(), this));
     }
-    d->timelinesTabWidget = new KTabWidget(this);
-    d->timelinesTabWidget->setTabCloseActivatePrevious(true);
+
     layout->addWidget( d->timelinesTabWidget );
-    this->layout()->setContentsMargins( 3, 1, 3, 1 );
+    this->layout()->setContentsMargins( 0, 0, 0, 0 );
     connect( currentAccount(), SIGNAL(modified(Choqok::Account*)), SLOT(slotAccountModified(Choqok::Account*)) );
     initTimelines();
 }
@@ -108,7 +168,7 @@ void MicroBlogWidget::setComposerWidget(ComposerWidget *widget)
     }
     d->composer = widget;
     d->composer->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Maximum);
-    qobject_cast<QVBoxLayout*>( this->layout() )->insertWidget(1, d->composer);
+    qobject_cast<QVBoxLayout*>( d->toolbar_widget->layout() )->insertWidget(1, d->composer);
     foreach(const TimelineWidget *mbw, d->timelines) {
         connect(mbw, SIGNAL(forwardResendPost(QString)), d->composer, SLOT(setText(QString)));
         connect( mbw, SIGNAL(forwardReply(QString,QString,QString)), d->composer, SLOT(setText(QString,QString,QString)) );
@@ -232,10 +292,20 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change, Choqok::UI::TimelineWidg
         if(tabIndex == -1)
             return;
         if(wd->unreadCount() > 0)
+        {
+            d->timelinesTabWidget->setTabIcon( tabIndex , addNumToIcon( timelinesTabWidget()->tabIcon(tabIndex) , wd->unreadCount() , QSize(40,40) , palette() ) );
             d->timelinesTabWidget->setTabText( tabIndex, wd->timelineInfoName() +
                                                 QString("(%1)").arg(wd->unreadCount()) );
+        }
         else
+        {
+	    KIcon icon;
+	    if( !wd->timelineIcon().isEmpty() )
+	        icon = KIcon( wd->timelineIcon() );
+	    
+            d->timelinesTabWidget->setTabIcon( tabIndex , icon );
             d->timelinesTabWidget->setTabText( tabIndex, wd->timelineInfoName() );
+        }
     }
 }
 
@@ -264,7 +334,7 @@ QMap< QString, TimelineWidget* > &MicroBlogWidget::timelines()
     return d->timelines;
 }
 
-KTabWidget* MicroBlogWidget::timelinesTabWidget()
+Choqok::UI::ChoqokTabBar* MicroBlogWidget::timelinesTabWidget()
 {
     return d->timelinesTabWidget;
 }
@@ -322,15 +392,8 @@ QLayout * MicroBlogWidget::createToolbar()
     fnt.setBold(true);
     d->latestUpdate->setFont(fnt);
 
-//     d->abortAll = new KPushButton(this);
-//     d->abortAll->setIcon(KIcon("dialog-cancel"));
-//     d->abortAll->setMaximumWidth(25);
-//     d->abortAll->setToolTip(i18n("Abort"));
-//     connect( d->abortAll, SIGNAL(clicked(bool)), SLOT(slotAbortAllJobs()) );
-
     btnActions->setMenu(d->account->microblog()->createActionsMenu(d->account));
     d->toolbar->addWidget(btnActions);
-//     toolbar->addWidget(d->abortAll);
     d->toolbar->addSpacerItem(new QSpacerItem(1, 10, QSizePolicy::Expanding));
     d->toolbar->addWidget(lblLatestUpdate);
     d->toolbar->addWidget(d->latestUpdate);
