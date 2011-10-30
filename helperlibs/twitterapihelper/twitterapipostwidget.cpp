@@ -170,23 +170,24 @@ void TwitterApiPostWidget::slotReply()
     } else {
         QString replyto = QString("@%1").arg(currentPost().author.userName);
         QString postId = currentPost().postId;
+        QString username = currentPost().author.userName;
         if( !currentPost().repeatedFromUsername.isEmpty() ){
             replyto.prepend(QString("@%1 ").arg(currentPost().repeatedFromUsername));
             postId = currentPost().repeatedPostId;
         }
-        emit reply( replyto, postId );
+        emit reply( replyto, postId,  username);
     }
 }
 
 void TwitterApiPostWidget::slotWriteTo()
 {
-    emit reply( QString("@%1").arg(currentPost().author.userName), QString() );
+    emit reply( QString("@%1").arg(currentPost().author.userName), QString(), currentPost().author.userName );
 }
 
 void TwitterApiPostWidget::slotReplyToAll()
 {
     QString txt = QString("@%1").arg(currentPost().author.userName);
-    emit reply(txt, currentPost().postId);
+    emit reply(txt, currentPost().postId, currentPost().author.userName);
 }
 
 void TwitterApiPostWidget::setFavorite()
@@ -249,8 +250,8 @@ void TwitterApiPostWidget::checkAnchor(const QUrl & url)
     } else if (scheme == "thread") {
         TwitterApiShowThread *wd = new TwitterApiShowThread(currentAccount(), currentPost(), NULL);
         wd->resize(this->width(), wd->height());
-        connect(wd, SIGNAL(forwardReply(QString,QString)),
-                this, SIGNAL(reply(QString,QString)));
+        connect(wd, SIGNAL(forwardReply(QString,QString,QString)),
+                this, SIGNAL(reply(QString,QString,QString)));
         connect(wd, SIGNAL(forwardResendPost(QString)),
                 this, SIGNAL(resendPost(QString)));
         wd->show();

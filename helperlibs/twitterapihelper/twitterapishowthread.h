@@ -49,7 +49,7 @@ protected Q_SLOTS:
 
 Q_SIGNALS:
     void forwardResendPost( const QString &post );
-    void forwardReply(const QString &txt, const QString &replyToId);
+    void forwardReply(const QString &txt, const QString &replyToId, const QString &replyToUsername);
 
 protected:
     void addPostWidgetToUi(Choqok::UI::PostWidget *widget);

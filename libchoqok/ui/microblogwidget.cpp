@@ -111,7 +111,7 @@ void MicroBlogWidget::setComposerWidget(ComposerWidget *widget)
     qobject_cast<QVBoxLayout*>( this->layout() )->insertWidget(1, d->composer);
     foreach(const TimelineWidget *mbw, d->timelines) {
         connect(mbw, SIGNAL(forwardResendPost(QString)), d->composer, SLOT(setText(QString)));
-        connect( mbw, SIGNAL(forwardReply(QString,QString)), d->composer, SLOT(setText(QString,QString)) );
+        connect( mbw, SIGNAL(forwardReply(QString,QString,QString)), d->composer, SLOT(setText(QString,QString,QString)) );
     }
 }
 
@@ -185,8 +185,8 @@ TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)
         if(d->composer) {
             connect( mbw, SIGNAL(forwardResendPost(QString)),
                      d->composer, SLOT(setText(QString)) );
-            connect( mbw, SIGNAL(forwardReply(QString,QString)),
-                     d->composer, SLOT(setText(QString,QString)) );
+            connect( mbw, SIGNAL(forwardReply(QString,QString,QString)),
+                     d->composer, SLOT(setText(QString,QString,QString)) );
         }
         slotUpdateUnreadCount(mbw->unreadCount(),mbw);
     } else {

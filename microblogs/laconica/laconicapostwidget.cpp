@@ -117,7 +117,7 @@ void LaconicaPostWidget::slotReplyToAll()
     
     txt.chop(1);
 
-    emit reply(txt, currentPost().postId);
+    emit reply(txt, currentPost().postId, currentPost().author.userName);
 }
 
 QString LaconicaPostWidget::prepareStatus(const QString& text)
@@ -264,7 +264,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
             }
             return;
         } else if(ret == replyTo){
-            emit reply( QString("@%1").arg(username), QString() );
+            emit reply( QString("@%1").arg(username), QString(), username );
             return;
         } else if(ret == dMessage){
             d->mBlog->showDirectMessageDialog( d->account, username );

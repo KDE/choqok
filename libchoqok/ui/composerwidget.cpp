@@ -31,6 +31,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <shortenmanager.h>
 #include <qpointer.h>
 #include <QGridLayout>
+#include <QLabel>
 
 namespace Choqok {
 namespace UI {
@@ -45,6 +46,8 @@ public:
     Account *currentAccount;
     Choqok::Post *postToSubmit;
     QWidget *editorContainer;
+    QPointer<QLabel> replyToUsernameLabel;
+    QPointer<KPushButton> btnCancelReply;
 };
 
 ComposerWidget::ComposerWidget(Choqok::Account* account, QWidget* parent /*= 0*/)
@@ -58,6 +61,18 @@ ComposerWidget::ComposerWidget(Choqok::Account* account, QWidget* parent /*= 0*/
     d->editorContainer->setLayout(internalLayout);
     layout->addWidget(editorContainer());
     setEditor(new TextEdit(account->microblog()->postCharLimit(), this));
+
+    d->replyToUsernameLabel = new QLabel(editorContainer());
+    d->btnCancelReply = new KPushButton(editorContainer());
+    d->btnCancelReply->setIcon(KIcon("dialog-cancel"));
+    d->btnCancelReply->setToolTip(i18n("Discard Reply"));
+    d->btnCancelReply->setMaximumWidth(d->btnCancelReply->height());
+    connect( d->btnCancelReply, SIGNAL(clicked(bool)), SLOT(editorCleared()) );
+    internalLayout->addWidget(d->replyToUsernameLabel, 2, 0);
+    internalLayout->addWidget(d->btnCancelReply, 2, 1);
+
+    d->btnCancelReply->hide();
+    d->replyToUsernameLabel->hide();
 }
 
 ComposerWidget::~ComposerWidget()
@@ -84,11 +99,17 @@ void ComposerWidget::setEditor(TextEdit* editor)
     }
 }
 
-void ComposerWidget::setText(const QString& text, const QString& replyTo)
+void ComposerWidget::setText(const QString& text, const QString& replyToId, const QString& replyToUsername)
 {
     d->editor->prependText(text);
-    replyToId = replyTo;
-    d->editor->setFocus(Qt::OtherFocusReason);
+    this->replyToId = replyToId;
+    this->replyToUsername = replyToUsername;
+    if( !replyToUsername.isEmpty() ){
+        d->replyToUsernameLabel->setText(i18n("Replying to <b>%1</b>", replyToUsername));
+        d->btnCancelReply->show();
+        d->replyToUsernameLabel->show();
+    }
+    d->editor->setFocus();
 }
 
 void ComposerWidget::submitPost( const QString &txt )
@@ -132,7 +153,7 @@ void ComposerWidget::slotPostSubmited(Choqok::Account* theAccount, Choqok::Post*
             btnAbort->deleteLater();
         }
         d->editor->clear();
-        replyToId.clear();
+        editorCleared();
         editorContainer()->setEnabled(true);
         delete d->postToSubmit;
         d->postToSubmit = 0L;
@@ -200,6 +221,9 @@ Account* ComposerWidget::currentAccount()
 void ComposerWidget::editorCleared()
 {
     replyToId.clear();
+    replyToUsername.clear();
+    d->btnCancelReply->hide();
+    d->replyToUsernameLabel->hide();
 }
 
 void ComposerWidget::abort()

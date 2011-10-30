@@ -154,7 +154,9 @@ void LaconicaComposerWidget::cancelAttachMedium()
 {
     kDebug();
     delete d->mediumName;
+    d->mediumName = 0;
     delete d->btnCancel;
+    d->btnCancel = 0;
     d->mediumToAttach.clear();
 }
 

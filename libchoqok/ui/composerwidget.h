@@ -48,7 +48,8 @@ public:
     TextEdit *editor();
 
 public Q_SLOTS:
-    virtual void setText(const QString &text, const QString &replyToId = QString());
+    virtual void setText(const QString &text, const QString &replyToId = QString(),
+                         const QString& replyToUsername = QString());
     virtual void abort();
 
 protected Q_SLOTS:
@@ -70,6 +71,7 @@ protected:
 
 
     QString replyToId;
+    QString replyToUsername;
     QPointer<KPushButton> btnAbort;
 
 private:

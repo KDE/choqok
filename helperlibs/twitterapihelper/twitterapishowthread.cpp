@@ -127,8 +127,8 @@ void TwitterApiShowThread::addPostWidgetToUi(Choqok::UI::PostWidget* widget)
              this, SLOT(raiseMainWindow()) );
     connect( widget, SIGNAL(reply(QString, QString)),
              this, SLOT(raiseMainWindow()) );
-    connect( widget, SIGNAL(reply(QString,QString)),
-            this, SIGNAL(forwardReply(QString,QString)) );
+    connect( widget, SIGNAL(reply(QString,QString,QString)),
+             this, SIGNAL(forwardReply(QString,QString,QString)) );
 //         connect( widget, SIGNAL(aboutClosing(ChoqokId,PostWidget*)),
 //                 SLOT(postWidgetClosed(ChoqokId,PostWidget*)) );
     d->mainLayout->insertWidget(0, widget);
