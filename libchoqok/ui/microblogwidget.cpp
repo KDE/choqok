@@ -146,16 +146,12 @@ void MicroBlogWidget::initUi()
     d->timelinesTabWidget = new Choqok::UI::ChoqokTabBar(this);
     d->timelinesTabWidget->setLinkedTabBar( true );
     d->timelinesTabWidget->setTabCloseActivatePrevious(true);
-//     d->timelinesTabWidget->setTabPosition( (Choqok::UI::ChoqokTabBar::TabPosition)
-//                                             Choqok::AppearanceSettings::tabBarPosition() );
-//     int iconSize = Choqok::AppearanceSettings::tabBarSize();
-//     d->timelinesTabWidget->setIconSize( QSize(iconSize,iconSize) );
     d->timelinesTabWidget->setExtraWidget( d->toolbar_widget , Choqok::UI::ChoqokTabBar::Top  );
     
     if(!d->account->isReadOnly()){
         setComposerWidget(d->blog->createComposerWidget(currentAccount(), this));
     }
-    
+
     layout->addWidget( d->timelinesTabWidget );
     this->layout()->setContentsMargins( 0, 0, 0, 0 );
     connect( currentAccount(), SIGNAL(modified(Choqok::Account*)), SLOT(slotAccountModified(Choqok::Account*)) );
@@ -396,15 +392,8 @@ QLayout * MicroBlogWidget::createToolbar()
     fnt.setBold(true);
     d->latestUpdate->setFont(fnt);
 
-//     d->abortAll = new KPushButton(this);
-//     d->abortAll->setIcon(KIcon("dialog-cancel"));
-//     d->abortAll->setMaximumWidth(25);
-//     d->abortAll->setToolTip(i18n("Abort"));
-//     connect( d->abortAll, SIGNAL(clicked(bool)), SLOT(slotAbortAllJobs()) );
-
     btnActions->setMenu(d->account->microblog()->createActionsMenu(d->account));
     d->toolbar->addWidget(btnActions);
-//     toolbar->addWidget(d->abortAll);
     d->toolbar->addSpacerItem(new QSpacerItem(1, 10, QSizePolicy::Expanding));
     d->toolbar->addWidget(lblLatestUpdate);
     d->toolbar->addWidget(d->latestUpdate);
