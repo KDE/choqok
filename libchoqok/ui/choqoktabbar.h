@@ -153,6 +153,7 @@ protected:
 private slots:
     void action_triggered( QAction *action );
     void contextMenuRequest( const QPoint & point );
+    void widget_destroyed( QObject *obj );
 
 private: // Private Functions
     void init_style();

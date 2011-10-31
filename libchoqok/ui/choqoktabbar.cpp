@@ -325,6 +325,8 @@ int ChoqokTabBar::insertTab( int index , QWidget *widget , const QIcon & input_i
 
     p->actions_list.insert( index , action );
     p->st_widget->insertWidget( index , widget );
+    
+    connect( widget , SIGNAL(destroyed(QObject*)) , SLOT(widget_destroyed(QObject*)) );
 
     for( int i=0 ; i<p->history_list.count() ; i++ )
         if( p->history_list.at(i) >= index )
@@ -371,6 +373,8 @@ void ChoqokTabBar::moveTab( int from , int to )
 
 void ChoqokTabBar::removeTab( int index )
 {
+    disconnect( p->st_widget->widget(index) , SIGNAL(destroyed(QObject*)) , this , SLOT(widget_destroyed(QObject*)) );
+    
     p->history_list.removeAll( index );
     p->actions_list.removeAt( index );
     p->st_widget->removeWidget( p->st_widget->widget(index) );
@@ -835,6 +839,11 @@ void ChoqokTabBar::contextMenuRequest( const QPoint & )
         setIconSize( QSize( result->data().toInt() , result->data().toInt() ) );
     else
         setTabPosition( static_cast<ChoqokTabBar::TabPosition>(result->data().toInt()) );
+}
+
+void ChoqokTabBar::widget_destroyed( QObject *obj )
+{
+    removePage( static_cast<QWidget*>(obj) );
 }
 
 ChoqokTabBar::~ChoqokTabBar()
