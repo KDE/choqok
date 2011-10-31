@@ -232,47 +232,47 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
                                        const QString& timelineName,
                                        const QList< Choqok::UI::PostWidget* > &timeline)
 {
-    if(timelineName.compare("Favorite") == 0)
-        return;//NOTE Won't cache favorites, and this is for compatibility with older versions!
-    kDebug();
-    QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
-    KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
+    if(timelineName.compare("Favorite") != 0) {
+        kDebug();
+        QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
+        KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
 
-    ///Clear previous data:
-    QStringList prevList = postsBackup.groupList();
-    int c = prevList.count();
-    if ( c > 0 ) {
-        for ( int i = 0; i < c; ++i ) {
-            postsBackup.deleteGroup( prevList[i] );
+        ///Clear previous data:
+        QStringList prevList = postsBackup.groupList();
+        int c = prevList.count();
+        if ( c > 0 ) {
+            for ( int i = 0; i < c; ++i ) {
+                postsBackup.deleteGroup( prevList[i] );
+            }
         }
+        QList< Choqok::UI::PostWidget *>::const_iterator it, endIt = timeline.constEnd();
+        for ( it = timeline.constBegin(); it != endIt; ++it ) {
+            const Choqok::Post *post = &((*it)->currentPost());
+            KConfigGroup grp( &postsBackup, post->creationDateTime.toString() );
+            grp.writeEntry( "creationDateTime", post->creationDateTime );
+            grp.writeEntry( "postId", post->postId.toString() );
+            grp.writeEntry( "text", post->content );
+            grp.writeEntry( "source", post->source );
+            grp.writeEntry( "inReplyToPostId", post->replyToPostId.toString() );
+            grp.writeEntry( "inReplyToUserId", post->replyToUserId.toString() );
+            grp.writeEntry( "favorited", post->isFavorited );
+            grp.writeEntry( "inReplyToUserName", post->replyToUserName );
+            grp.writeEntry( "authorId", post->author.userId.toString() );
+            grp.writeEntry( "authorUserName", post->author.userName );
+            grp.writeEntry( "authorRealName", post->author.realName );
+            grp.writeEntry( "authorProfileImageUrl", post->author.profileImageUrl );
+            grp.writeEntry( "authorDescription" , post->author.description );
+            grp.writeEntry( "isPrivate" , post->isPrivate );
+            grp.writeEntry( "authorLocation" , post->author.location );
+            grp.writeEntry( "isProtected" , post->author.isProtected );
+            grp.writeEntry( "authorUrl" , post->author.homePageUrl );
+            grp.writeEntry( "isRead" , post->isRead );
+            grp.writeEntry( "repeatedFrom", post->repeatedFromUsername);
+            grp.writeEntry( "repeatedPostId", post->repeatedPostId.toString());
+            grp.writeEntry( "conversationId", post->conversationId.toString() );
+        }
+        postsBackup.sync();
     }
-    QList< Choqok::UI::PostWidget *>::const_iterator it, endIt = timeline.constEnd();
-    for ( it = timeline.constBegin(); it != endIt; ++it ) {
-        const Choqok::Post *post = &((*it)->currentPost());
-        KConfigGroup grp( &postsBackup, post->creationDateTime.toString() );
-        grp.writeEntry( "creationDateTime", post->creationDateTime );
-        grp.writeEntry( "postId", post->postId.toString() );
-        grp.writeEntry( "text", post->content );
-        grp.writeEntry( "source", post->source );
-        grp.writeEntry( "inReplyToPostId", post->replyToPostId.toString() );
-        grp.writeEntry( "inReplyToUserId", post->replyToUserId.toString() );
-        grp.writeEntry( "favorited", post->isFavorited );
-        grp.writeEntry( "inReplyToUserName", post->replyToUserName );
-        grp.writeEntry( "authorId", post->author.userId.toString() );
-        grp.writeEntry( "authorUserName", post->author.userName );
-        grp.writeEntry( "authorRealName", post->author.realName );
-        grp.writeEntry( "authorProfileImageUrl", post->author.profileImageUrl );
-        grp.writeEntry( "authorDescription" , post->author.description );
-        grp.writeEntry( "isPrivate" , post->isPrivate );
-        grp.writeEntry( "authorLocation" , post->author.location );
-        grp.writeEntry( "isProtected" , post->author.isProtected );
-        grp.writeEntry( "authorUrl" , post->author.homePageUrl );
-        grp.writeEntry( "isRead" , post->isRead );
-        grp.writeEntry( "repeatedFrom", post->repeatedFromUsername);
-        grp.writeEntry( "repeatedPostId", post->repeatedPostId.toString());
-        grp.writeEntry( "conversationId", post->conversationId.toString() );
-    }
-    postsBackup.sync();
     if(Choqok::Application::isShuttingDown()) {
         --d->countOfTimelinesToSave;
         if(d->countOfTimelinesToSave < 1)

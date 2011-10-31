@@ -91,6 +91,7 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString 
 
 TwitterApiAccount::~TwitterApiAccount()
 {
+    d->qoauth->deleteLater();
     delete d;
 }
 
@@ -276,7 +277,7 @@ void TwitterApiAccount::initQOAuthInterface()
 {
     kDebug();
     if(!d->qoauth)
-        d->qoauth = new QOAuth::Interface(new KIO::AccessManager(this), this);//TODO KDE 4.5 Change to use new class.
+        d->qoauth = new QOAuth::Interface(new KIO::AccessManager(this), this);
     d->qoauth->setConsumerKey(d->oauthConsumerKey);
     d->qoauth->setConsumerSecret(d->oauthConsumerSecret);
     d->qoauth->setRequestTimeout(20000);
