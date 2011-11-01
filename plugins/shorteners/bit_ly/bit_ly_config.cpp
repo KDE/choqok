@@ -49,7 +49,7 @@ Bit_ly_Config::Bit_ly_Config(QWidget* parent, const QVariantList& ):
     addConfig( Bit_ly_Settings::self(), wd );
     layout->addWidget(wd);
 
-    QRegExp rx( "([a-z0-9]){4,32}", Qt::CaseInsensitive );
+    QRegExp rx( "([a-z0-9_]){4,32}", Qt::CaseInsensitive );
     QValidator *val0 = new QRegExpValidator( rx, 0 );
     ui.kcfg_login->setValidator( val0 );
     rx.setPattern("([a-z0-9_]){1,40}");
