@@ -1,3 +1,16 @@
+=== Version 1.2 -- 01-Nov-2011 ===
+* New TabBar UX for timelines inside an account. (Bardia Daneshvar)
+* Replying to USERNAME notice under composer widget.
+* A hyperlink (original post) added when a post is translated, So, User can restore post to original one! (FEATURE:270617)
+* Global menu, When the menubar is hidden!
+* Donate button in special menu and help menu
+* is.gd statistics support.
+* Font customization option.
+* Better conversation view like new identica.
+* Untiny plugin: Expanding twitter urls that shortened twice
+* Untiny plugin: Support for untiny.com service removed.
+* Several bug fixes.
+
 === Version 1.1 -- 2-Apr-2011 ===
 * System tray icon problem in Gnome fixed.
 * Hide Menu-bar option.
