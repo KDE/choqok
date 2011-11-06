@@ -55,6 +55,7 @@ GenericName[pt_BR]=Cliente de microblogging
 GenericName[sv]=Klient för mikrobloggar
 GenericName[uk]=Клієнт мікроблогів
 GenericName[x-test]=xxMicro-blogging Clientxx
+GenericName[zh_CN]=微博客户端
 GenericName[zh_TW]=微部落格客戶端程式
 Terminal=false
 X-DBUS-StartupType=Unique
