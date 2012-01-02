@@ -204,13 +204,13 @@ QByteArray MediaManager::createMultipartFormData(const QMap< QString, QByteArray
 {
     QByteArray newLine("\r\n");
     QString formHeader( newLine + "Content-Disposition: form-data; name=\"%1\"" );
-    QByteArray header(newLine + "--AaB03x");
-    QByteArray footer(newLine + "--AaB03x--");
+    QByteArray header("--AaB03x");
+    QByteArray footer("--AaB03x--");
     QString fileHeader(newLine + "Content-Disposition: file; name=\"%1\"; filename=\"%2\"");
     QByteArray data;
 
     data.append(header);
-    
+
     if ( !mediaFiles.isEmpty() ) {
         QList< QMap< QString, QByteArray > >::const_iterator it1 = mediaFiles.constBegin();
         QList< QMap< QString, QByteArray > >::const_iterator endIt1 = mediaFiles.constEnd();
@@ -221,15 +221,17 @@ QByteArray MediaManager::createMultipartFormData(const QMap< QString, QByteArray
             data.append(newLine + it1->value("medium"));
         }
     }
-    
+
     QMap< QString, QByteArray >::const_iterator it = formdata.constBegin();
     QMap< QString, QByteArray >::const_iterator endIt = formdata.constEnd();
     for(;it!=endIt; ++it){
+        data.append(newLine);
         data.append(header);
         data.append(formHeader.arg(it.key()).toLatin1());
         data.append(newLine);
         data.append(newLine + it.value());
     }
+    data.append(newLine);
     data.append(footer);
 
     return data;

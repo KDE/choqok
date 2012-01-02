@@ -40,6 +40,18 @@ public:
     TwitterAccount(TwitterMicroBlog* parent, const QString& alias);
     ~TwitterAccount();
 
+    void setApi(const QString &api);
+
+    KUrl uploadUrl() const;
+
+    QString uploadHost() const;
+    void setUploadHost(const QString &uploadHost);
+
+protected:
+    void setUploadUrl(const KUrl &url);
+    void generateUploadUrl();
+
+
 private:
     class Private;
     Private *d;

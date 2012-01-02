@@ -5,6 +5,7 @@ ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 set( choqok_twitter_SRCS 
+twittercomposerwidget.cpp
 twitteraccount.cpp
 twittermicroblog.cpp
 twitterpostwidget.cpp

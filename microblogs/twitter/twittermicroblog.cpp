@@ -50,6 +50,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <qjson/parser.h>
 #include "choqoktypes.h"
 #include "twittertimelinewidget.h"
+#include "twittercomposerwidget.h"
+#include <kio/netaccess.h>
+#include <kmimetype.h>
+#include "mediamanager.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < TwitterMicroBlog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_twitter" ) )
@@ -109,7 +113,7 @@ Choqok::UI::PostWidget* TwitterMicroBlog::createPostWidget(Choqok::Account* acco
 
 Choqok::UI::ComposerWidget* TwitterMicroBlog::createComposerWidget(Choqok::Account* account, QWidget* parent)
 {
-    return new TwitterApiComposerWidget(account, parent);
+    return new TwitterComposerWidget(account, parent);
 }
 
 QString TwitterMicroBlog::profileUrl(Choqok::Account*, const QString& username) const
@@ -128,6 +132,67 @@ TwitterApiSearch* TwitterMicroBlog::searchBackend()
     if(!mSearchBackend)
         mSearchBackend = new TwitterSearch(this);
     return mSearchBackend;
+}
+
+void TwitterMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Choqok::Post* post,
+                                                 const QString& mediumToAttach)
+{
+    if( mediumToAttach.isEmpty() ){
+        TwitterApiMicroBlog::createPost(theAccount, post);
+    } else {
+        QByteArray picData;
+        QString tmp;
+        KUrl picUrl(mediumToAttach);
+        KIO::TransferJob *picJob = KIO::get( picUrl, KIO::Reload, KIO::HideProgressInfo);
+        if( !KIO::NetAccess::synchronousRun(picJob, 0, &picData) ){
+            kError()<<"Job error: " << picJob->errorString();
+            KMessageBox::detailedError(Choqok::UI::Global::mainWindow(),
+                                       i18n( "Uploading medium failed: cannot read the medium file." ),
+            picJob->errorString() );
+            return;
+        }
+        if ( picData.count() == 0 ) {
+            kError() << "Cannot read the media file, please check if it exists.";
+            KMessageBox::error( Choqok::UI::Global::mainWindow(),
+                                i18n( "Uploading medium failed: cannot read the medium file." ) );
+            return;
+        }
+        ///Documentation: http://identi.ca/notice/17779990
+        TwitterAccount* account = qobject_cast<TwitterAccount*>(theAccount);
+        KUrl url = account->uploadUrl();
+        url.addPath ( "/statuses/update_with_media.xml" );
+        QByteArray fileContentType = KMimeType::findByUrl( picUrl, 0, true )->name().toUtf8();
+
+        QMap<QString, QByteArray> formdata;
+        formdata["status"] = post->content.toUtf8();
+        if (!post->replyToPostId.isEmpty()) {
+            formdata["in_reply_to_status_id"] = post->replyToPostId.toLatin1();
+        }
+        formdata["source"] = "choqok";
+
+        QMap<QString, QByteArray> mediafile;
+        mediafile["name"] = "media[]";
+        mediafile["filename"] = picUrl.fileName().toUtf8();
+        mediafile["mediumType"] = fileContentType;
+        mediafile["medium"] = picData;
+        QList< QMap<QString, QByteArray> > listMediafiles;
+        listMediafiles.append(mediafile);
+
+        QByteArray data = Choqok::MediaManager::createMultipartFormData(formdata, listMediafiles);
+
+        KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
+        if ( !job ) {
+            kError() << "Cannot create a http POST request!";
+            return;
+        }
+        job->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=AaB03x" );
+        job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST));
+        mCreatePostMap[ job ] = post;
+        mJobsAccount[job] = theAccount;
+        connect( job, SIGNAL( result( KJob* ) ),
+                 SLOT( slotCreatePost(KJob*) ) );
+        job->start();
+    }
 }
 
 QString TwitterMicroBlog::generateRepeatedByUserTooltip(const QString& username)

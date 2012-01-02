@@ -29,6 +29,8 @@
 class TwitterAccount::Private
 {
 public:
+    QString uploadHost;
+    KUrl uploadUrl;
 //     QStringList lists;
 };
 
@@ -36,6 +38,7 @@ TwitterAccount::TwitterAccount(TwitterMicroBlog* parent, const QString &alias)
     : TwitterApiAccount(parent, alias), d(new Private)
 {
     setHost("https://api.twitter.com");
+    setUploadHost("https://upload.twitter.com");
     setApi("1");
 //     d->lists = configGroup()->readEntry("lists", QStringList());
     QStringList lists;
@@ -51,6 +54,44 @@ TwitterAccount::~TwitterAccount()
 {
     delete d;
 }
+
+void TwitterAccount::setApi(const QString &api)
+{
+    TwitterApiAccount::setApi(api);
+    generateUploadUrl();
+}
+
+KUrl TwitterAccount::uploadUrl() const
+{
+    return d->uploadUrl;
+}
+
+void TwitterAccount::setUploadUrl(const KUrl &url)
+{
+    d->uploadUrl = url;
+}
+
+QString TwitterAccount::uploadHost() const
+{
+    return d->uploadHost;
+}
+
+void TwitterAccount::setUploadHost(const QString &uploadHost)
+{
+    d->uploadHost = uploadHost;
+}
+
+void TwitterAccount::generateUploadUrl()
+{
+    if(!uploadHost().startsWith(QLatin1String("http")))//NOTE: This is for compatibility by prev versions. remove it after 1.0 release
+        setUploadHost(uploadHost().prepend("http://"));
+    KUrl url(uploadHost());
+
+    url.addPath(api());
+    setUploadUrl(url);
+}
+
+
 /*
 void TwitterAccount::writeConfig()
 {

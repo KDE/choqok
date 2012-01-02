@@ -62,7 +62,7 @@ public:
     http://identi.ca/api/ is @ref apiUrl()
     */
     QString api() const;
-    void setApi( const QString &api );
+    virtual void setApi( const QString &api );
 
     /**
     Combined from @ref host and @ref api to use for connections and queries
