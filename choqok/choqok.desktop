@@ -45,6 +45,7 @@ Type=Application
 Categories=Network;
 GenericName=Micro-blogging Client
 GenericName[ca]=Client de microblocs
+GenericName[ca@valencia]=Client de microblocs
 GenericName[da]=Mikroblogging-klient
 GenericName[de]=Micro-Blogging-Programm
 GenericName[el]=Εφαρμογή μικρο-ιστολογίου
