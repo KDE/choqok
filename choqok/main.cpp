@@ -45,11 +45,13 @@ int main( int argc, char **argv )
     about.addAuthor( ki18n( "Andrey Esin" ), ki18n( "Developer" ),
                      "gmlastik@gmail.com", "http://twitter.com/la_stik" );
     about.addCredit( ki18n( "Roozbeh Shafiee" ), ki18n( "Artworks" ), "roozbeh@roozbehonline.com" );
+    about.addCredit( ki18n( "Shahrzad Shojaei" ), ki18n( "Artworks" ), "shahrzadesign@gmail.com" );
     about.addCredit( ki18n( "Daniel Schaal" ), ki18n( "UI improvements" ), "daniel@foto-schaal.de");
     about.addCredit( ki18n( "Stephen Henderson" ), ki18n( "Search API implementation" ), "hendersonsk@gmail.com");
     about.addCredit( ki18n( "Tejas Dinkar" ), ki18n( "Developer" ),
                      "tejasdinkar@gmail.com", "http://twitter.com/tdinkar" );
     about.addCredit( ki18n("Emanuele Bigiarini"), ki18n("DBus and konqueror plugin"), "pulmro@gmail.com");
+    about.addCredit( ki18n( "Bardia Daneshvar" ), ki18n("UI improvements"), "bardia.daneshvar@gmail.com");
 
     //TODO before next release, Add new contributers to credits
     KCmdLineArgs::init( argc, argv, &about );

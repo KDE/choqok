@@ -21,4 +21,9 @@
     <Action name="choqok_donate" append="about_merge"/>
   </Menu>
 </MenuBar>
+<ToolBar name="mainToolBar" position="top">
+  <Action name="choqok_new_post"/>
+  <Action name="update_timeline"/>
+  <Action name="choqok_upload_medium"/>
+</ToolBar>
 </kpartgui>
