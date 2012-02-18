@@ -44,11 +44,14 @@ public:
 
     static QMap<Filter::FilterField, QString> filterFieldsMap();
     static QMap<Filter::FilterType, QString> filterTypesMap();
+    static QMap<Filter::FilterAction, QString> filterActionsMap();
 
     static QString filterFieldName(Filter::FilterField field);
     static Filter::FilterField filterFieldFromName( const QString &name );
     static QString filterTypeName(Filter::FilterType type);
     static Filter::FilterType filterTypeFromName( const QString &name );
+    static QString filterActionName(Filter::FilterAction action);
+    static Filter::FilterAction filterActionFromName(const QString &name);
 
     static bool hideNoneFriendsReplies();
     static void setHideNoneFriendsReplies(bool enable = true);
@@ -62,6 +65,7 @@ private:
     QList<Filter*> _filters;
     static QMap<Filter::FilterField, QString> _filterFieldName;
     static QMap<Filter::FilterType, QString> _filterTypeName;
+    static QMap<Filter::FilterAction, QString> _filterActionName;
 
     static bool _hideNoneFriendsReplies;
     static bool _hideRepliesNotRelatedToMe;

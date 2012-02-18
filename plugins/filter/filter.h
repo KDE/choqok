@@ -34,12 +34,14 @@ class Filter : public QObject
 public:
     enum FilterType{ Contain = 0, ExactMatch, RegExp, DoesNotContain };
     enum FilterField{ Content = 0, AuthorUsername, ReplyToUsername, Source };
+    enum FilterAction { None = 0, Remove, Highlight};
 
     /**
         Just use this constructor when filter is new
     */
     explicit Filter(const QString &filterText, FilterField field = Content,
-                    FilterType type = Contain, bool dontHide = false, QObject* parent = 0);
+                    FilterType type = Contain, FilterAction action = Remove,
+                    bool dontHide = false, QObject* parent = 0);
     explicit Filter( const KConfigGroup& config, QObject* parent = 0);
     virtual ~Filter();
 
@@ -51,6 +53,9 @@ public:
 
     FilterType filterType() const;
     void setFilterType( FilterType type );
+
+    FilterAction filterAction() const;
+    void setFilterAction( FilterAction action );
 
     bool dontHideReplies() const;
     void setDontHideReplies(bool dontHide);

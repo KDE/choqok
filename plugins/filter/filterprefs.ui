@@ -50,6 +50,11 @@
            <string>Filter</string>
           </property>
          </column>
+         <column>
+          <property name="text">
+           <string>Action</string>
+          </property>
+         </column>
         </widget>
        </item>
        <item>

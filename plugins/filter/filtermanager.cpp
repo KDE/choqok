@@ -66,10 +66,6 @@ FilterManager::~FilterManager()
 
 void FilterManager::slotAddNewPostWidget(Choqok::UI::PostWidget* newWidget)
 {
-//     if(!theAccount->inherits("TwitterApiAccount")){
-//         kDebug()<<"Not a TwitterApi like account";
-//         return;
-//     }
     postsQueue.enqueue(newWidget);
     if(state == Stopped){
         state = Running;
@@ -94,6 +90,9 @@ void FilterManager::startParsing()
 void FilterManager::parse(Choqok::UI::PostWidget* postToParse)
 {
     if(!postToParse)
+        return;
+
+    if(postToParse->currentPost().author.userName == postToParse->currentAccount()->username())
         return;
 
     if( parseSpecialRules(postToParse) )
@@ -130,47 +129,57 @@ void FilterManager::parse(Choqok::UI::PostWidget* postToParse)
     }
 }
 
-FilterManager::FilterAction FilterManager::filterText(const QString& textToCheck, Filter* filter)
+Filter::FilterAction FilterManager::filterText(const QString& textToCheck, Filter* filter)
 {
+    bool filtered = false;
     switch(filter->filterType()){
         case Filter::ExactMatch:
             if(textToCheck == filter->filterText()){
                 kDebug()<<"ExactMatch: " << filter->filterText();
-                return Remove;
+                filtered = true;
             }
             break;
         case Filter::RegExp:
             if( textToCheck.contains(QRegExp(filter->filterText())) ){
                 kDebug()<<"RegExp: " << filter->filterText();
-                return Remove;
+                filtered = true;
             }
             break;
         case Filter::Contain:
             if( textToCheck.contains(filter->filterText()) ){
                 kDebug()<<"Contain: " << filter->filterText();
-                return Remove;
+                filtered = true;
             }
             break;
         case Filter::DoesNotContain:
             if( !textToCheck.contains(filter->filterText()) ){
                 kDebug()<<"DoesNotContain: " << filter->filterText();
-                return Remove;
+                filtered = true;
             }
             break;
         default:
-            return None;
             break;
     }
-    return None;
+    if(filtered)
+        return filter->filterAction();
+    else
+        return Filter::None;
 }
 
-void FilterManager::doFiltering(Choqok::UI::PostWidget* postToFilter, FilterManager::FilterAction action)
+void FilterManager::doFiltering(Choqok::UI::PostWidget* postToFilter, Filter::FilterAction action)
 {
+    QString css;
     switch(action){
-        case Remove:
-            kDebug()<<"Post filtered: "<<postToFilter->currentPost().content;
+        case Filter::Remove:
+            kDebug()<<"Post removed: "<<postToFilter->currentPost().content;
             postToFilter->close();
             break;
+        case Filter::Highlight:
+            css = postToFilter->styleSheet();
+            css.replace("border: 1px solid rgb(150,150,150)", "border: 2px solid rgb(255,0,0)");
+            postToFilter->setStyleSheet(css);
+            break;
+        case Filter::None:
         default:
             //Do nothing
             break;

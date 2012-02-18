@@ -36,6 +36,7 @@
 FilterSettings *FilterSettings::_self = 0L;
 QMap<Filter::FilterField, QString> FilterSettings::_filterFieldName;
 QMap<Filter::FilterType, QString> FilterSettings::_filterTypeName;
+QMap<Filter::FilterAction, QString> FilterSettings::_filterActionName;
 bool FilterSettings::_hideNoneFriendsReplies = false;
 bool FilterSettings::_hideRepliesNotRelatedToMe = false;
 
@@ -52,6 +53,9 @@ FilterSettings* FilterSettings::self()
         _filterTypeName[Filter::DoesNotContain] = i18n("Does Not Contain");
         _filterTypeName[Filter::ExactMatch] = i18n("Exact Match");
         _filterTypeName[Filter::RegExp] = i18n("Regular Expression");
+
+        _filterActionName[Filter::Remove] = i18n("Hide Posts");
+        _filterActionName[Filter::Highlight] = i18n("Highlight Posts");
     }
     return _self;
 }
@@ -137,6 +141,16 @@ Filter::FilterType FilterSettings::filterTypeFromName(const QString& name)
     return _filterTypeName.key(name);
 }
 
+Filter::FilterAction FilterSettings::filterActionFromName(const QString& name)
+{
+    return _filterActionName.key(name);
+}
+
+QString FilterSettings::filterActionName(Filter::FilterAction action)
+{
+    return _filterActionName.value(action);
+}
+
 QMap< Filter::FilterField, QString > FilterSettings::filterFieldsMap()
 {
     return _filterFieldName;
@@ -145,6 +159,11 @@ QMap< Filter::FilterField, QString > FilterSettings::filterFieldsMap()
 QMap< Filter::FilterType, QString > FilterSettings::filterTypesMap()
 {
     return _filterTypeName;
+}
+
+QMap< Filter::FilterAction, QString > FilterSettings::filterActionsMap()
+{
+    return _filterActionName;
 }
 
 bool FilterSettings::hideNoneFriendsReplies()

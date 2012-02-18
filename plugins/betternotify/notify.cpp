@@ -67,7 +67,7 @@ Notify::~Notify()
 
 void Notify::slotNewPostWidgetAdded(Choqok::UI::PostWidget* pw, Choqok::Account* acc, QString tm)
 {
-    kDebug()<<Choqok::Application::isStartingUp()<< Choqok::Application::isShuttingDown();
+//     kDebug()<<Choqok::Application::isStartingUp()<< Choqok::Application::isShuttingDown();
     if(Choqok::Application::isStartingUp() || Choqok::Application::isShuttingDown()){
         kDebug()<<"Choqok is starting up or going down!";
         return;

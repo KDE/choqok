@@ -48,8 +48,6 @@ class FilterManager : public Choqok::Plugin
 {
     Q_OBJECT
 public:
-    enum FilterAction { None = 0, Remove};
-
     FilterManager( QObject* parent, const QList< QVariant >& args );
     ~FilterManager();
 
@@ -63,8 +61,8 @@ private:
     enum ParserState{ Stopped = 0, Running };
     ParserState state;
 
-    FilterAction filterText(const QString &textToCheck, Filter * filter);
-    void doFiltering(Choqok::UI::PostWidget *postToFilter, FilterAction action );
+    Filter::FilterAction filterText(const QString &textToCheck, Filter * filter);
+    void doFiltering(Choqok::UI::PostWidget *postToFilter, Filter::FilterAction action );
 
     void parse( Choqok::UI::PostWidget *postToParse );
     QQueue< QPointer<Choqok::UI::PostWidget> > postsQueue;

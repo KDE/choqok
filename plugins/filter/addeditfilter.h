@@ -41,12 +41,14 @@ signals:
     void newFilterRegistered( Filter *filter );
     void filterUpdated( Filter *filter );
 
-protected:
+protected slots:
+    void slotFilterActionChanged(int);
     virtual void slotButtonClicked(int button);
 
 private:
     void setupFilterFields();
     void setupFilterTypes();
+    void setupFilterActions();
     Ui::AddEditFilterBase ui;
     Filter *currentFilter;
 };

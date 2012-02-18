@@ -38,7 +38,7 @@ ConfigureFilters::ConfigureFilters(QWidget* parent):
     wd->setObjectName("mFilteringCtl");
     ui.setupUi(wd);
     setMainWidget(wd);
-    resize(400, 300);
+    resize(500, 300);
 
     setWindowTitle(i18n("Configure Filters"));
 
@@ -82,11 +82,12 @@ void ConfigureFilters::saveFiltersTable()
     QList<Filter*> list;
     int count = ui.filters->rowCount();
     for(int i=0; i<count; ++i){
-        Filter::FilterField field = FilterSettings::self()->filterFieldFromName(ui.filters->item(i, 0)->text());
-        Filter::FilterType type = FilterSettings::self()->filterTypeFromName(ui.filters->item(i, 1)->text());
+        Filter::FilterField field = (Filter::FilterField) ui.filters->item(i, 0)->data(32).toInt();
+        Filter::FilterType type = (Filter::FilterType) ui.filters->item(i, 1)->data(32).toInt();
+        Filter::FilterAction action = (Filter::FilterAction) ui.filters->item(i, 3)->data(32).toInt();
         QString text = ui.filters->item(i, 2)->text();
         bool dontHideReplies = ui.filters->item(i, 2)->data(32).toBool();
-        Filter *f = new Filter(text, field, type, dontHideReplies, FilterSettings::self());
+        Filter *f = new Filter(text, field, type, action, dontHideReplies, FilterSettings::self());
         list << f;
     }
     FilterSettings::self()->setFilters(list);
@@ -106,13 +107,12 @@ void ConfigureFilters::slotEditFilter()
 {
     if(ui.filters->selectedItems().count()>0){
         int row = ui.filters->currentRow();
-        Filter::FilterField field;
-        Filter::FilterType type;
-        field = (Filter::FilterField) ui.filters->item(row, 0)->data(32).toInt();
-        type = (Filter::FilterType) ui.filters->item(row, 1)->data(32).toInt();
+        Filter::FilterField field = (Filter::FilterField) ui.filters->item(row, 0)->data(32).toInt();
+        Filter::FilterType type = (Filter::FilterType) ui.filters->item(row, 1)->data(32).toInt();
+        Filter::FilterAction action = (Filter::FilterAction) ui.filters->item(row, 3)->data(32).toInt();
         bool dontHideReplies = ui.filters->item(row, 2)->data(32).toBool();
         QString text = ui.filters->item(row, 2)->text();
-        Filter *f = new Filter(text, field, type, dontHideReplies, this);
+        Filter *f = new Filter(text, field, type, action, dontHideReplies, this);
         QPointer<AddEditFilter> dialog = new AddEditFilter(this, f);
         connect(dialog, SIGNAL(filterUpdated(Filter*)), SLOT(slotUpdateFilter(Filter*)));
         dialog->exec();
@@ -123,10 +123,6 @@ void ConfigureFilters::slotRemoveFilter()
 {
     if(ui.filters->selectedItems().count()>0){
         int row = ui.filters->currentRow();
-//         int field = ui.filters->item(row, 0)->data(32).toInt();
-//         int type = ui.filters->item(row, 1)->data(32).toInt();
-//         QString text = ui.filters->item(row, 2)->text();
-//         KGlobal::config()->deleteGroup(QString("%1%2%3").arg(text).arg(field).arg(type));
         ui.filters->removeRow(row);
     }
 }
@@ -144,6 +140,9 @@ void ConfigureFilters::addNewFilter(Filter* filter)
     QTableWidgetItem *item3 = new QTableWidgetItem(filter->filterText());
     item3->setData(32, filter->dontHideReplies());
     ui.filters->setItem(row, 2, item3);
+    QTableWidgetItem *item4 = new QTableWidgetItem(FilterSettings::self()->filterActionName(filter->filterAction()));
+    item4->setData(32, filter->filterAction());
+    ui.filters->setItem(row, 3, item4);
 }
 
 void ConfigureFilters::slotUpdateFilter(Filter* filter)
@@ -157,6 +156,9 @@ void ConfigureFilters::slotUpdateFilter(Filter* filter)
 
     ui.filters->item(row, 2)->setText(filter->filterText());
     ui.filters->item(row, 2)->setData(32, filter->dontHideReplies());
+
+    ui.filters->item(row, 3)->setText(FilterSettings::self()->filterActionName(filter->filterAction()));
+    ui.filters->item(row, 3)->setData(32, filter->filterAction());
 }
 
 void ConfigureFilters::slotHideRepliesNotRelatedToMeToggled(bool enabled)

@@ -11,6 +11,9 @@
    </rect>
   </property>
   <layout class="QFormLayout" name="formLayout">
+   <property name="fieldGrowthPolicy">
+    <enum>QFormLayout::ExpandingFieldsGrow</enum>
+   </property>
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
@@ -50,12 +53,25 @@
    <item row="2" column="1">
     <widget class="KLineEdit" name="filterText"/>
    </item>
-   <item row="3" column="0" colspan="2">
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Filter Action:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="KComboBox" name="filterAction"/>
+   </item>
+   <item row="5" column="0" colspan="2">
     <widget class="QCheckBox" name="dontHideReplies">
      <property name="text">
       <string>Do not hide replies to me</string>
      </property>
     </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="KSeparator" name="kseparator"/>
    </item>
   </layout>
  </widget>
@@ -69,6 +85,11 @@
    <class>KComboBox</class>
    <extends>QComboBox</extends>
    <header>kcombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KSeparator</class>
+   <extends>QFrame</extends>
+   <header>kseparator.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

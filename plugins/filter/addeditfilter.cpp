@@ -34,9 +34,11 @@ AddEditFilter::AddEditFilter(QWidget* parent, Filter *filter)
     QWidget *wd = new QWidget(this);
     ui.setupUi(wd);
     setMainWidget(wd);
+    connect(ui.filterAction, SIGNAL(currentIndexChanged(int)), this, SLOT(slotFilterActionChanged(int)));
 
     setupFilterFields();
     setupFilterTypes();
+    setupFilterActions();
 
     setWindowTitle(i18n("Define new filter rules"));
 
@@ -45,11 +47,13 @@ AddEditFilter::AddEditFilter(QWidget* parent, Filter *filter)
         //Editing
         ui.filterField->setCurrentIndex(ui.filterField->findData(filter->filterField()));
         ui.filterType->setCurrentIndex(ui.filterType->findData(filter->filterType()));
+        ui.filterAction->setCurrentIndex(ui.filterAction->findData(filter->filterAction()));
         ui.filterText->setText(filter->filterText());
         ui.dontHideReplies->setChecked(filter->dontHideReplies());
         setWindowTitle(i18n("Modify filter rules"));
     }
     ui.filterText->setFocus();
+
 }
 
 AddEditFilter::~AddEditFilter()
@@ -60,23 +64,33 @@ AddEditFilter::~AddEditFilter()
 void AddEditFilter::slotButtonClicked(int button)
 {
     if(button==KDialog::Ok){
-        Filter::FilterField field = (Filter::FilterField) ui.filterField->itemData(ui.filterField->currentIndex()).toInt();
-        Filter::FilterType type = (Filter::FilterType) ui.filterType->itemData(ui.filterType->currentIndex()).toInt();
+        Filter::FilterField field =
+                            (Filter::FilterField) ui.filterField->itemData(ui.filterField->currentIndex()).toInt();
+        Filter::FilterType type =
+                            (Filter::FilterType) ui.filterType->itemData(ui.filterType->currentIndex()).toInt();
+        Filter::FilterAction action =
+                            (Filter::FilterAction) ui.filterAction->itemData(ui.filterAction->currentIndex()).toInt();
         QString fText = ui.filterText->text();
         bool dontHideReplies = ui.dontHideReplies->isChecked();
         if(currentFilter){
             currentFilter->setFilterField(field);
             currentFilter->setFilterText(fText);
             currentFilter->setFilterType(type);
+            currentFilter->setFilterAction(action);
             currentFilter->setDontHideReplies(dontHideReplies);
             emit filterUpdated(currentFilter);
         } else {
-            currentFilter = new Filter(fText, field, type, dontHideReplies);
+            currentFilter = new Filter(fText, field, type, action, dontHideReplies);
             emit newFilterRegistered(currentFilter);
         }
         accept();
     } else
         KDialog::slotButtonClicked(button);
+}
+
+void AddEditFilter::slotFilterActionChanged(int index)
+{
+    ui.dontHideReplies->setVisible((Filter::FilterAction)ui.filterAction->itemData(index).toInt() == Filter::Remove);
 }
 
 void AddEditFilter::setupFilterFields()
@@ -94,5 +108,14 @@ void AddEditFilter::setupFilterTypes()
         ui.filterType->addItem(it.value(), it.key());
     }
 }
+
+void AddEditFilter::setupFilterActions()
+{
+    QMap<Filter::FilterAction, QString>::const_iterator it, endIt = FilterSettings::filterActionsMap().constEnd();
+    for(it=FilterSettings::filterActionsMap().constBegin(); it != endIt; ++it){
+        ui.filterAction->addItem(it.value(), it.key());
+    }
+}
+
 
 #include "addeditfilter.moc"
