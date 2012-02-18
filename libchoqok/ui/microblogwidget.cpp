@@ -56,17 +56,29 @@ QIcon addNumToIcon( const QIcon & big , int number , const QSize & result_size ,
     QIcon result;
 
     QList<QIcon::Mode> mods;
-        mods << QIcon::Active << QIcon::Disabled << QIcon::Disabled << QIcon::Selected;
+    mods << QIcon::Active /*<< QIcon::Disabled << QIcon::Selected*/;
 
     for( int i=0 ; i<mods.count() ; i++ )
     {
         QPixmap pixmap = big.pixmap( result_size );
+        QPainter painter( &pixmap );
+        QFont font;
+        font.setWeight( result_size.height()/2 );
+        font.setBold( true );
+        font.setItalic( true );
+        painter.setFont( font );
 
         QColor color1( palette.color( QPalette::Active , QPalette::HighlightedText ) );
         QColor color2( palette.color( QPalette::Active , QPalette::Window          ) );
 
-        QRect rct( result_size.width()/2 , result_size.width()/2 ,
-                   result_size.width()/2 , result_size.height()/2 );
+        QString numberStr = QString::number(number);
+        int textWidth = painter.fontMetrics().width(numberStr) + 6;
+
+        if(textWidth < result_size.width()/2)
+            textWidth = result_size.width()/2;
+
+        QRect rct( result_size.width() - textWidth , result_size.width()/2 ,
+                   textWidth , result_size.height()/2 );
         QPointF center( rct.x() + rct.width()/2 , rct.y() + rct.height()/2 );
 
         QLinearGradient gradiant(QPointF(0,0), QPointF(result_size.width(),result_size.height()));
@@ -77,16 +89,10 @@ QIcon addNumToIcon( const QIcon & big , int number , const QSize & result_size ,
         cyrcle_path.moveTo( center );
         cyrcle_path.arcTo( rct, 0, 360 );
 
-        QFont font;
-        font.setWeight( rct.height() );
-        font.setBold( true );
-        font.setItalic( true );
 
-        QPainter painter( &pixmap );
         painter.setRenderHint( QPainter::Antialiasing );
         painter.fillPath( cyrcle_path , gradiant );
-        painter.setPen( palette.color( QPalette::Active , QPalette::Highlight ) );
-        painter.setFont( font );
+        painter.setPen( palette.color( QPalette::Active , QPalette::Text ) );
         painter.drawText( rct , Qt::AlignHCenter|Qt::AlignVCenter , QString::number(number) );
 
         result.addPixmap( pixmap , mods.at(i) );
