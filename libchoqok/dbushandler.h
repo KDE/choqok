@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2008-2011 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    Copyright (C) 2010-2012 Mehrdad Momeny <mehrdad.momeny@gmail.com>
     Copyright (C) 2010-2011 Emanuele Bigiarini <pulmro@gmail.com>
 
     This program is free software; you can redistribute it and/or
