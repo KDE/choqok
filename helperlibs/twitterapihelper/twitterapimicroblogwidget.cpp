@@ -36,6 +36,7 @@
 #include <KAction>
 #include <KMenu>
 #include "twitterapiaccount.h"
+#include <QPainter>
 
 class TwitterApiMicroBlogWidget::Private
 {
@@ -51,6 +52,29 @@ public:
     TwitterApiAccount *account;
     QToolButton *btnCloseSearch;
 };
+
+KIcon addTextToIcon(const KIcon& icon, const QString &text, const QSize & result_size , const QPalette & palette )
+{
+    KIcon result;
+
+    QPixmap pixmap = icon.pixmap( result_size );
+    QPainter painter( &pixmap );
+    QFont font;
+    font.setWeight( result_size.height()/3 );
+    font.setBold(true);
+    painter.setFont( font );
+
+    int textWidth = painter.fontMetrics().width(text);
+    QRect rct( 0 , 0 , textWidth , result_size.height()/2 );
+
+    painter.setRenderHint( QPainter::Antialiasing );
+    painter.setPen( palette.color( QPalette::Active , QPalette::HighlightedText ) );
+    painter.drawText( rct , Qt::AlignTop|Qt::AlignLeft , text );
+
+    result.addPixmap( pixmap , QIcon::Active );
+
+    return result;
+}
 
 TwitterApiMicroBlogWidget::TwitterApiMicroBlogWidget(Choqok::Account* account, QWidget* parent)
     : MicroBlogWidget(account, parent), d(new Private(account))
@@ -117,7 +141,18 @@ TwitterApiSearchTimelineWidget* TwitterApiMicroBlogWidget::addSearchTimelineWidg
         mSearchTimelines.insert(name, mbw);
         timelines().insert(name, mbw);
         timelinesTabWidget()->addTab(mbw, name);
-        timelinesTabWidget()->setTabIcon(timelinesTabWidget()->indexOf(mbw), KIcon("edit-find"));
+        QString textToAdd = name;
+        if(textToAdd.contains(':')){
+            QStringList splitted = textToAdd.split(QChar(':'));
+            textToAdd = splitted.first().at(0) + QString(':') + splitted[1].left(3);
+        }
+        else
+        {
+            textToAdd = textToAdd.left(4);
+        }
+        KIcon icon = addTextToIcon( KIcon("edit-find"), textToAdd, QSize(40,40), palette() );
+        mbw->setTimelineIcon(icon);
+        timelinesTabWidget()->setTabIcon(timelinesTabWidget()->indexOf(mbw), icon);
         connect( mbw, SIGNAL(updateUnreadCount(int)),
                     this, SLOT(slotUpdateUnreadCount(int)) );
         connect( mbw, SIGNAL(closeMe()), this, SLOT(slotCloseCurrentSearch()) );

@@ -397,9 +397,6 @@ void ChoqokTabBar::removePage( QWidget *widget )
 void ChoqokTabBar::setTabIcon( int index , const QIcon & input_icon )
 {
     KIcon icon( input_icon );
-    if( icon.isNull() )
-        icon = KIcon( "edit-find" );
-    
     p->actions_list[ index ]->setIcon( icon );
 }
 

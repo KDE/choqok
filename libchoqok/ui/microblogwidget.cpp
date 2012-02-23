@@ -308,9 +308,11 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change, Choqok::UI::TimelineWidg
         else
         {
 	    KIcon icon;
-	    if( !wd->timelineIcon().isEmpty() )
-	        icon = KIcon( wd->timelineIcon() );
-	    
+	    if( !wd->timelineIconName().isEmpty() )
+	        icon = KIcon( wd->timelineIconName() );
+        else
+            icon = wd->timelineIcon();
+
             d->timelinesTabWidget->setTabIcon( tabIndex , icon );
             d->timelinesTabWidget->setTabText( tabIndex, wd->timelineInfoName() );
         }

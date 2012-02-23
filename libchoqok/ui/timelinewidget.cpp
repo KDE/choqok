@@ -70,6 +70,7 @@ public:
     int order;            // 0: web, -1: natural
     Choqok::TimelineInfo *info;
     bool isClosable;
+    KIcon timelineIcon;
 };
 
 TimelineWidget::TimelineWidget(Choqok::Account* account, const QString &timelineName, QWidget* parent /*= 0*/)
@@ -114,9 +115,19 @@ QString TimelineWidget::timelineInfoName()
     return d->info->name;
 }
 
-QString TimelineWidget::timelineIcon()
+QString TimelineWidget::timelineIconName()
 {
     return d->info->icon;
+}
+
+void TimelineWidget::setTimelineIcon(const KIcon& icon)
+{
+    d->timelineIcon = icon;
+}
+
+KIcon& TimelineWidget::timelineIcon() const
+{
+    return d->timelineIcon;
 }
 
 void TimelineWidget::setTimelineName(const QString &type)

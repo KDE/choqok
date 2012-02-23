@@ -24,7 +24,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #define TIMELINEWIDGET_H
 
 #include <QtGui/QWidget>
+#include <qicon.h>
 #include <QtCore/QMap>
+#include <KIcon>
 #include <choqoktypes.h>
 #include "choqok_export.h"
 
@@ -63,9 +65,16 @@ public:
     QString timelineInfoName();
 
     /**
-    @brief Return Timeline name for UI
+    @brief Return Timeline icon name
     */
-    QString timelineIcon();
+    QString timelineIconName();
+
+    /**
+    @brief Return Timeline icon
+    If timelineIconName() is empty this can be useful
+     */
+    KIcon& timelineIcon() const;
+    void setTimelineIcon(const KIcon& icon);
 
     /**
      @brief Add new posts to UI.
