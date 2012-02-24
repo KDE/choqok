@@ -68,9 +68,6 @@ QIcon addNumToIcon( const QIcon & big , int number , const QSize & result_size ,
         font.setItalic( true );
         painter.setFont( font );
 
-        QColor color1( palette.color( QPalette::Active , QPalette::HighlightedText ) );
-        QColor color2( palette.color( QPalette::Active , QPalette::Window          ) );
-
         QString numberStr = QString::number(number);
         int textWidth = painter.fontMetrics().width(numberStr) + 6;
 
@@ -81,17 +78,13 @@ QIcon addNumToIcon( const QIcon & big , int number , const QSize & result_size ,
                    textWidth , result_size.height()/2 );
         QPointF center( rct.x() + rct.width()/2 , rct.y() + rct.height()/2 );
 
-        QLinearGradient gradiant(QPointF(0,0), QPointF(result_size.width(),result_size.height()));
-        gradiant.setColorAt(0, color1);
-        gradiant.setColorAt(1, color2);
-
         QPainterPath cyrcle_path;
         cyrcle_path.moveTo( center );
         cyrcle_path.arcTo( rct, 0, 360 );
 
 
         painter.setRenderHint( QPainter::Antialiasing );
-        painter.fillPath( cyrcle_path , gradiant );
+        painter.fillPath( cyrcle_path , palette.color( QPalette::Active , QPalette::Window ) );
         painter.setPen( palette.color( QPalette::Active , QPalette::Text ) );
         painter.drawText( rct , Qt::AlignHCenter|Qt::AlignVCenter , QString::number(number) );
 
