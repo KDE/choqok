@@ -53,19 +53,7 @@ public slots:
     void quitChoqok();
 
     virtual void commitData( QSessionManager &sm );
-    /**
-     * Load all plugins
-     */
-//     void slotLoadPlugins();
-
-private slots:
-    /**
-     * auto-connect
-     */
-//     void slotAllPluginsLoaded();
 private:
-//     void handleURLArgs();
-
 
     // The main window might get deleted behind our back (W_DestructiveClose),
     // so use a guarded pointer

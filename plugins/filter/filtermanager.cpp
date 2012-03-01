@@ -135,25 +135,25 @@ Filter::FilterAction FilterManager::filterText(const QString& textToCheck, Filte
     switch(filter->filterType()){
         case Filter::ExactMatch:
             if(textToCheck.compare( filter->filterText(), Qt::CaseInsensitive) == 0){
-                kDebug()<<"ExactMatch: " << filter->filterText();
+//                 kDebug()<<"ExactMatch: " << filter->filterText();
                 filtered = true;
             }
             break;
         case Filter::RegExp:
             if( textToCheck.contains(QRegExp(filter->filterText())) ){
-                kDebug()<<"RegExp: " << filter->filterText();
+//                 kDebug()<<"RegExp: " << filter->filterText();
                 filtered = true;
             }
             break;
         case Filter::Contain:
             if( textToCheck.contains(filter->filterText(), Qt::CaseInsensitive) ){
-                kDebug()<<"Contain: " << filter->filterText();
+//                 kDebug()<<"Contain: " << filter->filterText();
                 filtered = true;
             }
             break;
         case Filter::DoesNotContain:
             if( !textToCheck.contains(filter->filterText(), Qt::CaseInsensitive) ){
-                kDebug()<<"DoesNotContain: " << filter->filterText();
+//                 kDebug()<<"DoesNotContain: " << filter->filterText();
                 filtered = true;
             }
             break;
