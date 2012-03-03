@@ -1,3 +1,11 @@
+=== Version 1.3 -- 05-Apr-2012 ===
+* Support for Twitter photo upload API method (by Atanas Gospodinov)
+* Translator plugin shuts off due Google terminated its free API.
+* Toolbar for Choqok
+* Filter plugin new feature: Add a filter to Highlight a post containing some text. [FEATURE:278529]
+* Improvements in new tab bar UI.
+* Show first 4 characters of search timeline name over the timeline icon [FEATURE:287687]
+
 === Version 1.2 -- 01-Nov-2011 ===
 * New TabBar UX for timelines inside an account. (Bardia Daneshvar)
 * Replying to USERNAME notice under composer widget.
