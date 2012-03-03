@@ -135,9 +135,9 @@ void TwitterApiSearchTimelineWidget::addNewPosts(QList< Choqok::Post* >& postLis
         removeAllPosts();
         d->loadingAnotherPage = false;
     }
-    bool markRead = false;
+   /*bool markRead = false;
     if( posts().count() < 1 )
-        markRead = true;
+        markRead = true;*/
     int m = postList.count() - Choqok::BehaviorSettings::countOfPosts();
 //     kDebug()<<m<<postList.count();
     while( m > 0 ){
@@ -145,8 +145,8 @@ void TwitterApiSearchTimelineWidget::addNewPosts(QList< Choqok::Post* >& postLis
         --m;
     }
     Choqok::UI::TimelineWidget::addNewPosts(postList);
-    if(markRead)
-        markAllAsRead();
+//     if(markRead)
+//         markAllAsRead();
     if(d->pageNumber)
         d->pageNumber->setText(QString::number(d->currentPage));
 }

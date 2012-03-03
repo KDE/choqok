@@ -89,10 +89,9 @@ void FilterManager::startParsing()
 
 void FilterManager::parse(Choqok::UI::PostWidget* postToParse)
 {
-    if(!postToParse)
-        return;
-
-    if(postToParse->currentPost().author.userName == postToParse->currentAccount()->username())
+    if( !postToParse ||
+        postToParse->currentPost().author.userName == postToParse->currentAccount()->username() ||
+        postToParse->isRead() )
         return;
 
     if( parseSpecialRules(postToParse) )
@@ -104,7 +103,7 @@ void FilterManager::parse(Choqok::UI::PostWidget* postToParse)
     foreach(Filter* filter, FilterSettings::self()->filters()) {
         if(filter->filterText().isEmpty())
             return;
-        if(filter->dontHideReplies() &&
+        if(filter->filterAction() == Filter::Remove && filter->dontHideReplies() &&
             (postToParse->currentPost().replyToUserName.compare(postToParse->currentAccount()->username(),
                                                                 Qt::CaseInsensitive) == 0 ||
              postToParse->currentPost().content.contains(QString("@%1").arg(postToParse->currentAccount()->username())))
