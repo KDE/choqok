@@ -95,7 +95,7 @@ void TwitterApiMicroBlogWidget::initUi()
     Choqok::UI::MicroBlogWidget::initUi();
     connect(timelinesTabWidget(), SIGNAL(contextMenu(QWidget*,QPoint)),
             this, SLOT(slotContextMenu(QWidget*,QPoint)));
-    connect(timelinesTabWidget(), SIGNAL(currentChanged(int)), SLOT(slotCurrentTimelineChanged(int)) );
+//     connect(timelinesTabWidget(), SIGNAL(currentChanged(int)), SLOT(slotCurrentTimelineChanged(int)) );
 //     d->btnCloseSearch->setIcon(KIcon("tab-close"));
 //     d->btnCloseSearch->setAutoRaise(true);
 //     d->btnCloseSearch->setToolTip(i18nc("Close a timeline", "Close Timeline"));
@@ -103,7 +103,7 @@ void TwitterApiMicroBlogWidget::initUi()
 //     timelinesTabWidget()->setTabAlongsideWidget( d->btnCloseSearch );
     
 //     connect(d->btnCloseSearch, SIGNAL(clicked(bool)), SLOT(slotCloseCurrentSearch()) );
-    slotCurrentTimelineChanged(timelinesTabWidget()->currentIndex());
+//     slotCurrentTimelineChanged(timelinesTabWidget()->currentIndex());
 }
 
 TwitterApiMicroBlogWidget::~TwitterApiMicroBlogWidget()
@@ -174,17 +174,17 @@ TwitterApiSearchTimelineWidget* TwitterApiMicroBlogWidget::addSearchTimelineWidg
     return mbw;
 }
 
-void TwitterApiMicroBlogWidget::slotCurrentTimelineChanged(int index)
-{
-  if ( index > -1 ) {
-      Choqok::UI::TimelineWidget *stw =
-              qobject_cast<Choqok::UI::TimelineWidget *>(timelinesTabWidget()->widget(index));
+// void TwitterApiMicroBlogWidget::slotCurrentTimelineChanged(int index)
+// {
+//   if ( index > -1 ) {
+//       Choqok::UI::TimelineWidget *stw =
+//               qobject_cast<Choqok::UI::TimelineWidget *>(timelinesTabWidget()->widget(index));
 //       if(stw->isClosable())
 //           d->btnCloseSearch->setEnabled(true);
 //       else
 //           d->btnCloseSearch->setEnabled(false);
-  }
-}
+//   }
+// }
 
 void TwitterApiMicroBlogWidget::slotCloseCurrentSearch()
 {

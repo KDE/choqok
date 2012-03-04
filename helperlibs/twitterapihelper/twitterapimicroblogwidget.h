@@ -46,7 +46,7 @@ protected Q_SLOTS:
     void closeAllSearches();
     void slotAccountModified(Choqok::Account *account);
     void slotCloseCurrentSearch();
-    void slotCurrentTimelineChanged(int);
+//     void slotCurrentTimelineChanged(int);
     virtual void saveSearchTimelinesState();
     virtual void loadSearchTimelinesState();
     virtual void slotSearchResultsReceived( const SearchInfo &info,
