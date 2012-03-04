@@ -25,6 +25,7 @@
 #define MAINWINDOW_H
 
 #include <kxmlguiwindow.h>
+#include <QPointer>
 #include "account.h"
 #include "choqokmainwindow.h"
 
@@ -119,7 +120,7 @@ private:
     SysTrayIcon *sysIcon;
     Choqok::UI::QuickPost *quickWidget;
     KSettings::Dialog *s_settingsDialog;
-    KSplashScreen *m_splash;
+    QPointer<KSplashScreen> m_splash;
     KAction *showMain;
     KAction *actQuit;
     KAction *prefs;

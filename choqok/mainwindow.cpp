@@ -137,9 +137,12 @@ void MainWindow::loadAllAccounts()
         //         kDebug()<<img;
         QPixmap splashpix( img );
         if(splashpix.isNull())
-            kDebug()<<"Pixmap is NULL";
-        m_splash = new KSplashScreen( splashpix, Qt::WindowStaysOnTopHint );
-        m_splash->show();
+            kError()<<"Splash screen pixmap is NULL! URL: "<<img;
+        else{
+            m_splash = new KSplashScreen( splashpix, Qt::WindowStaysOnTopHint );
+            m_splash->show();
+            m_splash->showMessage(QString());//Workaround for Qt 4.8 splash bug
+        }
     }
 
     settingsChanged();
@@ -148,6 +151,8 @@ void MainWindow::loadAllAccounts()
     if( count > 0 ) {
         for( int i=0; i < count; ++i ){
             addBlog(accList.at(i), true);
+            if(m_splash)
+                m_splash->showMessage(QString());//Workaround for Qt 4.8 splash bug
         }
         kDebug()<<"All accounts loaded.";
         if(Choqok::BehaviorSettings::updateInterval() > 0)
@@ -597,6 +602,9 @@ void MainWindow::oneMicroblogLoaded()
         m_splash = 0;
         if( Choqok::BehaviorSettings::showMainWinOnStart() )
             this->show();
+    } else {
+        if(m_splash)
+            m_splash->showMessage(QString());//Workaround for Qt 4.8 splash bug
     }
 }
 
