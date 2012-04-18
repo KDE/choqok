@@ -74,6 +74,7 @@ Comment[pt]=Um 'plugin' para reduzir os URL's, usando o serviço do ur1.ca.
 Comment[pt_BR]=Plugin para encurtar URLs através do serviço ur1.ca.
 Comment[ru]=Модуль для сокращения ссылок с помощью службы ur1.ca.
 Comment[sv]=Ett insticksprogram för att avkorta webbadresser via tjänsten url.ca.
+Comment[tr]=ur1.ca kullanarak adresleri kısaltmaya yarayan bir eklenti.
 Comment[uk]=Додаток для скорочення адрес за допомогою служб ur1.ca.
 Comment[x-test]=xxA plugin to shorten URLs via the ur1.ca service.xx
 Comment[zh_CN]=通过 ur1.ca 服务缩短 URL 的插件。

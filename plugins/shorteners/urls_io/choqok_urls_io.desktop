@@ -74,6 +74,7 @@ Comment[pt]=Um 'plugin' para reduzir os URL's, usando o serviço do urls.io.
 Comment[pt_BR]=Plugin para encurtar URLs através do serviço urls.io.
 Comment[ru]=Модуль для сокращения ссылок с помощью службы urls.io.
 Comment[sv]=Ett insticksprogram för att avkorta webbadresser via tjänsten urls.io.
+Comment[tr]=urls.iokullanarak adresleri kısaltmaya yarayan bir eklenti.
 Comment[uk]=Додаток для скорочення адрес за допомогою служби urls.io.
 Comment[x-test]=xxA plugin to shorten URLs via the urls.io service.xx
 Comment[zh_CN]=通过 urls.io 服务缩短 URL 的插件。
