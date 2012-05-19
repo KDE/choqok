@@ -360,7 +360,7 @@ void PostWidget::leaveEvent ( QEvent * event )
 QString PostWidget::prepareStatus( const QString &txt )
 {
     QString text = txt;
-    text.replace( "&amp;", "&amp;amp;" );
+//     text.replace( "&amp;", "&amp;amp;" );
     text.replace( '<', "&lt;" );
     text.replace( '>', "&gt;" );
     int pos = 0;
