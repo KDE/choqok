@@ -2,7 +2,7 @@
 find_package(LibAttica)
 
 IF(LIBATTICA_FOUND)
-    message(STATUS "FOUND LibAttica: Will build OCS plugin")
+    message(STATUS "FOUND LibAttica: Will build \"Open Collaboration Services\" plugin")
     include_directories(
     ${CHOQOK_INCLUDES}
     ${LIBATTICA_INCLUDE_DIR}
@@ -30,5 +30,5 @@ IF(LIBATTICA_FOUND)
 
     add_subdirectory(icons)
 ELSE(LIBATTICA_FOUND)
-    message(WARNING "LibAttica NOT FOUND, won't build OCS plugin")
+    message(WARNING "Optional dependency \"LibAttica\" NOT FOUND, won't build \"Open Collaboration Services\" plugin")
 ENDIF(LIBATTICA_FOUND)
