@@ -225,7 +225,7 @@ void PostWidget::updateUi()
 
 void PostWidget::setStyle(const QColor& color, const QColor& back, const QColor& read, const QColor& readBack, const QColor& own, const QColor& ownBack, const QFont& font)
 {
-    QString fntStr = "font-family:\"" + font.family() + "\"; font-size:" + QString::number(font.pointSize()) + ";";
+    QString fntStr = "font-family:\"" + font.family() + "\"; font-size:" + QString::number(font.pointSize()) + "pt;";
     fntStr += (font.bold() ? " font-weight:bold;" : QString()) + (font.italic() ? " font-style:italic;" : QString());
     unreadStyle = baseStyle.arg( getColorString(color), getColorString(back), fntStr);
     readStyle = baseStyle.arg( getColorString(read), getColorString(readBack), fntStr );
@@ -306,14 +306,14 @@ void PostWidget::setUiStyle()
       else
         setStyleSheet(unreadStyle);
     }
+    setHeight();
 }
 
 void PostWidget::setHeight()
 {
     _mainWidget->document()->setTextWidth(width()-2);
     int h = _mainWidget->document()->size().toSize().height()+2;
-    setMinimumHeight(h);
-    setMaximumHeight(h);
+    setFixedHeight(h);
 }
 
 void PostWidget::closeEvent(QCloseEvent* event)
