@@ -132,7 +132,7 @@
    <item>
     <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>* Any change, needs plugin re-load (disable/enable) to take effect.</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; Any change, needs plugin re-load (disable/enable) to take effect.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
