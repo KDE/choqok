@@ -24,6 +24,7 @@
 
 #include "notifymanager.h"
 #include <QApplication>
+#include <QTimer>
 #include "choqokuiglobal.h"
 #include <kglobal.h>
 #include <choqokbehaviorsettings.h>
@@ -34,9 +35,19 @@ namespace Choqok
 class NotifyManagerPrivate
 {
 public:
+    NotifyManagerPrivate()
+    {
+        lastErrorClearance.setSingleShot(true);
+        lastErrorClearance.setInterval(3000);
+        QObject::connect(&lastErrorClearance, SIGNAL(timeout()),
+                         Choqok::UI::Global::SessionManager::self(), SLOT(resetNotifyManager()));
+    }
     void triggerNotify( const QString &eventId, const QString &title,
                         const QString &message,
                         KNotification::NotificationFlags flags = KNotification::CloseOnTimeout );
+
+    QList<QString> lastErrorMessages;
+    QTimer          lastErrorClearance;
 };
 
 K_GLOBAL_STATIC(NotifyManagerPrivate, _nmp)
@@ -47,6 +58,11 @@ NotifyManager::NotifyManager()
 
 NotifyManager::~NotifyManager()
 {
+}
+
+void NotifyManager::resetNotifyManager()
+{
+    _nmp->lastErrorMessages.clear();
 }
 
 void NotifyManager::success( const QString& message, const QString& title )
@@ -60,7 +76,12 @@ void NotifyManager::success( const QString& message, const QString& title )
 
 void NotifyManager::error( const QString& message, const QString& title )
 {
-    _nmp->triggerNotify("job-error", title, message);
+    if( !_nmp->lastErrorMessages.contains(message) ){
+        _nmp->triggerNotify("job-error", title, message);
+        _nmp->lastErrorMessages.append(message);
+        _nmp->lastErrorClearance.start();
+    }
+
 }
 
 void NotifyManager::newPostArrived( const QString& message, const QString& title )

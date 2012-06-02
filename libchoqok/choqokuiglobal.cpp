@@ -27,6 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "quickpost.h"
 #include <QApplication>
 #include "postwidget.h"
+#include "notifymanager.h"
 
 namespace Choqok
 {
@@ -82,6 +83,11 @@ void UI::Global::SessionManager::emitNewPostWidgetAdded( UI::PostWidget* widget,
                                                          const QString &timelineName )
 {
     emit newPostWidgetAdded(widget, theAccount, timelineName);
+}
+
+void UI::Global::SessionManager::resetNotifyManager()
+{
+    NotifyManager::resetNotifyManager();
 }
 
 }

@@ -75,6 +75,9 @@ namespace Global
         void newPostWidgetAdded( Choqok::UI::PostWidget *widget, Choqok::Account *theAccount,
                                  const QString &timelineName);
 
+    public Q_SLOTS:
+        void resetNotifyManager();
+
     private:
         static SessionManager *m_self;
         SessionManager();
