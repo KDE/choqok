@@ -218,14 +218,17 @@ void TextEdit::setCharLimit(uint charLimit /*= 0*/)
 
 void TextEdit::setPlainText(const QString& text)
 {
-    KTextEdit::setPlainText(text);
+    if( Choqok::BehaviorSettings::shortenOnPaste() )
+        KTextEdit::setPlainText( ShortenManager::self()->parseText( text ) );
+    else
+        KTextEdit::setPlainText( text );
     moveCursor(QTextCursor::End);
     setEnabled(true);
 }
 
 void TextEdit::setText(const QString& text)
 {
-    KTextEdit::setText(text);
+    KTextEdit::setPlainText(text);
     moveCursor(QTextCursor::End);
     setEnabled(true);
 }

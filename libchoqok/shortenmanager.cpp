@@ -105,7 +105,10 @@ QString ShortenManager::shortenUrl(const QString &url)
 //             QApplication::processEvents();
 //         return res.result();
 // #else
-        return shorten(url);
+        QString shortUrl = shorten(url);
+        if(BehaviorSettings::removeHttp() && url != shortUrl)
+                shortUrl.remove(_smp->removeUrlRegExp);
+        return shortUrl;
 // #endif
     } else {
         kDebug()<<"There isn't any Shortener plugin.";
