@@ -27,7 +27,9 @@
 
 #include <kcmodule.h>
 #include "ui_notifyprefs.h"
+#include "dummynotification.h"
 #include <QMap>
+#include <QPointer>
 
 class NotifySettings;
 class NotifyConfig : public KCModule
@@ -44,12 +46,15 @@ protected slots:
     void updateTimelinesList();
     void timelineSelectionChanged();
     void emitChanged();
+    void slotAdjustNotificationPosition();
+    void slotNewPositionSelected(QPoint);
 
 private:
     QStringList langs;
     Ui_NotifyPrefsBase ui;
     QMap<QString, QStringList> accounts;
     NotifySettings *settings;
+    QPointer<DummyNotification> dummy;
 };
 
 #endif // NOTIFYCONFIG_H

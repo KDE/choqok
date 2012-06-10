@@ -126,6 +126,8 @@ public:
      */
     static void addAction( KAction *action );
 
+    static QString getBaseStyle();
+
 public Q_SLOTS:
     /**
     Set Style sheet of widget to corresponding data->
@@ -199,7 +201,6 @@ protected:
     virtual QString generateSign();
     virtual QString formatDateTime( const QDateTime &time );
     virtual QString formatDateTime( const KDateTime &time );
-    static QString getColorString(const QColor& color);
     /**
     @brief Create and Add a new button to widget
     This function will add button to UI!

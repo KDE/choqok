@@ -204,7 +204,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
         menu.addAction(openInBrowser);
 
         //Subscribe/UnSubscribe/Block
-        bool hasBlock = false, isSubscribe = false;
+        bool isSubscribe = false;
         QString accountUsername = d->account->username().toLower();
         QString postUsername = username.toLower();
         KAction *subscribe = 0, *block = 0, *replyTo = 0, *dMessage = 0;
@@ -229,7 +229,6 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
                                          i18nc("Subscribe to user",
                                                "Subscribe to %1", username), actionsMenu);
             }
-            hasBlock = true;
             block = new KAction( KIcon("dialog-cancel"),
                                  i18nc("Block user",
                                        "Block %1", username), actionsMenu);

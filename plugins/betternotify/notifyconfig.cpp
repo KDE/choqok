@@ -34,6 +34,7 @@
 #include <account.h>
 #include <accountmanager.h>
 #include <KDebug>
+
 K_PLUGIN_FACTORY( NotifyConfigFactory, registerPlugin < NotifyConfig > (); )
 K_EXPORT_PLUGIN( NotifyConfigFactory( "kcm_choqok_notify" ) )
 
@@ -48,12 +49,16 @@ NotifyConfig::NotifyConfig(QWidget* parent, const QVariantList& args):
     connect(ui.accountsList, SIGNAL(currentRowChanged(int)), SLOT(updateTimelinesList()));
     connect(ui.timelinesList, SIGNAL(itemSelectionChanged()), SLOT(timelineSelectionChanged()));
     connect(ui.interval, SIGNAL(valueChanged(int)), this, SLOT(emitChanged()));
+    connect(ui.adjustPosition, SIGNAL(clicked()), this, SLOT(slotAdjustNotificationPosition()) );
+    connect(ui.backgroundColor, SIGNAL(changed(QColor)), this, SLOT(emitChanged()));
+    connect(ui.foregroundColor, SIGNAL(changed(QColor)), this, SLOT(emitChanged()));
+    connect(ui.font, SIGNAL(fontSelected(QFont)), this, SLOT(emitChanged()));
     settings = new NotifySettings(this);
+    ui.lblArrow->setPixmap(KIcon("arrow-right").pixmap(48));
 }
 
 NotifyConfig::~NotifyConfig()
 {
-
 }
 
 void NotifyConfig::emitChanged()
@@ -99,6 +104,10 @@ void NotifyConfig::load()
         ui.accountsList->setCurrentRow(0);
         updateTimelinesList();
     }
+
+    ui.backgroundColor->setColor(settings->backgroundColor());
+    ui.foregroundColor->setColor(settings->foregroundColor());
+    ui.font->setFont(settings->font());
 }
 
 void NotifyConfig::save()
@@ -106,7 +115,32 @@ void NotifyConfig::save()
     kDebug()<< accounts.keys();
     settings->setAccounts(accounts);
     settings->setNotifyInterval(ui.interval->value());
+    settings->setBackgroundColor(ui.backgroundColor->color());
+    settings->setForegroundColor(ui.foregroundColor->color());
+    settings->setFont(ui.font->font());
     settings->save();
+}
+
+void NotifyConfig::slotAdjustNotificationPosition()
+{
+    ui.adjustPosition->setDisabled(true);
+    if(!dummy){
+        dummy = new DummyNotification(ui.font->font(), ui.foregroundColor->color(),
+                                      ui.backgroundColor->color(), this);
+        dummy->setAttribute(Qt::WA_DeleteOnClose);
+        dummy->resize(NOTIFICATION_WIDTH, NOTIFICATION_HEIGHT);
+        connect(dummy, SIGNAL(positionSelected(QPoint)), this, SLOT(slotNewPositionSelected(QPoint)));
+    }
+    dummy->move(settings->position());
+    dummy->show();
+}
+
+void NotifyConfig::slotNewPositionSelected(QPoint pos)
+{
+    settings->setPosition(pos);
+    dummy->close();
+    ui.adjustPosition->setEnabled(true);
+    emitChanged();
 }
 
 #include "notifyconfig.moc"

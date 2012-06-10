@@ -1,6 +1,6 @@
 /*
-    This file is part of Choqok, the KDE micro-blogging client*
-    Copyright (C) 2011-2012 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    This file is part of Choqok, the KDE micro-blogging client
+    Copyright (C) 2012 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -22,46 +22,32 @@
 */
 
 
-#ifndef NOTIFICATION_H
-#define NOTIFICATION_H
+#ifndef DUMMYNOTIFICATION_H
+#define DUMMYNOTIFICATION_H
 
-#include <postwidget.h>
-#include <KPushButton>
-#include "mytextbrowser.h"
+#include <ktextbrowser.h>
 
-
-class Notification : public QWidget
+class DummyNotification : public KTextBrowser
 {
 Q_OBJECT
 public:
-    Notification(Choqok::UI::PostWidget* post);
-    virtual ~Notification();
-    void init();
+    DummyNotification(const QFont &font, const QColor &color, const QColor &background,QWidget* parent);
+    virtual ~DummyNotification();
 
-    virtual QSize sizeHint() const;
+protected:
+    virtual void mouseMoveEvent(QMouseEvent* ev);
+    virtual void mousePressEvent(QMouseEvent* ev);
+    virtual void mouseReleaseEvent(QMouseEvent* ev);
 
 signals:
-    void ignored();
-    void postReaded();
-    void mouseEntered();
-    void mouseLeaved();
+    void positionSelected(QPoint position);
 
 protected slots:
     void slotProcessAnchor(const QUrl& url);
-    void slotClicked();
-
-protected:
-    virtual void mouseMoveEvent(QMouseEvent* );
 
 private:
-    void setDirection();
-    void setHeight();
-    static const QRegExp dirRegExp;
-    Choqok::UI::PostWidget *post;
-    QString dir;
-    MyTextBrowser mainWidget;
-    KPushButton* btnShowChoqok;
-    KPushButton* btnRead;
+    QPoint lastPressedPosition;
+    bool isMoving;
 };
 
-#endif // NOTIFICATION_H
+#endif // DUMMYNOTIFICATION_H

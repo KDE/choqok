@@ -57,7 +57,7 @@ Notify::Notify(QObject* parent, const QList< QVariant >& )
     connect(&timer, SIGNAL(timeout()), this, SLOT(notifyNextPost()));
 
     QRect screenRect(QDesktopWidget().screenGeometry());
-    notifyPosition = QPoint(screenRect.center().x()-NOTIFICATION_WIDTH/2, 30);
+    notifyPosition = set.position();
 }
 
 Notify::~Notify()

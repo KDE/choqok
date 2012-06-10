@@ -70,3 +70,9 @@ QString Choqok::qoauthErrorText(int code)
             return QString();
     }
 }
+
+QString Choqok::getColorString(const QColor& color)
+{
+    return "rgb(" + QString::number(color.red()) + ',' + QString::number(color.green()) + ',' +
+    QString::number(color.blue()) + ')';
+}

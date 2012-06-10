@@ -232,12 +232,6 @@ void PostWidget::setStyle(const QColor& color, const QColor& back, const QColor&
     ownStyle = baseStyle.arg( getColorString(own), getColorString(ownBack), fntStr );
 }
 
-QString PostWidget::getColorString(const QColor& color)
-{
-    return "rgb(" + QString::number(color.red()) + ',' + QString::number(color.green()) + ',' +
-    QString::number(color.blue()) + ')';
-}
-
 KPushButton * PostWidget::addButton(const QString & objName, const QString & toolTip, const QString & icon)
 {
     return addButton(objName, toolTip, KIcon(icon));
@@ -639,6 +633,11 @@ PostWidget* PostWidgetUserData::postWidget()
 void PostWidgetUserData::setPostWidget(PostWidget* widget)
 {
     d->postWidget = widget;
+}
+
+QString PostWidget::getBaseStyle()
+{
+    return baseStyle;
 }
 
 

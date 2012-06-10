@@ -27,7 +27,15 @@
 
 #include <QtCore/QObject>
 #include <QStringList>
+#include <QPoint>
+#include <QColor>
+#include <QFont>
 
+#define NOTIFICATION_WIDTH 300
+#define NOTIFICATION_HEIGHT 70
+
+const QString baseText( "<table height=\"100%\" width=\"100%\"><tr><td rowspan=\"2\"\
+width=\"48\"><img src=\"img://profileImage\" width=\"48\" height=\"48\" /></td><td width=\"5\"><!-- EMPTY HAHA --></td><td><b>%1 :</b><a href='choqok://close'><img src='icon://close' title='%4' align='right' /></a><div dir=\"%3\">%2</div></td></tr></table>" );
 
 class NotifySettings : public QObject
 {
@@ -39,8 +47,20 @@ public:
     QMap<QString, QStringList> accounts();
     void setAccounts(QMap<QString, QStringList> accounts);
 
-    int notifyInterval();
+    int notifyInterval() const;
     void setNotifyInterval(int interval);
+
+    QPoint position() const;
+    void setPosition(const QPoint& position);
+
+    QColor foregroundColor() const;
+    void setForegroundColor(const QColor& color);
+
+    QColor backgroundColor() const;
+    void setBackgroundColor(const QColor& color);
+
+    QFont font() const;
+    void setFont(const QFont& font);
 
     void load();
     void save();

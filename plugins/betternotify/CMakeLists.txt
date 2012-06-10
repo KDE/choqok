@@ -21,6 +21,7 @@ install(TARGETS choqok_betternotify DESTINATION ${PLUGIN_INSTALL_DIR})
 ########### next target ###############
 
 set( kcm_choqok_notify_PART_SRCS
+dummynotification.cpp
 notifyconfig.cpp
 notifysettings.cpp )
 

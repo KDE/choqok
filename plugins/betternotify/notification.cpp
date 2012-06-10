@@ -24,14 +24,14 @@
 
 #include "notification.h"
 #include <mediamanager.h>
+#include <choqoktools.h>
 #include <qevent.h>
 #include <QVBoxLayout>
 #include <KLocalizedString>
 #include <KIcon>
 #include <KDebug>
-
-const QString Notification::baseText( "<table height=\"100%\" width=\"100%\"><tr><td rowspan=\"2\"\
-width=\"48\"><img src=\"img://profileImage\" width=\"48\" height=\"48\" /></td><td width=\"5\"><!-- EMPTY HAHA --></td><td><b>%1 :</b><a href='choqok://close'><img src='icon://close' title='" + i18n("Ignore notifications") + "' align='right' /></a><div dir=\"%3\">%2</div></td></tr></table>" );
+#include "notifysettings.h"
+#include <choqokappearancesettings.h>
 
 const QRegExp Notification::dirRegExp("(RT|RD)|(@([^\\s\\W]+))|(#([^\\s\\W]+))|(!([^\\s\\W]+))");
 
@@ -51,9 +51,19 @@ Notification::Notification(Choqok::UI::PostWidget* postWidget)
     mainWidget.setOpenExternalLinks(false);
     mainWidget.setOpenLinks(false);
     setMouseTracking(true);
-    setStyleSheet( "KTextBrowser{background-color: rgba(0, 0, 0, 160); color: rgb(255, 255, 255);}"
-                   "QWidget{border-radius:6px;}");
-    resize(NOTIFICATION_WIDTH, 70);
+    resize(NOTIFICATION_WIDTH, NOTIFICATION_HEIGHT);
+
+    NotifySettings set(this);
+    QFont fnt = set.font();
+    QColor color = set.foregroundColor();
+    QColor back = set.backgroundColor();
+
+    QString fntStr = "font-family:\"" + fnt.family() + "\"; font-size:" + QString::number(fnt.pointSize()) + "pt;";
+    fntStr += (fnt.bold() ? " font-weight:bold;" : QString()) + (fnt.italic() ? " font-style:italic;" : QString());
+    QString style = Choqok::UI::PostWidget::getBaseStyle().arg( Choqok::getColorString(color), Choqok::getColorString(back), fntStr);
+
+    setStyleSheet( style );
+
     init();
     connect(&mainWidget, SIGNAL(anchorClicked(QUrl)), SLOT(slotProcessAnchor(QUrl)));
 }
@@ -66,7 +76,7 @@ Notification::~Notification()
 QSize Notification::sizeHint() const
 {
     kDebug();
-    return QSize(NOTIFICATION_WIDTH, 70);
+    return QSize(NOTIFICATION_WIDTH, NOTIFICATION_HEIGHT);
 }
 
 void Notification::init()
@@ -78,7 +88,10 @@ void Notification::init()
     mainWidget.document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"), *pix );
     mainWidget.document()->addResource( QTextDocument::ImageResource, QUrl("icon://close"),
                                         KIcon("dialog-close").pixmap(16) );
-    mainWidget.setText(baseText.arg(post->currentPost().author.userName).arg(post->currentPost().content).arg(dir));
+    mainWidget.setText(baseText.arg(post->currentPost().author.userName)
+                               .arg(post->currentPost().content)
+                               .arg(dir)
+                               .arg(i18n("Ignore")));
 
     QVBoxLayout *l = new QVBoxLayout(this);
     l->setContentsMargins(0,0,0,0);
