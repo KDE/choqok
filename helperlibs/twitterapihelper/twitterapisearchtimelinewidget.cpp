@@ -189,7 +189,7 @@ void TwitterApiSearchTimelineWidget::slotUpdateSearchResults()
     if(d->currentPage == 1) {
         ChoqokId lastId;
         if( !postWidgets().isEmpty() )
-            lastId = postWidgets().last()->currentPost().postId;
+            lastId = postWidgets().last()->currentPost()->postId;
         d->searchBackend->requestSearchResults(d->searchInfo, lastId);
     }
 }

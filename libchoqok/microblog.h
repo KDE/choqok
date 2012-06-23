@@ -165,7 +165,7 @@ public:
      * @param parent The parent of the 'to be returned' widget
      */
     virtual UI::PostWidget * createPostWidget( Choqok::Account *account,
-                                               const Choqok::Post &post, QWidget *parent );
+                                               Choqok::Post *post, QWidget *parent );
 
     /**
     @brief Save a specific timeline!

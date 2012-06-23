@@ -90,7 +90,7 @@ void FilterManager::startParsing()
 void FilterManager::parse(Choqok::UI::PostWidget* postToParse)
 {
     if( !postToParse ||
-        postToParse->currentPost().author.userName == postToParse->currentAccount()->username() ||
+        postToParse->currentPost()->author.userName == postToParse->currentAccount()->username() ||
         postToParse->isRead() )
         return;
 
@@ -104,23 +104,23 @@ void FilterManager::parse(Choqok::UI::PostWidget* postToParse)
         if(filter->filterText().isEmpty())
             return;
         if(filter->filterAction() == Filter::Remove && filter->dontHideReplies() &&
-            (postToParse->currentPost().replyToUserName.compare(postToParse->currentAccount()->username(),
+            (postToParse->currentPost()->replyToUserName.compare(postToParse->currentAccount()->username(),
                                                                 Qt::CaseInsensitive) == 0 ||
-             postToParse->currentPost().content.contains(QString("@%1").arg(postToParse->currentAccount()->username())))
+             postToParse->currentPost()->content.contains(QString("@%1").arg(postToParse->currentAccount()->username())))
           )
             continue;
         switch(filter->filterField()){
             case Filter::Content:
-                doFiltering( postToParse, filterText(postToParse->currentPost().content, filter) );
+                doFiltering( postToParse, filterText(postToParse->currentPost()->content, filter) );
                 break;
             case Filter::AuthorUsername:
-                doFiltering( postToParse, filterText(postToParse->currentPost().author.userName, filter) );
+                doFiltering( postToParse, filterText(postToParse->currentPost()->author.userName, filter) );
                 break;
             case Filter::ReplyToUsername:
-                doFiltering( postToParse, filterText(postToParse->currentPost().replyToUserName, filter) );
+                doFiltering( postToParse, filterText(postToParse->currentPost()->replyToUserName, filter) );
                 break;
             case Filter::Source:
-                doFiltering( postToParse, filterText(postToParse->currentPost().source, filter) );
+                doFiltering( postToParse, filterText(postToParse->currentPost()->source, filter) );
                 break;
             default:
                 break;
@@ -170,7 +170,7 @@ void FilterManager::doFiltering(Choqok::UI::PostWidget* postToFilter, Filter::Fi
     QString css;
     switch(action){
         case Filter::Remove:
-            kDebug()<<"Post removed: "<<postToFilter->currentPost().content;
+            kDebug()<<"Post removed: "<<postToFilter->currentPost()->content;
             postToFilter->close();
             break;
         case Filter::Highlight:
@@ -194,9 +194,9 @@ void FilterManager::slotConfigureFilters()
 bool FilterManager::parseSpecialRules(Choqok::UI::PostWidget* postToParse)
 {
     if(FilterSettings::hideRepliesNotRelatedToMe()){
-        if( !postToParse->currentPost().replyToUserName.isEmpty() &&
-            postToParse->currentPost().replyToUserName != postToParse->currentAccount()->username() ) {
-            if( !postToParse->currentPost().content.contains(postToParse->currentAccount()->username()) ) {
+        if( !postToParse->currentPost()->replyToUserName.isEmpty() &&
+            postToParse->currentPost()->replyToUserName != postToParse->currentAccount()->username() ) {
+            if( !postToParse->currentPost()->content.contains(postToParse->currentAccount()->username()) ) {
                 postToParse->close();
                 kDebug()<<"NOT RELATE TO ME FILTERING......";
                 return true;
@@ -208,9 +208,9 @@ bool FilterManager::parseSpecialRules(Choqok::UI::PostWidget* postToParse)
         TwitterApiAccount *acc = qobject_cast<TwitterApiAccount*>(postToParse->currentAccount());
         if(!acc)
             return false;
-        if( !postToParse->currentPost().replyToUserName.isEmpty() &&
-            !acc->friendsList().contains(postToParse->currentPost().replyToUserName) ) {
-            if( !postToParse->currentPost().content.contains(postToParse->currentAccount()->username()) ) {
+        if( !postToParse->currentPost()->replyToUserName.isEmpty() &&
+            !acc->friendsList().contains(postToParse->currentPost()->replyToUserName) ) {
+            if( !postToParse->currentPost()->content.contains(postToParse->currentAccount()->username()) ) {
                 postToParse->close();
                 kDebug()<<"NONE FRIEND FILTERING......";
                 return true;
@@ -225,7 +225,7 @@ void FilterManager::slotHidePost()
 {
     Choqok::UI::PostWidget *wd;
     wd = dynamic_cast<Choqok::UI::PostWidgetUserData *>(hidePost->userData(32))->postWidget();
-    QString username = wd->currentPost().author.userName;
+    QString username = wd->currentPost()->author.userName;
     int res = KMessageBox::questionYesNoCancel( choqokMainWindow, i18n("Hide all posts from <b>@%1</b>",
                                                                        username));
     if( res == KMessageBox::Cancel ){
@@ -240,7 +240,7 @@ void FilterManager::slotHidePost()
         if(tm){
             kDebug()<<"Closing all posts";
             foreach(Choqok::UI::PostWidget *pw, tm->postWidgets()){
-                if(pw->currentPost().author.userName == username){
+                if(pw->currentPost()->author.userName == username){
                     pw->close();
                 }
             }

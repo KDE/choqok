@@ -82,14 +82,14 @@ QSize Notification::sizeHint() const
 void Notification::init()
 {
     kDebug();
-    QPixmap *pix = Choqok::MediaManager::self()->fetchImage(post->currentPost().author.profileImageUrl);
+    QPixmap *pix = Choqok::MediaManager::self()->fetchImage(post->currentPost()->author.profileImageUrl);
     if( !pix )
         pix = new QPixmap( Choqok::MediaManager::self()->defaultImage() );
     mainWidget.document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"), *pix );
     mainWidget.document()->addResource( QTextDocument::ImageResource, QUrl("icon://close"),
                                         KIcon("dialog-close").pixmap(16) );
-    mainWidget.setText(baseText.arg(post->currentPost().author.userName)
-                               .arg(post->currentPost().content)
+    mainWidget.setText(baseText.arg(post->currentPost()->author.userName)
+                               .arg(post->currentPost()->content)
                                .arg(dir)
                                .arg(i18n("Ignore")));
 
@@ -136,7 +136,7 @@ void Notification::setHeight()
 void Notification::setDirection()
 {
     kDebug();
-    QString txt = post->currentPost().content;
+    QString txt = post->currentPost()->content;
     txt.remove(dirRegExp);
     txt = txt.trimmed();
     if( txt.isRightToLeft() ) {

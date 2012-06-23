@@ -36,7 +36,7 @@
 const QRegExp TwitterPostWidget::mTwitterUserRegExp( "([\\s\\W]|^)@([a-z0-9_]+){1,20}", Qt::CaseInsensitive );
 const QRegExp TwitterPostWidget::mTwitterTagRegExp("([\\s]|^)#([\\w_\\.\\-]+)", Qt::CaseInsensitive );
 
-TwitterPostWidget::TwitterPostWidget(Choqok::Account* account, const Choqok::Post& post, QWidget* parent): TwitterApiPostWidget(account, post, parent)
+TwitterPostWidget::TwitterPostWidget(Choqok::Account* account, Choqok::Post* post, QWidget* parent): TwitterApiPostWidget(account, post, parent)
 {
 
 }
@@ -55,7 +55,7 @@ void TwitterPostWidget::initUi()
         repeat->setToolTip(i18n("Retweet post using API"));
         connect( repeat, SIGNAL(triggered(bool)), SLOT(repeatPost()) );
         // If person protects their acc, we will use simple adding RT before message
-        if (!currentPost().author.isProtected)
+        if (!currentPost()->author.isProtected)
             menu->addAction(repeat);
         menu->addAction(resend);
         btn->setMenu(menu);
@@ -73,14 +73,14 @@ QString TwitterPostWidget::prepareStatus(const QString& text)
 void TwitterPostWidget::slotReplyToAll()
 {
     QStringList nicks;
-    nicks.append(currentPost().author.userName);
+    nicks.append(currentPost()->author.userName);
     
-    QString txt = QString("@%1 ").arg(currentPost().author.userName);
+    QString txt = QString("@%1 ").arg(currentPost()->author.userName);
 
     int pos = 0;
-    while ((pos = mTwitterUserRegExp.indexIn(currentPost().content, pos)) != -1) {
+    while ((pos = mTwitterUserRegExp.indexIn(currentPost()->content, pos)) != -1) {
         if (mTwitterUserRegExp.cap(2).toLower() != currentAccount()->username() && 
-            mTwitterUserRegExp.cap(2).toLower() != currentPost().author.userName &&
+            mTwitterUserRegExp.cap(2).toLower() != currentPost()->author.userName &&
             !nicks.contains(mTwitterUserRegExp.cap(2).toLower())){
             nicks.append(mTwitterUserRegExp.cap(2));
             txt += QString("@%1 ").arg(mTwitterUserRegExp.cap(2));
@@ -90,7 +90,7 @@ void TwitterPostWidget::slotReplyToAll()
 
     txt.chop(1);
 
-    emit reply(txt, currentPost().postId, currentPost().author.userName);
+    emit reply(txt, currentPost()->postId, currentPost()->author.userName);
 }
 
 void TwitterPostWidget::checkAnchor(const QUrl& url)
@@ -164,7 +164,7 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
         if(ret == 0)
             return;
         if(ret == info) {
-            TwitterApiWhoisWidget *wd = new TwitterApiWhoisWidget(account, url.host(),  currentPost(), this);
+            TwitterApiWhoisWidget *wd = new TwitterApiWhoisWidget(account, url.host(),  *currentPost(), this);
             wd->show(QCursor::pos());
             return;
         } else if(ret == subscribe){

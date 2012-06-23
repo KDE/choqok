@@ -29,7 +29,7 @@
 class LaconicaPostWidget : public TwitterApiPostWidget
 {
 public:
-    LaconicaPostWidget(Choqok::Account* account, const Choqok::Post& post, QWidget* parent = 0);
+    LaconicaPostWidget(Choqok::Account* account, Choqok::Post* post, QWidget* parent = 0);
     ~LaconicaPostWidget();
     virtual void initUi();
 

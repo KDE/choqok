@@ -52,7 +52,7 @@ public:
     virtual Choqok::UI::TimelineWidget * createTimelineWidget( Choqok::Account* account,
                                                            const QString& timelineName, QWidget* parent );
     virtual Choqok::UI::PostWidget* createPostWidget(Choqok::Account* account,
-                                                  const Choqok::Post& post, QWidget* parent);
+                                                     Choqok::Post* post, QWidget* parent);
     virtual Choqok::UI::ComposerWidget* createComposerWidget(Choqok::Account* account, QWidget* parent);
     virtual QString profileUrl( Choqok::Account *account,const QString &username) const;
     virtual QString postUrl ( Choqok::Account *account, const QString &username,

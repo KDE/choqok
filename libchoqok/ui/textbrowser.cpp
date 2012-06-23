@@ -140,7 +140,7 @@ void TextBrowser::slotCopyPostContent()
     if( txt.isEmpty() ){
         PostWidget *paPost = qobject_cast<PostWidget*>(parentWidget());
         if(paPost)
-            QApplication::clipboard()->setText( paPost->currentPost().content );
+            QApplication::clipboard()->setText( paPost->currentPost()->content );
      } else {
         QApplication::clipboard()->setText( txt );
      }

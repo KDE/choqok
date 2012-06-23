@@ -40,7 +40,7 @@ public:
     QString desiredPostId;
 };
 
-TwitterApiShowThread::TwitterApiShowThread(Choqok::Account* account, const Choqok::Post& finalPost,
+TwitterApiShowThread::TwitterApiShowThread(Choqok::Account* account, Choqok::Post* finalPost,
                                            QWidget* parent)
                                            : QWidget(parent), d(new Private(account))
 {
@@ -53,8 +53,8 @@ TwitterApiShowThread::TwitterApiShowThread(Choqok::Account* account, const Choqo
     if(widget) {
         addPostWidgetToUi(widget);
         Choqok::Post *ps = new Choqok::Post;
-        ps->postId = finalPost.replyToPostId;
-        d->desiredPostId = finalPost.replyToPostId;
+        ps->postId = finalPost->replyToPostId;
+        d->desiredPostId = finalPost->replyToPostId;
         d->account->microblog()->fetchPost(d->account, ps);
     }
 }
@@ -103,7 +103,7 @@ void TwitterApiShowThread::slotAddNewPost(Choqok::Account* theAccount, Choqok::P
 {
     kDebug();
     if(theAccount == d->account && post->postId == d->desiredPostId) {
-        Choqok::UI::PostWidget *widget = d->account->microblog()->createPostWidget(d->account, *post, this);
+        Choqok::UI::PostWidget *widget = d->account->microblog()->createPostWidget(d->account, post, this);
         if(widget) {
             addPostWidgetToUi(widget);
             Choqok::Post *ps = new Choqok::Post;
@@ -120,7 +120,7 @@ void TwitterApiShowThread::addPostWidgetToUi(Choqok::UI::PostWidget* widget)
     widget->initUi();
     widget->setRead();
     widget->setFocusProxy(this);
-    widget->setObjectName(widget->currentPost().postId);
+    widget->setObjectName(widget->currentPost()->postId);
     connect( widget, SIGNAL(resendPost(const QString &)),
              this, SIGNAL(forwardResendPost(const QString &)));
     connect( widget, SIGNAL(resendPost(QString)),

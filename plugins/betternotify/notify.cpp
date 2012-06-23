@@ -73,7 +73,7 @@ void Notify::slotNewPostWidgetAdded(Choqok::UI::PostWidget* pw, Choqok::Account*
         return;
     }
     if(pw && !pw->isRead() && accountsList[acc->alias()].contains(tm)){
-        kDebug()<<"POST ADDED TO NOTIFY IT: "<<pw->currentPost().content;
+        kDebug()<<"POST ADDED TO NOTIFY IT: "<<pw->currentPost()->content;
         postQueueToNotify.enqueue(pw);
         if( !timer.isActive() )
         {

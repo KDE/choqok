@@ -96,7 +96,7 @@ void TimelineWidget::loadTimeline()
     } else {
       QList<Post*>::const_iterator it, endIt = list.constEnd();
       for(it = list.constBegin(); it!= endIt; ++it){
-          PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, **it, this);
+          PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, *it, this);
           if(pw) {
               pw->setRead();
               addPostWidgetToUi(pw);
@@ -207,7 +207,7 @@ void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList)
     for(it = postList.constBegin(); it!= endIt; ++it){
         if(d->posts.keys().contains((*it)->postId))
             continue;
-        PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, **it, this);
+        PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, *it, this);
         if(pw) {
             addPostWidgetToUi(pw);
             if( !pw->isRead() )
@@ -243,7 +243,7 @@ void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
 {
     widget->initUi();
     widget->setFocusProxy(this);
-    widget->setObjectName(widget->currentPost().postId);
+    widget->setObjectName(widget->currentPost()->postId);
     connect( widget, SIGNAL(resendPost(const QString &)),
              this, SIGNAL(forwardResendPost(const QString &)));
     connect( widget, SIGNAL(reply(QString,QString,QString)),
@@ -253,8 +253,8 @@ void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
     connect( widget, SIGNAL(aboutClosing(ChoqokId,PostWidget*)),
              SLOT(postWidgetClosed(ChoqokId,PostWidget*)) );
     d->mainLayout->insertWidget(d->order, widget);
-    d->posts.insert(widget->currentPost().postId, widget);
-    d->sortedPostsList.insert(widget->currentPost().creationDateTime, widget);
+    d->posts.insert(widget->currentPost()->postId, widget);
+    d->sortedPostsList.insert(widget->currentPost()->creationDateTime, widget);
     Global::SessionManager::self()->emitNewPostWidgetAdded(widget, currentAccount(), timelineName());
 }
 
@@ -322,7 +322,7 @@ QList< PostWidget* > TimelineWidget::postWidgets()
 void TimelineWidget::postWidgetClosed(const ChoqokId& postId, PostWidget* post)
 {
     d->posts.remove(postId);
-    d->sortedPostsList.remove(post->currentPost().creationDateTime, post);
+    d->sortedPostsList.remove(post->currentPost()->creationDateTime, post);
 }
 
 QMap< ChoqokId, PostWidget* >& TimelineWidget::posts() const

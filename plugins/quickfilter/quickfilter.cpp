@@ -69,7 +69,7 @@ void QuickFilter::filterByAuthor()
     if (!m_filterUser.isEmpty() && Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()) {
         foreach(Choqok::UI::PostWidget* postwidget,
                 Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()->postWidgets()) {
-            if ( !postwidget->currentPost().author.userName.contains(m_filterUser, Qt::CaseInsensitive) ) {
+            if ( !postwidget->currentPost()->author.userName.contains(m_filterUser, Qt::CaseInsensitive) ) {
                 postwidget->hide();
             }
             else {
@@ -91,7 +91,7 @@ void QuickFilter::filterByContent()
     if (!m_filterText.isEmpty() && Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()) {
         foreach(Choqok::UI::PostWidget* postwidget,
                 Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()->postWidgets()) {
-            if ( !postwidget->currentPost().content.contains(m_filterText, Qt::CaseInsensitive) ) {
+            if ( !postwidget->currentPost()->content.contains(m_filterText, Qt::CaseInsensitive) ) {
                 postwidget->hide();
             }
             else {
@@ -212,13 +212,13 @@ void QuickFilter::filterNewPost(Choqok::UI::PostWidget* np, Choqok::Account* acc
         Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()->timelineName() == timeline) {
         kDebug()<<"pass1";
         if (!m_aledit->text().isEmpty()) {
-            if (!np->currentPost().author.userName.contains(m_aledit->text()))
+            if (!np->currentPost()->author.userName.contains(m_aledit->text()))
                 np->hide();
             else
                 np->show();
         }
         if (!m_tledit->text().isEmpty()) {
-            if (!np->currentPost().content.contains(m_tledit->text()))
+            if (!np->currentPost()->content.contains(m_tledit->text()))
                 np->hide();
             else
                 np->show();

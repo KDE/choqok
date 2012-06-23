@@ -80,7 +80,7 @@ void UnTiny::parse(QPointer<Choqok::UI::PostWidget> postToParse)
     if(!postToParse)
         return;
     QStringList redirectList, pureList = postToParse->urls();
-    QString content = postToParse->currentPost().content;
+    QString content = postToParse->currentPost()->content;
     for( int i=0; i < pureList.count(); ++i) {
         if(pureList[i].length()>30)
             continue;

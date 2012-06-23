@@ -106,7 +106,7 @@ Choqok::UI::TimelineWidget * TwitterMicroBlog::createTimelineWidget( Choqok::Acc
 }
 
 Choqok::UI::PostWidget* TwitterMicroBlog::createPostWidget(Choqok::Account* account,
-                                                        const Choqok::Post &post, QWidget* parent)
+                                                           Choqok::Post *post, QWidget* parent)
 {
     return new TwitterPostWidget(account, post, parent);
 }

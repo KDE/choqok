@@ -67,7 +67,7 @@ public:
     QString tmpUsername;
 };
 
-LaconicaPostWidget::LaconicaPostWidget(Choqok::Account* account, const Choqok::Post& post, QWidget* parent)
+LaconicaPostWidget::LaconicaPostWidget(Choqok::Account* account, Choqok::Post* post, QWidget* parent)
 : TwitterApiPostWidget(account, post, parent), d( new Private(account) )
 {
 
@@ -100,14 +100,14 @@ LaconicaPostWidget::~LaconicaPostWidget()
 void LaconicaPostWidget::slotReplyToAll()
 {
     QStringList nicks;
-    nicks.append(currentPost().author.userName);
+    nicks.append(currentPost()->author.userName);
 
-    QString txt = QString("@%1 ").arg(currentPost().author.userName);
+    QString txt = QString("@%1 ").arg(currentPost()->author.userName);
 
     int pos = 0;
-    while ((pos = mLaconicaUserRegExp.indexIn(currentPost().content, pos)) != -1) {
+    while ((pos = mLaconicaUserRegExp.indexIn(currentPost()->content, pos)) != -1) {
         if (mLaconicaUserRegExp.cap(2).toLower() != currentAccount()->username() && 
-            mLaconicaUserRegExp.cap(2).toLower() != currentPost().author.userName &&
+            mLaconicaUserRegExp.cap(2).toLower() != currentPost()->author.userName &&
             !nicks.contains(mLaconicaUserRegExp.cap(2).toLower())){
             nicks.append(mLaconicaUserRegExp.cap(2));
             txt += QString("@%1 ").arg(mLaconicaUserRegExp.cap(2));
@@ -117,7 +117,7 @@ void LaconicaPostWidget::slotReplyToAll()
     
     txt.chop(1);
 
-    emit reply(txt, currentPost().postId, currentPost().author.userName);
+    emit reply(txt, currentPost()->postId, currentPost()->author.userName);
 }
 
 QString LaconicaPostWidget::prepareStatus(const QString& text)
@@ -195,7 +195,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
                                               i18nc("Open profile page in browser",
                                                     "Open profile in browser"), &menu);
         menu.addAction(info);
-        if(currentPost().source != "ostatus") {
+        if(currentPost()->source != "ostatus") {
             menu.addAction(from);
             menu.addAction(to);
             from->setData(LaconicaSearch::FromUser);
@@ -232,7 +232,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
             block = new KAction( KIcon("dialog-cancel"),
                                  i18nc("Block user",
                                        "Block %1", username), actionsMenu);
-            if(currentPost().source != "ostatus") {
+            if(currentPost()->source != "ostatus") {
                 actionsMenu->addAction(subscribe);
                 actionsMenu->addAction(block);
             }
@@ -241,7 +241,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
         if(ret == 0)
             return;
         if(ret == info) {
-            TwitterApiWhoisWidget *wd = new TwitterApiWhoisWidget(d->account, username, currentPost(), this);
+            TwitterApiWhoisWidget *wd = new TwitterApiWhoisWidget(d->account, username, *currentPost(), this);
             wd->show(QCursor::pos());
             return;
         } else if(ret == subscribe){
@@ -256,8 +256,8 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
             return;
         } else if(ret == openInBrowser){
             kDebug()<<url<<username;
-            if( username == currentPost().author.userName && !currentPost().author.homePageUrl.isEmpty() ) {
-                Choqok::openUrl( QUrl( currentPost().author.homePageUrl ) );
+            if( username == currentPost()->author.userName && !currentPost()->author.homePageUrl.isEmpty() ) {
+                Choqok::openUrl( QUrl( currentPost()->author.homePageUrl ) );
             } else {
                 Choqok::openUrl( QUrl( currentAccount()->microblog()->profileUrl(currentAccount(), username) ) );
             }

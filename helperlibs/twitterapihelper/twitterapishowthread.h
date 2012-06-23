@@ -40,7 +40,7 @@ class CHOQOK_HELPER_EXPORT TwitterApiShowThread : public QWidget
 {
     Q_OBJECT
 public:
-    TwitterApiShowThread( Choqok::Account *account, const Choqok::Post &finalPost, QWidget* parent = 0);
+    TwitterApiShowThread( Choqok::Account *account, Choqok::Post *finalPost, QWidget* parent = 0);
     ~TwitterApiShowThread();
 
 protected Q_SLOTS:

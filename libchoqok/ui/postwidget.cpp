@@ -52,13 +52,13 @@ using namespace Choqok::UI;
 class PostWidget::Private
 {
     public:
-        Private( Account* account, const Choqok::Post& post )
+        Private( Account* account, Choqok::Post* post )
         : mCurrentPost(post), mCurrentAccount(account), dir("ltr"), timeline(0)
         {
         }
         QGridLayout *buttonsLayout;
         QMap<QString, KPushButton*> mUiButtons;//<Object name, Button>
-        Post mCurrentPost;
+        Post *mCurrentPost;
         Account *mCurrentAccount;
 //         bool mRead;
         QTimer mTimer;
@@ -112,13 +112,13 @@ QString PostWidget::unreadStyle;
 QString PostWidget::ownStyle;
 const QString PostWidget::webIconText("&#9755;");
 
-PostWidget::PostWidget( Account* account, const Choqok::Post& post, QWidget* parent/* = 0*/ )
+PostWidget::PostWidget( Account* account, Choqok::Post* post, QWidget* parent/* = 0*/ )
     :QWidget(parent), _mainWidget(new TextBrowser(this)), d(new Private(account, post))
 {
     setAttribute(Qt::WA_DeleteOnClose);
     _mainWidget->setFrameShape(QFrame::NoFrame);
-    if(currentAccount()->username().compare( currentPost().author.userName, Qt::CaseInsensitive ) == 0 )
-        d->mCurrentPost.isRead = true;
+    if(currentAccount()->username().compare( currentPost()->author.userName, Qt::CaseInsensitive ) == 0 )
+        d->mCurrentPost->isRead = true;
     d->mTimer.start( _MINUTE );
     connect( &d->mTimer, SIGNAL( timeout() ), this, SLOT( updateUi()) );
     connect(_mainWidget, SIGNAL(clicked(QMouseEvent*)), SLOT(mousePressEvent(QMouseEvent*)));
@@ -131,7 +131,7 @@ void PostWidget::checkAnchor(const QUrl & url)
 {
     if(url.scheme() == "choqok"){
         if(url.host() == "showoriginalpost"){
-            setContent( prepareStatus(currentPost().content).replace("<a href","<a style=\"text-decoration:none\" href",Qt::CaseInsensitive) );
+            setContent( prepareStatus(currentPost()->content).replace("<a href","<a style=\"text-decoration:none\" href",Qt::CaseInsensitive) );
             updateUi();
         }
     } else {
@@ -141,6 +141,7 @@ void PostWidget::checkAnchor(const QUrl & url)
 
 PostWidget::~PostWidget()
 {
+    delete d->mCurrentPost;
     delete d;
 }
 
@@ -153,16 +154,16 @@ QString PostWidget::generateSign()
 {
     QString ss;
     ss = "<b><a href='"+ d->mCurrentAccount->microblog()->profileUrl( d->mCurrentAccount,
-                                                                      d->mCurrentPost.author.userName )
+                                                                      d->mCurrentPost->author.userName )
          +"' title=\"" +
-    d->mCurrentPost.author.description + "\">" + d->mCurrentPost.author.userName +
+    d->mCurrentPost->author.description + "\">" + d->mCurrentPost->author.userName +
     "</a> - </b>";
 
-    ss += "<a href=\"" + d->mCurrentPost.link +
-    "\" title=\"" + d->mCurrentPost.creationDateTime.toString(Qt::DefaultLocaleLongDate) + "\">%1</a>";
+    ss += "<a href=\"" + d->mCurrentPost->link +
+    "\" title=\"" + d->mCurrentPost->creationDateTime.toString(Qt::DefaultLocaleLongDate) + "\">%1</a>";
 
-    if( !d->mCurrentPost.source.isNull() )
-        ss += " - " + d->mCurrentPost.source;
+    if( !d->mCurrentPost->source.isNull() )
+        ss += " - " + d->mCurrentPost->source;
 
     return ss;
 }
@@ -193,8 +194,8 @@ void PostWidget::initUi()
     _mainWidget->document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
                              MediaManager::self()->defaultImage() );
 
-    if(d->mCurrentAccount->username().compare( d->mCurrentPost.author.userName, Qt::CaseInsensitive ) == 0
-        || currentPost().isPrivate) {
+    if(d->mCurrentAccount->username().compare( d->mCurrentPost->author.userName, Qt::CaseInsensitive ) == 0
+        || currentPost()->isPrivate) {
         KPushButton *btnRemove = addButton("btnRemove", i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
         connect(btnRemove, SIGNAL(clicked(bool)), SLOT(removeCurrentPost()));
         baseText = &ownText;
@@ -203,8 +204,8 @@ void PostWidget::initUi()
         connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
         baseText = &otherText;
     }
-    d->mImage = "<img src=\"img://profileImage\" title=\""+ d->mCurrentPost.author.realName +"\" width=\"48\" height=\"48\" />";
-    d->mContent = prepareStatus(d->mCurrentPost.content);
+    d->mImage = "<img src=\"img://profileImage\" title=\""+ d->mCurrentPost->author.realName +"\" width=\"48\" height=\"48\" />";
+    d->mContent = prepareStatus(d->mCurrentPost->content);
     d->mSign = generateSign();
     setupAvatar();
     setDirection();
@@ -219,7 +220,7 @@ void PostWidget::initUi()
 void PostWidget::updateUi()
 {
     _mainWidget->setHtml(baseText->arg( d->mImage, d->mContent,
-                                        d->mSign.arg(formatDateTime( d->mCurrentPost.creationDateTime )),
+                                        d->mSign.arg(formatDateTime( d->mCurrentPost->creationDateTime )),
                                         d->dir ));
 }
 
@@ -255,24 +256,24 @@ KPushButton * PostWidget::addButton(const QString & objName, const QString & too
     return button;
 }
 
-const Post &PostWidget::currentPost() const
+Post *PostWidget::currentPost() const
 {
     return d->mCurrentPost;
 }
 
-void PostWidget::setCurrentPost(const Choqok::Post& post)
+void PostWidget::setCurrentPost(Post* post)
 {
     d->mCurrentPost = post;
 }
 
 void PostWidget::setRead(bool read/* = true*/)
 {
-    if( !read && !currentPost().isRead &&
-        currentAccount()->username().compare( currentPost().author.userName, Qt::CaseInsensitive ) == 0) {
-        d->mCurrentPost.isRead = true; ///Always Set own posts as read.
+    if( !read && !currentPost()->isRead &&
+        currentAccount()->username().compare( currentPost()->author.userName, Qt::CaseInsensitive ) == 0) {
+        d->mCurrentPost->isRead = true; ///Always Set own posts as read.
         setUiStyle();
-    } else if( currentPost().isRead != read ) {
-        d->mCurrentPost.isRead = read;
+    } else if( currentPost()->isRead != read ) {
+        d->mCurrentPost->isRead = read;
         setUiStyle();
     }
 }
@@ -287,15 +288,15 @@ void PostWidget::setReadWithSignal()
 
 bool PostWidget::isRead() const
 {
-    return currentPost().isRead;
+    return currentPost()->isRead;
 }
 
 void PostWidget::setUiStyle()
 {
-    if (currentAccount()->username().compare( currentPost().author.userName, Qt::CaseInsensitive ) == 0)
+    if (currentAccount()->username().compare( currentPost()->author.userName, Qt::CaseInsensitive ) == 0)
       setStyleSheet(ownStyle);
     else {
-      if(currentPost().isRead)
+      if(currentPost()->isRead)
         setStyleSheet(readStyle);
       else
         setStyleSheet(unreadStyle);
@@ -315,7 +316,7 @@ void PostWidget::closeEvent(QCloseEvent* event)
     clearFocus();
     if( !isRead() )
         setReadWithSignal();
-    Q_EMIT aboutClosing(currentPost().postId, this);
+    Q_EMIT aboutClosing(currentPost()->postId, this);
     event->accept();
 }
 
@@ -400,7 +401,7 @@ QString PostWidget::prepareStatus( const QString &txt )
 
 void PostWidget::setDirection()
 {
-    QString txt = d->mCurrentPost.content;
+    QString txt = d->mCurrentPost->content;
     txt.remove(dirRegExp);
     txt = txt.trimmed();
     if( txt.isRightToLeft() ) {
@@ -452,13 +453,13 @@ void PostWidget::removeCurrentPost()
                 SIGNAL(errorPost(Choqok::Account*, Choqok::Post*,Choqok::MicroBlog::ErrorType,QString)),
                 this, SLOT(slotPostError(Choqok::Account*, Choqok::Post*,Choqok::MicroBlog::ErrorType,QString)) );
         setReadWithSignal();
-        d->mCurrentAccount->microblog()->removePost(d->mCurrentAccount, &d->mCurrentPost);
+        d->mCurrentAccount->microblog()->removePost(d->mCurrentAccount, d->mCurrentPost);
     }
 }
 
 void PostWidget::slotCurrentPostRemoved( Account* theAccount, Post* post )
 {
-    if( theAccount == currentAccount() && post == &d->mCurrentPost )
+    if( theAccount == currentAccount() && post == d->mCurrentPost )
         this->close();
 }
 
@@ -476,21 +477,21 @@ QString PostWidget::generateResendText()
 {
     if (BehaviorSettings::useCustomRT())
     {
-        return QString(BehaviorSettings::customRT()) + " @" + currentPost().author.userName + ": " + currentPost().content;
+        return QString(BehaviorSettings::customRT()) + " @" + currentPost()->author.userName + ": " + currentPost()->content;
     }
     else
     {
         QChar re(0x267B);
-        return QString(re) + " @" + currentPost().author.userName + ": " + currentPost().content;
+        return QString(re) + " @" + currentPost()->author.userName + ": " + currentPost()->content;
     }
 }
 
 void PostWidget::setupAvatar()
 {
-    QPixmap *pix = MediaManager::self()->fetchImage( d->mCurrentPost.author.profileImageUrl,
+    QPixmap *pix = MediaManager::self()->fetchImage( d->mCurrentPost->author.profileImageUrl,
                                       MediaManager::Async );
     if(pix)
-        avatarFetched(d->mCurrentPost.author.profileImageUrl, *pix);
+        avatarFetched(d->mCurrentPost->author.profileImageUrl, *pix);
     else {
         connect( MediaManager::self(), SIGNAL( imageFetched(QString,QPixmap)),
                 this, SLOT(avatarFetched(QString, QPixmap) ) );
@@ -501,7 +502,7 @@ void PostWidget::setupAvatar()
 
 void PostWidget::avatarFetched(const QString& remoteUrl, const QPixmap& pixmap)
 {
-    if ( remoteUrl == d->mCurrentPost.author.profileImageUrl ) {
+    if ( remoteUrl == d->mCurrentPost->author.profileImageUrl ) {
         QString url = "img://profileImage";
         _mainWidget->document()->addResource( QTextDocument::ImageResource, url, pixmap );
         updateUi();
@@ -515,7 +516,7 @@ void PostWidget::avatarFetched(const QString& remoteUrl, const QPixmap& pixmap)
 void PostWidget::avatarFetchError(const QString& remoteUrl, const QString& errMsg)
 {
     Q_UNUSED(errMsg);
-    if( remoteUrl == d->mCurrentPost.author.profileImageUrl ){
+    if( remoteUrl == d->mCurrentPost->author.profileImageUrl ){
         ///Avatar fetching is failed! but will not disconnect to get the img if it fetches later!
         QString url = "img://profileImage";
         _mainWidget->document()->addResource( QTextDocument::ImageResource,
@@ -532,7 +533,7 @@ QMap<QString, KPushButton* >& PostWidget::buttons()
 void PostWidget::slotPostError(Account* theAccount, Choqok::Post* post,
                                MicroBlog::ErrorType , const QString& errorMessage)
 {
-    if( theAccount == currentAccount() && post == &d->mCurrentPost) {
+    if( theAccount == currentAccount() && post == d->mCurrentPost) {
         kDebug()<<errorMessage;
         disconnect(d->mCurrentAccount->microblog(), SIGNAL(postRemoved(Choqok::Account*,Choqok::Post*)),
                   this, SLOT(slotCurrentPostRemoved(Choqok::Account*,Choqok::Post*)) );

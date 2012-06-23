@@ -29,7 +29,7 @@
 class TwitterPostWidget : public TwitterApiPostWidget
 {
 public:
-    TwitterPostWidget(Choqok::Account* account, const Choqok::Post& post, QWidget* parent = 0);
+    TwitterPostWidget(Choqok::Account* account, Choqok::Post* post, QWidget* parent = 0);
     virtual void initUi();
 
 protected slots:

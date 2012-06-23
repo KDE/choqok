@@ -175,7 +175,7 @@ UI::TimelineWidget* MicroBlog::createTimelineWidget(Account* account, const QStr
     return new UI::TimelineWidget(account, timelineName, parent);
 }
 
-UI::PostWidget* MicroBlog::createPostWidget(Account* account, const Choqok::Post& post, QWidget* parent)
+UI::PostWidget* MicroBlog::createPostWidget(Account* account, Choqok::Post* post, QWidget* parent)
 {
     return new UI::PostWidget(account, post, parent);
 }

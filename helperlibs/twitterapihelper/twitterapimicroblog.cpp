@@ -247,7 +247,7 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
         }
         QList< Choqok::UI::PostWidget *>::const_iterator it, endIt = timeline.constEnd();
         for ( it = timeline.constBegin(); it != endIt; ++it ) {
-            const Choqok::Post *post = &((*it)->currentPost());
+            const Choqok::Post *post = ((*it)->currentPost());
             KConfigGroup grp( &postsBackup, post->creationDateTime.toString() );
             grp.writeEntry( "creationDateTime", post->creationDateTime );
             grp.writeEntry( "postId", post->postId.toString() );

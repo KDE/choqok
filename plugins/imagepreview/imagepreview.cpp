@@ -92,7 +92,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     QStringList PlixiRedirectList;
     QStringList ImgLyRedirectList;
     QStringList TwitgooRedirectList;
-    QString content = postToParse->currentPost().content;
+    QString content = postToParse->currentPost()->content;
 
     //Twitpic: http://www.twitpic.com/api.do
     while ((pos = mTwitpicRegExp.indexIn(content, pos)) != -1) {

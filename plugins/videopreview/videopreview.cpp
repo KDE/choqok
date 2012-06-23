@@ -121,7 +121,7 @@ void VideoPreview::parse(QPointer<Choqok::UI::PostWidget> postToParse)
     int pos3 = 0;
     QStringList thumbList;
 
-    QString content = postToParse->currentPost().content;
+    QString content = postToParse->currentPost()->content;
 //     kDebug() << content;
 
     while (((pos1 = mYouTuRegExp.indexIn(content, pos)) != -1) |

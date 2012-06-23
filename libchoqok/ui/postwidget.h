@@ -50,9 +50,9 @@ class CHOQOK_EXPORT PostWidget : public QWidget
     Q_OBJECT
     Q_PROPERTY (bool read READ isRead)
 public:
-    explicit PostWidget( Account *account, const Post &post, QWidget *parent = 0 );
+    explicit PostWidget( Choqok::Account* account, Choqok::Post* post, QWidget* parent = 0 );
     virtual ~PostWidget();
-    const Post &currentPost() const;
+    Post *currentPost() const;
     virtual void setRead(bool read = true);
 
     /**
@@ -86,7 +86,7 @@ public:
 
     After changing current post, Don't forget to call @ref initUi() to update post UI.
     */
-    void setCurrentPost( const Post &post );
+    void setCurrentPost( Post *post );
 
     /**
     @brief Sets Post sign
