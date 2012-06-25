@@ -75,7 +75,7 @@ background-color: qlineargradient(spread:reflect, x1:0.449382, y1:0, x2:0.448, y
 
 MainWindow::MainWindow()
     : Choqok::UI::MainWindow(), quickWidget(0), s_settingsDialog(0), m_splash(0),
-    choqokMainButton(0), microblogCounter(0)
+    choqokMainButton(0), microblogCounter(0), choqokMainButtonVisible(false)
 {
     kDebug();
     setAttribute ( Qt::WA_DeleteOnClose, false );
@@ -471,10 +471,7 @@ void MainWindow::addBlog( Choqok::Account * account, bool isStartup )
     if( !isStartup )
         QTimer::singleShot( 1500, widget, SLOT( updateTimelines() ) );
     enableApp();
-    if( mainWidget->count() > 1)
-        mainWidget->setTabBarHidden(false);
-    else
-        mainWidget->setTabBarHidden(true);
+    updateTabbarHiddenState();
 }
 
 void MainWindow::removeBlog( const QString & alias )
@@ -485,16 +482,21 @@ void MainWindow::removeBlog( const QString & alias )
         Choqok::UI::MicroBlogWidget * tmp = qobject_cast<Choqok::UI::MicroBlogWidget *>( mainWidget->widget( i ) );
         if ( tmp->currentAccount()->alias() == alias ) {
             mainWidget->removeTab( i );
-        if ( mainWidget->count() < 1 )
-            disableApp();
-        tmp->deleteLater();
-        if( mainWidget->count() > 1)
-            mainWidget->setTabBarHidden(false);
-        else
-            mainWidget->setTabBarHidden(true);
-        return;
+            if ( mainWidget->count() < 1 )
+                disableApp();
+            tmp->deleteLater();
+            updateTabbarHiddenState();
+            return;
         }
     }
+}
+
+void MainWindow::updateTabbarHiddenState()
+{
+    if( mainWidget->count() <= 1 && !choqokMainButtonVisible )
+        mainWidget->setTabBarHidden(true);
+    else
+        mainWidget->setTabBarHidden(false);
 }
 
 void MainWindow::slotUpdateUnreadCount(int change, int sum)
@@ -643,9 +645,12 @@ void MainWindow::slotShowSpecialMenu(bool show)
         }
         mainWidget->setCornerWidget(choqokMainButton/*, Qt::TopLeftCorner*/);
         choqokMainButton->show();
+        choqokMainButtonVisible = true;
     } else {
+        choqokMainButtonVisible = false;
         mainWidget->setCornerWidget(0/*, Qt::TopLeftCorner*/);
     }
+    updateTabbarHiddenState();
 }
 
 void MainWindow::slotDonate()

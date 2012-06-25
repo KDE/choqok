@@ -109,6 +109,7 @@ Q_SIGNALS:
     void quickPostCreated();
 
 private:
+    void updateTabbarHiddenState();
     void setupActions();
     void createQuickPostDialog();
     void disableApp();
@@ -128,6 +129,7 @@ private:
     KPushButton *choqokMainButton;
 
     int microblogCounter;
+    bool choqokMainButtonVisible;
 };
 
 #endif
