@@ -84,7 +84,7 @@ QString Is_gd::shorten( const QString& url )
         }
     }
     else {
-        Choqok::NotifyManager::error( i18n("Cannot create a short url.\n%1", job->errorString()), i18n("is.gd error") );
+        Choqok::NotifyManager::error( i18n("Cannot create a short URL.\n%1", job->errorString()), i18n("is.gd error") );
     }
     return url;
 }

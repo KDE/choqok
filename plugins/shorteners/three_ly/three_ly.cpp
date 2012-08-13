@@ -65,7 +65,7 @@ QString Three_ly::shorten( const QString& url )
         Choqok::NotifyManager::error( QString( data ), i18n("3.ly error") );
     }
     else {
-        Choqok::NotifyManager::error( i18n("Cannot create a short url.\n%1", job->errorString()) );
+        Choqok::NotifyManager::error( i18n("Cannot create a short URL.\n%1", job->errorString()) );
         kDebug() << "Cannot create a shorten url.\t" << "KJob ERROR";
     }
     return url;

@@ -118,7 +118,7 @@
        <item>
         <widget class="QCheckBox" name="cfg_hideRepliesNotRelatedToMe">
          <property name="toolTip">
-          <string>You'll see just replies came to you, or mentions you.</string>
+          <string>You will see just replies came to you, or mentions you.</string>
          </property>
          <property name="text">
           <string>Just show replies to me.</string>
@@ -128,7 +128,7 @@
        <item>
         <widget class="QCheckBox" name="cfg_hideNoneFriendsReplies">
          <property name="toolTip">
-          <string>You'll see just replies between your friends.</string>
+          <string>You will see just replies between your friends.</string>
          </property>
          <property name="text">
           <string>Just show replies to me and my friends.</string>
