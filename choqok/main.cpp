@@ -50,7 +50,7 @@ int main( int argc, char **argv )
     about.addCredit( ki18n( "Stephen Henderson" ), ki18n( "Search API implementation" ), "hendersonsk@gmail.com");
     about.addCredit( ki18n( "Tejas Dinkar" ), ki18n( "Developer" ),
                      "tejasdinkar@gmail.com", "http://twitter.com/tdinkar" );
-    about.addCredit( ki18n( "Emanuele Bigiarini"), ki18n("D-Bus and konqueror plugin"), "pulmro@gmail.com");
+    about.addCredit( ki18n( "Emanuele Bigiarini"), ki18n("D-Bus and Konqueror plugin"), "pulmro@gmail.com");
     about.addCredit( ki18n( "Alex Infantes"), ki18n("Improvements on Image preview plugin"),
                      "alexandro82@gmail.com" );
     about.addCredit( ki18n( "Bardia Daneshvar" ), ki18n("UI improvements"), "bardia.daneshvar@gmail.com");

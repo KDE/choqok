@@ -143,7 +143,7 @@ void LaconicaEditAccountWidget::authorizeUser()
     kDebug();
     slotCheckHostUrl();
     if(KUrl(kcfg_host->text()).host()!="identi.ca"){
-        KMessageBox::sorry(this, i18n("Sorry! OAuth Method just works with Identi.ca server. You have to use basic authentication for other StatusNet servers."));
+        KMessageBox::sorry(this, i18n("Sorry, OAuth Method just works with Identi.ca server. You have to use basic authentication for other StatusNet servers."));
         kcfg_authMethod->setCurrentIndex(1);
         return;
     }

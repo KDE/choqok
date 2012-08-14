@@ -103,7 +103,7 @@ void TwitterListDialog::slotUsernameChanged(const QString& name)
 void TwitterListDialog::loadUserLists()
 {
     if(ui.username->text().isEmpty()){
-        KMessageBox::error(choqokMainWindow, i18n("No User!"));
+        KMessageBox::error(choqokMainWindow, i18n("No user."));
         return;
     }
     connect( blog, SIGNAL(userLists(Choqok::Account*,QString,QList<Twitter::List>)),

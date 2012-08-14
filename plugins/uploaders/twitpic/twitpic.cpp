@@ -59,7 +59,7 @@ void Twitpic::upload(const KUrl& localUrl, const QByteArray& medium, const QByte
     QString alias = TwitpicSettings::alias();
     if(alias.isEmpty()){
         kError()<<"No account to use";
-        emit uploadingFailed(localUrl, i18n("There's no Twitter account configured to use."));
+        emit uploadingFailed(localUrl, i18n("There is no Twitter account configured to use."));
         return;
     }
     TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(Choqok::AccountManager::self()->findAccount(alias));
