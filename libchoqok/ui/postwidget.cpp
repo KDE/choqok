@@ -117,7 +117,7 @@ PostWidget::PostWidget( Account* account, Choqok::Post* post, QWidget* parent/* 
 {
     setAttribute(Qt::WA_DeleteOnClose);
     _mainWidget->setFrameShape(QFrame::NoFrame);
-    if(currentAccount()->username().compare( currentPost()->author.userName, Qt::CaseInsensitive ) == 0 )
+    if(isOwnPost())
         d->mCurrentPost->isRead = true;
     d->mTimer.start( _MINUTE );
     connect( &d->mTimer, SIGNAL( timeout() ), this, SLOT( updateUi()) );
@@ -194,6 +194,27 @@ void PostWidget::initUi()
     _mainWidget->document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
                              MediaManager::self()->defaultImage() );
 
+     if ( isOwnPost() )
+       baseText = &ownText;
+     else
+       baseText = &otherText;                        
+     
+     if ( isRemoveAvailable() )
+     {
+		KPushButton *btnRemove = addButton("btnRemove", i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
+        connect(btnRemove, SIGNAL(clicked(bool)), SLOT(removeCurrentPost()));
+        baseText = &ownText;
+	 }
+	 
+	 if ( isResendAvailable() )
+	 {
+		KPushButton *btnResend = addButton("btnResend", i18nc( "@info:tooltip", "ReSend" ), "retweet" );
+        connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
+        baseText = &otherText;
+	 }
+	 
+	 
+    /*
     if(d->mCurrentAccount->username().compare( d->mCurrentPost->author.userName, Qt::CaseInsensitive ) == 0
         || currentPost()->isPrivate) {
         KPushButton *btnRemove = addButton("btnRemove", i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
@@ -203,7 +224,8 @@ void PostWidget::initUi()
         KPushButton *btnResend = addButton("btnResend", i18nc( "@info:tooltip", "ReSend" ), "retweet" );
         connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
         baseText = &otherText;
-    }
+    }*/
+    
     d->mImage = "<img src=\"img://profileImage\" title=\""+ d->mCurrentPost->author.realName +"\" width=\"48\" height=\"48\" />";
     d->mContent = prepareStatus(d->mCurrentPost->content);
     d->mSign = generateSign();
@@ -217,9 +239,9 @@ void PostWidget::initUi()
     updateUi();
 }
 
-void PostWidget::updateUi()
+void PostWidget::updateUi() 
 {
-    _mainWidget->setHtml(baseText->arg( d->mImage, d->mContent,
+	_mainWidget->setHtml(baseText->arg( d->mImage, d->mContent,
                                         d->mSign.arg(formatDateTime( d->mCurrentPost->creationDateTime )),
                                         d->dir ));
 }
@@ -293,7 +315,7 @@ bool PostWidget::isRead() const
 
 void PostWidget::setUiStyle()
 {
-    if (currentAccount()->username().compare( currentPost()->author.userName, Qt::CaseInsensitive ) == 0)
+    if (isOwnPost())
       setStyleSheet(ownStyle);
     else {
       if(currentPost()->isRead)
@@ -302,6 +324,11 @@ void PostWidget::setUiStyle()
         setStyleSheet(unreadStyle);
     }
     setHeight();
+}
+
+bool PostWidget::isOwnPost()
+{
+	return currentAccount()->username().compare( currentPost()->author.userName, Qt::CaseInsensitive ) == 0;
 }
 
 void PostWidget::setHeight()
@@ -356,8 +383,7 @@ QString PostWidget::prepareStatus( const QString &txt )
 {
     QString text = txt;
 //     text.replace( "&amp;", "&amp;amp;" );
-    text.replace( '<', "&lt;" );
-    text.replace( '>', "&gt;" );
+    text = removeTags(text);
     int pos = 0;
     while(((pos = mUrlRegExp.indexIn(text, pos)) != -1)) {
         QString link = mUrlRegExp.cap(0);
@@ -399,6 +425,15 @@ QString PostWidget::prepareStatus( const QString &txt )
     return text;
 }
 
+QString PostWidget::removeTags(const QString& text) const
+{
+	QString txt(text);
+	
+	txt.replace( '<', "&lt;" );
+    txt.replace( '>', "&gt;" );
+    
+    return txt;
+}
 void PostWidget::setDirection()
 {
     QString txt = d->mCurrentPost->content;
@@ -586,7 +621,7 @@ void PostWidget::deleteLater()
     close();
 }
 
-TextBrowser* PostWidget::mainWidget()
+TextBrowser* PostWidget::mainWidget() 
 {
     return _mainWidget;
 }
@@ -641,5 +676,14 @@ QString PostWidget::getBaseStyle()
     return baseStyle;
 }
 
+bool PostWidget::isRemoveAvailable() 
+{
+	return d->mCurrentAccount->username().compare( d->mCurrentPost->author.userName, Qt::CaseInsensitive ) == 0;
+}
+
+bool PostWidget::isResendAvailable() 
+{
+	return d->mCurrentAccount->username().compare( d->mCurrentPost->author.userName, Qt::CaseInsensitive ) != 0;
+}
 
 #include "postwidget.moc"
