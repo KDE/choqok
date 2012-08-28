@@ -46,6 +46,7 @@ Icon=choqok
 Type=Application
 Categories=Network;
 GenericName=Micro-blogging Client
+GenericName[bg]=Клиент за микроблогове в KDE
 GenericName[ca]=Client de microblocs
 GenericName[ca@valencia]=Client de microblocs
 GenericName[cs]=Klient pro mikroblogování
