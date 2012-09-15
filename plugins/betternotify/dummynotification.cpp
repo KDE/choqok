@@ -44,7 +44,7 @@ DummyNotification::DummyNotification(const QFont& font, const QColor& color, con
     document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"), KIcon("choqok").pixmap(48) );
     document()->addResource( QTextDocument::ImageResource, QUrl("icon://close"),
                                         KIcon("dialog-ok").pixmap(16) );
-    setText(baseText.arg(i18n("Choqok")).arg(i18n("KDE Rocks! :)")).arg(i18n("Ok")));
+    setText(baseText.arg(i18n("Choqok")).arg(i18n("KDE Rocks! :)")).arg(i18n("OK")));
     connect(this, SIGNAL(anchorClicked(QUrl)), SLOT(slotProcessAnchor(QUrl)));
 
     QString fntStr = "font-family:\"" + font.family() + "\"; font-size:" + QString::number(font.pointSize()) + "pt;";
