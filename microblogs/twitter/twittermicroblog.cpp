@@ -65,6 +65,14 @@ TwitterMicroBlog::TwitterMicroBlog ( QObject* parent, const QVariantList&  )
     setServiceName("Twitter");
     setServiceHomepageUrl("https://twitter.com/");
     timelineApiPath["Reply"] = "/statuses/mentions.%1";
+    setTimelineInfos();
+}
+void TwitterMicroBlog::setTimelineInfos()
+{
+ //   hange description of replies to mentions
+    Choqok::TimelineInfo *t = mTimelineInfos["Reply"];    
+    t->name = i18nc("Timeline Name", "Mentions");
+    t->description = i18nc("Timeline description", "Mentions of you");
 }
 
 TwitterMicroBlog::~TwitterMicroBlog()

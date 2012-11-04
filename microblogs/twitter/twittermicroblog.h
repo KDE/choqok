@@ -82,7 +82,7 @@ protected:
     QList<Twitter::List> readUserListsFromJson(Choqok::Account* theAccount, QByteArray buffer);
     Twitter::List readListFromJsonMap(Choqok::Account* theAccount, QVariantMap map);
     QMap<KJob*, QString> mFetchUsersListMap;
-
+    virtual void setTimelineInfos();
 private:
     QPointer<TwitterSearch> mSearchBackend;
     QMap<QString, Choqok::TimelineInfo*> mListsInfo;
