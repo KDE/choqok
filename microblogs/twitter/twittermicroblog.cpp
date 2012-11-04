@@ -274,7 +274,7 @@ void TwitterMicroBlog::slotFetchUserLists(KJob* job)
             QString errorMsg;
             errorMsg = checkJsonForError(stj->data());
             if( errorMsg.isEmpty() ){
-                KMessageBox::information(choqokMainWindow, i18n("There's no list record for user %1", username));
+                KMessageBox::information(choqokMainWindow, i18n("There is no list record for user %1", username));
             } else {
                 emit error( theAccount, ServerError, errorMsg, Critical);
             }

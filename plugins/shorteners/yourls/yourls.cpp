@@ -89,7 +89,7 @@ QString Yourls::shorten( const QString &url )
         }
     } else {
             kDebug() << "Cannot create a shorten url.\t" << "KJob ERROR";
-            Choqok::NotifyManager::error( i18n("Cannot create a short url.\n%1", job->errorString()) );
+            Choqok::NotifyManager::error( i18n("Cannot create a short URL.\n%1", job->errorString()) );
     }
     return url;
 }

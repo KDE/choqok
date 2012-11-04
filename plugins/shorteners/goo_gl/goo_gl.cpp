@@ -79,7 +79,7 @@ QString Goo_gl::shorten( const QString& url )
         }
         Choqok::NotifyManager::error( i18n("Malformed response\n"), i18n("Goo.gl error")  );
     } else {
-        Choqok::NotifyManager::error( i18n("Cannot create a short url.\n%1", job->errorString()), i18n("Goo.gl error") );
+        Choqok::NotifyManager::error( i18n("Cannot create a short URL.\n%1", job->errorString()), i18n("Goo.gl error") );
     }
     return url;
 }

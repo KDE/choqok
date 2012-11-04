@@ -72,7 +72,7 @@ QString Tinyarro_ws::shorten( const QString &url )
         }
         Choqok::NotifyManager::error( output, i18n( "Tinyarro.ws error" ) );
     } else {
-        Choqok::NotifyManager::error( i18n( "Cannot create a short url.\n%1", job->errorString() ) );
+        Choqok::NotifyManager::error( i18n( "Cannot create a short URL.\n%1", job->errorString() ) );
     }
     return url;
 }

@@ -56,7 +56,7 @@ KonqPluginChoqok::KonqPluginChoqok(QObject* parent, const QVariantList& )
     menu->addAction( postaction );
     
     KAction *shortening = actionCollection()->add<KToggleAction>( "shortening_choqok");
-    shortening->setText( i18n("Shorten Url on Paste") );
+    shortening->setText( i18n("Shorten URL on Paste") );
     connect( shortening, SIGNAL( toggled(bool) ), SLOT( toggleShortening(bool) ) );
     menu->addAction( shortening );
     

@@ -126,7 +126,7 @@ void Bit_ly_Config::slotValidate()
         if ( output.startsWith( '0' ) )
              KMessageBox::error( this, i18n ( "Provided data is invalid. Try another login or API key.\nYou can find it on http://bit.ly/a/your_api_key" ) );
         if ( output.startsWith( '1' ) )
-             KMessageBox::information( this, i18n ( "You entered valid information!" ) );
+             KMessageBox::information( this, i18n ( "You entered valid information." ) );
     }
     else {
         Choqok::NotifyManager::error( job->errorString(), i18n( "bit.ly config error" ) );

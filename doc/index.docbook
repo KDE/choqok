@@ -7,7 +7,7 @@
   <!ENTITY % English "INCLUDE">
 ]>
 
-<book lang="&language;">
+<book id="choqok" lang="&language;">
 
 <bookinfo>
 <title>The &choqok; Handbook</title>
@@ -39,7 +39,7 @@
 
 <abstract>
 <para>&choqok; is a micro-blogging client for KDE
-(http://choqok.gnufolks.org).</para>
+(<ulink url="http://choqok.gnufolks.org">http://choqok.gnufolks.org</ulink>).</para>
 </abstract>
 
 
@@ -53,7 +53,7 @@
 
 </bookinfo>
 
-<chapter id="introduction"> 
+<chapter id="introduction">
 <title>Introduction</title>
 
 <para>&choqok; is a micro-blogging client which currently supports
@@ -66,10 +66,10 @@ including text messaging, instant messaging, email, digital audio or the
 web.</para>
 </chapter>
 
-<chapter id="using"> 
+<chapter id="using">
 <title>Using &choqok;</title>
 
-<sect1 id="getting-started"> 
+<sect1 id="getting-started">
 <title>Getting Started</title>
 
 <para>In the &choqok; main window there are some timelines allowing you to see
@@ -80,7 +80,7 @@ received from friends. You can also post a new message.</para>
 in &choqok;.</para>
 
 <screenshot>
-<screeninfo>Here's a screenshot of the &choqok; main window</screeninfo>
+<screeninfo>Here is a screenshot of the &choqok; main window</screeninfo>
 	<mediaobject>
 	  <imageobject>
 	    <imagedata fileref="choqok.png" format="PNG"/>
@@ -107,8 +107,8 @@ this person.</para>
 140 characters. The number of characters left is displayed in green on bottom
 right under the text area. The color changes to orange when you reach the 30
 characters limit then to red when you reach 0. If your message is longer
-than 140 characters, you'll be asked if you want to post it anyway. If you
-agree, it'll be posted up to 140 characters.</para>
+than 140 characters, you will be asked if you want to post it anyway. If you
+agree, it will be posted up to 140 characters.</para>
 
 <para>The <guilabel>Home</guilabel> tab displays the timeline which consists in
 all posts you and your friends wrote. A post using Identi.ca is called a dent
@@ -123,14 +123,14 @@ you.</para>
 
 </sect1>
 
-<sect1 id="search"> 
+<sect1 id="search">
 <title>Searching</title>
 
 <para>You can search through services for something (anything that
-the service-search api can offer to a client).</para>
+the service-search API can offer to a client).</para>
 
 <para>This function is available via the <menuchoice><guimenu>Tools</guimenu>
-<guimenuitem> Search</guimenuitem> </menuchoice> menu (shortcut:
+<guimenuitem>Search</guimenuitem> </menuchoice> menu (shortcut:
 <keycombo action="simul">&Ctrl;
 <keycap>F</keycap></keycombo>)
 For example you can search for a special word in all users' posts:</para>
@@ -149,11 +149,11 @@ For example you can search for a special word in all users' posts:</para>
 
 </sect1>
 
-<sect1 id="configuring-account"> 
+<sect1 id="configuring-account">
 <title>Configuring an Account</title>
 
 <para>Open the &choqok; configuration window via
-<menuchoice><guimenu>Settings</guimenu> <guimenuitem> Configure
+<menuchoice><guimenu>Settings</guimenu> <guimenuitem>Configure
 &choqok;...</guimenuitem> </menuchoice> then go to the
 <guilabel>Accounts</guilabel> tab and click the <guibutton>Add</guibutton>
 button, the <guilabel>Add a new account</guilabel> window will appear.
@@ -177,13 +177,13 @@ everything is okay, your account will be ready to use.</para>
 <para>You can configure other accounts subsequently.</para>
 </sect1>
 
-<sect1 id="special-features"> 
+<sect1 id="special-features">
 <title>Special Features</title>
 
 <itemizedlist>
 <listitem><para>
 You can disable the timeline updating of &choqok; (the timeline is the list of
-posts by you and your friends). 
+posts by you and your friends).
 </para></listitem>
 <listitem><para>
 Another special feature is the ability to notify the user about new
@@ -337,7 +337,7 @@ then minimized to system tray it then marks all new messages as read.
 </menuchoice></term>
 <listitem><para><action><action>Configure</action> the keyboard shortcuts used
 by &choqok;.
-</action> 
+</action>
 </para></listitem>
 </varlistentry>
 
@@ -372,10 +372,10 @@ toolbar.
 <chapter id="credits-and-license">
 <title>Credits and Licenses</title>
 
-<para>&choqok; copyright 2008-2009 Mehrdad Momeny (mehrdad.momeny AT gmail.com)
+<para>&choqok; copyright 2008-2009 Mehrdad Momeny <email>mehrdad.momeny@gmail.com</email>
 </para>
-<para>Documentation copyright 2009 Mehrdad Momeny (mehrdad.momeny AT
-gmail.com)</para>
+<para>Documentation copyright 2009 Mehrdad Momeny <email>mehrdad.momeny@gmail.com</email>
+</para>
 
 <!-- TRANS:CREDIT_FOR_TRANSLATORS -->
 
