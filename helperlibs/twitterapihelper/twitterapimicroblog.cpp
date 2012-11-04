@@ -881,12 +881,11 @@ Choqok::Post * TwitterApiMicroBlog::readPostFromDomElement ( Choqok::Account* th
 Choqok::Post* TwitterApiMicroBlog::readPostFromDomNode(Choqok::Account* theAccount,
                                                        QDomNode node, Choqok::Post* post)
 {
-    QString timeStr;
     Choqok::Post* repeatedPost = 0;
     while ( !node.isNull() ) {
         QDomElement elm = node.toElement();
         if ( elm.tagName() == "created_at" )
-            timeStr = elm.text();
+            post->creationDateTime = dateFromString ( elm.text() );
         else if ( elm.tagName() == "text" )
             post->content = elm.text();
         else if ( elm.tagName() == "id" )
@@ -934,7 +933,6 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromDomNode(Choqok::Account* theAccou
         delete repeatedPost;
     }
     post->link = postUrl(theAccount, post->author.userName, post->postId);
-    post->creationDateTime = dateFromString ( timeStr );
     post->isRead = post->isFavorited || (post->repeatedFromUsername.compare(theAccount->username(), Qt::CaseInsensitive) == 0);
     return post;
 }
