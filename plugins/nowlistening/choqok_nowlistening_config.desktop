@@ -10,7 +10,6 @@ X-KDE-ParentComponents=choqok_nowlistening
 
 Name=Now Listening
 Name[bg]=Сега слушам
-Name[bs]=Sada slušam
 Name[ca]=Ara s'escolta
 Name[ca@valencia]=Ara s'escolta
 Name[cs]=Nyní poslouchám
@@ -51,7 +50,6 @@ Name[zh_CN]=正在收听
 Name[zh_TW]=正在收聽
 Comment=Tells your friends what you are listening to.
 Comment[bg]=Известява приятелите ви каква музика слушате.
-Comment[bs]=Kaže vašim prijateljima šta slušate.
 Comment[ca]=Diu als vostres amics el què esteu escoltant.
 Comment[ca@valencia]=Diu als vostres amics el què esteu escoltant.
 Comment[cs]=Řekne Vašim přátelům, co zrovna posloucháte.

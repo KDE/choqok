@@ -11,7 +11,6 @@ Exec=qdbus org.kde.choqok / uploadFile %U
 Icon=choqok
 Name=Upload with Choqok
 Name[bg]=Качване с Choqok
-Name[bs]=Slanje datoteke Choqok-om
 Name[ca]=Puja amb el Choqok
 Name[ca@valencia]=Puja amb el Choqok
 Name[cs]=Nahrát s Choqok
