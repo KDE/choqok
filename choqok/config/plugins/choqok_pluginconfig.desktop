@@ -11,6 +11,7 @@ X-KDE-Weight=200
 
 Name=Plugins
 Name[bg]=Приставки
+Name[bs]=Priključci
 Name[ca]=Connectors
 Name[ca@valencia]=Connectors
 Name[cs]=Moduly
@@ -51,6 +52,7 @@ Name[zh_CN]=插件
 Name[zh_TW]=外掛程式
 Comment=Select and Configure Plugins
 Comment[bg]=Избор и настройки на приставките
+Comment[bs]=Odabir i podešavanje priključaka
 Comment[ca]=Selecció i configuració dels connectors
 Comment[ca@valencia]=Selecció i configuració dels connectors
 Comment[cs]=Výběr a nastavení modulů
