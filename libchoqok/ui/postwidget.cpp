@@ -451,6 +451,10 @@ QString PostWidget::formatDateTime(const KDateTime& time)
 
 QString PostWidget::formatDateTime( const QDateTime& time )
 {
+    if ( !time.isValid() )
+    {
+        return tr("Invalid Time");
+    }
     int seconds = time.secsTo( QDateTime::currentDateTime() );
     if ( seconds <= 15 ) {
         d->mTimer.setInterval( _15SECS );
