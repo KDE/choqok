@@ -749,14 +749,14 @@ void ChoqokTabBar::contextMenuRequest( const QPoint & )
         return;
     }
     
-    KAction north( tr("Top") , this );
-    KAction west(  tr("Left")  , this );
-    KAction east(  tr("Right")  , this );
-    KAction south( tr("Bottom") , this );
-    KAction size_s( tr("Small")  , this );
-    KAction size_m( tr("Medium") , this );
-    KAction size_b( tr("Big")    , this );
-    KAction styled( tr("Styled Panel") , this );
+    KAction north( i18n("Top") , this );
+    KAction west(  i18n("Left")  , this );
+    KAction east(  i18n("Right")  , this );
+    KAction south( i18n("Bottom") , this );
+    KAction size_s( i18n("Small")  , this );
+    KAction size_m( i18n("Medium") , this );
+    KAction size_b( i18n("Big")    , this );
+    KAction styled( i18n("Styled Panel") , this );
     
     /*! ------------- Setting Up Datas --------------- */
     north.setData( ChoqokTabBar::North );
