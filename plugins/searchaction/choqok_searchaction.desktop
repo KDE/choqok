@@ -76,6 +76,7 @@ Comment[pt_BR]=Adiciona uma ação para pesquisa na API dos microblogs, como Twi
 Comment[ru]=Добавляет возможность поиска для микроблогов с API Twitter, например Twitter и StatusNet
 Comment[sl]=Doda dejanje iskanja uporabniškem vmesniku za mikrobloge, ki uporabljajo Twitter API, npr. Twitter in StatusNet
 Comment[sv]=Lägg till en sökåtgärd i användargränssnitt med Twitters programmeringsgränssnitt, t.ex. Twitter och StatusNet
+Comment[tr]=UI'ye, Twitter ve StatusNet gibi Twitter API mikroblogları için bir Arama eylemi ekle
 Comment[uk]=Додає дію з пошуку до інтерфейсу користувача мікроблогів з API Twitter, зокрема Twitter і StatusNet
 Comment[x-test]=xxAdd a Search action to the UI for Twitter API microblogs like Twitter and StatusNetxx
 Comment[zh_CN]=为 Twitter API 微博客添加搜索动作，类似于 Twitter 和 StatusNet

@@ -74,6 +74,7 @@ Comment[pt_BR]=Extrai a URL completa e a exibe como uma dica
 Comment[ru]=Преобразует сокращённую ссылку в исходную и показывает её во всплывающей подсказке
 Comment[sl]=Pretvori v poln URL in ga pokaži kot orodni namig
 Comment[sv]=Extrahera den fullständiga webbadressen, och visa den som ett verktygstips
+Comment[tr]=Tüm URL'yi çıkar ve araç ipucu olarak göster
 Comment[uk]=Розгортає адреси URL і показує їх на панелі підказки
 Comment[x-test]=xxExtract the full URL and show it as a tooltipxx
 Comment[zh_CN]=展开完整 URL 并显示为工具提示
