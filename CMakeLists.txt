@@ -13,6 +13,8 @@ option(QTINDICATE_DISABLE "Disable support for notifications via indicator")
 find_package(QJson REQUIRED)
 find_package(QCA2 REQUIRED)
 find_package(QtOAuth REQUIRED)
+find_package(AccountsQt REQUIRED)
+find_package(SignOnQt REQUIRED)
 
 if(NOT QTINDICATE_DISABLE)
     find_package(QtIndicate)
