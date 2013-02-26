@@ -53,7 +53,7 @@ public:
         } else {//It's search timeline
             info = new Choqok::TimelineInfo;
             info->name = timelineName;
-            info->description = i18n("Search results for %1", timelineName);
+            info->description = i18nc("%1 is the name of a timeline", "Search results for %1", timelineName);
         }
     }
     Account *currentAccount;
