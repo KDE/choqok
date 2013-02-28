@@ -50,7 +50,7 @@ kde4_add_ui_files(choqok_LIB_SRCS ui/uploadmedia_base.ui)
 
 kde4_add_library(choqok SHARED ${choqok_LIB_SRCS})
 
-target_link_libraries(choqok ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS})
+target_link_libraries(choqok ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} ${ACCOUNTSQT_LIBRARY} ${SIGNONQT_LIBRARY})
 
 if(QtIndicate_FOUND)
        add_definitions(-DXDG_APPS_INSTALL_DIR=${XDG_APPS_INSTALL_DIR})
