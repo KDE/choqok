@@ -292,9 +292,9 @@ QStringList LaconicaMicroBlog::readUsersScreenNameFromXml(Choqok::Account* theAc
         if(!err.isEmpty()){
             emit error(theAccount, ServerError, err, Critical);
         } else {
-            err = i18n( "Retrieving the friends list failed. The data returned from the server is corrupted." );
-            kDebug() << "there's no users tag in XML\t the XML is: \n" << buffer;
-            emit error(theAccount, ParsingError, err, Critical);
+//             err = i18n( "Retrieving the friends list failed. The data returned from the server is corrupted." );
+//             kDebug() << "there's no users tag in XML\t the XML is: \n" << buffer;
+//             emit error(theAccount, ParsingError, err, Critical);
             list<<QString(' ');
         }
         return list;
