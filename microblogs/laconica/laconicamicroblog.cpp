@@ -32,6 +32,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KGenericFactory>
 #include "account.h"
 #include "accountmanager.h"
+#include "syncwithaccountssso.h"
 #include "microblogwidget.h"
 #include "timelinewidget.h"
 #include "editaccountwidget.h"
@@ -62,6 +63,7 @@ LaconicaMicroBlog::LaconicaMicroBlog ( QObject* parent, const QVariantList&  )
     mTimelineInfos["ReTweets"]->name = i18nc("Timeline name", "Repeated");
     mTimelineInfos["ReTweets"]->description = i18nc("Timeline description", "Your posts that were repeated by others");
 //     setServiceHomepageUrl("http://twitter.com/");
+    QMetaObject::invokeMethod(this, "importAccountsSso");
 }
 
 LaconicaMicroBlog::~LaconicaMicroBlog()
@@ -365,5 +367,40 @@ void LaconicaMicroBlog::slotFetchConversation(KJob* job)
         }
     }
 }
+
+void LaconicaMicroBlog::importAccountsSso()
+{
+    SyncWithAccountsSSO *sync = new SyncWithAccountsSSO("identica-microblog", this);
+    connect(sync, SIGNAL(accountToBeSync(QString, QVariantMap)), SLOT(createAccount(QString, QVariantMap)));
+    sync->start();
+}
+
+void LaconicaMicroBlog::createAccount(const QString &alias, const QVariantMap& info)
+{
+    qDebug() << "Creating account from accounts-sso2: " << alias + info["accountId"].toString();
+    qDebug() << info;
+    QString meh = alias + "_" + info["accountId"].toString();
+    qDebug() << "Meh:" << meh;
+
+    LaconicaAccount *acc = new LaconicaAccount(this, meh);
+    acc->setUsername(alias);
+    acc->setOauthToken(info["AccessToken"].toString().toLatin1());
+    acc->setOauthConsumerKey(info["consumerToken"].toString().toLatin1());
+    acc->setOauthConsumerSecret(info["consumerSecret"].toString().toLatin1());
+    acc->setOauthTokenSecret(info["TokenSecret"].toString().toLatin1());
+    acc->setUsingOAuth(true);
+    acc->setHost("https://identi.ca");
+    acc->setApi("api");
+    acc->setAlias(meh);
+    acc->configGroup()->writeEntry("account-sso", info["accountId"].toInt());
+    acc->setTimelineNames(QStringList("Home") << "Reply" << "Inbox" << "Outbox");
+    acc->setFriendsList(QStringList());
+    acc->setChangeExclamationMark(true);
+    acc->setChangeExclamationMarkToText("#");
+    acc->writeConfig();
+
+    Choqok::AccountManager::self()->registerAccount(acc);
+}
+
 
 #include "laconicamicroblog.moc"

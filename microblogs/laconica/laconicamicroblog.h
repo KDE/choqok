@@ -80,6 +80,9 @@ protected:
 protected Q_SLOTS:
     virtual void slotFetchConversation( KJob* job );
     virtual void slotRequestFriendsScreenName(KJob* job);
+
+    void importAccountsSso();
+    void createAccount(const QString &alias, const QVariantMap& map);
 private:
     QMap<KJob*, ChoqokId> mFetchConversationMap;
     QPointer<LaconicaSearch> mSearchBackend;
