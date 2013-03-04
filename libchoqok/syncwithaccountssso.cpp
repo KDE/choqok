@@ -86,6 +86,8 @@ void SyncWithAccountsSSO::realStart()
 
 void SyncWithAccountsSSO::sessionResponse(const SignOn::SessionData& data)
 {
+    qDebug() << "sessionResponse";
+    qDebug() << data.toMap();
     QVariantMap map = data.toMap();
     map.insert("consumerToken", sender()->property("consumerToken").toString());
     map.insert("consumerSecret", sender()->property("consumerSecret").toString());
@@ -95,7 +97,7 @@ void SyncWithAccountsSSO::sessionResponse(const SignOn::SessionData& data)
 
 void SyncWithAccountsSSO::sessionError(const SignOn::Error& error)
 {
-
+    qDebug() << "sessionError: " << error.message();
 }
 
 void SyncWithAccountsSSO::syncAccount(Accounts::Account* acc)
