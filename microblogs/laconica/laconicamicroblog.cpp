@@ -389,8 +389,8 @@ void LaconicaMicroBlog::createAccount(const QString &alias, const QVariantMap& i
     acc->setOauthConsumerSecret(info["consumerSecret"].toString().toLatin1());
     acc->setOauthTokenSecret(info["TokenSecret"].toString().toLatin1());
     acc->setUsingOAuth(true);
-    acc->setHost("https://identi.ca");
-    acc->setApi("api");
+    acc->setHost("identi.ca");
+    acc->setApi("1");
     acc->setAlias(meh);
     acc->configGroup()->writeEntry("account-sso", info["accountId"].toInt());
     acc->setTimelineNames(QStringList("Home") << "Reply" << "Inbox" << "Outbox");
