@@ -707,8 +707,8 @@ void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
     TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount *>( mJobsAccount.take(job) );
     KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
     if (stJob->error()) {
-        emit error(theAccount, ServerError, i18n("Friends list for account %1 could not be updated:\n%2",
-            theAccount->username(), stJob->errorString()), Critical);
+//         emit error(theAccount, ServerError, i18n("Friends list for account %1 could not be updated:\n%2",
+//             theAccount->username(), stJob->errorString()), Critical);
         return;
     }
     QStringList newList;
