@@ -35,6 +35,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "timelinewidget.h"
 #include "editaccountwidget.h"
 #include "twittereditaccount.h"
+#include "syncwithaccountssso.h"
 #include "postwidget.h"
 #include "twitteraccount.h"
 #include "composerwidget.h"
@@ -66,6 +67,7 @@ TwitterMicroBlog::TwitterMicroBlog ( QObject* parent, const QVariantList&  )
     setServiceHomepageUrl("https://twitter.com/");
     timelineApiPath["Reply"] = "/statuses/mentions.%1";
     setTimelineInfos();
+    QMetaObject::invokeMethod(this, "importAccountsSso");
 }
 void TwitterMicroBlog::setTimelineInfos()
 {
@@ -375,6 +377,37 @@ Twitter::List TwitterMicroBlog::readListFromJsonMap(Choqok::Account* theAccount,
     l.subscriberCount = map["subscriber_count"].toInt();
     l.uri = map["uri"].toString();
     return l;
+}
+
+void TwitterMicroBlog::importAccountsSso()
+{
+    qDebug() << "ImportAccountSoo yo";
+    SyncWithAccountsSSO *sync = new SyncWithAccountsSSO("twitter-microblog", this);
+    connect(sync, SIGNAL(accountToBeSync(QString, QVariantMap)), SLOT(createAccount(QString, QVariantMap)));
+    sync->start();
+}
+
+void TwitterMicroBlog::createAccount(const QString &alias, const QVariantMap& info)
+{
+    qDebug() << "Creating account from accounts-sso2: " << alias + info["accountId"].toString();
+    qDebug() << info;
+    QString meh = alias + "_" + info["accountId"].toString();
+    qDebug() << "Meh:" << meh;
+
+    TwitterAccount *acc = new TwitterAccount(this, meh);
+    acc->setUsername(alias);
+    acc->setOauthToken(info["AccessToken"].toString().toLatin1());
+    acc->setOauthConsumerKey(info["consumerToken"].toString().toLatin1());
+    acc->setOauthConsumerSecret(info["consumerSecret"].toString().toLatin1());
+    acc->setOauthTokenSecret(info["TokenSecret"].toString().toLatin1());
+    acc->setUsingOAuth(true);
+    acc->setAlias(meh);
+    acc->configGroup()->writeEntry("account-sso", info["accountId"].toInt());
+    acc->setTimelineNames(QStringList("Home") << "Reply" << "Inbox" << "Outbox");
+    acc->setFriendsList(QStringList());
+    acc->writeConfig();
+
+    Choqok::AccountManager::self()->registerAccount(acc);
 }
 
 #include "twittermicroblog.moc"

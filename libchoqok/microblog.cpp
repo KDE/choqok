@@ -149,6 +149,10 @@ void MicroBlog::slotConfigChanged()
 }
 
 /// UI Objects:
+void MicroBlog::importAccountsSso()
+{
+    kWarning()<<"MicroBlog Plugin should implement this!";
+}
 
 Account* MicroBlog::createNewAccount(const QString& alias)
 {

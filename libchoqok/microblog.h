@@ -110,6 +110,7 @@ public:
     * @return The new @ref Account object created by this function
     */
     virtual Account *createNewAccount( const QString &alias );
+    virtual void importAccountsSso();
 
     /**
     * @brief Create a new EditAccountWidget
