@@ -27,6 +27,7 @@
 #include <QtCore/QObject>
 #include "account.h"
 
+#include <Accounts/Account>
 namespace Choqok
 {
 /**
@@ -86,6 +87,7 @@ public:
     static QString generatePostBackupFileName( const QString &alias, const QString &name );
 
 public Q_SLOTS:
+    void ssoAccountCreated(const Accounts::AccountId &id);
     void loadAllAccounts();
 
 Q_SIGNALS:

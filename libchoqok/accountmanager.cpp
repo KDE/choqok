@@ -34,6 +34,8 @@
 #include "microblog.h"
 #include "passwordmanager.h"
 
+#include <Accounts/Manager>
+
 namespace Choqok
 {
 
@@ -64,10 +66,12 @@ class AccountManager::Private
 public:
     Private()
     :conf(0)
+    ,manager(0)
     {}
     QList<Account*> accounts;
     KSharedConfig::Ptr conf;
     QString lastError;
+    Accounts::Manager *manager;
 };
 
 AccountManager::AccountManager()
@@ -75,6 +79,8 @@ AccountManager::AccountManager()
 {
     kDebug();
     d->conf = KGlobal::config();
+    d->manager = new Accounts::Manager(this);
+    connect(d->manager, SIGNAL(accountCreated(Accounts::AccountId)), SLOT(ssoAccountCreated(Accounts::AccountId)));
 }
 
 AccountManager::~AccountManager()
@@ -198,6 +204,31 @@ void AccountManager::loadAllAccounts()
     kDebug() << d->accounts.count() << " accounts loaded.";
     d->accounts = sortAccountsByPriority(d->accounts);
     emit allAccountsLoaded();
+}
+
+void AccountManager::ssoAccountCreated(const Accounts::AccountId& id)
+{
+    Accounts::Account *acc = d->manager->account(id);
+    Accounts::ServiceList services = acc->services("microblogging");
+    if (services.isEmpty()) {
+        return;
+    }
+
+    Accounts::Service service = services.first();
+    acc->selectService(service);
+
+    if (!acc->enabled()) {
+        return;
+    }
+
+    MicroBlog* blog = 0;
+    if (service.name() == "twitter-microblog") {
+        blog = qobject_cast<MicroBlog*>( PluginManager::self()->loadPlugin( "choqok_twitter" ) );
+    } else {
+        blog = qobject_cast<MicroBlog*>( PluginManager::self()->loadPlugin( "choqok_laconica" ) );
+    }
+
+    blog->importAccountsSso();
 }
 
 QString AccountManager::generatePostBackupFileName( const QString& alias, const QString& name )
