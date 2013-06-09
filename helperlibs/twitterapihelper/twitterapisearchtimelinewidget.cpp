@@ -66,7 +66,7 @@ TwitterApiSearchTimelineWidget::TwitterApiSearchTimelineWidget(Choqok::Account* 
     connect(Choqok::UI::Global::mainWindow(), SIGNAL(updateTimelines()),
             this, SLOT(slotUpdateSearchResults()) );
     addFooter();
-    timelineDescription()->setText(i18n("Search results for %1", timelineName));
+    timelineDescription()->setText(i18nc("%1 is the name of a timeline", "Search results for %1", timelineName));
     setClosable();
 }
 

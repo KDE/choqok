@@ -231,9 +231,9 @@ void MainWindow::setupActions()
     KShortcut toggleMainGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_C );
     showMain->setGlobalShortcut( toggleMainGlobalShortcut );
     if(this->isVisible())
-        showMain->setText( i18n( "Minimize" ) );
+        showMain->setText( i18nc( "@action", "Minimize" ) );
     else
-        showMain->setText( i18n("Restore") );
+        showMain->setText( i18nc( "@action", "Restore" ) );
     connect( showMain, SIGNAL( triggered( bool ) ), this, SLOT( toggleMainWindow() ) );
 
     KAction *act = KStandardAction::configureNotifications ( this, SLOT ( slotConfNotifications() ),

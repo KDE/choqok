@@ -55,7 +55,7 @@ TwitterApiSearchDialog::TwitterApiSearchDialog(TwitterApiAccount* theAccount, QW
 : KDialog(parent), d(new Private(theAccount))
 {
     kDebug();
-    setWindowTitle(i18n("Search"));
+    setWindowTitle(i18nc("@title:window", "Search"));
     setAttribute(Qt::WA_DeleteOnClose);
     createUi();
     d->searchQuery->setFocus();
@@ -87,7 +87,7 @@ void TwitterApiSearchDialog::createUi()
     d->searchQuery = new KLineEdit(this);
     queryLayout->addWidget(d->searchQuery);
 
-    setButtonText( Ok, i18n("Search") );
+    setButtonText( Ok, i18nc("@action:button", "Search") );
 }
 
 void TwitterApiSearchDialog::fillSearchTypes()
