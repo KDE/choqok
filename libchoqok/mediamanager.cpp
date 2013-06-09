@@ -47,7 +47,7 @@ class MediaManager::Private
 {
 public:
     Private()
-    :emoticons(KEmoticons().theme()),cache("choqok-userimages", 20000000), uploader(0)
+    :emoticons(KEmoticons().theme()),cache("choqok-userimages", 30000000), uploader(0)
     {}
     KEmoticonsTheme emoticons;
     KImageCache cache;
