@@ -228,11 +228,16 @@ void LaconicaMicroBlog::listFriendsUsername(TwitterApiAccount* theAccount)
 {
     friendsList.clear();
     if ( theAccount ) {
-        requestFriendsScreenName(theAccount);
+        doRequestFriendsScreenName(theAccount, 1);
     }
 }
 
-void LaconicaMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount, int page)
+void LaconicaMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount)
+{
+    doRequestFriendsScreenName(theAccount, 1);
+}
+
+void LaconicaMicroBlog::doRequestFriendsScreenName(TwitterApiAccount* theAccount, int page)
 {
     kDebug();
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
@@ -269,7 +274,7 @@ void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob* job)
     }
     friendsList << newList;
     if ( newList.count() == 100 ) {
-        requestFriendsScreenName( theAccount, ++friendsPage );
+        doRequestFriendsScreenName( theAccount, ++friendsPage );
     } else {
         friendsList.removeDuplicates();
         theAccount->setFriendsList(friendsList);

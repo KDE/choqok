@@ -73,7 +73,12 @@ Q_SIGNALS:
 
 protected:
     virtual void listFriendsUsername(TwitterApiAccount* theAccount);
-    virtual void requestFriendsScreenName(TwitterApiAccount* theAccount, int page = 1);
+
+private:
+    void doRequestFriendsScreenName(TwitterApiAccount* theAccount, int page);
+
+public:
+    virtual void requestFriendsScreenName(TwitterApiAccount* theAccount);
 
     virtual QStringList readUsersScreenNameFromXml(Choqok::Account* theAccount, const QByteArray& buffer);
 
