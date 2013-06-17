@@ -226,7 +226,7 @@ void FilterManager::slotHidePost()
     Choqok::UI::PostWidget *wd;
     wd = dynamic_cast<Choqok::UI::PostWidgetUserData *>(hidePost->userData(32))->postWidget();
     QString username = wd->currentPost()->author.userName;
-    int res = KMessageBox::questionYesNoCancel( choqokMainWindow, i18n("Hide all posts from <b>@%1</b>",
+    int res = KMessageBox::questionYesNoCancel( choqokMainWindow, i18n("Hide all posts from <b>@%1</b>?",
                                                                        username));
     if( res == KMessageBox::Cancel ){
         return;
