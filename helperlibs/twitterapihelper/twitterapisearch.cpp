@@ -1,4 +1,4 @@
-
+/*
     This file is part of Choqok, the KDE micro-blogging client
 
     Copyright (C) 2008-2012 Mehrdad Momeny <mehrdad.momeny@gmail.com>
