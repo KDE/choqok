@@ -94,6 +94,8 @@ public:
     */
     virtual QString optionCode(int option) = 0;
 
+    QDateTime dateFromString( const QString &date );
+
 public Q_SLOTS:
     virtual void requestSearchResults( const SearchInfo &searchInfo,
                                        const ChoqokId &sinceStatusId = QString(),

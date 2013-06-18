@@ -30,6 +30,9 @@
 #include <kio/job.h>
 #include <QDomElement>
 #include "choqokbehaviorsettings.h"
+#include "twitteraccount.h"
+#include <QtOAuth/QtOAuth>
+#include <qjson/parser.h>
 
 const QRegExp TwitterSearch::m_rId("tag:search.twitter.com,[0-9]+:([0-9]+)");
 
@@ -70,13 +73,45 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
 {
     kDebug();
 
-    KUrl url = buildUrl( searchInfo.query, searchInfo.option, sinceStatusId, count, page );
+    QOAuth::ParamMap param;
+    QString query = searchInfo.query;
+    int option = searchInfo.option;
+
+    QString formattedQuery = mSearchCode[option] + query;
+    KUrl url( "https://api.twitter.com/1.1/search/tweets.json" );
+    KUrl tmpUrl(url);
+    url.addQueryItem("q", formattedQuery);
+    QString q = url.query();
+    param.insert( "q", q.mid(q.indexOf('=') + 1).toLatin1() );
+    if( !sinceStatusId.isEmpty() ) {
+        url.addQueryItem( "since_id", sinceStatusId );
+        param.insert( "since_id", sinceStatusId.toLatin1() );
+    }
+    int cntStr = Choqok::BehaviorSettings::countOfPosts();
+    if( count && count <= 100 )	// Twitter API specifies a max count of 100
+        cntStr =  count;
+    else
+      cntStr = 100;
+    url.addQueryItem( "count", QString::number(cntStr) );
+    param.insert( "count", QString::number(cntStr).toLatin1() );
+    if( page > 1 ) {
+        url.addQueryItem( "page", QString::number( page ) );
+        param.insert( "page", QString::number( page ).toLatin1() );
+    }
+
     kDebug()<<url;
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo );
     if( !job ) {
         kError() << "Cannot create an http GET request!";
         return;
     }
+
+    TwitterAccount *acc = qobject_cast<TwitterAccount*>(searchInfo.account);
+    QByteArray auth = acc->oauthInterface()->createParametersString( tmpUrl.url(), QOAuth::GET, acc->oauthToken(),
+                                                                     acc->oauthTokenSecret(), QOAuth::HMAC_SHA1,
+                                                                     param, QOAuth::ParseForHeaderArguments );
+    job->addMetaData("customHTTPHeader", "Authorization: " + auth);
+
     mSearchJobs[job] = searchInfo;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( searchResultsReturned( KJob* ) ) );
     job->start();
@@ -99,96 +134,48 @@ void TwitterSearch::searchResultsReturned(KJob* job)
         return;
     }
     KIO::StoredTransferJob *jj = qobject_cast<KIO::StoredTransferJob *>( job );
-    QList<Choqok::Post*> postsList = parseAtom( jj->data() );
+    QList<Choqok::Post*> postsList = parseJson( jj->data() );
 
 
     emit searchResultsReceived( info, postsList );
 }
 
-QList< Choqok::Post* > TwitterSearch::parseAtom(const QByteArray& buffer)
+QList< Choqok::Post* > TwitterSearch::parseJson(QByteArray buffer)
 {
-    kDebug();
-    QDomDocument document;
+    bool ok;
     QList<Choqok::Post*> statusList;
+    QJson::Parser parser;
+    QVariantMap map = parser.parse(buffer, &ok).toMap();
 
-    document.setContent( buffer );
-
-    QDomElement root = document.documentElement();
-
-    if ( root.tagName() != "feed" ) {
-        kDebug() << "There is no feed element in Atom feed " << buffer.data();
-        return statusList;
-    }
-
-    QDomNode node = root.firstChild();
-    QString timeStr;
-    while ( !node.isNull() ) {
-        if ( node.toElement().tagName() != "entry" ) {
-            node = node.nextSibling();
-            continue;
+    if ( ok && map.contains("statuses") ) {
+        QVariantList list = map["statuses"].toList();
+        QVariantList::const_iterator it = list.constBegin();
+        QVariantList::const_iterator endIt = list.constEnd();
+        for(; it != endIt; ++it){
+            statusList.prepend(readStatusesFromJsonMap(it->toMap()));
         }
-
-        QDomNode entryNode = node.firstChild();
-        Choqok::Post *status = new Choqok::Post;
-        status->isPrivate = false;
-
-        while ( !entryNode.isNull() ) {
-            QDomElement elm = entryNode.toElement();
-            if ( elm.tagName() == "id" ) {
-                // Fomatting example: "tag:search.twitter.com,2005:1235016836"
-                ChoqokId id;
-                if(m_rId.exactMatch(elm.text())) {
-                    id = m_rId.cap(1);
-                }
-                /*                sscanf( qPrintable( elm.text() ),
-                "tag:search.twitter.com,%*d:%d", &id);*/
-                status->postId = id;
-            } else if ( elm.tagName() == "published" ) {
-                // Formatting example: "2009-02-21T19:42:39Z"
-                // Need to extract date in similar fashion to dateFromString
-                int year, month, day, hour, minute, second;
-                sscanf( qPrintable( elm.text() ),
-                        "%d-%d-%dT%d:%d:%d%*s", &year, &month, &day, &hour, &minute, &second);
-                        QDateTime recognized( QDate( year, month, day), QTime( hour, minute, second ) );
-                        recognized.setTimeSpec( Qt::UTC );
-                        status->creationDateTime = recognized;
-            } else if ( elm.tagName() == "title" ) {
-                status->content = elm.text();
-            } else if ( elm.tagName() == "twitter:source" ) {
-                status->source = elm.text();
-            } else if ( elm.tagName() == "link") {
-                if(elm.attributeNode( "rel" ).value() == "image") {
-                status->author.profileImageUrl = elm.attribute( "href" );
-                } else if(elm.attributeNode( "rel" ).value() == "alternate") {
-                    status->link = elm.attribute( "href" );
-                }
-            } else if ( elm.tagName() == "author") {
-                QDomNode userNode = entryNode.firstChild();
-                while ( !userNode.isNull() )
-                {
-                    if ( userNode.toElement().tagName() == "name" )
-                    {
-                        QString fullName = userNode.toElement().text();
-                        int bracketPos = fullName.indexOf( " ", 0 );
-
-                        QString screenName = fullName.left( bracketPos );
-                        QString name = fullName.right ( fullName.size() - bracketPos - 2 );
-                        name.chop( 1 );
-
-                        status->author.realName = name;
-                        status->author.userName = screenName;
-                    }
-                    userNode = userNode.nextSibling();
-                }
-            }
-            entryNode = entryNode.nextSibling();
-        }
-        status->isFavorited = false;
-        statusList.insert( 0, status );
-        node = node.nextSibling();
     }
-
     return statusList;
+}
+
+Choqok::Post* TwitterSearch::readStatusesFromJsonMap(const QVariantMap& var)
+{
+    Choqok::Post *post = new Choqok::Post;
+
+    post->content = var["text"].toString();
+    post->creationDateTime = dateFromString(var["created_at"].toString());
+    post->postId = var["id"].toString();
+    post->source = var["source"].toString();
+    QVariantMap userMap = var["user"].toMap();
+    post->author.realName = userMap["name"].toString();
+    post->author.userName = userMap["screen_name"].toString();
+    post->author.profileImageUrl = userMap["profile_image_url"].toString();
+    post->isPrivate = false;
+    post->isFavorited = false;
+
+    post->link = QString ( "https://twitter.com/%1/status/%2" ).arg ( post->author.userName ).arg ( post->postId );
+
+    return post;
 }
 
 QString TwitterSearch::optionCode(int option)
@@ -198,25 +185,6 @@ QString TwitterSearch::optionCode(int option)
 
 TwitterSearch::~TwitterSearch()
 {
-}
-
-KUrl TwitterSearch::buildUrl( QString query, int option, ChoqokId sinceStatusId,
-                              uint count, uint page)
-{
-    kDebug();
-    QString formattedQuery = mSearchCode[option] + query;
-    KUrl url( "https://search.twitter.com/search.atom" );
-    url.addQueryItem("q", formattedQuery);
-    if( !sinceStatusId.isEmpty() )
-        url.addQueryItem( "since_id", sinceStatusId );
-    int cntStr = Choqok::BehaviorSettings::countOfPosts();
-    if( count && count <= 100 )
-        cntStr =  count;
-    url.addQueryItem( "rpp", QString::number(cntStr) );
-    if( page > 1 )
-        url.addQueryItem( "page", QString::number( page ) );
-
-    return url;
 }
 
 #include "twittersearch.moc"

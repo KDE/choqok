@@ -25,6 +25,8 @@
 #include "twitteraccount.h"
 #include "twittermicroblog.h"
 #include <KDebug>
+#include <iostream>
+
 
 class TwitterAccount::Private
 {
@@ -39,7 +41,8 @@ TwitterAccount::TwitterAccount(TwitterMicroBlog* parent, const QString &alias)
 {
     setHost("https://api.twitter.com");
     setUploadHost("https://upload.twitter.com");
-    setApi("1");
+    setApi("1.1");
+    std::cout << "Set API version to 1.1" << std::endl;
 //     d->lists = configGroup()->readEntry("lists", QStringList());
     QStringList lists;
     foreach(const QString & tm, timelineNames()){

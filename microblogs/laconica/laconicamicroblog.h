@@ -80,7 +80,7 @@ private:
 public:
     virtual void requestFriendsScreenName(TwitterApiAccount* theAccount);
 
-    virtual QStringList readUsersScreenNameFromXml(Choqok::Account* theAccount, const QByteArray& buffer);
+    //virtual QStringList readUsersScreenNameFromXml(Choqok::Account* theAccount, const QByteArray& buffer);
 
 protected Q_SLOTS:
     virtual void slotFetchConversation( KJob* job );

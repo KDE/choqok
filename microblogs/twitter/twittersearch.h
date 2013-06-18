@@ -52,10 +52,8 @@ protected slots:
     virtual void searchResultsReturned( KJob *job );
 
 protected:
-    virtual KUrl buildUrl( QString query, int option,
-                           ChoqokId sinceStatusId = ChoqokId(),
-                           uint count = 0, uint page = 1 );
-    QList<Choqok::Post*> parseAtom( const QByteArray &buffer );
+    QList< Choqok::Post* > parseJson(QByteArray buffer);
+    Choqok::Post* readStatusesFromJsonMap(const QVariantMap& var);
 
     QMap<int, QString> mSearchCode;
     QMap<int, QString> mI18nSearchCode;

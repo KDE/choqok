@@ -1,4 +1,4 @@
-/*
+
     This file is part of Choqok, the KDE micro-blogging client
 
     Copyright (C) 2008-2012 Mehrdad Momeny <mehrdad.momeny@gmail.com>
@@ -23,10 +23,27 @@
 */
 
 #include "twitterapisearch.h"
+#include <stdio.h>
 
 class TwitterApiSearch::Private
 {
 public:
+    Private()
+    {
+        monthes["Jan"] = 1;
+        monthes["Feb"] = 2;
+        monthes["Mar"] = 3;
+        monthes["Apr"] = 4;
+        monthes["May"] = 5;
+        monthes["Jun"] = 6;
+        monthes["Jul"] = 7;
+        monthes["Aug"] = 8;
+        monthes["Sep"] = 9;
+        monthes["Oct"] = 10;
+        monthes["Nov"] = 11;
+        monthes["Dec"] = 12;
+    }
+    QMap<QString, int> monthes;
 };
 
 TwitterApiSearch::TwitterApiSearch(QObject* parent)
@@ -52,6 +69,18 @@ void TwitterApiSearch::requestSearchResults(Choqok::Account* theAccount, const Q
     bool isB = getSearchTypes()[option].second;
     SearchInfo info(theAccount, query, option, isB);
     requestSearchResults(info, sinceStatusId, count, page);
+}
+
+QDateTime TwitterApiSearch::dateFromString ( const QString &date )
+{
+    char s[10];
+    int year, day, hours, minutes, seconds, tz;
+    sscanf( qPrintable ( date ), "%*s %s %d %d:%d:%d %d %d", s, &day, &hours, &minutes, &seconds, &tz, &year );
+    int month = d->monthes[s];
+    QDateTime recognized ( QDate ( year, month, day ), QTime ( hours, minutes, seconds ) );
+    if(tz == 0)//tz is the timezone, in Twitter it's always UTC(0) in Identica it's local +/-NUMBER
+        recognized.setTimeSpec( Qt::UTC );
+    return recognized.toLocalTime();
 }
 
 SearchInfo::SearchInfo()

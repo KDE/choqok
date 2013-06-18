@@ -64,7 +64,7 @@ TwitterMicroBlog::TwitterMicroBlog ( QObject* parent, const QVariantList&  )
     kDebug();
     setServiceName("Twitter");
     setServiceHomepageUrl("https://twitter.com/");
-    timelineApiPath["Reply"] = "/statuses/mentions.%1";
+    timelineApiPath["Reply"] = "/statuses/mentions_timeline.%1";
     setTimelineInfos();
 }
 void TwitterMicroBlog::setTimelineInfos()
@@ -168,7 +168,7 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Cho
         ///Documentation: http://identi.ca/notice/17779990
         TwitterAccount* account = qobject_cast<TwitterAccount*>(theAccount);
         KUrl url = account->uploadUrl();
-        url.addPath ( "/statuses/update_with_media.xml" );
+        url.addPath ( "/statuses/update_with_media.json" );
         QByteArray fileContentType = KMimeType::findByUrl( picUrl, 0, true )->name().toUtf8();
 
         QMap<QString, QByteArray> formdata;

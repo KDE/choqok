@@ -267,11 +267,11 @@ void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob* job)
     TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount *>( mJobsAccount.take(job) );
     KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
     QStringList newList;
-    if(format=="json"){
+    //if(format=="json"){
         newList = readUsersScreenNameFromJson( theAccount, stJob->data() );
-    } else {
-        newList = readUsersScreenNameFromXml( theAccount, stJob->data() );
-    }
+    //} else {
+    //    newList = readUsersScreenNameFromXml( theAccount, stJob->data() );
+    //}
     friendsList << newList;
     if ( newList.count() == 100 ) {
         doRequestFriendsScreenName( theAccount, ++friendsPage );
@@ -282,7 +282,7 @@ void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob* job)
     }
 }
 
-QStringList LaconicaMicroBlog::readUsersScreenNameFromXml(Choqok::Account* theAccount, const QByteArray& buffer)
+/*QStringList LaconicaMicroBlog::readUsersScreenNameFromXml(Choqok::Account* theAccount, const QByteArray& buffer)
 {
     kDebug();
     QStringList list;
@@ -320,7 +320,7 @@ QStringList LaconicaMicroBlog::readUsersScreenNameFromXml(Choqok::Account* theAc
         node = node.nextSibling();
     }
     return list;
-}
+}*/
 
 void LaconicaMicroBlog::fetchConversation(Choqok::Account* theAccount, const ChoqokId& conversationId)
 {
@@ -360,11 +360,11 @@ void LaconicaMicroBlog::slotFetchConversation(KJob* job)
                      i18n("Fetching conversation failed. %1", job->errorString()), Normal );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
-        if(format=="json"){
+        //if(format=="json"){
             posts = readTimelineFromJson ( theAccount, stj->data() );
-        } else {
-            posts = readTimelineFromXml ( theAccount, stj->data() );
-        }
+        //} else {
+        //    posts = readTimelineFromXml ( theAccount, stj->data() );
+        //}
         if( !posts.isEmpty() ){
             emit conversationFetched(theAccount, conversationId, posts);
         }
