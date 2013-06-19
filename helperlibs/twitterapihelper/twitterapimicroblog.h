@@ -209,25 +209,6 @@ protected:
 
     void setRepeatedOfInfo(Choqok::Post* post, Choqok::Post* repeatedPost);
 
-    ///==============================================
-    /// XML:
-    ///==============================================
-    //virtual Choqok::Post * readPostFromDomElement( Choqok::Account* theAccount,
-    //                                               const QDomElement& root, Choqok::Post* post );
-    //virtual Choqok::Post *readPostFromDomNode(Choqok::Account* theAccount,
-    //                                          QDomNode node, Choqok::Post* post);
-    //virtual Choqok::Post * readPostFromXml( Choqok::Account* theAccount,
-    //                                        const QByteArray& buffer, Choqok::Post* post );
-    //virtual QList<Choqok::Post*> readTimelineFromXml( Choqok::Account* theAccount, const QByteArray& buffer );
-    //virtual Choqok::Post * readDMessageFromXml (Choqok::Account *theAccount, const QByteArray &buffer );
-    //virtual Choqok::Post * readDMessageFromDomElement (Choqok::Account *theAccount, const QDomElement& root );
-    //virtual QList<Choqok::Post*> readDMessagesFromXml (Choqok::Account *theAccount, const QByteArray &buffer );
-    //virtual QStringList readUsersScreenNameFromXml( Choqok::Account *theAccount, const QByteArray & buffer );
-    //virtual Choqok::User *readUserInfoFromXml( const QByteArray &buffer );
-    /**
-    Checks xml returned from server for error, and return error string, Or an empty string if nothing found!
-    */
-    //virtual QString checkXmlForError(const QByteArray &buffer);
 
     ///===============================================
     /// JSON:
