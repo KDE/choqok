@@ -914,10 +914,12 @@ void TwitterApiMicroBlog::createFriendship( Choqok::Account *theAccount, const Q
     kDebug();
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
-    url.addPath( "/friendships/create/"+ username +".json" );
+    url.addPath( QString("/friendships/create.%1").arg(format));
+    QByteArray data;
+    data = "screen_name=" + username.toLocal8Bit();
     kDebug()<<url;
 
-    KIO::StoredTransferJob *job = KIO::storedHttpPost( QByteArray(), url, KIO::HideProgressInfo) ;
+    KIO::StoredTransferJob *job = KIO::storedHttpPost( data, url, KIO::HideProgressInfo) ;
     if ( !job ) {
         kError() << "Cannot create an http POST request!";
         return;
@@ -972,10 +974,12 @@ void TwitterApiMicroBlog::destroyFriendship( Choqok::Account *theAccount, const 
     kDebug();
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
-    url.addPath( "/friendships/destroy/" + username + ".json" );
+    url.addPath( QString("/friendships/destroy.%1").arg(format));
+    QByteArray data;
+    data = "screen_name=" + username.toLocal8Bit();
     kDebug()<<url;
 
-    KIO::StoredTransferJob *job = KIO::storedHttpPost(QByteArray(), url, KIO::HideProgressInfo) ;
+    KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
     if ( !job ) {
         kError() << "Cannot create an http POST request!";
         return;
@@ -1030,9 +1034,11 @@ void TwitterApiMicroBlog::blockUser( Choqok::Account *theAccount, const QString&
     kDebug();
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
-    url.addPath( "/blocks/create/"+ username +".json" );
+    url.addPath( QString("/blocks/create.%1").arg(format));
+    QByteArray data;
+    data = "screen_name=" + username.toLocal8Bit();
 
-    KIO::StoredTransferJob *job = KIO::storedHttpPost(QByteArray(), url, KIO::HideProgressInfo) ;
+    KIO::StoredTransferJob *job = KIO::storedHttpPost( data, url, KIO::HideProgressInfo) ;
     if ( !job ) {
         kError() << "Cannot create an http POST request!";
         return;
@@ -1260,9 +1266,27 @@ Choqok::Post* TwitterApiMicroBlog::readDMessageFromJsonMap(Choqok::Account* theA
 
 Choqok::User* TwitterApiMicroBlog::readUserInfoFromJson(const QByteArray& buffer)
 {
-    kError()<<"TwitterApiMicroBlog::readUserInfoFromJson: NOT IMPLEMENTED YET!";
-    Q_UNUSED(buffer);
-    return 0;
+    //kError()<<"TwitterApiMicroBlog::readUserInfoFromJson: NOT IMPLEMENTED YET!";
+    bool ok;
+    Choqok::User *user = new Choqok::User;
+    QVariantMap json = d->parser.parse(buffer, &ok).toMap();
+    if( ok ) {
+        // iterate over the list
+        user->description = json["description"].toString();
+        user->followersCount = json["followers_count"].toUInt();
+        user->homePageUrl = json["url"].toString();
+        user->isProtected = json["protected"].toBool();
+        user->location = json["location"].toString();
+        user->profileImageUrl = json["profile_image_url"].toString();
+        user->realName = json["name"].toString();
+        user->userId = json["id"].toString();
+        user->userName = json["screen_name"].toString();
+    } else {
+        QString err = i18n( "Retrieving the friends list failed. The data returned from the server is corrupted." );
+        kDebug() << "JSON parse error: the buffer is: \n" << buffer;
+        emit error(0, ParsingError, err, Critical);
+    }
+    return user;
 }
 
 QStringList TwitterApiMicroBlog::readUsersScreenNameFromJson(Choqok::Account* theAccount,
