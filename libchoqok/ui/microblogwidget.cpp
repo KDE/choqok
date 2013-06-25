@@ -275,7 +275,7 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change, Choqok::UI::TimelineWidg
             d->btnMarkAllAsRead = new KPushButton(this);
             d->btnMarkAllAsRead->setIcon(KIcon("mail-mark-read"));
             d->btnMarkAllAsRead->setIconSize(QSize(14,14));
-            d->btnMarkAllAsRead->setToolTip(i18n("Mark all as read"));
+            d->btnMarkAllAsRead->setToolTip(i18n("Mark all timelines as read"));
             d->btnMarkAllAsRead->setMaximumWidth(d->btnMarkAllAsRead->height());
             connect(d->btnMarkAllAsRead, SIGNAL(clicked(bool)), SLOT(markAllAsRead()));
             d->toolbar->insertWidget(1, d->btnMarkAllAsRead);

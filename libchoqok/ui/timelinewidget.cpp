@@ -231,7 +231,7 @@ void TimelineWidget::showMarkAllAsReadButton()
     if(!d->btnMarkAllAsRead){
         d->btnMarkAllAsRead = new KPushButton(this);
         d->btnMarkAllAsRead->setIcon(KIcon("mail-mark-read"));
-        d->btnMarkAllAsRead->setToolTip(i18n("Mark all as read"));
+        d->btnMarkAllAsRead->setToolTip(i18n("Mark timeline as read"));
         d->btnMarkAllAsRead->setMaximumSize(14, 14);
         d->btnMarkAllAsRead->setIconSize(QSize(12,12));
         connect(d->btnMarkAllAsRead, SIGNAL(clicked(bool)), SLOT(markAllAsRead()));

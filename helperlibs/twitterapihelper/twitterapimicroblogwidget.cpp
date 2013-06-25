@@ -257,18 +257,26 @@ void TwitterApiMicroBlogWidget::slotContextMenu(QWidget* w, const QPoint &pt)
 {
     kDebug();
     Choqok::UI::TimelineWidget *sWidget = qobject_cast<Choqok::UI::TimelineWidget*>(w);
+    KMenu menu;
+    KAction *mar = 0;
+    KAction *ac = 0;
+    if(sWidget->unreadCount() > 0) {
+        mar = new KAction(KIcon("mail-mark-read"), i18n("Mark timeline as read"), &menu);
+        menu.addAction(mar);
+    }
     if(sWidget->isClosable()){
-        KMenu menu;
-        KAction *ac = new KAction(KIcon("tab-close"), i18n("Close Timeline"), &menu);
+        ac = new KAction(KIcon("tab-close"), i18n("Close Timeline"), &menu);
         KAction *closeAll = new KAction(KIcon("tab-close"), i18n("Close All"), &menu);
         connect( closeAll, SIGNAL(triggered(Qt::MouseButtons,Qt::KeyboardModifiers)),
                  this, SLOT(closeAllSearches()) );
         menu.addAction(ac);
         menu.addAction(closeAll);
-        QAction *res = menu.exec(pt);
-        if(res == ac){
-            closeSearch(sWidget);
-        }
+    }
+    QAction *res = menu.exec(pt);
+    if(ac && res == ac){
+        closeSearch(sWidget);
+    } else if (res == mar) {
+        sWidget->markAllAsRead();
     }
 }
 
