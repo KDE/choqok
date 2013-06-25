@@ -46,7 +46,7 @@ class TimelineWidget::Private
 public:
     Private(Account *account, const QString &timelineName)
         :currentAccount(account), timelineName(timelineName),
-         btnMarkAllAsRead(0), unreadCount(0), info(0), isClosable(false)
+         btnMarkAllAsRead(0), unreadCount(0), info(0), isClosable(false), placeholderLabel(0)
     {
         if(account->microblog()->isValidTimeline(timelineName)) {
             info = account->microblog()->timelineInfo(timelineName);
@@ -66,6 +66,7 @@ public:
     QVBoxLayout *mainLayout;
     QHBoxLayout *titleBarLayout;
     QLabel *lblDesc;
+    QLabel *placeholderLabel;
     QScrollArea *scrollArea;
     int order;            // 0: web, -1: natural
     Choqok::TimelineInfo *info;
@@ -199,6 +200,17 @@ void TimelineWidget::removeOldPosts()
     }
 }
 
+void TimelineWidget::addPlaceholderMessage ( const QString& msg )
+{
+    if (d->posts.keys().length() == 0) {
+        if (!d->placeholderLabel) {
+            d->placeholderLabel = new QLabel(this);
+            d->mainLayout->insertWidget(d->order, d->placeholderLabel);
+        }
+        d->placeholderLabel->setText(msg);
+    }
+}
+
 void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList)
 {
     kDebug()<<d->currentAccount->alias()<<' '<<d->timelineName<<' '<<postList.count();
@@ -256,6 +268,11 @@ void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
     d->posts.insert(widget->currentPost()->postId, widget);
     d->sortedPostsList.insert(widget->currentPost()->creationDateTime, widget);
     Global::SessionManager::self()->emitNewPostWidgetAdded(widget, currentAccount(), timelineName());
+    if (d->placeholderLabel) {
+        d->mainLayout->removeWidget(d->placeholderLabel);
+        delete d->placeholderLabel;
+        d->placeholderLabel = 0;
+    }
 }
 
 int TimelineWidget::unreadCount() const

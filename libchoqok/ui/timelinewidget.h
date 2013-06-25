@@ -82,6 +82,11 @@ public:
     virtual void addNewPosts( QList< Choqok::Post* >& postList );
 
     /**
+     @brief Adds a message in place of an empty timeline. Placeholder is removed when a post gets added.
+    */
+    virtual void addPlaceholderMessage( const QString& message );
+
+    /**
     @brief Return count of unread posts on this timeline.
     */
     int unreadCount() const;
