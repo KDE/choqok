@@ -172,6 +172,8 @@ Choqok::Post* TwitterSearch::readStatusesFromJsonMap(const QVariantMap& var)
     post->author.profileImageUrl = userMap["profile_image_url"].toString();
     post->isPrivate = false;
     post->isFavorited = false;
+    post->replyToPostId = var["in_reply_to_status_id_str"].toString();
+    post->replyToUserName = var["in_reply_to_screen_name"].toString();
 
     post->link = QString ( "https://twitter.com/%1/status/%2" ).arg ( post->author.userName ).arg ( post->postId );
 
