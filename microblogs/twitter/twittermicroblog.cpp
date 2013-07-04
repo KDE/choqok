@@ -280,7 +280,7 @@ void TwitterMicroBlog::slotFetchUserLists(KJob* job)
         QList<Twitter::List> list = readUserListsFromJson ( theAccount, stj->data() );
         if ( list.isEmpty() ) {
             QString errorMsg;
-            errorMsg = checkJsonForError(stj->data());
+            errorMsg = checkForError(stj->data());
             if( errorMsg.isEmpty() ){
                 KMessageBox::information(choqokMainWindow, i18n("There is no list record for user %1", username));
             } else {
@@ -347,7 +347,7 @@ QList< Twitter::List > TwitterMicroBlog::readUserListsFromJson(Choqok::Account* 
 {
     bool ok;
     QList<Twitter::List> twitterList;
-    QVariantMap map = jsonParser()->parse(buffer, &ok).toMap();
+    QVariantMap map = parser()->parse(buffer, &ok).toMap();
 
     if ( ok && map.contains("lists") ) {
         QVariantList list = map["lists"].toList();
@@ -363,7 +363,7 @@ QList< Twitter::List > TwitterMicroBlog::readUserListsFromJson(Choqok::Account* 
 Twitter::List TwitterMicroBlog::readListFromJsonMap(Choqok::Account* theAccount, QVariantMap map)
 {
     Twitter::List l;
-    l.author = readUserFromJsonMap( theAccount, map["user"].toMap() );
+    l.author = readUser( theAccount, map["user"].toMap() );
     l.description = map["description"].toString();
     l.fullname = map["full_name"].toString();
     l.isFollowing = map["following"].toBool();

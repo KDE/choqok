@@ -268,7 +268,7 @@ void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob* job)
     KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
     QStringList newList;
     //if(format=="json"){
-        newList = readUsersScreenNameFromJson( theAccount, stJob->data() );
+        newList = readUsersScreenName( theAccount, stJob->data() );
     //} else {
     //    newList = readUsersScreenNameFromXml( theAccount, stJob->data() );
     //}
@@ -361,7 +361,7 @@ void LaconicaMicroBlog::slotFetchConversation(KJob* job)
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
         //if(format=="json"){
-            posts = readTimelineFromJson ( theAccount, stj->data() );
+            posts = readTimeline ( theAccount, stj->data() );
         //} else {
         //    posts = readTimelineFromXml ( theAccount, stj->data() );
         //}

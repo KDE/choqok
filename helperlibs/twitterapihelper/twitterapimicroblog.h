@@ -210,29 +210,22 @@ protected:
     void setRepeatedOfInfo(Choqok::Post* post, Choqok::Post* repeatedPost);
 
 
-    ///===============================================
-    /// JSON:
-    ///===============================================
-
-    QJson::Parser *jsonParser();
-    virtual Choqok::Post * readPostFromJsonMap( Choqok::Account* theAccount,
+    QJson::Parser *parser();
+    virtual Choqok::Post * readPost( Choqok::Account* theAccount,
                                                    const QVariantMap& var, Choqok::Post* post );
-    virtual Choqok::Post * readPostFromJson( Choqok::Account* theAccount,
+    virtual Choqok::Post * readPost( Choqok::Account* theAccount,
                                             const QByteArray& buffer, Choqok::Post* post );
-    virtual QList<Choqok::Post*> readTimelineFromJson( Choqok::Account* theAccount, const QByteArray& buffer );
-    virtual Choqok::Post * readDMessageFromJson(Choqok::Account *theAccount, const QByteArray &buffer );
-    virtual Choqok::Post * readDMessageFromJsonMap(Choqok::Account *theAccount, const QVariantMap& var );
-    virtual QList<Choqok::Post*> readDMessagesFromJson(Choqok::Account *theAccount, const QByteArray &buffer );
-    virtual QStringList readUsersScreenNameFromJson( Choqok::Account *theAccount, const QByteArray & buffer );
-    virtual Choqok::User *readUserInfoFromJson( const QByteArray &buffer );
-    virtual Choqok::User readUserFromJsonMap( Choqok::Account* theAccount, const QVariantMap& map );
+    virtual QList<Choqok::Post*> readTimeline( Choqok::Account* theAccount, const QByteArray& buffer );
+    virtual Choqok::Post * readDirectMessage(Choqok::Account *theAccount, const QByteArray &buffer );
+    virtual Choqok::Post * readDirectMessage(Choqok::Account *theAccount, const QVariantMap& var );
+    virtual QList<Choqok::Post*> readDirectMessages(Choqok::Account *theAccount, const QByteArray &buffer );
+    virtual QStringList readUsersScreenName( Choqok::Account *theAccount, const QByteArray & buffer );
+    virtual Choqok::User *readUserInfo( const QByteArray &buffer );
+    virtual Choqok::User readUser( Choqok::Account* theAccount, const QVariantMap& map );
     /**
     Checks json returned from server for error, and return error string, Or an empty string if nothing found!
     */
-    virtual QString checkJsonForError(const QByteArray &buffer);
-    ///=================================================
-    /// End JSON
-    ///=================================================
+    virtual QString checkForError(const QByteArray &buffer);
 
 
     ///==========================================

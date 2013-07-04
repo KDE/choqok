@@ -404,10 +404,10 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
     } else {
         KIO::StoredTransferJob *stj = qobject_cast< KIO::StoredTransferJob * > ( job );
         if ( !post->isPrivate ) {
-            readPostFromJson ( theAccount, stj->data(), post );
+            readPost ( theAccount, stj->data(), post );
             if ( post->isError ) {         
 		QString errorMsg;
-                errorMsg = checkJsonForError(stj->data());
+                errorMsg = checkForError(stj->data());
                 if( errorMsg.isEmpty() ){	// ???? If empty, why is there an error?
                     kError() << "Creating post: JSON parsing error: "<< stj->data() ;
                     emit errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
@@ -490,10 +490,10 @@ void TwitterApiMicroBlog::slotFetchPost ( KJob *job )
                      i18n("Fetching the new post failed. %1", job->errorString()), Low );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
-        readPostFromJson ( theAccount, stj->data(), post );
+        readPost ( theAccount, stj->data(), post );
         if ( post->isError ) {
                 QString errorMsg;
-                errorMsg = checkJsonForError(stj->data());
+                errorMsg = checkForError(stj->data());
             if( errorMsg.isEmpty() ){
                 kDebug() << "Parsing Error";
                 emit errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
@@ -553,7 +553,7 @@ void TwitterApiMicroBlog::slotRemovePost ( KJob *job )
                          i18n("Removing the post failed. %1", job->errorString() ), MicroBlog::Critical );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob*>(job);
-        QString errMsg = checkJsonForError(stj->data());
+        QString errMsg = checkForError(stj->data());
         if( errMsg.isEmpty() ){
             emit postRemoved ( theAccount, post );
         } else {
@@ -603,7 +603,7 @@ void TwitterApiMicroBlog::slotCreateFavorite ( KJob *job )
         emit error ( theAccount, CommunicationError, i18n( "Favorite creation failed. %1", job->errorString() ) );
     } else {
         KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
-        QString err = checkJsonForError(stJob->data());
+        QString err = checkForError(stJob->data());
         if( !err.isEmpty() ){
             emit error(theAccount, ServerError, err, Critical);
             return;
@@ -651,7 +651,7 @@ void TwitterApiMicroBlog::slotRemoveFavorite ( KJob *job )
         emit error ( theAccount, CommunicationError, i18n("Removing the favorite failed. %1", job->errorString() ) );
     } else {
         KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
-        QString err = checkJsonForError(stJob->data());
+        QString err = checkForError(stJob->data());
         if( !err.isEmpty() ){
             emit error(theAccount, ServerError, err, Critical);
             return;
@@ -704,7 +704,7 @@ void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
         return;
     }
     QStringList newList;
-    newList = readUsersScreenNameFromJson( theAccount, stJob->data() );
+    newList = readUsersScreenName( theAccount, stJob->data() );
     friendsList << newList;
     if ( newList.count() == 100 ) {
         requestFriendsScreenName( theAccount );
@@ -795,9 +795,9 @@ void TwitterApiMicroBlog::slotRequestTimeline ( KJob *job )
         KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob*>( job );
         QList<Choqok::Post*> list;
         if( type=="Inbox" || type=="Outbox" ) {
-            list = readDMessagesFromJson( theAccount, j->data() );
+            list = readDirectMessages( theAccount, j->data() );
         } else {
-            list = readTimelineFromJson( theAccount, j->data() );
+            list = readTimeline( theAccount, j->data() );
 
         }
         if(!list.isEmpty()) {
@@ -947,14 +947,14 @@ void TwitterApiMicroBlog::slotCreateFriendship(KJob* job)
         return;
     }
     KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob*>(job);
-    Choqok::User *user = readUserInfoFromJson(stj->data());
+    Choqok::User *user = readUserInfo(stj->data());
     if( user /*&& user->userName.compare(username, Qt::CaseInsensitive)*/ ){
         emit friendshipCreated(theAccount, username);
         Choqok::NotifyManager::success( i18n("You are now listening to %1's posts.", username) );
         theAccount->setFriendsList(QStringList());
         listFriendsUsername(theAccount);
     } else {
-        QString errorMsg = checkJsonForError(stj->data());
+        QString errorMsg = checkForError(stj->data());
         if( errorMsg.isEmpty() ){
             kDebug()<<"Parse Error: "<<stj->data();
             emit error( theAccount, ParsingError,
@@ -1007,14 +1007,14 @@ void TwitterApiMicroBlog::slotDestroyFriendship(KJob* job)
         return;
     }
     KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob*>(job);
-    Choqok::User *user = readUserInfoFromJson(stj->data());
+    Choqok::User *user = readUserInfo(stj->data());
     if( user /*&& user->userName.compare( username, Qt::CaseInsensitive )*/ ){
         emit friendshipDestroyed(theAccount, username);
         Choqok::NotifyManager::success( i18n("You will not receive %1's updates.", username) );
         theAccount->setFriendsList(QStringList());
         listFriendsUsername(theAccount);
     } else {
-        QString errorMsg = checkJsonForError(stj->data());
+        QString errorMsg = checkForError(stj->data());
         if( errorMsg.isEmpty() ){
             kDebug()<<"Parse Error: "<<stj->data();
             emit error( theAccount, ParsingError,
@@ -1065,7 +1065,7 @@ void TwitterApiMicroBlog::slotBlockUser(KJob* job)
                      i18n("Blocking %1 failed. %2", username, job->errorString() ) );
         return;
     }
-    Choqok::User *user = readUserInfoFromJson(qobject_cast<KIO::StoredTransferJob*>(job)->data());
+    Choqok::User *user = readUserInfo(qobject_cast<KIO::StoredTransferJob*>(job)->data());
     if( user /*&& user->userName.compare( username, Qt::CaseInsensitive )*/ ){
         emit userBlocked(theAccount, username);
         Choqok::NotifyManager::success( i18n("You will no longer be disturbed by %1.", username) );
@@ -1080,12 +1080,12 @@ void TwitterApiMicroBlog::slotBlockUser(KJob* job)
 
 ///===================================================================
 
-QJson::Parser* TwitterApiMicroBlog::jsonParser()
+QJson::Parser* TwitterApiMicroBlog::parser()
 {
     return &d->parser;
 }
 
-QString TwitterApiMicroBlog::checkJsonForError(const QByteArray& buffer)
+QString TwitterApiMicroBlog::checkForError(const QByteArray& buffer)
 {
     bool ok;
     QVariantMap map = d->parser.parse(buffer, &ok).toMap();
@@ -1096,7 +1096,7 @@ QString TwitterApiMicroBlog::checkJsonForError(const QByteArray& buffer)
     return QString();
 }
 
-QList< Choqok::Post* > TwitterApiMicroBlog::readTimelineFromJson(Choqok::Account* theAccount,
+QList< Choqok::Post* > TwitterApiMicroBlog::readTimeline(Choqok::Account* theAccount,
                                                                  const QByteArray& buffer)
 {
     QList<Choqok::Post*> postList;
@@ -1107,10 +1107,10 @@ QList< Choqok::Post* > TwitterApiMicroBlog::readTimelineFromJson(Choqok::Account
         QVariantList::const_iterator it = list.constBegin();
         QVariantList::const_iterator endIt = list.constEnd();
         for(; it != endIt; ++it){
-            postList.prepend(readPostFromJsonMap(theAccount, it->toMap(), new Choqok::Post));
+            postList.prepend(readPost(theAccount, it->toMap(), new Choqok::Post));
         }
     } else {
-        QString err = checkJsonForError(buffer);
+        QString err = checkForError(buffer);
         if(err.isEmpty()){
             kError() << "JSON parsing failed.\nBuffer was: \n" << buffer;
             emit error(theAccount, ParsingError, i18n("Could not parse the data that has been received from the server."));
@@ -1122,7 +1122,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::readTimelineFromJson(Choqok::Account
     return postList;
 }
 
-Choqok::Post* TwitterApiMicroBlog::readPostFromJson(Choqok::Account* theAccount,
+Choqok::Post* TwitterApiMicroBlog::readPost(Choqok::Account* theAccount,
                                                     const QByteArray& buffer,
                                                     Choqok::Post* post)
 {
@@ -1130,10 +1130,10 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromJson(Choqok::Account* theAccount,
     QVariantMap map = d->parser.parse(buffer, &ok).toMap();
 
     if ( ok ) {
-        return readPostFromJsonMap ( theAccount, map, post );
+        return readPost ( theAccount, map, post );
     } else {
         if(!post){
-            kError()<<"TwitterApiMicroBlog::readPostFromJson: post is NULL!";
+            kError()<<"TwitterApiMicroBlog::readPost: post is NULL!";
             post = new Choqok::Post;
         }
         emit errorPost(theAccount, post, ParsingError, i18n("Could not parse the data that has been received from the server."));
@@ -1143,12 +1143,12 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromJson(Choqok::Account* theAccount,
     }
 }
 
-Choqok::Post* TwitterApiMicroBlog::readPostFromJsonMap(Choqok::Account* theAccount,
+Choqok::Post* TwitterApiMicroBlog::readPost(Choqok::Account* theAccount,
                                                        const QVariantMap& var,
                                                        Choqok::Post* post)
 {
     if(!post){
-        kError()<<"TwitterApiMicroBlog::readPostFromJsonMap: post is NULL!";
+        kError()<<"TwitterApiMicroBlog::readPost: post is NULL!";
         return 0;
     }
     post->content = var["text"].toString();
@@ -1169,7 +1169,7 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromJsonMap(Choqok::Account* theAccou
     Choqok::Post* repeatedPost = 0;
     QVariantMap retweetedMap = var["retweeted_status"].toMap();
     if( !retweetedMap.isEmpty() ){
-        repeatedPost = readPostFromJsonMap( theAccount, retweetedMap, new Choqok::Post);
+        repeatedPost = readPost( theAccount, retweetedMap, new Choqok::Post);
         setRepeatedOfInfo(post, repeatedPost);
         delete repeatedPost;
     }
@@ -1178,7 +1178,7 @@ Choqok::Post* TwitterApiMicroBlog::readPostFromJsonMap(Choqok::Account* theAccou
     return post;
 }
 
-QList< Choqok::Post* > TwitterApiMicroBlog::readDMessagesFromJson(Choqok::Account* theAccount,
+QList< Choqok::Post* > TwitterApiMicroBlog::readDirectMessages(Choqok::Account* theAccount,
                                                                   const QByteArray& buffer)
 {
     QList<Choqok::Post*> postList;
@@ -1189,10 +1189,10 @@ QList< Choqok::Post* > TwitterApiMicroBlog::readDMessagesFromJson(Choqok::Accoun
         QVariantList::const_iterator it = list.constBegin();
         QVariantList::const_iterator endIt = list.constEnd();
         for(; it != endIt; ++it){
-            postList.prepend(readDMessageFromJsonMap(theAccount, it->toMap()));
+            postList.prepend(readDirectMessage(theAccount, it->toMap()));
         }
     } else {
-        QString err = checkJsonForError(buffer);
+        QString err = checkForError(buffer);
         if(err.isEmpty()){
             kError() << "JSON parsing failed.\nBuffer was: \n" << buffer;
             emit error(theAccount, ParsingError, i18n("Could not parse the data that has been received from the server."));
@@ -1204,14 +1204,14 @@ QList< Choqok::Post* > TwitterApiMicroBlog::readDMessagesFromJson(Choqok::Accoun
     return postList;
 }
 
-Choqok::Post* TwitterApiMicroBlog::readDMessageFromJson(Choqok::Account* theAccount,
+Choqok::Post* TwitterApiMicroBlog::readDirectMessage(Choqok::Account* theAccount,
                                                         const QByteArray& buffer)
 {
     bool ok;
     QVariantMap map = d->parser.parse(buffer, &ok).toMap();
 
     if ( ok ) {
-        return readDMessageFromJsonMap ( theAccount, map );
+        return readDirectMessage ( theAccount, map );
     } else {
         Choqok::Post *post = new Choqok::Post;
         post->isError = true;
@@ -1219,7 +1219,7 @@ Choqok::Post* TwitterApiMicroBlog::readDMessageFromJson(Choqok::Account* theAcco
     }
 }
 
-Choqok::Post* TwitterApiMicroBlog::readDMessageFromJsonMap(Choqok::Account* theAccount,
+Choqok::Post* TwitterApiMicroBlog::readDirectMessage(Choqok::Account* theAccount,
                                                            const QVariantMap& var)
 {
     Choqok::Post *msg = new Choqok::Post;
@@ -1264,7 +1264,7 @@ Choqok::Post* TwitterApiMicroBlog::readDMessageFromJsonMap(Choqok::Account* theA
     return msg;
 }
 
-Choqok::User* TwitterApiMicroBlog::readUserInfoFromJson(const QByteArray& buffer)
+Choqok::User* TwitterApiMicroBlog::readUserInfo(const QByteArray& buffer)
 {
     //kError()<<"TwitterApiMicroBlog::readUserInfoFromJson: NOT IMPLEMENTED YET!";
     bool ok;
@@ -1289,7 +1289,7 @@ Choqok::User* TwitterApiMicroBlog::readUserInfoFromJson(const QByteArray& buffer
     return user;
 }
 
-QStringList TwitterApiMicroBlog::readUsersScreenNameFromJson(Choqok::Account* theAccount,
+QStringList TwitterApiMicroBlog::readUsersScreenName(Choqok::Account* theAccount,
                                                              const QByteArray& buffer)
 {
     QStringList list;
@@ -1310,7 +1310,7 @@ QStringList TwitterApiMicroBlog::readUsersScreenNameFromJson(Choqok::Account* th
     return list;
 }
 
-Choqok::User TwitterApiMicroBlog::readUserFromJsonMap(Choqok::Account* theAccount, const QVariantMap& map)
+Choqok::User TwitterApiMicroBlog::readUser(Choqok::Account* theAccount, const QVariantMap& map)
 {
     Q_UNUSED(theAccount);
     Choqok::User u;
