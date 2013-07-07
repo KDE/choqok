@@ -26,6 +26,7 @@
 #include <KDebug>
 #include <klocalizedstring.h>
 #include <twitterapihelper/twitterapiaccount.h>
+#include <twitterapihelper/twitterapimicroblog.h>
 #include <kio/jobclasses.h>
 #include <kio/job.h>
 #include <QDomElement>
@@ -106,11 +107,10 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
         return;
     }
 
-    TwitterAccount *acc = qobject_cast<TwitterAccount*>(searchInfo.account);
-    QByteArray auth = acc->oauthInterface()->createParametersString( tmpUrl.url(), QOAuth::GET, acc->oauthToken(),
-                                                                     acc->oauthTokenSecret(), QOAuth::HMAC_SHA1,
-                                                                     param, QOAuth::ParseForHeaderArguments );
-    job->addMetaData("customHTTPHeader", "Authorization: " + auth);
+    TwitterAccount* account = qobject_cast< TwitterAccount* >(searchInfo.account);
+    TwitterApiMicroBlog *microblog = qobject_cast<TwitterApiMicroBlog*>(account->microblog());
+
+    job->addMetaData("customHTTPHeader", "Authorization: " + microblog->authorizationHeader(account, tmpUrl, QOAuth::GET, param));
 
     mSearchJobs[job] = searchInfo;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( searchResultsReturned( KJob* ) ) );

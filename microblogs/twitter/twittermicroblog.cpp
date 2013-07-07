@@ -247,15 +247,19 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount* theAccount, const QString&
         return;
     }
     KUrl url = theAccount->apiUrl();
-    url.addPath ( QString("/%1/lists.json").arg(username) );
+    url.addPath ( "/lists/ownerships.json" );
+    KUrl url_for_oauth(url);//we need base URL (without params) to make OAuth signature with it!
+    url.addQueryItem("screen_name", username);
+    QOAuth::ParamMap params;
+    params.insert("screen_name", username.toLatin1());
 
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kError() << "TwitterMicroBlog::loadUserLists: Cannot create an http GET request!";
         return;
     }
-    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(theAccount, url,
-                                                                                 QOAuth::GET));
+
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(theAccount, url_for_oauth, QOAuth::GET, params));
     mFetchUsersListMap[ job ] = username;
     mJobsAccount[ job ] = theAccount;
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotFetchUserLists(KJob*) ) );
@@ -277,10 +281,12 @@ void TwitterMicroBlog::slotFetchUserLists(KJob* job)
                      i18n("Fetching %1's lists failed. %2", username, job->errorString()), Critical );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
-        QList<Twitter::List> list = readUserListsFromJson ( theAccount, stj->data() );
+        QByteArray buffer = stj->data();
+        QList<Twitter::List> list = readUserListsFromJson ( theAccount, buffer );
         if ( list.isEmpty() ) {
+            kDebug() << buffer;
             QString errorMsg;
-            errorMsg = checkForError(stj->data());
+            errorMsg = checkForError(buffer);
             if( errorMsg.isEmpty() ){
                 KMessageBox::information(choqokMainWindow, i18n("There is no list record for user %1", username));
             } else {

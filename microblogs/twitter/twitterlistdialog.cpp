@@ -83,6 +83,7 @@ void TwitterListDialog::slotButtonClicked(int button)
             KMessageBox::error(this, i18n("You should provide both list author username and list name."));
         } else {
             blog->addListTimeline(account, ui.username->text(), ui.listname->text());
+            accept();
         }
     } else
         KDialog::slotButtonClicked(button);
