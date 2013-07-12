@@ -91,8 +91,12 @@ TextEdit::~TextEdit()
 void TextEdit::keyPressEvent(QKeyEvent* e)
 {
     if (( e->key() == Qt::Key_Return ) || ( e->key() == Qt::Key_Enter ) ) {
-        QString txt = toPlainText();
-        emit returnPressed( txt );
+        if (e->modifiers() == Qt::ShiftModifier) {
+            KTextEdit::keyPressEvent(e);
+        } else {
+            QString txt = toPlainText();
+            emit returnPressed( txt );
+        }
         e->accept();
     } else if ( e->modifiers() == Qt::ControlModifier && e->key() == Qt::Key_S ) {
         this->setCheckSpellingEnabled( !this->checkSpellingEnabled() );

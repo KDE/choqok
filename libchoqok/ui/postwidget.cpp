@@ -237,6 +237,7 @@ void PostWidget::initUi()
     setUiStyle();
 
     d->mContent.replace("<a href","<a style=\"text-decoration:none\" href",Qt::CaseInsensitive);
+    d->mContent.replace("\n", "<br/>");
     d->mSign.replace("<a href","<a style=\"text-decoration:none\" href",Qt::CaseInsensitive);
 
     updateUi();
