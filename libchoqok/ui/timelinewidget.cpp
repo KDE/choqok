@@ -46,7 +46,7 @@ class TimelineWidget::Private
 public:
     Private(Account *account, const QString &timelineName)
         :currentAccount(account), timelineName(timelineName),
-         btnMarkAllAsRead(0), unreadCount(0), info(0), isClosable(false), placeholderLabel(0)
+         btnMarkAllAsRead(0), unreadCount(0), placeholderLabel(0), info(0), isClosable(false)
     {
         if(account->microblog()->isValidTimeline(timelineName)) {
             info = account->microblog()->timelineInfo(timelineName);
