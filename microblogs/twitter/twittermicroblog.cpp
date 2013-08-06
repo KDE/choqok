@@ -308,24 +308,20 @@ void TwitterMicroBlog::addListTimeline( TwitterAccount* theAccount, const QStrin
     addTimelineName(name);
     theAccount->setTimelineNames(tms);
     theAccount->writeConfig();
-    QString url = QString("/%1/lists/%2/statuses").arg(username).arg(listname);
+    QString url = QString("/lists/statuses");
     timelineApiPath[name] = url + ".%1";
     updateTimelines(theAccount);
 }
 
+// TODO: Change to new API
 void TwitterMicroBlog::setListTimelines(TwitterAccount* theAccount, const QStringList& lists)
 {
     kDebug()<<lists;
     QStringList tms = theAccount->timelineNames();
     foreach(const QString &name, lists){
-        QString lst = name;
-        lst.remove(0, 1);
-        QStringList userlist = lst.split('/');
-
-        QString username = userlist[0], listname = userlist[1];
         tms.append(name);
         addTimelineName(name);
-        QString url = QString("/%1/lists/%2/statuses").arg(username).arg(listname);
+        QString url = QString("/lists/statuses");
         timelineApiPath[name] = url + ".%1";
     }
     tms.removeDuplicates();

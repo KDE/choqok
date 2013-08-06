@@ -736,29 +736,44 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
     int countOfPost = Choqok::BehaviorSettings::countOfPosts();
 
     QOAuth::ParamMap params;
-    if( account->usingOAuth() ){	//TODO: Check if needed
+    // needed because lists have different parameter names but
+    // returned timelines have the same JSON format
+    if(timelineApiPath[type].contains("lists/statuses")) {
+
+        // type contains @username/timelinename, we only need the timeline name here
+        int index = type.indexOf("/");
+        QString slug = type.mid(index + 1);
+
+        url.addQueryItem("slug", slug);
+        params.insert("slug", slug.toLatin1());
+
+        url.addQueryItem("owner_screen_name", theAccount->username());
+        params.insert("owner_screen_name", theAccount->username().toLatin1());
+    } else {
+        if( account->usingOAuth() ){	//TODO: Check if needed
+            if ( !latestStatusId.isEmpty() ) {
+                params.insert ( "since_id", latestStatusId.toLatin1() );
+                countOfPost = 200;
+            }
+            params.insert ( "count", QByteArray::number( countOfPost ) );
+            if ( !maxId.isEmpty() ) {
+                params.insert ( "max_id", maxId.toLatin1() );
+            }
+            if ( page ) {
+                params.insert ( "page", QByteArray::number ( page ) );
+            }
+        }
         if ( !latestStatusId.isEmpty() ) {
-            params.insert ( "since_id", latestStatusId.toLatin1() );
+            url.addQueryItem ( "since_id", latestStatusId );
             countOfPost = 200;
         }
-        params.insert ( "count", QByteArray::number( countOfPost ) );
+        url.addQueryItem ( "count", QString::number( countOfPost ) );
         if ( !maxId.isEmpty() ) {
-            params.insert ( "max_id", maxId.toLatin1() );
+            url.addQueryItem ( "max_id", maxId );
         }
         if ( page ) {
-            params.insert ( "page", QByteArray::number ( page ) );
+            url.addQueryItem ( "page", QString::number ( page ) );
         }
-    }
-    if ( !latestStatusId.isEmpty() ) {
-        url.addQueryItem ( "since_id", latestStatusId );
-        countOfPost = 200;
-    }
-    url.addQueryItem ( "count", QString::number( countOfPost ) );
-    if ( !maxId.isEmpty() ) {
-        url.addQueryItem ( "max_id", maxId );
-    }
-    if ( page ) {
-        url.addQueryItem ( "page", QString::number ( page ) );
     }
     kDebug() << "Latest " << type << " Id: " << latestStatusId;// << " apiReq: " << url;
 
