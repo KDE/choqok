@@ -45,7 +45,7 @@
 KonqPluginChoqok::KonqPluginChoqok(QObject* parent, const QVariantList& )
     : Plugin( parent ) , m_interface(0)
 { 
-    KActionMenu *menu = new KActionMenu(KIcon("choqok") , "Choqok",
+    KActionMenu *menu = new KActionMenu(KIcon("choqok") , i18n("Choqok"),
     actionCollection() );
     actionCollection()->addAction( "action menu", menu);
     menu->setDelayed( false );
@@ -143,6 +143,6 @@ void KonqPluginChoqok::toggleShortening(bool value)
 
 K_PLUGIN_FACTORY(KonqPluginChoqokFactory,
          registerPlugin<KonqPluginChoqok>(); )
-K_EXPORT_PLUGIN( KonqPluginChoqokFactory( "konqchoqok" ) )
+K_EXPORT_PLUGIN( KonqPluginChoqokFactory( "konqchoqok", "choqok" ) )
 
 #include "konqchoqok.moc"
