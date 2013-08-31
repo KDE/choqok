@@ -128,6 +128,7 @@ PostWidget::PostWidget( Account* account, Choqok::Post* post, QWidget* parent/* 
     connect(_mainWidget, SIGNAL(anchorClicked(QUrl)), this, SLOT(checkAnchor(QUrl)));
 
     d->timeline = qobject_cast<TimelineWidget*>(parent);
+    d->mCurrentPost->owners++;
 }
 
 void PostWidget::checkAnchor(const QUrl & url)
@@ -144,7 +145,10 @@ void PostWidget::checkAnchor(const QUrl & url)
 
 PostWidget::~PostWidget()
 {
-    delete d->mCurrentPost;
+    if (d->mCurrentPost->owners < 2)
+        delete d->mCurrentPost;
+    else
+        d->mCurrentPost->owners--;
     delete d;
 }
 

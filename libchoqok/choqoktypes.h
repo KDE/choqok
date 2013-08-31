@@ -57,7 +57,7 @@ public:
 class CHOQOK_EXPORT Post {
 public:
     Post()
-    :isFavorited(false), isPrivate(false), isError(false), isRead(false)
+    :isFavorited(false), isPrivate(false), isError(false), isRead(false), owners(0)
     {}
     virtual ~Post() {}
     QDateTime creationDateTime;
@@ -77,6 +77,7 @@ public:
     QString repeatedFromUsername;
     ChoqokId repeatedPostId;
     ChoqokId conversationId;
+    unsigned int owners; // number of associated PostWidgets
 };
 /**
 Describe an specific timeline, Should use by @ref MicroBlog
