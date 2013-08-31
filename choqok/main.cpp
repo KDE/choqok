@@ -32,7 +32,7 @@
 static const char description[] =
     I18N_NOOP( "KDE Micro-Blogging Client." );
 
-static const char version[] = "1.3.1";
+static const char version[] = "1.4";
 
 int main( int argc, char **argv )
 {
@@ -55,6 +55,8 @@ int main( int argc, char **argv )
                      "alexandro82@gmail.com" );
     about.addCredit( ki18n( "Bardia Daneshvar" ), ki18n("UI improvements"), "bardia.daneshvar@gmail.com");
     about.addCredit( ki18n( "Atanas Gospodinov" ), ki18n("Twitter photo upload"), QByteArray());
+    about.addCredit( ki18n( "Daniel Kreuter" ), ki18n("Twitter API v1.1 support"), "daniel.kreuter85@gmail.com" );
+    about.addCredit( ki18n( "Lim Yuen Hoe" ), ki18n("Bug fixes and improvements"), "yuenhoe86@gmail.com" );
 
     //TODO before next release, Add new contributers to credits
     KCmdLineArgs::init( argc, argv, &about );

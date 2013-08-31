@@ -1,3 +1,15 @@
+=== Version 1.4 -- 01-Sep-2013 ===
+* Fix in font size
+* Fix in shortening Urls comming from konqueror
+* New icons and splash screen
+* Twitter API v1.1 support (Daniel Kreuter)
+* "mark timeline as read" menu item added to tabs context menu (Lim Yuen Hoe)
+* Show "in reply to" in twitter search timelines (Lim Yuen Hoe)
+* Identi.ca support removed from StatusNet plugin, we still support StatusNet
+
+New Plugin:
+    - BetterNotify to notify statuses based on user preference
+
 === Version 1.3 -- 05-Apr-2012 ===
 * Support for Twitter photo upload API method (by Atanas Gospodinov)
 * Translator plugin shuts off due Google terminated its free API.
