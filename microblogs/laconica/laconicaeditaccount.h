@@ -61,16 +61,16 @@ public:
     virtual Choqok::Account *apply();
 
 protected slots:
-    virtual void authorizeUser();
-    void slotAuthMethodChanged(int);
+//     virtual void authorizeUser();
+//     void slotAuthMethodChanged(int);
     void slotCheckHostUrl();
 //     void getAccessToken();
 
 protected:
-    virtual void getPinCode();
+//     virtual void getPinCode();
     void loadTimelinesTableState();
     void saveTimelinesTableState();
-    void setAuthenticated(bool authenticated);
+//     void setAuthenticated(bool authenticated);
 
     LaconicaMicroBlog *mBlog;
     LaconicaAccount *mAccount;

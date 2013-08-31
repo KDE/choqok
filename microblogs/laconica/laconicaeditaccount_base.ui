@@ -77,26 +77,6 @@ p, li { white-space: pre-wrap; }
           <string>Server</string>
          </property>
          <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>StatusNet server:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="buddy">
-             <cstring>kcfg_host</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="KLineEdit" name="kcfg_host">
-            <property name="text">
-             <string notr="true">https://identi.ca</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_4">
             <property name="text">
@@ -117,109 +97,21 @@ p, li { white-space: pre-wrap; }
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_7">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>Authentication Type:</string>
+             <string>StatusNet server:</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="KComboBox" name="kcfg_authMethod">
-            <item>
-             <property name="text">
-              <string>OAuth Authentication</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Basic Authentication</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="kcfg_OAuthBox">
-         <property name="title">
-          <string>OAuth Authentication</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout">
-            <item>
-             <widget class="QLabel" name="textLabel1">
-              <property name="text">
-               <string>&amp;Username:</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="buddy">
-               <cstring>kcfg_oauthUsername</cstring>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="KLineEdit" name="kcfg_oauthUsername">
-              <property name="toolTip">
-               <string>The name you use to connect to the service</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="KLed" name="kcfg_authenticateLed">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="kcfg_authenticateStatus">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_5">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Click the below button; if everything goes well, you will pointed to Identi.ca website to allow access to Choqok.</string>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
+            <property name="buddy">
+             <cstring>kcfg_host</cstring>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="KPushButton" name="kcfg_authorize">
-            <property name="toolTip">
-             <string>Verify Credentials</string>
-            </property>
-            <property name="text">
-             <string>&amp;Authenticate with StatusNet service</string>
-            </property>
-           </widget>
+          <item row="0" column="1">
+           <widget class="KLineEdit" name="kcfg_host"/>
           </item>
          </layout>
         </widget>
@@ -240,13 +132,10 @@ p, li { white-space: pre-wrap; }
           <item row="2" column="0">
            <widget class="QLabel" name="textLabel1_3">
             <property name="text">
-             <string>&amp;Password:</string>
+             <string>Password:</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="buddy">
-             <cstring>kcfg_oauthUsername</cstring>
             </property>
            </widget>
           </item>
@@ -263,13 +152,10 @@ p, li { white-space: pre-wrap; }
           <item row="1" column="0">
            <widget class="QLabel" name="textLabel1_2">
             <property name="text">
-             <string>&amp;Username:</string>
+             <string>Username:</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="buddy">
-             <cstring>kcfg_oauthUsername</cstring>
             </property>
            </widget>
           </item>
@@ -378,24 +264,9 @@ p, li { white-space: pre-wrap; }
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KLed</class>
-   <extends>QWidget</extends>
-   <header>kled.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
-  <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
   </customwidget>
   <customwidget>
    <class>KTabWidget</class>
@@ -408,9 +279,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>kcfg_alias</tabstop>
   <tabstop>kcfg_host</tabstop>
   <tabstop>kcfg_api</tabstop>
-  <tabstop>kcfg_authMethod</tabstop>
-  <tabstop>kcfg_oauthUsername</tabstop>
-  <tabstop>kcfg_authorize</tabstop>
   <tabstop>kcfg_basicUsername</tabstop>
   <tabstop>kcfg_basicPassword</tabstop>
   <tabstop>tabwidget</tabstop>
