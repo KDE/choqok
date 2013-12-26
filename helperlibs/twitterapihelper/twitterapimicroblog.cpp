@@ -855,7 +855,7 @@ void TwitterApiMicroBlog::setRepeatedOfInfo(Choqok::Post* post, Choqok::Post* re
         post->author = repeatedPost->author;
         post->repeatedPostId = repeatedPost->postId;
     }
-    post->creationDateTime = repeatedPost->creationDateTime;
+    //post->creationDateTime = repeatedPost->creationDateTime;
 }
 
 QDateTime TwitterApiMicroBlog::dateFromString ( const QString &date )
