@@ -282,6 +282,12 @@ void TextEdit::setupSpeller()
     }
 }
 
+QSize TextEdit::minimumSizeHint() const
+{
+    const QSize size = QTextEdit::minimumSizeHint();
+    return QSize(size.width(), qMax(fontMetrics().height() * 3, size.height()));
+}
+
 }
 }
 #include "choqoktextedit.moc"

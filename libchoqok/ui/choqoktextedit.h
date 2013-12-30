@@ -52,6 +52,7 @@ public:
 protected:
     virtual void keyPressEvent(QKeyEvent* );
     virtual void insertFromMimeData ( const QMimeData *source );
+    virtual QSize minimumSizeHint() const;
 
 Q_SIGNALS:
     void returnPressed( const QString &txt );

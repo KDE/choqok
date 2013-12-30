@@ -183,11 +183,13 @@ void ComposerWidget::slotErrorPost(Account* theAccount, Post* post)
 void ComposerWidget::editorTextChanged()
 {
     if(d->editor->toPlainText().length()) {
-        d->editor->setMaximumHeight(80);
+        d->editor->setMaximumHeight(qMax(d->editor->fontMetrics().height() * 3,
+                                         80));
         d->editor->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     }
     else {
-        d->editor->setMaximumHeight(30);
+        d->editor->setMaximumHeight(qMax(d->editor->fontMetrics().height(),
+                                         30));
         d->editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     }
 }
