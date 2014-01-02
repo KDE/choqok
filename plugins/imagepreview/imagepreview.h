@@ -70,6 +70,7 @@ private:
     static const QRegExp mPlixiRegExp;
     static const QRegExp mImgLyRegExp;
     static const QRegExp mTwitgooRegExp;
+    static const QRegExp mPumpIORegExp;
 };
 
 #endif // IMAGEPREVIEW_H

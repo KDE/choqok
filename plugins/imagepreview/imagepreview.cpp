@@ -38,6 +38,7 @@ const QRegExp ImagePreview::mTweetphotoRegExp("(http://tweetphoto.com/[^\\s<>\"]
 const QRegExp ImagePreview::mPlixiRegExp("(http://plixi.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
 const QRegExp ImagePreview::mImgLyRegExp("(http://img.ly/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
 const QRegExp ImagePreview::mTwitgooRegExp("(http://(([a-zA-Z0-9]+\\.)?)twitgoo.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
+const QRegExp ImagePreview::mPumpIORegExp("(https://([a-zA-Z0-9]+\\.)?[a-zA-Z0-9]+\\.[a-zA-Z]+/uploads/\\w+/\\d{4}/\\d{1,2}/\\d{1,2}/\\w+)(\\.[a-zA-Z]{3,4})");
 
 
 
@@ -92,6 +93,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     QStringList PlixiRedirectList;
     QStringList ImgLyRedirectList;
     QStringList TwitgooRedirectList;
+    QStringList PumpIORedirectList;
     QString content = postToParse->currentPost()->content;
 
     //Twitpic: http://www.twitpic.com/api.do
@@ -198,6 +200,25 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
         Choqok::MediaManager::self()->fetchImage(TwitgooUrl, Choqok::MediaManager::Async);
     }
     
+    //PumpIO
+    pos = 0;
+    QString baseUrl;
+    QString imageExtension;
+    while ((pos = mPumpIORegExp.indexIn(content, pos)) != -1) {
+        pos += mPumpIORegExp.matchedLength();
+        PumpIORedirectList << mPumpIORegExp.cap(0);
+        baseUrl = mPumpIORegExp.cap(1);
+        imageExtension = mPumpIORegExp.cap(mPumpIORegExp.capturedTexts().length() - 1);
+        kDebug() << mPumpIORegExp.capturedTexts();
+    }
+    Q_FOREACH (const QString &url, PumpIORedirectList) {
+        connect (Choqok::MediaManager::self(), SIGNAL(imageFetched(QString, QPixmap)),
+                 SLOT(slotImageFetched(QString, QPixmap)));
+        const QString pumpIOUrl = baseUrl + "_thumb" + imageExtension;
+        mParsingList.insert(pumpIOUrl, postToParse);
+        mBaseUrlMap.insert(pumpIOUrl, url);
+        Choqok::MediaManager::self()->fetchImage(pumpIOUrl, Choqok::MediaManager::Async);
+    }
 }
 
 void ImagePreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pixmap)
