@@ -98,7 +98,6 @@ void PumpIOComposerWidget::submitPost(const QString& text)
 
     PumpIOMicroBlog *mBlog = qobject_cast<PumpIOMicroBlog* >(currentAccount()->microblog());
     if (d->mediumToAttach.isEmpty()) {
-        postToSubmit()->type = "note";
         mBlog->createPost(currentAccount(), postToSubmit());
     } else {
         mBlog->createPostWithMedia(currentAccount(), postToSubmit(), d->mediumToAttach);

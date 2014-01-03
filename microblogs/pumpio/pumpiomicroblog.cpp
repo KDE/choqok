@@ -176,6 +176,9 @@ void PumpIOMicroBlog::createPost(Choqok::Account* theAccount, Choqok::Post* post
         if (!post->postId.isEmpty()) {
             object.insert("id", post->postId);
         }
+        if (post->type.isEmpty()) {
+            post->type = "note";
+        }
         object.insert("objectType", post->type);
         //Convert URLs to href form
         post->content.replace(QRegExp("((?:https?|ftp)://\\S+)"), "<a href=\"\\1\">\\1</a>");

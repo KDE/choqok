@@ -133,7 +133,6 @@ void PumpIOMessageDialog::sendPost()
         if (microblog) {
             PumpIOPost* post = new PumpIOPost;
             post->content = txtMessage->toPlainText();
-            post->type = "note";
 
             QVariantList to;
             Q_FOREACH (QListWidgetItem *item, toList->selectedItems()) {
