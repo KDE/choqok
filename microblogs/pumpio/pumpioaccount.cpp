@@ -109,6 +109,7 @@ QString PumpIOAccount::consumerKey()
 void PumpIOAccount::setConsumerKey(const QString& consumerKey)
 {
     d->consumerKey = consumerKey;
+    d->oAuth->setConsumerKey(consumerKey.toLocal8Bit());
 }
 
 QString PumpIOAccount::consumerSecret()
@@ -119,6 +120,7 @@ QString PumpIOAccount::consumerSecret()
 void PumpIOAccount::setConsumerSecret(const QString& consumerSecret)
 {
     d->consumerSecret = consumerSecret;
+    d->oAuth->setConsumerSecret(consumerSecret.toLocal8Bit());
 }
 
 QString PumpIOAccount::token()
