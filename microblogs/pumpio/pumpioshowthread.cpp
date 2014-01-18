@@ -24,6 +24,7 @@
 #include "pumpioshowthread.h"
 
 #include <KDebug>
+#include <KLocale>
 
 #include "pumpiomicroblog.h"
 #include "pumpiopost.h"
@@ -45,7 +46,7 @@ PumpIOShowThread::PumpIOShowThread(Choqok::Account* account, Choqok::Post* post,
 
     setupUi(this);
 
-    setWindowTitle("Choqok: " + post->author.userName + "'s thread");
+    setWindowTitle(i18nc("Thread of specified user", "Choqok: %1's thread", post->author.userName));
 
     connect(account->microblog(), SIGNAL(postFetched(Choqok::Account*,Choqok::Post*)),
             this, SLOT(slotAddPost(Choqok::Account*,Choqok::Post*)));

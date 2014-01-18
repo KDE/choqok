@@ -108,7 +108,7 @@ void PumpIOEditAccountWidget::authorizeUser()
         oAuthAuthorizeURL.addQueryItem("oauth_token", token);
         Choqok::openUrl(oAuthAuthorizeURL);
         QString verifier = KInputDialog::getText( i18n("PIN"),
-                           i18n("Enter the verifier code received from " + m_account->host().toAscii()));
+                           i18n("Enter the verifier code received from %1", m_account->host()));
 
         QOAuth::ParamMap oAuthVerifierParams;
         oAuthVerifierParams.insert("oauth_verifier", verifier.toUtf8());

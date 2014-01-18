@@ -855,7 +855,7 @@ void PumpIOMicroBlog::slotShare(KJob* job)
         kDebug() << "Job Error: " << job->errorString();
     } else {
         Choqok::UI::Global::mainWindow()->showStatusMessage(
-                            i18n("The post has been shared!."));
+                            i18n("The post has been shared."));
         KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
         bool ok;
         QJson::Parser parser;
