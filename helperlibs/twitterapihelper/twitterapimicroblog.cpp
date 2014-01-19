@@ -697,7 +697,7 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount
     mJobsAccount[job] = theAccount;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFriendsScreenName(KJob*) ) );
     job->start();
-    Choqok::UI::Global::mainWindow()->showStatusMessage( i18n("Updating friends list for account %1 ...", theAccount->username()) );
+    Choqok::UI::Global::mainWindow()->showStatusMessage( i18n("Updating friends list for account %1...", theAccount->username()) );
 }
 
 void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
@@ -809,7 +809,7 @@ void TwitterApiMicroBlog::slotRequestTimeline ( KJob *job )
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
         emit error( theAccount, CommunicationError,
-                    i18n("Timeline update failed, %1", job->errorString()), Low );
+                    i18n("Timeline update failed: %1", job->errorString()), Low );
         return;
     }
     QString type = mRequestTimelineMap.take(job);

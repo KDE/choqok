@@ -115,7 +115,7 @@ QString PumpIOPostWidget::generateSign()
 
         if (!post->cc.isEmpty()) {
             ss += " - ";
-            ss += i18n("Cc:") + ' ';
+            ss += i18n("CC:") + ' ';
 
             Q_FOREACH (const QString& id, post->cc) {
                 if (id == "http://activityschema.org/collection/public") {

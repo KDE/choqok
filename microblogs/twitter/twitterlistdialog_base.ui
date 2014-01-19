@@ -72,10 +72,10 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Load User Lists</string>
+    <string>Load user lists</string>
    </property>
    <property name="text">
-    <string>Load lists</string>
+    <string>Load Lists</string>
    </property>
   </widget>
  </widget>

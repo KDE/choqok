@@ -129,7 +129,7 @@ void Bit_ly_Config::slotValidate()
              KMessageBox::information( this, i18n ( "You entered valid information." ) );
     }
     else {
-        Choqok::NotifyManager::error( job->errorString(), i18n( "bit.ly config error" ) );
+        Choqok::NotifyManager::error( job->errorString(), i18n( "bit.ly Config Error" ) );
     }
 
     ui.validate_button->setEnabled( true );

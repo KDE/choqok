@@ -16,7 +16,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="login">
        <property name="text">
-        <string>Bit.ly Login:</string>
+        <string>Bit.ly login:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -29,7 +29,7 @@
      <item row="1" column="0">
       <widget class="QLabel" name="api_key">
        <property name="text">
-        <string>Bit.ly API Key:</string>
+        <string>Bit.ly API key:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

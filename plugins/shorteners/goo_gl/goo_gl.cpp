@@ -58,7 +58,7 @@ QString Goo_gl::shorten( const QString& url )
 
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( req, KUrl("http://goo.gl/api/url"), KIO::HideProgressInfo ) ;  
     if (!job){
-      Choqok::NotifyManager::error( i18n("Error when creating job"), i18n("Goo.gl error") );
+      Choqok::NotifyManager::error( i18n("Error when creating job"), i18n("Goo.gl Error") );
       return url;
     }
     job->setMetaData(KIO::MetaData(metaData));
@@ -72,14 +72,14 @@ QString Goo_gl::shorten( const QString& url )
 
         if ( ok ) {
             if ( !map[ "error" ].toString().isEmpty() ) {
-                Choqok::NotifyManager::error( map[ "error" ].toString(), i18n("Goo.gl error") );
+                Choqok::NotifyManager::error( map[ "error" ].toString(), i18n("Goo.gl Error") );
                 return url;
             }
             return map[ "short_url" ].toString();
         }
-        Choqok::NotifyManager::error( i18n("Malformed response\n"), i18n("Goo.gl error")  );
+        Choqok::NotifyManager::error( i18n("Malformed response"), i18n("Goo.gl Error")  );
     } else {
-        Choqok::NotifyManager::error( i18n("Cannot create a short URL.\n%1", job->errorString()), i18n("Goo.gl error") );
+        Choqok::NotifyManager::error( i18n("Cannot create a short URL.\n%1", job->errorString()), i18n("Goo.gl Error") );
     }
     return url;
 }

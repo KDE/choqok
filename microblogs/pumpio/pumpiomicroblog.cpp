@@ -655,7 +655,7 @@ void PumpIOMicroBlog::slotFavorite(KJob* job)
     if (job->error()) {
         kDebug() << "Job Error: " << job->errorString();
         emit error(theAccount, Choqok::MicroBlog::CommunicationError,
-                   i18n("Cannot set the post as (un)favorite. %1", job->errorString()));
+                   i18n("Cannot set/unset the post as favorite. %1", job->errorString()));
     } else {
         post->isFavorited = !post->isFavorited;
         emit favorite(theAccount, post);

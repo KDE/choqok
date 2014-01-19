@@ -74,7 +74,7 @@ void TwitpicConfig::save()
         kDebug()<<TwitpicSettings::alias();
     } else {
         TwitpicSettings::setAlias(QString());
-        KMessageBox::error(this, i18n("You have to configure at least one twitter account to use this plugin."));
+        KMessageBox::error(this, i18n("You have to configure at least one Twitter account to use this plugin."));
     }
     TwitpicSettings::self()->writeConfig();
     KCModule::save();

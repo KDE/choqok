@@ -74,7 +74,7 @@ void TwitgooConfig::save()
         kDebug() << TwitgooSettings::alias();
     } else {
         TwitgooSettings::setAlias ( QString() );
-        KMessageBox::error ( this, i18n ( "You have to configure at least one twitter account to use this plugin." ) );
+        KMessageBox::error ( this, i18n ( "You have to configure at least one Twitter account to use this plugin." ) );
     }
     TwitgooSettings::setDirectLink ( ui.cfg_directLink->isChecked() );
     TwitgooSettings::self()->writeConfig();
