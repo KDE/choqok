@@ -26,6 +26,7 @@
 #define CHOQOKTYPES_H
 
 #include <QtCore/QDateTime>
+#include <QSize>
 #include "choqok_export.h"
 #include "choqokid.h"
 
@@ -77,6 +78,9 @@ public:
     QString repeatedFromUsername;
     ChoqokId repeatedPostId;
     ChoqokId conversationId;
+    QString media;          // first Image of Post, if available
+    int mediaSizeWidth;
+    int mediaSizeHeight;
     unsigned int owners; // number of associated PostWidgets
 };
 /**

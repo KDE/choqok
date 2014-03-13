@@ -220,6 +220,9 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
             st->repeatedFromUsername = grp.readEntry("repeatedFrom", QString());
             st->repeatedPostId = grp.readEntry("repeatedPostId", QString());
             st->conversationId = grp.readEntry("conversationId", QString());
+            st->media = grp.readEntry("mediaUrl", QString());
+	    st->mediaSizeWidth = grp.readEntry("mediaWidth", 0);
+	    st->mediaSizeHeight = grp.readEntry("mediaHeight", 0);
 
             list.append( st );
         }
@@ -270,6 +273,9 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
             grp.writeEntry( "repeatedFrom", post->repeatedFromUsername);
             grp.writeEntry( "repeatedPostId", post->repeatedPostId.toString());
             grp.writeEntry( "conversationId", post->conversationId.toString() );
+            grp.writeEntry( "mediaUrl", post->media);
+	    grp.writeEntry("mediaWidth", post->mediaSizeWidth);
+	    grp.writeEntry("mediaHeight", post->mediaSizeHeight);
         }
         postsBackup.sync();
     }
@@ -1188,6 +1194,27 @@ Choqok::Post* TwitterApiMicroBlog::readPost(Choqok::Account* theAccount,
     post->author.userName = userMap["screen_name"].toString();
     post->author.profileImageUrl = userMap["profile_image_url"].toString();
     post->author.homePageUrl = userMap["statusnet_profile_url"].toString();
+    QVariantMap entities = var["entities"].toMap();
+    QVariantMap mediaMap;
+    QVariantList media = entities["media"].toList();
+    if(media.size() > 0) {
+        mediaMap = media.at(0).toMap();
+        post->media = mediaMap["media_url"].toString() + ":small";
+	QVariantMap sizes = mediaMap["sizes"].toMap();
+	QVariantMap w = sizes["small"].toMap();
+	kError() << "size: " << w;
+	post->mediaSizeWidth = w["w"].toInt() !=  0L ? w["w"].toInt() : 0;
+	post->mediaSizeHeight = w["h"].toInt() != 0L ? w["h"].toInt() : 0;
+    }
+    else {
+        post->media = "";
+	post->mediaSizeHeight = 0;
+	post->mediaSizeWidth = 0;
+    }
+
+    //post->media = mediaMap["media_url"].toString();
+
+    kError() << "Expanded url = " << post->media;
     Choqok::Post* repeatedPost = 0;
     QVariantMap retweetedMap = var["retweeted_status"].toMap();
     if( !retweetedMap.isEmpty() ){

@@ -25,6 +25,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "textbrowser.h"
 #include <qboxlayout.h>
 #include <KLocale>
+#include <QLabel>
+#include <QRect>
 #include <KPushButton>
 #include <QGridLayout>
 #include <KDebug>
@@ -66,7 +68,9 @@ class PostWidget::Private
         //BEGIN UI contents:
         QString mSign;
         QString mContent;
+        QString mProfileImage;
         QString mImage;
+        QString imageUrl;
         QString dir;
         //END UI contents;
 
@@ -76,10 +80,10 @@ class PostWidget::Private
 };
 
 
-const QString PostWidget::ownText ("<table width=\"100%\" ><tr><td dir=\"%4\"><p>%2</p></td><td width=\"5\"><!-- empty --></td><td width=\"48\" rowspan=\"2\" align=\"right\">%1</td></tr><tr><td style=\"font-size:small;\" dir=\"ltr\" align=\"right\" valign=\"bottom\">%3</td></tr></table>");
+const QString PostWidget::ownText ("<table width=\"100%\" ><tr><td colspan=\"2\" dir=\"%4\"><p>%2</p></td><td width=\"5\"><!-- empty --></td><td width=\"48\" rowspan=\"2\" align=\"right\">%1</td></tr><tr>%5</tr><tr><td colspan=\"4\"  style=\"font-size:small;\" dir=\"ltr\" align=\"right\" width=\"100%\" valign=\"bottom\">%3</td></tr></table>");
 
-const QString PostWidget::otherText ( "<table height=\"100%\" width=\"100%\"><tr><td rowspan=\"2\"\
-width=\"48\">%1</td><td width=\"5\"><!-- EMPTY HAHA --></td><td dir=\"%4\"><p>%2</p></td></tr><tr><td><!-- EMPTY HAHA --></td><td style=\"font-size:small;\" dir=\"ltr\" align=\"right\" width=\"100%\" valign=\"bottom\">%3</td></tr></table>");
+const QString PostWidget::otherText ( "<table height=\"100%\" width=\"100%\"><tr><td rowspan=\"3\"\
+width=\"48\">%1</td><td width=\"5\"><!-- EMPTY HAHA --></td><td colspan=\"2\" dir=\"%4\"><p>%2</p></td></tr><tr><td><!-- EMPTY HAHA --></td>%5</tr><tr><td ><!-- empty --></td><td colspan=\"2\" style=\"font-size:small;\" dir=\"ltr\" align=\"right\" width=\"100%\" valign=\"bottom\">%3</td></tr></table>");
 
 const QString PostWidget::baseStyle ("KTextBrowser {border: 1px solid rgb(150,150,150);\
 border-radius:5px; color:%1; background-color:%2; %3}\
@@ -116,7 +120,7 @@ QString PostWidget::ownStyle;
 const QString PostWidget::webIconText("&#9755;");
 
 PostWidget::PostWidget( Account* account, Choqok::Post* post, QWidget* parent/* = 0*/ )
-    :QWidget(parent), _mainWidget(new TextBrowser(this)), d(new Private(account, post))
+    :QWidget(parent), _mainWidget(new TextBrowser(this)), image(new QLabel(this)), d(new Private(account, post))
 {
     setAttribute(Qt::WA_DeleteOnClose);
     _mainWidget->setFrameShape(QFrame::NoFrame);
@@ -129,6 +133,12 @@ PostWidget::PostWidget( Account* account, Choqok::Post* post, QWidget* parent/* 
 
     d->timeline = qobject_cast<TimelineWidget*>(parent);
     d->mCurrentPost->owners++;
+    
+    if(!d->mCurrentPost->media.isEmpty()) {
+        d->imageUrl = d->mCurrentPost->media;
+    }
+    
+    setHeight();
 }
 
 void PostWidget::checkAnchor(const QUrl & url)
@@ -171,7 +181,7 @@ QString PostWidget::generateSign()
 
     if( !d->mCurrentPost->source.isNull() )
         ss += " - " + d->mCurrentPost->source;
-
+    
     return ss;
 }
 
@@ -233,25 +243,33 @@ void PostWidget::initUi()
         baseText = &otherText;
     }*/
     
-    d->mImage = "<img src=\"img://profileImage\" title=\""+ d->mCurrentPost->author.realName +"\" width=\"48\" height=\"48\" />";
+    d->mProfileImage = "<img src=\"img://profileImage\" title=\""+ d->mCurrentPost->author.realName +"\" width=\"48\" height=\"48\" />";
+    if(!d->imageUrl.isEmpty()) {      
+      d->mImage = QString("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight );
+    }
     d->mContent = prepareStatus(d->mCurrentPost->content);
     d->mSign = generateSign();
     setupAvatar();
+    fetchImage();
     setDirection();
     setUiStyle();
 
     d->mContent.replace("<a href","<a style=\"text-decoration:none\" href",Qt::CaseInsensitive);
     d->mContent.replace("\n", "<br/>");
+
     d->mSign.replace("<a href","<a style=\"text-decoration:none\" href",Qt::CaseInsensitive);
 
-    updateUi();
 }
 
 void PostWidget::updateUi() 
 {
-	_mainWidget->setHtml(baseText->arg( d->mImage, d->mContent,
+  
+    _mainWidget->setHtml(baseText->arg( d->mProfileImage, d->mContent,
                                         d->mSign.arg(formatDateTime( d->mCurrentPost->creationDateTime )),
-                                        d->dir ));
+                                        d->dir,
+					d->mImage
+                                         ));
+    
 }
 
 void PostWidget::setStyle(const QColor& color, const QColor& back, const QColor& read, const QColor& readBack, const QColor& own, const QColor& ownBack, const QFont& font)
@@ -342,7 +360,7 @@ bool PostWidget::isOwnPost()
 void PostWidget::setHeight()
 {
     _mainWidget->document()->setTextWidth(width()-2);
-    int h = _mainWidget->document()->size().toSize().height()+2;
+    int h = _mainWidget->document()->size().toSize().height() + 2;
     setFixedHeight(h);
 }
 
@@ -533,6 +551,20 @@ QString PostWidget::generateResendText()
     }
 }
 
+void PostWidget::fetchImage() {
+    if(d->imageUrl.isEmpty())
+        return;
+
+    QPixmap *pix = MediaManager::self()->fetchImage(d->imageUrl, MediaManager::Async);
+
+    if(pix)
+        slotImageFetched(d->imageUrl, *pix);
+    else {
+        connect( MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
+                 this, SLOT(slotImageFetched(QString, QPixmap)));
+    }
+}
+
 void PostWidget::setupAvatar()
 {
     QPixmap *pix = MediaManager::self()->fetchImage( d->mCurrentPost->author.profileImageUrl,
@@ -572,6 +604,18 @@ void PostWidget::avatarFetchError(const QString& remoteUrl, const QString& errMs
     }
 }
 
+void PostWidget::slotImageFetched(const QString& remoteUrl, const QPixmap& pixmap) {
+
+    kError() << "Image fetched?" << remoteUrl << d->imageUrl;
+    if(remoteUrl == d->imageUrl) {
+        //QString url = d->imageUrl.toString();
+      QString url = "img://postImage";
+        _mainWidget->document()->addResource( QTextDocument::ImageResource, url, pixmap);
+        updateUi();
+        disconnect( MediaManager::self(), SIGNAL(imageFetched(QString, QPixmap)), this, SLOT(slotImageFetched(QString, QPixmap)));
+    }
+}
+
 QMap<QString, KPushButton* >& PostWidget::buttons()
 {
     return d->mUiButtons;
@@ -592,12 +636,12 @@ void PostWidget::slotPostError(Account* theAccount, Choqok::Post* post,
 
 QString PostWidget::avatarText() const
 {
-    return d->mImage;
+    return d->mProfileImage;
 }
 
 void PostWidget::setAvatarText(const QString& text)
 {
-    d->mImage = text;
+    d->mProfileImage = text;
     updateUi();
 }
 
