@@ -106,26 +106,21 @@ public:
     static QByteArray createMultipartFormData(const QMap<QString, QByteArray> &formdata,
                                        const QList< QMap<QString, QByteArray> > &mediaFiles);
 
-
 public Q_SLOTS:
     /**
      * @brief Clear image cache
      */
     void clearImageCache();
 
-
-
 Q_SIGNALS:
     void fetchError( const QString &remoteUrl, const QString &errMsg );
     void imageFetched( const QString &remoteUrl, const QPixmap &pixmap );
-
 
     void mediumUploaded( const KUrl &localUrl, const QString &remoteUrl );
     void mediumUploadFailed( const KUrl &localUrl, const QString &errorMessage );
 
 protected Q_SLOTS:
     void slotImageFetched( KJob *job );
-
 
 protected:
     MediaManager();

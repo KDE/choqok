@@ -1212,9 +1212,6 @@ Choqok::Post* TwitterApiMicroBlog::readPost(Choqok::Account* theAccount,
 	post->mediaSizeWidth = 0;
     }
 
-    //post->media = mediaMap["media_url"].toString();
-
-    kError() << "Expanded url = " << post->media;
     Choqok::Post* repeatedPost = 0;
     QVariantMap retweetedMap = var["retweeted_status"].toMap();
     if( !retweetedMap.isEmpty() ){

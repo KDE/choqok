@@ -33,7 +33,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 class KAction;
 class QGridLayout;
 class KPushButton;
-class QLabel;
 
 namespace Choqok {
 namespace UI {
@@ -220,8 +219,6 @@ protected:
 
 protected:
     TextBrowser *_mainWidget;
-    QLabel *image;
-    TextBrowser *footerImage;
     const QString *baseText;
     static const QString baseStyle;
     static QString readStyle;
@@ -250,8 +247,8 @@ public:
     virtual ~PostWidgetUserData();
     PostWidget *postWidget();
     void setPostWidget(PostWidget *widget);
-    
-    
+
+
 
 private:
     class Private;

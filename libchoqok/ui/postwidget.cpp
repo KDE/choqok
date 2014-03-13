@@ -25,8 +25,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "textbrowser.h"
 #include <qboxlayout.h>
 #include <KLocale>
-#include <QLabel>
-#include <QRect>
 #include <KPushButton>
 #include <QGridLayout>
 #include <KDebug>
@@ -120,7 +118,7 @@ QString PostWidget::ownStyle;
 const QString PostWidget::webIconText("&#9755;");
 
 PostWidget::PostWidget( Account* account, Choqok::Post* post, QWidget* parent/* = 0*/ )
-    :QWidget(parent), _mainWidget(new TextBrowser(this)), image(new QLabel(this)), d(new Private(account, post))
+    :QWidget(parent), _mainWidget(new TextBrowser(this)), d(new Private(account, post))
 {
     setAttribute(Qt::WA_DeleteOnClose);
     _mainWidget->setFrameShape(QFrame::NoFrame);
@@ -133,11 +131,11 @@ PostWidget::PostWidget( Account* account, Choqok::Post* post, QWidget* parent/* 
 
     d->timeline = qobject_cast<TimelineWidget*>(parent);
     d->mCurrentPost->owners++;
-    
+
     if(!d->mCurrentPost->media.isEmpty()) {
         d->imageUrl = d->mCurrentPost->media;
     }
-    
+
     setHeight();
 }
 
@@ -181,7 +179,7 @@ QString PostWidget::generateSign()
 
     if( !d->mCurrentPost->source.isNull() )
         ss += " - " + d->mCurrentPost->source;
-    
+
     return ss;
 }
 
@@ -242,9 +240,9 @@ void PostWidget::initUi()
         connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
         baseText = &otherText;
     }*/
-    
+
     d->mProfileImage = "<img src=\"img://profileImage\" title=\""+ d->mCurrentPost->author.realName +"\" width=\"48\" height=\"48\" />";
-    if(!d->imageUrl.isEmpty()) {      
+    if(!d->imageUrl.isEmpty()) {
       d->mImage = QString("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight );
     }
     d->mContent = prepareStatus(d->mCurrentPost->content);
@@ -259,17 +257,16 @@ void PostWidget::initUi()
 
     d->mSign.replace("<a href","<a style=\"text-decoration:none\" href",Qt::CaseInsensitive);
 
+    updateUi();
 }
 
-void PostWidget::updateUi() 
+void PostWidget::updateUi()
 {
-  
     _mainWidget->setHtml(baseText->arg( d->mProfileImage, d->mContent,
                                         d->mSign.arg(formatDateTime( d->mCurrentPost->creationDateTime )),
                                         d->dir,
 					d->mImage
                                          ));
-    
 }
 
 void PostWidget::setStyle(const QColor& color, const QColor& back, const QColor& read, const QColor& readBack, const QColor& own, const QColor& ownBack, const QFont& font)
@@ -360,7 +357,7 @@ bool PostWidget::isOwnPost()
 void PostWidget::setHeight()
 {
     _mainWidget->document()->setTextWidth(width()-2);
-    int h = _mainWidget->document()->size().toSize().height() + 2;
+    int h = _mainWidget->document()->size().toSize().height()+2;
     setFixedHeight(h);
 }
 
