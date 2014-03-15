@@ -70,6 +70,7 @@ class PostWidget::Private
         QString mImage;
         QString imageUrl;
         QString dir;
+	QPixmap originalImage;
         //END UI contents;
 
         QStringList detectedUrls;
@@ -77,8 +78,8 @@ class PostWidget::Private
         TimelineWidget *timeline;
 };
 
-
-const QString PostWidget::ownText ("<table width=\"100%\" ><tr><td colspan=\"2\" dir=\"%4\"><p>%2</p></td><td width=\"5\"><!-- empty --></td><td width=\"48\" rowspan=\"2\" align=\"right\">%1</td></tr><tr>%5</tr><tr><td colspan=\"4\"  style=\"font-size:small;\" dir=\"ltr\" align=\"right\" width=\"100%\" valign=\"bottom\">%3</td></tr></table>");
+//QString ownText = "<table width=\"100%\"><tr><td width=\"80%\">%2</td><td>%1</td></tr></table>";
+const QString PostWidget::ownText ("<table width=\"100%\" ><tr><td width=\"90%\" dir=\"%4\">%2</td><td  rowspan=\"2\" align=\"right\">%1</td></tr><tr>%5</tr><tr><td colspan=\"2\"  style=\"font-size:small;\" dir=\"ltr\" align=\"right\" width=\"100%\" valign=\"bottom\">%3</td></tr></table>");
 
 const QString PostWidget::otherText ( "<table height=\"100%\" width=\"100%\"><tr><td rowspan=\"3\"\
 width=\"48\">%1</td><td width=\"5\"><!-- EMPTY HAHA --></td><td colspan=\"2\" dir=\"%4\"><p>%2</p></td></tr><tr><td><!-- EMPTY HAHA --></td>%5</tr><tr><td ><!-- empty --></td><td colspan=\"2\" style=\"font-size:small;\" dir=\"ltr\" align=\"right\" width=\"100%\" valign=\"bottom\">%3</td></tr></table>");
@@ -243,7 +244,7 @@ void PostWidget::initUi()
 
     d->mProfileImage = "<img src=\"img://profileImage\" title=\""+ d->mCurrentPost->author.realName +"\" width=\"48\" height=\"48\" />";
     if(!d->imageUrl.isEmpty()) {
-      d->mImage = QString("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight );
+      d->mImage = QString("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
     }
     d->mContent = prepareStatus(d->mCurrentPost->content);
     d->mSign = generateSign();
@@ -380,7 +381,29 @@ void PostWidget::mousePressEvent(QMouseEvent* ev)
 
 void PostWidget::resizeEvent ( QResizeEvent * event )
 {
+    // only scale if image is present
+    if(!d->originalImage.isNull()) {
+	QPixmap *newPixmap;
+	
+	int w = event->size().width() - 60;
+		
+	newPixmap = new QPixmap(d->originalImage.scaledToWidth(w, Qt::SmoothTransformation));
+	int newW = newPixmap->width();
+	int newH = newPixmap->height();
+	
+	// only use scaled image if it's smaller than the original one
+	if(newW <= d->originalImage.width() && newH <= d->originalImage.height()) {	// never scale up
+	    d->mImage = QString("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(newW, newH );
+	    QString url = "img://postImage";
+	    _mainWidget->document()->addResource( QTextDocument::ImageResource, url, *newPixmap);
+	} else {
+	    d->mImage = QString("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
+		QString url = "img://postImage";
+		_mainWidget->document()->addResource( QTextDocument::ImageResource, url, d->originalImage);
+	}
+    }
     setHeight();
+    updateUi();
     QWidget::resizeEvent(event);
 }
 
@@ -603,11 +626,11 @@ void PostWidget::avatarFetchError(const QString& remoteUrl, const QString& errMs
 
 void PostWidget::slotImageFetched(const QString& remoteUrl, const QPixmap& pixmap) {
 
-    kError() << "Image fetched?" << remoteUrl << d->imageUrl;
     if(remoteUrl == d->imageUrl) {
-        //QString url = d->imageUrl.toString();
-      QString url = "img://postImage";
-        _mainWidget->document()->addResource( QTextDocument::ImageResource, url, pixmap);
+	QString url = "img://postImage";
+	QPixmap *newPixmap = new QPixmap(pixmap.scaled(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight));
+        _mainWidget->document()->addResource( QTextDocument::ImageResource, url, *newPixmap);
+	d->originalImage = pixmap;
         updateUi();
         disconnect( MediaManager::self(), SIGNAL(imageFetched(QString, QPixmap)), this, SLOT(slotImageFetched(QString, QPixmap)));
     }
