@@ -57,6 +57,8 @@ QString Yourls::shorten( const QString &url )
     reqUrl.addQueryItem( "action", "shorturl" );                        /* set action to shorturl */
     reqUrl.addQueryItem( "format", "xml" );                             /* get result as xml */
     reqUrl.addQueryItem( "url", KUrl( url ).url() );                    /* url to be shorted */
+    password = Choqok::PasswordManager::self()->readPassword(
+                                                QString("yourls_%1").arg(YourlsSettings::username())).toUtf8();
     if( !YourlsSettings::username().isEmpty() ){
         reqUrl.addQueryItem( "username", YourlsSettings::username() );
         reqUrl.addQueryItem( "password", password );

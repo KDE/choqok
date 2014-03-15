@@ -571,10 +571,13 @@ void TwitterApiMicroBlog::createFavorite ( Choqok::Account* theAccount, const QS
     KUrl url = account->apiUrl();
     //url.addPath ( QString("/favorites/create.json?id=%1").arg(postId));
     url.addPath ( "/favorites/create.json" );
-    QByteArray data;
-    data = "id=";
-    data += postId.toLocal8Bit();
-    KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
+    KUrl tmp(url);
+    url.addQueryItem("id", postId);
+    
+    QOAuth::ParamMap params;
+    params.insert("id", postId.toLatin1());
+
+    KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kDebug() << "Cannot create an http POST request!";
 //         QString errMsg = i18n ( "The Favorite creation failed. Cannot create an http POST request. "
@@ -582,7 +585,7 @@ void TwitterApiMicroBlog::createFavorite ( Choqok::Account* theAccount, const QS
 //         emit error ( theAccount, OtherError, errMsg );
         return;
     }
-    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST));
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, tmp, QOAuth::POST, params));
     mFavoriteMap[job] = postId;
     mJobsAccount[job] = theAccount;
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotCreateFavorite ( KJob* ) ) );
@@ -619,10 +622,14 @@ void TwitterApiMicroBlog::removeFavorite ( Choqok::Account* theAccount, const QS
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
     url.addPath ( "/favorites/destroy.json" );
-    QByteArray data;
-    data = "id=";
-    data += postId.toLocal8Bit();
-    KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
+    
+    KUrl tmp(url);
+    url.addQueryItem("id", postId);
+    
+    QOAuth::ParamMap params;
+    params.insert("id", postId.toLatin1());
+
+    KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo  ) ;
     if ( !job ) {
         kDebug() << "Cannot create an http POST request!";
 //         QString errMsg = i18n ( "Removing the favorite failed. Cannot create an http POST request. "
@@ -630,7 +637,7 @@ void TwitterApiMicroBlog::removeFavorite ( Choqok::Account* theAccount, const QS
 //         emit error ( theAccount, OtherError, errMsg );
         return;
     }
-    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST));
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, tmp, QOAuth::POST, params));
     mFavoriteMap[job] = postId;
     mJobsAccount[job] = theAccount;
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotRemoveFavorite ( KJob* ) ) );
@@ -690,7 +697,7 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount
     mJobsAccount[job] = theAccount;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFriendsScreenName(KJob*) ) );
     job->start();
-    Choqok::UI::Global::mainWindow()->showStatusMessage( i18n("Updating friends list for account %1 ...", theAccount->username()) );
+    Choqok::UI::Global::mainWindow()->showStatusMessage( i18n("Updating friends list for account %1...", theAccount->username()) );
 }
 
 void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
@@ -802,7 +809,7 @@ void TwitterApiMicroBlog::slotRequestTimeline ( KJob *job )
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
         emit error( theAccount, CommunicationError,
-                    i18n("Timeline update failed, %1", job->errorString()), Low );
+                    i18n("Timeline update failed: %1", job->errorString()), Low );
         return;
     }
     QString type = mRequestTimelineMap.take(job);

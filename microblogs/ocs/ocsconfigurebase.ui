@@ -80,7 +80,7 @@ p, li { white-space: pre-wrap; }
       <item>
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>You can manage Social Desktop providers in KDE Social Desktop configurations.</string>
+         <string>You can manage Social Desktop providers in the KDE Social Desktop configuration.</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>

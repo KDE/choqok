@@ -72,7 +72,7 @@ QString Is_gd::shorten( const QString& url )
 
         if ( ok ) {
             if ( !map[ "errorcode" ].toString().isEmpty() ) {
-                Choqok::NotifyManager::error( map[ "errormessage" ].toString(), i18n("is.gd error") );
+                Choqok::NotifyManager::error( map[ "errormessage" ].toString(), i18n("is.gd Error") );
                 return url;
             }
             QString shorturl = map[ "shorturl" ].toString();
@@ -80,11 +80,11 @@ QString Is_gd::shorten( const QString& url )
                 return shorturl;
             }
         } else {
-            Choqok::NotifyManager::error( i18n("Malformed response\n"), i18n("is.gd error")  );
+            Choqok::NotifyManager::error( i18n("Malformed response"), i18n("is.gd Error")  );
         }
     }
     else {
-        Choqok::NotifyManager::error( i18n("Cannot create a short URL.\n%1", job->errorString()), i18n("is.gd error") );
+        Choqok::NotifyManager::error( i18n("Cannot create a short URL.\n%1", job->errorString()), i18n("is.gd Error") );
     }
     return url;
 }

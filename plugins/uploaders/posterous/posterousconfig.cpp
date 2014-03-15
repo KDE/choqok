@@ -84,7 +84,7 @@ void PosterousConfig::save()
         kDebug() << PosterousSettings::alias();
     } else {
         PosterousSettings::setAlias ( QString() );
-        KMessageBox::error ( this, i18n ( "You have to configure at least one twitter account to use this plugin." ) );
+        KMessageBox::error ( this, i18n ( "You have to configure at least one Twitter account to use this plugin." ) );
     }
 
     PosterousSettings::setBasic ( ui.cfg_basic->isChecked() );

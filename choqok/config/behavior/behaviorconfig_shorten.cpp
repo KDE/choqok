@@ -79,7 +79,7 @@ void BehaviorConfig_Shorten::load()
 {
     QList<KPluginInfo> plugins = Choqok::PluginManager::self()->availablePlugins("Shorteners");
     shortenPlugins->clear();
-    shortenPlugins->addItem( i18n("None"), QLatin1String("none") );
+    shortenPlugins->addItem( i18nc("No shortener service", "None"), QLatin1String("none") );
     foreach(const KPluginInfo& plugin, plugins){
         shortenPlugins->addItem( KIcon(plugin.icon()), plugin.name(), plugin.pluginName());
         availablePlugins.insert(plugin.pluginName(), plugin);

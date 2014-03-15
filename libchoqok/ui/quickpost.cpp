@@ -89,7 +89,7 @@ void QuickPost::setupUi()
     this->setMainWidget( wdg );
 
     this->resize( Choqok::BehaviorSettings::quickPostDialogSize() );
-    d->all = new QCheckBox( i18n("All"), this);
+    d->all = new QCheckBox( i18nc("All accounts", "All"), this);
     d->comboAccounts = new KComboBox(this);
     d->attach = new KPushButton(KIcon("mail-attachment"), QString(), this);
     d->attach->setMaximumWidth(d->attach->height());

@@ -121,7 +121,7 @@
           <string>You will see just replies came to you, or mentions you.</string>
          </property>
          <property name="text">
-          <string>Just show replies to me.</string>
+          <string>Just show replies to me</string>
          </property>
         </widget>
        </item>
@@ -131,7 +131,7 @@
           <string>You will see just replies between your friends.</string>
          </property>
          <property name="text">
-          <string>Just show replies to me and my friends.</string>
+          <string>Just show replies to me and my friends</string>
          </property>
         </widget>
        </item>

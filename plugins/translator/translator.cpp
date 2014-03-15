@@ -51,7 +51,7 @@ Translator::Translator(QObject* parent, const QList< QVariant >& )
     :Choqok::Plugin(MyPluginFactory::componentData(), parent)
 {
     kDebug();
-    translateAction = new KAction(i18n("Translate to ..."), this);
+    translateAction = new KAction(i18n("Translate to..."), this);
     Choqok::UI::PostWidget::addAction(translateAction);
     translateAction->setMenu(setupTranslateMenu());
     connect(TranslatorSettings::self(), SIGNAL(configChanged()), SLOT(slotUpdateMenu()));

@@ -148,10 +148,10 @@ p, li { white-space: pre-wrap; }
           <item row="2" column="0" colspan="2">
            <widget class="KPushButton" name="kcfg_authorize">
             <property name="toolTip">
-             <string>Verify Credentials</string>
+             <string>Verify credentials</string>
             </property>
             <property name="text">
-             <string>&amp;Authenticate with Twitter service</string>
+             <string>&amp;Authenticate with Twitter Service</string>
             </property>
            </widget>
           </item>

@@ -86,10 +86,10 @@ QString Bit_ly::shorten( const QString& url )
         if ( output.startsWith( QString( "RATE_LIMIT_EXCEEDED" ) ) )
              err = i18n( "Rate limit exceeded. Try another shortener." );
 
-        Choqok::NotifyManager::error( err, i18n( "bit.ly error" ) );
+        Choqok::NotifyManager::error( err, i18n( "bit.ly Error" ) );
     }
     else {
-        Choqok::NotifyManager::error( job->errorString(), i18n( "bit.ly error" ) );
+        Choqok::NotifyManager::error( job->errorString(), i18n( "bit.ly Error" ) );
     }
     return url;
 }

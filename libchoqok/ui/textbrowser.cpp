@@ -109,7 +109,7 @@ void TextBrowser::resizeEvent(QResizeEvent* e)
 void TextBrowser::contextMenuEvent(QContextMenuEvent* event)
 {
     KMenu *menu = new KMenu(this);
-    KAction *copy = new KAction( i18n("Copy"), this );
+    KAction *copy = new KAction( i18nc("Copy text", "Copy"), this );
 //     copy->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_C ) );
     connect( copy, SIGNAL(triggered(bool)), SLOT(slotCopyPostContent()) );
     menu->addAction(copy);
@@ -120,7 +120,7 @@ void TextBrowser::contextMenuEvent(QContextMenuEvent* event)
         connect( copyLink, SIGNAL(triggered(bool)), SLOT(slotCopyLink()) );
         menu->addAction(copyLink);
     }
-    KAction *selectAll = new KAction(i18n("Select All"), this);
+    KAction *selectAll = new KAction(i18nc("Select all text", "Select All"), this);
 //     selectAll->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_A ) );
     connect( selectAll, SIGNAL(triggered(bool)), SLOT(selectAll()) );
     menu->addAction(selectAll);

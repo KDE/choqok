@@ -49,6 +49,7 @@ Type=Application
 Categories=Network;
 GenericName=Micro-blogging Client
 GenericName[bg]=Клиент за микроблогове в KDE
+GenericName[bs]=Mikro-blog klijent
 GenericName[ca]=Client de microblogs
 GenericName[ca@valencia]=Client de microblogs
 GenericName[cs]=Klient pro mikroblogování

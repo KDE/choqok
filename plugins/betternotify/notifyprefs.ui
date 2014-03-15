@@ -120,7 +120,7 @@
          <item>
           <widget class="KPushButton" name="adjustPosition">
            <property name="text">
-            <string>Adjust notification's position</string>
+            <string>Adjust Notification's Position</string>
            </property>
           </widget>
          </item>
