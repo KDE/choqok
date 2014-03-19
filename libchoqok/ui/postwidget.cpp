@@ -242,7 +242,7 @@ void PostWidget::initUi()
 
     d->mProfileImage = "<img src=\"img://profileImage\" title=\""+ d->mCurrentPost->author.realName +"\" width=\"48\" height=\"48\" />";
     if(!d->imageUrl.isEmpty()) {
-      d->mImage = QString("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
+      d->mImage = QString("<td width=\"%1\" height=\"%2\" style=\"padding-left: 5px; padding-left: 5px;\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
     }
     d->mContent = prepareStatus(d->mCurrentPost->content);
     d->mSign = generateSign();
@@ -383,7 +383,8 @@ void PostWidget::resizeEvent ( QResizeEvent * event )
     if(!d->originalImage.isNull()) {
 	QPixmap *newPixmap;
 	
-	int w = event->size().width() - 60;
+	// TODO: Find a way to calculate the difference we need to subtract.
+	int w = event->size().width() - 76;
 		
 	newPixmap = new QPixmap(d->originalImage.scaledToWidth(w, Qt::SmoothTransformation));
 	int newW = newPixmap->width();
