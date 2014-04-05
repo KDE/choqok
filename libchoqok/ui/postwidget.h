@@ -187,11 +187,14 @@ protected Q_SLOTS:
     void avatarFetchError( const QString &remoteUrl, const QString &errMsg );
     void avatarFetched( const QString &remoteUrl, const QPixmap &pixmap );
 
+    void slotImageFetched( const QString &remoteUrl, const QPixmap &pixmap );
     virtual void mousePressEvent(QMouseEvent* ev);
+
 protected:
     virtual void setupUi();
     virtual void closeEvent(QCloseEvent* event);
     virtual void setupAvatar();
+    virtual void fetchImage();
     virtual void wheelEvent(QWheelEvent* );
     virtual void resizeEvent ( QResizeEvent * event );
     virtual void enterEvent ( QEvent * event );
@@ -244,6 +247,8 @@ public:
     virtual ~PostWidgetUserData();
     PostWidget *postWidget();
     void setPostWidget(PostWidget *widget);
+
+
 
 private:
     class Private;

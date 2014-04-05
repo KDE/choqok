@@ -77,6 +77,9 @@ public:
     QString repeatedFromUsername;
     ChoqokId repeatedPostId;
     ChoqokId conversationId;
+    QString media;          // first Image of Post, if available
+    int mediaSizeWidth;
+    int mediaSizeHeight;
     unsigned int owners; // number of associated PostWidgets
 };
 /**
