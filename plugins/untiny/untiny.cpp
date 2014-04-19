@@ -117,11 +117,12 @@ void UnTiny::slot301Redirected(KIO::Job* job, KUrl fromUrl, KUrl toUrl)
             KIO::TransferJob *job = KIO::mimetype( toUrl, KIO::HideProgressInfo );
             if ( !job ) {
                 kDebug() << "Cannot create a http header request!";
+            } else {
+                connect( job, SIGNAL( permanentRedirection( KIO::Job*, KUrl, KUrl ) ),
+                        this, SLOT( slot301Redirected(KIO::Job*,KUrl,KUrl)) );
+                mParsingList.insert(job, postToParse);
+                job->start();
             }
-            connect( job, SIGNAL( permanentRedirection( KIO::Job*, KUrl, KUrl ) ),
-                     this, SLOT( slot301Redirected(KIO::Job*,KUrl,KUrl)) );
-            mParsingList.insert(job, postToParse);
-            job->start();
         }
     }
 }
