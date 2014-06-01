@@ -74,8 +74,9 @@ background-color: qlineargradient(spread:reflect, x1:0.449382, y1:0, x2:0.448, y
     }";
 
 MainWindow::MainWindow()
-    : Choqok::UI::MainWindow(), quickWidget(0), s_settingsDialog(0), m_splash(0),
-    choqokMainButton(0), microblogCounter(0), choqokMainButtonVisible(false)
+    : Choqok::UI::MainWindow(), sysIcon(0), quickWidget(0), s_settingsDialog(0),
+    m_splash(0), choqokMainButton(0), microblogCounter(0),
+    choqokMainButtonVisible(false)
 {
     kDebug();
     setAttribute ( Qt::WA_DeleteOnClose, false );
@@ -86,9 +87,8 @@ MainWindow::MainWindow()
     connect( mainWidget, SIGNAL(currentChanged(int)), SLOT(slotCurrentBlogChanged(int)) );
     setCentralWidget( mainWidget );
 
-    sysIcon = new SysTrayIcon(this);
-//     sysIcon->show();
     setupActions();
+    updateSysTray();
     statusBar()->show();
     setupGUI();
 
@@ -207,14 +207,14 @@ void MainWindow::setupActions()
     actQuit = KStandardAction::quit( this, SLOT( slotQuit() ), actionCollection() );
     prefs = KStandardAction::preferences( this, SLOT( slotConfigChoqok() ), actionCollection() );
 
-    KAction *actUpdate = new KAction( KIcon( "view-refresh" ), i18n( "Update Timelines" ), this );
+    actUpdate = new KAction( KIcon( "view-refresh" ), i18n( "Update Timelines" ), this );
     actionCollection()->addAction( QLatin1String( "update_timeline" ), actUpdate );
     actUpdate->setShortcut( Qt::Key_F5 );
     KShortcut updateGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_F5 );
     actUpdate->setGlobalShortcut( updateGlobalShortcut );
     connect( actUpdate, SIGNAL( triggered( bool ) ), this, SIGNAL( updateTimelines() ) );
 
-    KAction *newTwit = new KAction( KIcon( "document-new" ), i18n( "Quick Post" ), this );
+    newTwit = new KAction( KIcon( "document-new" ), i18n( "Quick Post" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_new_post" ), newTwit );
     newTwit->setShortcut( KShortcut( Qt::CTRL | Qt::Key_T ) );
     KShortcut quickTwitGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_T );
@@ -240,7 +240,7 @@ void MainWindow::setupActions()
                                                              actionCollection() );
     actionCollection()->addAction ( "settings_notifications", act );
 
-    KAction *enableUpdates = new KAction( i18n( "Enable Update Timer" ), this );
+    enableUpdates = new KAction( i18n( "Enable Update Timer" ), this );
     enableUpdates->setCheckable( true );
     actionCollection()->addAction( QLatin1String( "choqok_enable_updates" ), enableUpdates );
     enableUpdates->setShortcut( KShortcut( Qt::CTRL | Qt::Key_U ) );
@@ -274,24 +274,6 @@ void MainWindow::setupActions()
     KAction *donate = new KAction( KIcon("help-donate"), i18n("Donate"), this );
     actionCollection()->addAction( QLatin1String( "choqok_donate" ), donate);
     connect( donate, SIGNAL(triggered(bool)), this, SLOT(slotDonate()));
-
-    ///SysTray Actions:
-    sysIcon->contextMenu()->addAction( newTwit );
-//     sysIcon->contextMenu()->addAction( uploadMedium );
-    sysIcon->contextMenu()->addAction( actUpdate );
-    sysIcon->contextMenu()->addSeparator();
-    connect( enableUpdates, SIGNAL( toggled( bool ) ), sysIcon, SLOT( setTimeLineUpdatesEnabled( bool ) ) );
-    sysIcon->contextMenu()->addAction( enableUpdates );
-    sysIcon->setTimeLineUpdatesEnabled( enableUpdates->isChecked() );
-//     sysIcon->contextMenu()->addAction( enableNotify );
-    sysIcon->contextMenu()->addAction( prefs );
-
-    sysIcon->contextMenu()->addSeparator();
-    sysIcon->contextMenu()->addAction(showMain);
-    sysIcon->contextMenu()->addAction(actQuit);
-//     connect( sysIcon, SIGNAL(quitSelected()), this, SLOT(slotQuit()) );
-    connect(sysIcon, SIGNAL(scrollRequested(int,Qt::Orientation)),
-            this, SLOT(nextTab(int,Qt::Orientation)));
 }
 
 void MainWindow::slotConfNotifications()
@@ -304,8 +286,10 @@ void MainWindow::createQuickPostDialog()
     quickWidget = new Choqok::UI::QuickPost( this );
     Choqok::UI::Global::setQuickPostWidget(quickWidget);
     quickWidget->setAttribute(Qt::WA_DeleteOnClose, false);
-    connect( quickWidget, SIGNAL( newPostSubmitted(Choqok::JobResult)),
-             sysIcon, SLOT( slotJobDone(Choqok::JobResult)) );
+    if ( sysIcon ) {
+        connect( quickWidget, SIGNAL( newPostSubmitted(Choqok::JobResult)),
+                 sysIcon, SLOT( slotJobDone(Choqok::JobResult)) );
+    }
     emit(quickPostCreated());
 }
 
@@ -375,6 +359,44 @@ void MainWindow::slotAppearanceConfigChanged()
     }
 }
 
+void MainWindow::updateSysTray()
+{
+    if ( Choqok::BehaviorSettings::enableSysTray() ) {
+        if ( !sysIcon ) {
+            sysIcon = new SysTrayIcon(this);
+//            sysIcon->show();
+
+            ///SysTray Actions:
+            sysIcon->contextMenu()->addAction( newTwit );
+//            sysIcon->contextMenu()->addAction( uploadMedium );
+            sysIcon->contextMenu()->addAction( actUpdate );
+            sysIcon->contextMenu()->addSeparator();
+            connect( enableUpdates, SIGNAL( toggled( bool ) ), sysIcon,
+                     SLOT( setTimeLineUpdatesEnabled( bool ) ) );
+            sysIcon->contextMenu()->addAction( enableUpdates );
+            sysIcon->setTimeLineUpdatesEnabled( enableUpdates->isChecked() );
+//           sysIcon->contextMenu()->addAction( enableNotify );
+            sysIcon->contextMenu()->addAction( prefs );
+
+            sysIcon->contextMenu()->addSeparator();
+            sysIcon->contextMenu()->addAction(showMain);
+            sysIcon->contextMenu()->addAction(actQuit);
+//            connect( sysIcon, SIGNAL(quitSelected()), this, SLOT(slotQuit()) );
+            connect( sysIcon, SIGNAL(scrollRequested(int,Qt::Orientation)),
+                     this, SLOT(nextTab(int,Qt::Orientation)) );
+        }
+    } else {
+        if ( sysIcon ) {
+            if ( isHidden() ) {
+                show();
+            }
+
+            delete sysIcon;
+            sysIcon = 0;
+        }
+    }
+}
+
 void MainWindow::slotBehaviorConfigChanged()
 {
     if ( Choqok::BehaviorSettings::notifyEnabled() ) {
@@ -390,6 +412,8 @@ void MainWindow::slotBehaviorConfigChanged()
         timelineTimer->stop();
         actionCollection()->action( "choqok_enable_updates" )->setChecked( false );
     }
+
+    updateSysTray();
 }
 
 void MainWindow::slotQuit()
@@ -503,11 +527,17 @@ void MainWindow::slotUpdateUnreadCount(int change, int sum)
 {
     kDebug()<<"Change: "<<change<<" Sum: "<<sum;
     Choqok::UI::MicroBlogWidget *wd = qobject_cast<Choqok::UI::MicroBlogWidget*>(sender());
-    sysIcon->updateUnreadCount(change);
-    if( sysIcon->unreadCount() )
-        setWindowTitle( i18n("Choqok (%1)", sysIcon->unreadCount()) );
-    else
+
+    if ( sysIcon ) {
+        sysIcon->updateUnreadCount(change);
+    }
+
+    if ( sum > 0 ) {
+        setWindowTitle( i18n("Choqok (%1)", sum) );
+    } else {
         setWindowTitle( i18n("Choqok") );
+    }
+
     if(wd) {
         int tabIndex = mainWidget->indexOf(wd);
         if(tabIndex == -1)
@@ -577,7 +607,9 @@ void MainWindow::showEvent(QShowEvent* event)
 void MainWindow::slotMarkAllAsRead()
 {
     setWindowTitle( i18n("Choqok") );
-    sysIcon->resetUnreadCount();
+    if ( sysIcon ) {
+        sysIcon->resetUnreadCount();
+    }
     int count = mainWidget->count();
     for(int i=0; i<count; ++i) {
         Choqok::UI::MicroBlogWidget *wd = qobject_cast<Choqok::UI::MicroBlogWidget*>(mainWidget->widget(i));

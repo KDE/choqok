@@ -13,6 +13,9 @@
         <entry name="showAllNotifiesInOne" type="Bool">
             <default>false</default>
         </entry>
+        <entry name="enableSysTray" type="Bool">
+            <default>true</default>
+        </entry>
         <entry name="enableSpellChecker" type="Bool">
             <default>false</default>
         </entry>

@@ -114,6 +114,7 @@ private:
     void createQuickPostDialog();
     void disableApp();
     void enableApp();
+    void updateSysTray();
     virtual bool queryExit();
     virtual bool queryClose();
 
@@ -122,8 +123,11 @@ private:
     Choqok::UI::QuickPost *quickWidget;
     KSettings::Dialog *s_settingsDialog;
     QPointer<KSplashScreen> m_splash;
+    KAction *enableUpdates;
+    KAction *newTwit;
     KAction *showMain;
     KAction *actQuit;
+    KAction *actUpdate;
     KAction *prefs;
     KAction *aboutChoqok;
     KPushButton *choqokMainButton;

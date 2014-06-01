@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>482</width>
-    <height>341</height>
+    <width>417</width>
+    <height>389</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -38,23 +38,35 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="kcfg_markAllAsReadOnHideToSystray">
-        <property name="toolTip">
-         <string/>
-        </property>
-        <property name="text">
-         <string>Mark all unread posts as read, when hiding to system tray</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QCheckBox" name="kcfg_enableSpellChecker">
         <property name="text">
          <string>Enable automatic spellchecking in the message editor</string>
         </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="kcfg_enableSysTray">
+        <property name="title">
+         <string>Enable System Tray</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <item>
+          <widget class="QCheckBox" name="kcfg_markAllAsReadOnHideToSystray">
+           <property name="toolTip">
+            <string/>
+           </property>
+           <property name="text">
+            <string>Mark all unread posts as read, when hiding to system tray</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -204,14 +216,14 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KIntSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>knuminput.h</header>
-  </customwidget>
-  <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KIntSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>knuminput.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
