@@ -674,15 +674,15 @@ void TwitterApiMicroBlog::slotRemoveFavorite ( KJob *job )
     }
 }
 
-void TwitterApiMicroBlog::listFriendsUsername(TwitterApiAccount* theAccount)
+void TwitterApiMicroBlog::listFriendsUsername(TwitterApiAccount* theAccount, bool active)
 {
     friendsList.clear();
     if ( theAccount ) {
-        requestFriendsScreenName(theAccount);
+        requestFriendsScreenName(theAccount, active);
     }
 }
 
-void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount)
+void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount, bool active)
 {
     kDebug();
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
@@ -701,26 +701,40 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount
     job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, tmpUrl,
                                                                                  QOAuth::GET, params));
     mJobsAccount[job] = theAccount;
-    connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFriendsScreenName(KJob*) ) );
+    if (active)
+        connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFriendsScreenNameActive(KJob*) ) );
+    else
+        connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFriendsScreenNamePassive(KJob*) ) );
     job->start();
     Choqok::UI::Global::mainWindow()->showStatusMessage( i18n("Updating friends list for account %1...", theAccount->username()) );
 }
 
-void TwitterApiMicroBlog::slotRequestFriendsScreenName(KJob* job)
+void TwitterApiMicroBlog::slotRequestFriendsScreenNameActive(KJob* job)
+{
+    finishRequestFriendsScreenName(job, true);
+}
+
+void TwitterApiMicroBlog::slotRequestFriendsScreenNamePassive(KJob* job)
+{
+    finishRequestFriendsScreenName(job, false);
+}
+
+void TwitterApiMicroBlog::finishRequestFriendsScreenName(KJob* job, bool active)
 {
     kDebug();
     TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount *>( mJobsAccount.take(job) );
     KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
+    Choqok::MicroBlog::ErrorLevel level = active ? Critical : Low;
     if (stJob->error()) {
         emit error(theAccount, ServerError, i18n("Friends list for account %1 could not be updated:\n%2",
-            theAccount->username(), stJob->errorString()), Critical);
+            theAccount->username(), stJob->errorString()), level);
         return;
     }
     QStringList newList;
     newList = readUsersScreenName( theAccount, stJob->data() );
     friendsList << newList;
     if ( newList.count() == 100 ) {
-        requestFriendsScreenName( theAccount );
+        requestFriendsScreenName( theAccount, active );
     } else {
         friendsList.removeDuplicates();
         theAccount->setFriendsList(friendsList);
@@ -934,7 +948,7 @@ void TwitterApiMicroBlog::slotUpdateFriendsList()
     KAction *act = qobject_cast<KAction *>(sender());
     TwitterApiAccount* theAccount = qobject_cast<TwitterApiAccount*>(
                                         Choqok::AccountManager::self()->findAccount( act->data().toString() ) );
-    listFriendsUsername(theAccount);
+    listFriendsUsername(theAccount, true);
 }
 
 void TwitterApiMicroBlog::createFriendship( Choqok::Account *theAccount, const QString& username )

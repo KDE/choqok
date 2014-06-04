@@ -72,19 +72,19 @@ Q_SIGNALS:
                               QList<Choqok::Post*> posts );
 
 protected:
-    virtual void listFriendsUsername(TwitterApiAccount* theAccount);
+    virtual void listFriendsUsername(TwitterApiAccount* theAccount, bool active = false);
 
 private:
     void doRequestFriendsScreenName(TwitterApiAccount* theAccount, int page);
 
 public:
-    virtual void requestFriendsScreenName(TwitterApiAccount* theAccount);
+    virtual void requestFriendsScreenName(TwitterApiAccount* theAccount, bool active);
 
     //virtual QStringList readUsersScreenNameFromXml(Choqok::Account* theAccount, const QByteArray& buffer);
 
 protected Q_SLOTS:
     virtual void slotFetchConversation( KJob* job );
-    virtual void slotRequestFriendsScreenName(KJob* job);
+    void slotRequestFriendsScreenName(KJob* job);
 private:
     QMap<KJob*, ChoqokId> mFetchConversationMap;
     QPointer<LaconicaSearch> mSearchBackend;

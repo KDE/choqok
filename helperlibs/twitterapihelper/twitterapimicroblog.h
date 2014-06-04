@@ -131,7 +131,7 @@ public:
 
     virtual void aboutToUnload();
 
-    virtual void listFriendsUsername( TwitterApiAccount *theAccount );
+    virtual void listFriendsUsername( TwitterApiAccount *theAccount, bool active = false );
 
     virtual Choqok::TimelineInfo * timelineInfo(const QString &timelineName);
 
@@ -189,8 +189,9 @@ protected Q_SLOTS:
     virtual void slotCreateFavorite( KJob *job );
     virtual void slotRemoveFavorite( KJob *job );
     virtual void slotRequestTimeline( KJob *job );
-    virtual void requestFriendsScreenName( TwitterApiAccount* theAccount );
-    virtual void slotRequestFriendsScreenName( KJob *job );
+    virtual void requestFriendsScreenName( TwitterApiAccount* theAccount, bool active );
+    void slotRequestFriendsScreenNameActive(KJob *job);
+    void slotRequestFriendsScreenNamePassive(KJob *job);
     virtual void slotCreateFriendship( KJob *job );
     virtual void slotDestroyFriendship( KJob *job );
     virtual void slotBlockUser( KJob *job );
@@ -226,6 +227,7 @@ protected:
     Checks json returned from server for error, and return error string, Or an empty string if nothing found!
     */
     virtual QString checkForError(const QByteArray &buffer);
+    void finishRequestFriendsScreenName( KJob *job, bool active );
 
 
     ///==========================================

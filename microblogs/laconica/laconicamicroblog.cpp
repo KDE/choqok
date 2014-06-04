@@ -224,7 +224,7 @@ QString LaconicaMicroBlog::repeatQuestion()
     return i18n("Repeat this notice?");
 }
 
-void LaconicaMicroBlog::listFriendsUsername(TwitterApiAccount* theAccount)
+void LaconicaMicroBlog::listFriendsUsername(TwitterApiAccount* theAccount, bool active)
 {
     friendsList.clear();
     if ( theAccount ) {
@@ -232,7 +232,7 @@ void LaconicaMicroBlog::listFriendsUsername(TwitterApiAccount* theAccount)
     }
 }
 
-void LaconicaMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount)
+void LaconicaMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount, bool active)
 {
     doRequestFriendsScreenName(theAccount, 1);
 }
