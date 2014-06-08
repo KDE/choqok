@@ -107,6 +107,9 @@ PluginManager::PluginManager() : QObject( )
     // This way we can unload plugins asynchronously, which is more
     // robust if they are still doing processing.
     KGlobal::ref();
+
+    connect(QCoreApplication::instance(), SIGNAL(aboutToQuit()),
+            this, SLOT(slotAboutToQuit()));
 }
 
 PluginManager::~PluginManager()
@@ -492,6 +495,11 @@ bool PluginManager::setPluginEnabled( const QString &_pluginId, bool enabled /* 
 bool PluginManager::isAllPluginsLoaded() const
 {
     return _kpmp->isAllPluginsLoaded;
+}
+
+void PluginManager::slotAboutToQuit()
+{
+    shutdown();
 }
 
 } //END namespace Choqok

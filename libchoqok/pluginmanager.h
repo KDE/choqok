@@ -219,6 +219,11 @@ private Q_SLOTS:
      */
     void slotLoadNextPlugin();
 
+    /**
+     * Called when the application is quitting
+     */
+    void slotAboutToQuit();
+
 private:
     /**
      * @internal

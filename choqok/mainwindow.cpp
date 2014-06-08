@@ -425,24 +425,9 @@ void MainWindow::slotQuit()
 
 bool MainWindow::queryClose()
 {
-    return true;
-}
-
-bool MainWindow::queryExit()
-{
-    kDebug();
-    ChoqokApplication *app = qobject_cast<ChoqokApplication*>(kapp);
-    if( app->sessionSaving() || app->isShuttingDown() ) {
-        Choqok::BehaviorSettings::setPosition( pos() );
-        timelineTimer->stop();
-        Choqok::BehaviorSettings::self()->writeConfig();
-        kDebug () << " shutting down plugin manager";
-        Choqok::PluginManager::self()->shutdown();
-//         Choqok::PasswordManager::self()->deleteLater();
-//         Choqok::MediaManager::self()->deleteLater();
-//         return true;
-    }/* else
-        return false;*/
+    Choqok::BehaviorSettings::setPosition( pos() );
+    timelineTimer->stop();
+    Choqok::BehaviorSettings::self()->writeConfig();
     return true;
 }
 
