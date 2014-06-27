@@ -115,7 +115,6 @@ private:
     void disableApp();
     void enableApp();
     void updateSysTray();
-    virtual bool queryClose();
 
     int mPrevUpdateInterval;
     SysTrayIcon *sysIcon;

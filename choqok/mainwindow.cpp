@@ -419,16 +419,11 @@ void MainWindow::slotBehaviorConfigChanged()
 void MainWindow::slotQuit()
 {
     kDebug();
-    ChoqokApplication *app = qobject_cast<ChoqokApplication*>(kapp);
-    app->quitChoqok();
-}
-
-bool MainWindow::queryClose()
-{
     Choqok::BehaviorSettings::setPosition( pos() );
     timelineTimer->stop();
     Choqok::BehaviorSettings::self()->writeConfig();
-    return true;
+    ChoqokApplication *app = qobject_cast<ChoqokApplication*>(kapp);
+    app->quitChoqok();
 }
 
 void MainWindow::disableApp()
