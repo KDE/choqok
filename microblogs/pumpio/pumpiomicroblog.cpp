@@ -1123,13 +1123,23 @@ Choqok::Post* PumpIOMicroBlog::readPost(const QVariantMap& var, Choqok::Post* po
         } else {
             actor = var[author].toMap();
         }
-        p->author.userId = actor["id"].toString();
+        const QString userId = actor["id"].toString();
+        const QString homePageUrl = actor["url"].toString();
+        p->author.userId = userId;
         p->author.userName = actor["preferredUsername"].toString();
         p->author.realName = actor["displayName"].toString();
-        p->author.homePageUrl = actor["url"].toString();
+        p->author.homePageUrl = homePageUrl;
         p->author.location = actor["location"].toMap().value("displayName").toString();
         p->author.description = actor["summary"].toString();
-        p->author.profileImageUrl = actor["image"].toMap().value("url").toString();
+
+        const QString profileImageUrl = actor["image"].toMap().value("url").toString();
+        if (!profileImageUrl.isEmpty()) {
+            p->author.profileImageUrl = profileImageUrl;
+        } else if (actor["objectType"].toString() == "service") {
+            p->author.profileImageUrl = homePageUrl + "images/default.png";
+        } else {
+            p->author.profileImageUrl = QString("https://%1/%2").arg(hostFromAcct(userId)).arg("images/default.png");
+        }
 
         if (!var["generator"].isNull()) {
             p->source = var["generator"].toMap().value("displayName").toString();
