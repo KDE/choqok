@@ -57,7 +57,8 @@ public:
 class CHOQOK_EXPORT Post {
 public:
     Post()
-    :isFavorited(false), isPrivate(false), isError(false), isRead(false), owners(0)
+    :isFavorited(false), isPrivate(false), isError(false), isRead(false),
+     mediaSizeWidth(0), mediaSizeHeight(0), owners(0)
     {}
     virtual ~Post() {}
     QDateTime creationDateTime;
