@@ -352,6 +352,9 @@ QList< Choqok::Post* > PumpIOMicroBlog::loadTimeline(Choqok::Account* account,
         st->author.profileImageUrl = grp.readEntry("authorProfileImageUrl", QString());
         st->author.homePageUrl = grp.readEntry("authorHomePageUrl", QString());
         st->type = grp.readEntry("type", QString());
+        st->media = grp.readEntry("media"), QString();
+        st->mediaSizeHeight = grp.readEntry("mediaHeight", 0);
+        st->mediaSizeWidth = grp.readEntry("mediaWidth", 0);
         st->isRead = grp.readEntry("isRead", true);
         st->conversationId = grp.readEntry("conversationId", QString());
         st->to = grp.readEntry("to", QStringList());
@@ -410,11 +413,14 @@ void PumpIOMicroBlog::saveTimeline(Choqok::Account* account, const QString& time
         grp.writeEntry("authorId", post->author.userId.toString());
         grp.writeEntry("authorRealName", post->author.realName);
         grp.writeEntry("authorUserName", post->author.userName);
-        grp.writeEntry("authorLocation" , post->author.location);
-        grp.writeEntry("authorDescription" , post->author.description);
+        grp.writeEntry("authorLocation", post->author.location);
+        grp.writeEntry("authorDescription", post->author.description);
         grp.writeEntry("authorProfileImageUrl", post->author.profileImageUrl);
-        grp.writeEntry("authorHomePageUrl" , post->author.homePageUrl);
-        grp.writeEntry("type" , post->type);
+        grp.writeEntry("authorHomePageUrl", post->author.homePageUrl);
+        grp.writeEntry("type", post->type);
+        grp.writeEntry("media", post->media);
+        grp.writeEntry("mediaHeight", post->mediaSizeHeight);
+        grp.writeEntry("mediaWidth", post->mediaSizeWidth);
         grp.writeEntry("isRead", post->isRead);
         grp.writeEntry("conversationId", post->conversationId.toString());
         grp.writeEntry("to", post->to);
@@ -1082,9 +1088,11 @@ Choqok::Post* PumpIOMicroBlog::readPost(const QVariantMap& var, Choqok::Post* po
         p->content += content.toPlainText().trimmed();
 
         if (!object["fullImage"].isNull()) {
-            const QString imagePath = object["fullImage"].toMap().value("url").toString();
-            if (!imagePath.isEmpty()) {
-                p->content += '\n' + imagePath;
+            const QVariantMap fullImage = object["fullImage"].toMap();
+            if (!fullImage.isEmpty()) {
+                p->media = fullImage["url"].toString();
+                p->mediaSizeHeight = fullImage["height"].toInt();
+                p->mediaSizeWidth = fullImage["width"].toInt();
             }
         }
         p->creationDateTime = QDateTime::fromString(var["published"].toString(),
