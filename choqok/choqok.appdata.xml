@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<component type="desktop">
+  <id>choqok.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+  <name>Choqok</name>
+  <description>
+    <p>
+      Choqok is a micro-blogging client which supports Twitter.com and Identi.ca services
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>Supporting Twitter.com micro-blogging service</li>
+      <li>Supporting Identi.ca micro-blogging service (Using its Twitter compatible API)</li>
+      <li>Supporting self hosted Laconica websites (Using its Twitter compatible API)</li>
+      <li>Supporting User + His/Her Friends time-lines</li>
+      <li>Supporting @Reply time-lines</li>
+      <li>Support for send and receive direct messages</li>
+      <li>Twitpic.com integration</li>
+      <li>Supporting Multiple Accounts simultaneously</li>
+      <li>Supporting search APIs for all services</li>
+      <li>KWallet integration</li>
+      <li>Ability to make a quick tweet with global shortcuts (Ctrl+Meta+T)</li>
+      <li>Ability to notify user about new statuses text, with KNotification or Libnotify</li>
+      <li>Support for shortening urls with more than 30 characters (shorten on paste)</li>
+      <li>Support for configuring status lists appearance</li>
+    </ul>
+  </description>
+  <url type="homepage">http://choqok.gnufolks.org/</url>
+  <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=choqok</url>
+  <url type="help">http://docs.kde.org/development/en/extragear-network/choqok/index.html</url>
+  <screenshots>
+    <screenshot type="default">
+      <image>http://kde.org/images/screenshots/choqok.png</image>
+    </screenshot>
+  </screenshots>
+  <project_group>KDE</project_group>
+  <provides>
+    <binary>choqok</binary>
+  </provides>
+</component>
