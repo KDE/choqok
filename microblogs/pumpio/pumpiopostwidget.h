@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2013 Andrea Scarpino <scarpino@kde.org>
+    Copyright (C) 2013-2014 Andrea Scarpino <scarpino@kde.org>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -43,17 +43,20 @@ protected Q_SLOTS:
     virtual void slotPostError(Choqok::Account* theAccount, Choqok::Post* post,
                                Choqok::MicroBlog::ErrorType error, const QString& errorMessage);
 
-    virtual void toggleFavorite();
-
     virtual void slotResendPost();
 
-    virtual void slotToggleFavorite(Choqok::Account*, Choqok::Post*);
+    void slotReplyTo();
+
+    void slotToggleFavorite(Choqok::Account*, Choqok::Post*);
+
+    void toggleFavorite();
 
 protected:
     static const KIcon unFavIcon;
 
 private:
     void updateFavStat();
+    bool isReplyAvailable();
 
     class Private;
     Private * const d;

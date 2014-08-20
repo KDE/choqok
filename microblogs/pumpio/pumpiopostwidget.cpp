@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2013 Andrea Scarpino <scarpino@kde.org>
+    Copyright (C) 2013-2014 Andrea Scarpino <scarpino@kde.org>
     Copyright (C) 2008-2012 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
     This program is free software; you can redistribute it and/or
@@ -24,6 +24,9 @@
 
 #include "pumpiopostwidget.h"
 
+#include <QMenu>
+
+#include <KAction>
 #include <KDebug>
 #include <KLocalizedString>
 #include <KPushButton>
@@ -42,6 +45,7 @@ class PumpIOPostWidget::Private
 {
 public:
     KPushButton *btnFavorite;
+    KPushButton *btnReply;
 };
 
 PumpIOPostWidget::PumpIOPostWidget(Choqok::Account* account, Choqok::Post* post,
@@ -62,6 +66,8 @@ void PumpIOPostWidget::checkAnchor(const QUrl& url)
 {
     if (url.scheme() == "thread") {
         PumpIOShowThread *thread = new PumpIOShowThread(currentAccount(), currentPost());
+        connect(thread, SIGNAL(forwardReply(QString,QString,QString)),
+                this, SIGNAL(reply(QString,QString,QString)));
         thread->resize(this->width(), thread->height() * 3);
         thread->show();
     } else {
@@ -166,6 +172,17 @@ void PumpIOPostWidget::initUi()
         buttons().value("btnResend")->setToolTip(i18nc("@info:tooltip", "Share"));
     }
 
+    if (isReplyAvailable()) {
+        d->btnReply = addButton("btnReply", i18nc("@info:tooltip", "Reply"), "edit-undo");
+        QMenu *replyMenu = new QMenu(d->btnReply);
+
+        KAction *replyToAct = new KAction(KIcon("edit-undo"), i18n("Reply to %1",
+                                      currentPost()->author.userName), replyMenu);
+        replyMenu->addAction(replyToAct);
+        connect(replyToAct, SIGNAL(triggered(bool)), SLOT(slotReplyTo()));
+        connect(d->btnReply, SIGNAL(clicked(bool)), SLOT(slotReplyTo()));
+    }
+
     d->btnFavorite = addButton("btnFavorite", i18nc("@info:tooltip", "Like"), "rating");
     d->btnFavorite->setCheckable(true);
     connect(d->btnFavorite, SIGNAL(clicked(bool)), this, SLOT(toggleFavorite()));
@@ -211,6 +228,23 @@ void PumpIOPostWidget::slotResendPost()
     setReadWithSignal();
     PumpIOMicroBlog* microBlog = qobject_cast<PumpIOMicroBlog*>(currentAccount()->microblog());
     microBlog->share(currentAccount(), currentPost());
+}
+
+bool PumpIOPostWidget::isReplyAvailable()
+{
+    return (currentPost()->type != "comment");
+}
+
+void PumpIOPostWidget::slotReplyTo()
+{
+    kDebug();
+    setReadWithSignal();
+    PumpIOPost *post = dynamic_cast<PumpIOPost* >(currentPost());
+    if (post->type == "comment") {
+        emit reply(post->replyToPostId, post->replyToUserName, post->replyToObjectType);
+    } else {
+        emit reply(post->postId, PumpIOMicroBlog::userNameFromAcct(post->author.userId), post->type);
+    }
 }
 
 void PumpIOPostWidget::updateFavStat()

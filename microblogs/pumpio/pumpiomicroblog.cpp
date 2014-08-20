@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2013  Andrea Scarpino <scarpino@kde.org>
+    Copyright (C) 2013-2014 Andrea Scarpino <scarpino@kde.org>
     Copyright (C) 2008-2012 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
     This program is free software; you can redistribute it and/or
@@ -32,6 +32,7 @@
 #include <qjson/serializer.h>
 
 #include <KAction>
+#include <KDebug>
 #include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/StoredTransferJob>
@@ -46,6 +47,7 @@
 #include "pumpiocomposerwidget.h"
 #include "pumpioeditaccountwidget.h"
 #include "pumpiomessagedialog.h"
+#include "pumpiomicroblogwidget.h"
 #include "pumpiopost.h"
 #include "pumpiopostwidget.h"
 
@@ -127,6 +129,11 @@ QMenu* PumpIOMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidget* 
     return menu;
 }
 
+Choqok::UI::MicroBlogWidget* PumpIOMicroBlog::createMicroBlogWidget(Choqok::Account* account, QWidget* parent)
+{
+    return new PumpIOMicroBlogWidget(account, parent);
+}
+
 Choqok::UI::ComposerWidget* PumpIOMicroBlog::createComposerWidget(Choqok::Account* account, QWidget* parent)
 {
     return new PumpIOComposerWidget(account, parent);
@@ -189,6 +196,50 @@ void PumpIOMicroBlog::createPost(Choqok::Account* theAccount, Choqok::Post* post
         item.insert("object", object);
         item.insert("to", to);
         item.insert("cc", cc);
+
+        QJson::Serializer serializer;
+        const QByteArray data = serializer.serialize(item);
+
+        KUrl url(acc->host());
+        url.addPath(outboxActivity.arg(acc->username()));
+        KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
+        job->addMetaData("content-type", "Content-Type: application/json");
+        job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
+        if (!job) {
+            kDebug() << "Cannot create an http POST request!";
+            return;
+        }
+        m_accountJobs[job] = acc;
+        m_createPostJobs[job] = post;
+        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCreatePost(KJob*)));
+        job->start();
+    } else {
+        kDebug() << "theAccount is not a PumpIOAccount!";
+    }
+}
+
+void PumpIOMicroBlog::createReply(Choqok::Account* theAccount, PumpIOPost* post)
+{
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
+    if (acc) {
+        post->type = "comment";
+
+        QVariantMap object;
+        object.insert("objectType", post->type);
+        //Convert URLs to href form
+        post->content.replace(QRegExp("((?:https?|ftp)://\\S+)"), "<a href=\"\\1\">\\1</a>");
+        object.insert("content", QUrl::toPercentEncoding(post->content));
+
+        if (!post->replyToPostId.isEmpty()) {
+            QVariantMap inReplyTo;
+            inReplyTo.insert("id", post->replyToPostId);
+            inReplyTo.insert("objectType", post->replyToObjectType);
+            object.insert("inReplyTo", inReplyTo);
+        }
+
+        QVariantMap item;
+        item.insert("verb", "post");
+        item.insert("object", object);
 
         QJson::Serializer serializer;
         const QByteArray data = serializer.serialize(item);
@@ -287,7 +338,7 @@ void PumpIOMicroBlog::removePost(Choqok::Account* theAccount, Choqok::Post* post
     PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
     if (acc) {
         QVariantMap object;
-        object.insert("id", post->postId.toString());
+        object.insert("id", post->postId);
         object.insert("objectType", post->type);
 
         QVariantMap item;
@@ -361,6 +412,9 @@ QList< Choqok::Post* > PumpIOMicroBlog::loadTimeline(Choqok::Account* account,
         st->cc = grp.readEntry("cc", QStringList());
         st->shares = grp.readEntry("shares", QStringList());
         st->replies = grp.readEntry("replies", QString());
+        st->replyToPostId = grp.readEntry("replyToPostId", QString());
+        st->replyToUserName = grp.readEntry("replyToUserName", QString());
+        st->replyToObjectType = grp.readEntry("replyToObjectType", QString());
         list.append(st);
     }
 
@@ -427,6 +481,9 @@ void PumpIOMicroBlog::saveTimeline(Choqok::Account* account, const QString& time
         grp.writeEntry("cc", post->cc);
         grp.writeEntry("shares", post->shares);
         grp.writeEntry("replies", post->replies);
+        grp.writeEntry("replyToPostId", post->replyToPostId.toString());
+        grp.writeEntry("replyToUserName", post->replyToUserName);
+        grp.writeEntry("replyToObjectType", post->replyToObjectType);
     }
     postsBackup.sync();
 
@@ -537,7 +594,7 @@ void PumpIOMicroBlog::share(Choqok::Account* theAccount, Choqok::Post* post)
     if (acc) {
         QVariantMap object;
         object.insert("objectType", post->type);
-        object.insert("id", post->postId.toString());
+        object.insert("id", post->postId);
 
         QVariantMap item;
         item.insert("verb", "share");
@@ -570,7 +627,7 @@ void PumpIOMicroBlog::toggleFavorite(Choqok::Account* theAccount, Choqok::Post* 
     if (acc) {
         QVariantMap object;
         object.insert("objectType", post->type);
-        object.insert("id", post->postId.toString());
+        object.insert("id", post->postId);
 
         QVariantMap item;
         item.insert("verb", post->isFavorited ? "unfavorite" : "favorite");

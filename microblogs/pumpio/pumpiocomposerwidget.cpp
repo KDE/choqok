@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2013  Andrea Scarpino <scarpino@kde.org>
+    Copyright (C) 2013-2014 Andrea Scarpino <scarpino@kde.org>
     Copyright (C) 2008-2012 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
     This program is free software; you can redistribute it and/or
@@ -38,6 +38,7 @@
 #include "shortenmanager.h"
 
 #include "pumpiomicroblog.h"
+#include "pumpiopost.h"
 
 class PumpIOComposerWidget::Private
 {
@@ -47,12 +48,12 @@ public:
     QPointer<QLabel> mediumName;
     QPointer<KPushButton> btnCancel;
     QGridLayout *editorLayout;
+    QString replyToObjectType;
 };
 
-PumpIOComposerWidget::PumpIOComposerWidget(Choqok::Account* account,
-                                           QWidget* parent):
-                                           ComposerWidget(account, parent)
-                                           , d(new Private)
+PumpIOComposerWidget::PumpIOComposerWidget(Choqok::Account* account, QWidget* parent)
+                                          : ComposerWidget(account, parent)
+                                          , d(new Private)
 {
     d->editorLayout = qobject_cast<QGridLayout*>(editorContainer()->layout());
     d->btnAttach = new KPushButton(editorContainer());
@@ -98,7 +99,18 @@ void PumpIOComposerWidget::submitPost(const QString& text)
 
     PumpIOMicroBlog *mBlog = qobject_cast<PumpIOMicroBlog* >(currentAccount()->microblog());
     if (d->mediumToAttach.isEmpty()) {
-        mBlog->createPost(currentAccount(), postToSubmit());
+        if (replyToId.isEmpty()) {
+            currentAccount()->microblog()->createPost(currentAccount(), postToSubmit());
+        } else {
+            // WTF? It seems we cannot cast postToSubmit to PumpIOPost and then I'm copying its attributes
+            PumpIOPost *pumpPost = new PumpIOPost();
+            pumpPost->content = postToSubmit()->content;
+            pumpPost->replyToPostId = postToSubmit()->replyToPostId;
+            pumpPost->replyToObjectType = d->replyToObjectType;
+            setPostToSubmit(pumpPost);
+
+            mBlog->createReply(currentAccount(), pumpPost);
+        }
     } else {
         mBlog->createPostWithMedia(currentAccount(), postToSubmit(), d->mediumToAttach);
     }
@@ -161,4 +173,19 @@ void PumpIOComposerWidget::cancelAttach()
     delete d->btnCancel;
     d->btnCancel = 0;
     d->mediumToAttach.clear();
+}
+
+void PumpIOComposerWidget::slotSetReply(const QString replyToId, const QString replyToUsername, const QString replyToObjectType)
+{
+    kDebug();
+    this->replyToId = replyToId;
+    this->replyToUsername = replyToUsername;
+    d->replyToObjectType = replyToObjectType;
+
+    if(!replyToUsername.isEmpty()){
+        replyToUsernameLabel()->setText(i18n("Replying to <b>%1</b>", replyToUsername));
+        btnCancelReply()->show();
+        replyToUsernameLabel()->show();
+    }
+    editor()->setFocus();
 }

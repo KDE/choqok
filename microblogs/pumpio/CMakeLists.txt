@@ -9,6 +9,7 @@ set(choqok_pumpio_SRCS
     pumpioeditaccountwidget.cpp
     pumpiomessagedialog.cpp
     pumpiomicroblog.cpp
+    pumpiomicroblogwidget.cpp
     pumpiopost.cpp
     pumpiopostwidget.cpp
     pumpioshowthread.cpp

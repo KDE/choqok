@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2013  Andrea Scarpino <scarpino@kde.org>
+    Copyright (C) 2013-2014 Andrea Scarpino <scarpino@kde.org>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -45,12 +45,17 @@ public:
                               QWidget* parent = 0);
     virtual ~PumpIOShowThread();
 
+Q_SIGNALS:
+    void forwardReply(const QString replyToId, const QString replyToUsername,
+                      const QString replyToObjectType);
+
 protected Q_SLOTS:
     void slotAddPost(Choqok::Account*, Choqok::Post*);
 
 private:
     class Private;
     Private * const d;
+
 };
 
 #endif // PUMPIOSHOWTHREAD_H

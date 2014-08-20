@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2013  Andrea Scarpino <scarpino@kde.org>
+    Copyright (C) 2013-2014 Andrea Scarpino <scarpino@kde.org>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -57,8 +57,10 @@ PumpIOShowThread::PumpIOShowThread(Choqok::Account* account, Choqok::Post* post,
         widget->initUi();
         widget->setRead();
         mainLayout->insertWidget(0, widget);
+        connect(widget, SIGNAL(reply(QString,QString,QString)),
+                this, SIGNAL(forwardReply(QString, QString, QString)));
 
-        PumpIOMicroBlog* microblog = dynamic_cast<PumpIOMicroBlog*>(account->microblog());
+        PumpIOMicroBlog* microblog = qobject_cast<PumpIOMicroBlog* >(account->microblog());
         if (microblog) {
             microblog->fetchReplies(account, p->replies);
         } else {
@@ -81,6 +83,8 @@ void PumpIOShowThread::slotAddPost(Choqok::Account* theAccount, Choqok::Post* po
         PumpIOPostWidget *widget = new PumpIOPostWidget(theAccount, post, this);
         widget->initUi();
         widget->setRead();
+        connect(widget, SIGNAL(reply(QString,QString,QString)),
+                this, SIGNAL(forwardReply(QString,QString,QString)));
         mainLayout->insertWidget(mainLayout->count() - 1, widget);
     }
 }

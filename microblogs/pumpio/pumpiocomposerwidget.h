@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2013  Andrea Scarpino <scarpino@kde.org>
+    Copyright (C) 2013-2014 Andrea Scarpino <scarpino@kde.org>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -37,6 +37,7 @@ public:
 protected Q_SLOTS:
     virtual void submitPost(const QString& text);
     virtual void slotPostSubmited(Choqok::Account* theAccount, Choqok::Post* post);
+    void slotSetReply(const QString replyToId, const QString replyToUsername, const QString replyToObjectType);
 
     void cancelAttach();
     void attachMedia();

@@ -215,9 +215,19 @@ void ComposerWidget::setPostToSubmit(Post* post)
     d->postToSubmit = post;
 }
 
+QPointer< KPushButton > ComposerWidget::btnCancelReply()
+{
+    return d->btnCancelReply;
+}
+
 Account* ComposerWidget::currentAccount()
 {
     return d->currentAccount;
+}
+
+QPointer< QLabel > ComposerWidget::replyToUsernameLabel()
+{
+    return d->replyToUsernameLabel;
 }
 
 void ComposerWidget::editorCleared()

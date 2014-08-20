@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2013 Andrea Scarpino <scarpino@kde.org>
+    Copyright (C) 2013-2014 Andrea Scarpino <scarpino@kde.org>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -31,6 +31,7 @@
 class KJob;
 class KUrl;
 class PumpIOAccount;
+class PumpIOPost;
 
 class PumpIOMicroBlog : public Choqok::MicroBlog
 {
@@ -53,6 +54,9 @@ public:
 
     virtual ChoqokEditAccountWidget* createEditAccountWidget(Choqok::Account* account,
                                                              QWidget* parent);
+
+    virtual Choqok::UI::MicroBlogWidget* createMicroBlogWidget(Choqok::Account* account,
+                                                               QWidget* parent);
 
     virtual Choqok::Account* createNewAccount(const QString& alias);
 
@@ -86,6 +90,8 @@ public:
 
     void createPostWithMedia(Choqok::Account* theAccount, Choqok::Post* post,
                              const QString& filePath);
+
+    void createReply(Choqok::Account* theAccount, PumpIOPost* post);
 
     void fetchFollowing(Choqok::Account* theAccount);
 

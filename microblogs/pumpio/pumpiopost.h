@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2013  Andrea Scarpino <scarpino@kde.org>
+    Copyright (C) 2013-2014 Andrea Scarpino <scarpino@kde.org>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -31,13 +31,14 @@
 class PumpIOPost : public Choqok::Post
 {
 public:
-    PumpIOPost();
+    explicit PumpIOPost();
     virtual ~PumpIOPost();
 
     QString replies;
     QStringList shares;
     QStringList to;
     QStringList cc;
+    QString replyToObjectType;
 };
 
 #endif //PUMPIOPOST_H
