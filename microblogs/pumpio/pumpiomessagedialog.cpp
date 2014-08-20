@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2013  Andrea Scarpino <scarpino@kde.org>
+    Copyright (C) 2013-2014 Andrea Scarpino <scarpino@kde.org>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -23,7 +23,11 @@
 
 #include "pumpiomessagedialog.h"
 
+#include <QPointer>
+
 #include <KDebug>
+#include <KFileDialog>
+#include <KPushButton>
 
 #include "pumpioaccount.h"
 #include "pumpiomicroblog.h"
@@ -33,6 +37,9 @@ class PumpIOMessageDialog::Private
 {
 public:
     Choqok::Account *account;
+    QString mediumToAttach;
+    QPointer<QLabel> mediumName;
+    QPointer<KPushButton> btnCancel;
 };
 
 PumpIOMessageDialog::PumpIOMessageDialog(Choqok::Account* theAccount, QWidget* parent,
@@ -70,6 +77,7 @@ PumpIOMessageDialog::PumpIOMessageDialog(Choqok::Account* theAccount, QWidget* p
     }
 
     connect(btnReload, SIGNAL(clicked(bool)), this, SLOT(fetchFollowing()));
+    connect(btnAttach, SIGNAL(clicked(bool)), this, SLOT(attachMedia()));
     connect(this, SIGNAL(okClicked()), this, SLOT(sendPost()));
 }
 
@@ -163,4 +171,40 @@ void PumpIOMessageDialog::sendPost()
             microblog->createPost(acc, post, to, cc);
         }
     }
+}
+
+void PumpIOMessageDialog::attachMedia()
+{
+    kDebug();
+    d->mediumToAttach = KFileDialog::getOpenFileName(KUrl("kfiledialog:///image?global"),
+                                                     QString(), this,
+                                                     i18n("Select Media to Upload"));
+    if (d->mediumToAttach.isEmpty()) {
+        kDebug() << "No file selected";
+        return;
+    }
+    const QString fileName = KUrl(d->mediumToAttach).fileName();
+    if (!d->mediumName) {
+        d->mediumName = new QLabel(this);
+        d->btnCancel = new KPushButton(this);
+        d->btnCancel->setIcon(KIcon("list-remove"));
+        d->btnCancel->setToolTip(i18n("Discard Attachment"));
+        d->btnCancel->setMaximumWidth(d->btnCancel->height());
+        connect(d->btnCancel, SIGNAL(clicked(bool)), SLOT(cancelAttach()));
+
+        horizontalLayout->insertWidget(1, d->mediumName);
+        horizontalLayout->insertWidget(2, d->btnCancel);
+    }
+    d->mediumName->setText(i18n("Attaching <b>%1</b>", fileName));
+    txtMessage->setFocus();
+}
+
+void PumpIOMessageDialog::cancelAttach()
+{
+    kDebug();
+    delete d->mediumName;
+    d->mediumName = 0;
+    delete d->btnCancel;
+    d->btnCancel = 0;
+    d->mediumToAttach.clear();
 }

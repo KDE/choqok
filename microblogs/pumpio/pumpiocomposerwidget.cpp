@@ -149,7 +149,7 @@ void PumpIOComposerWidget::attachMedia()
         kDebug() << "No file selected";
         return;
     }
-    QString fileName = KUrl(d->mediumToAttach).fileName();
+    const QString fileName = KUrl(d->mediumToAttach).fileName();
     if (!d->mediumName) {
         d->mediumName = new QLabel(editorContainer());
         d->btnCancel = new KPushButton(editorContainer());

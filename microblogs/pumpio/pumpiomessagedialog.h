@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2013  Andrea Scarpino <scarpino@kde.org>
+    Copyright (C) 2013-2014 Andrea Scarpino <scarpino@kde.org>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -42,6 +42,8 @@ public:
     virtual ~PumpIOMessageDialog();
 
 protected Q_SLOTS:
+    void attachMedia();
+    void cancelAttach();
     void fetchFollowing();
     void sendPost();
     void slotFetchFollowing(Choqok::Account*);
