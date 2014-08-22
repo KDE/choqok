@@ -65,6 +65,8 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_pumpio" ) )
 const QString PumpIOMicroBlog::inboxActivity("/api/user/%1/inbox");
 const QString PumpIOMicroBlog::outboxActivity("/api/user/%1/feed");
 
+const QString PumpIOMicroBlog::PublicCollection("http://activityschema.org/collection/public");
+
 PumpIOMicroBlog::PumpIOMicroBlog(QObject* parent, const QVariantList& args):
     MicroBlog(MyPluginFactory::componentData(), parent), d(new Private)
 {
@@ -168,7 +170,7 @@ void PumpIOMicroBlog::createPost(Choqok::Account* theAccount, Choqok::Post* post
     QVariantList to;
     QVariantMap thePublic;
     thePublic.insert("objectType", "collection");
-    thePublic.insert("id", "http://activityschema.org/collection/public");
+    thePublic.insert("id", PumpIOMicroBlog::PublicCollection);
     to.append(thePublic);
 
     createPost(theAccount, post, to);
@@ -1299,7 +1301,7 @@ void PumpIOMicroBlog::updatePost(Choqok::Account* theAccount, Choqok::Post* post
         QVariantList to;
         QVariantMap thePublic;
         thePublic.insert("objectType", "collection");
-        thePublic.insert("id", "http://activityschema.org/collection/public");
+        thePublic.insert("id", PumpIOMicroBlog::PublicCollection);
         to.append(thePublic);
 
         QVariantMap item;

@@ -164,7 +164,7 @@ void PumpIOAccount::setLists(const QVariantList lists)
 {
     d->lists = lists;
     QVariantMap publicCollection;
-    publicCollection.insert("id", "http://activityschema.org/collection/public");
+    publicCollection.insert("id", PumpIOMicroBlog::PublicCollection);
     publicCollection.insert("name", "Public");
     d->lists.append(publicCollection);
     QVariantMap followersCollection;

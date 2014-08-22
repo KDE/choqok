@@ -106,6 +106,8 @@ public:
     static QString userNameFromAcct(const QString& acct);
     static QString hostFromAcct(const QString& acct);
 
+    static const QString PublicCollection;
+
 Q_SIGNALS:
     void favorite(Choqok::Account*, Choqok::Post*);
     void followingFetched(Choqok::Account*);

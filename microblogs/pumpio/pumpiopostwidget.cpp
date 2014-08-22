@@ -104,19 +104,22 @@ QString PumpIOPostWidget::generateSign()
             ss += i18n("To:") + ' ';
 
             Q_FOREACH (const QString& id, post->to) {
-                if (id == "http://activityschema.org/collection/public") {
-                    ss += i18n("Public") + ' ';
+                if (id == PumpIOMicroBlog::PublicCollection) {
+                    ss += i18n("Public") + ", ";
                 } else if (followers.indexIn(id) != -1) {
                     ss += "<a href=\"" + QString(id).remove("/api/user") + "\">"
-                          + i18n("Followers") + "</a> ";
+                          + i18n("Followers") + "</a>, ";
                 } else if (id == "acct:" + account->webfingerID()) {
-                    ss += i18n("You") + ' ';
+                    ss += i18n("You") + ", ";
                 } else {
                     ss += "<a href=\"" + microblog->profileUrl(account, id)
-                          + "\">" + PumpIOMicroBlog::userNameFromAcct(id) + "</a> ";
+                          + "\">" + PumpIOMicroBlog::userNameFromAcct(id) + "</a>, ";
                 }
             }
-            ss = ss.trimmed();
+
+            if (ss.endsWith(", ")) {
+                ss.chop(2);
+            }
         }
 
         if (!post->cc.isEmpty()) {
@@ -124,19 +127,22 @@ QString PumpIOPostWidget::generateSign()
             ss += i18n("CC:") + ' ';
 
             Q_FOREACH (const QString& id, post->cc) {
-                if (id == "http://activityschema.org/collection/public") {
-                    ss += i18n("Public") + ' ';
+                if (id == PumpIOMicroBlog::PublicCollection) {
+                    ss += i18n("Public") + ", ";
                 } else if (followers.indexIn(id) != -1) {
                     ss += "<a href=\"" + QString(id).remove("/api/user") + "\">"
-                          + i18n("Followers") + "</a> ";
+                          + i18n("Followers") + "</a>, ";
                 } else if (id == "acct:" + account->webfingerID()) {
-                    ss += i18n("You") + ' ';
+                    ss += i18n("You") + ", ";
                 } else {
                     ss += "<a href=\"" + microblog->profileUrl(account, id)
-                          + "\">" + PumpIOMicroBlog::userNameFromAcct(id) + "</a> ";
+                          + "\">" + PumpIOMicroBlog::userNameFromAcct(id) + "</a>, ";
                 }
             }
-            ss = ss.trimmed();
+
+            if (ss.endsWith(", ")) {
+                ss.chop(2);
+            }
         }
 
         if (!post->shares.isEmpty()) {
@@ -145,13 +151,16 @@ QString PumpIOPostWidget::generateSign()
 
             Q_FOREACH (const QString& id, post->shares) {
                 if (id == "acct:" + account->webfingerID()) {
-                    ss += i18n("You") + ' ';
+                    ss += i18n("You") + ", ";
                 } else {
                     ss += "<a href=\"" + microblog->profileUrl(account, id)
-                          + "\">" + PumpIOMicroBlog::userNameFromAcct(id) + "</a> ";
+                          + "\">" + PumpIOMicroBlog::userNameFromAcct(id) + "</a>, ";
                 }
             }
-            ss = ss.trimmed();
+
+            if (ss.endsWith(", ")) {
+                ss.chop(2);
+            }
         }
 
         ss += " - ";
