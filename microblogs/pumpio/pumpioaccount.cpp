@@ -88,6 +88,7 @@ void PumpIOAccount::writeConfig()
                                                    d->tokenSecret);
     configGroup()->writeEntry("Following", d->following);
     configGroup()->writeEntry("Timelines", d->timelineNames);
+    //TODO: write accounts lists
     Choqok::Account::writeConfig();
 }
 
@@ -171,7 +172,6 @@ void PumpIOAccount::setLists(const QVariantList lists)
     followersCollection.insert("id", d->host + "/api/user/" + username() + "/followers");
     followersCollection.insert("name", "Followers");
     d->lists.append(followersCollection);
-    writeConfig();
 }
 
 void PumpIOAccount::setTimelineNames(const QStringList& list)
