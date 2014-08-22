@@ -1206,12 +1206,20 @@ Choqok::Post* PumpIOMicroBlog::readPost(const QVariantMap& var, Choqok::Post* po
 
         const QVariantList to = var["to"].toList();
         Q_FOREACH (const QVariant& element, to) {
-            p->to.append(element.toMap().value("id").toString());
+            QVariantMap toElementMap = element.toMap();
+            QString toElementType = toElementMap.value("objectType").toString();
+            if (toElementType == "person" || toElementType == "collection") {
+                p->cc.append(toElementMap.value("id").toString());
+            }
         }
 
         const QVariantList cc = var["cc"].toList();
         Q_FOREACH (const QVariant& element, cc) {
-            p->cc.append(element.toMap().value("id").toString());
+            QVariantMap ccElementMap = element.toMap();
+            QString ccElementType = ccElementMap.value("objectType").toString();
+            if (ccElementType == "person" || ccElementType == "collection") {
+                p->to.append(ccElementMap.value("id").toString());
+            }
         }
 
         const QVariantMap replies = object["replies"].toMap();
