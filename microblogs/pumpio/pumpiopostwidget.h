@@ -52,6 +52,8 @@ protected Q_SLOTS:
     void toggleFavorite();
 
 protected:
+    virtual bool isResendAvailable();
+
     static const KIcon unFavIcon;
 
 private:
