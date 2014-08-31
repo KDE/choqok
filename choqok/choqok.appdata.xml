@@ -29,6 +29,7 @@
     <p xml:lang="pl">Choqok jest klientem mikro bloków, który obsługuje usługi Twitter.com oraz Identi.ca</p>
     <p xml:lang="pt">O Choqok é um cliente de micro-blogs que suporta os serviços do Twitter.com e do Identi.ca</p>
     <p xml:lang="pt-BR">Choqok é um cliente de microblogging que suporte aos serviços do Identi.ca e Twitter.com</p>
+    <p xml:lang="sk">Choqok je mikro blogovací klient, ktorý podporuje služby Twitter.com a Identi.ca</p>
     <p xml:lang="sv">Choqok är en klient för mikrobloggar som stöder tjänsterna Twitter.com och Identi.ca</p>
     <p xml:lang="uk">Choqok — клієнтська програма для роботи з мікроблогами, у якій передбачено підтримку служб Twitter.com та Identi.ca.</p>
     <p xml:lang="x-test">xxChoqok is a micro-blogging client which supports Twitter.com and Identi.ca servicesxx</p>
@@ -56,6 +57,7 @@
       <li xml:lang="pl">Obsługa usługi mikro blogów Twitter.com</li>
       <li xml:lang="pt">Suporte para o serviço de micro-blogs Twitter.com</li>
       <li xml:lang="pt-BR">Suporte ao serviço de microblogging Twitter.com</li>
+      <li xml:lang="sk">Podporuje mikro blogovaciu službu Twitter.com</li>
       <li xml:lang="sv">Stöder mikrobloggtjänsten Twitter.com</li>
       <li xml:lang="uk">підтримка служби мікроблогів Twitter.com;</li>
       <li xml:lang="x-test">xxSupporting Twitter.com micro-blogging servicexx</li>
@@ -68,6 +70,7 @@
       <li xml:lang="pl">Obsługa usługi mikro blogów Identi.ca (przy użyciu API zgodnego z Twitter)</li>
       <li xml:lang="pt">Suporte para o serviço de micro-blogs Identi.ca (usando a sua API compatível com o Twitter)</li>
       <li xml:lang="pt-BR">Suporte ao serviço de microblogging Identi.ca (Usando a API compatível do Twitter)</li>
+      <li xml:lang="sk">Podporuje mikro blogovaciu službu Identi.ca (pomocou svojho API kompatibilného s Twitterom)</li>
       <li xml:lang="sv">Stöder mikrobloggtjänsten Identi.ca (genom att använda dess programmeringsgränssnitt kompatibelt med Twitter)</li>
       <li xml:lang="uk">підтримка служби ведення мікроблогів Identi.ca (за допомогою її сумісного з Twitter програмного інтерфейсу);</li>
       <li xml:lang="x-test">xxSupporting Identi.ca micro-blogging service (Using its Twitter compatible API)xx</li>
@@ -80,6 +83,7 @@
       <li xml:lang="pl">Obsługa samodzielnych stron sieciowych Laconica (przy użyciu API zgodnego z Twitter)</li>
       <li xml:lang="pt">Suporte para as páginas Web do Laconica auto-alojadas (usando a sua API compatível com o Twitter)</li>
       <li xml:lang="pt-BR">Suporte a sites independentes hospedados no Laconica (Usando a API compatível do Twitter)</li>
+      <li xml:lang="sk">Podporuje samostatne hostované webové služby Laconica (pomocou svojho API kompatibilného s Twitterom)</li>
       <li xml:lang="sv">Stöder Laconica-webbplatser med egen värddator (genom att använda dess programmeringsgränssnitt kompatibelt med Twitter)</li>
       <li xml:lang="uk">підтримка самостійно підтримуваних сайтів Laconica (за допомогою відповідного сумісного з Twitter програмного інтерфейсу);</li>
       <li xml:lang="x-test">xxSupporting self hosted Laconica websites (Using its Twitter compatible API)xx</li>
@@ -92,6 +96,7 @@
       <li xml:lang="pl">Obsługa osi czasowych użytkownik + jego przyjaciele</li>
       <li xml:lang="pt">Suporte para linhas temporais do Utilizador + Os Seus Amigos</li>
       <li xml:lang="pt-BR">Suporte a linha do tempo do usuário e seus amigos</li>
+      <li xml:lang="sk">Podporuje časové osi používateľov a ich priateľov</li>
       <li xml:lang="sv">Stöd för tidslinjer för användaren och hans eller hennes vänner</li>
       <li xml:lang="uk">підтримка показу розкладу повідомлень користувача та його друзів;</li>
       <li xml:lang="x-test">xxSupporting User + His/Her Friends time-linesxx</li>
@@ -104,6 +109,7 @@
       <li xml:lang="pl">Obsługa osi czasowych @Reply</li>
       <li xml:lang="pt">Suporte para as linhas temporais de @Resposta</li>
       <li xml:lang="pt-BR">Suporte a linhas do tempo @Reply</li>
+      <li xml:lang="sk">Podporuje časové osi @Reply</li>
       <li xml:lang="sv">Stöd för tidslinjer för svar (@Reply)</li>
       <li xml:lang="uk">підтримка розкладів @Reply;</li>
       <li xml:lang="x-test">xxSupporting @Reply time-linesxx</li>
@@ -116,6 +122,7 @@
       <li xml:lang="pl">Obsługa wysyłania i odbierania wiadomości bezpośrednich</li>
       <li xml:lang="pt">Suporte para o envio e recepção de mensagens directas</li>
       <li xml:lang="pt-BR">Suporte a envio e recebimento de mensagens diretas</li>
+      <li xml:lang="sk">Podpora pre posielanie a prijímanie priamych správ</li>
       <li xml:lang="sv">Stöd för att skicka och ta emot direktmeddelanden</li>
       <li xml:lang="uk">підтримка надсилання та отримання безпосередніх повідомлень;</li>
       <li xml:lang="x-test">xxSupport for send and receive direct messagesxx</li>
@@ -128,6 +135,7 @@
       <li xml:lang="pl">Integracja z Twitpic.com</li>
       <li xml:lang="pt">Integração com o Twitpic.com</li>
       <li xml:lang="pt-BR">Integração com o Twitpic.com</li>
+      <li xml:lang="sk">Integrácia Twitpic.com</li>
       <li xml:lang="sv">Integrering med Twitpic.com</li>
       <li xml:lang="uk">інтеграція з Twitpic.com;</li>
       <li xml:lang="x-test">xxTwitpic.com integrationxx</li>
@@ -140,6 +148,7 @@
       <li xml:lang="pl">Obsługa wielu kont jednocześnie</li>
       <li xml:lang="pt">Suporte para várias contas em simultâneo</li>
       <li xml:lang="pt-BR">Suporte a várias contas simultâneas</li>
+      <li xml:lang="sk">Podporuje viac účtov súčasne</li>
       <li xml:lang="sv">Stöder flera samtidiga konton</li>
       <li xml:lang="uk">підтримка одночасної роботи з декількома обліковими записами;</li>
       <li xml:lang="x-test">xxSupporting Multiple Accounts simultaneouslyxx</li>
@@ -152,6 +161,7 @@
       <li xml:lang="pl">Obsługa API wyszukiwania dla wszystkich usług</li>
       <li xml:lang="pt">Suporte para as API's de pesquisa em todos os serviços</li>
       <li xml:lang="pt-BR">Suporte a mecanismos de pesquisa de vários serviços</li>
+      <li xml:lang="sk">Podporuje API hľadania pre všetky služby</li>
       <li xml:lang="sv">Stöder programmeringsgränssnitt för sökning med alla tjänster</li>
       <li xml:lang="uk">підтримка програмного інтерфейсу пошуку для усіх служб;</li>
       <li xml:lang="x-test">xxSupporting search APIs for all servicesxx</li>
@@ -164,6 +174,7 @@
       <li xml:lang="pl">Integracja z KPortfelem</li>
       <li xml:lang="pt">Integração com a KWallet</li>
       <li xml:lang="pt-BR">Integração com o KWallet</li>
+      <li xml:lang="sk">Integrácia KWallet</li>
       <li xml:lang="sv">Integrering med plånboken</li>
       <li xml:lang="uk">інтеграція з KWallet;</li>
       <li xml:lang="x-test">xxKWallet integrationxx</li>
@@ -176,6 +187,7 @@
       <li xml:lang="pl">Możliwość przesłania szybkiego ćwierknięcia przy użyciu skrótu globalnego (Ctrl+Meta+T)</li>
       <li xml:lang="pt">Capacidade de fazer um 'tweet' rápido com combinações de teclas globais (Ctrl+Meta+T)</li>
       <li xml:lang="pt-BR">Capacidade de criar um tweet rápido usando atalhos globais (Ctrl+Meta+T)</li>
+      <li xml:lang="sk">Schopnosť urobiť rýchly tweet s globálnymi skratkami (Ctrl+Meta+T)</li>
       <li xml:lang="sv">Möjlighet att göra ett snabbt inlägg med globala snabbtangenter (Ctrl+Meta+T)</li>
       <li xml:lang="uk">можливість швидкого створення допису за допомогою загальних скорочень (Ctrl+Alt+T);</li>
       <li xml:lang="x-test">xxAbility to make a quick tweet with global shortcuts (Ctrl+Meta+T)xx</li>
@@ -188,6 +200,7 @@
       <li xml:lang="pl">Możliwość powiadamiania użytkownika o nowych tekstach dostępności poprzez KNotification lub Libnotify</li>
       <li xml:lang="pt">Capacidade de notificação dos utilizadores sobre os novos estados, com a KNotification ou a Libnotify</li>
       <li xml:lang="pt-BR">Capacidade de notificar o usuário sobre mudança de status, com KNotification ou Libnotify</li>
+      <li xml:lang="sk">Schopnosť upozorniť používateľa o novom texte statusu s KNotification alebo Libnotify</li>
       <li xml:lang="sv">Möjlighet att underrätta användaren om ny statustext, med KNotification eller Libnotify</li>
       <li xml:lang="uk">можливість сповіщення користувача щодо тексту нових станів за допомогою KNotification або Libnotify;</li>
       <li xml:lang="x-test">xxAbility to notify user about new statuses text, with KNotification or Libnotifyxx</li>
@@ -200,6 +213,7 @@
       <li xml:lang="pl">Obsługa skracania adresów url dłuższych niż 30 znaków (skracanie przy wklejaniu)</li>
       <li xml:lang="pt">Suporte para URL's curtos com mais de 30 caracteres (encurtar ao colar)</li>
       <li xml:lang="pt-BR">Suporte a encurtamento de URLs com mais de 30 caracteres (encurta ao colar)</li>
+      <li xml:lang="sk">Podpora pre skrátenie URL s viac ako 30 znakmi (skrátenie pri vložení)</li>
       <li xml:lang="sv">Stöd för att avkorta webbadresser med mer än 30 tecken (avkorta vid inklistring)</li>
       <li xml:lang="uk">підтримка скорочення адрес, що складаються з понад 30 символів (скорочення під час вставлення);</li>
       <li xml:lang="x-test">xxSupport for shortening urls with more than 30 characters (shorten on paste)xx</li>
@@ -212,6 +226,7 @@
       <li xml:lang="pl">Obsługa ustawiania wyglądu wykazu dostępności</li>
       <li xml:lang="pt">Suporte para a configuração da aparência das listas de estados</li>
       <li xml:lang="pt-BR">Suporte para configuração da aparência das listas de status</li>
+      <li xml:lang="sk">Podpora pre nastavenie statusu a vzhľadu zoznamu</li>
       <li xml:lang="sv">Stöd för att anpassa statuslistornas utseende</li>
       <li xml:lang="uk">підтримка можливості зміни вигляду списків станів.</li>
       <li xml:lang="x-test">xxSupport for configuring status lists appearancexx</li>
