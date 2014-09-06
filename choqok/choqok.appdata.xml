@@ -6,6 +6,7 @@
   <name>Choqok</name>
   <name xml:lang="ca">Choqok</name>
   <name xml:lang="cs">Choqok</name>
+  <name xml:lang="de">Choqok</name>
   <name xml:lang="en-GB">Choqok</name>
   <name xml:lang="es">Choqok</name>
   <name xml:lang="nds">Choqok</name>
@@ -22,6 +23,7 @@
       Choqok is a micro-blogging client which supports Twitter.com and Identi.ca services
     </p>
     <p xml:lang="ca">El Choqok és un client de micro-blogs que implementa els serveis de Twitter.com i Identi.ca</p>
+    <p xml:lang="de">Choqok ist ein Mikro-Blogging-Programm, das derzeit Identi.ca und Twitter unterstützt</p>
     <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com and Identi.ca services</p>
     <p xml:lang="es">Choqok es un cliente de microblogueo que soporta los servicios Twitter.com e Identi.ca</p>
     <p xml:lang="nds">Chokoq is en Lüttdaagbook-Client, de Twitter un Identi.ca ünnerstütten deit.</p>
@@ -128,6 +130,7 @@
       <li xml:lang="x-test">xxSupport for send and receive direct messagesxx</li>
       <li>Twitpic.com integration</li>
       <li xml:lang="ca">Integració amb Twitpic.com</li>
+      <li xml:lang="de">Integration von Twitpic.com</li>
       <li xml:lang="en-GB">Twitpic.com integration</li>
       <li xml:lang="es">Integración con Twitpic.com</li>
       <li xml:lang="nds">Arbeidt mit Twitpic.com tosamen</li>
