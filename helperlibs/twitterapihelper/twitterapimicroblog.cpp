@@ -687,7 +687,7 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount
     kDebug();
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
-    url.addPath( QString("/statuses/friends.json") );
+    url.addPath( QString("/friends/list.json") );
     KUrl tmpUrl(url);
     url.addQueryItem( "cursor", d->friendsCursor );
     QOAuth::ParamMap params;
@@ -956,17 +956,20 @@ void TwitterApiMicroBlog::createFriendship( Choqok::Account *theAccount, const Q
     kDebug();
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
-    url.addPath( QString("/friendships/create.%1").arg(format));
-    QByteArray data;
-    data = "screen_name=" + username.toLocal8Bit();
-    kDebug()<<url;
+    url.addPath ( "/friendships/create.json" );
+    KUrl tmp(url);
+    url.addQueryItem("screen_name", username.toLatin1());
+    
+    QOAuth::ParamMap params;
+    params.insert("screen_name", username.toLatin1());
 
-    KIO::StoredTransferJob *job = KIO::storedHttpPost( data, url, KIO::HideProgressInfo) ;
+    KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
+    kDebug()<<url;
     if ( !job ) {
         kError() << "Cannot create an http POST request!";
         return;
     }
-    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST));
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, tmp, QOAuth::POST, params));
     mJobsAccount[job] = theAccount;
     mFriendshipMap[ job ] = username;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotCreateFriendship(KJob*) ) );
@@ -1016,17 +1019,20 @@ void TwitterApiMicroBlog::destroyFriendship( Choqok::Account *theAccount, const 
     kDebug();
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
-    url.addPath( QString("/friendships/destroy.%1").arg(format));
-    QByteArray data;
-    data = "screen_name=" + username.toLocal8Bit();
-    kDebug()<<url;
 
-    KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
+    url.addPath ( "/friendships/destroy.json" );
+    KUrl tmp(url);
+    url.addQueryItem("screen_name", username.toLatin1());
+    
+    QOAuth::ParamMap params;
+    params.insert("screen_name", username.toLatin1());
+
+    KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kError() << "Cannot create an http POST request!";
         return;
     }
-    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST));
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, tmp, QOAuth::POST, params));
     mJobsAccount[job] = theAccount;
     mFriendshipMap[ job ] = username;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotDestroyFriendship(KJob*) ) );
@@ -1076,16 +1082,19 @@ void TwitterApiMicroBlog::blockUser( Choqok::Account *theAccount, const QString&
     kDebug();
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
-    url.addPath( QString("/blocks/create.%1").arg(format));
-    QByteArray data;
-    data = "screen_name=" + username.toLocal8Bit();
+    url.addPath ( "/blocks/create.json" );
+    KUrl tmp(url);
+    url.addQueryItem("screen_name", username.toLatin1());
+    
+    QOAuth::ParamMap params;
+    params.insert("screen_name", username.toLatin1());
 
-    KIO::StoredTransferJob *job = KIO::storedHttpPost( data, url, KIO::HideProgressInfo) ;
+    KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
     if ( !job ) {
         kError() << "Cannot create an http POST request!";
         return;
     }
-    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST));
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, tmp, QOAuth::POST, params));
     mJobsAccount[job] = theAccount;
     mFriendshipMap[ job ] = username;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotBlockUser(KJob*) ) );
@@ -1354,7 +1363,7 @@ QStringList TwitterApiMicroBlog::readUsersScreenName(Choqok::Account* theAccount
 {
     QStringList list;
     bool ok;
-    QVariantList jsonList = d->parser.parse(buffer, &ok).toList();
+    QVariantList jsonList = d->parser.parse(buffer, &ok).toMap()["users"].toList();
 
     if ( ok ) {
         QVariantList::const_iterator it = jsonList.constBegin();
