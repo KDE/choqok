@@ -147,7 +147,7 @@ void TwitterApiDMessageDialog::submitPost(QString text)
 void TwitterApiDMessageDialog::friendsUsernameListed(TwitterApiAccount* theAccount, QStringList list)
 {
     if(theAccount == d->account){
-        d->comboFriendsList->removeItem(0);
+        d->comboFriendsList->clear();
         list.sort();
         d->comboFriendsList->addItems(list);
     }

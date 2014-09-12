@@ -85,7 +85,7 @@ TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObje
     KConfigGroup grp(KGlobal::config(), "TwitterApi");
     format = grp.readEntry("format", "json");
 
-    setCharLimit(140);	//TODO: See if we can ask twitter for the char limit and make it dynamic
+    setCharLimit(140);    //TODO: See if we can ask twitter for the char limit and make it dynamic
     QStringList timelineTypes;
     timelineTypes<< "Home" << "Reply" << "Inbox" << "Outbox" << "Favorite" << "ReTweets" << "Public";
     setTimelineNames(timelineTypes);
@@ -221,8 +221,8 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
             st->repeatedPostId = grp.readEntry("repeatedPostId", QString());
             st->conversationId = grp.readEntry("conversationId", QString());
             st->media = grp.readEntry("mediaUrl", QString());
-	    st->mediaSizeWidth = grp.readEntry("mediaWidth", 0);
-	    st->mediaSizeHeight = grp.readEntry("mediaHeight", 0);
+            st->mediaSizeWidth = grp.readEntry("mediaWidth", 0);
+            st->mediaSizeHeight = grp.readEntry("mediaHeight", 0);
 
             list.append( st );
         }
@@ -274,8 +274,8 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
             grp.writeEntry( "repeatedPostId", post->repeatedPostId.toString());
             grp.writeEntry( "conversationId", post->conversationId.toString() );
             grp.writeEntry( "mediaUrl", post->media);
-	    grp.writeEntry("mediaWidth", post->mediaSizeWidth);
-	    grp.writeEntry("mediaHeight", post->mediaSizeHeight);
+            grp.writeEntry("mediaWidth", post->mediaSizeWidth);
+            grp.writeEntry("mediaHeight", post->mediaSizeHeight);
         }
         postsBackup.sync();
     }
@@ -412,9 +412,9 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
         if ( !post->isPrivate ) {
             readPost ( theAccount, stj->data(), post );
             if ( post->isError ) {         
-		QString errorMsg;
+                QString errorMsg;
                 errorMsg = checkForError(stj->data());
-                if( errorMsg.isEmpty() ){	// ???? If empty, why is there an error?
+                if( errorMsg.isEmpty() ){    // ???? If empty, why is there an error?
                     kError() << "Creating post: JSON parsing error: "<< stj->data() ;
                     emit errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
                                     i18n ( "Creating the new post failed. The result data could not be parsed." ), MicroBlog::Critical );
@@ -677,6 +677,7 @@ void TwitterApiMicroBlog::slotRemoveFavorite ( KJob *job )
 void TwitterApiMicroBlog::listFriendsUsername(TwitterApiAccount* theAccount, bool active)
 {
     friendsList.clear();
+    d->friendsCursor = "-1";
     if ( theAccount ) {
         requestFriendsScreenName(theAccount, active);
     }
@@ -690,8 +691,10 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount
     url.addPath( QString("/friends/list.json") );
     KUrl tmpUrl(url);
     url.addQueryItem( "cursor", d->friendsCursor );
+    url.addQueryItem( "count", QString("200") );
     QOAuth::ParamMap params;
     params.insert("cursor", d->friendsCursor.toLatin1());
+    params.insert("count", QString("200").toLatin1());
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
@@ -732,11 +735,16 @@ void TwitterApiMicroBlog::finishRequestFriendsScreenName(KJob* job, bool active)
     }
     QStringList newList;
     newList = readUsersScreenName( theAccount, stJob->data() );
-    friendsList << newList;
-    if ( newList.count() == 100 ) {
+    newList.removeDuplicates();
+    if ( ! checkForError( stJob->data()).isEmpty() ) {        // if an error occurred, do not replace the friends list.
+        theAccount->setFriendsList(friendsList);
+        emit friendsUsernameListed( theAccount, friendsList );
+    }
+    else if ( QString::compare(d->friendsCursor,"0") ) {    // if the cursor is not "0", there is more friends data to be had
+        friendsList << newList;
         requestFriendsScreenName( theAccount, active );
     } else {
-        friendsList.removeDuplicates();
+        friendsList << newList;
         theAccount->setFriendsList(friendsList);
         Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Friends list for account %1 has been updated.",
             theAccount->username()) );
@@ -777,7 +785,7 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
         url.addQueryItem("owner_screen_name", theAccount->username());
         params.insert("owner_screen_name", theAccount->username().toLatin1());
     } else {
-        if( account->usingOAuth() ){	//TODO: Check if needed
+        if( account->usingOAuth() ){    //TODO: Check if needed
             if ( !latestStatusId.isEmpty() ) {
                 params.insert ( "since_id", latestStatusId.toLatin1() );
                 countOfPost = 200;
@@ -1140,9 +1148,13 @@ QString TwitterApiMicroBlog::checkForError(const QByteArray& buffer)
 {
     bool ok;
     QVariantMap map = d->parser.parse(buffer, &ok).toMap();
-    if(ok && map.contains("error")){
-        kError()<<"Error at request "<<map.value("request").toString()<<" : "<<map.value("error").toString();
-        return map.value("error").toString();
+    QStringList errors;
+    if(ok && map.contains("errors")){
+    for (int i=0; i<map["errors"].toList().count(); i++) {
+        errors.append(map["errors"].toList()[i].toMap()["message"].toString());
+        kError() << "Error: " << errors.last();
+        }
+        return errors.join(";");
     }
     return QString();
 }
@@ -1223,16 +1235,16 @@ Choqok::Post* TwitterApiMicroBlog::readPost(Choqok::Account* theAccount,
     if(media.size() > 0) {
         mediaMap = media.at(0).toMap();
         post->media = mediaMap["media_url"].toString() + ":small";
-	QVariantMap sizes = mediaMap["sizes"].toMap();
-	QVariantMap w = sizes["small"].toMap();
-	kError() << "size: " << w;
-	post->mediaSizeWidth = w["w"].toInt() !=  0L ? w["w"].toInt() : 0;
-	post->mediaSizeHeight = w["h"].toInt() != 0L ? w["h"].toInt() : 0;
+        QVariantMap sizes = mediaMap["sizes"].toMap();
+        QVariantMap w = sizes["small"].toMap();
+        kError() << "size: " << w;
+        post->mediaSizeWidth = w["w"].toInt() !=  0L ? w["w"].toInt() : 0;
+        post->mediaSizeHeight = w["h"].toInt() != 0L ? w["h"].toInt() : 0;
     }
     else {
         post->media = "";
-	post->mediaSizeHeight = 0;
-	post->mediaSizeWidth = 0;
+        post->mediaSizeHeight = 0;
+        post->mediaSizeWidth = 0;
     }
 
     Choqok::Post* repeatedPost = 0;
@@ -1364,6 +1376,9 @@ QStringList TwitterApiMicroBlog::readUsersScreenName(Choqok::Account* theAccount
     QStringList list;
     bool ok;
     QVariantList jsonList = d->parser.parse(buffer, &ok).toMap()["users"].toList();
+    QString nextCursor = d->parser.parse(buffer, &ok).toMap()["next_cursor_str"].toString();
+    if (nextCursor.isEmpty())
+        nextCursor = "0"; // we probably ran the rate limit; stop bugging the server already
 
     if ( ok ) {
         QVariantList::const_iterator it = jsonList.constBegin();
@@ -1371,6 +1386,7 @@ QStringList TwitterApiMicroBlog::readUsersScreenName(Choqok::Account* theAccount
         for(; it!=endIt; ++it){
             list<<it->toMap()["screen_name"].toString();
         }
+        d->friendsCursor = nextCursor;
     } else {
         QString err = i18n( "Retrieving the friends list failed. The data returned from the server is corrupted." );
         kDebug() << "JSON parse error: the buffer is: \n" << buffer;
