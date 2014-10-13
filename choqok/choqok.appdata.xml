@@ -40,6 +40,7 @@
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
+    <p xml:lang="de">Funktionen:</p>
     <p xml:lang="en-GB">Features:</p>
     <p xml:lang="es">Características:</p>
     <p xml:lang="nb">Egenskaper:</p>
@@ -70,6 +71,7 @@
       <li xml:lang="x-test">xxSupporting Twitter.com micro-blogging servicexx</li>
       <li>Supporting Identi.ca micro-blogging service (Using its Twitter compatible API)</li>
       <li xml:lang="ca">Implementació del servei de micro-blog Identi.ca (usant la seva API compatible amb Twitter)</li>
+      <li xml:lang="de">Unterstützung für den Micro-Blogging-Dienst Identi.ca, dazu wird die Twitter-kompatible API (Programmschnittstelle)</li>
       <li xml:lang="en-GB">Supporting Identi.ca micro-blogging service (Using its Twitter compatible API)</li>
       <li xml:lang="es">Soporta el servicio de microblogueo Identi.ca (Utilizando su API compatible con Twitter)</li>
       <li xml:lang="nb">Støtter identi.ca-tjeneste for mikroblogging (ved bruk av dens Twitter-kompatible API)</li>
