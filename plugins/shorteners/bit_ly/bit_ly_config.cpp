@@ -57,7 +57,9 @@ Bit_ly_Config::Bit_ly_Config(QWidget* parent, const QVariantList& ):
     ui.kcfg_api_key->setValidator( val1 );
 
     ui.help_label->setTextFormat( Qt::RichText );
-    ui.help_label->setText( i18n("You can find your API key <a href=\"http://bit.ly/a/your_api_key\">here</a>") );
+    ui.help_label->setText( i18nc( "The your_api_key part of the URL is a fixed part of the URL "
+                                   "and should probably not be changed in localization.",
+                                   "You can find your API key <a href=\"http://bit.ly/a/your_api_key\">here</a>") );
 
     domains << "bit.ly" << "j.mp";
     ui.kcfg_domain->addItems( domains  );
@@ -124,7 +126,10 @@ void Bit_ly_Config::slotValidate()
     if( KIO::NetAccess::synchronousRun( job, 0, &data ) ) {
         QString output(data);
         if ( output.startsWith( '0' ) )
-             KMessageBox::error( this, i18n ( "Provided data is invalid. Try another login or API key.\nYou can find it on http://bit.ly/a/your_api_key" ) );
+             KMessageBox::error( this, i18nc ( "The your_api_key part of the URL is a fixed part of the URL "
+                                               "and should probably not be changed in localization.",
+                                               "Provided data is invalid. Try another login or API key.\n"
+                                               "You can find it on http://bit.ly/a/your_api_key" ) );
         if ( output.startsWith( '1' ) )
              KMessageBox::information( this, i18n ( "You entered valid information." ) );
     }

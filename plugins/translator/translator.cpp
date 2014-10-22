@@ -103,7 +103,7 @@ void Translator::slotTranslated(KJob* job)
                 color = wd->palette().dark().color().name();
             }
             QString translatedNotice =
-            i18n("<span style=\"color:%2; font-size:small;\">Translated from %1: (<a href='choqok://showoriginalpost' style=\"text-decoration:none\" >original post</a>)</span>", srcLang, color);
+            i18nc("%1 is the name of the source language in localized form", "<span style=\"color:%2; font-size:small;\">Translated from %1: (<a href='choqok://showoriginalpost' style=\"text-decoration:none\" >original post</a>)</span>", srcLang, color);
             wd->setContent(QString("%1<br/>%2").arg(translatedNotice)
                                             .arg(trMap["translatedText"].toString()));
             return;

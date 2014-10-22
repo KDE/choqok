@@ -54,8 +54,8 @@ FilterSettings* FilterSettings::self()
         _filterTypeName[Filter::ExactMatch] = i18n("Exact Match");
         _filterTypeName[Filter::RegExp] = i18n("Regular Expression");
 
-        _filterActionName[Filter::Remove] = i18n("Hide Posts");
-        _filterActionName[Filter::Highlight] = i18n("Highlight Posts");
+        _filterActionName[Filter::Remove] = i18nc("@action", "Hide Posts");
+        _filterActionName[Filter::Highlight] = i18nc("@action", "Highlight Posts");
     }
     return _self;
 }
