@@ -9,6 +9,7 @@
   <name xml:lang="de">Choqok</name>
   <name xml:lang="en-GB">Choqok</name>
   <name xml:lang="es">Choqok</name>
+  <name xml:lang="fi">Choqok</name>
   <name xml:lang="nb">Choqok</name>
   <name xml:lang="nds">Choqok</name>
   <name xml:lang="nl">Choqok</name>
@@ -27,6 +28,7 @@
     <p xml:lang="de">Choqok ist ein Mikro-Blogging-Programm, das derzeit Identi.ca und Twitter unterstützt</p>
     <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com and Identi.ca services</p>
     <p xml:lang="es">Choqok es un cliente de microblogueo que soporta los servicios Twitter.com e Identi.ca</p>
+    <p xml:lang="fi">Choqok on mikroblogausasiakas, joka tukee Twitter.com- ja Identi.ca-palveluja</p>
     <p xml:lang="nb">Choqok er en klient for mikroblogging som støtter tjenestene Twitter.com og identi.ca</p>
     <p xml:lang="nds">Chokoq is en Lüttdaagbook-Client, de Twitter un Identi.ca ünnerstütten deit.</p>
     <p xml:lang="nl">Choqok is een micro-blogging-client, die de services Twitter.com en Identi.ca ondersteunt</p>
@@ -43,6 +45,7 @@
     <p xml:lang="de">Funktionen:</p>
     <p xml:lang="en-GB">Features:</p>
     <p xml:lang="es">Características:</p>
+    <p xml:lang="fi">Ominaisuudet:</p>
     <p xml:lang="nb">Egenskaper:</p>
     <p xml:lang="nds">Markmalen:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
@@ -59,6 +62,7 @@
       <li xml:lang="de">Unterstützung für den Micro-Blogging-Dienst Twitter.com</li>
       <li xml:lang="en-GB">Supporting Twitter.com micro-blogging service</li>
       <li xml:lang="es">Soporta el servicio de microblogueo Twitter.com</li>
+      <li xml:lang="fi">Tukee Twitter.com-mikroblogauspalvelua</li>
       <li xml:lang="nb">Støtter Twitter.com-tjeneste for mikroblogging</li>
       <li xml:lang="nds">Ünnerstütt den Lüttdaagbookdeenst Twitter.com</li>
       <li xml:lang="nl">Ondersteunt de microblogging-service Twitter.com</li>
@@ -74,6 +78,7 @@
       <li xml:lang="de">Unterstützung für den Micro-Blogging-Dienst Identi.ca, dazu wird die Twitter-kompatible API (Programmschnittstelle)</li>
       <li xml:lang="en-GB">Supporting Identi.ca micro-blogging service (Using its Twitter compatible API)</li>
       <li xml:lang="es">Soporta el servicio de microblogueo Identi.ca (Utilizando su API compatible con Twitter)</li>
+      <li xml:lang="fi">Tukee Identi.ca-mikroblogauspalvelua (käyttäen sen Twitter-yhteensopivaa APIa)</li>
       <li xml:lang="nb">Støtter identi.ca-tjeneste for mikroblogging (ved bruk av dens Twitter-kompatible API)</li>
       <li xml:lang="nds">Ünnerstütt den Lüttdaagbookdeenst Identi.ca (över sien to Twitter kumpativel API)</li>
       <li xml:lang="nl">Ondersteunt de microblogging-service Identi.ca (met gebruik van zijn aan Twitter compatibele API)</li>
@@ -88,6 +93,7 @@
       <li xml:lang="ca">Implementació pels llocs web allotjats a Laconica (usant la seva API compatible amb Twitter)</li>
       <li xml:lang="en-GB">Supporting self hosted Laconica websites (Using its Twitter compatible API)</li>
       <li xml:lang="es">Soporta los sitios web auto-alojados Laconica (utilizando su API compatible con Twitter)</li>
+      <li xml:lang="fi">Tukee itse ylläpidettyjä Laconica-sivustoja (käyttäen sen Twitter-yhteensopivaa APIa)</li>
       <li xml:lang="nb">Støtter egne Laconica-nettsider (med dens Twitter-kompatible API)</li>
       <li xml:lang="nds">Ünnerstütt sülven ünnerhollen Laconica-Nettsieden (över ehr to Twitter kumpativel API)</li>
       <li xml:lang="nl">Ondersteunt de zelf gehoste Laconica-websites (met gebruik van zijn aan Twitter compatibele API)</li>
@@ -102,6 +108,7 @@
       <li xml:lang="ca">Implementació per a les línies de temps Usuari + Vós i els vostres amics</li>
       <li xml:lang="en-GB">Supporting User + His/Her Friends time-lines</li>
       <li xml:lang="es">Soporta las líneas temporales usuario + sus amigos</li>
+      <li xml:lang="fi">Tukee käyttäjän ja hänen kaveriensa aikajanoja</li>
       <li xml:lang="nb">Støtter User + His/Her Friends tidslinjer</li>
       <li xml:lang="nds">Ünnerstütt Teitregen för Brukers un ehr Frünnen</li>
       <li xml:lang="nl">Ondersteuning van User + His/Her Friends tijdlijnen</li>
@@ -116,6 +123,7 @@
       <li xml:lang="ca">Implementació per a les línies de temps @Resposta</li>
       <li xml:lang="en-GB">Supporting @Reply time-lines</li>
       <li xml:lang="es">Soporta las líneas temporales de @respuesta</li>
+      <li xml:lang="fi">Tukee @Reply-aikajanoja</li>
       <li xml:lang="nb">Støtter @Reply  tidslinjer</li>
       <li xml:lang="nds">Ünnerstütt @Reply-Tietregen</li>
       <li xml:lang="nl">Ondersteuning van @Reply tijdlijnen</li>
@@ -130,6 +138,7 @@
       <li xml:lang="ca">Implementació per enviar i rebre missatges directes</li>
       <li xml:lang="en-GB">Support for send and receive direct messages</li>
       <li xml:lang="es">Soporta el envío y la recepción de mensajes directos</li>
+      <li xml:lang="fi">Tukee suorien viestien lähettämistä ja vastaanottamista</li>
       <li xml:lang="nb">Støtte for å sende og motta direkte meldinger</li>
       <li xml:lang="nds">Ünnerstütt dat Kriegen un Loosstüern vun Direktnarichten</li>
       <li xml:lang="nl">Ondersteuning van direct bestanden verzenden en ontvangen</li>
@@ -145,6 +154,7 @@
       <li xml:lang="de">Integration von Twitpic.com</li>
       <li xml:lang="en-GB">Twitpic.com integration</li>
       <li xml:lang="es">Integración con Twitpic.com</li>
+      <li xml:lang="fi">Twitpic.com-integrointi</li>
       <li xml:lang="nb">Integrasjon med Twitpic.com</li>
       <li xml:lang="nds">Arbeidt mit Twitpic.com tosamen</li>
       <li xml:lang="nl">Integratie met Twitpic.com</li>
@@ -159,6 +169,7 @@
       <li xml:lang="ca">Implementació per a múltiples comptes simultanis</li>
       <li xml:lang="en-GB">Supporting Multiple Accounts simultaneously</li>
       <li xml:lang="es">Soporta múltiples cuentas simultáneamente</li>
+      <li xml:lang="fi">Tukee useampia tilejä samanaikaisesti</li>
       <li xml:lang="nb">Støtter flere kontoer samtidig</li>
       <li xml:lang="nds">Ünnerstütt mehr Kontos op eenmaal</li>
       <li xml:lang="nl">Ondersteuning van meerdere accounts tegelijk</li>
@@ -173,6 +184,7 @@
       <li xml:lang="ca">Implementació per a les API de cerca per a tots els serveis</li>
       <li xml:lang="en-GB">Supporting search APIs for all services</li>
       <li xml:lang="es">Soporta las APIs de búsqueda de todos los servicios</li>
+      <li xml:lang="fi">Tukee jokaisen tuntemansa palvelun haku-APIa</li>
       <li xml:lang="nb">Støtter søke-API-er for alle tjenester</li>
       <li xml:lang="nds">Ünnerstütt Söök-APIs för all Deensten</li>
       <li xml:lang="nl">Ondersteunen van API's voor zoeken voor alle services</li>
@@ -188,6 +200,7 @@
       <li xml:lang="de">Integration von KWallet</li>
       <li xml:lang="en-GB">KWallet integration</li>
       <li xml:lang="es">Integración con KWallet</li>
+      <li xml:lang="fi">Käyttää KDE:n lompakkoa</li>
       <li xml:lang="nb">Integrasjon med KWallet</li>
       <li xml:lang="nds">Arbeidt mit KWallet tosamen</li>
       <li xml:lang="nl">Integratie met KWallet</li>
@@ -202,6 +215,7 @@
       <li xml:lang="ca">La capacitat per fer un «tweet» ràpid amb dreceres globals (Ctrl+Meta+T)</li>
       <li xml:lang="en-GB">Ability to make a quick tweet with global shortcuts (Ctrl+Meta+T)</li>
       <li xml:lang="es">Capacidad para hacer un tuit rápido con accesos rápidos de teclado globales (Ctrl+Meta+T)</li>
+      <li xml:lang="fi">Osaa lähettää pikaviestejä pikanäppäinyhdistelmällä (Ctrl+Meta+T)</li>
       <li xml:lang="nb">Kan gjøre en rask tvitring med globale snarveier (Ctrl+Meta+T)</li>
       <li xml:lang="nds">Jiepels gau mit en Tastkombinatschoon opstellen (Strg+Meta+T)</li>
       <li xml:lang="nl">Mogelijkheid om een snelle tweet te maken met globale sneltoetsen (Ctrl+Meta+T)</li>
@@ -216,6 +230,7 @@
       <li xml:lang="ca">La capacitat per a notificar a l'usuari sobre el nou estat del text, amb KNotification o Libnotify</li>
       <li xml:lang="en-GB">Ability to notify user about new statuses text, with KNotification or Libnotify</li>
       <li xml:lang="es">Capacidad para notificar al usuario sobre los nuevos textos de estado, con KNotification o Libnotify</li>
+      <li xml:lang="fi">Osaa tiedottaa käyttäjää uusista tilaviesteistä joko KNotificationin tai Libnotifyn avulla</li>
       <li xml:lang="nb">Kan varsle bruker om nye statustekster, men KNotification eller Libnotify</li>
       <li xml:lang="nds">Kann Brukers Bescheed över nieg Statussen geven, mit KNotification oder Libnotify</li>
       <li xml:lang="nl">De mogelijkheid om de gebruiker te informeren over nieuwe statusteksten, met KNotification of Libnotify</li>
@@ -230,6 +245,7 @@
       <li xml:lang="ca">Implementació per escurçar els URL amb més de 30 caràcters (escurça en enganxar)</li>
       <li xml:lang="en-GB">Support for shortening urls with more than 30 characters (shorten on paste)</li>
       <li xml:lang="es">Soporte para abreviar URL que tengan más de 30 caracteres (abreviatura al pegar)</li>
+      <li xml:lang="fi">Tukee verkko-osoitteitten lyhentämistä alle 30 merkkiin (leikepöydältä liitettäessä)</li>
       <li xml:lang="nb">Støtte for å forkorte URL-er med mer enn 30 tegn (korter inn ved innliming)</li>
       <li xml:lang="nds">Kann URLs mit mehr as 30 Tekens bi't Infögen kortmaken</li>
       <li xml:lang="nl">Ondersteuning voor ingekorte URL's met meer dan 30 tekens (ingekort bij plakken)</li>
@@ -244,6 +260,7 @@
       <li xml:lang="ca">Implementació per a configurar l'aparença de les llistes d'estat</li>
       <li xml:lang="en-GB">Support for configuring status lists appearance</li>
       <li xml:lang="es">Soporte para configurar la apariencia de las listas de estados</li>
+      <li xml:lang="fi">Tukee tilalistojen ulkoasun mukauttamista</li>
       <li xml:lang="nb">Støtte for å stille inn utseende på statuslister</li>
       <li xml:lang="nds">Ünnerstütt dat Instellen vun't Utsehn vun Statuslisten</li>
       <li xml:lang="nl">Ondersteuning voor instellen van het verschijnen van statuslijsten</li>
