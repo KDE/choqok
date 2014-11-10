@@ -7,6 +7,7 @@
   <name xml:lang="ca">Choqok</name>
   <name xml:lang="cs">Choqok</name>
   <name xml:lang="de">Choqok</name>
+  <name xml:lang="el">Choqok</name>
   <name xml:lang="en-GB">Choqok</name>
   <name xml:lang="es">Choqok</name>
   <name xml:lang="fi">Choqok</name>
@@ -27,6 +28,7 @@
     </p>
     <p xml:lang="ca">El Choqok és un client de micro-blogs que implementa els serveis de Twitter.com i Identi.ca</p>
     <p xml:lang="de">Choqok ist ein Mikro-Blogging-Programm, das derzeit Identi.ca und Twitter unterstützt</p>
+    <p xml:lang="el">Το Choqok είναι μια εφαρμογή μικρο-ιστολογίου η οποία υποστηρίζει τις υπηρεσίες Twitter.com και Identi.ca</p>
     <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com and Identi.ca services</p>
     <p xml:lang="es">Choqok es un cliente de microblogueo que soporta los servicios Twitter.com e Identi.ca</p>
     <p xml:lang="fi">Choqok on mikroblogausasiakas, joka tukee Twitter.com- ja Identi.ca-palveluja</p>
@@ -45,6 +47,7 @@
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
     <p xml:lang="de">Funktionen:</p>
+    <p xml:lang="el">Χαρακτηριστικά:</p>
     <p xml:lang="en-GB">Features:</p>
     <p xml:lang="es">Características:</p>
     <p xml:lang="fi">Ominaisuudet:</p>
@@ -63,6 +66,7 @@
       <li>Supporting Twitter.com micro-blogging service</li>
       <li xml:lang="ca">Implementació del servei de micro-blog Twitter.com</li>
       <li xml:lang="de">Unterstützung für den Micro-Blogging-Dienst Twitter.com</li>
+      <li xml:lang="el">Υποστηρίζει την υπηρεσία μικρο-ιστολογίου Twitter.com</li>
       <li xml:lang="en-GB">Supporting Twitter.com micro-blogging service</li>
       <li xml:lang="es">Soporta el servicio de microblogueo Twitter.com</li>
       <li xml:lang="fi">Tukee Twitter.com-mikroblogauspalvelua</li>
@@ -80,6 +84,7 @@
       <li>Supporting Identi.ca micro-blogging service (Using its Twitter compatible API)</li>
       <li xml:lang="ca">Implementació del servei de micro-blog Identi.ca (usant la seva API compatible amb Twitter)</li>
       <li xml:lang="de">Unterstützung für den Micro-Blogging-Dienst Identi.ca, dazu wird die Twitter-kompatible API (Programmschnittstelle)</li>
+      <li xml:lang="el">Υποστηρίζει την υπηρεσία μικρο-ιστολογίου Identi.ca (με χρήση του συμβατού API του Twitter)</li>
       <li xml:lang="en-GB">Supporting Identi.ca micro-blogging service (Using its Twitter compatible API)</li>
       <li xml:lang="es">Soporta el servicio de microblogueo Identi.ca (Utilizando su API compatible con Twitter)</li>
       <li xml:lang="fi">Tukee Identi.ca-mikroblogauspalvelua (käyttäen sen Twitter-yhteensopivaa APIa)</li>
@@ -96,6 +101,7 @@
       <li xml:lang="x-test">xxSupporting Identi.ca micro-blogging service (Using its Twitter compatible API)xx</li>
       <li>Supporting self hosted Laconica websites (Using its Twitter compatible API)</li>
       <li xml:lang="ca">Implementació pels llocs web allotjats a Laconica (usant la seva API compatible amb Twitter)</li>
+      <li xml:lang="el">Υποστηρίζει ιστοτόπους Laconica ίδιας φιλοξενίας (με χρήση του συμβατού API του Twitter)</li>
       <li xml:lang="en-GB">Supporting self hosted Laconica websites (Using its Twitter compatible API)</li>
       <li xml:lang="es">Soporta los sitios web auto-alojados Laconica (utilizando su API compatible con Twitter)</li>
       <li xml:lang="fi">Tukee itse ylläpidettyjä Laconica-sivustoja (käyttäen sen Twitter-yhteensopivaa APIa)</li>
@@ -112,6 +118,7 @@
       <li xml:lang="x-test">xxSupporting self hosted Laconica websites (Using its Twitter compatible API)xx</li>
       <li>Supporting User + His/Her Friends time-lines</li>
       <li xml:lang="ca">Implementació per a les línies de temps Usuari + Vós i els vostres amics</li>
+      <li xml:lang="el">Υποστηρίζει χρονολόγια για χρήστη + φίλους</li>
       <li xml:lang="en-GB">Supporting User + His/Her Friends time-lines</li>
       <li xml:lang="es">Soporta las líneas temporales usuario + sus amigos</li>
       <li xml:lang="fi">Tukee käyttäjän ja hänen kaveriensa aikajanoja</li>
@@ -128,6 +135,7 @@
       <li xml:lang="x-test">xxSupporting User + His/Her Friends time-linesxx</li>
       <li>Supporting @Reply time-lines</li>
       <li xml:lang="ca">Implementació per a les línies de temps @Resposta</li>
+      <li xml:lang="el">Υποστηρίζει χρονολόγια @Reply</li>
       <li xml:lang="en-GB">Supporting @Reply time-lines</li>
       <li xml:lang="es">Soporta las líneas temporales de @respuesta</li>
       <li xml:lang="fi">Tukee @Reply-aikajanoja</li>
@@ -144,6 +152,7 @@
       <li xml:lang="x-test">xxSupporting @Reply time-linesxx</li>
       <li>Support for send and receive direct messages</li>
       <li xml:lang="ca">Implementació per enviar i rebre missatges directes</li>
+      <li xml:lang="el">Υποστηρίζει την άμεση αποστολή και λήψη μηνυμάτων</li>
       <li xml:lang="en-GB">Support for send and receive direct messages</li>
       <li xml:lang="es">Soporta el envío y la recepción de mensajes directos</li>
       <li xml:lang="fi">Tukee suorien viestien lähettämistä ja vastaanottamista</li>
@@ -161,6 +170,7 @@
       <li>Twitpic.com integration</li>
       <li xml:lang="ca">Integració amb Twitpic.com</li>
       <li xml:lang="de">Integration von Twitpic.com</li>
+      <li xml:lang="el">Ενσωμάτωση Twitpic.com</li>
       <li xml:lang="en-GB">Twitpic.com integration</li>
       <li xml:lang="es">Integración con Twitpic.com</li>
       <li xml:lang="fi">Twitpic.com-integrointi</li>
@@ -177,6 +187,7 @@
       <li xml:lang="x-test">xxTwitpic.com integrationxx</li>
       <li>Supporting Multiple Accounts simultaneously</li>
       <li xml:lang="ca">Implementació per a múltiples comptes simultanis</li>
+      <li xml:lang="el">Υποστηρίζει πολλούς λογαριασμούς ταυτόχρονα</li>
       <li xml:lang="en-GB">Supporting Multiple Accounts simultaneously</li>
       <li xml:lang="es">Soporta múltiples cuentas simultáneamente</li>
       <li xml:lang="fi">Tukee useampia tilejä samanaikaisesti</li>
@@ -193,6 +204,7 @@
       <li xml:lang="x-test">xxSupporting Multiple Accounts simultaneouslyxx</li>
       <li>Supporting search APIs for all services</li>
       <li xml:lang="ca">Implementació per a les API de cerca per a tots els serveis</li>
+      <li xml:lang="el">Υποστηρίζει API αναζήτησης για όλες τις υπηρεσίες</li>
       <li xml:lang="en-GB">Supporting search APIs for all services</li>
       <li xml:lang="es">Soporta las APIs de búsqueda de todos los servicios</li>
       <li xml:lang="fi">Tukee jokaisen tuntemansa palvelun haku-APIa</li>
@@ -210,6 +222,7 @@
       <li>KWallet integration</li>
       <li xml:lang="ca">Integració amb el KWallet</li>
       <li xml:lang="de">Integration von KWallet</li>
+      <li xml:lang="el">Ενσωμάτωση KWallet</li>
       <li xml:lang="en-GB">KWallet integration</li>
       <li xml:lang="es">Integración con KWallet</li>
       <li xml:lang="fi">Käyttää KDE:n lompakkoa</li>
@@ -226,6 +239,7 @@
       <li xml:lang="x-test">xxKWallet integrationxx</li>
       <li>Ability to make a quick tweet with global shortcuts (Ctrl+Meta+T)</li>
       <li xml:lang="ca">La capacitat per fer un «tweet» ràpid amb dreceres globals (Ctrl+Meta+T)</li>
+      <li xml:lang="el">Δυνατότητα για γρήγορα tweet με καθολικές συντομεύσεις (Ctrl+Meta+T)</li>
       <li xml:lang="en-GB">Ability to make a quick tweet with global shortcuts (Ctrl+Meta+T)</li>
       <li xml:lang="es">Capacidad para hacer un tuit rápido con accesos rápidos de teclado globales (Ctrl+Meta+T)</li>
       <li xml:lang="fi">Osaa lähettää pikaviestejä pikanäppäinyhdistelmällä (Ctrl+Meta+T)</li>
@@ -242,6 +256,7 @@
       <li xml:lang="x-test">xxAbility to make a quick tweet with global shortcuts (Ctrl+Meta+T)xx</li>
       <li>Ability to notify user about new statuses text, with KNotification or Libnotify</li>
       <li xml:lang="ca">La capacitat per a notificar a l'usuari sobre el nou estat del text, amb KNotification o Libnotify</li>
+      <li xml:lang="el">Δυνατότητα ειδοποίησης του χρήστη σχετικά με κείμενο νέων καταστάσεων με το KNotification ή το Libnotify</li>
       <li xml:lang="en-GB">Ability to notify user about new statuses text, with KNotification or Libnotify</li>
       <li xml:lang="es">Capacidad para notificar al usuario sobre los nuevos textos de estado, con KNotification o Libnotify</li>
       <li xml:lang="fi">Osaa tiedottaa käyttäjää uusista tilaviesteistä joko KNotificationin tai Libnotifyn avulla</li>
@@ -258,6 +273,7 @@
       <li xml:lang="x-test">xxAbility to notify user about new statuses text, with KNotification or Libnotifyxx</li>
       <li>Support for shortening urls with more than 30 characters (shorten on paste)</li>
       <li xml:lang="ca">Implementació per escurçar els URL amb més de 30 caràcters (escurça en enganxar)</li>
+      <li xml:lang="el">Υποστηρίζει τη συρρίκνωση URL που έχουν περισσότερους από 30 χαρακτήρες (συρρίκνωση σε επικόλληση)</li>
       <li xml:lang="en-GB">Support for shortening urls with more than 30 characters (shorten on paste)</li>
       <li xml:lang="es">Soporte para abreviar URL que tengan más de 30 caracteres (abreviatura al pegar)</li>
       <li xml:lang="fi">Tukee verkko-osoitteitten lyhentämistä alle 30 merkkiin (leikepöydältä liitettäessä)</li>
@@ -274,6 +290,7 @@
       <li xml:lang="x-test">xxSupport for shortening urls with more than 30 characters (shorten on paste)xx</li>
       <li>Support for configuring status lists appearance</li>
       <li xml:lang="ca">Implementació per a configurar l'aparença de les llistes d'estat</li>
+      <li xml:lang="el">Υποστηρίζει τη διαμόρφωση της εμφάνισης σε λίστες καταστάσεων</li>
       <li xml:lang="en-GB">Support for configuring status lists appearance</li>
       <li xml:lang="es">Soporte para configurar la apariencia de las listas de estados</li>
       <li xml:lang="fi">Tukee tilalistojen ulkoasun mukauttamista</li>
