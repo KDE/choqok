@@ -77,7 +77,6 @@ PumpIOMicroBlog::PumpIOMicroBlog(QObject* parent, const QVariantList& args):
     timelineNames << "Activity" << "Favorites" << "Inbox" << "Outbox";
     setTimelineNames(timelineNames);
     setTimelinesInfo();
-    setCharLimit(0);
 }
 
 PumpIOMicroBlog::~PumpIOMicroBlog()

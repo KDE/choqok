@@ -60,7 +60,7 @@ ComposerWidget::ComposerWidget(Choqok::Account* account, QWidget* parent /*= 0*/
     internalLayout->setContentsMargins(0, 0, 0, 0);
     d->editorContainer->setLayout(internalLayout);
     layout->addWidget(editorContainer());
-    setEditor(new TextEdit(account->microblog()->postCharLimit(), this));
+    setEditor(new TextEdit(account->postCharLimit(), this));
 
     d->replyToUsernameLabel = new QLabel(editorContainer());
     d->btnCancelReply = new KPushButton(editorContainer());
@@ -117,8 +117,8 @@ void ComposerWidget::submitPost( const QString &txt )
     kDebug();
     editorContainer()->setEnabled(false);
     QString text = txt;
-    if( currentAccount()->microblog()->postCharLimit() &&
-       text.size() > (int)currentAccount()->microblog()->postCharLimit() )
+    if( currentAccount()->postCharLimit() &&
+       text.size() > (int)currentAccount()->postCharLimit() )
         text = Choqok::ShortenManager::self()->parseText(text);
     delete d->postToSubmit;
     d->postToSubmit = new Choqok::Post;

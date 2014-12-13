@@ -265,11 +265,6 @@ public:
 
     static QString errorString( ErrorType type );
 
-    /**
-    Indicate character limit for a post. 0 means no limit.
-    */
-    uint postCharLimit() const;
-
 Q_SIGNALS:
 
     /**
@@ -319,7 +314,6 @@ protected:
     void addTimelineName(const QString&);
     void setServiceName(const QString&);
     void setServiceHomepageUrl(const QString&);
-    void setCharLimit(uint);
 
 protected slots:
     void slotConfigChanged();

@@ -71,6 +71,7 @@ protected:
     void loadTimelinesTableState();
     void saveTimelinesTableState();
 //     void setAuthenticated(bool authenticated);
+    void setTextLimit();
 
     LaconicaMicroBlog *mBlog;
     LaconicaAccount *mAccount;

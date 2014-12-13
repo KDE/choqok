@@ -73,6 +73,12 @@ public:
     bool showInQuickPost() const;
     void setShowInQuickPost(bool show = true);
 
+    void setPostCharLimit(const uint limit);
+    /**
+    Indicate character limit for a post. 0 means no limit.
+    */
+    uint postCharLimit() const;
+
     virtual void writeConfig();
     /**
     * \brief Get the priority of this account.

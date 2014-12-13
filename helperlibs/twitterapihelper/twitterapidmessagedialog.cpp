@@ -97,7 +97,7 @@ void TwitterApiDMessageDialog::setupUi( QWidget *mainWidget )
     toLayout->addWidget(btnReload);
     mainLayout->addLayout(toLayout);
 
-    d->editor = new Choqok::UI::TextEdit( d->account->microblog()->postCharLimit() );
+    d->editor = new Choqok::UI::TextEdit( d->account->postCharLimit() );
     connect( d->editor, SIGNAL(returnPressed(QString)), SLOT(submitPost(QString)) );
     mainLayout->addWidget(d->editor);
     d->editor->setFocus();

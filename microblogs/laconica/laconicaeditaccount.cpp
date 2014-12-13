@@ -38,6 +38,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "laconicamicroblog.h"
 #include "laconicaaccount.h"
 #include <KInputDialog>
+#include <qjson/parser.h>
 
 LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblog,
                                                     LaconicaAccount* account, QWidget* parent)
@@ -134,6 +135,7 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
     mAccount->setChangeExclamationMark(kcfg_changeExclamationMark->isChecked());
     mAccount->setChangeExclamationMarkToText(kcfg_changeToString->text());
     saveTimelinesTableState();
+    setTextLimit();
     mAccount->writeConfig();
     return mAccount;
 }
@@ -214,6 +216,32 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
 //         }
 //     }
 // }
+
+void LaconicaEditAccountWidget::setTextLimit()
+{
+    QByteArray jobData;
+    QString url = mAccount->host() + "/" + mAccount->api() + "/statusnet/config.json";
+    KIO::TransferJob *job = KIO::get(KUrl(url), KIO::Reload, KIO::HideProgressInfo);
+    if ( !KIO::NetAccess::synchronousRun(job, 0, &jobData) ) {
+        kError()<<"Job error: " << job->errorString();
+        return;
+    }
+
+    bool ok;
+    QJson::Parser parser;
+    QVariantMap siteInfos = parser.parse(jobData, &ok).toMap()["site"].toMap();
+
+    if (ok) {
+        mAccount->setPostCharLimit(siteInfos["textlimit"].toUInt(&ok));
+    } else {
+        kDebug() << "Cannot parse JSON reply";
+    }
+
+    if (!ok) {
+        kDebug() << "Cannot parse text limit value";
+        mAccount->setPostCharLimit(140);
+    }
+}
 
 void LaconicaEditAccountWidget::loadTimelinesTableState()
 {

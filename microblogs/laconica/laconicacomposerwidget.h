@@ -41,6 +41,7 @@ protected slots:
 //     virtual void slotErrorPost(Choqok::Account* theAccount,Choqok::Post* post);
     virtual void selectMediumToAttach();
     virtual void cancelAttachMedium();
+    virtual void slotRebuildEditor(Choqok::Account *theAccount);
 
 private:
     class Private;

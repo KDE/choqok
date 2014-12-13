@@ -85,7 +85,6 @@ TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObje
     KConfigGroup grp(KGlobal::config(), "TwitterApi");
     format = grp.readEntry("format", "json");
 
-    setCharLimit(140);    //TODO: See if we can ask twitter for the char limit and make it dynamic
     QStringList timelineTypes;
     timelineTypes<< "Home" << "Reply" << "Inbox" << "Outbox" << "Favorite" << "ReTweets" << "Public";
     setTimelineNames(timelineTypes);

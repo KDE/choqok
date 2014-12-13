@@ -37,6 +37,7 @@
 #include "laconicamicroblog.h"
 #include <KDebug>
 #include <choqoktextedit.h>
+#include <twitterapihelper/twitterapitextedit.h>
 
 class LaconicaComposerWidget::Private{
 public:
@@ -64,6 +65,8 @@ LaconicaComposerWidget::LaconicaComposerWidget(Choqok::Account* account, QWidget
     vLayout->addWidget(d->btnAttach);
     vLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Preferred, QSizePolicy::MinimumExpanding));
     d->editorLayout->addItem(vLayout, 0, 1, 1, 1);
+
+    connect( account, SIGNAL(modified(Choqok::Account*)), this, SLOT(slotRebuildEditor(Choqok::Account*)));
 }
 
 LaconicaComposerWidget::~LaconicaComposerWidget()
@@ -79,8 +82,8 @@ void LaconicaComposerWidget::submitPost(const QString& txt)
         kDebug();
         editorContainer()->setEnabled(false);
         QString text = txt;
-        if( currentAccount()->microblog()->postCharLimit() &&
-            text.size() > (int)currentAccount()->microblog()->postCharLimit() )
+        if( currentAccount()->postCharLimit() &&
+            text.size() > (int)currentAccount()->postCharLimit() )
             text = Choqok::ShortenManager::self()->parseText(text);
         setPostToSubmit(0L);
         setPostToSubmit( new Choqok::Post );
@@ -159,6 +162,11 @@ void LaconicaComposerWidget::cancelAttachMedium()
     delete d->btnCancel;
     d->btnCancel = 0;
     d->mediumToAttach.clear();
+}
+
+void LaconicaComposerWidget::slotRebuildEditor(Choqok::Account *theAccount)
+{
+    setEditor(new TwitterApiTextEdit(theAccount->postCharLimit(), this));
 }
 
 #include "laconicacomposerwidget.moc"

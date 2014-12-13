@@ -165,8 +165,8 @@ void QuickPost::submitPost( const QString & txt )
     }
     this->hide();
     d->submittedAccounts.clear();
-    if( currentAccount->microblog()->postCharLimit() &&
-        newPost.size() > (int)currentAccount->microblog()->postCharLimit() )
+    if( currentAccount->postCharLimit() &&
+        newPost.size() > (int)currentAccount->postCharLimit() )
         newPost = Choqok::ShortenManager::self()->parseText(newPost);
         delete d->submittedPost;
     if ( d->all->isChecked() ) {
@@ -257,7 +257,7 @@ void QuickPost::slotCurrentAccountChanged(int index)
 {
     Q_UNUSED(index)
     if( !d->accountsList.isEmpty() )
-        d->txtPost->setCharLimit( d->accountsList.value(d->comboAccounts->currentText())->microblog()->postCharLimit() );
+        d->txtPost->setCharLimit( d->accountsList.value(d->comboAccounts->currentText())->postCharLimit() );
 }
 
 void QuickPost::accountModified(Account* theAccount)

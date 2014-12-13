@@ -64,6 +64,8 @@ PumpIOAccount::PumpIOAccount(PumpIOMicroBlog* parent, const QString& alias):
 
     parent->fetchFollowing(this);
     parent->fetchLists(this);
+
+    setPostCharLimit(0);
 }
 
 PumpIOAccount::~PumpIOAccount()

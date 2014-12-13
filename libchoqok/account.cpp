@@ -44,6 +44,7 @@ public:
         readonly = configGroup->readEntry("ReadOnly", false);
         showInQuickPost = configGroup->readEntry("ShowInQuickPost", true);
         enable = configGroup->readEntry("Enable", true);
+        postCharLimit = configGroup->readEntry("PostCharLimit", 140);
         password = PasswordManager::self()->readPassword(alias);
     }
     QString username;
@@ -55,6 +56,7 @@ public:
     bool readonly;
     bool enable;
     bool showInQuickPost;
+    uint postCharLimit;
 };
 
 Account::Account(Choqok::MicroBlog* parent, const QString& alias)
@@ -80,6 +82,7 @@ void Account::writeConfig()
     d->configGroup->writeEntry( "Enable", d->enable );
     d->configGroup->writeEntry( "ShowInQuickPost", d->showInQuickPost );
     d->configGroup->writeEntry( "MicroBlog", microblog()->pluginName() );
+    d->configGroup->writeEntry( "PostCharLimit", d->postCharLimit );
     if(!password().isEmpty())
         PasswordManager::self()->writePassword( d->alias, password() );
     d->configGroup->sync();
@@ -153,6 +156,16 @@ bool Account::isEnabled() const
 void Account::setEnabled(bool enabled)
 {
     d->enable = enabled;
+}
+
+uint Account::postCharLimit() const
+{
+    return d->postCharLimit;
+}
+
+void Account::setPostCharLimit(const uint limit)
+{
+    d->postCharLimit = limit;
 }
 
 bool Account::showInQuickPost() const

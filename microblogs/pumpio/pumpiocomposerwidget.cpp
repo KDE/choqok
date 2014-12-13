@@ -77,8 +77,8 @@ void PumpIOComposerWidget::submitPost(const QString& text)
     kDebug();
     editorContainer()->setEnabled(false);
     QString txt = text;
-    if (currentAccount()->microblog()->postCharLimit() &&
-        txt.size() > (int) currentAccount()->microblog()->postCharLimit()) {
+    if (currentAccount()->postCharLimit() &&
+        txt.size() > (int) currentAccount()->postCharLimit()) {
         txt = Choqok::ShortenManager::self()->parseText(txt);
     }
     setPostToSubmit(0L);

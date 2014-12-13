@@ -79,8 +79,8 @@ void TwitterComposerWidget::submitPost(const QString& txt)
         kDebug();
         editorContainer()->setEnabled(false);
         QString text = txt;
-        if( currentAccount()->microblog()->postCharLimit() &&
-            text.size() > (int)currentAccount()->microblog()->postCharLimit() )
+        if( currentAccount()->postCharLimit() &&
+            text.size() > (int)currentAccount()->postCharLimit() )
             text = Choqok::ShortenManager::self()->parseText(text);
         setPostToSubmit(0L);
         setPostToSubmit( new Choqok::Post );

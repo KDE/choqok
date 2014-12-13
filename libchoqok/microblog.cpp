@@ -41,7 +41,6 @@ class MicroBlog::Private
 public:
     QString serviceName;
     QString homepage;
-    uint charLimit;
     QStringList timelineTypes;
     QTimer* saveTimelinesTimer;
 };
@@ -111,16 +110,6 @@ void MicroBlog::setServiceName(const QString& serviceName)
 void MicroBlog::setServiceHomepageUrl(const QString& homepage)
 {
     d->homepage = homepage;
-}
-
-uint MicroBlog::postCharLimit() const
-{
-    return d->charLimit;
-}
-
-void MicroBlog::setCharLimit(uint limit)
-{
-    d->charLimit = limit;
 }
 
 QStringList MicroBlog::timelineNames() const

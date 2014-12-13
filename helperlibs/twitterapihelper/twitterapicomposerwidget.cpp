@@ -48,7 +48,7 @@ TwitterApiComposerWidget::TwitterApiComposerWidget(Choqok::Account* account, QWi
     d->model = new QStringListModel(qobject_cast<TwitterApiAccount*>(account)->friendsList(), this);
 //     d->index = new QModelIndex(d->model->rowCount(), 0, 0, d->model);
 //     kDebug()<<d->index;
-    TwitterApiTextEdit *edit = new TwitterApiTextEdit(140, this);
+    TwitterApiTextEdit *edit = new TwitterApiTextEdit(account->postCharLimit(), this);
     QCompleter *completer = new QCompleter(d->model, this);
     completer->setCaseSensitivity(Qt::CaseInsensitive);
     edit->setCompleter(completer);
