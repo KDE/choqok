@@ -33,8 +33,6 @@
 #include <choqokbehaviorsettings.h>
 #include <QTimer>
 
-#include <QDebug>
-
 #define STR(x) #x
 #define XSTR(x) STR(x)
 

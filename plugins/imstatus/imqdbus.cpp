@@ -28,7 +28,7 @@
 #include <QDBusReply>
 #include <QDBusConnectionInterface>
 
-#include <QDebug>
+#include <kdebug.h>
 
 IMQDBus::IMQDBus ( const QString im, const QString statusMsg )
 {
@@ -53,7 +53,7 @@ void IMQDBus::useKopete()
     msg.setArguments ( args );
     QDBusMessage rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
-        qDebug() <<  "ERROR" << rep.errorMessage();
+        kDebug() <<  "ERROR" << rep.errorMessage();
         return;
     }
 }
@@ -67,7 +67,7 @@ void IMQDBus::usePsi()
     msg.setArguments ( args );
     QDBusMessage rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
-        qDebug() <<  "ERROR" << rep.errorMessage();
+        kDebug() <<  "ERROR" << rep.errorMessage();
         return;
     }
 }
@@ -80,7 +80,7 @@ void IMQDBus::useSkype()
     msg.setArguments ( args );
     QDBusMessage rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
-        qDebug() <<  "ERROR" << rep.errorMessage();
+        kDebug() <<  "ERROR" << rep.errorMessage();
         return;
     }
 
@@ -89,7 +89,7 @@ void IMQDBus::useSkype()
     msg.setArguments ( args );
     rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
-        qDebug() <<  "ERROR" << rep.errorMessage();
+        kDebug() <<  "ERROR" << rep.errorMessage();
         return;
     }
 
@@ -98,7 +98,7 @@ void IMQDBus::useSkype()
     msg.setArguments ( args );
     rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
-        qDebug() <<  "ERROR" << rep.errorMessage();
+        kDebug() <<  "ERROR" << rep.errorMessage();
         return;
     }
 }
@@ -108,7 +108,7 @@ void IMQDBus::usePidgin()
     QDBusMessage msg = QDBusMessage::createMethodCall ( "im.pidgin.purple.PurpleService", "/im/pidgin/purple/PurpleObject", "im.pidgin.purple.PurpleInterface", "PurpleSavedstatusGetCurrent" );
     QDBusReply<int> repUInt = QDBusConnection::sessionBus().call ( msg );
     if ( repUInt.error().isValid() ) {
-        qDebug() << "ERROR:" << repUInt.error().message();
+        kDebug() << "ERROR:" << repUInt.error().message();
         return;
     }
     int IDCurrentStatus = repUInt.value();
@@ -118,7 +118,7 @@ void IMQDBus::usePidgin()
     msg.setArguments ( args );
     repUInt = QDBusConnection::sessionBus().call ( msg );
     if ( repUInt.error().isValid() ) {
-        qDebug() << "ERROR:" << repUInt.error().message();
+        kDebug() << "ERROR:" << repUInt.error().message();
         return;
     }
     int currentStatusType = repUInt.value();
@@ -130,7 +130,7 @@ void IMQDBus::usePidgin()
     msg.setArguments ( args );
     repUInt = QDBusConnection::sessionBus().call ( msg );
     if ( repUInt.error().isValid() ) {
-        qDebug() << "ERROR:" << repUInt.error().message();
+        kDebug() << "ERROR:" << repUInt.error().message();
         return;
     }
     IDCurrentStatus = repUInt.value(); //ID of new status
@@ -142,7 +142,7 @@ void IMQDBus::usePidgin()
     msg.setArguments ( args );
     QDBusReply<void> repStr = QDBusConnection::sessionBus().call ( msg );
     if ( repStr.error().isValid() ) {
-        qDebug() << "ERROR:" << repStr.error().message();
+        kDebug() << "ERROR:" << repStr.error().message();
         return;
     }
 
@@ -152,7 +152,7 @@ void IMQDBus::usePidgin()
     msg.setArguments ( args );
     repStr = QDBusConnection::sessionBus().call ( msg );
     if ( repStr.error().isValid() ) {
-        qDebug() << "ERROR:" << repStr.error().message();
+        kDebug() << "ERROR:" << repStr.error().message();
         return;
     }
 }

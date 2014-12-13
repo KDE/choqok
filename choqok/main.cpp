@@ -36,7 +36,7 @@ static const char version[] = "1.4";
 
 int main( int argc, char **argv )
 {
-    qDebug()<<"Choqok "<<version;
+    kDebug()<<"Choqok "<<version;
     KAboutData about( "choqok", 0, ki18n( "Choqok" ), version, ki18n( description ),
                       KAboutData::License_GPL_V3, ki18n( "(C) 2008-2010 Mehrdad Momeny\n(C) 2011-2012 Choqok Developers" ),
                       KLocalizedString(), 0  );
