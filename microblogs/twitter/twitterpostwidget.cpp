@@ -130,7 +130,7 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
         bool isSubscribe = false;
         QString accountUsername = currentAccount()->username().toLower();
         QString postUsername = url.host().toLower();
-        KAction *subscribe = 0, *block = 0, *replyTo = 0, *dMessage = 0;
+        KAction *subscribe = 0, *block = 0, *replyTo = 0, *dMessage = 0, *reportSpam = 0;
         if(accountUsername != postUsername){
             menu.addSeparator();
             QMenu *actionsMenu = menu.addMenu(KIcon("applications-system"), i18n("Actions"));
@@ -156,8 +156,13 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
             block = new KAction( KIcon("dialog-cancel"),
                                  i18nc("Block user",
                                        "Block %1", url.host()), actionsMenu);
+            reportSpam = new KAction( KIcon("irc-voice"),
+                                      i18nc("Report user",
+                                            "Report %1 as spam", url.host()), actionsMenu);
+
             actionsMenu->addAction(subscribe);
             actionsMenu->addAction(block);
+            actionsMenu->addAction(reportSpam);
         }
 
         QAction * ret = menu.exec(QCursor::pos());
@@ -177,7 +182,10 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
         }else if(ret == block){
             blog->blockUser(currentAccount(), url.host());
             return;
-        } else if(ret == openInBrowser){
+        } else if(ret == reportSpam) {
+            blog->reportUserAsSpam(currentAccount(), url.host());
+            return;
+        } else if(ret == openInBrowser) {
             Choqok::openUrl( QUrl( currentAccount()->microblog()->profileUrl(currentAccount(), url.host()) ) );
             return;
         } else if(ret == replyTo){

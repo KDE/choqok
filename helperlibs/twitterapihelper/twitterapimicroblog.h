@@ -129,6 +129,11 @@ public:
     */
     virtual void blockUser( Choqok::Account *theAccount, const QString &username );
 
+    /**
+     * Report user as a spam with username or screen name @p username
+     */
+    virtual void reportUserAsSpam( Choqok::Account *theAccount, const QString &username );
+
     virtual void aboutToUnload();
 
     virtual void listFriendsUsername( TwitterApiAccount *theAccount, bool active = false );
@@ -195,6 +200,7 @@ protected Q_SLOTS:
     virtual void slotCreateFriendship( KJob *job );
     virtual void slotDestroyFriendship( KJob *job );
     virtual void slotBlockUser( KJob *job );
+    virtual void slotReportUser( KJob *job );
     virtual void slotUpdateFriendsList();
 
 protected:

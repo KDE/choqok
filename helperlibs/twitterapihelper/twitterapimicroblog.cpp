@@ -1109,6 +1109,31 @@ void TwitterApiMicroBlog::blockUser( Choqok::Account *theAccount, const QString&
     job->start();
 }
 
+void TwitterApiMicroBlog::reportUserAsSpam(Choqok::Account* theAccount, const QString& username)
+{
+    kDebug();
+    TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
+    KUrl url = account->apiUrl();
+    url.addPath( "/users/report_spam.json" );
+    KUrl tmp(url);
+    url.addQueryItem("screen_name", username.toLatin1());
+
+    QOAuth::ParamMap params;
+    params.insert("screen_name", username.toLatin1());
+
+    KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
+    if ( !job ) {
+        kError() << "Cannot create an http POST request!";
+        return;
+    }
+    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, tmp, QOAuth::POST, params));
+    mJobsAccount[job] = theAccount;
+    mFriendshipMap[ job ] = username;
+    connect( job, SIGNAL( result( KJob* ) ), this, SLOT(slotReportUser(KJob*)) );
+    job->start();
+
+}
+
 void TwitterApiMicroBlog::slotBlockUser(KJob* job)
 {
     kDebug();
@@ -1135,6 +1160,33 @@ void TwitterApiMicroBlog::slotBlockUser(KJob* job)
                           username ) );
     }
     //TODO Check for failor!
+}
+
+void TwitterApiMicroBlog::slotReportUser(KJob* job)
+{
+    kDebug();
+    if(!job){
+        kError()<<"Job is a null Pointer!";
+        return;
+    }
+
+    Choqok::Account *theAccount = mJobsAccount.take(job);
+    QString username = mFriendshipMap.take(job);
+    if(job->error()){
+        kDebug()<<"Job Error:"<<job->errorString();
+        emit error ( theAccount, CommunicationError,
+                     i18n("Reporting %1 failed. %2", username, job->errorString() ) );
+        return;
+    }
+    Choqok::User *user = readUserInfo(qobject_cast<KIO::StoredTransferJob*>(job)->data());
+    if( user ){
+        Choqok::NotifyManager::success( i18n("Report sent successfully") );
+    } else {
+        kDebug()<<"Parse Error: "<<qobject_cast<KIO::StoredTransferJob*>(job)->data();
+        emit error( theAccount, ParsingError,
+                     i18n("Reporting %1 failed: the server returned invalid data.",
+                          username ) );
+    }
 }
 
 ///===================================================================
