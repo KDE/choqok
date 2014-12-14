@@ -32,6 +32,7 @@
 #include <math.h>
 #include <notifymanager.h>
 #include <qjson/parser.h>
+#include <qjson/serializer.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Goo_gl > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_goo_gl" ) )
@@ -49,33 +50,30 @@ QString Goo_gl::shorten( const QString& url )
 {
     kDebug() << "Using goo.gl";
 
-    QByteArray req;
-    req = "url=" + QUrl::toPercentEncoding( KUrl( url ).url() );
+    QVariantMap req;
+    req.insert("longUrl", url);
+    QJson::Serializer serializer;
+    QByteArray data = serializer.serialize(req);
 
-    QMap<QString, QString> metaData;
-    metaData.insert("accept","*/*");
-    metaData.insert("content-type", "Content-Type: application/x-www-form-urlencoded" );
-
-    KIO::StoredTransferJob *job = KIO::storedHttpPost ( req, KUrl("http://goo.gl/api/url"), KIO::HideProgressInfo ) ;  
+    KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, KUrl("https://www.googleapis.com/urlshortener/v1/url"), KIO::HideProgressInfo ) ;
     if (!job){
       Choqok::NotifyManager::error( i18n("Error when creating job"), i18n("Goo.gl Error") );
       return url;
     }
-    job->setMetaData(KIO::MetaData(metaData));
+    job->addMetaData("content-type", "Content-Type: application/json");
 
-    QByteArray data;
     if ( KIO::NetAccess::synchronousRun( job, 0, &data ) ) {
         QString output( data );
         QJson::Parser parser;
         bool ok;
         QVariantMap map = parser.parse( data , &ok ).toMap();
-
         if ( ok ) {
-            if ( !map[ "error" ].toString().isEmpty() ) {
-                Choqok::NotifyManager::error( map[ "error" ].toString(), i18n("Goo.gl Error") );
+            QVariantMap error = map["error"].toMap();
+            if ( !error.isEmpty() ) {
+                Choqok::NotifyManager::error( error["message"].toString(), i18n("Goo.gl Error") );
                 return url;
             }
-            return map[ "short_url" ].toString();
+            return map[ "id" ].toString();
         }
         Choqok::NotifyManager::error( i18n("Malformed response"), i18n("Goo.gl Error")  );
     } else {
