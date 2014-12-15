@@ -1,0 +1,22 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Service
+X-Choqok-Version=1
+Icon=document-preview
+ServiceTypes=Choqok/Plugin
+X-KDE-Library=choqok_longurl
+X-KDE-PluginInfo-Author=Eugene Shalygin
+X-KDE-PluginInfo-Email=eugene.shalygin@gmail.com
+X-KDE-PluginInfo-Name=choqok_longurl
+X-KDE-PluginInfo-Version=0.1
+X-KDE-PluginInfo-Website=http://choqok.gnufolks.org
+X-KDE-PluginInfo-Category=Plugins
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
+Name=Expand URLs via longurl.org
+Name[en_GB]=Expand URLs via longurl.org
+Name[uk]=Розгортання URL за допомогою longurl.org
+Comment=Extract the full URL using longurl.org service and show it as a tooltip
+Comment[en_GB]=Extract the full URL using longurl.org service and show it as a tooltip
+Comment[uk]=Розгортає адреси URL за допомогою сервісу longurl.org і показує їх на панелі підказки

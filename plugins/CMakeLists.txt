@@ -1,7 +1,7 @@
 
 add_subdirectory(shorteners)
 add_subdirectory(nowlistening)
-add_subdirectory(untiny)
+# add_subdirectory(untiny)
 add_subdirectory(searchaction)
 add_subdirectory(imagepreview)
 add_subdirectory(videopreview)
@@ -12,3 +12,4 @@ add_subdirectory(imstatus)
 # add_subdirectory(translator)
 add_subdirectory(quickfilter)
 add_subdirectory(betternotify)
+add_subdirectory(longurl)
