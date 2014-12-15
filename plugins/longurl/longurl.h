@@ -42,8 +42,6 @@ class PostWidget;
 }
 }
 
-class KConfigGroup;
-
 class LongUrl : public Choqok::Plugin
 {
     Q_OBJECT
