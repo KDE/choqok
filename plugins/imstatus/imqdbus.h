@@ -27,25 +27,44 @@
 
 #include <QString>
 
+#include <TelepathyQt/Types>
+
+#include "config-imstatus.h"
+
+#if TELEPATHY_FOUND
+namespace Tp {
+    class PendingOperation;
+}
+#endif
+
 /**
   @author Andrey Esin \<gmlastik@gmail.com\>
 */
 
-class IMQDBus
+class IMQDBus : public QObject
 {
+    Q_OBJECT
 public:
-    IMQDBus ( const QString im, const QString statusMsg );
+    IMQDBus (QObject *parent = 0);
     ~IMQDBus();
-    void usePsi();
-    void useKopete();
-    void useSkype();
-    void usePidgin();
-    QString currentIMstr;
+
+    void updateStatusMessage(const QString &im, const QString &statusMessage);
     static QStringList scanForIMs();
 
 private:
-    int m_mStatus;
-    QString m_statusMsg;
+    void usePsi(const QString &statusMessage);
+    void useKopete(const QString &statusMessage);
+    void useSkype(const QString &statusMessage);
+    void usePidgin(const QString &statusMessage);
+
+#if TELEPATHY_FOUND
+private slots:
+    void slotFinished(Tp::PendingOperation *po);
+
+private:
+    void useTelepathy(const QString &statusMessage);
+    Tp::AccountManagerPtr m_accountManager;
+#endif
 };
 
 #endif // IMQDBUS_H

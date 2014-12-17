@@ -30,26 +30,51 @@
 
 #include <kdebug.h>
 
-IMQDBus::IMQDBus ( const QString im, const QString statusMsg )
+#if TELEPATHY_FOUND
+    #include <TelepathyQt/AccountManager>
+    #include <TelepathyQt/AccountSet>
+    #include <TelepathyQt/Account>
+    #include <TelepathyQt/PendingOperation>
+    #include <TelepathyQt/PendingReady>
+#endif
+
+const QString IM_KOPETE = "Kopete";
+const QString IM_PSI = "Psi";
+const QString IM_SKYPE = "Skype";
+const QString IM_PIDGIN = "Pidgin";
+const QString IM_TELEPATHY = "Telepathy";
+
+IMQDBus::IMQDBus (QObject *parent) : QObject(parent)
 {
     /*
     TODO:
     - qutIM (>0.3)
     - gajim ( doesn't want work :( )
     */
-    
-    m_statusMsg = statusMsg;
-    if ( im == "Kopete" ) useKopete();
-    if ( im == "Psi" ) usePsi();
-    if ( im == "Skype" ) useSkype();
-    if ( im == "Pidgin" ) usePidgin();
+#if TELEPATHY_FOUND
+    m_accountManager =  Tp::AccountManager::create(Tp::AccountFactory::create(QDBusConnection::sessionBus(), Tp::Account::FeatureCore));
+    connect(m_accountManager->becomeReady(), SIGNAL(finished(Tp::PendingOperation*)), SLOT(slotFinished(Tp::PendingOperation*)));
+
+    Tp::registerTypes();
+#endif
 }
 
-void IMQDBus::useKopete()
+void IMQDBus::updateStatusMessage(const QString& im, const QString& statusMessage)
+{
+    if ( im == IM_KOPETE ) useKopete(statusMessage);
+    if ( im == IM_PSI ) usePsi(statusMessage);
+    if ( im == IM_SKYPE ) useSkype(statusMessage);
+    if ( im == IM_PIDGIN ) usePidgin(statusMessage);
+#if TELEPATHY_FOUND
+    if ( im == IM_TELEPATHY ) useTelepathy(statusMessage);
+#endif
+}
+
+void IMQDBus::useKopete(const QString &statusMessage)
 {
     QDBusMessage msg = QDBusMessage::createMethodCall ( "org.kde.kopete", "/Kopete", "org.kde.Kopete", "setStatusMessage" );
     QList<QVariant> args;
-    args.append ( QVariant ( m_statusMsg ) );
+    args.append ( QVariant ( statusMessage ) );
     msg.setArguments ( args );
     QDBusMessage rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
@@ -58,12 +83,12 @@ void IMQDBus::useKopete()
     }
 }
 
-void IMQDBus::usePsi()
+void IMQDBus::usePsi(const QString &statusMessage)
 {
     QDBusMessage msg = QDBusMessage::createMethodCall ( "org.psi-im.Psi", "/Main", "org.psi_im.Psi.Main", "setStatus" );
     QList<QVariant> args;
     args.append ( QVariant ( "online" ) );
-    args.append ( QVariant ( m_statusMsg ) );
+    args.append ( QVariant ( statusMessage ) );
     msg.setArguments ( args );
     QDBusMessage rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
@@ -72,7 +97,7 @@ void IMQDBus::usePsi()
     }
 }
 
-void IMQDBus::useSkype()
+void IMQDBus::useSkype(const QString &statusMessage)
 {
     QDBusMessage msg = QDBusMessage::createMethodCall ( "com.Skype.API", "/com/Skype", "com.Skype.API", "Invoke" );
     QList<QVariant> args;
@@ -94,7 +119,7 @@ void IMQDBus::useSkype()
     }
 
     args.clear();
-    args.append ( QVariant ( QString ( "SET PROFILE MOOD_TEXT %1" ).arg ( m_statusMsg ) ) );
+    args.append ( QVariant ( QString ( "SET PROFILE MOOD_TEXT %1" ).arg ( statusMessage ) ) );
     msg.setArguments ( args );
     rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
@@ -103,7 +128,7 @@ void IMQDBus::useSkype()
     }
 }
 
-void IMQDBus::usePidgin()
+void IMQDBus::usePidgin(const QString &statusMessage)
 {
     QDBusMessage msg = QDBusMessage::createMethodCall ( "im.pidgin.purple.PurpleService", "/im/pidgin/purple/PurpleObject", "im.pidgin.purple.PurpleInterface", "PurpleSavedstatusGetCurrent" );
     QDBusReply<int> repUInt = QDBusConnection::sessionBus().call ( msg );
@@ -138,7 +163,7 @@ void IMQDBus::usePidgin()
     msg = QDBusMessage::createMethodCall ( "im.pidgin.purple.PurpleService", "/im/pidgin/purple/PurpleObject", "im.pidgin.purple.PurpleInterface", "PurpleSavedstatusSetMessage" );
     args.clear();
     args.append ( QVariant ( IDCurrentStatus ) );
-    args.append ( QVariant ( m_statusMsg ) );
+    args.append ( QVariant ( statusMessage ) );
     msg.setArguments ( args );
     QDBusReply<void> repStr = QDBusConnection::sessionBus().call ( msg );
     if ( repStr.error().isValid() ) {
@@ -157,6 +182,33 @@ void IMQDBus::usePidgin()
     }
 }
 
+#if TELEPATHY_FOUND
+void IMQDBus::useTelepathy(const QString &statusMessage)
+{
+    if (m_accountManager->isReady()) {
+        Tp::AccountSetPtr validAccountsPtr = m_accountManager->enabledAccounts();
+
+        QList<Tp::AccountPtr> accountsList = validAccountsPtr->accounts();
+
+        Q_FOREACH(Tp::AccountPtr account, accountsList) {
+            if (account->isOnline() && account->isReady()) {
+                Tp::Presence currentPresence = account->currentPresence();
+                currentPresence.setStatusMessage(statusMessage);
+                account->setRequestedPresence(currentPresence);
+            }
+        }
+    }
+}
+
+void IMQDBus::slotFinished(Tp::PendingOperation* po)
+{
+    if (po->isError()) {
+	kDebug() << "Telepathy AccountManager failed to get ready:" << po->errorMessage();
+    }
+}
+
+#endif
+
 IMQDBus::~IMQDBus()
 {}
 
@@ -165,13 +217,18 @@ QStringList IMQDBus::scanForIMs()
 {
     QStringList ims;
     if ( QDBusConnection::sessionBus().interface()->isServiceRegistered ( "com.Skype.API" ).value() )
-        ims << "Skype";
+        ims << IM_SKYPE;
     if ( QDBusConnection::sessionBus().interface()->isServiceRegistered ( "org.psi-im.Psi" ).value() )
-        ims << "Psi";
+        ims << IM_PSI;
     if ( QDBusConnection::sessionBus().interface()->isServiceRegistered ( "org.kde.kopete" ).value() )
-        ims << "Kopete";
+        ims << IM_KOPETE;
     if ( QDBusConnection::sessionBus().interface()->isServiceRegistered ( "im.pidgin.purple.PurpleService" ).value() )
-        ims << "Pidgin";
+        ims << IM_PIDGIN;
+#if TELEPATHY_FOUND
+    if ( QDBusConnection::sessionBus().interface()->isServiceRegistered( "org.freedesktop.Telepathy.AccountManager" ).value() )
+        ims << IM_TELEPATHY;
+#endif
+
     ims.sort();
     return ims;
 }

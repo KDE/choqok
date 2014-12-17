@@ -27,6 +27,7 @@
 #include <QTimer>
 
 class KConfigGroup;
+class IMStatusPrivate;
 
 /**
   @author Andrey Esin \<gmlastik@gmail.com\>
@@ -42,4 +43,7 @@ public:
 public slots:
     void slotIMStatus ( Choqok::JobResult res, Choqok::Post* newPost );
     void update();
+
+private:
+    IMStatusPrivate * const d;
 };

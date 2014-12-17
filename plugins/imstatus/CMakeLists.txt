@@ -1,5 +1,9 @@
+find_package(TelepathyQt4)
+
+configure_file(config-imstatus.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-imstatus.h )
 
 include_directories(
+${TELEPATHY_QT4_INCLUDE_DIR}
 ${CHOQOK_INCLUDES}
 )
 
@@ -12,7 +16,7 @@ kde4_add_kcfg_files(choqok_imstatus_PART_SRCS imstatussettings.kcfgc )
 
 kde4_add_plugin(choqok_imstatus ${choqok_imstatus_PART_SRCS})
 
-target_link_libraries(choqok_imstatus ${KDE4_KIO_LIBS} choqok)
+target_link_libraries(choqok_imstatus ${KDE4_KIO_LIBS} ${TELEPATHY_QT4_LIBRARIES} choqok)
 
 install(TARGETS choqok_imstatus DESTINATION ${PLUGIN_INSTALL_DIR})
 
@@ -27,7 +31,7 @@ kde4_add_kcfg_files(kcm_choqok_imstatus_PART_SRCS imstatussettings.kcfgc )
 
 kde4_add_plugin(kcm_choqok_imstatus ${kcm_choqok_imstatus_PART_SRCS})
 
-target_link_libraries(kcm_choqok_imstatus ${KDE4_KDEUI_LIBS})
+target_link_libraries(kcm_choqok_imstatus ${KDE4_KDEUI_LIBS} ${TELEPATHY_QT4_LIBRARIES})
 
 install(TARGETS kcm_choqok_imstatus DESTINATION ${PLUGIN_INSTALL_DIR})
 

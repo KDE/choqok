@@ -36,14 +36,22 @@
 K_PLUGIN_FACTORY ( MyPluginFactory, registerPlugin < IMStatus > (); )
 K_EXPORT_PLUGIN ( MyPluginFactory ( "choqok_imstatus" ) )
 
+class IMStatusPrivate {
+public:
+    IMStatusPrivate() {}
+    IMQDBus *im;
+};
+
 IMStatus::IMStatus ( QObject* parent, const QList<QVariant>& )
-        : Choqok::Plugin ( MyPluginFactory::componentData(), parent )
+        : Choqok::Plugin ( MyPluginFactory::componentData(), parent ), d(new IMStatusPrivate())
 {
     QTimer::singleShot ( 500, this, SLOT ( update() ) );
+    d->im = new IMQDBus(this);
 }
 
 IMStatus::~IMStatus()
 {
+    delete d;
 }
 
 void IMStatus::update()
@@ -69,6 +77,6 @@ void IMStatus::slotIMStatus ( Choqok::JobResult res, Choqok::Post* newPost )
         statusMessage.replace ( QString ( "%client%" ), QString ( "Choqok" ), Qt::CaseInsensitive );
         if ( !IMStatusSettings::repeat() && !newPost->repeatedFromUsername.isEmpty() ) return;
         if ( !IMStatusSettings::reply() && !newPost->replyToUserName.isEmpty() ) return;
-        IMQDBus im ( IMStatusSettings::imclient(), statusMessage );
+        d->im->updateStatusMessage(IMStatusSettings::imclient(), statusMessage);
     }
 }
