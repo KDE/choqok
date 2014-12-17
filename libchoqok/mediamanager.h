@@ -58,15 +58,15 @@ public:
      * @brief Fetch an Image and cache it for later use.
      *
      * @param remoteUrl The URL of image to fetch
-     * @param mode Return mode, if sets to Sync if image is not available in Cache 0L will return.
-     * if mode sets to @ref Async and image is not available in cache will return 0L
-     * and then @ref MediaManager will fetch image and emit @ref imageFetched() on success or
+     * @param mode Return mode, if set to Sync and the image is not available in the cache the null pixmap will be returned.
+     * if mode set to @ref Async and image is not available in the cache, the null pixmap will be returned
+     * and then @ref MediaManager will fetch the image and emit @ref imageFetched() on success or
      * emit @ref fetchError() on error.
-     * And if mode sets to @ref Sync and image is not in cache @ref MediaManager will not fetch it.
+     * And if mode set to @ref Sync and image is not in the cache @ref MediaManager will not fetch it.
      *
-     * @return return @ref QPixmap of requested image if exists in cache, otherwise 0L
+     * @return return @ref QPixmap of requested image if exists in cache, otherwise null pixmap
      */
-    QPixmap *fetchImage( const QString& remoteUrl, ReturnMode mode = Sync );
+    QPixmap fetchImage( const QString& remoteUrl, ReturnMode mode = Sync );
 
     /**
      * @return KDE Default image

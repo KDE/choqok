@@ -381,20 +381,19 @@ void PostWidget::resizeEvent ( QResizeEvent * event )
 {
     // only scale if image is present
     if(!d->originalImage.isNull()) {
-	QPixmap *newPixmap;
 	
 	// TODO: Find a way to calculate the difference we need to subtract.
 	int w = event->size().width() - 76;
 		
-	newPixmap = new QPixmap(d->originalImage.scaledToWidth(w, Qt::SmoothTransformation));
-	int newW = newPixmap->width();
-	int newH = newPixmap->height();
+	QPixmap newPixmap = d->originalImage.scaledToWidth(w, Qt::SmoothTransformation);
+	int newW = newPixmap.width();
+	int newH = newPixmap.height();
 	
 	// only use scaled image if it's smaller than the original one
 	if(newW <= d->originalImage.width() && newH <= d->originalImage.height()) {	// never scale up
 	    d->mImage = QString("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(newW, newH );
 	    QString url = "img://postImage";
-	    _mainWidget->document()->addResource( QTextDocument::ImageResource, url, *newPixmap);
+	    _mainWidget->document()->addResource( QTextDocument::ImageResource, url, newPixmap);
 	} else {
 	    d->mImage = QString("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
 		QString url = "img://postImage";
@@ -574,10 +573,10 @@ void PostWidget::fetchImage() {
     if(d->imageUrl.isEmpty())
         return;
 
-    QPixmap *pix = MediaManager::self()->fetchImage(d->imageUrl, MediaManager::Async);
+    QPixmap pix = MediaManager::self()->fetchImage(d->imageUrl, MediaManager::Async);
 
-    if(pix)
-        slotImageFetched(d->imageUrl, *pix);
+    if(!pix.isNull())
+        slotImageFetched(d->imageUrl, pix);
     else {
         connect( MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
                  this, SLOT(slotImageFetched(QString, QPixmap)));
@@ -586,10 +585,10 @@ void PostWidget::fetchImage() {
 
 void PostWidget::setupAvatar()
 {
-    QPixmap *pix = MediaManager::self()->fetchImage( d->mCurrentPost->author.profileImageUrl,
+   QPixmap pix = MediaManager::self()->fetchImage( d->mCurrentPost->author.profileImageUrl,
                                       MediaManager::Async );
-    if(pix)
-        avatarFetched(d->mCurrentPost->author.profileImageUrl, *pix);
+    if(!pix.isNull())
+        avatarFetched(d->mCurrentPost->author.profileImageUrl, pix);
     else {
         connect( MediaManager::self(), SIGNAL( imageFetched(QString,QPixmap)),
                 this, SLOT(avatarFetched(QString, QPixmap) ) );
@@ -627,8 +626,8 @@ void PostWidget::slotImageFetched(const QString& remoteUrl, const QPixmap& pixma
 
     if(remoteUrl == d->imageUrl) {
 	QString url = "img://postImage";
-	QPixmap *newPixmap = new QPixmap(pixmap.scaled(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight));
-        _mainWidget->document()->addResource( QTextDocument::ImageResource, url, *newPixmap);
+	QPixmap newPixmap = pixmap.scaled(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
+        _mainWidget->document()->addResource( QTextDocument::ImageResource, url, newPixmap);
 	d->originalImage = pixmap;
         updateUi();
         disconnect( MediaManager::self(), SIGNAL(imageFetched(QString, QPixmap)), this, SLOT(slotImageFetched(QString, QPixmap)));

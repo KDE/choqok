@@ -82,10 +82,10 @@ QSize Notification::sizeHint() const
 void Notification::init()
 {
     kDebug();
-    QPixmap *pix = Choqok::MediaManager::self()->fetchImage(post->currentPost()->author.profileImageUrl);
+    QPixmap pix = Choqok::MediaManager::self()->fetchImage(post->currentPost()->author.profileImageUrl);
     if( !pix )
-        pix = new QPixmap( Choqok::MediaManager::self()->defaultImage() );
-    mainWidget.document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"), *pix );
+        pix = QPixmap( Choqok::MediaManager::self()->defaultImage() );
+    mainWidget.document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"), pix );
     mainWidget.document()->addResource( QTextDocument::ImageResource, QUrl("icon://close"),
                                         KIcon("dialog-close").pixmap(16) );
     mainWidget.setText(baseText.arg(post->currentPost()->author.userName)

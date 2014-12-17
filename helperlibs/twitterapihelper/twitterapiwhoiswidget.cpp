@@ -198,12 +198,12 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
     updateHtml();
     showForm();
 
-    QPixmap *userAvatar = Choqok::MediaManager::self()->fetchImage( post.author.profileImageUrl,
+    QPixmap userAvatar = Choqok::MediaManager::self()->fetchImage( post.author.profileImageUrl,
                                                                     Choqok::MediaManager::Async );
 
-    if(userAvatar) {
+    if(!userAvatar.isNull()) {
         d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
-                                         *(userAvatar) );
+                                         userAvatar );
     } else {
         connect( Choqok::MediaManager::self(), SIGNAL( imageFetched(QString,QPixmap)),
                 this, SLOT(avatarFetched(QString, QPixmap) ) );

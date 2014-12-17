@@ -89,16 +89,15 @@ QString MediaManager::parseEmoticons(const QString& text)
   return d->emoticons.parseEmoticons(text,KEmoticonsTheme::DefaultParse,QStringList() << "(e)");
 }
 
-QPixmap * MediaManager::fetchImage( const QString& remoteUrl, ReturnMode mode /*= Sync*/ )
+QPixmap MediaManager::fetchImage( const QString& remoteUrl, ReturnMode mode /*= Sync*/ )
 {
-    QPixmap *p = new QPixmap();
-    if( d->cache.findPixmap(remoteUrl,p) ) {
-        emit imageFetched(remoteUrl, *p);
-        return p;
+    QPixmap p;
+    if( d->cache.findPixmap(remoteUrl, &p) ) {
+        emit imageFetched(remoteUrl, p);
     } else if(mode == Async) {
         if ( d->queue.values().contains( remoteUrl ) ) {
             ///The file is on the way, wait to download complete.
-            return 0L;
+            return p;
         }
         KUrl srcUrl(remoteUrl);
         KIO::Job *job = KIO::storedGet( srcUrl, KIO::NoReload, KIO::HideProgressInfo ) ;
@@ -106,14 +105,13 @@ QPixmap * MediaManager::fetchImage( const QString& remoteUrl, ReturnMode mode /*
             kDebug() << "Cannot create a FileCopyJob!";
             QString errMsg = i18n( "Cannot create a KDE Job. Please check your installation.");
             emit fetchError( remoteUrl, errMsg );
-            return 0L;
+            return p;
         }
         d->queue.insert(job, remoteUrl );
         connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotImageFetched( KJob * ) ) );
         job->start();
     }
-    delete p;
-    return 0L;
+    return p;
 }
 
 void MediaManager::slotImageFetched( KJob * job )
