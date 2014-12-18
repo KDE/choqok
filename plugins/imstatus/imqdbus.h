@@ -27,11 +27,12 @@
 
 #include <QString>
 
-#include <TelepathyQt/Types>
-
 #include "config-imstatus.h"
 
 #if TELEPATHY_FOUND
+
+#include <TelepathyQt/Types>
+
 namespace Tp {
     class PendingOperation;
 }
