@@ -26,6 +26,7 @@
 #define IMQDBUS_H
 
 #include <QString>
+#include <QObject>
 
 #include "config-imstatus.h"
 
