@@ -29,6 +29,7 @@
 #include <qqueue.h>
 #include <KUrl>
 #include <QPointer>
+#include <QSharedPointer>
 
 namespace KIO {
 class Job;
@@ -44,28 +45,33 @@ class PostWidget;
 
 class LongUrl : public Choqok::Plugin
 {
+    typedef Choqok::Plugin base;
     Q_OBJECT
 public:
     LongUrl( QObject* parent, const QList< QVariant >& args );
     ~LongUrl();
 
-protected slots:
+protected Q_SLOTS:
     void slotAddNewPostWidget( Choqok::UI::PostWidget *newWidget );
     void startParsing();
     void dataReceived(KIO::Job* job, QByteArray data);
     void jobResult(KJob* job);
+    virtual void aboutToUnload();
+    void servicesDataReceived(KIO::Job* job, QByteArray data);
+    void servicesJobResult(KJob* job);
 private:
     enum ParserState { Running = 0, Stopped };
     ParserState state;
 
     typedef QPointer<Choqok::UI::PostWidget> PostWidgetPointer;
 
-    void getSupportedServices();
+    void sheduleSupportedServicesFetch();
     bool isServiceSupported(const QString& host);
     void processJobResults(KJob* job);
 
     void parse( PostWidgetPointer postToParse );
     KJob* sheduleParsing(const QString& shortUrl);
+    void suspendJobs();
 
     void replaceUrl(PostWidgetPointer post, const KUrl& fromUrl, const KUrl& toUrl);
 
@@ -80,8 +86,12 @@ private:
     QQueue< PostWidgetPointer > postsQueue;
     QMap<KJob*, PostWidgetPointer > mParsingList;
     QStringList supportedServices;
-    QMap<KJob*, QByteArray> mData;
-    QMap<KJob*, QString> mShortUrls;
+    typedef QMap<KJob*, QByteArray> DataMap;
+    DataMap mData;
+    typedef QMap<KJob*, QString> UrlsMap;
+    UrlsMap mShortUrls;
+    QSharedPointer<QByteArray> mServicesData;
+    bool mServicesAreFetched;
 };
 
 #endif //CHOQOK_LONGURL_H

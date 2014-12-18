@@ -27,11 +27,8 @@
 #include <shortenmanager.h>
 
 #include <KIO/JobUiDelegate>
-#include <KIO/NetAccess>
-#include <kio/jobclasses.h>
 #include <KIO/Job>
 #include <KGenericFactory>
-#include <KTemporaryFile>
 
 #include <qjson/parser.h>
 
@@ -43,9 +40,9 @@ const QString baseLongUrlDorComUrl = QLatin1String("http://api.longurl.org/v2/")
 }
 
 LongUrl::LongUrl(QObject* parent, const QList< QVariant >& args)
-    : Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped)
+    : Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped), mServicesAreFetched(false)
 {
-    getSupportedServices();
+    sheduleSupportedServicesFetch();
     kDebug();
     connect( Choqok::UI::Global::SessionManager::self(),
              SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
@@ -55,12 +52,10 @@ LongUrl::LongUrl(QObject* parent, const QList< QVariant >& args)
 
 LongUrl::~LongUrl()
 {
-    foreach(KJob* job, mParsingList.keys()) {
-        job->suspend();
-    }
+    suspendJobs();
     mData.clear();
     mShortUrls.clear();
-    foreach(KJob* job, mParsingList.keys()) {
+    Q_FOREACH(KJob* job, mParsingList.keys()) {
         job->kill();
     }
     mParsingList.clear();
@@ -81,7 +76,7 @@ void LongUrl::parse(QPointer< Choqok::UI::PostWidget > postToParse)
         }
         redirectList << pureList[i];
     }
-    foreach(const QString &url, redirectList) {
+    Q_FOREACH(const QString &url, redirectList) {
         KJob* job = sheduleParsing(url);
         if(job) {
             mParsingList.insert(job, postToParse);
@@ -131,21 +126,30 @@ void LongUrl::replaceUrl(LongUrl::PostWidgetPointer post, const KUrl& fromUrl, c
     }
 }
 
-void LongUrl::getSupportedServices()
+void LongUrl::sheduleSupportedServicesFetch()
 {
-    KTemporaryFile tmpFile;
-    if (tmpFile.open()) {
-        KIO::Job* getJob = KIO::file_copy(KUrl(baseLongUrlDorComUrl+"services?format=json"), KUrl(tmpFile.fileName()),
-                                          -1, KIO::Overwrite | KIO::HideProgressInfo);
-        if (KIO::NetAccess::synchronousRun(getJob, 0)) {
-            tmpFile.close();
-            QFile file(tmpFile.fileName());
-            QVariantMap response = QJson::Parser().parse(&file).toMap();
-            supportedServices = response.uniqueKeys();
-        } else {
-            getJob->ui()->showErrorMessage();
-        }
+    mServicesAreFetched = true;
+    mServicesData = QSharedPointer<QByteArray>(new QByteArray());
+    KIO::TransferJob* job = KIO::get(KUrl(baseLongUrlDorComUrl+"services?format=json"), KIO::NoReload, KIO::HideProgressInfo);
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)), SLOT(servicesDataReceived(KIO::Job*,QByteArray)));
+    connect(job, SIGNAL(result(KJob*)), SLOT(servicesJobResult(KJob*)));
+}
+
+void LongUrl::servicesDataReceived(KIO::Job* job, QByteArray data)
+{
+    mServicesData->append(data);
+}
+
+void LongUrl::servicesJobResult(KJob* job)
+{
+    if(!job->error()) {
+        QVariantMap response = QJson::Parser().parse(*mServicesData).toMap();
+        supportedServices = response.uniqueKeys();
+    } else {
+        job->uiDelegate()->showErrorMessage();
     }
+    mServicesAreFetched = false;
+    mServicesData.clear();
 }
 
 bool LongUrl::isServiceSupported(const QString& host)
@@ -162,7 +166,6 @@ KJob* LongUrl::sheduleParsing(const QString& shortUrl)
         request.addQueryItem(QLatin1String("format"), QLatin1String("json"));
         request.addQueryItem(QLatin1String("user-agent"), QLatin1String("Choqok"));
         KIO::TransferJob* job = KIO::get(request, KIO::NoReload, KIO::HideProgressInfo);
-        job->setAutoDelete(true);
         mData.insert(job, QByteArray());
         mShortUrls.insert(job, shortUrl);
         connect(job, SIGNAL(data(KIO::Job*,QByteArray)), SLOT(dataReceived(KIO::Job*,QByteArray)));
@@ -184,14 +187,28 @@ void LongUrl::jobResult(KJob* job)
     }
     mData.remove(job);
     mShortUrls.remove(job);
+    mParsingList.remove(job);
 }
 
 void LongUrl::slotAddNewPostWidget(Choqok::UI::PostWidget* newWidget)
 {
     postsQueue.enqueue(newWidget);
-    if(state == Stopped) {
+    if(state == Stopped && !mServicesAreFetched) {
         state = Running;
         QTimer::singleShot(1000, this, SLOT(startParsing()));
+    }
+}
+
+void LongUrl::aboutToUnload()
+{
+    suspendJobs();
+    base::aboutToUnload();
+}
+
+void LongUrl::suspendJobs()
+{
+    Q_FOREACH(KJob* job, mParsingList.keys()) {
+        job->suspend();
     }
 }
 
