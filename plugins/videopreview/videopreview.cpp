@@ -271,7 +271,7 @@ void VideoPreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pix
     
     //kDebug() << QRegExp('>'+baseUrl+'<').pattern();
     
-    QString temp("<br><table><tr><td rowspan=2><img align='left' height=64 src='" + imgUrl + "' /></td>");
+    QString temp("<br/><table><tr><td rowspan=2><img align='left' height=64 src='" + imgUrl + "' /></td>");
     temp.append("<td><a href='" + baseUrl + "' title='" + baseUrl + "'><b>" + title + "</b></a></td></tr>");
     temp.append("<tr><font size=\"-1\">" + description + "</font></tr></table>");
 

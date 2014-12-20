@@ -57,7 +57,7 @@ TextEdit::TextEdit(uint charLimit /*= 0*/, QWidget* parent /*= 0*/)
     kDebug()<<charLimit;
     connect( this, SIGNAL( textChanged() ), this, SLOT( updateRemainingCharsCount() ) );
     setAcceptRichText( false );
-    this->setToolTip( i18n( "<strong>Note:</strong><br/><em>Ctrl+S</em> to enable/disable auto spell checker." ) );
+    this->setToolTip( i18n( "<b>Note:</b><br/><i>Ctrl+S</i> to enable/disable auto spell checker." ) );
 
     enableFindReplace(false);
     QFont counterF;

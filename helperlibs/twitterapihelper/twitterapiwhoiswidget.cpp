@@ -262,9 +262,9 @@ void TwitterApiWhoisWidget::updateHtml()
         .arg(url);
 
         QString countTable = QString("<table><tr>\
-        <td><b>%1</b><br>" + i18nc("User posts", "Posts") + "</td>\
-        <td><b>%2</b><br>" + i18nc("User friends", "Friends") + "</td>\
-        <td><b>%3</b><br>" + i18nc("User followers" , "Followers") + "</td>\
+        <td><b>%1</b><br/>" + i18nc("User posts", "Posts") + "</td>\
+        <td><b>%2</b><br/>" + i18nc("User friends", "Friends") + "</td>\
+        <td><b>%3</b><br/>" + i18nc("User followers" , "Followers") + "</td>\
         </tr></table><br/>")
         .arg(d->statusesCount)
         .arg(d->friendsCount)
