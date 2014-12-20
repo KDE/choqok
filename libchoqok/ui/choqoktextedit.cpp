@@ -214,6 +214,21 @@ void TextEdit::slotChangeSpellerLanguage()
     }
 }
 
+uint TextEdit::charLimit()
+{
+    return d->charLimit;
+}
+
+QChar TextEdit::firstChar()
+{
+    return d->firstChar;
+}
+
+void TextEdit::setFirstChar(const QChar& firstChar)
+{
+    d->firstChar = firstChar;
+}
+
 void TextEdit::setCharLimit(uint charLimit /*= 0*/)
 {
     d->charLimit = charLimit;

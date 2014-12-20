@@ -23,6 +23,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "postwidget.h"
 #include "choqoktools.h"
 #include "textbrowser.h"
+#include "urlutils.h"
 #include <qboxlayout.h>
 #include <KLocale>
 #include <KPushButton>
@@ -86,29 +87,8 @@ const QString PostWidget::baseStyle ("KTextBrowser {border: 1px solid rgb(150,15
 border-radius:5px; color:%1; background-color:%2; %3}\
 KPushButton{border:0px}");
 
-const QString protocols = "((https?|ftps?)://)";
-const QString subdomains = "(([a-z0-9\\-_]{1,}\\.)?)";
-const QString auth = "(([a-z0-9\\-_]{1,})((:[\\S]{1,})?)@)";
-const QString domains = "(([a-z0-9\\-\\x0080-\\xFFFF_]){1,63}\\.)+";
-const QString port = "(:(6553[0-5]|655[0-2][0-9]|65[0-4][\\d]{2}|6[0-4][\\d]{3}|[1-5][\\d]{4}|[1-9][\\d]{0,3}))";
-const QString zone ("((a[cdefgilmnoqrstuwxz])|(b[abdefghijlmnorstvwyz])|(c[acdfghiklmnoruvxyz])|(d[ejkmoz])|(e[ceghrstu])|\
-(f[ijkmor])|(g[abdefghilmnpqrstuwy])|(h[kmnrtu])|(i[delmnoqrst])|(j[emop])|(k[eghimnprwyz])|(l[abcikrstuvy])|\
-(m[acdefghklmnopqrstuvwxyz])|(n[acefgilopruz])|(om)|(p[aefghklnrstwy])|(qa)|(r[eosuw])|(s[abcdeghijklmnortuvyz])|\
-(t[cdfghjkmnoprtvwz])|(u[agksyz])|(v[aceginu])|(w[fs])|(ye)|(z[amrw])\
-|(asia|com|info|net|org|biz|name|pro|aero|cat|coop|edu|jobs|mobi|museum|tel|travel|gov|int|mil|local|xxx)|(中国)|(公司)|(网络)|(صر)|(امارات)|(рф))");
-const QString ip = "(25[0-5]|[2][0-4][0-9]|[0-1]?[\\d]{1,2})(\\.(25[0-5]|[2][0-4][0-9]|[0-1]?[\\d]{1,2})){3}";
-const QString params = "(((\\/)[\\w:/\\?#\\[\\]@!\\$&\\(\\)\\*%\\+,;=\\._~\\x0080-\\xFFFF\\-\\|]{1,}|%[0-9a-f]{2})?)";
-const QString excludingCharacters = QString::fromLatin1("[^\\s`!()\\[\\]{};:'\".,<>?%1%2%3%4%5%6]") 
-                            .arg(QChar(0x00AB)).arg(QChar(0x00BB)).arg(QChar(0x201C)).arg(QChar(0x201D)).arg(QChar(0x2018)).arg(QChar(0x2019));
+const QString PostWidget::hrefTemplate("<a href='%1' title='%1' target='_blank'>%2</a>");
 
-const QRegExp PostWidget::mUrlRegExp("(((((" + protocols + auth + "?)?)" +
-                          subdomains +
-                          '(' + domains +
-                          zone + "(?!(\\w))))|(" + protocols + '(' + ip + ")+))" +
-                          '(' + port + "?)" + "((\\/)?)"  +
-                          params + ')' + excludingCharacters, Qt::CaseInsensitive);
-
-const QRegExp PostWidget::mEmailRegExp('^' + auth + subdomains + domains + zone);
 const QRegExp PostWidget::dirRegExp("(RT|RD)|(@([^\\s\\W]+))|(#([^\\s\\W]+))|(!([^\\s\\W]+))");
 
 QString PostWidget::readStyle;
@@ -428,40 +408,20 @@ QString PostWidget::prepareStatus( const QString &txt )
     QString text = txt;
 //     text.replace( "&amp;", "&amp;amp;" );
     text = removeTags(text);
-    int pos = 0;
-    while(((pos = mUrlRegExp.indexIn(text, pos)) != -1)) {
-        QString link = mUrlRegExp.cap(0);
-        QString tmplink = link;
-        if ( (pos - 1 > -1 && ( text.at( pos - 1 ) != '@' && 
-             text.at( pos - 1 ) != '#' && text.at( pos - 1 ) != '!')) ||
-             pos == 0 ) { 
-        text.remove( pos, link.length() );
-        d->detectedUrls << link;
-        if ( !tmplink.startsWith(QLatin1String("http"), Qt::CaseInsensitive) &&
-             !tmplink.startsWith(QLatin1String("ftp"), Qt::CaseInsensitive) )
-             tmplink.prepend("http://");
-        static const QString hrefTemplate("<a href='%1' title='%1' target='_blank'>%2</a>");
-        tmplink = hrefTemplate.arg( tmplink, link );
-        text.insert( pos, tmplink );
+
+    d->detectedUrls = UrlUtils::detectUrls(text);
+    Q_FOREACH(const QString &url, d->detectedUrls) {
+        QString httpUrl(url);
+        if ( !httpUrl.startsWith(QLatin1String("http"), Qt::CaseInsensitive) &&
+             !httpUrl.startsWith(QLatin1String("ftp"), Qt::CaseInsensitive) ) {
+            httpUrl.prepend("http://");
+            text.replace(url, httpUrl);
         }
-        pos += tmplink.length();
+
+        text.replace(url, hrefTemplate.arg( httpUrl, url ));
     }
 
-    pos = 0;
-    while(((pos = mEmailRegExp.indexIn(text, pos)) != -1)) {
-        QString link = mEmailRegExp.cap(0);
-        QString tmplink = link;
-        if ( (pos - 1 > -1 && ( text.at( pos - 1 ) != '@' &&
-            text.at( pos - 1 ) != '#' && text.at( pos - 1 ) != '!')) ||
-            pos == 0 ) {
-            tmplink.prepend("mailto:");
-            text.remove( pos, link.length() );
-            static const QString hrefTemplate("<a href='%1' title='%1'>%2</a>");
-            tmplink = hrefTemplate.arg( tmplink, link );
-            text.insert( pos, tmplink );
-            }
-            pos += tmplink.length();
-    }
+    text = UrlUtils::detectEmails(text);
 
     if(AppearanceSettings::isEmoticonsEnabled())
         text = MediaManager::self()->parseEmoticons(text);

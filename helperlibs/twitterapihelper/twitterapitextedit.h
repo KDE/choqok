@@ -25,21 +25,26 @@
 #ifndef TWITTERAPITEXTEDIT_H
 #define TWITTERAPITEXTEDIT_H
 
-#include <choqoktextedit.h>
-#include <choqok_export.h>
+#include "account.h"
+#include "choqoktextedit.h"
+#include "choqok_export.h"
 
 class QCompleter;
+class KJob;
 
 class CHOQOK_HELPER_EXPORT TwitterApiTextEdit : public Choqok::UI::TextEdit
 {
 Q_OBJECT
 
 public:
-    explicit TwitterApiTextEdit(uint charLimit = 0, QWidget* parent = 0);
+    explicit TwitterApiTextEdit(Choqok::Account *theAccount, QWidget* parent = 0);
     ~TwitterApiTextEdit();
 
     void setCompleter(QCompleter *c);
     QCompleter *completer() const;
+
+protected Q_SLOTS:
+    virtual void updateRemainingCharsCount();
 
 protected:
     void keyPressEvent(QKeyEvent *e);
@@ -47,9 +52,11 @@ protected:
 
 private Q_SLOTS:
     void insertCompletion(const QString &completion);
+    void slotTCoMaximumLength(KJob *job);
 
 private:
 //     QString textUnderCursor() const;
+    void fetchTCoMaximumLength();
 
     class Private;
     Private * const d;

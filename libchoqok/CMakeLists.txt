@@ -20,6 +20,7 @@ choqokuiglobal.cpp
 choqokid.cpp
 choqoktools.cpp
 dbushandler.cpp
+urlutils.cpp
 ui/microblogwidget.cpp
 ui/editaccountwidget.cpp
 ui/timelinewidget.cpp

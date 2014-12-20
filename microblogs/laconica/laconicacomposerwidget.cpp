@@ -166,7 +166,7 @@ void LaconicaComposerWidget::cancelAttachMedium()
 
 void LaconicaComposerWidget::slotRebuildEditor(Choqok::Account *theAccount)
 {
-    setEditor(new TwitterApiTextEdit(theAccount->postCharLimit(), this));
+    setEditor(new TwitterApiTextEdit(theAccount, this));
 }
 
 #include "laconicacomposerwidget.moc"

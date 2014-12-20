@@ -26,27 +26,37 @@
 #include <QCompleter>
 #include <QKeyEvent>
 #include <QAbstractItemView>
-#include <QtDebug>
 #include <QApplication>
 #include <QModelIndex>
+#include <QLabel>
 #include <QAbstractItemModel>
 #include <QScrollBar>
+#include <KIO/Job>
 #include <KDebug>
+#include <QtOAuth/qoauth_namespace.h>
+#include "twitterapiaccount.h"
+#include "twitterapimicroblog.h"
+#include <qjson/parser.h>
+#include "urlutils.h"
 
 class TwitterApiTextEdit::Private
 {
 public:
-    Private()
-    :c(0)
+    Private(Choqok::Account *theAccount)
+    :c(0), acc(theAccount), tCoMaximumLength(0), tCoMaximumLengthHttps(0)
     {}
+    Choqok::Account *acc;
     QCompleter *c;
+    int tCoMaximumLength;
+    int tCoMaximumLengthHttps;
 };
 
-TwitterApiTextEdit::TwitterApiTextEdit(uint charLimit, QWidget* parent)
-: TextEdit(charLimit, parent), d(new Private)
+TwitterApiTextEdit::TwitterApiTextEdit(Choqok::Account* theAccount, QWidget* parent)
+: TextEdit(theAccount->postCharLimit(), parent), d(new Private(theAccount))
 {
     kDebug();
     setTabChangesFocus(false);
+    fetchTCoMaximumLength();
 }
 
 TwitterApiTextEdit::~TwitterApiTextEdit()
@@ -177,3 +187,92 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
     }
 }
 
+void TwitterApiTextEdit::updateRemainingCharsCount()
+{
+    QString txt = this->toPlainText();
+    int count = txt.count();
+    if (count) {
+        lblRemainChar->show();
+        if (charLimit()) {
+            int remain = charLimit() - count;
+
+            Q_FOREACH (const QString &url, UrlUtils::detectUrls(txt)) {
+                // Twitter does not wrapps urls with login informations
+                if (!url.contains("@")) {
+                    int diff = -1;
+                    if (url.startsWith("http://")) {
+                        diff = url.length() - d->tCoMaximumLength;
+                    } else if (url.startsWith("https://")) {
+                        diff = url.length() - d->tCoMaximumLengthHttps;
+                    }
+
+                    if (diff > 0) {
+                        remain += diff;
+                    }
+                }
+            }
+
+            if (remain < 0) {
+                lblRemainChar->setStyleSheet( "QLabel {color: red;}" );
+            } else if (remain < 30) {
+                lblRemainChar->setStyleSheet( "QLabel {color: rgb(242, 179, 19);}" );
+            } else {
+                lblRemainChar->setStyleSheet( "QLabel {color: green;}" );
+            }
+            lblRemainChar->setText( QString::number(remain) );
+        } else {
+            lblRemainChar->setText( QString::number(count) );
+            lblRemainChar->setStyleSheet( "QLabel {color: blue;}" );
+        }
+        txt.remove(QRegExp("@([^\\s\\W]+)"));
+        txt = txt.trimmed();
+        if (firstChar() != txt[0]) {
+            setFirstChar(txt[0]);
+            txt.prepend(' ');
+            QTextBlockFormat f;
+            f.setLayoutDirection( (Qt::LayoutDirection) txt.isRightToLeft() );
+            textCursor().mergeBlockFormat(f);
+        }
+    } else {
+        lblRemainChar->hide();
+    }
+}
+
+void TwitterApiTextEdit::fetchTCoMaximumLength()
+{
+    TwitterApiAccount *acc = qobject_cast<TwitterApiAccount*>(d->acc);
+    if (acc) {
+        KUrl url("https://api.twitter.com/1.1/help/configuration.json");
+
+        KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
+        if (!job) {
+            kDebug() << "Cannot create an http GET request!";
+            return;
+        }
+        TwitterApiMicroBlog *mBlog = qobject_cast<TwitterApiMicroBlog*>(acc->microblog());
+        job->addMetaData("customHTTPHeader", "Authorization: " +
+            mBlog->authorizationHeader(acc, url, QOAuth::GET));
+        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotTCoMaximumLength(KJob*)));
+        job->start();
+    } else {
+        kDebug() << "the account is not a TwitterAPIAccount!";
+    }
+}
+
+void TwitterApiTextEdit::slotTCoMaximumLength(KJob* job)
+{
+    if (job->error()) {
+        kDebug() << "Job Error: " << job->errorString();
+    } else {
+        KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
+        bool ok;
+        QJson::Parser parser;
+        const QVariantMap reply = parser.parse(j->data(), &ok).toMap();
+        if (ok) {
+            d->tCoMaximumLength = reply["short_url_length"].toInt();
+            d->tCoMaximumLengthHttps = reply["short_url_length_https"].toInt();
+        } else {
+            kDebug() << "Cannot parse JSON reply";
+        }
+    }
+}

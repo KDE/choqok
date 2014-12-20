@@ -60,7 +60,7 @@ Q_SIGNALS:
     void cleared();
 
 protected Q_SLOTS:
-    void updateRemainingCharsCount();
+    virtual void updateRemainingCharsCount();
     void settingsChanged();
     void slotChangeSpellerLanguage();
     void setupSpeller();
@@ -68,6 +68,9 @@ protected Q_SLOTS:
     void shortenUrls();
 
 protected:
+    uint charLimit();
+    QChar firstChar();
+    void setFirstChar(const QChar &firstChar);
     void undoableClear();
     QLabel *lblRemainChar;
 
