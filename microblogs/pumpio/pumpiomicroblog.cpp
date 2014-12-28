@@ -1208,7 +1208,7 @@ Choqok::Post* PumpIOMicroBlog::readPost(const QVariantMap& var, Choqok::Post* po
             QVariantMap toElementMap = element.toMap();
             QString toElementType = toElementMap.value("objectType").toString();
             if (toElementType == "person" || toElementType == "collection") {
-                p->cc.append(toElementMap.value("id").toString());
+                p->to.append(toElementMap.value("id").toString());
             }
         }
 
@@ -1217,7 +1217,7 @@ Choqok::Post* PumpIOMicroBlog::readPost(const QVariantMap& var, Choqok::Post* po
             QVariantMap ccElementMap = element.toMap();
             QString ccElementType = ccElementMap.value("objectType").toString();
             if (ccElementType == "person" || ccElementType == "collection") {
-                p->to.append(ccElementMap.value("id").toString());
+                p->cc.append(ccElementMap.value("id").toString());
             }
         }
 
