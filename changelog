@@ -1,3 +1,16 @@
+=== Version 1.5 -- 25-Jan-2015 ===
+* Yourls plugin fixed. (by Benjamin Marwell) [BUG:265219]
+* Pump.io plugin added. (by Andrea Scarpino) [BUG:319348]
+* Preview of images posted via Twitter.com added. (by Daniel Kreuter) [BUG:299433]
+* Option to disable system tray. (by Andrea Scarpino) [BUG:241152]
+* Twitter friend list update fixed. [BUG:325071]
+* Add "Report User" to User menu Actions (by Ahmed I. Khalil)
+* Get custom char limit for the Status.net accounts. (by Andrea Scarpino) [BUG:283298]
+* Goo.gl shortner plugin fixed. (by Andrea Scarpino) [BUG:338917]
+* New plugin for expanding tiny URLs. (by Andrea Scarpino) [BUG:294600]
+* KDE Telepathy support in IMStatus Plugin (by Ahmed I. Khalil) [BUG:301702]
+* Broken shortening plugins removed
+
 === Version 1.4 -- 01-Sep-2013 ===
 * Fix in font size
 * Fix in shortening Urls comming from konqueror

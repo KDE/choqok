@@ -32,18 +32,21 @@
 static const char description[] =
     I18N_NOOP( "KDE Micro-Blogging Client." );
 
-static const char version[] = "1.4";
+static const char version[] = "1.5";
 
 int main( int argc, char **argv )
 {
     kDebug()<<"Choqok "<<version;
     KAboutData about( "choqok", 0, ki18n( "Choqok" ), version, ki18n( description ),
-                      KAboutData::License_GPL_V3, ki18n( "(C) 2008-2010 Mehrdad Momeny\n(C) 2011-2012 Choqok Developers" ),
+                      KAboutData::License_GPL_V3, ki18n( "(C) 2008-2010 Mehrdad Momeny\n(C) 2011-2015 Choqok Developers" ),
                       KLocalizedString(), 0  );
-    about.addAuthor( ki18n( "Mehrdad Momeny" ), ki18n( "Author and Core Developer" ),
-                     "mehrdad.momeny@gmail.com", "http://identi.ca/mtux" );
+    about.addAuthor( ki18n( "Mehrdad Momeny" ), ki18n( "Author, Developer and Maintainer" ),
+                     "mehrdad.momeny@gmail.com", "http://momeny.wordpress.com" );
     about.addAuthor( ki18n( "Andrey Esin" ), ki18n( "Developer" ),
                      "gmlastik@gmail.com", "http://twitter.com/la_stik" );
+    about.addAuthor( ki18n( "Andrea Scarpino" ), ki18n( "Developer" ), "scarpino@kde.org" );
+    
+    
     about.addCredit( ki18n( "Roozbeh Shafiee" ), ki18n( "Artworks" ), "roozbeh@roozbehonline.com" );
     about.addCredit( ki18n( "Shahrzad Shojaei" ), ki18n( "Artworks" ), "shahrzadesign@gmail.com" );
     about.addCredit( ki18n( "Daniel Schaal" ), ki18n( "UI improvements" ), "daniel@foto-schaal.de");
@@ -55,8 +58,9 @@ int main( int argc, char **argv )
                      "alexandro82@gmail.com" );
     about.addCredit( ki18n( "Bardia Daneshvar" ), ki18n("UI improvements"), "bardia.daneshvar@gmail.com");
     about.addCredit( ki18n( "Atanas Gospodinov" ), ki18n("Twitter photo upload"), QByteArray());
-    about.addCredit( ki18n( "Daniel Kreuter" ), ki18n("Twitter API v1.1 support"), "daniel.kreuter85@gmail.com" );
+    about.addCredit( ki18n( "Daniel Kreuter" ), ki18n("Twitter microblog developer"), "daniel.kreuter85@gmail.com" );
     about.addCredit( ki18n( "Lim Yuen Hoe" ), ki18n("Bug fixes and improvements"), "yuenhoe86@gmail.com" );
+    about.addCredit( ki18n( "Ahmed I. Khalil" ), ki18n("Various improvements"), "ahmedibrahimkhali@gmail.com" );
 
     //TODO before next release, Add new contributers to credits
     KCmdLineArgs::init( argc, argv, &about );
