@@ -48,7 +48,8 @@
 <keyword>micro-blogging</keyword>
 <keyword>client</keyword>
 <keyword>Twitter</keyword>
-<keyword>Identi.ca</keyword>
+<keyword>Pump.io</keyword>
+<keyword>GNU social</keyword>
 </keywordset>
 
 </bookinfo>
@@ -57,7 +58,7 @@
 <title>Introduction</title>
 
 <para>&choqok; is a micro-blogging client which currently supports
-Identi.ca/Laconica and Twitter.com services.</para>
+Pump.io, GNU social and Twitter.com services.</para>
 <para>Micro-blogging is a form of multimedia blogging that allows users to
 send brief text updates or micro media such as photos or audio clips and publish
 them. These can be viewed either by anyone or by a restricted group, which can
@@ -92,7 +93,7 @@ in &choqok;.</para>
 </screenshot>
 
 <para>You have one tab per account, on the screenshot you can see a tab with the
-alias <guilabel>identica</guilabel> and another with the alias
+alias <guilabel>Pump.io</guilabel> and another with the alias
 <guilabel>twitter</guilabel>.</para>
 
 <para>On top of the tab you can choose to send a direct message to someone who
@@ -111,7 +112,7 @@ than 140 characters, you will be asked if you want to post it anyway. If you
 agree, it will be posted up to 140 characters.</para>
 
 <para>The <guilabel>Home</guilabel> tab displays the timeline which consists in
-all posts you and your friends wrote. A post using Identi.ca is called a dent
+all posts you and your friends wrote. A post using Pump.io is called a post
 while a post using Twitter is called a tweet.</para>
 
 <para>The <guilabel>Reply</guilabel> tab displays posts that are replies to

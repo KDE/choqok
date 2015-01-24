@@ -58,7 +58,7 @@ LaconicaMicroBlog::LaconicaMicroBlog ( QObject* parent, const QVariantList&  )
 : TwitterApiMicroBlog(MyPluginFactory::componentData(), parent), friendsPage(1)
 {
     kDebug();
-    setServiceName("StatusNet");
+    setServiceName("GNU social");
     mTimelineInfos["ReTweets"]->name = i18nc("Timeline name", "Repeated");
     mTimelineInfos["ReTweets"]->description = i18nc("Timeline description", "Your posts that were repeated by others");
 //     setServiceHomepageUrl("http://twitter.com/");

@@ -33,9 +33,9 @@ class ChoqokEditAccountWidget;
 class KJob;
 
 /**
-This plugin is to StatusNet service.
+This plugin is to GNU social service.
 
-@Note StatusNet was called Laconcia previously, So I just renamed it on UI :D
+@Note GNU social was called StatusNet and Laconcia previously, So I just renamed it on UI :D
 
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */

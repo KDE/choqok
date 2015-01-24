@@ -26,26 +26,26 @@
   <name xml:lang="x-test">xxChoqokxx</name>
   <description>
     <p>
-      Choqok is a micro-blogging client which supports Twitter.com and Identi.ca services
+      Choqok is a micro-blogging client which supports Twitter.com and Pump.io services
     </p>
-    <p xml:lang="ca">El Choqok és un client de micro-blogs que implementa els serveis de Twitter.com i Identi.ca</p>
-    <p xml:lang="de">Choqok ist ein Mikro-Blogging-Programm, das derzeit Identi.ca und Twitter unterstützt</p>
-    <p xml:lang="el">Το Choqok είναι μια εφαρμογή μικρο-ιστολογίου η οποία υποστηρίζει τις υπηρεσίες Twitter.com και Identi.ca</p>
-    <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com and Identi.ca services</p>
-    <p xml:lang="es">Choqok es un cliente de microblogueo que soporta los servicios Twitter.com e Identi.ca</p>
-    <p xml:lang="fi">Choqok on mikroblogausasiakas, joka tukee Twitter.com- ja Identi.ca-palveluja</p>
-    <p xml:lang="fr">Choqok est un client de micro-bloggage prenant en charge les services Twitter.com et Identi.ca</p>
-    <p xml:lang="nb">Choqok er en klient for mikroblogging som støtter tjenestene Twitter.com og identi.ca</p>
-    <p xml:lang="nds">Chokoq is en Lüttdaagbook-Client, de Twitter un Identi.ca ünnerstütten deit.</p>
-    <p xml:lang="nl">Choqok is een micro-blogging-client, die de services Twitter.com en Identi.ca ondersteunt</p>
-    <p xml:lang="pl">Choqok jest klientem mikro bloków, który obsługuje usługi Twitter.com oraz Identi.ca</p>
-    <p xml:lang="pt">O Choqok é um cliente de micro-blogs que suporta os serviços do Twitter.com e do Identi.ca</p>
-    <p xml:lang="pt-BR">Choqok é um cliente de microblogging que suporte aos serviços do Identi.ca e Twitter.com</p>
-    <p xml:lang="sk">Choqok je mikro blogovací klient, ktorý podporuje služby Twitter.com a Identi.ca</p>
-    <p xml:lang="sl">Choqok je odjemalec mikrobloganja, ki podpira storitvi Twitter.com in Identi.ca</p>
-    <p xml:lang="sv">Choqok är en klient för mikrobloggar som stöder tjänsterna Twitter.com och Identi.ca</p>
-    <p xml:lang="uk">Choqok — клієнтська програма для роботи з мікроблогами, у якій передбачено підтримку служб Twitter.com та Identi.ca.</p>
-    <p xml:lang="x-test">xxChoqok is a micro-blogging client which supports Twitter.com and Identi.ca servicesxx</p>
+    <p xml:lang="ca">El Choqok és un client de micro-blogs que implementa els serveis de Twitter.com i Pump.io</p>
+    <p xml:lang="de">Choqok ist ein Mikro-Blogging-Programm, das derzeit Pump.io und Twitter unterstützt</p>
+    <p xml:lang="el">Το Choqok είναι μια εφαρμογή μικρο-ιστολογίου η οποία υποστηρίζει τις υπηρεσίες Twitter.com και Pump.io</p>
+    <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com and Pump.io services</p>
+    <p xml:lang="es">Choqok es un cliente de microblogueo que soporta los servicios Twitter.com e Pump.io</p>
+    <p xml:lang="fi">Choqok on mikroblogausasiakas, joka tukee Twitter.com- ja Pump.io-palveluja</p>
+    <p xml:lang="fr">Choqok est un client de micro-bloggage prenant en charge les services Twitter.com et Pump.io</p>
+    <p xml:lang="nb">Choqok er en klient for mikroblogging som støtter tjenestene Twitter.com og Pump.io</p>
+    <p xml:lang="nds">Chokoq is en Lüttdaagbook-Client, de Twitter un Pump.io ünnerstütten deit.</p>
+    <p xml:lang="nl">Choqok is een micro-blogging-client, die de services Twitter.com en Pump.io ondersteunt</p>
+    <p xml:lang="pl">Choqok jest klientem mikro bloków, który obsługuje usługi Twitter.com oraz Pump.io</p>
+    <p xml:lang="pt">O Choqok é um cliente de micro-blogs que suporta os serviços do Twitter.com e do Pump.io</p>
+    <p xml:lang="pt-BR">Choqok é um cliente de microblogging que suporte aos serviços do Pump.io e Twitter.com</p>
+    <p xml:lang="sk">Choqok je mikro blogovací klient, ktorý podporuje služby Twitter.com a Pump.io</p>
+    <p xml:lang="sl">Choqok je odjemalec mikrobloganja, ki podpira storitvi Twitter.com in Pump.io</p>
+    <p xml:lang="sv">Choqok är en klient för mikrobloggar som stöder tjänsterna Twitter.com och Pump.io</p>
+    <p xml:lang="uk">Choqok — клієнтська програма для роботи з мікроблогами, у якій передбачено підтримку служб Twitter.com та Pump.io</p>
+    <p xml:lang="x-test">xxChoqok is a micro-blogging client which supports Twitter.com and Pump.io servicesxx</p>
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
@@ -87,43 +87,8 @@
       <li xml:lang="sv">Stöder mikrobloggtjänsten Twitter.com</li>
       <li xml:lang="uk">підтримка служби мікроблогів Twitter.com;</li>
       <li xml:lang="x-test">xxSupporting Twitter.com micro-blogging servicexx</li>
-      <li>Supporting Identi.ca micro-blogging service (Using its Twitter compatible API)</li>
-      <li xml:lang="ca">Implementació del servei de micro-blog Identi.ca (usant la seva API compatible amb Twitter)</li>
-      <li xml:lang="de">Unterstützung für den Micro-Blogging-Dienst Identi.ca, dazu wird die Twitter-kompatible API (Programmschnittstelle)</li>
-      <li xml:lang="el">Υποστηρίζει την υπηρεσία μικρο-ιστολογίου Identi.ca (με χρήση του συμβατού API του Twitter)</li>
-      <li xml:lang="en-GB">Supporting Identi.ca micro-blogging service (Using its Twitter compatible API)</li>
-      <li xml:lang="es">Soporta el servicio de microblogueo Identi.ca (Utilizando su API compatible con Twitter)</li>
-      <li xml:lang="fi">Tukee Identi.ca-mikroblogauspalvelua (käyttäen sen Twitter-yhteensopivaa APIa)</li>
-      <li xml:lang="fr">Prise en charge du service de micro-bloggage Identi.ca (en utilisant l'API Twitter)</li>
-      <li xml:lang="nb">Støtter identi.ca-tjeneste for mikroblogging (ved bruk av dens Twitter-kompatible API)</li>
-      <li xml:lang="nds">Ünnerstütt den Lüttdaagbookdeenst Identi.ca (över sien to Twitter kumpativel API)</li>
-      <li xml:lang="nl">Ondersteunt de microblogging-service Identi.ca (met gebruik van zijn aan Twitter compatibele API)</li>
-      <li xml:lang="pl">Obsługa usługi mikro blogów Identi.ca (przy użyciu API zgodnego z Twitter)</li>
-      <li xml:lang="pt">Suporte para o serviço de micro-blogs Identi.ca (usando a sua API compatível com o Twitter)</li>
-      <li xml:lang="pt-BR">Suporte ao serviço de microblogging Identi.ca (Usando a API compatível do Twitter)</li>
-      <li xml:lang="sk">Podporuje mikro blogovaciu službu Identi.ca (pomocou svojho API kompatibilného s Twitterom)</li>
-      <li xml:lang="sl">Podpora storitvi mikrobloganja Identi.ca (z uporabo API-ja združljivega s Twitter-jem)</li>
-      <li xml:lang="sv">Stöder mikrobloggtjänsten Identi.ca (genom att använda dess programmeringsgränssnitt kompatibelt med Twitter)</li>
-      <li xml:lang="uk">підтримка служби ведення мікроблогів Identi.ca (за допомогою її сумісного з Twitter програмного інтерфейсу);</li>
-      <li xml:lang="x-test">xxSupporting Identi.ca micro-blogging service (Using its Twitter compatible API)xx</li>
-      <li>Supporting self hosted Laconica websites (Using its Twitter compatible API)</li>
-      <li xml:lang="ca">Implementació pels llocs web allotjats a Laconica (usant la seva API compatible amb Twitter)</li>
-      <li xml:lang="el">Υποστηρίζει ιστοτόπους Laconica ίδιας φιλοξενίας (με χρήση του συμβατού API του Twitter)</li>
-      <li xml:lang="en-GB">Supporting self hosted Laconica websites (Using its Twitter compatible API)</li>
-      <li xml:lang="es">Soporta los sitios web auto-alojados Laconica (utilizando su API compatible con Twitter)</li>
-      <li xml:lang="fi">Tukee itse ylläpidettyjä Laconica-sivustoja (käyttäen sen Twitter-yhteensopivaa APIa)</li>
-      <li xml:lang="fr">Prise en charge des sites web auto-hébergés Laconica/StatusNet (en utilisant l'API Twitter)</li>
-      <li xml:lang="nb">Støtter egne Laconica-nettsider (med dens Twitter-kompatible API)</li>
-      <li xml:lang="nds">Ünnerstütt sülven ünnerhollen Laconica-Nettsieden (över ehr to Twitter kumpativel API)</li>
-      <li xml:lang="nl">Ondersteunt de zelf gehoste Laconica-websites (met gebruik van zijn aan Twitter compatibele API)</li>
-      <li xml:lang="pl">Obsługa samodzielnych stron sieciowych Laconica (przy użyciu API zgodnego z Twitter)</li>
-      <li xml:lang="pt">Suporte para as páginas Web do Laconica auto-alojadas (usando a sua API compatível com o Twitter)</li>
-      <li xml:lang="pt-BR">Suporte a sites independentes hospedados no Laconica (Usando a API compatível do Twitter)</li>
-      <li xml:lang="sk">Podporuje samostatne hostované webové služby Laconica (pomocou svojho API kompatibilného s Twitterom)</li>
-      <li xml:lang="sl">Podpora spletiščem Laconica, ki jih gostujete sami (z uporabo API-ja združljivega s Twitter-jem)</li>
-      <li xml:lang="sv">Stöder Laconica-webbplatser med egen värddator (genom att använda dess programmeringsgränssnitt kompatibelt med Twitter)</li>
-      <li xml:lang="uk">підтримка самостійно підтримуваних сайтів Laconica (за допомогою відповідного сумісного з Twitter програмного інтерфейсу);</li>
-      <li xml:lang="x-test">xxSupporting self hosted Laconica websites (Using its Twitter compatible API)xx</li>
+      <li>Supporting self hosted Pump.io service</li>
+      <li>Supporting self hosted GNU social service</li>
       <li>Supporting User + His/Her Friends time-lines</li>
       <li xml:lang="ca">Implementació per a les línies de temps Usuari + Vós i els vostres amics</li>
       <li xml:lang="el">Υποστηρίζει χρονολόγια για χρήστη + φίλους</li>

@@ -29,7 +29,7 @@
 
 
 /**
-Laconica/StatusNet search API implementation.
+GNU social/StatatusNet/Laconica search API implementation.
 
 @author Stephen Henderson \<hendersonsk@gmail.com\>
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>

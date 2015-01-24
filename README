@@ -1,10 +1,11 @@
     Choqok
 KDE Micro-Blogging client,
-Currently supports Identi.ca and Twitter.com
+Currently supports Pump.io, GNU social and Twitter.com
 
 Authors:
     Mehrdad Momeny <mehrdad.momeny[AT]gmail.com>
     Andrey Esin <gmlastik[AT]gmail.com>
+    Andrea Scarpino <scarpino[AT]kde.org>
 
 License:
     GNU GPL v2 or v3 or Later
