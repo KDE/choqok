@@ -28,6 +28,12 @@
     <p>
       Choqok is a micro-blogging client which supports Twitter.com and Pump.io services
     </p>
+    <p xml:lang="nl">Choqok is een micro-blogging-client, die de services Twitter.com en Pump.io ondersteunt</p>
+    <p xml:lang="pt">O Choqok é um cliente de micro-blogs que suporta os serviços do Twitter.com e do Pump.io</p>
+    <p xml:lang="pt-BR">Choqok é um cliente de microblogging que suporte aos serviços do Pump.io e Twitter.com</p>
+    <p xml:lang="sv">Choqok är en klient för mikrobloggar som stöder tjänsterna Twitter.com och Pump.io</p>
+    <p xml:lang="uk">Choqok — клієнтська програма для роботи з мікроблогами, у якій передбачено підтримку служб Twitter.com та Pump.io.</p>
+    <p xml:lang="x-test">xxChoqok is a micro-blogging client which supports Twitter.com and Pump.io servicesxx</p>
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
@@ -70,7 +76,19 @@
       <li xml:lang="uk">підтримка служби мікроблогів Twitter.com;</li>
       <li xml:lang="x-test">xxSupporting Twitter.com micro-blogging servicexx</li>
       <li>Supporting self hosted Pump.io service</li>
+      <li xml:lang="nl">Ondersteuning voor zelf gehoste Pump.io service</li>
+      <li xml:lang="pt">Suporte para o serviço auto-alojado do Pump.io</li>
+      <li xml:lang="pt-BR">Suporte ao serviço de hospedagem Pump.io</li>
+      <li xml:lang="sv">Stöder tjänsten Pump.io på egen värddator</li>
+      <li xml:lang="uk">підтримка автономної власної служби Pump.io;</li>
+      <li xml:lang="x-test">xxSupporting self hosted Pump.io servicexx</li>
       <li>Supporting self hosted GNU social service</li>
+      <li xml:lang="nl">Ondersteuning voor zelf gehoste GNU sociaal service</li>
+      <li xml:lang="pt">Suporte para o serviço auto-alojado do GNU social</li>
+      <li xml:lang="pt-BR">Suporte ao serviço de hospedagem GNU social</li>
+      <li xml:lang="sv">Stöder tjänsten GNU social på egen värddator</li>
+      <li xml:lang="uk">підтримка автономної власної служби GNU social;</li>
+      <li xml:lang="x-test">xxSupporting self hosted GNU social servicexx</li>
       <li>Supporting User + His/Her Friends time-lines</li>
       <li xml:lang="ca">Implementació per a les línies de temps Usuari + Vós i els vostres amics</li>
       <li xml:lang="el">Υποστηρίζει χρονολόγια για χρήστη + φίλους</li>
