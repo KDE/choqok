@@ -54,6 +54,7 @@ Comment[ca]=Afegeix una acció de cerca a la IU per l'API de micro-blogs com ara
 Comment[cs]=Přidat vyhledávací činnost do uživatelského rozhraní pro mikroblogy Twitter API, jako Twitter a síť GNU
 Comment[da]=Føj en søgehandling til brugerfladen til mikroblogs med Twitter-API, såsom Twitter og GNU Social
 Comment[en_GB]=Add a Search action to the UI for Twitter API microblogs like Twitter and GNU social
+Comment[fi]=Lisää hakutoiminto käyttöliittymään Twitter API -mikroblogia, kuten Twitter ja GNU social, varten.
 Comment[nl]=Voeg een zoekactie toe aan de GI voor Twitter-API-microblogs. zoals Twitter en GNU sociaal
 Comment[pl]=Dodaj funkcję wyszukiwania do interfejsu dla API mikroblogów jak Twitter i Społeczność GNU
 Comment[pt]=Adiciona uma acção de Pesquisa à interface para a API do Twitter, como o Twitter e o GNU social
