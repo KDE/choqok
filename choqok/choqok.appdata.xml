@@ -30,6 +30,8 @@
     </p>
     <p xml:lang="ca">El Choqok és un client de micro-blogs que implementa els serveis de Twitter.com i Pump.io</p>
     <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com and Pump.io services</p>
+    <p xml:lang="fi">Choqok on mikroblogausasiakas, joka tukee Twitter.com- ja Pump.io-palveluja</p>
+    <p xml:lang="fr">Choqok est un client de micro-bloggage prenant en charge les services Twitter.com et Pump.io</p>
     <p xml:lang="nl">Choqok is een micro-blogging-client, die de services Twitter.com en Pump.io ondersteunt</p>
     <p xml:lang="pl">Choqok jest klientem mikro bloków, który obsługuje usługi Twitter.com oraz Pump.io</p>
     <p xml:lang="pt">O Choqok é um cliente de micro-blogs que suporta os serviços do Twitter.com e do Pump.io</p>
@@ -81,6 +83,7 @@
       <li>Supporting self hosted Pump.io service</li>
       <li xml:lang="ca">Implementació per al servei Pump.io auto hostatjat</li>
       <li xml:lang="en-GB">Supporting self hosted Pump.io service</li>
+      <li xml:lang="fr">Prise en charge du service auto-hébergé Pump.io</li>
       <li xml:lang="nl">Ondersteuning voor zelf gehoste Pump.io service</li>
       <li xml:lang="pl">Obsługa samoutrzymywanej usługi Pump.io</li>
       <li xml:lang="pt">Suporte para o serviço auto-alojado do Pump.io</li>
@@ -91,6 +94,7 @@
       <li>Supporting self hosted GNU social service</li>
       <li xml:lang="ca">Implementació per al servei social de la GNU auto hostatjat</li>
       <li xml:lang="en-GB">Supporting self hosted GNU social service</li>
+      <li xml:lang="fr">Prise en charge du service social auto-hébergé GNU</li>
       <li xml:lang="nl">Ondersteuning voor zelf gehoste GNU sociaal service</li>
       <li xml:lang="pl">Obsługa samoutrzymywanej usługi społecznościowej GNU</li>
       <li xml:lang="pt">Suporte para o serviço auto-alojado do GNU social</li>
@@ -104,6 +108,7 @@
       <li xml:lang="en-GB">Supporting User + His/Her Friends time-lines</li>
       <li xml:lang="es">Soporta las líneas temporales usuario + sus amigos</li>
       <li xml:lang="fi">Tukee käyttäjän ja hänen kaveriensa aikajanoja</li>
+      <li xml:lang="fr">Prise en charge des flux de l'utilisateur et de ses amis</li>
       <li xml:lang="nb">Støtter User + His/Her Friends tidslinjer</li>
       <li xml:lang="nds">Ünnerstütt Teitregen för Brukers un ehr Frünnen</li>
       <li xml:lang="nl">Ondersteuning van User + His/Her Friends tijdlijnen</li>
@@ -121,6 +126,7 @@
       <li xml:lang="en-GB">Supporting @Reply time-lines</li>
       <li xml:lang="es">Soporta las líneas temporales de @respuesta</li>
       <li xml:lang="fi">Tukee @Reply-aikajanoja</li>
+      <li xml:lang="fr">Prise en charge des balises de réponse (« @utilisateur »)</li>
       <li xml:lang="nb">Støtter @Reply  tidslinjer</li>
       <li xml:lang="nds">Ünnerstütt @Reply-Tietregen</li>
       <li xml:lang="nl">Ondersteuning van @Reply tijdlijnen</li>
@@ -284,6 +290,7 @@
       <li xml:lang="en-GB">Support for configuring status lists appearance</li>
       <li xml:lang="es">Soporte para configurar la apariencia de las listas de estados</li>
       <li xml:lang="fi">Tukee tilalistojen ulkoasun mukauttamista</li>
+      <li xml:lang="fr">Prise en charge de l'apparition des listes d'état</li>
       <li xml:lang="nb">Støtte for å stille inn utseende på statuslister</li>
       <li xml:lang="nds">Ünnerstütt dat Instellen vun't Utsehn vun Statuslisten</li>
       <li xml:lang="nl">Ondersteuning voor instellen van het verschijnen van statuslijsten</li>
