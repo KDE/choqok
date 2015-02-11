@@ -30,6 +30,7 @@
     </p>
     <p xml:lang="ca">El Choqok és un client de micro-blogs que implementa els serveis de Twitter.com i Pump.io</p>
     <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com and Pump.io services</p>
+    <p xml:lang="es">Choqok es un cliente de microblogueo que soporta los servicios Twitter.com y Pump.io</p>
     <p xml:lang="fi">Choqok on mikroblogausasiakas, joka tukee Twitter.com- ja Pump.io-palveluja</p>
     <p xml:lang="fr">Choqok est un client de micro-bloggage prenant en charge les services Twitter.com et Pump.io</p>
     <p xml:lang="nl">Choqok is een micro-blogging-client, die de services Twitter.com en Pump.io ondersteunt</p>
@@ -83,6 +84,7 @@
       <li>Supporting self hosted Pump.io service</li>
       <li xml:lang="ca">Implementació per al servei Pump.io auto hostatjat</li>
       <li xml:lang="en-GB">Supporting self hosted Pump.io service</li>
+      <li xml:lang="es">Soporta el servicio auto hospedado Pump.io</li>
       <li xml:lang="fr">Prise en charge du service auto-hébergé Pump.io</li>
       <li xml:lang="nl">Ondersteuning voor zelf gehoste Pump.io service</li>
       <li xml:lang="pl">Obsługa samoutrzymywanej usługi Pump.io</li>
@@ -94,6 +96,7 @@
       <li>Supporting self hosted GNU social service</li>
       <li xml:lang="ca">Implementació per al servei social de la GNU auto hostatjat</li>
       <li xml:lang="en-GB">Supporting self hosted GNU social service</li>
+      <li xml:lang="es">Soporta el servicio auto hospedado GNU social</li>
       <li xml:lang="fr">Prise en charge du service social auto-hébergé GNU</li>
       <li xml:lang="nl">Ondersteuning voor zelf gehoste GNU sociaal service</li>
       <li xml:lang="pl">Obsługa samoutrzymywanej usługi społecznościowej GNU</li>
