@@ -41,7 +41,7 @@ namespace Choqok
     {
         kDebug()<<accounts.count();
         QList<Account*> result;
-        foreach(Account* ac, accounts){
+        Q_FOREACH (Account* ac, accounts) {
             bool inserted = false;
             int i = 0;
             while( i < result.count() ){
@@ -171,13 +171,13 @@ Account * AccountManager::registerAccount( Account * account )
 void AccountManager::loadAllAccounts()
 {
     kDebug();
-    foreach (Account *ac, d->accounts){
+    Q_FOREACH (Account *ac, d->accounts) {
         ac->deleteLater();
     }
     d->accounts.clear();
     const QStringList accountGroups = d->conf->groupList().filter( QRegExp( QString::fromLatin1( "^Account_" ) ) );
     kDebug()<<accountGroups;
-    foreach ( const QString& grp, accountGroups ) {
+    Q_FOREACH (const QString& grp, accountGroups) {
         kDebug()<<grp;
         KConfigGroup cg( d->conf, grp );
 //         KConfigGroup pluginConfig( d->conf, QLatin1String("Plugins") );

@@ -122,7 +122,7 @@ QMenu* Translator::setupTranslateMenu()
     QMenu *menu = new QMenu;
     TranslatorSettings::self()->readConfig();
     langs =  TranslatorSettings::languages();
-    foreach(const QString& lang, langs){
+    Q_FOREACH (const QString& lang, langs) {
         KIcon icon;
 		icon.addPixmap(QPixmap(SharedTools::self()->languageFlag(lang)));
         QString langStr = KGlobal::locale()->languageCodeToName(lang);
@@ -162,7 +162,7 @@ void Translator::slotConfigureTranslator()
 
     QList<KCModuleProxy*> moduleProxyList;
 
-    foreach (const KService::Ptr &servicePtr, pluginInfo.kcmServices()) {
+    Q_FOREACH (const KService::Ptr &servicePtr, pluginInfo.kcmServices()) {
         if(!servicePtr->noDisplay()) {
             KCModuleInfo moduleInfo(servicePtr);
             KCModuleProxy *currentModuleProxy = new KCModuleProxy(moduleInfo, moduleProxyParentWidget);
@@ -209,13 +209,13 @@ void Translator::slotConfigureTranslator()
         configDialog->setMainWidget(showWidget);
 
         if (configDialog->exec() == QDialog::Accepted) {
-            foreach (KCModuleProxy *moduleProxy, moduleProxyList) {
+            Q_FOREACH (KCModuleProxy *moduleProxy, moduleProxyList) {
                 QStringList parentComponents = moduleProxy->moduleInfo().service()->property("X-KDE-ParentComponents").toStringList();
                 moduleProxy->save();
                 slotUpdateMenu();
             }
         } else {
-            foreach (KCModuleProxy *moduleProxy, moduleProxyList) {
+            Q_FOREACH (KCModuleProxy *moduleProxy, moduleProxyList) {
                 moduleProxy->load();
             }
         }

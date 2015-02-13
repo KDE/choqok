@@ -236,7 +236,7 @@ KMenu * AccountsWidget::createAddAccountMenu()
 {
     mBlogMenu = new KMenu(i18n("Select Micro-Blogging Service"), this);
     const QList<KPluginInfo> list = Choqok::PluginManager::self()->availablePlugins("MicroBlogs");
-    foreach(const KPluginInfo& info, list){
+    Q_FOREACH (const KPluginInfo& info, list) {
         KAction *act = new KAction(mBlogMenu);
         act->setText(info.name());
         act->setIcon( KIcon(info.icon()) );

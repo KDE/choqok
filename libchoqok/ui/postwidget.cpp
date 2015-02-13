@@ -387,7 +387,7 @@ void PostWidget::resizeEvent ( QResizeEvent * event )
 
 void PostWidget::enterEvent ( QEvent * event )
 {
-    foreach(KPushButton *btn, buttons()){
+    Q_FOREACH (KPushButton *btn, buttons()) {
         if(btn)//A crash happens here :/
             btn->show();
     }
@@ -396,7 +396,7 @@ void PostWidget::enterEvent ( QEvent * event )
 
 void PostWidget::leaveEvent ( QEvent * event )
 {
-    foreach(KPushButton *btn, buttons()){
+    Q_FOREACH (KPushButton *btn, buttons()) {
         if(btn)
             btn->hide();
     }

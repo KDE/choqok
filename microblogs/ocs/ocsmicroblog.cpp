@@ -97,8 +97,9 @@ QList< Choqok::Post* > OCSMicroblog::loadTimeline(Choqok::Account* account, cons
     QStringList tmpList = postsBackup.groupList();
 
     QList<QDateTime> groupList;
-    foreach(const QString &str, tmpList)
+    Q_FOREACH (const QString &str, tmpList) {
         groupList.append(QDateTime::fromString(str) );
+    }
     qSort(groupList);
     int count = groupList.count();
     if( count ) {
@@ -232,7 +233,7 @@ QList< Choqok::Post* > OCSMicroblog::parseActivityList(const Attica::Activity::L
 {
     kDebug()<<list.count();
     QList< Choqok::Post* > resultList;
-    foreach(Attica::Activity act, list){
+    Q_FOREACH (const Attica::Activity &act, list) {
         Choqok::Post* pst = new Choqok::Post;
         pst->postId = act.id();
         pst->content = act.message();

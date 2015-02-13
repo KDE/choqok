@@ -70,7 +70,7 @@ void ConfigureFilters::reloadFiltersTable()
     ui.filters->clearContents();
     QList<Filter*> filters = FilterSettings::self()->filters();
     kDebug()<<filters.count();
-    foreach(Filter *filter, filters){
+    Q_FOREACH (Filter *filter, filters) {
         addNewFilter(filter);
     }
     ui.cfg_hideNoneFriendsReplies->setChecked(FilterSettings::hideNoneFriendsReplies());

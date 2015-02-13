@@ -188,8 +188,9 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
 ///--------------
 
     QList<QDateTime> groupList;
-    foreach(const QString &str, tmpList)
+    Q_FOREACH (const QString &str, tmpList) {
         groupList.append(QDateTime::fromString(str) );
+    }
     qSort(groupList);
     int count = groupList.count();
     if( count ) {
@@ -436,7 +437,7 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
 
 void TwitterApiMicroBlog::abortAllJobs(Choqok::Account* theAccount)
 {
-    foreach ( KJob *job, mJobsAccount.keys(theAccount) ) {
+    Q_FOREACH (KJob *job, mJobsAccount.keys(theAccount)) {
         job->kill(KJob::EmitResult);
     }
 }
@@ -448,7 +449,7 @@ void TwitterApiMicroBlog::abortCreatePost(Choqok::Account* theAccount, Choqok::P
     if( post ) {
         mCreatePostMap.key(post)->kill(KJob::EmitResult);
     } else {
-        foreach( KJob *job, mCreatePostMap.keys() ){
+        Q_FOREACH (KJob *job, mCreatePostMap.keys()) {
             if(mJobsAccount[job] == theAccount)
                 job->kill(KJob::EmitResult);
         }
@@ -754,7 +755,7 @@ void TwitterApiMicroBlog::finishRequestFriendsScreenName(KJob* job, bool active)
 void TwitterApiMicroBlog::updateTimelines (Choqok::Account* theAccount)
 {
     kDebug();
-    foreach ( const QString &tm, theAccount->timelineNames() ) {
+    Q_FOREACH (const QString &tm, theAccount->timelineNames()) {
         requestTimeLine ( theAccount, tm, mTimelineLatestId[theAccount][tm] );
     }
 }
@@ -907,7 +908,7 @@ QDateTime TwitterApiMicroBlog::dateFromString ( const QString &date )
 void TwitterApiMicroBlog::aboutToUnload()
 {
     d->countOfTimelinesToSave = 0;
-    foreach(Choqok::Account* acc, Choqok::AccountManager::self()->accounts()){
+    Q_FOREACH (Choqok::Account* acc, Choqok::AccountManager::self()->accounts()) {
         if(acc->microblog() == this){
             d->countOfTimelinesToSave += acc->timelineNames().count();
         }

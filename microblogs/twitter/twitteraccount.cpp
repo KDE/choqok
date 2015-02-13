@@ -43,7 +43,7 @@ TwitterAccount::TwitterAccount(TwitterMicroBlog* parent, const QString &alias)
     kDebug() << "Set API version to 1.1";
 //     d->lists = configGroup()->readEntry("lists", QStringList());
     QStringList lists;
-    foreach(const QString & tm, timelineNames()){
+    Q_FOREACH (const QString & tm, timelineNames()) {
         if(tm.startsWith('@'))
             lists.append(tm);
     }

@@ -148,7 +148,7 @@ void VideoPreview::parse(QPointer<Choqok::UI::PostWidget> postToParse)
         }
     }
 
-    foreach(const QString &thumb_url, thumbList) {
+    Q_FOREACH (const QString &thumb_url, thumbList) {
 
         kDebug() << thumb_url;
         connect( Choqok::MediaManager::self(),

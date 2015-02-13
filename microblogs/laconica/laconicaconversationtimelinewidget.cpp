@@ -63,7 +63,7 @@ void LaconicaConversationTimelineWidget::slotConversationFetched(Choqok::Account
     if( currentAccount() == theAccount && convId == this->conversationId){
         setWindowTitle(i18n("Conversation"));
         addNewPosts(posts);
-        foreach(Choqok::UI::PostWidget* post, postWidgets()){
+        Q_FOREACH (Choqok::UI::PostWidget* post, postWidgets()) {
             post->setReadWithSignal();
         }
         QTimer::singleShot(0, this, SLOT(updateHeight()));
@@ -73,7 +73,7 @@ void LaconicaConversationTimelineWidget::slotConversationFetched(Choqok::Account
 void LaconicaConversationTimelineWidget::updateHeight()
 {
     int height = 25;
-    foreach(Choqok::UI::PostWidget* wd, postWidgets()){
+    Q_FOREACH (Choqok::UI::PostWidget* wd, postWidgets()) {
         height += wd->height() + 5;
     }
     if(height > choqokMainWindow->height())

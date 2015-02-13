@@ -245,7 +245,7 @@ void LaconicaEditAccountWidget::setTextLimit()
 
 void LaconicaEditAccountWidget::loadTimelinesTableState()
 {
-    foreach(const QString &timeline, mAccount->microblog()->timelineNames()){
+    Q_FOREACH (const QString &timeline, mAccount->microblog()->timelineNames()) {
         int newRow = timelinesTable->rowCount();
         timelinesTable->insertRow(newRow);
         Choqok::TimelineInfo *info = mAccount->microblog()->timelineInfo(timeline);

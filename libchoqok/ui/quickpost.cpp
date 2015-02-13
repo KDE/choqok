@@ -173,7 +173,7 @@ void QuickPost::submitPost( const QString & txt )
             d->submittedPost = new Post;
             d->submittedPost->content = newPost;
             d->submittedPost->isPrivate = false;
-        foreach ( Account* acc, d->accountsList ) {
+        Q_FOREACH (Account* acc, d->accountsList) {
             acc->microblog()->createPost( acc, d->submittedPost );
             d->submittedAccounts<<acc;
         }

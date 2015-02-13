@@ -80,7 +80,7 @@ void BehaviorConfig_Shorten::load()
     QList<KPluginInfo> plugins = Choqok::PluginManager::self()->availablePlugins("Shorteners");
     shortenPlugins->clear();
     shortenPlugins->addItem( i18nc("No shortener service", "None"), QLatin1String("none") );
-    foreach(const KPluginInfo& plugin, plugins){
+    Q_FOREACH (const KPluginInfo& plugin, plugins) {
         shortenPlugins->addItem( KIcon(plugin.icon()), plugin.name(), plugin.pluginName());
         availablePlugins.insert(plugin.pluginName(), plugin);
     }
@@ -134,7 +134,7 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
     // The first proxy is owned by the dialog itself
     QWidget *moduleProxyParentWidget = configDialog;
 
-    foreach (const KService::Ptr &servicePtr, pluginInfo.kcmServices()) {
+    Q_FOREACH (const KService::Ptr &servicePtr, pluginInfo.kcmServices() ) {
         if(!servicePtr->noDisplay()) {
             KCModuleInfo moduleInfo(servicePtr);
             KCModuleProxy *currentModuleProxy = new KCModuleProxy(moduleInfo, moduleProxyParentWidget);
@@ -184,7 +184,7 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
 //         connect(&configDialog, SIGNAL(defaultClicked()), this, SLOT(slotDefaultClicked()));
 
         if (configDialog->exec() == QDialog::Accepted) {
-            foreach (KCModuleProxy *moduleProxy, moduleProxyList) {
+            Q_FOREACH (KCModuleProxy *moduleProxy, moduleProxyList) {
                 QStringList parentComponents = moduleProxy->moduleInfo().service()->property("X-KDE-ParentComponents").toStringList();
                 moduleProxy->save();
 //                 foreach (const QString &parentComponent, parentComponents) {
@@ -192,7 +192,7 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
 //                 }
             }
         } else {
-            foreach (KCModuleProxy *moduleProxy, moduleProxyList) {
+            Q_FOREACH (KCModuleProxy *moduleProxy, moduleProxyList) {
                 moduleProxy->load();
             }
         }

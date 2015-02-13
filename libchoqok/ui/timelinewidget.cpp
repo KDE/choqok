@@ -288,7 +288,7 @@ void TimelineWidget::setUnreadCount(int unread)
 void TimelineWidget::markAllAsRead()
 {
     if( d->unreadCount > 0 ) {
-        foreach(PostWidget *pw, d->sortedPostsList){
+        Q_FOREACH (PostWidget *pw, d->sortedPostsList) {
             pw->setRead();
         }
         int unread = -d->unreadCount;
@@ -311,7 +311,7 @@ Account* TimelineWidget::currentAccount()
 
 void TimelineWidget::settingsChanged()
 {
-    foreach(PostWidget *pw, d->sortedPostsList){
+    Q_FOREACH (PostWidget *pw, d->sortedPostsList) {
         pw->setUiStyle();
     }
 }

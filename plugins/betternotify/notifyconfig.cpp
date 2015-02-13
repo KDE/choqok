@@ -73,7 +73,7 @@ void NotifyConfig::updateTimelinesList()
     ui.timelinesList->clear();
     QString acc = ui.accountsList->currentItem()->text();
     Choqok::Account* account = Choqok::AccountManager::self()->findAccount(acc);
-    foreach(const QString& tm, account->timelineNames()){
+    Q_FOREACH (const QString& tm, account->timelineNames()) {
         ui.timelinesList->addItem(tm);
         if(accounts[acc].contains(tm))
             ui.timelinesList->item(ui.timelinesList->count()-1)->setSelected(true);
@@ -84,7 +84,7 @@ void NotifyConfig::updateTimelinesList()
 void NotifyConfig::timelineSelectionChanged()
 {
     QStringList lst;
-    foreach(QListWidgetItem* item, ui.timelinesList->selectedItems()){
+    Q_FOREACH (QListWidgetItem* item, ui.timelinesList->selectedItems()) {
         lst.append(item->text());
     }
     accounts[ui.accountsList->currentItem()->text()] = lst;
@@ -97,7 +97,7 @@ void NotifyConfig::load()
 
     ui.interval->setValue(settings->notifyInterval());
 
-    foreach(const QString& acc, accounts.keys()){
+    Q_FOREACH (const QString& acc, accounts.keys()) {
         ui.accountsList->addItem(acc);
     }
     if(ui.accountsList->count()>0) {

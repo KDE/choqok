@@ -318,7 +318,7 @@ void TwitterMicroBlog::setListTimelines(TwitterAccount* theAccount, const QStrin
 {
     kDebug()<<lists;
     QStringList tms = theAccount->timelineNames();
-    foreach(const QString &name, lists){
+    Q_FOREACH (const QString &name, lists) {
         tms.append(name);
         addTimelineName(name);
         QString url = QString("/lists/statuses");

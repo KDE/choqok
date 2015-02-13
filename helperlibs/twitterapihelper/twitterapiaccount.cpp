@@ -207,7 +207,7 @@ QStringList TwitterApiAccount::timelineNames() const
 void TwitterApiAccount::setTimelineNames(const QStringList& list)
 {
     d->timelineNames.clear();
-    foreach(const QString &name, list){
+    Q_FOREACH (const QString &name, list) {
         if(microblog()->timelineNames().contains(name))
             d->timelineNames<<name;
     }

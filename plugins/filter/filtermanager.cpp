@@ -100,7 +100,7 @@ void FilterManager::parse(Choqok::UI::PostWidget* postToParse)
     if(!postToParse)
         return;
 //     kDebug()<<"Processing: "<<postToParse->content();
-    foreach(Filter* filter, FilterSettings::self()->filters()) {
+    Q_FOREACH (Filter* filter, FilterSettings::self()->filters()) {
         if(filter->filterText().isEmpty())
             return;
         if(filter->filterAction() == Filter::Remove && filter->dontHideReplies() &&
@@ -239,7 +239,7 @@ void FilterManager::slotHidePost()
         Choqok::UI::TimelineWidget *tm = wd->timelineWidget();
         if(tm){
             kDebug()<<"Closing all posts";
-            foreach(Choqok::UI::PostWidget *pw, tm->postWidgets()){
+            Q_FOREACH (Choqok::UI::PostWidget *pw, tm->postWidgets()) {
                 if(pw->currentPost()->author.userName == username){
                     pw->close();
                 }

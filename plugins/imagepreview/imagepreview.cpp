@@ -102,7 +102,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
         twitpicRedirectList << mTwitpicRegExp.cap(0);
         kDebug()<<mTwitpicRegExp.capturedTexts();
     }
-    foreach(const QString &url, twitpicRedirectList) {
+    Q_FOREACH (const QString &url, twitpicRedirectList) {
         QString twitpicUrl = QString( "http://twitpic.com/show/mini%1" ).arg(QString(url).remove("http://twitpic.com"));
         connect( Choqok::MediaManager::self(),
                  SIGNAL(imageFetched(QString,QPixmap)),
@@ -120,7 +120,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
         yfrogRedirectList << mYFrogRegExp.cap(0);
         kDebug()<<mYFrogRegExp.capturedTexts();
     }
-    foreach(const QString &url, yfrogRedirectList){
+    Q_FOREACH (const QString &url, yfrogRedirectList) {
 //         if( url.endsWith('j') || url.endsWith('p') || url.endsWith('g') ) //To check if it's Image or not!
         connect( Choqok::MediaManager::self(),
                  SIGNAL(imageFetched(QString,QPixmap)),
@@ -139,7 +139,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
         TweetphotoRedirectList << mTweetphotoRegExp.cap(0);
         kDebug()<<mTweetphotoRegExp.capturedTexts();
     }
-    foreach(const QString &url, TweetphotoRedirectList){
+    Q_FOREACH (const QString &url, TweetphotoRedirectList) {
     connect( Choqok::MediaManager::self(),
                  SIGNAL(imageFetched(QString,QPixmap)),
                  SLOT(slotImageFetched(QString,QPixmap)) );
@@ -156,11 +156,11 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
         PlixiRedirectList << mPlixiRegExp.cap(0);
         kDebug()<<mPlixiRegExp.capturedTexts();
     }
-    foreach(const QString &url, PlixiRedirectList){
-    connect( Choqok::MediaManager::self(),
+    Q_FOREACH (const QString &url, PlixiRedirectList) {
+        connect( Choqok::MediaManager::self(),
                  SIGNAL(imageFetched(QString,QPixmap)),
                  SLOT(slotImageFetched(QString,QPixmap)) );
-    QString PlixiUrl = "http://api.plixi.com/api/tpapi.svc/json/imagefromurl?size=thumbnail&url="+ url;
+        QString PlixiUrl = "http://api.plixi.com/api/tpapi.svc/json/imagefromurl?size=thumbnail&url="+ url;
         mParsingList.insert(PlixiUrl, postToParse);
         mBaseUrlMap.insert(PlixiUrl, url);
         Choqok::MediaManager::self()->fetchImage(PlixiUrl, Choqok::MediaManager::Async);
@@ -173,11 +173,11 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
         ImgLyRedirectList << mImgLyRegExp.cap(0);
         kDebug()<<mImgLyRegExp.capturedTexts();
     }
-    foreach(const QString &url, ImgLyRedirectList){
-    connect( Choqok::MediaManager::self(),
+    Q_FOREACH (const QString &url, ImgLyRedirectList) {
+        connect( Choqok::MediaManager::self(),
                  SIGNAL(imageFetched(QString,QPixmap)),
                  SLOT(slotImageFetched(QString,QPixmap)) );
-    QString ImgLyUrl = QString( "http://img.ly/show/thumb%1" ).arg(QString(url).remove("http://img.ly"));
+        QString ImgLyUrl = QString( "http://img.ly/show/thumb%1" ).arg(QString(url).remove("http://img.ly"));
         mParsingList.insert(ImgLyUrl, postToParse);
         mBaseUrlMap.insert(ImgLyUrl, url);
         Choqok::MediaManager::self()->fetchImage(ImgLyUrl, Choqok::MediaManager::Async);
@@ -190,11 +190,11 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
         TwitgooRedirectList << mTwitgooRegExp.cap(0);
         kDebug()<<mTwitgooRegExp.capturedTexts();
     }
-    foreach(const QString &url, TwitgooRedirectList){
-    connect( Choqok::MediaManager::self(),
+    Q_FOREACH (const QString &url, TwitgooRedirectList) {
+        connect( Choqok::MediaManager::self(),
                  SIGNAL(imageFetched(QString,QPixmap)),
                  SLOT(slotImageFetched(QString,QPixmap)) );
-    QString TwitgooUrl = url + "/thumb";
+        QString TwitgooUrl = url + "/thumb";
         mParsingList.insert(TwitgooUrl, postToParse);
         mBaseUrlMap.insert(TwitgooUrl, url);
         Choqok::MediaManager::self()->fetchImage(TwitgooUrl, Choqok::MediaManager::Async);
