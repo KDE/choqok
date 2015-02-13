@@ -63,7 +63,7 @@ TextBrowser::~TextBrowser()
 
 void TextBrowser::mousePressEvent(QMouseEvent* ev)
 {
-    emit clicked(ev);
+    Q_EMIT clicked(ev);
 
     if(ev->button() == Qt::LeftButton) {
         if( !cursorForPosition(ev->pos()).hasSelection() && !anchorAt(ev->pos()).isEmpty() ) {

@@ -175,19 +175,19 @@ void TwitterApiPostWidget::slotReply()
             replyto.prepend(QString("@%1 ").arg(currentPost()->repeatedFromUsername));
             postId = currentPost()->repeatedPostId;
         }
-        emit reply( replyto, postId,  username);
+        Q_EMIT reply( replyto, postId,  username);
     }
 }
 
 void TwitterApiPostWidget::slotWriteTo()
 {
-    emit reply( QString("@%1").arg(currentPost()->author.userName), QString(), currentPost()->author.userName );
+    Q_EMIT reply( QString("@%1").arg(currentPost()->author.userName), QString(), currentPost()->author.userName );
 }
 
 void TwitterApiPostWidget::slotReplyToAll()
 {
     QString txt = QString("@%1").arg(currentPost()->author.userName);
-    emit reply(txt, currentPost()->postId, currentPost()->author.userName);
+    Q_EMIT reply(txt, currentPost()->postId, currentPost()->author.userName);
 }
 
 void TwitterApiPostWidget::setFavorite()

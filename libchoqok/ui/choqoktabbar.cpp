@@ -126,7 +126,7 @@ void ChoqokTabBar::setTabPosition( ChoqokTabBar::TabPosition position )
             choqok_tabbars_list.at(i)->setTabPosition( position );
     /*! ------------------------------------------------------------ */
 
-    emit tabPositionChanged( position );
+    Q_EMIT tabPositionChanged( position );
 }
 
 void ChoqokTabBar::init_position( ChoqokTabBar::TabPosition position )
@@ -368,7 +368,7 @@ void ChoqokTabBar::moveTab( int from , int to )
     }
 
     refreshTabBar();
-    emit tabMoved( from , to );
+    Q_EMIT tabMoved( from , to );
 }
 
 void ChoqokTabBar::removeTab( int index )
@@ -475,7 +475,7 @@ void ChoqokTabBar::setIconSize( const QSize & size )
             choqok_tabbars_list.at(i)->setIconSize( size );
     /*! ------------------------------------------------------------ */
     
-    emit iconSizeChanged( size );
+    Q_EMIT iconSizeChanged( size );
 }
 
 int ChoqokTabBar::count() const
@@ -516,7 +516,7 @@ void ChoqokTabBar::setStyledTabBar( bool stt )
             choqok_tabbars_list.at(i)->setStyledTabBar( stt );
     /*! ------------------------------------------------------------ */
     
-    emit styledPanelSignal( stt );
+    Q_EMIT styledPanelSignal( stt );
 }
 
 bool ChoqokTabBar::styledTabBar() const
@@ -555,7 +555,7 @@ void ChoqokTabBar::action_triggered( QAction *action )
     p->st_widget->setCurrentIndex( new_index );
     p->history_list.prepend( new_index );
 
-    emit currentChanged( new_index );
+    Q_EMIT currentChanged( new_index );
 }
 
 void ChoqokTabBar::init_style()
@@ -744,8 +744,8 @@ void ChoqokTabBar::contextMenuRequest( const QPoint & )
     QAction *action = p->toolbar->actionAt( local_point );
     if( action )
     {
-        emit contextMenu( global_point );
-        emit contextMenu( widget(p->actions_list.indexOf(action)) , global_point );
+        Q_EMIT contextMenu( global_point );
+        Q_EMIT contextMenu( widget(p->actions_list.indexOf(action)) , global_point );
         return;
     }
     

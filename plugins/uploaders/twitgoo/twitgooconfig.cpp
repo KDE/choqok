@@ -83,7 +83,7 @@ void TwitgooConfig::save()
 
 void TwitgooConfig::emitChanged()
 {
-    emit changed ( true );
+    Q_EMIT changed ( true );
 }
 
 #include "twitgooconfig.moc"

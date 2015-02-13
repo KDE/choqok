@@ -130,7 +130,7 @@ void LaconicaSearch::searchResultsReturned(KJob* job)
     kDebug();
     if( job == 0 ) {
         kDebug() << "job is a null pointer";
-        emit error( i18n( "Unable to fetch search results." ) );
+        Q_EMIT error( i18n( "Unable to fetch search results." ) );
         return;
     }
 
@@ -138,7 +138,7 @@ void LaconicaSearch::searchResultsReturned(KJob* job)
 
     if( job->error() ) {
         kError() << "Error: " << job->errorString();
-        emit error( i18n( "Unable to fetch search results: %1", job->errorString() ) );
+        Q_EMIT error( i18n( "Unable to fetch search results: %1", job->errorString() ) );
         return;
     }
     KIO::StoredTransferJob *jj = qobject_cast<KIO::StoredTransferJob *>( job );
@@ -149,7 +149,7 @@ void LaconicaSearch::searchResultsReturned(KJob* job)
         postsList = parseRss( jj->data() );
 
     kDebug()<<"Emiting searchResultsReceived()";
-    emit searchResultsReceived( info, postsList );
+    Q_EMIT searchResultsReceived( info, postsList );
 }
 
 QString LaconicaSearch::optionCode(int option)

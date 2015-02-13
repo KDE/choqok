@@ -82,7 +82,7 @@ UI::Global::SessionManager* UI::Global::SessionManager::self()
 void UI::Global::SessionManager::emitNewPostWidgetAdded( UI::PostWidget* widget, Choqok::Account *theAccount,
                                                          const QString &timelineName )
 {
-    emit newPostWidgetAdded(widget, theAccount, timelineName);
+    Q_EMIT newPostWidgetAdded(widget, theAccount, timelineName);
 }
 
 void UI::Global::SessionManager::resetNotifyManager()

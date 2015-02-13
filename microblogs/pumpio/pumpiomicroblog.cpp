@@ -115,7 +115,7 @@ void PumpIOMicroBlog::aboutToUnload()
             d->countOfTimelinesToSave += acc->timelineNames().count();
         }
     }
-    emit saveTimelines();
+    Q_EMIT saveTimelines();
 }
 
 QMenu* PumpIOMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidget* parent)
@@ -491,7 +491,7 @@ void PumpIOMicroBlog::saveTimeline(Choqok::Account* account, const QString& time
     if (Choqok::Application::isShuttingDown()) {
         --d->countOfTimelinesToSave;
         if (d->countOfTimelinesToSave < 1) {
-            emit readyForUnload();
+            Q_EMIT readyForUnload();
         }
     }
 }
@@ -689,7 +689,7 @@ void PumpIOMicroBlog::slotCreatePost(KJob* job)
             if (!reply["object"].toMap().value("id").toString().isEmpty()) {
                 Choqok::NotifyManager::success(i18n("New post submitted successfully"));
                 ret = 0;
-                emit postCreated(theAccount, post);
+                Q_EMIT postCreated(theAccount, post);
             }
         } else {
             kDebug() << "Cannot parse JSON reply";
@@ -697,7 +697,7 @@ void PumpIOMicroBlog::slotCreatePost(KJob* job)
     }
 
     if (ret) {
-        emit errorPost(theAccount, post, Choqok::MicroBlog::CommunicationError,
+        Q_EMIT errorPost(theAccount, post, Choqok::MicroBlog::CommunicationError,
                        i18n("Creating the new post failed. %1", job->errorString()),
                        MicroBlog::Critical);
     }
@@ -718,11 +718,11 @@ void PumpIOMicroBlog::slotFavorite(KJob* job)
     }
     if (job->error()) {
         kDebug() << "Job Error: " << job->errorString();
-        emit error(theAccount, Choqok::MicroBlog::CommunicationError,
+        Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
                    i18n("Cannot set/unset the post as favorite. %1", job->errorString()));
     } else {
         post->isFavorited = !post->isFavorited;
-        emit favorite(theAccount, post);
+        Q_EMIT favorite(theAccount, post);
     }
 }
 
@@ -750,14 +750,14 @@ void PumpIOMicroBlog::slotFetchPost(KJob* job)
             PumpIOPost* post = new PumpIOPost;
             readPost(reply, post);
             ret = 0;
-            emit postFetched(theAccount, post);
+            Q_EMIT postFetched(theAccount, post);
         } else {
             kDebug() << "Cannot parse JSON reply";
         }
     }
 
     if (ret) {
-        emit error(theAccount, Choqok::MicroBlog::CommunicationError,
+        Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
                    i18n("Cannot fetch post. %1", job->errorString()),
                    MicroBlog::Critical);
     }
@@ -790,7 +790,7 @@ void PumpIOMicroBlog::slotFetchReplies(KJob* job)
                 PumpIOPost* r = new PumpIOPost;
                 readPost(item, r);
                 r->replyToPostId = reply["url"].toString().remove("/replies");
-                emit postFetched(theAccount, r);
+                Q_EMIT postFetched(theAccount, r);
             }
             ret = 0;
         } else {
@@ -799,7 +799,7 @@ void PumpIOMicroBlog::slotFetchReplies(KJob* job)
     }
 
     if (ret) {
-        emit error(theAccount, Choqok::MicroBlog::CommunicationError,
+        Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
                    i18n("Cannot fetch replies. %1", job->errorString()),
                    MicroBlog::Critical);
     }
@@ -837,7 +837,7 @@ void PumpIOMicroBlog::slotFollowing(KJob* job)
             }
             acc->setFollowing(following);
             ret = 0;
-            emit followingFetched(acc);
+            Q_EMIT followingFetched(acc);
         } else {
             kDebug() << "Cannot parse JSON reply";
         }
@@ -846,7 +846,7 @@ void PumpIOMicroBlog::slotFollowing(KJob* job)
     }
 
     if (ret) {
-        emit error(theAccount, Choqok::MicroBlog::CommunicationError,
+        Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
                    i18n("Cannot retrieve the following list. %1", job->errorString()));
     }
 }
@@ -887,7 +887,7 @@ void PumpIOMicroBlog::slotLists(KJob* job)
             }
             acc->setLists(lists);
             ret = 0;
-            emit listsFetched(acc);
+            Q_EMIT listsFetched(acc);
         } else {
             kDebug() << "Cannot parse JSON reply";
         }
@@ -896,7 +896,7 @@ void PumpIOMicroBlog::slotLists(KJob* job)
     }
 
     if (ret) {
-        emit error(theAccount, Choqok::MicroBlog::CommunicationError,
+        Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
                    i18n("Cannot retrieve the lists. %1", job->errorString()));
     }
 }
@@ -932,7 +932,7 @@ void PumpIOMicroBlog::slotShare(KJob* job)
     }
 
     if (ret) {
-        emit error(theAccount, Choqok::MicroBlog::CommunicationError,
+        Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
                    i18n("Cannot share the post. %1", job->errorString()));
     }
 }
@@ -962,7 +962,7 @@ void PumpIOMicroBlog::slotRemovePost(KJob* job)
             if (!object["deleted"].toString().isEmpty()) {
                 Choqok::NotifyManager::success(i18n("Post removed successfully"));
                 ret = 0;
-                emit postRemoved(theAccount, post);
+                Q_EMIT postRemoved(theAccount, post);
             }
         } else {
             kDebug() << "Cannot parse JSON reply";
@@ -970,7 +970,7 @@ void PumpIOMicroBlog::slotRemovePost(KJob* job)
     }
 
     if (ret) {
-        emit errorPost(theAccount, post, Choqok::MicroBlog::CommunicationError,
+        Q_EMIT errorPost(theAccount, post, Choqok::MicroBlog::CommunicationError,
                        i18n("Removing the post failed. %1", job->errorString()),
                        MicroBlog::Critical);
     }
@@ -1006,7 +1006,7 @@ void PumpIOMicroBlog::slotUpdatePost(KJob* job)
     }
 
     if (ret) {
-        emit error(account, Choqok::MicroBlog::CommunicationError,
+        Q_EMIT error(account, Choqok::MicroBlog::CommunicationError,
                    i18n("An error occurred when updating the post"));
     }
 }
@@ -1025,7 +1025,7 @@ void PumpIOMicroBlog::slotUpdateTimeline(KJob* job)
     }
     if (job->error()) {
         kDebug() << "Job Error: " << job->errorString();
-        emit error(account, Choqok::MicroBlog::CommunicationError,
+        Q_EMIT error(account, Choqok::MicroBlog::CommunicationError,
                    i18n("An error occurred when fetching the timeline"));
     } else {
         KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
@@ -1035,7 +1035,7 @@ void PumpIOMicroBlog::slotUpdateTimeline(KJob* job)
             setLastTimelineId(account, timeline, list.last()->conversationId);
         }
 
-        emit timelineDataReceived(account, timeline, list);
+        Q_EMIT timelineDataReceived(account, timeline, list);
     }
 }
 
@@ -1075,7 +1075,7 @@ void PumpIOMicroBlog::slotUpload(KJob* job)
     }
 
     if (ret) {
-        emit error(account, Choqok::MicroBlog::CommunicationError,
+        Q_EMIT error(account, Choqok::MicroBlog::CommunicationError,
                    i18n("An error occurred when uploading the media"));
     }
 }

@@ -255,9 +255,9 @@ void PumpIOPostWidget::slotReplyTo()
     setReadWithSignal();
     PumpIOPost *post = dynamic_cast<PumpIOPost* >(currentPost());
     if (post->type == "comment") {
-        emit reply(post->replyToPostId, post->replyToUserName, post->replyToObjectType);
+        Q_EMIT reply(post->replyToPostId, post->replyToUserName, post->replyToObjectType);
     } else {
-        emit reply(post->postId, PumpIOMicroBlog::userNameFromAcct(post->author.userId), post->type);
+        Q_EMIT reply(post->postId, PumpIOMicroBlog::userNameFromAcct(post->author.userId), post->type);
     }
 }
 

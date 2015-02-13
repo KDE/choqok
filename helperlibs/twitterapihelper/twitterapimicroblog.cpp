@@ -282,7 +282,7 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
     if(Choqok::Application::isShuttingDown()) {
         --d->countOfTimelinesToSave;
         if(d->countOfTimelinesToSave < 1)
-            emit readyForUnload();
+            Q_EMIT readyForUnload();
     }
 }
 
@@ -307,7 +307,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
     QOAuth::ParamMap params;
     if ( !post || post->content.isEmpty() ) {
         kDebug() << "ERROR: Status text is empty!";
-        emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError,
+        Q_EMIT errorPost ( theAccount, post, Choqok::MicroBlog::OtherError,
                          i18n ( "Creating the new post failed. Text is empty." ), MicroBlog::Critical );
         return;
     }
@@ -405,7 +405,7 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
     }
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit errorPost ( theAccount, post, Choqok::MicroBlog::CommunicationError,
+        Q_EMIT errorPost ( theAccount, post, Choqok::MicroBlog::CommunicationError,
                          i18n("Creating the new post failed. %1", job->errorString()), MicroBlog::Critical );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast< KIO::StoredTransferJob * > ( job );
@@ -416,21 +416,21 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
                 errorMsg = checkForError(stj->data());
                 if( errorMsg.isEmpty() ){    // ???? If empty, why is there an error?
                     kError() << "Creating post: JSON parsing error: "<< stj->data() ;
-                    emit errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
+                    Q_EMIT errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
                                     i18n ( "Creating the new post failed. The result data could not be parsed." ), MicroBlog::Critical );
                 } else {
                     kError() << "Server Error:" << errorMsg ;
-                    emit errorPost ( theAccount, post, Choqok::MicroBlog::ServerError,
+                    Q_EMIT errorPost ( theAccount, post, Choqok::MicroBlog::ServerError,
                                      i18n ( "Creating the new post failed, with error: %1", errorMsg ),
                                      MicroBlog::Critical );
                 }
             } else {
                 Choqok::NotifyManager::success(i18n("New post submitted successfully"));
-                emit postCreated ( theAccount, post );
+                Q_EMIT postCreated ( theAccount, post );
             }
         } else {
             Choqok::NotifyManager::success(i18n("Private message sent successfully"));
-            emit postCreated ( theAccount, post );
+            Q_EMIT postCreated ( theAccount, post );
         }
     }
 }
@@ -492,7 +492,7 @@ void TwitterApiMicroBlog::slotFetchPost ( KJob *job )
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit error ( theAccount, Choqok::MicroBlog::CommunicationError,
+        Q_EMIT error ( theAccount, Choqok::MicroBlog::CommunicationError,
                      i18n("Fetching the new post failed. %1", job->errorString()), Low );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
@@ -502,18 +502,18 @@ void TwitterApiMicroBlog::slotFetchPost ( KJob *job )
                 errorMsg = checkForError(stj->data());
             if( errorMsg.isEmpty() ){
                 kDebug() << "Parsing Error";
-                emit errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
+                Q_EMIT errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
                                 i18n ( "Fetching new post failed. The result data could not be parsed." ),
                                  Low );
             } else {
                 kError()<<"Fetching post: Server Error: "<<errorMsg;
-                emit errorPost ( theAccount, post, Choqok::MicroBlog::ServerError,
+                Q_EMIT errorPost ( theAccount, post, Choqok::MicroBlog::ServerError,
                                  i18n ( "Fetching new post failed, with error: %1", errorMsg ),
                                  Low );
             }
         } else {
             post->isError = true;
-            emit postFetched ( theAccount, post );
+            Q_EMIT postFetched ( theAccount, post );
         }
     }
 }
@@ -555,16 +555,16 @@ void TwitterApiMicroBlog::slotRemovePost ( KJob *job )
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit errorPost ( theAccount, post, CommunicationError,
+        Q_EMIT errorPost ( theAccount, post, CommunicationError,
                          i18n("Removing the post failed. %1", job->errorString() ), MicroBlog::Critical );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob*>(job);
         QString errMsg = checkForError(stj->data());
         if( errMsg.isEmpty() ){
-            emit postRemoved ( theAccount, post );
+            Q_EMIT postRemoved ( theAccount, post );
         } else {
             kError()<<"Server error on removing post: "<<errMsg;
-            emit errorPost ( theAccount, post, ServerError,
+            Q_EMIT errorPost ( theAccount, post, ServerError,
                              i18n("Removing the post failed. %1", errMsg ), MicroBlog::Critical );
         }
     }
@@ -609,15 +609,15 @@ void TwitterApiMicroBlog::slotCreateFavorite ( KJob *job )
     QString postId = mFavoriteMap.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit error ( theAccount, CommunicationError, i18n( "Favorite creation failed. %1", job->errorString() ) );
+        Q_EMIT error ( theAccount, CommunicationError, i18n( "Favorite creation failed. %1", job->errorString() ) );
     } else {
         KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
         QString err = checkForError(stJob->data());
         if( !err.isEmpty() ){
-            emit error(theAccount, ServerError, err, Critical);
+            Q_EMIT error(theAccount, ServerError, err, Critical);
             return;
         } else {
-            emit favoriteCreated ( theAccount, postId );
+            Q_EMIT favoriteCreated ( theAccount, postId );
         }
     }
 }
@@ -661,15 +661,15 @@ void TwitterApiMicroBlog::slotRemoveFavorite ( KJob *job )
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit error ( theAccount, CommunicationError, i18n("Removing the favorite failed. %1", job->errorString() ) );
+        Q_EMIT error ( theAccount, CommunicationError, i18n("Removing the favorite failed. %1", job->errorString() ) );
     } else {
         KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
         QString err = checkForError(stJob->data());
         if( !err.isEmpty() ){
-            emit error(theAccount, ServerError, err, Critical);
+            Q_EMIT error(theAccount, ServerError, err, Critical);
             return;
         } else {
-            emit favoriteRemoved ( theAccount, id );
+            Q_EMIT favoriteRemoved ( theAccount, id );
         }
     }
 }
@@ -729,7 +729,7 @@ void TwitterApiMicroBlog::finishRequestFriendsScreenName(KJob* job, bool active)
     KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
     Choqok::MicroBlog::ErrorLevel level = active ? Critical : Low;
     if (stJob->error()) {
-        emit error(theAccount, ServerError, i18n("Friends list for account %1 could not be updated:\n%2",
+        Q_EMIT error(theAccount, ServerError, i18n("Friends list for account %1 could not be updated:\n%2",
             theAccount->username(), stJob->errorString()), level);
         return;
     }
@@ -738,7 +738,7 @@ void TwitterApiMicroBlog::finishRequestFriendsScreenName(KJob* job, bool active)
     newList.removeDuplicates();
     if ( ! checkForError( stJob->data()).isEmpty() ) {        // if an error occurred, do not replace the friends list.
         theAccount->setFriendsList(friendsList);
-        emit friendsUsernameListed( theAccount, friendsList );
+        Q_EMIT friendsUsernameListed( theAccount, friendsList );
     }
     else if ( QString::compare(d->friendsCursor,"0") ) {    // if the cursor is not "0", there is more friends data to be had
         friendsList << newList;
@@ -748,7 +748,7 @@ void TwitterApiMicroBlog::finishRequestFriendsScreenName(KJob* job, bool active)
         theAccount->setFriendsList(friendsList);
         Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Friends list for account %1 has been updated.",
             theAccount->username()) );
-        emit friendsUsernameListed( theAccount, friendsList );
+        Q_EMIT friendsUsernameListed( theAccount, friendsList );
     }
 }
 
@@ -836,7 +836,7 @@ void TwitterApiMicroBlog::slotRequestTimeline ( KJob *job )
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit error( theAccount, CommunicationError,
+        Q_EMIT error( theAccount, CommunicationError,
                     i18n("Timeline update failed: %1", job->errorString()), Low );
         return;
     }
@@ -852,7 +852,7 @@ void TwitterApiMicroBlog::slotRequestTimeline ( KJob *job )
         }
         if(!list.isEmpty()) {
             mTimelineLatestId[theAccount][type] = list.last()->postId;
-            emit timelineDataReceived( theAccount, type, list );
+            Q_EMIT timelineDataReceived( theAccount, type, list );
         }
     }
 }
@@ -913,7 +913,7 @@ void TwitterApiMicroBlog::aboutToUnload()
             d->countOfTimelinesToSave += acc->timelineNames().count();
         }
     }
-    emit saveTimelines();
+    Q_EMIT saveTimelines();
 }
 
 void TwitterApiMicroBlog::showDirectMessageDialog( TwitterApiAccount *theAccount/* = 0*/,
@@ -995,14 +995,14 @@ void TwitterApiMicroBlog::slotCreateFriendship(KJob* job)
     QString username = mFriendshipMap.take(job);
     if(job->error()){
         kDebug()<<"Job Error:"<<job->errorString();
-        emit error ( theAccount, CommunicationError,
+        Q_EMIT error ( theAccount, CommunicationError,
                      i18n("Creating friendship with %1 failed. %2", username, job->errorString() ) );
         return;
     }
     KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob*>(job);
     Choqok::User *user = readUserInfo(stj->data());
     if( user /*&& user->userName.compare(username, Qt::CaseInsensitive)*/ ){
-        emit friendshipCreated(theAccount, username);
+        Q_EMIT friendshipCreated(theAccount, username);
         Choqok::NotifyManager::success( i18n("You are now listening to %1's posts.", username) );
         theAccount->setFriendsList(QStringList());
         listFriendsUsername(theAccount);
@@ -1010,12 +1010,12 @@ void TwitterApiMicroBlog::slotCreateFriendship(KJob* job)
         QString errorMsg = checkForError(stj->data());
         if( errorMsg.isEmpty() ){
             kDebug()<<"Parse Error: "<<stj->data();
-            emit error( theAccount, ParsingError,
+            Q_EMIT error( theAccount, ParsingError,
                         i18n("Creating friendship with %1 failed: the server returned invalid data.",
                              username ) );
         } else {
             kDebug()<<"Server error: "<<errorMsg;
-            emit error( theAccount, ServerError,
+            Q_EMIT error( theAccount, ServerError,
                         i18n("Creating friendship with %1 failed: %2",
                             username, errorMsg ) );
         }
@@ -1058,14 +1058,14 @@ void TwitterApiMicroBlog::slotDestroyFriendship(KJob* job)
     QString username = mFriendshipMap.take(job);
     if(job->error()){
         kDebug()<<"Job Error:"<<job->errorString();
-        emit error ( theAccount, CommunicationError,
+        Q_EMIT error ( theAccount, CommunicationError,
                      i18n("Destroying friendship with %1 failed. %2", username, job->errorString() ) );
         return;
     }
     KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob*>(job);
     Choqok::User *user = readUserInfo(stj->data());
     if( user /*&& user->userName.compare( username, Qt::CaseInsensitive )*/ ){
-        emit friendshipDestroyed(theAccount, username);
+        Q_EMIT friendshipDestroyed(theAccount, username);
         Choqok::NotifyManager::success( i18n("You will not receive %1's updates.", username) );
         theAccount->setFriendsList(QStringList());
         listFriendsUsername(theAccount);
@@ -1073,12 +1073,12 @@ void TwitterApiMicroBlog::slotDestroyFriendship(KJob* job)
         QString errorMsg = checkForError(stj->data());
         if( errorMsg.isEmpty() ){
             kDebug()<<"Parse Error: "<<stj->data();
-            emit error( theAccount, ParsingError,
+            Q_EMIT error( theAccount, ParsingError,
                         i18n("Destroying friendship with %1 failed: the server returned invalid data.",
                             username ) );
         } else {
             kDebug()<<"Server error: "<<errorMsg;
-            emit error( theAccount, ServerError,
+            Q_EMIT error( theAccount, ServerError,
                         i18n("Destroying friendship with %1 failed: %2",
                              username, errorMsg ) );
         }
@@ -1145,17 +1145,17 @@ void TwitterApiMicroBlog::slotBlockUser(KJob* job)
     QString username = mFriendshipMap.take(job);
     if(job->error()){
         kDebug()<<"Job Error:"<<job->errorString();
-        emit error ( theAccount, CommunicationError,
+        Q_EMIT error ( theAccount, CommunicationError,
                      i18n("Blocking %1 failed. %2", username, job->errorString() ) );
         return;
     }
     Choqok::User *user = readUserInfo(qobject_cast<KIO::StoredTransferJob*>(job)->data());
     if( user /*&& user->userName.compare( username, Qt::CaseInsensitive )*/ ){
-        emit userBlocked(theAccount, username);
+        Q_EMIT userBlocked(theAccount, username);
         Choqok::NotifyManager::success( i18n("You will no longer be disturbed by %1.", username) );
     } else {
         kDebug()<<"Parse Error: "<<qobject_cast<KIO::StoredTransferJob*>(job)->data();
-        emit error( theAccount, ParsingError,
+        Q_EMIT error( theAccount, ParsingError,
                      i18n("Blocking %1 failed: the server returned invalid data.",
                           username ) );
     }
@@ -1174,7 +1174,7 @@ void TwitterApiMicroBlog::slotReportUser(KJob* job)
     QString username = mFriendshipMap.take(job);
     if(job->error()){
         kDebug()<<"Job Error:"<<job->errorString();
-        emit error ( theAccount, CommunicationError,
+        Q_EMIT error ( theAccount, CommunicationError,
                      i18n("Reporting %1 failed. %2", username, job->errorString() ) );
         return;
     }
@@ -1183,7 +1183,7 @@ void TwitterApiMicroBlog::slotReportUser(KJob* job)
         Choqok::NotifyManager::success( i18n("Report sent successfully") );
     } else {
         kDebug()<<"Parse Error: "<<qobject_cast<KIO::StoredTransferJob*>(job)->data();
-        emit error( theAccount, ParsingError,
+        Q_EMIT error( theAccount, ParsingError,
                      i18n("Reporting %1 failed: the server returned invalid data.",
                           username ) );
     }
@@ -1228,7 +1228,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::readTimeline(Choqok::Account* theAcc
         QString err = checkForError(buffer);
         if(err.isEmpty()){
             kError() << "JSON parsing failed.\nBuffer was: \n" << buffer;
-            emit error(theAccount, ParsingError, i18n("Could not parse the data that has been received from the server."));
+            Q_EMIT error(theAccount, ParsingError, i18n("Could not parse the data that has been received from the server."));
         } else {
             Q_EMIT error(theAccount, ServerError, err);
         }
@@ -1251,7 +1251,7 @@ Choqok::Post* TwitterApiMicroBlog::readPost(Choqok::Account* theAccount,
             kError()<<"TwitterApiMicroBlog::readPost: post is NULL!";
             post = new Choqok::Post;
         }
-        emit errorPost(theAccount, post, ParsingError, i18n("Could not parse the data that has been received from the server."));
+        Q_EMIT errorPost(theAccount, post, ParsingError, i18n("Could not parse the data that has been received from the server."));
         kError()<<"JSon parsing failed. Buffer was:"<<buffer;
         post->isError = true;
         return post;
@@ -1328,7 +1328,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::readDirectMessages(Choqok::Account* 
         QString err = checkForError(buffer);
         if(err.isEmpty()){
             kError() << "JSON parsing failed.\nBuffer was: \n" << buffer;
-            emit error(theAccount, ParsingError, i18n("Could not parse the data that has been received from the server."));
+            Q_EMIT error(theAccount, ParsingError, i18n("Could not parse the data that has been received from the server."));
         } else {
             Q_EMIT error(theAccount, ServerError, err);
         }
@@ -1417,7 +1417,7 @@ Choqok::User* TwitterApiMicroBlog::readUserInfo(const QByteArray& buffer)
     } else {
         QString err = i18n( "Retrieving the friends list failed. The data returned from the server is corrupted." );
         kDebug() << "JSON parse error: the buffer is: \n" << buffer;
-        emit error(0, ParsingError, err, Critical);
+        Q_EMIT error(0, ParsingError, err, Critical);
     }
     return user;
 }
@@ -1442,7 +1442,7 @@ QStringList TwitterApiMicroBlog::readUsersScreenName(Choqok::Account* theAccount
     } else {
         QString err = i18n( "Retrieving the friends list failed. The data returned from the server is corrupted." );
         kDebug() << "JSON parse error: the buffer is: \n" << buffer;
-        emit error(theAccount, ParsingError, err, Critical);
+        Q_EMIT error(theAccount, ParsingError, err, Critical);
     }
     return list;
 }

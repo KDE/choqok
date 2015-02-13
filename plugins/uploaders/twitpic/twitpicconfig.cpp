@@ -82,7 +82,7 @@ void TwitpicConfig::save()
 
 void TwitpicConfig::emitChanged()
 {
-    emit changed(true);
+    Q_EMIT changed(true);
 }
 
 #include "twitpicconfig.moc"

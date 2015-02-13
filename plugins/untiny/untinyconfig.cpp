@@ -68,7 +68,7 @@ void UnTinyConfig::save()
 
 void UnTinyConfig::emitChanged()
 {
-    emit changed(true);
+    Q_EMIT changed(true);
 }
 
 #include "untinyconfig.moc"

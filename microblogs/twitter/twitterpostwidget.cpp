@@ -90,7 +90,7 @@ void TwitterPostWidget::slotReplyToAll()
 
     txt.chop(1);
 
-    emit reply(txt, currentPost()->postId, currentPost()->author.userName);
+    Q_EMIT reply(txt, currentPost()->postId, currentPost()->author.userName);
 }
 
 void TwitterPostWidget::checkAnchor(const QUrl& url)
@@ -189,7 +189,7 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
             Choqok::openUrl( QUrl( currentAccount()->microblog()->profileUrl(currentAccount(), url.host()) ) );
             return;
         } else if(ret == replyTo){
-            emit reply( QString("@%1").arg(url.host()), QString(), url.host() );
+            Q_EMIT reply( QString("@%1").arg(url.host()), QString(), url.host() );
             return;
         } else if(ret == dMessage){
                 blog->showDirectMessageDialog(account,url.host());

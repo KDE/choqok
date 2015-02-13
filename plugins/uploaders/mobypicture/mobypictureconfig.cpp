@@ -101,7 +101,7 @@ void MobypictureConfig::emitChanged()
     ui.cfg_login->setEnabled(ui.cfg_basic->isChecked());
     ui.cfg_pin->setEnabled(ui.cfg_basic->isChecked());
     ui.cfg_accountsList->setEnabled(ui.cfg_oauth->isChecked());
-    emit changed ( true );
+    Q_EMIT changed ( true );
 }
 
 #include "mobypictureconfig.moc"

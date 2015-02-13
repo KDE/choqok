@@ -230,7 +230,7 @@ void MicroBlogWidget::initTimelines()
         addTimelineWidgetToUi(timeline);
     }
 //     kDebug()<<"========== Emiting loaded()";
-    emit loaded();
+    Q_EMIT loaded();
 }
 
 TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)
@@ -269,7 +269,7 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change, Choqok::UI::TimelineWidg
         sum += mbw->unreadCount();
     }
     if(change != 0)
-        emit updateUnreadCount(change, sum);
+        Q_EMIT updateUnreadCount(change, sum);
 
     if(sum>0) {
         if (!d->btnMarkAllAsRead){
@@ -439,7 +439,7 @@ void MicroBlogWidget::slotAccountModified(Account* theAccount)
         Q_FOREACH (TimelineWidget *mbw, d->timelines) {
             sum += mbw->unreadCount();
         }
-        emit updateUnreadCount( 0, sum);
+        Q_EMIT updateUnreadCount( 0, sum);
     }
 }
 

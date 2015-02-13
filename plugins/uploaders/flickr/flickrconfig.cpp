@@ -122,7 +122,7 @@ void FlickrConfig::emitChanged()
 {
     ui.cfg_forfamily->setEnabled(ui.cfg_forprivate->isChecked());
     ui.cfg_forfriends->setEnabled(ui.cfg_forprivate->isChecked());
-    emit changed(true);
+    Q_EMIT changed(true);
 }
 
 void FlickrConfig::getFrob()

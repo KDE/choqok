@@ -69,7 +69,7 @@ void YourlsConfig::save()
 
 void YourlsConfig::emitChanged()
 {
-    emit changed(true);
+    Q_EMIT changed(true);
     disconnect( ui.kcfg_username, SIGNAL(textChanged(QString)), this, SLOT(emitChanged()) );
     disconnect( ui.cfg_password, SIGNAL(textChanged(QString)), this, SLOT(emitChanged()) );
 }

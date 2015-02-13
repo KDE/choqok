@@ -59,7 +59,7 @@ void Twitpic::upload(const KUrl& localUrl, const QByteArray& medium, const QByte
     QString alias = TwitpicSettings::alias();
     if(alias.isEmpty()){
         kError()<<"No account to use";
-        emit uploadingFailed(localUrl, i18n("There is no Twitter account configured to use."));
+        Q_EMIT uploadingFailed(localUrl, i18n("There is no Twitter account configured to use."));
         return;
     }
     TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(Choqok::AccountManager::self()->findAccount(alias));
@@ -111,7 +111,7 @@ void Twitpic::slotUpload(KJob* job)
     KUrl localUrl = mUrlMap.take(job);
     if ( job->error() ) {
         kError() << "Job Error: " << job->errorString();
-        emit uploadingFailed(localUrl, job->errorString());
+        Q_EMIT uploadingFailed(localUrl, job->errorString());
         return;
     } else {
         QJson::Parser p;
@@ -121,13 +121,13 @@ void Twitpic::slotUpload(KJob* job)
             QVariantMap map = res.toMap();
             if(map.contains("errors")){
                 QVariantMap err = map.value("errors").toList()[0].toMap();
-                emit uploadingFailed(localUrl, err.value("message").toString());
+                Q_EMIT uploadingFailed(localUrl, err.value("message").toString());
             } else {
-                emit mediumUploaded(localUrl, map.value("url").toString());
+                Q_EMIT mediumUploaded(localUrl, map.value("url").toString());
             }
         } else {
             kDebug()<<"Parse error: "<<qobject_cast<KIO::StoredTransferJob*>(job)->data();
-            emit uploadingFailed(localUrl, i18n("Malformed response"));
+            Q_EMIT uploadingFailed(localUrl, i18n("Malformed response"));
         }
     }
 }

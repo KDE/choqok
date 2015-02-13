@@ -99,7 +99,7 @@ void Bit_ly_Config::save()
 
 void Bit_ly_Config::emitChanged()
 {
-    emit changed( true );
+    Q_EMIT changed( true );
 }
 
 void Bit_ly_Config::slotValidate()

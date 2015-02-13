@@ -318,7 +318,7 @@ void PluginManager::slotLoadNextPlugin()
             _kpmp->shutdownMode = PluginManagerPrivate::Running;
             _kpmp->isAllPluginsLoaded = true;
             kDebug()<<"All plugins loaded...";
-            emit allPluginsLoaded();
+            Q_EMIT allPluginsLoaded();
         }
         return;
     }
@@ -386,7 +386,7 @@ Plugin *PluginManager::loadPluginInternal( const QString &pluginId )
 
         if( plugin->pluginInfo().category() != "MicroBlogs" && plugin->pluginInfo().category() != "Shorteners" ){
             kDebug()<<"Emitting pluginLoaded()";
-            emit pluginLoaded( plugin );
+            Q_EMIT pluginLoaded( plugin );
         }
 
 //         Protocol* protocol = dynamic_cast<Protocol*>( plugin );
@@ -424,7 +424,7 @@ void PluginManager::slotPluginDestroyed( QObject *plugin )
         {
             QString pluginName = it.key().pluginName();
             _kpmp->loadedPlugins.erase( it );
-            emit pluginUnloaded( pluginName );
+            Q_EMIT pluginUnloaded( pluginName );
             break;
         }
     }

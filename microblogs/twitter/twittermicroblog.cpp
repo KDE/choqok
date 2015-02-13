@@ -277,7 +277,7 @@ void TwitterMicroBlog::slotFetchUserLists(KJob* job)
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit error ( theAccount, Choqok::MicroBlog::CommunicationError,
+        Q_EMIT error ( theAccount, Choqok::MicroBlog::CommunicationError,
                      i18n("Fetching %1's lists failed. %2", username, job->errorString()), Critical );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
@@ -290,10 +290,10 @@ void TwitterMicroBlog::slotFetchUserLists(KJob* job)
             if( errorMsg.isEmpty() ){
                 KMessageBox::information(choqokMainWindow, i18n("There is no list record for user %1", username));
             } else {
-                emit error( theAccount, ServerError, errorMsg, Critical);
+                Q_EMIT error( theAccount, ServerError, errorMsg, Critical);
             }
         } else {
-            emit userLists(theAccount, username, list);
+            Q_EMIT userLists(theAccount, username, list);
         }
     }
 }

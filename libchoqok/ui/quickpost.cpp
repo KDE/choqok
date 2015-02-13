@@ -128,7 +128,7 @@ void QuickPost::show()
 void QuickPost::slotSubmitPost( Account* a, Post* post )
 {
     if (post == d->submittedPost && d->submittedAccounts.removeOne(a)) {
-        emit newPostSubmitted(Success, d->submittedPost);
+        Q_EMIT newPostSubmitted(Success, d->submittedPost);
     }
     if(d->isPostSubmitted && d->submittedAccounts.isEmpty()){
         d->txtPost->setEnabled(true);
@@ -144,7 +144,7 @@ void QuickPost::postError(Account* a, Choqok::Post* post,
 {
     if (post == d->submittedPost && d->submittedAccounts.contains(a)) {
         d->txtPost->setEnabled(true);
-        emit newPostSubmitted(Fail, post); //Choqok crashes without post :(
+        Q_EMIT newPostSubmitted(Fail, post); //Choqok crashes without post :(
         show();
     }
     if(d->submittedAccounts.isEmpty()){

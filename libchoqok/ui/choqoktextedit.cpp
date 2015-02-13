@@ -95,7 +95,7 @@ void TextEdit::keyPressEvent(QKeyEvent* e)
             KTextEdit::keyPressEvent(e);
         } else {
             QString txt = toPlainText();
-            emit returnPressed( txt );
+            Q_EMIT returnPressed( txt );
         }
         e->accept();
     } else if ( e->modifiers() == Qt::ControlModifier && e->key() == Qt::Key_S ) {
@@ -104,7 +104,7 @@ void TextEdit::keyPressEvent(QKeyEvent* e)
     } else if ( e->key() == Qt::Key_Escape ) {
         if ( !this->toPlainText().isEmpty() ) {
             this->clear();
-            emit cleared();
+            Q_EMIT cleared();
             e->accept();
         } else {
             KTextEdit::keyPressEvent( e );
@@ -120,7 +120,7 @@ void TextEdit::clear()
         return;
     else {
         undoableClear();
-        emit cleared();
+        Q_EMIT cleared();
     }
 }
 

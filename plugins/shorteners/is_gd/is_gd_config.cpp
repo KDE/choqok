@@ -65,7 +65,7 @@ void Is_gd_Config::save()
 
 void Is_gd_Config::emitChanged()
 {
-    emit changed( true );
+    Q_EMIT changed( true );
 }
 
 #include "is_gd_config.moc"

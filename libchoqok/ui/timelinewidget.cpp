@@ -233,7 +233,7 @@ void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList)
                                                       "%1 new posts in %2(%3)",
                                                       unread, currentAccount()->alias(), d->timelineName ) );
 
-        emit updateUnreadCount(unread);
+        Q_EMIT updateUnreadCount(unread);
         showMarkAllAsReadButton();
     }
 }
@@ -293,7 +293,7 @@ void TimelineWidget::markAllAsRead()
         }
         int unread = -d->unreadCount;
         d->unreadCount = 0;
-        emit updateUnreadCount(unread);
+        Q_EMIT updateUnreadCount(unread);
         d->btnMarkAllAsRead->deleteLater();
     }
 }
@@ -319,7 +319,7 @@ void TimelineWidget::settingsChanged()
 void TimelineWidget::slotOnePostReaded()
 {
     d->unreadCount--;
-    emit updateUnreadCount(-1);
+    Q_EMIT updateUnreadCount(-1);
     if(d->unreadCount == 0){
         d->btnMarkAllAsRead->deleteLater();
     }

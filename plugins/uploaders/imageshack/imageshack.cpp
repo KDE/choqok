@@ -52,7 +52,7 @@ void ImageShack::upload(const KUrl& localUrl, const QByteArray& medium, const QB
 {
     kDebug();
     if( !mediumType.startsWith(QByteArray("image/")) ){
-        emit uploadingFailed(localUrl, i18n("Just supporting image uploading"));
+        Q_EMIT uploadingFailed(localUrl, i18n("Just supporting image uploading"));
         return;
     }
     KUrl url("http://www.imageshack.us/upload_api.php");
@@ -88,7 +88,7 @@ void ImageShack::slotUpload(KJob* job)
     KUrl localUrl = mUrlMap.take( job );
     if ( job->error() ) {
         kError() << "Job Error: " << job->errorString();
-        emit uploadingFailed(localUrl, job->errorString());
+        Q_EMIT uploadingFailed(localUrl, job->errorString());
         return;
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>(job);
@@ -108,7 +108,7 @@ void ImageShack::slotUpload(KJob* job)
                     while( !node2.isNull() ){
                         QDomElement elm2 = node2.toElement();
                         if(elm2.tagName() == "yfrog_link"){
-                            emit mediumUploaded(localUrl, elm2.text());
+                            Q_EMIT mediumUploaded(localUrl, elm2.text());
                             return;
                         }
                         node2 = node2.nextSibling();
@@ -121,13 +121,13 @@ void ImageShack::slotUpload(KJob* job)
                 QDomNode node = root.firstChild();
                 if( !node.isNull() ){
                     if(node.toElement().tagName() == "error" ){
-                        emit uploadingFailed(localUrl, node.toElement().text());
+                        Q_EMIT uploadingFailed(localUrl, node.toElement().text());
                         return;
                     }
                 }
             }
         }
-        emit uploadingFailed(localUrl, i18n("Malformed response"));
+        Q_EMIT uploadingFailed(localUrl, i18n("Malformed response"));
         kDebug()<<"Response not detected: "<<stj->data();
     }
 }

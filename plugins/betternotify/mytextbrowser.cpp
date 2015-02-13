@@ -37,19 +37,19 @@ MyTextBrowser::~MyTextBrowser()
 void MyTextBrowser::enterEvent(QEvent* e)
 {
     QWidget::enterEvent(e);
-    emit mouseEntered();
+    Q_EMIT mouseEntered();
 }
 
 void MyTextBrowser::leaveEvent(QEvent* e)
 {
     QWidget::leaveEvent(e);
-    emit mouseLeaved();
+    Q_EMIT mouseLeaved();
 }
 
 void MyTextBrowser::mousePressEvent(QMouseEvent* ev)
 {
     if(anchorAt(ev->pos()).isEmpty())
-        emit clicked();
+        Q_EMIT clicked();
     KTextBrowser::mousePressEvent(ev);
 }
 

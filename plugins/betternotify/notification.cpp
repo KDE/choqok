@@ -112,7 +112,7 @@ void Notification::slotProcessAnchor(const QUrl& url)
     kDebug();
     if(url.scheme() == "choqok"){
         if(url.host() == "close"){
-            emit ignored();
+            Q_EMIT ignored();
         }
     }
 }
@@ -121,7 +121,7 @@ void Notification::slotClicked()
 {
     kDebug();
     post->setReadWithSignal();
-    emit postReaded();
+    Q_EMIT postReaded();
 }
 
 void Notification::setHeight()

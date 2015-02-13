@@ -63,7 +63,7 @@ NotifyConfig::~NotifyConfig()
 
 void NotifyConfig::emitChanged()
 {
-    emit changed(true);
+    Q_EMIT changed(true);
 }
 
 
@@ -88,7 +88,7 @@ void NotifyConfig::timelineSelectionChanged()
         lst.append(item->text());
     }
     accounts[ui.accountsList->currentItem()->text()] = lst;
-    emit changed();
+    Q_EMIT changed();
 }
 
 void NotifyConfig::load()

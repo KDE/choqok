@@ -131,7 +131,7 @@ void Flickr::slotUpload(KJob* job)
     KUrl localUrl = mUrlMap.take( job );
     if ( job->error() ) {
         kError() << "Job Error: " << job->errorString();
-        emit uploadingFailed(localUrl, job->errorString());
+        Q_EMIT uploadingFailed(localUrl, job->errorString());
         return;
     } else {
         QDomDocument rep;
@@ -157,7 +157,7 @@ void Flickr::slotUpload(KJob* job)
                     else
                         remUrl = "http://flickr.com/photos/" + FlickrSettings::nsid() + '/' + photoId;
 
-                    emit mediumUploaded( localUrl, remUrl );
+                    Q_EMIT mediumUploaded( localUrl, remUrl );
                     return;
 
                 } else if ( res == "fail" ) {
@@ -199,17 +199,17 @@ void Flickr::slotUpload(KJob* job)
                             errMsg = i18n( "Unknown Error: %1. Please try again later", errCode );
                             break;
                         }
-                        emit uploadingFailed( localUrl, errMsg );
+                        Q_EMIT uploadingFailed( localUrl, errMsg );
                         return;
                     }
                 } else {
-                    emit uploadingFailed( localUrl, i18n( "Malformed response" ) );
+                    Q_EMIT uploadingFailed( localUrl, i18n( "Malformed response" ) );
                     return;
                 }
                 node = node.nextSibling();
             }
         } else {
-            emit uploadingFailed( localUrl, i18n( "Malformed response" ) );
+            Q_EMIT uploadingFailed( localUrl, i18n( "Malformed response" ) );
             return;
         }
     }

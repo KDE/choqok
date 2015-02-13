@@ -268,41 +268,41 @@ public:
 Q_SIGNALS:
 
     /**
-    Emit when data for a timeline received! @p type specifies the type of timeline as specifies in timelineTypes()
+    emit when data for a timeline received! @p type specifies the type of timeline as specifies in timelineTypes()
     */
     void timelineDataReceived( Choqok::Account *theAccount, const QString &timelineName,
                                QList<Choqok::Post*> data );
 
     /**
-    Emit when a post successfully created!
+    emit when a post successfully created!
     */
     void postCreated( Choqok::Account *theAccount, Choqok::Post *post );
 
     /**
-    Emit when a post successfully fetched!
+    emit when a post successfully fetched!
     */
     void postFetched( Choqok::Account *theAccount, Choqok::Post *post );
 
     /**
-    Emit when a post successfully removed!
+    emit when a post successfully removed!
     */
     void postRemoved( Choqok::Account *theAccount, Choqok::Post *post );
 
     /**
-    Emit when an error occurred the @p errorMessage will specify the error.
+    emit when an error occurred the @p errorMessage will specify the error.
     */
     void error( Choqok::Account *theAccount, Choqok::MicroBlog::ErrorType error,
                 const QString &errorMessage, Choqok::MicroBlog::ErrorLevel level = Normal );
 
     /**
-    Emit when an error occurred on Post manipulation. e.g. On Creation!
+    emit when an error occurred on Post manipulation. e.g. On Creation!
     */
     void errorPost( Choqok::Account *theAccount, Choqok::Post *post,
                     Choqok::MicroBlog::ErrorType error, const QString &errorMessage,
                     Choqok::MicroBlog::ErrorLevel level = Normal );
 
     /**
-    Emit when microblog plugin is going to unload, and @ref Choqok::TimelineWidget should save their timelines
+    emit when microblog plugin is going to unload, and @ref Choqok::TimelineWidget should save their timelines
     */
     void saveTimelines();
 

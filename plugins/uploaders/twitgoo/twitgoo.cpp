@@ -59,7 +59,7 @@ void Twitgoo::upload ( const KUrl& localUrl, const QByteArray& medium, const QBy
     QString alias = TwitgooSettings::alias();
     if ( alias.isEmpty() ) {
         kError() << "No account to use";
-        emit uploadingFailed ( localUrl, i18n ( "There is no Twitter account configured to use." ) );
+        Q_EMIT uploadingFailed ( localUrl, i18n ( "There is no Twitter account configured to use." ) );
         return;
     }
     TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *> ( Choqok::AccountManager::self()->findAccount ( alias ) );
@@ -109,7 +109,7 @@ void Twitgoo::slotUpload ( KJob* job )
     KUrl localUrl = mUrlMap.take ( job );
     if ( job->error() ) {
         kError() << "Job Error: " << job->errorString();
-        emit uploadingFailed ( localUrl, job->errorString() );
+        Q_EMIT uploadingFailed ( localUrl, job->errorString() );
         return;
     } else {
         kDebug() << qobject_cast<KIO::StoredTransferJob*> ( job )->data();
@@ -120,15 +120,15 @@ void Twitgoo::slotUpload ( KJob* job )
             QVariantMap map = res.toMap();
             if ( map.value ( "status" ) == QString ( "fail" ) ) {
                 QVariantMap err = map.value ( "err" ).toMap();
-                emit uploadingFailed ( localUrl, err.value ( "err_msg" ).toString() );
+                Q_EMIT uploadingFailed ( localUrl, err.value ( "err_msg" ).toString() );
             } else if ( map.value ( "status" ) == QString ( "ok" ) ) {
                 TwitgooSettings::self()->readConfig();
                 QString val = TwitgooSettings::directLink() ? "imageurl" : "mediaurl";
-                emit mediumUploaded ( localUrl, map.value ( val ).toString() );
+                Q_EMIT mediumUploaded ( localUrl, map.value ( val ).toString() );
             }
         } else {
             kDebug() << "Parse error: " << qobject_cast<KIO::StoredTransferJob*> ( job )->data();
-            emit uploadingFailed ( localUrl, i18n ( "Malformed response" ) );
+            Q_EMIT uploadingFailed ( localUrl, i18n ( "Malformed response" ) );
         }
     }
 }

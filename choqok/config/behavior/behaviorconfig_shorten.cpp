@@ -55,9 +55,9 @@ BehaviorConfig_Shorten::~BehaviorConfig_Shorten()
 void BehaviorConfig_Shorten::currentPluginChanged( int index )
 {
     if( shortenPlugins->itemData(index).toString() == prevShortener)
-        emit changed(false);
+        Q_EMIT changed(false);
     else
-        emit changed(true);
+        Q_EMIT changed(true);
     QString key = shortenPlugins->itemData(index).toString();
 //     kDebug()<<key;
     if( !key.isEmpty() && key != "none" && availablePlugins.value(key).kcmServices().count() > 0 )

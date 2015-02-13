@@ -543,7 +543,7 @@ void MainWindow::setTimeLineUpdatesEnabled( bool isEnabled )
     if ( isEnabled ) {
         if( mPrevUpdateInterval > 0 )
             Choqok::BehaviorSettings::setUpdateInterval( mPrevUpdateInterval );
-        emit updateTimelines();
+        Q_EMIT updateTimelines();
         timelineTimer->start( Choqok::BehaviorSettings::updateInterval() *60000 );
 //         kDebug()<<"timelineTimer started";
     } else {
@@ -602,7 +602,7 @@ void MainWindow::slotCurrentBlogChanged(int)
     Choqok::UI::MicroBlogWidget *wd = qobject_cast<Choqok::UI::MicroBlogWidget *>(mainWidget->currentWidget());
     if( wd ) {
         wd->setFocus();
-        emit currentMicroBlogWidgetChanged(wd);
+        Q_EMIT currentMicroBlogWidgetChanged(wd);
     }
 }
 

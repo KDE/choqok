@@ -313,7 +313,7 @@ void AccountsWidget::setRow(int row, const QList<QTableWidgetItem*>& rowItems)
 
 void AccountsWidget::emitChanged()
 {
-    emit changed(true);
+    Q_EMIT changed(true);
 }
 
 void AccountsWidget::accountsTableCellDoubleClicked(int row, int column)

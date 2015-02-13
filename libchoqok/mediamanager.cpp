@@ -93,7 +93,7 @@ QPixmap MediaManager::fetchImage( const QString& remoteUrl, ReturnMode mode /*= 
 {
     QPixmap p;
     if( d->cache.findPixmap(remoteUrl, &p) ) {
-        emit imageFetched(remoteUrl, p);
+        Q_EMIT imageFetched(remoteUrl, p);
     } else if(mode == Async) {
         if ( d->queue.values().contains( remoteUrl ) ) {
             ///The file is on the way, wait to download complete.
@@ -104,7 +104,7 @@ QPixmap MediaManager::fetchImage( const QString& remoteUrl, ReturnMode mode /*= 
         if ( !job ) {
             kDebug() << "Cannot create a FileCopyJob!";
             QString errMsg = i18n( "Cannot create a KDE Job. Please check your installation.");
-            emit fetchError( remoteUrl, errMsg );
+            Q_EMIT fetchError( remoteUrl, errMsg );
             return p;
         }
         d->queue.insert(job, remoteUrl );
@@ -123,16 +123,16 @@ void MediaManager::slotImageFetched( KJob * job )
         kDebug() << "Job error: " << job->error() << "\t" << job->errorString();
         QString errMsg = i18n( "Cannot download image from %1.",
                                job->errorString() );
-        emit fetchError( remote, errMsg );
+        Q_EMIT fetchError( remote, errMsg );
     } else {
         QPixmap p;
         if( !baseJob->data().startsWith(QByteArray("<?xml version=\"")) &&
             p.loadFromData( baseJob->data() ) ) {
             d->cache.insertPixmap( remote, p );
-            emit imageFetched( remote, p );
+            Q_EMIT imageFetched( remote, p );
         } else {
             kDebug()<<"Parse Error: \nBase Url:"<<baseJob->url()<<"\ndata:"<<baseJob->data();
-            emit fetchError( remote, i18n( "The download failed. The returned file is corrupted." ) );
+            Q_EMIT fetchError( remote, i18n( "The download failed. The returned file is corrupted." ) );
         }
     }
 }
@@ -162,7 +162,7 @@ void MediaManager::uploadMedium(const KUrl& localUrl, const QString& pluginId)
     if(pId.isEmpty())
         pId = Choqok::BehaviorSettings::lastUsedUploaderPlugin();
     if(pId.isEmpty()){
-        emit mediumUploadFailed(localUrl, i18n("No pluginId specified, And last used plugin is null."));
+        Q_EMIT mediumUploadFailed(localUrl, i18n("No pluginId specified, And last used plugin is null."));
         return;
     }
     if(!d->uploader){

@@ -72,8 +72,8 @@ void MainWindow::hideEvent( QHideEvent * event )
     if( !this->isVisible() ) {
         kDebug();
         if( Choqok::BehaviorSettings::markAllAsReadOnHideToSystray() )
-            emit markAllAsRead();
-        emit removeOldPosts();
+            Q_EMIT markAllAsRead();
+        Q_EMIT removeOldPosts();
     }
 }
 

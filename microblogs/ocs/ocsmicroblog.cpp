@@ -85,7 +85,7 @@ void OCSMicroblog::saveTimeline(Choqok::Account* account, const QString& timelin
     }
     postsBackup.sync();
 	if(Choqok::Application::isShuttingDown())
-		emit readyForUnload();
+		Q_EMIT readyForUnload();
 }
 
 QList< Choqok::Post* > OCSMicroblog::loadTimeline(Choqok::Account* account, const QString& timelineName)
@@ -151,7 +151,7 @@ ChoqokEditAccountWidget* OCSMicroblog::createEditAccountWidget(Choqok::Account* 
 void OCSMicroblog::createPost(Choqok::Account* theAccount, Choqok::Post* post)
 {
     if(!mIsOperational){
-        emit errorPost(theAccount, post, OtherError, i18n("OCS plugin is not initialized yet. Try again later."));
+        Q_EMIT errorPost(theAccount, post, OtherError, i18n("OCS plugin is not initialized yet. Try again later."));
         return;
     }
     kDebug();
@@ -167,7 +167,7 @@ void OCSMicroblog::slotCreatePost(Attica::BaseJob* job)
 {
     OCSAccount* acc = mJobsAccount.take(job);
     Choqok::Post* post = mJobsPost.take(job);
-    emit postCreated ( acc, post );
+    Q_EMIT postCreated ( acc, post );
 }
 
 void OCSMicroblog::abortCreatePost(Choqok::Account* theAccount, Choqok::Post* post)
@@ -223,9 +223,9 @@ void OCSMicroblog::slotTimelineLoaded(Attica::BaseJob* job)
     OCSAccount* acc = mJobsAccount.take(job);
     if(job->metadata().error() == Attica::Metadata::NoError) {
         Attica::Activity::List actList = static_cast< Attica::ListJob<Attica::Activity> * >(job)->itemList();
-        emit timelineDataReceived( acc, "Activity", parseActivityList(actList) );
+        Q_EMIT timelineDataReceived( acc, "Activity", parseActivityList(actList) );
     } else {
-        emit error(acc, ServerError, job->metadata().message(), Low);
+        Q_EMIT error(acc, ServerError, job->metadata().message(), Low);
     }
 }
 
@@ -276,7 +276,7 @@ void OCSMicroblog::slotDefaultProvidersLoaded()
 {
     kDebug();
     mIsOperational = true;
-    emit initialized();
+    Q_EMIT initialized();
 
     QMultiMap<Choqok::Account*, Task>::const_iterator it = scheduledTasks.constBegin();
     QMultiMap<Choqok::Account*, Task>::const_iterator endIt = scheduledTasks.constEnd();
@@ -302,7 +302,7 @@ QString OCSMicroblog::profileUrl(Choqok::Account* account, const QString& userna
 
 void OCSMicroblog::aboutToUnload()
 {
-    emit saveTimelines();
+    Q_EMIT saveTimelines();
 }
 
 #include "ocsmicroblog.moc"

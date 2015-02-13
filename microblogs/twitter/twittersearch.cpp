@@ -122,7 +122,7 @@ void TwitterSearch::searchResultsReturned(KJob* job)
     kDebug();
     if( job == 0 ) {
         kDebug() << "job is a null pointer";
-        emit error( i18n( "Unable to fetch search results." ) );
+        Q_EMIT error( i18n( "Unable to fetch search results." ) );
         return;
     }
 
@@ -130,16 +130,16 @@ void TwitterSearch::searchResultsReturned(KJob* job)
 
     if( job->error() ) {
         kError() << "Error: " << job->errorString();
-        emit error( i18n( "Unable to fetch search results: %1", job->errorString() ) );
+        Q_EMIT error( i18n( "Unable to fetch search results: %1", job->errorString() ) );
         QList<Choqok::Post*> postsList;
-        emit searchResultsReceived( info, postsList );
+        Q_EMIT searchResultsReceived( info, postsList );
         return;
     }
     KIO::StoredTransferJob *jj = qobject_cast<KIO::StoredTransferJob *>( job );
     QList<Choqok::Post*> postsList = parseJson( jj->data() );
 
 
-    emit searchResultsReceived( info, postsList );
+    Q_EMIT searchResultsReceived( info, postsList );
 }
 
 QList< Choqok::Post* > TwitterSearch::parseJson(QByteArray buffer)

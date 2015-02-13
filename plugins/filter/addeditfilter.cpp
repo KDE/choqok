@@ -78,10 +78,10 @@ void AddEditFilter::slotButtonClicked(int button)
             currentFilter->setFilterType(type);
             currentFilter->setFilterAction(action);
             currentFilter->setDontHideReplies(dontHideReplies);
-            emit filterUpdated(currentFilter);
+            Q_EMIT filterUpdated(currentFilter);
         } else {
             currentFilter = new Filter(fText, field, type, action, dontHideReplies);
-            emit newFilterRegistered(currentFilter);
+            Q_EMIT newFilterRegistered(currentFilter);
         }
         accept();
     } else

@@ -135,7 +135,7 @@ bool AccountManager::removeAccount( const QString &alias )
             }
             a->deleteLater();
             PasswordManager::self()->removePassword(alias);
-            emit accountRemoved( alias );
+            Q_EMIT accountRemoved( alias );
             return true;
         }
     }
@@ -164,7 +164,7 @@ Account * AccountManager::registerAccount( Account * account )
     d->accounts.append( account );
     d->accounts = sortAccountsByPriority(d->accounts);
 
-    emit accountAdded( account );
+    Q_EMIT accountAdded( account );
     return account;
 }
 
@@ -197,7 +197,7 @@ void AccountManager::loadAllAccounts()
     }
     kDebug() << d->accounts.count() << " accounts loaded.";
     d->accounts = sortAccountsByPriority(d->accounts);
-    emit allAccountsLoaded();
+    Q_EMIT allAccountsLoaded();
 }
 
 QString AccountManager::generatePostBackupFileName( const QString& alias, const QString& name )

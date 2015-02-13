@@ -62,7 +62,7 @@ void Mobypicture::upload ( const KUrl& localUrl, const QByteArray& medium, const
         QString alias = MobypictureSettings::alias();
         if ( alias.isEmpty() ) {
             kError() << "No account to use";
-            emit uploadingFailed ( localUrl, i18n ( "There is no Twitter account configured to use." ) );
+            Q_EMIT uploadingFailed ( localUrl, i18n ( "There is no Twitter account configured to use." ) );
             return;
         }
         TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *> ( Choqok::AccountManager::self()->findAccount ( alias ) );
@@ -139,7 +139,7 @@ void Mobypicture::slotUpload ( KJob* job )
     KUrl localUrl = mUrlMap.take ( job );
     if ( job->error() ) {
         kError() << "Job Error: " << job->errorString();
-        emit uploadingFailed ( localUrl, job->errorString() );
+        Q_EMIT uploadingFailed ( localUrl, job->errorString() );
         return;
     } else {
         kDebug() << qobject_cast<KIO::StoredTransferJob*> ( job )->data();
@@ -151,22 +151,22 @@ void Mobypicture::slotUpload ( KJob* job )
             if ( MobypictureSettings::oauth() ) {
                 if ( map.contains ( "errors" ) ) {
                     QVariantMap err = map.value ( "errors" ).toMap();
-                    emit uploadingFailed ( localUrl, err.value ( "message" ).toString() );
+                    Q_EMIT uploadingFailed ( localUrl, err.value ( "message" ).toString() );
                 } else if ( map.contains ( "media" ) ) {
                     QVariantMap media = map.value ( "media" ).toMap();
-                    emit mediumUploaded ( localUrl, media.value ( "mediaurl" ).toString() );
+                    Q_EMIT mediumUploaded ( localUrl, media.value ( "mediaurl" ).toString() );
                 }
             }
             if ( MobypictureSettings::basic() ) {
                 if ( map.value ( "result" ) == "0" &&  map.contains ( "url" ) ) {
-                    emit mediumUploaded ( localUrl, map.value ( "url" ).toString() );
+                    Q_EMIT mediumUploaded ( localUrl, map.value ( "url" ).toString() );
                 } else {
-                    emit uploadingFailed ( localUrl, map.value ( "message" ).toString() );
+                    Q_EMIT uploadingFailed ( localUrl, map.value ( "message" ).toString() );
                 }
             }
         } else {
             kDebug() << "Parse error: " << qobject_cast<KIO::StoredTransferJob*> ( job )->data();
-            emit uploadingFailed ( localUrl, i18n ( "Malformed response" ) );
+            Q_EMIT uploadingFailed ( localUrl, i18n ( "Malformed response" ) );
         }
     }
 }

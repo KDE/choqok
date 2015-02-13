@@ -90,7 +90,7 @@ void Tinyarro_ws_Config::save()
 
 void Tinyarro_ws_Config::emitChanged()
 {
-    emit changed(true);
+    Q_EMIT changed(true);
 }
 
 #include "tinyarro_ws_config.moc"

@@ -89,7 +89,7 @@ void DummyNotification::slotProcessAnchor(const QUrl& url)
     kDebug();
     if(url.scheme() == "choqok"){
         if(url.host() == "close"){
-            emit positionSelected(pos());
+            Q_EMIT positionSelected(pos());
         }
     }
 }

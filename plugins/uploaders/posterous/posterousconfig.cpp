@@ -101,7 +101,7 @@ void PosterousConfig::emitChanged()
     ui.cfg_login->setEnabled ( ui.cfg_basic->isChecked() );
     ui.cfg_password->setEnabled ( ui.cfg_basic->isChecked() );
     ui.cfg_accountsList->setEnabled ( ui.cfg_oauth->isChecked() );
-    emit changed ( true );
+    Q_EMIT changed ( true );
 }
 
 #include "posterousconfig.moc"

@@ -83,7 +83,7 @@ void IMStatusConfig::save()
 
 void IMStatusConfig::emitChanged()
 {
-    emit changed ( true );
+    Q_EMIT changed ( true );
 }
 
 #include "imstatusconfig.moc"

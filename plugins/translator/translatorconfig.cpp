@@ -93,7 +93,7 @@ void TranslatorConfig::save()
 
 void TranslatorConfig::emitChanged()
 {
-    emit changed(true);
+    Q_EMIT changed(true);
 }
 
 #include "translatorconfig.moc"

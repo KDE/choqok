@@ -74,7 +74,7 @@ KPluginInfo Plugin::pluginInfo() const
 void Plugin::aboutToUnload()
 {
     // Just make the unload synchronous by default
-    emit readyForUnload();
+    Q_EMIT readyForUnload();
 }
 
 }

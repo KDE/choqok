@@ -69,7 +69,7 @@ void NowListeningConfig::save()
 
 void NowListeningConfig::emitChanged()
 {
-    emit changed(true);
+    Q_EMIT changed(true);
     disconnect( ui.kcfg_templateString, SIGNAL(textChanged()), this, SLOT(emitChanged()) );
 }
 

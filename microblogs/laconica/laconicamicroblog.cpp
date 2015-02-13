@@ -278,7 +278,7 @@ void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob* job)
     } else {
         friendsList.removeDuplicates();
         theAccount->setFriendsList(friendsList);
-        emit friendsUsernameListed( theAccount, friendsList );
+        Q_EMIT friendsUsernameListed( theAccount, friendsList );
     }
 }
 
@@ -293,11 +293,11 @@ void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob* job)
     if ( root.tagName() != "users" ) {
         QString err = checkXmlForError(buffer);
         if(!err.isEmpty()){
-            emit error(theAccount, ServerError, err, Critical);
+            Q_EMIT error(theAccount, ServerError, err, Critical);
         } else {
             err = i18n( "Retrieving the friends list failed. The data returned from the server is corrupted." );
             kDebug() << "there's no users tag in XML\t the XML is: \n" << buffer;
-            emit error(theAccount, ParsingError, err, Critical);
+            Q_EMIT error(theAccount, ParsingError, err, Critical);
             list<<QString(' ');
         }
         return list;
@@ -356,7 +356,7 @@ void LaconicaMicroBlog::slotFetchConversation(KJob* job)
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();
-        emit error ( theAccount, Choqok::MicroBlog::CommunicationError,
+        Q_EMIT error ( theAccount, Choqok::MicroBlog::CommunicationError,
                      i18n("Fetching conversation failed. %1", job->errorString()), Normal );
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
@@ -366,7 +366,7 @@ void LaconicaMicroBlog::slotFetchConversation(KJob* job)
         //    posts = readTimelineFromXml ( theAccount, stj->data() );
         //}
         if( !posts.isEmpty() ){
-            emit conversationFetched(theAccount, conversationId, posts);
+            Q_EMIT conversationFetched(theAccount, conversationId, posts);
         }
     }
 }

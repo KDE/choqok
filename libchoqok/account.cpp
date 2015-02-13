@@ -86,7 +86,7 @@ void Account::writeConfig()
     if(!password().isEmpty())
         PasswordManager::self()->writePassword( d->alias, password() );
     d->configGroup->sync();
-    emit modified(this);
+    Q_EMIT modified(this);
 }
 
 QString Account::username() const
