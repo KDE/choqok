@@ -71,7 +71,7 @@ public:
     virtual Choqok::TimelineInfo* timelineInfo(const QString& timelineName);
 
     void createPostWithAttachment(Choqok::Account *theAccount, Choqok::Post *post, const QString &mediumToAttach = QString());
-signals:
+Q_SIGNALS:
     void userLists(Choqok::Account* theAccount, const QString& username, QList<Twitter::List> lists);
 
 protected Q_SLOTS:

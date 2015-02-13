@@ -39,7 +39,7 @@ protected:
     virtual void mousePressEvent(QMouseEvent* ev);
     virtual void mouseReleaseEvent(QMouseEvent* ev);
 
-signals:
+Q_SIGNALS:
     void positionSelected(QPoint position);
 
 protected Q_SLOTS:

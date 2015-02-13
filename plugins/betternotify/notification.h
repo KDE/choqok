@@ -40,7 +40,7 @@ public:
 
     virtual QSize sizeHint() const;
 
-signals:
+Q_SIGNALS:
     void ignored();
     void postReaded();
     void mouseEntered();

@@ -34,7 +34,7 @@ public:
     MyTextBrowser(QWidget* parent = 0);
     virtual ~MyTextBrowser();
 
-signals:
+Q_SIGNALS:
     void mouseEntered();
     void mouseLeaved();
     void clicked();

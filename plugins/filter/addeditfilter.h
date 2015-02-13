@@ -37,7 +37,7 @@ public:
     explicit AddEditFilter(QWidget* parent, Filter* filter = 0);
     virtual ~AddEditFilter();
 
-signals:
+Q_SIGNALS:
     void newFilterRegistered( Filter *filter );
     void filterUpdated( Filter *filter );
 

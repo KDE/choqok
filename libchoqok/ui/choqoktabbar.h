@@ -134,7 +134,7 @@ public Q_SLOTS:
 
     void setToolButtonStyle( Qt::ToolButtonStyle toolButtonStyle );
 
-signals:
+Q_SIGNALS:
     void currentChanged( int index );
     void tabCloseRequested( int index );
     void tabMoved( int from , int to );

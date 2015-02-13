@@ -40,7 +40,7 @@ public:
     void load();
     void save();
 
-signals:
+Q_SIGNALS:
     void changed(bool isChanged);
 
 private Q_SLOTS:

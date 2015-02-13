@@ -58,7 +58,7 @@ public:
     bool isOperational();
     virtual void aboutToUnload();
 
-signals:
+Q_SIGNALS:
     void initialized();
 
 protected Q_SLOTS:
