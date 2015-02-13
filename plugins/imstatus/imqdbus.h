@@ -60,7 +60,7 @@ private:
     void usePidgin(const QString &statusMessage);
 
 #if TELEPATHY_FOUND
-private slots:
+private Q_SLOTS:
     void slotFinished(Tp::PendingOperation *po);
 
 private:

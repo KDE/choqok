@@ -46,7 +46,7 @@ public:
     Notify( QObject* parent, const QList< QVariant >& args );
     ~Notify();
 
-protected slots:
+protected Q_SLOTS:
     void slotNewPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString);
     void notifyNextPost();
     void stopNotifications();

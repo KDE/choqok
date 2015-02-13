@@ -76,7 +76,7 @@ protected:
     virtual void hideEvent(QHideEvent* event);
     virtual void showEvent(QShowEvent* );
 
-private slots:
+private Q_SLOTS:
     void nextTab(int delta, Qt::Orientation orientation);
     void loadAllAccounts();
     void newPluginAvailable( Choqok::Plugin *plugin );

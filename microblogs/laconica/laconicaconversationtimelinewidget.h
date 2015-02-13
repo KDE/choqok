@@ -40,7 +40,7 @@ protected:
 
     ChoqokId conversationId;
 
-protected slots:
+protected Q_SLOTS:
     void slotConversationFetched(Choqok::Account* theAccount,const ChoqokId& conversationId,
                                  QList<Choqok::Post*> posts);
     void updateHeight();

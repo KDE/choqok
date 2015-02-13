@@ -42,7 +42,7 @@ protected:
 signals:
     void positionSelected(QPoint position);
 
-protected slots:
+protected Q_SLOTS:
     void slotProcessAnchor(const QUrl& url);
 
 private:

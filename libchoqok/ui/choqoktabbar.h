@@ -128,7 +128,7 @@ public:
 
     void refreshTabBar();
 
-public slots:
+public Q_SLOTS:
     void setCurrentIndex ( int index );
     void setCurrentWidget ( QWidget *widget );
 
@@ -150,7 +150,7 @@ protected:
     void resizeEvent( QResizeEvent *event );
     void paintEvent( QPaintEvent *event );
 
-private slots:
+private Q_SLOTS:
     void action_triggered( QAction *action );
     void contextMenuRequest( const QPoint & point );
     void widget_destroyed( QObject *obj );

@@ -41,7 +41,7 @@ public:
     void getFrob();
     QByteArray createSign(QByteArray);
     
-protected slots:
+protected Q_SLOTS:
     void emitChanged();
     void slotAuthButton_clicked();
     void setAuthenticated(bool);

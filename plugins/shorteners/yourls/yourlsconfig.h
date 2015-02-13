@@ -39,7 +39,7 @@ public:
     virtual void save();
     virtual void load();
 
-protected slots:
+protected Q_SLOTS:
     void emitChanged();
 private:
     Ui_YourlsPrefsBase ui;

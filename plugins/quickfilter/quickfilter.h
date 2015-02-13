@@ -48,18 +48,18 @@ public:
     QuickFilter(QObject* parent, const QList< QVariant >& args);
     ~QuickFilter();
     
-public slots:
+public Q_SLOTS:
     void createUiInterface();
     void showAuthorFilterUiInterface(bool);
     void showContentFilterUiInterface(bool);
     void showAllPosts();
     
-protected slots:
+protected Q_SLOTS:
     void filterByAuthor();
     void filterByContent();
     void filterNewPost(Choqok::UI::PostWidget*, Choqok::Account*, QString);
     
-private slots:
+private Q_SLOTS:
     void updateUser(QString user);
     void updateContent(QString text);
     

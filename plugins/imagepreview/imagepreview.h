@@ -50,7 +50,7 @@ public:
     ImagePreview( QObject* parent, const QList< QVariant >& args );
     ~ImagePreview();
 
-protected slots:
+protected Q_SLOTS:
     void slotAddNewPostWidget( Choqok::UI::PostWidget *newWidget );
     void startParsing();
     void slotImageFetched(const QString &remoteUrl,const QPixmap &pixmap);

@@ -40,11 +40,11 @@ public:
     AccountsWidget( QWidget *parent, const QVariantList& args  );
     ~AccountsWidget();
 
-public slots:
+public Q_SLOTS:
     virtual void save();
     virtual void load();
 
-protected slots:
+protected Q_SLOTS:
     void addAccount();
     void editAccount( QString alias = QString() );
     void removeAccount( QString alias = QString() );

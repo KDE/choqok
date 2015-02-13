@@ -38,7 +38,7 @@ public:
     virtual bool validateData();
     virtual Choqok::Account* apply();
 
-protected slots:
+protected Q_SLOTS:
     void slotprovidersLoaded();
 
 private:

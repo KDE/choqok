@@ -41,7 +41,7 @@ signals:
     void newFilterRegistered( Filter *filter );
     void filterUpdated( Filter *filter );
 
-protected slots:
+protected Q_SLOTS:
     void slotFilterActionChanged(int);
     virtual void slotButtonClicked(int button);
 

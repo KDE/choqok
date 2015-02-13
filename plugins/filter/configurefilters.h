@@ -36,7 +36,7 @@ public:
     ConfigureFilters(QWidget* parent);
     ~ConfigureFilters();
 
-protected slots:
+protected Q_SLOTS:
     virtual void slotButtonClicked(int button);
     void slotAddFilter();
     void slotEditFilter();

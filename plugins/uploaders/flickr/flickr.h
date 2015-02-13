@@ -46,7 +46,7 @@ public:
     QString base58encode( quint64 );
     QByteArray createSign( QByteArray );
     
-protected slots:
+protected Q_SLOTS:
     void slotUpload( KJob *job );
 
 private:

@@ -43,7 +43,7 @@ protected:
     virtual QString generateSign();
     virtual void slotReplyToAll();
 
-protected slots:
+protected Q_SLOTS:
     virtual void slotResendPost();
 
 private:

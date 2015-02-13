@@ -40,7 +40,7 @@ public:
     ~Yourls();
     QString shorten( const QString &url );
 
-private slots:
+private Q_SLOTS:
     void reloadConfigs();
 private:
     QString password;

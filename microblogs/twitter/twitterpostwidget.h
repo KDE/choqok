@@ -32,7 +32,7 @@ public:
     TwitterPostWidget(Choqok::Account* account, Choqok::Post* post, QWidget* parent = 0);
     virtual void initUi();
 
-protected slots:
+protected Q_SLOTS:
     virtual void slotReplyToAll();
 
 protected:

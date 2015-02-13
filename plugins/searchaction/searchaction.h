@@ -35,7 +35,7 @@ public:
     SearchAction( QObject* parent, const QList< QVariant >& args );
     ~SearchAction();
 
-protected slots:
+protected Q_SLOTS:
     void slotSearch();
 };
 

@@ -51,7 +51,7 @@ public:
     UnTiny( QObject* parent, const QList< QVariant >& args );
     ~UnTiny();
 
-protected slots:
+protected Q_SLOTS:
     void slotAddNewPostWidget( Choqok::UI::PostWidget *newWidget );
     void slot301Redirected(KIO::Job*,KUrl,KUrl);
     void startParsing();

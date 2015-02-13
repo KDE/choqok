@@ -52,7 +52,7 @@ private:
     QMap<QString, QIndicate::Indicator *> iList;
     QImage getIconByAlias( const QString& alias );
 
-public slots:
+public Q_SLOTS:
     void slotDisplay ( QIndicate::Indicator* );
     void slotShowMainWindow();
     void slotCanWorkWithAccs();

@@ -43,10 +43,10 @@ public:
 signals:
     void changed(bool isChanged);
 
-private slots:
+private Q_SLOTS:
     void currentPluginChanged( int index );
 
-protected slots:
+protected Q_SLOTS:
     void slotAboutClicked();
     void slotConfigureClicked();
 

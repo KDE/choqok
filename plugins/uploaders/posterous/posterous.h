@@ -40,7 +40,7 @@ public:
 
     virtual void upload ( const KUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType );
     QString getAuthToken(const KUrl& localUrl);
-protected slots:
+protected Q_SLOTS:
     void slotUpload ( KJob *job );
 
 private:

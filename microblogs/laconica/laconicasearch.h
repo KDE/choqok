@@ -53,7 +53,7 @@ protected:
     QList<Choqok::Post*> parseRss( const QByteArray &buffer );
     QList<Choqok::Post*> parseAtom( const QByteArray &buffer );
 
-protected slots:
+protected Q_SLOTS:
     virtual void searchResultsReturned( KJob *job );
 
 private:

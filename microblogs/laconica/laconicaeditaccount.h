@@ -60,7 +60,7 @@ public:
     */
     virtual Choqok::Account *apply();
 
-protected slots:
+protected Q_SLOTS:
 //     virtual void authorizeUser();
 //     void slotAuthMethodChanged(int);
     void slotCheckHostUrl();

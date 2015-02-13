@@ -42,13 +42,13 @@ public:
     ~SysTrayIcon();
     int unreadCount() const;
 
-public slots:
+public Q_SLOTS:
     void setTimeLineUpdatesEnabled( bool isEnabled );
     void slotJobDone( Choqok::JobResult result );
     void updateUnreadCount( int changeOfUnreadPosts );
     void resetUnreadCount();
 
-protected slots:
+protected Q_SLOTS:
     void slotRestoreIcon();
 
 private:

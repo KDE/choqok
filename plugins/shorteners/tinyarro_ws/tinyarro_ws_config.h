@@ -39,7 +39,7 @@ public:
     virtual void load();
 protected:
     QMap<QString, QString> hostList;
-protected slots:
+protected Q_SLOTS:
     void emitChanged();
 private:
     Ui_Tinyarro_ws_PrefsBase ui;

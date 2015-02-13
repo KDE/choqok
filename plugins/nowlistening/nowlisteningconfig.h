@@ -39,7 +39,7 @@ public:
     virtual void load();
     virtual void defaults();
 
-protected slots:
+protected Q_SLOTS:
     void emitChanged();
 private:
     Ui_NowListeningPrefsBase ui;

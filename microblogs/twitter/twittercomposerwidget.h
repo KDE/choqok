@@ -35,7 +35,7 @@ public:
     explicit TwitterComposerWidget(Choqok::Account* account, QWidget* parent = 0);
     ~TwitterComposerWidget();
 
-protected slots:
+protected Q_SLOTS:
     virtual void submitPost(const QString& text);
     virtual void slotPostMediaSubmitted(Choqok::Account *theAccount, Choqok::Post* post);
 //     virtual void slotErrorPost(Choqok::Account* theAccount,Choqok::Post* post);

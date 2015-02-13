@@ -50,7 +50,7 @@ public:
 protected:
     virtual void slotButtonClicked(int button);
 
-protected slots:
+protected Q_SLOTS:
     void slotUsernameChanged(const QString & name);
     void loadUserLists();
     void slotLoadUserlists(Choqok::Account* theAccount, QString username, QList<Twitter::List> list);

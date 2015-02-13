@@ -42,7 +42,7 @@ public:
     ChoqokPluginConfig( QWidget *parent, const QVariantList &args  );
     ~ChoqokPluginConfig();
 
-public slots:
+public Q_SLOTS:
     virtual void load();
     virtual void save();
 

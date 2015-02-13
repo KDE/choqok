@@ -45,7 +45,7 @@ public:
 
     virtual int newInstance();
 
-public slots:
+public Q_SLOTS:
     /**
      * Quit Choqok, closing all the windows, which causes application shutdown
      * This method marks Choqok as 'shutting down'

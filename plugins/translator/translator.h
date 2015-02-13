@@ -53,7 +53,7 @@ public:
     Translator( QObject* parent, const QList< QVariant >& args );
     ~Translator();
 
-protected slots:
+protected Q_SLOTS:
     void translate();
     void slotTranslated(KJob*);
     void slotConfigureTranslator();

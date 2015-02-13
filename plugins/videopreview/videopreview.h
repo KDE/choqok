@@ -59,7 +59,7 @@ public:
     VideoPreview( QObject* parent, const QList< QVariant >& args );
     ~VideoPreview();
 
-protected slots:
+protected Q_SLOTS:
     void slotAddNewPostWidget( Choqok::UI::PostWidget *newWidget );
     void startParsing();
     void slotImageFetched(const QString &remoteUrl,const QPixmap &pixmap);

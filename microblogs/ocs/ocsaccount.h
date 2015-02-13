@@ -43,7 +43,7 @@ public:
 
     virtual void writeConfig();
 
-protected slots:
+protected Q_SLOTS:
     void slotDefaultProvidersLoaded();
 
 private:

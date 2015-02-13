@@ -48,7 +48,7 @@ public:
                                       uint count = 0, uint page = 1);
     virtual QString optionCode(int option);
 
-protected slots:
+protected Q_SLOTS:
     virtual void searchResultsReturned( KJob *job );
 
 protected:

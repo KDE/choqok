@@ -42,7 +42,7 @@ public:
     NowListening( QObject* parent, const QList< QVariant >& args );
     ~NowListening();
 
-protected slots:
+protected Q_SLOTS:
     void slotPrepareNowListening();
 
 };

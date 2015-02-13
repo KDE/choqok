@@ -40,7 +40,7 @@ public:
     IMStatus ( QObject* parent, const QList< QVariant >& args );
     ~IMStatus();
 
-public slots:
+public Q_SLOTS:
     void slotIMStatus ( Choqok::JobResult res, Choqok::Post* newPost );
     void update();
 

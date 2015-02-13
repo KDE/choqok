@@ -315,7 +315,7 @@ protected:
     void setServiceName(const QString&);
     void setServiceHomepageUrl(const QString&);
 
-protected slots:
+protected Q_SLOTS:
     void slotConfigChanged();
 
 private:

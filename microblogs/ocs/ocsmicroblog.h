@@ -61,7 +61,7 @@ public:
 signals:
     void initialized();
 
-protected slots:
+protected Q_SLOTS:
     void slotTimelineLoaded(Attica::BaseJob*);
     void slotCreatePost(Attica::BaseJob*);
     void slotDefaultProvidersLoaded();

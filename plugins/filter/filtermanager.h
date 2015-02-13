@@ -51,7 +51,7 @@ public:
     FilterManager( QObject* parent, const QList< QVariant >& args );
     ~FilterManager();
 
-protected slots:
+protected Q_SLOTS:
     void slotAddNewPostWidget( Choqok::UI::PostWidget* newWidget );
     void startParsing();
     void slotConfigureFilters();

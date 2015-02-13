@@ -46,7 +46,7 @@ signals:
     void mouseEntered();
     void mouseLeaved();
 
-protected slots:
+protected Q_SLOTS:
     void slotProcessAnchor(const QUrl& url);
     void slotClicked();
 

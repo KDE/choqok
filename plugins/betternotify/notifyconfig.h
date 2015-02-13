@@ -42,7 +42,7 @@ public:
     virtual void save();
     virtual void load();
 
-protected slots:
+protected Q_SLOTS:
     void updateTimelinesList();
     void timelineSelectionChanged();
     void emitChanged();
