@@ -23,9 +23,12 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef TWITTERMICROBLOGPLUGIN_H
 #define TWITTERMICROBLOGPLUGIN_H
 
-#include <KUrl>
-#include <twitterapihelper/twitterapimicroblog.h>
 #include <QPointer>
+
+#include <KUrl>
+
+#include "twitterapihelper/twitterapimicroblog.h"
+
 #include "twitterlist.h"
 
 class TwitterAccount;

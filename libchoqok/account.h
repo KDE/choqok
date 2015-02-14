@@ -24,8 +24,10 @@
 #ifndef CHOQOKACCOUNT_H
 #define CHOQOKACCOUNT_H
 
-#include <QtCore/QString>
-#include <kconfiggroup.h>
+#include <QString>
+
+#include <KConfigGroup>
+
 #include "choqok_export.h"
 
 namespace Choqok

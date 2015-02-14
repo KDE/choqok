@@ -22,20 +22,23 @@
 
 */
 #include "accountswidget.h"
-#include <kdebug.h>
+
 #include <QCheckBox>
-#include <KMessageBox>
-#include <microblog.h>
-#include <KMenu>
-#include <pluginmanager.h>
-#include <KPluginInfo>
+
 #include <KAction>
+#include <KDebug>
+#include <KMenu>
+#include <KMessageBox>
+#include <KPluginFactory>
+#include <KPluginInfo>
+
+#include "accountmanager.h"
 #include "addaccountdialog.h"
-#include <accountmanager.h>
+#include "choqokuiglobal.h"
 #include "editaccountwidget.h"
 #include "editaccountdialog.h"
-#include <choqokuiglobal.h>
-#include <KPluginFactory>
+#include "microblog.h"
+#include "pluginmanager.h"
 
 K_PLUGIN_FACTORY( ChoqokAccountsConfigFactory,
                   registerPlugin<AccountsWidget>(); )

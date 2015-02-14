@@ -21,17 +21,20 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see http://www.gnu.org/licenses/
 */
 #include "composerwidget.h"
-#include "choqoktextedit.h"
-#include "account.h"
-#include <microblog.h>
-#include <QHBoxLayout>
-#include <KDebug>
-#include <notifymanager.h>
-#include <KPushButton>
-#include <shortenmanager.h>
-#include <qpointer.h>
+
 #include <QGridLayout>
+#include <QHBoxLayout>
 #include <QLabel>
+#include <QPointer>
+
+#include <KDebug>
+#include <KPushButton>
+
+#include "account.h"
+#include "choqoktextedit.h"
+#include "microblog.h"
+#include "notifymanager.h"
+#include "shortenmanager.h"
 
 namespace Choqok {
 namespace UI {

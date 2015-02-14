@@ -23,14 +23,17 @@
 */
 
 #include "searchaction.h"
-#include <KGenericFactory>
+
 #include <KAction>
-#include "choqokuiglobal.h"
-#include "twitterapihelper/twitterapimicroblog.h"
-#include <twitterapihelper/twitterapiaccount.h>
-#include <microblogwidget.h>
-#include <KMessageBox>
 #include <KActionCollection>
+#include <KGenericFactory>
+#include <KMessageBox>
+
+#include "choqokuiglobal.h"
+#include "microblogwidget.h"
+
+#include "twitterapihelper/twitterapiaccount.h"
+#include "twitterapihelper/twitterapimicroblog.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < SearchAction > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_searchaction" ) )

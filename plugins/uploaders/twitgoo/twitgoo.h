@@ -25,8 +25,7 @@
 #ifndef TWITGOO_H
 #define TWITGOO_H
 
-#include "plugin.h"
-#include <uploader.h>
+#include "uploader.h"
 
 class KJob;
 class KConfigGroup;

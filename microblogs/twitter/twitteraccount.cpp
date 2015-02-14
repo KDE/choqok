@@ -23,8 +23,10 @@
 */
 
 #include "twitteraccount.h"
-#include "twittermicroblog.h"
+
 #include <KDebug>
+
+#include "twittermicroblog.h"
 
 class TwitterAccount::Private
 {

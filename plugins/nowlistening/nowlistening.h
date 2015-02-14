@@ -26,7 +26,7 @@
 #ifndef NOWLISTENING_H
 #define NOWLISTENING_H
 
-#include <plugin.h>
+#include "plugin.h"
 
 class KConfigGroup;
 /**

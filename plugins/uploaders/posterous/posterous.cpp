@@ -23,22 +23,28 @@
 */
 
 #include "posterous.h"
+
+#include <QDomDocument>
+
+#include <KAboutData>
 #include <KAction>
 #include <KActionCollection>
-#include <KAboutData>
 #include <KGenericFactory>
-#include "posteroussettings.h"
 #include <KIO/Job>
-#include <kio/netaccess.h>
-#include <passwordmanager.h>
-#include <QDomDocument>
-#include <mediamanager.h>
-#include <twitterapihelper/twitterapiaccount.h>
-#include <accountmanager.h>
-#include <twitterapihelper/twitterapimicroblog.h>
+#include <KIO/NetAccess>
+
 #include <QtOAuth/QtOAuth>
+
 #include <qjson/parser.h>
-#include <passwordmanager.h>
+
+#include "accountmanager.h"
+#include "mediamanager.h"
+#include "passwordmanager.h"
+
+#include "twitterapihelper/twitterapiaccount.h"
+#include "twitterapihelper/twitterapimicroblog.h"
+
+#include "posteroussettings.h"
 
 K_PLUGIN_FACTORY ( MyPluginFactory, registerPlugin < Posterous > (); )
 K_EXPORT_PLUGIN ( MyPluginFactory ( "choqok_posterous" ) )

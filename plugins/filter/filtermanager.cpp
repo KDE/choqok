@@ -23,20 +23,25 @@
 */
 
 #include "filtermanager.h"
+
+#include <QTimer>
+
+#include <KAboutData>
 #include <KAction>
 #include <KActionCollection>
-#include <KAboutData>
 #include <KGenericFactory>
-#include "choqokuiglobal.h"
-#include "quickpost.h"
 #include <KMessageBox>
-#include <QTimer>
-#include "filtersettings.h"
-#include "filter.h"
-#include "configurefilters.h"
+
+#include "choqokuiglobal.h"
 #include "postwidget.h"
-#include "twitterapihelper/twitterapiaccount.h"
+#include "quickpost.h"
 #include "timelinewidget.h"
+
+#include "twitterapihelper/twitterapiaccount.h"
+
+#include "configurefilters.h"
+#include "filter.h"
+#include "filtersettings.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < FilterManager > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_filter" ) )

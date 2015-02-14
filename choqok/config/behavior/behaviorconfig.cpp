@@ -24,21 +24,21 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "behaviorconfig.h"
 
-#include <QVBoxLayout>
-
-#include <kdebug.h>
-#include <kplugininfo.h>
-#include <klocale.h>
-#include <kgenericfactory.h>
-
 #include "ui_behaviorconfig_general.h"
 #include "ui_behaviorconfig_notifications.h"
+
+#include <QVBoxLayout>
+
+#include <KCModuleInfo>
+#include <KCModuleProxy>
+#include <KDebug>
+#include <KGenericFactory>
+#include <KPluginInfo>
+#include <KLocale>
+#include <KTabWidget>
+
 #include "choqokbehaviorsettings.h"
 #include "behaviorconfig_shorten.h"
-
-#include <ktabwidget.h>
-#include <KCModuleProxy>
-#include <KCModuleInfo>
 
 K_PLUGIN_FACTORY( ChoqokBehaviorConfigFactory,
                   registerPlugin <BehaviorConfig>(); )

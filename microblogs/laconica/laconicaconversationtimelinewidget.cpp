@@ -23,11 +23,13 @@
 
 
 #include "laconicaconversationtimelinewidget.h"
-#include <KLocalizedString>
-#include "laconicamicroblog.h"
-#include <postwidget.h>
-#include <choqokappearancesettings.h>
 
+#include <KLocalizedString>
+
+#include "choqokappearancesettings.h"
+#include "postwidget.h"
+
+#include "laconicamicroblog.h"
 
 LaconicaConversationTimelineWidget::LaconicaConversationTimelineWidget(Choqok::Account* curAccount,
                                                                        const ChoqokId& convId, QWidget* parent)

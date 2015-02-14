@@ -25,9 +25,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef CHOQOKSHORTENMANAGER_H
 #define CHOQOKSHORTENMANAGER_H
 
-#include <QtCore/QObject>
+#include <QObject>
+
+#include <KUrl>
+
 #include "shortener.h"
-#include <KDE/KUrl>
 
 namespace Choqok{
   namespace UI {

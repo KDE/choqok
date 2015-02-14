@@ -22,12 +22,14 @@
 
 */
 #include "account.h"
-#include "microblog.h"
-#include <kglobal.h>
-#include <ksharedptr.h>
-#include <ksharedconfig.h>
-#include "passwordmanager.h"
+
 #include <KDebug>
+#include <KGlobal>
+#include <KSharedConfig>
+#include <KSharedPtr>
+
+#include "microblog.h"
+#include "passwordmanager.h"
 
 namespace Choqok
 {

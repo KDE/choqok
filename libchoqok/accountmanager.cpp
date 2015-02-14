@@ -22,17 +22,20 @@
 
 */
 #include "accountmanager.h"
-#include <kdebug.h>
+
+#include <QApplication>
+
 #include <KConfig>
 #include <KConfigGroup>
-#include <kio/netaccess.h>
-#include <kwallet.h>
-#include <kstandarddirs.h>
-#include <KDE/KLocale>
-#include <QApplication>
-#include <pluginmanager.h>
+#include <KDebug>
+#include <KIO/NetAccess>
+#include <KLocale>
+#include <KStandardDirs>
+#include <KWallet/Wallet>
+
 #include "microblog.h"
 #include "passwordmanager.h"
+#include "pluginmanager.h"
 
 namespace Choqok
 {

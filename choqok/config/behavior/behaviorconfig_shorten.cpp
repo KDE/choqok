@@ -21,18 +21,20 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see http://www.gnu.org/licenses/
 
 */
-
 #include "behaviorconfig_shorten.h"
-#include <pluginmanager.h>
-#include <kplugininfo.h>
-#include <KDebug>
+
+#include <QLayout>
+
 #include <KAboutApplicationDialog>
-#include <qlayout.h>
-#include <shortenmanager.h>
-#include "choqokbehaviorsettings.h"
-#include <KTabWidget>
-#include <kcmoduleinfo.h>
+#include <KCModuleInfo>
 #include <KCModuleProxy>
+#include <KDebug>
+#include <KPluginInfo>
+#include <KTabWidget>
+
+#include "choqokbehaviorsettings.h"
+#include "pluginmanager.h"
+#include "shortenmanager.h"
 
 BehaviorConfig_Shorten::BehaviorConfig_Shorten( QWidget *parent )
     :QWidget(parent),currentShortener(0)

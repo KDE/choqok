@@ -25,8 +25,9 @@
 #ifndef TWITTERAPIDMESSAGEDIALOG_H
 #define TWITTERAPIDMESSAGEDIALOG_H
 
-#include <kdialog.h>
-#include <microblog.h>
+#include <KDialog>
+
+#include "microblog.h"
 
 namespace Choqok {
 class Account;

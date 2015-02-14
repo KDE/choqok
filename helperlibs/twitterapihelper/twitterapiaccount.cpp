@@ -23,11 +23,14 @@
 */
 
 #include "twitterapiaccount.h"
-#include "twitterapimicroblog.h"
-#include <passwordmanager.h>
-#include <QtOAuth/QtOAuth>
-#include <kio/accessmanager.h>
+
 #include <KDebug>
+#include <KIO/AccessManager>
+
+#include <QtOAuth/QtOAuth>
+
+#include "passwordmanager.h"
+#include "twitterapimicroblog.h"
 
 class TwitterApiAccount::Private
 {

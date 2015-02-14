@@ -25,7 +25,8 @@
 #ifndef POSTEROUSCONFIG_H
 #define POSTEROUSCONFIG_H
 
-#include <kcmodule.h>
+#include <KCModule>
+
 #include "ui_posterousprefs.h"
 
 class PosterousConfig : public KCModule

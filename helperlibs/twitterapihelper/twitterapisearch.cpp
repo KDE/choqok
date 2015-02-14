@@ -23,6 +23,7 @@
 */
 
 #include "twitterapisearch.h"
+
 #include <stdio.h>
 
 class TwitterApiSearch::Private

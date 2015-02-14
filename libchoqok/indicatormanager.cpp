@@ -23,15 +23,18 @@
 */
 
 #include "indicatormanager.h"
+
 #include <QApplication>
-#include <KIcon>
-#include "choqokuiglobal.h"
-#include "accountmanager.h"
-#include "account.h"
-#include "microblog.h"
-#include <microblogwidget.h>
-#include <choqokbehaviorsettings.h>
 #include <QTimer>
+
+#include <KIcon>
+
+#include "account.h"
+#include "accountmanager.h"
+#include "choqokuiglobal.h"
+#include "microblog.h"
+#include "microblogwidget.h"
+#include "choqokbehaviorsettings.h"
 
 #define STR(x) #x
 #define XSTR(x) STR(x)

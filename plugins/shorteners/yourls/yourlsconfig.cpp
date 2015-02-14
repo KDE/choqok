@@ -23,12 +23,15 @@
 */
 
 #include "yourlsconfig.h"
-#include <KPluginFactory>
-#include <klocale.h>
-#include <qlayout.h>
-#include "yourlssettings.h"
+
 #include <QVBoxLayout>
-#include <passwordmanager.h>
+
+#include <KLocale>
+#include <KPluginFactory>
+
+#include "passwordmanager.h"
+
+#include "yourlssettings.h"
 
 K_PLUGIN_FACTORY( YourlsConfigFactory, registerPlugin < YourlsConfig > (); )
 K_EXPORT_PLUGIN( YourlsConfigFactory( "kcm_choqok_yourls" ) )

@@ -22,14 +22,16 @@
 */
 
 #include "tinyarro_ws.h"
-#include <QString>
-#include <KIO/Job>
-#include <KDebug>
-#include <kio/netaccess.h>
+
 #include <KAboutData>
+#include <KDebug>
 #include <KGenericFactory>
-#include <kglobal.h>
+#include <KGlobal>
+#include <KIO/Job>
+#include <KIO/NetAccess>
+
 #include "notifymanager.h"
+
 #include "tinyarro_ws_settings.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Tinyarro_ws > (); )

@@ -25,7 +25,7 @@
 #ifndef LACONICACONVERSATIONTIMELINEWIDGET_H
 #define LACONICACONVERSATIONTIMELINEWIDGET_H
 
-#include <twitterapihelper/twitterapitimelinewidget.h>
+#include "twitterapihelper/twitterapitimelinewidget.h"
 
 class LaconicaConversationTimelineWidget : public TwitterApiTimelineWidget
 {

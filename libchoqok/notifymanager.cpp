@@ -23,11 +23,14 @@
 */
 
 #include "notifymanager.h"
+
 #include <QApplication>
 #include <QTimer>
+
+#include <KGlobal>
+
+#include "choqokbehaviorsettings.h"
 #include "choqokuiglobal.h"
-#include <kglobal.h>
-#include <choqokbehaviorsettings.h>
 
 namespace Choqok
 {

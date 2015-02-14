@@ -23,15 +23,18 @@
 */
 
 #include "twitterapisearchdialog.h"
-#include "twitterapiaccount.h"
-#include <kcombobox.h>
-#include <klineedit.h>
+
 #include <QGridLayout>
 #include <QLabel>
-#include <klocalizedstring.h>
-#include "twitterapisearch.h"
-#include "twitterapimicroblog.h"
+
+#include <KComboBox>
 #include <KDebug>
+#include <KLineEdit>
+#include <KLocalizedString>
+
+#include "twitterapiaccount.h"
+#include "twitterapimicroblog.h"
+#include "twitterapisearch.h"
 
 class TwitterApiSearchDialog::Private
 {

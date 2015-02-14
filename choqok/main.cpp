@@ -22,12 +22,13 @@
 
 */
 
-#include "mainwindow.h"
-#include "choqokbehaviorsettings.h"
+#include <KAboutData>
+#include <KCmdLineArgs>
+#include <KLocale>
+
 #include "choqokapplication.h"
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
-#include <KDE/KLocale>
+#include "choqokbehaviorsettings.h"
+#include "mainwindow.h"
 
 static const char description[] =
     I18N_NOOP( "KDE Micro-Blogging Client." );

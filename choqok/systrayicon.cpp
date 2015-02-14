@@ -22,17 +22,20 @@
 
 */
 #include "systrayicon.h"
-#include <kaction.h>
-#include <kactioncollection.h>
-#include <KDE/KLocale>
+
 #include <QPainter>
-#include <KColorScheme>
 #include <QTimer>
-#include "accountmanager.h"
-#include <kglobalsettings.h>
-#include <mediamanager.h>
 #include <QWheelEvent>
+
+#include <KAction>
+#include <KActionCollection>
+#include <KColorScheme>
 #include <KDebug>
+#include <KGlobalSettings>
+#include <KLocale>
+
+#include "accountmanager.h"
+#include "mediamanager.h"
 
 SysTrayIcon::SysTrayIcon( Choqok::UI::MainWindow* parent )
 : KStatusNotifierItem( parent ), _mainwin(parent), isOffline(false)

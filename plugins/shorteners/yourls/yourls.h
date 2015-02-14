@@ -24,9 +24,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef YOURLS_H
 #define YOURLS_H
 
-#include <shortener.h>
-#include <QString>
 #include <QVariantList>
+
+#include "shortener.h"
+
 /**
 @author Marcello Ceschia \<marcelloceschia@users.sourceforge.net\>
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>

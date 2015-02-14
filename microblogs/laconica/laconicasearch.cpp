@@ -23,13 +23,17 @@
 */
 
 #include "laconicasearch.h"
-#include <KDebug>
-#include <klocalizedstring.h>
-#include <twitterapihelper/twitterapiaccount.h>
-#include <kio/jobclasses.h>
-#include <kio/job.h>
+
 #include <QDomElement>
-#include <choqokbehaviorsettings.h>
+
+#include <KDebug>
+#include <KIO/Job>
+#include <KIO/JobClasses>
+#include <KLocalizedString>
+
+#include "choqokbehaviorsettings.h"
+
+#include "twitterapihelper/twitterapiaccount.h"
 
 const QRegExp LaconicaSearch::m_rId("tag:.+,[\\d-]+:(\\d+)");
 const QRegExp LaconicaSearch::mIdRegExp("(?:user|(?:.*notice))/([0-9]+)");

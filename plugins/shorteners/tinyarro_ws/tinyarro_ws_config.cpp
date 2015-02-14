@@ -22,12 +22,15 @@
 */
 
 #include "tinyarro_ws_config.h"
-#include <KPluginFactory>
-#include <klocale.h>
-#include <qlayout.h>
-#include "tinyarro_ws_settings.h"
+
 #include <QVBoxLayout>
-#include <passwordmanager.h>
+
+#include <KLocale>
+#include <KPluginFactory>
+
+#include "passwordmanager.h"
+
+#include "tinyarro_ws_settings.h"
 
 K_PLUGIN_FACTORY( Tinyarro_ws_ConfigFactory, registerPlugin < Tinyarro_ws_Config > (); )
 K_EXPORT_PLUGIN( Tinyarro_ws_ConfigFactory( "kcm_choqok_tinyarro_ws" ) )

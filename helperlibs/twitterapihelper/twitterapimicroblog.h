@@ -23,10 +23,13 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef TWITTERAPIMICROBLOG_H
 #define TWITTERAPIMICROBLOG_H
 
-#include <QtXml/QDomElement>
+#include <QDomElement>
+
 #include <QtOAuth/qoauth_namespace.h>
-#include <KDE/KUrl>
-#include <microblog.h>
+
+#include <KUrl>
+
+#include "microblog.h"
 #include "twitterapisearch.h"
 
 namespace QJson {

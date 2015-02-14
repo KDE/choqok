@@ -25,11 +25,11 @@
 #ifndef NOTIFYSETTINGS_H
 #define NOTIFYSETTINGS_H
 
-#include <QtCore/QObject>
-#include <QStringList>
-#include <QPoint>
 #include <QColor>
 #include <QFont>
+#include <QObject>
+#include <QPoint>
+#include <QStringList>
 
 #define NOTIFICATION_WIDTH 300
 #define NOTIFICATION_HEIGHT 70

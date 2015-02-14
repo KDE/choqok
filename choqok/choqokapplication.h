@@ -25,7 +25,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef CHOQOKAPPLICATION_H
 #define CHOQOKAPPLICATION_H
 
-#include <qpointer.h>
+#include <QPointer>
 
 #include "application.h"
 

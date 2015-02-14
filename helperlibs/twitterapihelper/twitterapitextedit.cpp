@@ -23,20 +23,25 @@
 */
 
 #include "twitterapitextedit.h"
-#include <QCompleter>
-#include <QKeyEvent>
+
+#include <QAbstractItemModel>
 #include <QAbstractItemView>
 #include <QApplication>
-#include <QModelIndex>
+#include <QCompleter>
+#include <QKeyEvent>
 #include <QLabel>
-#include <QAbstractItemModel>
+#include <QModelIndex>
 #include <QScrollBar>
+
 #include <KIO/Job>
 #include <KDebug>
+
 #include <QtOAuth/qoauth_namespace.h>
+
+#include <qjson/parser.h>
+
 #include "twitterapiaccount.h"
 #include "twitterapimicroblog.h"
-#include <qjson/parser.h>
 #include "urlutils.h"
 
 class TwitterApiTextEdit::Private

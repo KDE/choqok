@@ -24,8 +24,9 @@
 #ifndef BIT_LY_H
 #define BIT_LY_H
 
-#include <shortener.h>
-#include <QVariant>
+#include <QVariantList>
+
+#include "shortener.h"
 
 /**
   @author Andrey Esin \<gmlastik@gmail.com\>

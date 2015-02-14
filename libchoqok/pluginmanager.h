@@ -25,9 +25,10 @@
 #ifndef CHOQOKPLUGINMANAGER_H
 #define CHOQOKPLUGINMANAGER_H
 
-#include <choqok_export.h>
-#include <QtCore/QObject>
-#include <QtCore/QList>
+#include <QList>
+#include <QObject>
+
+#include "choqok_export.h"
 
 class KPluginInfo;
 

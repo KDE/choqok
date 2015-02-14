@@ -23,14 +23,17 @@
 */
 
 #include "textbrowser.h"
-#include <KMenu>
-#include <KAction>
-#include <KLocalizedString>
+
+#include <QAbstractTextDocumentLayout>
 #include <QApplication>
 #include <QClipboard>
-#include "postwidget.h"
-#include <QAbstractTextDocumentLayout>
 #include <QPointer>
+
+#include <KAction>
+#include <KLocalizedString>
+#include <KMenu>
+
+#include "postwidget.h"
 
 using namespace Choqok::UI;
 

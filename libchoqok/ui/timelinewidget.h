@@ -23,11 +23,13 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef TIMELINEWIDGET_H
 #define TIMELINEWIDGET_H
 
-#include <QtGui/QWidget>
-#include <qicon.h>
-#include <QtCore/QMap>
+#include <QIcon>
+#include <QMap>
+#include <QWidget>
+
 #include <KIcon>
-#include <choqoktypes.h>
+
+#include "choqoktypes.h"
 #include "choqok_export.h"
 
 class QLabel;

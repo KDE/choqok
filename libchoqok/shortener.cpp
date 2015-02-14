@@ -22,6 +22,7 @@
 */
 
 #include "shortener.h"
+
 #include <kdemacros.h>
 
 namespace Choqok{

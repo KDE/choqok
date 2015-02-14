@@ -25,8 +25,10 @@
 #ifndef CHOQOKPLUGIN_H
 #define CHOQOKPLUGIN_H
 
-#include <QtCore/QObject>
-#include <kxmlguiclient.h>
+#include <QObject>
+
+#include <KXMLGUIClient>
+
 #include "choqok_export.h"
 
 class KPluginInfo;

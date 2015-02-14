@@ -23,9 +23,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef TIGHTURL_H
 #define TIGHTURL_H
 
-#include <shortener.h>
-#include <QString>
 #include <QVariantList>
+
+#include "shortener.h"
 /**
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */

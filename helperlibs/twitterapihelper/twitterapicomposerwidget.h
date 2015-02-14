@@ -25,7 +25,7 @@
 #ifndef TWITTERAPICOMPOSERWIDGET_H
 #define TWITTERAPICOMPOSERWIDGET_H
 
-#include <composerwidget.h>
+#include "composerwidget.h"
 
 namespace Choqok {
 namespace UI {

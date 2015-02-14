@@ -25,7 +25,8 @@
 #ifndef NOWLISTENINGCONFIG_H
 #define NOWLISTENINGCONFIG_H
 
-#include <kcmodule.h>
+#include <KCModule>
+
 #include "ui_nowlisteningprefs.h"
 
 class NowListeningConfig : public KCModule

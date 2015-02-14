@@ -23,13 +23,16 @@
 
 
 #include "notifysettings.h"
-#include <QMap>
+
 #include <QDesktopWidget>
+#include <QMap>
+
 #include <KConfigGroup>
 #include <KGlobal>
 #include <KSharedConfig>
 #include <KSharedConfigPtr>
-#include <accountmanager.h>
+
+#include "accountmanager.h"
 
 class NotifySettings::Private
 {

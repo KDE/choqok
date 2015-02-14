@@ -25,8 +25,7 @@
 #ifndef IMAGESHACK_H
 #define IMAGESHACK_H
 
-#include "plugin.h"
-#include <uploader.h>
+#include "uploader.h"
 
 /**
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>

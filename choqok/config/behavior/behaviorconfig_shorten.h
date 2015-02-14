@@ -26,9 +26,12 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #define BEHAVIORCONFIG_SHORTEN_H
 
 #include "ui_behaviorconfig_shorten_base.h"
-#include <QtGui/QWidget>
-#include <kplugininfo.h>
-#include <shortener.h>
+
+#include <QWidget>
+
+#include <KPluginInfo>
+
+#include "shortener.h"
 
 class KCModuleProxy;
 class BehaviorConfig_Shorten: public QWidget, public Ui::BehaviorConfig_ShortenBase

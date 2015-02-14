@@ -23,14 +23,17 @@
 */
 
 #include "twitgooconfig.h"
-#include <KPluginFactory>
-#include <klocale.h>
-#include <qlayout.h>
-#include "twitgoosettings.h"
+
 #include <QVBoxLayout>
-#include <passwordmanager.h>
-#include <accountmanager.h>
+
+#include <KPluginFactory>
+#include <KLocale>
 #include <KMessageBox>
+
+#include "accountmanager.h"
+#include "passwordmanager.h"
+
+#include "twitgoosettings.h"
 
 K_PLUGIN_FACTORY ( TwitgooConfigFactory, registerPlugin < TwitgooConfig > (); )
 K_EXPORT_PLUGIN ( TwitgooConfigFactory ( "kcm_choqok_twitgoo" ) )

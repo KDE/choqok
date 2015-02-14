@@ -25,7 +25,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #define TWITTEREDITACCOUNT_H
 
 #include "editaccountwidget.h"
+
 #include <QWidget>
+
 #include "ui_twittereditaccount_base.h"
 
 namespace QOAuth {

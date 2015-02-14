@@ -22,16 +22,20 @@
 */
 
 #include "is_gd.h"
-#include <QString>
-#include <KIO/Job>
-#include <KDebug>
-#include <kio/netaccess.h>
+
+#include <QEventLoop>
+
 #include <KAboutData>
+#include <KDebug>
 #include <KGenericFactory>
-#include <kglobal.h>
-#include <qeventloop.h>
-#include <notifymanager.h>
+#include <KIO/Job>
+#include <KIO/NetAccess>
+#include <KGlobal>
+
 #include <qjson/parser.h>
+
+#include "notifymanager.h"
+
 #include "is_gd_settings.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Is_gd > (); )

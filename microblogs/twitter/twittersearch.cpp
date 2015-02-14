@@ -23,17 +23,24 @@
 */
 
 #include "twittersearch.h"
-#include <KDebug>
-#include <klocalizedstring.h>
-#include <twitterapihelper/twitterapiaccount.h>
-#include <twitterapihelper/twitterapimicroblog.h>
-#include <kio/jobclasses.h>
-#include <kio/job.h>
+
 #include <QDomElement>
-#include "choqokbehaviorsettings.h"
-#include "twitteraccount.h"
+
+#include <KDebug>
+#include <KIO/JobClasses>
+#include <KIO/Job>
+#include <KLocalizedString>
+
 #include <QtOAuth/QtOAuth>
+
 #include <qjson/parser.h>
+
+#include "choqokbehaviorsettings.h"
+
+#include "twitterapihelper/twitterapiaccount.h"
+#include "twitterapihelper/twitterapimicroblog.h"
+
+#include "twitteraccount.h"
 
 const QRegExp TwitterSearch::m_rId("tag:search.twitter.com,[0-9]+:([0-9]+)");
 

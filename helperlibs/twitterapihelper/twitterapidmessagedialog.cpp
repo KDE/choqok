@@ -23,18 +23,21 @@
 */
 
 #include "twitterapidmessagedialog.h"
+
 #include <QLabel>
-#include <kcombobox.h>
 #include <QVBoxLayout>
-#include <choqoktextedit.h>
-#include "twitterapiaccount.h"
-#include <microblog.h>
-#include <klocalizedstring.h>
-#include <KPushButton>
-#include "twitterapimicroblog.h"
+
+#include <KComboBox>
 #include <KDebug>
-#include <notifymanager.h>
+#include <KLocalizedString>
 #include <KMessageBox>
+#include <KPushButton>
+
+#include "choqoktextedit.h"
+#include "microblog.h"
+#include "notifymanager.h"
+#include "twitterapimicroblog.h"
+#include "twitterapiaccount.h"
 
 class TwitterApiDMessageDialog::Private
 {

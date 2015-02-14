@@ -22,9 +22,11 @@
 
 */
 
-#include <plugin.h>
-#include "choqoktypes.h"
+#include "plugin.h"
+
 #include <QTimer>
+
+#include "choqoktypes.h"
 
 class KConfigGroup;
 class IMStatusPrivate;

@@ -23,17 +23,18 @@
 */
 
 #include "notifyconfig.h"
-#include <KPluginFactory>
-#include <klocale.h>
-#include <qlayout.h>
-#include <QVBoxLayout>
-#include <kstandarddirs.h>
-#include <QFile>
 
-#include "notifysettings.h"
-#include <account.h>
-#include <accountmanager.h>
+#include <QFile>
+#include <QVBoxLayout>
+
 #include <KDebug>
+#include <KLocale>
+#include <KPluginFactory>
+#include <KStandardDirs>
+
+#include "account.h"
+#include "accountmanager.h"
+#include "notifysettings.h"
 
 K_PLUGIN_FACTORY( NotifyConfigFactory, registerPlugin < NotifyConfig > (); )
 K_EXPORT_PLUGIN( NotifyConfigFactory( "kcm_choqok_notify" ) )

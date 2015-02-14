@@ -23,9 +23,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef UR1_CA_H
 #define UR1_CA_H
 
-#include <shortener.h>
-#include <QString>
 #include <QVariantList>
+
+#include "shortener.h"
+
 /**
 @author Bhaskar Kandiyal \<bkandiyal@gmail.com\>
 */

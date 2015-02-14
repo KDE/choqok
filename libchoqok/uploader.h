@@ -25,7 +25,8 @@
 #ifndef UPLOADER_H
 #define UPLOADER_H
 
-#include <KDE/KUrl>
+#include <KUrl>
+
 #include "plugin.h"
 
 namespace Choqok {

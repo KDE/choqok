@@ -25,7 +25,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef BEHAVIORCONFIG_H
 #define BEHAVIORCONFIG_H
 
-#include <kcmodule.h>
+#include <KCModule>
 
 class BehaviorConfig : public KCModule
 {

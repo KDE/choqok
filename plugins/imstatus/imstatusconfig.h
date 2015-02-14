@@ -25,7 +25,8 @@
 #ifndef IMSTATUSCONFIG_H
 #define IMSTATUSCONFIG_H
 
-#include <kcmodule.h>
+#include <KCModule>
+
 #include "ui_imstatusprefs.h"
 
 class IMStatusConfig : public KCModule

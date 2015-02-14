@@ -25,8 +25,9 @@
 #ifndef KONQCHOQOK_H
 #define KONQCHOQOK_H
 
-#include <kparts/plugin.h>
 #include <QDBusInterface>
+
+#include <KParts/Plugin>
 
 class KonqPluginChoqok : public KParts::Plugin
 {

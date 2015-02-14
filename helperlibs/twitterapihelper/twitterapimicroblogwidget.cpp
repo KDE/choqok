@@ -23,20 +23,23 @@
 */
 
 #include "twitterapimicroblogwidget.h"
-#include "twitterapimicroblog.h"
+
+#include <QPainter>
+#include <QToolButton>
+
+#include <KAction>
+#include <KDebug>
+#include <KIcon>
+#include <KLocalizedString>
+#include <KMenu>
+#include <KMessageBox>
+#include <KTabWidget>
+
 #include "account.h"
 #include "composerwidget.h"
-#include <KTabWidget>
-#include "twitterapisearchtimelinewidget.h"
-#include <kicon.h>
-#include <KDebug>
-#include <QToolButton>
-#include <klocalizedstring.h>
-#include <KMessageBox>
-#include <KAction>
-#include <KMenu>
 #include "twitterapiaccount.h"
-#include <QPainter>
+#include "twitterapimicroblog.h"
+#include "twitterapisearchtimelinewidget.h"
 
 class TwitterApiMicroBlogWidget::Private
 {

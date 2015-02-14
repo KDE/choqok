@@ -28,11 +28,11 @@
 
 #include "mpris.h"
 
-#include <QDBusMetaType>
 #include <QDBusConnection>
-#include <QDBusReply>
-#include <QDBusInterface>
 #include <QDBusConnectionInterface>
+#include <QDBusInterface>
+#include <QDBusMetaType>
+#include <QDBusReply>
 
 
 Q_DECLARE_METATYPE( MPRIS::MprisStatusStruct )

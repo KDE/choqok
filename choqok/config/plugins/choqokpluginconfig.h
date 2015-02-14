@@ -25,7 +25,7 @@
 #ifndef CHOQOKPLUGINCONFIG_H
 #define CHOQOKPLUGINCONFIG_H
 
-#include <kcmodule.h>
+#include <KCModule>
 
 class KPluginSelector;
 

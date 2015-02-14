@@ -25,10 +25,12 @@
 #ifndef FILTERSETTINGS_H
 #define FILTERSETTINGS_H
 
-#include <QObject>
 #include <QMap>
-#include "filter.h"
+#include <QObject>
+
 #include <KConfigSkeleton>
+
+#include "filter.h"
 
 class FilterSettings : public QObject
 {

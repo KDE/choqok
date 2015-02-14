@@ -25,8 +25,7 @@
 #ifndef MOBYPICTURE_H
 #define MOBYPICTURE_H
 
-#include "plugin.h"
-#include <uploader.h>
+#include "uploader.h"
 
 class KJob;
 class KConfigGroup;

@@ -24,7 +24,7 @@
 #ifndef PUMPIOACCOUNT_H
 #define PUMPIOACCOUNT_H
 
-#include <QtOAuth/interface.h>
+#include <QtOAuth/QtOAuth>
 
 #include "account.h"
 #include "choqoktypes.h"

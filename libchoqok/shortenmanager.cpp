@@ -22,16 +22,19 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 
 #include "shortenmanager.h"
-#include <kglobal.h>
-#include "pluginmanager.h"
-#include <ksharedptr.h>
-#include <ksharedconfig.h>
-#include <kconfiggroup.h>
-#include <KDebug>
-#include "notifymanager.h"
-#include <choqokbehaviorsettings.h>
-#include <qtconcurrentrun.h>
+
 #include <QApplication>
+#include <QtConcurrentRun>
+
+#include <KConfigGroup>
+#include <KDebug>
+#include <KGlobal>
+#include <KSharedConfig>
+#include <KSharedPtr>
+
+#include "choqokbehaviorsettings.h"
+#include "pluginmanager.h"
+#include "notifymanager.h"
 
 namespace Choqok{
 

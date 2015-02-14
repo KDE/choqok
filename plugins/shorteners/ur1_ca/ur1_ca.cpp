@@ -21,14 +21,15 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see http://www.gnu.org/licenses/
 */
 #include "ur1_ca.h"
-#include <QString>
-#include <KIO/Job>
-#include <KDebug>
-#include <kio/netaccess.h>
+
+#include <QEventLoop>
+
 #include <KAboutData>
+#include <KDebug>
 #include <KGenericFactory>
-#include <kglobal.h>
-#include <qeventloop.h>
+#include <KGlobal>
+#include <KIO/Job>
+#include <KIO/NetAccess>
 
 K_PLUGIN_FACTORY ( MyPluginFactory, registerPlugin < Ur1_ca> (); )
 K_EXPORT_PLUGIN ( MyPluginFactory ( "choqok_ur1_ca" ) )

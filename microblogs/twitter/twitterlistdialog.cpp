@@ -23,16 +23,19 @@
 */
 
 #include "twitterlistdialog.h"
-#include <KDebug>
-#include <QListWidget>
-#include <kcombobox.h>
+
 #include <QLabel>
-#include <klineedit.h>
-#include <KLocalizedString>
-#include "twitteraccount.h"
-#include <KMessageBox>
-#include "twittermicroblog.h"
 #include <QLayout>
+#include <QListWidget>
+
+#include <KComboBox>
+#include <KDebug>
+#include <KMessageBox>
+#include <KLineEdit>
+#include <KLocalizedString>
+
+#include "twitteraccount.h"
+#include "twittermicroblog.h"
 
 TwitterListDialog::TwitterListDialog(TwitterApiAccount* theAccount, QWidget* parent)
 : KDialog(parent)

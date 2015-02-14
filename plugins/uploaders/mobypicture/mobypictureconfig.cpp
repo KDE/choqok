@@ -23,14 +23,17 @@
 */
 
 #include "mobypictureconfig.h"
-#include <KPluginFactory>
-#include <klocale.h>
-#include <qlayout.h>
-#include "mobypicturesettings.h"
+
 #include <QVBoxLayout>
-#include <passwordmanager.h>
-#include <accountmanager.h>
+
+#include <KPluginFactory>
+#include <KLocale>
 #include <KMessageBox>
+
+#include "mobypicturesettings.h"
+
+#include "accountmanager.h"
+#include "passwordmanager.h"
 
 K_PLUGIN_FACTORY ( MobypictureConfigFactory, registerPlugin < MobypictureConfig > (); )
 K_EXPORT_PLUGIN ( MobypictureConfigFactory ( "kcm_choqok_mobypicture" ) )

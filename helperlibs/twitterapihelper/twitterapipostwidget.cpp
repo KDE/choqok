@@ -23,20 +23,23 @@
 */
 
 #include "twitterapipostwidget.h"
-#include <microblog.h>
-#include <klocalizedstring.h>
-#include "twitterapiaccount.h"
-#include <kicon.h>
-#include <KPushButton>
-#include "twitterapimicroblog.h"
-#include <KDebug>
-#include <mediamanager.h>
-#include <choqokappearancesettings.h>
-#include "twitterapishowthread.h"
-#include <textbrowser.h>
-#include <KMessageBox>
-#include <KAction>
+
 #include <QMenu>
+
+#include <KAction>
+#include <KDebug>
+#include <KIcon>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KPushButton>
+
+#include "choqokappearancesettings.h"
+#include "mediamanager.h"
+#include "microblog.h"
+#include "textbrowser.h"
+#include "twitterapiaccount.h"
+#include "twitterapimicroblog.h"
+#include "twitterapishowthread.h"
 
 const KIcon TwitterApiPostWidget::unFavIcon(Choqok::MediaManager::convertToGrayScale(KIcon("rating").pixmap(16)) );
 

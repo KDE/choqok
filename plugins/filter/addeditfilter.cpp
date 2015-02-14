@@ -23,10 +23,13 @@
 */
 
 #include "addeditfilter.h"
+
+#include <QTimer>
+
+#include <KDebug>
+
 #include "filter.h"
 #include "filtersettings.h"
-#include <QTimer>
-#include <kdebug.h>
 
 AddEditFilter::AddEditFilter(QWidget* parent, Filter *filter)
     : KDialog(parent), currentFilter(filter)

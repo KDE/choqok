@@ -25,10 +25,11 @@
 #ifndef NOTIFICATION_H
 #define NOTIFICATION_H
 
-#include <postwidget.h>
 #include <KPushButton>
-#include "mytextbrowser.h"
 
+#include "postwidget.h"
+
+#include "mytextbrowser.h"
 
 class Notification : public QWidget
 {

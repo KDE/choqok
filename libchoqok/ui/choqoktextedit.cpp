@@ -21,18 +21,21 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see http://www.gnu.org/licenses/
 */
 #include "choqoktextedit.h"
-#include <KLocale>
-#include <QKeyEvent>
-#include "shortenmanager.h"
-#include <QGridLayout>
-#include <QLabel>
-#include <KDebug>
-#include <choqokbehaviorsettings.h>
+
 #include <QAction>
-#include <sonnet/speller.h>
+#include <QGridLayout>
+#include <QKeyEvent>
+#include <QLabel>
 #include <QMenu>
 #include <QTimer>
+
 #include <KAction>
+#include <KDebug>
+#include <KLocale>
+#include <sonnet/speller.h>
+
+#include "choqokbehaviorsettings.h"
+#include "shortenmanager.h"
 
 namespace Choqok {
 namespace UI{

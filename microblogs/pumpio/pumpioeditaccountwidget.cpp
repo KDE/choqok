@@ -31,8 +31,8 @@
 #include <KDebug>
 #include <KInputDialog>
 #include <KIO/AccessManager>
-#include <KIO/StoredTransferJob>
 #include <KIO/Job>
+#include <KIO/StoredTransferJob>
 #include <KMessageBox>
 #include <KUrl>
 

@@ -25,9 +25,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef CHOQOKUIGLOBAL_H
 #define CHOQOKUIGLOBAL_H
 
-#include <QtCore/QObject>
-#include "choqok_export.h"
+#include <QObject>
+
 #include "choqokmainwindow.h"
+#include "choqok_export.h"
 
 #define choqokMainWindow Choqok::UI::Global::mainWindow()
 

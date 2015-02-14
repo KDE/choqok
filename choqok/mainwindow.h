@@ -24,8 +24,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <kxmlguiwindow.h>
 #include <QPointer>
+
+#include <KXmlGuiWindow>
+
 #include "account.h"
 #include "choqokmainwindow.h"
 

@@ -23,13 +23,15 @@
 */
 
 #include "configurefilters.h"
-#include "filtersettings.h"
-#include <klocale.h>
-#include <qlayout.h>
+
 #include <QVBoxLayout>
+
 #include <KDebug>
-#include "filter.h"
+#include <KLocale>
+
 #include "addeditfilter.h"
+#include "filter.h"
+#include "filtersettings.h"
 
 ConfigureFilters::ConfigureFilters(QWidget* parent):
         KDialog(parent)

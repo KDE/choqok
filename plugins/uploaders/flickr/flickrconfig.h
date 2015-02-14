@@ -25,7 +25,8 @@
 #ifndef FLICKRCONFIG_H
 #define FLICKRCONFIG_H
 
-#include <kcmodule.h>
+#include <KCModule>
+
 #include "ui_flickrprefs.h"
 
 class FlickrConfig : public KCModule

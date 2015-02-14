@@ -23,15 +23,18 @@
 */
 
 #include "filtersettings.h"
+
 #include <QApplication>
-#include "filter.h"
-#include <KGlobal>
-#include <ksharedptr.h>
-#include <KSharedConfig>
 #include <QStringList>
-#include <KLocalizedString>
+
 #include <KConfigGroup>
 #include <KDebug>
+#include <KGlobal>
+#include <KLocalizedString>
+#include <KSharedPtr>
+#include <KSharedConfig>
+
+#include "filter.h"
 
 FilterSettings *FilterSettings::_self = 0L;
 QMap<Filter::FilterField, QString> FilterSettings::_filterFieldName;

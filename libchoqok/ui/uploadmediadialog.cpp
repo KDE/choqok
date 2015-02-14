@@ -24,20 +24,23 @@
 
 #include "uploadmediadialog.h"
 #include "ui_uploadmedia_base.h"
-#include <uploader.h>
-#include <pluginmanager.h>
+
 #include <QPointer>
-#include <KPluginInfo>
-#include <choqokbehaviorsettings.h>
+#include <QProgressBar>
+
 #include <KAboutApplicationDialog>
-#include <KTabWidget>
 #include <KCModuleInfo>
 #include <KCModuleProxy>
-#include <mediamanager.h>
-#include <choqokuiglobal.h>
-#include "quickpost.h"
 #include <KMessageBox>
-#include <QProgressBar>
+#include <KPluginInfo>
+#include <KTabWidget>
+
+#include "choqokbehaviorsettings.h"
+#include "choqokuiglobal.h"
+#include "pluginmanager.h"
+#include "mediamanager.h"
+#include "quickpost.h"
+#include "uploader.h"
 
 using namespace Choqok::UI;
 

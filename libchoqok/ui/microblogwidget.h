@@ -24,12 +24,13 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef MICROBLOGWIDGET_H
 #define MICROBLOGWIDGET_H
 
-#include <QtGui/QWidget>
-#include <QtCore/QMap>
-#include <choqoktypes.h>
-#include "choqok_export.h"
-#include "microblog.h"
+#include <QMap>
+#include <QWidget>
+
 #include "choqoktabbar.h"
+#include "choqoktypes.h"
+#include "microblog.h"
+#include "choqok_export.h"
 
 class QLabel;
 class KTabWidget;

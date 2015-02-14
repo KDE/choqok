@@ -22,8 +22,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 #ifndef CHOQOKTEXTEDIT_H
 #define CHOQOKTEXTEDIT_H
-#include <ktextedit.h>
-#include <choqok_export.h>
+
+#include <KTextEdit>
+
+#include "choqok_export.h"
+
 class QLabel;
 
 namespace Choqok {

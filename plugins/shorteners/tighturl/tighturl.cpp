@@ -22,14 +22,15 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 
 #include "tighturl.h"
-#include <QString>
-#include <KIO/Job>
-#include <KDebug>
-#include <kio/netaccess.h>
+
+#include <QEventLoop>
+
 #include <KAboutData>
+#include <KDebug>
 #include <KGenericFactory>
-#include <kglobal.h>
-#include <qeventloop.h>
+#include <KIO/Job>
+#include <KIO/NetAccess>
+#include <KGlobal>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < TightUrl > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_tighturl" ) )

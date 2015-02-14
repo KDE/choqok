@@ -25,7 +25,8 @@
 #ifndef TWITGOOCONFIG_H
 #define TWITGOOCONFIG_H
 
-#include <kcmodule.h>
+#include <KCModule>
+
 #include "ui_twitgooprefs.h"
 
 class TwitgooConfig : public KCModule

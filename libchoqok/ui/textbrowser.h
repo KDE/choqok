@@ -25,7 +25,8 @@
 #ifndef TEXTBROWSER_H
 #define TEXTBROWSER_H
 
-#include <KDE/KTextBrowser>
+#include <KTextBrowser>
+
 #include "choqok_export.h"
 
 class KAction;

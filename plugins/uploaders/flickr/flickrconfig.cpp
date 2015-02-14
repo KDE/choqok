@@ -23,24 +23,27 @@
 */
 
 #include "flickrconfig.h"
-#include <KPluginFactory>
-#include <klocale.h>
-#include <qlayout.h>
-#include "flickrsettings.h"
-#include <QVBoxLayout>
-#include <passwordmanager.h>
+
 #include <QCryptographicHash>
-#include <KIO/Job>
-#include <kio/netaccess.h>
+#include <QDomDocument>
+#include <QTextDocument>
+#include <QVBoxLayout>
+
+#include <KAboutData>
 #include <KAction>
 #include <KActionCollection>
-#include <KAboutData>
 #include <KGenericFactory>
-#include <choqoktools.h>
+#include <KIO/Job>
+#include <KIO/NetAccess>
+#include <KLocale>
 #include <KMessageBox>
-#include <QDomDocument>
+#include <KPluginFactory>
 #include <KPushButton>
-#include <QTextDocument>
+
+#include "choqoktools.h"
+#include "passwordmanager.h"
+
+#include "flickrsettings.h"
 
 K_PLUGIN_FACTORY( FlickrConfigFactory, registerPlugin < FlickrConfig > (); )
 K_EXPORT_PLUGIN( FlickrConfigFactory( "kcm_choqok_flickr" ) )

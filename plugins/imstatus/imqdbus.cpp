@@ -23,17 +23,18 @@
 */
 
 #include "imqdbus.h"
-#include <QDBusMessage>
-#include <QDBusInterface>
-#include <QDBusReply>
-#include <QDBusConnectionInterface>
 
-#include <kdebug.h>
+#include <QDBusConnectionInterface>
+#include <QDBusInterface>
+#include <QDBusMessage>
+#include <QDBusReply>
+
+#include <KDebug>
 
 #if TELEPATHY_FOUND
+    #include <TelepathyQt/Account>
     #include <TelepathyQt/AccountManager>
     #include <TelepathyQt/AccountSet>
-    #include <TelepathyQt/Account>
     #include <TelepathyQt/PendingOperation>
     #include <TelepathyQt/PendingReady>
 #endif

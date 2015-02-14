@@ -24,8 +24,10 @@
 #ifndef TINYARROWS_WS_H
 #define TINYARROWS_WS_H
 
-#include <shortener.h>
 #include <QVariantList>
+
+#include "shortener.h"
+
 /**
   @author Andrey Esin \<gmlastik@gmail.com\>
 */

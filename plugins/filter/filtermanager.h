@@ -24,10 +24,12 @@
 #ifndef FILTERMANAGER_H
 #define FILTERMANAGER_H
 
-#include <plugin.h>
 #include <QPixmap>
-#include <QQueue>
 #include <QPointer>
+#include <QQueue>
+
+#include "plugin.h"
+
 #include "filter.h"
 
 class KAction;

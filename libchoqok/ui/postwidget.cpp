@@ -21,26 +21,28 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see http://www.gnu.org/licenses/
 */
 #include "postwidget.h"
+
+#include <QBoxLayout>
+#include <QCloseEvent>
+#include <QGridLayout>
+
+#include <KDebug>
+#include <KLocale>
+#include <KMenu>
+#include <KMessageBox>
+#include <KProcess>
+#include <KPushButton>
+#include <KToolInvocation>
+
+#include "choqokappearancesettings.h"
+#include "choqokbehaviorsettings.h"
 #include "choqoktools.h"
+#include "choqokuiglobal.h"
+#include "mediamanager.h"
+#include "quickpost.h"
+#include "timelinewidget.h"
 #include "textbrowser.h"
 #include "urlutils.h"
-#include <qboxlayout.h>
-#include <KLocale>
-#include <KPushButton>
-#include <QGridLayout>
-#include <KDebug>
-#include "mediamanager.h"
-#include "choqokbehaviorsettings.h"
-#include "choqokuiglobal.h"
-#include "quickpost.h"
-#include <KProcess>
-#include <KToolInvocation>
-#include <KMessageBox>
-#include "choqokappearancesettings.h"
-#include <QMenu>
-#include <kmenu.h>
-#include <QCloseEvent>
-#include "timelinewidget.h"
 
 static const int _15SECS = 15000;
 static const int _MINUTE = 60000;

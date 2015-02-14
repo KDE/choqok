@@ -23,22 +23,25 @@
 */
 
 #include "notify.h"
-#include <KGenericFactory>
-#include <choqokuiglobal.h>
-#include "postwidget.h"
-#include <kio/jobclasses.h>
-#include <KIO/Job>
-#include <shortenmanager.h>
-#include "notifysettings.h"
-#include <KAction>
-#include <QMenu>
-#include <kstandarddirs.h>
-#include <QFile>
-#include <mediamanager.h>
-#include "account.h"
-#include <application.h>
-#include "notification.h"
+
 #include <QDesktopWidget>
+#include <QFile>
+#include <QMenu>
+
+#include <KAction>
+#include <KGenericFactory>
+#include <KIO/Job>
+#include <KIO/JobClasses>
+#include <KStandardDirs>
+
+#include "account.h"
+#include "application.h"
+#include "choqokuiglobal.h"
+#include "mediamanager.h"
+#include "notification.h"
+#include "notifysettings.h"
+#include "postwidget.h"
+#include "shortenmanager.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Notify > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_betternotify" ) )

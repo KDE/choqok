@@ -25,9 +25,10 @@
 #ifndef CHOQOKTYPES_H
 #define CHOQOKTYPES_H
 
-#include <QtCore/QDateTime>
-#include "choqok_export.h"
+#include <QDateTime>
+
 #include "choqokid.h"
+#include "choqok_export.h"
 
 namespace Choqok
 {

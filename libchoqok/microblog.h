@@ -24,11 +24,12 @@
 #ifndef MICROBLOG_H
 #define MICROBLOG_H
 
-#include <QtCore/QString>
-#include "plugin.h"
+#include <QString>
+
 #include "choqok_export.h"
 #include "choqoktypes.h"
 #include "choqokuiglobal.h"
+#include "plugin.h"
 
 class ChoqokEditAccountWidget;
 class QMenu;

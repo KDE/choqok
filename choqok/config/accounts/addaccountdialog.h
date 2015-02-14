@@ -25,7 +25,7 @@
 #ifndef ADDACCOUNTDIALOG_H
 #define ADDACCOUNTDIALOG_H
 
-#include <kdialog.h>
+#include <KDialog>
 
 class ChoqokEditAccountWidget;
 namespace Choqok {

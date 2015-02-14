@@ -25,8 +25,7 @@
 #ifndef FLICKR_H
 #define FLICKR_H
 
-#include "plugin.h"
-#include <uploader.h>
+#include "uploader.h"
 
 /**
 @author Andrey Esin \<gmlastik@gmail.com\>

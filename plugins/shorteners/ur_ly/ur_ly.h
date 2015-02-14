@@ -24,9 +24,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef UR_LY_H
 #define UR_LY_H
 
-#include <shortener.h>
-#include <QString>
 #include <QVariantList>
+
+#include "shortener.h"
+
 /**
 @author Scott Banwart \<sbanwart@rogue-technology.com\>
 */

@@ -23,14 +23,17 @@
 */
 
 #include "twitpicconfig.h"
-#include <KPluginFactory>
-#include <klocale.h>
-#include <qlayout.h>
-#include "twitpicsettings.h"
+
 #include <QVBoxLayout>
-#include <passwordmanager.h>
-#include <accountmanager.h>
+
+#include <KPluginFactory>
+#include <KLocale>
 #include <KMessageBox>
+
+#include "accountmanager.h"
+#include "passwordmanager.h"
+
+#include "twitpicsettings.h"
 
 K_PLUGIN_FACTORY( TwitpicConfigFactory, registerPlugin < TwitpicConfig > (); )
 K_EXPORT_PLUGIN( TwitpicConfigFactory( "kcm_choqok_twitpic" ) )

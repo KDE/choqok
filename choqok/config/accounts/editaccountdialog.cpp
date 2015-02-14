@@ -23,12 +23,14 @@
 */
 
 #include "editaccountdialog.h"
-#include <klocalizedstring.h>
-#include <account.h>
-#include <accountmanager.h>
-#include <KMessageBox>
-#include <editaccountwidget.h>
+
 #include <KDebug>
+#include <KLocalizedString>
+#include <KMessageBox>
+
+#include "account.h"
+#include "accountmanager.h"
+#include "editaccountwidget.h"
 
 EditAccountDialog::EditAccountDialog(ChoqokEditAccountWidget* editWidget, QWidget* parent, Qt::WFlags flags)
         : KDialog(parent, flags), widget(editWidget)

@@ -21,22 +21,25 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see http://www.gnu.org/licenses/
 */
 #include "timelinewidget.h"
-#include "account.h"
-#include "microblog.h"
-#include <QVBoxLayout>
+
+#include <QLabel>
+#include <QLayoutItem>
+#include <QPointer>
 #include <QScrollArea>
 #include <QScrollBar>
+#include <QTextDocument>
 #include <QTimer>
-#include <qlayoutitem.h>
-#include "postwidget.h"
+#include <QVBoxLayout>
+
 #include <KDebug>
-#include <QLabel>
 #include <KPushButton>
-#include <QPointer>
-#include "notifymanager.h"
+
+#include "account.h"
 #include "choqokappearancesettings.h"
 #include "choqokbehaviorsettings.h"
-#include <QTextDocument>
+#include "microblog.h"
+#include "postwidget.h"
+#include "notifymanager.h"
 
 namespace Choqok {
 namespace UI {

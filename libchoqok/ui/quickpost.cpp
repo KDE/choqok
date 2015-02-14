@@ -23,20 +23,23 @@
 */
 
 #include "quickpost.h"
-#include "choqoktextedit.h"
+
+#include <QCheckBox>
+#include <QHBoxLayout>
+
+#include <KComboBox>
+#include <KDebug>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KPushButton>
+
 #include "accountmanager.h"
 #include "choqokbehaviorsettings.h"
-#include <KDebug>
-#include <microblog.h>
-#include <QCheckBox>
-#include <klocalizedstring.h>
-#include <kcombobox.h>
-#include <QHBoxLayout>
-#include <notifymanager.h>
-#include <shortenmanager.h>
-#include <KPushButton>
+#include "choqoktextedit.h"
+#include "microblog.h"
+#include "notifymanager.h"
+#include "shortenmanager.h"
 #include "uploadmediadialog.h"
-#include <KMessageBox>
 
 using namespace Choqok::UI;
 using namespace Choqok;

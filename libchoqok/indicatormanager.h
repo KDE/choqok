@@ -25,12 +25,14 @@
 #ifndef INDICATORMANAGER_H
 #define INDICATORMANAGER_H
 
-#include <KDE/KNotification>
-#include <klocalizedstring.h>
-#include "choqok_export.h"
-#include <account.h>
+#include <KNotification>
+#include <KLocalizedString>
+
 #include <qindicateserver.h>
 #include <qindicateindicator.h>
+
+#include "account.h"
+#include "choqok_export.h"
 
 namespace Choqok
 {

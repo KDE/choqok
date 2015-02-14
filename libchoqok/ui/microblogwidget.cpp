@@ -22,30 +22,31 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 
 #include "microblogwidget.h"
-#include "account.h"
-#include <KDebug>
-#include "timelinewidget.h"
-#include <ktabwidget.h>
-#include "composerwidget.h"
-#include <QVBoxLayout>
-#include <notifymanager.h>
-#include <KMessageBox>
-#include <choqokuiglobal.h>
-#include <kstatusbar.h>
-#include <ktoolbar.h>
-#include <KPushButton>
-#include <QLabel>
-#include <KMenu>
-#include <KDateTime>
-#include <QKeyEvent>
-#include <QPointer>
-#include <QLayout>
-#include <QPainter>
-#include <QLinearGradient>
-#include <QPainterPath>
 
+#include <QKeyEvent>
+#include <QLabel>
+#include <QLinearGradient>
+#include <QPainter>
+#include <QPainterPath>
+#include <QPointer>
+#include <QVBoxLayout>
+
+#include <KDateTime>
+#include <KDebug>
+#include <KMenu>
+#include <KMessageBox>
+#include <KPushButton>
+#include <KStatusBar>
+#include <KTabWidget>
+#include <KToolBar>
+
+#include "account.h"
+#include "choqokappearancesettings.h"
 #include "choqoktextedit.h"
-#include <choqokappearancesettings.h>
+#include "choqokuiglobal.h"
+#include "composerwidget.h"
+#include "notifymanager.h"
+#include "timelinewidget.h"
 
 namespace Choqok {
 namespace UI {

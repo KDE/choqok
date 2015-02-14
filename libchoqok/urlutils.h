@@ -26,6 +26,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QObject>
 #include <QStringList>
+
 #include "choqok_export.h"
 
 class CHOQOK_EXPORT UrlUtils : public QObject

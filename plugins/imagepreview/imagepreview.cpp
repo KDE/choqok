@@ -23,11 +23,13 @@
 */
 
 #include "imagepreview.h"
+
 #include <KGenericFactory>
-#include <choqokuiglobal.h>
+
+#include "choqokuiglobal.h"
+#include "mediamanager.h"
 #include "postwidget.h"
-#include <mediamanager.h>
-#include <textbrowser.h>
+#include "textbrowser.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < ImagePreview > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_imagepreview" ) )

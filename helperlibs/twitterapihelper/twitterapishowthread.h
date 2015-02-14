@@ -25,8 +25,9 @@
 #ifndef TWITTERAPISHOWTHREAD_H
 #define TWITTERAPISHOWTHREAD_H
 
-#include <QtGui/QWidget>
-#include <choqoktypes.h>
+#include <QWidget>
+
+#include "choqoktypes.h"
 
 namespace Choqok {
 class Account;

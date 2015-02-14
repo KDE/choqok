@@ -24,9 +24,9 @@
 
 #include "pumpiocomposerwidget.h"
 
+#include <QGridLayout>
 #include <QLabel>
 #include <QSpacerItem>
-#include <QGridLayout>
 #include <QVBoxLayout>
 
 #include <KDebug>

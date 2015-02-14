@@ -23,37 +23,42 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "twittermicroblog.h"
 
-#include <KLocale>
-#include <KDebug>
-#include <kio/jobclasses.h>
-#include <kio/job.h>
 #include <QDomElement>
+#include <QMenu>
+
 #include <KAboutData>
+#include <KAction>
+#include <KDebug>
 #include <KGenericFactory>
+#include <KIO/Job>
+#include <KIO/JobClasses>
+#include <KIO/NetAccess>
+#include <KLocale>
+#include <KMessageBox>
+#include <KMimeType>
+
+#include <qjson/parser.h>
+
 #include "account.h"
 #include "accountmanager.h"
-#include "timelinewidget.h"
-#include "editaccountwidget.h"
-#include "twittereditaccount.h"
-#include "postwidget.h"
-#include "twitteraccount.h"
-#include "composerwidget.h"
-#include "twitterpostwidget.h"
-#include "twitterapihelper/twitterapimicroblogwidget.h"
-#include "twittersearch.h"
-#include "twitterapihelper/twitterapicomposerwidget.h"
 #include "choqokappearancesettings.h"
-#include <QMenu>
-#include <KAction>
-#include "twitterlistdialog.h"
-#include <KMessageBox>
-#include <qjson/parser.h>
 #include "choqoktypes.h"
-#include "twittertimelinewidget.h"
-#include "twittercomposerwidget.h"
-#include <kio/netaccess.h>
-#include <kmimetype.h>
+#include "composerwidget.h"
+#include "editaccountwidget.h"
 #include "mediamanager.h"
+#include "postwidget.h"
+#include "timelinewidget.h"
+
+#include "twitterapihelper/twitterapicomposerwidget.h"
+#include "twitterapihelper/twitterapimicroblogwidget.h"
+
+#include "twitteraccount.h"
+#include "twittercomposerwidget.h"
+#include "twittereditaccount.h"
+#include "twitterlistdialog.h"
+#include "twitterpostwidget.h"
+#include "twittersearch.h"
+#include "twittertimelinewidget.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < TwitterMicroBlog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_twitter" ) )

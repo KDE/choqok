@@ -24,7 +24,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef CHOQOK_APPLICATION_H
 #define CHOQOK_APPLICATION_H
 
-#include <kuniqueapplication.h>
+#include <KUniqueApplication>
+
 #include "choqok_export.h"
 
 namespace Choqok {

@@ -25,7 +25,8 @@
 #ifndef TWITPICCONFIG_H
 #define TWITPICCONFIG_H
 
-#include <kcmodule.h>
+#include <KCModule>
+
 #include "ui_twitpicprefs.h"
 
 class TwitpicConfig : public KCModule

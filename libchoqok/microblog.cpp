@@ -22,17 +22,20 @@
 */
 
 #include "microblog.h"
-#include <klocalizedstring.h>
-#include <KDebug>
-#include <QTimer>
+
 #include <QMenu>
+#include <QTimer>
+
+#include <KDebug>
+#include <KLocalizedString>
+
 #include "account.h"
-#include "timelinewidget.h"
-#include "composerwidget.h"
-#include "postwidget.h"
-#include "microblogwidget.h"
 #include "accountmanager.h"
-#include <choqokbehaviorsettings.h>
+#include "choqokbehaviorsettings.h"
+#include "composerwidget.h"
+#include "microblogwidget.h"
+#include "postwidget.h"
+#include "timelinewidget.h"
 
 namespace Choqok
 {

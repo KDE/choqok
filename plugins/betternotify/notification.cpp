@@ -23,15 +23,18 @@
 
 
 #include "notification.h"
-#include <mediamanager.h>
-#include <choqoktools.h>
-#include <qevent.h>
+
+#include <QMouseEvent>
 #include <QVBoxLayout>
-#include <KLocalizedString>
-#include <KIcon>
+
 #include <KDebug>
+#include <KIcon>
+#include <KLocalizedString>
+
+#include "choqokappearancesettings.h"
+#include "choqoktools.h"
+#include "mediamanager.h"
 #include "notifysettings.h"
-#include <choqokappearancesettings.h>
 
 const QRegExp Notification::dirRegExp("(RT|RD)|(@([^\\s\\W]+))|(#([^\\s\\W]+))|(!([^\\s\\W]+))");
 

@@ -25,11 +25,13 @@
 #ifndef NOTIFYCONFIG_H
 #define NOTIFYCONFIG_H
 
-#include <kcmodule.h>
-#include "ui_notifyprefs.h"
-#include "dummynotification.h"
 #include <QMap>
 #include <QPointer>
+
+#include <KCModule>
+
+#include "ui_notifyprefs.h"
+#include "dummynotification.h"
 
 class NotifySettings;
 class NotifyConfig : public KCModule

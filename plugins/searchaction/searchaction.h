@@ -25,7 +25,7 @@
 #ifndef SEARCHACTION_H
 #define SEARCHACTION_H
 
-#include <plugin.h>
+#include "plugin.h"
 
 
 class SearchAction : public Choqok::Plugin

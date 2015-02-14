@@ -22,32 +22,35 @@
 */
 
 #include "twitterapiwhoiswidget.h"
-#include "mediamanager.h"
-#include <KTextBrowser>
-#include <KUrl>
-#include <kicon.h>
+
+#include <QDesktopWidget>
+#include <QDomDocument>
+#include <QPointer>
+#include <QVBoxLayout>
+
+#include <KAnimatedButton>
+#include <KApplication>
+#include <KDebug>
+#include <KIcon>
+#include <KIO/Job>
+#include <KLocalizedString>
 #include <KNotification>
 #include <KProcess>
+#include <KStatusBar>
+#include <KTextBrowser>
 #include <KToolInvocation>
-#include <KApplication>
-#include <QtGui/QDesktopWidget>
-#include <QtGui/QVBoxLayout>
-#include "twitterapiaccount.h"
-#include <KIO/Job>
-#include <KDebug>
-#include <QtXml/QDomDocument>
-#include <klocalizedstring.h>
-#include <kanimatedbutton.h>
-// <a href='choqok://follow'>%6</a>
-#include <choqoktypes.h>
-#include <microblog.h>
-#include "twitterapimicroblog.h"
-#include <choqokappearancesettings.h>
-#include <notifymanager.h>
-#include <choqoktools.h>
-#include <kstatusbar.h>
+#include <KUrl>
+
 #include <qjson/parser.h>
-#include <QtCore/QPointer>
+
+#include "choqokappearancesettings.h"
+#include "choqoktools.h"
+#include "choqoktypes.h"
+#include "mediamanager.h"
+#include "microblog.h"
+#include "notifymanager.h"
+#include "twitterapiaccount.h"
+#include "twitterapimicroblog.h"
 
 class TwitterApiWhoisWidget::Private
 {

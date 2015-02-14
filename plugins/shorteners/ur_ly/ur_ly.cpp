@@ -22,13 +22,14 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see http://www.gnu.org/licenses/
 */
 #include "ur_ly.h"
-#include <QString>
-#include <KIO/Job>
-#include <KDebug>
-#include <kio/netaccess.h>
+
 #include <KAboutData>
+#include <KDebug>
 #include <KGenericFactory>
-#include <kglobal.h>
+#include <KGlobal>
+#include <KIO/Job>
+#include <KIO/NetAccess>
+
 #include <qjson/parser.h>
 
 K_PLUGIN_FACTORY ( MyPluginFactory, registerPlugin < Ur_ly> (); )

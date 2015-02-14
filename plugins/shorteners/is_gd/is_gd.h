@@ -24,9 +24,9 @@
 #ifndef IS_GD_H
 #define IS_GD_H
 
-#include <shortener.h>
-#include <QString>
-#include <QVariant>
+#include <QVariantList>
+
+#include "shortener.h"
 
 /**
   @author Felix Rohrbach \<fxrh@gmx.de\>

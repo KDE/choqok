@@ -23,11 +23,13 @@
 */
 
 #include "choqoktools.h"
-#include "choqokbehaviorsettings.h"
-#include <KToolInvocation>
+
 #include <KProcess>
+#include <KToolInvocation>
+
 #include <QtOAuth/qoauth_namespace.h>
 
+#include "choqokbehaviorsettings.h"
 
 void Choqok::openUrl(const QUrl& url)
 {

@@ -25,7 +25,8 @@
 #ifndef MOBYPICTURECONFIG_H
 #define MOBYPICTURECONFIG_H
 
-#include <kcmodule.h>
+#include <KCModule>
+
 #include "ui_mobypictureprefs.h"
 
 class MobypictureConfig : public KCModule

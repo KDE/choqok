@@ -26,6 +26,7 @@
 #define CONFIGUREFILTERS_H
 
 #include <KDialog>
+
 #include "ui_filterprefs.h"
 
 class Filter;

@@ -24,19 +24,16 @@
 
 #include "choqokpluginconfig.h"
 
-// Qt includes
-#include <QtCore/QByteArray>
-#include <QtGui/QVBoxLayout>
+#include <QByteArray>
+#include <QVBoxLayout>
 
-// KDE includes
-#include <kdebug.h>
-#include <klocale.h>
-#include <kpluginselector.h>
-#include <kpluginfactory.h>
-#include <ksettings/dispatcher.h>
+#include <KDebug>
+#include <KLocale>
 #include <KPluginInfo>
+#include <KPluginFactory>
+#include <KPluginSelector>
+#include <KSettings/Dispatcher>
 
-// Kopete includes
 #include "pluginmanager.h"
 
 K_PLUGIN_FACTORY( ChoqokPluginConfigFactory,

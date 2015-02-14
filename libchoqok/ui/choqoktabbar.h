@@ -25,9 +25,9 @@
 #ifndef CHOQOKTABBAR_H
 #define CHOQOKTABBAR_H
 
-#include <QWidget>
-#include <QString>
 #include <QIcon>
+#include <QString>
+#include <QWidget>
 
 #include "choqok_export.h"
 

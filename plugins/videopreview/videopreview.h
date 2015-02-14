@@ -27,14 +27,14 @@
 #ifndef VIDEOPREVIEW_H
 #define VIDEOPREVIEW_H
 
-#include "plugin.h"
-#include <qqueue.h>
-#include <KUrl>
-#include <kio/job.h>
-//#include <kio/jobclasses.h>
-#include <kio/netaccess.h>
 #include <QPointer>
-#include <qdom.h>
+#include <QQueue>
+
+#include <KUrl>
+#include <KIO/Job>
+#include <KIO/NetAccess>
+
+#include "plugin.h"
 
 /*
 namespace KIO {

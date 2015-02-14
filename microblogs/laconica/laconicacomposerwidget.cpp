@@ -23,21 +23,25 @@
 */
 
 #include "laconicacomposerwidget.h"
-#include <KPushButton>
-#include <QLabel>
-#include <KFileDialog>
-#include <klocalizedstring.h>
-#include <QPointer>
-#include <qlayout.h>
+
 #include <QHBoxLayout>
-#include <shortenmanager.h>
-#include <notifymanager.h>
-#include <account.h>
-#include <microblog.h>
-#include "laconicamicroblog.h"
+#include <QLabel>
+#include <QLayout>
+#include <QPointer>
+
 #include <KDebug>
-#include <choqoktextedit.h>
-#include <twitterapihelper/twitterapitextedit.h>
+#include <KFileDialog>
+#include <KLocalizedString>
+#include <KPushButton>
+
+#include "account.h"
+#include "choqoktextedit.h"
+#include "microblog.h"
+#include "notifymanager.h"
+#include "shortenmanager.h"
+
+#include "twitterapihelper/twitterapitextedit.h"
+#include "laconicamicroblog.h"
 
 class LaconicaComposerWidget::Private{
 public:

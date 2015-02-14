@@ -23,11 +23,12 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 #include "choqokuiglobal.h"
 
-#include <qpointer.h>
-#include "quickpost.h"
 #include <QApplication>
-#include "postwidget.h"
+#include <QPointer>
+
 #include "notifymanager.h"
+#include "postwidget.h"
+#include "quickpost.h"
 
 namespace Choqok
 {

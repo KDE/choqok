@@ -23,17 +23,21 @@
 */
 
 #include "flickr.h"
+
+#include <QCryptographicHash>
+#include <QDomDocument>
+
+#include <KAboutData>
 #include <KAction>
 #include <KActionCollection>
-#include <KAboutData>
 #include <KGenericFactory>
 #include <KIO/Job>
-#include <kio/netaccess.h>
-#include <QDomDocument>
-#include <mediamanager.h>
-#include <QCryptographicHash>
+#include <KIO/NetAccess>
+
+#include "mediamanager.h"
+#include "passwordmanager.h"
+
 #include "flickrsettings.h"
-#include <passwordmanager.h>
 
 const QString apiKey = "13f602e6e705834d8cdd5dd2ccb19651";
 const QString apiSecret = "98c89dbe39ae3bea";

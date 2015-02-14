@@ -25,8 +25,7 @@
 #ifndef POSTEROUS_H
 #define POSTEROUS_H
 
-#include "plugin.h"
-#include <uploader.h>
+#include "uploader.h"
 
 class KJob;
 class KConfigGroup;

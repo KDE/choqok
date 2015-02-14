@@ -24,10 +24,12 @@
 #ifndef MEDIAMANAGER_H
 #define MEDIAMANAGER_H
 
-#include <QtCore/QObject>
-#include <QtGui/QPixmap>
-#include <QtCore/QMap>
-#include <KDE/KUrl>
+#include <QObject>
+#include <QMap>
+#include <QPixmap>
+
+#include <KUrl>
+
 #include "choqok_export.h"
 
 namespace KIO

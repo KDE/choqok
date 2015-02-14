@@ -23,23 +23,26 @@
 */
 
 #include "quickfilter.h"
-#include <KGenericFactory>
-#include <choqokuiglobal.h>
-#include "postwidget.h"
-#include "choqoktypes.h"
-#include <qmutex.h>
+
 #include <QDomDocument>
-#include <microblogwidget.h>
-#include <KLineEdit>
+#include <QLabel>
+#include <QMutex>
+#include <QPushButton>
 #include <QToolBar>
-#include <timelinewidget.h>
-#include <KMenuBar>
+
 #include <KAction>
 #include <KActionCollection>
-#include <QLabel>
 #include <KCompletionBox>
-#include <QPushButton>
-#include <quickpost.h>
+#include <KGenericFactory>
+#include <KLineEdit>
+#include <KMenuBar>
+
+#include "choqoktypes.h"
+#include "choqokuiglobal.h"
+#include "microblogwidget.h"
+#include "postwidget.h"
+#include "quickpost.h"
+#include "timelinewidget.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < QuickFilter > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_quickfilter" ) )

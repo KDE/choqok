@@ -24,10 +24,11 @@
 #ifndef TWITTERAPIWHOISWIDGET_H
 #define TWITTERAPIWHOISWIDGET_H
 
-#include <QtCore/QUrl>
-#include <QtGui/QFrame>
+#include <QUrl>
+#include <QFrame>
+
+#include "choqoktypes.h"
 #include "choqok_export.h"
-#include <choqoktypes.h>
 
 namespace Choqok {
 class Account;

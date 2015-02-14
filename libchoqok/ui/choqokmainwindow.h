@@ -25,7 +25,8 @@
 #ifndef CHOQOK_UI_MAINWINDOW_H
 #define CHOQOK_UI_MAINWINDOW_H
 
-#include <kxmlguiwindow.h>
+#include <KXmlGuiWindow>
+
 #include "choqok_export.h"
 
 class KTabWidget;

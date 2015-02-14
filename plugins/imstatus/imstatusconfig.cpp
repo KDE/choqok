@@ -23,13 +23,15 @@
 */
 
 #include "imstatusconfig.h"
-#include <KPluginFactory>
-#include <klocale.h>
-#include <qlayout.h>
-#include "imstatussettings.h"
+
 #include <QVBoxLayout>
+
 #include <KDebug>
+#include <KLocale>
+#include <KPluginFactory>
+
 #include "imqdbus.h"
+#include "imstatussettings.h"
 
 K_PLUGIN_FACTORY ( IMStatusConfigFactory, registerPlugin < IMStatusConfig > (); )
 K_EXPORT_PLUGIN ( IMStatusConfigFactory ( "kcm_choqok_imstatus" ) )

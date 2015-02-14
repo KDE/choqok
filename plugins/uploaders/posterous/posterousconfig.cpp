@@ -23,14 +23,17 @@
 */
 
 #include "posterousconfig.h"
-#include <KPluginFactory>
-#include <klocale.h>
-#include <qlayout.h>
-#include "posteroussettings.h"
+
 #include <QVBoxLayout>
-#include <passwordmanager.h>
-#include <accountmanager.h>
+
+#include <KPluginFactory>
+#include <KLocale>
 #include <KMessageBox>
+
+#include "accountmanager.h"
+#include "passwordmanager.h"
+
+#include "posteroussettings.h"
 
 K_PLUGIN_FACTORY ( PosterousConfigFactory, registerPlugin < PosterousConfig > (); )
 K_EXPORT_PLUGIN ( PosterousConfigFactory ( "kcm_choqok_posterous" ) )

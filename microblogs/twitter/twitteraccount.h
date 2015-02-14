@@ -25,8 +25,9 @@
 #ifndef TWITTERACCOUNT_H
 #define TWITTERACCOUNT_H
 
-#include <account.h>
-#include <twitterapihelper/twitterapiaccount.h>
+#include "account.h"
+
+#include "twitterapihelper/twitterapiaccount.h"
 
 class TwitterMicroBlog;
 /**

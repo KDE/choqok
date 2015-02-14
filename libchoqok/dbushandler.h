@@ -26,11 +26,12 @@
 #ifndef DBUSHANDLER_H
 #define DBUSHANDLER_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtGui/QTextDocument>
-#include <kio/job.h>
-#include <choqok_export.h>
+#include <QObject>
+#include <QString>
+#include <QTextDocument>
+#include <KIO/Job>
+
+#include "choqok_export.h"
 
 
 namespace Choqok

@@ -24,10 +24,11 @@
 #ifndef QUICKPOST_H
 #define QUICKPOST_H
 
-#include "choqoktypes.h"
-#include <kdialog.h>
+#include <KDialog>
+
 #include "account.h"
-#include <microblog.h>
+#include "choqoktypes.h"
+#include "microblog.h"
 
 class KComboBox;
 class QCheckBox;

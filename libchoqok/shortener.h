@@ -24,6 +24,8 @@
 #ifndef SHORTENER_H
 #define SHORTENER_H
 
+#include <QString>
+
 #include "plugin.h"
 
 class QWidget;

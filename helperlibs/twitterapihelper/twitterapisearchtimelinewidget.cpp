@@ -23,20 +23,23 @@
 */
 
 #include "twitterapisearchtimelinewidget.h"
+
+#include <QCheckBox>
 #include <QHBoxLayout>
+#include <QLabel>
+#include <QLayoutItem>
+
+#include <KDebug>
+#include <KLocalizedString>
 #include <KPushButton>
 #include <KRestrictedLine>
-#include <QCheckBox>
-#include <klocalizedstring.h>
-#include <KDebug>
-#include <qlayoutitem.h>
-#include "twitterapimicroblog.h"
+#include <KSeparator>
+
 #include "account.h"
-#include "postwidget.h"
+#include "choqokbehaviorsettings.h"
 #include "choqoktypes.h"
-#include <QLabel>
-#include <choqokbehaviorsettings.h>
-#include <kseparator.h>
+#include "postwidget.h"
+#include "twitterapimicroblog.h"
 
 class TwitterApiSearchTimelineWidget::Private
 {

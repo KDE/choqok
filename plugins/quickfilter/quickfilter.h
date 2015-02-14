@@ -24,9 +24,11 @@
 
 #ifndef QUICKFILTER_H
 #define QUICKFILTER_H
-#include <QPointer>
-#include <plugin.h>
+
 #include <QList>
+#include <QPointer>
+
+#include "plugin.h"
 
 class KAction;
 namespace Choqok {

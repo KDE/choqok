@@ -22,15 +22,16 @@
 
 */
 
-#include "./longurl.h"
-#include "postwidget.h"
-#include <shortenmanager.h>
+#include "longurl.h"
 
-#include <KIO/JobUiDelegate>
-#include <KIO/Job>
 #include <KGenericFactory>
+#include <KIO/Job>
+#include <KIO/JobUiDelegate>
 
 #include <qjson/parser.h>
+
+#include "postwidget.h"
+#include "shortenmanager.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < LongUrl > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_longurl" ) )

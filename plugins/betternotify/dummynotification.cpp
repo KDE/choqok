@@ -22,14 +22,17 @@
 */
 
 #include "dummynotification.h"
-#include "notifysettings.h"
-#include <choqokappearancesettings.h>
-#include <postwidget.h>
-#include <choqoktools.h>
-#include <qevent.h>
+
+#include <QMouseEvent>
+
+#include <KDebug>
 #include <KIcon>
 #include <KLocalizedString>
-#include <KDebug>
+
+#include "choqokappearancesettings.h"
+#include "choqoktools.h"
+#include "notifysettings.h"
+#include "postwidget.h"
 
 DummyNotification::DummyNotification(const QFont& font, const QColor& color, const QColor& background, QWidget* parent)
 : KTextBrowser(parent), isMoving(false)

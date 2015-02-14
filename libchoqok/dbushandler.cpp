@@ -24,18 +24,20 @@
 */
 
 #include "dbushandler.h"
-#include "ChoqokAdaptor.h"
 
+#include <QAction>
 #include <QDBusConnection>
 #include <QPointer>
-#include <KDebug>
 #include <QTextDocument>
+
+#include <KActionCollection>
+#include <KDebug>
+
+#include "ChoqokAdaptor.h"
+#include "choqokbehaviorsettings.h"
 #include "quickpost.h"
 #include "shortenmanager.h"
-#include "choqokbehaviorsettings.h"
 #include "uploadmediadialog.h"
-#include <KActionCollection>
-#include <QAction>
 
 namespace Choqok
 {

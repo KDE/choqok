@@ -25,7 +25,7 @@
 #ifndef DUMMYNOTIFICATION_H
 #define DUMMYNOTIFICATION_H
 
-#include <ktextbrowser.h>
+#include <KTextBrowser>
 
 class DummyNotification : public KTextBrowser
 {

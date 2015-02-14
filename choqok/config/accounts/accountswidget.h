@@ -26,7 +26,7 @@
 
 #include "ui_accountswidget_base.h"
 
-#include <kcmodule.h>
+#include <KCModule>
 
 class KMenu;
 namespace Choqok{

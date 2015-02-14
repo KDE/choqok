@@ -23,21 +23,25 @@
 */
 
 #include "laconicapostwidget.h"
-#include <twitterapihelper/twitterapiaccount.h>
-#include <KDebug>
-#include <twitterapihelper/twitterapimicroblog.h>
-#include "laconicasearch.h"
-#include <KMenu>
+
 #include <KAction>
-#include <klocalizedstring.h>
-#include <twitterapihelper/twitterapiwhoiswidget.h>
-#include <choqokbehaviorsettings.h>
-#include <quickpost.h>
+#include <KDebug>
+#include <KLocalizedString>
+#include <KMenu>
+#include <KPushButton>
+
+#include "choqokbehaviorsettings.h"
+#include "choqoktools.h"
+#include "notifymanager.h"
+#include "quickpost.h"
+
+#include "twitterapihelper/twitterapiaccount.h"
+#include "twitterapihelper/twitterapimicroblog.h"
+#include "twitterapihelper/twitterapiwhoiswidget.h"
+
+#include "laconicasearch.h"
 #include "laconicaaccount.h"
 #include "laconicamicroblog.h"
-#include <notifymanager.h>
-#include <KPushButton>
-#include <choqoktools.h>
 #include "laconicaconversationtimelinewidget.h"
 
 const QRegExp LaconicaPostWidget::mGroupRegExp( "([\\s]|^)!([a-z0-9]+){1,64}",  Qt::CaseInsensitive );

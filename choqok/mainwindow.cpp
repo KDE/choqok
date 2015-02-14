@@ -23,41 +23,41 @@
 */
 
 #include "mainwindow.h"
-#include "accountmanager.h"
-// #include "searchwindow.h"
-#include "systrayicon.h"
-#include "quickpost.h"
 
-#include <KTabWidget>
-#include <kconfigdialog.h>
-#include <kstatusbar.h>
-#include <kaction.h>
-#include <kactioncollection.h>
-#include <kstandardaction.h>
-#include <KDE/KLocale>
-#include <KMessageBox>
 #include <QTimer>
-#include <postwidget.h>
-#include <microblogwidget.h>
-#include <pluginmanager.h>
-#include <passwordmanager.h>
-#include <mediamanager.h>
 #include <QWheelEvent>
-#include <QMenu>
-#include <KXMLGUIFactory>
-#include <choqokuiglobal.h>
-#include <choqokappearancesettings.h>
-#include "choqokapplication.h"
-#include <ksettings/dialog.h>
-#include <choqokbehaviorsettings.h>
-#include <kstandarddirs.h>
-#include <KSplashScreen>
+
+#include <KAction>
+#include <KActionCollection>
+#include <KConfigDialog>
+#include <KLocale>
 #include <KMenu>
-#include "uploadmediadialog.h"
-#include <knotifyconfigwidget.h>
 #include <KMenuBar>
+#include <KMessageBox>
+#include <KNotifyConfigWidget>
 #include <KPushButton>
-#include <choqoktools.h>
+#include <KSettings/Dialog>
+#include <KSplashScreen>
+#include <KStandardAction>
+#include <KStandardDirs>
+#include <KStatusBar>
+#include <KTabWidget>
+#include <KXMLGUIFactory>
+
+#include "accountmanager.h"
+#include "choqokappearancesettings.h"
+#include "choqokapplication.h"
+#include "choqokbehaviorsettings.h"
+#include "choqoktools.h"
+#include "choqokuiglobal.h"
+#include "mediamanager.h"
+#include "microblogwidget.h"
+#include "passwordmanager.h"
+#include "pluginmanager.h"
+#include "postwidget.h"
+#include "quickpost.h"
+#include "systrayicon.h"
+#include "uploadmediadialog.h"
 
 const char* mainButtonStyleSheet = "QPushButton{\
 background-color: qlineargradient(spread:reflect, x1:0.449382, y1:0, x2:0.448, y2:1, stop:0.15 rgba(255, 255, 255, 100), stop:1 rgba(61, 158, 0, 255));\

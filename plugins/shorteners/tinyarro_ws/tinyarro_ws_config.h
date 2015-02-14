@@ -25,7 +25,7 @@
 #define TINYARRO_WS_H
 
 #include <KCModule>
-#include <QWidget>
+
 #include "ui_tinyarro_ws_prefs.h"
 
 class Tinyarro_ws_Config : public KCModule

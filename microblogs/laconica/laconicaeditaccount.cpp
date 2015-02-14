@@ -22,23 +22,29 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 
 #include "laconicaeditaccount.h"
-#include <QtGui/QProgressBar>
-#include <QtXml/QDomDocument>
-#include <QtOAuth/interface.h>
-#include <QtOAuth/qoauth_namespace.h>
-#include <KDE/KDebug>
-#include <KDE/KMessageBox>
-#include <KDE/KToolInvocation>
-#include <kio/accessmanager.h>
-#include <kio/jobclasses.h>
-#include <kio/job.h>
-#include <kio/netaccess.h>
-#include <accountmanager.h>
-#include <choqoktools.h>
-#include "laconicamicroblog.h"
-#include "laconicaaccount.h"
+
+#include <QDomDocument>
+#include <QProgressBar>
+
+#include <KDebug>
 #include <KInputDialog>
+#include <KIO/AccessManager>
+#include <KIO/Job>
+#include <KIO/JobClasses>
+#include <KIO/NetAccess>
+#include <KMessageBox>
+#include <KToolInvocation>
+
+#include <QtOAuth/QtOAuth>
+#include <QtOAuth/qoauth_namespace.h>
+
 #include <qjson/parser.h>
+
+#include "accountmanager.h"
+#include "choqoktools.h"
+
+#include "laconicaaccount.h"
+#include "laconicamicroblog.h"
 
 LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblog,
                                                     LaconicaAccount* account, QWidget* parent)

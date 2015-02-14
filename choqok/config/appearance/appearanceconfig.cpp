@@ -24,14 +24,13 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "appearanceconfig.h"
 #include "ui_appearanceconfig_base.h"
 
-#include <kdebug.h>
-#include <kpluginfactory.h>
-#include <klocale.h>
-
-#include <ktabwidget.h>
+#include <KDebug>
+#include <KLocale>
+#include <KPluginFactory>
+#include <KTabWidget>
 
 //class AppearanceConfig;
-#include <choqokappearancesettings.h>
+#include "choqokappearancesettings.h"
 
 K_PLUGIN_FACTORY( ChoqokAppearanceConfigFactory,
         registerPlugin<AppearanceConfig>(); )

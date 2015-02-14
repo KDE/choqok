@@ -23,6 +23,7 @@
 */
 
 #include "filter.h"
+
 #include <KConfigGroup>
 #include <KGlobal>
 #include <KSharedConfig>

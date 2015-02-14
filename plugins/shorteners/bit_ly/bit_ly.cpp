@@ -22,15 +22,17 @@
 */
 
 #include "bit_ly.h"
-#include <QString>
-#include <KIO/Job>
-#include <KDebug>
-#include <kio/netaccess.h>
+
 #include <KAboutData>
+#include <KDebug>
 #include <KGenericFactory>
+#include <KIO/Job>
+#include <KIO/NetAccess>
+
 #include "notifymanager.h"
+#include "passwordmanager.h"
+
 #include "bit_ly_settings.h"
-#include <passwordmanager.h>
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Bit_ly > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_bit_ly" ) )

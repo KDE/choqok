@@ -25,10 +25,12 @@
 #ifndef IMAGEPREVIEW_H
 #define IMAGEPREVIEW_H
 
-#include "plugin.h"
-#include <qqueue.h>
-#include <KUrl>
 #include <QPointer>
+#include <QQueue>
+
+#include <KUrl>
+
+#include "plugin.h"
 
 namespace KIO {
 class Job;

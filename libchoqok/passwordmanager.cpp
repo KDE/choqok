@@ -23,13 +23,16 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 
 #include "passwordmanager.h"
-#include <kwallet.h>
-#include "choqokbehaviorsettings.h"
-#include <kdebug.h>
+
 #include <QApplication>
-#include "choqokuiglobal.h"
+
 #include <KApplication>
+#include <KDebug>
 #include <KMessageBox>
+#include <KWallet/Wallet>
+
+#include "choqokbehaviorsettings.h"
+#include "choqokuiglobal.h"
 
 namespace Choqok
 {

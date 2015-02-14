@@ -23,17 +23,20 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 
 #include "yourls.h"
-#include <QString>
-#include <KIO/Job>
-#include <KDebug>
-#include <kio/netaccess.h>
-#include <KAboutData>
-#include <KGenericFactory>
-#include <kglobal.h>
-#include "notifymanager.h"
-#include "yourlssettings.h"
-#include <passwordmanager.h>
+
 #include <QDomDocument>
+
+#include <KAboutData>
+#include <KDebug>
+#include <KGenericFactory>
+#include <KGlobal>
+#include <KIO/Job>
+#include <KIO/NetAccess>
+
+#include "notifymanager.h"
+#include "passwordmanager.h"
+
+#include "yourlssettings.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Yourls > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_yourls" ) )

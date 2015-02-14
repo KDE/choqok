@@ -26,7 +26,7 @@
 #define YOURLSCONFIG_H
 
 #include <KCModule>
-#include <QWidget>
+
 #include "ui_yourlsprefs.h"
 
 class YourlsConfig : public KCModule

@@ -25,10 +25,12 @@
 #ifndef NOTIFYMANAGER_H
 #define NOTIFYMANAGER_H
 
-#include <KDE/KNotification>
-#include <klocalizedstring.h>
-#include "choqok_export.h"
 #include <QObject>
+
+#include <KNotification>
+#include <KLocalizedString>
+
+#include "choqok_export.h"
 
 namespace Choqok
 {

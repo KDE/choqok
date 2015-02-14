@@ -25,8 +25,8 @@
 #ifndef TWITTERAPIACCOUNT_H
 #define TWITTERAPIACCOUNT_H
 
-#include <account.h>
-#include <choqok_export.h>
+#include "account.h"
+#include "choqok_export.h"
 
 namespace QOAuth {
 class Interface;

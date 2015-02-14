@@ -23,7 +23,9 @@
 */
 
 #include "laconicaaccount.h"
+
 #include <KDebug>
+
 #include "laconicamicroblog.h"
 
 class LaconicaAccount::Private

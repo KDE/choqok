@@ -26,7 +26,7 @@
 #define BIT_LY_CONFIG_H
 
 #include <KCModule>
-#include <QWidget>
+
 #include "ui_bit_ly_prefs.h"
 
 class Bit_ly_Config : public KCModule

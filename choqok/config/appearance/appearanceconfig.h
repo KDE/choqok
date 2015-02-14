@@ -25,7 +25,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef APPEARANCECONFIG_H
 #define APPEARANCECONFIG_H
 
-#include <kcmodule.h>
+#include <KCModule>
 
 /**
  * @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>

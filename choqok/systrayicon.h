@@ -24,9 +24,9 @@
 #ifndef SYSTRAYICON_H
 #define SYSTRAYICON_H
 
-// #include <ksystemtrayicon.h>
-#include <choqoktypes.h>
-#include <kstatusnotifieritem.h>
+#include <KStatusNotifierItem>
+
+#include "choqoktypes.h"
 #include "mainwindow.h"
 
 /**

@@ -23,15 +23,19 @@
 */
 
 #include "twitterpostwidget.h"
-#include <twitterapihelper/twitterapimicroblog.h>
-#include "twittersearch.h"
+
 #include <KAction>
+#include <KLocalizedString>
 #include <KMenu>
-#include <klocalizedstring.h>
-#include <twitterapihelper/twitterapiwhoiswidget.h>
-#include <twitterapihelper/twitterapiaccount.h>
 #include <KPushButton>
-#include <choqoktools.h>
+
+#include "choqoktools.h"
+
+#include "twitterapihelper/twitterapiaccount.h"
+#include "twitterapihelper/twitterapimicroblog.h"
+#include "twitterapihelper/twitterapiwhoiswidget.h"
+
+#include "twittersearch.h"
 
 const QRegExp TwitterPostWidget::mTwitterUserRegExp( "([\\s\\W]|^)@([a-z0-9_]+){1,20}", Qt::CaseInsensitive );
 const QRegExp TwitterPostWidget::mTwitterTagRegExp("([\\s]|^)#([\\w_\\.\\-]+)", Qt::CaseInsensitive );

@@ -22,17 +22,18 @@
 */
 
 #include "goo_gl.h"
-#include <QtCore/QCoreApplication>
-#include <KDebug>
-#include <kio/netaccess.h>
+
 #include <KAboutData>
+#include <KDebug>
 #include <KGenericFactory>
-#include <kglobal.h>
-#include <kio/job.h>
-#include <math.h>
-#include <notifymanager.h>
+#include <KGlobal>
+#include <KIO/Job>
+#include <KIO/NetAccess>
+
 #include <qjson/parser.h>
 #include <qjson/serializer.h>
+
+#include "notifymanager.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Goo_gl > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_goo_gl" ) )

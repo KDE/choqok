@@ -23,33 +23,37 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "laconicamicroblog.h"
 
-#include <KLocale>
-#include <KDebug>
-#include <kio/jobclasses.h>
-#include <kio/job.h>
 #include <QDomElement>
+
 #include <KAboutData>
+#include <KDebug>
 #include <KGenericFactory>
+#include <KIO/JobClasses>
+#include <KIO/Job>
+#include <KIO/NetAccess>
+#include <KLocale>
+#include <KMessageBox>
+#include <KMimeType>
+
 #include "account.h"
 #include "accountmanager.h"
-#include "microblogwidget.h"
-#include "timelinewidget.h"
+#include "choqokappearancesettings.h"
+#include "composerwidget.h"
 #include "editaccountwidget.h"
-#include "laconicaeditaccount.h"
-#include "postwidget.h"
-#include "laconicaaccount.h"
-#include <composerwidget.h>
-#include <twitterapihelper/twitterapipostwidget.h>
-#include "laconicapostwidget.h"
-#include <twitterapihelper/twitterapimicroblogwidget.h>
-#include "laconicasearch.h"
-#include <kio/netaccess.h>
-#include <KMessageBox>
-#include <kmimetype.h>
-#include "laconicacomposerwidget.h"
 #include "mediamanager.h"
-#include <choqokappearancesettings.h>
+#include "microblogwidget.h"
+#include "postwidget.h"
+#include "timelinewidget.h"
+
+#include "twitterapihelper/twitterapimicroblogwidget.h"
+#include "twitterapihelper/twitterapipostwidget.h"
 #include "twitterapihelper/twitterapitimelinewidget.h"
+
+#include "laconicaaccount.h"
+#include "laconicacomposerwidget.h"
+#include "laconicaeditaccount.h"
+#include "laconicapostwidget.h"
+#include "laconicasearch.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < LaconicaMicroBlog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_laconica" ) )

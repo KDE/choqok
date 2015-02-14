@@ -24,12 +24,14 @@
 #ifndef NOTIFY_H
 #define NOTIFY_H
 
-#include <plugin.h>
-#include <qqueue.h>
-#include <KUrl>
+#include <QQueue>
+#include <QPoint>
 #include <QPointer>
 #include <QTimer>
-#include <QPoint>
+
+#include <KUrl>
+
+#include "plugin.h"
 
 class Notification;
 namespace Choqok {

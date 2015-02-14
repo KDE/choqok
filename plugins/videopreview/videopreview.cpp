@@ -23,17 +23,20 @@
     along with this program; if not, see http://www.gnu.org/licenses/
 
 */
-
 #include "videopreview.h"
+
+#include <QDomDocument>
+#include <QDomElement>
+#include <QEventLoop>
+
 #include <KGenericFactory>
-#include <choqokuiglobal.h>
+
+#include "choqokuiglobal.h"
 #include "postwidget.h"
 #include "notifymanager.h"
-#include <mediamanager.h>
-#include <textbrowser.h>
-#include <shortenmanager.h>
-#include <qeventloop.h>
-
+#include "mediamanager.h"
+#include "textbrowser.h"
+#include "shortenmanager.h"
 
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < VideoPreview > (); )

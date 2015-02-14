@@ -24,7 +24,7 @@
 #ifndef TWITTERAPITIMELINEWIDGET_H
 #define TWITTERAPITIMELINEWIDGET_H
 
-#include <timelinewidget.h>
+#include "timelinewidget.h"
 
 
 class CHOQOK_HELPER_EXPORT TwitterApiTimelineWidget : public Choqok::UI::TimelineWidget

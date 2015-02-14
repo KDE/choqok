@@ -24,19 +24,21 @@
 
 #include "choqoktabbar.h"
 
-#include <QToolBar>
-#include <QStackedWidget>
 #include <QAction>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
+#include <QContextMenuEvent>
 #include <QGridLayout>
 #include <QHash>
+#include <QHBoxLayout>
 #include <QList>
 #include <QResizeEvent>
-#include <QContextMenuEvent>
-#include <KMenu>
+#include <QStackedWidget>
+#include <QToolBar>
+#include <QVBoxLayout>
+
 #include <KAction>
-#include <choqokappearancesettings.h>
+#include <KMenu>
+
+#include "choqokappearancesettings.h"
 
 #define ICON_SMALL_SIZE  22
 #define ICON_MEDIUM_SIZE 32

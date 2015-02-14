@@ -23,11 +23,13 @@
 */
 
 #include "nowlisteningconfig.h"
-#include <KPluginFactory>
-#include <klocale.h>
-#include <qlayout.h>
-#include <nowlisteningsettings.h>
+
 #include <QVBoxLayout>
+
+#include <KLocale>
+#include <KPluginFactory>
+
+#include "nowlisteningsettings.h"
 
 K_PLUGIN_FACTORY( NowListeningConfigFactory, registerPlugin < NowListeningConfig > (); )
 K_EXPORT_PLUGIN( NowListeningConfigFactory( "kcm_choqok_nowlistening" ) )

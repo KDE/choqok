@@ -25,7 +25,7 @@
 #ifndef TWITTERAPIPOSTWIDGET_H
 #define TWITTERAPIPOSTWIDGET_H
 
-#include <postwidget.h>
+#include "postwidget.h"
 
 /**
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>

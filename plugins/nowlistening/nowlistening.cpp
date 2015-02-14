@@ -24,17 +24,21 @@
 */
 
 #include "nowlistening.h"
-#include <KAction>
-#include <KActionCollection>
-#include <KAboutData>
-#include <KGenericFactory>
+
+#include <QDBusConnectionInterface>
 #include <QDBusInterface>
 #include <QDBusReply>
-#include <choqokuiglobal.h>
-#include <quickpost.h>
-#include "nowlisteningsettings.h"
+
+#include <KAboutData>
+#include <KAction>
+#include <KActionCollection>
+#include <KGenericFactory>
 #include <KMessageBox>
-#include <qdbusconnectioninterface.h>
+
+#include "choqokuiglobal.h"
+#include "nowlisteningsettings.h"
+#include "quickpost.h"
+
 #include "mpris.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < NowListening > (); )

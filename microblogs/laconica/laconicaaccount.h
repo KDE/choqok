@@ -25,7 +25,7 @@
 #ifndef LACONICAACCOUNT_H
 #define LACONICAACCOUNT_H
 
-#include <twitterapihelper/twitterapiaccount.h>
+#include "twitterapihelper/twitterapiaccount.h"
 
 class LaconicaMicroBlog;
 /**

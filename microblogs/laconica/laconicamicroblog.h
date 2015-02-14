@@ -23,9 +23,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef LACONICAMICROBLOGPLUGIN_H
 #define LACONICAMICROBLOGPLUGIN_H
 
-#include <KUrl>
-#include <twitterapihelper/twitterapimicroblog.h>
 #include <QPointer>
+
+#include <KUrl>
+
+#include "twitterapihelper/twitterapimicroblog.h"
 
 class LaconicaAccount;
 class LaconicaSearch;

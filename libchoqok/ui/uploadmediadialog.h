@@ -25,7 +25,8 @@
 #ifndef UPLOADMEDIADIALOG_H
 #define UPLOADMEDIADIALOG_H
 
-#include <kdialog.h>
+#include <KDialog>
+
 #include "choqok_export.h"
 
 namespace Choqok {

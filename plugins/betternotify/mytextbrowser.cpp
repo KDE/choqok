@@ -22,7 +22,9 @@
 
 
 #include "mytextbrowser.h"
-#include <qevent.h>
+
+#include <QMouseEvent>
+
 MyTextBrowser::MyTextBrowser(QWidget* parent)
     : KTextBrowser(parent)
 {

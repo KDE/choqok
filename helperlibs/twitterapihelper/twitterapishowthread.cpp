@@ -23,12 +23,15 @@
 */
 
 #include "twitterapishowthread.h"
-#include <QVBoxLayout>
+
 #include <QScrollArea>
-#include "twitterapiaccount.h"
-#include <postwidget.h>
+#include <QVBoxLayout>
+
 #include <KDebug>
-#include <klocalizedstring.h>
+#include <KLocalizedString>
+
+#include "postwidget.h"
+#include "twitterapiaccount.h"
 
 class TwitterApiShowThread::Private{
 public:

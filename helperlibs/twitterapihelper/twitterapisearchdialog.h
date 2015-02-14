@@ -25,7 +25,8 @@
 #ifndef TWITTERAPISEARCHDIALOG_H
 #define TWITTERAPISEARCHDIALOG_H
 
-#include <kdialog.h>
+#include <KDialog>
+
 #include "choqok_export.h"
 
 class TwitterApiAccount;

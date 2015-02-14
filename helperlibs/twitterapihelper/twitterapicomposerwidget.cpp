@@ -23,14 +23,17 @@
 */
 
 #include "twitterapicomposerwidget.h"
-#include "twitterapitextedit.h"
-#include <QtGui/QCompleter>
-#include "twitterapiaccount.h"
+
+#include <QCompleter>
+#include <QStringListModel>
+
 #include <KDebug>
-#include <choqokuiglobal.h>
-#include <postwidget.h>
-#include <choqokbehaviorsettings.h>
-#include <QtGui/QStringListModel>
+
+#include "choqokbehaviorsettings.h"
+#include "choqokuiglobal.h"
+#include "postwidget.h"
+#include "twitterapiaccount.h"
+#include "twitterapitextedit.h"
 
 class TwitterApiComposerWidget::Private
 {

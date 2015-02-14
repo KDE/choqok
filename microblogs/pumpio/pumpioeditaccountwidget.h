@@ -26,7 +26,7 @@
 
 #include "editaccountwidget.h"
 
-#include <QtOAuth/interface.h>
+#include <QtOAuth/QtOAuth>
 
 #include "ui_pumpioeditaccountwidget.h"
 

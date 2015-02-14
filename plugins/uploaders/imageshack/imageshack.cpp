@@ -23,16 +23,19 @@
 */
 
 #include "imageshack.h"
+
+#include <QDomDocument>
+
+#include <KAboutData>
 #include <KAction>
 #include <KActionCollection>
-#include <KAboutData>
 #include <KGenericFactory>
 #include <KIO/Job>
-#include <kio/netaccess.h>
-#include <QtXml/QDomDocument>
-#include <mediamanager.h>
-#include <passwordmanager.h>
-#include <shortenmanager.h>
+#include <KIO/NetAccess>
+
+#include "mediamanager.h"
+#include "passwordmanager.h"
+#include "shortenmanager.h"
 
 const char * apiKey = "ZMWLXQBOfb570310607355f90c601148a3203f0f";
 

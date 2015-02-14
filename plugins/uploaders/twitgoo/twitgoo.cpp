@@ -23,21 +23,28 @@
 */
 
 #include "twitgoo.h"
+
+#include <QDomDocument>
+
+#include <KAboutData>
 #include <KAction>
 #include <KActionCollection>
-#include <KAboutData>
 #include <KGenericFactory>
-#include "twitgoosettings.h"
 #include <KIO/Job>
-#include <kio/netaccess.h>
-#include <passwordmanager.h>
-#include <QDomDocument>
-#include <mediamanager.h>
-#include <twitterapihelper/twitterapiaccount.h>
-#include <accountmanager.h>
-#include <twitterapihelper/twitterapimicroblog.h>
+#include <KIO/NetAccess>
+
+#include "accountmanager.h"
+#include "mediamanager.h"
+#include "passwordmanager.h"
+
+#include "twitterapihelper/twitterapiaccount.h"
+#include "twitterapihelper/twitterapimicroblog.h"
+
 #include <QtOAuth/QtOAuth>
+
 #include <qjson/parser.h>
+
+#include "twitgoosettings.h"
 
 K_PLUGIN_FACTORY ( MyPluginFactory, registerPlugin < Twitgoo > (); )
 K_EXPORT_PLUGIN ( MyPluginFactory ( "choqok_twitgoo" ) )

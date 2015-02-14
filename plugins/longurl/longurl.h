@@ -25,11 +25,13 @@
 #ifndef CHOQOK_LONGURL_H
 #define CHOQOK_LONGURL_H
 
-#include <plugin.h>
-#include <qqueue.h>
-#include <KUrl>
 #include <QPointer>
+#include <QQueue>
 #include <QSharedPointer>
+
+#include <KUrl>
+
+#include "plugin.h"
 
 namespace KIO {
 class Job;

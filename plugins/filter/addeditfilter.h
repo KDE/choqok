@@ -25,7 +25,8 @@
 #ifndef ADDEDITFILTER_H
 #define ADDEDITFILTER_H
 
-#include <kdialog.h>
+#include <KDialog>
+
 #include "ui_addeditfilter_base.h"
 
 class Filter;

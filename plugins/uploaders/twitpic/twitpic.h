@@ -25,8 +25,7 @@
 #ifndef TWITPIC_H
 #define TWITPIC_H
 
-#include "plugin.h"
-#include <uploader.h>
+#include "uploader.h"
 
 class KJob;
 class KConfigGroup;

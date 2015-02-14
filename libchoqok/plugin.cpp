@@ -22,9 +22,11 @@
 */
 
 #include "plugin.h"
+
+#include <KPluginInfo>
+#include <KSettings/Dispatcher>
+
 #include "pluginmanager.h"
-#include <kplugininfo.h>
-#include <ksettings/dispatcher.h>
 
 namespace Choqok {
 

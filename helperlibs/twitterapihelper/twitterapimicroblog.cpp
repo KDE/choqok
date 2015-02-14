@@ -23,36 +23,40 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "twitterapimicroblog.h"
 
-#include <KLocale>
-#include <KDebug>
-#include <kio/jobclasses.h>
-#include <kio/job.h>
 #include <QDomElement>
+
 #include <KAboutData>
-#include <KGenericFactory>
-#include <qjson/parser.h>
-#include "account.h"
-#include "microblogwidget.h"
-#include "timelinewidget.h"
-#include "editaccountwidget.h"
-#include "postwidget.h"
-#include "twitterapiaccount.h"
-#include "twitterapipostwidget.h"
-#include <KMenu>
 #include <KAction>
-#include <choqokuiglobal.h>
-#include <accountmanager.h>
-#include "twitterapidmessagedialog.h"
+#include <KDebug>
+#include <KGenericFactory>
+#include <KIO/Job>
+#include <KIO/JobClasses>
+#include <KLocale>
+#include <KMenu>
+
+#include <QtOAuth/QtOAuth>
+
+#include <qjson/parser.h>
+
+#include "account.h"
+#include "accountmanager.h"
+#include "application.h"
+#include "choqokappearancesettings.h"
 #include "choqokbehaviorsettings.h"
 #include "choqokid.h"
+#include "choqokuiglobal.h"
+#include "editaccountwidget.h"
+#include "microblogwidget.h"
+#include "notifymanager.h"
+#include "postwidget.h"
+#include "timelinewidget.h"
+#include "twitterapiaccount.h"
+#include "twitterapicomposerwidget.h"
+#include "twitterapidmessagedialog.h"
+#include "twitterapipostwidget.h"
 #include "twitterapisearch.h"
 #include "twitterapisearchdialog.h"
 #include "twitterapisearchtimelinewidget.h"
-#include <notifymanager.h>
-#include "twitterapicomposerwidget.h"
-#include <QtOAuth/QtOAuth>
-#include <choqokappearancesettings.h>
-#include "application.h"
 
 class TwitterApiMicroBlog::Private
 {

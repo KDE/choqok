@@ -23,9 +23,11 @@
 */
 
 #include "choqokmainwindow.h"
-#include "choqokbehaviorsettings.h"
-#include <kstatusbar.h>
+
+#include <KStatusBar>
 #include <KTabWidget>
+
+#include "choqokbehaviorsettings.h"
 #include "microblogwidget.h"
 
 #ifdef QTINDICATE_BUILD

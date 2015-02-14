@@ -28,16 +28,17 @@
 #include <QTimer>
 #include <QStack>
 
-#include <ksharedconfig.h>
-#include <kdebug.h>
-#include <kparts/componentfactory.h>
-#include <kplugininfo.h>
-#include <kconfig.h>
-#include <kstandarddirs.h>
-#include <kurl.h>
-#include <kservicetypetrader.h>
-#include "plugin.h"
+#include <KConfig>
+#include <KDebug>
+#include <KParts/ComponentFactory>
+#include <KPluginInfo>
+#include <KServiceTypeTrader>
+#include <KSharedConfig>
+#include <KStandardDirs>
+#include <KUrl>
+
 #include "accountmanager.h"
+#include "plugin.h"
 
 namespace Choqok
 {

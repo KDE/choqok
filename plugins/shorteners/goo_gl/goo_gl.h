@@ -24,9 +24,9 @@
 #ifndef GOO_GL_H
 #define GOO_GL_H
 
-#include <QtCore/QString>
-#include <QtCore/QVariant>
-#include <shortener.h>
+#include <QVariantList>
+
+#include "shortener.h"
 
 class KJob;
 /**

@@ -25,7 +25,8 @@
 #ifndef CHOQOK_CHOQOKID_H
 #define CHOQOK_CHOQOKID_H
 
-#include <QtCore/QString>
+#include <QString>
+
 #include "choqok_export.h"
 
 /**

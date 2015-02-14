@@ -26,7 +26,7 @@
 #define IS_GD_CONFIG_H
 
 #include <KCModule>
-#include <QWidget>
+
 #include "ui_is_gd_prefs.h"
 
 class Is_gd_Config : public KCModule

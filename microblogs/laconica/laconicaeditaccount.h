@@ -24,8 +24,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef LACONICAEDITACCOUNT_H
 #define LACONICAEDITACCOUNT_H
 
-#include <QtCore/QByteArray>
-#include <editaccountwidget.h>
+#include <QByteArray>
+
+#include "editaccountwidget.h"
+
 #include "ui_laconicaeditaccount_base.h"
 
 namespace QOAuth {

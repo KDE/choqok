@@ -24,22 +24,23 @@
 
 #include "konqchoqok.h"
 
-#include <KHTMLPart>
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
+
 #include <KActionCollection>
 #include <KActionMenu>
+#include <KConfigGroup>
+#include <KHTMLPart>
 #include <KMenu>
-#include <KToggleAction>
-#include <QDBusConnection>
+#include <KMessageBox>
 #include <KPluginFactory>
 #include <KPluginLoader>
+#include <KToggleAction>
 #include <KToolInvocation>
-#include <KConfigGroup>
-#include <QDBusConnectionInterface>
-#include <KMessageBox>
 
 #ifdef HAVE_KWEBKITPART
-#include <KDE/KWebKitPart>
 #include <QWebView>
+#include <KWebKitPart>
 #endif
 
 KonqPluginChoqok::KonqPluginChoqok(QObject* parent, const QVariantList& )

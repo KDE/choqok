@@ -25,9 +25,10 @@
 #ifndef EDITACCOUNTWIDGET_H
 #define EDITACCOUNTWIDGET_H
 
-#include <QtGui/QWidget>
-#include "choqok_export.h"
+#include <QWidget>
+
 #include "account.h"
+#include "choqok_export.h"
 
 namespace Choqok
 {

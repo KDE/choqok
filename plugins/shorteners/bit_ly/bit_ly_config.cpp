@@ -23,17 +23,21 @@
 */
 
 #include "bit_ly_config.h"
-#include <KPluginFactory>
+
+#include <QLayout>
+
 #include <KAboutData>
 #include <KGenericFactory>
-#include <KMessageBox>
 #include <KIO/Job>
-#include <kio/netaccess.h>
-#include <klocale.h>
-#include <qlayout.h>
-#include <passwordmanager.h>
-#include "bit_ly_settings.h"
+#include <KIO/NetAccess>
+#include <KLocale>
+#include <KMessageBox>
+#include <KPluginFactory>
+
 #include "notifymanager.h"
+#include "passwordmanager.h"
+
+#include "bit_ly_settings.h"
 
 K_PLUGIN_FACTORY( Bit_ly_ConfigFactory, registerPlugin < Bit_ly_Config > (); )
 K_EXPORT_PLUGIN( Bit_ly_ConfigFactory( "kcm_choqok_bit_ly" ) )

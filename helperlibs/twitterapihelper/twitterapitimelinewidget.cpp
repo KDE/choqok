@@ -22,8 +22,9 @@
 */
 
 #include "twitterapitimelinewidget.h"
+
 #include "twitterapimicroblog.h"
-#include <postwidget.h>
+#include "postwidget.h"
 
 TwitterApiTimelineWidget::TwitterApiTimelineWidget(Choqok::Account* account, const QString& timelineName,
                                                    QWidget* parent)

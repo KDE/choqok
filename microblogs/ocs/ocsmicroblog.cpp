@@ -22,16 +22,20 @@
 */
 
 #include "ocsmicroblog.h"
+
 #include <KAboutData>
 #include <KGenericFactory>
-#include <attica/providermanager.h>
-#include "accountmanager.h"
-#include "ocsaccount.h"
-#include "editaccountwidget.h"
-#include "ocsconfigurewidget.h"
 #include <KMessageBox>
+
+#include <attica/providermanager.h>
+
+#include "application.h"
+#include "accountmanager.h"
+#include "editaccountwidget.h"
 #include "postwidget.h"
-#include <application.h>
+
+#include "ocsaccount.h"
+#include "ocsconfigurewidget.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < OCSMicroblog > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_ocs" ) )

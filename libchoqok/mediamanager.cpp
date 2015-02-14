@@ -22,23 +22,26 @@
 
 */
 #include "mediamanager.h"
-#include <kio/job.h>
-#include <kio/jobclasses.h>
-#include <kdebug.h>
-#include <KDE/KLocale>
-#include <kicon.h>
+
 #include <QApplication>
 #include <QHash>
+
+#include <KDebug>
 #include <KEmoticons>
 #include <KEmoticonsTheme>
+#include <KIcon>
 #include <KImageCache>
-#include <choqokbehaviorsettings.h>
-#include "uploader.h"
-#include "pluginmanager.h"
-#include <kmimetype.h>
-#include <kio/netaccess.h>
+#include <KIO/Job>
+#include <KIO/JobClasses>
+#include <KIO/NetAccess>
+#include <KLocale>
 #include <KMessageBox>
+#include <KMimeType>
+
+#include "choqokbehaviorsettings.h"
 #include "choqokuiglobal.h"
+#include "pluginmanager.h"
+#include "uploader.h"
 
 namespace Choqok
 {

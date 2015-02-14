@@ -23,15 +23,18 @@
 */
 
 #include "imstatus.h"
-#include "imstatussettings.h"
-#include "imqdbus.h"
+
 #include <KAction>
 #include <KActionCollection>
 #include <KAboutData>
 #include <KGenericFactory>
-#include <choqokuiglobal.h>
-#include <quickpost.h>
 #include <KMessageBox>
+
+#include "choqokuiglobal.h"
+#include "quickpost.h"
+
+#include "imqdbus.h"
+#include "imstatussettings.h"
 
 K_PLUGIN_FACTORY ( MyPluginFactory, registerPlugin < IMStatus > (); )
 K_EXPORT_PLUGIN ( MyPluginFactory ( "choqok_imstatus" ) )
