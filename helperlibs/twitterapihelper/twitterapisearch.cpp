@@ -64,7 +64,7 @@ QMap< int, QPair<QString, bool> > &TwitterApiSearch::getSearchTypes()
 }
 
 void TwitterApiSearch::requestSearchResults(Choqok::Account* theAccount, const QString& query,
-                                            int option, const ChoqokId& sinceStatusId,
+                                            int option, const QString& sinceStatusId,
                                             uint count, uint page)
 {
     bool isB = getSearchTypes()[option].second;

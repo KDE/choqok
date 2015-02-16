@@ -43,7 +43,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "application.h"
 #include "choqokappearancesettings.h"
 #include "choqokbehaviorsettings.h"
-#include "choqokid.h"
 #include "choqokuiglobal.h"
 #include "editaccountwidget.h"
 #include "microblogwidget.h"
@@ -257,14 +256,14 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
             const Choqok::Post *post = ((*it)->currentPost());
             KConfigGroup grp( &postsBackup, post->creationDateTime.toString() );
             grp.writeEntry( "creationDateTime", post->creationDateTime );
-            grp.writeEntry( "postId", post->postId.toString() );
+            grp.writeEntry( "postId", post->postId );
             grp.writeEntry( "text", post->content );
             grp.writeEntry( "source", post->source );
-            grp.writeEntry( "inReplyToPostId", post->replyToPostId.toString() );
-            grp.writeEntry( "inReplyToUserId", post->replyToUserId.toString() );
+            grp.writeEntry( "inReplyToPostId", post->replyToPostId );
+            grp.writeEntry( "inReplyToUserId", post->replyToUserId );
             grp.writeEntry( "favorited", post->isFavorited );
             grp.writeEntry( "inReplyToUserName", post->replyToUserName );
-            grp.writeEntry( "authorId", post->author.userId.toString() );
+            grp.writeEntry( "authorId", post->author.userId );
             grp.writeEntry( "authorUserName", post->author.userName );
             grp.writeEntry( "authorRealName", post->author.realName );
             grp.writeEntry( "authorProfileImageUrl", post->author.profileImageUrl );
@@ -275,8 +274,8 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
             grp.writeEntry( "authorUrl" , post->author.homePageUrl );
             grp.writeEntry( "isRead" , post->isRead );
             grp.writeEntry( "repeatedFrom", post->repeatedFromUsername);
-            grp.writeEntry( "repeatedPostId", post->repeatedPostId.toString());
-            grp.writeEntry( "conversationId", post->conversationId.toString() );
+            grp.writeEntry( "repeatedPostId", post->repeatedPostId );
+            grp.writeEntry( "conversationId", post->conversationId );
             grp.writeEntry( "mediaUrl", post->media);
             grp.writeEntry("mediaWidth", post->mediaSizeWidth);
             grp.writeEntry("mediaHeight", post->mediaSizeHeight);
@@ -368,7 +367,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
     }
 }
 
-void TwitterApiMicroBlog::repeatPost(Choqok::Account* theAccount, const ChoqokId& postId)
+void TwitterApiMicroBlog::repeatPost(Choqok::Account* theAccount, const QString& postId)
 {
     kDebug();
     if ( postId.isEmpty() ) {

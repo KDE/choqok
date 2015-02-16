@@ -139,7 +139,7 @@ protected Q_SLOTS:
     void slotOnePostReaded();
     virtual void saveTimeline();
     virtual void loadTimeline();
-    void postWidgetClosed( const ChoqokId &postId, PostWidget* widget );
+    void postWidgetClosed( const QString &postId, PostWidget* widget );
 
 protected:
     /**
@@ -148,7 +148,7 @@ protected:
     */
     virtual void addPostWidgetToUi(PostWidget *widget);
     Account *currentAccount();
-    QMap<ChoqokId, PostWidget *> &posts() const;
+    QMap<QString, PostWidget *> &posts() const;
     QMultiMap<QDateTime, PostWidget *> &sortedPostsList() const;
 
     QVBoxLayout *mainLayout();

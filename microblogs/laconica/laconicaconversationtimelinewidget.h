@@ -31,17 +31,17 @@ class LaconicaConversationTimelineWidget : public TwitterApiTimelineWidget
 {
 Q_OBJECT
 public:
-    LaconicaConversationTimelineWidget(Choqok::Account* currentAccount, const ChoqokId& conversationId, QWidget* parent = 0);
+    LaconicaConversationTimelineWidget(Choqok::Account* currentAccount, const QString& conversationId, QWidget* parent = 0);
     virtual ~LaconicaConversationTimelineWidget();
 
 protected:
     virtual void saveTimeline();
     virtual void loadTimeline();
 
-    ChoqokId conversationId;
+    QString conversationId;
 
 protected Q_SLOTS:
-    void slotConversationFetched(Choqok::Account* theAccount,const ChoqokId& conversationId,
+    void slotConversationFetched(Choqok::Account* theAccount,const QString& conversationId,
                                  QList<Choqok::Post*> posts);
     void updateHeight();
 };

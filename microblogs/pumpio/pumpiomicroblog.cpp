@@ -460,12 +460,12 @@ void PumpIOMicroBlog::saveTimeline(Choqok::Account* account, const QString& time
         PumpIOPost *post = dynamic_cast<PumpIOPost* >((*it)->currentPost());
         KConfigGroup grp(&postsBackup, post->creationDateTime.toString());
         grp.writeEntry("creationDateTime", post->creationDateTime);
-        grp.writeEntry("postId", post->postId.toString());
+        grp.writeEntry("postId", post->postId);
         grp.writeEntry("link", post->link);
         grp.writeEntry("content", post->content);
         grp.writeEntry("source", post->source);
         grp.writeEntry("favorited", post->isFavorited);
-        grp.writeEntry("authorId", post->author.userId.toString());
+        grp.writeEntry("authorId", post->author.userId);
         grp.writeEntry("authorRealName", post->author.realName);
         grp.writeEntry("authorUserName", post->author.userName);
         grp.writeEntry("authorLocation", post->author.location);
@@ -477,12 +477,12 @@ void PumpIOMicroBlog::saveTimeline(Choqok::Account* account, const QString& time
         grp.writeEntry("mediaHeight", post->mediaSizeHeight);
         grp.writeEntry("mediaWidth", post->mediaSizeWidth);
         grp.writeEntry("isRead", post->isRead);
-        grp.writeEntry("conversationId", post->conversationId.toString());
+        grp.writeEntry("conversationId", post->conversationId);
         grp.writeEntry("to", post->to);
         grp.writeEntry("cc", post->cc);
         grp.writeEntry("shares", post->shares);
         grp.writeEntry("replies", post->replies);
-        grp.writeEntry("replyToPostId", post->replyToPostId.toString());
+        grp.writeEntry("replyToPostId", post->replyToPostId);
         grp.writeEntry("replyToUserName", post->replyToUserName);
         grp.writeEntry("replyToObjectType", post->replyToObjectType);
     }
@@ -510,10 +510,10 @@ void PumpIOMicroBlog::updateTimelines(Choqok::Account* theAccount)
             url.addPath(m_timelinesPaths[timeline].arg(acc->username()));
 
             QOAuth::ParamMap oAuthParams;
-            const ChoqokId lastActivityId(lastTimelineId(theAccount, timeline));
+            const QString lastActivityId(lastTimelineId(theAccount, timeline));
             if (!lastActivityId.isEmpty()) {
                 oAuthParams.insert("count", QByteArray::number(200));
-                oAuthParams.insert("since", KUrl::toPercentEncoding(lastActivityId.toString()));
+                oAuthParams.insert("since", KUrl::toPercentEncoding(lastActivityId));
             } else {
                 oAuthParams.insert("count", QByteArray::number(Choqok::BehaviorSettings::countOfPosts()));
             }
@@ -1116,7 +1116,7 @@ void PumpIOMicroBlog::fetchReplies(Choqok::Account* theAccount, const QString& u
     }
 }
 
-ChoqokId PumpIOMicroBlog::lastTimelineId(Choqok::Account* theAccount,
+QString PumpIOMicroBlog::lastTimelineId(Choqok::Account* theAccount,
                                          const QString& timeline) const
 {
     kDebug() << "Latest ID for timeline " << timeline << m_timelinesLatestIds[theAccount][timeline];
@@ -1259,7 +1259,7 @@ QList< Choqok::Post* > PumpIOMicroBlog::readTimeline(const QByteArray& buffer)
 
 void PumpIOMicroBlog::setLastTimelineId(Choqok::Account* theAccount,
                                         const QString& timeline,
-                                        const ChoqokId& id)
+                                        const QString& id)
 {
     m_timelinesLatestIds[theAccount][timeline] = id;
 }

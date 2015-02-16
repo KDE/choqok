@@ -292,7 +292,7 @@ void TwitterApiPostWidget::slotBasePostFetched(Choqok::Account* theAccount, Choq
 void TwitterApiPostWidget::repeatPost()
 {
     setReadWithSignal();
-    ChoqokId postId;
+    QString postId;
     if(currentPost()->repeatedPostId.isEmpty())
         postId = currentPost()->postId;
     else

@@ -166,7 +166,7 @@ void TwitterApiSearchTimelineWidget::loadCustomPage(const QString& pageNumber)
         page = 1;
     d->loadingAnotherPage = true;
     d->currentPage = page;
-    d->searchBackend->requestSearchResults(d->searchInfo, ChoqokId(), 0, page);
+    d->searchBackend->requestSearchResults(d->searchInfo, QString(), 0, page);
 }
 
 void TwitterApiSearchTimelineWidget::loadNextPage()
@@ -190,7 +190,7 @@ void TwitterApiSearchTimelineWidget::removeAllPosts()
 void TwitterApiSearchTimelineWidget::slotUpdateSearchResults()
 {
     if(d->currentPage == 1) {
-        ChoqokId lastId;
+        QString lastId;
         if( !postWidgets().isEmpty() )
             lastId = postWidgets().last()->currentPost()->postId;
         d->searchBackend->requestSearchResults(d->searchInfo, lastId);

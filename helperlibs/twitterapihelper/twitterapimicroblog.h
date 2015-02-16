@@ -91,7 +91,7 @@ public:
     /**
     \brief Repeat/Retweet a post using the API
     */
-    virtual void repeatPost( Choqok::Account *theAccount, const ChoqokId &postId );
+    virtual void repeatPost( Choqok::Account *theAccount, const QString &postId );
 
     /**
     Request to update all timelines of account!

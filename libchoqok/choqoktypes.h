@@ -27,7 +27,6 @@
 
 #include <QDateTime>
 
-#include "choqokid.h"
 #include "choqok_export.h"
 
 namespace Choqok
@@ -44,7 +43,7 @@ public:
     :isProtected(false)
     {}
     virtual ~User() {}
-    ChoqokId userId;
+    QString userId;
     QString realName;
     QString userName;
     QString location;
@@ -63,12 +62,12 @@ public:
     {}
     virtual ~Post() {}
     QDateTime creationDateTime;
-    ChoqokId postId;
+    QString postId;
     QString link;
     QString content;
     QString source;
-    ChoqokId replyToPostId;
-    ChoqokId replyToUserId;
+    QString replyToPostId;
+    QString replyToUserId;
     bool isFavorited;
     QString replyToUserName;
     User author;
@@ -77,8 +76,8 @@ public:
     bool isError;
     bool isRead;
     QString repeatedFromUsername;
-    ChoqokId repeatedPostId;
-    ChoqokId conversationId;
+    QString repeatedPostId;
+    QString conversationId;
     QString media;          // first Image of Post, if available
     int mediaSizeWidth;
     int mediaSizeHeight;

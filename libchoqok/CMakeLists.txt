@@ -17,7 +17,6 @@ passwordmanager.cpp
 mediamanager.cpp
 notifymanager.cpp
 choqokuiglobal.cpp
-choqokid.cpp
 choqoktools.cpp
 dbushandler.cpp
 urlutils.cpp
@@ -83,7 +82,6 @@ install( FILES
     account.h
     accountmanager.h
     choqok_export.h
-    choqokid.h
     choqoktypes.h
     choqokuiglobal.h
     mediamanager.h

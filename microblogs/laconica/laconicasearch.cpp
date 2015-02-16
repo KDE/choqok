@@ -67,7 +67,7 @@ LaconicaSearch::~LaconicaSearch()
 }
 
 KUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
-                              ChoqokId sinceStatusId, uint count, uint page)
+                              QString sinceStatusId, uint count, uint page)
 {
     kDebug();
 
@@ -113,7 +113,7 @@ KUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
 }
 
 void LaconicaSearch::requestSearchResults(const SearchInfo &searchInfo,
-                                          const ChoqokId& sinceStatusId,
+                                          const QString& sinceStatusId,
                                           uint count, uint page)
 {
     kDebug();
@@ -191,7 +191,7 @@ QList< Choqok::Post* > LaconicaSearch::parseAtom(const QByteArray& buffer)
             QDomElement elm = entryNode.toElement();
             if ( elm.tagName() == "id" ) {
                 // Fomatting example: "tag:search.twitter.com,2005:1235016836"
-                ChoqokId id;
+                QString id;
                 if(m_rId.exactMatch(elm.text())) {
                     id = m_rId.cap(1);
                 }
@@ -269,7 +269,7 @@ QList< Choqok::Post* > LaconicaSearch::parseRss(const QByteArray& buffer)
         Choqok::Post *status = new Choqok::Post;
 
         QDomAttr statusIdAttr = node.toElement().attributeNode( "rdf:about" );
-        ChoqokId statusId;
+        QString statusId;
         if(mIdRegExp.exactMatch(statusIdAttr.value())) {
             statusId = mIdRegExp.cap(1);
         }
@@ -301,7 +301,7 @@ QList< Choqok::Post* > LaconicaSearch::parseRss(const QByteArray& buffer)
                 status->author.realName = itemNode.toElement().text();
             } else if ( itemNode.toElement().tagName() == "sioc:reply_of" ) {
                 QDomAttr userIdAttr = itemNode.toElement().attributeNode( "rdf:resource" );
-                ChoqokId id;
+                QString id;
                 if(mIdRegExp.exactMatch(userIdAttr.value())) {
                     id = mIdRegExp.cap(1);
                 }

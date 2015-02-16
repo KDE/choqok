@@ -34,7 +34,7 @@ namespace Twitter {
 class List
 {
 public:
-    ChoqokId listId;
+    QString listId;
     QString name;
     QString fullname;
     QString slug;

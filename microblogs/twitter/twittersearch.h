@@ -46,7 +46,7 @@ public:
     ~TwitterSearch();
 
     virtual void requestSearchResults(const SearchInfo &searchInfo,
-                                      const ChoqokId& sinceStatusId = ChoqokId(),
+                                      const QString& sinceStatusId = QString(),
                                       uint count = 0, uint page = 1);
     virtual QString optionCode(int option);
 

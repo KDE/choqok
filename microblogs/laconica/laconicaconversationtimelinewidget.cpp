@@ -32,7 +32,7 @@
 #include "laconicamicroblog.h"
 
 LaconicaConversationTimelineWidget::LaconicaConversationTimelineWidget(Choqok::Account* curAccount,
-                                                                       const ChoqokId& convId, QWidget* parent)
+                                                                       const QString& convId, QWidget* parent)
 : TwitterApiTimelineWidget(curAccount, i18n("Conversation %1", convId), parent)
 {
     setWindowTitle(i18n("Please wait..."));
@@ -40,8 +40,8 @@ LaconicaConversationTimelineWidget::LaconicaConversationTimelineWidget(Choqok::A
     resize(choqokMainWindow->width(), 500);
     move(choqokMainWindow->pos());
     conversationId = convId;
-    connect( mBlog, SIGNAL(conversationFetched(Choqok::Account*,ChoqokId,QList<Choqok::Post*>)),
-             this, SLOT(slotConversationFetched(Choqok::Account*,ChoqokId,QList<Choqok::Post*>)) );
+    connect( mBlog, SIGNAL(conversationFetched(Choqok::Account*,QString,QList<Choqok::Post*>)),
+             this, SLOT(slotConversationFetched(Choqok::Account*,QString,QList<Choqok::Post*>)) );
     mBlog->fetchConversation(curAccount, convId);
 }
 
@@ -59,7 +59,7 @@ void LaconicaConversationTimelineWidget::loadTimeline()
 }
 
 void LaconicaConversationTimelineWidget::slotConversationFetched(Choqok::Account* theAccount,
-                                                                 const ChoqokId& convId,
+                                                                 const QString& convId,
                                                                  QList< Choqok::Post* > posts)
 {
     if( currentAccount() == theAccount && convId == this->conversationId){

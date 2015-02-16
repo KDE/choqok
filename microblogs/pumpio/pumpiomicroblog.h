@@ -135,14 +135,14 @@ protected:
                                   const QOAuth::HttpMethod& method,
                                   const QOAuth::ParamMap& map = QOAuth::ParamMap()) const;
 
-    ChoqokId lastTimelineId(Choqok::Account* theAccount, const QString& timeline) const;
+    QString lastTimelineId(Choqok::Account* theAccount, const QString& timeline) const;
 
     Choqok::Post* readPost(const QVariantMap& var, Choqok::Post* post);
 
     QList<Choqok::Post* > readTimeline(const QByteArray& buffer);
 
     void setLastTimelineId(Choqok::Account* theAccount, const QString& timeline,
-                           const ChoqokId& id);
+                           const QString& id);
 
     void setTimelinesInfo();
 
@@ -156,7 +156,7 @@ protected:
     QMap<KJob*, Choqok::Post* > m_uploadJobs;
     QMap<KJob*, Choqok::Post* > m_updateJobs;
     QMap<QString, Choqok::TimelineInfo* > m_timelinesInfos;
-    QHash<Choqok::Account*, QMap<QString, ChoqokId> > m_timelinesLatestIds;
+    QHash<Choqok::Account*, QMap<QString, QString> > m_timelinesLatestIds;
     QHash<QString, QString> m_timelinesPaths;
     QMap<KJob*, QString> m_timelinesRequests;
 

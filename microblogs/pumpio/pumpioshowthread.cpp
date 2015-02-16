@@ -34,7 +34,7 @@ class PumpIOShowThread::Private
 {
 public:
     Choqok::Account* account;
-    ChoqokId postId;
+    QString postId;
 };
 
 PumpIOShowThread::PumpIOShowThread(Choqok::Account* account, Choqok::Post* post,

@@ -64,7 +64,7 @@ public:
     bool mStartUp;
     QPointer<KPushButton> btnMarkAllAsRead;
     int unreadCount;
-    QMap<ChoqokId, PostWidget *> posts;
+    QMap<QString, PostWidget *> posts;
     QMultiMap<QDateTime, PostWidget *>  sortedPostsList;
     QVBoxLayout *mainLayout;
     QHBoxLayout *titleBarLayout;
@@ -265,8 +265,8 @@ void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
              this, SIGNAL(forwardReply(QString,QString,QString)) );
     connect( widget, SIGNAL(postReaded()),
             this, SLOT(slotOnePostReaded()) );
-    connect( widget, SIGNAL(aboutClosing(ChoqokId,PostWidget*)),
-             SLOT(postWidgetClosed(ChoqokId,PostWidget*)) );
+    connect( widget, SIGNAL(aboutClosing(QString,PostWidget*)),
+             SLOT(postWidgetClosed(QString,PostWidget*)) );
     d->mainLayout->insertWidget(d->order, widget);
     d->posts.insert(widget->currentPost()->postId, widget);
     d->sortedPostsList.insert(widget->currentPost()->creationDateTime, widget);
@@ -339,13 +339,13 @@ QList< PostWidget* > TimelineWidget::postWidgets()
     return posts().values();
 }
 
-void TimelineWidget::postWidgetClosed(const ChoqokId& postId, PostWidget* post)
+void TimelineWidget::postWidgetClosed(const QString& postId, PostWidget* post)
 {
     d->posts.remove(postId);
     d->sortedPostsList.remove(post->currentPost()->creationDateTime, post);
 }
 
-QMap< ChoqokId, PostWidget* >& TimelineWidget::posts() const
+QMap< QString, PostWidget* >& TimelineWidget::posts() const
 {
     return d->posts;
 }

@@ -76,7 +76,7 @@ TwitterSearch::TwitterSearch(QObject* parent): TwitterApiSearch(parent)
 }
 
 void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
-                                         const ChoqokId& sinceStatusId,
+                                         const QString& sinceStatusId,
                                          uint count, uint page)
 {
     kDebug();

@@ -43,13 +43,13 @@ public:
     LaconicaSearch(QObject* parent = 0);
     ~LaconicaSearch();
     virtual void requestSearchResults(const SearchInfo &searchInfo,
-                                      const ChoqokId& sinceStatusId = QString(),
+                                      const QString& sinceStatusId = QString(),
                                       uint count = 0, uint page = 1);
     virtual QString optionCode(int option);
 
 protected:
     virtual KUrl buildUrl( const SearchInfo &searchInfo,
-                           ChoqokId sinceStatusId = ChoqokId(),
+                           QString sinceStatusId = QString(),
                            uint count = 0, uint page = 1 );
     QList<Choqok::Post*> parseRss( const QByteArray &buffer );
     QList<Choqok::Post*> parseAtom( const QByteArray &buffer );

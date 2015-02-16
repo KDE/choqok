@@ -326,7 +326,7 @@ void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob* job)
     return list;
 }*/
 
-void LaconicaMicroBlog::fetchConversation(Choqok::Account* theAccount, const ChoqokId& conversationId)
+void LaconicaMicroBlog::fetchConversation(Choqok::Account* theAccount, const QString& conversationId)
 {
     kDebug();
     if ( conversationId.isEmpty()) {
@@ -356,7 +356,7 @@ void LaconicaMicroBlog::slotFetchConversation(KJob* job)
         return;
     }
     QList<Choqok::Post*> posts;
-    ChoqokId conversationId = mFetchConversationMap.take(job);
+    QString conversationId = mFetchConversationMap.take(job);
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
         kDebug() << "Job Error: " << job->errorString();

@@ -75,9 +75,9 @@ void OCSMicroblog::saveTimeline(Choqok::Account* account, const QString& timelin
         const Choqok::Post *post = (*it)->currentPost();
         KConfigGroup grp( &postsBackup, post->creationDateTime.toString() );
         grp.writeEntry( "creationDateTime", post->creationDateTime );
-        grp.writeEntry( "postId", post->postId.toString() );
+        grp.writeEntry( "postId", post->postId );
         grp.writeEntry( "text", post->content );
-        grp.writeEntry( "authorId", post->author.userId.toString() );
+        grp.writeEntry( "authorId", post->author.userId );
         grp.writeEntry( "authorUserName", post->author.userName );
         grp.writeEntry( "authorRealName", post->author.realName );
         grp.writeEntry( "authorProfileImageUrl", post->author.profileImageUrl );

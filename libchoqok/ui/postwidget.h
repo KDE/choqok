@@ -154,7 +154,7 @@ Q_SIGNALS:
     Emitted when this widget is about to close!
     postId and this returned!
     */
-    void aboutClosing( const ChoqokId &postId, PostWidget *widget);
+    void aboutClosing( const QString &postId, PostWidget *widget);
 
 protected Q_SLOTS:
 

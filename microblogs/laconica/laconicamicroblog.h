@@ -66,10 +66,10 @@ public:
     virtual QString generateRepeatedByUserTooltip(const QString& username);
     virtual QString repeatQuestion();
 
-    virtual void fetchConversation(Choqok::Account* theAccount, const ChoqokId& conversationId);
+    virtual void fetchConversation(Choqok::Account* theAccount, const QString& conversationId);
 
 Q_SIGNALS:
-    void conversationFetched( Choqok::Account* theAccount, const ChoqokId& conversationId,
+    void conversationFetched( Choqok::Account* theAccount, const QString& conversationId,
                               QList<Choqok::Post*> posts );
 
 protected:
@@ -87,7 +87,7 @@ protected Q_SLOTS:
     virtual void slotFetchConversation( KJob* job );
     void slotRequestFriendsScreenName(KJob* job);
 private:
-    QMap<KJob*, ChoqokId> mFetchConversationMap;
+    QMap<KJob*, QString> mFetchConversationMap;
     QPointer<LaconicaSearch> mSearchBackend;
     int friendsPage;
 };
