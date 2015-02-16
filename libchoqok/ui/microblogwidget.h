@@ -33,7 +33,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "choqok_export.h"
 
 class QLabel;
-class KTabWidget;
 
 namespace Choqok {
 class Account;

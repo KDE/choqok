@@ -33,7 +33,6 @@
 class PumpIOAccount;
 class PumpIOMicroBlog;
 
-class KJob;
 
 class PumpIOEditAccountWidget : public ChoqokEditAccountWidget, Ui::PumpIOEditAccountWidget
 {

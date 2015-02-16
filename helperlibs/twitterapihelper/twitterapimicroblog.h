@@ -36,10 +36,6 @@ namespace QJson {
 class Parser;
 }
 
-namespace QOAuth {
-class Interface;
-}
-
 class TwitterApiSearchTimelineWidget;
 class TwitterApiAccount;
 class KJob;

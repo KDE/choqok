@@ -31,7 +31,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "choqoktypes.h"
 #include "choqok_export.h"
 
-class QHBoxLayout;
 class QLabel;
 namespace Choqok {
 class Account;

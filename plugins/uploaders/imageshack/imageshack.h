@@ -32,7 +32,6 @@
 */
 
 class KJob;
-class KConfigGroup;
 
 class ImageShack : public Choqok::Uploader
 {

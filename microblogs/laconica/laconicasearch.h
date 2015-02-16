@@ -27,6 +27,7 @@
 
 #include "twitterapihelper/twitterapisearch.h"
 
+class KJob;
 
 /**
 GNU social/StatatusNet/Laconica search API implementation.

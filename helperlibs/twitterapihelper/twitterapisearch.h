@@ -36,12 +36,10 @@
 #include "accountmanager.h"
 #include "choqoktypes.h"
 
-class TwitterApiAccount;
 namespace Choqok {
 class Account;
 }
 
-class KJob;
 
 class CHOQOK_HELPER_EXPORT SearchInfo
 {

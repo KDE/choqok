@@ -39,7 +39,6 @@ class Job;
 
 class KJob;
 namespace Choqok {
-class ShortenManager;
 namespace UI {
 class PostWidget;
 }

@@ -28,7 +28,6 @@
 
 #include "plugin.h"
 
-class QWidget;
 
 namespace Choqok{
 /**

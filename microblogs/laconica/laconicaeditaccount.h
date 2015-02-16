@@ -35,7 +35,6 @@ class Interface;
 }
 
 class QProgressBar;
-class KJob;
 class LaconicaAccount;
 class LaconicaMicroBlog;
 /**

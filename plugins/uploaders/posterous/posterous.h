@@ -28,7 +28,6 @@
 #include "uploader.h"
 
 class KJob;
-class KConfigGroup;
 
 class Posterous : public Choqok::Uploader
 {

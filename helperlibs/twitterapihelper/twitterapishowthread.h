@@ -36,7 +36,6 @@ class PostWidget;
 }
 }
 
-class TwitterApiAccount;
 class CHOQOK_HELPER_EXPORT TwitterApiShowThread : public QWidget
 {
     Q_OBJECT

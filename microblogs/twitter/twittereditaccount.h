@@ -34,7 +34,6 @@ namespace QOAuth {
 class Interface;
 }
 
-class KJob;
 class QProgressBar;
 class TwitterAccount;
 class TwitterMicroBlog;

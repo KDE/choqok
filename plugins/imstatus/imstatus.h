@@ -28,7 +28,6 @@
 
 #include "choqoktypes.h"
 
-class KConfigGroup;
 class IMStatusPrivate;
 
 /**

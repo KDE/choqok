@@ -44,13 +44,11 @@ class Job;
 
 //class KJob;
 namespace Choqok {
-  class ShortenManager;
 namespace UI {
 class PostWidget;
 }
 }
 
-class KConfigGroup;
 
 class VideoPreview : public Choqok::Plugin
 {

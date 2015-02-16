@@ -30,11 +30,8 @@
 #include "choqoktypes.h"
 #include "microblog.h"
 
-class KComboBox;
-class QCheckBox;
 namespace Choqok {
 namespace UI {
-class TextEdit;
 
 /**
 Widget for Quick posting

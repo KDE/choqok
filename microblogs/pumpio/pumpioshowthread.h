@@ -31,12 +31,6 @@
 
 #include "ui_pumpioshowthread.h"
 
-namespace Choqok {
-    namespace UI {
-        class PostWidget;
-    }
-}
-
 class PumpIOShowThread : public QWidget, Ui::PumpIOShowThread
 {
     Q_OBJECT

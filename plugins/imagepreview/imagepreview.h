@@ -36,14 +36,12 @@ namespace KIO {
 class Job;
 }
 
-class KJob;
 namespace Choqok {
 namespace UI {
 class PostWidget;
 }
 }
 
-class KConfigGroup;
 
 class ImagePreview : public Choqok::Plugin
 {

@@ -33,7 +33,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "microblog.h"
 
 class KAction;
-class QGridLayout;
 class KPushButton;
 
 namespace Choqok {

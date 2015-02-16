@@ -27,6 +27,8 @@
 
 #include "twitterapihelper/twitterapisearch.h"
 
+class KJob;
+
 /**
 Twitter.com search API implementation.
 

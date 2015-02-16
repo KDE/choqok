@@ -39,7 +39,6 @@ namespace Choqok
 namespace UI
 {
     class QuickPost;
-    class MicroBlogWidget;
 }
     class Plugin;
 }
@@ -48,9 +47,7 @@ namespace KSettings
     class Dialog;
 }
 
-class QTimer;
 class SysTrayIcon;
-class KTabWidget;
 
 /**
  * This class serves as the main window for Choqok.  It handles the

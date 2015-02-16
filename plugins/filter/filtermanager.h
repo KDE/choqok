@@ -37,10 +37,8 @@ namespace Choqok {
 namespace UI {
 class PostWidget;
 }
-class Account;
 }
 
-class KConfigGroup;
 /**
 Filter Manager
 

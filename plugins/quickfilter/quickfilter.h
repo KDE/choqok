@@ -32,11 +32,9 @@
 
 class KAction;
 namespace Choqok {
-    class ShortenManager;
     class Account;
     namespace UI {
         class PostWidget;
-        class MicroBlogWidget;
     }
 }
 

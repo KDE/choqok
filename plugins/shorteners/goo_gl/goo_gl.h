@@ -28,7 +28,6 @@
 
 #include "shortener.h"
 
-class KJob;
 /**
   @author Andrey Esin \<gmlastik@gmail.com\>
 */
