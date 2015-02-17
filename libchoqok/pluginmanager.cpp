@@ -55,7 +55,7 @@ public:
     ~PluginManagerPrivate()
     {
         if ( shutdownMode != DoneShutdown ) {
-            qCWarning(CHOQOK) << "Destructing plugin manager without going through the shutdown process! Backtrace is: " << endl << kBacktrace();
+            qCWarning(CHOQOK) << "Destructing plugin manager without going through the shutdown process! Backtrace is: " << endl;
         }
 
         // Clean up loadedPlugins manually, because PluginManager can't access our global
@@ -335,7 +335,7 @@ Plugin * PluginManager::loadPlugin( const QString &_pluginId, PluginLoadMode mod
     // FIXME: Find any cases causing this, remove them, and remove this too - Richard
     if ( pluginId.endsWith( QLatin1String( ".desktop" ) ) )
     {
-        qCWarning(CHOQOK) << "Trying to use old-style API!" << endl << kBacktrace();
+        qCWarning(CHOQOK) << "Trying to use old-style API!" << endl;
         pluginId = pluginId.remove( QRegExp( QLatin1String( ".desktop$" ) ) );
     }
 
