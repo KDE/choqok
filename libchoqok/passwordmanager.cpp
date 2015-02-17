@@ -54,8 +54,9 @@ public:
     bool openWallet()
     {
         qCDebug(CHOQOK);
-        if(kapp->sessionSaving())
-            return false;
+#pragma message("This segfaults on KF5")
+//        if(kapp->sessionSaving())
+//            return false;
         if((wallet && wallet->isOpen()))
             return true;
         WId id = 0;
