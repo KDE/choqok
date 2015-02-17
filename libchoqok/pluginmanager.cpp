@@ -25,6 +25,7 @@
 
 #include <QApplication>
 #include <QRegExp>
+#include <QtGlobal>
 #include <QTimer>
 #include <QStack>
 
@@ -93,7 +94,7 @@ public:
     PluginManager instance;
 };
 
-K_GLOBAL_STATIC(PluginManagerPrivate, _kpmp)
+Q_GLOBAL_STATIC(PluginManagerPrivate, _kpmp)
 
 PluginManager* PluginManager::self()
 {
@@ -102,12 +103,6 @@ PluginManager* PluginManager::self()
 
 PluginManager::PluginManager() : QObject( )
 {
-    // We want to add a reference to the application's event loop so we
-    // can remain in control when all windows are removed.
-    // This way we can unload plugins asynchronously, which is more
-    // robust if they are still doing processing.
-    KGlobal::ref();
-
     connect(QCoreApplication::instance(), SIGNAL(aboutToQuit()),
             this, SLOT(slotAboutToQuit()));
 }
@@ -244,7 +239,6 @@ void PluginManager::slotShutdownDone()
 {
     qCDebug(CHOQOK) ;
     _kpmp->shutdownMode = PluginManagerPrivate::DoneShutdown;
-    KGlobal::deref();
 }
 
 void PluginManager::loadAllPlugins()
@@ -477,7 +471,7 @@ bool PluginManager::setPluginEnabled( const QString &_pluginId, bool enabled /* 
 {
     QString pluginId = _pluginId;
 
-    KConfigGroup config(KGlobal::config(), "Plugins");
+    KConfigGroup config(KSharedConfig::openConfig(), "Plugins");
 
     // FIXME: What is this for? This sort of thing is kconf_update's job - Richard
     if ( !pluginId.startsWith( QLatin1String( "choqok_" ) ) )

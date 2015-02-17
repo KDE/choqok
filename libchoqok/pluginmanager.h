@@ -25,6 +25,7 @@
 #ifndef CHOQOKPLUGINMANAGER_H
 #define CHOQOKPLUGINMANAGER_H
 
+#include <QEventLoopLocker>
 #include <QList>
 #include <QObject>
 
@@ -246,6 +247,12 @@ private:
 
     PluginManager();
     ~PluginManager();
+
+    // We want to add a reference to the application's event loop so we
+    // can remain in control when all windows are removed.
+    // This way we can unload plugins asynchronously, which is more
+    // robust if they are still doing processing.
+    QEventLoopLocker lock;
 
 };
 
