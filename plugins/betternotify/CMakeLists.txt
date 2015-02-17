@@ -10,11 +10,11 @@ notification.cpp
 notify.cpp
 notifysettings.cpp )
 
-# kde4_add_kcfg_files(choqok_notify_PART_SRCS betternotify.kcfgc )
+# kconfig_add_kcfg_files(choqok_notify_PART_SRCS betternotify.kcfgc )
 
-kde4_add_plugin(choqok_betternotify ${choqok_notify_PART_SRCS})
+add_library(choqok_betternotify MODULE ${choqok_notify_PART_SRCS})
 
-target_link_libraries(choqok_betternotify ${KDE4_KUTILS_LIBS} ${KDE4_KDEUI_LIBS} choqok)
+target_link_libraries(choqok_betternotify   choqok)
 
 install(TARGETS choqok_betternotify DESTINATION ${PLUGIN_INSTALL_DIR})
 
@@ -25,13 +25,13 @@ dummynotification.cpp
 notifyconfig.cpp
 notifysettings.cpp )
 
-kde4_add_ui_files(kcm_choqok_notify_PART_SRCS notifyprefs.ui )
+ki18n_wrap_ui(kcm_choqok_notify_PART_SRCS notifyprefs.ui )
 
-# kde4_add_kcfg_files(kcm_choqok_notify_PART_SRCS betternotify.kcfgc )
+# kconfig_add_kcfg_files(kcm_choqok_notify_PART_SRCS betternotify.kcfgc )
 
-kde4_add_plugin(kcm_choqok_betternotify ${kcm_choqok_notify_PART_SRCS})
+add_library(kcm_choqok_betternotify MODULE ${kcm_choqok_notify_PART_SRCS})
 
-target_link_libraries(kcm_choqok_betternotify ${KDE4_KDEUI_LIBS} choqok)
+target_link_libraries(kcm_choqok_betternotify  choqok)
 
 install(TARGETS kcm_choqok_betternotify DESTINATION ${PLUGIN_INSTALL_DIR})
 

@@ -8,11 +8,11 @@ ${CHOQOK_INCLUDES}
 set( choqok_untiny_PART_SRCS
 untiny.cpp )
 
-kde4_add_kcfg_files(choqok_untiny_PART_SRCS untinysettings.kcfgc)
+kconfig_add_kcfg_files(choqok_untiny_PART_SRCS untinysettings.kcfgc)
 
-kde4_add_plugin(choqok_untiny ${choqok_untiny_PART_SRCS})
+add_library(choqok_untiny MODULE ${choqok_untiny_PART_SRCS})
 
-target_link_libraries(choqok_untiny ${KDE4_KIO_LIBS} choqok)
+target_link_libraries(choqok_untiny KF5::KIOCore choqok)
 
 install(TARGETS choqok_untiny DESTINATION ${PLUGIN_INSTALL_DIR})
 
@@ -22,13 +22,13 @@ install(TARGETS choqok_untiny DESTINATION ${PLUGIN_INSTALL_DIR})
 # set( kcm_choqok_untiny_PART_SRCS
 # untinyconfig.cpp )
 # 
-# kde4_add_ui_files(kcm_choqok_untiny_PART_SRCS untinyprefs.ui )
+# ki18n_wrap_ui(kcm_choqok_untiny_PART_SRCS untinyprefs.ui )
 # 
-# kde4_add_kcfg_files(kcm_choqok_untiny_PART_SRCS untinysettings.kcfgc )
+# kconfig_add_kcfg_files(kcm_choqok_untiny_PART_SRCS untinysettings.kcfgc )
 # 
 # kde4_add_plugin(kcm_choqok_untiny ${kcm_choqok_untiny_PART_SRCS})
 # 
-# target_link_libraries(kcm_choqok_untiny ${KDE4_KDEUI_LIBS})
+# target_link_libraries(kcm_choqok_untiny )
 # 
 # install(TARGETS kcm_choqok_untiny DESTINATION ${PLUGIN_INSTALL_DIR})
 

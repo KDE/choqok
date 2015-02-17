@@ -153,4 +153,3 @@ void Notification::mouseMoveEvent(QMouseEvent* e)
     e->accept();
 }
 
-#include "notification.moc"

@@ -173,4 +173,3 @@ void LaconicaComposerWidget::slotRebuildEditor(Choqok::Account *theAccount)
     setEditor(new TwitterApiTextEdit(theAccount, this));
 }
 
-#include "laconicacomposerwidget.moc"

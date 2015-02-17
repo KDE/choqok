@@ -81,4 +81,3 @@ void Plugin::aboutToUnload()
 
 }
 
-#include "plugin.moc"

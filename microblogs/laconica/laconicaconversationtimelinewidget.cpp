@@ -85,4 +85,3 @@ void LaconicaConversationTimelineWidget::updateHeight()
         scrollToBottom();
 }
 
-#include "laconicaconversationtimelinewidget.moc"

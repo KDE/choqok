@@ -10,11 +10,11 @@ add_subdirectory(icons)
 set( choqok_flickr_PART_SRCS
 flickr.cpp)
 
-kde4_add_kcfg_files(choqok_flickr_PART_SRCS flickrsettings.kcfgc )
+kconfig_add_kcfg_files(choqok_flickr_PART_SRCS flickrsettings.kcfgc )
 
-kde4_add_plugin(choqok_flickr ${choqok_flickr_PART_SRCS})
+add_library(choqok_flickr MODULE ${choqok_flickr_PART_SRCS})
 
-target_link_libraries(choqok_flickr ${KDE4_KIO_LIBS} choqok)
+target_link_libraries(choqok_flickr KF5::KIOCore choqok)
 
 install(TARGETS choqok_flickr DESTINATION ${PLUGIN_INSTALL_DIR})
 
@@ -23,13 +23,13 @@ install(TARGETS choqok_flickr DESTINATION ${PLUGIN_INSTALL_DIR})
 set( kcm_choqok_flickr_PART_SRCS
 flickrconfig.cpp )
 
-kde4_add_ui_files(kcm_choqok_flickr_PART_SRCS flickrprefs.ui )
+ki18n_wrap_ui(kcm_choqok_flickr_PART_SRCS flickrprefs.ui )
 
-kde4_add_kcfg_files(kcm_choqok_flickr_PART_SRCS flickrsettings.kcfgc )
+kconfig_add_kcfg_files(kcm_choqok_flickr_PART_SRCS flickrsettings.kcfgc )
 
-kde4_add_plugin(kcm_choqok_flickr ${kcm_choqok_flickr_PART_SRCS})
+add_library(kcm_choqok_flickr MODULE ${kcm_choqok_flickr_PART_SRCS})
 
-target_link_libraries(kcm_choqok_flickr ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} choqok)
+target_link_libraries(kcm_choqok_flickr  KF5::KIOCore choqok)
 
 install(TARGETS kcm_choqok_flickr DESTINATION ${PLUGIN_INSTALL_DIR})
 

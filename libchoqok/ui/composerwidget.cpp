@@ -253,4 +253,3 @@ void ComposerWidget::abort()
 
 }
 }
-#include "composerwidget.moc"

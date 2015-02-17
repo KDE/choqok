@@ -8,11 +8,11 @@ ${CHOQOK_INCLUDES}
 set( choqok_twitgoo_PART_SRCS
 twitgoo.cpp)
 
-kde4_add_kcfg_files(choqok_twitgoo_PART_SRCS twitgoosettings.kcfgc )
+kconfig_add_kcfg_files(choqok_twitgoo_PART_SRCS twitgoosettings.kcfgc )
 
-kde4_add_plugin(choqok_twitgoo ${choqok_twitgoo_PART_SRCS})
+add_library(choqok_twitgoo MODULE ${choqok_twitgoo_PART_SRCS})
 
-target_link_libraries(choqok_twitgoo ${KDE4_KIO_LIBS} ${QTOAUTH_LIBRARY} ${QJSON_LIBRARY} choqok twitterapihelper)
+target_link_libraries(choqok_twitgoo KF5::KIOCore ${QTOAUTH_LIBRARY} ${QJSON_LIBRARY} choqok twitterapihelper)
 
 install(TARGETS choqok_twitgoo DESTINATION ${PLUGIN_INSTALL_DIR})
 
@@ -21,13 +21,13 @@ install(TARGETS choqok_twitgoo DESTINATION ${PLUGIN_INSTALL_DIR})
 set( kcm_choqok_twitgoo_PART_SRCS
 twitgooconfig.cpp )
 
-kde4_add_ui_files(kcm_choqok_twitgoo_PART_SRCS twitgooprefs.ui )
+ki18n_wrap_ui(kcm_choqok_twitgoo_PART_SRCS twitgooprefs.ui )
 
-kde4_add_kcfg_files(kcm_choqok_twitgoo_PART_SRCS twitgoosettings.kcfgc )
+kconfig_add_kcfg_files(kcm_choqok_twitgoo_PART_SRCS twitgoosettings.kcfgc )
 
-kde4_add_plugin(kcm_choqok_twitgoo ${kcm_choqok_twitgoo_PART_SRCS})
+add_library(kcm_choqok_twitgoo MODULE ${kcm_choqok_twitgoo_PART_SRCS})
 
-target_link_libraries(kcm_choqok_twitgoo ${KDE4_KDEUI_LIBS} choqok)
+target_link_libraries(kcm_choqok_twitgoo  choqok)
 
 install(TARGETS kcm_choqok_twitgoo DESTINATION ${PLUGIN_INSTALL_DIR})
 

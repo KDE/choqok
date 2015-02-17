@@ -65,4 +65,3 @@ void Application::setStartingUp(bool startingUp)
     Private::isStartingUp = startingUp;
 }
 
-#include "application.moc"

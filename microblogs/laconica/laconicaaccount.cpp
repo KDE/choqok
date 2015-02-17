@@ -79,4 +79,3 @@ KUrl LaconicaAccount::homepageUrl() const
     return apiUrl().upUrl();
 }
 
-#include "laconicaaccount.moc"

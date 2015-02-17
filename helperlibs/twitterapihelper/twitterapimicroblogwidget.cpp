@@ -317,4 +317,3 @@ void TwitterApiMicroBlogWidget::closeAllSearches()
     }
 }
 
-#include "twitterapimicroblogwidget.moc"

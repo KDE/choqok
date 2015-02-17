@@ -722,4 +722,3 @@ bool PostWidget::isResendAvailable()
 	return d->mCurrentAccount->username().compare( d->mCurrentPost->author.userName, Qt::CaseInsensitive ) != 0;
 }
 
-#include "postwidget.moc"

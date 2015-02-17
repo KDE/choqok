@@ -670,4 +670,3 @@ void MainWindow::slotDonate()
     Choqok::openUrl(QUrl("http://choqok.gnufolks.org/about/contribute/"));
 }
 
-#include "mainwindow.moc"

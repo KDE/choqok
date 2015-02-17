@@ -15,17 +15,16 @@ set(choqok_pumpio_SRCS
     pumpioshowthread.cpp
 )
 
-kde4_add_ui_files(choqok_pumpio_SRCS
+ki18n_wrap_ui(choqok_pumpio_SRCS
     pumpioeditaccountwidget.ui
     pumpiomessagedialog.ui
     pumpioshowthread.ui
 )
 
-kde4_add_plugin(choqok_pumpio ${choqok_pumpio_SRCS})
+add_library(choqok_pumpio MODULE ${choqok_pumpio_SRCS})
 
 target_link_libraries(choqok_pumpio choqok
-    ${KDE4_KDEUI_LIBS}
-    ${KDE4_KIO_LIBS}
+    KF5::KIOCore
     ${QTOAUTH_LIBRARY}
     ${QJSON_LIBRARY}
 )

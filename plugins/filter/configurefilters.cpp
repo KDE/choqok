@@ -175,4 +175,3 @@ void ConfigureFilters::slotHideRepliesNotRelatedToMeToggled(bool enabled)
 }
 
 
-#include "configurefilters.moc"

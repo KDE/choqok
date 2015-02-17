@@ -40,4 +40,3 @@ QString Shortener::shorten( const QString &url )
     return url;
 }
 }
-#include "shortener.moc"

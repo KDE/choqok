@@ -3,9 +3,9 @@ include_directories(
 ${CHOQOK_INCLUDES}
 )
 
-if(QtIndicate_FOUND)
-	add_definitions(-DQTINDICATE_BUILD)
-endif(QtIndicate_FOUND)
+#if(QtIndicate_FOUND)
+#	add_definitions(-DQTINDICATE_BUILD)
+#endif(QtIndicate_FOUND)
 
 ########### next target ###############
 
@@ -14,17 +14,25 @@ set(kcm_choqok_behaviorconfig_PART_SRCS
    behaviorconfig_shorten.cpp
    )
 
-kde4_add_ui_files(kcm_choqok_behaviorconfig_PART_SRCS
+ki18n_wrap_ui(kcm_choqok_behaviorconfig_PART_SRCS
    behaviorconfig_general.ui
    behaviorconfig_notifications.ui
    behaviorconfig_shorten_base.ui
    )
 
+add_library(kcm_choqok_behaviorconfig MODULE ${kcm_choqok_behaviorconfig_PART_SRCS})
 
-kde4_add_plugin(kcm_choqok_behaviorconfig ${kcm_choqok_behaviorconfig_PART_SRCS})
+kcoreaddons_desktop_to_json(kcm_choqok_behaviorconfig choqok_behaviorconfig.desktop)
 
-
-target_link_libraries(kcm_choqok_behaviorconfig  ${KDE4_KUTILS_LIBS} choqok)
+target_link_libraries(kcm_choqok_behaviorconfig
+PUBLIC
+    Qt5::Widgets
+    KF5::CoreAddons
+    KF5::I18n
+    KF5::KCMUtils
+    KF5::KDELibs4Support
+    choqok
+)
 
 install(TARGETS kcm_choqok_behaviorconfig  DESTINATION ${PLUGIN_INSTALL_DIR})
 

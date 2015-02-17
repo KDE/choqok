@@ -37,4 +37,3 @@ Choqok::Uploader::~Uploader()
 
 }
 
-#include "uploader.moc"

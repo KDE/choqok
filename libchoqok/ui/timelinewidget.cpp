@@ -382,4 +382,3 @@ void TimelineWidget::setClosable(bool isClosable)
 
 }
 }
-#include "timelinewidget.moc"

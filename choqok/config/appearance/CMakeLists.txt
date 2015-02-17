@@ -3,21 +3,25 @@ include_directories(
 ${CHOQOK_INCLUDES}
 )
 
-# link_directories(  )
-
-
 ########### next target ###############
 
 set(kcm_choqok_appearanceconfig_PART_SRCS
 appearanceconfig.cpp )
 
-kde4_add_ui_files(kcm_choqok_appearanceconfig_PART_SRCS
+ki18n_wrap_ui(kcm_choqok_appearanceconfig_PART_SRCS
 appearanceconfig_base.ui )
 
-kde4_add_plugin(kcm_choqok_appearanceconfig ${kcm_choqok_appearanceconfig_PART_SRCS})
+add_library(kcm_choqok_appearanceconfig MODULE ${kcm_choqok_appearanceconfig_PART_SRCS})
 
+kcoreaddons_desktop_to_json(kcm_choqok_appearanceconfig choqok_appearanceconfig.desktop)
 
-target_link_libraries(kcm_choqok_appearanceconfig ${KDE4_KUTILS_LIBS} choqok)
+target_link_libraries(kcm_choqok_appearanceconfig
+PUBLIC
+    Qt5::Widgets
+    KF5::CoreAddons
+    KF5::KDELibs4Support
+    choqok
+)
 
 install(TARGETS kcm_choqok_appearanceconfig  DESTINATION ${PLUGIN_INSTALL_DIR})
 

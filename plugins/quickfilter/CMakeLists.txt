@@ -8,9 +8,9 @@ set( choqok_quickfilter_PART_SRCS
 quickfilter.cpp )
 
 
-kde4_add_plugin(choqok_quickfilter ${choqok_quickfilter_PART_SRCS})
+add_library(choqok_quickfilter MODULE ${choqok_quickfilter_PART_SRCS})
 
-target_link_libraries(choqok_quickfilter ${KDE4_KIO_LIBS} choqok)
+target_link_libraries(choqok_quickfilter KF5::KIOCore choqok)
 
 install(TARGETS choqok_quickfilter DESTINATION ${PLUGIN_INSTALL_DIR})
 

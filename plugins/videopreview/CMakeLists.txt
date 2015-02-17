@@ -9,9 +9,9 @@ set( choqok_videopreview_PART_SRCS
 videopreview.cpp )
 
 
-kde4_add_plugin(choqok_videopreview ${choqok_videopreview_PART_SRCS})
+add_library(choqok_videopreview MODULE ${choqok_videopreview_PART_SRCS})
 
-target_link_libraries(choqok_videopreview ${KDE4_KIO_LIBS} choqok)
+target_link_libraries(choqok_videopreview KF5::KIOCore choqok)
 
 install(TARGETS choqok_videopreview DESTINATION ${PLUGIN_INSTALL_DIR})
 

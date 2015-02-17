@@ -55,4 +55,3 @@ void MyTextBrowser::mousePressEvent(QMouseEvent* ev)
     KTextBrowser::mousePressEvent(ev);
 }
 
-#include "mytextbrowser.moc"

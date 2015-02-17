@@ -9,13 +9,13 @@ add_subdirectory(icons)
 set( choqok_twitpic_PART_SRCS
 twitpic.cpp)
 
-# kde4_add_ui_files(choqok_twitpic_PART_SRCS twitpicuploadimage_base.ui)
+# ki18n_wrap_ui(choqok_twitpic_PART_SRCS twitpicuploadimage_base.ui)
 
-kde4_add_kcfg_files(choqok_twitpic_PART_SRCS twitpicsettings.kcfgc )
+kconfig_add_kcfg_files(choqok_twitpic_PART_SRCS twitpicsettings.kcfgc )
 
-kde4_add_plugin(choqok_twitpic ${choqok_twitpic_PART_SRCS})
+add_library(choqok_twitpic MODULE ${choqok_twitpic_PART_SRCS})
 
-target_link_libraries(choqok_twitpic ${KDE4_KIO_LIBS} ${QTOAUTH_LIBRARY} ${QJSON_LIBRARY} choqok twitterapihelper)
+target_link_libraries(choqok_twitpic KF5::KIOCore ${QTOAUTH_LIBRARY} ${QJSON_LIBRARY} choqok twitterapihelper)
 
 install(TARGETS choqok_twitpic DESTINATION ${PLUGIN_INSTALL_DIR})
 
@@ -24,13 +24,13 @@ install(TARGETS choqok_twitpic DESTINATION ${PLUGIN_INSTALL_DIR})
 set( kcm_choqok_twitpic_PART_SRCS
 twitpicconfig.cpp )
 
-kde4_add_ui_files(kcm_choqok_twitpic_PART_SRCS twitpicprefs.ui )
+ki18n_wrap_ui(kcm_choqok_twitpic_PART_SRCS twitpicprefs.ui )
 
-kde4_add_kcfg_files(kcm_choqok_twitpic_PART_SRCS twitpicsettings.kcfgc )
+kconfig_add_kcfg_files(kcm_choqok_twitpic_PART_SRCS twitpicsettings.kcfgc )
 
-kde4_add_plugin(kcm_choqok_twitpic ${kcm_choqok_twitpic_PART_SRCS})
+add_library(kcm_choqok_twitpic MODULE ${kcm_choqok_twitpic_PART_SRCS})
 
-target_link_libraries(kcm_choqok_twitpic ${KDE4_KDEUI_LIBS} choqok)
+target_link_libraries(kcm_choqok_twitpic  choqok)
 
 install(TARGETS kcm_choqok_twitpic DESTINATION ${PLUGIN_INSTALL_DIR})
 

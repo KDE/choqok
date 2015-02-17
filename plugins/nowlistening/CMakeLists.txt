@@ -8,11 +8,11 @@ ${CHOQOK_INCLUDES}
 set( choqok_nowlistening_PART_SRCS mpris.cpp
 nowlistening.cpp )
 
-kde4_add_kcfg_files(choqok_nowlistening_PART_SRCS nowlisteningsettings.kcfgc )
+kconfig_add_kcfg_files(choqok_nowlistening_PART_SRCS nowlisteningsettings.kcfgc )
 
-kde4_add_plugin(choqok_nowlistening ${choqok_nowlistening_PART_SRCS})
+add_library(choqok_nowlistening MODULE ${choqok_nowlistening_PART_SRCS})
 
-target_link_libraries(choqok_nowlistening ${KDE4_KIO_LIBS} choqok)
+target_link_libraries(choqok_nowlistening KF5::KIOCore choqok)
 
 install(TARGETS choqok_nowlistening DESTINATION ${PLUGIN_INSTALL_DIR})
 
@@ -21,13 +21,13 @@ install(TARGETS choqok_nowlistening DESTINATION ${PLUGIN_INSTALL_DIR})
 set( kcm_choqok_nowlistening_PART_SRCS
 nowlisteningconfig.cpp )
 
-kde4_add_ui_files(kcm_choqok_nowlistening_PART_SRCS nowlisteningprefs.ui )
+ki18n_wrap_ui(kcm_choqok_nowlistening_PART_SRCS nowlisteningprefs.ui )
 
-kde4_add_kcfg_files(kcm_choqok_nowlistening_PART_SRCS nowlisteningsettings.kcfgc )
+kconfig_add_kcfg_files(kcm_choqok_nowlistening_PART_SRCS nowlisteningsettings.kcfgc )
 
-kde4_add_plugin(kcm_choqok_nowlistening ${kcm_choqok_nowlistening_PART_SRCS})
+add_library(kcm_choqok_nowlistening MODULE ${kcm_choqok_nowlistening_PART_SRCS})
 
-target_link_libraries(kcm_choqok_nowlistening ${KDE4_KDEUI_LIBS})
+target_link_libraries(kcm_choqok_nowlistening )
 
 install(TARGETS kcm_choqok_nowlistening DESTINATION ${PLUGIN_INSTALL_DIR})
 

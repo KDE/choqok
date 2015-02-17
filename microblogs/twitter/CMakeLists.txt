@@ -15,14 +15,14 @@ twitterlistdialog.cpp
 twittertimelinewidget.cpp
 )
 
-kde4_add_ui_files(choqok_twitter_SRCS
+ki18n_wrap_ui(choqok_twitter_SRCS
 twittereditaccount_base.ui
 twitterlistdialog_base.ui
 )
 
-kde4_add_plugin(choqok_twitter ${choqok_twitter_SRCS})
+add_library(choqok_twitter MODULE ${choqok_twitter_SRCS})
 
-target_link_libraries(choqok_twitter ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${QJSON_LIBRARY} ${QTOAUTH_LIBRARY} choqok twitterapihelper)
+target_link_libraries(choqok_twitter  KF5::KIOCore ${QJSON_LIBRARY} ${QTOAUTH_LIBRARY} choqok twitterapihelper)
 
 # Install
 

@@ -10,11 +10,11 @@ add_subdirectory(icons)
 set( choqok_imageshack_PART_SRCS
 imageshack.cpp)
 
-# kde4_add_kcfg_files(choqok_imageshack_PART_SRCS imageshacksettings.kcfgc )
+# kconfig_add_kcfg_files(choqok_imageshack_PART_SRCS imageshacksettings.kcfgc )
 
-kde4_add_plugin(choqok_imageshack ${choqok_imageshack_PART_SRCS})
+add_library(choqok_imageshack MODULE ${choqok_imageshack_PART_SRCS})
 
-target_link_libraries(choqok_imageshack ${KDE4_KIO_LIBS} choqok)
+target_link_libraries(choqok_imageshack KF5::KIOCore choqok)
 
 install(TARGETS choqok_imageshack DESTINATION ${PLUGIN_INSTALL_DIR})
 

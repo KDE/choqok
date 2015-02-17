@@ -424,4 +424,3 @@ void TwitterApiWhoisWidget::slotFriendshipDestroyed(Choqok::Account* theAccount,
 //     }
 // }
 
-#include "twitterapiwhoiswidget.moc"

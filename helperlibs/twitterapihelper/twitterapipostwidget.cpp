@@ -304,4 +304,3 @@ void TwitterApiPostWidget::repeatPost()
 }
 
 
-#include "twitterapipostwidget.moc"

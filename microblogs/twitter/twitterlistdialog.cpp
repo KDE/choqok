@@ -143,4 +143,3 @@ void TwitterListDialog::slotListItemChanged(QListWidgetItem* item)
     ui.listname->setText(item->data(32).toString());
 }
 
-#include "twitterlistdialog.moc"

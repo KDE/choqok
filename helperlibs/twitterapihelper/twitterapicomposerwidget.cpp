@@ -77,4 +77,3 @@ void TwitterApiComposerWidget::slotNewPostReady(Choqok::UI::PostWidget* widget, 
     }
 }
 
-#include "twitterapicomposerwidget.moc"

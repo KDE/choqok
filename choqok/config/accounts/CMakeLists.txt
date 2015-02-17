@@ -13,12 +13,21 @@ addaccountdialog.cpp
 editaccountdialog.cpp )
 
 
-kde4_add_ui_files(kcm_choqok_accountsconfig_PART_SRCS accountswidget_base.ui )
+ki18n_wrap_ui(kcm_choqok_accountsconfig_PART_SRCS accountswidget_base.ui )
 
-kde4_add_plugin(kcm_choqok_accountsconfig ${kcm_choqok_accountsconfig_PART_SRCS})
+add_library(kcm_choqok_accountsconfig MODULE ${kcm_choqok_accountsconfig_PART_SRCS})
 
+kcoreaddons_desktop_to_json(kcm_choqok_accountsconfig choqok_accountsconfig.desktop)
 
-target_link_libraries(kcm_choqok_accountsconfig ${KDE4_KDEUI_LIBS} ${KDE4_KUTILS_LIBS} choqok)
+target_link_libraries(kcm_choqok_accountsconfig
+PUBLIC
+    Qt5::Widgets
+    KF5::CoreAddons
+    KF5::Service
+    KF5::WidgetsAddons
+    KF5::KDELibs4Support
+    choqok
+)
 
 install(TARGETS kcm_choqok_accountsconfig  DESTINATION ${PLUGIN_INSTALL_DIR})
 

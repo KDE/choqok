@@ -1466,4 +1466,3 @@ Choqok::User TwitterApiMicroBlog::readUser(Choqok::Account* theAccount, const QV
     return u;
 }
 
-#include "twitterapimicroblog.moc"

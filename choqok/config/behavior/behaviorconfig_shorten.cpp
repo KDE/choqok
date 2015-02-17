@@ -204,4 +204,3 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
     }
 }
 
-#include "behaviorconfig_shorten.moc"

@@ -288,4 +288,3 @@ void TwitterApiAccount::initQOAuthInterface()
     d->qoauth->setIgnoreSslErrors(true);
 }
 
-#include "twitterapiaccount.moc"

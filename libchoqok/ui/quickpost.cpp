@@ -283,4 +283,3 @@ void QuickPost::slotAttachMedium()
 }
 
 
-#include "quickpost.moc"

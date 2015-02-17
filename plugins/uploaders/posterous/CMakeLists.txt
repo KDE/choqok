@@ -8,11 +8,11 @@ ${CHOQOK_INCLUDES}
 set( choqok_posterous_PART_SRCS
 posterous.cpp)
 
-kde4_add_kcfg_files(choqok_posterous_PART_SRCS posteroussettings.kcfgc )
+kconfig_add_kcfg_files(choqok_posterous_PART_SRCS posteroussettings.kcfgc )
 
-kde4_add_plugin(choqok_posterous ${choqok_posterous_PART_SRCS})
+add_library(choqok_posterous MODULE ${choqok_posterous_PART_SRCS})
 
-target_link_libraries(choqok_posterous ${KDE4_KIO_LIBS} ${QTOAUTH_LIBRARY} ${QJSON_LIBRARY} choqok twitterapihelper)
+target_link_libraries(choqok_posterous KF5::KIOCore ${QTOAUTH_LIBRARY} ${QJSON_LIBRARY} choqok twitterapihelper)
 
 install(TARGETS choqok_posterous DESTINATION ${PLUGIN_INSTALL_DIR})
 
@@ -21,13 +21,13 @@ install(TARGETS choqok_posterous DESTINATION ${PLUGIN_INSTALL_DIR})
 set( kcm_choqok_posterous_PART_SRCS
 posterousconfig.cpp )
 
-kde4_add_ui_files(kcm_choqok_posterous_PART_SRCS posterousprefs.ui )
+ki18n_wrap_ui(kcm_choqok_posterous_PART_SRCS posterousprefs.ui )
 
-kde4_add_kcfg_files(kcm_choqok_posterous_PART_SRCS posteroussettings.kcfgc )
+kconfig_add_kcfg_files(kcm_choqok_posterous_PART_SRCS posteroussettings.kcfgc )
 
-kde4_add_plugin(kcm_choqok_posterous ${kcm_choqok_posterous_PART_SRCS})
+add_library(kcm_choqok_posterous MODULE ${kcm_choqok_posterous_PART_SRCS})
 
-target_link_libraries(kcm_choqok_posterous ${KDE4_KDEUI_LIBS} choqok)
+target_link_libraries(kcm_choqok_posterous  choqok)
 
 install(TARGETS kcm_choqok_posterous DESTINATION ${PLUGIN_INSTALL_DIR})
 

@@ -215,4 +215,3 @@ void TwitterEditAccountWidget::saveTimelinesTableState()
     mAccount->setTimelineNames(timelines);
 }
 
-#include "twittereditaccount.moc"

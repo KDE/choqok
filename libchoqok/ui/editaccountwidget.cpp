@@ -57,4 +57,3 @@ void ChoqokEditAccountWidget::setAccount(Choqok::Account* account)
     d->account = account;
 }
 
-#include "editaccountwidget.moc"

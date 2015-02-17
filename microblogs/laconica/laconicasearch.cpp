@@ -329,4 +329,3 @@ QList< Choqok::Post* > LaconicaSearch::parseRss(const QByteArray& buffer)
 }
 
 
-#include "laconicasearch.moc"

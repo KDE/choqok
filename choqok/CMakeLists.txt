@@ -13,19 +13,29 @@ set(choqok_SRCS
    systrayicon.cpp
 )
 
-# kde4_add_ui_files(choqok_SRCS accounts/accountswidget_base.ui)
+# ki18n_wrap_ui(choqok_SRCS accounts/accountswidget_base.ui)
 
-# kde4_add_kcfg_files(choqok_SRCS settings.kcfgc )
+# kconfig_add_kcfg_files(choqok_SRCS settings.kcfgc )
 dbus_add_activation_service(org.kde.choqok.service.in)
 
-kde4_add_app_icon(choqok_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-app-choqok.png")
-
-kde4_add_executable(choqok_bin ${choqok_SRCS})
+add_executable(choqok_bin ${choqok_SRCS})
 
 set_target_properties(choqok_bin PROPERTIES OUTPUT_NAME choqok)
 
-target_link_libraries(choqok_bin ${KDE4_KDEUI_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KNOTIFYCONFIG_LIBS}
-                                 ${KDE4_KIO_LIBS} choqok)
+target_link_libraries(choqok_bin
+PUBLIC
+    Qt5::Core
+    Qt5::Widgets
+    KF5::ConfigWidgets
+    KF5::CoreAddons
+    KF5::GlobalAccel
+    KF5::I18n
+    KF5::NotifyConfig
+    KF5::WidgetsAddons
+    KF5::XmlGui
+    KF5::KDELibs4Support
+    choqok
+)
 
 install(TARGETS choqok_bin ${INSTALL_TARGETS_DEFAULT_ARGS})
 
@@ -34,4 +44,5 @@ install(TARGETS choqok_bin ${INSTALL_TARGETS_DEFAULT_ARGS})
 install( PROGRAMS choqok.desktop  DESTINATION ${XDG_APPS_INSTALL_DIR} )
 install( FILES choqok.appdata.xml DESTINATION  ${SHARE_INSTALL_PREFIX}/appdata )
 # install( FILES choqok.kcfg  DESTINATION  ${KCFG_INSTALL_DIR} )
-install( FILES choqokui.rc choqok.notifyrc  DESTINATION  ${DATA_INSTALL_DIR}/choqok )
+install( FILES choqokui.rc DESTINATION  ${KXMLGUI_INSTALL_DIR}/choqok )
+install( FILES choqok.notifyrc  DESTINATION  ${KNOTIFYRC_INSTALL_DIR}/choqok )

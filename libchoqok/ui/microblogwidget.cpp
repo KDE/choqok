@@ -451,4 +451,3 @@ QLabel* MicroBlogWidget::latestUpdate()
 
 }
 }
-#include "microblogwidget.moc"

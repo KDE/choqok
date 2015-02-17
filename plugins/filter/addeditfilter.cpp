@@ -121,4 +121,3 @@ void AddEditFilter::setupFilterActions()
 }
 
 
-#include "addeditfilter.moc"

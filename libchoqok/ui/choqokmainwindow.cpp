@@ -106,4 +106,3 @@ void Choqok::UI::MainWindow::activateTab( int k )
        mainWidget->setCurrentIndex( k );
 }
 
-#include "choqokmainwindow.moc"

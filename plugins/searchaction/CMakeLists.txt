@@ -9,9 +9,9 @@ set( choqok_searchaction_PART_SRCS
 searchaction.cpp )
 
 
-kde4_add_plugin(choqok_searchaction ${choqok_searchaction_PART_SRCS})
+add_library(choqok_searchaction MODULE ${choqok_searchaction_PART_SRCS})
 
-target_link_libraries(choqok_searchaction ${KDE4_KIO_LIBS} choqok twitterapihelper)
+target_link_libraries(choqok_searchaction KF5::KIOCore choqok twitterapihelper)
 
 install(TARGETS choqok_searchaction DESTINATION ${PLUGIN_INSTALL_DIR})
 

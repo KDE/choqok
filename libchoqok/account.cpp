@@ -192,4 +192,3 @@ QStringList Account::timelineNames() const
 
 }
 
-#include "account.moc"

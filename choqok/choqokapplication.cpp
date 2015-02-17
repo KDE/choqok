@@ -89,5 +89,4 @@ void ChoqokApplication::commitData( QSessionManager &sm )
     KUniqueApplication::commitData( sm );
 }
 
-#include "choqokapplication.moc"
 // vim: set noet ts=4 sts=4 sw=4:

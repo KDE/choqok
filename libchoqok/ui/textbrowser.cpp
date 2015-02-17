@@ -170,4 +170,3 @@ void Choqok::UI::TextBrowser::addAction(KAction* action)
 }
 
 
-#include "textbrowser.moc"

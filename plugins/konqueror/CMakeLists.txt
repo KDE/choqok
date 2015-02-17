@@ -6,9 +6,9 @@ ${CHOQOK_INCLUDES}
 
 set(konqchoqokplugin_SRCS konqchoqok.cpp)
 
-kde4_add_plugin(konqchoqokplugin ${konqchoqokplugin_SRCS})
+add_library(konqchoqokplugin MODULE ${konqchoqokplugin_SRCS})
 
-target_link_libraries(konqchoqokplugin ${KDE4_KHTML_LIBS} choqok )
+target_link_libraries(konqchoqokplugin KF5::KHtml choqok )
 
 install(TARGETS konqchoqokplugin DESTINATION ${PLUGIN_INSTALL_DIR} )
 

@@ -198,4 +198,3 @@ TwitterSearch::~TwitterSearch()
 {
 }
 
-#include "twittersearch.moc"

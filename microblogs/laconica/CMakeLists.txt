@@ -14,11 +14,11 @@ laconicacomposerwidget.cpp
 laconicaconversationtimelinewidget.cpp
 )
 
-kde4_add_ui_files(choqok_laconica_SRCS laconicaeditaccount_base.ui )
+ki18n_wrap_ui(choqok_laconica_SRCS laconicaeditaccount_base.ui )
 
-kde4_add_plugin(choqok_laconica ${choqok_laconica_SRCS})
+add_library(choqok_laconica MODULE ${choqok_laconica_SRCS})
 
-target_link_libraries(choqok_laconica ${KDE4_KIO_LIBS} ${QJSON_LIBRARY} choqok twitterapihelper ${QTOAUTH_LIBRARY})
+target_link_libraries(choqok_laconica KF5::KIOCore ${QJSON_LIBRARY} choqok twitterapihelper ${QTOAUTH_LIBRARY})
 
 # Install
 

@@ -33,29 +33,41 @@ ui/textbrowser.cpp
 ui/choqoktabbar.cpp
 )
 
-if(QtIndicate_FOUND)
-    set(choqok_LIB_SRCS ${choqok_LIB_SRCS} indicatormanager.cpp)
-    include_directories(${QTINDICATE_INCLUDE_DIRS})
-    add_definitions(-DQTINDICATE_BUILD)
-endif(QtIndicate_FOUND)
+#if(QtIndicate_FOUND)
+#    set(choqok_LIB_SRCS ${choqok_LIB_SRCS} indicatormanager.cpp)
+#    include_directories(${QTINDICATE_INCLUDE_DIRS})
+#    add_definitions(-DQTINDICATE_BUILD)
+#endif(QtIndicate_FOUND)
 
-qt4_add_dbus_adaptor( choqok_LIB_SRCS org.kde.choqok.xml dbushandler.h Choqok::DbusHandler ChoqokAdaptor ) 
+qt5_add_dbus_adaptor( choqok_LIB_SRCS org.kde.choqok.xml dbushandler.h Choqok::DbusHandler ChoqokAdaptor ) 
 
-kde4_add_kcfg_files(choqok_LIB_SRCS
+kconfig_add_kcfg_files(choqok_LIB_SRCS
 choqokbehaviorsettings.kcfgc
 choqokappearancesettings.kcfgc
 )
 
-kde4_add_ui_files(choqok_LIB_SRCS ui/uploadmedia_base.ui)
+ki18n_wrap_ui(choqok_LIB_SRCS ui/uploadmedia_base.ui)
 
-kde4_add_library(choqok SHARED ${choqok_LIB_SRCS})
+add_library(choqok SHARED ${choqok_LIB_SRCS})
 
-target_link_libraries(choqok ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS})
+target_link_libraries(choqok
+PUBLIC
+    Qt5::Core
+    Qt5::Concurrent
+    Qt5::DBus
+    Qt5::Widgets
+    KF5::I18n
+    KF5::Wallet
+    KF5::KCMUtils
+    KF5::Emoticons
+    KF5::SonnetCore
+    KF5::KDELibs4Support
+)
 
-if(QtIndicate_FOUND)
-       add_definitions(-DXDG_APPS_INSTALL_DIR=${XDG_APPS_INSTALL_DIR})
-       target_link_libraries(choqok ${QTINDICATE_LIBRARY})
-endif(QtIndicate_FOUND)
+#if(QtIndicate_FOUND)
+#       add_definitions(-DXDG_APPS_INSTALL_DIR=${XDG_APPS_INSTALL_DIR})
+#       target_link_libraries(choqok ${QTINDICATE_LIBRARY})
+#endif(QtIndicate_FOUND)
 
 set_target_properties(choqok PROPERTIES
 VERSION 1.3.0

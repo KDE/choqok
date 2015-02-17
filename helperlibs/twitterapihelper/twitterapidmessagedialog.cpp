@@ -179,4 +179,3 @@ void TwitterApiDMessageDialog::setTo(const QString& username)
     d->comboFriendsList->setCurrentItem(username, true);
 }
 
-#include "twitterapidmessagedialog.moc"

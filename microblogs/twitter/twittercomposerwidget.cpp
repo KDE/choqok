@@ -165,4 +165,3 @@ void TwitterComposerWidget::cancelAttachMedium()
     d->mediumToAttach.clear();
 }
 
-#include "twittercomposerwidget.moc"

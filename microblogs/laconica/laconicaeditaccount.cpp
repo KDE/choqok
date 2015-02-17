@@ -311,4 +311,3 @@ void LaconicaEditAccountWidget::slotCheckHostUrl()
         kcfg_host->setText(kcfg_host->text().prepend("http://"));
 }
 
-#include "laconicaeditaccount.moc"

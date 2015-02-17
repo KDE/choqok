@@ -173,4 +173,3 @@ DbusHandler* ChoqokDbus()
 
 }
 
-#include "dbushandler.moc"

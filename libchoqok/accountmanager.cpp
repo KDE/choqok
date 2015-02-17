@@ -214,4 +214,3 @@ QString AccountManager::lastError() const
 }
 
 }
-#include "accountmanager.moc"

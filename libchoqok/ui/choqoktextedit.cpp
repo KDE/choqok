@@ -308,4 +308,3 @@ QSize TextEdit::minimumSizeHint() const
 
 }
 }
-#include "choqoktextedit.moc"

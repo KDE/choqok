@@ -19,15 +19,15 @@ twitterapicomposerwidget.cpp
 twitterapitimelinewidget.cpp
 )
 
-# kde4_add_kcfg_files(twitterhelper_LIB_SRCS
+# kconfig_add_kcfg_files(twitterhelper_LIB_SRCS
 # twitterapisettings.kcfgc
 # )
 
-kde4_add_library(twitterapihelper SHARED ${twitterhelper_LIB_SRCS})
+add_library(twitterapihelper SHARED ${twitterhelper_LIB_SRCS})
 
 target_link_libraries( twitterapihelper
-                       ${QT_QTNETWORK_LIBRARY}
-                       ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS}
+                       Qt5::Network
+                        KF5::KIOCore 
                        ${QTOAUTH_LIBRARY} ${QJSON_LIBRARY}
                        choqok)
 

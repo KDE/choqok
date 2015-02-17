@@ -10,11 +10,11 @@ filtersettings.cpp
 filtermanager.cpp
 addeditfilter.cpp )
 
-kde4_add_ui_files( choqok_filter_PART_SRCS addeditfilter_base.ui filterprefs.ui )
+ki18n_wrap_ui( choqok_filter_PART_SRCS addeditfilter_base.ui filterprefs.ui )
 
-kde4_add_plugin(choqok_filter ${choqok_filter_PART_SRCS})
+add_library(choqok_filter MODULE ${choqok_filter_PART_SRCS})
 
-target_link_libraries(choqok_filter ${KDE4_KIO_LIBS} choqok twitterapihelper)
+target_link_libraries(choqok_filter KF5::KIOCore choqok twitterapihelper)
 
 install(TARGETS choqok_filter DESTINATION ${PLUGIN_INSTALL_DIR})
 

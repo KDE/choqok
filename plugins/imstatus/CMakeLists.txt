@@ -1,4 +1,4 @@
-find_package(TelepathyQt4)
+#find_package(TelepathyQt4)
 
 configure_file(config-imstatus.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-imstatus.h )
 
@@ -12,11 +12,11 @@ ${CHOQOK_INCLUDES}
 set( choqok_imstatus_PART_SRCS imqdbus.cpp
 imstatus.cpp )
 
-kde4_add_kcfg_files(choqok_imstatus_PART_SRCS imstatussettings.kcfgc )
+kconfig_add_kcfg_files(choqok_imstatus_PART_SRCS imstatussettings.kcfgc )
 
-kde4_add_plugin(choqok_imstatus ${choqok_imstatus_PART_SRCS})
+add_library(choqok_imstatus MODULE ${choqok_imstatus_PART_SRCS})
 
-target_link_libraries(choqok_imstatus ${KDE4_KIO_LIBS} ${TELEPATHY_QT4_LIBRARIES} choqok)
+target_link_libraries(choqok_imstatus KF5::KIOCore ${TELEPATHY_QT4_LIBRARIES} choqok)
 
 install(TARGETS choqok_imstatus DESTINATION ${PLUGIN_INSTALL_DIR})
 
@@ -25,13 +25,13 @@ install(TARGETS choqok_imstatus DESTINATION ${PLUGIN_INSTALL_DIR})
 set( kcm_choqok_imstatus_PART_SRCS imqdbus.cpp
 imstatusconfig.cpp )
 
-kde4_add_ui_files(kcm_choqok_imstatus_PART_SRCS imstatusprefs.ui )
+ki18n_wrap_ui(kcm_choqok_imstatus_PART_SRCS imstatusprefs.ui )
 
-kde4_add_kcfg_files(kcm_choqok_imstatus_PART_SRCS imstatussettings.kcfgc )
+kconfig_add_kcfg_files(kcm_choqok_imstatus_PART_SRCS imstatussettings.kcfgc )
 
-kde4_add_plugin(kcm_choqok_imstatus ${kcm_choqok_imstatus_PART_SRCS})
+add_library(kcm_choqok_imstatus MODULE ${kcm_choqok_imstatus_PART_SRCS})
 
-target_link_libraries(kcm_choqok_imstatus ${KDE4_KDEUI_LIBS} ${TELEPATHY_QT4_LIBRARIES})
+target_link_libraries(kcm_choqok_imstatus  ${TELEPATHY_QT4_LIBRARIES})
 
 install(TARGETS kcm_choqok_imstatus DESTINATION ${PLUGIN_INSTALL_DIR})
 

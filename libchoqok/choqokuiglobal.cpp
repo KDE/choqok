@@ -93,4 +93,3 @@ void UI::Global::SessionManager::resetNotifyManager()
 
 }
 
-#include "choqokuiglobal.moc"
