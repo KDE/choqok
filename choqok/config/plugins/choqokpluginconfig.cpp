@@ -24,24 +24,21 @@
 
 #include "choqokpluginconfig.h"
 
-#include <QByteArray>
 #include <QVBoxLayout>
 
-#include <KLocale>
-#include <KPluginInfo>
+#include <KLocalizedString>
 #include <KPluginFactory>
 #include <KPluginSelector>
-#include <KSettings/Dispatcher>
+#include <ksettings/Dispatcher>
 
 #include "pluginmanager.h"
 #include "pluginsdebug.h"
 
-K_PLUGIN_FACTORY( ChoqokPluginConfigFactory,
-        registerPlugin<ChoqokPluginConfig>(); )
-K_EXPORT_PLUGIN( ChoqokPluginConfigFactory("kcm_choqok_pluginconfig") )
+K_PLUGIN_FACTORY_WITH_JSON( ChoqokPluginConfigFactory, "choqok_pluginconfig.json",
+                            registerPlugin<ChoqokPluginConfig>(); )
 
 ChoqokPluginConfig::ChoqokPluginConfig( QWidget *parent, const QVariantList &args )
-: KCModule(ChoqokPluginConfigFactory::componentData(), parent, args)
+: KCModule(parent, args)
 {
     m_pluginSelector = new KPluginSelector( this );
 

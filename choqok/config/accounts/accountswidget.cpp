@@ -40,12 +40,11 @@
 #include "microblog.h"
 #include "pluginmanager.h"
 
-K_PLUGIN_FACTORY( ChoqokAccountsConfigFactory,
-                  registerPlugin<AccountsWidget>(); )
-K_EXPORT_PLUGIN( ChoqokAccountsConfigFactory("kcm_choqok_accountsconfig") )
+K_PLUGIN_FACTORY_WITH_JSON( ChoqokAccountsConfigFactory, "choqok_accountsconfig.json",
+                            registerPlugin<AccountsWidget>(); )
 
 AccountsWidget::AccountsWidget( QWidget* parent, const QVariantList& args )
-        : KCModule( ChoqokAccountsConfigFactory::componentData(), parent, args )
+        : KCModule( parent, args )
 {
     qCDebug(CHOQOK);
     setAttribute(Qt::WA_DeleteOnClose);

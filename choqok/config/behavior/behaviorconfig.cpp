@@ -39,9 +39,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "behaviordebug.h"
 #include "choqokbehaviorsettings.h"
 
-K_PLUGIN_FACTORY( ChoqokBehaviorConfigFactory,
-                  registerPlugin <BehaviorConfig>(); )
-K_EXPORT_PLUGIN( ChoqokBehaviorConfigFactory("kcm_choqok_behaviorconfig") )
+K_PLUGIN_FACTORY_WITH_JSON( ChoqokBehaviorConfigFactory, "choqok_behaviorconfig.json",
+                            registerPlugin<BehaviorConfig>(); )
 
 class BehaviorConfig::Private
 {
@@ -55,7 +54,7 @@ public:
 };
 
 BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
-        KCModule( ChoqokBehaviorConfigFactory::componentData(), parent, args ), d(new Private)
+        KCModule( parent, args ), d(new Private)
 {
     qCDebug(CHOQOK);
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -94,7 +93,7 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
 
     KCModuleInfo proxyInfo("proxy.desktop");
     d->proxyModule = new KCModuleProxy(proxyInfo,parent);
-    d->mBehaviorTabCtl->addTab( d->proxyModule, i18n(proxyInfo.moduleName().toUtf8()) );
+    d->mBehaviorTabCtl->addTab( d->proxyModule, proxyInfo.moduleName() );
 
     connect(d->mPrfsShorten, SIGNAL(changed(bool)), this, SIGNAL(changed(bool)) );
     connect(d->proxyModule,   SIGNAL( changed(bool) ), this, SIGNAL( changed(bool) ) );

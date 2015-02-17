@@ -24,6 +24,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "appearanceconfig.h"
 #include "ui_appearanceconfig_base.h"
 
+#include <QVBoxLayout>
+
 #include <KLocale>
 #include <KPluginFactory>
 #include <KTabWidget>
@@ -31,9 +33,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "appearancedebug.h"
 #include "choqokappearancesettings.h"
 
-K_PLUGIN_FACTORY( ChoqokAppearanceConfigFactory,
-        registerPlugin<AppearanceConfig>(); )
-K_EXPORT_PLUGIN( ChoqokAppearanceConfigFactory("kcm_choqok_appearanceconfig") )
+K_PLUGIN_FACTORY_WITH_JSON( ChoqokAppearanceConfigFactory, "choqok_appearanceconfig.json",
+                            registerPlugin<AppearanceConfig>(); )
 
 class AppearanceConfig::Private
 {
@@ -49,7 +50,7 @@ public:
 
 
 AppearanceConfig::AppearanceConfig(QWidget *parent, const QVariantList &args )
-: KCModule( ChoqokAppearanceConfigFactory::componentData(), parent, args ), d(new Private())
+: KCModule( parent, args ), d(new Private())
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     // since the tab widget is already within a layout with margins in the KSettings::Dialog

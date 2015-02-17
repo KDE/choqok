@@ -25,6 +25,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QLayout>
 
+#include <KDialog>
 #include <KAboutApplicationDialog>
 #include <KCModuleInfo>
 #include <KCModuleProxy>
@@ -111,11 +112,13 @@ void BehaviorConfig_Shorten::slotAboutClicked()
         return;
     KPluginInfo info = availablePlugins.value(shorten);
 
-    KAboutData aboutData(info.name().toUtf8(), info.name().toUtf8(), ki18n(info.name().toUtf8()), info.version().toUtf8(), ki18n(info.comment().toUtf8()), KAboutLicense::byKeyword(info.license()).key(), ki18n(QByteArray()), ki18n(QByteArray()), info.website().toLatin1());
+    KAboutData aboutData(info.name(), info.name(), info.version(), info.comment(),
+                         KAboutLicense::byKeyword(info.license()).key(), QString(),
+                         QString(), info.website());
     aboutData.setProgramIconName(info.icon());
-    aboutData.addAuthor(ki18n(info.author().toUtf8()), ki18n(QByteArray()), info.email().toUtf8(), 0);
+    aboutData.addAuthor(info.author(), QString(), info.email());
 
-    KAboutApplicationDialog aboutPlugin(&aboutData, this);
+    KAboutApplicationDialog aboutPlugin(aboutData, this);
     aboutPlugin.exec();
 }
 
