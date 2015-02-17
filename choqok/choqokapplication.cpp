@@ -30,10 +30,14 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "dbushandler.h"
 #include "mainwindow.h"
 
-ChoqokApplication::ChoqokApplication()
-: Choqok::Application()
+ChoqokApplication::ChoqokApplication(int &argc, char **argv)
+: Choqok::Application(argc, argv)
 {
     qCDebug(CHOQOK);
+    setApplicationName(QStringLiteral("choqok"));
+    setApplicationDisplayName(QStringLiteral("Choqok"));
+    setOrganizationDomain(QStringLiteral("kde.org"));
+
     setQuitOnLastWindowClosed( false );
 
     Choqok::ChoqokDbus();
@@ -49,14 +53,6 @@ ChoqokApplication::~ChoqokApplication()
     qCDebug(CHOQOK);
 }
 
-int ChoqokApplication::newInstance()
-{
-    qCDebug(CHOQOK);
-    //handleURLArgs();
-
-    return KUniqueApplication::newInstance();
-}
-
 void ChoqokApplication::quitChoqok()
 {
     qCDebug(CHOQOK) ;
@@ -70,12 +66,6 @@ void ChoqokApplication::quitChoqok()
         m_mainWindow = 0;
     }
     this->quit();
-}
-
-void ChoqokApplication::commitData( QSessionManager &sm )
-{
-    setShuttingDown(true);
-    KUniqueApplication::commitData( sm );
 }
 
 // vim: set noet ts=4 sts=4 sw=4:

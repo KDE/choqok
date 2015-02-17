@@ -39,10 +39,8 @@ class ChoqokApplication : public Choqok::Application
     Q_OBJECT
 
 public:
-    ChoqokApplication();
+    ChoqokApplication(int &argc, char **argv);
     ~ChoqokApplication();
-
-    virtual int newInstance();
 
 public Q_SLOTS:
     /**
@@ -50,8 +48,6 @@ public Q_SLOTS:
      * This method marks Choqok as 'shutting down'
      */
     void quitChoqok();
-
-    virtual void commitData( QSessionManager &sm );
 private:
 
     // The main window might get deleted behind our back (W_DestructiveClose),

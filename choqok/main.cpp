@@ -47,7 +47,7 @@ int main( int argc, char **argv )
                      "gmlastik@gmail.com", "http://twitter.com/la_stik" );
     about.addAuthor( i18n( "Andrea Scarpino" ), i18n( "Developer" ),
                      "scarpino@kde.org", "http://www.andreascarpino.it" );
-    
+
     about.addCredit( i18n( "Roozbeh Shafiee" ), i18n( "Artworks" ), "roozbeh@roozbehonline.com" );
     about.addCredit( i18n( "Shahrzad Shojaei" ), i18n( "Artworks" ), "shahrzadesign@gmail.com" );
     about.addCredit( i18n( "Daniel Schaal" ), i18n( "UI improvements" ), "daniel@foto-schaal.de");
@@ -63,11 +63,18 @@ int main( int argc, char **argv )
     about.addCredit( i18n( "Lim Yuen Hoe" ), i18n("Bug fixes and improvements"), "yuenhoe86@gmail.com" );
     about.addCredit( i18n( "Ahmed I. Khalil" ), i18n("Various improvements"), "ahmedibrahimkhali@gmail.com" );
 
-    KAboutData::setApplicationData(about);
-
     //TODO before next release, Add new contributers to credits
-    KCmdLineArgs::init( argc, argv );
 
-    ChoqokApplication app;
+    ChoqokApplication app(argc, argv);
+    app.setApplicationVersion(version);
+
+    QCommandLineParser parser;
+    KAboutData::setApplicationData(about);
+    parser.addVersionOption();
+    parser.addHelpOption();
+    about.setupCommandLine(&parser);
+    parser.process(app);
+    about.processCommandLine(&parser);
+
     return app.exec();
 }

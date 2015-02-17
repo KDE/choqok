@@ -30,11 +30,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 namespace Choqok {
 
-class CHOQOK_EXPORT Application : public KUniqueApplication
+class CHOQOK_EXPORT Application : public QApplication
 {
 Q_OBJECT
 public:
-    Application();
+    Application(int &argc, char **argv);
     virtual ~Application();
 
     /**

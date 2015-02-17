@@ -35,8 +35,8 @@ public:
 bool Application::Private::isShuttingDown = false;
 bool Application::Private::isStartingUp = true;
 
-Application::Application()
-: KUniqueApplication(true, true), d(new Private)
+Application::Application(int &argc, char **argv)
+: QApplication(argc, argv), d(new Private)
 {
 }
 
