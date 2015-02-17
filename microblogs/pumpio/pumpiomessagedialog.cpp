@@ -25,7 +25,7 @@
 
 #include <QPointer>
 
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KFileDialog>
 #include <KPushButton>
 
@@ -88,7 +88,7 @@ PumpIOMessageDialog::~PumpIOMessageDialog()
 
 void PumpIOMessageDialog::fetchFollowing()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     toList->clear();
     ccList->clear();
     PumpIOMicroBlog *microblog = qobject_cast<PumpIOMicroBlog*>(d->account->microblog());
@@ -101,7 +101,7 @@ void PumpIOMessageDialog::fetchFollowing()
 
 void PumpIOMessageDialog::slotFetchFollowing(Choqok::Account* theAccount)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if (theAccount == d->account) {
         PumpIOAccount* acc = qobject_cast<PumpIOAccount *>(theAccount);
         if (acc) {
@@ -129,7 +129,7 @@ void PumpIOMessageDialog::slotFetchFollowing(Choqok::Account* theAccount)
 
 void PumpIOMessageDialog::sendPost()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     PumpIOAccount* acc = qobject_cast<PumpIOAccount *>(d->account);
     if (acc) {
         if (acc->following().isEmpty() || txtMessage->toPlainText().isEmpty()
@@ -175,12 +175,12 @@ void PumpIOMessageDialog::sendPost()
 
 void PumpIOMessageDialog::attachMedia()
 {
-    kDebug();
-    d->mediumToAttach = KFileDialog::getOpenFileName(KUrl("kfiledialog:///image?global"),
+    qCDebug(CHOQOK);
+    d->mediumToAttach = KFileDialog::getOpenFileName(QUrl("kfiledialog:///image?global"),
                                                      QString(), this,
                                                      i18n("Select Media to Upload"));
     if (d->mediumToAttach.isEmpty()) {
-        kDebug() << "No file selected";
+        qCDebug(CHOQOK) << "No file selected";
         return;
     }
     const QString fileName = KUrl(d->mediumToAttach).fileName();
@@ -201,7 +201,7 @@ void PumpIOMessageDialog::attachMedia()
 
 void PumpIOMessageDialog::cancelAttach()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     delete d->mediumName;
     d->mediumName = 0;
     delete d->btnCancel;

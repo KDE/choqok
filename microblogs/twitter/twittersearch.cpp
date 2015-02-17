@@ -26,7 +26,7 @@
 
 #include <QDomElement>
 
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KIO/JobClasses>
 #include <KIO/Job>
 #include <KLocalizedString>
@@ -46,7 +46,7 @@ const QRegExp TwitterSearch::m_rId("tag:search.twitter.com,[0-9]+:([0-9]+)");
 
 TwitterSearch::TwitterSearch(QObject* parent): TwitterApiSearch(parent)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     mSearchCode[CustomSearch].clear();
     mSearchCode[ToUser] = "to:";
     mSearchCode[FromUser] = "from:";
@@ -79,7 +79,7 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
                                          const QString& sinceStatusId,
                                          uint count, uint page)
 {
-    kDebug();
+    qCDebug(CHOQOK);
 
     QOAuth::ParamMap param;
     QString query = searchInfo.query;
@@ -107,10 +107,10 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
         param.insert( "page", QString::number( page ).toLatin1() );
     }
 
-    kDebug()<<url;
+    qCDebug(CHOQOK)<<url;
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo );
     if( !job ) {
-        kError() << "Cannot create an http GET request!";
+        qCCritical(CHOQOK) << "Cannot create an http GET request!";
         return;
     }
 
@@ -126,9 +126,9 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
 
 void TwitterSearch::searchResultsReturned(KJob* job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if( job == 0 ) {
-        kDebug() << "job is a null pointer";
+        qCDebug(CHOQOK) << "job is a null pointer";
         Q_EMIT error( i18n( "Unable to fetch search results." ) );
         return;
     }
@@ -136,7 +136,7 @@ void TwitterSearch::searchResultsReturned(KJob* job)
     SearchInfo info = mSearchJobs.take(job);
 
     if( job->error() ) {
-        kError() << "Error: " << job->errorString();
+        qCCritical(CHOQOK) << "Error: " << job->errorString();
         Q_EMIT error( i18n( "Unable to fetch search results: %1", job->errorString() ) );
         QList<Choqok::Post*> postsList;
         Q_EMIT searchResultsReceived( info, postsList );

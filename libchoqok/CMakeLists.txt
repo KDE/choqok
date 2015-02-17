@@ -5,6 +5,7 @@ ${CHOQOK_INCLUDES}
 
 set(choqok_LIB_SRCS
 application.cpp
+libchoqokdebug.cpp
 plugin.cpp
 shortener.cpp
 uploader.cpp

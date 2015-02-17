@@ -25,7 +25,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QEventLoop>
 
 #include <KAboutData>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KGenericFactory>
 #include <KGlobal>
 #include <KIO/Job>
@@ -46,8 +46,8 @@ Ur1_ca::~Ur1_ca()
 
 QString Ur1_ca::shorten ( const QString& url )
 {
-  kDebug() << "Using ur1.ca";
-  KUrl reqUrl ( "http://ur1.ca/" );
+  qCDebug(CHOQOK) << "Using ur1.ca";
+  QUrl reqUrl ( "http://ur1.ca/" );
   QString temp;
   temp = QUrl::toPercentEncoding(url);
 
@@ -71,7 +71,7 @@ QString Ur1_ca::shorten ( const QString& url )
       rx.setPattern(QString("href=[\'\"](.*)[\'\"]"));
       rx.indexIn(output);
       output = rx.cap(1);
-      kDebug() << "Short url is: " << output;
+      qCDebug(CHOQOK) << "Short url is: " << output;
       if ( !output.isEmpty() )
         {
           return output;
@@ -79,7 +79,7 @@ QString Ur1_ca::shorten ( const QString& url )
     }
   else
     {
-      kDebug() << "Cannot create a shortened url.\t" << job->errorString();
+      qCDebug(CHOQOK) << "Cannot create a shortened url.\t" << job->errorString();
     }
   return url;
 }

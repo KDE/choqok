@@ -25,14 +25,14 @@
 
 #include <QCheckBox>
 
-#include <KAction>
-#include <KDebug>
+#include <QAction>
 #include <KMenu>
 #include <KMessageBox>
 #include <KPluginFactory>
 #include <KPluginInfo>
 
 #include "accountmanager.h"
+#include "accountsdebug.h"
 #include "addaccountdialog.h"
 #include "choqokuiglobal.h"
 #include "editaccountwidget.h"
@@ -47,7 +47,7 @@ K_EXPORT_PLUGIN( ChoqokAccountsConfigFactory("kcm_choqok_accountsconfig") )
 AccountsWidget::AccountsWidget( QWidget* parent, const QVariantList& args )
         : KCModule( ChoqokAccountsConfigFactory::componentData(), parent, args )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     setAttribute(Qt::WA_DeleteOnClose);
     setupUi( this );
     connect( accountsTable, SIGNAL(cellDoubleClicked(int,int)),
@@ -77,12 +77,12 @@ AccountsWidget::AccountsWidget( QWidget* parent, const QVariantList& args )
 
 AccountsWidget::~AccountsWidget()
 {
-    kDebug();
+    qCDebug(CHOQOK);
 }
 
 void AccountsWidget::addAccount()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     KAction *act = qobject_cast<KAction*>( sender() );
     if(act) {
         QString name = act->data().toString();
@@ -101,7 +101,7 @@ void AccountsWidget::addAccount()
 
 void AccountsWidget::editAccount( QString alias )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     int currentRow = accountsTable->currentRow();
     if ( alias.isEmpty() )
         alias = accountsTable->item( currentRow, 0 )->text();
@@ -125,7 +125,7 @@ void AccountsWidget::editAccount( QString alias )
 
 void AccountsWidget::removeAccount( QString alias )
 {
-    kDebug() << alias;
+    qCDebug(CHOQOK) << alias;
     if( KMessageBox::warningYesNoCancel(this, i18n("Are you sure you want to remove the selected account?"))
         == KMessageBox::Yes ){
         if ( alias.isEmpty() )
@@ -137,14 +137,14 @@ void AccountsWidget::removeAccount( QString alias )
 
 void AccountsWidget::slotAccountAdded( Choqok::Account *account )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     addAccountToTable( account );
     emitChanged();
 }
 
 void AccountsWidget::slotAccountRemoved( const QString alias )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     int count = accountsTable->rowCount();
     for(int i = 0; i<count; ++i) {
         if(accountsTable->item(i, 0)->text() == alias){
@@ -157,7 +157,7 @@ void AccountsWidget::slotAccountRemoved( const QString alias )
 
 void AccountsWidget::addAccountToTable( Choqok::Account* account )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     int row = accountsTable->rowCount();
     accountsTable->setRowCount( row + 1 );
 //   accountsTable->insertRow(row);
@@ -178,9 +178,9 @@ void AccountsWidget::addAccountToTable( Choqok::Account* account )
 
 void AccountsWidget::accountsTablestateChanged()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     int current = accountsTable->currentRow();
-    kDebug()<<current;
+    qCDebug(CHOQOK)<<current;
     if ( current >= 0 && accountsTable->selectedItems().count() > 0 ) {
         btnEdit->setEnabled( true );
         btnRemove->setEnabled( true );
@@ -196,7 +196,7 @@ void AccountsWidget::accountsTablestateChanged()
 
 void AccountsWidget::load()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QList<Choqok::Account*> ac = Choqok::AccountManager::self()->accounts();
     QListIterator<Choqok::Account*> it( ac );
     while ( it.hasNext() ) {
@@ -208,7 +208,7 @@ void AccountsWidget::load()
 
 void AccountsWidget::save()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     int rowCount = accountsTable->rowCount();
     bool changed;
     for(int i=0; i<rowCount; ++i){

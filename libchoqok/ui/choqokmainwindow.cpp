@@ -26,6 +26,7 @@
 
 #include <KStatusBar>
 #include <KTabWidget>
+#include "libchoqokdebug.h"
 
 #include "choqokbehaviorsettings.h"
 #include "microblogwidget.h"
@@ -72,7 +73,7 @@ void MainWindow::hideEvent( QHideEvent * event )
 {
     Q_UNUSED(event);
     if( !this->isVisible() ) {
-        kDebug();
+        qCDebug(CHOQOK);
         if( Choqok::BehaviorSettings::markAllAsReadOnHideToSystray() )
             Q_EMIT markAllAsRead();
         Q_EMIT removeOldPosts();

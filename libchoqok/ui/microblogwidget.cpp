@@ -32,7 +32,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QVBoxLayout>
 
 #include <KDateTime>
-#include <KDebug>
+#include "libchoqokdebug.h"
 #include <KMenu>
 #include <KMessageBox>
 #include <KPushButton>
@@ -117,7 +117,7 @@ public:
 MicroBlogWidget::MicroBlogWidget( Account *account, QWidget* parent)
     :QWidget(parent), d(new Private(account))
 {
-    kDebug();
+    qCDebug(CHOQOK);
     connect(d->blog, SIGNAL(timelineDataReceived(Choqok::Account*,QString,QList<Choqok::Post*>)),
             this, SLOT(newTimelineDataRecieved(Choqok::Account*,QString,QList<Choqok::Post*>)) );
     connect(d->blog, SIGNAL(error(Choqok::Account*,Choqok::MicroBlog::ErrorType,
@@ -179,7 +179,7 @@ void MicroBlogWidget::setComposerWidget(ComposerWidget *widget)
 
 MicroBlogWidget::~MicroBlogWidget()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     delete d;
 }
 
@@ -197,7 +197,7 @@ void MicroBlogWidget::settingsChanged()
 
 void MicroBlogWidget::updateTimelines()
 {
-    kDebug()<<d->account->alias();
+    qCDebug(CHOQOK)<<d->account->alias();
     d->account->microblog()->updateTimelines(currentAccount());
 }
 
@@ -214,7 +214,7 @@ void MicroBlogWidget::newTimelineDataRecieved( Choqok::Account* theAccount, cons
     if(theAccount != currentAccount())
         return;
 
-    kDebug()<<d->account->alias()<<": "<<type;
+    qCDebug(CHOQOK)<<d->account->alias()<<": "<<type;
     d->latestUpdate->setText(KDateTime::currentLocalDateTime().time().toString());
     if(d->timelines.contains(type)){
         d->timelines.value(type)->addNewPosts(data);
@@ -226,11 +226,11 @@ void MicroBlogWidget::newTimelineDataRecieved( Choqok::Account* theAccount, cons
 
 void MicroBlogWidget::initTimelines()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     Q_FOREACH (const QString &timeline, d->account->timelineNames()) {
         addTimelineWidgetToUi(timeline);
     }
-//     kDebug()<<"========== Emiting loaded()";
+//     qCDebug(CHOQOK)<<"========== Emiting loaded()";
     Q_EMIT loaded();
 }
 
@@ -252,7 +252,7 @@ TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)
         }
         slotUpdateUnreadCount(mbw->unreadCount(),mbw);
     } else {
-        kDebug()<<"Cannot Create a new TimelineWidget for timeline "<<name;
+        qCDebug(CHOQOK)<<"Cannot Create a new TimelineWidget for timeline "<<name;
         return 0L;
     }
     if(d->timelinesTabWidget->count() == 1)
@@ -264,7 +264,7 @@ TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)
 
 void MicroBlogWidget::slotUpdateUnreadCount(int change, Choqok::UI::TimelineWidget* widget)
 {
-    kDebug()<<change;
+    qCDebug(CHOQOK)<<change;
     int sum = 0;
     Q_FOREACH (TimelineWidget *mbw, d->timelines) {
         sum += mbw->unreadCount();
@@ -290,7 +290,7 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change, Choqok::UI::TimelineWidg
     if(!wd)
         wd = widget;
     if(wd) {
-        kDebug()<< wd->unreadCount();
+        qCDebug(CHOQOK)<< wd->unreadCount();
         int tabIndex = d->timelinesTabWidget->indexOf(wd);
         if(tabIndex == -1)
             return;

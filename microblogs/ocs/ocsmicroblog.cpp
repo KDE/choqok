@@ -28,6 +28,7 @@
 #include <KMessageBox>
 
 #include <attica/providermanager.h>
+#include "choqokdebug.h"
 
 #include "application.h"
 #include "accountmanager.h"
@@ -58,7 +59,7 @@ OCSMicroblog::~OCSMicroblog()
 void OCSMicroblog::saveTimeline(Choqok::Account* account, const QString& timelineName,
                                 const QList< Choqok::UI::PostWidget* >& timeline)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
     KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
 
@@ -94,7 +95,7 @@ void OCSMicroblog::saveTimeline(Choqok::Account* account, const QString& timelin
 
 QList< Choqok::Post* > OCSMicroblog::loadTimeline(Choqok::Account* account, const QString& timelineName)
 {
-    kDebug()<<timelineName;
+    qCDebug(CHOQOK)<<timelineName;
     QList< Choqok::Post* > list;
     QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
     KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
@@ -142,12 +143,12 @@ Choqok::Account* OCSMicroblog::createNewAccount(const QString& alias)
 
 ChoqokEditAccountWidget* OCSMicroblog::createEditAccountWidget(Choqok::Account* account, QWidget* parent)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     OCSAccount *acc = qobject_cast<OCSAccount*>(account);
     if(acc || !account)
         return new OCSConfigureWidget(this, acc, parent);
     else{
-        kDebug()<<"Account passed here was not a valid OCSAccount!";
+        qCDebug(CHOQOK)<<"Account passed here was not a valid OCSAccount!";
         return 0L;
     }
 }
@@ -158,7 +159,7 @@ void OCSMicroblog::createPost(Choqok::Account* theAccount, Choqok::Post* post)
         Q_EMIT errorPost(theAccount, post, OtherError, i18n("OCS plugin is not initialized yet. Try again later."));
         return;
     }
-    kDebug();
+    qCDebug(CHOQOK);
     OCSAccount* acc = qobject_cast<OCSAccount*>(theAccount);
     Attica::PostJob* job = acc->provider().postActivity(post->content);
     mJobsAccount.insert(job, acc);
@@ -176,7 +177,7 @@ void OCSMicroblog::slotCreatePost(Attica::BaseJob* job)
 
 void OCSMicroblog::abortCreatePost(Choqok::Account* theAccount, Choqok::Post* post)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     Q_UNUSED(post);
     OCSAccount* acc = qobject_cast<OCSAccount*>(theAccount);
     Attica::BaseJob* job = mJobsAccount.key(acc);
@@ -209,10 +210,10 @@ void OCSMicroblog::updateTimelines(Choqok::Account* theAccount)
         scheduledTasks.insertMulti(theAccount, Update);
         return;
     }
-    kDebug();
+    qCDebug(CHOQOK);
     OCSAccount* acc = qobject_cast<OCSAccount*>(theAccount);
     if(!acc){
-        kError()<<"OCSMicroblog::updateTimelines: acc is not an OCSAccount";
+        qCCritical(CHOQOK)<<"OCSMicroblog::updateTimelines: acc is not an OCSAccount";
         return;
     }
     Attica::ListJob <Attica::Activity>* job = acc->provider().requestActivities();
@@ -223,7 +224,7 @@ void OCSMicroblog::updateTimelines(Choqok::Account* theAccount)
 
 void OCSMicroblog::slotTimelineLoaded(Attica::BaseJob* job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     OCSAccount* acc = mJobsAccount.take(job);
     if(job->metadata().error() == Attica::Metadata::NoError) {
         Attica::Activity::List actList = static_cast< Attica::ListJob<Attica::Activity> * >(job)->itemList();
@@ -235,7 +236,7 @@ void OCSMicroblog::slotTimelineLoaded(Attica::BaseJob* job)
 
 QList< Choqok::Post* > OCSMicroblog::parseActivityList(const Attica::Activity::List& list)
 {
-    kDebug()<<list.count();
+    qCDebug(CHOQOK)<<list.count();
     QList< Choqok::Post* > resultList;
     Q_FOREACH (const Attica::Activity &act, list) {
         Choqok::Post* pst = new Choqok::Post;
@@ -266,7 +267,7 @@ Choqok::TimelineInfo* OCSMicroblog::timelineInfo(const QString& timelineName)
         info->icon = "user-home";
         return info;
     } else {
-        kError()<<"timelineName is not valid!";
+        qCCritical(CHOQOK)<<"timelineName is not valid!";
         return 0;
     }
 }
@@ -278,7 +279,7 @@ bool OCSMicroblog::isOperational()
 
 void OCSMicroblog::slotDefaultProvidersLoaded()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     mIsOperational = true;
     Q_EMIT initialized();
 

@@ -29,8 +29,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QMenu>
 #include <QTimer>
 
-#include <KAction>
-#include <KDebug>
+#include <QAction>
+#include "libchoqokdebug.h"
 #include <KLocale>
 #include <sonnet/speller.h>
 
@@ -57,7 +57,7 @@ public:
 TextEdit::TextEdit(uint charLimit /*= 0*/, QWidget* parent /*= 0*/)
     :KTextEdit(parent), d(new Private(charLimit))
 {
-    kDebug()<<charLimit;
+    qCDebug(CHOQOK)<<charLimit;
     connect( this, SIGNAL( textChanged() ), this, SLOT( updateRemainingCharsCount() ) );
     setAcceptRichText( false );
     this->setToolTip( i18n( "<b>Note:</b><br/><i>Ctrl+S</i> to enable/disable auto spell checker." ) );
@@ -182,7 +182,7 @@ void TextEdit::updateRemainingCharsCount()
 void TextEdit::slotAboutToShowContextMenu(QMenu* menu)
 {
     if(menu){
-        kDebug();
+        qCDebug(CHOQOK);
         KAction *act = new KAction(i18n("Set spell check language"), menu);
         act->setMenu(d->langActions);
         menu->addAction(act);
@@ -195,7 +195,7 @@ void TextEdit::slotAboutToShowContextMenu(QMenu* menu)
 
 void TextEdit::shortenUrls()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QTextCursor cur = textCursor();
     if( !cur.hasSelection() ){
         cur.select(QTextCursor::BlockUnderCursor);
@@ -285,7 +285,7 @@ void TextEdit::setupSpeller()
     if(d->curLang.isEmpty()){
         d->curLang = s.defaultLanguage();
     }
-    kDebug()<<"Current LANG: "<<d->curLang;
+    qCDebug(CHOQOK)<<"Current LANG: "<<d->curLang;
     QMap<QString, QString> list = s.availableDictionaries();
     QMap<QString, QString>::const_iterator it = list.constBegin(), endIt = list.constEnd();
     for(; it!=endIt; ++it){

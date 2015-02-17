@@ -32,6 +32,7 @@
 #include <untinysettings.h>
 #include <qmutex.h>
 #include <QDomDocument>
+#include "choqokdebug.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < UnTiny > (); )
 K_EXPORT_PLUGIN( MyPluginFactory( "choqok_untiny" ) )
@@ -39,7 +40,7 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_untiny" ) )
 UnTiny::UnTiny(QObject* parent, const QList< QVariant >& )
     :Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     connect( Choqok::UI::Global::SessionManager::self(),
             SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
              this,
@@ -62,7 +63,7 @@ void UnTiny::slotAddNewPostWidget(Choqok::UI::PostWidget* newWidget)
 
 void UnTiny::startParsing()
 {
-//     kDebug();
+//     qCDebug(CHOQOK);
     int i = 8;
     while( !postsQueue.isEmpty() && i>0 ){
         parse(postsQueue.dequeue());
@@ -92,7 +93,7 @@ void UnTiny::parse(QPointer<Choqok::UI::PostWidget> postToParse)
         Q_FOREACH (const QString &url, redirectList) {
             KIO::TransferJob *job = KIO::mimetype( url, KIO::HideProgressInfo );
             if ( !job ) {
-                kDebug() << "Cannot create a http header request!";
+                qCDebug(CHOQOK) << "Cannot create a http header request!";
                 break;
             }
             connect( job, SIGNAL( permanentRedirection( KIO::Job*, KUrl, KUrl ) ),
@@ -116,7 +117,7 @@ void UnTiny::slot301Redirected(KIO::Job* job, KUrl fromUrl, KUrl toUrl)
         if(toUrl.url().length() < 30 && fromUrl.url().startsWith("http://t.co/")){
             KIO::TransferJob *job = KIO::mimetype( toUrl, KIO::HideProgressInfo );
             if ( !job ) {
-                kDebug() << "Cannot create a http header request!";
+                qCDebug(CHOQOK) << "Cannot create a http header request!";
             } else {
                 connect( job, SIGNAL( permanentRedirection( KIO::Job*, KUrl, KUrl ) ),
                         this, SLOT( slot301Redirected(KIO::Job*,KUrl,KUrl)) );

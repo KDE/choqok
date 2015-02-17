@@ -27,7 +27,7 @@
 #include <QFile>
 #include <QVBoxLayout>
 
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KLocale>
 #include <KPluginFactory>
 #include <KStandardDirs>
@@ -113,7 +113,7 @@ void NotifyConfig::load()
 
 void NotifyConfig::save()
 {
-    kDebug()<< accounts.keys();
+    qCDebug(CHOQOK)<< accounts.keys();
     settings->setAccounts(accounts);
     settings->setNotifyInterval(ui.interval->value());
     settings->setBackgroundColor(ui.backgroundColor->color());

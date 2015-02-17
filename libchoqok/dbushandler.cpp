@@ -31,7 +31,7 @@
 #include <QTextDocument>
 
 #include <KActionCollection>
-#include <KDebug>
+#include "libchoqokdebug.h"
 
 #include "ChoqokAdaptor.h"
 #include "choqokbehaviorsettings.h"
@@ -76,7 +76,7 @@ void DbusHandler::shareUrl(const QString& url, bool title)
         QByteArray data;
         KIO::StoredTransferJob *job = KIO::storedGet ( KUrl(url), KIO::NoReload, KIO::HideProgressInfo) ;
         if ( !job ) {
-            kDebug() << "Cannot create an http GET request!";
+            qCDebug(CHOQOK) << "Cannot create an http GET request!";
         } else {
             connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotTitleUrl(KJob*)) );
             job->start();
@@ -89,12 +89,12 @@ void DbusHandler::slotTitleUrl( KJob *job )
 {
     QString text;
     if (!job) {
-        kWarning()<<"NULL Job returned";
+        qCWarning(CHOQOK)<<"NULL Job returned";
         return;
     }
     KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
     if ( job->error() ) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     }
     else {
         QByteArray data = stj->data();

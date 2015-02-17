@@ -27,7 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <KAboutData>
 #include <KAction>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/JobClasses>
@@ -84,7 +84,7 @@ public:
 TwitterApiMicroBlog::TwitterApiMicroBlog ( const KComponentData &instance, QObject *parent )
 : MicroBlog( instance, parent), d(new Private)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     KConfigGroup grp(KGlobal::config(), "TwitterApi");
     format = grp.readEntry("format", "json");
 
@@ -148,7 +148,7 @@ void TwitterApiMicroBlog::setTimelineInfos()
 
 TwitterApiMicroBlog::~TwitterApiMicroBlog()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     delete d;
 }
 
@@ -180,7 +180,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
     QList< Choqok::Post* > list;
     if(timelineName.compare("Favorite") == 0)
         return list;//NOTE Won't cache favorites, and this is for compatibility with older versions!
-    kDebug()<<timelineName;
+    qCDebug(CHOQOK)<<timelineName;
     QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
     KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
     QStringList tmpList = postsBackup.groupList();
@@ -239,7 +239,7 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
                                        const QList< Choqok::UI::PostWidget* > &timeline)
 {
     if(timelineName.compare("Favorite") != 0) {
-        kDebug();
+        qCDebug(CHOQOK);
         QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
         KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
 
@@ -304,12 +304,12 @@ TwitterApiSearchTimelineWidget * TwitterApiMicroBlog::createSearchTimelineWidget
 
 void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post* post )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     QByteArray data;
     QOAuth::ParamMap params;
     if ( !post || post->content.isEmpty() ) {
-        kDebug() << "ERROR: Status text is empty!";
+        qCDebug(CHOQOK) << "ERROR: Status text is empty!";
         Q_EMIT errorPost ( theAccount, post, Choqok::MicroBlog::OtherError,
                          i18n ( "Creating the new post failed. Text is empty." ), MicroBlog::Critical );
         return;
@@ -330,7 +330,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
             data += "&source=Choqok";
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
         if ( !job ) {
-            kDebug() << "Cannot create an http POST request!";
+            qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
         }
         job->addMetaData ( "content-type", "Content-Type: application/x-www-form-urlencoded" );
@@ -353,7 +353,7 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
             data += "&source=Choqok";
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
         if ( !job ) {
-            kDebug() << "Cannot create an http POST request!";
+            qCDebug(CHOQOK) << "Cannot create an http POST request!";
 //             QString errMsg = i18n ( "Creating the new post failed. Cannot create an http POST request. Please check your KDE installation." );
 //             emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
@@ -369,9 +369,9 @@ void TwitterApiMicroBlog::createPost ( Choqok::Account* theAccount, Choqok::Post
 
 void TwitterApiMicroBlog::repeatPost(Choqok::Account* theAccount, const QString& postId)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if ( postId.isEmpty() ) {
-        kError() << "ERROR: PostId is empty!";
+        qCritical() << "ERROR: PostId is empty!";
         return;
     }
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
@@ -380,7 +380,7 @@ void TwitterApiMicroBlog::repeatPost(Choqok::Account* theAccount, const QString&
     QByteArray data;
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create an http POST request!";
+        qCDebug(CHOQOK) << "Cannot create an http POST request!";
         return;
     }
     job->addMetaData ( "content-type", "Content-Type: application/x-www-form-urlencoded" );
@@ -395,19 +395,19 @@ void TwitterApiMicroBlog::repeatPost(Choqok::Account* theAccount, const QString&
 
 void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if ( !job ) {
-        kDebug() << "Job is null pointer";
+        qCDebug(CHOQOK) << "Job is null pointer";
         return;
     }
     Choqok::Post *post = mCreatePostMap.take(job);
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if(!post || !theAccount) {
-        kDebug()<<"Account or Post is NULL pointer";
+        qCDebug(CHOQOK)<<"Account or Post is NULL pointer";
         return;
     }
     if ( job->error() ) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
         Q_EMIT errorPost ( theAccount, post, Choqok::MicroBlog::CommunicationError,
                          i18n("Creating the new post failed. %1", job->errorString()), MicroBlog::Critical );
     } else {
@@ -418,11 +418,11 @@ void TwitterApiMicroBlog::slotCreatePost ( KJob *job )
                 QString errorMsg;
                 errorMsg = checkForError(stj->data());
                 if( errorMsg.isEmpty() ){    // ???? If empty, why is there an error?
-                    kError() << "Creating post: JSON parsing error: "<< stj->data() ;
+                    qCritical() << "Creating post: JSON parsing error: "<< stj->data() ;
                     Q_EMIT errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
                                     i18n ( "Creating the new post failed. The result data could not be parsed." ), MicroBlog::Critical );
                 } else {
-                    kError() << "Server Error:" << errorMsg ;
+                    qCritical() << "Server Error:" << errorMsg ;
                     Q_EMIT errorPost ( theAccount, post, Choqok::MicroBlog::ServerError,
                                      i18n ( "Creating the new post failed, with error: %1", errorMsg ),
                                      MicroBlog::Critical );
@@ -461,7 +461,7 @@ void TwitterApiMicroBlog::abortCreatePost(Choqok::Account* theAccount, Choqok::P
 
 void TwitterApiMicroBlog::fetchPost ( Choqok::Account* theAccount, Choqok::Post* post )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if ( !post || post->postId.isEmpty()) {
         return;
     }
@@ -471,7 +471,7 @@ void TwitterApiMicroBlog::fetchPost ( Choqok::Account* theAccount, Choqok::Post*
 
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create an http GET request!";
+        qCDebug(CHOQOK) << "Cannot create an http GET request!";
 //         QString errMsg = i18n ( "Fetching the new post failed. Cannot create an HTTP GET request."
 //                                 "Please check your KDE installation." );
 //         emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, Low );
@@ -486,15 +486,15 @@ void TwitterApiMicroBlog::fetchPost ( Choqok::Account* theAccount, Choqok::Post*
 
 void TwitterApiMicroBlog::slotFetchPost ( KJob *job )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(!job) {
-        kWarning()<<"NULL Job returned";
+        qCWarning(CHOQOK)<<"NULL Job returned";
         return;
     }
     Choqok::Post *post = mFetchPostMap.take(job);
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
         Q_EMIT error ( theAccount, Choqok::MicroBlog::CommunicationError,
                      i18n("Fetching the new post failed. %1", job->errorString()), Low );
     } else {
@@ -504,12 +504,12 @@ void TwitterApiMicroBlog::slotFetchPost ( KJob *job )
                 QString errorMsg;
                 errorMsg = checkForError(stj->data());
             if( errorMsg.isEmpty() ){
-                kDebug() << "Parsing Error";
+                qCDebug(CHOQOK) << "Parsing Error";
                 Q_EMIT errorPost ( theAccount, post, Choqok::MicroBlog::ParsingError,
                                 i18n ( "Fetching new post failed. The result data could not be parsed." ),
                                  Low );
             } else {
-                kError()<<"Fetching post: Server Error: "<<errorMsg;
+                qCritical()<<"Fetching post: Server Error: "<<errorMsg;
                 Q_EMIT errorPost ( theAccount, post, Choqok::MicroBlog::ServerError,
                                  i18n ( "Fetching new post failed, with error: %1", errorMsg ),
                                  Low );
@@ -523,7 +523,7 @@ void TwitterApiMicroBlog::slotFetchPost ( KJob *job )
 
 void TwitterApiMicroBlog::removePost ( Choqok::Account* theAccount, Choqok::Post* post )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if ( !post->postId.isEmpty() ) {
         TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
         KUrl url = account->apiUrl();
@@ -534,7 +534,7 @@ void TwitterApiMicroBlog::removePost ( Choqok::Account* theAccount, Choqok::Post
         }
         KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
         if ( !job ) {
-            kDebug() << "Cannot create an http POST request!";
+            qCDebug(CHOQOK) << "Cannot create an http POST request!";
 //             QString errMsg = i18n ( "Removing the post failed. Cannot create an HTTP POST request. Please check your KDE installation." );
 //             emit errorPost ( theAccount, post, Choqok::MicroBlog::OtherError, errMsg, MicroBlog::Critical );
             return;
@@ -549,15 +549,15 @@ void TwitterApiMicroBlog::removePost ( Choqok::Account* theAccount, Choqok::Post
 
 void TwitterApiMicroBlog::slotRemovePost ( KJob *job )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if ( !job ) {
-        kDebug() << "Job is null pointer.";
+        qCDebug(CHOQOK) << "Job is null pointer.";
         return;
     }
     Choqok::Post *post = mRemovePostMap.take(job);
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
         Q_EMIT errorPost ( theAccount, post, CommunicationError,
                          i18n("Removing the post failed. %1", job->errorString() ), MicroBlog::Critical );
     } else {
@@ -566,7 +566,7 @@ void TwitterApiMicroBlog::slotRemovePost ( KJob *job )
         if( errMsg.isEmpty() ){
             Q_EMIT postRemoved ( theAccount, post );
         } else {
-            kError()<<"Server error on removing post: "<<errMsg;
+            qCritical()<<"Server error on removing post: "<<errMsg;
             Q_EMIT errorPost ( theAccount, post, ServerError,
                              i18n("Removing the post failed. %1", errMsg ), MicroBlog::Critical );
         }
@@ -575,7 +575,7 @@ void TwitterApiMicroBlog::slotRemovePost ( KJob *job )
 
 void TwitterApiMicroBlog::createFavorite ( Choqok::Account* theAccount, const QString &postId )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
     //url.addPath ( QString("/favorites/create.json?id=%1").arg(postId));
@@ -588,7 +588,7 @@ void TwitterApiMicroBlog::createFavorite ( Choqok::Account* theAccount, const QS
 
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create an http POST request!";
+        qCDebug(CHOQOK) << "Cannot create an http POST request!";
 //         QString errMsg = i18n ( "The Favorite creation failed. Cannot create an http POST request. "
 //                                 "Please check your KDE installation." );
 //         emit error ( theAccount, OtherError, errMsg );
@@ -603,15 +603,15 @@ void TwitterApiMicroBlog::createFavorite ( Choqok::Account* theAccount, const QS
 
 void TwitterApiMicroBlog::slotCreateFavorite ( KJob *job )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if ( !job ) {
-        kDebug() << "Job is null pointer.";
+        qCDebug(CHOQOK) << "Job is null pointer.";
         return;
     }
     Choqok::Account *theAccount = mJobsAccount.take(job);
     QString postId = mFavoriteMap.take(job);
     if ( job->error() ) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
         Q_EMIT error ( theAccount, CommunicationError, i18n( "Favorite creation failed. %1", job->errorString() ) );
     } else {
         KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
@@ -627,7 +627,7 @@ void TwitterApiMicroBlog::slotCreateFavorite ( KJob *job )
 
 void TwitterApiMicroBlog::removeFavorite ( Choqok::Account* theAccount, const QString& postId )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
     url.addPath ( "/favorites/destroy.json" );
@@ -640,7 +640,7 @@ void TwitterApiMicroBlog::removeFavorite ( Choqok::Account* theAccount, const QS
 
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo  ) ;
     if ( !job ) {
-        kDebug() << "Cannot create an http POST request!";
+        qCDebug(CHOQOK) << "Cannot create an http POST request!";
 //         QString errMsg = i18n ( "Removing the favorite failed. Cannot create an http POST request. "
 //                                 "Please check your KDE installation." );
 //         emit error ( theAccount, OtherError, errMsg );
@@ -655,15 +655,15 @@ void TwitterApiMicroBlog::removeFavorite ( Choqok::Account* theAccount, const QS
 
 void TwitterApiMicroBlog::slotRemoveFavorite ( KJob *job )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if ( !job ) {
-        kDebug() << "Job is null pointer.";
+        qCDebug(CHOQOK) << "Job is null pointer.";
         return;
     }
     QString id = mFavoriteMap.take(job);
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
         Q_EMIT error ( theAccount, CommunicationError, i18n("Removing the favorite failed. %1", job->errorString() ) );
     } else {
         KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
@@ -688,7 +688,7 @@ void TwitterApiMicroBlog::listFriendsUsername(TwitterApiAccount* theAccount, boo
 
 void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount, bool active)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
     url.addPath( QString("/friends/list.json") );
@@ -701,7 +701,7 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create an http GET request!";
+        qCDebug(CHOQOK) << "Cannot create an http GET request!";
         return;
     }
     job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, tmpUrl,
@@ -727,7 +727,7 @@ void TwitterApiMicroBlog::slotRequestFriendsScreenNamePassive(KJob* job)
 
 void TwitterApiMicroBlog::finishRequestFriendsScreenName(KJob* job, bool active)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount *>( mJobsAccount.take(job) );
     KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
     Choqok::MicroBlog::ErrorLevel level = active ? Critical : Low;
@@ -757,7 +757,7 @@ void TwitterApiMicroBlog::finishRequestFriendsScreenName(KJob* job, bool active)
 
 void TwitterApiMicroBlog::updateTimelines (Choqok::Account* theAccount)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     Q_FOREACH (const QString &tm, theAccount->timelineNames()) {
         requestTimeLine ( theAccount, tm, mTimelineLatestId[theAccount][tm] );
     }
@@ -766,7 +766,7 @@ void TwitterApiMicroBlog::updateTimelines (Choqok::Account* theAccount)
 void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString type,
                                             QString latestStatusId, int page, QString maxId )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
     url.addPath ( timelineApiPath[type].arg(format) );
@@ -813,11 +813,11 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
             url.addQueryItem ( "page", QString::number ( page ) );
         }
     }
-    kDebug() << "Latest " << type << " Id: " << latestStatusId;// << " apiReq: " << url;
+    qCDebug(CHOQOK) << "Latest " << type << " Id: " << latestStatusId;// << " apiReq: " << url;
 
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create an http GET request!";
+        qCDebug(CHOQOK) << "Cannot create an http GET request!";
 //         QString errMsg = i18n ( "Cannot create an http GET request. Please check your KDE installation." );
 //         emit error ( theAccount, OtherError, errMsg, Low );
         return;
@@ -831,14 +831,14 @@ void TwitterApiMicroBlog::requestTimeLine ( Choqok::Account* theAccount, QString
 
 void TwitterApiMicroBlog::slotRequestTimeline ( KJob *job )
 {
-    kDebug();//TODO Add error detection for XML "checkXmlForError()" and JSON
+    qCDebug(CHOQOK);//TODO Add error detection for XML "checkXmlForError()" and JSON
     if ( !job ) {
-        kDebug() << "Job is null pointer";
+        qCDebug(CHOQOK) << "Job is null pointer";
         return;
     }
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
         Q_EMIT error( theAccount, CommunicationError,
                     i18n("Timeline update failed: %1", job->errorString()), Low );
         return;
@@ -922,7 +922,7 @@ void TwitterApiMicroBlog::aboutToUnload()
 void TwitterApiMicroBlog::showDirectMessageDialog( TwitterApiAccount *theAccount/* = 0*/,
                                                    const QString &toUsername/* = QString()*/ )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if( !theAccount ) {
         KAction *act = qobject_cast<KAction *>(sender());
         theAccount = qobject_cast<TwitterApiAccount*>(
@@ -964,7 +964,7 @@ void TwitterApiMicroBlog::slotUpdateFriendsList()
 
 void TwitterApiMicroBlog::createFriendship( Choqok::Account *theAccount, const QString& username )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
     url.addPath ( "/friendships/create.json" );
@@ -975,9 +975,9 @@ void TwitterApiMicroBlog::createFriendship( Choqok::Account *theAccount, const Q
     params.insert("screen_name", username.toLatin1());
 
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
-    kDebug()<<url;
+    qCDebug(CHOQOK)<<url;
     if ( !job ) {
-        kError() << "Cannot create an http POST request!";
+        qCritical() << "Cannot create an http POST request!";
         return;
     }
     job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, tmp, QOAuth::POST, params));
@@ -989,15 +989,15 @@ void TwitterApiMicroBlog::createFriendship( Choqok::Account *theAccount, const Q
 
 void TwitterApiMicroBlog::slotCreateFriendship(KJob* job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(!job){
-        kError()<<"Job is a null Pointer!";
+        qCritical()<<"Job is a null Pointer!";
         return;
     }
     TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount*>( mJobsAccount.take(job) );
     QString username = mFriendshipMap.take(job);
     if(job->error()){
-        kDebug()<<"Job Error:"<<job->errorString();
+        qCDebug(CHOQOK)<<"Job Error:"<<job->errorString();
         Q_EMIT error ( theAccount, CommunicationError,
                      i18n("Creating friendship with %1 failed. %2", username, job->errorString() ) );
         return;
@@ -1012,12 +1012,12 @@ void TwitterApiMicroBlog::slotCreateFriendship(KJob* job)
     } else {
         QString errorMsg = checkForError(stj->data());
         if( errorMsg.isEmpty() ){
-            kDebug()<<"Parse Error: "<<stj->data();
+            qCDebug(CHOQOK)<<"Parse Error: "<<stj->data();
             Q_EMIT error( theAccount, ParsingError,
                         i18n("Creating friendship with %1 failed: the server returned invalid data.",
                              username ) );
         } else {
-            kDebug()<<"Server error: "<<errorMsg;
+            qCDebug(CHOQOK)<<"Server error: "<<errorMsg;
             Q_EMIT error( theAccount, ServerError,
                         i18n("Creating friendship with %1 failed: %2",
                             username, errorMsg ) );
@@ -1027,7 +1027,7 @@ void TwitterApiMicroBlog::slotCreateFriendship(KJob* job)
 
 void TwitterApiMicroBlog::destroyFriendship( Choqok::Account *theAccount, const QString& username )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
 
@@ -1040,7 +1040,7 @@ void TwitterApiMicroBlog::destroyFriendship( Choqok::Account *theAccount, const 
 
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kError() << "Cannot create an http POST request!";
+        qCritical() << "Cannot create an http POST request!";
         return;
     }
     job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, tmp, QOAuth::POST, params));
@@ -1052,15 +1052,15 @@ void TwitterApiMicroBlog::destroyFriendship( Choqok::Account *theAccount, const 
 
 void TwitterApiMicroBlog::slotDestroyFriendship(KJob* job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(!job){
-        kError()<<"Job is a null Pointer!";
+        qCritical()<<"Job is a null Pointer!";
         return;
     }
     TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount*>( mJobsAccount.take(job) );
     QString username = mFriendshipMap.take(job);
     if(job->error()){
-        kDebug()<<"Job Error:"<<job->errorString();
+        qCDebug(CHOQOK)<<"Job Error:"<<job->errorString();
         Q_EMIT error ( theAccount, CommunicationError,
                      i18n("Destroying friendship with %1 failed. %2", username, job->errorString() ) );
         return;
@@ -1075,12 +1075,12 @@ void TwitterApiMicroBlog::slotDestroyFriendship(KJob* job)
     } else {
         QString errorMsg = checkForError(stj->data());
         if( errorMsg.isEmpty() ){
-            kDebug()<<"Parse Error: "<<stj->data();
+            qCDebug(CHOQOK)<<"Parse Error: "<<stj->data();
             Q_EMIT error( theAccount, ParsingError,
                         i18n("Destroying friendship with %1 failed: the server returned invalid data.",
                             username ) );
         } else {
-            kDebug()<<"Server error: "<<errorMsg;
+            qCDebug(CHOQOK)<<"Server error: "<<errorMsg;
             Q_EMIT error( theAccount, ServerError,
                         i18n("Destroying friendship with %1 failed: %2",
                              username, errorMsg ) );
@@ -1090,7 +1090,7 @@ void TwitterApiMicroBlog::slotDestroyFriendship(KJob* job)
 
 void TwitterApiMicroBlog::blockUser( Choqok::Account *theAccount, const QString& username )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
     url.addPath ( "/blocks/create.json" );
@@ -1102,7 +1102,7 @@ void TwitterApiMicroBlog::blockUser( Choqok::Account *theAccount, const QString&
 
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kError() << "Cannot create an http POST request!";
+        qCritical() << "Cannot create an http POST request!";
         return;
     }
     job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, tmp, QOAuth::POST, params));
@@ -1114,7 +1114,7 @@ void TwitterApiMicroBlog::blockUser( Choqok::Account *theAccount, const QString&
 
 void TwitterApiMicroBlog::reportUserAsSpam(Choqok::Account* theAccount, const QString& username)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
     url.addPath( "/users/report_spam.json" );
@@ -1126,7 +1126,7 @@ void TwitterApiMicroBlog::reportUserAsSpam(Choqok::Account* theAccount, const QS
 
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( QByteArray(), url, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kError() << "Cannot create an http POST request!";
+        qCritical() << "Cannot create an http POST request!";
         return;
     }
     job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, tmp, QOAuth::POST, params));
@@ -1139,15 +1139,15 @@ void TwitterApiMicroBlog::reportUserAsSpam(Choqok::Account* theAccount, const QS
 
 void TwitterApiMicroBlog::slotBlockUser(KJob* job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(!job){
-        kError()<<"Job is a null Pointer!";
+        qCritical()<<"Job is a null Pointer!";
         return;
     }
     Choqok::Account *theAccount = mJobsAccount.take(job);
     QString username = mFriendshipMap.take(job);
     if(job->error()){
-        kDebug()<<"Job Error:"<<job->errorString();
+        qCDebug(CHOQOK)<<"Job Error:"<<job->errorString();
         Q_EMIT error ( theAccount, CommunicationError,
                      i18n("Blocking %1 failed. %2", username, job->errorString() ) );
         return;
@@ -1157,7 +1157,7 @@ void TwitterApiMicroBlog::slotBlockUser(KJob* job)
         Q_EMIT userBlocked(theAccount, username);
         Choqok::NotifyManager::success( i18n("You will no longer be disturbed by %1.", username) );
     } else {
-        kDebug()<<"Parse Error: "<<qobject_cast<KIO::StoredTransferJob*>(job)->data();
+        qCDebug(CHOQOK)<<"Parse Error: "<<qobject_cast<KIO::StoredTransferJob*>(job)->data();
         Q_EMIT error( theAccount, ParsingError,
                      i18n("Blocking %1 failed: the server returned invalid data.",
                           username ) );
@@ -1167,16 +1167,16 @@ void TwitterApiMicroBlog::slotBlockUser(KJob* job)
 
 void TwitterApiMicroBlog::slotReportUser(KJob* job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(!job){
-        kError()<<"Job is a null Pointer!";
+        qCritical()<<"Job is a null Pointer!";
         return;
     }
 
     Choqok::Account *theAccount = mJobsAccount.take(job);
     QString username = mFriendshipMap.take(job);
     if(job->error()){
-        kDebug()<<"Job Error:"<<job->errorString();
+        qCDebug(CHOQOK)<<"Job Error:"<<job->errorString();
         Q_EMIT error ( theAccount, CommunicationError,
                      i18n("Reporting %1 failed. %2", username, job->errorString() ) );
         return;
@@ -1185,7 +1185,7 @@ void TwitterApiMicroBlog::slotReportUser(KJob* job)
     if( user ){
         Choqok::NotifyManager::success( i18n("Report sent successfully") );
     } else {
-        kDebug()<<"Parse Error: "<<qobject_cast<KIO::StoredTransferJob*>(job)->data();
+        qCDebug(CHOQOK)<<"Parse Error: "<<qobject_cast<KIO::StoredTransferJob*>(job)->data();
         Q_EMIT error( theAccount, ParsingError,
                      i18n("Reporting %1 failed: the server returned invalid data.",
                           username ) );
@@ -1207,7 +1207,7 @@ QString TwitterApiMicroBlog::checkForError(const QByteArray& buffer)
     if(ok && map.contains("errors")){
     for (int i=0; i<map["errors"].toList().count(); i++) {
         errors.append(map["errors"].toList()[i].toMap()["message"].toString());
-        kError() << "Error: " << errors.last();
+        qCritical() << "Error: " << errors.last();
         }
         return errors.join(";");
     }
@@ -1230,7 +1230,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::readTimeline(Choqok::Account* theAcc
     } else {
         QString err = checkForError(buffer);
         if(err.isEmpty()){
-            kError() << "JSON parsing failed.\nBuffer was: \n" << buffer;
+            qCritical() << "JSON parsing failed.\nBuffer was: \n" << buffer;
             Q_EMIT error(theAccount, ParsingError, i18n("Could not parse the data that has been received from the server."));
         } else {
             Q_EMIT error(theAccount, ServerError, err);
@@ -1251,11 +1251,11 @@ Choqok::Post* TwitterApiMicroBlog::readPost(Choqok::Account* theAccount,
         return readPost ( theAccount, map, post );
     } else {
         if(!post){
-            kError()<<"TwitterApiMicroBlog::readPost: post is NULL!";
+            qCritical()<<"TwitterApiMicroBlog::readPost: post is NULL!";
             post = new Choqok::Post;
         }
         Q_EMIT errorPost(theAccount, post, ParsingError, i18n("Could not parse the data that has been received from the server."));
-        kError()<<"JSon parsing failed. Buffer was:"<<buffer;
+        qCritical()<<"JSon parsing failed. Buffer was:"<<buffer;
         post->isError = true;
         return post;
     }
@@ -1266,7 +1266,7 @@ Choqok::Post* TwitterApiMicroBlog::readPost(Choqok::Account* theAccount,
                                                        Choqok::Post* post)
 {
     if(!post){
-        kError()<<"TwitterApiMicroBlog::readPost: post is NULL!";
+        qCritical()<<"TwitterApiMicroBlog::readPost: post is NULL!";
         return 0;
     }
     post->content = var["text"].toString();
@@ -1292,7 +1292,7 @@ Choqok::Post* TwitterApiMicroBlog::readPost(Choqok::Account* theAccount,
         post->media = mediaMap["media_url"].toString() + ":small";
         QVariantMap sizes = mediaMap["sizes"].toMap();
         QVariantMap w = sizes["small"].toMap();
-        kError() << "size: " << w;
+        qCritical() << "size: " << w;
         post->mediaSizeWidth = w["w"].toInt() !=  0L ? w["w"].toInt() : 0;
         post->mediaSizeHeight = w["h"].toInt() != 0L ? w["h"].toInt() : 0;
     }
@@ -1330,7 +1330,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::readDirectMessages(Choqok::Account* 
     } else {
         QString err = checkForError(buffer);
         if(err.isEmpty()){
-            kError() << "JSON parsing failed.\nBuffer was: \n" << buffer;
+            qCritical() << "JSON parsing failed.\nBuffer was: \n" << buffer;
             Q_EMIT error(theAccount, ParsingError, i18n("Could not parse the data that has been received from the server."));
         } else {
             Q_EMIT error(theAccount, ServerError, err);
@@ -1402,7 +1402,7 @@ Choqok::Post* TwitterApiMicroBlog::readDirectMessage(Choqok::Account* theAccount
 
 Choqok::User* TwitterApiMicroBlog::readUserInfo(const QByteArray& buffer)
 {
-    //kError()<<"TwitterApiMicroBlog::readUserInfoFromJson: NOT IMPLEMENTED YET!";
+    //qCritical()<<"TwitterApiMicroBlog::readUserInfoFromJson: NOT IMPLEMENTED YET!";
     bool ok;
     Choqok::User *user = new Choqok::User;
     QVariantMap json = d->parser.parse(buffer, &ok).toMap();
@@ -1419,7 +1419,7 @@ Choqok::User* TwitterApiMicroBlog::readUserInfo(const QByteArray& buffer)
         user->userName = json["screen_name"].toString();
     } else {
         QString err = i18n( "Retrieving the friends list failed. The data returned from the server is corrupted." );
-        kDebug() << "JSON parse error: the buffer is: \n" << buffer;
+        qCDebug(CHOQOK) << "JSON parse error: the buffer is: \n" << buffer;
         Q_EMIT error(0, ParsingError, err, Critical);
     }
     return user;
@@ -1444,7 +1444,7 @@ QStringList TwitterApiMicroBlog::readUsersScreenName(Choqok::Account* theAccount
         d->friendsCursor = nextCursor;
     } else {
         QString err = i18n( "Retrieving the friends list failed. The data returned from the server is corrupted." );
-        kDebug() << "JSON parse error: the buffer is: \n" << buffer;
+        qCDebug(CHOQOK) << "JSON parse error: the buffer is: \n" << buffer;
         Q_EMIT error(theAccount, ParsingError, err, Critical);
     }
     return list;

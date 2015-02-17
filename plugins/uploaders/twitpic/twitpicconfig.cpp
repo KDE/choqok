@@ -29,6 +29,7 @@
 #include <KPluginFactory>
 #include <KLocale>
 #include <KMessageBox>
+#include "choqokdebug.h"
 
 #include "accountmanager.h"
 #include "passwordmanager.h"
@@ -52,12 +53,12 @@ TwitpicConfig::TwitpicConfig(QWidget* parent, const QVariantList& ):
 
 TwitpicConfig::~TwitpicConfig()
 {
-    kDebug()<<TwitpicSettings::alias();
+    qCDebug(CHOQOK)<<TwitpicSettings::alias();
 }
 
 void TwitpicConfig::load()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     KCModule::load();
     QList<Choqok::Account*> list = Choqok::AccountManager::self()->accounts();
     Q_FOREACH (Choqok::Account *acc, list) {
@@ -71,10 +72,10 @@ void TwitpicConfig::load()
 
 void TwitpicConfig::save()
 {
-    kDebug()<<ui.accountsList->currentIndex();
+    qCDebug(CHOQOK)<<ui.accountsList->currentIndex();
     if(ui.accountsList->currentIndex() > -1) {
         TwitpicSettings::setAlias( ui.accountsList->currentText() );
-        kDebug()<<TwitpicSettings::alias();
+        qCDebug(CHOQOK)<<TwitpicSettings::alias();
     } else {
         TwitpicSettings::setAlias(QString());
         KMessageBox::error(this, i18n("You have to configure at least one Twitter account to use this plugin."));

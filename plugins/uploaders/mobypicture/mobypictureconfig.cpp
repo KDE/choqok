@@ -29,6 +29,7 @@
 #include <KPluginFactory>
 #include <KLocale>
 #include <KMessageBox>
+#include "choqokdebug.h"
 
 #include "mobypicturesettings.h"
 
@@ -62,7 +63,7 @@ MobypictureConfig::~MobypictureConfig()
 
 void MobypictureConfig::load()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     KCModule::load();
     QList<Choqok::Account*> list = Choqok::AccountManager::self()->accounts();
     Q_FOREACH (Choqok::Account *acc, list) {
@@ -84,7 +85,7 @@ void MobypictureConfig::save()
 {
     if ( ui.cfg_accountsList->currentIndex() > -1 ) {
         MobypictureSettings::setAlias ( ui.cfg_accountsList->currentText() );
-        kDebug() << MobypictureSettings::alias();
+        qCDebug(CHOQOK) << MobypictureSettings::alias();
     } else {
         MobypictureSettings::setAlias ( QString() );
         KMessageBox::error ( this, i18n ( "You have to configure at least one Twitter account to use this plugin." ) );

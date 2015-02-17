@@ -26,7 +26,7 @@
 
 #include <QDomElement>
 
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KIO/Job>
 #include <KIO/JobClasses>
 #include <KLocalizedString>
@@ -40,7 +40,7 @@ const QRegExp LaconicaSearch::mIdRegExp("(?:user|(?:.*notice))/([0-9]+)");
 
 LaconicaSearch::LaconicaSearch(QObject* parent): TwitterApiSearch(parent)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     mSearchCode[ReferenceGroup] = '!';
     mSearchCode[ToUser] = '@';
     mSearchCode[FromUser].clear();
@@ -69,7 +69,7 @@ LaconicaSearch::~LaconicaSearch()
 KUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
                               QString sinceStatusId, uint count, uint page)
 {
-    kDebug();
+    qCDebug(CHOQOK);
 
     QString formattedQuery;
     switch ( searchInfo.option ) {
@@ -116,12 +116,12 @@ void LaconicaSearch::requestSearchResults(const SearchInfo &searchInfo,
                                           const QString& sinceStatusId,
                                           uint count, uint page)
 {
-    kDebug();
-    KUrl url = buildUrl( searchInfo, sinceStatusId, count, page );
-    kDebug()<<url;
+    qCDebug(CHOQOK);
+    QUrl url = buildUrl( searchInfo, sinceStatusId, count, page );
+    qCDebug(CHOQOK)<<url;
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo );
     if( !job ) {
-        kError() << "Cannot create an http GET request!";
+        qCCritical(CHOQOK) << "Cannot create an http GET request!";
         return;
     }
     mSearchJobs[job] = searchInfo;
@@ -131,9 +131,9 @@ void LaconicaSearch::requestSearchResults(const SearchInfo &searchInfo,
 
 void LaconicaSearch::searchResultsReturned(KJob* job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if( job == 0 ) {
-        kDebug() << "job is a null pointer";
+        qCDebug(CHOQOK) << "job is a null pointer";
         Q_EMIT error( i18n( "Unable to fetch search results." ) );
         return;
     }
@@ -141,7 +141,7 @@ void LaconicaSearch::searchResultsReturned(KJob* job)
     SearchInfo info = mSearchJobs.take(job);
 
     if( job->error() ) {
-        kError() << "Error: " << job->errorString();
+        qCCritical(CHOQOK) << "Error: " << job->errorString();
         Q_EMIT error( i18n( "Unable to fetch search results: %1", job->errorString() ) );
         return;
     }
@@ -152,7 +152,7 @@ void LaconicaSearch::searchResultsReturned(KJob* job)
     else
         postsList = parseRss( jj->data() );
 
-    kDebug()<<"Emiting searchResultsReceived()";
+    qCDebug(CHOQOK)<<"Emiting searchResultsReceived()";
     Q_EMIT searchResultsReceived( info, postsList );
 }
 
@@ -171,7 +171,7 @@ QList< Choqok::Post* > LaconicaSearch::parseAtom(const QByteArray& buffer)
     QDomElement root = document.documentElement();
 
     if ( root.tagName() != "feed" ) {
-        kDebug() << "There is no feed element in Atom feed " << buffer.data();
+        qCDebug(CHOQOK) << "There is no feed element in Atom feed " << buffer.data();
         return statusList;
     }
 
@@ -245,7 +245,7 @@ QList< Choqok::Post* > LaconicaSearch::parseAtom(const QByteArray& buffer)
 
 QList< Choqok::Post* > LaconicaSearch::parseRss(const QByteArray& buffer)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QDomDocument document;
     QList<Choqok::Post*> statusList;
 
@@ -254,7 +254,7 @@ QList< Choqok::Post* > LaconicaSearch::parseRss(const QByteArray& buffer)
     QDomElement root = document.documentElement();
 
     if ( root.tagName() != "rdf:RDF" ) {
-        kDebug() << "There is no rdf:RDF element in RSS feed " << buffer.data();
+        qCDebug(CHOQOK) << "There is no rdf:RDF element in RSS feed " << buffer.data();
         return statusList;
     }
 

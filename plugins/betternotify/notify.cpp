@@ -33,6 +33,7 @@
 #include <KIO/Job>
 #include <KIO/JobClasses>
 #include <KStandardDirs>
+#include "choqokdebug.h"
 
 #include "account.h"
 #include "application.h"
@@ -49,7 +50,7 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_betternotify" ) )
 Notify::Notify(QObject* parent, const QList< QVariant >& )
     :Choqok::Plugin(MyPluginFactory::componentData(), parent), notification(0)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     NotifySettings set;
     accountsList = set.accounts();
     timer.setInterval(set.notifyInterval()*1000);
@@ -65,18 +66,18 @@ Notify::Notify(QObject* parent, const QList< QVariant >& )
 
 Notify::~Notify()
 {
-    kDebug();
+    qCDebug(CHOQOK);
 }
 
 void Notify::slotNewPostWidgetAdded(Choqok::UI::PostWidget* pw, Choqok::Account* acc, QString tm)
 {
-//     kDebug()<<Choqok::Application::isStartingUp()<< Choqok::Application::isShuttingDown();
+//     qCDebug(CHOQOK)<<Choqok::Application::isStartingUp()<< Choqok::Application::isShuttingDown();
     if(Choqok::Application::isStartingUp() || Choqok::Application::isShuttingDown()){
-        kDebug()<<"Choqok is starting up or going down!";
+        qCDebug(CHOQOK)<<"Choqok is starting up or going down!";
         return;
     }
     if(pw && !pw->isRead() && accountsList[acc->alias()].contains(tm)){
-        kDebug()<<"POST ADDED TO NOTIFY IT: "<<pw->currentPost()->content;
+        qCDebug(CHOQOK)<<"POST ADDED TO NOTIFY IT: "<<pw->currentPost()->content;
         postQueueToNotify.enqueue(pw);
         if( !timer.isActive() )
         {
@@ -88,7 +89,7 @@ void Notify::slotNewPostWidgetAdded(Choqok::UI::PostWidget* pw, Choqok::Account*
 
 void Notify::notifyNextPost()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(postQueueToNotify.isEmpty()){
         timer.stop();
         if(notification){
@@ -101,7 +102,7 @@ void Notify::notifyNextPost()
 
 void Notify::notify(QPointer< Choqok::UI::PostWidget > post)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(post) {
         Notification *notif= new Notification ( post );
         connect(notif, SIGNAL(ignored()), this, SLOT(stopNotifications()));
@@ -116,7 +117,7 @@ void Notify::notify(QPointer< Choqok::UI::PostWidget > post)
 
 void Notify::slotPostReaded()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     notifyNextPost();
     timer.stop();
     timer.start();
@@ -124,7 +125,7 @@ void Notify::slotPostReaded()
 
 void Notify::stopNotifications()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     postQueueToNotify.clear();
     timer.stop();
     hideLastNotificationAndShowThis();
@@ -132,7 +133,7 @@ void Notify::stopNotifications()
 
 void Notify::hideLastNotificationAndShowThis(Notification* nextNotificationToShow)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     //TODO: Add Animation
     notification->deleteLater();
     notification = 0;

@@ -34,7 +34,7 @@
 #include <QScrollBar>
 
 #include <KIO/Job>
-#include <KDebug>
+#include "choqokdebug.h"
 
 #include <QtOAuth/qoauth_namespace.h>
 
@@ -59,7 +59,7 @@ public:
 TwitterApiTextEdit::TwitterApiTextEdit(Choqok::Account* theAccount, QWidget* parent)
 : TextEdit(theAccount->postCharLimit(), parent), d(new Private(theAccount))
 {
-    kDebug();
+    qCDebug(CHOQOK);
     setTabChangesFocus(false);
     fetchTCoMaximumLength();
 }
@@ -251,7 +251,7 @@ void TwitterApiTextEdit::fetchTCoMaximumLength()
 
         KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
         if (!job) {
-            kDebug() << "Cannot create an http GET request!";
+            qCDebug(CHOQOK) << "Cannot create an http GET request!";
             return;
         }
         TwitterApiMicroBlog *mBlog = qobject_cast<TwitterApiMicroBlog*>(acc->microblog());
@@ -260,14 +260,14 @@ void TwitterApiTextEdit::fetchTCoMaximumLength()
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotTCoMaximumLength(KJob*)));
         job->start();
     } else {
-        kDebug() << "the account is not a TwitterAPIAccount!";
+        qCDebug(CHOQOK) << "the account is not a TwitterAPIAccount!";
     }
 }
 
 void TwitterApiTextEdit::slotTCoMaximumLength(KJob* job)
 {
     if (job->error()) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     } else {
         KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
         bool ok;
@@ -277,7 +277,7 @@ void TwitterApiTextEdit::slotTCoMaximumLength(KJob* job)
             d->tCoMaximumLength = reply["short_url_length"].toInt();
             d->tCoMaximumLengthHttps = reply["short_url_length_https"].toInt();
         } else {
-            kDebug() << "Cannot parse JSON reply";
+            qCDebug(CHOQOK) << "Cannot parse JSON reply";
         }
     }
 }

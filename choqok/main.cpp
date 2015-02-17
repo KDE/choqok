@@ -25,6 +25,7 @@
 #include <KAboutData>
 #include <KCmdLineArgs>
 #include <KLocale>
+#include "choqokdebug.h"
 
 #include "choqokapplication.h"
 #include "choqokbehaviorsettings.h"
@@ -37,7 +38,7 @@ static const char version[] = "1.5";
 
 int main( int argc, char **argv )
 {
-    kDebug()<<"Choqok "<<version;
+    qCDebug(CHOQOK)<<"Choqok "<<version;
     KAboutData about( "choqok", 0, ki18n( "Choqok" ), version, ki18n( description ),
                       KAboutData::License_GPL_V3, ki18n( "(C) 2008-2010 Mehrdad Momeny\n(C) 2011-2015 Choqok Developers" ),
                       KLocalizedString(), 0  );

@@ -23,7 +23,7 @@
 */
 #include "account.h"
 
-#include <KDebug>
+#include "libchoqokdebug.h"
 #include <KGlobal>
 #include <KSharedConfig>
 #include <KSharedPtr>
@@ -64,12 +64,12 @@ public:
 Account::Account(Choqok::MicroBlog* parent, const QString& alias)
     : QObject(parent), d(new Private(parent, alias))
 {
-    kDebug();
+    qCDebug(CHOQOK);
 }
 
 Account::~Account()
 {
-    kDebug()<<alias();
+    qCDebug(CHOQOK)<<alias();
 //     writeConfig();
     delete d->configGroup;
     delete d;

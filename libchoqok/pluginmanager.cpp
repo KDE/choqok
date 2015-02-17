@@ -29,8 +29,7 @@
 #include <QStack>
 
 #include <KConfig>
-#include <KDebug>
-#include <KParts/ComponentFactory>
+#include "libchoqokdebug.h"
 #include <KPluginInfo>
 #include <KServiceTypeTrader>
 #include <KSharedConfig>
@@ -55,7 +54,7 @@ public:
     ~PluginManagerPrivate()
     {
         if ( shutdownMode != DoneShutdown ) {
-            kWarning() << "Destructing plugin manager without going through the shutdown process! Backtrace is: " << endl << kBacktrace();
+            qCWarning(CHOQOK) << "Destructing plugin manager without going through the shutdown process! Backtrace is: " << endl << kBacktrace();
         }
 
         // Clean up loadedPlugins manually, because PluginManager can't access our global
@@ -63,7 +62,7 @@ public:
         while ( !loadedPlugins.empty() )
         {
             InfoToPluginMap::ConstIterator it = loadedPlugins.constBegin();
-            kWarning() << "Deleting stale plugin '" << it.value()->objectName() << "'";
+            qCWarning(CHOQOK) << "Deleting stale plugin '" << it.value()->objectName() << "'";
             KPluginInfo info = it.key();
             Plugin *plugin = it.value();
             loadedPlugins.remove(info);
@@ -115,7 +114,7 @@ PluginManager::PluginManager() : QObject( )
 
 PluginManager::~PluginManager()
 {
-    kDebug();
+    qCDebug(CHOQOK);
 }
 
 QList<KPluginInfo> PluginManager::availablePlugins( const QString &category ) const
@@ -161,10 +160,10 @@ KPluginInfo PluginManager::pluginInfo( const Plugin *plugin ) const
 
 void PluginManager::shutdown()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(_kpmp->shutdownMode != PluginManagerPrivate::Running)
     {
-        kDebug() << "called when not running.  / state = " << _kpmp->shutdownMode;
+        qCDebug(CHOQOK) << "called when not running.  / state = " << _kpmp->shutdownMode;
         return;
     }
 
@@ -192,7 +191,7 @@ void PluginManager::shutdown()
     // certainly fire due to valgrind's much slower processing
 #if defined(HAVE_VALGRIND_H) && !defined(NDEBUG) && defined(__i386__)
     if ( RUNNING_ON_VALGRIND )
-        kDebug(14010) << "Running under valgrind, disabling plugin unload timeout guard";
+        qCDebug(CHOQOK) << "Running under valgrind, disabling plugin unload timeout guard";
     else
 #endif
         QTimer::singleShot( 3000, this, SLOT( slotShutdownTimeout() ) );
@@ -200,7 +199,7 @@ void PluginManager::shutdown()
 
 void PluginManager::slotPluginReadyForUnload()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     // Using QObject::sender() is on purpose here, because otherwise all
     // plugins would have to pass 'this' as parameter, which makes the API
     // less clean for plugin authors
@@ -209,10 +208,10 @@ void PluginManager::slotPluginReadyForUnload()
     Plugin *plugin = dynamic_cast<Plugin *>( const_cast<QObject *>( sender() ) );
     if ( !plugin )
     {
-        kWarning() << "Calling object is not a plugin!";
+        qCWarning(CHOQOK) << "Calling object is not a plugin!";
         return;
     }
-    kDebug() << plugin->pluginId() << "ready for unload";
+    qCDebug(CHOQOK) << plugin->pluginId() << "ready for unload";
     _kpmp->loadedPlugins.remove(_kpmp->loadedPlugins.key(plugin));
     plugin->deleteLater();
     plugin = 0L;
@@ -223,7 +222,7 @@ void PluginManager::slotPluginReadyForUnload()
 
 void PluginManager::slotShutdownTimeout()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     // When we were already done the timer might still fire.
     // Do nothing in that case.
     if ( _kpmp->shutdownMode == PluginManagerPrivate::DoneShutdown )
@@ -234,7 +233,7 @@ void PluginManager::slotShutdownTimeout()
           it != _kpmp->loadedPlugins.constEnd(); ++it )
         remaining.append( it.value()->pluginId() );
 
-    kWarning() << "Some plugins didn't shutdown in time!" << endl
+    qCWarning(CHOQOK) << "Some plugins didn't shutdown in time!" << endl
         << "Remaining plugins: " << remaining << endl
         << "Forcing Choqok shutdown now." << endl;
 
@@ -243,15 +242,15 @@ void PluginManager::slotShutdownTimeout()
 
 void PluginManager::slotShutdownDone()
 {
-    kDebug() ;
+    qCDebug(CHOQOK) ;
     _kpmp->shutdownMode = PluginManagerPrivate::DoneShutdown;
     KGlobal::deref();
 }
 
 void PluginManager::loadAllPlugins()
 {
-    kDebug();
-    KSharedConfig::Ptr config = KGlobal::config();
+    qCDebug(CHOQOK);
+    KSharedConfig::Ptr config = KSharedConfig::openConfig();
     if ( config->hasGroup( QLatin1String( "Plugins" ) ) )
     {
         QMap<QString, bool> pluginsMap;
@@ -311,14 +310,14 @@ void PluginManager::loadAllPlugins()
 
 void PluginManager::slotLoadNextPlugin()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if ( _kpmp->pluginsToLoad.isEmpty() )
     {
         if ( _kpmp->shutdownMode == PluginManagerPrivate::StartingUp )
         {
             _kpmp->shutdownMode = PluginManagerPrivate::Running;
             _kpmp->isAllPluginsLoaded = true;
-            kDebug()<<"All plugins loaded...";
+            qCDebug(CHOQOK)<<"All plugins loaded...";
             Q_EMIT allPluginsLoaded();
         }
         return;
@@ -342,7 +341,7 @@ Plugin * PluginManager::loadPlugin( const QString &_pluginId, PluginLoadMode mod
     // FIXME: Find any cases causing this, remove them, and remove this too - Richard
     if ( pluginId.endsWith( QLatin1String( ".desktop" ) ) )
     {
-        kWarning() << "Trying to use old-style API!" << endl << kBacktrace();
+        qCWarning(CHOQOK) << "Trying to use old-style API!" << endl << kBacktrace();
         pluginId = pluginId.remove( QRegExp( QLatin1String( ".desktop$" ) ) );
     }
 
@@ -360,12 +359,12 @@ Plugin * PluginManager::loadPlugin( const QString &_pluginId, PluginLoadMode mod
 
 Plugin *PluginManager::loadPluginInternal( const QString &pluginId )
 {
-    kDebug() << "Loading Plugin: " << pluginId;
+    qCDebug(CHOQOK) << "Loading Plugin: " << pluginId;
 
     KPluginInfo info = infoForPluginId( pluginId );
     if ( !info.isValid() )
     {
-        kWarning() << "Unable to find a plugin named '" << pluginId << "'!";
+        qCWarning(CHOQOK) << "Unable to find a plugin named '" << pluginId << "'!";
         return 0L;
     }
 
@@ -383,10 +382,10 @@ Plugin *PluginManager::loadPluginInternal( const QString &pluginId )
         connect( plugin, SIGNAL( destroyed( QObject * ) ), this, SLOT( slotPluginDestroyed( QObject * ) ) );
         connect( plugin, SIGNAL( readyForUnload() ), this, SLOT( slotPluginReadyForUnload() ) );
 
-        kDebug() << "Successfully loaded plugin '" << pluginId << "'";
+        qCDebug(CHOQOK) << "Successfully loaded plugin '" << pluginId << "'";
 
         if( plugin->pluginInfo().category() != "MicroBlogs" && plugin->pluginInfo().category() != "Shorteners" ){
-            kDebug()<<"Emitting pluginLoaded()";
+            qCDebug(CHOQOK)<<"Emitting pluginLoaded()";
             Q_EMIT pluginLoaded( plugin );
         }
 
@@ -396,7 +395,7 @@ Plugin *PluginManager::loadPluginInternal( const QString &pluginId )
     }
     else
     {
-        kDebug() << "Loading plugin " << pluginId << " failed, KServiceTypeTrader reported error: " << error ;
+        qCDebug(CHOQOK) << "Loading plugin " << pluginId << " failed, KServiceTypeTrader reported error: " << error ;
     }
 
     return plugin;
@@ -404,10 +403,10 @@ Plugin *PluginManager::loadPluginInternal( const QString &pluginId )
 
 bool PluginManager::unloadPlugin( const QString &spec )
 {
-    //kDebug(14010) << spec;
+    qCDebug(CHOQOK) << spec;
     if( Plugin *thePlugin = plugin( spec ) )
     {
-        kDebug()<<"Unloading "<<spec;
+        qCDebug(CHOQOK)<<"Unloading "<<spec;
         thePlugin->aboutToUnload();
         return true;
     }
@@ -417,7 +416,7 @@ bool PluginManager::unloadPlugin( const QString &spec )
 
 void PluginManager::slotPluginDestroyed( QObject *plugin )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     for ( PluginManagerPrivate::InfoToPluginMap::Iterator it = _kpmp->loadedPlugins.begin();
           it != _kpmp->loadedPlugins.end(); ++it )
     {

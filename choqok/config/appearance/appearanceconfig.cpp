@@ -24,12 +24,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "appearanceconfig.h"
 #include "ui_appearanceconfig_base.h"
 
-#include <KDebug>
 #include <KLocale>
 #include <KPluginFactory>
 #include <KTabWidget>
 
-//class AppearanceConfig;
+#include "appearancedebug.h"
 #include "choqokappearancesettings.h"
 
 K_PLUGIN_FACTORY( ChoqokAppearanceConfigFactory,
@@ -84,13 +83,13 @@ AppearanceConfig::~AppearanceConfig()
 void AppearanceConfig::save()
 {
     KCModule::save();
-//    kDebug(14000) << "called.";
+    qCDebug(CHOQOK) << "called";
 }
 
 void AppearanceConfig::load()
 {
     KCModule::load();
-//    kDebug(14000) << "called";
+    qCDebug(CHOQOK) << "called";
 }
 
 #include "appearanceconfig.moc"

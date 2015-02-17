@@ -26,7 +26,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QDomElement>
 
 #include <KAboutData>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KGenericFactory>
 #include <KIO/JobClasses>
 #include <KIO/Job>
@@ -61,7 +61,7 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_laconica" ) )
 LaconicaMicroBlog::LaconicaMicroBlog ( QObject* parent, const QVariantList&  )
 : TwitterApiMicroBlog(MyPluginFactory::componentData(), parent), friendsPage(1)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     setServiceName("GNU social");
     mTimelineInfos["ReTweets"]->name = i18nc("Timeline name", "Repeated");
     mTimelineInfos["ReTweets"]->description = i18nc("Timeline description", "Your posts that were repeated by others");
@@ -70,7 +70,7 @@ LaconicaMicroBlog::LaconicaMicroBlog ( QObject* parent, const QVariantList&  )
 
 LaconicaMicroBlog::~LaconicaMicroBlog()
 {
-    kDebug();
+    qCDebug(CHOQOK);
 }
 
 Choqok::Account * LaconicaMicroBlog::createNewAccount( const QString &alias )
@@ -85,12 +85,12 @@ Choqok::Account * LaconicaMicroBlog::createNewAccount( const QString &alias )
 
 ChoqokEditAccountWidget * LaconicaMicroBlog::createEditAccountWidget( Choqok::Account *account, QWidget *parent )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     LaconicaAccount *acc = qobject_cast<LaconicaAccount*>(account);
     if(acc || !account)
         return new LaconicaEditAccountWidget(this, acc, parent);
     else{
-        kDebug()<<"Account passed here is not a LaconicaAccount!";
+        qCDebug(CHOQOK)<<"Account passed here is not a LaconicaAccount!";
         return 0L;
     }
 }
@@ -167,14 +167,14 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Ch
         KUrl picUrl(mediumToAttach);
         KIO::TransferJob *picJob = KIO::get( picUrl, KIO::Reload, KIO::HideProgressInfo);
         if( !KIO::NetAccess::synchronousRun(picJob, 0, &picData) ){
-            kError()<<"Job error: " << picJob->errorString();
+            qCCritical(CHOQOK)<<"Job error: " << picJob->errorString();
             KMessageBox::detailedError(Choqok::UI::Global::mainWindow(),
                                        i18n( "Uploading medium failed: cannot read the medium file." ),
             picJob->errorString() );
             return;
         }
         if ( picData.count() == 0 ) {
-            kError() << "Cannot read the media file, please check if it exists.";
+            qCCritical(CHOQOK) << "Cannot read the media file, please check if it exists.";
             KMessageBox::error( Choqok::UI::Global::mainWindow(),
                                 i18n( "Uploading medium failed: cannot read the medium file." ) );
             return;
@@ -202,7 +202,7 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Ch
 
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
         if ( !job ) {
-            kError() << "Cannot create a http POST request!";
+            qCCritical(CHOQOK) << "Cannot create a http POST request!";
             return;
         }
         job->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=AaB03x" );
@@ -243,7 +243,7 @@ void LaconicaMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount, 
 
 void LaconicaMicroBlog::doRequestFriendsScreenName(TwitterApiAccount* theAccount, int page)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     KUrl url = account->apiUrl();
     url.addPath( QString("/statuses/friends.%1").arg(format));
@@ -255,7 +255,7 @@ void LaconicaMicroBlog::doRequestFriendsScreenName(TwitterApiAccount* theAccount
 
     KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create an http GET request!";
+        qCDebug(CHOQOK) << "Cannot create an http GET request!";
         return;
     }
     job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url,
@@ -267,7 +267,7 @@ void LaconicaMicroBlog::doRequestFriendsScreenName(TwitterApiAccount* theAccount
 
 void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob* job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount *>( mJobsAccount.take(job) );
     KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
     QStringList newList;
@@ -288,7 +288,7 @@ void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob* job)
 
 /*QStringList LaconicaMicroBlog::readUsersScreenNameFromXml(Choqok::Account* theAccount, const QByteArray& buffer)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QStringList list;
     QDomDocument document;
     document.setContent( buffer );
@@ -300,7 +300,7 @@ void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob* job)
             Q_EMIT error(theAccount, ServerError, err, Critical);
         } else {
             err = i18n( "Retrieving the friends list failed. The data returned from the server is corrupted." );
-            kDebug() << "there's no users tag in XML\t the XML is: \n" << buffer;
+            qCDebug(CHOQOK) << "there's no users tag in XML\t the XML is: \n" << buffer;
             Q_EMIT error(theAccount, ParsingError, err, Critical);
             list<<QString(' ');
         }
@@ -310,7 +310,7 @@ void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob* job)
     QString timeStr;
     while ( !node.isNull() ) {
         if ( node.toElement().tagName() != "user" ) {
-            kDebug() << "there's no user tag in XML!\n"<<buffer;
+            qCDebug(CHOQOK) << "there's no user tag in XML!\n"<<buffer;
             return list;
         }
         QDomNode node2 = node.firstChild();
@@ -328,7 +328,7 @@ void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob* job)
 
 void LaconicaMicroBlog::fetchConversation(Choqok::Account* theAccount, const QString& conversationId)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if ( conversationId.isEmpty()) {
         return;
     }
@@ -338,7 +338,7 @@ void LaconicaMicroBlog::fetchConversation(Choqok::Account* theAccount, const QSt
 
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kDebug() << "Cannot create an http GET request!";
+        qCDebug(CHOQOK) << "Cannot create an http GET request!";
         return;
     }
     job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::GET));
@@ -350,16 +350,16 @@ void LaconicaMicroBlog::fetchConversation(Choqok::Account* theAccount, const QSt
 
 void LaconicaMicroBlog::slotFetchConversation(KJob* job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(!job) {
-        kWarning()<<"NULL Job returned";
+        qCWarning(CHOQOK)<<"NULL Job returned";
         return;
     }
     QList<Choqok::Post*> posts;
     QString conversationId = mFetchConversationMap.take(job);
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
         Q_EMIT error ( theAccount, Choqok::MicroBlog::CommunicationError,
                      i18n("Fetching conversation failed. %1", job->errorString()), Normal );
     } else {

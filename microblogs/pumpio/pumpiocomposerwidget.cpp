@@ -29,7 +29,7 @@
 #include <QSpacerItem>
 #include <QVBoxLayout>
 
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KFileDialog>
 #include <KLocalizedString>
 
@@ -74,7 +74,7 @@ PumpIOComposerWidget::~PumpIOComposerWidget()
 
 void PumpIOComposerWidget::submitPost(const QString& text)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     editorContainer()->setEnabled(false);
     QString txt = text;
     if (currentAccount()->postCharLimit() &&
@@ -118,9 +118,9 @@ void PumpIOComposerWidget::submitPost(const QString& text)
 
 void PumpIOComposerWidget::slotPostSubmited(Choqok::Account* theAccount, Choqok::Post* post)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if( currentAccount() == theAccount && post == postToSubmit() ) {
-        kDebug()<<"Accepted";
+        qCDebug(CHOQOK)<<"Accepted";
         disconnect(currentAccount()->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
                     this, SLOT(slotPostSubmited(Choqok::Account*,Choqok::Post*)) );
         disconnect(currentAccount()->microblog(),
@@ -141,12 +141,12 @@ void PumpIOComposerWidget::slotPostSubmited(Choqok::Account* theAccount, Choqok:
 
 void PumpIOComposerWidget::attachMedia()
 {
-    kDebug();
-    d->mediumToAttach = KFileDialog::getOpenFileName(KUrl("kfiledialog:///image?global"),
+    qCDebug(CHOQOK);
+    d->mediumToAttach = KFileDialog::getOpenFileName(QUrl("kfiledialog:///image?global"),
                                                      QString(), this,
                                                      i18n("Select Media to Upload"));
     if (d->mediumToAttach.isEmpty()) {
-        kDebug() << "No file selected";
+        qCDebug(CHOQOK) << "No file selected";
         return;
     }
     const QString fileName = KUrl(d->mediumToAttach).fileName();
@@ -167,7 +167,7 @@ void PumpIOComposerWidget::attachMedia()
 
 void PumpIOComposerWidget::cancelAttach()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     delete d->mediumName;
     d->mediumName = 0;
     delete d->btnCancel;
@@ -177,7 +177,7 @@ void PumpIOComposerWidget::cancelAttach()
 
 void PumpIOComposerWidget::slotSetReply(const QString replyToId, const QString replyToUsername, const QString replyToObjectType)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     this->replyToId = replyToId;
     this->replyToUsername = replyToUsername;
     d->replyToObjectType = replyToObjectType;

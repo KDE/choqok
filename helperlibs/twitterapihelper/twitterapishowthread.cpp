@@ -27,7 +27,7 @@
 #include <QScrollArea>
 #include <QVBoxLayout>
 
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KLocalizedString>
 
 #include "postwidget.h"
@@ -47,7 +47,7 @@ TwitterApiShowThread::TwitterApiShowThread(Choqok::Account* account, Choqok::Pos
                                            QWidget* parent)
                                            : QWidget(parent), d(new Private(account))
 {
-    kDebug();
+    qCDebug(CHOQOK);
     setupUi();
     setWindowTitle(i18n("Conversation"));
     connect( account->microblog(), SIGNAL(postFetched(Choqok::Account*,Choqok::Post*)),
@@ -70,7 +70,7 @@ TwitterApiShowThread::~TwitterApiShowThread()
 
 void TwitterApiShowThread::setupUi()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QVBoxLayout *gridLayout;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
@@ -104,7 +104,7 @@ void TwitterApiShowThread::setupUi()
 
 void TwitterApiShowThread::slotAddNewPost(Choqok::Account* theAccount, Choqok::Post* post)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(theAccount == d->account && post->postId == d->desiredPostId) {
         Choqok::UI::PostWidget *widget = d->account->microblog()->createPostWidget(d->account, post, this);
         if(widget) {
@@ -119,7 +119,7 @@ void TwitterApiShowThread::slotAddNewPost(Choqok::Account* theAccount, Choqok::P
 
 void TwitterApiShowThread::addPostWidgetToUi(Choqok::UI::PostWidget* widget)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     widget->initUi();
     widget->setRead();
     widget->setFocusProxy(this);

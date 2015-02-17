@@ -33,6 +33,7 @@
 #include <KLocale>
 #include <KMessageBox>
 #include <KPluginFactory>
+#include "choqokdebug.h"
 
 #include "notifymanager.h"
 #include "passwordmanager.h"
@@ -81,7 +82,7 @@ Bit_ly_Config::~Bit_ly_Config()
 
 void Bit_ly_Config::load()
 {
-//     kDebug();
+//     qCDebug(CHOQOK);
     KCModule::load();
     KConfigGroup grp( KGlobal::config(), "Bit.ly Shortener" );
     ui.kcfg_login->setText( grp.readEntry( "login", "" ) );
@@ -92,7 +93,7 @@ void Bit_ly_Config::load()
 
 void Bit_ly_Config::save()
 {
-//     kDebug();
+//     qCDebug(CHOQOK);
     KCModule::save();
     KConfigGroup grp( KGlobal::config(), "Bit.ly Shortener" );
     grp.writeEntry( "login", ui.kcfg_login->text() );

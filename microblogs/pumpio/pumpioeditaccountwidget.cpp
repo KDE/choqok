@@ -28,7 +28,7 @@
 
 #include <qjson/parser.h>
 
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KInputDialog>
 #include <KIO/AccessManager>
 #include <KIO/Job>
@@ -87,7 +87,7 @@ Choqok::Account* PumpIOEditAccountWidget::apply()
 
 void PumpIOEditAccountWidget::authorizeUser()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     m_qoauth = new QOAuth::Interface(new KIO::Integration::AccessManager(this), this);
     if (m_account->consumerKey().isEmpty() || m_account->consumerSecret().isEmpty()) {
         registerClient();
@@ -125,10 +125,10 @@ void PumpIOEditAccountWidget::authorizeUser()
                                         i18n("Authorized"));
             }
         } else {
-            kDebug() << "QOAuth error: " + Choqok::qoauthErrorText(m_qoauth->error());
+            qCDebug(CHOQOK) << "QOAuth error: " + Choqok::qoauthErrorText(m_qoauth->error());
         }
     } else {
-        kDebug() << "QOAuth error: " + Choqok::qoauthErrorText(m_qoauth->error());
+        qCDebug(CHOQOK) << "QOAuth error: " + Choqok::qoauthErrorText(m_qoauth->error());
     }
 }
 
@@ -179,7 +179,7 @@ void PumpIOEditAccountWidget::registerClient()
                         "}");
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         if ( !job ) {
-            kDebug() << "Cannot create an http POST request!";
+            qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
         }
         job->addMetaData("content-type", "Content-Type: application/json");
@@ -189,7 +189,7 @@ void PumpIOEditAccountWidget::registerClient()
         loop.exec();
 
         if (job->error()) {
-            kDebug() << "An error occurred in Job";
+            qCDebug(CHOQOK) << "An error occurred in Job";
             return;
         } else {
             KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>(job);
@@ -200,11 +200,11 @@ void PumpIOEditAccountWidget::registerClient()
                 m_account->setConsumerKey(result.value("client_id").toString());
                 m_account->setConsumerSecret(result.value("client_secret").toString());
             } else {
-                kDebug() << "Cannot parse JSON reply";
+                qCDebug(CHOQOK) << "Cannot parse JSON reply";
             }
         }
     } else {
-        kDebug() << "webfingerID is not valid";
+        qCDebug(CHOQOK) << "webfingerID is not valid";
     }
 }
 

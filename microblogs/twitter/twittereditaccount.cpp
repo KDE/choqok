@@ -27,7 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QDomDocument>
 #include <QProgressBar>
 
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KInputDialog>
 #include <KIO/AccessManager>
 #include <KIO/Job>
@@ -96,7 +96,7 @@ bool TwitterEditAccountWidget::validateData()
 
 Choqok::Account* TwitterEditAccountWidget::apply()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     mAccount->setAlias(kcfg_alias->text());
     mAccount->setUsername( username );
     mAccount->setOauthToken( token );
@@ -111,7 +111,7 @@ Choqok::Account* TwitterEditAccountWidget::apply()
 
 void TwitterEditAccountWidget::authorizeUser()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     qoauth = new QOAuth::Interface(new KIO::AccessManager(this), this);//TODO KDE 4.5 Change to use new class.
     // set the consumer key and secret
     qoauth->setConsumerKey( twitterConsumerKey );
@@ -131,14 +131,14 @@ void TwitterEditAccountWidget::authorizeUser()
     if ( qoauth->error() == QOAuth::NoError ) {
         token = reply.value( QOAuth::tokenParameterName() );
         tokenSecret = reply.value( QOAuth::tokenSecretParameterName() );
-        kDebug()<<"token: "<<token;
+        qCDebug(CHOQOK)<<"token: "<<token;
         QUrl url("https://twitter.com/oauth/authorize");
         url.addQueryItem("oauth_token", token);
         url.addQueryItem( "oauth_callback", "oob" );
         Choqok::openUrl(url);
         getPinCode();
     } else {
-        kDebug()<<"ERROR: " <<qoauth->error()<<' '<<Choqok::qoauthErrorText(qoauth->error());
+        qCDebug(CHOQOK)<<"ERROR: " <<qoauth->error()<<' '<<Choqok::qoauthErrorText(qoauth->error());
         KMessageBox::detailedError(this, i18n("Authorization Error"),
                                    Choqok::qoauthErrorText(qoauth->error()));
     }
@@ -168,7 +168,7 @@ void TwitterEditAccountWidget::getPinCode()
             KMessageBox::information(this, i18n("Choqok is authorized successfully."),
                                      i18n("Authorized"));
         } else {
-            kDebug()<<"ERROR: "<<qoauth->error()<<' '<<Choqok::qoauthErrorText(qoauth->error());
+            qCDebug(CHOQOK)<<"ERROR: "<<qoauth->error()<<' '<<Choqok::qoauthErrorText(qoauth->error());
             KMessageBox::detailedError(this, i18n("Authorization Error"),
                                     Choqok::qoauthErrorText(qoauth->error()));
         }

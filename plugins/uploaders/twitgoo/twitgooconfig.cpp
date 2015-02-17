@@ -29,6 +29,7 @@
 #include <KPluginFactory>
 #include <KLocale>
 #include <KMessageBox>
+#include "choqokdebug.h"
 
 #include "accountmanager.h"
 #include "passwordmanager.h"
@@ -57,7 +58,7 @@ TwitgooConfig::~TwitgooConfig()
 
 void TwitgooConfig::load()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     KCModule::load();
     QList<Choqok::Account*> list = Choqok::AccountManager::self()->accounts();
     Q_FOREACH (Choqok::Account *acc, list) {
@@ -74,7 +75,7 @@ void TwitgooConfig::save()
 {
     if ( ui.cfg_accountsList->currentIndex() > -1 ) {
         TwitgooSettings::setAlias ( ui.cfg_accountsList->currentText() );
-        kDebug() << TwitgooSettings::alias();
+        qCDebug(CHOQOK) << TwitgooSettings::alias();
     } else {
         TwitgooSettings::setAlias ( QString() );
         KMessageBox::error ( this, i18n ( "You have to configure at least one Twitter account to use this plugin." ) );

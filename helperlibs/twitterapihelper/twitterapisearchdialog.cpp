@@ -28,7 +28,7 @@
 #include <QLabel>
 
 #include <KComboBox>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KLineEdit>
 #include <KLocalizedString>
 
@@ -42,10 +42,10 @@ public:
     Private(TwitterApiAccount* theAccount)
         :account(theAccount)
     {
-        kDebug();
+        qCDebug(CHOQOK);
         mBlog = qobject_cast<TwitterApiMicroBlog*>(account->microblog());
         if(!mBlog)
-            kError()<<"microblog is not a TwitterApiMicroBlog";
+            qCritical()<<"microblog is not a TwitterApiMicroBlog";
         Q_ASSERT(mBlog);
     }
     KComboBox *searchTypes;
@@ -57,7 +57,7 @@ public:
 TwitterApiSearchDialog::TwitterApiSearchDialog(TwitterApiAccount* theAccount, QWidget* parent)
 : KDialog(parent), d(new Private(theAccount))
 {
-    kDebug();
+    qCDebug(CHOQOK);
     setWindowTitle(i18nc("@title:window", "Search"));
     setAttribute(Qt::WA_DeleteOnClose);
     createUi();
@@ -72,13 +72,13 @@ TwitterApiSearchDialog::~TwitterApiSearchDialog()
 
 void TwitterApiSearchDialog::createUi()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QWidget *wd = new QWidget(this);
     setMainWidget(wd);
     QVBoxLayout *layout = new QVBoxLayout(wd);
     d->searchTypes = new KComboBox(wd);
     fillSearchTypes();
-    kDebug();
+    qCDebug(CHOQOK);
     layout->addWidget(d->searchTypes);
 
     QHBoxLayout *queryLayout = new QHBoxLayout;
@@ -95,7 +95,7 @@ void TwitterApiSearchDialog::createUi()
 
 void TwitterApiSearchDialog::fillSearchTypes()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QMap<int, QPair<QString, bool> > searchTypes = d->mBlog->searchBackend()->getSearchTypes();
     int count = searchTypes.count();
     for(int i = 0; i < count; ++i){

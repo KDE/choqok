@@ -31,7 +31,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QTimer>
 #include <QVBoxLayout>
 
-#include <KDebug>
+#include "libchoqokdebug.h"
 #include <KPushButton>
 
 #include "account.h"
@@ -193,7 +193,7 @@ void TimelineWidget::setupUi()
 void TimelineWidget::removeOldPosts()
 {
     int count = d->sortedPostsList.count() - BehaviorSettings::countOfPosts();
-//     kDebug()<<count;
+//     qCDebug(CHOQOK)<<count;
     while( count > 0 && !d->sortedPostsList.isEmpty() ){
         PostWidget *wd = d->sortedPostsList.values().first();
         if(wd && wd->isRead()){
@@ -216,7 +216,7 @@ void TimelineWidget::addPlaceholderMessage ( const QString& msg )
 
 void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList)
 {
-    kDebug()<<d->currentAccount->alias()<<' '<<d->timelineName<<' '<<postList.count();
+    qCDebug(CHOQOK)<<d->currentAccount->alias()<<' '<<d->timelineName<<' '<<postList.count();
     QList<Post*>::const_iterator it, endIt = postList.constEnd();
     int unread = 0;
     for(it = postList.constBegin(); it!= endIt; ++it){

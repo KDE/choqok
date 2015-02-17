@@ -27,8 +27,8 @@
 #include <QMenu>
 
 #include <KAction>
-#include <KDebug>
-#include <KIcon>
+#include "choqokdebug.h"
+#include <QIcon>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KPushButton>
@@ -211,7 +211,7 @@ void TwitterApiPostWidget::setFavorite()
 void TwitterApiPostWidget::slotSetFavorite(Choqok::Account *theAccount, const QString& postId)
 {
     if(currentAccount() == theAccount && postId == currentPost()->postId){
-        kDebug()<<postId;
+        qCDebug(CHOQOK)<<postId;
         currentPost()->isFavorited = !currentPost()->isFavorited;
         updateFavStat();
         disconnect(d->mBlog, SIGNAL(favoriteRemoved(Choqok::Account*,QString)),
@@ -265,7 +265,7 @@ void TwitterApiPostWidget::checkAnchor(const QUrl & url)
 void TwitterApiPostWidget::slotBasePostFetched(Choqok::Account* theAccount, Choqok::Post* post)
 {
     if(theAccount == currentAccount() && post && post->postId == currentPost()->replyToPostId){
-        kDebug();
+        qCDebug(CHOQOK);
         disconnect( currentAccount()->microblog(), SIGNAL(postFetched(Choqok::Account*,Choqok::Post*)),
                    this, SLOT(slotBasePostFetched(Choqok::Account*,Choqok::Post*)) );
         if(d->isBasePostShowed)

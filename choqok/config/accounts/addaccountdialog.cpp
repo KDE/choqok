@@ -24,11 +24,11 @@
 
 #include "addaccountdialog.h"
 
-#include <KDebug>
 #include <KLocalizedString>
 #include <KMessageBox>
 
 #include "accountmanager.h"
+#include "accountsdebug.h"
 #include "editaccountwidget.h"
 
 AddAccountDialog::AddAccountDialog( ChoqokEditAccountWidget *addWidget,QWidget* parent, Qt::WFlags flags)
@@ -54,7 +54,7 @@ void AddAccountDialog::closeEvent(QCloseEvent* e)
 
 void AddAccountDialog::slotButtonClicked(int button)
 {
-    kDebug()<<button;
+    qCDebug(CHOQOK)<<button;
     if(button == KDialog::Ok) {
         if( widget->validateData() ){
             if( Choqok::Account *acc = widget->apply() ) {

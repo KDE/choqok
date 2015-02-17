@@ -27,7 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QApplication>
 
 #include <KApplication>
-#include <KDebug>
+#include "libchoqokdebug.h"
 #include <KMessageBox>
 #include <KWallet/Wallet>
 
@@ -53,7 +53,7 @@ public:
 
     bool openWallet()
     {
-        kDebug();
+        qCDebug(CHOQOK);
         if(kapp->sessionSaving())
             return false;
         if((wallet && wallet->isOpen()))
@@ -67,7 +67,7 @@ public:
                 wallet->createFolder( "choqok" );
                 wallet->setFolder( "choqok" );
             }
-            kDebug() << "Wallet successfully opened.";
+            qCDebug(CHOQOK) << "Wallet successfully opened.";
             return true;
         } else if(!conf){
             cfg = new KConfig( "choqok/secretsrc", KConfig::NoGlobals, "data" );
@@ -92,7 +92,7 @@ private:
 PasswordManager::PasswordManager()
     :QObject(qApp), d(new Private)
 {
-    kDebug();
+    qCDebug(CHOQOK);
 }
 
 PasswordManager::~PasswordManager()
@@ -114,10 +114,10 @@ QString PasswordManager::readPassword(const QString &alias)
     if(d->openWallet()) {
         QString pass;
         if( d->wallet->readPassword(alias, pass) == 0 ) {
-            kDebug()<<"Read password from wallet";
+            qCDebug(CHOQOK)<<"Read password from wallet";
             return pass;
         } else {
-            kDebug()<<"Error on reading password from wallet";
+            qCDebug(CHOQOK)<<"Error on reading password from wallet";
             return QString();
         }
     } else {
@@ -130,10 +130,10 @@ bool PasswordManager::writePassword(const QString &alias, const QString &passwor
 {
     if(d->openWallet()) {
         if( d->wallet->writePassword(alias, password) == 0 ){
-            kDebug()<<"Password wrote to wallet successfuly";
+            qCDebug(CHOQOK)<<"Password wrote to wallet successfuly";
             return true;
         } else {
-            kDebug()<<"Error on writing password to wallet";
+            qCDebug(CHOQOK)<<"Error on writing password to wallet";
             return false;
         }
     } else {

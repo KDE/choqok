@@ -29,7 +29,7 @@
 #include <QListWidget>
 
 #include <KComboBox>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KMessageBox>
 #include <KLineEdit>
 #include <KLocalizedString>
@@ -43,11 +43,11 @@ TwitterListDialog::TwitterListDialog(TwitterApiAccount* theAccount, QWidget* par
     if(theAccount){
         account = qobject_cast<TwitterAccount*>(theAccount);
         if(!account){
-        kError()<<"TwitterListDialog: ERROR, the provided account is not a valid Twitter account";
+        qCCritical(CHOQOK)<<"TwitterListDialog: ERROR, the provided account is not a valid Twitter account";
         return;
         }
     } else {
-        kError()<<"TwitterListDialog: ERROR, theAccount is NULL";
+        qCCritical(CHOQOK)<<"TwitterListDialog: ERROR, theAccount is NULL";
         return;
     }
     setWindowTitle(i18n("Add List"));

@@ -27,7 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QDomDocument>
 
 #include <KAboutData>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KGenericFactory>
 #include <KGlobal>
 #include <KIO/Job>
@@ -53,7 +53,7 @@ Yourls::~Yourls()
 
 QString Yourls::shorten( const QString &url )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QByteArray data;                                                    /* output field */
 
     KUrl reqUrl( YourlsSettings::yourlsHost() );
@@ -79,7 +79,7 @@ QString Yourls::shorten( const QString &url )
 
 
         if(!output.isEmpty()) {
-            kDebug() << "Short url is: " << output;
+            qCDebug(CHOQOK) << "Short url is: " << output;
             return output;
         }else{
             output = data;
@@ -88,12 +88,12 @@ QString Yourls::shorten( const QString &url )
             rx.indexIn(output);
             output = rx.cap(1);
 
-            kDebug() << "error while getting shorting url: " << output;
+            qCDebug(CHOQOK) << "error while getting shorting url: " << output;
             Choqok::NotifyManager::error( output, i18n("Yourls Error") );
-            kDebug()<<data;
+            qCDebug(CHOQOK)<<data;
         }
     } else {
-            kDebug() << "Cannot create a shorten url.\t" << "KJob ERROR";
+            qCDebug(CHOQOK) << "Cannot create a shorten url.\t" << "KJob ERROR";
             Choqok::NotifyManager::error( i18n("Cannot create a short URL.\n%1", job->errorString()) );
     }
     return url;

@@ -26,7 +26,7 @@
 #include <QApplication>
 #include <QHash>
 
-#include <KDebug>
+#include "libchoqokdebug.h"
 #include <KEmoticons>
 #include <KEmoticonsTheme>
 #include <KIcon>
@@ -70,7 +70,7 @@ MediaManager::~MediaManager()
 {
     delete d;
     mSelf = 0L;
-    kDebug();
+    qCDebug(CHOQOK);
 }
 
 MediaManager * MediaManager::mSelf = 0L;
@@ -105,7 +105,7 @@ QPixmap MediaManager::fetchImage( const QString& remoteUrl, ReturnMode mode /*= 
         KUrl srcUrl(remoteUrl);
         KIO::Job *job = KIO::storedGet( srcUrl, KIO::NoReload, KIO::HideProgressInfo ) ;
         if ( !job ) {
-            kDebug() << "Cannot create a FileCopyJob!";
+            qCDebug(CHOQOK) << "Cannot create a FileCopyJob!";
             QString errMsg = i18n( "Cannot create a KDE Job. Please check your installation.");
             Q_EMIT fetchError( remoteUrl, errMsg );
             return p;
@@ -123,7 +123,7 @@ void MediaManager::slotImageFetched( KJob * job )
     QString remote = d->queue.value(job);
     d->queue.remove( job );
     if ( job->error() ) {
-        kDebug() << "Job error: " << job->error() << "\t" << job->errorString();
+        qCDebug(CHOQOK) << "Job error: " << job->error() << "\t" << job->errorString();
         QString errMsg = i18n( "Cannot download image from %1.",
                                job->errorString() );
         Q_EMIT fetchError( remote, errMsg );
@@ -134,7 +134,7 @@ void MediaManager::slotImageFetched( KJob * job )
             d->cache.insertPixmap( remote, p );
             Q_EMIT imageFetched( remote, p );
         } else {
-            kDebug()<<"Parse Error: \nBase Url:"<<baseJob->url()<<"\ndata:"<<baseJob->data();
+            qCDebug(CHOQOK)<<"Parse Error: \nBase Url:"<<baseJob->url()<<"\ndata:"<<baseJob->data();
             Q_EMIT fetchError( remote, i18n( "The download failed. The returned file is corrupted." ) );
         }
     }
@@ -172,7 +172,7 @@ void MediaManager::uploadMedium(const KUrl& localUrl, const QString& pluginId)
         Plugin *plugin = PluginManager::self()->loadPlugin(pId);
         d->uploader = qobject_cast<Uploader*>(plugin);
     } else if(d->uploader->pluginName() != pId) {
-//         kDebug()<<"CREATING A NEW UPLOADER OBJECT";
+//         qCDebug(CHOQOK)<<"CREATING A NEW UPLOADER OBJECT";
         PluginManager::self()->unloadPlugin(d->uploader->pluginName());
         Plugin *plugin = PluginManager::self()->loadPlugin(pId);
         d->uploader = qobject_cast<Uploader*>(plugin);
@@ -182,13 +182,13 @@ void MediaManager::uploadMedium(const KUrl& localUrl, const QString& pluginId)
     QByteArray picData;
     KIO::TransferJob *picJob = KIO::get( localUrl, KIO::Reload, KIO::HideProgressInfo);
     if( !KIO::NetAccess::synchronousRun(picJob, 0, &picData) ){
-        kError()<<"Job error: " << picJob->errorString();
+        qCritical()<<"Job error: " << picJob->errorString();
         KMessageBox::detailedError(UI::Global::mainWindow(), i18n( "Uploading medium failed: cannot read the medium file." ),
                                                picJob->errorString() );
                                                return;
     }
     if ( picData.count() == 0 ) {
-        kError() << "Cannot read the media file, please check if it exists.";
+        qCritical() << "Cannot read the media file, please check if it exists.";
         KMessageBox::error( UI::Global::mainWindow(), i18n( "Uploading medium failed: cannot read the medium file." ) );
         return;
     }

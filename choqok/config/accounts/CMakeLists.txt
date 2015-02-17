@@ -8,6 +8,7 @@ ${CHOQOK_INCLUDES}
 ########### next target ###############
 
 set(kcm_choqok_accountsconfig_PART_SRCS
+accountsdebug.cpp
 accountswidget.cpp
 addaccountdialog.cpp
 editaccountdialog.cpp )

@@ -28,18 +28,18 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KAboutApplicationDialog>
 #include <KCModuleInfo>
 #include <KCModuleProxy>
-#include <KDebug>
 #include <KPluginInfo>
 #include <KTabWidget>
 
 #include "choqokbehaviorsettings.h"
+#include "behaviordebug.h"
 #include "pluginmanager.h"
 #include "shortenmanager.h"
 
 BehaviorConfig_Shorten::BehaviorConfig_Shorten( QWidget *parent )
     :QWidget(parent),currentShortener(0)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     setupUi(this);
     Choqok::ShortenManager::self();
     connect(shortenPlugins, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
@@ -51,7 +51,7 @@ BehaviorConfig_Shorten::BehaviorConfig_Shorten( QWidget *parent )
 
 BehaviorConfig_Shorten::~BehaviorConfig_Shorten()
 {
-    kDebug();
+    qCDebug(CHOQOK);
 }
 
 void BehaviorConfig_Shorten::currentPluginChanged( int index )
@@ -61,7 +61,7 @@ void BehaviorConfig_Shorten::currentPluginChanged( int index )
     else
         Q_EMIT changed(true);
     QString key = shortenPlugins->itemData(index).toString();
-//     kDebug()<<key;
+//     qCDebug(CHOQOK)<<key;
     if( !key.isEmpty() && key != "none" && availablePlugins.value(key).kcmServices().count() > 0 )
         configPlugin->setEnabled(true);
     else
@@ -98,7 +98,7 @@ void BehaviorConfig_Shorten::save()
     const QString shorten = shortenPlugins->itemData(shortenPlugins->currentIndex()).toString();
     Choqok::BehaviorSettings::setShortenerPlugin(shorten);
     if( prevShortener != shorten ) {
-        kDebug()<<prevShortener<<" -> "<<shorten;
+        qCDebug(CHOQOK)<<prevShortener<<" -> "<<shorten;
         Choqok::BehaviorSettings::self()->writeConfig();
         Choqok::ShortenManager::self()->reloadConfig();
     }
@@ -121,9 +121,9 @@ void BehaviorConfig_Shorten::slotAboutClicked()
 
 void BehaviorConfig_Shorten::slotConfigureClicked()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     KPluginInfo pluginInfo = availablePlugins.value( shortenPlugins->itemData(shortenPlugins->currentIndex() ).toString() );
-    kDebug()<<pluginInfo.name()<<pluginInfo.kcmServices().count();
+    qCDebug(CHOQOK)<<pluginInfo.name()<<pluginInfo.kcmServices().count();
 
     QPointer<KDialog> configDialog = new KDialog(this);
     configDialog->setWindowTitle(pluginInfo.name());

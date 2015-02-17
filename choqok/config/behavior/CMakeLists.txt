@@ -12,6 +12,7 @@ ${CHOQOK_INCLUDES}
 set(kcm_choqok_behaviorconfig_PART_SRCS
    behaviorconfig.cpp
    behaviorconfig_shorten.cpp
+   behaviordebug.cpp
    )
 
 ki18n_wrap_ui(kcm_choqok_behaviorconfig_PART_SRCS

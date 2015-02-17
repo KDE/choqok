@@ -26,7 +26,7 @@
 
 #include <QVBoxLayout>
 
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KLocale>
 
 #include "addeditfilter.h"
@@ -71,7 +71,7 @@ void ConfigureFilters::reloadFiltersTable()
 {
     ui.filters->clearContents();
     QList<Filter*> filters = FilterSettings::self()->filters();
-    kDebug()<<filters.count();
+    qCDebug(CHOQOK)<<filters.count();
     Q_FOREACH (Filter *filter, filters) {
         addNewFilter(filter);
     }

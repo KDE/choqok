@@ -27,7 +27,7 @@
 #include <QCompleter>
 #include <QStringListModel>
 
-#include <KDebug>
+#include "choqokdebug.h"
 
 #include "choqokbehaviorsettings.h"
 #include "choqokuiglobal.h"
@@ -47,10 +47,10 @@ public:
 TwitterApiComposerWidget::TwitterApiComposerWidget(Choqok::Account* account, QWidget* parent)
 : Choqok::UI::ComposerWidget(account, parent), d(new Private)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     d->model = new QStringListModel(qobject_cast<TwitterApiAccount*>(account)->friendsList(), this);
 //     d->index = new QModelIndex(d->model->rowCount(), 0, 0, d->model);
-//     kDebug()<<d->index;
+//     qCDebug(CHOQOK)<<d->index;
     TwitterApiTextEdit *edit = new TwitterApiTextEdit(account, this);
     QCompleter *completer = new QCompleter(d->model, this);
     completer->setCaseSensitivity(Qt::CaseInsensitive);

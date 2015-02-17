@@ -29,7 +29,7 @@
 #include <QLabel>
 #include <QLayoutItem>
 
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KLocalizedString>
 #include <KPushButton>
 #include <KRestrictedLine>
@@ -80,14 +80,14 @@ TwitterApiSearchTimelineWidget::~TwitterApiSearchTimelineWidget()
 
 void TwitterApiSearchTimelineWidget::saveTimeline()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     //There's no implementation because we don't want to have it in Search Timelines :)
 //     Choqok::UI::TimelineWidget::saveTimeline();
 }
 
 void TwitterApiSearchTimelineWidget::loadTimeline()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     //There's no implementation because we don't want to have it in Search Timelines :)
 //     Choqok::UI::TimelineWidget::loadTimeline();
 }
@@ -142,7 +142,7 @@ void TwitterApiSearchTimelineWidget::addNewPosts(QList< Choqok::Post* >& postLis
     if( posts().count() < 1 )
         markRead = true;*/
     int m = postList.count() - Choqok::BehaviorSettings::countOfPosts();
-//     kDebug()<<m<<postList.count();
+//     qCDebug(CHOQOK)<<m<<postList.count();
     while( m > 0 ){
         postList.removeFirst();
         --m;

@@ -23,7 +23,7 @@
 
 #include "pumpioshowthread.h"
 
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KLocale>
 
 #include "pumpiomicroblog.h"
@@ -64,10 +64,10 @@ PumpIOShowThread::PumpIOShowThread(Choqok::Account* account, Choqok::Post* post,
         if (microblog) {
             microblog->fetchReplies(account, p->replies);
         } else {
-            kDebug() << "Microblog is not a PumpIOMicroBlog";
+            qCDebug(CHOQOK) << "Microblog is not a PumpIOMicroBlog";
         }
     } else {
-        kDebug() << "Post is not a PumpIOPost";
+        qCDebug(CHOQOK) << "Post is not a PumpIOPost";
     }
 }
 
@@ -78,7 +78,7 @@ PumpIOShowThread::~PumpIOShowThread()
 
 void PumpIOShowThread::slotAddPost(Choqok::Account* theAccount, Choqok::Post* post)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if (theAccount == d->account && post->replyToPostId == d->postId) {
         PumpIOPostWidget *widget = new PumpIOPostWidget(theAccount, post, this);
         widget->initUi();

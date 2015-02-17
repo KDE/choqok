@@ -33,6 +33,7 @@
 #include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/NetAccess>
+#include "choqokdebug.h"
 
 #include "mediamanager.h"
 #include "passwordmanager.h"
@@ -119,7 +120,7 @@ void Flickr::upload(const KUrl& localUrl, const QByteArray& medium, const QByteA
 
     KIO::StoredTransferJob *job = KIO::storedHttpPost( data, url, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kError() << "Cannot create a http POST request!";
+        qCritical() << "Cannot create a http POST request!";
         return;
     }
     job->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=AaB03x" );
@@ -131,16 +132,16 @@ void Flickr::upload(const KUrl& localUrl, const QByteArray& medium, const QByteA
 
 void Flickr::slotUpload(KJob* job)
 {
-    kDebug();
-    KUrl localUrl = mUrlMap.take( job );
+    qCDebug(CHOQOK);
+    QUrl localUrl = mUrlMap.take( job );
     if ( job->error() ) {
-        kError() << "Job Error: " << job->errorString();
+        qCritical() << "Job Error: " << job->errorString();
         Q_EMIT uploadingFailed(localUrl, job->errorString());
         return;
     } else {
         QDomDocument rep;
         QByteArray buffer = qobject_cast<KIO::StoredTransferJob*>( job )->data();
-        kDebug() << buffer;
+        qCDebug(CHOQOK) << buffer;
         rep.setContent( buffer );
         QString photoId;
         QDomElement element = rep.documentElement();

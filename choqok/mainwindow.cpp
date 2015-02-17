@@ -43,6 +43,7 @@
 #include <KStatusBar>
 #include <KTabWidget>
 #include <KXMLGUIFactory>
+#include "choqokdebug.h"
 
 #include "accountmanager.h"
 #include "choqokappearancesettings.h"
@@ -78,7 +79,7 @@ MainWindow::MainWindow()
     m_splash(0), choqokMainButton(0), microblogCounter(0),
     choqokMainButtonVisible(false)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     setAttribute ( Qt::WA_DeleteOnClose, false );
     setAttribute ( Qt::WA_QuitOnClose, false );
 
@@ -124,20 +125,20 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
-    kDebug();
+    qCDebug(CHOQOK);
 }
 
 void MainWindow::loadAllAccounts()
 {
-    kDebug();
+    qCDebug(CHOQOK);
 
     if( Choqok::BehaviorSettings::showSplashScreen() ){
         KStandardDirs *stdDirs = KGlobal::dirs();
         QString img = stdDirs->findResource( "data", "choqok/images/splash_screen.png" );
-        //         kDebug()<<img;
+        //         qCDebug(CHOQOK)<<img;
         QPixmap splashpix( img );
         if(splashpix.isNull())
-            kError()<<"Splash screen pixmap is NULL! URL: "<<img;
+            qCritical()<<"Splash screen pixmap is NULL! URL: "<<img;
         else{
             m_splash = new KSplashScreen( splashpix, Qt::WindowStaysOnTopHint );
             m_splash->show();
@@ -154,7 +155,7 @@ void MainWindow::loadAllAccounts()
             if(m_splash)
                 m_splash->showMessage(QString());//Workaround for Qt 4.8 splash bug
         }
-        kDebug()<<"All accounts loaded.";
+        qCDebug(CHOQOK)<<"All accounts loaded.";
         if(Choqok::BehaviorSettings::updateInterval() > 0)
             QTimer::singleShot(500, this, SIGNAL(updateTimelines()));
     } else {
@@ -167,7 +168,7 @@ void MainWindow::loadAllAccounts()
 
 void MainWindow::newPluginAvailable( Choqok::Plugin *plugin )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     guiFactory()->addClient(plugin);
 }
 
@@ -324,7 +325,7 @@ void MainWindow::slotConfigChoqok()
 
 void MainWindow::settingsChanged()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if ( Choqok::AccountManager::self()->accounts().count() < 1 ) {
         if ( KMessageBox::questionYesNo( this, i18n( "In order to use Choqok you need \
 an account at one of the supported micro-blogging services.\n\
@@ -418,7 +419,7 @@ void MainWindow::slotBehaviorConfigChanged()
 
 void MainWindow::slotQuit()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     Choqok::BehaviorSettings::setPosition( pos() );
     timelineTimer->stop();
     Choqok::BehaviorSettings::self()->writeConfig();
@@ -428,9 +429,9 @@ void MainWindow::slotQuit()
 
 void MainWindow::disableApp()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     timelineTimer->stop();
-//     kDebug()<<"timelineTimer stoped";
+//     qCDebug(CHOQOK)<<"timelineTimer stoped";
     actionCollection()->action( "update_timeline" )->setEnabled( false );
     actionCollection()->action( "choqok_new_post" )->setEnabled( false );
 //     actionCollection()->action( "choqok_search" )->setEnabled( false );
@@ -440,10 +441,10 @@ void MainWindow::disableApp()
 
 void MainWindow::enableApp()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if ( Choqok::BehaviorSettings::updateInterval() > 0 ) {
         timelineTimer->start();
-//         kDebug()<<"timelineTimer started";
+//         qCDebug(CHOQOK)<<"timelineTimer started";
     }
     actionCollection()->action( "update_timeline" )->setEnabled( true );
     actionCollection()->action( "choqok_new_post" )->setEnabled( true );
@@ -454,7 +455,7 @@ void MainWindow::enableApp()
 
 void MainWindow::addBlog( Choqok::Account * account, bool isStartup )
 {
-    kDebug() << "Adding new Blog, Alias: " << account->alias() << "Blog: " << account->microblog()->serviceName();
+    qCDebug(CHOQOK) << "Adding new Blog, Alias: " << account->alias() << "Blog: " << account->microblog()->serviceName();
 
     Choqok::UI::MicroBlogWidget *widget = account->microblog()->createMicroBlogWidget(account, this);
     connect(widget, SIGNAL(loaded()), SLOT(oneMicroblogLoaded()));
@@ -469,8 +470,8 @@ void MainWindow::addBlog( Choqok::Account * account, bool isStartup )
     connect( this, SIGNAL( updateTimelines() ), widget, SLOT( updateTimelines() ) );
     connect( this, SIGNAL( markAllAsRead() ), widget, SLOT( markAllAsRead() ) );
     connect( this, SIGNAL(removeOldPosts()), widget, SLOT(removeOldPosts()) );
-//     kDebug()<<"Plugin Icon: "<<account->microblog()->pluginIcon();
-    mainWidget->addTab( widget, KIcon(account->microblog()->pluginIcon()), account->alias() );
+//     qCDebug(CHOQOK)<<"Plugin Icon: "<<account->microblog()->pluginIcon();
+    mainWidget->addTab( widget, QIcon::fromTheme(account->microblog()->pluginIcon()), account->alias() );
 
     if( !isStartup )
         QTimer::singleShot( 1500, widget, SLOT( updateTimelines() ) );
@@ -480,7 +481,7 @@ void MainWindow::addBlog( Choqok::Account * account, bool isStartup )
 
 void MainWindow::removeBlog( const QString & alias )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     int count = mainWidget->count();
     for ( int i = 0; i < count; ++i ) {
         Choqok::UI::MicroBlogWidget * tmp = qobject_cast<Choqok::UI::MicroBlogWidget *>( mainWidget->widget( i ) );
@@ -505,7 +506,7 @@ void MainWindow::updateTabbarHiddenState()
 
 void MainWindow::slotUpdateUnreadCount(int change, int sum)
 {
-    kDebug()<<"Change: "<<change<<" Sum: "<<sum;
+    qCDebug(CHOQOK)<<"Change: "<<change<<" Sum: "<<sum;
     Choqok::UI::MicroBlogWidget *wd = qobject_cast<Choqok::UI::MicroBlogWidget*>(sender());
 
     if ( sysIcon ) {
@@ -539,24 +540,24 @@ void MainWindow::showBlog()
 
 void MainWindow::setTimeLineUpdatesEnabled( bool isEnabled )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if ( isEnabled ) {
         if( mPrevUpdateInterval > 0 )
             Choqok::BehaviorSettings::setUpdateInterval( mPrevUpdateInterval );
         Q_EMIT updateTimelines();
         timelineTimer->start( Choqok::BehaviorSettings::updateInterval() *60000 );
-//         kDebug()<<"timelineTimer started";
+//         qCDebug(CHOQOK)<<"timelineTimer started";
     } else {
         mPrevUpdateInterval = Choqok::BehaviorSettings::updateInterval();
         timelineTimer->stop();
-//         kDebug()<<"timelineTimer stoped";
+//         qCDebug(CHOQOK)<<"timelineTimer stoped";
         Choqok::BehaviorSettings::setUpdateInterval( 0 );
     }
 }
 
 void MainWindow::setNotificationsEnabled( bool isEnabled )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if ( isEnabled ) {
         Choqok::BehaviorSettings::setNotifyEnabled( true );
     } else {
@@ -608,7 +609,7 @@ void MainWindow::slotCurrentBlogChanged(int)
 
 void MainWindow::oneMicroblogLoaded()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     --microblogCounter;
     if(microblogCounter < 1){
         //Everything loaded, So splash screen should be deleted!

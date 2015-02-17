@@ -28,8 +28,8 @@
 #include <QToolButton>
 
 #include <KAction>
-#include <KDebug>
-#include <KIcon>
+#include "choqokdebug.h"
+#include <QIcon>
 #include <KLocalizedString>
 #include <KMenu>
 #include <KMessageBox>
@@ -47,7 +47,7 @@ public:
     Private(Choqok::Account *acc)
         :btnCloseSearch(0)
     {
-        kDebug();
+        qCDebug(CHOQOK);
         mBlog = qobject_cast<TwitterApiMicroBlog *>(acc->microblog());
         this->account = qobject_cast<TwitterApiAccount *>(acc);
     }
@@ -82,7 +82,7 @@ KIcon addTextToIcon(const KIcon& icon, const QString &text, const QSize & result
 TwitterApiMicroBlogWidget::TwitterApiMicroBlogWidget(Choqok::Account* account, QWidget* parent)
     : MicroBlogWidget(account, parent), d(new Private(account))
 {
-    kDebug();
+    qCDebug(CHOQOK);
     connect( account, SIGNAL(modified(Choqok::Account*)),
              this, SLOT(slotAccountModified(Choqok::Account*)) );
     connect( d->mBlog->searchBackend(),
@@ -94,7 +94,7 @@ TwitterApiMicroBlogWidget::TwitterApiMicroBlogWidget(Choqok::Account* account, Q
 
 void TwitterApiMicroBlogWidget::initUi()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     Choqok::UI::MicroBlogWidget::initUi();
     connect(timelinesTabWidget(), SIGNAL(contextMenu(QWidget*,QPoint)),
             this, SLOT(slotContextMenu(QWidget*,QPoint)));
@@ -117,9 +117,9 @@ TwitterApiMicroBlogWidget::~TwitterApiMicroBlogWidget()
 void TwitterApiMicroBlogWidget::slotSearchResultsReceived(const SearchInfo &info,
                                                           QList< Choqok::Post* >& postsList)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if( info.account == currentAccount() ){
-        kDebug()<<postsList.count();
+        qCDebug(CHOQOK)<<postsList.count();
         QString name = QString("%1%2").arg(d->mBlog->searchBackend()->optionCode(info.option)).arg(info.query);
         if(mSearchTimelines.contains(name)){
             mSearchTimelines.value(name)->addNewPosts(postsList);
@@ -136,7 +136,7 @@ void TwitterApiMicroBlogWidget::slotSearchResultsReceived(const SearchInfo &info
 TwitterApiSearchTimelineWidget* TwitterApiMicroBlogWidget::addSearchTimelineWidgetToUi(const QString& name,
                                                                                        const SearchInfo &info)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     TwitterApiSearchTimelineWidget *mbw = d->mBlog->createSearchTimelineWidget(currentAccount(), name,
                                                                                info, this);
     if(mbw) {
@@ -167,7 +167,7 @@ TwitterApiSearchTimelineWidget* TwitterApiMicroBlogWidget::addSearchTimelineWidg
         }
         timelinesTabWidget()->setCurrentWidget(mbw);
     } else {
-        kDebug()<<"Cannot Create a new TimelineWidget for timeline "<<name;
+        qCDebug(CHOQOK)<<"Cannot Create a new TimelineWidget for timeline "<<name;
         return 0L;
     }
     if(timelinesTabWidget()->count() == 1)
@@ -225,7 +225,7 @@ void TwitterApiMicroBlogWidget::slotAccountModified(Choqok::Account* account)
 
 void TwitterApiMicroBlogWidget::saveSearchTimelinesState()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     int count = currentAccount()->configGroup()->readEntry("SearchCount", 0);
     int i = 0;
     while(i<count)
@@ -243,7 +243,7 @@ void TwitterApiMicroBlogWidget::saveSearchTimelinesState()
 
 void TwitterApiMicroBlogWidget::loadSearchTimelinesState()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     int count = currentAccount()->configGroup()->readEntry("SearchCount", 0);
     int i = 0;
     while( i < count )
@@ -258,7 +258,7 @@ void TwitterApiMicroBlogWidget::loadSearchTimelinesState()
 
 void TwitterApiMicroBlogWidget::slotContextMenu(QWidget* w, const QPoint &pt)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     Choqok::UI::TimelineWidget *sWidget = qobject_cast<Choqok::UI::TimelineWidget*>(w);
     KMenu menu;
     KAction *mar = 0;

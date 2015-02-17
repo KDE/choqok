@@ -26,7 +26,7 @@
 
 #include <QVBoxLayout>
 
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KLocale>
 #include <KPluginFactory>
 
@@ -61,7 +61,7 @@ IMStatusConfig::~IMStatusConfig()
 
 void IMStatusConfig::load()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     KCModule::load();
     KConfigGroup grp ( KGlobal::config(), "IMStatus" );
     IMStatusSettings::self()->readConfig();
@@ -74,7 +74,7 @@ void IMStatusConfig::load()
 
 void IMStatusConfig::save()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     KCModule::save();
     IMStatusSettings::setImclient ( ui.cfg_imclient->currentText() );
     IMStatusSettings::setTempltate ( ui.cfg_templtate->toPlainText() );

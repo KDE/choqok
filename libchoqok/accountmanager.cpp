@@ -27,7 +27,7 @@
 
 #include <KConfig>
 #include <KConfigGroup>
-#include <KDebug>
+#include "libchoqokdebug.h"
 #include <KIO/NetAccess>
 #include <KLocale>
 #include <KStandardDirs>
@@ -42,7 +42,7 @@ namespace Choqok
 
     static QList<Account*> sortAccountsByPriority( QList<Account*> &accounts )
     {
-        kDebug()<<accounts.count();
+        qCDebug(CHOQOK)<<accounts.count();
         QList<Account*> result;
         Q_FOREACH (Account* ac, accounts) {
             bool inserted = false;
@@ -76,13 +76,13 @@ public:
 AccountManager::AccountManager()
     : QObject(qApp), d(new Private)
 {
-    kDebug();
-    d->conf = KGlobal::config();
+    qCDebug(CHOQOK);
+    d->conf = KSharedConfig::openConfig();
 }
 
 AccountManager::~AccountManager()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     mSelf = 0L;
     d->conf->sync();
     delete d;
@@ -104,7 +104,7 @@ const QList< Account * > & AccountManager::accounts() const
 
 Account * AccountManager::findAccount( const QString &alias )
 {
-    kDebug() << "Finding: " << alias;
+    qCDebug(CHOQOK) << "Finding: " << alias;
     int count = d->accounts.count();
     for ( int i = 0; i < count; ++i ) {
         if ( d->accounts[i]->alias() == alias ) {
@@ -117,7 +117,7 @@ Account * AccountManager::findAccount( const QString &alias )
 
 bool AccountManager::removeAccount( const QString &alias )
 {
-    kDebug() << "Removing " << alias;
+    qCDebug(CHOQOK) << "Removing " << alias;
     int count = d->accounts.count();
     d->conf->deleteGroup( QString::fromLatin1( "Account_%1" ).arg( alias ) );
     d->conf->sync();
@@ -131,8 +131,8 @@ bool AccountManager::removeAccount( const QString &alias )
                 QString tmpFile;
                 tmpFile = KStandardDirs::locate( "data", "choqok/" +
                         generatePostBackupFileName(a->alias(), names.takeFirst()) );
-                kDebug() << "Will remove " << tmpFile;
-                const KUrl path( tmpFile );
+                qCDebug(CHOQOK) << "Will remove " << tmpFile;
+                const QUrl path( tmpFile );
                 if(KIO::NetAccess::exists(path, KIO::NetAccess::SourceSide, UI::Global::mainWindow()))
                     KIO::NetAccess::del(path, UI::Global::mainWindow());
             }
@@ -148,7 +148,7 @@ bool AccountManager::removeAccount( const QString &alias )
 
 Account * AccountManager::registerAccount( Account * account )
 {
-    kDebug() << "Adding: " << account->alias();
+    qCDebug(CHOQOK) << "Adding: " << account->alias();
 
     if ( !account || d->accounts.contains( account ) || account->alias().isEmpty() ) {
         return 0L;
@@ -160,7 +160,7 @@ Account * AccountManager::registerAccount( Account * account )
         Account *curracc = it.next();
         if ( account->alias() == curracc->alias() ) {
             d->lastError = i18n( "An account with this alias already exists: a unique alias has to be specified." );
-            kDebug()<<"An account with this alias already exists: a unique alias has to be specified.";
+            qCDebug(CHOQOK)<<"An account with this alias already exists: a unique alias has to be specified.";
             return 0L;
         }
     }
@@ -173,15 +173,15 @@ Account * AccountManager::registerAccount( Account * account )
 
 void AccountManager::loadAllAccounts()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     Q_FOREACH (Account *ac, d->accounts) {
         ac->deleteLater();
     }
     d->accounts.clear();
     const QStringList accountGroups = d->conf->groupList().filter( QRegExp( QString::fromLatin1( "^Account_" ) ) );
-    kDebug()<<accountGroups;
+    qCDebug(CHOQOK)<<accountGroups;
     Q_FOREACH (const QString& grp, accountGroups) {
-        kDebug()<<grp;
+        qCDebug(CHOQOK)<<grp;
         KConfigGroup cg( d->conf, grp );
 //         KConfigGroup pluginConfig( d->conf, QLatin1String("Plugins") );
 
@@ -198,7 +198,7 @@ void AccountManager::loadAllAccounts()
                 d->accounts.append(acc);
         }
     }
-    kDebug() << d->accounts.count() << " accounts loaded.";
+    qCDebug(CHOQOK) << d->accounts.count() << " accounts loaded.";
     d->accounts = sortAccountsByPriority(d->accounts);
     Q_EMIT allAccountsLoaded();
 }

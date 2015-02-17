@@ -36,6 +36,7 @@
 #include <KGenericFactory>
 #include <KLineEdit>
 #include <KMenuBar>
+#include "choqokdebug.h"
 
 #include "choqoktypes.h"
 #include "choqokuiglobal.h"
@@ -210,10 +211,10 @@ void QuickFilter::showAllPosts()
 
 void QuickFilter::filterNewPost(Choqok::UI::PostWidget* np, Choqok::Account* acc, QString timeline)
 {
-    kDebug()<<Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentAccount()->alias()<<acc->alias()<<timeline;
+    qCDebug(CHOQOK)<<Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentAccount()->alias()<<acc->alias()<<timeline;
     if (Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentAccount() == acc &&
         Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()->timelineName() == timeline) {
-        kDebug()<<"pass1";
+        qCDebug(CHOQOK)<<"pass1";
         if (!m_aledit->text().isEmpty()) {
             if (!np->currentPost()->author.userName.contains(m_aledit->text()))
                 np->hide();

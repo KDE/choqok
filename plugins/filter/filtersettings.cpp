@@ -28,7 +28,7 @@
 #include <QStringList>
 
 #include <KConfigGroup>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KGlobal>
 #include <KLocalizedString>
 #include <KSharedPtr>
@@ -91,10 +91,10 @@ void FilterSettings::readConfig()
             if(f->filterText().isEmpty())
                 continue;
             _filters << f;
-            kDebug()<<"REEADING A FILTER";
+            qCDebug(CHOQOK)<<"REEADING A FILTER";
         }
     }
-    kDebug()<<filters().count();
+    qCDebug(CHOQOK)<<filters().count();
 
     _hideNoneFriendsReplies = conf->readEntry("hideNoneFriendsReplies", false);
     _hideRepliesNotRelatedToMe = conf->readEntry("hideRepliesNotRelatedToMe", false);

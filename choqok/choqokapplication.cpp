@@ -28,7 +28,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QRegExp>
 
 #include <KConfig>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KGlobal>
 #include <KLocale>
 #include <KCmdLineArgs>
@@ -43,7 +43,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 ChoqokApplication::ChoqokApplication()
 : Choqok::Application()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     setQuitOnLastWindowClosed( false );
 
     Choqok::ChoqokDbus();
@@ -56,21 +56,20 @@ ChoqokApplication::ChoqokApplication()
 
 ChoqokApplication::~ChoqokApplication()
 {
-    kDebug() ;
-    //kDebug() << "Done";
+    qCDebug(CHOQOK);
 }
 
 int ChoqokApplication::newInstance()
 {
-//    kDebug(14000) ;
-//     handleURLArgs();
+    qCDebug(CHOQOK);
+    //handleURLArgs();
 
     return KUniqueApplication::newInstance();
 }
 
 void ChoqokApplication::quitChoqok()
 {
-    kDebug() ;
+    qCDebug(CHOQOK) ;
 
     setShuttingDown(true);
 

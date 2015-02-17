@@ -39,6 +39,7 @@
 #include <KMessageBox>
 #include <KPluginFactory>
 #include <KPushButton>
+#include "choqokdebug.h"
 
 #include "choqoktools.h"
 #include "passwordmanager.h"
@@ -80,7 +81,7 @@ FlickrConfig::~FlickrConfig()
 
 void FlickrConfig::load()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     KCModule::load();
     KConfigGroup grp( KGlobal::config(), "Flickr Uploader" );
     m_nsid = grp.readEntry( "nsid", "");
@@ -102,7 +103,7 @@ void FlickrConfig::load()
 
 void FlickrConfig::save()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     KCModule::save();
     KConfigGroup grp( KGlobal::config(), "Flickr Uploader" );
     grp.writeEntry( "nsid", m_nsid );
@@ -130,7 +131,7 @@ void FlickrConfig::emitChanged()
 
 void FlickrConfig::getFrob()
 {
-    kDebug()<<"Get Frob";
+    qCDebug(CHOQOK)<<"Get Frob";
     m_frob.clear();
     KUrl url( "http://flickr.com/services/rest/" );
     url.addQueryItem( "method", "flickr.auth.getFrob" );
@@ -188,7 +189,7 @@ void FlickrConfig::getFrob()
 
 void FlickrConfig::getToken()
 {
-    kDebug()<<"Get Token";
+    qCDebug(CHOQOK)<<"Get Token";
     m_token.clear();
     KUrl url( "http://flickr.com/services/rest/" );
     url.addQueryItem( "method", "flickr.auth.getToken" );

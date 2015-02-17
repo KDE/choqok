@@ -31,14 +31,14 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <KCModuleInfo>
 #include <KCModuleProxy>
-#include <KDebug>
 #include <KGenericFactory>
 #include <KPluginInfo>
 #include <KLocale>
 #include <KTabWidget>
 
-#include "choqokbehaviorsettings.h"
 #include "behaviorconfig_shorten.h"
+#include "behaviordebug.h"
+#include "choqokbehaviorsettings.h"
 
 K_PLUGIN_FACTORY( ChoqokBehaviorConfigFactory,
                   registerPlugin <BehaviorConfig>(); )
@@ -58,7 +58,7 @@ public:
 BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
         KCModule( ChoqokBehaviorConfigFactory::componentData(), parent, args ), d(new Private)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QVBoxLayout *layout = new QVBoxLayout(this);
     // since KSetting::Dialog has margins here, we don't need our own.
     layout->setContentsMargins( 0, 0, 0, 0);
@@ -111,7 +111,7 @@ BehaviorConfig::~BehaviorConfig()
 
 void BehaviorConfig::save()
 {
-   kDebug();
+   qCDebug(CHOQOK);
 
     KCModule::save();
     d->mPrfsShorten->save();

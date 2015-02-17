@@ -24,7 +24,7 @@
 
 #include "twitterapiaccount.h"
 
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KIO/AccessManager>
 
 #include <QtOAuth/QtOAuth>
@@ -57,7 +57,7 @@ public:
 TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString &alias)
     : Account(parent, alias), d(new Private)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     d->usingOauth = configGroup()->readEntry("UsingOAuth", false);
     d->userId = configGroup()->readEntry("UserId", QString());
     d->count = configGroup()->readEntry("CountOfPosts", 20);
@@ -72,7 +72,7 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString 
                                             QString("%1_tokenSecret").arg(alias) ).toUtf8();
     setApi( configGroup()->readEntry("Api", QString('/') ) );
 
-    kDebug()<<"UsingOAuth: "<<d->usingOauth;
+    qCDebug(CHOQOK)<<"UsingOAuth: "<<d->usingOauth;
     if(d->usingOauth){
         initQOAuthInterface();
     }
@@ -279,7 +279,7 @@ QOAuth::Interface* TwitterApiAccount::oauthInterface()
 
 void TwitterApiAccount::initQOAuthInterface()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(!d->qoauth)
         d->qoauth = new QOAuth::Interface(new KIO::AccessManager(this), this);
     d->qoauth->setConsumerKey(d->oauthConsumerKey);

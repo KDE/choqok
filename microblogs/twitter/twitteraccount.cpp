@@ -24,7 +24,7 @@
 
 #include "twitteraccount.h"
 
-#include <KDebug>
+#include "choqokdebug.h"
 
 #include "twittermicroblog.h"
 
@@ -42,7 +42,7 @@ TwitterAccount::TwitterAccount(TwitterMicroBlog* parent, const QString &alias)
     setHost("https://api.twitter.com");
     setUploadHost("https://api.twitter.com");
     setApi("1.1");
-    kDebug() << "Set API version to 1.1";
+    qCDebug(CHOQOK) << "Set API version to 1.1";
 //     d->lists = configGroup()->readEntry("lists", QStringList());
     QStringList lists;
     Q_FOREACH (const QString & tm, timelineNames()) {
@@ -98,7 +98,7 @@ void TwitterAccount::generateUploadUrl()
 /*
 void TwitterAccount::writeConfig()
 {
-    kDebug()<<d->lists;
+    qCDebug(CHOQOK)<<d->lists;
     configGroup()->writeEntry("lists", d->lists);
     TwitterApiAccount::writeConfig();
 }

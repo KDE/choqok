@@ -28,6 +28,7 @@
 
 #include <KLocale>
 #include <KPluginFactory>
+#include "choqokdebug.h"
 
 #include "passwordmanager.h"
 
@@ -56,7 +57,7 @@ YourlsConfig::~YourlsConfig()
 
 void YourlsConfig::load()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     KCModule::load();
     ui.cfg_password->setText( Choqok::PasswordManager::self()->readPassword( QString("yourls_%1")
                                                                       .arg(ui.kcfg_username->text()) ) );
@@ -64,7 +65,7 @@ void YourlsConfig::load()
 
 void YourlsConfig::save()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     KCModule::save();
     Choqok::PasswordManager::self()->writePassword(QString("yourls_%1").arg(ui.kcfg_username->text()),
                                                    ui.cfg_password->text());

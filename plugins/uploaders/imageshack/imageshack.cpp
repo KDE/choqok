@@ -32,6 +32,7 @@
 #include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/NetAccess>
+#include "choqokdebug.h"
 
 #include "mediamanager.h"
 #include "passwordmanager.h"
@@ -53,7 +54,7 @@ ImageShack::~ImageShack()
 
 void ImageShack::upload(const KUrl& localUrl, const QByteArray& medium, const QByteArray& mediumType)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if( !mediumType.startsWith(QByteArray("image/")) ){
         Q_EMIT uploadingFailed(localUrl, i18n("Just supporting image uploading"));
         return;
@@ -75,7 +76,7 @@ void ImageShack::upload(const KUrl& localUrl, const QByteArray& medium, const QB
 
     KIO::StoredTransferJob *job = KIO::storedHttpPost( data, url, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kError() << "Cannot create a http POST request!";
+        qCritical() << "Cannot create a http POST request!";
         return;
     }
     job->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=AaB03x" );
@@ -87,10 +88,10 @@ void ImageShack::upload(const KUrl& localUrl, const QByteArray& medium, const QB
 
 void ImageShack::slotUpload(KJob* job)
 {
-    kDebug();
-    KUrl localUrl = mUrlMap.take( job );
+    qCDebug(CHOQOK);
+    QUrl localUrl = mUrlMap.take( job );
     if ( job->error() ) {
-        kError() << "Job Error: " << job->errorString();
+        qCritical() << "Job Error: " << job->errorString();
         Q_EMIT uploadingFailed(localUrl, job->errorString());
         return;
     } else {
@@ -98,7 +99,7 @@ void ImageShack::slotUpload(KJob* job)
         QDomDocument doc;
         doc.setContent(stj->data());
         if(doc.firstChild().isNull()) {
-            kDebug()<<"Malformed response: "<< stj->data();
+            qCDebug(CHOQOK)<<"Malformed response: "<< stj->data();
             return;
         }
         QDomElement root = doc.documentElement();
@@ -131,7 +132,7 @@ void ImageShack::slotUpload(KJob* job)
             }
         }
         Q_EMIT uploadingFailed(localUrl, i18n("Malformed response"));
-        kDebug()<<"Response not detected: "<<stj->data();
+        qCDebug(CHOQOK)<<"Response not detected: "<<stj->data();
     }
 }
 

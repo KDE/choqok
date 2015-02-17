@@ -27,7 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QLabel>
 #include <QPointer>
 
-#include <KDebug>
+#include "libchoqokdebug.h"
 #include <KPushButton>
 
 #include "account.h"
@@ -85,11 +85,11 @@ ComposerWidget::~ComposerWidget()
 
 void ComposerWidget::setEditor(TextEdit* editor)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(d->editor)
         d->editor->deleteLater();
     d->editor = editor;
-    kDebug();
+    qCDebug(CHOQOK);
     if(d->editor) {
         QGridLayout *internalLayout = qobject_cast<QGridLayout*>(d->editorContainer->layout());
         internalLayout->addWidget(d->editor, 0, 0);
@@ -98,7 +98,7 @@ void ComposerWidget::setEditor(TextEdit* editor)
         connect(d->editor, SIGNAL(cleared()), SLOT(editorCleared()));
         editorTextChanged();
     } else {
-        kDebug()<<"Editor is NULL!";
+        qCDebug(CHOQOK)<<"Editor is NULL!";
     }
 }
 
@@ -117,7 +117,7 @@ void ComposerWidget::setText(const QString& text, const QString& replyToId, cons
 
 void ComposerWidget::submitPost( const QString &txt )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     editorContainer()->setEnabled(false);
     QString text = txt;
     if( currentAccount()->postCharLimit() &&
@@ -143,9 +143,9 @@ void ComposerWidget::submitPost( const QString &txt )
 
 void ComposerWidget::slotPostSubmited(Choqok::Account* theAccount, Choqok::Post* post)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if( currentAccount() == theAccount && post == d->postToSubmit ) {
-        kDebug()<<"Accepted";
+        qCDebug(CHOQOK)<<"Accepted";
         disconnect(d->currentAccount->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
                     this, SLOT(slotPostSubmited(Choqok::Account*,Choqok::Post*)) );
         disconnect(d->currentAccount->microblog(),
@@ -166,9 +166,9 @@ void ComposerWidget::slotPostSubmited(Choqok::Account* theAccount, Choqok::Post*
 
 void ComposerWidget::slotErrorPost(Account* theAccount, Post* post)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(theAccount == d->currentAccount && post == d->postToSubmit) {
-        kDebug();
+        qCDebug(CHOQOK);
         disconnect(d->currentAccount->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
                    this, SLOT(slotPostSubmited(Choqok::Account*,Choqok::Post*)) );
         disconnect(d->currentAccount->microblog(),

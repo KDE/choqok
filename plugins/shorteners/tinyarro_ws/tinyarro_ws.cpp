@@ -24,7 +24,7 @@
 #include "tinyarro_ws.h"
 
 #include <KAboutData>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KGenericFactory>
 #include <KGlobal>
 #include <KIO/Job>
@@ -48,7 +48,7 @@ Tinyarro_ws::~Tinyarro_ws()
 
 QString Tinyarro_ws::shorten( const QString &url )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QByteArray data;
 
     KUrl reqUrl( "http://tinyarro.ws/api-create.php" );
@@ -68,7 +68,7 @@ QString Tinyarro_ws::shorten( const QString &url )
         QString output = QString::fromUtf8( data );
 
         if( !output.isEmpty() ) {
-            kDebug() << "Short url is: " << output;
+            qCDebug(CHOQOK) << "Short url is: " << output;
             if ( output.startsWith( QString( "http://" ) ) )
               return output;
         }

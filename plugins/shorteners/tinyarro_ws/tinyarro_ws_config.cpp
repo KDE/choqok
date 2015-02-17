@@ -27,6 +27,7 @@
 
 #include <KLocale>
 #include <KPluginFactory>
+#include "choqokdebug.h"
 
 #include "passwordmanager.h"
 
@@ -76,7 +77,7 @@ Tinyarro_ws_Config::~Tinyarro_ws_Config()
 
 void Tinyarro_ws_Config::load()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     KCModule::load();
     KConfigGroup grp(KGlobal::config(), "Tinyarro.ws Shortener");
     ui.kcfg_tinyarro_ws_host->setCurrentIndex(grp.readEntry("tinyarro_ws_host", "0").toInt());
@@ -84,7 +85,7 @@ void Tinyarro_ws_Config::load()
 
 void Tinyarro_ws_Config::save()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     KCModule::save();
     KConfigGroup grp(KGlobal::config(), "Tinyarro.ws Shortener");
     grp.writeEntry("tinyarro_ws_host", ui.kcfg_tinyarro_ws_host->currentIndex());

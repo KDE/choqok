@@ -26,7 +26,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QDomDocument>
 #include <QProgressBar>
 
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KInputDialog>
 #include <KIO/AccessManager>
 #include <KIO/Job>
@@ -122,7 +122,7 @@ bool LaconicaEditAccountWidget::validateData()
 
 Choqok::Account* LaconicaEditAccountWidget::apply()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     /*if(kcfg_authMethod->currentIndex() == 0){
         mAccount->setUsername( kcfg_oauthUsername->text() );
         mAccount->setOauthToken( token );
@@ -148,7 +148,7 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
 
 // void LaconicaEditAccountWidget::authorizeUser()
 // {
-//     kDebug();
+//     qCDebug(CHOQOK);
 //     slotCheckHostUrl();
 //     if(KUrl(kcfg_host->text()).host()!="identi.ca"){
 //         KMessageBox::sorry(this, i18n("Sorry, OAuth Method just works with Identi.ca server. You have to use basic authentication for other StatusNet servers."));
@@ -163,7 +163,7 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
 // 
 //     // send a request for an unauthorized token
 //     QString oauthReqTokenUrl = QString("%1/%2/oauth/request_token").arg(kcfg_host->text()).arg(kcfg_api->text());
-// //     kDebug()<<oauthReqTokenUrl;
+// //     qCDebug(CHOQOK)<<oauthReqTokenUrl;
 //     QOAuth::ParamMap params;
 //     params.insert("oauth_callback", "oob");
 //     QOAuth::ParamMap reply =
@@ -175,7 +175,7 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
 //     if ( qoauth->error() == QOAuth::NoError ) {
 //         token = reply.value( QOAuth::tokenParameterName() );
 //         tokenSecret = reply.value( QOAuth::tokenSecretParameterName() );
-//         kDebug()<<"token: "<<token;
+//         qCDebug(CHOQOK)<<"token: "<<token;
 //         QUrl url(QString("%1/%2/oauth/authorize").arg(kcfg_host->text()).arg(kcfg_api->text()));
 //         url.addQueryItem( QOAuth::tokenParameterName(), token );
 //         url.addQueryItem( "oauth_token", token );
@@ -183,7 +183,7 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
 //         kcfg_authorize->setEnabled(false);
 //         getPinCode();
 //     } else {
-//         kDebug()<<"ERROR: " <<qoauth->error()<<' '<<Choqok::qoauthErrorText(qoauth->error());
+//         qCDebug(CHOQOK)<<"ERROR: " <<qoauth->error()<<' '<<Choqok::qoauthErrorText(qoauth->error());
 //         KMessageBox::detailedError(this, i18n("Authentication Error"),
 //                                    Choqok::qoauthErrorText(qoauth->error()));
 //     }
@@ -210,13 +210,13 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
 //             kcfg_authorize->setEnabled(true);
 //             token = reply.value( QOAuth::tokenParameterName() );
 //             tokenSecret = reply.value( QOAuth::tokenSecretParameterName() );
-//             kDebug()<<"token: "<<token;
+//             qCDebug(CHOQOK)<<"token: "<<token;
 //             setAuthenticated(true);
 //             KMessageBox::information(this, i18n("Choqok is authorized successfully."),
 //                                      i18n("Authorized"));
 //         } else {
 //             setAuthenticated(false);
-//             kDebug()<<"ERROR: "<<qoauth->error()<<' '<<Choqok::qoauthErrorText(qoauth->error());
+//             qCDebug(CHOQOK)<<"ERROR: "<<qoauth->error()<<' '<<Choqok::qoauthErrorText(qoauth->error());
 //             KMessageBox::detailedError(this, i18n("Authentication Error"),
 //             Choqok::qoauthErrorText(qoauth->error()));
 //         }
@@ -229,7 +229,7 @@ void LaconicaEditAccountWidget::setTextLimit()
     QString url = mAccount->host() + "/" + mAccount->api() + "/statusnet/config.json";
     KIO::TransferJob *job = KIO::get(KUrl(url), KIO::Reload, KIO::HideProgressInfo);
     if ( !KIO::NetAccess::synchronousRun(job, 0, &jobData) ) {
-        kError()<<"Job error: " << job->errorString();
+        qCCritical(CHOQOK)<<"Job error: " << job->errorString();
         return;
     }
 
@@ -240,11 +240,11 @@ void LaconicaEditAccountWidget::setTextLimit()
     if (ok) {
         mAccount->setPostCharLimit(siteInfos["textlimit"].toUInt(&ok));
     } else {
-        kDebug() << "Cannot parse JSON reply";
+        qCDebug(CHOQOK) << "Cannot parse JSON reply";
     }
 
     if (!ok) {
-        kDebug() << "Cannot parse text limit value";
+        qCDebug(CHOQOK) << "Cannot parse text limit value";
         mAccount->setPostCharLimit(140);
     }
 }

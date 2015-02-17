@@ -24,7 +24,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "ur_ly.h"
 
 #include <KAboutData>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KGenericFactory>
 #include <KGlobal>
 #include <KIO/Job>
@@ -47,7 +47,7 @@ Ur_ly::~Ur_ly()
 
 QString Ur_ly::shorten ( const QString& url )
 {
-    kDebug() << "Using ur.ly";
+    qCDebug(CHOQOK) << "Using ur.ly";
     QByteArray data;
     KUrl reqUrl ( "http://ur.ly/new.json" );
     reqUrl.addQueryItem( "href", KUrl( url ).url() );
@@ -61,10 +61,10 @@ QString Ur_ly::shorten ( const QString& url )
         if ( ok && result.contains("code") ) {
             return QString("http://ur.ly/%1").arg(result.value("code").toString());
         } else{
-            kError()<<"Ur_ly::shorten: Parse error, Job error: "<<job->errorString()<<"\n Data:"<<data;
+            qCritical()<<"Ur_ly::shorten: Parse error, Job error: "<<job->errorString()<<"\n Data:"<<data;
         }
     } else {
-        kDebug() << "Cannot create a shortened url.\t" << job->errorString();
+        qCDebug(CHOQOK) << "Cannot create a shortened url.\t" << job->errorString();
     }
     return url;
 }

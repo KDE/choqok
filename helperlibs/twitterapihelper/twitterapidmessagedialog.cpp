@@ -28,7 +28,7 @@
 #include <QVBoxLayout>
 
 #include <KComboBox>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KPushButton>
@@ -159,7 +159,7 @@ void TwitterApiDMessageDialog::friendsUsernameListed(TwitterApiAccount* theAccou
 void TwitterApiDMessageDialog::postCreated(Choqok::Account* theAccount, Choqok::Post* thePost)
 {
     if(theAccount == d->account && thePost == d->sentPost){
-        kDebug();
+        qCDebug(CHOQOK);
         accept();
     }
 }
@@ -169,7 +169,7 @@ void TwitterApiDMessageDialog::errorPost(Choqok::Account* theAccount, Choqok::Po
                                          Choqok::MicroBlog::ErrorLevel )
 {
     if(theAccount == d->account && thePost == d->sentPost){
-        kDebug();
+        qCDebug(CHOQOK);
         show();
     }
 }

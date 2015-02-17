@@ -28,7 +28,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <KAboutData>
 #include <KAction>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/JobClasses>
@@ -66,7 +66,7 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_twitter" ) )
 TwitterMicroBlog::TwitterMicroBlog ( QObject* parent, const QVariantList&  )
 : TwitterApiMicroBlog(MyPluginFactory::componentData(), parent)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     setServiceName("Twitter");
     setServiceHomepageUrl("https://twitter.com/");
     timelineApiPath["Reply"] = "/statuses/mentions_timeline.%1";
@@ -82,7 +82,7 @@ void TwitterMicroBlog::setTimelineInfos()
 
 TwitterMicroBlog::~TwitterMicroBlog()
 {
-    kDebug();
+    qCDebug(CHOQOK);
 }
 
 Choqok::Account * TwitterMicroBlog::createNewAccount( const QString &alias )
@@ -97,12 +97,12 @@ Choqok::Account * TwitterMicroBlog::createNewAccount( const QString &alias )
 
 ChoqokEditAccountWidget * TwitterMicroBlog::createEditAccountWidget( Choqok::Account *account, QWidget *parent )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     TwitterAccount *acc = qobject_cast<TwitterAccount*>(account);
     if(acc || !account)
         return new TwitterEditAccountWidget(this, acc, parent);
     else{
-        kDebug()<<"Account passed here is not a TwitterAccount!";
+        qCDebug(CHOQOK)<<"Account passed here is not a TwitterAccount!";
         return 0L;
     }
 }
@@ -158,14 +158,14 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Cho
         KUrl picUrl(mediumToAttach);
         KIO::TransferJob *picJob = KIO::get( picUrl, KIO::Reload, KIO::HideProgressInfo);
         if( !KIO::NetAccess::synchronousRun(picJob, 0, &picData) ){
-            kError()<<"Job error: " << picJob->errorString();
+            qCCritical(CHOQOK)<<"Job error: " << picJob->errorString();
             KMessageBox::detailedError(Choqok::UI::Global::mainWindow(),
                                        i18n( "Uploading medium failed: cannot read the medium file." ),
             picJob->errorString() );
             return;
         }
         if ( picData.count() == 0 ) {
-            kError() << "Cannot read the media file, please check if it exists.";
+            qCCritical(CHOQOK) << "Cannot read the media file, please check if it exists.";
             KMessageBox::error( Choqok::UI::Global::mainWindow(),
                                 i18n( "Uploading medium failed: cannot read the medium file." ) );
             return;
@@ -195,7 +195,7 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Cho
 
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
         if ( !job ) {
-            kError() << "Cannot create a http POST request!";
+            qCCritical(CHOQOK) << "Cannot create a http POST request!";
             return;
         }
         job->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=AaB03x" );
@@ -247,7 +247,7 @@ void TwitterMicroBlog::showListDialog(TwitterApiAccount* theAccount)
 
 void TwitterMicroBlog::fetchUserLists(TwitterAccount* theAccount, const QString& username)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if ( !theAccount) {
         return;
     }
@@ -260,7 +260,7 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount* theAccount, const QString&
 
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
-        kError() << "TwitterMicroBlog::loadUserLists: Cannot create an http GET request!";
+        qCCritical(CHOQOK) << "TwitterMicroBlog::loadUserLists: Cannot create an http GET request!";
         return;
     }
 
@@ -273,15 +273,15 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount* theAccount, const QString&
 
 void TwitterMicroBlog::slotFetchUserLists(KJob* job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(!job) {
-        kWarning()<<"NULL Job returned";
+        qCWarning(CHOQOK)<<"NULL Job returned";
         return;
     }
     QString username = mFetchUsersListMap.take(job);
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if ( job->error() ) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
         Q_EMIT error ( theAccount, Choqok::MicroBlog::CommunicationError,
                      i18n("Fetching %1's lists failed. %2", username, job->errorString()), Critical );
     } else {
@@ -289,7 +289,7 @@ void TwitterMicroBlog::slotFetchUserLists(KJob* job)
         QByteArray buffer = stj->data();
         QList<Twitter::List> list = readUserListsFromJson ( theAccount, buffer );
         if ( list.isEmpty() ) {
-            kDebug() << buffer;
+            qCDebug(CHOQOK) << buffer;
             QString errorMsg;
             errorMsg = checkForError(buffer);
             if( errorMsg.isEmpty() ){
@@ -306,7 +306,7 @@ void TwitterMicroBlog::slotFetchUserLists(KJob* job)
 void TwitterMicroBlog::addListTimeline( TwitterAccount* theAccount, const QString& username,
                                         const QString& listname )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QStringList tms = theAccount->timelineNames();
     QString name = QString("@%1/%2").arg(username).arg(listname);
     tms.append(name);
@@ -321,7 +321,7 @@ void TwitterMicroBlog::addListTimeline( TwitterAccount* theAccount, const QStrin
 // TODO: Change to new API
 void TwitterMicroBlog::setListTimelines(TwitterAccount* theAccount, const QStringList& lists)
 {
-    kDebug()<<lists;
+    qCDebug(CHOQOK)<<lists;
     QStringList tms = theAccount->timelineNames();
     Q_FOREACH (const QString &name, lists) {
         tms.append(name);

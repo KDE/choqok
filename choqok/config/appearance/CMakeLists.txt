@@ -6,7 +6,9 @@ ${CHOQOK_INCLUDES}
 ########### next target ###############
 
 set(kcm_choqok_appearanceconfig_PART_SRCS
-appearanceconfig.cpp )
+    appearanceconfig.cpp
+    appearancedebug.cpp
+)
 
 ki18n_wrap_ui(kcm_choqok_appearanceconfig_PART_SRCS
 appearanceconfig_base.ui )

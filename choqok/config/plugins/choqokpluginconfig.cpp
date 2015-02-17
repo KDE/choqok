@@ -27,7 +27,6 @@
 #include <QByteArray>
 #include <QVBoxLayout>
 
-#include <KDebug>
 #include <KLocale>
 #include <KPluginInfo>
 #include <KPluginFactory>
@@ -35,6 +34,7 @@
 #include <KSettings/Dispatcher>
 
 #include "pluginmanager.h"
+#include "pluginsdebug.h"
 
 K_PLUGIN_FACTORY( ChoqokPluginConfigFactory,
         registerPlugin<ChoqokPluginConfig>(); )

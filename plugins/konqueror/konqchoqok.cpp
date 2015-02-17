@@ -41,6 +41,7 @@
 #ifdef HAVE_KWEBKITPART
 #include <QWebView>
 #include <KWebKitPart>
+#include "choqokdebug.h"
 #endif
 
 KonqPluginChoqok::KonqPluginChoqok(QObject* parent, const QVariantList& )
@@ -121,7 +122,7 @@ void KonqPluginChoqok::slotpostSelectedText()
     
     if (!QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.choqok"))
     {
-    kDebug() << "Choqok is not running, starting it!..." << endl;
+    qCDebug(CHOQOK) << "Choqok is not running, starting it!..." << endl;
     KToolInvocation::startServiceByDesktopName(QString("choqok"),
                            QStringList());
     }

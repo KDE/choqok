@@ -4,7 +4,10 @@ ${CHOQOK_INCLUDES}
 
 ########### next target ###############
 
-set(kcm_choqok_pluginconfig_PART_SRCS choqokpluginconfig.cpp )
+set(kcm_choqok_pluginconfig_PART_SRCS
+    choqokpluginconfig.cpp
+    pluginsdebug.cpp
+)
 
 add_library(kcm_choqok_pluginconfig MODULE ${kcm_choqok_pluginconfig_PART_SRCS})
 

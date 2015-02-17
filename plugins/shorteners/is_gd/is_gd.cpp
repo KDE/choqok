@@ -26,7 +26,7 @@
 #include <QEventLoop>
 
 #include <KAboutData>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/NetAccess>
@@ -52,7 +52,7 @@ Is_gd::~Is_gd()
 
 QString Is_gd::shorten( const QString& url )
 {
-    kDebug() << "Using is.gd";
+    qCDebug(CHOQOK) << "Using is.gd";
 
     Is_gd_Settings::self()->readConfig();
 

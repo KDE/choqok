@@ -29,7 +29,7 @@
 #include <QDBusMessage>
 #include <QDBusReply>
 
-#include <KDebug>
+#include "choqokdebug.h"
 
 #if TELEPATHY_FOUND
     #include <TelepathyQt/Account>
@@ -79,7 +79,7 @@ void IMQDBus::useKopete(const QString &statusMessage)
     msg.setArguments ( args );
     QDBusMessage rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
-        kDebug() <<  "ERROR" << rep.errorMessage();
+        qCDebug(CHOQOK) <<  "ERROR" << rep.errorMessage();
         return;
     }
 }
@@ -93,7 +93,7 @@ void IMQDBus::usePsi(const QString &statusMessage)
     msg.setArguments ( args );
     QDBusMessage rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
-        kDebug() <<  "ERROR" << rep.errorMessage();
+        qCDebug(CHOQOK) <<  "ERROR" << rep.errorMessage();
         return;
     }
 }
@@ -106,7 +106,7 @@ void IMQDBus::useSkype(const QString &statusMessage)
     msg.setArguments ( args );
     QDBusMessage rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
-        kDebug() <<  "ERROR" << rep.errorMessage();
+        qCDebug(CHOQOK) <<  "ERROR" << rep.errorMessage();
         return;
     }
 
@@ -115,7 +115,7 @@ void IMQDBus::useSkype(const QString &statusMessage)
     msg.setArguments ( args );
     rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
-        kDebug() <<  "ERROR" << rep.errorMessage();
+        qCDebug(CHOQOK) <<  "ERROR" << rep.errorMessage();
         return;
     }
 
@@ -124,7 +124,7 @@ void IMQDBus::useSkype(const QString &statusMessage)
     msg.setArguments ( args );
     rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
-        kDebug() <<  "ERROR" << rep.errorMessage();
+        qCDebug(CHOQOK) <<  "ERROR" << rep.errorMessage();
         return;
     }
 }
@@ -134,7 +134,7 @@ void IMQDBus::usePidgin(const QString &statusMessage)
     QDBusMessage msg = QDBusMessage::createMethodCall ( "im.pidgin.purple.PurpleService", "/im/pidgin/purple/PurpleObject", "im.pidgin.purple.PurpleInterface", "PurpleSavedstatusGetCurrent" );
     QDBusReply<int> repUInt = QDBusConnection::sessionBus().call ( msg );
     if ( repUInt.error().isValid() ) {
-        kDebug() << "ERROR:" << repUInt.error().message();
+        qCDebug(CHOQOK) << "ERROR:" << repUInt.error().message();
         return;
     }
     int IDCurrentStatus = repUInt.value();
@@ -144,7 +144,7 @@ void IMQDBus::usePidgin(const QString &statusMessage)
     msg.setArguments ( args );
     repUInt = QDBusConnection::sessionBus().call ( msg );
     if ( repUInt.error().isValid() ) {
-        kDebug() << "ERROR:" << repUInt.error().message();
+        qCDebug(CHOQOK) << "ERROR:" << repUInt.error().message();
         return;
     }
     int currentStatusType = repUInt.value();
@@ -156,7 +156,7 @@ void IMQDBus::usePidgin(const QString &statusMessage)
     msg.setArguments ( args );
     repUInt = QDBusConnection::sessionBus().call ( msg );
     if ( repUInt.error().isValid() ) {
-        kDebug() << "ERROR:" << repUInt.error().message();
+        qCDebug(CHOQOK) << "ERROR:" << repUInt.error().message();
         return;
     }
     IDCurrentStatus = repUInt.value(); //ID of new status
@@ -168,7 +168,7 @@ void IMQDBus::usePidgin(const QString &statusMessage)
     msg.setArguments ( args );
     QDBusReply<void> repStr = QDBusConnection::sessionBus().call ( msg );
     if ( repStr.error().isValid() ) {
-        kDebug() << "ERROR:" << repStr.error().message();
+        qCDebug(CHOQOK) << "ERROR:" << repStr.error().message();
         return;
     }
 
@@ -178,7 +178,7 @@ void IMQDBus::usePidgin(const QString &statusMessage)
     msg.setArguments ( args );
     repStr = QDBusConnection::sessionBus().call ( msg );
     if ( repStr.error().isValid() ) {
-        kDebug() << "ERROR:" << repStr.error().message();
+        qCDebug(CHOQOK) << "ERROR:" << repStr.error().message();
         return;
     }
 }
@@ -204,7 +204,7 @@ void IMQDBus::useTelepathy(const QString &statusMessage)
 void IMQDBus::slotFinished(Tp::PendingOperation* po)
 {
     if (po->isError()) {
-	kDebug() << "Telepathy AccountManager failed to get ready:" << po->errorMessage();
+	qCDebug(CHOQOK) << "Telepathy AccountManager failed to get ready:" << po->errorMessage();
     }
 }
 

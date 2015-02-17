@@ -28,7 +28,7 @@
 #include <QHBoxLayout>
 
 #include <KComboBox>
-#include <KDebug>
+#include "libchoqokdebug.h"
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KPushButton>
@@ -65,7 +65,7 @@ public:
 QuickPost::QuickPost( QWidget* parent )
     : KDialog( parent ), d(new Private)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     setupUi();
     loadAccounts();
     connect( d->comboAccounts, SIGNAL(currentIndexChanged(int)),
@@ -119,7 +119,7 @@ QuickPost::~QuickPost()
     BehaviorSettings::setQuickPostDialogSize( this->size() );
     BehaviorSettings::self()->writeConfig();
     delete d;
-    kDebug();
+    qCDebug(CHOQOK);
 }
 
 void QuickPost::show()
@@ -159,7 +159,7 @@ void QuickPost::postError(Account* a, Choqok::Post* post,
 
 void QuickPost::submitPost( const QString & txt )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QString newPost = txt;
     Choqok::Account* currentAccount = d->accountsList.value(d->comboAccounts->currentText());
     if(!currentAccount) {
@@ -193,7 +193,7 @@ void QuickPost::submitPost( const QString & txt )
 
 void QuickPost::slotButtonClicked(int button)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(button == KDialog::Ok) {
         submitPost( d->txtPost->toPlainText() );
     } else
@@ -202,7 +202,7 @@ void QuickPost::slotButtonClicked(int button)
 
 void QuickPost::loadAccounts()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QList<Account*> ac = AccountManager::self()->accounts();
     QListIterator<Account*> it( ac );
     while ( it.hasNext() ) {
@@ -212,7 +212,7 @@ void QuickPost::loadAccounts()
 
 void QuickPost::addAccount( Choqok::Account* account )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     connect(account, SIGNAL(modified(Choqok::Account*)), SLOT(accountModified(Choqok::Account*)) );//Added for later changes
     if(account->isReadOnly() || !account->showInQuickPost())
         return;
@@ -229,7 +229,7 @@ void QuickPost::addAccount( Choqok::Account* account )
 
 void QuickPost::removeAccount( const QString & alias )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     d->accountsList.remove( alias );
     d->comboAccounts->removeItem( d->comboAccounts->findText(alias) );
 }
@@ -265,7 +265,7 @@ void QuickPost::slotCurrentAccountChanged(int index)
 
 void QuickPost::accountModified(Account* theAccount)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if( !theAccount->isReadOnly() && theAccount->showInQuickPost() ) {
         if( !d->accountsList.contains(theAccount->alias()) )
             addAccount(theAccount);

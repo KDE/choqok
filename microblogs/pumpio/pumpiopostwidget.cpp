@@ -27,7 +27,7 @@
 #include <QMenu>
 
 #include <KAction>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KLocalizedString>
 #include <KPushButton>
 
@@ -167,7 +167,7 @@ QString PumpIOPostWidget::generateSign()
         ss += i18n("View replies");
         ss += " <a href=\"thread://\"><img src=\"icon://thread\"/></a>";
     } else {
-        kDebug() << "post is not a PumpIOPost!";
+        qCDebug(CHOQOK) << "post is not a PumpIOPost!";
     }
 
     return ss;
@@ -200,7 +200,7 @@ void PumpIOPostWidget::initUi()
 
 void PumpIOPostWidget::toggleFavorite()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     setReadWithSignal();
     PumpIOMicroBlog* microBlog = qobject_cast<PumpIOMicroBlog*>(currentAccount()->microblog());
     connect(microBlog, SIGNAL(favorite(Choqok::Account*, Choqok::Post*)),
@@ -210,7 +210,7 @@ void PumpIOPostWidget::toggleFavorite()
 
 void PumpIOPostWidget::slotToggleFavorite(Choqok::Account*, Choqok::Post*)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     updateFavStat();
 }
 
@@ -220,9 +220,9 @@ void PumpIOPostWidget::slotPostError(Choqok::Account* theAccount, Choqok::Post* 
 {
     Q_UNUSED(error)
 
-    kDebug();
+    qCDebug(CHOQOK);
     if (theAccount == currentAccount() && post == currentPost()) {
-        kDebug() << errorMessage;
+        qCDebug(CHOQOK) << errorMessage;
         disconnect(currentAccount()->microblog(), SIGNAL(postRemoved(Choqok::Account*,Choqok::Post*)),
                   this, SLOT(slotCurrentPostRemoved(Choqok::Account*,Choqok::Post*)) );
         disconnect(currentAccount()->microblog(),
@@ -233,7 +233,7 @@ void PumpIOPostWidget::slotPostError(Choqok::Account* theAccount, Choqok::Post* 
 
 void PumpIOPostWidget::slotResendPost()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     setReadWithSignal();
     PumpIOMicroBlog* microBlog = qobject_cast<PumpIOMicroBlog*>(currentAccount()->microblog());
     microBlog->share(currentAccount(), currentPost());
@@ -251,7 +251,7 @@ bool PumpIOPostWidget::isResendAvailable()
 
 void PumpIOPostWidget::slotReplyTo()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     setReadWithSignal();
     PumpIOPost *post = dynamic_cast<PumpIOPost* >(currentPost());
     if (post->type == "comment") {

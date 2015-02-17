@@ -30,6 +30,7 @@
 #include <QEventLoop>
 
 #include <KGenericFactory>
+#include "choqokdebug.h"
 
 #include "choqokuiglobal.h"
 #include "postwidget.h"
@@ -53,7 +54,7 @@ const QRegExp VideoPreview::mYouTuCode("youtu.(.+)/(.+)[?&]?");
 VideoPreview::VideoPreview(QObject* parent, const QList< QVariant >& )
         :Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     connect( Choqok::UI::Global::SessionManager::self(),
              SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
              this,
@@ -80,7 +81,7 @@ void VideoPreview::slotAddNewPostWidget(Choqok::UI::PostWidget* newWidget)
 
 void VideoPreview::slotNewUnshortenedUrl(Choqok::UI::PostWidget* widget, const KUrl &fromUrl, const KUrl &toUrl)
 {
-//     kDebug() << "I have to consider: " << fromUrl << " -> " << toUrl;
+//     qCDebug(CHOQOK) << "I have to consider: " << fromUrl << " -> " << toUrl;
     Q_UNUSED(fromUrl)
     if (mYouTubeRegExp.indexIn(toUrl.prettyUrl()) != -1) {
         KUrl thisurl(mYouTubeRegExp.cap(0));
@@ -125,7 +126,7 @@ void VideoPreview::parse(QPointer<Choqok::UI::PostWidget> postToParse)
     QStringList thumbList;
 
     QString content = postToParse->currentPost()->content;
-//     kDebug() << content;
+//     qCDebug(CHOQOK) << content;
 
     while (((pos1 = mYouTuRegExp.indexIn(content, pos)) != -1) |
             ((pos2 = mYouTubeRegExp.indexIn(content, pos)) != -1) |
@@ -135,25 +136,25 @@ void VideoPreview::parse(QPointer<Choqok::UI::PostWidget> postToParse)
             pos = pos1 + mYouTuRegExp.matchedLength();
             if (mYouTuCode.indexIn(mYouTuRegExp.cap(0)) != -1) {
                 thumbList << parseYoutube(mYouTuCode.cap(2), postToParse);
-                kDebug() << "YouTu:) " << mYouTuCode.capturedTexts();
+                qCDebug(CHOQOK) << "YouTu:) " << mYouTuCode.capturedTexts();
             }
         }
         else if (pos2>=0) {
             pos = pos2 + mYouTubeRegExp.matchedLength();
             KUrl thisurl(mYouTubeRegExp.cap(0));
             thumbList << parseYoutube(thisurl.queryItemValue("v"), postToParse);
-            kDebug() << "YouTube:) " << mYouTubeRegExp.capturedTexts();
+            qCDebug(CHOQOK) << "YouTube:) " << mYouTubeRegExp.capturedTexts();
         }
         else if (pos3>=0) {
             pos = pos3 + mVimeoRegExp.matchedLength();
             thumbList << parseVimeo(mVimeoRegExp.cap(3), postToParse);
-            kDebug() << "Vimeo:) " << mVimeoRegExp.capturedTexts();
+            qCDebug(CHOQOK) << "Vimeo:) " << mVimeoRegExp.capturedTexts();
         }
     }
 
     Q_FOREACH (const QString &thumb_url, thumbList) {
 
-        kDebug() << thumb_url;
+        qCDebug(CHOQOK) << thumb_url;
         connect( Choqok::MediaManager::self(),
                  SIGNAL(imageFetched(QString,QPixmap)),
                  SLOT(slotImageFetched(QString,QPixmap)) );
@@ -166,8 +167,8 @@ void VideoPreview::parse(QPointer<Choqok::UI::PostWidget> postToParse)
 QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWidget > postToParse)
 {
     QString youtubeUrl = QString( "http://gdata.youtube.com/feeds/api/videos/%1" ).arg(videoid);
-//   kDebug() << youtubeUrl;
-    KUrl th_url(youtubeUrl);
+//   qCDebug(CHOQOK) << youtubeUrl;
+    QUrl th_url(youtubeUrl);
     KIO::TransferJob *job = KIO::get( th_url, KIO::NoReload, KIO::HideProgressInfo );
     QString title, description, thumb_url;
     QByteArray data;
@@ -191,14 +192,14 @@ QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWi
                 thumb_url = QString(node.attributeNode("url").value());
         }
         else {
-            kError() << "Youtube XML response is NULL!";
+            qCritical() << "Youtube XML response is NULL!";
         }
 
         description = description.left(70);
 
 
-        kDebug() << "thumbnail url: "<< thumb_url;
-        //kDebug() << "video title: "<< title;
+        qCDebug(CHOQOK) << "thumbnail url: "<< thumb_url;
+        qCDebug(CHOQOK) << "video title: "<< title;
 
         mParsingList.insert(thumb_url, postToParse);
         mBaseUrlMap.insert(thumb_url, "http://www.youtube.com/watch?v="+videoid);
@@ -212,8 +213,8 @@ QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWi
 QString VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidget > postToParse)
 {
     QString vimeoUrl = QString( "http://vimeo.com/api/v2/video/%1.xml" ).arg(videoid);
-//   kDebug() << vimeoUrl;
-    KUrl th_url(vimeoUrl);
+//   qCDebug(CHOQOK) << vimeoUrl;
+    QUrl th_url(vimeoUrl);
     QEventLoop loop;
     KIO::TransferJob *job = KIO::get( th_url, KIO::NoReload, KIO::HideProgressInfo );
     QString title, description, thumb_url;
@@ -239,12 +240,12 @@ QString VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidg
                     thumb_url = QString(node.text());
             }
             else
-                kError() << "Vimeo XML response is NULL";
+                qCritical() << "Vimeo XML response is NULL";
         }
         description = description.left(70);
 
-        kDebug() << "thumbnail url: "<< thumb_url;
-        //kDebug() << "video title: "<< title;
+        qCDebug(CHOQOK) << "thumbnail url: "<< thumb_url;
+        qCDebug(CHOQOK) << "video title: "<< title;
 
         mParsingList.insert(thumb_url, postToParse);
         mBaseUrlMap.insert(thumb_url, "http://vimeo.com/"+videoid);
@@ -257,7 +258,7 @@ QString VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidg
 
 void VideoPreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pixmap)
 {
-//     kDebug();
+//     qCDebug(CHOQOK);
 
     Choqok::UI::PostWidget *postToParse = mParsingList.take(remoteUrl);
     QString baseUrl = mBaseUrlMap.take(remoteUrl);
@@ -272,7 +273,7 @@ void VideoPreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pix
     QString imgUrl = imgU.prettyUrl();
     postToParse->mainWidget()->document()->addResource(QTextDocument::ImageResource, imgUrl, pixmap);
     
-    //kDebug() << QRegExp('>'+baseUrl+'<').pattern();
+    qCDebug(CHOQOK) << QRegExp('>'+baseUrl+'<').pattern();
     
     QString temp("<br/><table><tr><td rowspan=2><img align='left' height=64 src='" + imgUrl + "' /></td>");
     temp.append("<td><a href='" + baseUrl + "' title='" + baseUrl + "'><b>" + title + "</b></a></td></tr>");

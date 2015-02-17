@@ -26,7 +26,7 @@
 
 #include <QTimer>
 
-#include <KDebug>
+#include "choqokdebug.h"
 
 #include "filter.h"
 #include "filtersettings.h"
@@ -46,7 +46,7 @@ AddEditFilter::AddEditFilter(QWidget* parent, Filter *filter)
     setWindowTitle(i18n("Define new filter rules"));
 
     if(filter){
-        kDebug()<<filter->filterField();
+        qCDebug(CHOQOK)<<filter->filterField();
         //Editing
         ui.filterField->setCurrentIndex(ui.filterField->findData(filter->filterField()));
         ui.filterType->setCurrentIndex(ui.filterType->findData(filter->filterType()));

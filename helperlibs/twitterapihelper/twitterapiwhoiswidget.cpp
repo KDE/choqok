@@ -30,8 +30,8 @@
 
 #include <KAnimatedButton>
 #include <KApplication>
-#include <KDebug>
-#include <KIcon>
+#include "choqokdebug.h"
+#include <QIcon>
 #include <KIO/Job>
 #include <KLocalizedString>
 #include <KNotification>
@@ -81,7 +81,7 @@ TwitterApiWhoisWidget::TwitterApiWhoisWidget(TwitterApiAccount* theAccount, cons
                                              const Choqok::Post &post, QWidget* parent)
     : QFrame(parent), d(new Private(theAccount, username))
 {
-    kDebug();
+    qCDebug(CHOQOK);
     setAttribute(Qt::WA_DeleteOnClose);
     d->currentPost = post;
     loadUserInfo(theAccount, username);
@@ -104,13 +104,13 @@ TwitterApiWhoisWidget::TwitterApiWhoisWidget(TwitterApiAccount* theAccount, cons
 
 TwitterApiWhoisWidget::~TwitterApiWhoisWidget()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     delete d;
 }
 
 void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount* theAccount, const QString& username)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QString urlStr;
     QString user = username;
     if(user.contains('@')) {
@@ -126,7 +126,7 @@ void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount* theAccount, const QS
             int len = urlStr.length();
             int userLen = user.length();
             urlStr.remove(len - userLen, userLen);
-            kDebug()<<urlStr;
+            qCDebug(CHOQOK)<<urlStr;
         }
         urlStr.append("api");
     } else {
@@ -136,7 +136,7 @@ void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount* theAccount, const QS
 
     url.addPath( QString( "/users/show/%1.json" ).arg(user));
 
-//     kDebug() << url;
+//     qCDebug(CHOQOK) << url;
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
     if( d->currentPost.source != "ostatus" )
@@ -150,23 +150,23 @@ void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount* theAccount, const QS
 
 void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(job->error()){
-        kError()<<"Job Error: "<<job->errorString();
+        qCritical()<<"Job Error: "<<job->errorString();
         if( Choqok::UI::Global::mainWindow()->statusBar() )
             Choqok::UI::Global::mainWindow()->statusBar()->showMessage(job->errorString());
         slotCancel();
         return;
     }
     KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>(job);
-//     kDebug()<<stj->data();
+//     qCDebug(CHOQOK)<<stj->data();
     QJson::Parser parser;
     bool ok;
     QVariantMap map = parser.parse(stj->data(), &ok).toMap();
 
     Choqok::Post post;
     if ( !ok ){
-        kDebug()<<"JSON parsing failed! Data is:\n\t"<<stj->data();
+        qCDebug(CHOQOK)<<"JSON parsing failed! Data is:\n\t"<<stj->data();
         d->errorMessage = i18n("Cannot load user information.");
         updateHtml();
         showForm();
@@ -217,7 +217,7 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
 
 void TwitterApiWhoisWidget::avatarFetched(const QString& remoteUrl, const QPixmap& pixmap)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if ( remoteUrl == d->currentPost.author.profileImageUrl ) {
         QString url = "img://profileImage";
         d->wid->document()->addResource( QTextDocument::ImageResource, url, pixmap );
@@ -231,7 +231,7 @@ void TwitterApiWhoisWidget::avatarFetched(const QString& remoteUrl, const QPixma
 
 void TwitterApiWhoisWidget::avatarFetchError(const QString& remoteUrl, const QString& errMsg)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     Q_UNUSED(errMsg);
     if( remoteUrl == d->currentPost.author.profileImageUrl ){
         ///Avatar fetching is failed! but will not disconnect to get the img if it fetches later!
@@ -243,7 +243,7 @@ void TwitterApiWhoisWidget::avatarFetchError(const QString& remoteUrl, const QSt
 
 void TwitterApiWhoisWidget::updateHtml()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QString html;
     if( d->errorMessage.isEmpty() ) {
         QString url = d->currentPost.author.homePageUrl.isEmpty() ? QString()
@@ -287,7 +287,7 @@ void TwitterApiWhoisWidget::updateHtml()
 
 void TwitterApiWhoisWidget::showForm()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QPoint pos = d->waitFrame->pos();
     d->waitFrame->deleteLater();
     d->wid->resize(320, 200);
@@ -309,7 +309,7 @@ void TwitterApiWhoisWidget::showForm()
 
 void TwitterApiWhoisWidget::show(QPoint pos)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     d->waitFrame = new QFrame(this);
     d->waitFrame->setFrameShape(NoFrame);
     d->waitFrame->setWindowFlags(Qt::Popup);
@@ -330,7 +330,7 @@ void TwitterApiWhoisWidget::show(QPoint pos)
 
 void TwitterApiWhoisWidget::checkAnchor( const QUrl url )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(url.scheme()=="choqok"){
         if(url.host()=="close"){
             this->close();
@@ -354,7 +354,7 @@ void TwitterApiWhoisWidget::checkAnchor( const QUrl url )
 
 void TwitterApiWhoisWidget::setupUi()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://close"),
                             KIcon("dialog-close").pixmap(16) );
 
@@ -371,7 +371,7 @@ void TwitterApiWhoisWidget::setupUi()
 
 void TwitterApiWhoisWidget::slotCancel()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if(d->waitFrame)
         d->waitFrame->deleteLater();
     if(d->job)

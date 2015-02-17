@@ -8,6 +8,7 @@ add_subdirectory( config )
 
 set(choqok_SRCS
    choqokapplication.cpp
+   choqokdebug.cpp
    mainwindow.cpp
    main.cpp
    systrayicon.cpp

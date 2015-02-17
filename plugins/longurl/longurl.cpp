@@ -29,6 +29,7 @@
 #include <KIO/JobUiDelegate>
 
 #include <qjson/parser.h>
+#include "choqokdebug.h"
 
 #include "postwidget.h"
 #include "shortenmanager.h"
@@ -44,7 +45,7 @@ LongUrl::LongUrl(QObject* parent, const QList< QVariant >& args)
     : Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped), mServicesAreFetched(false)
 {
     sheduleSupportedServicesFetch();
-    kDebug();
+    qCDebug(CHOQOK);
     connect( Choqok::UI::Global::SessionManager::self(),
              SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
              this,
@@ -91,7 +92,7 @@ void LongUrl::processJobResults(KJob* job)
     bool ok;
     QVariant v = QJson::Parser().parse(mData[job], &ok);
     if(!ok) {
-        kDebug() << "Can not parse " << baseLongUrlDorComUrl << " responce";
+        qCDebug(CHOQOK) << "Can not parse " << baseLongUrlDorComUrl << " responce";
         return;
     }
     QVariantMap m = v.toMap();
@@ -101,7 +102,7 @@ void LongUrl::processJobResults(KJob* job)
 
 void LongUrl::startParsing()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     int i = 8;
     while( !postsQueue.isEmpty() && i>0 ) {
         parse(postsQueue.dequeue());
@@ -116,7 +117,7 @@ void LongUrl::startParsing()
 
 void LongUrl::replaceUrl(LongUrl::PostWidgetPointer post, const KUrl& fromUrl, const KUrl& toUrl)
 {
-    kDebug() << "Replacing URL: " << fromUrl << " --> " << toUrl;
+    qCDebug(CHOQOK) << "Replacing URL: " << fromUrl << " --> " << toUrl;
     if(post) {
         QString content = post->content();
         QString fromUrlStr = fromUrl.url();

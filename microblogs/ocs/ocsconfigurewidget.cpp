@@ -25,7 +25,7 @@
 #include <attica/providermanager.h>
 #include "ocsaccount.h"
 #include "ocsmicroblog.h"
-#include <KDebug>
+#include "choqokdebug.h"
 #include <accountmanager.h>
 #include <KMessageBox>
 
@@ -81,13 +81,13 @@ Choqok::Account* OCSConfigureWidget::apply()
 
 void OCSConfigureWidget::slotprovidersLoaded()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     cfg_provider->removeItem(0);
     providersLoaded = true;
     QList <Attica::Provider> providerList = mMicroblog->providerManager()->providers();
     int selectedIndex = 0;
     Q_FOREACH (const Attica::Provider &p, providerList) {
-        kDebug()<<p.baseUrl();
+        qCDebug(CHOQOK)<<p.baseUrl();
         cfg_provider->addItem(p.name(), p.baseUrl());
         if(mAccount && mAccount->providerUrl() == p.baseUrl())
             selectedIndex = cfg_provider->count() - 1;

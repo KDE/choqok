@@ -24,7 +24,7 @@
 #include "goo_gl.h"
 
 #include <KAboutData>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KGenericFactory>
 #include <KGlobal>
 #include <KIO/Job>
@@ -49,7 +49,7 @@ Goo_gl::~Goo_gl()
 
 QString Goo_gl::shorten( const QString& url )
 {
-    kDebug() << "Using goo.gl";
+    qCDebug(CHOQOK) << "Using goo.gl";
 
     QVariantMap req;
     req.insert("longUrl", url);

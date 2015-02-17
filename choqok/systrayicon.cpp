@@ -30,7 +30,7 @@
 #include <KAction>
 #include <KActionCollection>
 #include <KColorScheme>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KGlobalSettings>
 #include <KLocale>
 
@@ -40,7 +40,7 @@
 SysTrayIcon::SysTrayIcon( Choqok::UI::MainWindow* parent )
 : KStatusNotifierItem( parent ), _mainwin(parent), isOffline(false)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     unread = 0;
     setAssociatedWidget(parent);
     setCategory(ApplicationStatus);
@@ -51,7 +51,7 @@ SysTrayIcon::SysTrayIcon( Choqok::UI::MainWindow* parent )
 
 SysTrayIcon::~SysTrayIcon()
 {
-    kDebug();
+    qCDebug(CHOQOK);
 }
 
 void SysTrayIcon::resetUnreadCount()
@@ -69,7 +69,7 @@ QString SysTrayIcon::currentIconName()
 
 void SysTrayIcon::updateUnreadCount( int changeOfUnreadPosts )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     unread += changeOfUnreadPosts;
 
     if ( unread <= 0 ) {
@@ -134,7 +134,7 @@ void SysTrayIcon::setTimeLineUpdatesEnabled( bool isEnabled )
 
 void SysTrayIcon::slotJobDone( Choqok::JobResult result )
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if ( result == Choqok::Success ) {
         setOverlayIconByName( "task-complete" );
     } else {

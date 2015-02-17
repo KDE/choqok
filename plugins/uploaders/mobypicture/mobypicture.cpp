@@ -36,6 +36,7 @@
 #include <QtOAuth/QtOAuth>
 
 #include <qjson/parser.h>
+#include "choqokdebug.h"
 
 #include "accountmanager.h"
 #include "mediamanager.h"
@@ -68,7 +69,7 @@ void Mobypicture::upload ( const KUrl& localUrl, const QByteArray& medium, const
     if ( MobypictureSettings::oauth() ) {
         QString alias = MobypictureSettings::alias();
         if ( alias.isEmpty() ) {
-            kError() << "No account to use";
+            qCritical() << "No account to use";
             Q_EMIT uploadingFailed ( localUrl, i18n ( "There is no Twitter account configured to use." ) );
             return;
         }
@@ -130,7 +131,7 @@ void Mobypicture::upload ( const KUrl& localUrl, const QByteArray& medium, const
     }
 
     if ( !job ) {
-        kError() << "Cannot create a http POST request!";
+        qCritical() << "Cannot create a http POST request!";
         return;
     }
     job->addMetaData ( "content-type", "Content-Type: multipart/form-data; boundary=AaB03x" );
@@ -142,14 +143,14 @@ void Mobypicture::upload ( const KUrl& localUrl, const QByteArray& medium, const
 
 void Mobypicture::slotUpload ( KJob* job )
 {
-    kDebug();
-    KUrl localUrl = mUrlMap.take ( job );
+    qCDebug(CHOQOK);
+    QUrl localUrl = mUrlMap.take ( job );
     if ( job->error() ) {
-        kError() << "Job Error: " << job->errorString();
+        qCritical() << "Job Error: " << job->errorString();
         Q_EMIT uploadingFailed ( localUrl, job->errorString() );
         return;
     } else {
-        kDebug() << qobject_cast<KIO::StoredTransferJob*> ( job )->data();
+        qCDebug(CHOQOK) << qobject_cast<KIO::StoredTransferJob*> ( job )->data();
         QJson::Parser p;
         bool ok;
         QVariant res = p.parse ( qobject_cast<KIO::StoredTransferJob*> ( job )->data(), &ok );
@@ -172,7 +173,7 @@ void Mobypicture::slotUpload ( KJob* job )
                 }
             }
         } else {
-            kDebug() << "Parse error: " << qobject_cast<KIO::StoredTransferJob*> ( job )->data();
+            qCDebug(CHOQOK) << "Parse error: " << qobject_cast<KIO::StoredTransferJob*> ( job )->data();
             Q_EMIT uploadingFailed ( localUrl, i18n ( "Malformed response" ) );
         }
     }

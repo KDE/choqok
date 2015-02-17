@@ -31,6 +31,7 @@
 #include <KActionCollection>
 #include <KGenericFactory>
 #include <KMessageBox>
+#include "choqokdebug.h"
 
 #include "choqokuiglobal.h"
 #include "postwidget.h"
@@ -49,7 +50,7 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_filter" ) )
 FilterManager::FilterManager(QObject* parent, const QList<QVariant>& )
         :Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     KAction *action = new KAction(i18n("Configure Filters..."), this);
     actionCollection()->addAction("configureFilters", action);
     connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureFilters()));
@@ -104,7 +105,7 @@ void FilterManager::parse(Choqok::UI::PostWidget* postToParse)
 
     if(!postToParse)
         return;
-//     kDebug()<<"Processing: "<<postToParse->content();
+//     qCDebug(CHOQOK)<<"Processing: "<<postToParse->content();
     Q_FOREACH (Filter* filter, FilterSettings::self()->filters()) {
         if(filter->filterText().isEmpty())
             return;
@@ -139,25 +140,25 @@ Filter::FilterAction FilterManager::filterText(const QString& textToCheck, Filte
     switch(filter->filterType()){
         case Filter::ExactMatch:
             if(textToCheck.compare( filter->filterText(), Qt::CaseInsensitive) == 0){
-//                 kDebug()<<"ExactMatch: " << filter->filterText();
+//                 qCDebug(CHOQOK)<<"ExactMatch: " << filter->filterText();
                 filtered = true;
             }
             break;
         case Filter::RegExp:
             if( textToCheck.contains(QRegExp(filter->filterText())) ){
-//                 kDebug()<<"RegExp: " << filter->filterText();
+//                 qCDebug(CHOQOK)<<"RegExp: " << filter->filterText();
                 filtered = true;
             }
             break;
         case Filter::Contain:
             if( textToCheck.contains(filter->filterText(), Qt::CaseInsensitive) ){
-//                 kDebug()<<"Contain: " << filter->filterText();
+//                 qCDebug(CHOQOK)<<"Contain: " << filter->filterText();
                 filtered = true;
             }
             break;
         case Filter::DoesNotContain:
             if( !textToCheck.contains(filter->filterText(), Qt::CaseInsensitive) ){
-//                 kDebug()<<"DoesNotContain: " << filter->filterText();
+//                 qCDebug(CHOQOK)<<"DoesNotContain: " << filter->filterText();
                 filtered = true;
             }
             break;
@@ -175,7 +176,7 @@ void FilterManager::doFiltering(Choqok::UI::PostWidget* postToFilter, Filter::Fi
     QString css;
     switch(action){
         case Filter::Remove:
-            kDebug()<<"Post removed: "<<postToFilter->currentPost()->content;
+            qCDebug(CHOQOK)<<"Post removed: "<<postToFilter->currentPost()->content;
             postToFilter->close();
             break;
         case Filter::Highlight:
@@ -203,7 +204,7 @@ bool FilterManager::parseSpecialRules(Choqok::UI::PostWidget* postToParse)
             postToParse->currentPost()->replyToUserName != postToParse->currentAccount()->username() ) {
             if( !postToParse->currentPost()->content.contains(postToParse->currentAccount()->username()) ) {
                 postToParse->close();
-                kDebug()<<"NOT RELATE TO ME FILTERING......";
+                qCDebug(CHOQOK)<<"NOT RELATE TO ME FILTERING......";
                 return true;
             }
         }
@@ -217,7 +218,7 @@ bool FilterManager::parseSpecialRules(Choqok::UI::PostWidget* postToParse)
             !acc->friendsList().contains(postToParse->currentPost()->replyToUserName) ) {
             if( !postToParse->currentPost()->content.contains(postToParse->currentAccount()->username()) ) {
                 postToParse->close();
-                kDebug()<<"NONE FRIEND FILTERING......";
+                qCDebug(CHOQOK)<<"NONE FRIEND FILTERING......";
                 return true;
             }
         }
@@ -243,7 +244,7 @@ void FilterManager::slotHidePost()
         FilterSettings::self()->setFilters(filterList);
         Choqok::UI::TimelineWidget *tm = wd->timelineWidget();
         if(tm){
-            kDebug()<<"Closing all posts";
+            qCDebug(CHOQOK)<<"Closing all posts";
             Q_FOREACH (Choqok::UI::PostWidget *pw, tm->postWidgets()) {
                 if(pw->currentPost()->author.userName == username){
                     pw->close();

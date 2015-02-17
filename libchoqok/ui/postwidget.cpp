@@ -26,7 +26,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QCloseEvent>
 #include <QGridLayout>
 
-#include <KDebug>
+#include "libchoqokdebug.h"
 #include <KLocale>
 #include <KMenu>
 #include <KMessageBox>
@@ -605,7 +605,7 @@ void PostWidget::slotPostError(Account* theAccount, Choqok::Post* post,
                                MicroBlog::ErrorType , const QString& errorMessage)
 {
     if( theAccount == currentAccount() && post == d->mCurrentPost) {
-        kDebug()<<errorMessage;
+        qCDebug(CHOQOK)<<errorMessage;
         disconnect(d->mCurrentAccount->microblog(), SIGNAL(postRemoved(Choqok::Account*,Choqok::Post*)),
                   this, SLOT(slotCurrentPostRemoved(Choqok::Account*,Choqok::Post*)) );
         disconnect( d->mCurrentAccount->microblog(),

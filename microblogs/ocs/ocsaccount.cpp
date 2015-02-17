@@ -23,7 +23,7 @@
 
 #include "ocsaccount.h"
 
-#include <KDebug>
+#include "choqokdebug.h"
 
 #include <attica/providermanager.h>
 
@@ -40,7 +40,7 @@ public:
 OCSAccount::OCSAccount(OCSMicroblog* parent, const QString& alias)
 : Account(parent, alias), d(new Private)
 {
-    kDebug()<<alias;
+    qCDebug(CHOQOK)<<alias;
     d->mBlog = parent;
     setProviderUrl( QUrl(configGroup()->readEntry("ProviderUrl", QString())) );
 }
@@ -63,7 +63,7 @@ QUrl OCSAccount::providerUrl() const
 
 void OCSAccount::setProviderUrl(const QUrl& url)
 {
-    kDebug()<<url;
+    qCDebug(CHOQOK)<<url;
     d->providerUrl = url;
     if(d->mBlog->isOperational())
         slotDefaultProvidersLoaded();

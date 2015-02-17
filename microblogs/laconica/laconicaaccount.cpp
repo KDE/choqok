@@ -24,7 +24,7 @@
 
 #include "laconicaaccount.h"
 
-#include <KDebug>
+#include "choqokdebug.h"
 
 #include "laconicamicroblog.h"
 

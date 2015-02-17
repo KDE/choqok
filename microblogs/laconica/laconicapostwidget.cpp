@@ -25,7 +25,7 @@
 #include "laconicapostwidget.h"
 
 #include <KAction>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KLocalizedString>
 #include <KMenu>
 #include <KPushButton>
@@ -259,7 +259,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
             d->mBlog->blockUser(d->account, username);
             return;
         } else if(ret == openInBrowser){
-            kDebug()<<url<<username;
+            qCDebug(CHOQOK)<<url<<username;
             if( username == currentPost()->author.userName && !currentPost()->author.homePageUrl.isEmpty() ) {
                 Choqok::openUrl( QUrl( currentPost()->author.homePageUrl ) );
             } else {

@@ -28,6 +28,7 @@
 
 #include <KLocale>
 #include <KPluginFactory>
+#include "choqokdebug.h"
 
 #include "nowlisteningsettings.h"
 
@@ -59,13 +60,13 @@ void NowListeningConfig::defaults()
 
 void NowListeningConfig::load()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     KCModule::load();
 }
 
 void NowListeningConfig::save()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     KCModule::save();
 }
 

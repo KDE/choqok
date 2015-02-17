@@ -27,7 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QFrame>
 #include <QLayout>
 
-#include <KDebug>
+#include "choqokdebug.h"
 
 #include "account.h"
 #include "timelinewidget.h"
@@ -67,7 +67,7 @@ Choqok::UI::TimelineWidget* PumpIOMicroBlogWidget::addTimelineWidgetToUi(const Q
         }
         slotUpdateUnreadCount(mbw->unreadCount(), mbw);
     } else {
-        kDebug() << "Cannot Create a new TimelineWidget for timeline " << name;
+        qCDebug(CHOQOK) << "Cannot Create a new TimelineWidget for timeline " << name;
         return 0L;
     }
     

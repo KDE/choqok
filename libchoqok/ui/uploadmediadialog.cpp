@@ -34,6 +34,7 @@
 #include <KMessageBox>
 #include <KPluginInfo>
 #include <KTabWidget>
+#include "libchoqokdebug.h"
 
 #include "choqokbehaviorsettings.h"
 #include "choqokuiglobal.h"
@@ -91,7 +92,7 @@ UploadMediaDialog::~UploadMediaDialog()
 void UploadMediaDialog::load()
 {
     QList<KPluginInfo> plugins = Choqok::PluginManager::self()->availablePlugins("Uploaders");
-    kDebug()<<plugins.count();
+    qCDebug(CHOQOK)<<plugins.count();
 
     Q_FOREACH (const KPluginInfo& plugin, plugins) {
         d->ui.uploaderPlugin->addItem( KIcon(plugin.icon()), plugin.name(), plugin.pluginName());
@@ -129,7 +130,7 @@ void UploadMediaDialog::slotButtonClicked(int button)
 void Choqok::UI::UploadMediaDialog::currentPluginChanged(int index)
 {
     QString key = d->ui.uploaderPlugin->itemData(index).toString();
-//     kDebug()<<key;
+//     qCDebug(CHOQOK)<<key;
     d->ui.configPlugin->setEnabled(!key.isEmpty() && d->availablePlugins.value(key).kcmServices().count() > 0);
 }
 
@@ -150,9 +151,9 @@ void Choqok::UI::UploadMediaDialog::slotAboutClicked()
 
 void Choqok::UI::UploadMediaDialog::slotConfigureClicked()
 {
-        kDebug();
+        qCDebug(CHOQOK);
     KPluginInfo pluginInfo = d->availablePlugins.value( d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex() ).toString() );
-    kDebug()<<pluginInfo.name()<<pluginInfo.kcmServices().count();
+    qCDebug(CHOQOK)<<pluginInfo.name()<<pluginInfo.kcmServices().count();
 
     QPointer<KDialog> configDialog = new KDialog(this);
     configDialog->setWindowTitle(pluginInfo.name());
@@ -236,7 +237,7 @@ void Choqok::UI::UploadMediaDialog::slotConfigureClicked()
 void Choqok::UI::UploadMediaDialog::slotMediumUploaded(const KUrl& localUrl, const QString& remoteUrl)
 {
     if(d->localUrl == localUrl && showed){
-        kDebug();
+        qCDebug(CHOQOK);
         Global::quickPostWidget()->appendText(remoteUrl);
         showed = false;
         close();

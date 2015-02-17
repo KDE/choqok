@@ -29,7 +29,7 @@
 #include <QLayout>
 #include <QPointer>
 
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KFileDialog>
 #include <KLocalizedString>
 #include <KPushButton>
@@ -80,7 +80,7 @@ void TwitterComposerWidget::submitPost(const QString& txt)
     if( d->mediumToAttach.isEmpty() ){
         Choqok::UI::ComposerWidget::submitPost(txt);
     } else {
-        kDebug();
+        qCDebug(CHOQOK);
         editorContainer()->setEnabled(false);
         QString text = txt;
         if( currentAccount()->postCharLimit() &&
@@ -108,9 +108,9 @@ void TwitterComposerWidget::submitPost(const QString& txt)
 
 void TwitterComposerWidget::slotPostMediaSubmitted(Choqok::Account* theAccount, Choqok::Post* post)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if( currentAccount() == theAccount && post == postToSubmit() ) {
-        kDebug()<<"Accepted";
+        qCDebug(CHOQOK)<<"Accepted";
         disconnect(currentAccount()->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
                    this, SLOT(slotPostMediaSubmitted(Choqok::Account*,Choqok::Post*)) );
         disconnect(currentAccount()->microblog(),
@@ -132,15 +132,15 @@ void TwitterComposerWidget::slotPostMediaSubmitted(Choqok::Account* theAccount, 
 
 void TwitterComposerWidget::selectMediumToAttach()
 {
-    kDebug();
-    d->mediumToAttach = KFileDialog::getOpenFileName( KUrl("kfiledialog:///image?global"),
+    qCDebug(CHOQOK);
+    d->mediumToAttach = KFileDialog::getOpenFileName( QUrl("kfiledialog:///image?global"),
                                                       QString(), this,
                                                       i18n("Select Media to Upload") );
     if( d->mediumToAttach.isEmpty() )
         return;
     QString fileName = KUrl(d->mediumToAttach).fileName();
     if( !d->mediumName ){
-        kDebug()<<fileName;
+        qCDebug(CHOQOK)<<fileName;
         d->mediumName = new QLabel(editorContainer());
         d->btnCancel = new KPushButton(editorContainer());
         d->btnCancel->setIcon(KIcon("list-remove"));
@@ -157,7 +157,7 @@ void TwitterComposerWidget::selectMediumToAttach()
 
 void TwitterComposerWidget::cancelAttachMedium()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     delete d->mediumName;
     d->mediumName = 0;
     delete d->btnCancel;

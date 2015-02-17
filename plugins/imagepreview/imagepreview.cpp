@@ -25,6 +25,7 @@
 #include "imagepreview.h"
 
 #include <KGenericFactory>
+#include "choqokdebug.h"
 
 #include "choqokuiglobal.h"
 #include "mediamanager.h"
@@ -47,7 +48,7 @@ const QRegExp ImagePreview::mPumpIORegExp("(https://([a-zA-Z0-9]+\\.)?[a-zA-Z0-9
 ImagePreview::ImagePreview(QObject* parent, const QList< QVariant >& )
     :Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     connect( Choqok::UI::Global::SessionManager::self(),
             SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
              this,
@@ -70,7 +71,7 @@ void ImagePreview::slotAddNewPostWidget(Choqok::UI::PostWidget* newWidget)
 
 void ImagePreview::startParsing()
 {
-//     kDebug();
+//     qCDebug(CHOQOK);
     int i = 8;
     while( !postsQueue.isEmpty() && i>0 ){
         parse(postsQueue.dequeue());
@@ -87,7 +88,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
 {
     if(!postToParse)
         return;
-//     kDebug();
+//     qCDebug(CHOQOK);
     int pos = 0;
     QStringList twitpicRedirectList;
     QStringList yfrogRedirectList;
@@ -102,7 +103,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     while ((pos = mTwitpicRegExp.indexIn(content, pos)) != -1) {
         pos += mTwitpicRegExp.matchedLength();
         twitpicRedirectList << mTwitpicRegExp.cap(0);
-        kDebug()<<mTwitpicRegExp.capturedTexts();
+        qCDebug(CHOQOK)<<mTwitpicRegExp.capturedTexts();
     }
     Q_FOREACH (const QString &url, twitpicRedirectList) {
         QString twitpicUrl = QString( "http://twitpic.com/show/mini%1" ).arg(QString(url).remove("http://twitpic.com"));
@@ -120,7 +121,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     while ((pos = mYFrogRegExp.indexIn(content, pos)) != -1) {
         pos += mYFrogRegExp.matchedLength();
         yfrogRedirectList << mYFrogRegExp.cap(0);
-        kDebug()<<mYFrogRegExp.capturedTexts();
+        qCDebug(CHOQOK)<<mYFrogRegExp.capturedTexts();
     }
     Q_FOREACH (const QString &url, yfrogRedirectList) {
 //         if( url.endsWith('j') || url.endsWith('p') || url.endsWith('g') ) //To check if it's Image or not!
@@ -128,7 +129,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
                  SIGNAL(imageFetched(QString,QPixmap)),
                  SLOT(slotImageFetched(QString,QPixmap)) );
         QString yfrogThumbnailUrl = url + ".th.jpg";
-        kDebug()<<"YFrog Thumbnail Url: "<<yfrogThumbnailUrl;
+        qCDebug(CHOQOK)<<"YFrog Thumbnail Url: "<<yfrogThumbnailUrl;
         mParsingList.insert(yfrogThumbnailUrl, postToParse);
         mBaseUrlMap.insert(yfrogThumbnailUrl, url);
         Choqok::MediaManager::self()->fetchImage(yfrogThumbnailUrl, Choqok::MediaManager::Async);
@@ -139,7 +140,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     while ((pos = mTweetphotoRegExp.indexIn(content, pos)) != -1) {
         pos += mTweetphotoRegExp.matchedLength();
         TweetphotoRedirectList << mTweetphotoRegExp.cap(0);
-        kDebug()<<mTweetphotoRegExp.capturedTexts();
+        qCDebug(CHOQOK)<<mTweetphotoRegExp.capturedTexts();
     }
     Q_FOREACH (const QString &url, TweetphotoRedirectList) {
     connect( Choqok::MediaManager::self(),
@@ -156,7 +157,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     while ((pos = mPlixiRegExp.indexIn(content, pos)) != -1) {
         pos += mPlixiRegExp.matchedLength();
         PlixiRedirectList << mPlixiRegExp.cap(0);
-        kDebug()<<mPlixiRegExp.capturedTexts();
+        qCDebug(CHOQOK)<<mPlixiRegExp.capturedTexts();
     }
     Q_FOREACH (const QString &url, PlixiRedirectList) {
         connect( Choqok::MediaManager::self(),
@@ -173,7 +174,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     while ((pos = mImgLyRegExp.indexIn(content, pos)) != -1) {
         pos += mImgLyRegExp.matchedLength();
         ImgLyRedirectList << mImgLyRegExp.cap(0);
-        kDebug()<<mImgLyRegExp.capturedTexts();
+        qCDebug(CHOQOK)<<mImgLyRegExp.capturedTexts();
     }
     Q_FOREACH (const QString &url, ImgLyRedirectList) {
         connect( Choqok::MediaManager::self(),
@@ -190,7 +191,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     while ((pos = mTwitgooRegExp.indexIn(content, pos)) != -1) {
         pos += mTwitgooRegExp.matchedLength();
         TwitgooRedirectList << mTwitgooRegExp.cap(0);
-        kDebug()<<mTwitgooRegExp.capturedTexts();
+        qCDebug(CHOQOK)<<mTwitgooRegExp.capturedTexts();
     }
     Q_FOREACH (const QString &url, TwitgooRedirectList) {
         connect( Choqok::MediaManager::self(),
@@ -211,7 +212,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
         PumpIORedirectList << mPumpIORegExp.cap(0);
         baseUrl = mPumpIORegExp.cap(1);
         imageExtension = mPumpIORegExp.cap(mPumpIORegExp.capturedTexts().length() - 1);
-        kDebug() << mPumpIORegExp.capturedTexts();
+        qCDebug(CHOQOK) << mPumpIORegExp.capturedTexts();
     }
     Q_FOREACH (const QString &url, PumpIORedirectList) {
         connect (Choqok::MediaManager::self(), SIGNAL(imageFetched(QString, QPixmap)),
@@ -225,7 +226,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
 
 void ImagePreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pixmap)
 {
-//     kDebug();
+//     qCDebug(CHOQOK);
     Choqok::UI::PostWidget *postToParse = mParsingList.take(remoteUrl);
     QString baseUrl = mBaseUrlMap.take(remoteUrl);
     if(!postToParse)

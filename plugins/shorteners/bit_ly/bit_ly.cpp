@@ -24,7 +24,7 @@
 #include "bit_ly.h"
 
 #include <KAboutData>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/NetAccess>
@@ -48,7 +48,7 @@ Bit_ly::~Bit_ly()
 
 QString Bit_ly::shorten( const QString& url )
 {
-    kDebug() << "Using bit.ly";
+    qCDebug(CHOQOK) << "Using bit.ly";
     QByteArray data;
     QString login = "choqok";
     QString apiKey = "R_bdd1ae8b6191dd36e13fc77ca1d4f27f";
@@ -73,7 +73,7 @@ QString Bit_ly::shorten( const QString& url )
 
     if( KIO::NetAccess::synchronousRun( job, 0, &data ) ) {
         QString output(data);
-        kDebug() << "Short url is: " << output;
+        qCDebug(CHOQOK) << "Short url is: " << output;
         QRegExp rx( QString( "(http://((.*)+)/([a-zA-Z0-9])+)" ) );
         rx.indexIn( output );
         QString bitlyUrl = rx.cap( 0 );

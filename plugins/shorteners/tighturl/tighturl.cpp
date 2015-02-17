@@ -26,7 +26,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QEventLoop>
 
 #include <KAboutData>
-#include <KDebug>
+#include "choqokdebug.h"
 #include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/NetAccess>
@@ -42,8 +42,8 @@ TightUrl::TightUrl( QObject *parent, const QVariantList & )
 
 QString TightUrl::shorten( const QString &url )
 {
-    kDebug()<<"Using 2tu.us";
-    KUrl reqUrl( "http://2tu.us/" );
+    qCDebug(CHOQOK)<<"Using 2tu.us";
+    QUrl reqUrl( "http://2tu.us/" );
     reqUrl.addQueryItem( "save", "y" );
     reqUrl.addQueryItem( "url", KUrl( url ).url() );
 
@@ -59,16 +59,16 @@ QString TightUrl::shorten( const QString &url )
         rx.setMinimal(true);
         rx.indexIn(output);
         output = rx.cap(1);
-        kDebug()<<output;
+        qCDebug(CHOQOK)<<output;
         rx.setPattern( QString( "href=[\'\"](.+)[\'\"]" ) );
         rx.indexIn(output);
         output = rx.cap(1);
-        kDebug() << "Short url is: " << output;
+        qCDebug(CHOQOK) << "Short url is: " << output;
         if(!output.isEmpty()) {
             return output;
         }
     } else {
-        kDebug() << "KJob ERROR: " << job->errorString() ;
+        qCDebug(CHOQOK) << "KJob ERROR: " << job->errorString() ;
     }
     return url;
 }

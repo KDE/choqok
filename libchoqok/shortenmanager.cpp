@@ -27,8 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QtConcurrentRun>
 
 #include <KConfigGroup>
-#include <KDebug>
-#include <KGlobal>
+#include "libchoqokdebug.h"
 #include <KSharedConfig>
 #include <KSharedPtr>
 
@@ -60,7 +59,7 @@ public:
             if(backend->pluginName() == pluginId) {
                 return;//Already loaded
             }else{
-                kDebug()<<backend->pluginName();
+                qCDebug(CHOQOK)<<backend->pluginName();
                 PluginManager::self()->unloadPlugin(backend->pluginName());
                 backend = 0L;
             }
@@ -70,7 +69,7 @@ public:
         Plugin *plugin = PluginManager::self()->loadPlugin(pluginId);
         backend = qobject_cast<Shortener*>( plugin );
         if(!backend){
-            kDebug()<<"Could not load a Shortener plugin. Shortening Disabled";
+            qCDebug(CHOQOK)<<"Could not load a Shortener plugin. Shortening Disabled";
         }
     }
 };
@@ -98,7 +97,7 @@ ShortenManager *ShortenManager::self()
 QString ShortenManager::shortenUrl(const QString &url)
 {
     if(_smp->backend){
-        kDebug()<<"Shortening: "<<url;
+        qCDebug(CHOQOK)<<"Shortening: "<<url;
         NotifyManager::shortening(url);
 // #ifndef QT_NO_CONCURRENT
         ///Commented due KIO doesn't support running in another thread
@@ -114,7 +113,7 @@ QString ShortenManager::shortenUrl(const QString &url)
         return shortUrl;
 // #endif
     } else {
-        kDebug()<<"There isn't any Shortener plugin.";
+        qCDebug(CHOQOK)<<"There isn't any Shortener plugin.";
         return url;
     }
 }
@@ -126,7 +125,7 @@ void ShortenManager::reloadConfig()
 
 QString ShortenManager::parseText(const QString &text)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QString t = "";
     int i = 0, j = 0;
     while (( j = text.indexOf( _smp->findUrlRegExp, i ) ) != -1 ) {
