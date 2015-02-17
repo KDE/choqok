@@ -39,8 +39,10 @@ public:
 Plugin::Plugin( const KComponentData &instance, QObject *parent )
 : QObject( parent ), KXMLGUIClient(), d(new Private)
 {
-    setComponentData( instance );
-    KSettings::Dispatcher::registerComponent( instance, this, "settingsChanged" );
+#pragma message("Port to KF5")
+    //setComponentData( instance );
+    setComponentName(instance.componentName(), instance.componentName());
+    KSettings::Dispatcher::registerComponent( instance.componentName(), this, "settingsChanged" );
 }
 
 Plugin::~Plugin()
