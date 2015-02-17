@@ -44,9 +44,9 @@ ConfigureFilters::ConfigureFilters(QWidget* parent):
 
     setWindowTitle(i18n("Configure Filters"));
 
-    ui.btnAdd->setIcon(KIcon("list-add"));
-    ui.btnEdit->setIcon(KIcon("document-edit"));
-    ui.btnRemove->setIcon(KIcon("list-remove"));
+    ui.btnAdd->setIcon(QIcon::fromTheme("list-add"));
+    ui.btnEdit->setIcon(QIcon::fromTheme("document-edit"));
+    ui.btnRemove->setIcon(QIcon::fromTheme("list-remove"));
     connect( ui.btnAdd, SIGNAL(clicked()), SLOT(slotAddFilter()) );
     connect( ui.btnEdit, SIGNAL(clicked()), SLOT(slotEditFilter()));
     connect( ui.btnRemove, SIGNAL(clicked()), SLOT(slotRemoveFilter()));

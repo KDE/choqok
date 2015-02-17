@@ -43,8 +43,8 @@ BehaviorConfig_Shorten::BehaviorConfig_Shorten( QWidget *parent )
     setupUi(this);
     Choqok::ShortenManager::self();
     connect(shortenPlugins, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
-    aboutPlugin->setIcon(KIcon("help-about"));
-    configPlugin->setIcon(KIcon("configure"));
+    aboutPlugin->setIcon(QIcon::fromTheme("help-about"));
+    configPlugin->setIcon(QIcon::fromTheme("configure"));
     connect( aboutPlugin, SIGNAL(clicked(bool)), SLOT(slotAboutClicked()) );
     connect( configPlugin, SIGNAL(clicked(bool)), SLOT(slotConfigureClicked()) );
 }
@@ -83,7 +83,7 @@ void BehaviorConfig_Shorten::load()
     shortenPlugins->clear();
     shortenPlugins->addItem( i18nc("No shortener service", "None"), QLatin1String("none") );
     Q_FOREACH (const KPluginInfo& plugin, plugins) {
-        shortenPlugins->addItem( KIcon(plugin.icon()), plugin.name(), plugin.pluginName());
+        shortenPlugins->addItem( QIcon::fromTheme(plugin.icon()), plugin.name(), plugin.pluginName());
         availablePlugins.insert(plugin.pluginName(), plugin);
     }
     prevShortener = Choqok::BehaviorSettings::shortenerPlugin();

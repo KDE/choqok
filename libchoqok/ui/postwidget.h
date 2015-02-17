@@ -215,7 +215,7 @@ protected:
     @return added button, for some managements such as connect to a slot
     */
     KPushButton * addButton(const QString & objName, const QString & toolTip, const QString & icon);
-    KPushButton * addButton(const QString & objName, const QString & toolTip, const KIcon & icon);
+    KPushButton * addButton(const QString & objName, const QString & toolTip, const QIcon & icon);
     QMap<QString, KPushButton*> &buttons();
 
 protected:

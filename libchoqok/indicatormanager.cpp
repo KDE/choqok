@@ -27,7 +27,7 @@
 #include <QApplication>
 #include <QTimer>
 
-#include <KIcon>
+#include <QIcon>
 
 #include "account.h"
 #include "accountmanager.h"
@@ -96,7 +96,7 @@ void MessageIndicatorManager::slotupdateUnreadCount ( int change, int sum )
 QImage MessageIndicatorManager::getIconByAlias ( const QString& alias )
 {
     Choqok::Account* acc = Choqok::AccountManager::self()->findAccount ( alias );
-    return KIcon ( acc->microblog()->pluginIcon() ).pixmap ( QSize ( 16, 16 ), QIcon::Normal, QIcon::On ).toImage();
+    return QIcon::fromTheme( acc->microblog()->pluginIcon() ).pixmap ( QSize ( 16, 16 ), QIcon::Normal, QIcon::On ).toImage();
 }
 
 void MessageIndicatorManager::newPostInc ( int unread, const QString& alias, const QString& timeline )

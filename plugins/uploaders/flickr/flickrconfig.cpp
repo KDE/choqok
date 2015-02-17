@@ -274,13 +274,13 @@ void FlickrConfig::setAuthenticated(bool authenticated)
 {
     isAuthenticated = authenticated;
     if (authenticated) {
-        ui.authButton->setIcon(KIcon("object-unlocked"));
+        ui.authButton->setIcon(QIcon::fromTheme("object-unlocked"));
         ui.authLed->on();
         ui.authLabel->setText(i18n("Authorized as %1").arg(m_username));
         if (!m_fullname.isEmpty())
             ui.authLabel->setText(ui.authLabel->text() + QString(" (%1)").arg(Qt::escape(m_fullname)));
     } else {
-        ui.authButton->setIcon(KIcon("object-locked"));
+        ui.authButton->setIcon(QIcon::fromTheme("object-locked"));
         ui.authLed->off();
         ui.authLabel->setText(i18n("Not authorized"));
     }
@@ -297,7 +297,7 @@ void FlickrConfig::slotAuthButton_clicked()
         oUrl.append( "&api_sig=" + createSign( "frob" + m_frob.toUtf8() + "permswrite" ) );
         Choqok::openUrl( oUrl );
 
-        KPushButton *btn = new KPushButton(KIcon("dialog-ok"), i18n("Click here when you authorized Choqok"), this);
+        KPushButton *btn = new KPushButton(QIcon::fromTheme("dialog-ok"), i18n("Click here when you authorized Choqok"), this);
         connect(btn, SIGNAL(clicked(bool)), SLOT(getToken()));
         btn->setWindowFlags(Qt::Dialog);
         ui.authTab->layout()->addWidget(btn);

@@ -66,11 +66,11 @@ AccountsWidget::AccountsWidget( QWidget* parent, const QVariantList& args )
     connect(Choqok::AccountManager::self(), SIGNAL(accountRemoved(QString)),
              SLOT(slotAccountRemoved(QString)) );
 
-    btnAdd->setIcon( KIcon( "list-add" ) );
-    btnEdit->setIcon( KIcon( "edit-rename" ) );
-    btnRemove->setIcon( KIcon( "list-remove" ) );
-    btnUp->setIcon( KIcon("go-up") );
-    btnDown->setIcon( KIcon("go-down") );
+    btnAdd->setIcon( QIcon::fromTheme( "list-add" ) );
+    btnEdit->setIcon( QIcon::fromTheme( "edit-rename" ) );
+    btnRemove->setIcon( QIcon::fromTheme( "list-remove" ) );
+    btnUp->setIcon( QIcon::fromTheme("go-up") );
+    btnDown->setIcon( QIcon::fromTheme("go-down") );
     btnAdd->setMenu( createAddAccountMenu() );
 //     load();
 }
@@ -165,7 +165,7 @@ void AccountsWidget::addAccountToTable( Choqok::Account* account )
 //     enable->setChecked ( account->isEnabled() );
 //     accountsTable->setCellWidget ( row, 0, enable );
     accountsTable->setItem( row, 0, new QTableWidgetItem( account->alias() ) );
-    accountsTable->setItem( row, 1, new QTableWidgetItem( KIcon(account->microblog()->pluginIcon()), account->microblog()->serviceName() ) );
+    accountsTable->setItem( row, 1, new QTableWidgetItem( QIcon::fromTheme(account->microblog()->pluginIcon()), account->microblog()->serviceName() ) );
     QCheckBox *readOnly = new QCheckBox ( accountsTable );
     readOnly->setChecked ( account->isReadOnly() );
     accountsTable->setCellWidget ( row, 2, readOnly );
@@ -242,7 +242,7 @@ KMenu * AccountsWidget::createAddAccountMenu()
     Q_FOREACH (const KPluginInfo& info, list) {
         KAction *act = new KAction(mBlogMenu);
         act->setText(info.name());
-        act->setIcon( KIcon(info.icon()) );
+        act->setIcon( QIcon::fromTheme(info.icon()) );
         act->setData(info.pluginName());
         connect(act, SIGNAL(triggered(bool)), this, SLOT(addAccount()) );
         mBlogMenu->addAction(act);

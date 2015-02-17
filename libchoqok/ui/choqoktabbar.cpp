@@ -318,9 +318,9 @@ int ChoqokTabBar::insertTab( int index , QWidget *widget , const QString & name 
 
 int ChoqokTabBar::insertTab( int index , QWidget *widget , const QIcon & input_icon , const QString & name )
 {
-    KIcon icon( input_icon );
-    if( icon.isNull() )
-        icon = KIcon( "edit-find" );
+    QIcon icon( input_icon );
+    if( input_icon.isNull() )
+        icon = QIcon::fromTheme( "edit-find" );
     
     QAction *action = new QAction( icon , name , this );
         action->setCheckable( true );
@@ -398,8 +398,7 @@ void ChoqokTabBar::removePage( QWidget *widget )
 
 void ChoqokTabBar::setTabIcon( int index , const QIcon & input_icon )
 {
-    KIcon icon( input_icon );
-    p->actions_list[ index ]->setIcon( icon );
+    p->actions_list[ index ]->setIcon( input_icon );
 }
 
 QIcon ChoqokTabBar::tabIcon( int index ) const

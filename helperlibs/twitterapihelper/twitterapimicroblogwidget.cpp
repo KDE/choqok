@@ -99,7 +99,7 @@ void TwitterApiMicroBlogWidget::initUi()
     connect(timelinesTabWidget(), SIGNAL(contextMenu(QWidget*,QPoint)),
             this, SLOT(slotContextMenu(QWidget*,QPoint)));
 //     connect(timelinesTabWidget(), SIGNAL(currentChanged(int)), SLOT(slotCurrentTimelineChanged(int)) );
-//     d->btnCloseSearch->setIcon(KIcon("tab-close"));
+//     d->btnCloseSearch->setIcon(QIcon::fromTheme("tab-close"));
 //     d->btnCloseSearch->setAutoRaise(true);
 //     d->btnCloseSearch->setToolTip(i18nc("Close a timeline", "Close Timeline"));
 //     d->btnCloseSearch->setFixedWidth( 32 );
@@ -153,7 +153,7 @@ TwitterApiSearchTimelineWidget* TwitterApiMicroBlogWidget::addSearchTimelineWidg
         {
             textToAdd = textToAdd.left(4);
         }
-        KIcon icon = addTextToIcon( KIcon("edit-find"), textToAdd, QSize(40,40), palette() );
+        KIcon icon = addTextToIcon( QIcon::fromTheme("edit-find"), textToAdd, QSize(40,40), palette() );
         mbw->setTimelineIcon(icon);
         timelinesTabWidget()->setTabIcon(timelinesTabWidget()->indexOf(mbw), icon);
         connect( mbw, SIGNAL(updateUnreadCount(int)),
@@ -264,12 +264,12 @@ void TwitterApiMicroBlogWidget::slotContextMenu(QWidget* w, const QPoint &pt)
     KAction *mar = 0;
     KAction *ac = 0;
     if(sWidget->unreadCount() > 0) {
-        mar = new KAction(KIcon("mail-mark-read"), i18n("Mark timeline as read"), &menu);
+        mar = new KAction(QIcon::fromTheme("mail-mark-read"), i18n("Mark timeline as read"), &menu);
         menu.addAction(mar);
     }
     if(sWidget->isClosable()){
-        ac = new KAction(KIcon("tab-close"), i18n("Close Timeline"), &menu);
-        KAction *closeAll = new KAction(KIcon("tab-close"), i18n("Close All"), &menu);
+        ac = new KAction(QIcon::fromTheme("tab-close"), i18n("Close Timeline"), &menu);
+        KAction *closeAll = new KAction(QIcon::fromTheme("tab-close"), i18n("Close All"), &menu);
         connect( closeAll, SIGNAL(triggered(Qt::MouseButtons,Qt::KeyboardModifiers)),
                  this, SLOT(closeAllSearches()) );
         menu.addAction(ac);

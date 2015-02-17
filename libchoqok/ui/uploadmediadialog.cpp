@@ -73,8 +73,8 @@ UploadMediaDialog::UploadMediaDialog(QWidget* parent, const QString& url)
     else
       d->ui.imageUrl->setUrl(KUrl(url));
     connect(d->ui.uploaderPlugin, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
-    d->ui.aboutPlugin->setIcon(KIcon("help-about"));
-    d->ui.configPlugin->setIcon(KIcon("configure"));
+    d->ui.aboutPlugin->setIcon(QIcon::fromTheme("help-about"));
+    d->ui.configPlugin->setIcon(QIcon::fromTheme("configure"));
     connect( d->ui.aboutPlugin, SIGNAL(clicked(bool)), SLOT(slotAboutClicked()) );
     connect( d->ui.configPlugin, SIGNAL(clicked(bool)), SLOT(slotConfigureClicked()) );
     connect(Choqok::MediaManager::self(), SIGNAL(mediumUploaded(KUrl,QString)),
@@ -95,7 +95,7 @@ void UploadMediaDialog::load()
     qCDebug(CHOQOK)<<plugins.count();
 
     Q_FOREACH (const KPluginInfo& plugin, plugins) {
-        d->ui.uploaderPlugin->addItem( KIcon(plugin.icon()), plugin.name(), plugin.pluginName());
+        d->ui.uploaderPlugin->addItem( QIcon::fromTheme(plugin.icon()), plugin.name(), plugin.pluginName());
         d->availablePlugins.insert(plugin.pluginName(), plugin);
     }
     d->ui.uploaderPlugin->setCurrentIndex( d->ui.uploaderPlugin->findData( Choqok::BehaviorSettings::lastUsedUploaderPlugin() ) );

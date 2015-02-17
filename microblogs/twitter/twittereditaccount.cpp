@@ -179,11 +179,11 @@ void TwitterEditAccountWidget::setAuthenticated(bool authenticated)
 {
     isAuthenticated = authenticated;
     if(authenticated){
-        kcfg_authorize->setIcon(KIcon("object-unlocked"));
+        kcfg_authorize->setIcon(QIcon::fromTheme("object-unlocked"));
         kcfg_authenticateLed->on();
         kcfg_authenticateStatus->setText(i18n("Authenticated"));
     } else {
-        kcfg_authorize->setIcon(KIcon("object-locked"));
+        kcfg_authorize->setIcon(QIcon::fromTheme("object-locked"));
         kcfg_authenticateLed->off();
         kcfg_authenticateStatus->setText(i18n("Not Authenticated"));
     }

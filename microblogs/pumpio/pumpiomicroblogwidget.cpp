@@ -55,7 +55,7 @@ Choqok::UI::TimelineWidget* PumpIOMicroBlogWidget::addTimelineWidgetToUi(const Q
         Choqok::TimelineInfo *info = currentAccount()->microblog()->timelineInfo(name);
         timelines().insert(name, mbw);
         timelinesTabWidget()->addTab(mbw, info->name);
-        timelinesTabWidget()->setTabIcon(timelinesTabWidget()->indexOf(mbw), KIcon(info->icon));
+        timelinesTabWidget()->setTabIcon(timelinesTabWidget()->indexOf(mbw), QIcon::fromTheme(info->icon));
         connect(mbw, SIGNAL(updateUnreadCount(int)), this, SLOT(slotUpdateUnreadCount(int)));
         
         PumpIOComposerWidget *pumpComposer = qobject_cast<PumpIOComposerWidget* >(composer());

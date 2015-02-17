@@ -241,7 +241,7 @@ TimelineWidget* MicroBlogWidget::addTimelineWidgetToUi(const QString& name)
         Choqok::TimelineInfo *info = currentAccount()->microblog()->timelineInfo(name);
         d->timelines.insert(name, mbw);
         d->timelinesTabWidget->addTab(mbw, info->name);
-        d->timelinesTabWidget->setTabIcon(d->timelinesTabWidget->indexOf(mbw), KIcon(info->icon));
+        d->timelinesTabWidget->setTabIcon(d->timelinesTabWidget->indexOf(mbw), QIcon::fromTheme(info->icon));
         connect( mbw, SIGNAL(updateUnreadCount(int)),
                     this, SLOT(slotUpdateUnreadCount(int)) );
         if(d->composer) {
@@ -275,7 +275,7 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change, Choqok::UI::TimelineWidg
     if(sum>0) {
         if (!d->btnMarkAllAsRead){
             d->btnMarkAllAsRead = new KPushButton(this);
-            d->btnMarkAllAsRead->setIcon(KIcon("mail-mark-read"));
+            d->btnMarkAllAsRead->setIcon(QIcon::fromTheme("mail-mark-read"));
             d->btnMarkAllAsRead->setIconSize(QSize(14,14));
             d->btnMarkAllAsRead->setToolTip(i18n("Mark all timelines as read"));
             d->btnMarkAllAsRead->setMaximumWidth(d->btnMarkAllAsRead->height());
@@ -302,13 +302,11 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change, Choqok::UI::TimelineWidg
         }
         else
         {
-	    KIcon icon;
 	    if( !wd->timelineIconName().isEmpty() )
-	        icon = KIcon( wd->timelineIconName() );
-        else
-            icon = wd->timelineIcon();
+                d->timelinesTabWidget->setTabIcon( tabIndex , QIcon::fromTheme(wd->timelineIconName()) );
+            else
+                d->timelinesTabWidget->setTabIcon( tabIndex , wd->timelineIcon() );
 
-            d->timelinesTabWidget->setTabIcon( tabIndex , icon );
             d->timelinesTabWidget->setTabText( tabIndex, wd->timelineInfoName() );
         }
     }

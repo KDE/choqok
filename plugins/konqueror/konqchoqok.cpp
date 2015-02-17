@@ -47,7 +47,7 @@
 KonqPluginChoqok::KonqPluginChoqok(QObject* parent, const QVariantList& )
     : Plugin( parent ) , m_interface(0)
 { 
-    KActionMenu *menu = new KActionMenu(KIcon("choqok") , i18n("Choqok"),
+    KActionMenu *menu = new KActionMenu(QIcon::fromTheme("choqok") , i18n("Choqok"),
     actionCollection() );
     actionCollection()->addAction( "action menu", menu);
     menu->setDelayed( false );

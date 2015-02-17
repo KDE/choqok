@@ -41,7 +41,7 @@
 #include "twitterapimicroblog.h"
 #include "twitterapishowthread.h"
 
-const KIcon TwitterApiPostWidget::unFavIcon(Choqok::MediaManager::convertToGrayScale(KIcon("rating").pixmap(16)) );
+const KIcon TwitterApiPostWidget::unFavIcon(Choqok::MediaManager::convertToGrayScale(QIcon::fromTheme("rating").pixmap(16)) );
 
 class TwitterApiPostWidget::Private
 {
@@ -60,7 +60,7 @@ TwitterApiPostWidget::TwitterApiPostWidget(Choqok::Account* account, Choqok::Pos
     : PostWidget(account, post, parent), d(new Private(account))
 {
     mainWidget()->document()->addResource( QTextDocument::ImageResource, QUrl("icon://thread"),
-                             KIcon("go-top").pixmap(10) );
+                             QIcon::fromTheme("go-top").pixmap(10) );
 }
 
 TwitterApiPostWidget::~TwitterApiPostWidget()
@@ -75,12 +75,12 @@ void TwitterApiPostWidget::initUi()
     KPushButton *btnRe = addButton( "btnReply",i18nc( "@info:tooltip", "Reply" ), "edit-undo" );
     QMenu *menu = new QMenu(btnRe);
 
-    KAction *actRep = new KAction(KIcon("edit-undo"), i18n("Reply to %1", currentPost()->author.userName), menu);
+    KAction *actRep = new KAction(QIcon::fromTheme("edit-undo"), i18n("Reply to %1", currentPost()->author.userName), menu);
     menu->addAction(actRep);
     connect( actRep, SIGNAL(triggered(bool)), SLOT(slotReply()) );
     connect( btnRe, SIGNAL(clicked(bool)), SLOT(slotReply()) );
 
-    KAction *actWrite = new KAction( KIcon("document-edit"), i18n("Write to %1", currentPost()->author.userName),
+    KAction *actWrite = new KAction( QIcon::fromTheme("document-edit"), i18n("Write to %1", currentPost()->author.userName),
                                      menu );
     menu->addAction(actWrite);
     connect( actWrite, SIGNAL(triggered(bool)), SLOT(slotWriteTo()) );
@@ -225,7 +225,7 @@ void TwitterApiPostWidget::updateFavStat()
 {
     if(currentPost()->isFavorited){
         d->btnFav->setChecked(true);
-        d->btnFav->setIcon(KIcon("rating"));
+        d->btnFav->setIcon(QIcon::fromTheme("rating"));
     } else {
         d->btnFav->setChecked(false);
         d->btnFav->setIcon(unFavIcon);

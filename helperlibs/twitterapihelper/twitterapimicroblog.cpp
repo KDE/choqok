@@ -156,17 +156,17 @@ QMenu* TwitterApiMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidg
 {
     QMenu * menu = MicroBlog::createActionsMenu(theAccount, parent);
 
-    KAction *directMessge = new KAction( KIcon("mail-message-new"), i18n("Send Private Message..."), menu );
+    KAction *directMessge = new KAction( QIcon::fromTheme("mail-message-new"), i18n("Send Private Message..."), menu );
     directMessge->setData( theAccount->alias() );
     connect( directMessge, SIGNAL(triggered(bool)), SLOT(showDirectMessageDialog()) );
     menu->addAction(directMessge);
 
-    KAction *search = new KAction( KIcon("edit-find"), i18n("Search..."), menu );
+    KAction *search = new KAction( QIcon::fromTheme("edit-find"), i18n("Search..."), menu );
     search->setData( theAccount->alias() );
     connect( search, SIGNAL(triggered(bool)), SLOT(showSearchDialog()) );
     menu->addAction(search);
 
-    KAction *updateFriendsList = new KAction(KIcon("arrow-down"), i18n("Update Friends List"), menu);
+    KAction *updateFriendsList = new KAction(QIcon::fromTheme("arrow-down"), i18n("Update Friends List"), menu);
     updateFriendsList->setData( theAccount->alias() );
     connect( updateFriendsList, SIGNAL(triggered(bool)), SLOT(slotUpdateFriendsList()) );
     menu->addAction(updateFriendsList);

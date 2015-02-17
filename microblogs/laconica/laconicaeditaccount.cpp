@@ -169,7 +169,7 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
 //     QOAuth::ParamMap reply =
 //         qoauth->requestToken( oauthReqTokenUrl, QOAuth::GET, QOAuth::HMAC_SHA1, params );
 //     setAuthenticated(false);
-//     kcfg_authorize->setIcon(KIcon("object-locked"));
+//     kcfg_authorize->setIcon(QIcon::fromTheme("object-locked"));
 // 
 //     // if no error occurred, read the received token and token secret
 //     if ( qoauth->error() == QOAuth::NoError ) {
@@ -294,11 +294,11 @@ void LaconicaEditAccountWidget::saveTimelinesTableState()
 // {
 //     isAuthenticated = authenticated;
 //     if(authenticated){
-//         kcfg_authorize->setIcon(KIcon("object-unlocked"));
+//         kcfg_authorize->setIcon(QIcon::fromTheme("object-unlocked"));
 //         kcfg_authenticateLed->on();
 //         kcfg_authenticateStatus->setText(i18n("Authenticated"));
 //     } else {
-//         kcfg_authorize->setIcon(KIcon("object-locked"));
+//         kcfg_authorize->setIcon(QIcon::fromTheme("object-locked"));
 //         kcfg_authenticateLed->off();
 //         kcfg_authenticateStatus->setText(i18n("Not Authenticated"));
 //     }

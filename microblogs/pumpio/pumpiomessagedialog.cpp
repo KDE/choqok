@@ -187,7 +187,7 @@ void PumpIOMessageDialog::attachMedia()
     if (!d->mediumName) {
         d->mediumName = new QLabel(this);
         d->btnCancel = new KPushButton(this);
-        d->btnCancel->setIcon(KIcon("list-remove"));
+        d->btnCancel->setIcon(QIcon::fromTheme("list-remove"));
         d->btnCancel->setToolTip(i18n("Discard Attachment"));
         d->btnCancel->setMaximumWidth(d->btnCancel->height());
         connect(d->btnCancel, SIGNAL(clicked(bool)), SLOT(cancelAttach()));

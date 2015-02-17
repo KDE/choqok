@@ -74,7 +74,7 @@ public:
     int order;            // 0: web, -1: natural
     Choqok::TimelineInfo *info;
     bool isClosable;
-    KIcon timelineIcon;
+    QIcon timelineIcon;
 };
 
 TimelineWidget::TimelineWidget(Choqok::Account* account, const QString &timelineName, QWidget* parent /*= 0*/)
@@ -124,12 +124,12 @@ QString TimelineWidget::timelineIconName()
     return d->info->icon;
 }
 
-void TimelineWidget::setTimelineIcon(const KIcon& icon)
+void TimelineWidget::setTimelineIcon(const QIcon& icon)
 {
     d->timelineIcon = icon;
 }
 
-KIcon& TimelineWidget::timelineIcon() const
+QIcon& TimelineWidget::timelineIcon() const
 {
     return d->timelineIcon;
 }
@@ -245,7 +245,7 @@ void TimelineWidget::showMarkAllAsReadButton()
 {
     if(!d->btnMarkAllAsRead){
         d->btnMarkAllAsRead = new KPushButton(this);
-        d->btnMarkAllAsRead->setIcon(KIcon("mail-mark-read"));
+        d->btnMarkAllAsRead->setIcon(QIcon::fromTheme("mail-mark-read"));
         d->btnMarkAllAsRead->setToolTip(i18n("Mark timeline as read"));
         d->btnMarkAllAsRead->setMaximumSize(14, 14);
         d->btnMarkAllAsRead->setIconSize(QSize(12,12));

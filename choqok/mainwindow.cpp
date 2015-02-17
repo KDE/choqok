@@ -208,21 +208,21 @@ void MainWindow::setupActions()
     actQuit = KStandardAction::quit( this, SLOT( slotQuit() ), actionCollection() );
     prefs = KStandardAction::preferences( this, SLOT( slotConfigChoqok() ), actionCollection() );
 
-    actUpdate = new KAction( KIcon( "view-refresh" ), i18n( "Update Timelines" ), this );
+    actUpdate = new KAction( QIcon::fromTheme( "view-refresh" ), i18n( "Update Timelines" ), this );
     actionCollection()->addAction( QLatin1String( "update_timeline" ), actUpdate );
     actUpdate->setShortcut( Qt::Key_F5 );
     KShortcut updateGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_F5 );
     actUpdate->setGlobalShortcut( updateGlobalShortcut );
     connect( actUpdate, SIGNAL( triggered( bool ) ), this, SIGNAL( updateTimelines() ) );
 
-    newTwit = new KAction( KIcon( "document-new" ), i18n( "Quick Post" ), this );
+    newTwit = new KAction( QIcon::fromTheme( "document-new" ), i18n( "Quick Post" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_new_post" ), newTwit );
     newTwit->setShortcut( KShortcut( Qt::CTRL | Qt::Key_T ) );
     KShortcut quickTwitGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_T );
     newTwit->setGlobalShortcut( quickTwitGlobalShortcut );
     connect( newTwit, SIGNAL( triggered(bool) ), this, SLOT( triggerQuickPost()) );
 
-    KAction *markRead = new KAction( KIcon( "mail-mark-read" ), i18n( "Mark All As Read" ), this );
+    KAction *markRead = new KAction( QIcon::fromTheme( "mail-mark-read" ), i18n( "Mark All As Read" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_mark_as_read" ), markRead );
     markRead->setShortcut( KShortcut( Qt::CTRL | Qt::Key_R ) );
     connect( markRead, SIGNAL( triggered( bool ) ), this, SIGNAL( markAllAsRead()) );
@@ -260,7 +260,7 @@ void MainWindow::setupActions()
     connect( hideMenuBar, SIGNAL(toggled(bool)), menuBar(), SLOT(setHidden(bool)) );
     connect( hideMenuBar, SIGNAL(toggled(bool)), this, SLOT(slotShowSpecialMenu(bool)) );
 
-    KAction *clearAvatarCache = new KAction(KIcon("edit-clear"), i18n( "Clear Avatar Cache" ), this );
+    KAction *clearAvatarCache = new KAction(QIcon::fromTheme("edit-clear"), i18n( "Clear Avatar Cache" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_clear_avatar_cache" ), clearAvatarCache );
     QString tip = i18n( "You have to restart Choqok to load avatars again" );
     clearAvatarCache->setToolTip(tip);
@@ -268,11 +268,11 @@ void MainWindow::setupActions()
     connect( clearAvatarCache, SIGNAL( triggered() ),
              Choqok::MediaManager::self(), SLOT(clearImageCache()) );
 
-    KAction *uploadMedium = new KAction( KIcon("arrow-up"), i18n( "Upload Medium..." ), this );
+    KAction *uploadMedium = new KAction( QIcon::fromTheme("arrow-up"), i18n( "Upload Medium..." ), this );
     actionCollection()->addAction( QLatin1String( "choqok_upload_medium" ), uploadMedium );
     connect( uploadMedium, SIGNAL( triggered(bool)), this, SLOT(slotUploadMedium()) );
 
-    KAction *donate = new KAction( KIcon("help-donate"), i18n("Donate"), this );
+    KAction *donate = new KAction( QIcon::fromTheme("help-donate"), i18n("Donate"), this );
     actionCollection()->addAction( QLatin1String( "choqok_donate" ), donate);
     connect( donate, SIGNAL(triggered(bool)), this, SLOT(slotDonate()));
 }
@@ -639,7 +639,7 @@ void MainWindow::slotShowSpecialMenu(bool show)
 {
     if(show) {
         if(!choqokMainButton) {
-            choqokMainButton = new KPushButton(KIcon("choqok"), QString(), mainWidget);
+            choqokMainButton = new KPushButton(QIcon::fromTheme("choqok"), QString(), mainWidget);
             KMenu* menu = new KMenu(i18n("Choqok"), choqokMainButton);
             menu->addAction(actionCollection()->action("choqok_new_post"));
             menu->addAction(actionCollection()->action("update_timeline"));

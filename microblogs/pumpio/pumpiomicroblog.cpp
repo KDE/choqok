@@ -122,7 +122,7 @@ QMenu* PumpIOMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidget* 
 {
     QMenu *menu = MicroBlog::createActionsMenu(theAccount, parent);
 
-    KAction *directMessge = new KAction(KIcon("mail-message-new"), i18n("Send Private Message..."), menu);
+    KAction *directMessge = new KAction(QIcon::fromTheme("mail-message-new"), i18n("Send Private Message..."), menu);
     directMessge->setData(theAccount->alias());
     connect(directMessge, SIGNAL(triggered(bool)), this, SLOT(showDirectMessageDialog()));
     menu->addAction(directMessge);

@@ -236,7 +236,7 @@ void TwitterApiWhoisWidget::avatarFetchError(const QString& remoteUrl, const QSt
     if( remoteUrl == d->currentPost.author.profileImageUrl ){
         ///Avatar fetching is failed! but will not disconnect to get the img if it fetches later!
         QString url = "img://profileImage";
-        d->wid->document()->addResource( QTextDocument::ImageResource, url, KIcon("image-missing").pixmap(48) );
+        d->wid->document()->addResource( QTextDocument::ImageResource, url, QIcon::fromTheme("image-missing").pixmap(48) );
         updateHtml();
     }
 }
@@ -356,7 +356,7 @@ void TwitterApiWhoisWidget::setupUi()
 {
     qCDebug(CHOQOK);
     d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://close"),
-                            KIcon("dialog-close").pixmap(16) );
+                            QIcon::fromTheme("dialog-close").pixmap(16) );
 
 
     QString style = "color: %1; background-color: %2";
@@ -385,18 +385,18 @@ void TwitterApiWhoisWidget::setActionImages()
     if(d->username.compare(d->currentAccount->username(), Qt::CaseInsensitive) != 0){
         if( d->currentAccount->friendsList().contains(d->username, Qt::CaseInsensitive) ){
             d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://unsubscribe"),
-                            KIcon("list-remove-user").pixmap(16) );
+                            QIcon::fromTheme("list-remove-user").pixmap(16) );
             d->imgActions += "<a href='choqok://unsubscribe'><img src='icon://unsubscribe' title='"+
                             i18n("Unsubscribe") +"'></a> ";
         } else {
             d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://subscribe"),
-                            KIcon("list-add-user").pixmap(16) );
+                            QIcon::fromTheme("list-add-user").pixmap(16) );
             d->imgActions += "<a href='choqok://subscribe'><img src='icon://subscribe' title='"+
                             i18n("Subscribe") +"'></a> ";
         }
 
         d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://block"),
-                                         KIcon("dialog-cancel").pixmap(16) );
+                                         QIcon::fromTheme("dialog-cancel").pixmap(16) );
         d->imgActions += "<a href='choqok://block'><img src='icon://block' title='"+ i18n("Block") +"'></a>";
     }
 }

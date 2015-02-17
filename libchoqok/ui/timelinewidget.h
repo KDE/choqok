@@ -75,8 +75,8 @@ public:
     @brief Return Timeline icon
     If timelineIconName() is empty this can be useful
      */
-    KIcon& timelineIcon() const;
-    void setTimelineIcon(const KIcon& icon);
+    QIcon& timelineIcon() const;
+    void setTimelineIcon(const QIcon& icon);
 
     /**
      @brief Add new posts to UI.

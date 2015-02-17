@@ -60,7 +60,7 @@ TwitterComposerWidget::TwitterComposerWidget(Choqok::Account* account, QWidget* 
 {
     d->editorLayout = qobject_cast<QGridLayout*>(editorContainer()->layout());
     d->btnAttach = new KPushButton(editorContainer());
-    d->btnAttach->setIcon(KIcon("mail-attachment"));
+    d->btnAttach->setIcon(QIcon::fromTheme("mail-attachment"));
     d->btnAttach->setToolTip(i18n("Attach a file"));
     d->btnAttach->setMaximumWidth(d->btnAttach->height());
     connect(d->btnAttach, SIGNAL(clicked(bool)), this, SLOT(selectMediumToAttach()));
@@ -98,7 +98,7 @@ void TwitterComposerWidget::submitPost(const QString& txt)
                 SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,
                                          QString,Choqok::MicroBlog::ErrorLevel)),
                 SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
-        btnAbort = new KPushButton(KIcon("dialog-cancel"), i18n("Abort"), this);
+        btnAbort = new KPushButton(QIcon::fromTheme("dialog-cancel"), i18n("Abort"), this);
         layout()->addWidget(btnAbort);
         connect( btnAbort, SIGNAL(clicked(bool)), SLOT(abort()) );
         TwitterMicroBlog *mBlog = qobject_cast<TwitterMicroBlog*>(currentAccount()->microblog());
@@ -143,7 +143,7 @@ void TwitterComposerWidget::selectMediumToAttach()
         qCDebug(CHOQOK)<<fileName;
         d->mediumName = new QLabel(editorContainer());
         d->btnCancel = new KPushButton(editorContainer());
-        d->btnCancel->setIcon(KIcon("list-remove"));
+        d->btnCancel->setIcon(QIcon::fromTheme("list-remove"));
         d->btnCancel->setToolTip(i18n("Discard Attachment"));
         d->btnCancel->setMaximumWidth(d->btnCancel->height());
         connect( d->btnCancel, SIGNAL(clicked(bool)), SLOT(cancelAttachMedium()) );

@@ -88,7 +88,7 @@ void TwitterApiDMessageDialog::setupUi( QWidget *mainWidget )
 
     KPushButton *btnReload = new KPushButton(this);
     btnReload->setToolTip(i18n("Reload friends list"));
-    btnReload->setIcon(KIcon("view-refresh"));
+    btnReload->setIcon(QIcon::fromTheme("view-refresh"));
     btnReload->setMaximumWidth(25);
     connect( btnReload, SIGNAL(clicked(bool)), SLOT(reloadFriendslist()) );
 

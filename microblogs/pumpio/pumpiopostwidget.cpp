@@ -39,7 +39,7 @@
 #include "pumpiopost.h"
 #include "pumpioshowthread.h"
 
-const KIcon PumpIOPostWidget::unFavIcon(Choqok::MediaManager::convertToGrayScale(KIcon("rating").pixmap(16)));
+const KIcon PumpIOPostWidget::unFavIcon(Choqok::MediaManager::convertToGrayScale(QIcon::fromTheme("rating").pixmap(16)));
 
 class PumpIOPostWidget::Private
 {
@@ -54,7 +54,7 @@ PumpIOPostWidget::PumpIOPostWidget(Choqok::Account* account, Choqok::Post* post,
 {
     mainWidget()->document()->addResource(QTextDocument::ImageResource,
                                           QUrl("icon://thread"),
-                                          KIcon("go-top").pixmap(10));
+                                          QIcon::fromTheme("go-top").pixmap(10));
 }
 
 PumpIOPostWidget::~PumpIOPostWidget()
@@ -185,7 +185,7 @@ void PumpIOPostWidget::initUi()
         d->btnReply = addButton("btnReply", i18nc("@info:tooltip", "Reply"), "edit-undo");
         QMenu *replyMenu = new QMenu(d->btnReply);
 
-        KAction *replyToAct = new KAction(KIcon("edit-undo"), i18n("Reply to %1",
+        KAction *replyToAct = new KAction(QIcon::fromTheme("edit-undo"), i18n("Reply to %1",
                                       currentPost()->author.userName), replyMenu);
         replyMenu->addAction(replyToAct);
         connect(replyToAct, SIGNAL(triggered(bool)), SLOT(slotReplyTo()));
@@ -265,7 +265,7 @@ void PumpIOPostWidget::updateFavStat()
 {
     d->btnFavorite->setChecked(currentPost()->isFavorited);
     if (currentPost()->isFavorited){
-        d->btnFavorite->setIcon(KIcon("rating"));
+        d->btnFavorite->setIcon(QIcon::fromTheme("rating"));
     } else {
         d->btnFavorite->setIcon(unFavIcon);
     }

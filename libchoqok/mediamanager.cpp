@@ -29,7 +29,7 @@
 #include "libchoqokdebug.h"
 #include <KEmoticons>
 #include <KEmoticonsTheme>
-#include <KIcon>
+#include <QIcon>
 #include <KImageCache>
 #include <KIO/Job>
 #include <KIO/JobClasses>
@@ -62,8 +62,7 @@ public:
 MediaManager::MediaManager()
     : QObject( qApp ), d(new Private)
 {
-  KIcon icon("image-loading");
-  d->defaultImage = icon.pixmap(48);
+  d->defaultImage = QIcon::fromTheme("image-loading").pixmap(48);
 }
 
 MediaManager::~MediaManager()

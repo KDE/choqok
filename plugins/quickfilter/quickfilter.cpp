@@ -51,9 +51,9 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_quickfilter" ) )
 QuickFilter::QuickFilter(QObject* parent, const QList< QVariant >& args) : Choqok::Plugin(MyPluginFactory::componentData(), parent)
 {
     Q_UNUSED(args);
-    m_authorAction = new KAction(KIcon("document-preview"), i18n("Filter by author"), this);
+    m_authorAction = new KAction(QIcon::fromTheme("document-preview"), i18n("Filter by author"), this);
     m_authorAction->setCheckable(true);
-    m_textAction = new KAction(KIcon("document-preview"), i18n("Filter by content"), this);
+    m_textAction = new KAction(QIcon::fromTheme("document-preview"), i18n("Filter by content"), this);
     m_textAction->setCheckable(true);
     actionCollection()->addAction("filterByAuthor", m_authorAction);
     actionCollection()->addAction("filterByContent", m_textAction);
@@ -132,14 +132,14 @@ void QuickFilter::createUiInterface()
     QLabel *tlabel = new QLabel(i18n("Text"), m_textToolbar);
     m_authorToolbar->addWidget(alabel);
     m_authorToolbar->addWidget(m_aledit);
-    QPushButton *authorCloseButton = new QPushButton(KIcon("dialog-close"), QString() , m_authorToolbar);
+    QPushButton *authorCloseButton = new QPushButton(QIcon::fromTheme("dialog-close"), QString() , m_authorToolbar);
     authorCloseButton->setMaximumWidth(authorCloseButton->height());
     connect(authorCloseButton, SIGNAL(clicked(bool)), m_authorToolbar, SLOT(hide()));
     m_authorToolbar->addWidget(authorCloseButton);
     
     m_textToolbar->addWidget(tlabel);
     m_textToolbar->addWidget(m_tledit);
-    QPushButton *textCloseButton = new QPushButton(KIcon("dialog-close"), QString() , m_textToolbar);
+    QPushButton *textCloseButton = new QPushButton(QIcon::fromTheme("dialog-close"), QString() , m_textToolbar);
     textCloseButton->setMaximumWidth(textCloseButton->height());
     connect(textCloseButton, SIGNAL(clicked(bool)), m_textToolbar, SLOT(hide()));
     m_textToolbar->addWidget(textCloseButton);

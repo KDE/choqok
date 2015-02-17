@@ -134,7 +134,7 @@ QMenu* Translator::setupTranslateMenu()
         menu->addAction(act);
     }
     menu->addSeparator();
-    KAction* setup = new KAction(KIcon("configure"), i18n("Configure Translator"), menu);
+    KAction* setup = new KAction(QIcon::fromTheme("configure"), i18n("Configure Translator"), menu);
     connect(setup, SIGNAL(triggered(bool)), this, SLOT(slotConfigureTranslator()));
     menu->addAction(setup);
     return menu;

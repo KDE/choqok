@@ -47,7 +47,7 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_nowlistening" ) )
 NowListening::NowListening(QObject* parent, const QList<QVariant>& )
         :Choqok::Plugin(MyPluginFactory::componentData(), parent)
 {
-    KAction *action = new KAction(KIcon("media-playback-start"), i18n("Now Listening"), this);
+    KAction *action = new KAction(QIcon::fromTheme("media-playback-start"), i18n("Now Listening"), this);
     actionCollection()->addAction("nowListening", action);
     connect(action, SIGNAL(triggered(bool)), SLOT(slotPrepareNowListening()));
     setXMLFile("nowlisteningui.rc");

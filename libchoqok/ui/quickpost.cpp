@@ -94,7 +94,7 @@ void QuickPost::setupUi()
     this->resize( Choqok::BehaviorSettings::quickPostDialogSize() );
     d->all = new QCheckBox( i18nc("All accounts", "All"), this);
     d->comboAccounts = new KComboBox(this);
-    d->attach = new KPushButton(KIcon("mail-attachment"), QString(), this);
+    d->attach = new KPushButton(QIcon::fromTheme("mail-attachment"), QString(), this);
     d->attach->setMaximumWidth(d->attach->height());
     d->attach->setToolTip(i18n("Attach a file"));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -217,7 +217,7 @@ void QuickPost::addAccount( Choqok::Account* account )
     if(account->isReadOnly() || !account->showInQuickPost())
         return;
     d->accountsList.insert( account->alias(), account );
-    d->comboAccounts->addItem( KIcon(account->microblog()->pluginIcon()), account->alias() );
+    d->comboAccounts->addItem( QIcon::fromTheme(account->microblog()->pluginIcon()), account->alias() );
     connect(account->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
             SLOT(slotSubmitPost(Choqok::Account*,Choqok::Post*)) );
     connect(account->microblog(),

@@ -96,19 +96,19 @@ void TwitterApiSearchTimelineWidget::addFooter()
 {
     QHBoxLayout *footer = titleBarLayout();
 
-    d->close = new KPushButton(KIcon("dialog-close"), QString(), this);
+    d->close = new KPushButton(QIcon::fromTheme("dialog-close"), QString(), this);
     d->close->setFixedSize(28,28);
     d->close->setToolTip(i18n("Close Search"));
 
     if(d->searchInfo.isBrowsable)
     {
         d->previous = new KPushButton(this);
-        d->previous->setIcon(KIcon("go-previous"));
+        d->previous->setIcon(QIcon::fromTheme("go-previous"));
         d->previous->setMaximumSize(28,28);
         d->previous->setToolTip(i18n("Previous"));
 
         d->next = new KPushButton(this);
-        d->next->setIcon(KIcon("go-next"));
+        d->next->setIcon(QIcon::fromTheme("go-next"));
         d->next->setMaximumSize(28,28);
         d->next->setToolTip(i18n("Next"));
 

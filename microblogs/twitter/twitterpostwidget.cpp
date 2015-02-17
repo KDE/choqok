@@ -108,17 +108,17 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
                                                     (int)TwitterSearch::ReferenceHashtag);
     } else if(scheme == "user") {
         KMenu menu;
-        KAction * info = new KAction( KIcon("user-identity"), i18nc("Who is user", "Who is %1", url.host()),
+        KAction * info = new KAction( QIcon::fromTheme("user-identity"), i18nc("Who is user", "Who is %1", url.host()),
                                       &menu );
-        KAction * from = new KAction(KIcon("edit-find-user"), i18nc("Posts from user", "Posts from %1",url.host()),
+        KAction * from = new KAction(QIcon::fromTheme("edit-find-user"), i18nc("Posts from user", "Posts from %1",url.host()),
                                      &menu);
-        KAction * to = new KAction(KIcon("meeting-attending"), i18nc("Replies to user", "Replies to %1",
+        KAction * to = new KAction(QIcon::fromTheme("meeting-attending"), i18nc("Replies to user", "Replies to %1",
                                                                      url.host()),
                                    &menu);
-        KAction *cont = new KAction(KIcon("user-properties"),i18nc("Including user name", "Including %1",
+        KAction *cont = new KAction(QIcon::fromTheme("user-properties"),i18nc("Including user name", "Including %1",
                                                                    url.host()),
                                     &menu);
-        KAction * openInBrowser = new KAction(KIcon("applications-internet"),
+        KAction * openInBrowser = new KAction(QIcon::fromTheme("applications-internet"),
                                               i18nc("Open profile page in browser",
                                                     "Open profile in browser"), &menu);
         from->setData(TwitterSearch::FromUser);
@@ -137,30 +137,30 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
         KAction *subscribe = 0, *block = 0, *replyTo = 0, *dMessage = 0, *reportSpam = 0;
         if(accountUsername != postUsername){
             menu.addSeparator();
-            QMenu *actionsMenu = menu.addMenu(KIcon("applications-system"), i18n("Actions"));
-            replyTo = new KAction(KIcon("edit-undo"), i18nc("Write a message to user attention", "Write to %1",
+            QMenu *actionsMenu = menu.addMenu(QIcon::fromTheme("applications-system"), i18n("Actions"));
+            replyTo = new KAction(QIcon::fromTheme("edit-undo"), i18nc("Write a message to user attention", "Write to %1",
                                                           url.host()), actionsMenu);
             actionsMenu->addAction(replyTo);
             if( account->friendsList().contains( url.host(),
                 Qt::CaseInsensitive ) ){
-                dMessage = new KAction(KIcon("mail-message-new"), i18nc("Send direct message to user",
+                dMessage = new KAction(QIcon::fromTheme("mail-message-new"), i18nc("Send direct message to user",
                                                                         "Send private message to %1",
                                                                         url.host()), actionsMenu);
                 actionsMenu->addAction(dMessage);
                 isSubscribe = false;//It's UnSubscribe
-                subscribe = new KAction( KIcon("list-remove-user"),
+                subscribe = new KAction( QIcon::fromTheme("list-remove-user"),
                                          i18nc("Unfollow user",
                                                "Unfollow %1", url.host()), actionsMenu);
             } else {
                 isSubscribe = true;
-                subscribe = new KAction( KIcon("list-add-user"),
+                subscribe = new KAction( QIcon::fromTheme("list-add-user"),
                                          i18nc("Follow user",
                                                "Follow %1", url.host()), actionsMenu);
             }
-            block = new KAction( KIcon("dialog-cancel"),
+            block = new KAction( QIcon::fromTheme("dialog-cancel"),
                                  i18nc("Block user",
                                        "Block %1", url.host()), actionsMenu);
-            reportSpam = new KAction( KIcon("irc-voice"),
+            reportSpam = new KAction( QIcon::fromTheme("irc-voice"),
                                       i18nc("Report user",
                                             "Report %1 as spam", url.host()), actionsMenu);
 

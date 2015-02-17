@@ -147,7 +147,7 @@ bool PumpIOEditAccountWidget::isAuthenticated()
     if (m_account->token().isEmpty() || m_account->tokenSecret().isEmpty()) {
         return false;
     } else {
-        kcfg_authorize->setIcon(KIcon("object-unlocked"));
+        kcfg_authorize->setIcon(QIcon::fromTheme("object-unlocked"));
         kcfg_authenticateLed->setState(KLed::On);
         kcfg_authenticateStatus->setText(i18n("Authenticated"));
         return true;

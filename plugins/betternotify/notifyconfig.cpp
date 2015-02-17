@@ -55,7 +55,7 @@ NotifyConfig::NotifyConfig(QWidget* parent, const QVariantList& args):
     connect(ui.foregroundColor, SIGNAL(changed(QColor)), this, SLOT(emitChanged()));
     connect(ui.font, SIGNAL(fontSelected(QFont)), this, SLOT(emitChanged()));
     settings = new NotifySettings(this);
-    ui.lblArrow->setPixmap(KIcon("arrow-right").pixmap(48));
+    ui.lblArrow->setPixmap(QIcon::fromTheme("arrow-right").pixmap(48));
 }
 
 NotifyConfig::~NotifyConfig()

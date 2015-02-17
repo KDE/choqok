@@ -90,7 +90,7 @@ void Notification::init()
         pix = QPixmap( Choqok::MediaManager::self()->defaultImage() );
     mainWidget.document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"), pix );
     mainWidget.document()->addResource( QTextDocument::ImageResource, QUrl("icon://close"),
-                                        KIcon("dialog-close").pixmap(16) );
+                                        QIcon::fromTheme("dialog-close").pixmap(16) );
     mainWidget.setText(baseText.arg(post->currentPost()->author.userName)
                                .arg(post->currentPost()->content)
                                .arg(dir)

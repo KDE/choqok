@@ -261,11 +261,11 @@ void PostWidget::setStyle(const QColor& color, const QColor& back, const QColor&
 
 KPushButton * PostWidget::addButton(const QString & objName, const QString & toolTip, const QString & icon)
 {
-    return addButton(objName, toolTip, KIcon(icon));
+    return addButton(objName, toolTip, QIcon::fromTheme(icon));
 
 }
 
-KPushButton * PostWidget::addButton(const QString & objName, const QString & toolTip, const KIcon & icon)
+KPushButton * PostWidget::addButton(const QString & objName, const QString & toolTip, const QIcon & icon)
 {
     KPushButton * button = new KPushButton(icon, QString(), _mainWidget);
     button->setObjectName(objName);
@@ -371,14 +371,13 @@ void PostWidget::resizeEvent ( QResizeEvent * event )
 	int newW = newPixmap.width();
 	int newH = newPixmap.height();
 	
+        const QUrl url("img://postImage");
 	// only use scaled image if it's smaller than the original one
 	if(newW <= d->originalImage.width() && newH <= d->originalImage.height()) {	// never scale up
 	    d->mImage = QString("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(newW, newH );
-	    QString url = "img://postImage";
 	    _mainWidget->document()->addResource( QTextDocument::ImageResource, url, newPixmap);
 	} else {
 	    d->mImage = QString("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
-		QString url = "img://postImage";
 		_mainWidget->document()->addResource( QTextDocument::ImageResource, url, d->originalImage);
 	}
     }
@@ -579,7 +578,7 @@ void PostWidget::avatarFetchError(const QString& remoteUrl, const QString& errMs
         ///Avatar fetching is failed! but will not disconnect to get the img if it fetches later!
         QString url = "img://profileImage";
         _mainWidget->document()->addResource( QTextDocument::ImageResource,
-                                             url, KIcon("image-missing").pixmap(48) );
+                                             url, QIcon::fromTheme("image-missing").pixmap(48) );
         updateUi();
     }
 }

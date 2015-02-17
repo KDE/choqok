@@ -41,7 +41,7 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_searchaction" ) )
 SearchAction::SearchAction( QObject* parent, const QList< QVariant >& )
     : Plugin(MyPluginFactory::componentData(), parent)
 {
-    KAction *action = new KAction(KIcon("edit-find"), i18n("Search..."), this);
+    KAction *action = new KAction(QIcon::fromTheme("edit-find"), i18n("Search..."), this);
     action->setShortcut(KShortcut(Qt::ControlModifier | Qt::Key_F));
     actionCollection()->addAction("search", action);
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSearch()));
