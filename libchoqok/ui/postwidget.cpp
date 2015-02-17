@@ -561,7 +561,7 @@ void PostWidget::setupAvatar()
 void PostWidget::avatarFetched(const QString& remoteUrl, const QPixmap& pixmap)
 {
     if ( remoteUrl == d->mCurrentPost->author.profileImageUrl ) {
-        QString url = "img://profileImage";
+        const QUrl url("img://profileImage");
         _mainWidget->document()->addResource( QTextDocument::ImageResource, url, pixmap );
         updateUi();
         disconnect( MediaManager::self(), SIGNAL( imageFetched(QString,QPixmap)),
@@ -576,7 +576,7 @@ void PostWidget::avatarFetchError(const QString& remoteUrl, const QString& errMs
     Q_UNUSED(errMsg);
     if( remoteUrl == d->mCurrentPost->author.profileImageUrl ){
         ///Avatar fetching is failed! but will not disconnect to get the img if it fetches later!
-        QString url = "img://profileImage";
+        const QUrl url("img://profileImage");
         _mainWidget->document()->addResource( QTextDocument::ImageResource,
                                              url, QIcon::fromTheme("image-missing").pixmap(48) );
         updateUi();
@@ -586,7 +586,7 @@ void PostWidget::avatarFetchError(const QString& remoteUrl, const QString& errMs
 void PostWidget::slotImageFetched(const QString& remoteUrl, const QPixmap& pixmap) {
 
     if(remoteUrl == d->imageUrl) {
-	QString url = "img://postImage";
+	const QUrl url("img://postImage");
 	QPixmap newPixmap = pixmap.scaled(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
         _mainWidget->document()->addResource( QTextDocument::ImageResource, url, newPixmap);
 	d->originalImage = pixmap;
