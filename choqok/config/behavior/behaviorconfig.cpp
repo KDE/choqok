@@ -31,9 +31,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <KCModuleInfo>
 #include <KCModuleProxy>
-#include <KGenericFactory>
-#include <KPluginInfo>
-#include <KLocale>
+#include <KPluginFactory>
+#include <KLocalizedString>
 #include <KTabWidget>
 
 #include "behaviorconfig_shorten.h"
