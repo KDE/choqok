@@ -26,6 +26,7 @@
 
 #include <KAboutData>
 #include <KLocalizedString>
+#include <Kdelibs4ConfigMigrator>
 
 #include "choqokapplication.h"
 #include "choqokdebug.h"
@@ -64,6 +65,17 @@ int main( int argc, char **argv )
     about.addCredit( i18n( "Ahmed I. Khalil" ), i18n("Various improvements"), "ahmedibrahimkhali@gmail.com" );
 
     //TODO before next release, Add new contributers to credits
+
+    // Migrate configurations from KDE4
+    QStringList configFiles;
+    QStringList rcFiles;
+    configFiles << QLatin1String("choqokrc");
+    rcFiles << QLatin1String("choqokui.rc");
+
+    Kdelibs4ConfigMigrator migrator(QLatin1String("choqok")); // the same name defined in the aboutData
+    migrator.setConfigFiles(configFiles);
+    migrator.setUiFiles(rcFiles);
+    migrator.migrate();
 
     ChoqokApplication app(argc, argv);
     app.setApplicationVersion(version);
