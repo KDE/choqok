@@ -24,21 +24,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "choqokapplication.h"
 
-#include <QTimer>
-#include <QRegExp>
-
-#include <KConfig>
-#include "choqokdebug.h"
-#include <KGlobal>
-#include <KLocale>
-#include <KCmdLineArgs>
-#include <KMessageBox>
-
 #include "choqokbehaviorsettings.h"
+#include "choqokdebug.h"
 #include "choqokuiglobal.h"
 #include "dbushandler.h"
 #include "mainwindow.h"
-#include "pluginmanager.h"
 
 ChoqokApplication::ChoqokApplication()
 : Choqok::Application()

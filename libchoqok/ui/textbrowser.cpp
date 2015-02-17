@@ -27,6 +27,8 @@
 #include <QAbstractTextDocumentLayout>
 #include <QApplication>
 #include <QClipboard>
+#include <QDrag>
+#include <QMimeData>
 #include <QPointer>
 
 #include <QAction>

@@ -22,14 +22,13 @@
 
 */
 
+#include <QCommandLineParser>
+
 #include <KAboutData>
-#include <KCmdLineArgs>
-#include <KLocale>
-#include "choqokdebug.h"
+#include <KLocalizedString>
 
 #include "choqokapplication.h"
-#include "choqokbehaviorsettings.h"
-#include "mainwindow.h"
+#include "choqokdebug.h"
 
 static const char description[] =
     I18N_NOOP( "KDE Micro-Blogging Client." );

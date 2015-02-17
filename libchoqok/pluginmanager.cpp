@@ -23,22 +23,18 @@
 
 #include "pluginmanager.h"
 
-#include <QApplication>
+#include <QEventLoopLocker>
 #include <QRegExp>
-#include <QtGlobal>
 #include <QTimer>
 #include <QStack>
-
-#include <KConfig>
-#include "libchoqokdebug.h"
-#include <KPluginInfo>
-#include <KServiceTypeTrader>
-#include <KSharedConfig>
-#include <KStandardDirs>
 #include <QUrl>
 
+#include <KConfigGroup>
+#include <KServiceTypeTrader>
+#include <KSharedConfig>
+
 #include "accountmanager.h"
-#include "plugin.h"
+#include "libchoqokdebug.h"
 
 namespace Choqok
 {

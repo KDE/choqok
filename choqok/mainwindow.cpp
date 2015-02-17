@@ -24,17 +24,18 @@
 
 #include "mainwindow.h"
 
-#include <QTimer>
-#include <QWheelEvent>
-
 #include <QAction>
+#include <QMenuBar>
+#include <QStatusBar>
+#include <QTimer>
+#include <QWidgetAction>
+
+#include <KApplication>
 #include <KActionCollection>
-#include <KConfigDialog>
 #include <KGlobal>
 #include <KGlobalAccel>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KMenu>
-#include <KMenuBar>
 #include <KMessageBox>
 #include <KNotifyConfigWidget>
 #include <KPushButton>
@@ -42,20 +43,18 @@
 #include <KSplashScreen>
 #include <KStandardAction>
 #include <KStandardDirs>
-#include <KStatusBar>
 #include <KTabWidget>
 #include <KXMLGUIFactory>
-#include "choqokdebug.h"
 
 #include "accountmanager.h"
 #include "choqokappearancesettings.h"
 #include "choqokapplication.h"
 #include "choqokbehaviorsettings.h"
+#include "choqokdebug.h"
 #include "choqoktools.h"
 #include "choqokuiglobal.h"
 #include "mediamanager.h"
 #include "microblogwidget.h"
-#include "passwordmanager.h"
 #include "pluginmanager.h"
 #include "postwidget.h"
 #include "quickpost.h"

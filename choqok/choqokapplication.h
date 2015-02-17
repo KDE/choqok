@@ -30,7 +30,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "application.h"
 
 class MainWindow;
-class QSessionManager;
 
 /**
  * @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>

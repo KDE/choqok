@@ -25,18 +25,18 @@
 #ifndef CHOQOKPLUGINMANAGER_H
 #define CHOQOKPLUGINMANAGER_H
 
-#include <QEventLoopLocker>
 #include <QList>
-#include <QObject>
 
+#include <KPluginInfo>
+
+#include "plugin.h"
 #include "choqok_export.h"
 
-class KPluginInfo;
+class QEventLoopLocker;
 
 namespace Choqok
 {
 
-class Plugin;
 class Protocol;
 typedef QList<Plugin*> PluginList;
 class PluginManagerPrivate;

@@ -24,12 +24,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QHideEvent>
 #include <QPointer>
+#include <QShowEvent>
 
-#include <KXmlGuiWindow>
-
-#include "account.h"
 #include "choqokmainwindow.h"
+#include "account.h"
+#include "plugin.h"
 
 class QAction;
 class KPushButton;
@@ -40,7 +41,6 @@ namespace UI
 {
     class QuickPost;
 }
-    class Plugin;
 }
 namespace KSettings
 {

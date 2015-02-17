@@ -28,6 +28,7 @@
 #include <QObject>
 
 #include <KXMLGUIClient>
+#include <KComponentData>
 
 #include "choqok_export.h"
 

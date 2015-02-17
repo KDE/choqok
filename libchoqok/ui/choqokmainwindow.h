@@ -25,16 +25,18 @@
 #ifndef CHOQOK_UI_MAINWINDOW_H
 #define CHOQOK_UI_MAINWINDOW_H
 
+#include <QHideEvent>
+
 #include <KXmlGuiWindow>
 
 #include "choqok_export.h"
 
+class QTimer;
 class KTabWidget;
 
 namespace Choqok {
-
-namespace UI {
-class MicroBlogWidget;
+    namespace UI {
+        class MicroBlogWidget;
 
 class CHOQOK_EXPORT MainWindow : public KXmlGuiWindow
 {
