@@ -40,13 +40,13 @@ public:
     ImageShack( QObject* parent, const QList< QVariant >& args );
     ~ImageShack();
 
-    virtual void upload(const KUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType);
+    virtual void upload(const QUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType);
 
 protected Q_SLOTS:
     void slotUpload( KJob *job );
 
 private:
-    QMap<KJob*, KUrl> mUrlMap;
+    QMap<KJob*, QUrl> mUrlMap;
 };
 
 #endif

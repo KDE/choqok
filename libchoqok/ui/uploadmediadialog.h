@@ -25,6 +25,8 @@
 #ifndef UPLOADMEDIADIALOG_H
 #define UPLOADMEDIADIALOG_H
 
+#include <QUrl>
+
 #include <KDialog>
 
 #include "choqok_export.h"
@@ -49,8 +51,8 @@ protected Q_SLOTS:
     void currentPluginChanged( int index );
     void slotAboutClicked();
     void slotConfigureClicked();
-    void slotMediumUploadFailed(const KUrl& localUrl, const QString& errorMessage);
-    void slotMediumUploaded(const KUrl& localUrl, const QString& remoteUrl);
+    void slotMediumUploadFailed(const QUrl& localUrl, const QString& errorMessage);
+    void slotMediumUploaded(const QUrl& localUrl, const QString& remoteUrl);
     void slotMediumChanged(const QString &url);
 
 private:

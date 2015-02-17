@@ -28,8 +28,7 @@
 #include <QPointer>
 #include <QQueue>
 #include <QSharedPointer>
-
-#include <KUrl>
+#include <QUrl>
 
 #include "plugin.h"
 
@@ -74,7 +73,7 @@ private:
     KJob* sheduleParsing(const QString& shortUrl);
     void suspendJobs();
 
-    void replaceUrl(PostWidgetPointer post, const KUrl& fromUrl, const KUrl& toUrl);
+    void replaceUrl(PostWidgetPointer post, const QUrl& fromUrl, const QUrl& toUrl);
 
     PostWidgetPointer takeJob(KJob* job) {
         return mParsingList.take(job);

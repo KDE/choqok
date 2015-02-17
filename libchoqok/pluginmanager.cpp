@@ -34,7 +34,7 @@
 #include <KServiceTypeTrader>
 #include <KSharedConfig>
 #include <KStandardDirs>
-#include <KUrl>
+#include <QUrl>
 
 #include "accountmanager.h"
 #include "plugin.h"

@@ -28,8 +28,6 @@
 #include <QPointer>
 #include <QQueue>
 
-#include <KUrl>
-
 #include "plugin.h"
 
 namespace KIO {

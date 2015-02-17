@@ -31,6 +31,7 @@
 #include <KIO/NetAccess>
 #include <KLocale>
 #include <KStandardDirs>
+#include <QUrl>
 #include <KWallet/Wallet>
 
 #include "microblog.h"

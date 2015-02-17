@@ -61,7 +61,7 @@ Mobypicture::~Mobypicture()
 
 }
 
-void Mobypicture::upload ( const KUrl& localUrl, const QByteArray& medium, const QByteArray& mediumType )
+void Mobypicture::upload ( const QUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType )
 {
     MobypictureSettings::self()->readConfig();
     KIO::StoredTransferJob *job = 0;
@@ -77,7 +77,7 @@ void Mobypicture::upload ( const KUrl& localUrl, const QByteArray& medium, const
         if ( !acc )
             return;
 
-        KUrl url ( "http://api.mobypicture.com/2.0/upload" );
+        QUrl url ( "http://api.mobypicture.com/2.0/upload" );
 
         QMap<QString, QByteArray> formdata;
         formdata["key"] = apiKey;
@@ -106,7 +106,7 @@ void Mobypicture::upload ( const KUrl& localUrl, const QByteArray& medium, const
         cHeader.append ( "X-Auth-Service-Provider: https://api.twitter.com/1/account/verify_credentials.json" );
         job->addMetaData ( "customHTTPHeader", cHeader );
     } else if ( MobypictureSettings::basic() ) {
-        KUrl url ( "http://api.mobypicture.com" );
+        QUrl url ( "http://api.mobypicture.com" );
         QString login = MobypictureSettings::login();
         QString pass = Choqok::PasswordManager::self()->readPassword ( QString ( "mobypicture_%1" )
                        .arg ( MobypictureSettings::login() ) );

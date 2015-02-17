@@ -39,7 +39,7 @@
 #include <KStatusBar>
 #include <KTextBrowser>
 #include <KToolInvocation>
-#include <KUrl>
+#include <QUrl>
 
 #include <qjson/parser.h>
 
@@ -132,9 +132,10 @@ void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount* theAccount, const QS
     } else {
         urlStr = theAccount->apiUrl().url();
     }
-    KUrl url( urlStr );
+    QUrl url( urlStr );
 
-    url.addPath( QString( "/users/show/%1.json" ).arg(user));
+    url = url.adjusted(QUrl::StripTrailingSlash);
+    url.setPath(url.path() + '/' + ( QString( "/users/show/%1.json" ).arg(user)));
 
 //     qCDebug(CHOQOK) << url;
 

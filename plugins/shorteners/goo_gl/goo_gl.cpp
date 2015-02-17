@@ -56,7 +56,7 @@ QString Goo_gl::shorten( const QString& url )
     QJson::Serializer serializer;
     QByteArray data = serializer.serialize(req);
 
-    KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, KUrl("https://www.googleapis.com/urlshortener/v1/url"), KIO::HideProgressInfo ) ;
+    KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, QUrl("https://www.googleapis.com/urlshortener/v1/url"), KIO::HideProgressInfo ) ;
     if (!job){
       Choqok::NotifyManager::error( i18n("Error when creating job"), i18n("Goo.gl Error") );
       return url;

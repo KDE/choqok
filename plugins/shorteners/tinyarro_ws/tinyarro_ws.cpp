@@ -51,7 +51,7 @@ QString Tinyarro_ws::shorten( const QString &url )
     qCDebug(CHOQOK);
     QByteArray data;
 
-    KUrl reqUrl( "http://tinyarro.ws/api-create.php" );
+    QUrl reqUrl( "http://tinyarro.ws/api-create.php" );
 
     Tinyarro_ws_Settings::self()->readConfig();
 
@@ -60,7 +60,7 @@ QString Tinyarro_ws::shorten( const QString &url )
         reqUrl.addQueryItem( "host", Tinyarro_ws_Settings::tinyarro_ws_host_punny() );
     }
     reqUrl.addQueryItem( "utfpure", "1" );
-    reqUrl.addQueryItem( "url", KUrl( url ).url() );
+    reqUrl.addQueryItem( "url", QUrl( url ).url() );
 
     KIO::Job *job = KIO::get( reqUrl, KIO::Reload, KIO::HideProgressInfo );
 

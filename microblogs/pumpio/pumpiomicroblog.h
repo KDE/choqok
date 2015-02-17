@@ -28,8 +28,8 @@
 
 #include "microblog.h"
 
+class QUrl;
 class KJob;
-class KUrl;
 class PumpIOAccount;
 class PumpIOPost;
 
@@ -131,7 +131,7 @@ protected:
     static const QString inboxActivity;
     static const QString outboxActivity;
 
-    QString authorizationMetaData(PumpIOAccount* account, const KUrl& url,
+    QString authorizationMetaData(PumpIOAccount* account, const QUrl& url,
                                   const QOAuth::HttpMethod& method,
                                   const QOAuth::ParamMap& map = QOAuth::ParamMap()) const;
 

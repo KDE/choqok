@@ -86,8 +86,8 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
     int option = searchInfo.option;
 
     QString formattedQuery = mSearchCode[option] + query;
-    KUrl url( "https://api.twitter.com/1.1/search/tweets.json" );
-    KUrl tmpUrl(url);
+    QUrl url( "https://api.twitter.com/1.1/search/tweets.json" );
+    QUrl tmpUrl(url);
     url.addQueryItem("q", formattedQuery);
     QString q = url.query();
     param.insert( "q", q.mid(q.indexOf('=') + 1).toLatin1() );

@@ -155,7 +155,7 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Cho
     } else {
         QByteArray picData;
         QString tmp;
-        KUrl picUrl(mediumToAttach);
+        QUrl picUrl(mediumToAttach);
         KIO::TransferJob *picJob = KIO::get( picUrl, KIO::Reload, KIO::HideProgressInfo);
         if( !KIO::NetAccess::synchronousRun(picJob, 0, &picData) ){
             qCCritical(CHOQOK)<<"Job error: " << picJob->errorString();
@@ -172,7 +172,7 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Cho
         }
         ///Documentation: http://identi.ca/notice/17779990
         TwitterAccount* account = qobject_cast<TwitterAccount*>(theAccount);
-        KUrl url = account->uploadUrl();
+        QUrl url = account->uploadUrl();
         url.addPath ( "/statuses/update_with_media.json" );
         QByteArray fileContentType = KMimeType::findByUrl( picUrl, 0, true )->name().toUtf8();
 
@@ -251,9 +251,9 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount* theAccount, const QString&
     if ( !theAccount) {
         return;
     }
-    KUrl url = theAccount->apiUrl();
+    QUrl url = theAccount->apiUrl();
     url.addPath ( "/lists/ownerships.json" );
-    KUrl url_for_oauth(url);//we need base URL (without params) to make OAuth signature with it!
+    QUrl url_for_oauth(url);//we need base URL (without params) to make OAuth signature with it!
     url.addQueryItem("screen_name", username);
     QOAuth::ParamMap params;
     params.insert("screen_name", username.toLatin1());

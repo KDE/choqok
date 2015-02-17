@@ -74,7 +74,7 @@ void DbusHandler::shareUrl(const QString& url, bool title)
 {
     if (title) {
         QByteArray data;
-        KIO::StoredTransferJob *job = KIO::storedGet ( KUrl(url), KIO::NoReload, KIO::HideProgressInfo) ;
+        KIO::StoredTransferJob *job = KIO::storedGet ( QUrl(url), KIO::NoReload, KIO::HideProgressInfo) ;
         if ( !job ) {
             qCDebug(CHOQOK) << "Cannot create an http GET request!";
         } else {
@@ -102,7 +102,7 @@ void DbusHandler::slotTitleUrl( KJob *job )
         m_doc.setHtml(codec->toUnicode(data));
         text.append(m_doc.metaInformation(QTextDocument::DocumentTitle));
     }
-    QString url = stj->url().prettyUrl();
+    QString url = stj->url().toDisplayString();
     text.append(' '+prepareUrl(url));
     postText(text);
 }

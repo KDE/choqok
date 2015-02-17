@@ -25,6 +25,8 @@
 #ifndef TWITTERAPIACCOUNT_H
 #define TWITTERAPIACCOUNT_H
 
+#include <QUrl>
+
 #include "account.h"
 #include "choqok_export.h"
 
@@ -67,8 +69,8 @@ public:
     /**
     Combined from @ref host and @ref api to use for connections and queries
     */
-    KUrl apiUrl() const;
-    virtual KUrl homepageUrl() const;
+    QUrl apiUrl() const;
+    virtual QUrl homepageUrl() const;
 
     QStringList friendsList() const;
 
@@ -95,8 +97,8 @@ public:
 
     QOAuth::Interface *oauthInterface();
 protected:
-    void setApiUrl( const KUrl &apiUrl );
-    void setHomepageUrl( const KUrl& homepageUrl );
+    void setApiUrl( const QUrl &apiUrl );
+    void setHomepageUrl( const QUrl& homepageUrl );
     void generateApiUrl();
     void initQOAuthInterface();
 

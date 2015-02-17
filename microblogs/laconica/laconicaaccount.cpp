@@ -74,7 +74,7 @@ void LaconicaAccount::setChangeExclamationMark(bool isChange)
     d->isChangeExclamationMark = isChange;
 }
 
-KUrl LaconicaAccount::homepageUrl() const
+QUrl LaconicaAccount::homepageUrl() const
 {
     return apiUrl().upUrl();
 }

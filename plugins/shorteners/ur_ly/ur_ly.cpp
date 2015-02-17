@@ -49,8 +49,8 @@ QString Ur_ly::shorten ( const QString& url )
 {
     qCDebug(CHOQOK) << "Using ur.ly";
     QByteArray data;
-    KUrl reqUrl ( "http://ur.ly/new.json" );
-    reqUrl.addQueryItem( "href", KUrl( url ).url() );
+    QUrl reqUrl ( "http://ur.ly/new.json" );
+    reqUrl.addQueryItem( "href", QUrl( url ).url() );
 
     KIO::Job* job = KIO::get ( reqUrl, KIO::Reload, KIO::HideProgressInfo );
 

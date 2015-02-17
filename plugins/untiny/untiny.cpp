@@ -96,14 +96,14 @@ void UnTiny::parse(QPointer<Choqok::UI::PostWidget> postToParse)
                 qCDebug(CHOQOK) << "Cannot create a http header request!";
                 break;
             }
-            connect( job, SIGNAL( permanentRedirection( KIO::Job*, KUrl, KUrl ) ),
-                    this, SLOT( slot301Redirected(KIO::Job*,KUrl,KUrl)) );
+            connect( job, SIGNAL( permanentRedirection( KIO::Job*, QUrl, QUrl ) ),
+                    this, SLOT( slot301Redirected(KIO::Job*,QUrl,QUrl)) );
             mParsingList.insert(job, postToParse);
             job->start();
         }
 }
 
-void UnTiny::slot301Redirected(KIO::Job* job, KUrl fromUrl, KUrl toUrl)
+void UnTiny::slot301Redirected(KIO::Job* job, QUrl fromUrl, QUrl toUrl)
 {
     QPointer<Choqok::UI::PostWidget> postToParse = mParsingList.take(job);
     job->kill();
@@ -119,8 +119,8 @@ void UnTiny::slot301Redirected(KIO::Job* job, KUrl fromUrl, KUrl toUrl)
             if ( !job ) {
                 qCDebug(CHOQOK) << "Cannot create a http header request!";
             } else {
-                connect( job, SIGNAL( permanentRedirection( KIO::Job*, KUrl, KUrl ) ),
-                        this, SLOT( slot301Redirected(KIO::Job*,KUrl,KUrl)) );
+                connect( job, SIGNAL( permanentRedirection( KIO::Job*, QUrl, QUrl ) ),
+                        this, SLOT( slot301Redirected(KIO::Job*,QUrl,QUrl)) );
                 mParsingList.insert(job, postToParse);
                 job->start();
             }

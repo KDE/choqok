@@ -148,7 +148,7 @@ QString ShortenManager::parseText(const QString &text)
     return t;
 }
 
-void ShortenManager::emitNewUnshortenedUrl(Choqok::UI::PostWidget* widget, const KUrl& fromUrl, const KUrl& toUrl)
+void ShortenManager::emitNewUnshortenedUrl(Choqok::UI::PostWidget* widget, const QUrl &fromUrl, const QUrl& toUrl)
 {
     Q_EMIT newUnshortenedUrl(widget, fromUrl, toUrl);
 }

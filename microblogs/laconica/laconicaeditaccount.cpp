@@ -150,7 +150,7 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
 // {
 //     qCDebug(CHOQOK);
 //     slotCheckHostUrl();
-//     if(KUrl(kcfg_host->text()).host()!="identi.ca"){
+//     if(QUrl(kcfg_host->text()).host()!="identi.ca"){
 //         KMessageBox::sorry(this, i18n("Sorry, OAuth Method just works with Identi.ca server. You have to use basic authentication for other StatusNet servers."));
 //         kcfg_authMethod->setCurrentIndex(1);
 //         return;
@@ -227,7 +227,7 @@ void LaconicaEditAccountWidget::setTextLimit()
 {
     QByteArray jobData;
     QString url = mAccount->host() + "/" + mAccount->api() + "/statusnet/config.json";
-    KIO::TransferJob *job = KIO::get(KUrl(url), KIO::Reload, KIO::HideProgressInfo);
+    KIO::TransferJob *job = KIO::get(QUrl(url), KIO::Reload, KIO::HideProgressInfo);
     if ( !KIO::NetAccess::synchronousRun(job, 0, &jobData) ) {
         qCCritical(CHOQOK)<<"Job error: " << job->errorString();
         return;

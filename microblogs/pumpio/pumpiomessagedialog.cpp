@@ -183,7 +183,7 @@ void PumpIOMessageDialog::attachMedia()
         qCDebug(CHOQOK) << "No file selected";
         return;
     }
-    const QString fileName = KUrl(d->mediumToAttach).fileName();
+    const QString fileName = QUrl(d->mediumToAttach).fileName();
     if (!d->mediumName) {
         d->mediumName = new QLabel(this);
         d->btnCancel = new KPushButton(this);

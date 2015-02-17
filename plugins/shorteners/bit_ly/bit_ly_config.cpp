@@ -114,7 +114,7 @@ void Bit_ly_Config::slotValidate()
     QByteArray data;
     QString login = "choqok";
     QString apiKey = "R_bdd1ae8b6191dd36e13fc77ca1d4f27f";
-    KUrl reqUrl( "http://api.bit.ly/v3/validate" );
+    QUrl reqUrl( "http://api.bit.ly/v3/validate" );
 
     reqUrl.addQueryItem( "x_login", ui.kcfg_login->text() );
     reqUrl.addQueryItem( "x_apiKey", ui.kcfg_api_key->text() );

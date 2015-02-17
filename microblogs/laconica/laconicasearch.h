@@ -48,7 +48,7 @@ public:
     virtual QString optionCode(int option);
 
 protected:
-    virtual KUrl buildUrl( const SearchInfo &searchInfo,
+    virtual QUrl buildUrl( const SearchInfo &searchInfo,
                            QString sinceStatusId = QString(),
                            uint count = 0, uint page = 1 );
     QList<Choqok::Post*> parseRss( const QByteArray &buffer );

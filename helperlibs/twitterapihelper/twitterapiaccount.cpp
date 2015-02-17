@@ -42,8 +42,8 @@ public:
     int count;
     QString host;
     QString api;
-    KUrl apiUrl;
-    KUrl homepageUrl;
+    QUrl apiUrl;
+    QUrl homepageUrl;
     QStringList friendsList;
     QStringList timelineNames;
     QByteArray oauthToken;
@@ -137,7 +137,7 @@ void TwitterApiAccount::setCountOfPosts(int count)
     d->count = count;
 }
 
-KUrl TwitterApiAccount::apiUrl() const
+QUrl TwitterApiAccount::apiUrl() const
 {
     return d->apiUrl;
 }
@@ -147,7 +147,7 @@ QString TwitterApiAccount::host() const
     return d->host;
 }
 
-void TwitterApiAccount::setApiUrl(const KUrl& apiUrl)
+void TwitterApiAccount::setApiUrl(const QUrl &apiUrl)
 {
     d->apiUrl = apiUrl;
 }
@@ -169,7 +169,7 @@ void TwitterApiAccount::setHost(const QString& host)
     generateApiUrl();
 }
 
-KUrl TwitterApiAccount::homepageUrl() const
+QUrl TwitterApiAccount::homepageUrl() const
 {
     return d->homepageUrl;
 }
@@ -178,15 +178,16 @@ void TwitterApiAccount::generateApiUrl()
 {
     if(!host().startsWith(QLatin1String("http")))//NOTE: This is for compatibility by prev versions. remove it after 1.0 release
         setHost(host().prepend("http://"));
-    KUrl url(host());
+    QUrl url(host());
 
     setHomepageUrl(url);
 
-    url.addPath(api());
+    url = url.adjusted(QUrl::StripTrailingSlash);
+    url.setPath(url.path() + '/' + (api()));
     setApiUrl(url);
 }
 
-void TwitterApiAccount::setHomepageUrl(const KUrl& homepageUrl)
+void TwitterApiAccount::setHomepageUrl(const QUrl &homepageUrl)
 { 
     d->homepageUrl = homepageUrl;
 }

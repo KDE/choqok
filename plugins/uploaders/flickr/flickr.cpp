@@ -56,9 +56,9 @@ Flickr::~Flickr()
 {
 }
 
-void Flickr::upload(const KUrl& localUrl, const QByteArray& medium, const QByteArray& mediumType)
+void Flickr::upload(const QUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType)
 {
-    KUrl url( "http://api.flickr.com/services/upload/" );
+    QUrl url( "http://api.flickr.com/services/upload/" );
     FlickrSettings::self()->readConfig();
     QString token = Choqok::PasswordManager::self()->readPassword( QString( "flickr_%1" )
                     .arg( FlickrSettings::username() ) );

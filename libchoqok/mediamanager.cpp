@@ -101,7 +101,7 @@ QPixmap MediaManager::fetchImage( const QString& remoteUrl, ReturnMode mode /*= 
             ///The file is on the way, wait to download complete.
             return p;
         }
-        KUrl srcUrl(remoteUrl);
+        QUrl srcUrl(remoteUrl);
         KIO::Job *job = KIO::storedGet( srcUrl, KIO::NoReload, KIO::HideProgressInfo ) ;
         if ( !job ) {
             qCDebug(CHOQOK) << "Cannot create a FileCopyJob!";
@@ -158,7 +158,7 @@ QPixmap MediaManager::convertToGrayScale(const QPixmap& pic)
     return QPixmap::fromImage( result );
 }
 
-void MediaManager::uploadMedium(const KUrl& localUrl, const QString& pluginId)
+void MediaManager::uploadMedium(const QUrl &localUrl, const QString& pluginId)
 {
     QString pId = pluginId;
     if(pId.isEmpty())
@@ -192,10 +192,10 @@ void MediaManager::uploadMedium(const KUrl& localUrl, const QString& pluginId)
         return;
     }
     QByteArray type = KMimeType::findByUrl( localUrl, 0, true )->name().toUtf8();
-    connect( d->uploader, SIGNAL(mediumUploaded(KUrl,QString)),
-             this, SIGNAL(mediumUploaded(KUrl,QString)) );
-    connect( d->uploader, SIGNAL(uploadingFailed(KUrl,QString)),
-             this, SIGNAL(mediumUploadFailed(KUrl,QString)) );
+    connect( d->uploader, SIGNAL(mediumUploaded(QUrl,QString)),
+             this, SIGNAL(mediumUploaded(QUrl,QString)) );
+    connect( d->uploader, SIGNAL(uploadingFailed(QUrl,QString)),
+             this, SIGNAL(mediumUploadFailed(QUrl,QString)) );
     d->uploader->upload(localUrl, picData, type);
 }
 

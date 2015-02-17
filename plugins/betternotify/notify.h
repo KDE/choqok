@@ -29,8 +29,6 @@
 #include <QPointer>
 #include <QTimer>
 
-#include <KUrl>
-
 #include "plugin.h"
 
 class Notification;

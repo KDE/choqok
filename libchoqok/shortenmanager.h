@@ -26,8 +26,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #define CHOQOKSHORTENMANAGER_H
 
 #include <QObject>
-
-#include <KUrl>
+#include <QUrl>
 
 #include "shortener.h"
 
@@ -64,10 +63,10 @@ public:
     */
     void reloadConfig();
 
-    void emitNewUnshortenedUrl( Choqok::UI::PostWidget *widget, const KUrl& fromUrl, const KUrl& toUrl);
+    void emitNewUnshortenedUrl( Choqok::UI::PostWidget *widget, const QUrl& fromUrl, const QUrl& toUrl);
 
   Q_SIGNALS:
-    void newUnshortenedUrl( Choqok::UI::PostWidget *widget, const KUrl& fromUrl, const KUrl& toUrl);
+    void newUnshortenedUrl( Choqok::UI::PostWidget *widget, const QUrl& fromUrl, const QUrl& toUrl);
 
 private:
     ShortenManager(QObject *parent=0);

@@ -141,7 +141,7 @@ void LaconicaComposerWidget::selectMediumToAttach()
                                                       i18n("Select Media to Upload") );
     if( d->mediumToAttach.isEmpty() )
         return;
-    QString fileName = KUrl(d->mediumToAttach).fileName();
+    QString fileName = QUrl(d->mediumToAttach).fileName();
     if( !d->mediumName ){
         qCDebug(CHOQOK)<<fileName;
         d->mediumName = new QLabel(editorContainer());

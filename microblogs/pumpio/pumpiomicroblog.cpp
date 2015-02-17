@@ -201,8 +201,9 @@ void PumpIOMicroBlog::createPost(Choqok::Account* theAccount, Choqok::Post* post
         QJson::Serializer serializer;
         const QByteArray data = serializer.serialize(item);
 
-        KUrl url(acc->host());
-        url.addPath(outboxActivity.arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/json");
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
@@ -245,8 +246,9 @@ void PumpIOMicroBlog::createReply(Choqok::Account* theAccount, PumpIOPost* post)
         QJson::Serializer serializer;
         const QByteArray data = serializer.serialize(item);
 
-        KUrl url(acc->host());
-        url.addPath(outboxActivity.arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/json");
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
@@ -285,8 +287,9 @@ void PumpIOMicroBlog::createPostWithMedia(Choqok::Account* theAccount, Choqok::P
             return;
         }
 
-        KUrl url(acc->host());
-        url.addPath(QString("/api/user/%1/uploads").arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + '/' + (QString("/api/user/%1/uploads").arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: " + mime);
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
@@ -318,7 +321,7 @@ void PumpIOMicroBlog::fetchPost(Choqok::Account* theAccount, Choqok::Post* post)
             qCDebug(CHOQOK) << "You can only fetch posts from your host!";
             return;
         }
-        KUrl url(post->link);
+        QUrl url(post->link);
 
         KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
         if (!job) {
@@ -349,8 +352,9 @@ void PumpIOMicroBlog::removePost(Choqok::Account* theAccount, Choqok::Post* post
         QJson::Serializer serializer;
         const QByteArray data = serializer.serialize(item);
 
-        KUrl url(acc->host());
-        url.addPath(outboxActivity.arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/json");
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
@@ -506,14 +510,15 @@ void PumpIOMicroBlog::updateTimelines(Choqok::Account* theAccount)
     PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
     if (acc) {
         Q_FOREACH (const QString& timeline, acc->timelineNames()) {
-            KUrl url(acc->host());
-            url.addPath(m_timelinesPaths[timeline].arg(acc->username()));
+            QUrl url(acc->host());
+            url = url.adjusted(QUrl::StripTrailingSlash);
+            url.setPath(url.path() + '/' + (m_timelinesPaths[timeline].arg(acc->username())));
 
             QOAuth::ParamMap oAuthParams;
             const QString lastActivityId(lastTimelineId(theAccount, timeline));
             if (!lastActivityId.isEmpty()) {
                 oAuthParams.insert("count", QByteArray::number(200));
-                oAuthParams.insert("since", KUrl::toPercentEncoding(lastActivityId));
+                oAuthParams.insert("since", QUrl::toPercentEncoding(lastActivityId));
             } else {
                 oAuthParams.insert("count", QByteArray::number(Choqok::BehaviorSettings::countOfPosts()));
             }
@@ -539,13 +544,14 @@ void PumpIOMicroBlog::fetchFollowing(Choqok::Account* theAccount)
 {
     PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
     if (acc) {
-        KUrl url(acc->host());
-        url.addPath(QString("/api/user/%1/following").arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + '/' + (QString("/api/user/%1/following").arg(acc->username())));
 
         QOAuth::ParamMap oAuthParams;
         oAuthParams.insert("count", QByteArray::number(200));
         if (!acc->following().isEmpty()) {
-            oAuthParams.insert("since", KUrl::toPercentEncoding(acc->following().last()));
+            oAuthParams.insert("since", QUrl::toPercentEncoding(acc->following().last()));
         }
 
         KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
@@ -567,8 +573,9 @@ void PumpIOMicroBlog::fetchLists(Choqok::Account* theAccount)
 {
     PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
     if (acc) {
-        KUrl url(acc->host());
-        url.addPath(QString("/api/user/%1/lists/person").arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + '/' + (QString("/api/user/%1/lists/person").arg(acc->username())));
 
         QOAuth::ParamMap oAuthParams;
         oAuthParams.insert("count", QByteArray::number(200));
@@ -604,8 +611,9 @@ void PumpIOMicroBlog::share(Choqok::Account* theAccount, Choqok::Post* post)
         QJson::Serializer serializer;
         const QByteArray data = serializer.serialize(item);
 
-        KUrl url(acc->host());
-        url.addPath(outboxActivity.arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/json");
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
@@ -637,8 +645,9 @@ void PumpIOMicroBlog::toggleFavorite(Choqok::Account* theAccount, Choqok::Post* 
         QJson::Serializer serializer;
         const QByteArray data = serializer.serialize(item);
 
-        KUrl url(acc->host());
-        url.addPath(outboxActivity.arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/json");
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
@@ -1080,7 +1089,7 @@ void PumpIOMicroBlog::slotUpload(KJob* job)
     }
 }
 
-QString PumpIOMicroBlog::authorizationMetaData(PumpIOAccount* account, const KUrl& url,
+QString PumpIOMicroBlog::authorizationMetaData(PumpIOAccount* account, const QUrl &url,
                                                const QOAuth::HttpMethod& method,
                                                const QOAuth::ParamMap& paramMap) const
 {
@@ -1100,7 +1109,7 @@ void PumpIOMicroBlog::fetchReplies(Choqok::Account* theAccount, const QString& u
             qCDebug(CHOQOK) << "You can only fetch replies from your host!";
             return;
         }
-        KUrl u(url);
+        QUrl u(url);
 
         KIO::StoredTransferJob *job = KIO::storedGet(u, KIO::Reload, KIO::HideProgressInfo);
         if (!job) {
@@ -1319,8 +1328,9 @@ void PumpIOMicroBlog::updatePost(Choqok::Account* theAccount, Choqok::Post* post
         QJson::Serializer serializer;
         const QByteArray data = serializer.serialize(item);
 
-        KUrl url(acc->host());
-        url.addPath(outboxActivity.arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/json");
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));

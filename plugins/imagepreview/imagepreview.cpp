@@ -232,9 +232,9 @@ void ImagePreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pix
     if(!postToParse)
         return;
     QString content = postToParse->content();
-    KUrl imgU(remoteUrl);
+    QUrl imgU(remoteUrl);
     imgU.setScheme("img");
-    QString imgUrl = imgU.prettyUrl();
+    QString imgUrl = imgU.toDisplayString();
 //     imgUrl.replace("http://","img://");
     QString size;
     QPixmap pix = pixmap;

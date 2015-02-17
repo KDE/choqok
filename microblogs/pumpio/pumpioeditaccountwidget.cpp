@@ -34,7 +34,7 @@
 #include <KIO/Job>
 #include <KIO/StoredTransferJob>
 #include <KMessageBox>
-#include <KUrl>
+#include <QUrl>
 
 #include "choqoktools.h"
 #include "accountmanager.h"
@@ -104,7 +104,7 @@ void PumpIOEditAccountWidget::authorizeUser()
         const QString token = oAuthRequest.value(QOAuth::tokenParameterName());
         const QString tokenSecret = oAuthRequest.value(QOAuth::tokenSecretParameterName());
 
-        KUrl oAuthAuthorizeURL(m_account->host() + "/oauth/authorize");
+        QUrl oAuthAuthorizeURL(m_account->host() + "/oauth/authorize");
         oAuthAuthorizeURL.addQueryItem("oauth_token", token);
         Choqok::openUrl(oAuthAuthorizeURL);
         QString verifier = KInputDialog::getText( i18n("PIN"),
@@ -171,7 +171,7 @@ void PumpIOEditAccountWidget::registerClient()
 {
     if (kcfg_webfingerid->text().contains('@')) {
         m_account->setHost("https://" + kcfg_webfingerid->text().split('@')[1]);
-        KUrl url(m_account->host() + "/api/client/register");
+        QUrl url(m_account->host() + "/api/client/register");
         QByteArray data("{"
                         " \"type\": \"client_associate\", "
                         " \"application_type\": \"native\", "

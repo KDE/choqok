@@ -52,14 +52,14 @@ ImageShack::~ImageShack()
 {
 }
 
-void ImageShack::upload(const KUrl& localUrl, const QByteArray& medium, const QByteArray& mediumType)
+void ImageShack::upload(const QUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType)
 {
     qCDebug(CHOQOK);
     if( !mediumType.startsWith(QByteArray("image/")) ){
         Q_EMIT uploadingFailed(localUrl, i18n("Just supporting image uploading"));
         return;
     }
-    KUrl url("http://www.imageshack.us/upload_api.php");
+    QUrl url("http://www.imageshack.us/upload_api.php");
     QMap<QString, QByteArray> formdata;
     formdata["key"] = apiKey;
     formdata["rembar"] = "1";

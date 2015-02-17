@@ -30,8 +30,6 @@
 #include <QPair>
 #include <QRegExp>
 
-#include <KUrl>
-
 #include "account.h"
 #include "accountmanager.h"
 #include "choqoktypes.h"

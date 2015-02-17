@@ -97,7 +97,7 @@ void LongUrl::processJobResults(KJob* job)
     }
     QVariantMap m = v.toMap();
     QString longUrl = m.value(QLatin1String("long-url")).toString();
-    replaceUrl(takeJob(job), KUrl(mShortUrls.take(job)), longUrl);
+    replaceUrl(takeJob(job), QUrl(mShortUrls.take(job)), longUrl);
 }
 
 void LongUrl::startParsing()
@@ -115,7 +115,7 @@ void LongUrl::startParsing()
         QTimer::singleShot(500, this, SLOT(startParsing()));
 }
 
-void LongUrl::replaceUrl(LongUrl::PostWidgetPointer post, const KUrl& fromUrl, const KUrl& toUrl)
+void LongUrl::replaceUrl(LongUrl::PostWidgetPointer post, const QUrl &fromUrl, const QUrl& toUrl)
 {
     qCDebug(CHOQOK) << "Replacing URL: " << fromUrl << " --> " << toUrl;
     if(post) {
@@ -132,7 +132,7 @@ void LongUrl::sheduleSupportedServicesFetch()
 {
     mServicesAreFetched = true;
     mServicesData = QSharedPointer<QByteArray>(new QByteArray());
-    KIO::TransferJob* job = KIO::get(KUrl(baseLongUrlDorComUrl+"services?format=json"), KIO::NoReload, KIO::HideProgressInfo);
+    KIO::TransferJob* job = KIO::get(QUrl(baseLongUrlDorComUrl+"services?format=json"), KIO::NoReload, KIO::HideProgressInfo);
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)), SLOT(servicesDataReceived(KIO::Job*,QByteArray)));
     connect(job, SIGNAL(result(KJob*)), SLOT(servicesJobResult(KJob*)));
 }
@@ -161,9 +161,9 @@ bool LongUrl::isServiceSupported(const QString& host)
 
 KJob* LongUrl::sheduleParsing(const QString& shortUrl)
 {
-    KUrl url(shortUrl);
+    QUrl url(shortUrl);
     if (isServiceSupported(url.host())) {
-        KUrl request = KUrl(baseLongUrlDorComUrl+QLatin1String("expand"));
+        QUrl request = QUrl(baseLongUrlDorComUrl+QLatin1String("expand"));
         request.addQueryItem(QLatin1String("url"), url.url());
         request.addQueryItem(QLatin1String("format"), QLatin1String("json"));
         request.addQueryItem(QLatin1String("user-agent"), QLatin1String("Choqok"));

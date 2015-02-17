@@ -27,7 +27,6 @@
 
 #include <plugin.h>
 #include <qqueue.h>
-#include <KUrl>
 #include <QPointer>
 
 class QMenu;

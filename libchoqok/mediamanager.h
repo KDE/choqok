@@ -27,8 +27,7 @@
 #include <QObject>
 #include <QMap>
 #include <QPixmap>
-
-#include <KUrl>
+#include <QUrl>
 
 #include "choqok_export.h"
 
@@ -88,7 +87,7 @@ public:
     @see mediumUploaded()
     @see mediumUploadFailed()
     */
-    void uploadMedium( const KUrl& localUrl, const QString& pluginId = QString() );
+    void uploadMedium( const QUrl& localUrl, const QString& pluginId = QString() );
 
     /**
     Create and return a byte array containing a multipart/form-data to send with HTTP POST request
@@ -118,8 +117,8 @@ Q_SIGNALS:
     void fetchError( const QString &remoteUrl, const QString &errMsg );
     void imageFetched( const QString &remoteUrl, const QPixmap &pixmap );
 
-    void mediumUploaded( const KUrl &localUrl, const QString &remoteUrl );
-    void mediumUploadFailed( const KUrl &localUrl, const QString &errorMessage );
+    void mediumUploaded( const QUrl &localUrl, const QString &remoteUrl );
+    void mediumUploadFailed( const QUrl &localUrl, const QString &errorMessage );
 
 protected Q_SLOTS:
     void slotImageFetched( KJob *job );

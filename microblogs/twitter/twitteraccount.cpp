@@ -32,7 +32,7 @@ class TwitterAccount::Private
 {
 public:
     QString uploadHost;
-    KUrl uploadUrl;
+    QUrl uploadUrl;
 //     QStringList lists;
 };
 
@@ -64,12 +64,12 @@ void TwitterAccount::setApi(const QString &api)
     generateUploadUrl();
 }
 
-KUrl TwitterAccount::uploadUrl() const
+QUrl TwitterAccount::uploadUrl() const
 {
     return d->uploadUrl;
 }
 
-void TwitterAccount::setUploadUrl(const KUrl &url)
+void TwitterAccount::setUploadUrl(const QUrl &url)
 {
     d->uploadUrl = url;
 }
@@ -88,9 +88,10 @@ void TwitterAccount::generateUploadUrl()
 {
     if(!uploadHost().startsWith(QLatin1String("http")))//NOTE: This is for compatibility by prev versions. remove it after 1.0 release
         setUploadHost(uploadHost().prepend("http://"));
-    KUrl url(uploadHost());
+    QUrl url(uploadHost());
 
-    url.addPath(api());
+    url = url.adjusted(QUrl::StripTrailingSlash);
+    url.setPath(url.path() + '/' + (api()));
     setUploadUrl(url);
 }
 

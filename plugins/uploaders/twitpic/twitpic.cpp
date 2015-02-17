@@ -61,7 +61,7 @@ Twitpic::~Twitpic()
 
 }
 
-void Twitpic::upload(const KUrl& localUrl, const QByteArray& medium, const QByteArray& mediumType)
+void Twitpic::upload(const QUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType)
 {
     TwitpicSettings::self()->readConfig();
     QString alias = TwitpicSettings::alias();
@@ -74,7 +74,7 @@ void Twitpic::upload(const KUrl& localUrl, const QByteArray& medium, const QByte
     if(!acc)
         return;
     ///Documentation: http://dev.twitpic.com/
-    KUrl url( "http://api.twitpic.com/2/upload.json" );
+    QUrl url( "http://api.twitpic.com/2/upload.json" );
 
     QMap<QString, QByteArray> formdata;
     formdata["key"] = "b66d1f2dc90b53ca1fcd75319cda0b72";

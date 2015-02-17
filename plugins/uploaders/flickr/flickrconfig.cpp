@@ -133,7 +133,7 @@ void FlickrConfig::getFrob()
 {
     qCDebug(CHOQOK)<<"Get Frob";
     m_frob.clear();
-    KUrl url( "http://flickr.com/services/rest/" );
+    QUrl url( "http://flickr.com/services/rest/" );
     url.addQueryItem( "method", "flickr.auth.getFrob" );
     url.addQueryItem( "api_key", apiKey.toUtf8() );
     url.addQueryItem( "api_sig",  createSign( "methodflickr.auth.getFrob" ) );
@@ -191,7 +191,7 @@ void FlickrConfig::getToken()
 {
     qCDebug(CHOQOK)<<"Get Token";
     m_token.clear();
-    KUrl url( "http://flickr.com/services/rest/" );
+    QUrl url( "http://flickr.com/services/rest/" );
     url.addQueryItem( "method", "flickr.auth.getToken" );
     url.addQueryItem( "api_key", apiKey.toUtf8() );
     url.addQueryItem( "frob", m_frob.toUtf8() );

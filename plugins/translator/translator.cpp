@@ -71,7 +71,7 @@ void Translator::translate()
     if(!wd || lang.isEmpty())
         return;
 
-    KUrl url ( "https://www.googleapis.com/language/translate/v2");
+    QUrl url ( "https://www.googleapis.com/language/translate/v2");
     url.addQueryItem("key", "AIzaSyBqB4DN7CRIvMl4NKmffC-QlFilGVVRsmI");
     url.addQueryItem("q", wd->content());
     url.addQueryItem("format", "html");

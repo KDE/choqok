@@ -56,9 +56,9 @@ QString Is_gd::shorten( const QString& url )
 
     Is_gd_Settings::self()->readConfig();
 
-    KUrl reqUrl( "http://is.gd/create.php" );
+    QUrl reqUrl( "http://is.gd/create.php" );
     reqUrl.addQueryItem( "format", "json" );
-    reqUrl.addQueryItem( "url", KUrl( url ).url() );
+    reqUrl.addQueryItem( "url", QUrl( url ).url() );
     if (Is_gd_Settings::logstats()) {
         reqUrl.addQueryItem( "logstats", "true");
     }

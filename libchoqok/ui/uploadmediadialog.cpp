@@ -51,7 +51,7 @@ public:
     Ui::UploadMediaBase ui;
     QMap <QString, KPluginInfo> availablePlugins;
     QList<KCModuleProxy*> moduleProxyList;
-    KUrl localUrl;
+    QUrl localUrl;
     QPointer<QProgressBar> progress;
 };
 
@@ -71,16 +71,16 @@ UploadMediaDialog::UploadMediaDialog(QWidget* parent, const QString& url)
     if (url.isEmpty())
       d->ui.imageUrl->button()->click();
     else
-      d->ui.imageUrl->setUrl(KUrl(url));
+      d->ui.imageUrl->setUrl(QUrl(url));
     connect(d->ui.uploaderPlugin, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
     d->ui.aboutPlugin->setIcon(QIcon::fromTheme("help-about"));
     d->ui.configPlugin->setIcon(QIcon::fromTheme("configure"));
     connect( d->ui.aboutPlugin, SIGNAL(clicked(bool)), SLOT(slotAboutClicked()) );
     connect( d->ui.configPlugin, SIGNAL(clicked(bool)), SLOT(slotConfigureClicked()) );
-    connect(Choqok::MediaManager::self(), SIGNAL(mediumUploaded(KUrl,QString)),
-            SLOT(slotMediumUploaded(KUrl,QString)));
-    connect(Choqok::MediaManager::self(), SIGNAL(mediumUploadFailed(KUrl,QString)),
-            SLOT(slotMediumUploadFailed(KUrl,QString)));
+    connect(Choqok::MediaManager::self(), SIGNAL(mediumUploaded(QUrl,QString)),
+            SLOT(slotMediumUploaded(QUrl,QString)));
+    connect(Choqok::MediaManager::self(), SIGNAL(mediumUploadFailed(QUrl,QString)),
+            SLOT(slotMediumUploadFailed(QUrl,QString)));
 
 }
 
@@ -234,7 +234,7 @@ void Choqok::UI::UploadMediaDialog::slotConfigureClicked()
     }
 }
 
-void Choqok::UI::UploadMediaDialog::slotMediumUploaded(const KUrl& localUrl, const QString& remoteUrl)
+void Choqok::UI::UploadMediaDialog::slotMediumUploaded(const QUrl &localUrl, const QString& remoteUrl)
 {
     if(d->localUrl == localUrl && showed){
         qCDebug(CHOQOK);
@@ -244,7 +244,7 @@ void Choqok::UI::UploadMediaDialog::slotMediumUploaded(const KUrl& localUrl, con
     }
 }
 
-void Choqok::UI::UploadMediaDialog::slotMediumUploadFailed(const KUrl& localUrl, const QString& errorMessage)
+void Choqok::UI::UploadMediaDialog::slotMediumUploadFailed(const QUrl &localUrl, const QString& errorMessage)
 {
     if(d->localUrl == localUrl && showed){
         showed = false;
@@ -257,6 +257,6 @@ void Choqok::UI::UploadMediaDialog::slotMediumUploadFailed(const KUrl& localUrl,
 
 void Choqok::UI::UploadMediaDialog::slotMediumChanged(const QString& url)
 {
-    d->ui.previewer->showPreview(KUrl(url));
+    d->ui.previewer->showPreview(QUrl(url));
 }
 

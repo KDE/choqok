@@ -45,7 +45,7 @@ QString TightUrl::shorten( const QString &url )
     qCDebug(CHOQOK)<<"Using 2tu.us";
     QUrl reqUrl( "http://2tu.us/" );
     reqUrl.addQueryItem( "save", "y" );
-    reqUrl.addQueryItem( "url", KUrl( url ).url() );
+    reqUrl.addQueryItem( "url", QUrl( url ).url() );
 
     QEventLoop loop;
     KIO::StoredTransferJob *job = KIO::storedGet( reqUrl, KIO::Reload, KIO::HideProgressInfo );

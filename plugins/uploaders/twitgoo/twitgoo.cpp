@@ -61,7 +61,7 @@ Twitgoo::~Twitgoo()
 
 }
 
-void Twitgoo::upload ( const KUrl& localUrl, const QByteArray& medium, const QByteArray& mediumType )
+void Twitgoo::upload ( const QUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType )
 {
     TwitgooSettings::self()->readConfig();
     QString alias = TwitgooSettings::alias();
@@ -74,7 +74,7 @@ void Twitgoo::upload ( const KUrl& localUrl, const QByteArray& medium, const QBy
     if ( !acc )
         return;
 
-    KUrl url ( "http://twitgoo.com/api/upload" );
+    QUrl url ( "http://twitgoo.com/api/upload" );
 
     QMap<QString, QByteArray> formdata;
     formdata["source"] = "Choqok";

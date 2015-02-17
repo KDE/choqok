@@ -61,7 +61,7 @@ Posterous::~Posterous()
 
 }
 
-QString Posterous::getAuthToken ( const KUrl& localUrl )
+QString Posterous::getAuthToken ( const QUrl &localUrl )
 {
     qCDebug(CHOQOK) << "Try to get token";
     QUrl url ( "http://posterous.com/api/2/auth/token" );
@@ -95,7 +95,7 @@ QString Posterous::getAuthToken ( const KUrl& localUrl )
     return QString();
 }
 
-void Posterous::upload ( const KUrl& localUrl, const QByteArray& medium, const QByteArray& mediumType )
+void Posterous::upload ( const QUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType )
 {
     PosterousSettings::self()->readConfig();
     KIO::StoredTransferJob *job = 0;
@@ -104,7 +104,7 @@ void Posterous::upload ( const KUrl& localUrl, const QByteArray& medium, const Q
         QString pass = Choqok::PasswordManager::self()->readPassword ( QString ( "posterous_%1" ).arg ( PosterousSettings::login() ) );
         QString token = getAuthToken ( localUrl );
         if ( !token.isEmpty() ) {
-            KUrl url ( "http://posterous.com/api/2/users/me/sites/primary/posts" );
+            QUrl url ( "http://posterous.com/api/2/users/me/sites/primary/posts" );
             QMap<QString, QByteArray> formdata;
             formdata["post[title]"] = QByteArray();
             formdata["post[body]"] = QByteArray();
@@ -135,7 +135,7 @@ void Posterous::upload ( const KUrl& localUrl, const QByteArray& medium, const Q
         if ( !acc )
             return;
 
-        KUrl url ( "http://posterous.com/api2/upload.json" );
+        QUrl url ( "http://posterous.com/api2/upload.json" );
 
         QMap<QString, QByteArray> formdata;
         formdata["source"] = "Choqok";

@@ -40,7 +40,7 @@ public:
     Flickr( QObject* parent, const QList< QVariant >& args );
     ~Flickr();
 
-    virtual void upload(const KUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType);
+    virtual void upload(const QUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType);
     QString base58encode( quint64 );
     QByteArray createSign( QByteArray );
     
@@ -48,7 +48,7 @@ protected Q_SLOTS:
     void slotUpload( KJob *job );
 
 private:
-    QMap<KJob*, KUrl> mUrlMap;
+    QMap<KJob*, QUrl> mUrlMap;
 };
 
 #endif //FLICKR_H

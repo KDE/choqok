@@ -29,8 +29,8 @@
 
 #include <QPointer>
 #include <QQueue>
+#include <QUrl>
 
-#include <KUrl>
 #include <KIO/Job>
 #include <KIO/NetAccess>
 
@@ -61,7 +61,7 @@ protected Q_SLOTS:
     void slotAddNewPostWidget( Choqok::UI::PostWidget *newWidget );
     void startParsing();
     void slotImageFetched(const QString &remoteUrl,const QPixmap &pixmap);
-    void slotNewUnshortenedUrl(Choqok::UI::PostWidget* widget, const KUrl& fromUrl, const KUrl& toUrl);
+    void slotNewUnshortenedUrl(Choqok::UI::PostWidget* widget, const QUrl& fromUrl, const QUrl& toUrl);
 
 private:
     enum ParserState{ Running = 0, Stopped };

@@ -145,7 +145,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
     QString scheme = url.scheme();
     QAction * ret;
     if( scheme == "tag" ) {
-        QString unpcode = KUrl::fromPunycode(url.host().toUtf8());
+        QString unpcode = QUrl::fromPunycode(url.host().toUtf8());
         unpcode.remove('.');
         unpcode.remove('-');
         unpcode.remove('_');
@@ -164,7 +164,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
                                                         unpcode,
                                                         LaconicaSearch::ReferenceHashtag);
         } else if(ret == openInBrowser){
-            Choqok::openUrl(QUrl(QString(d->account->homepageUrl().prettyUrl(KUrl::RemoveTrailingSlash)) +
+            Choqok::openUrl(QUrl(QString(d->account->homepageUrl().prettyUrl(QUrl::RemoveTrailingSlash)) +
                                   "tag/" + unpcode));
         }
     } else if( scheme == "group" ) {
@@ -182,7 +182,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
                                                         url.host(),
                                                         LaconicaSearch::ReferenceGroup);
         } else if(ret == openInBrowser){
-            Choqok::openUrl(QUrl(QString(d->account->homepageUrl().prettyUrl(KUrl::RemoveTrailingSlash)) +
+            Choqok::openUrl(QUrl(QString(d->account->homepageUrl().prettyUrl(QUrl::RemoveTrailingSlash)) +
                                   "group/" + url.host()));
         }
     } else if(scheme == "user") {

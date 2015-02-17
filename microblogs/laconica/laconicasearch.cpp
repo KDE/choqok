@@ -66,7 +66,7 @@ LaconicaSearch::~LaconicaSearch()
 
 }
 
-KUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
+QUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
                               QString sinceStatusId, uint count, uint page)
 {
     qCDebug(CHOQOK);
@@ -90,12 +90,13 @@ KUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
             break;
     };
 
-    KUrl url;
+    QUrl url;
     TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount*>(searchInfo.account);
     Q_ASSERT(theAccount);
     if( searchInfo.option == ReferenceHashtag ) {
         url = theAccount->apiUrl();
-        url.addPath("/search.atom");
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + '/' + ("/search.atom"));
         url.addQueryItem("q", formattedQuery);
         if( !sinceStatusId.isEmpty() )
             url.addQueryItem( "since_id", sinceStatusId );
@@ -106,8 +107,9 @@ KUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
         if( page > 1 )
             url.addQueryItem( "page", QString::number( page ) );
     } else {
-        url = theAccount->apiUrl().url(KUrl::AddTrailingSlash).remove("api/", Qt::CaseInsensitive);
-        url.addPath( formattedQuery );
+        url = theAccount->apiUrl().url(QUrl::AddTrailingSlash).remove("api/", Qt::CaseInsensitive);
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + '/' + ( formattedQuery ));
     }
     return url;
 }
@@ -232,7 +234,7 @@ QList< Choqok::Post* > LaconicaSearch::parseAtom(const QByteArray& buffer)
                     userNode = userNode.nextSibling();
                 }
             } else if ( elm.tagName() == "twitter:source" ){
-                status->source = KUrl::fromPercentEncoding(elm.text().toAscii());
+                status->source = QUrl::fromPercentEncoding(elm.text().toAscii());
             }
             entryNode = entryNode.nextSibling();
         }

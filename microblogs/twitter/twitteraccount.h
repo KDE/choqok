@@ -25,6 +25,8 @@
 #ifndef TWITTERACCOUNT_H
 #define TWITTERACCOUNT_H
 
+#include <QUrl>
+
 #include "account.h"
 
 #include "twitterapihelper/twitterapiaccount.h"
@@ -43,13 +45,13 @@ public:
 
     void setApi(const QString &api);
 
-    KUrl uploadUrl() const;
+    QUrl uploadUrl() const;
 
     QString uploadHost() const;
     void setUploadHost(const QString &uploadHost);
 
 protected:
-    void setUploadUrl(const KUrl &url);
+    void setUploadUrl(const QUrl &url);
     void generateUploadUrl();
 
 

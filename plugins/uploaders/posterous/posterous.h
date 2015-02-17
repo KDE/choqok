@@ -36,13 +36,13 @@ public:
     Posterous ( QObject* parent, const QList< QVariant >& args );
     ~Posterous();
 
-    virtual void upload ( const KUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType );
-    QString getAuthToken(const KUrl& localUrl);
+    virtual void upload ( const QUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType );
+    QString getAuthToken(const QUrl& localUrl);
 protected Q_SLOTS:
     void slotUpload ( KJob *job );
 
 private:
-    QMap<KJob*, KUrl> mUrlMap;
+    QMap<KJob*, QUrl> mUrlMap;
 };
 
 #endif // POSTEROUS_H

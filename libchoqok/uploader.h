@@ -25,7 +25,7 @@
 #ifndef UPLOADER_H
 #define UPLOADER_H
 
-#include <KUrl>
+#include <QUrl>
 
 #include "plugin.h"
 
@@ -44,11 +44,11 @@ public:
 
     /*virtual void upload( const QString &localUrl, const QByteArray &mediumType,
                             const QString &optionalMessage = QString() )*/;
-    virtual void upload( const KUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType) = 0;
+    virtual void upload( const QUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType) = 0;
 
 Q_SIGNALS:
-    void mediumUploaded( const KUrl &localUrl, const QString &remoteUrl );
-    void uploadingFailed( const KUrl &localUrl, const QString &errorMessage );
+    void mediumUploaded( const QUrl &localUrl, const QString &remoteUrl );
+    void uploadingFailed( const QUrl &localUrl, const QString &errorMessage );
 
 protected:
     Uploader( const KComponentData &instance, QObject *parent );

@@ -60,9 +60,9 @@ VideoPreview::VideoPreview(QObject* parent, const QList< QVariant >& )
              this,
              SLOT(slotAddNewPostWidget(Choqok::UI::PostWidget*)) );
     connect( Choqok::ShortenManager::self(),
-             SIGNAL(newUnshortenedUrl(Choqok::UI::PostWidget*,KUrl,KUrl)),
+             SIGNAL(newUnshortenedUrl(Choqok::UI::PostWidget*,QUrl,QUrl)),
              this,
-             SLOT(slotNewUnshortenedUrl(Choqok::UI::PostWidget*,KUrl,KUrl)) );
+             SLOT(slotNewUnshortenedUrl(Choqok::UI::PostWidget*,QUrl,QUrl)) );
 }
 
 VideoPreview::~VideoPreview()
@@ -79,12 +79,12 @@ void VideoPreview::slotAddNewPostWidget(Choqok::UI::PostWidget* newWidget)
     }
 }
 
-void VideoPreview::slotNewUnshortenedUrl(Choqok::UI::PostWidget* widget, const KUrl &fromUrl, const KUrl &toUrl)
+void VideoPreview::slotNewUnshortenedUrl(Choqok::UI::PostWidget* widget, const QUrl &fromUrl, const QUrl &toUrl)
 {
 //     qCDebug(CHOQOK) << "I have to consider: " << fromUrl << " -> " << toUrl;
     Q_UNUSED(fromUrl)
     if (mYouTubeRegExp.indexIn(toUrl.prettyUrl()) != -1) {
-        KUrl thisurl(mYouTubeRegExp.cap(0));
+        QUrl thisurl(mYouTubeRegExp.cap(0));
         QString thumbUrl = parseYoutube(thisurl.queryItemValue("v"), widget);
         connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
                 SLOT(slotImageFetched(QString,QPixmap)));
@@ -141,7 +141,7 @@ void VideoPreview::parse(QPointer<Choqok::UI::PostWidget> postToParse)
         }
         else if (pos2>=0) {
             pos = pos2 + mYouTubeRegExp.matchedLength();
-            KUrl thisurl(mYouTubeRegExp.cap(0));
+            QUrl thisurl(mYouTubeRegExp.cap(0));
             thumbList << parseYoutube(thisurl.queryItemValue("v"), postToParse);
             qCDebug(CHOQOK) << "YouTube:) " << mYouTubeRegExp.capturedTexts();
         }
@@ -268,9 +268,9 @@ void VideoPreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pix
     if (!postToParse)
         return;
     QString content = postToParse->content();
-    KUrl imgU(remoteUrl);
+    QUrl imgU(remoteUrl);
     imgU.setScheme("img");
-    QString imgUrl = imgU.prettyUrl();
+    QString imgUrl = imgU.toDisplayString();
     postToParse->mainWidget()->document()->addResource(QTextDocument::ImageResource, imgUrl, pixmap);
     
     qCDebug(CHOQOK) << QRegExp('>'+baseUrl+'<').pattern();

@@ -52,7 +52,7 @@ QString Bit_ly::shorten( const QString& url )
     QByteArray data;
     QString login = "choqok";
     QString apiKey = "R_bdd1ae8b6191dd36e13fc77ca1d4f27f";
-    KUrl reqUrl( "http://api.bit.ly/v3/shorten" );
+    QUrl reqUrl( "http://api.bit.ly/v3/shorten" );
     Bit_ly_Settings::self()->readConfig();
     QString userApiKey = Choqok::PasswordManager::self()->readPassword( QString("bitly_%1")
                                                        .arg( Bit_ly_Settings::login() ) );
@@ -66,7 +66,7 @@ QString Bit_ly::shorten( const QString& url )
 
     reqUrl.addQueryItem( "login", login.toUtf8() );
     reqUrl.addQueryItem( "apiKey", apiKey.toUtf8() );
-    reqUrl.addQueryItem( "longUrl", KUrl( url ).url() );
+    reqUrl.addQueryItem( "longUrl", QUrl( url ).url() );
     reqUrl.addQueryItem( "format", "txt" );
 
     KIO::Job* job = KIO::get( reqUrl, KIO::Reload, KIO::HideProgressInfo );
