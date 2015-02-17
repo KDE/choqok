@@ -24,22 +24,21 @@
 #include "pumpioeditaccountwidget.h"
 
 #include <QCheckBox>
+#include <QJsonDocument>
 #include <QEventLoop>
+#include <QUrl>
 
-#include <qjson/parser.h>
-
-#include "choqokdebug.h"
 #include <KInputDialog>
 #include <KIO/AccessManager>
 #include <KIO/Job>
 #include <KIO/StoredTransferJob>
 #include <KMessageBox>
-#include <QUrl>
 
 #include "choqoktools.h"
 #include "accountmanager.h"
 
 #include "pumpioaccount.h"
+#include "pumpiodebug.h"
 #include "pumpiomicroblog.h"
 
 PumpIOEditAccountWidget::PumpIOEditAccountWidget(PumpIOMicroBlog* microblog,
@@ -193,12 +192,12 @@ void PumpIOEditAccountWidget::registerClient()
             return;
         } else {
             KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>(job);
-            bool ok;
-            QJson::Parser parser;
-            QVariantMap result = parser.parse(stj->data(), &ok).toMap();
-            if (ok) {
-                m_account->setConsumerKey(result.value("client_id").toString());
-                m_account->setConsumerSecret(result.value("client_secret").toString());
+
+            const QJsonDocument json = QJsonDocument::fromJson(stj->data());
+            if (!json.isNull()) {
+                const QVariantMap result = json.toVariant().toMap();
+                m_account->setConsumerKey(result["client_id"].toString());
+                m_account->setConsumerSecret(result["client_secret"].toString());
             } else {
                 qCDebug(CHOQOK) << "Cannot parse JSON reply";
             }

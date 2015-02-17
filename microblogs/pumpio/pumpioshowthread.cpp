@@ -23,9 +23,9 @@
 
 #include "pumpioshowthread.h"
 
-#include "choqokdebug.h"
-#include <KLocale>
+#include <KLocalizedString>
 
+#include "pumpiodebug.h"
 #include "pumpiomicroblog.h"
 #include "pumpiopost.h"
 #include "pumpiopostwidget.h"

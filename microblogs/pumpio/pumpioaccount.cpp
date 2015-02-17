@@ -171,7 +171,7 @@ void PumpIOAccount::setLists(const QVariantList lists)
     publicCollection.insert("name", "Public");
     d->lists.append(publicCollection);
     QVariantMap followersCollection;
-    followersCollection.insert("id", d->host + "/api/user/" + username() + "/followers");
+    followersCollection.insert("id", QString(d->host + "/api/user/" + username() + "/followers"));
     followersCollection.insert("name", "Followers");
     d->lists.append(followersCollection);
 }

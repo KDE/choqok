@@ -27,12 +27,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QFrame>
 #include <QLayout>
 
-#include "choqokdebug.h"
-
 #include "account.h"
 #include "timelinewidget.h"
 
 #include "pumpiocomposerwidget.h"
+#include "pumpiodebug.h"
 
 PumpIOMicroBlogWidget::PumpIOMicroBlogWidget(Choqok::Account *account, QWidget* parent)
                                             : MicroBlogWidget::MicroBlogWidget(account, parent)

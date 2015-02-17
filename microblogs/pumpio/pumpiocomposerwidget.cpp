@@ -29,7 +29,6 @@
 #include <QSpacerItem>
 #include <QVBoxLayout>
 
-#include "choqokdebug.h"
 #include <KFileDialog>
 #include <KLocalizedString>
 
@@ -37,6 +36,7 @@
 #include "choqoktextedit.h"
 #include "shortenmanager.h"
 
+#include "pumpiodebug.h"
 #include "pumpiomicroblog.h"
 #include "pumpiopost.h"
 

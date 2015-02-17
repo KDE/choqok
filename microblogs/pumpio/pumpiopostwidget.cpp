@@ -24,10 +24,9 @@
 
 #include "pumpiopostwidget.h"
 
+#include <QAction>
 #include <QMenu>
 
-#include <QAction>
-#include "choqokdebug.h"
 #include <KLocalizedString>
 #include <KPushButton>
 
@@ -35,6 +34,7 @@
 #include "textbrowser.h"
 
 #include "pumpioaccount.h"
+#include "pumpiodebug.h"
 #include "pumpiomicroblog.h"
 #include "pumpiopost.h"
 #include "pumpioshowthread.h"

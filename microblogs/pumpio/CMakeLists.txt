@@ -6,6 +6,7 @@ include_directories(
 set(choqok_pumpio_SRCS
     pumpioaccount.cpp
     pumpiocomposerwidget.cpp
+    pumpiodebug.cpp
     pumpioeditaccountwidget.cpp
     pumpiomessagedialog.cpp
     pumpiomicroblog.cpp
@@ -23,10 +24,20 @@ ki18n_wrap_ui(choqok_pumpio_SRCS
 
 add_library(choqok_pumpio MODULE ${choqok_pumpio_SRCS})
 
-target_link_libraries(choqok_pumpio choqok
+kcoreaddons_desktop_to_json(choqok_pumpio choqok_pumpio.desktop)
+
+target_link_libraries(choqok_pumpio
+PUBLIC
+    Qt5::Core
+    Qt5::Gui
+    Qt5::Widgets
+    KF5::I18n
     KF5::KIOCore
+    KF5::WidgetsAddons
+    KF5::KDELibs4Support
+    qca-qt5
     ${QTOAUTH_LIBRARY}
-    ${QJSON_LIBRARY}
+    choqok
 )
 
 install(TARGETS choqok_pumpio DESTINATION ${PLUGIN_INSTALL_DIR})

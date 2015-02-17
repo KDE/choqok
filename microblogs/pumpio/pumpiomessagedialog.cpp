@@ -25,11 +25,11 @@
 
 #include <QPointer>
 
-#include "choqokdebug.h"
 #include <KFileDialog>
 #include <KPushButton>
 
 #include "pumpioaccount.h"
+#include "pumpiodebug.h"
 #include "pumpiomicroblog.h"
 #include "pumpiopost.h"
 

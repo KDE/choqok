@@ -24,15 +24,12 @@
 
 #include "pumpiomicroblog.h"
 
+#include <QAction>
 #include <QFile>
+#include <QJsonDocument>
 #include <QMenu>
 #include <QTextDocument>
 
-#include <qjson/parser.h>
-#include <qjson/serializer.h>
-
-#include <QAction>
-#include "choqokdebug.h"
 #include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/StoredTransferJob>
@@ -45,6 +42,7 @@
 
 #include "pumpioaccount.h"
 #include "pumpiocomposerwidget.h"
+#include "pumpiodebug.h"
 #include "pumpioeditaccountwidget.h"
 #include "pumpiomessagedialog.h"
 #include "pumpiomicroblogwidget.h"
@@ -59,8 +57,7 @@ public:
     int countOfTimelinesToSave;
 };
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < PumpIOMicroBlog > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_pumpio" ) )
+K_PLUGIN_FACTORY_WITH_JSON( MyPluginFactory, "choqok_pumpio.json", registerPlugin < PumpIOMicroBlog > (); )
 
 const QString PumpIOMicroBlog::inboxActivity("/api/user/%1/inbox");
 const QString PumpIOMicroBlog::outboxActivity("/api/user/%1/feed");
@@ -68,7 +65,7 @@ const QString PumpIOMicroBlog::outboxActivity("/api/user/%1/feed");
 const QString PumpIOMicroBlog::PublicCollection("http://activityschema.org/collection/public");
 
 PumpIOMicroBlog::PumpIOMicroBlog(QObject* parent, const QVariantList& args):
-    MicroBlog(MyPluginFactory::componentData(), parent), d(new Private)
+    MicroBlog(QStringLiteral("Pump.IO") , parent), d(new Private)
 {
     Q_UNUSED(args)
     setServiceName("Pump.io");
@@ -198,8 +195,7 @@ void PumpIOMicroBlog::createPost(Choqok::Account* theAccount, Choqok::Post* post
         item.insert("to", to);
         item.insert("cc", cc);
 
-        QJson::Serializer serializer;
-        const QByteArray data = serializer.serialize(item);
+        const QByteArray data = QJsonDocument::fromVariant(item).toBinaryData();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
@@ -243,8 +239,7 @@ void PumpIOMicroBlog::createReply(Choqok::Account* theAccount, PumpIOPost* post)
         item.insert("verb", "post");
         item.insert("object", object);
 
-        QJson::Serializer serializer;
-        const QByteArray data = serializer.serialize(item);
+        const QByteArray data = QJsonDocument::fromVariant(item).toBinaryData();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
@@ -349,8 +344,7 @@ void PumpIOMicroBlog::removePost(Choqok::Account* theAccount, Choqok::Post* post
         item.insert("verb", "delete");
         item.insert("object", object);
 
-        QJson::Serializer serializer;
-        const QByteArray data = serializer.serialize(item);
+        const QByteArray data = QJsonDocument::fromVariant(item).toBinaryData();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
@@ -377,7 +371,7 @@ QList< Choqok::Post* > PumpIOMicroBlog::loadTimeline(Choqok::Account* account,
     QList< Choqok::Post* > list;
     const QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(),
                                                                                 timelineName);
-    const KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
+    const KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, QStandardPaths::DataLocation );
     const QStringList tmpList = postsBackup.groupList();
 
     // don't load old archives
@@ -452,7 +446,7 @@ void PumpIOMicroBlog::saveTimeline(Choqok::Account* account, const QString& time
 {
     const QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(),
                                                                                 timelineName);
-    KConfig postsBackup("choqok/" + fileName, KConfig::NoGlobals, "data");
+    KConfig postsBackup("choqok/" + fileName, KConfig::NoGlobals, QStandardPaths::DataLocation);
 
     ///Clear previous data:
     Q_FOREACH (const QString& group, postsBackup.groupList()) {
@@ -608,8 +602,7 @@ void PumpIOMicroBlog::share(Choqok::Account* theAccount, Choqok::Post* post)
         item.insert("verb", "share");
         item.insert("object", object);
 
-        QJson::Serializer serializer;
-        const QByteArray data = serializer.serialize(item);
+        const QByteArray data = QJsonDocument::fromVariant(item).toBinaryData();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
@@ -642,8 +635,7 @@ void PumpIOMicroBlog::toggleFavorite(Choqok::Account* theAccount, Choqok::Post* 
         item.insert("verb", post->isFavorited ? "unfavorite" : "favorite");
         item.insert("object", object);
 
-        QJson::Serializer serializer;
-        const QByteArray data = serializer.serialize(item);
+        const QByteArray data = QJsonDocument::fromVariant(item).toBinaryData();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
@@ -691,10 +683,10 @@ void PumpIOMicroBlog::slotCreatePost(KJob* job)
         qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     } else {
         KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantMap reply = parser.parse(j->data(), &ok).toMap();
-        if (ok) {
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const QVariantMap reply = json.toVariant().toMap();
             if (!reply["object"].toMap().value("id").toString().isEmpty()) {
                 Choqok::NotifyManager::success(i18n("New post submitted successfully"));
                 ret = 0;
@@ -752,10 +744,10 @@ void PumpIOMicroBlog::slotFetchPost(KJob* job)
         qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     } else {
         KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantMap reply = parser.parse(j->data(), &ok).toMap();
-        if (ok) {
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const QVariantMap reply = json.toVariant().toMap();
             PumpIOPost* post = new PumpIOPost;
             readPost(reply, post);
             ret = 0;
@@ -789,10 +781,10 @@ void PumpIOMicroBlog::slotFetchReplies(KJob* job)
         qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     } else {
         KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantMap reply = parser.parse(j->data(), &ok).toMap();
-        if (ok) {
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const QVariantMap reply = json.toVariant().toMap();
             const QVariantList items = reply["items"].toList();
             for (int i = items.size() - 1; i >= 0; i--) {
                 QVariantMap item = items.at(i).toMap();
@@ -836,10 +828,10 @@ void PumpIOMicroBlog::slotFollowing(KJob* job)
             i18n("Following list for account %1 has been updated.",
             acc->username()));
         KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantList items = parser.parse(j->data(), &ok).toMap().value("items").toList();
-        if (ok) {
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const QVariantList items = json.toVariant().toMap().value("items").toList();
             QStringList following;
             Q_FOREACH (const QVariant& element, items) {
                 following.append(element.toMap().value("id").toString());
@@ -882,10 +874,10 @@ void PumpIOMicroBlog::slotLists(KJob* job)
             i18n("Lists for account %1 has been updated.",
             acc->username()));
         KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantList items = parser.parse(j->data(), &ok).toMap().value("items").toList();
-        if (ok) {
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const QVariantList items = json.toVariant().toMap().value("items").toList();
             QVariantList lists;
             Q_FOREACH (const QVariant& element, items) {
                 QVariantMap e = element.toMap();
@@ -930,10 +922,10 @@ void PumpIOMicroBlog::slotShare(KJob* job)
         Choqok::UI::Global::mainWindow()->showStatusMessage(
                             i18n("The post has been shared."));
         KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantMap object = parser.parse(j->data(), &ok).toMap().value("object").toMap();
-        if (ok) {
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const QVariantMap object = json.toVariant().toMap().value("object").toMap();
             ret = 0;
         } else {
             qCDebug(CHOQOK) << "Cannot parse JSON reply";
@@ -964,10 +956,10 @@ void PumpIOMicroBlog::slotRemovePost(KJob* job)
         qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     } else {
         KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantMap object = parser.parse(j->data(), &ok).toMap().value("object").toMap();
-        if (ok) {
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const QVariantMap object = json.toVariant().toMap().value("object").toMap();
             if (!object["deleted"].toString().isEmpty()) {
                 Choqok::NotifyManager::success(i18n("Post removed successfully"));
                 ret = 0;
@@ -1003,10 +995,9 @@ void PumpIOMicroBlog::slotUpdatePost(KJob* job)
         qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     } else {
         KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantMap reply = parser.parse(j->data(), &ok).toMap();
-        if (ok) {
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
             ret = 0;
             createPost(account, post);
         } else {
@@ -1066,10 +1057,10 @@ void PumpIOMicroBlog::slotUpload(KJob* job)
         qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     } else {
         KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantMap reply = parser.parse(j->data(), &ok).toMap();
-        if (ok) {
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const QVariantMap reply = json.toVariant().toMap();
             const QString id = reply["id"].toString();
             if (!id.isEmpty()) {
                 post->postId = id;
@@ -1098,7 +1089,7 @@ QString PumpIOMicroBlog::authorizationMetaData(PumpIOAccount* account, const QUr
                                                        account->tokenSecret().toLocal8Bit(),
                                                        QOAuth::HMAC_SHA1, paramMap,
                                                        QOAuth::ParseForHeaderArguments);
-    return "Authorization: " + authorization;
+    return QStringLiteral("Authorization: ") + authorization;
 }
 
 void PumpIOMicroBlog::fetchReplies(Choqok::Account* theAccount, const QString& url)
@@ -1247,10 +1238,9 @@ Choqok::Post* PumpIOMicroBlog::readPost(const QVariantMap& var, Choqok::Post* po
 QList< Choqok::Post* > PumpIOMicroBlog::readTimeline(const QByteArray& buffer)
 {
     QList<Choqok::Post* > posts;
-    bool ok;
-    QJson::Parser parser;
-    const QVariantList list = parser.parse(buffer, &ok).toMap().value("items").toList();
-    if (ok) {
+    const QJsonDocument json = QJsonDocument::fromJson(buffer);
+    if (!json.isNull()) {
+        const QVariantList list = json.toVariant().toMap().value("items").toList();
         Q_FOREACH (const QVariant& element, list) {
             const QVariantMap elementMap = element.toMap();
             if (!elementMap["object"].toMap().value("deleted").isNull()) {
@@ -1325,8 +1315,7 @@ void PumpIOMicroBlog::updatePost(Choqok::Account* theAccount, Choqok::Post* post
         item.insert("object", object);
         item.insert("to", to);
 
-        QJson::Serializer serializer;
-        const QByteArray data = serializer.serialize(item);
+        const QByteArray data = QJsonDocument::fromVariant(item).toBinaryData();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
@@ -1364,3 +1353,5 @@ QString PumpIOMicroBlog::userNameFromAcct(const QString& acct)
 
     return acct;
 }
+
+#include "pumpiomicroblog.moc"

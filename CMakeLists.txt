@@ -38,9 +38,8 @@ find_package(KF5 REQUIRED
 
 #option(QTINDICATE_DISABLE "Disable support for notifications via indicator")
 
-#find_package(QJson REQUIRED)
-#find_package(QCA2 REQUIRED)
-#find_package(QtOAuth REQUIRED)
+find_package(Qca-qt5 REQUIRED)
+find_package(QtOAuth REQUIRED)
 
 #if(NOT QTINDICATE_DISABLE)
 #    find_package(QtIndicate)
@@ -56,8 +55,6 @@ find_package(KF5 REQUIRED
 #endif(QTINDICATE_BUILD)
 
 set(CHOQOK_INCLUDES
-${QJSON_INCLUDE_DIR}
-${QCA2_INCLUDE_DIR}
 ${QTOAUTH_INCLUDE_DIR}
 ${CHOQOK_SOURCE_DIR}/helperlibs
 ${CHOQOK_BINARY_DIR}/helperlibs
@@ -71,7 +68,7 @@ add_subdirectory( libchoqok )
 add_subdirectory( choqok )
 add_subdirectory( icons )
 #add_subdirectory( plugins )
-#add_subdirectory( microblogs )
+add_subdirectory( microblogs )
 add_subdirectory( images )
 add_subdirectory( cmake )
 
