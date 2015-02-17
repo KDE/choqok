@@ -25,9 +25,8 @@
 #include "notifymanager.h"
 
 #include <QApplication>
+#include <QtGlobal>
 #include <QTimer>
-
-#include <KGlobal>
 
 #include "choqokbehaviorsettings.h"
 #include "choqokuiglobal.h"
@@ -53,7 +52,7 @@ public:
     QTimer          lastErrorClearance;
 };
 
-K_GLOBAL_STATIC(NotifyManagerPrivate, _nmp)
+Q_GLOBAL_STATIC(NotifyManagerPrivate, _nmp)
 
 NotifyManager::NotifyManager()
 {

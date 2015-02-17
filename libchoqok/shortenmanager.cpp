@@ -25,6 +25,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QApplication>
 #include <QtConcurrentRun>
+#include <QtGlobal>
 
 #include <KConfigGroup>
 #include "libchoqokdebug.h"
@@ -74,7 +75,7 @@ public:
     }
 };
 
-K_GLOBAL_STATIC(ShortenManagerPrivate, _smp)
+Q_GLOBAL_STATIC(ShortenManagerPrivate, _smp)
 
 QString shorten(const QString &url)
 {
