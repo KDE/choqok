@@ -51,7 +51,7 @@ Q_SIGNALS:
     void uploadingFailed( const QUrl &localUrl, const QString &errorMessage );
 
 protected:
-    Uploader( const KComponentData &instance, QObject *parent );
+    Uploader( const QString &componentName, QObject *parent );
 };
 
 }

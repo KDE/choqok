@@ -27,8 +27,8 @@
 
 namespace Choqok{
 
-Shortener::Shortener( const KComponentData &instance, QObject *parent )
-    : Plugin(instance, parent)
+Shortener::Shortener( const QString &componentName, QObject *parent )
+    : Plugin(componentName, parent)
 {
 }
 

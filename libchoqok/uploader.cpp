@@ -26,8 +26,8 @@
 
 namespace Choqok{
 
-Choqok::Uploader::Uploader(const KComponentData& instance, QObject* parent)
-    : Plugin(instance, parent)
+Choqok::Uploader::Uploader(const QString &componentName, QObject* parent)
+    : Plugin(componentName, parent)
 {
 
 }

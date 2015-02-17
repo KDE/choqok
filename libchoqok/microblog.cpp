@@ -48,8 +48,8 @@ public:
     QTimer* saveTimelinesTimer;
 };
 
-MicroBlog::MicroBlog( const KComponentData &instance, QObject *parent )
-    :Plugin(instance, parent), d(new Private)
+MicroBlog::MicroBlog( const QString &componentName, QObject *parent )
+    :Plugin(componentName, parent), d(new Private)
 {
     qCDebug(CHOQOK);
     d->saveTimelinesTimer = new QTimer(this);

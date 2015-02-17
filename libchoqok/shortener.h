@@ -46,7 +46,7 @@ public:
     virtual QString shorten( const QString &url );
 
 protected:
-    Shortener( const KComponentData &instance, QObject *parent );
+    Shortener( const QString &componentName, QObject *parent );
 };
 }//End Namespace Choqok
 #endif

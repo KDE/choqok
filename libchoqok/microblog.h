@@ -309,7 +309,7 @@ Q_SIGNALS:
 
 protected:
 
-    MicroBlog( const KComponentData &instance, QObject *parent=0 );
+    MicroBlog( const QString &componentName, QObject *parent=0 );
 
     virtual void setTimelineNames(const QStringList&);
     void addTimelineName(const QString&);
