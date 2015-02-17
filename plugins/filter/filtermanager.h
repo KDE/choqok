@@ -32,7 +32,7 @@
 
 #include "filter.h"
 
-class KAction;
+class QAction;
 namespace Choqok {
 namespace UI {
 class PostWidget;
@@ -69,7 +69,7 @@ private:
 
     bool parseSpecialRules( Choqok::UI::PostWidget *postToParse );
 
-    KAction *hidePost;
+    QAction *hidePost;
 };
 
 #endif

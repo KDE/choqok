@@ -24,7 +24,7 @@
 
 #include "laconicapostwidget.h"
 
-#include <KAction>
+#include <QAction>
 #include "choqokdebug.h"
 #include <KLocalizedString>
 #include <KMenu>
@@ -151,9 +151,9 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
         unpcode.remove('_');
 
         KMenu menu;
-        KAction *search = new KAction(QIcon::fromTheme("system-search"),
+        QAction *search = new QAction(QIcon::fromTheme("system-search"),
                                       i18n("Search for %1", unpcode), &menu);
-        KAction *openInBrowser = new KAction(QIcon::fromTheme("applications-internet"),
+        QAction *openInBrowser = new QAction(QIcon::fromTheme("applications-internet"),
                                              i18n("Open tag page in browser"), &menu);
         menu.addAction(search);
         menu.addAction(openInBrowser);
@@ -169,9 +169,9 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
         }
     } else if( scheme == "group" ) {
         KMenu menu;
-        KAction *search = new KAction(QIcon::fromTheme("system-search"),
+        QAction *search = new QAction(QIcon::fromTheme("system-search"),
                                       i18n("Show latest group posts"), &menu);
-        KAction *openInBrowser = new KAction(QIcon::fromTheme("applications-internet"),
+        QAction *openInBrowser = new QAction(QIcon::fromTheme("applications-internet"),
                                              i18n("Open group page in browser"), &menu);
         menu.addAction(search);
         menu.addAction(openInBrowser);
@@ -189,13 +189,13 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
         QString username = ( url.userName().isEmpty() ? "" : QString("%1@").arg(url.userName()) ) +
                             url.host();
         KMenu menu;
-        KAction * info = new KAction( QIcon::fromTheme("user-identity"), i18nc("Who is user", "Who is %1",
+        QAction * info = new QAction( QIcon::fromTheme("user-identity"), i18nc("Who is user", "Who is %1",
                                                                     username), &menu );
-        KAction * from = new KAction(QIcon::fromTheme("edit-find-user"), i18nc("Posts from user", "Posts from %1",
+        QAction * from = new QAction(QIcon::fromTheme("edit-find-user"), i18nc("Posts from user", "Posts from %1",
                                                                     username), &menu);
-        KAction * to = new KAction(QIcon::fromTheme("meeting-attending"), i18nc("Replies to user", "Replies to %1",
+        QAction * to = new QAction(QIcon::fromTheme("meeting-attending"), i18nc("Replies to user", "Replies to %1",
                                                                      username), &menu);
-        KAction * openInBrowser = new KAction(QIcon::fromTheme("applications-internet"),
+        QAction * openInBrowser = new QAction(QIcon::fromTheme("applications-internet"),
                                               i18nc("Open profile page in browser",
                                                     "Open profile in browser"), &menu);
         menu.addAction(info);
@@ -211,29 +211,29 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
         bool isSubscribe = false;
         QString accountUsername = d->account->username().toLower();
         QString postUsername = username.toLower();
-        KAction *subscribe = 0, *block = 0, *replyTo = 0, *dMessage = 0;
+        QAction *subscribe = 0, *block = 0, *replyTo = 0, *dMessage = 0;
         if(accountUsername != postUsername){
             menu.addSeparator();
             QMenu *actionsMenu = menu.addMenu(QIcon::fromTheme("applications-system"), i18n("Actions"));
-            replyTo = new KAction(QIcon::fromTheme("edit-undo"), i18nc("Write a message to user attention", "Write to %1",
+            replyTo = new QAction(QIcon::fromTheme("edit-undo"), i18nc("Write a message to user attention", "Write to %1",
                                                           username), actionsMenu);
             actionsMenu->addAction(replyTo);
             if( d->account->friendsList().contains( username ) ){
-                dMessage = new KAction(QIcon::fromTheme("mail-message-new"), i18nc("Send direct message to user",
+                dMessage = new QAction(QIcon::fromTheme("mail-message-new"), i18nc("Send direct message to user",
                                                                         "Send private message to %1",
                                                                         username), actionsMenu);
                 actionsMenu->addAction(dMessage);
                 isSubscribe = false;//It's UnSubscribe
-                subscribe = new KAction( QIcon::fromTheme("list-remove-user"),
+                subscribe = new QAction( QIcon::fromTheme("list-remove-user"),
                                          i18nc("Unsubscribe from user",
                                                "Unsubscribe from %1", username), actionsMenu);
             } else {
                 isSubscribe = true;
-                subscribe = new KAction( QIcon::fromTheme("list-add-user"),
+                subscribe = new QAction( QIcon::fromTheme("list-add-user"),
                                          i18nc("Subscribe to user",
                                                "Subscribe to %1", username), actionsMenu);
             }
-            block = new KAction( QIcon::fromTheme("dialog-cancel"),
+            block = new QAction( QIcon::fromTheme("dialog-cancel"),
                                  i18nc("Block user",
                                        "Block %1", username), actionsMenu);
             if(currentPost()->source != "ostatus") {

@@ -52,12 +52,12 @@ KonqPluginChoqok::KonqPluginChoqok(QObject* parent, const QVariantList& )
     actionCollection()->addAction( "action menu", menu);
     menu->setDelayed( false );
     
-    KAction *postaction = actionCollection()->addAction( "post_choqok" );
+    QAction *postaction = actionCollection()->addAction( "post_choqok" );
     postaction->setText( i18n("Post Text with Choqok") );
     connect( postaction, SIGNAL( triggered(bool) ), SLOT( slotpostSelectedText() ) );
     menu->addAction( postaction );
     
-    KAction *shortening = actionCollection()->add<KToggleAction>( "shortening_choqok");
+    QAction *shortening = actionCollection()->add<KToggleAction>( "shortening_choqok");
     shortening->setText( i18n("Shorten URL on Paste") );
     connect( shortening, SIGNAL( toggled(bool) ), SLOT( toggleShortening(bool) ) );
     menu->addAction( shortening );

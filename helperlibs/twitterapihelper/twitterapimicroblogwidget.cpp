@@ -27,7 +27,7 @@
 #include <QPainter>
 #include <QToolButton>
 
-#include <KAction>
+#include <QAction>
 #include "choqokdebug.h"
 #include <QIcon>
 #include <KLocalizedString>
@@ -261,15 +261,15 @@ void TwitterApiMicroBlogWidget::slotContextMenu(QWidget* w, const QPoint &pt)
     qCDebug(CHOQOK);
     Choqok::UI::TimelineWidget *sWidget = qobject_cast<Choqok::UI::TimelineWidget*>(w);
     KMenu menu;
-    KAction *mar = 0;
-    KAction *ac = 0;
+    QAction *mar = 0;
+    QAction *ac = 0;
     if(sWidget->unreadCount() > 0) {
-        mar = new KAction(QIcon::fromTheme("mail-mark-read"), i18n("Mark timeline as read"), &menu);
+        mar = new QAction(QIcon::fromTheme("mail-mark-read"), i18n("Mark timeline as read"), &menu);
         menu.addAction(mar);
     }
     if(sWidget->isClosable()){
-        ac = new KAction(QIcon::fromTheme("tab-close"), i18n("Close Timeline"), &menu);
-        KAction *closeAll = new KAction(QIcon::fromTheme("tab-close"), i18n("Close All"), &menu);
+        ac = new QAction(QIcon::fromTheme("tab-close"), i18n("Close Timeline"), &menu);
+        QAction *closeAll = new QAction(QIcon::fromTheme("tab-close"), i18n("Close All"), &menu);
         connect( closeAll, SIGNAL(triggered(Qt::MouseButtons,Qt::KeyboardModifiers)),
                  this, SLOT(closeAllSearches()) );
         menu.addAction(ac);

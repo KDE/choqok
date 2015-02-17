@@ -27,7 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QMenu>
 
 #include <KAboutData>
-#include <KAction>
+#include <QAction>
 #include "choqokdebug.h"
 #include <KGenericFactory>
 #include <KIO/Job>
@@ -225,7 +225,7 @@ QMenu* TwitterMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidget*
 {
     QMenu *menu = TwitterApiMicroBlog::createActionsMenu(theAccount, parent);
 
-    KAction *lists = new KAction( i18n("Add User List..."), menu );
+    QAction *lists = new QAction( i18n("Add User List..."), menu );
     lists->setData( theAccount->alias() );
     connect( lists, SIGNAL(triggered(bool)), SLOT(showListDialog()) );
     menu->addAction(lists);
@@ -236,7 +236,7 @@ QMenu* TwitterMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidget*
 void TwitterMicroBlog::showListDialog(TwitterApiAccount* theAccount)
 {
     if( !theAccount ) {
-        KAction *act = qobject_cast<KAction *>(sender());
+        QAction *act = qobject_cast<QAction *>(sender());
         theAccount = qobject_cast<TwitterApiAccount*>(
                                     Choqok::AccountManager::self()->findAccount( act->data().toString() ) );
     }

@@ -26,7 +26,7 @@
 
 #include <QMenu>
 
-#include <KAction>
+#include <QAction>
 #include "choqokdebug.h"
 #include <QIcon>
 #include <KLocalizedString>
@@ -75,18 +75,18 @@ void TwitterApiPostWidget::initUi()
     KPushButton *btnRe = addButton( "btnReply",i18nc( "@info:tooltip", "Reply" ), "edit-undo" );
     QMenu *menu = new QMenu(btnRe);
 
-    KAction *actRep = new KAction(QIcon::fromTheme("edit-undo"), i18n("Reply to %1", currentPost()->author.userName), menu);
+    QAction *actRep = new QAction(QIcon::fromTheme("edit-undo"), i18n("Reply to %1", currentPost()->author.userName), menu);
     menu->addAction(actRep);
     connect( actRep, SIGNAL(triggered(bool)), SLOT(slotReply()) );
     connect( btnRe, SIGNAL(clicked(bool)), SLOT(slotReply()) );
 
-    KAction *actWrite = new KAction( QIcon::fromTheme("document-edit"), i18n("Write to %1", currentPost()->author.userName),
+    QAction *actWrite = new QAction( QIcon::fromTheme("document-edit"), i18n("Write to %1", currentPost()->author.userName),
                                      menu );
     menu->addAction(actWrite);
     connect( actWrite, SIGNAL(triggered(bool)), SLOT(slotWriteTo()) );
 
     if( !currentPost()->isPrivate ) {
-        KAction *actReplytoAll = new KAction(i18n("Reply to all"), menu);
+        QAction *actReplytoAll = new QAction(i18n("Reply to all"), menu);
         menu->addAction(actReplytoAll);
         connect( actReplytoAll, SIGNAL(triggered(bool)), SLOT(slotReplyToAll()) );
     }

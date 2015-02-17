@@ -666,7 +666,7 @@ void PostWidget::wheelEvent(QWheelEvent* event)
     event->ignore();
 }
 
-void PostWidget::addAction(KAction* action)
+void PostWidget::addAction(QAction * action)
 {
     TextBrowser::addAction(action);
 }

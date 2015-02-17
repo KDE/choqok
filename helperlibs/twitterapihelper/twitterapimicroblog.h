@@ -168,7 +168,7 @@ public Q_SLOTS:
     Launch a dialog to send direct message.
     There are 2 ways to use this function:
         1. Calling with theAccount option
-        2. Get called by a signal from a KAction (Microblog menu)
+        2. Get called by a signal from a QAction (Microblog menu)
     */
     virtual void showDirectMessageDialog( TwitterApiAccount *theAccount = 0,
                                           const QString &toUsername = QString() );

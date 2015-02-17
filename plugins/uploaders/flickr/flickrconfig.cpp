@@ -30,7 +30,7 @@
 #include <QVBoxLayout>
 
 #include <KAboutData>
-#include <KAction>
+#include <QAction>
 #include <KActionCollection>
 #include <KGenericFactory>
 #include <KIO/Job>

@@ -24,7 +24,7 @@
 
 #include "searchaction.h"
 
-#include <KAction>
+#include <QAction>
 #include <KActionCollection>
 #include <KGenericFactory>
 #include <KMessageBox>
@@ -41,8 +41,8 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_searchaction" ) )
 SearchAction::SearchAction( QObject* parent, const QList< QVariant >& )
     : Plugin(MyPluginFactory::componentData(), parent)
 {
-    KAction *action = new KAction(QIcon::fromTheme("edit-find"), i18n("Search..."), this);
-    action->setShortcut(KShortcut(Qt::ControlModifier | Qt::Key_F));
+    QAction *action = new QAction(QIcon::fromTheme("edit-find"), i18n("Search..."), this);
+    action->setShortcut(QKeySequence(Qt::ControlModifier | Qt::Key_F));
     actionCollection()->addAction("search", action);
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSearch()));
     setXMLFile("searchactionui.rc");

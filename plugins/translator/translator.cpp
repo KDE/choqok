@@ -30,7 +30,7 @@
 #include <KIO/Job>
 #include <shortenmanager.h>
 #include "translatorsettings.h"
-#include <KAction>
+#include <QAction>
 #include <QMenu>
 #include <kstandarddirs.h>
 #include <QFile>
@@ -52,7 +52,7 @@ Translator::Translator(QObject* parent, const QList< QVariant >& )
     :Choqok::Plugin(MyPluginFactory::componentData(), parent)
 {
     qCDebug(CHOQOK);
-    translateAction = new KAction(i18n("Translate to..."), this);
+    translateAction = new QAction(i18n("Translate to..."), this);
     Choqok::UI::PostWidget::addAction(translateAction);
     translateAction->setMenu(setupTranslateMenu());
     connect(TranslatorSettings::self(), SIGNAL(configChanged()), SLOT(slotUpdateMenu()));
@@ -65,7 +65,7 @@ Translator::~Translator()
 
 void Translator::translate()
 {
-    QString lang = qobject_cast<KAction*>(sender())->data().toString();
+    QString lang = qobject_cast<QAction *>(sender())->data().toString();
     Choqok::UI::PostWidget *wd;
     wd = dynamic_cast<Choqok::UI::PostWidgetUserData *>(translateAction->userData(32))->postWidget();
     if(!wd || lang.isEmpty())
@@ -127,14 +127,14 @@ QMenu* Translator::setupTranslateMenu()
         KIcon icon;
 		icon.addPixmap(QPixmap(SharedTools::self()->languageFlag(lang)));
         QString langStr = KGlobal::locale()->languageCodeToName(lang);
-        KAction* act =
-        new KAction(icon, langStr.isEmpty() ? SharedTools::self()->missingLangs().value(lang) : langStr, 0);
+        QAction * act =
+        new QAction(icon, langStr.isEmpty() ? SharedTools::self()->missingLangs().value(lang) : langStr, 0);
         act->setData(lang);
         connect( act, SIGNAL(triggered(bool)), SLOT(translate()));
         menu->addAction(act);
     }
     menu->addSeparator();
-    KAction* setup = new KAction(QIcon::fromTheme("configure"), i18n("Configure Translator"), menu);
+    QAction * setup = new QAction(QIcon::fromTheme("configure"), i18n("Configure Translator"), menu);
     connect(setup, SIGNAL(triggered(bool)), this, SLOT(slotConfigureTranslator()));
     menu->addAction(setup);
     return menu;

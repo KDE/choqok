@@ -35,7 +35,7 @@
 #include <QToolBar>
 #include <QVBoxLayout>
 
-#include <KAction>
+#include <QAction>
 #include <KMenu>
 
 #include "choqokappearancesettings.h"
@@ -750,14 +750,14 @@ void ChoqokTabBar::contextMenuRequest( const QPoint & )
         return;
     }
     
-    KAction north( i18n("Top") , this );
-    KAction west(  i18n("Left")  , this );
-    KAction east(  i18n("Right")  , this );
-    KAction south( i18n("Bottom") , this );
-    KAction size_s( i18n("Small")  , this );
-    KAction size_m( i18n("Medium") , this );
-    KAction size_b( i18n("Big")    , this );
-    KAction styled( i18n("Styled Panel") , this );
+    QAction north( i18n("Top") , this );
+    QAction west(  i18n("Left")  , this );
+    QAction east(  i18n("Right")  , this );
+    QAction south( i18n("Bottom") , this );
+    QAction size_s( i18n("Small")  , this );
+    QAction size_m( i18n("Medium") , this );
+    QAction size_b( i18n("Big")    , this );
+    QAction styled( i18n("Styled Panel") , this );
     
     /*! ------------- Setting Up Datas --------------- */
     north.setData( ChoqokTabBar::North );

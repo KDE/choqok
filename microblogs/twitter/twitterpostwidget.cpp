@@ -24,7 +24,7 @@
 
 #include "twitterpostwidget.h"
 
-#include <KAction>
+#include <QAction>
 #include <KLocalizedString>
 #include <KMenu>
 #include <KPushButton>
@@ -108,17 +108,17 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
                                                     (int)TwitterSearch::ReferenceHashtag);
     } else if(scheme == "user") {
         KMenu menu;
-        KAction * info = new KAction( QIcon::fromTheme("user-identity"), i18nc("Who is user", "Who is %1", url.host()),
+        QAction * info = new QAction( QIcon::fromTheme("user-identity"), i18nc("Who is user", "Who is %1", url.host()),
                                       &menu );
-        KAction * from = new KAction(QIcon::fromTheme("edit-find-user"), i18nc("Posts from user", "Posts from %1",url.host()),
+        QAction * from = new QAction(QIcon::fromTheme("edit-find-user"), i18nc("Posts from user", "Posts from %1",url.host()),
                                      &menu);
-        KAction * to = new KAction(QIcon::fromTheme("meeting-attending"), i18nc("Replies to user", "Replies to %1",
+        QAction * to = new QAction(QIcon::fromTheme("meeting-attending"), i18nc("Replies to user", "Replies to %1",
                                                                      url.host()),
                                    &menu);
-        KAction *cont = new KAction(QIcon::fromTheme("user-properties"),i18nc("Including user name", "Including %1",
+        QAction *cont = new QAction(QIcon::fromTheme("user-properties"),i18nc("Including user name", "Including %1",
                                                                    url.host()),
                                     &menu);
-        KAction * openInBrowser = new KAction(QIcon::fromTheme("applications-internet"),
+        QAction * openInBrowser = new QAction(QIcon::fromTheme("applications-internet"),
                                               i18nc("Open profile page in browser",
                                                     "Open profile in browser"), &menu);
         from->setData(TwitterSearch::FromUser);
@@ -134,33 +134,33 @@ void TwitterPostWidget::checkAnchor(const QUrl& url)
         bool isSubscribe = false;
         QString accountUsername = currentAccount()->username().toLower();
         QString postUsername = url.host().toLower();
-        KAction *subscribe = 0, *block = 0, *replyTo = 0, *dMessage = 0, *reportSpam = 0;
+        QAction *subscribe = 0, *block = 0, *replyTo = 0, *dMessage = 0, *reportSpam = 0;
         if(accountUsername != postUsername){
             menu.addSeparator();
             QMenu *actionsMenu = menu.addMenu(QIcon::fromTheme("applications-system"), i18n("Actions"));
-            replyTo = new KAction(QIcon::fromTheme("edit-undo"), i18nc("Write a message to user attention", "Write to %1",
+            replyTo = new QAction(QIcon::fromTheme("edit-undo"), i18nc("Write a message to user attention", "Write to %1",
                                                           url.host()), actionsMenu);
             actionsMenu->addAction(replyTo);
             if( account->friendsList().contains( url.host(),
                 Qt::CaseInsensitive ) ){
-                dMessage = new KAction(QIcon::fromTheme("mail-message-new"), i18nc("Send direct message to user",
+                dMessage = new QAction(QIcon::fromTheme("mail-message-new"), i18nc("Send direct message to user",
                                                                         "Send private message to %1",
                                                                         url.host()), actionsMenu);
                 actionsMenu->addAction(dMessage);
                 isSubscribe = false;//It's UnSubscribe
-                subscribe = new KAction( QIcon::fromTheme("list-remove-user"),
+                subscribe = new QAction( QIcon::fromTheme("list-remove-user"),
                                          i18nc("Unfollow user",
                                                "Unfollow %1", url.host()), actionsMenu);
             } else {
                 isSubscribe = true;
-                subscribe = new KAction( QIcon::fromTheme("list-add-user"),
+                subscribe = new QAction( QIcon::fromTheme("list-add-user"),
                                          i18nc("Follow user",
                                                "Follow %1", url.host()), actionsMenu);
             }
-            block = new KAction( QIcon::fromTheme("dialog-cancel"),
+            block = new QAction( QIcon::fromTheme("dialog-cancel"),
                                  i18nc("Block user",
                                        "Block %1", url.host()), actionsMenu);
-            reportSpam = new KAction( QIcon::fromTheme("irc-voice"),
+            reportSpam = new QAction( QIcon::fromTheme("irc-voice"),
                                       i18nc("Report user",
                                             "Report %1 as spam", url.host()), actionsMenu);
 

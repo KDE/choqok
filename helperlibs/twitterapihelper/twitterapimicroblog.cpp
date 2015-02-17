@@ -26,7 +26,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QDomElement>
 
 #include <KAboutData>
-#include <KAction>
+#include <QAction>
 #include "choqokdebug.h"
 #include <KGenericFactory>
 #include <KIO/Job>
@@ -156,17 +156,17 @@ QMenu* TwitterApiMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidg
 {
     QMenu * menu = MicroBlog::createActionsMenu(theAccount, parent);
 
-    KAction *directMessge = new KAction( QIcon::fromTheme("mail-message-new"), i18n("Send Private Message..."), menu );
+    QAction *directMessge = new QAction( QIcon::fromTheme("mail-message-new"), i18n("Send Private Message..."), menu );
     directMessge->setData( theAccount->alias() );
     connect( directMessge, SIGNAL(triggered(bool)), SLOT(showDirectMessageDialog()) );
     menu->addAction(directMessge);
 
-    KAction *search = new KAction( QIcon::fromTheme("edit-find"), i18n("Search..."), menu );
+    QAction *search = new QAction( QIcon::fromTheme("edit-find"), i18n("Search..."), menu );
     search->setData( theAccount->alias() );
     connect( search, SIGNAL(triggered(bool)), SLOT(showSearchDialog()) );
     menu->addAction(search);
 
-    KAction *updateFriendsList = new KAction(QIcon::fromTheme("arrow-down"), i18n("Update Friends List"), menu);
+    QAction *updateFriendsList = new QAction(QIcon::fromTheme("arrow-down"), i18n("Update Friends List"), menu);
     updateFriendsList->setData( theAccount->alias() );
     connect( updateFriendsList, SIGNAL(triggered(bool)), SLOT(slotUpdateFriendsList()) );
     menu->addAction(updateFriendsList);
@@ -925,7 +925,7 @@ void TwitterApiMicroBlog::showDirectMessageDialog( TwitterApiAccount *theAccount
 {
     qCDebug(CHOQOK);
     if( !theAccount ) {
-        KAction *act = qobject_cast<KAction *>(sender());
+        QAction *act = qobject_cast<QAction *>(sender());
         theAccount = qobject_cast<TwitterApiAccount*>(
                                     Choqok::AccountManager::self()->findAccount( act->data().toString() ) );
     }
@@ -946,7 +946,7 @@ Choqok::TimelineInfo * TwitterApiMicroBlog::timelineInfo(const QString& timeline
 void TwitterApiMicroBlog::showSearchDialog(TwitterApiAccount* theAccount)
 {
     if( !theAccount ) {
-        KAction *act = qobject_cast<KAction *>(sender());
+        QAction *act = qobject_cast<QAction *>(sender());
         theAccount = qobject_cast<TwitterApiAccount*>(
                                     Choqok::AccountManager::self()->findAccount( act->data().toString() ) );
     }
@@ -957,7 +957,7 @@ void TwitterApiMicroBlog::showSearchDialog(TwitterApiAccount* theAccount)
 
 void TwitterApiMicroBlog::slotUpdateFriendsList()
 {
-    KAction *act = qobject_cast<KAction *>(sender());
+    QAction *act = qobject_cast<QAction *>(sender());
     TwitterApiAccount* theAccount = qobject_cast<TwitterApiAccount*>(
                                         Choqok::AccountManager::self()->findAccount( act->data().toString() ) );
     listFriendsUsername(theAccount, true);

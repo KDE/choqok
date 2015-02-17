@@ -31,8 +31,8 @@
 #include "account.h"
 #include "choqokmainwindow.h"
 
+class QAction;
 class KPushButton;
-class KAction;
 class KSplashScreen;
 namespace Choqok
 {
@@ -120,13 +120,13 @@ private:
     Choqok::UI::QuickPost *quickWidget;
     KSettings::Dialog *s_settingsDialog;
     QPointer<KSplashScreen> m_splash;
-    KAction *enableUpdates;
-    KAction *newTwit;
-    KAction *showMain;
-    KAction *actQuit;
-    KAction *actUpdate;
-    KAction *prefs;
-    KAction *aboutChoqok;
+    QAction *enableUpdates;
+    QAction *newTwit;
+    QAction *showMain;
+    QAction *actQuit;
+    QAction *actUpdate;
+    QAction *prefs;
+    QAction *aboutChoqok;
     KPushButton *choqokMainButton;
 
     int microblogCounter;

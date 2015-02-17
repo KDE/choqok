@@ -28,7 +28,7 @@
 #include <QFile>
 #include <QMenu>
 
-#include <KAction>
+#include <QAction>
 #include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/JobClasses>

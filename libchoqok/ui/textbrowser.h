@@ -29,7 +29,7 @@
 
 #include "choqok_export.h"
 
-class KAction;
+class QAction;
 namespace Choqok {
 
 namespace UI {
@@ -40,7 +40,7 @@ Q_OBJECT
 public:
     TextBrowser(QWidget* parent = 0);
     virtual ~TextBrowser();
-    static void addAction( KAction *action);
+    static void addAction( QAction *action);
 
 Q_SIGNALS:
     void clicked(QMouseEvent* ev);

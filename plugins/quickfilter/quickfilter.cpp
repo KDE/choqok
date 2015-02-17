@@ -30,7 +30,7 @@
 #include <QPushButton>
 #include <QToolBar>
 
-#include <KAction>
+#include <QAction>
 #include <KActionCollection>
 #include <KCompletionBox>
 #include <KGenericFactory>
@@ -51,9 +51,9 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_quickfilter" ) )
 QuickFilter::QuickFilter(QObject* parent, const QList< QVariant >& args) : Choqok::Plugin(MyPluginFactory::componentData(), parent)
 {
     Q_UNUSED(args);
-    m_authorAction = new KAction(QIcon::fromTheme("document-preview"), i18n("Filter by author"), this);
+    m_authorAction = new QAction(QIcon::fromTheme("document-preview"), i18n("Filter by author"), this);
     m_authorAction->setCheckable(true);
-    m_textAction = new KAction(QIcon::fromTheme("document-preview"), i18n("Filter by content"), this);
+    m_textAction = new QAction(QIcon::fromTheme("document-preview"), i18n("Filter by content"), this);
     m_textAction->setCheckable(true);
     actionCollection()->addAction("filterByAuthor", m_authorAction);
     actionCollection()->addAction("filterByContent", m_textAction);

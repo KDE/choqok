@@ -27,7 +27,7 @@
 #include <QTimer>
 
 #include <KAboutData>
-#include <KAction>
+#include <QAction>
 #include <KActionCollection>
 #include <KGenericFactory>
 #include <KMessageBox>
@@ -51,7 +51,7 @@ FilterManager::FilterManager(QObject* parent, const QList<QVariant>& )
         :Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped)
 {
     qCDebug(CHOQOK);
-    KAction *action = new KAction(i18n("Configure Filters..."), this);
+    QAction *action = new QAction(i18n("Configure Filters..."), this);
     actionCollection()->addAction("configureFilters", action);
     connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureFilters()));
     setXMLFile("filterui.rc");
@@ -59,7 +59,7 @@ FilterManager::FilterManager(QObject* parent, const QList<QVariant>& )
             SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
             SLOT(slotAddNewPostWidget(Choqok::UI::PostWidget*)) );
 
-    hidePost = new KAction(i18n("Hide Post"), this);
+    hidePost = new QAction(i18n("Hide Post"), this);
     Choqok::UI::PostWidget::addAction(hidePost);
     connect( hidePost, SIGNAL(triggered(bool)), SLOT(slotHidePost()) );
 }

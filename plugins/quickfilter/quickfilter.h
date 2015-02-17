@@ -30,7 +30,7 @@
 
 #include "plugin.h"
 
-class KAction;
+class QAction;
 namespace Choqok {
     class Account;
     namespace UI {
@@ -70,8 +70,8 @@ private:
     KLineEdit *m_tledit;
     QToolBar *m_authorToolbar;
     QToolBar *m_textToolbar;
-    KAction *m_authorAction;
-    KAction *m_textAction;
+    QAction *m_authorAction;
+    QAction *m_textAction;
 };
 
 #endif // QUICKFILTER_H

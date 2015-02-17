@@ -26,7 +26,7 @@
 
 #include <QMenu>
 
-#include <KAction>
+#include <QAction>
 #include "choqokdebug.h"
 #include <KLocalizedString>
 #include <KPushButton>
@@ -185,7 +185,7 @@ void PumpIOPostWidget::initUi()
         d->btnReply = addButton("btnReply", i18nc("@info:tooltip", "Reply"), "edit-undo");
         QMenu *replyMenu = new QMenu(d->btnReply);
 
-        KAction *replyToAct = new KAction(QIcon::fromTheme("edit-undo"), i18n("Reply to %1",
+        QAction *replyToAct = new QAction(QIcon::fromTheme("edit-undo"), i18n("Reply to %1",
                                       currentPost()->author.userName), replyMenu);
         replyMenu->addAction(replyToAct);
         connect(replyToAct, SIGNAL(triggered(bool)), SLOT(slotReplyTo()));

@@ -27,9 +27,11 @@
 #include <QTimer>
 #include <QWheelEvent>
 
-#include <KAction>
+#include <QAction>
 #include <KActionCollection>
 #include <KConfigDialog>
+#include <KGlobal>
+#include <KGlobalAccel>
 #include <KLocale>
 #include <KMenu>
 #include <KMenuBar>
@@ -208,59 +210,59 @@ void MainWindow::setupActions()
     actQuit = KStandardAction::quit( this, SLOT( slotQuit() ), actionCollection() );
     prefs = KStandardAction::preferences( this, SLOT( slotConfigChoqok() ), actionCollection() );
 
-    actUpdate = new KAction( QIcon::fromTheme( "view-refresh" ), i18n( "Update Timelines" ), this );
+    actUpdate = new QAction( QIcon::fromTheme( "view-refresh" ), i18n( "Update Timelines" ), this );
     actionCollection()->addAction( QLatin1String( "update_timeline" ), actUpdate );
     actUpdate->setShortcut( Qt::Key_F5 );
-    KShortcut updateGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_F5 );
-    actUpdate->setGlobalShortcut( updateGlobalShortcut );
+    QKeySequence updateGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_F5 );
+    KGlobalAccel::setGlobalShortcut(actUpdate, updateGlobalShortcut );
     connect( actUpdate, SIGNAL( triggered( bool ) ), this, SIGNAL( updateTimelines() ) );
 
-    newTwit = new KAction( QIcon::fromTheme( "document-new" ), i18n( "Quick Post" ), this );
+    newTwit = new QAction( QIcon::fromTheme( "document-new" ), i18n( "Quick Post" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_new_post" ), newTwit );
-    newTwit->setShortcut( KShortcut( Qt::CTRL | Qt::Key_T ) );
-    KShortcut quickTwitGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_T );
-    newTwit->setGlobalShortcut( quickTwitGlobalShortcut );
+    newTwit->setShortcut( QKeySequence( Qt::CTRL | Qt::Key_T ) );
+    QKeySequence quickTwitGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_T );
+    KGlobalAccel::setGlobalShortcut( newTwit, quickTwitGlobalShortcut );
     connect( newTwit, SIGNAL( triggered(bool) ), this, SLOT( triggerQuickPost()) );
 
-    KAction *markRead = new KAction( QIcon::fromTheme( "mail-mark-read" ), i18n( "Mark All As Read" ), this );
+    QAction *markRead = new QAction( QIcon::fromTheme( "mail-mark-read" ), i18n( "Mark All As Read" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_mark_as_read" ), markRead );
-    markRead->setShortcut( KShortcut( Qt::CTRL | Qt::Key_R ) );
+    markRead->setShortcut( QKeySequence( Qt::CTRL | Qt::Key_R ) );
     connect( markRead, SIGNAL( triggered( bool ) ), this, SIGNAL( markAllAsRead()) );
 
-    showMain = new KAction( this );
+    showMain = new QAction( this );
     actionCollection()->addAction( QLatin1String( "toggle_mainwin" ), showMain );
-    KShortcut toggleMainGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_C );
-    showMain->setGlobalShortcut( toggleMainGlobalShortcut );
+    QKeySequence toggleMainGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_C );
+    KGlobalAccel::setGlobalShortcut( showMain, toggleMainGlobalShortcut );
     if(this->isVisible())
         showMain->setText( i18nc( "@action", "Minimize" ) );
     else
         showMain->setText( i18nc( "@action", "Restore" ) );
     connect( showMain, SIGNAL( triggered( bool ) ), this, SLOT( toggleMainWindow() ) );
 
-    KAction *act = KStandardAction::configureNotifications ( this, SLOT ( slotConfNotifications() ),
+    QAction *act = KStandardAction::configureNotifications ( this, SLOT ( slotConfNotifications() ),
                                                              actionCollection() );
     actionCollection()->addAction ( "settings_notifications", act );
 
-    enableUpdates = new KAction( i18n( "Enable Update Timer" ), this );
+    enableUpdates = new QAction( i18n( "Enable Update Timer" ), this );
     enableUpdates->setCheckable( true );
     actionCollection()->addAction( QLatin1String( "choqok_enable_updates" ), enableUpdates );
-    enableUpdates->setShortcut( KShortcut( Qt::CTRL | Qt::Key_U ) );
+    enableUpdates->setShortcut( QKeySequence( Qt::CTRL | Qt::Key_U ) );
     connect( enableUpdates, SIGNAL( toggled( bool ) ), this, SLOT( setTimeLineUpdatesEnabled( bool ) ) );
 
-    KAction *enableNotify = new KAction( i18n( "Enable Notifications" ), this );
+    QAction *enableNotify = new QAction( i18n( "Enable Notifications" ), this );
     enableNotify->setCheckable( true );
     actionCollection()->addAction( QLatin1String( "choqok_enable_notify" ), enableNotify );
-    enableNotify->setShortcut( KShortcut( Qt::CTRL | Qt::Key_N ) );
+    enableNotify->setShortcut( QKeySequence( Qt::CTRL | Qt::Key_N ) );
     connect( enableNotify, SIGNAL( toggled( bool ) ), this, SLOT( setNotificationsEnabled( bool ) ) );
 
-    KAction* hideMenuBar = new KAction( i18n("Hide Menubar"), this );
+    QAction * hideMenuBar = new QAction( i18n("Hide Menubar"), this );
     hideMenuBar->setCheckable(true);
     actionCollection()->addAction( QLatin1String( "choqok_hide_menubar" ), hideMenuBar );
-    hideMenuBar->setShortcut( KShortcut(Qt::ControlModifier | Qt::Key_M) );
+    hideMenuBar->setShortcut( QKeySequence(Qt::ControlModifier | Qt::Key_M) );
     connect( hideMenuBar, SIGNAL(toggled(bool)), menuBar(), SLOT(setHidden(bool)) );
     connect( hideMenuBar, SIGNAL(toggled(bool)), this, SLOT(slotShowSpecialMenu(bool)) );
 
-    KAction *clearAvatarCache = new KAction(QIcon::fromTheme("edit-clear"), i18n( "Clear Avatar Cache" ), this );
+    QAction *clearAvatarCache = new QAction(QIcon::fromTheme("edit-clear"), i18n( "Clear Avatar Cache" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_clear_avatar_cache" ), clearAvatarCache );
     QString tip = i18n( "You have to restart Choqok to load avatars again" );
     clearAvatarCache->setToolTip(tip);
@@ -268,11 +270,11 @@ void MainWindow::setupActions()
     connect( clearAvatarCache, SIGNAL( triggered() ),
              Choqok::MediaManager::self(), SLOT(clearImageCache()) );
 
-    KAction *uploadMedium = new KAction( QIcon::fromTheme("arrow-up"), i18n( "Upload Medium..." ), this );
+    QAction *uploadMedium = new QAction( QIcon::fromTheme("arrow-up"), i18n( "Upload Medium..." ), this );
     actionCollection()->addAction( QLatin1String( "choqok_upload_medium" ), uploadMedium );
     connect( uploadMedium, SIGNAL( triggered(bool)), this, SLOT(slotUploadMedium()) );
 
-    KAction *donate = new KAction( QIcon::fromTheme("help-donate"), i18n("Donate"), this );
+    QAction *donate = new QAction( QIcon::fromTheme("help-donate"), i18n("Donate"), this );
     actionCollection()->addAction( QLatin1String( "choqok_donate" ), donate);
     connect( donate, SIGNAL(triggered(bool)), this, SLOT(slotDonate()));
 }

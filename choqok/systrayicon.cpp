@@ -27,7 +27,7 @@
 #include <QTimer>
 #include <QWheelEvent>
 
-#include <KAction>
+#include <QAction>
 #include <KActionCollection>
 #include <KColorScheme>
 #include "choqokdebug.h"

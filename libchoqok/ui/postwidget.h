@@ -32,7 +32,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "choqoktypes.h"
 #include "microblog.h"
 
-class KAction;
+class QAction;
 class KPushButton;
 
 namespace Choqok {
@@ -125,7 +125,7 @@ public:
      * Plugins can add status specific actions and process them internally
      * 
      */
-    static void addAction( KAction *action );
+    static void addAction( QAction *action );
 
     static QString getBaseStyle();
 

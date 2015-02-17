@@ -29,7 +29,7 @@
 #include <QClipboard>
 #include <QPointer>
 
-#include <KAction>
+#include <QAction>
 #include <KLocalizedString>
 #include <KMenu>
 
@@ -42,13 +42,13 @@ public:
     Private()
     :isPressedForDrag(false)
     {}
-    static QList< QPointer<KAction> > actions;
+    static QList< QPointer<QAction> > actions;
     PostWidget *parent;
     QPoint dragStartPosition;
     bool isPressedForDrag;
 };
 
-QList< QPointer<KAction> > TextBrowser::Private::actions;
+QList< QPointer<QAction> > TextBrowser::Private::actions;
 
 TextBrowser::TextBrowser(QWidget* parent)
     : KTextBrowser(parent, true), d(new Private)
@@ -112,23 +112,23 @@ void TextBrowser::resizeEvent(QResizeEvent* e)
 void TextBrowser::contextMenuEvent(QContextMenuEvent* event)
 {
     KMenu *menu = new KMenu(this);
-    KAction *copy = new KAction( i18nc("Copy text", "Copy"), this );
+    QAction *copy = new QAction( i18nc("Copy text", "Copy"), this );
 //     copy->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_C ) );
     connect( copy, SIGNAL(triggered(bool)), SLOT(slotCopyPostContent()) );
     menu->addAction(copy);
     QString anchor = document()->documentLayout()->anchorAt(event->pos());
     if( !anchor.isEmpty() ){
-        KAction *copyLink = new KAction( i18n("Copy Link Location"), this );
+        QAction *copyLink = new QAction( i18n("Copy Link Location"), this );
         copyLink->setData( anchor );
         connect( copyLink, SIGNAL(triggered(bool)), SLOT(slotCopyLink()) );
         menu->addAction(copyLink);
     }
-    KAction *selectAll = new KAction(i18nc("Select all text", "Select All"), this);
+    QAction *selectAll = new QAction(i18nc("Select all text", "Select All"), this);
 //     selectAll->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_A ) );
     connect( selectAll, SIGNAL(triggered(bool)), SLOT(selectAll()) );
     menu->addAction(selectAll);
     menu->addSeparator();
-    Q_FOREACH (KAction *act, d->actions) {
+    Q_FOREACH (QAction *act, d->actions) {
         if(act) {
             act->setUserData(32, new PostWidgetUserData(d->parent));
             menu->addAction(act);
@@ -151,7 +151,7 @@ void TextBrowser::slotCopyPostContent()
 
 void TextBrowser::slotCopyLink()
 {
-    KAction *act = qobject_cast< KAction* >( sender() );
+    QAction *act = qobject_cast< QAction* >( sender() );
     if( act ){
         QString link = act->data().toString();
         QApplication::clipboard()->setText( link );
@@ -163,7 +163,7 @@ void Choqok::UI::TextBrowser::wheelEvent(QWheelEvent* event)
     event->ignore();
 }
 
-void Choqok::UI::TextBrowser::addAction(KAction* action)
+void Choqok::UI::TextBrowser::addAction(QAction * action)
 {
     if(action)
         Private::actions.append(action);

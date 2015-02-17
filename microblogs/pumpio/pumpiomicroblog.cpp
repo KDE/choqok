@@ -31,7 +31,7 @@
 #include <qjson/parser.h>
 #include <qjson/serializer.h>
 
-#include <KAction>
+#include <QAction>
 #include "choqokdebug.h"
 #include <KGenericFactory>
 #include <KIO/Job>
@@ -122,7 +122,7 @@ QMenu* PumpIOMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidget* 
 {
     QMenu *menu = MicroBlog::createActionsMenu(theAccount, parent);
 
-    KAction *directMessge = new KAction(QIcon::fromTheme("mail-message-new"), i18n("Send Private Message..."), menu);
+    QAction *directMessge = new QAction(QIcon::fromTheme("mail-message-new"), i18n("Send Private Message..."), menu);
     directMessge->setData(theAccount->alias());
     connect(directMessge, SIGNAL(triggered(bool)), this, SLOT(showDirectMessageDialog()));
     menu->addAction(directMessge);
@@ -667,7 +667,7 @@ void PumpIOMicroBlog::toggleFavorite(Choqok::Account* theAccount, Choqok::Post* 
 void PumpIOMicroBlog::showDirectMessageDialog()
 {
     qCDebug(CHOQOK);
-    const QString alias = qobject_cast<KAction *>(sender())->data().toString();
+    const QString alias = qobject_cast<QAction *>(sender())->data().toString();
     PumpIOAccount *theAccount = qobject_cast<PumpIOAccount*>(Choqok::AccountManager::self()->findAccount(alias));
     PumpIOMessageDialog *msg = new PumpIOMessageDialog(theAccount, Choqok::UI::Global::mainWindow());
     msg->show();

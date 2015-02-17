@@ -83,7 +83,7 @@ AccountsWidget::~AccountsWidget()
 void AccountsWidget::addAccount()
 {
     qCDebug(CHOQOK);
-    KAction *act = qobject_cast<KAction*>( sender() );
+    QAction *act = qobject_cast<QAction*>( sender() );
     if(act) {
         QString name = act->data().toString();
         Choqok::MicroBlog *blog = qobject_cast<Choqok::MicroBlog *>(Choqok::PluginManager::self()->loadPlugin(name));
@@ -240,7 +240,7 @@ KMenu * AccountsWidget::createAddAccountMenu()
     mBlogMenu = new KMenu(i18n("Select Micro-Blogging Service"), this);
     const QList<KPluginInfo> list = Choqok::PluginManager::self()->availablePlugins("MicroBlogs");
     Q_FOREACH (const KPluginInfo& info, list) {
-        KAction *act = new KAction(mBlogMenu);
+        QAction *act = new QAction(mBlogMenu);
         act->setText(info.name());
         act->setIcon( QIcon::fromTheme(info.icon()) );
         act->setData(info.pluginName());

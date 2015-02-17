@@ -24,7 +24,7 @@
 
 #include "imstatus.h"
 
-#include <KAction>
+#include <QAction>
 #include <KActionCollection>
 #include <KAboutData>
 #include <KGenericFactory>
