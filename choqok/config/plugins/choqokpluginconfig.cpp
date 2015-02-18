@@ -26,6 +26,7 @@
 
 #include <QVBoxLayout>
 
+#include <KAboutData>
 #include <KLocalizedString>
 #include <KPluginFactory>
 #include <KPluginSelector>
@@ -38,7 +39,7 @@ K_PLUGIN_FACTORY_WITH_JSON( ChoqokPluginConfigFactory, "choqok_pluginconfig.json
                             registerPlugin<ChoqokPluginConfig>(); )
 
 ChoqokPluginConfig::ChoqokPluginConfig( QWidget *parent, const QVariantList &args )
-: KCModule(parent, args)
+    : KCModule(KAboutData::pluginData("kcm_choqok_pluginconfig"), parent, args)
 {
     m_pluginSelector = new KPluginSelector( this );
 

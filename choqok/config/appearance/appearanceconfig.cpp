@@ -26,7 +26,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QVBoxLayout>
 
-#include <KLocale>
+#include <KAboutData>
+#include <KLocalizedString>
 #include <KPluginFactory>
 #include <KTabWidget>
 
@@ -50,7 +51,8 @@ public:
 
 
 AppearanceConfig::AppearanceConfig(QWidget *parent, const QVariantList &args )
-: KCModule( parent, args ), d(new Private())
+    : KCModule( KAboutData::pluginData("kcm_choqok_appearanceconfig"), parent, args )
+    , d(new Private())
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     // since the tab widget is already within a layout with margins in the KSettings::Dialog

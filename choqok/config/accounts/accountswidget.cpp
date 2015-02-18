@@ -23,9 +23,10 @@
 */
 #include "accountswidget.h"
 
+#include <QAction>
 #include <QCheckBox>
 
-#include <QAction>
+#include <KAboutData>
 #include <KMenu>
 #include <KMessageBox>
 #include <KPluginFactory>
@@ -44,7 +45,7 @@ K_PLUGIN_FACTORY_WITH_JSON( ChoqokAccountsConfigFactory, "choqok_accountsconfig.
                             registerPlugin<AccountsWidget>(); )
 
 AccountsWidget::AccountsWidget( QWidget* parent, const QVariantList& args )
-        : KCModule( parent, args )
+    : KCModule( KAboutData::pluginData("kcm_choqok_accountsconfig") , parent, args )
 {
     qCDebug(CHOQOK);
     setAttribute(Qt::WA_DeleteOnClose);

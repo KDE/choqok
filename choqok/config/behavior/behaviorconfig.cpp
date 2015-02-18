@@ -29,10 +29,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QVBoxLayout>
 
+#include <KAboutData>
 #include <KCModuleInfo>
 #include <KCModuleProxy>
-#include <KPluginFactory>
 #include <KLocalizedString>
+#include <KPluginFactory>
 #include <KTabWidget>
 
 #include "behaviorconfig_shorten.h"
@@ -53,8 +54,9 @@ public:
     KCModuleProxy *proxyModule;
 };
 
-BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args) :
-        KCModule( parent, args ), d(new Private)
+BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args)
+    : KCModule( KAboutData::pluginData("kcm_choqok_behaviorconfig"), parent, args )
+    , d(new Private)
 {
     qCDebug(CHOQOK);
     QVBoxLayout *layout = new QVBoxLayout(this);
