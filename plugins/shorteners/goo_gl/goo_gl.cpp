@@ -23,23 +23,19 @@
 
 #include "goo_gl.h"
 
+#include <QJsonDocument>
+
 #include <KAboutData>
-#include "choqokdebug.h"
-#include <KGenericFactory>
-#include <KGlobal>
 #include <KIO/Job>
 #include <KIO/NetAccess>
-
-#include <qjson/parser.h>
-#include <qjson/serializer.h>
+#include <KPluginFactory>
 
 #include "notifymanager.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Goo_gl > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_goo_gl" ) )
+K_PLUGIN_FACTORY_WITH_JSON( Goo_glFactory, "choqok_goo_gl.json", registerPlugin < Goo_gl > (); )
 
 Goo_gl::Goo_gl( QObject* parent, const QVariantList& )
-        : Choqok::Shortener( MyPluginFactory::componentData(), parent )
+    : Choqok::Shortener( "choqok_goo_gl", parent )
 {
 }
 
@@ -49,27 +45,22 @@ Goo_gl::~Goo_gl()
 
 QString Goo_gl::shorten( const QString& url )
 {
-    qCDebug(CHOQOK) << "Using goo.gl";
-
     QVariantMap req;
     req.insert("longUrl", url);
-    QJson::Serializer serializer;
-    QByteArray data = serializer.serialize(req);
-
-    KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, QUrl("https://www.googleapis.com/urlshortener/v1/url"), KIO::HideProgressInfo ) ;
+    const QByteArray json = QJsonDocument::fromVariant(req).toBinaryData();
+    KIO::StoredTransferJob *job = KIO::storedHttpPost ( json, QUrl("https://www.googleapis.com/urlshortener/v1/url"), KIO::HideProgressInfo ) ;
     if (!job){
       Choqok::NotifyManager::error( i18n("Error when creating job"), i18n("Goo.gl Error") );
       return url;
     }
     job->addMetaData("content-type", "Content-Type: application/json");
 
+    QByteArray data;
     if ( KIO::NetAccess::synchronousRun( job, 0, &data ) ) {
-        QString output( data );
-        QJson::Parser parser;
-        bool ok;
-        QVariantMap map = parser.parse( data , &ok ).toMap();
-        if ( ok ) {
-            QVariantMap error = map["error"].toMap();
+        const QJsonDocument json = QJsonDocument::fromJson(data);
+        if (!json.isNull()) {
+            const QVariantMap map = json.toVariant().toMap();
+            const QVariantMap error = map["error"].toMap();
             if ( !error.isEmpty() ) {
                 Choqok::NotifyManager::error( error["message"].toString(), i18n("Goo.gl Error") );
                 return url;
