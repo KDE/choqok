@@ -39,7 +39,8 @@ class Yourls : public Choqok::Shortener
 public:
     Yourls( QObject* parent, const QVariantList& args  );
     ~Yourls();
-    QString shorten( const QString &url );
+
+    virtual QString shorten( const QString &url );
 
 private Q_SLOTS:
     void reloadConfigs();

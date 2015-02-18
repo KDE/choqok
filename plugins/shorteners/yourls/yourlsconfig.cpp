@@ -26,19 +26,19 @@
 
 #include <QVBoxLayout>
 
-#include <KLocale>
+#include <KAboutData>
+#include <KLocalizedString>
 #include <KPluginFactory>
-#include "choqokdebug.h"
 
 #include "passwordmanager.h"
 
 #include "yourlssettings.h"
 
-K_PLUGIN_FACTORY( YourlsConfigFactory, registerPlugin < YourlsConfig > (); )
-K_EXPORT_PLUGIN( YourlsConfigFactory( "kcm_choqok_yourls" ) )
+K_PLUGIN_FACTORY_WITH_JSON( YourlsConfigFactory, "choqok_yourls_config.json",
+                            registerPlugin < YourlsConfig > (); )
 
 YourlsConfig::YourlsConfig(QWidget* parent, const QVariantList& ):
-        KCModule( YourlsConfigFactory::componentData(), parent)
+        KCModule( KAboutData::pluginData("kcm_choqok_yourls"), parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
@@ -57,7 +57,6 @@ YourlsConfig::~YourlsConfig()
 
 void YourlsConfig::load()
 {
-    qCDebug(CHOQOK);
     KCModule::load();
     ui.cfg_password->setText( Choqok::PasswordManager::self()->readPassword( QString("yourls_%1")
                                                                       .arg(ui.kcfg_username->text()) ) );
@@ -65,7 +64,6 @@ void YourlsConfig::load()
 
 void YourlsConfig::save()
 {
-    qCDebug(CHOQOK);
     KCModule::save();
     Choqok::PasswordManager::self()->writePassword(QString("yourls_%1").arg(ui.kcfg_username->text()),
                                                    ui.cfg_password->text());

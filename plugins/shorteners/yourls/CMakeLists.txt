@@ -1,9 +1,3 @@
-include_directories(
-${CHOQOK_INCLUDES}
-)
-
-########### next target ###############
-
 set( choqok_yourls_SRCS
 yourls.cpp )
 
@@ -11,7 +5,17 @@ kconfig_add_kcfg_files(choqok_yourls_SRCS yourlssettings.kcfgc )
 
 add_library(choqok_yourls MODULE ${choqok_yourls_SRCS})
 
-target_link_libraries(choqok_yourls KF5::KIOCore choqok)
+kcoreaddons_desktop_to_json(choqok_yourls choqok_yourls.desktop)
+
+target_link_libraries(choqok_yourls
+PUBLIC
+    Qt5::Core
+    KF5::CoreAddons
+    KF5::I18n
+    KF5::KIOCore
+    KF5::KDELibs4Support
+    choqok
+)
 
 install(TARGETS choqok_yourls DESTINATION ${PLUGIN_INSTALL_DIR})
 
@@ -28,7 +32,16 @@ kconfig_add_kcfg_files(kcm_choqok_yourls_PART_SRCS yourlssettings.kcfgc )
 
 add_library(kcm_choqok_yourls MODULE ${kcm_choqok_yourls_PART_SRCS})
 
-target_link_libraries(kcm_choqok_yourls  choqok)
+kcoreaddons_desktop_to_json(kcm_choqok_yourls choqok_yourls_config.desktop)
+
+target_link_libraries(kcm_choqok_yourls
+PUBLIC
+    Qt5::Core
+    KF5::ConfigWidgets
+    KF5::CoreAddons
+    KF5::I18n
+    choqok
+)
 
 install(TARGETS kcm_choqok_yourls DESTINATION ${PLUGIN_INSTALL_DIR})
 

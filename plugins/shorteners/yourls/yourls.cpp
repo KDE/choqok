@@ -24,25 +24,24 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "yourls.h"
 
-#include <QDomDocument>
+#include <QUrl>
 
 #include <KAboutData>
-#include "choqokdebug.h"
-#include <KGenericFactory>
-#include <KGlobal>
 #include <KIO/Job>
 #include <KIO/NetAccess>
+#include <KLocalizedString>
+#include <KPluginFactory>
 
 #include "notifymanager.h"
 #include "passwordmanager.h"
 
 #include "yourlssettings.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Yourls > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_yourls" ) )
+K_PLUGIN_FACTORY_WITH_JSON( YourlsFactory, "choqok_yourls.json",
+                            registerPlugin < Yourls > (); )
 
 Yourls::Yourls( QObject *parent, const QVariantList & )
-    : Choqok::Shortener( MyPluginFactory::componentData(), parent )
+    : Choqok::Shortener( "choqok_yourls", parent )
 {
     connect( YourlsSettings::self(), SIGNAL(configChanged()),
              SLOT(reloadConfigs()) );
@@ -53,7 +52,6 @@ Yourls::~Yourls()
 
 QString Yourls::shorten( const QString &url )
 {
-    qCDebug(CHOQOK);
     QByteArray data;                                                    /* output field */
 
     QUrl reqUrl( YourlsSettings::yourlsHost() );
@@ -79,7 +77,6 @@ QString Yourls::shorten( const QString &url )
 
 
         if(!output.isEmpty()) {
-            qCDebug(CHOQOK) << "Short url is: " << output;
             return output;
         }else{
             output = data;
@@ -88,13 +85,11 @@ QString Yourls::shorten( const QString &url )
             rx.indexIn(output);
             output = rx.cap(1);
 
-            qCDebug(CHOQOK) << "error while getting shorting url: " << output;
             Choqok::NotifyManager::error( output, i18n("Yourls Error") );
-            qCDebug(CHOQOK)<<data;
         }
     } else {
-            qCDebug(CHOQOK) << "Cannot create a shorten url.\t" << "KJob ERROR";
-            Choqok::NotifyManager::error( i18n("Cannot create a short URL.\n%1", job->errorString()) );
+            Choqok::NotifyManager::error( i18n("Cannot create a short URL.\n%1",
+                                               job->errorString()) );
     }
     return url;
 }
@@ -105,3 +100,4 @@ void Yourls::reloadConfigs()
                                                 QString("yourls_%1").arg(YourlsSettings::username())).toUtf8();
 }
 
+#include "yourls.moc"

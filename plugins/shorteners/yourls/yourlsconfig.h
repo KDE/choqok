@@ -25,6 +25,8 @@
 #ifndef YOURLSCONFIG_H
 #define YOURLSCONFIG_H
 
+#include <QVariantList>
+
 #include <KCModule>
 
 #include "ui_yourlsprefs.h"
