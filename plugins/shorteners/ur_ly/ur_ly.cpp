@@ -23,20 +23,20 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 #include "ur_ly.h"
 
-#include <KAboutData>
-#include "choqokdebug.h"
-#include <KGenericFactory>
-#include <KGlobal>
+#include <QJsonDocument>
+
 #include <KIO/Job>
 #include <KIO/NetAccess>
+#include <KLocalizedString>
+#include <KPluginFactory>
 
-#include <qjson/parser.h>
+#include "notifymanager.h"
 
-K_PLUGIN_FACTORY ( MyPluginFactory, registerPlugin < Ur_ly> (); )
-K_EXPORT_PLUGIN ( MyPluginFactory ( "choqok_ur_ly" ) )
+K_PLUGIN_FACTORY_WITH_JSON ( Ur_lyFactory, "choqok_ur_ly.json",
+                             registerPlugin < Ur_ly> (); )
 
 Ur_ly::Ur_ly ( QObject* parent, const QVariantList& )
-    : Choqok::Shortener ( MyPluginFactory::componentData(), parent )
+    : Choqok::Shortener ( "choqok_ur_ly", parent )
 {
 }
 
@@ -44,10 +44,8 @@ Ur_ly::~Ur_ly()
 {
 }
 
-
 QString Ur_ly::shorten ( const QString& url )
 {
-    qCDebug(CHOQOK) << "Using ur.ly";
     QByteArray data;
     QUrl reqUrl ( "http://ur.ly/new.json" );
     reqUrl.addQueryItem( "href", QUrl( url ).url() );
@@ -55,16 +53,21 @@ QString Ur_ly::shorten ( const QString& url )
     KIO::Job* job = KIO::get ( reqUrl, KIO::Reload, KIO::HideProgressInfo );
 
     if ( KIO::NetAccess::synchronousRun ( job, 0, &data ) ){
-        QJson::Parser parser;
-        bool ok;
-        QVariantMap result = parser.parse(data, &ok).toMap();
-        if ( ok && result.contains("code") ) {
-            return QString("http://ur.ly/%1").arg(result.value("code").toString());
+        const QJsonDocument json = QJsonDocument::fromJson(data);
+        if (!json.isNull()) {
+            const QVariantMap result = json.toVariant().toMap();
+
+            if ( result.contains("code") ) {
+                return QString("http://ur.ly/%1").arg(result.value("code").toString());
+            }
         } else{
-            qCritical()<<"Ur_ly::shorten: Parse error, Job error: "<<job->errorString()<<"\n Data:"<<data;
+            Choqok::NotifyManager::error( i18n("Malformed response"), i18n("Ur.ly Error") );
         }
     } else {
-        qCDebug(CHOQOK) << "Cannot create a shortened url.\t" << job->errorString();
+        Choqok::NotifyManager::error( i18n("Cannot create a short URL.\n%1",
+                                           job->errorString()), i18n("Ur.ly Error") );
     }
     return url;
 }
+
+#include "ur_ly.moc"

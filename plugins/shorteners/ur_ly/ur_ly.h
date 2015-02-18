@@ -37,8 +37,8 @@ class Ur_ly : public Choqok::Shortener
 public:
     Ur_ly( QObject* parent, const QVariantList& args  );
     ~Ur_ly();
-public:
-    QString shorten( const QString &url );
+
+    virtual QString shorten( const QString &url );
 };
 
 #endif
