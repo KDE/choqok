@@ -42,7 +42,7 @@ ChoqokApplication::ChoqokApplication(int &argc, char **argv)
 
     Choqok::ChoqokDbus();
     
-    m_mainWindow = new MainWindow;
+    m_mainWindow = new MainWindow(this);
 
     Choqok::UI::Global::setMainWindow( m_mainWindow );
 

@@ -35,6 +35,7 @@
 class QAction;
 class KPushButton;
 class KSplashScreen;
+class ChoqokApplication;
 namespace Choqok
 {
 namespace UI
@@ -64,7 +65,7 @@ public:
     /**
     * Default Constructor
     */
-    MainWindow();
+    MainWindow(ChoqokApplication *application);
 
     /**
     * Default Destructor
@@ -128,6 +129,7 @@ private:
     QAction *prefs;
     QAction *aboutChoqok;
     KPushButton *choqokMainButton;
+    ChoqokApplication *app;
 
     int microblogCounter;
     bool choqokMainButtonVisible;

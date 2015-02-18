@@ -30,7 +30,6 @@
 #include <QTimer>
 #include <QWidgetAction>
 
-#include <KApplication>
 #include <KActionCollection>
 #include <KGlobal>
 #include <KGlobalAccel>
@@ -75,10 +74,10 @@ background-color: qlineargradient(spread:reflect, x1:0.449382, y1:0, x2:0.448, y
     background-color: qlineargradient(spread:reflect, x1:0.449382, y1:0, x2:0.448, y2:1, stop:0.3 rgba(255, 255, 255, 100), stop:1 rgba(61, 158, 0, 255));\
     }";
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(ChoqokApplication *application)
     : Choqok::UI::MainWindow(), sysIcon(0), quickWidget(0), s_settingsDialog(0),
     m_splash(0), choqokMainButton(0), microblogCounter(0),
-    choqokMainButtonVisible(false)
+    choqokMainButtonVisible(false), app(application)
 {
     qCDebug(CHOQOK);
     setAttribute ( Qt::WA_DeleteOnClose, false );
@@ -424,7 +423,6 @@ void MainWindow::slotQuit()
     Choqok::BehaviorSettings::setPosition( pos() );
     timelineTimer->stop();
     Choqok::BehaviorSettings::self()->writeConfig();
-    ChoqokApplication *app = qobject_cast<ChoqokApplication*>(kapp);
     app->quitChoqok();
 }
 
