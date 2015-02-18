@@ -47,7 +47,7 @@ QString Goo_gl::shorten( const QString& url )
 {
     QVariantMap req;
     req.insert("longUrl", url);
-    const QByteArray json = QJsonDocument::fromVariant(req).toBinaryData();
+    const QByteArray json = QJsonDocument::fromVariant(req).toJson();
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( json, QUrl("https://www.googleapis.com/urlshortener/v1/url"), KIO::HideProgressInfo ) ;
     if (!job){
       Choqok::NotifyManager::error( i18n("Error when creating job"), i18n("Goo.gl Error") );

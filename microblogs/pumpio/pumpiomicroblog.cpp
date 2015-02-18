@@ -195,7 +195,7 @@ void PumpIOMicroBlog::createPost(Choqok::Account* theAccount, Choqok::Post* post
         item.insert("to", to);
         item.insert("cc", cc);
 
-        const QByteArray data = QJsonDocument::fromVariant(item).toBinaryData();
+        const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
@@ -239,7 +239,7 @@ void PumpIOMicroBlog::createReply(Choqok::Account* theAccount, PumpIOPost* post)
         item.insert("verb", "post");
         item.insert("object", object);
 
-        const QByteArray data = QJsonDocument::fromVariant(item).toBinaryData();
+        const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
@@ -344,7 +344,7 @@ void PumpIOMicroBlog::removePost(Choqok::Account* theAccount, Choqok::Post* post
         item.insert("verb", "delete");
         item.insert("object", object);
 
-        const QByteArray data = QJsonDocument::fromVariant(item).toBinaryData();
+        const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
@@ -602,7 +602,7 @@ void PumpIOMicroBlog::share(Choqok::Account* theAccount, Choqok::Post* post)
         item.insert("verb", "share");
         item.insert("object", object);
 
-        const QByteArray data = QJsonDocument::fromVariant(item).toBinaryData();
+        const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
@@ -635,7 +635,7 @@ void PumpIOMicroBlog::toggleFavorite(Choqok::Account* theAccount, Choqok::Post* 
         item.insert("verb", post->isFavorited ? "unfavorite" : "favorite");
         item.insert("object", object);
 
-        const QByteArray data = QJsonDocument::fromVariant(item).toBinaryData();
+        const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
@@ -1315,7 +1315,7 @@ void PumpIOMicroBlog::updatePost(Choqok::Account* theAccount, Choqok::Post* post
         item.insert("object", object);
         item.insert("to", to);
 
-        const QByteArray data = QJsonDocument::fromVariant(item).toBinaryData();
+        const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
