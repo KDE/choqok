@@ -26,23 +26,23 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QEventLoop>
 
 #include <KAboutData>
-#include "choqokdebug.h"
-#include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/NetAccess>
-#include <KGlobal>
+#include <KLocalizedString>
+#include <KPluginFactory>
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < TightUrl > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_tighturl" ) )
+#include "notifymanager.h"
+
+K_PLUGIN_FACTORY_WITH_JSON( TightUrlFactory, "choqok_tighturl.json",
+                            registerPlugin < TightUrl > (); )
 
 TightUrl::TightUrl( QObject *parent, const QVariantList & )
-: Choqok::Shortener( MyPluginFactory::componentData(), parent )
+: Choqok::Shortener( "choqok_tighturl", parent )
 {
 }
 
 QString TightUrl::shorten( const QString &url )
 {
-    qCDebug(CHOQOK)<<"Using 2tu.us";
     QUrl reqUrl( "http://2tu.us/" );
     reqUrl.addQueryItem( "save", "y" );
     reqUrl.addQueryItem( "url", QUrl( url ).url() );
@@ -59,16 +59,15 @@ QString TightUrl::shorten( const QString &url )
         rx.setMinimal(true);
         rx.indexIn(output);
         output = rx.cap(1);
-        qCDebug(CHOQOK)<<output;
         rx.setPattern( QString( "href=[\'\"](.+)[\'\"]" ) );
         rx.indexIn(output);
         output = rx.cap(1);
-        qCDebug(CHOQOK) << "Short url is: " << output;
         if(!output.isEmpty()) {
             return output;
         }
     } else {
-        qCDebug(CHOQOK) << "KJob ERROR: " << job->errorString() ;
+        Choqok::NotifyManager::error( i18n("Cannot create a short URL.\n%1",
+                                      job->errorString()), i18n("TightUrl Error") );
     }
     return url;
 }
@@ -77,4 +76,4 @@ TightUrl::~TightUrl()
 {
 }
 
-// #include "tighturl.moc"
+#include "tighturl.moc"
