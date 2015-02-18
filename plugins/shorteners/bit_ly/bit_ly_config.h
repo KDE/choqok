@@ -25,6 +25,8 @@
 #ifndef BIT_LY_CONFIG_H
 #define BIT_LY_CONFIG_H
 
+#include <QVariantList>
+
 #include <KCModule>
 
 #include "ui_bit_ly_prefs.h"

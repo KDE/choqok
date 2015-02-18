@@ -24,27 +24,26 @@
 
 #include "bit_ly_config.h"
 
-#include <QLayout>
+#include <QVBoxLayout>
 
 #include <KAboutData>
-#include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/NetAccess>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KMessageBox>
 #include <KPluginFactory>
-#include "choqokdebug.h"
+#include <KSharedConfig>
 
 #include "notifymanager.h"
 #include "passwordmanager.h"
 
 #include "bit_ly_settings.h"
 
-K_PLUGIN_FACTORY( Bit_ly_ConfigFactory, registerPlugin < Bit_ly_Config > (); )
-K_EXPORT_PLUGIN( Bit_ly_ConfigFactory( "kcm_choqok_bit_ly" ) )
+K_PLUGIN_FACTORY_WITH_JSON( Bit_ly_ConfigFactory, "choqok_bit_ly_config.json",
+                            registerPlugin < Bit_ly_Config > (); )
 
 Bit_ly_Config::Bit_ly_Config(QWidget* parent, const QVariantList& ):
-        KCModule( Bit_ly_ConfigFactory::componentData(), parent)
+        KCModule( KAboutData::pluginData("kcm_choqok_bit_ly"), parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
@@ -84,7 +83,7 @@ void Bit_ly_Config::load()
 {
 //     qCDebug(CHOQOK);
     KCModule::load();
-    KConfigGroup grp( KGlobal::config(), "Bit.ly Shortener" );
+    KConfigGroup grp( KSharedConfig::openConfig(), "Bit.ly Shortener" );
     ui.kcfg_login->setText( grp.readEntry( "login", "" ) );
     ui.kcfg_domain->setCurrentIndex( domains.indexOf( grp.readEntry( "domain", "bit.ly" ) ) );
     ui.kcfg_api_key->setText( Choqok::PasswordManager::self()->readPassword( QString("bitly_%1")
@@ -95,7 +94,7 @@ void Bit_ly_Config::save()
 {
 //     qCDebug(CHOQOK);
     KCModule::save();
-    KConfigGroup grp( KGlobal::config(), "Bit.ly Shortener" );
+    KConfigGroup grp( KSharedConfig::openConfig(), "Bit.ly Shortener" );
     grp.writeEntry( "login", ui.kcfg_login->text() );
     grp.writeEntry( "domain", domains.at( ui.kcfg_domain->currentIndex() ) );
     Choqok::PasswordManager::self()->writePassword( QString( "bitly_%1" ).arg( ui.kcfg_login->text() ),
