@@ -24,21 +24,20 @@
 #include "tinyarro_ws.h"
 
 #include <KAboutData>
-#include "choqokdebug.h"
-#include <KGenericFactory>
-#include <KGlobal>
 #include <KIO/Job>
 #include <KIO/NetAccess>
+#include <KLocalizedString>
+#include <KPluginFactory>
 
 #include "notifymanager.h"
 
 #include "tinyarro_ws_settings.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Tinyarro_ws > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_tinyarro_ws" ) )
+K_PLUGIN_FACTORY_WITH_JSON( Tinyarro_wsFactory, "choqok_tinyarro_ws.json",
+                            registerPlugin < Tinyarro_ws > (); )
 
 Tinyarro_ws::Tinyarro_ws( QObject *parent, const QVariantList & )
-    : Choqok::Shortener( MyPluginFactory::componentData(), parent )
+    : Choqok::Shortener( "choqok_tinyarro_ws", parent )
 {
 }
 
@@ -48,7 +47,6 @@ Tinyarro_ws::~Tinyarro_ws()
 
 QString Tinyarro_ws::shorten( const QString &url )
 {
-    qCDebug(CHOQOK);
     QByteArray data;
 
     QUrl reqUrl( "http://tinyarro.ws/api-create.php" );
@@ -68,7 +66,6 @@ QString Tinyarro_ws::shorten( const QString &url )
         QString output = QString::fromUtf8( data );
 
         if( !output.isEmpty() ) {
-            qCDebug(CHOQOK) << "Short url is: " << output;
             if ( output.startsWith( QString( "http://" ) ) )
               return output;
         }
@@ -78,3 +75,5 @@ QString Tinyarro_ws::shorten( const QString &url )
     }
     return url;
 }
+
+#include "tinyarro_ws.moc"

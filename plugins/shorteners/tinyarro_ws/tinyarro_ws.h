@@ -38,7 +38,8 @@ class Tinyarro_ws : public Choqok::Shortener
 public:
     Tinyarro_ws( QObject* parent, const QVariantList& args  );
     ~Tinyarro_ws();
-    QString shorten( const QString &url );
+
+    virtual QString shorten( const QString &url );
 };
 
 #endif

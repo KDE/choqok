@@ -25,19 +25,20 @@
 
 #include <QVBoxLayout>
 
-#include <KLocale>
+#include <KAboutData>
+#include <KLocalizedString>
 #include <KPluginFactory>
-#include "choqokdebug.h"
+#include <KSharedConfig>
 
 #include "passwordmanager.h"
 
 #include "tinyarro_ws_settings.h"
 
-K_PLUGIN_FACTORY( Tinyarro_ws_ConfigFactory, registerPlugin < Tinyarro_ws_Config > (); )
-K_EXPORT_PLUGIN( Tinyarro_ws_ConfigFactory( "kcm_choqok_tinyarro_ws" ) )
+K_PLUGIN_FACTORY_WITH_JSON( Tinyarro_ws_ConfigFactory, "choqok_tinyarro_ws_config.json",
+                            registerPlugin < Tinyarro_ws_Config > (); )
 
 Tinyarro_ws_Config::Tinyarro_ws_Config(QWidget* parent, const QVariantList& ):
-        KCModule( Tinyarro_ws_ConfigFactory::componentData(), parent )
+        KCModule( KAboutData::pluginData("kcm_choqok_tinyarro_ws"), parent )
 {
     QVBoxLayout *layout = new QVBoxLayout( this );
     QWidget *wd = new QWidget( this );
@@ -77,17 +78,15 @@ Tinyarro_ws_Config::~Tinyarro_ws_Config()
 
 void Tinyarro_ws_Config::load()
 {
-    qCDebug(CHOQOK);
     KCModule::load();
-    KConfigGroup grp(KGlobal::config(), "Tinyarro.ws Shortener");
+    KConfigGroup grp(KSharedConfig::openConfig(), "Tinyarro.ws Shortener");
     ui.kcfg_tinyarro_ws_host->setCurrentIndex(grp.readEntry("tinyarro_ws_host", "0").toInt());
 }
 
 void Tinyarro_ws_Config::save()
 {
-    qCDebug(CHOQOK);
     KCModule::save();
-    KConfigGroup grp(KGlobal::config(), "Tinyarro.ws Shortener");
+    KConfigGroup grp(KSharedConfig::openConfig(), "Tinyarro.ws Shortener");
     grp.writeEntry("tinyarro_ws_host", ui.kcfg_tinyarro_ws_host->currentIndex());
     grp.writeEntry("tinyarro_ws_host_punny", hostList[ui.kcfg_tinyarro_ws_host->currentText()]);
 }

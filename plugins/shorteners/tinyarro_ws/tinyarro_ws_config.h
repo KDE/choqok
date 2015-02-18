@@ -24,6 +24,8 @@
 #ifndef TINYARRO_WS_H
 #define TINYARRO_WS_H
 
+#include <QVariantList>
+
 #include <KCModule>
 
 #include "ui_tinyarro_ws_prefs.h"
