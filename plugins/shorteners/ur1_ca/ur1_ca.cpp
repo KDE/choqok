@@ -25,17 +25,18 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QEventLoop>
 
 #include <KAboutData>
-#include "choqokdebug.h"
-#include <KGenericFactory>
-#include <KGlobal>
 #include <KIO/Job>
 #include <KIO/NetAccess>
+#include <KLocalizedString>
+#include <KPluginFactory>
 
-K_PLUGIN_FACTORY ( MyPluginFactory, registerPlugin < Ur1_ca> (); )
-K_EXPORT_PLUGIN ( MyPluginFactory ( "choqok_ur1_ca" ) )
+#include "notifymanager.h"
+
+K_PLUGIN_FACTORY_WITH_JSON ( Ur1_caFactory, "choqok_ur1_ca.json",
+                             registerPlugin < Ur1_ca> (); )
 
 Ur1_ca::Ur1_ca ( QObject* parent, const QVariantList& )
-    : Choqok::Shortener ( MyPluginFactory::componentData(), parent )
+    : Choqok::Shortener ( "choqok_ur1_ca", parent )
 {
 }
 
@@ -43,10 +44,8 @@ Ur1_ca::~Ur1_ca()
 {
 }
 
-
 QString Ur1_ca::shorten ( const QString& url )
 {
-  qCDebug(CHOQOK) << "Using ur1.ca";
   QUrl reqUrl ( "http://ur1.ca/" );
   QString temp;
   temp = QUrl::toPercentEncoding(url);
@@ -71,7 +70,6 @@ QString Ur1_ca::shorten ( const QString& url )
       rx.setPattern(QString("href=[\'\"](.*)[\'\"]"));
       rx.indexIn(output);
       output = rx.cap(1);
-      qCDebug(CHOQOK) << "Short url is: " << output;
       if ( !output.isEmpty() )
         {
           return output;
@@ -79,7 +77,9 @@ QString Ur1_ca::shorten ( const QString& url )
     }
   else
     {
-      qCDebug(CHOQOK) << "Cannot create a shortened url.\t" << job->errorString();
+        Choqok::NotifyManager::error( i18n("Cannot create a short URL.\n%1", job->errorString()), i18n("ur1.ca Error") );
     }
   return url;
 }
+
+#include "ur1_ca.moc"
