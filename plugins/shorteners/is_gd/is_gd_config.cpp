@@ -24,25 +24,21 @@
 
 #include "is_gd_config.h"
 
-#include <QLayout>
+#include <QVBoxLayout>
 
 #include <KAboutData>
-#include <KGenericFactory>
-#include <KIO/Job>
-#include <KIO/NetAccess>
-#include <KLocale>
-#include <KMessageBox>
+#include <KLocalizedString>
 #include <KPluginFactory>
 
 #include "notifymanager.h"
 
 #include "is_gd_settings.h"
 
-K_PLUGIN_FACTORY( Is_gd_ConfigFactory, registerPlugin < Is_gd_Config > (); )
-K_EXPORT_PLUGIN( Is_gd_ConfigFactory( "kcm_choqok_is_gd" ) )
+K_PLUGIN_FACTORY_WITH_JSON( Is_gd_ConfigFactory, "choqok_is_gd_config.json",
+                            registerPlugin < Is_gd_Config > (); )
 
 Is_gd_Config::Is_gd_Config(QWidget* parent, const QVariantList& ):
-        KCModule( Is_gd_ConfigFactory::componentData(), parent)
+        KCModule( KAboutData::pluginData("kcm_choqok_is_gd"), parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);

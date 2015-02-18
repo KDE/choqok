@@ -24,25 +24,22 @@
 #include "is_gd.h"
 
 #include <QEventLoop>
+#include <QJsonDocument>
 
 #include <KAboutData>
-#include "choqokdebug.h"
-#include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/NetAccess>
-#include <KGlobal>
-
-#include <qjson/parser.h>
+#include <KLocalizedString>
+#include <KPluginFactory>
 
 #include "notifymanager.h"
 
 #include "is_gd_settings.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Is_gd > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_is_gd" ) )
+K_PLUGIN_FACTORY_WITH_JSON( Is_gdFactory, "choqok_is_gd.json", registerPlugin < Is_gd > (); )
 
 Is_gd::Is_gd( QObject* parent, const QVariantList& )
-    : Choqok::Shortener( MyPluginFactory::componentData(), parent )
+    : Choqok::Shortener( "choqok_is_gd", parent )
 {
 }
 
@@ -52,8 +49,6 @@ Is_gd::~Is_gd()
 
 QString Is_gd::shorten( const QString& url )
 {
-    qCDebug(CHOQOK) << "Using is.gd";
-
     Is_gd_Settings::self()->readConfig();
 
     QUrl reqUrl( "http://is.gd/create.php" );
@@ -70,11 +65,11 @@ QString Is_gd::shorten( const QString& url )
     loop.exec();
 
     if( job->error() == KJob::NoError ) {
-        QJson::Parser parser;
-        bool ok;
-        QVariantMap map = parser.parse( job->data() , &ok ).toMap();
 
-        if ( ok ) {
+        const QJsonDocument json = QJsonDocument::fromJson(job->data());
+        if (!json.isNull()) {
+            const QVariantMap map = json.toVariant().toMap();
+
             if ( !map[ "errorcode" ].toString().isEmpty() ) {
                 Choqok::NotifyManager::error( map[ "errormessage" ].toString(), i18n("is.gd Error") );
                 return url;
@@ -93,4 +88,4 @@ QString Is_gd::shorten( const QString& url )
     return url;
 }
 
-// #include "is_gd.moc"
+#include "is_gd.moc"

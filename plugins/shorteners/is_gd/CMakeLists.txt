@@ -5,7 +5,17 @@ kconfig_add_kcfg_files(choqok_is_gd_SRCS is_gd_settings.kcfgc )
 
 add_library(choqok_is_gd MODULE ${choqok_is_gd_SRCS})
 
-target_link_libraries(choqok_is_gd KF5::KIOCore ${QJSON_LIBRARY} choqok)
+kcoreaddons_desktop_to_json(choqok_is_gd choqok_is_gd.desktop)
+
+target_link_libraries(choqok_is_gd
+PUBLIC
+    Qt5::Core
+    KF5::CoreAddons
+    KF5::I18n
+    KF5::KIOCore
+    KF5::KDELibs4Support
+    choqok
+)
 
 install(TARGETS choqok_is_gd DESTINATION ${PLUGIN_INSTALL_DIR})
 
