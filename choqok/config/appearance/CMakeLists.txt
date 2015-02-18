@@ -1,10 +1,3 @@
-
-include_directories(
-${CHOQOK_INCLUDES}
-)
-
-########### next target ###############
-
 set(kcm_choqok_appearanceconfig_PART_SRCS
     appearanceconfig.cpp
     appearancedebug.cpp
@@ -26,9 +19,5 @@ PUBLIC
 )
 
 install(TARGETS kcm_choqok_appearanceconfig  DESTINATION ${PLUGIN_INSTALL_DIR})
-
-
-########### install files ###############
-
 install( FILES choqok_appearanceconfig.desktop  DESTINATION ${SERVICES_INSTALL_DIR})
 

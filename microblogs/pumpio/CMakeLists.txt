@@ -1,6 +1,5 @@
 include_directories(
     ${CHOQOK_INCLUDES}
-    ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 set(choqok_pumpio_SRCS

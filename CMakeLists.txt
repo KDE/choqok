@@ -2,12 +2,9 @@ project(choqok)
 
 cmake_minimum_required(VERSION 2.8.12)
 
-set(CHOQOK_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-set(CHOQOK_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
-
 find_package(ECM REQUIRED NO_MODULE)
 
-set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CHOQOK_SOURCE_DIR}/cmake/modules)
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
 include(KDEInstallDirs)
 include(ECMInstallIcons)
@@ -55,19 +52,15 @@ find_package(QtOAuth REQUIRED)
 #endif(QTINDICATE_BUILD)
 
 set(CHOQOK_INCLUDES
-${QTOAUTH_INCLUDE_DIR}
-${CHOQOK_SOURCE_DIR}/helperlibs
-${CHOQOK_BINARY_DIR}/helperlibs
-${CHOQOK_SOURCE_DIR}/libchoqok/
-${CHOQOK_BINARY_DIR}/libchoqok/
-${CHOQOK_SOURCE_DIR}/libchoqok/ui/
+${CMAKE_CURRENT_SOURCE_DIR}/libchoqok/
+${CMAKE_CURRENT_SOURCE_DIR}/libchoqok/ui
 )
 
 add_subdirectory( libchoqok )
 #add_subdirectory( helperlibs )
 add_subdirectory( choqok )
 add_subdirectory( icons )
-#add_subdirectory( plugins )
+add_subdirectory( plugins )
 add_subdirectory( microblogs )
 add_subdirectory( images )
 add_subdirectory( cmake )

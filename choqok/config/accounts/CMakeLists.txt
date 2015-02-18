@@ -1,18 +1,8 @@
-
-include_directories(
-${CHOQOK_INCLUDES}
-)
-
-# link_directories(  )
-
-########### next target ###############
-
 set(kcm_choqok_accountsconfig_PART_SRCS
 accountsdebug.cpp
 accountswidget.cpp
 addaccountdialog.cpp
 editaccountdialog.cpp )
-
 
 ki18n_wrap_ui(kcm_choqok_accountsconfig_PART_SRCS accountswidget_base.ui )
 
@@ -31,9 +21,4 @@ PUBLIC
 )
 
 install(TARGETS kcm_choqok_accountsconfig  DESTINATION ${PLUGIN_INSTALL_DIR})
-
-
-########### install files ###############
-
 install( FILES choqok_accountsconfig.desktop  DESTINATION ${SERVICES_INSTALL_DIR})
-

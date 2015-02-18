@@ -1,13 +1,6 @@
-
-include_directories(
-${CHOQOK_INCLUDES}
-)
-
 #if(QtIndicate_FOUND)
 #	add_definitions(-DQTINDICATE_BUILD)
 #endif(QtIndicate_FOUND)
-
-########### next target ###############
 
 set(kcm_choqok_behaviorconfig_PART_SRCS
    behaviorconfig.cpp
@@ -36,10 +29,4 @@ PUBLIC
 )
 
 install(TARGETS kcm_choqok_behaviorconfig  DESTINATION ${PLUGIN_INSTALL_DIR})
-
-
-########### install files ###############
-
 install( FILES choqok_behaviorconfig.desktop  DESTINATION ${SERVICES_INSTALL_DIR})
-
-
