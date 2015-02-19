@@ -25,21 +25,19 @@
 #ifndef IMAGEPREVIEW_H
 #define IMAGEPREVIEW_H
 
-#include <QPointer>
 #include <QQueue>
+#include <QPixmap>
+#include <QVariant>
 
 #include "plugin.h"
 
-namespace KIO {
-class Job;
-}
-
 namespace Choqok {
-namespace UI {
-class PostWidget;
-}
+    namespace UI {
+        class PostWidget;
+    }
 }
 
+class QPointer<Choqok::UI::PostWidget*>;
 
 class ImagePreview : public Choqok::Plugin
 {

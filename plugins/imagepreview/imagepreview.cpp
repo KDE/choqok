@@ -24,16 +24,18 @@
 
 #include "imagepreview.h"
 
-#include <KGenericFactory>
-#include "choqokdebug.h"
+#include <QPointer>
+#include <QTimer>
+
+#include <KPluginFactory>
 
 #include "choqokuiglobal.h"
 #include "mediamanager.h"
 #include "postwidget.h"
 #include "textbrowser.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < ImagePreview > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_imagepreview" ) )
+K_PLUGIN_FACTORY_WITH_JSON( ImagePreviewFactory, "choqok_imagepreview.json",
+                            registerPlugin < ImagePreview > (); )
 
 const QRegExp ImagePreview::mTwitpicRegExp("(http://twitpic.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
 const QRegExp ImagePreview::mYFrogRegExp("(http://yfrog.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])");
@@ -43,12 +45,9 @@ const QRegExp ImagePreview::mImgLyRegExp("(http://img.ly/[^\\s<>\"]+[^!,\\.\\s<>
 const QRegExp ImagePreview::mTwitgooRegExp("(http://(([a-zA-Z0-9]+\\.)?)twitgoo.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
 const QRegExp ImagePreview::mPumpIORegExp("(https://([a-zA-Z0-9]+\\.)?[a-zA-Z0-9]+\\.[a-zA-Z]+/uploads/\\w+/\\d{4}/\\d{1,2}/\\d{1,2}/\\w+)(\\.[a-zA-Z]{3,4})");
 
-
-
 ImagePreview::ImagePreview(QObject* parent, const QList< QVariant >& )
-    :Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped)
+    :Choqok::Plugin("choqok_imagepreview", parent), state(Stopped)
 {
-    qCDebug(CHOQOK);
     connect( Choqok::UI::Global::SessionManager::self(),
             SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
              this,
@@ -71,7 +70,6 @@ void ImagePreview::slotAddNewPostWidget(Choqok::UI::PostWidget* newWidget)
 
 void ImagePreview::startParsing()
 {
-//     qCDebug(CHOQOK);
     int i = 8;
     while( !postsQueue.isEmpty() && i>0 ){
         parse(postsQueue.dequeue());
@@ -88,7 +86,6 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
 {
     if(!postToParse)
         return;
-//     qCDebug(CHOQOK);
     int pos = 0;
     QStringList twitpicRedirectList;
     QStringList yfrogRedirectList;
@@ -103,7 +100,6 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     while ((pos = mTwitpicRegExp.indexIn(content, pos)) != -1) {
         pos += mTwitpicRegExp.matchedLength();
         twitpicRedirectList << mTwitpicRegExp.cap(0);
-        qCDebug(CHOQOK)<<mTwitpicRegExp.capturedTexts();
     }
     Q_FOREACH (const QString &url, twitpicRedirectList) {
         QString twitpicUrl = QString( "http://twitpic.com/show/mini%1" ).arg(QString(url).remove("http://twitpic.com"));
@@ -121,7 +117,6 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     while ((pos = mYFrogRegExp.indexIn(content, pos)) != -1) {
         pos += mYFrogRegExp.matchedLength();
         yfrogRedirectList << mYFrogRegExp.cap(0);
-        qCDebug(CHOQOK)<<mYFrogRegExp.capturedTexts();
     }
     Q_FOREACH (const QString &url, yfrogRedirectList) {
 //         if( url.endsWith('j') || url.endsWith('p') || url.endsWith('g') ) //To check if it's Image or not!
@@ -129,7 +124,6 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
                  SIGNAL(imageFetched(QString,QPixmap)),
                  SLOT(slotImageFetched(QString,QPixmap)) );
         QString yfrogThumbnailUrl = url + ".th.jpg";
-        qCDebug(CHOQOK)<<"YFrog Thumbnail Url: "<<yfrogThumbnailUrl;
         mParsingList.insert(yfrogThumbnailUrl, postToParse);
         mBaseUrlMap.insert(yfrogThumbnailUrl, url);
         Choqok::MediaManager::self()->fetchImage(yfrogThumbnailUrl, Choqok::MediaManager::Async);
@@ -140,7 +134,6 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     while ((pos = mTweetphotoRegExp.indexIn(content, pos)) != -1) {
         pos += mTweetphotoRegExp.matchedLength();
         TweetphotoRedirectList << mTweetphotoRegExp.cap(0);
-        qCDebug(CHOQOK)<<mTweetphotoRegExp.capturedTexts();
     }
     Q_FOREACH (const QString &url, TweetphotoRedirectList) {
     connect( Choqok::MediaManager::self(),
@@ -157,7 +150,6 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     while ((pos = mPlixiRegExp.indexIn(content, pos)) != -1) {
         pos += mPlixiRegExp.matchedLength();
         PlixiRedirectList << mPlixiRegExp.cap(0);
-        qCDebug(CHOQOK)<<mPlixiRegExp.capturedTexts();
     }
     Q_FOREACH (const QString &url, PlixiRedirectList) {
         connect( Choqok::MediaManager::self(),
@@ -174,7 +166,6 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     while ((pos = mImgLyRegExp.indexIn(content, pos)) != -1) {
         pos += mImgLyRegExp.matchedLength();
         ImgLyRedirectList << mImgLyRegExp.cap(0);
-        qCDebug(CHOQOK)<<mImgLyRegExp.capturedTexts();
     }
     Q_FOREACH (const QString &url, ImgLyRedirectList) {
         connect( Choqok::MediaManager::self(),
@@ -191,7 +182,6 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
     while ((pos = mTwitgooRegExp.indexIn(content, pos)) != -1) {
         pos += mTwitgooRegExp.matchedLength();
         TwitgooRedirectList << mTwitgooRegExp.cap(0);
-        qCDebug(CHOQOK)<<mTwitgooRegExp.capturedTexts();
     }
     Q_FOREACH (const QString &url, TwitgooRedirectList) {
         connect( Choqok::MediaManager::self(),
@@ -212,7 +202,6 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
         PumpIORedirectList << mPumpIORegExp.cap(0);
         baseUrl = mPumpIORegExp.cap(1);
         imageExtension = mPumpIORegExp.cap(mPumpIORegExp.capturedTexts().length() - 1);
-        qCDebug(CHOQOK) << mPumpIORegExp.capturedTexts();
     }
     Q_FOREACH (const QString &url, PumpIORedirectList) {
         connect (Choqok::MediaManager::self(), SIGNAL(imageFetched(QString, QPixmap)),
@@ -226,7 +215,6 @@ void ImagePreview::parse(Choqok::UI::PostWidget* postToParse)
 
 void ImagePreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pixmap)
 {
-//     qCDebug(CHOQOK);
     Choqok::UI::PostWidget *postToParse = mParsingList.take(remoteUrl);
     QString baseUrl = mBaseUrlMap.take(remoteUrl);
     if(!postToParse)
@@ -234,7 +222,6 @@ void ImagePreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pix
     QString content = postToParse->content();
     QUrl imgU(remoteUrl);
     imgU.setScheme("img");
-    QString imgUrl = imgU.toDisplayString();
 //     imgUrl.replace("http://","img://");
     QString size;
     QPixmap pix = pixmap;
@@ -243,8 +230,10 @@ void ImagePreview::slotImageFetched(const QString& remoteUrl, const QPixmap& pix
     } else if(pixmap.height() > 200) {
         pix = pixmap.scaledToHeight(200);
     }
-    postToParse->mainWidget()->document()->addResource(QTextDocument::ImageResource, imgUrl, pix);
-    content.replace(QRegExp('>'+baseUrl+'<'), "><img align='left' src='"+imgUrl+"' /><");
+    postToParse->mainWidget()->document()->addResource(QTextDocument::ImageResource, imgU, pix);
+    content.replace(QRegExp('>'+baseUrl+'<'), QStringLiteral("><img align='left' src='")
+        + imgU.toDisplayString() + QStringLiteral("' /><"));
     postToParse->setContent(content);
 }
 
+#include "imagepreview.moc"
