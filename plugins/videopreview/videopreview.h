@@ -27,28 +27,21 @@
 #ifndef VIDEOPREVIEW_H
 #define VIDEOPREVIEW_H
 
+#include <QMap>
+#include <QPixmap>
 #include <QPointer>
 #include <QQueue>
+#include <QRegExp>
+#include <QVariant>
 #include <QUrl>
-
-#include <KIO/Job>
-#include <KIO/NetAccess>
 
 #include "plugin.h"
 
-/*
-namespace KIO {
-class Job;
-}
-*/
-
-//class KJob;
 namespace Choqok {
-namespace UI {
-class PostWidget;
+    namespace UI {
+        class PostWidget;
+    }
 }
-}
-
 
 class VideoPreview : public Choqok::Plugin
 {
