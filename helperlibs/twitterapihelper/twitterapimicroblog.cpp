@@ -707,7 +707,7 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     QUrl url = account->apiUrl();
     url = url.adjusted(QUrl::StripTrailingSlash);
-    url.setPath(url.path() + '/' + ( QString("/friends/list.json") ));
+    url.setPath(url.path() + ( QString("/friends/list.json") ));
     QUrl tmpUrl(url);
     url.addQueryItem( "cursor", d->friendsCursor );
     url.addQueryItem( "count", QString("200") );
@@ -1142,7 +1142,7 @@ void TwitterApiMicroBlog::reportUserAsSpam(Choqok::Account* theAccount, const QS
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     QUrl url = account->apiUrl();
     url = url.adjusted(QUrl::StripTrailingSlash);
-    url.setPath(url.path() + '/' + ( "/users/report_spam.json" ));
+    url.setPath(url.path() + ( "/users/report_spam.json" ));
     QUrl tmp(url);
     url.addQueryItem("screen_name", username.toLatin1());
 

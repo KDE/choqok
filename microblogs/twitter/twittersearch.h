@@ -25,7 +25,7 @@
 #ifndef TWITTERSEARCH_H
 #define TWITTERSEARCH_H
 
-#include "twitterapihelper/twitterapisearch.h"
+#include "twitterapisearch.h"
 
 class KJob;
 

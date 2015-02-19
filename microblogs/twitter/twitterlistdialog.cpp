@@ -24,14 +24,11 @@
 
 #include "twitterlistdialog.h"
 
-#include <QLabel>
-#include <QLayout>
+#include <QGridLayout>
 #include <QListWidget>
 
-#include <KComboBox>
-#include "choqokdebug.h"
+#include "twitterdebug.h"
 #include <KMessageBox>
-#include <KLineEdit>
 #include <KLocalizedString>
 
 #include "twitteraccount.h"

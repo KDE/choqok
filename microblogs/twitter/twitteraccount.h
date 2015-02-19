@@ -29,7 +29,7 @@
 
 #include "account.h"
 
-#include "twitterapihelper/twitterapiaccount.h"
+#include "twitterapiaccount.h"
 
 class TwitterMicroBlog;
 /**

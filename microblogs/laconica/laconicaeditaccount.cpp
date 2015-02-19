@@ -226,7 +226,7 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
 void LaconicaEditAccountWidget::setTextLimit()
 {
     QByteArray jobData;
-    QString url = mAccount->host() + "/" + mAccount->api() + "/statusnet/config.json";
+    QString url = mAccount->host() + '/' + mAccount->api() + "/statusnet/config.json";
     KIO::TransferJob *job = KIO::get(QUrl(url), KIO::Reload, KIO::HideProgressInfo);
     if ( !KIO::NetAccess::synchronousRun(job, 0, &jobData) ) {
         qCCritical(CHOQOK)<<"Job error: " << job->errorString();

@@ -31,9 +31,9 @@
 
 #include "choqoktools.h"
 
-#include "twitterapihelper/twitterapiaccount.h"
-#include "twitterapihelper/twitterapimicroblog.h"
-#include "twitterapihelper/twitterapiwhoiswidget.h"
+#include "twitterapiaccount.h"
+#include "twitterapimicroblog.h"
+#include "twitterapiwhoiswidget.h"
 
 #include "twittersearch.h"
 

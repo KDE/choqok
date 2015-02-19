@@ -25,8 +25,6 @@
 #ifndef TWITTERLISTDIALOG_H
 #define TWITTERLISTDIALOG_H
 
-#include <QListWidget>
-
 #include <KDialog>
 
 #include "ui_twitterlistdialog_base.h"
@@ -36,6 +34,7 @@ namespace Choqok {
 class Account;
 }
 
+class QListWidget;
 class QListWidgetItem;
 class TwitterMicroBlog;
 class TwitterAccount;

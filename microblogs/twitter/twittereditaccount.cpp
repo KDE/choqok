@@ -24,17 +24,13 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "twittereditaccount.h"
 
 #include <QCheckBox>
-#include <QDomDocument>
-#include <QProgressBar>
 
-#include "choqokdebug.h"
 #include <KInputDialog>
 #include <KIO/AccessManager>
 #include <KIO/Job>
 #include <KIO/JobClasses>
 #include <KIO/NetAccess>
 #include <KMessageBox>
-#include <KToolInvocation>
 
 #include <QtOAuth/QtOAuth>
 #include <QtOAuth/qoauth_namespace.h>
@@ -42,8 +38,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "accountmanager.h"
 #include "choqoktools.h"
 
-#include "twittermicroblog.h"
 #include "twitteraccount.h"
+#include "twitterdebug.h"
+#include "twittermicroblog.h"
 
 const char * twitterConsumerKey = "VyXMf0O7CvciiUQjliYtYg";
 const char * twitterConsumerSecret = "uD2HvsOBjzt1Vs6SnouFtuxDeHmvOOVwmn3fBVyCw0";

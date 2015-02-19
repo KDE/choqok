@@ -247,7 +247,7 @@ void LaconicaMicroBlog::doRequestFriendsScreenName(TwitterApiAccount* theAccount
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     QUrl url = account->apiUrl();
     url = url.adjusted(QUrl::StripTrailingSlash);
-    url.setPath(url.path() + '/' + ( QString("/statuses/friends.%1").arg(format)));
+    url.setPath(url.path() + ( QString("/statuses/friends.%1").arg(format)));
     QOAuth::ParamMap params;
     if( page > 1 ) {
         params.insert( "page", QByteArray::number( page ) );

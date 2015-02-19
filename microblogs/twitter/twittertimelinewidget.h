@@ -24,7 +24,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef TWITTERTIMELINEWIDGET_H
 #define TWITTERTIMELINEWIDGET_H
 
-#include "twitterapihelper/twitterapitimelinewidget.h"
+#include "twitterapitimelinewidget.h"
 
 
 class TwitterTimelineWidget : public TwitterApiTimelineWidget

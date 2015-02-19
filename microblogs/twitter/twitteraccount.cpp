@@ -24,7 +24,7 @@
 
 #include "twitteraccount.h"
 
-#include "choqokdebug.h"
+#include "twitterdebug.h"
 
 #include "twittermicroblog.h"
 

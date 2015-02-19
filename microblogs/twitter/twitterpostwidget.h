@@ -25,7 +25,7 @@
 #ifndef TWITTERPOSTWIDGET_H
 #define TWITTERPOSTWIDGET_H
 
-#include "twitterapihelper/twitterapipostwidget.h"
+#include "twitterapipostwidget.h"
 
 class TwitterPostWidget : public TwitterApiPostWidget
 {

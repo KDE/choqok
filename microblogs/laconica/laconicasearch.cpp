@@ -96,7 +96,7 @@ QUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
     if( searchInfo.option == ReferenceHashtag ) {
         url = theAccount->apiUrl();
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + '/' + ("/search.atom"));
+        url.setPath(url.path() + ("/search.atom"));
         url.addQueryItem("q", formattedQuery);
         if( !sinceStatusId.isEmpty() )
             url.addQueryItem( "since_id", sinceStatusId );

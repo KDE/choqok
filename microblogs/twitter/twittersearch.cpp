@@ -24,23 +24,20 @@
 
 #include "twittersearch.h"
 
-#include <QDomElement>
+#include <QJsonDocument>
 
-#include "choqokdebug.h"
-#include <KIO/JobClasses>
 #include <KIO/Job>
+#include <KIO/JobClasses>
 #include <KLocalizedString>
 
 #include <QtOAuth/QtOAuth>
 
-#include <qjson/parser.h>
-
 #include "choqokbehaviorsettings.h"
 
-#include "twitterapihelper/twitterapiaccount.h"
-#include "twitterapihelper/twitterapimicroblog.h"
+#include "twitterapimicroblog.h"
 
 #include "twitteraccount.h"
+#include "twitterdebug.h"
 
 const QRegExp TwitterSearch::m_rId("tag:search.twitter.com,[0-9]+:([0-9]+)");
 
@@ -117,7 +114,9 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
     TwitterAccount* account = qobject_cast< TwitterAccount* >(searchInfo.account);
     TwitterApiMicroBlog *microblog = qobject_cast<TwitterApiMicroBlog*>(account->microblog());
 
-    job->addMetaData("customHTTPHeader", "Authorization: " + microblog->authorizationHeader(account, tmpUrl, QOAuth::GET, param));
+    job->addMetaData(QStringLiteral("customHTTPHeader"),
+                     QStringLiteral("Authorization: ") +
+                     microblog->authorizationHeader(account, tmpUrl, QOAuth::GET, param));
 
     mSearchJobs[job] = searchInfo;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( searchResultsReturned( KJob* ) ) );
@@ -127,7 +126,7 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
 void TwitterSearch::searchResultsReturned(KJob* job)
 {
     qCDebug(CHOQOK);
-    if( job == 0 ) {
+    if (!job) {
         qCDebug(CHOQOK) << "job is a null pointer";
         Q_EMIT error( i18n( "Unable to fetch search results." ) );
         return;
@@ -151,17 +150,17 @@ void TwitterSearch::searchResultsReturned(KJob* job)
 
 QList< Choqok::Post* > TwitterSearch::parseJson(QByteArray buffer)
 {
-    bool ok;
     QList<Choqok::Post*> statusList;
-    QJson::Parser parser;
-    QVariantMap map = parser.parse(buffer, &ok).toMap();
-
-    if ( ok && map.contains("statuses") ) {
-        QVariantList list = map["statuses"].toList();
-        QVariantList::const_iterator it = list.constBegin();
-        QVariantList::const_iterator endIt = list.constEnd();
-        for(; it != endIt; ++it){
-            statusList.prepend(readStatusesFromJsonMap(it->toMap()));
+    const QJsonDocument json = QJsonDocument::fromJson(buffer);
+    if (!json.isNull()) {
+        const QVariantMap map = json.toVariant().toMap();
+        if (map.contains("statuses")) {
+            const QVariantList list = map["statuses"].toList();
+            QVariantList::const_iterator it = list.constBegin();
+            QVariantList::const_iterator endIt = list.constEnd();
+            for(; it != endIt; ++it){
+                statusList.prepend(readStatusesFromJsonMap(it->toMap()));
+            }
         }
     }
     return statusList;
@@ -172,6 +171,7 @@ Choqok::Post* TwitterSearch::readStatusesFromJsonMap(const QVariantMap& var)
     Choqok::Post *post = new Choqok::Post;
 
     post->content = var["text"].toString();
+    //%*s %s %d %d:%d:%d %d %d
     post->creationDateTime = dateFromString(var["created_at"].toString());
     post->postId = var["id"].toString();
     post->source = var["source"].toString();

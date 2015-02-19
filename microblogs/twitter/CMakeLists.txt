@@ -1,12 +1,12 @@
 
 include_directories(
 ${CHOQOK_INCLUDES}
-${CMAKE_CURRENT_BINARY_DIR}
 )
 
 set( choqok_twitter_SRCS 
 twittercomposerwidget.cpp
 twitteraccount.cpp
+twitterdebug.cpp
 twittermicroblog.cpp
 twitterpostwidget.cpp
 twittersearch.cpp
@@ -22,7 +22,9 @@ twitterlistdialog_base.ui
 
 add_library(choqok_twitter MODULE ${choqok_twitter_SRCS})
 
-target_link_libraries(choqok_twitter  KF5::KIOCore ${QJSON_LIBRARY} ${QTOAUTH_LIBRARY} choqok twitterapihelper)
+kcoreaddons_desktop_to_json(choqok_twitter choqok_twitter.desktop)
+
+target_link_libraries(choqok_twitter KF5::KIOCore ${QTOAUTH_LIBRARY} qca-qt5 choqok twitterapihelper)
 
 # Install
 

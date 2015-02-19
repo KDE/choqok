@@ -284,7 +284,7 @@ void PumpIOMicroBlog::createPostWithMedia(Choqok::Account* theAccount, Choqok::P
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + '/' + (QString("/api/user/%1/uploads").arg(acc->username())));
+        url.setPath(url.path() + (QString("/api/user/%1/uploads").arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: " + mime);
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
@@ -540,7 +540,7 @@ void PumpIOMicroBlog::fetchFollowing(Choqok::Account* theAccount)
     if (acc) {
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + '/' + (QString("/api/user/%1/following").arg(acc->username())));
+        url.setPath(url.path() + (QString("/api/user/%1/following").arg(acc->username())));
 
         QOAuth::ParamMap oAuthParams;
         oAuthParams.insert("count", QByteArray::number(200));
@@ -569,7 +569,7 @@ void PumpIOMicroBlog::fetchLists(Choqok::Account* theAccount)
     if (acc) {
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + '/' + (QString("/api/user/%1/lists/person").arg(acc->username())));
+        url.setPath(url.path() + (QString("/api/user/%1/lists/person").arg(acc->username())));
 
         QOAuth::ParamMap oAuthParams;
         oAuthParams.insert("count", QByteArray::number(200));

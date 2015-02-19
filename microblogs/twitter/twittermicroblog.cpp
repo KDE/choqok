@@ -23,21 +23,17 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "twittermicroblog.h"
 
-#include <QDomElement>
+#include <QAction>
+#include <QJsonDocument>
 #include <QMenu>
 
-#include <KAboutData>
-#include <QAction>
-#include "choqokdebug.h"
-#include <KGenericFactory>
+#include <KPluginFactory>
 #include <KIO/Job>
 #include <KIO/JobClasses>
 #include <KIO/NetAccess>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KMessageBox>
 #include <KMimeType>
-
-#include <qjson/parser.h>
 
 #include "account.h"
 #include "accountmanager.h"
@@ -49,22 +45,22 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "postwidget.h"
 #include "timelinewidget.h"
 
-#include "twitterapihelper/twitterapicomposerwidget.h"
-#include "twitterapihelper/twitterapimicroblogwidget.h"
+#include "twitterapimicroblogwidget.h"
 
 #include "twitteraccount.h"
 #include "twittercomposerwidget.h"
+#include "twitterdebug.h"
 #include "twittereditaccount.h"
 #include "twitterlistdialog.h"
 #include "twitterpostwidget.h"
 #include "twittersearch.h"
 #include "twittertimelinewidget.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < TwitterMicroBlog > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_twitter" ) )
+K_PLUGIN_FACTORY_WITH_JSON( TwitterMicroBlogFactory, "choqok_twitter.json",
+                            registerPlugin < TwitterMicroBlog > (); )
 
 TwitterMicroBlog::TwitterMicroBlog ( QObject* parent, const QVariantList&  )
-: TwitterApiMicroBlog(MyPluginFactory::componentData(), parent)
+    : TwitterApiMicroBlog("choqok_twitter", parent)
 {
     qCDebug(CHOQOK);
     setServiceName("Twitter");
@@ -173,7 +169,7 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Cho
         ///Documentation: http://identi.ca/notice/17779990
         TwitterAccount* account = qobject_cast<TwitterAccount*>(theAccount);
         QUrl url = account->uploadUrl();
-        url.addPath ( "/statuses/update_with_media.json" );
+        url.setPath( url.path() + "/statuses/update_with_media.json" );
         QByteArray fileContentType = KMimeType::findByUrl( picUrl, 0, true )->name().toUtf8();
 
         QMap<QString, QByteArray> formdata;
@@ -198,8 +194,11 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Cho
             qCCritical(CHOQOK) << "Cannot create a http POST request!";
             return;
         }
-        job->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=AaB03x" );
-        job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST));
+        job->addMetaData(QStringLiteral("content-type"),
+                         QStringLiteral("Content-Type: multipart/form-data; boundary=AaB03x") );
+        job->addMetaData(QStringLiteral("customHTTPHeader"),
+                         QStringLiteral("Authorization: ") +
+                         authorizationHeader(account, url, QOAuth::POST));
         mCreatePostMap[ job ] = post;
         mJobsAccount[job] = theAccount;
         connect( job, SIGNAL( result( KJob* ) ),
@@ -252,7 +251,7 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount* theAccount, const QString&
         return;
     }
     QUrl url = theAccount->apiUrl();
-    url.addPath ( "/lists/ownerships.json" );
+    url.setPath( url.path() + "/lists/ownerships.json" );
     QUrl url_for_oauth(url);//we need base URL (without params) to make OAuth signature with it!
     url.addQueryItem("screen_name", username);
     QOAuth::ParamMap params;
@@ -264,7 +263,9 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount* theAccount, const QString&
         return;
     }
 
-    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(theAccount, url_for_oauth, QOAuth::GET, params));
+    job->addMetaData(QStringLiteral("customHTTPHeader"),
+                     QStringLiteral("Authorization: ") +
+                     authorizationHeader(theAccount, url_for_oauth, QOAuth::GET, params));
     mFetchUsersListMap[ job ] = username;
     mJobsAccount[ job ] = theAccount;
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotFetchUserLists(KJob*) ) );
@@ -352,16 +353,17 @@ Choqok::TimelineInfo* TwitterMicroBlog::timelineInfo(const QString& timelineName
 
 QList< Twitter::List > TwitterMicroBlog::readUserListsFromJson(Choqok::Account* theAccount, QByteArray buffer)
 {
-    bool ok;
     QList<Twitter::List> twitterList;
-    QVariantMap map = parser()->parse(buffer, &ok).toMap();
-
-    if ( ok && map.contains("lists") ) {
-        QVariantList list = map["lists"].toList();
-        QVariantList::const_iterator it = list.constBegin();
-        QVariantList::const_iterator endIt = list.constEnd();
-        for(; it != endIt; ++it){
-            twitterList.append(readListFromJsonMap(theAccount, it->toMap()));
+    const QJsonDocument json = QJsonDocument::fromJson(buffer);
+    if (!json.isNull()) {
+        const QVariantMap map = json.toVariant().toMap();
+        if (map.contains("lists") ) {
+            QVariantList list = map["lists"].toList();
+            QVariantList::const_iterator it = list.constBegin();
+            QVariantList::const_iterator endIt = list.constEnd();
+            for(; it != endIt; ++it){
+                twitterList.append(readListFromJsonMap(theAccount, it->toMap()));
+            }
         }
     }
     return twitterList;

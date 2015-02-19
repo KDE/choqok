@@ -24,22 +24,21 @@
 
 #include "twittercomposerwidget.h"
 
-#include <QHBoxLayout>
+#include <QGridLayout>
 #include <QLabel>
-#include <QLayout>
 #include <QPointer>
+#include <QVBoxLayout>
 
-#include "choqokdebug.h"
 #include <KFileDialog>
 #include <KLocalizedString>
 #include <KPushButton>
 
 #include "account.h"
 #include "choqoktextedit.h"
-#include "microblog.h"
 #include "notifymanager.h"
 #include "shortenmanager.h"
 
+#include "twitterdebug.h"
 #include "twittermicroblog.h"
 
 class TwitterComposerWidget::Private{
