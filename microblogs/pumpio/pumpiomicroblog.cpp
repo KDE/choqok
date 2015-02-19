@@ -371,7 +371,7 @@ QList< Choqok::Post* > PumpIOMicroBlog::loadTimeline(Choqok::Account* account,
     QList< Choqok::Post* > list;
     const QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(),
                                                                                 timelineName);
-    const KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, QStandardPaths::DataLocation );
+    const KConfig postsBackup( fileName, KConfig::NoGlobals, QStandardPaths::DataLocation );
     const QStringList tmpList = postsBackup.groupList();
 
     // don't load old archives
@@ -446,7 +446,7 @@ void PumpIOMicroBlog::saveTimeline(Choqok::Account* account, const QString& time
 {
     const QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(),
                                                                                 timelineName);
-    KConfig postsBackup("choqok/" + fileName, KConfig::NoGlobals, QStandardPaths::DataLocation);
+    KConfig postsBackup(fileName, KConfig::NoGlobals, QStandardPaths::DataLocation);
 
     ///Clear previous data:
     Q_FOREACH (const QString& group, postsBackup.groupList()) {

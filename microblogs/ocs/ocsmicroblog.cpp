@@ -61,7 +61,7 @@ void OCSMicroblog::saveTimeline(Choqok::Account* account, const QString& timelin
 {
     qCDebug(CHOQOK);
     QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
-    KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
+    KConfig postsBackup( fileName, KConfig::NoGlobals, "data" );
 
     ///Clear previous data:
     QStringList prevList = postsBackup.groupList();
@@ -98,7 +98,7 @@ QList< Choqok::Post* > OCSMicroblog::loadTimeline(Choqok::Account* account, cons
     qCDebug(CHOQOK)<<timelineName;
     QList< Choqok::Post* > list;
     QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
-    KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
+    KConfig postsBackup( fileName, KConfig::NoGlobals, "data" );
     QStringList tmpList = postsBackup.groupList();
 
     QList<QDateTime> groupList;

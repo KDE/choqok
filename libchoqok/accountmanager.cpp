@@ -130,7 +130,7 @@ bool AccountManager::removeAccount( const QString &alias )
             QStringList names = a->timelineNames();
             while ( !names.isEmpty() ) {
                 QString tmpFile;
-                tmpFile = KStandardDirs::locate( "data", "choqok/" +
+                tmpFile = KStandardDirs::locate( "data",
                         generatePostBackupFileName(a->alias(), names.takeFirst()) );
                 qCDebug(CHOQOK) << "Will remove " << tmpFile;
                 const QUrl path( tmpFile );

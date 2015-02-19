@@ -182,7 +182,7 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
         return list;//NOTE Won't cache favorites, and this is for compatibility with older versions!
     qCDebug(CHOQOK)<<timelineName;
     QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
-    KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
+    KConfig postsBackup( fileName, KConfig::NoGlobals, "data" );
     QStringList tmpList = postsBackup.groupList();
 
 /// to don't load old archives
@@ -241,7 +241,7 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
     if(timelineName.compare("Favorite") != 0) {
         qCDebug(CHOQOK);
         QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
-        KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
+        KConfig postsBackup( fileName, KConfig::NoGlobals, "data" );
 
         ///Clear previous data:
         QStringList prevList = postsBackup.groupList();
