@@ -39,7 +39,7 @@
 #include "pumpiopost.h"
 #include "pumpioshowthread.h"
 
-const KIcon PumpIOPostWidget::unFavIcon(Choqok::MediaManager::convertToGrayScale(QIcon::fromTheme("rating").pixmap(16)));
+const QIcon PumpIOPostWidget::unFavIcon(Choqok::MediaManager::convertToGrayScale(QIcon::fromTheme("rating").pixmap(16)));
 
 class PumpIOPostWidget::Private
 {

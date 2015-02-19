@@ -54,7 +54,7 @@ protected Q_SLOTS:
 protected:
     virtual bool isResendAvailable();
 
-    static const KIcon unFavIcon;
+    static const QIcon unFavIcon;
 
 private:
     void updateFavStat();

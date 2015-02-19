@@ -31,6 +31,7 @@
 
 #include <KFileDialog>
 #include <KLocalizedString>
+#include <KPushButton>
 
 #include "account.h"
 #include "choqoktextedit.h"
