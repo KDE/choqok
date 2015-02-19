@@ -24,28 +24,27 @@
 
 #include "longurl.h"
 
-#include <KGenericFactory>
-#include <KIO/Job>
-#include <KIO/JobUiDelegate>
+#include <QJsonDocument>
+#include <QQueue>
+#include <QSharedPointer>
+#include <QTimer>
 
-#include <qjson/parser.h>
-#include "choqokdebug.h"
+#include <KIO/JobUiDelegate>
+#include <KPluginFactory>
 
 #include "postwidget.h"
 #include "shortenmanager.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < LongUrl > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_longurl" ) )
+K_PLUGIN_FACTORY_WITH_JSON( LongUrlFactory, "choqok_longurl.json",
+                            registerPlugin < LongUrl > (); )
 
-namespace {
 const QString baseLongUrlDorComUrl = QLatin1String("http://api.longurl.org/v2/");
-}
 
 LongUrl::LongUrl(QObject* parent, const QList< QVariant >& args)
-    : Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped), mServicesAreFetched(false)
+    : Choqok::Plugin("choqok_longurl", parent)
+    , state(Stopped), mServicesAreFetched(false)
 {
     sheduleSupportedServicesFetch();
-    qCDebug(CHOQOK);
     connect( Choqok::UI::Global::SessionManager::self(),
              SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
              this,
@@ -89,20 +88,17 @@ void LongUrl::parse(QPointer< Choqok::UI::PostWidget > postToParse)
 
 void LongUrl::processJobResults(KJob* job)
 {
-    bool ok;
-    QVariant v = QJson::Parser().parse(mData[job], &ok);
-    if(!ok) {
-        qCDebug(CHOQOK) << "Can not parse " << baseLongUrlDorComUrl << " responce";
+    const QJsonDocument json = QJsonDocument::fromJson(mData[job]);
+    if(json.isNull()) {
         return;
     }
-    QVariantMap m = v.toMap();
-    QString longUrl = m.value(QLatin1String("long-url")).toString();
+    const QVariantMap m = json.toVariant().toMap();
+    const QUrl longUrl = m.value(QLatin1String("long-url")).toUrl();
     replaceUrl(takeJob(job), QUrl(mShortUrls.take(job)), longUrl);
 }
 
 void LongUrl::startParsing()
 {
-    qCDebug(CHOQOK);
     int i = 8;
     while( !postsQueue.isEmpty() && i>0 ) {
         parse(postsQueue.dequeue());
@@ -117,7 +113,6 @@ void LongUrl::startParsing()
 
 void LongUrl::replaceUrl(LongUrl::PostWidgetPointer post, const QUrl &fromUrl, const QUrl& toUrl)
 {
-    qCDebug(CHOQOK) << "Replacing URL: " << fromUrl << " --> " << toUrl;
     if(post) {
         QString content = post->content();
         QString fromUrlStr = fromUrl.url();
@@ -145,8 +140,10 @@ void LongUrl::servicesDataReceived(KIO::Job* job, QByteArray data)
 void LongUrl::servicesJobResult(KJob* job)
 {
     if(!job->error()) {
-        QVariantMap response = QJson::Parser().parse(*mServicesData).toMap();
-        supportedServices = response.uniqueKeys();
+        const QJsonDocument json = QJsonDocument::fromJson(*mServicesData);
+        if (!json.isNull()) {
+            supportedServices = json.toVariant().toMap().uniqueKeys();
+        }
     } else {
         job->uiDelegate()->showErrorMessage();
     }
@@ -214,3 +211,4 @@ void LongUrl::suspendJobs()
     }
 }
 
+#include "longurl.moc"

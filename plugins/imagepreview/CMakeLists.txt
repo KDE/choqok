@@ -1,6 +1,5 @@
-
 include_directories(
-${CHOQOK_INCLUDES}
+    ${CHOQOK_INCLUDES}
 )
 
 set( choqok_imagepreview_PART_SRCS

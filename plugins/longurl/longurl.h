@@ -28,19 +28,18 @@
 #include <QPointer>
 #include <QQueue>
 #include <QSharedPointer>
-#include <QUrl>
+
+#include <KJob>
+#include <KIO/Job>
 
 #include "plugin.h"
 
-namespace KIO {
-class Job;
-}
+class QUrl;
 
-class KJob;
 namespace Choqok {
-namespace UI {
-class PostWidget;
-}
+    namespace UI {
+        class PostWidget;
+    }
 }
 
 class LongUrl : public Choqok::Plugin

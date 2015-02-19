@@ -1,8 +1,5 @@
-find_package(QJSON REQUIRED)
-
 include_directories(
-	${CHOQOK_INCLUDES}
-	${QJSON_INCLUDE_DIR}
+    ${CHOQOK_INCLUDES}
 )
 
 set( choqok_longurl_PART_SRCS
@@ -12,7 +9,9 @@ longurl.cpp longurl.h)
 
 add_library(choqok_longurl MODULE ${choqok_longurl_PART_SRCS})
 
-target_link_libraries(choqok_longurl KF5::KIOCore ${QJSON_LIBRARIES} choqok)
+kcoreaddons_desktop_to_json(choqok_longurl choqok_longurl.desktop)
+
+target_link_libraries(choqok_longurl KF5::KIOCore choqok)
 
 install(TARGETS choqok_longurl DESTINATION ${PLUGIN_INSTALL_DIR})
 install( FILES choqok_longurl.desktop DESTINATION ${SERVICES_INSTALL_DIR})
