@@ -34,7 +34,7 @@
 
 class QAction;
 class KPushButton;
-class KSplashScreen;
+class QSplashScreen;
 class ChoqokApplication;
 namespace Choqok
 {
@@ -120,7 +120,7 @@ private:
     SysTrayIcon *sysIcon;
     Choqok::UI::QuickPost *quickWidget;
     KSettings::Dialog *s_settingsDialog;
-    QPointer<KSplashScreen> m_splash;
+    QPointer<QSplashScreen> m_splash;
     QAction *enableUpdates;
     QAction *newTwit;
     QAction *showMain;

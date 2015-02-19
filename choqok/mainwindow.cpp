@@ -26,6 +26,7 @@
 
 #include <QAction>
 #include <QMenuBar>
+#include <QSplashScreen>
 #include <QStatusBar>
 #include <QTimer>
 #include <QWidgetAction>
@@ -39,7 +40,6 @@
 #include <KNotifyConfigWidget>
 #include <KPushButton>
 #include <KSettings/Dialog>
-#include <KSplashScreen>
 #include <KStandardAction>
 #include <KStandardDirs>
 #include <KTabWidget>
@@ -140,9 +140,8 @@ void MainWindow::loadAllAccounts()
         if(splashpix.isNull())
             qCritical()<<"Splash screen pixmap is NULL! URL: "<<img;
         else{
-            m_splash = new KSplashScreen( splashpix, Qt::WindowStaysOnTopHint );
+            m_splash = new QSplashScreen( splashpix, Qt::WindowStaysOnTopHint );
             m_splash->show();
-            m_splash->showMessage(QString());//Workaround for Qt 4.8 splash bug
         }
     }
 
@@ -152,8 +151,6 @@ void MainWindow::loadAllAccounts()
     if( count > 0 ) {
         for( int i=0; i < count; ++i ){
             addBlog(accList.at(i), true);
-            if(m_splash)
-                m_splash->showMessage(QString());//Workaround for Qt 4.8 splash bug
         }
         qCDebug(CHOQOK)<<"All accounts loaded.";
         if(Choqok::BehaviorSettings::updateInterval() > 0)
@@ -210,27 +207,24 @@ void MainWindow::setupActions()
 
     actUpdate = new QAction( QIcon::fromTheme( "view-refresh" ), i18n( "Update Timelines" ), this );
     actionCollection()->addAction( QLatin1String( "update_timeline" ), actUpdate );
-    actUpdate->setShortcut( Qt::Key_F5 );
-    QKeySequence updateGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_F5 );
-    KGlobalAccel::setGlobalShortcut(actUpdate, updateGlobalShortcut );
+    actionCollection()->setDefaultShortcut( actUpdate, QKeySequence(Qt::Key_F5) );
+    KGlobalAccel::setGlobalShortcut(actUpdate, QKeySequence( Qt::CTRL | Qt::META | Qt::Key_F5 ) );
     connect( actUpdate, SIGNAL( triggered( bool ) ), this, SIGNAL( updateTimelines() ) );
 
     newTwit = new QAction( QIcon::fromTheme( "document-new" ), i18n( "Quick Post" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_new_post" ), newTwit );
-    newTwit->setShortcut( QKeySequence( Qt::CTRL | Qt::Key_T ) );
-    QKeySequence quickTwitGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_T );
-    KGlobalAccel::setGlobalShortcut( newTwit, quickTwitGlobalShortcut );
+    actionCollection()->setDefaultShortcut( newTwit, QKeySequence( Qt::CTRL | Qt::Key_T ) );
+    KGlobalAccel::setGlobalShortcut( newTwit, QKeySequence ( Qt::CTRL | Qt::META | Qt::Key_T ) );
     connect( newTwit, SIGNAL( triggered(bool) ), this, SLOT( triggerQuickPost()) );
 
     QAction *markRead = new QAction( QIcon::fromTheme( "mail-mark-read" ), i18n( "Mark All As Read" ), this );
     actionCollection()->addAction( QLatin1String( "choqok_mark_as_read" ), markRead );
-    markRead->setShortcut( QKeySequence( Qt::CTRL | Qt::Key_R ) );
+    actionCollection()->setDefaultShortcut( markRead, QKeySequence( Qt::CTRL | Qt::Key_R ) );
     connect( markRead, SIGNAL( triggered( bool ) ), this, SIGNAL( markAllAsRead()) );
 
     showMain = new QAction( this );
     actionCollection()->addAction( QLatin1String( "toggle_mainwin" ), showMain );
-    QKeySequence toggleMainGlobalShortcut( Qt::CTRL | Qt::META | Qt::Key_C );
-    KGlobalAccel::setGlobalShortcut( showMain, toggleMainGlobalShortcut );
+    KGlobalAccel::setGlobalShortcut( showMain, QKeySequence( Qt::CTRL | Qt::META | Qt::Key_C ) );
     if(this->isVisible())
         showMain->setText( i18nc( "@action", "Minimize" ) );
     else
@@ -244,19 +238,19 @@ void MainWindow::setupActions()
     enableUpdates = new QAction( i18n( "Enable Update Timer" ), this );
     enableUpdates->setCheckable( true );
     actionCollection()->addAction( QLatin1String( "choqok_enable_updates" ), enableUpdates );
-    enableUpdates->setShortcut( QKeySequence( Qt::CTRL | Qt::Key_U ) );
+    actionCollection()->setDefaultShortcut( enableUpdates, QKeySequence( Qt::CTRL | Qt::Key_U ) );
     connect( enableUpdates, SIGNAL( toggled( bool ) ), this, SLOT( setTimeLineUpdatesEnabled( bool ) ) );
 
     QAction *enableNotify = new QAction( i18n( "Enable Notifications" ), this );
     enableNotify->setCheckable( true );
     actionCollection()->addAction( QLatin1String( "choqok_enable_notify" ), enableNotify );
-    enableNotify->setShortcut( QKeySequence( Qt::CTRL | Qt::Key_N ) );
+    actionCollection()->setDefaultShortcut( enableNotify, QKeySequence( Qt::CTRL | Qt::Key_N ) );
     connect( enableNotify, SIGNAL( toggled( bool ) ), this, SLOT( setNotificationsEnabled( bool ) ) );
 
     QAction * hideMenuBar = new QAction( i18n("Hide Menubar"), this );
     hideMenuBar->setCheckable(true);
     actionCollection()->addAction( QLatin1String( "choqok_hide_menubar" ), hideMenuBar );
-    hideMenuBar->setShortcut( QKeySequence(Qt::ControlModifier | Qt::Key_M) );
+    actionCollection()->setDefaultShortcut( hideMenuBar, QKeySequence(Qt::ControlModifier | Qt::Key_M) );
     connect( hideMenuBar, SIGNAL(toggled(bool)), menuBar(), SLOT(setHidden(bool)) );
     connect( hideMenuBar, SIGNAL(toggled(bool)), this, SLOT(slotShowSpecialMenu(bool)) );
 
