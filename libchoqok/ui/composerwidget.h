@@ -26,15 +26,14 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QPointer>
 #include <QWidget>
 
-#include <KPushButton>
-
+#include "account.h"
 #include "choqoktypes.h"
 #include "choqok_export.h"
 
 class QLabel;
-namespace Choqok {
-class Account;
+class KPushButton;
 
+namespace Choqok {
 namespace UI {
 class TextEdit;
 /**

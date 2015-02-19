@@ -24,20 +24,21 @@
 
 #include "twitterapimicroblogwidget.h"
 
+#include <QAction>
+#include <QFont>
+#include <QIcon>
 #include <QPainter>
+#include <QRect>
 #include <QToolButton>
 
-#include <QAction>
-#include "choqokdebug.h"
-#include <QIcon>
 #include <KLocalizedString>
 #include <KMenu>
-#include <KMessageBox>
-#include <KTabWidget>
 
 #include "account.h"
 #include "composerwidget.h"
+
 #include "twitterapiaccount.h"
+#include "twitterapidebug.h"
 #include "twitterapimicroblog.h"
 #include "twitterapisearchtimelinewidget.h"
 
@@ -56,9 +57,9 @@ public:
     QToolButton *btnCloseSearch;
 };
 
-KIcon addTextToIcon(const KIcon& icon, const QString &text, const QSize & result_size , const QPalette & palette )
+QIcon addTextToIcon(const QIcon& icon, const QString &text, const QSize & result_size , const QPalette & palette )
 {
-    KIcon result;
+    QIcon result;
 
     QPixmap pixmap = icon.pixmap( result_size );
     QPainter painter( &pixmap );
@@ -153,7 +154,7 @@ TwitterApiSearchTimelineWidget* TwitterApiMicroBlogWidget::addSearchTimelineWidg
         {
             textToAdd = textToAdd.left(4);
         }
-        KIcon icon = addTextToIcon( QIcon::fromTheme("edit-find"), textToAdd, QSize(40,40), palette() );
+        QIcon icon = addTextToIcon( QIcon::fromTheme("edit-find"), textToAdd, QSize(40,40), palette() );
         mbw->setTimelineIcon(icon);
         timelinesTabWidget()->setTabIcon(timelinesTabWidget()->indexOf(mbw), icon);
         connect( mbw, SIGNAL(updateUnreadCount(int)),

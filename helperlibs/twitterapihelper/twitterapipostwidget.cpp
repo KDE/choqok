@@ -24,11 +24,11 @@
 
 #include "twitterapipostwidget.h"
 
+#include <QAction>
+#include <QIcon>
 #include <QMenu>
 
-#include <QAction>
-#include "choqokdebug.h"
-#include <QIcon>
+#include "twitterapidebug.h"
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KPushButton>
@@ -41,7 +41,7 @@
 #include "twitterapimicroblog.h"
 #include "twitterapishowthread.h"
 
-const KIcon TwitterApiPostWidget::unFavIcon(Choqok::MediaManager::convertToGrayScale(QIcon::fromTheme("rating").pixmap(16)) );
+const QIcon TwitterApiPostWidget::unFavIcon(Choqok::MediaManager::convertToGrayScale(QIcon::fromTheme("rating").pixmap(16)) );
 
 class TwitterApiPostWidget::Private
 {

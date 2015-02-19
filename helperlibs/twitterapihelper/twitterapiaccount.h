@@ -30,11 +30,12 @@
 #include "account.h"
 #include "choqok_export.h"
 
+#include "twitterapimicroblog.h"
+
 namespace QOAuth {
-class Interface;
+    class Interface;
 }
 
-class TwitterApiMicroBlog;
 /**
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */

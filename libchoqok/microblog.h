@@ -24,19 +24,19 @@
 #ifndef MICROBLOG_H
 #define MICROBLOG_H
 
+#include <QMenu>
 #include <QString>
 
+#include "account.h"
 #include "choqok_export.h"
 #include "choqoktypes.h"
 #include "choqokuiglobal.h"
 #include "plugin.h"
 
 class ChoqokEditAccountWidget;
-class QMenu;
 
 namespace Choqok
 {
-class Account;
 namespace UI{
 class PostWidget;
 class TimelineWidget;

@@ -28,7 +28,7 @@
 #include <QLabel>
 
 #include <KComboBox>
-#include "choqokdebug.h"
+#include "twitterapidebug.h"
 #include <KLineEdit>
 #include <KLocalizedString>
 
@@ -45,7 +45,7 @@ public:
         qCDebug(CHOQOK);
         mBlog = qobject_cast<TwitterApiMicroBlog*>(account->microblog());
         if(!mBlog)
-            qCritical()<<"microblog is not a TwitterApiMicroBlog";
+            qCCritical(CHOQOK)<<"microblog is not a TwitterApiMicroBlog";
         Q_ASSERT(mBlog);
     }
     KComboBox *searchTypes;

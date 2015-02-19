@@ -24,25 +24,21 @@
 
 #include "twitterapitextedit.h"
 
-#include <QAbstractItemModel>
 #include <QAbstractItemView>
-#include <QApplication>
-#include <QCompleter>
+#include <QJsonDocument>
 #include <QKeyEvent>
 #include <QLabel>
-#include <QModelIndex>
 #include <QScrollBar>
 
 #include <KIO/Job>
-#include "choqokdebug.h"
 
 #include <QtOAuth/qoauth_namespace.h>
 
-#include <qjson/parser.h>
+#include "urlutils.h"
 
 #include "twitterapiaccount.h"
+#include "twitterapidebug.h"
 #include "twitterapimicroblog.h"
-#include "urlutils.h"
 
 class TwitterApiTextEdit::Private
 {
@@ -117,6 +113,7 @@ void TwitterApiTextEdit::insertCompletion(const QString& completion)
 //     return tc.selectedText();
 // }
 
+#include "twitterapiwhoiswidget.h"
 void TwitterApiTextEdit::focusInEvent(QFocusEvent *e)
 {
     if (d->c)
@@ -255,8 +252,9 @@ void TwitterApiTextEdit::fetchTCoMaximumLength()
             return;
         }
         TwitterApiMicroBlog *mBlog = qobject_cast<TwitterApiMicroBlog*>(acc->microblog());
-        job->addMetaData("customHTTPHeader", "Authorization: " +
-            mBlog->authorizationHeader(acc, url, QOAuth::GET));
+        job->addMetaData(QStringLiteral("customHTTPHeader"),
+                         QStringLiteral("Authorization: ") +
+                         mBlog->authorizationHeader(acc, url, QOAuth::GET));
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotTCoMaximumLength(KJob*)));
         job->start();
     } else {
@@ -270,10 +268,9 @@ void TwitterApiTextEdit::slotTCoMaximumLength(KJob* job)
         qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     } else {
         KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantMap reply = parser.parse(j->data(), &ok).toMap();
-        if (ok) {
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const QVariantMap reply = json.toVariant().toMap();
             d->tCoMaximumLength = reply["short_url_length"].toInt();
             d->tCoMaximumLengthHttps = reply["short_url_length_https"].toInt();
         } else {

@@ -29,7 +29,7 @@
 #include <QLabel>
 #include <QLayoutItem>
 
-#include "choqokdebug.h"
+#include "twitterapidebug.h"
 #include <KLocalizedString>
 #include <KPushButton>
 #include <KRestrictedLine>

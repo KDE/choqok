@@ -25,19 +25,21 @@
 #include "twitterapidmessagedialog.h"
 
 #include <QLabel>
+#include <QHBoxLayout>
 #include <QVBoxLayout>
 
 #include <KComboBox>
-#include "choqokdebug.h"
 #include <KLocalizedString>
-#include <KMessageBox>
 #include <KPushButton>
+#include <KSharedConfig>
 
 #include "choqoktextedit.h"
 #include "microblog.h"
 #include "notifymanager.h"
-#include "twitterapimicroblog.h"
+
 #include "twitterapiaccount.h"
+#include "twitterapidebug.h"
+#include "twitterapimicroblog.h"
 
 class TwitterApiDMessageDialog::Private
 {
@@ -60,7 +62,7 @@ TwitterApiDMessageDialog::TwitterApiDMessageDialog(TwitterApiAccount *theAccount
     QWidget *wg = new QWidget(this, flags);
     setMainWidget(wg);
     setupUi(wg);
-    KConfigGroup grp(KGlobal::config(), "TwitterApi");
+    KConfigGroup grp(KSharedConfig::openConfig(), "TwitterApi");
     resize( grp.readEntry("DMessageDialogSize", QSize(300, 200)) );
     QStringList list = theAccount->friendsList();
     if( list.isEmpty() ){
@@ -74,7 +76,7 @@ TwitterApiDMessageDialog::TwitterApiDMessageDialog(TwitterApiAccount *theAccount
 
 TwitterApiDMessageDialog::~TwitterApiDMessageDialog()
 {
-    KConfigGroup grp(KGlobal::config(), "TwitterApi");
+    KConfigGroup grp(KSharedConfig::openConfig(), "TwitterApi");
     grp.writeEntry("DMessageDialogSize", size());
     grp.sync();
     delete d;

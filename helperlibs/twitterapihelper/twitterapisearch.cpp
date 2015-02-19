@@ -24,6 +24,8 @@
 
 #include "twitterapisearch.h"
 
+#include "accountmanager.h"
+
 #include <stdio.h>
 
 class TwitterApiSearch::Private

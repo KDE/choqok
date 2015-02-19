@@ -57,7 +57,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/libchoqok/ui
 )
 
 add_subdirectory( libchoqok )
-#add_subdirectory( helperlibs )
+add_subdirectory( helperlibs )
 add_subdirectory( choqok )
 add_subdirectory( icons )
 add_subdirectory( plugins )

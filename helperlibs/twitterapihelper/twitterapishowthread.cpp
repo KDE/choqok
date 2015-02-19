@@ -27,7 +27,7 @@
 #include <QScrollArea>
 #include <QVBoxLayout>
 
-#include "choqokdebug.h"
+#include "twitterapidebug.h"
 #include <KLocalizedString>
 
 #include "postwidget.h"

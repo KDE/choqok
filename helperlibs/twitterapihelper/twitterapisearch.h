@@ -25,19 +25,12 @@
 #ifndef TWITTERAPISEARCH_H
 #define TWITTERAPISEARCH_H
 
+#include <QDateTime>
 #include <QMap>
-#include <QObject>
 #include <QPair>
-#include <QRegExp>
 
 #include "account.h"
-#include "accountmanager.h"
 #include "choqoktypes.h"
-
-namespace Choqok {
-class Account;
-}
-
 
 class CHOQOK_HELPER_EXPORT SearchInfo
 {

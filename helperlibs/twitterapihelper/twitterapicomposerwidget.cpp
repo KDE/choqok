@@ -27,11 +27,14 @@
 #include <QCompleter>
 #include <QStringListModel>
 
-#include "choqokdebug.h"
+#include <KPushButton>
+
+#include "twitterapidebug.h"
 
 #include "choqokbehaviorsettings.h"
 #include "choqokuiglobal.h"
 #include "postwidget.h"
+
 #include "twitterapiaccount.h"
 #include "twitterapitextedit.h"
 

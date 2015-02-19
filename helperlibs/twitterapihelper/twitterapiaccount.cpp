@@ -24,12 +24,13 @@
 
 #include "twitterapiaccount.h"
 
-#include "choqokdebug.h"
 #include <KIO/AccessManager>
 
 #include <QtOAuth/QtOAuth>
 
 #include "passwordmanager.h"
+
+#include "twitterapidebug.h"
 #include "twitterapimicroblog.h"
 
 class TwitterApiAccount::Private

@@ -54,7 +54,7 @@ protected:
     virtual QString generateSign();
     void updateFavStat();
 
-    static const KIcon unFavIcon;
+    static const QIcon unFavIcon;
 private:
     class Private;
     Private * const d;

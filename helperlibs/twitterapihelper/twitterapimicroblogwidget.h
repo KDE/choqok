@@ -25,7 +25,11 @@
 #ifndef TWITTERAPIMICROBLOGWIDGET_H
 #define TWITTERAPIMICROBLOGWIDGET_H
 
+#include <QMap>
+#include <QPoint>
+
 #include "microblogwidget.h"
+#include "timelinewidget.h"
 #include "twitterapisearch.h"
 
 class TwitterApiSearchTimelineWidget;

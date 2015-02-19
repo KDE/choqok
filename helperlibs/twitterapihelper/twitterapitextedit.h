@@ -25,11 +25,12 @@
 #ifndef TWITTERAPITEXTEDIT_H
 #define TWITTERAPITEXTEDIT_H
 
+#include <QCompleter>
+
 #include "account.h"
 #include "choqoktextedit.h"
 #include "choqok_export.h"
 
-class QCompleter;
 class KJob;
 
 class CHOQOK_HELPER_EXPORT TwitterApiTextEdit : public Choqok::UI::TextEdit

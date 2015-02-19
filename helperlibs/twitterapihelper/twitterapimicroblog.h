@@ -23,16 +23,12 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef TWITTERAPIMICROBLOG_H
 #define TWITTERAPIMICROBLOG_H
 
-#include <QDomElement>
+#include <QDateTime>
 
 #include <QtOAuth/qoauth_namespace.h>
 
 #include "microblog.h"
 #include "twitterapisearch.h"
-
-namespace QJson {
-class Parser;
-}
 
 class TwitterApiSearchTimelineWidget;
 class TwitterApiAccount;
@@ -201,7 +197,7 @@ protected Q_SLOTS:
     virtual void slotUpdateFriendsList();
 
 protected:
-    TwitterApiMicroBlog( const KComponentData &instance, QObject *parent=0 );
+    TwitterApiMicroBlog( const QString &componentName, QObject *parent=0 );
     /**
      Request update for @p timelineName timeline.
      timelineName should be a valid, previously created timeline.
@@ -214,7 +210,6 @@ protected:
     void setRepeatedOfInfo(Choqok::Post* post, Choqok::Post* repeatedPost);
 
 
-    QJson::Parser *parser();
     virtual Choqok::Post * readPost( Choqok::Account* theAccount,
                                                    const QVariantMap& var, Choqok::Post* post );
     virtual Choqok::Post * readPost( Choqok::Account* theAccount,
