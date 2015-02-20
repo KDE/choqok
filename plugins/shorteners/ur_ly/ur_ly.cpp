@@ -23,6 +23,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 #include "ur_ly.h"
 
+#include <QDebug>
 #include <QJsonDocument>
 
 #include <KIO/Job>
@@ -61,9 +62,12 @@ QString Ur_ly::shorten ( const QString& url )
                 return QString("http://ur.ly/%1").arg(result.value("code").toString());
             }
         } else{
+            qCritical() << "Ur_ly::shorten: Parse error, Job error:" << job->errorString();
+            qCritical() << "Data:" << data;
             Choqok::NotifyManager::error( i18n("Malformed response"), i18n("Ur.ly Error") );
         }
     } else {
+        qCritical() << "Cannot create a shortened url:" << job->errorString();
         Choqok::NotifyManager::error( i18n("Cannot create a short URL.\n%1",
                                            job->errorString()), i18n("Ur.ly Error") );
     }

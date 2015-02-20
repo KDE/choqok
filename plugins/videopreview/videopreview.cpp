@@ -25,10 +25,11 @@
 */
 #include "videopreview.h"
 
-#include <QTimer>
+#include <QDebug>
 #include <QDomDocument>
 #include <QDomElement>
 #include <QEventLoop>
+#include <QTimer>
 
 #include <KIO/Job>
 #include <KIO/NetAccess>
@@ -188,6 +189,8 @@ QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWi
         mBaseUrlMap.insert(thumb_url, "http://www.youtube.com/watch?v="+videoid);
         mTitleVideoMap.insert(thumb_url, title);
         mDescriptionVideoMap.insert(thumb_url, description);
+    } else {
+        qCritical() << "Youtube XML response is NULL!";
     }
 
     return thumb_url;
@@ -228,6 +231,8 @@ QString VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidg
         mBaseUrlMap.insert(thumb_url, "http://vimeo.com/"+videoid);
         mTitleVideoMap.insert(thumb_url, title);
         mDescriptionVideoMap.insert(thumb_url, description);
+    } else {
+        qCritical() << "Vimeo XML response is NULL!";
     }
 
     return thumb_url;
