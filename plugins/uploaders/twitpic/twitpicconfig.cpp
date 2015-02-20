@@ -26,21 +26,20 @@
 
 #include <QVBoxLayout>
 
+#include <KAboutData>
 #include <KPluginFactory>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KMessageBox>
-#include "choqokdebug.h"
 
 #include "accountmanager.h"
-#include "passwordmanager.h"
 
 #include "twitpicsettings.h"
 
-K_PLUGIN_FACTORY( TwitpicConfigFactory, registerPlugin < TwitpicConfig > (); )
-K_EXPORT_PLUGIN( TwitpicConfigFactory( "kcm_choqok_twitpic" ) )
+K_PLUGIN_FACTORY_WITH_JSON( TwitpicConfigFactory, "choqok_twitpic_config.json",
+                            registerPlugin < TwitpicConfig > (); )
 
 TwitpicConfig::TwitpicConfig(QWidget* parent, const QVariantList& ):
-        KCModule( TwitpicConfigFactory::componentData(), parent)
+    KCModule( KAboutData::pluginData("kcm_choqok_twitpic"), parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
@@ -53,12 +52,10 @@ TwitpicConfig::TwitpicConfig(QWidget* parent, const QVariantList& ):
 
 TwitpicConfig::~TwitpicConfig()
 {
-    qCDebug(CHOQOK)<<TwitpicSettings::alias();
 }
 
 void TwitpicConfig::load()
 {
-    qCDebug(CHOQOK);
     KCModule::load();
     QList<Choqok::Account*> list = Choqok::AccountManager::self()->accounts();
     Q_FOREACH (Choqok::Account *acc, list) {
@@ -72,10 +69,8 @@ void TwitpicConfig::load()
 
 void TwitpicConfig::save()
 {
-    qCDebug(CHOQOK)<<ui.accountsList->currentIndex();
     if(ui.accountsList->currentIndex() > -1) {
         TwitpicSettings::setAlias( ui.accountsList->currentText() );
-        qCDebug(CHOQOK)<<TwitpicSettings::alias();
     } else {
         TwitpicSettings::setAlias(QString());
         KMessageBox::error(this, i18n("You have to configure at least one Twitter account to use this plugin."));

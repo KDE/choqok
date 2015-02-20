@@ -24,41 +24,33 @@
 
 #include "twitpic.h"
 
-#include <QDomDocument>
+#include <QJsonDocument>
 
-#include <KAboutData>
-#include <QAction>
-#include <KActionCollection>
-#include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/NetAccess>
+#include <KLocalizedString>
+#include <KPluginFactory>
 
 #include "accountmanager.h"
 #include "mediamanager.h"
-#include "passwordmanager.h"
 
 #include <QtOAuth/QtOAuth>
 
-#include <qjson/parser.h>
-#include "choqokdebug.h"
-
-#include "twitterapihelper/twitterapiaccount.h"
-#include "twitterapihelper/twitterapimicroblog.h"
+#include "twitterapiaccount.h"
+#include "twitterapimicroblog.h"
 
 #include "twitpicsettings.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Twitpic > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_twitpic" ) )
+K_PLUGIN_FACTORY_WITH_JSON( TwitpicFactory, "choqok_twitpic.json",
+                            registerPlugin < Twitpic > (); )
 
 Twitpic::Twitpic(QObject* parent, const QList<QVariant>& )
-    :Choqok::Uploader(MyPluginFactory::componentData(), parent)
+    :Choqok::Uploader("choqok_twitpic", parent)
 {
-    
 }
 
 Twitpic::~Twitpic()
 {
-
 }
 
 void Twitpic::upload(const QUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType)
@@ -66,7 +58,7 @@ void Twitpic::upload(const QUrl &localUrl, const QByteArray& medium, const QByte
     TwitpicSettings::self()->readConfig();
     QString alias = TwitpicSettings::alias();
     if(alias.isEmpty()){
-        qCritical()<<"No account to use";
+        qCritical() << "No account to use";
         Q_EMIT uploadingFailed(localUrl, i18n("There is no Twitter account configured to use."));
         return;
     }
@@ -90,7 +82,8 @@ void Twitpic::upload(const QUrl &localUrl, const QByteArray& medium, const QByte
     QByteArray data = Choqok::MediaManager::createMultipartFormData(formdata, listMediafiles);
 
     KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
-    job->addMetaData("customHTTPHeader", "X-Auth-Service-Provider: https://api.twitter.com/1/account/verify_credentials.json");
+    job->addMetaData(QStringLiteral("customHTTPHeader"),
+                     QStringLiteral("X-Auth-Service-Provider: https://api.twitter.com/1/account/verify_credentials.json"));
     QOAuth::ParamMap params;
 //     params.insert("realm","http://api.twitter.com/");
     QString requrl = "https://api.twitter.com/1/account/verify_credentials.json";
@@ -100,13 +93,15 @@ void Twitpic::upload(const QUrl &localUrl, const QByteArray& medium, const QByte
                                                                             QOAuth::HMAC_SHA1,
                                                                             params, QOAuth::ParseForHeaderArguments );
     credentials.insert(6, "realm=\"http://api.twitter.com/\",") ;
-    qCDebug(CHOQOK)<<credentials;
-    job->addMetaData("customHTTPHeader", "X-Verify-Credentials-Authorization: " + credentials);
+    job->addMetaData(QStringLiteral("customHTTPHeader"),
+                     QStringLiteral("X-Verify-Credentials-Authorization: ") +
+                     credentials);
     if ( !job ) {
         qCritical() << "Cannot create a http POST request!";
         return;
     }
-    job->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=AaB03x" );
+    job->addMetaData(QStringLiteral("content-type"),
+                     QStringLiteral("Content-Type: multipart/form-data; boundary=AaB03x"));
     mUrlMap[job] = localUrl;
     connect( job, SIGNAL( result( KJob* ) ),
              SLOT( slotUpload(KJob*)) );
@@ -115,18 +110,16 @@ void Twitpic::upload(const QUrl &localUrl, const QByteArray& medium, const QByte
 
 void Twitpic::slotUpload(KJob* job)
 {
-    qCDebug(CHOQOK);
     QUrl localUrl = mUrlMap.take(job);
     if ( job->error() ) {
         qCritical() << "Job Error: " << job->errorString();
         Q_EMIT uploadingFailed(localUrl, job->errorString());
         return;
     } else {
-        QJson::Parser p;
-        bool ok;
-        QVariant res = p.parse(qobject_cast<KIO::StoredTransferJob*>(job)->data(), &ok);
-        if(ok){
-            QVariantMap map = res.toMap();
+        KIO::StoredTransferJob *stj = qobject_cast< KIO::StoredTransferJob* >(job);
+        const QJsonDocument json = QJsonDocument::fromJson(stj->data());
+        if (!json.isNull()) {
+            const QVariantMap map = json.toVariant().toMap();
             if(map.contains("errors")){
                 QVariantMap err = map.value("errors").toList()[0].toMap();
                 Q_EMIT uploadingFailed(localUrl, err.value("message").toString());
@@ -134,8 +127,9 @@ void Twitpic::slotUpload(KJob* job)
                 Q_EMIT mediumUploaded(localUrl, map.value("url").toString());
             }
         } else {
-            qCDebug(CHOQOK)<<"Parse error: "<<qobject_cast<KIO::StoredTransferJob*>(job)->data();
             Q_EMIT uploadingFailed(localUrl, i18n("Malformed response"));
         }
     }
 }
+
+#include "twitpic.moc"
