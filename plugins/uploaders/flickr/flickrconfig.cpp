@@ -26,35 +26,32 @@
 
 #include <QCryptographicHash>
 #include <QDomDocument>
-#include <QTextDocument>
+#include <QDomElement>
 #include <QVBoxLayout>
 
 #include <KAboutData>
-#include <QAction>
-#include <KActionCollection>
-#include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/NetAccess>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KMessageBox>
 #include <KPluginFactory>
 #include <KPushButton>
-#include "choqokdebug.h"
+#include <KSharedConfig>
 
 #include "choqoktools.h"
 #include "passwordmanager.h"
 
 #include "flickrsettings.h"
 
-K_PLUGIN_FACTORY( FlickrConfigFactory, registerPlugin < FlickrConfig > (); )
-K_EXPORT_PLUGIN( FlickrConfigFactory( "kcm_choqok_flickr" ) )
+K_PLUGIN_FACTORY_WITH_JSON( FlickrConfigFactory, "choqok_flickr_config.json",
+                            registerPlugin < FlickrConfig > (); )
 
 const QString apiKey = "13f602e6e705834d8cdd5dd2ccb19651";
 const QString apiSecret = "98c89dbe39ae3bea";
-QString apiKeSec = apiSecret + QString( "api_key" ) + apiKey;
+const QString apiKeSec = apiSecret + QString( "api_key" ) + apiKey;
 
-FlickrConfig::FlickrConfig(QWidget* parent, const QVariantList& ):
-        KCModule( FlickrConfigFactory::componentData(), parent)
+FlickrConfig::FlickrConfig(QWidget* parent, const QVariantList& )
+    : KCModule( KAboutData::pluginData("kcm_choqok_flickr"), parent)
 {
     QVBoxLayout *layout = new QVBoxLayout( this );
     QWidget *wd = new QWidget( this );
@@ -81,9 +78,8 @@ FlickrConfig::~FlickrConfig()
 
 void FlickrConfig::load()
 {
-    qCDebug(CHOQOK);
     KCModule::load();
-    KConfigGroup grp( KGlobal::config(), "Flickr Uploader" );
+    KConfigGroup grp( KSharedConfig::openConfig(), "Flickr Uploader" );
     m_nsid = grp.readEntry( "nsid", "");
     m_username = grp.readEntry( "username", "");
     m_fullname = grp.readEntry( "fullname", "");
@@ -103,9 +99,8 @@ void FlickrConfig::load()
 
 void FlickrConfig::save()
 {
-    qCDebug(CHOQOK);
     KCModule::save();
-    KConfigGroup grp( KGlobal::config(), "Flickr Uploader" );
+    KConfigGroup grp( KSharedConfig::openConfig(), "Flickr Uploader" );
     grp.writeEntry( "nsid", m_nsid );
     grp.writeEntry( "username", m_username );
     grp.writeEntry( "fullname", m_fullname );
@@ -131,7 +126,6 @@ void FlickrConfig::emitChanged()
 
 void FlickrConfig::getFrob()
 {
-    qCDebug(CHOQOK)<<"Get Frob";
     m_frob.clear();
     QUrl url( "http://flickr.com/services/rest/" );
     url.addQueryItem( "method", "flickr.auth.getFrob" );
@@ -189,7 +183,6 @@ void FlickrConfig::getFrob()
 
 void FlickrConfig::getToken()
 {
-    qCDebug(CHOQOK)<<"Get Token";
     m_token.clear();
     QUrl url( "http://flickr.com/services/rest/" );
     url.addQueryItem( "method", "flickr.auth.getToken" );
@@ -290,11 +283,10 @@ void FlickrConfig::slotAuthButton_clicked()
 {
     getFrob();
     if ( !m_frob.isEmpty() ) {
-        QString oUrl = "http://flickr.com/services/auth/?";
-        oUrl.append( "api_key=" + apiKey );
-        oUrl.append( "&perms=write" );
-        oUrl.append( "&frob=" + m_frob );
-        oUrl.append( "&api_sig=" + createSign( "frob" + m_frob.toUtf8() + "permswrite" ) );
+        QUrl oUrl("http://flickr.com/services/auth/?");
+        oUrl.setPath( oUrl.path() + "api_key=" + apiKey +
+                      "&perms=write&frob=" + m_frob +
+                      "&api_sig=" + createSign( "frob" + m_frob.toUtf8() + "permswrite" ) );
         Choqok::openUrl( oUrl );
 
         KPushButton *btn = new KPushButton(QIcon::fromTheme("dialog-ok"), i18n("Click here when you authorized Choqok"), this);

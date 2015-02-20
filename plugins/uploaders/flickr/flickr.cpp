@@ -25,30 +25,28 @@
 #include "flickr.h"
 
 #include <QCryptographicHash>
+#include <QDebug>
 #include <QDomDocument>
+#include <QDomElement>
 
-#include <KAboutData>
-#include <QAction>
-#include <KActionCollection>
-#include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/NetAccess>
-#include "choqokdebug.h"
+#include <KPluginFactory>
 
 #include "mediamanager.h"
 #include "passwordmanager.h"
 
 #include "flickrsettings.h"
 
-const QString apiKey = "13f602e6e705834d8cdd5dd2ccb19651";
-const QString apiSecret = "98c89dbe39ae3bea";
-QString apiKeSec = apiSecret + QString( "api_key" ) + apiKey;
+const static QString apiKey = "13f602e6e705834d8cdd5dd2ccb19651";
+const static QString apiSecret = "98c89dbe39ae3bea";
+const static QString apiKeSec = apiSecret + QString( "api_key" ) + apiKey;
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Flickr > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_flickr" ) )
+K_PLUGIN_FACTORY_WITH_JSON( FlickrFactory, "choqok_flickr.json",
+                            registerPlugin < Flickr > (); )
 
 Flickr::Flickr(QObject* parent, const QList<QVariant>& )
-        :Choqok::Uploader(MyPluginFactory::componentData(), parent)
+    :Choqok::Uploader("choqok_flickr", parent)
 {
 }
 
@@ -132,7 +130,6 @@ void Flickr::upload(const QUrl &localUrl, const QByteArray& medium, const QByteA
 
 void Flickr::slotUpload(KJob* job)
 {
-    qCDebug(CHOQOK);
     QUrl localUrl = mUrlMap.take( job );
     if ( job->error() ) {
         qCritical() << "Job Error: " << job->errorString();
@@ -141,7 +138,6 @@ void Flickr::slotUpload(KJob* job)
     } else {
         QDomDocument rep;
         QByteArray buffer = qobject_cast<KIO::StoredTransferJob*>( job )->data();
-        qCDebug(CHOQOK) << buffer;
         rep.setContent( buffer );
         QString photoId;
         QDomElement element = rep.documentElement();
@@ -238,3 +234,5 @@ QByteArray Flickr::createSign( QByteArray req )
 {
     return QCryptographicHash::hash( apiKeSec.toUtf8().append( req ),QCryptographicHash::Md5 ).toHex();
 }
+
+#include "flickr.moc"
