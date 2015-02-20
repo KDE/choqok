@@ -26,21 +26,21 @@
 
 #include <QVBoxLayout>
 
+#include <KAboutData>
+#include <KLocalizedString>
 #include <KPluginFactory>
-#include <KLocale>
 #include <KMessageBox>
-#include "choqokdebug.h"
 
 #include "accountmanager.h"
 #include "passwordmanager.h"
 
 #include "posteroussettings.h"
 
-K_PLUGIN_FACTORY ( PosterousConfigFactory, registerPlugin < PosterousConfig > (); )
-K_EXPORT_PLUGIN ( PosterousConfigFactory ( "kcm_choqok_posterous" ) )
+K_PLUGIN_FACTORY_WITH_JSON( PosterousConfigFactory, "choqok_posterous_config.json",
+                            registerPlugin < PosterousConfig > (); )
 
 PosterousConfig::PosterousConfig ( QWidget* parent, const QVariantList& ) :
-        KCModule ( PosterousConfigFactory::componentData(), parent )
+        KCModule ( KAboutData::pluginData("kcm_choqok_posterous"), parent )
 {
     QVBoxLayout *layout = new QVBoxLayout ( this );
     QWidget *wd = new QWidget ( this );
@@ -63,7 +63,6 @@ PosterousConfig::~PosterousConfig()
 
 void PosterousConfig::load()
 {
-    qCDebug(CHOQOK);
     KCModule::load();
     QList<Choqok::Account*> list = Choqok::AccountManager::self()->accounts();
     Q_FOREACH (Choqok::Account *acc, list) {
@@ -85,7 +84,6 @@ void PosterousConfig::save()
 {
     if ( ui.cfg_accountsList->currentIndex() > -1 ) {
         PosterousSettings::setAlias ( ui.cfg_accountsList->currentText() );
-        qCDebug(CHOQOK) << PosterousSettings::alias();
     } else {
         PosterousSettings::setAlias ( QString() );
         KMessageBox::error ( this, i18n ( "You have to configure at least one Twitter account to use this plugin." ) );
