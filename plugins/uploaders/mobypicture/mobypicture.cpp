@@ -24,41 +24,34 @@
 
 #include "mobypicture.h"
 
-#include <QDomDocument>
+#include <QDebug>
+#include <QJsonDocument>
 
-#include <KAboutData>
-#include <QAction>
-#include <KActionCollection>
-#include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/NetAccess>
+#include <KPluginFactory>
 
 #include <QtOAuth/QtOAuth>
-
-#include <qjson/parser.h>
-#include "choqokdebug.h"
 
 #include "accountmanager.h"
 #include "mediamanager.h"
 #include "passwordmanager.h"
 
-#include "twitterapihelper/twitterapiaccount.h"
-#include "twitterapihelper/twitterapimicroblog.h"
+#include "twitterapiaccount.h"
+#include "twitterapimicroblog.h"
 
 #include "mobypicturesettings.h"
 
-K_PLUGIN_FACTORY ( MyPluginFactory, registerPlugin < Mobypicture > (); )
-K_EXPORT_PLUGIN ( MyPluginFactory ( "choqok_mobypicture" ) )
+K_PLUGIN_FACTORY_WITH_JSON ( MobypictureFactory, "choqok_mobypicture.json",
+                             registerPlugin < Mobypicture > (); )
 
 Mobypicture::Mobypicture ( QObject* parent, const QList<QVariant>& )
-        : Choqok::Uploader ( MyPluginFactory::componentData(), parent )
+        : Choqok::Uploader ( "choqok_mobypicture", parent )
 {
-
 }
 
 Mobypicture::~Mobypicture()
 {
-
 }
 
 void Mobypicture::upload ( const QUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType )
@@ -127,14 +120,16 @@ void Mobypicture::upload ( const QUrl &localUrl, const QByteArray& medium, const
         QByteArray data = Choqok::MediaManager::createMultipartFormData ( formdata, listMediafiles );
 
         job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
-        job->addMetaData ( "Authorization", "Basic " + QString ( login + ':' + pass ).toUtf8().toBase64() );
+        job->addMetaData( QStringLiteral("Authorization"),
+                          QStringLiteral("Basic ") + QString("%1:%2").arg(login).arg(pass).toUtf8().toBase64() );
     }
 
     if ( !job ) {
         qCritical() << "Cannot create a http POST request!";
         return;
     }
-    job->addMetaData ( "content-type", "Content-Type: multipart/form-data; boundary=AaB03x" );
+    job->addMetaData( QStringLiteral("content-type"),
+                      QStringLiteral("Content-Type: multipart/form-data; boundary=AaB03x") );
     mUrlMap[job] = localUrl;
     connect ( job, SIGNAL ( result ( KJob* ) ),
               SLOT ( slotUpload ( KJob* ) ) );
@@ -143,19 +138,16 @@ void Mobypicture::upload ( const QUrl &localUrl, const QByteArray& medium, const
 
 void Mobypicture::slotUpload ( KJob* job )
 {
-    qCDebug(CHOQOK);
     QUrl localUrl = mUrlMap.take ( job );
     if ( job->error() ) {
         qCritical() << "Job Error: " << job->errorString();
         Q_EMIT uploadingFailed ( localUrl, job->errorString() );
         return;
     } else {
-        qCDebug(CHOQOK) << qobject_cast<KIO::StoredTransferJob*> ( job )->data();
-        QJson::Parser p;
-        bool ok;
-        QVariant res = p.parse ( qobject_cast<KIO::StoredTransferJob*> ( job )->data(), &ok );
-        if ( ok ) {
-            QVariantMap map = res.toMap();
+        KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>(job);
+        const QJsonDocument json = QJsonDocument::fromJson(stj->data());
+        if (!json.isNull()) {
+            const QVariantMap map = json.toVariant().toMap();
             if ( MobypictureSettings::oauth() ) {
                 if ( map.contains ( "errors" ) ) {
                     QVariantMap err = map.value ( "errors" ).toMap();
@@ -173,8 +165,9 @@ void Mobypicture::slotUpload ( KJob* job )
                 }
             }
         } else {
-            qCDebug(CHOQOK) << "Parse error: " << qobject_cast<KIO::StoredTransferJob*> ( job )->data();
             Q_EMIT uploadingFailed ( localUrl, i18n ( "Malformed response" ) );
         }
     }
 }
+
+#include "mobypicture.moc"

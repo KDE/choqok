@@ -26,21 +26,22 @@
 
 #include <QVBoxLayout>
 
-#include <KPluginFactory>
-#include <KLocale>
+#include <KAboutData>
+#include <KLocalizedString>
 #include <KMessageBox>
-#include "choqokdebug.h"
+#include <KPluginFactory>
 
 #include "mobypicturesettings.h"
 
 #include "accountmanager.h"
 #include "passwordmanager.h"
 
-K_PLUGIN_FACTORY ( MobypictureConfigFactory, registerPlugin < MobypictureConfig > (); )
+K_PLUGIN_FACTORY_WITH_JSON( MobypictureConfigFactory, "choqok_mobypicture_config.json",
+                            registerPlugin < MobypictureConfig > (); )
 K_EXPORT_PLUGIN ( MobypictureConfigFactory ( "kcm_choqok_mobypicture" ) )
 
-MobypictureConfig::MobypictureConfig ( QWidget* parent, const QVariantList& ) :
-        KCModule ( MobypictureConfigFactory::componentData(), parent )
+MobypictureConfig::MobypictureConfig ( QWidget* parent, const QVariantList& )
+    : KCModule ( KAboutData::pluginData("kcm_choqok_mobypicture"), parent )
 {
     QVBoxLayout *layout = new QVBoxLayout ( this );
     QWidget *wd = new QWidget ( this );
@@ -58,12 +59,10 @@ MobypictureConfig::MobypictureConfig ( QWidget* parent, const QVariantList& ) :
 
 MobypictureConfig::~MobypictureConfig()
 {
-
 }
 
 void MobypictureConfig::load()
 {
-    qCDebug(CHOQOK);
     KCModule::load();
     QList<Choqok::Account*> list = Choqok::AccountManager::self()->accounts();
     Q_FOREACH (Choqok::Account *acc, list) {
@@ -85,7 +84,6 @@ void MobypictureConfig::save()
 {
     if ( ui.cfg_accountsList->currentIndex() > -1 ) {
         MobypictureSettings::setAlias ( ui.cfg_accountsList->currentText() );
-        qCDebug(CHOQOK) << MobypictureSettings::alias();
     } else {
         MobypictureSettings::setAlias ( QString() );
         KMessageBox::error ( this, i18n ( "You have to configure at least one Twitter account to use this plugin." ) );
