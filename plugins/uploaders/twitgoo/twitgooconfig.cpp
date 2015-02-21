@@ -26,21 +26,20 @@
 
 #include <QVBoxLayout>
 
-#include <KPluginFactory>
-#include <KLocale>
+#include <KAboutData>
+#include <KLocalizedString>
 #include <KMessageBox>
-#include "choqokdebug.h"
+#include <KPluginFactory>
 
 #include "accountmanager.h"
-#include "passwordmanager.h"
 
 #include "twitgoosettings.h"
 
-K_PLUGIN_FACTORY ( TwitgooConfigFactory, registerPlugin < TwitgooConfig > (); )
-K_EXPORT_PLUGIN ( TwitgooConfigFactory ( "kcm_choqok_twitgoo" ) )
+K_PLUGIN_FACTORY_WITH_JSON( TwitgooConfigFactory, "choqok_twitgoo_config.json",
+                            registerPlugin < TwitgooConfig > (); )
 
-TwitgooConfig::TwitgooConfig ( QWidget* parent, const QVariantList& ) :
-        KCModule ( TwitgooConfigFactory::componentData(), parent )
+TwitgooConfig::TwitgooConfig ( QWidget* parent, const QVariantList& )
+    : KCModule ( KAboutData::pluginData("kcm_choqok_twitgoo"), parent )
 {
     QVBoxLayout *layout = new QVBoxLayout ( this );
     QWidget *wd = new QWidget ( this );
@@ -58,7 +57,6 @@ TwitgooConfig::~TwitgooConfig()
 
 void TwitgooConfig::load()
 {
-    qCDebug(CHOQOK);
     KCModule::load();
     QList<Choqok::Account*> list = Choqok::AccountManager::self()->accounts();
     Q_FOREACH (Choqok::Account *acc, list) {
@@ -75,7 +73,6 @@ void TwitgooConfig::save()
 {
     if ( ui.cfg_accountsList->currentIndex() > -1 ) {
         TwitgooSettings::setAlias ( ui.cfg_accountsList->currentText() );
-        qCDebug(CHOQOK) << TwitgooSettings::alias();
     } else {
         TwitgooSettings::setAlias ( QString() );
         KMessageBox::error ( this, i18n ( "You have to configure at least one Twitter account to use this plugin." ) );

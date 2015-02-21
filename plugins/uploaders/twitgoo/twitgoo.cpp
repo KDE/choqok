@@ -24,41 +24,34 @@
 
 #include "twitgoo.h"
 
-#include <QDomDocument>
+#include <QDebug>
+#include <QJsonDocument>
 
-#include <KAboutData>
-#include <QAction>
-#include <KActionCollection>
-#include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/NetAccess>
+#include <KPluginFactory>
 
 #include "accountmanager.h"
 #include "mediamanager.h"
 #include "passwordmanager.h"
 
-#include "twitterapihelper/twitterapiaccount.h"
-#include "twitterapihelper/twitterapimicroblog.h"
+#include "twitterapiaccount.h"
+#include "twitterapimicroblog.h"
 
 #include <QtOAuth/QtOAuth>
 
-#include <qjson/parser.h>
-#include "choqokdebug.h"
-
 #include "twitgoosettings.h"
 
-K_PLUGIN_FACTORY ( MyPluginFactory, registerPlugin < Twitgoo > (); )
-K_EXPORT_PLUGIN ( MyPluginFactory ( "choqok_twitgoo" ) )
+K_PLUGIN_FACTORY_WITH_JSON( TwitgooFactory, "choqok_twitgoo.json",
+                            registerPlugin < Twitgoo > (); )
 
 Twitgoo::Twitgoo ( QObject* parent, const QList<QVariant>& )
-        : Choqok::Uploader ( MyPluginFactory::componentData(), parent )
+    : Choqok::Uploader( "choqok_twitgoo", parent )
 {
-
 }
 
 Twitgoo::~Twitgoo()
 {
-
 }
 
 void Twitgoo::upload ( const QUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType )
@@ -91,7 +84,8 @@ void Twitgoo::upload ( const QUrl &localUrl, const QByteArray& medium, const QBy
     QByteArray data = Choqok::MediaManager::createMultipartFormData ( formdata, listMediafiles );
 
     KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
-    job->addMetaData ( "customHTTPHeader", "X-Auth-Service-Provider: https://api.twitter.com/1/account/verify_credentials.json" );
+    job->addMetaData( QStringLiteral("customHTTPHeader"),
+                      QStringLiteral("X-Auth-Service-Provider: https://api.twitter.com/1/account/verify_credentials.json") );
     QOAuth::ParamMap params;
     QString requrl = "https://api.twitter.com/1/account/verify_credentials.json";
     QByteArray credentials = acc->oauthInterface()->createParametersString ( requrl,
@@ -99,12 +93,14 @@ void Twitgoo::upload ( const QUrl &localUrl, const QByteArray& medium, const QBy
                              acc->oauthTokenSecret(),
                              QOAuth::HMAC_SHA1,
                              params, QOAuth::ParseForHeaderArguments );
-    job->addMetaData ( "customHTTPHeader", "X-Verify-Credentials-Authorization: " + credentials );
+    job->addMetaData( QStringLiteral("customHTTPHeader"),
+                      QStringLiteral("X-Verify-Credentials-Authorization: ") + credentials );
     if ( !job ) {
         qCritical() << "Cannot create a http POST request!";
         return;
     }
-    job->addMetaData ( "content-type", "Content-Type: multipart/form-data; boundary=AaB03x" );
+    job->addMetaData( QStringLiteral("content-type"),
+                      QStringLiteral("Content-Type: multipart/form-data; boundary=AaB03x") );
     mUrlMap[job] = localUrl;
     connect ( job, SIGNAL ( result ( KJob* ) ),
               SLOT ( slotUpload ( KJob* ) ) );
@@ -113,19 +109,16 @@ void Twitgoo::upload ( const QUrl &localUrl, const QByteArray& medium, const QBy
 
 void Twitgoo::slotUpload ( KJob* job )
 {
-    qCDebug(CHOQOK);
     QUrl localUrl = mUrlMap.take ( job );
     if ( job->error() ) {
         qCritical() << "Job Error: " << job->errorString();
         Q_EMIT uploadingFailed ( localUrl, job->errorString() );
         return;
     } else {
-        qCDebug(CHOQOK) << qobject_cast<KIO::StoredTransferJob*> ( job )->data();
-        QJson::Parser parser;
-        bool ok;
-        QVariant res = parser.parse ( qobject_cast<KIO::StoredTransferJob*> ( job )->data(), &ok );
-        if ( ok ) {
-            QVariantMap map = res.toMap();
+        KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob*>( job );
+        const QJsonDocument json = QJsonDocument::fromJson(stj->data());
+        if (!json.isNull()) {
+            QVariantMap map = json.toVariant().toMap();
             if ( map.value ( "status" ) == QString ( "fail" ) ) {
                 QVariantMap err = map.value ( "err" ).toMap();
                 Q_EMIT uploadingFailed ( localUrl, err.value ( "err_msg" ).toString() );
@@ -135,8 +128,9 @@ void Twitgoo::slotUpload ( KJob* job )
                 Q_EMIT mediumUploaded ( localUrl, map.value ( val ).toString() );
             }
         } else {
-            qCDebug(CHOQOK) << "Parse error: " << qobject_cast<KIO::StoredTransferJob*> ( job )->data();
             Q_EMIT uploadingFailed ( localUrl, i18n ( "Malformed response" ) );
         }
     }
 }
+
+#include "twitgoo.moc"
