@@ -215,7 +215,6 @@ QList< Choqok::Post* > TwitterApiMicroBlog::loadTimeline( Choqok::Account *accou
             st->author.isProtected = grp.readEntry("isProtected", false);
             st->isPrivate = grp.readEntry( "isPrivate" , false );
             st->author.location = grp.readEntry("authorLocation", QString());
-            st->author.homePageUrl = grp.readEntry("authorUrl", QString());
             st->link = postUrl( account, st->author.userName, st->postId);
             st->isRead = grp.readEntry("isRead", true);
             st->repeatedFromUsername = grp.readEntry("repeatedFrom", QString());
@@ -269,7 +268,6 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
             grp.writeEntry( "isPrivate" , post->isPrivate );
             grp.writeEntry( "authorLocation" , post->author.location );
             grp.writeEntry( "isProtected" , post->author.isProtected );
-            grp.writeEntry( "authorUrl" , post->author.homePageUrl );
             grp.writeEntry( "isRead" , post->isRead );
             grp.writeEntry( "repeatedFrom", post->repeatedFromUsername);
             grp.writeEntry( "repeatedPostId", post->repeatedPostId );
@@ -1294,8 +1292,8 @@ Choqok::Post* TwitterApiMicroBlog::readPost(Choqok::Account* theAccount,
     post->content = var["text"].toString();
     post->creationDateTime = dateFromString(var["created_at"].toString());
     post->isFavorited = var["favorited"].toBool();
-    post->postId = var["id"].toString();
-    post->replyToPostId = var["in_reply_to_status_id"].toString();
+    post->postId = var["id_str"].toString();
+    post->replyToPostId = var["in_reply_to_status_id_str"].toString();
     post->replyToUserId = var["in_reply_to_user_id"].toString();
     post->replyToUserName = var["in_reply_to_screen_name"].toString();
     post->source = var["source"].toString();
@@ -1305,7 +1303,6 @@ Choqok::Post* TwitterApiMicroBlog::readPost(Choqok::Account* theAccount,
     post->author.userId = userMap["id"].toString();
     post->author.userName = userMap["screen_name"].toString();
     post->author.profileImageUrl = userMap["profile_image_url"].toString();
-    post->author.homePageUrl = userMap["statusnet_profile_url"].toString();
     QVariantMap entities = var["entities"].toMap();
     QVariantMap mediaMap;
     QVariantList media = entities["media"].toList();

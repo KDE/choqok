@@ -69,7 +69,6 @@ MediaManager::~MediaManager()
 {
     delete d;
     mSelf = 0L;
-    qCDebug(CHOQOK);
 }
 
 MediaManager * MediaManager::mSelf = 0L;
