@@ -57,7 +57,8 @@ public:
     int countOfTimelinesToSave;
 };
 
-K_PLUGIN_FACTORY_WITH_JSON( MyPluginFactory, "choqok_pumpio.json", registerPlugin < PumpIOMicroBlog > (); )
+K_PLUGIN_FACTORY_WITH_JSON( PumpIOMicroBlogFactory, "choqok_pumpio.json",
+                            registerPlugin < PumpIOMicroBlog > (); )
 
 const QString PumpIOMicroBlog::inboxActivity("/api/user/%1/inbox");
 const QString PumpIOMicroBlog::outboxActivity("/api/user/%1/feed");
