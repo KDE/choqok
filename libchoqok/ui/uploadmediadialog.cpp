@@ -143,7 +143,6 @@ void Choqok::UI::UploadMediaDialog::slotAboutClicked()
         return;
     KPluginInfo info = d->availablePlugins.value(shorten);
 
-#pragma message("use i18n for name and comment")
     KAboutData aboutData(info.name(), info.name(), info.version(), info.comment(),
                          KAboutLicense::byKeyword(info.license()).key(), QString(),
                          QString(), info.website());

@@ -34,7 +34,7 @@
 #include <KIO/Job>
 #include <KIO/JobClasses>
 #include <KIO/NetAccess>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KMessageBox>
 #include <KMimeType>
 

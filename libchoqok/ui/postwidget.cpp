@@ -27,7 +27,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QGridLayout>
 
 #include "libchoqokdebug.h"
-#include <KLocale>
+#include <KLocalizedString>
 #include <KMenu>
 #include <KMessageBox>
 #include <KProcess>

@@ -30,9 +30,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QMimeData>
 #include <QTimer>
 
-#include <QAction>
 #include "libchoqokdebug.h"
-#include <KLocale>
+#include <KLocalizedString>
 #include <sonnet/speller.h>
 
 #include "choqokbehaviorsettings.h"

@@ -23,14 +23,13 @@
 */
 #include "accountmanager.h"
 
-#include <QApplication>
-
 #include <KConfig>
 #include <KConfigGroup>
 #include "libchoqokdebug.h"
 #include <KIO/NetAccess>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KStandardDirs>
+#include <KSharedConfig>
 #include <QUrl>
 #include <KWallet/Wallet>
 
