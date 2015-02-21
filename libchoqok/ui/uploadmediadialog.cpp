@@ -261,6 +261,6 @@ void Choqok::UI::UploadMediaDialog::slotMediumUploadFailed(const QUrl &localUrl,
 
 void Choqok::UI::UploadMediaDialog::slotMediumChanged(const QString& url)
 {
-    d->ui.previewer->showPreview(QUrl(url));
+    d->ui.previewer->showPreview(QUrl::fromLocalFile(url));
 }
 
