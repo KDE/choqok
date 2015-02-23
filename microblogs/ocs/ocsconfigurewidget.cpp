@@ -22,12 +22,17 @@
 */
 
 #include "ocsconfigurewidget.h"
-#include <attica/providermanager.h>
+
+#include <KMessageBox>
+#include <KLocalizedString>
+
+#include <Attica/ProviderManager>
+
+#include "accountmanager.h"
+
 #include "ocsaccount.h"
 #include "ocsmicroblog.h"
-#include "choqokdebug.h"
-#include <accountmanager.h>
-#include <KMessageBox>
+#include "ocsdebug.h"
 
 OCSConfigureWidget::OCSConfigureWidget(OCSMicroblog *microblog, OCSAccount* account, QWidget* parent)
     : ChoqokEditAccountWidget(account, parent), mAccount(account), mMicroblog(microblog), providersLoaded(false)
@@ -74,7 +79,7 @@ bool OCSConfigureWidget::validateData()
 Choqok::Account* OCSConfigureWidget::apply()
 {
     mAccount->setAlias( cfg_alias->text() );
-    mAccount->setProviderUrl( cfg_provider->itemData(cfg_provider->currentIndex()).toString() );
+    mAccount->setProviderUrl( cfg_provider->itemData(cfg_provider->currentIndex()).toUrl() );
     mAccount->writeConfig();
     return mAccount;
 }

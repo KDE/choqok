@@ -23,12 +23,12 @@
 
 #include "ocsmicroblog.h"
 
-#include <KAboutData>
-#include <KGenericFactory>
+#include <KLocalizedString>
 #include <KMessageBox>
+#include <KPluginFactory>
+#include <KConfig>
 
-#include <attica/providermanager.h>
-#include "choqokdebug.h"
+#include <Attica/ProviderManager>
 
 #include "application.h"
 #include "accountmanager.h"
@@ -36,14 +36,16 @@
 #include "postwidget.h"
 
 #include "ocsaccount.h"
+#include "ocsdebug.h"
 #include "ocsconfigurewidget.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < OCSMicroblog > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_ocs" ) )
+K_PLUGIN_FACTORY_WITH_JSON(OCSMicroblogFactory, "choqok_ocs.json",
+                           registerPlugin < OCSMicroblog > (); )
 
 OCSMicroblog::OCSMicroblog( QObject* parent, const QVariantList&  )
-    : MicroBlog(MyPluginFactory::componentData(), parent), mProviderManager(new Attica::ProviderManager),
-    mIsOperational(false)
+    : MicroBlog("choqok_ocs", parent)
+    , mProviderManager(new Attica::ProviderManager)
+    , mIsOperational(false)
 {
     connect( mProviderManager, SIGNAL(defaultProvidersLoaded()),
              this, SLOT(slotDefaultProvidersLoaded()) );
@@ -61,7 +63,7 @@ void OCSMicroblog::saveTimeline(Choqok::Account* account, const QString& timelin
 {
     qCDebug(CHOQOK);
     QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
-    KConfig postsBackup( fileName, KConfig::NoGlobals, "data" );
+    KConfig postsBackup( fileName, KConfig::NoGlobals, QStandardPaths::DataLocation );
 
     ///Clear previous data:
     QStringList prevList = postsBackup.groupList();
@@ -98,7 +100,7 @@ QList< Choqok::Post* > OCSMicroblog::loadTimeline(Choqok::Account* account, cons
     qCDebug(CHOQOK)<<timelineName;
     QList< Choqok::Post* > list;
     QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
-    KConfig postsBackup( fileName, KConfig::NoGlobals, "data" );
+    KConfig postsBackup( fileName, KConfig::NoGlobals, QStandardPaths::DataLocation );
     QStringList tmpList = postsBackup.groupList();
 
     QList<QDateTime> groupList;

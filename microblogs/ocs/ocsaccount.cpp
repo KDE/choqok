@@ -23,9 +23,9 @@
 
 #include "ocsaccount.h"
 
-#include "choqokdebug.h"
+#include "ocsdebug.h"
 
-#include <attica/providermanager.h>
+#include <Attica/ProviderManager>
 
 #include "ocsmicroblog.h"
 

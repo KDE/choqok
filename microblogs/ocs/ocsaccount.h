@@ -26,7 +26,7 @@
 
 #include "account.h"
 
-#include <attica/provider.h>
+#include <Attica/Provider>
 
 class OCSMicroblog;
 

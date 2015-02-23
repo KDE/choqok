@@ -25,7 +25,7 @@
 #define OCSMICROBLOG_H
 #include "microblog.h"
 
-#include <attica/activity.h>
+#include <Attica/Activity>
 
 class OCSAccount;
 namespace Attica {
