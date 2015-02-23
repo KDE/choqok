@@ -23,15 +23,12 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "laconicamicroblog.h"
 
-#include <QDomElement>
-
-#include <KAboutData>
-#include "choqokdebug.h"
-#include <KGenericFactory>
+#include "laconicadebug.h"
 #include <KIO/JobClasses>
 #include <KIO/Job>
 #include <KIO/NetAccess>
-#include <KLocale>
+#include <KLocalizedString>
+#include <KPluginFactory>
 #include <KMessageBox>
 #include <KMimeType>
 
@@ -45,9 +42,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "postwidget.h"
 #include "timelinewidget.h"
 
-#include "twitterapihelper/twitterapimicroblogwidget.h"
-#include "twitterapihelper/twitterapipostwidget.h"
-#include "twitterapihelper/twitterapitimelinewidget.h"
+#include "twitterapimicroblogwidget.h"
+#include "twitterapipostwidget.h"
+#include "twitterapitimelinewidget.h"
 
 #include "laconicaaccount.h"
 #include "laconicacomposerwidget.h"
@@ -55,11 +52,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "laconicapostwidget.h"
 #include "laconicasearch.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < LaconicaMicroBlog > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_laconica" ) )
+K_PLUGIN_FACTORY_WITH_JSON( LaconicaFactory, "choqok_laconica.json",
+                            registerPlugin < LaconicaMicroBlog > (); )
 
-LaconicaMicroBlog::LaconicaMicroBlog ( QObject* parent, const QVariantList&  )
-: TwitterApiMicroBlog(MyPluginFactory::componentData(), parent), friendsPage(1)
+LaconicaMicroBlog::LaconicaMicroBlog ( QObject* parent, const QVariantList& )
+: TwitterApiMicroBlog( "choqok_laconica", parent), friendsPage(1)
 {
     qCDebug(CHOQOK);
     setServiceName("GNU social");
@@ -131,7 +128,7 @@ QString LaconicaMicroBlog::profileUrl( Choqok::Account *account, const QString &
         }
     }
     if(acc){
-        return QString( acc->homepageUrl().prettyUrl(QUrl::AddTrailingSlash) + username) ;
+        return QString( acc->homepageUrl().toDisplayString() + '/' + username) ;
     } else
         return QString();
 }
@@ -143,7 +140,7 @@ QString LaconicaMicroBlog::postUrl ( Choqok::Account *account,  const QString &u
     TwitterApiAccount *acc = qobject_cast<TwitterApiAccount*>(account);
     if(acc){
         QUrl url( acc->homepageUrl() );
-        url.addPath ( QString("/notice/%1" ).arg ( postId ) );
+        url.setPath( url.path() + QString("/notice/%1" ).arg ( postId ) );
         return QString ( url.toDisplayString() );
     } else
         return QString();
@@ -182,7 +179,7 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Ch
         ///Documentation: http://identi.ca/notice/17779990
         TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
         QUrl url = account->apiUrl();
-        url.addPath ( "/statuses/update.xml" );
+        url.setPath( url.path() + "/statuses/update.xml" );
         QByteArray fileContentType = KMimeType::findByUrl( picUrl, 0, true )->name().toUtf8();
 
         QMap<QString, QByteArray> formdata;
@@ -205,8 +202,11 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Ch
             qCCritical(CHOQOK) << "Cannot create a http POST request!";
             return;
         }
-        job->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=AaB03x" );
-        job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST));
+        job->addMetaData( QStringLiteral("content-type"),
+                          QStringLiteral("Content-Type: multipart/form-data; boundary=AaB03x") );
+        job->addMetaData( QStringLiteral("customHTTPHeader"),
+                          QStringLiteral("Authorization: ") +
+                          authorizationHeader(account, url, QOAuth::POST));
         mCreatePostMap[ job ] = post;
         mJobsAccount[job] = theAccount;
         connect( job, SIGNAL( result( KJob* ) ),
@@ -259,8 +259,9 @@ void LaconicaMicroBlog::doRequestFriendsScreenName(TwitterApiAccount* theAccount
         qCDebug(CHOQOK) << "Cannot create an http GET request!";
         return;
     }
-    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url,
-                                                                                 QOAuth::GET, params));
+    job->addMetaData(QStringLiteral("customHTTPHeader"),
+                     QStringLiteral("Authorization: ") +
+                     authorizationHeader(account, url, QOAuth::GET, params));
     mJobsAccount[job] = theAccount;
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFriendsScreenName(KJob*) ) );
     job->start();
@@ -335,14 +336,16 @@ void LaconicaMicroBlog::fetchConversation(Choqok::Account* theAccount, const QSt
     }
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     QUrl url = account->apiUrl();
-    url.addPath ( QString("/statusnet/conversation/%1.%2").arg(conversationId).arg(format) );
+    url.setPath( QString("/statusnet/conversation/%1.%2").arg(conversationId).arg(format) );
 
     KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
     if ( !job ) {
         qCDebug(CHOQOK) << "Cannot create an http GET request!";
         return;
     }
-    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::GET));
+    job->addMetaData( QStringLiteral("customHTTPHeader"),
+                      QStringLiteral("Authorization: ") +
+                      authorizationHeader(account, url, QOAuth::GET));
     mFetchConversationMap[ job ] = conversationId;
     mJobsAccount[ job ] = theAccount;
     connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotFetchConversation ( KJob* ) ) );

@@ -23,22 +23,16 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "laconicaeditaccount.h"
 
-#include <QDomDocument>
-#include <QProgressBar>
+#include <QJsonDocument>
 
-#include "choqokdebug.h"
-#include <KInputDialog>
+#include "laconicadebug.h"
 #include <KIO/AccessManager>
 #include <KIO/Job>
 #include <KIO/JobClasses>
 #include <KIO/NetAccess>
-#include <KMessageBox>
-#include <KToolInvocation>
 
 #include <QtOAuth/QtOAuth>
 #include <QtOAuth/qoauth_namespace.h>
-
-#include <qjson/parser.h>
 
 #include "accountmanager.h"
 #include "choqoktools.h"
@@ -233,19 +227,17 @@ void LaconicaEditAccountWidget::setTextLimit()
         return;
     }
 
-    bool ok;
-    QJson::Parser parser;
-    QVariantMap siteInfos = parser.parse(jobData, &ok).toMap()["site"].toMap();
-
-    if (ok) {
+    const QJsonDocument json = QJsonDocument::fromJson(jobData);
+    if (!json.isNull()) {
+        const QVariantMap siteInfos = json.toVariant().toMap()["site"].toMap();
+        bool ok;
         mAccount->setPostCharLimit(siteInfos["textlimit"].toUInt(&ok));
+        if (!ok) {
+            qCDebug(CHOQOK) << "Cannot parse text limit value";
+            mAccount->setPostCharLimit(140);
+        }
     } else {
         qCDebug(CHOQOK) << "Cannot parse JSON reply";
-    }
-
-    if (!ok) {
-        qCDebug(CHOQOK) << "Cannot parse text limit value";
-        mAccount->setPostCharLimit(140);
     }
 }
 

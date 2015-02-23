@@ -25,7 +25,7 @@
 #include "laconicapostwidget.h"
 
 #include <QAction>
-#include "choqokdebug.h"
+#include "laconicadebug.h"
 #include <KLocalizedString>
 #include <KMenu>
 #include <KPushButton>
@@ -35,9 +35,9 @@
 #include "notifymanager.h"
 #include "quickpost.h"
 
-#include "twitterapihelper/twitterapiaccount.h"
-#include "twitterapihelper/twitterapimicroblog.h"
-#include "twitterapihelper/twitterapiwhoiswidget.h"
+#include "twitterapiaccount.h"
+#include "twitterapimicroblog.h"
+#include "twitterapiwhoiswidget.h"
 
 #include "laconicasearch.h"
 #include "laconicaaccount.h"
@@ -164,8 +164,8 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
                                                         unpcode,
                                                         LaconicaSearch::ReferenceHashtag);
         } else if(ret == openInBrowser){
-            Choqok::openUrl(QUrl(QString(d->account->homepageUrl().prettyUrl(QUrl::RemoveTrailingSlash)) +
-                                  "tag/" + unpcode));
+            Choqok::openUrl(QUrl(d->account->homepageUrl().toDisplayString() +
+                                 "/tag/" + unpcode));
         }
     } else if( scheme == "group" ) {
         KMenu menu;
@@ -182,8 +182,8 @@ void LaconicaPostWidget::checkAnchor(const QUrl& url)
                                                         url.host(),
                                                         LaconicaSearch::ReferenceGroup);
         } else if(ret == openInBrowser){
-            Choqok::openUrl(QUrl(QString(d->account->homepageUrl().prettyUrl(QUrl::RemoveTrailingSlash)) +
-                                  "group/" + url.host()));
+            Choqok::openUrl(QUrl(d->account->homepageUrl().toDisplayString() +
+                                 "/group/" + url.host()));
         }
     } else if(scheme == "user") {
         QString username = ( url.userName().isEmpty() ? "" : QString("%1@").arg(url.userName()) ) +

@@ -25,7 +25,7 @@
 #ifndef LACONICAPOSTWIDGET_H
 #define LACONICAPOSTWIDGET_H
 
-#include "twitterapihelper/twitterapipostwidget.h"
+#include "twitterapipostwidget.h"
 
 class LaconicaPostWidget : public TwitterApiPostWidget
 {

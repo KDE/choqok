@@ -24,12 +24,11 @@
 
 #include "laconicacomposerwidget.h"
 
-#include <QHBoxLayout>
 #include <QLabel>
 #include <QLayout>
 #include <QPointer>
 
-#include "choqokdebug.h"
+#include "laconicadebug.h"
 #include <KFileDialog>
 #include <KLocalizedString>
 #include <KPushButton>
@@ -40,7 +39,8 @@
 #include "notifymanager.h"
 #include "shortenmanager.h"
 
-#include "twitterapihelper/twitterapitextedit.h"
+#include "twitterapitextedit.h"
+
 #include "laconicamicroblog.h"
 
 class LaconicaComposerWidget::Private{

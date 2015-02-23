@@ -25,7 +25,7 @@
 #ifndef LACONICASEARCH_H
 #define LACONICASEARCH_H
 
-#include "twitterapihelper/twitterapisearch.h"
+#include "twitterapisearch.h"
 
 class KJob;
 

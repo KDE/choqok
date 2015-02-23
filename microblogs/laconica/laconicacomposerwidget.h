@@ -25,7 +25,7 @@
 #ifndef LACONICACOMPOSERWIDGET_H
 #define LACONICACOMPOSERWIDGET_H
 
-#include "twitterapihelper/twitterapicomposerwidget.h"
+#include "twitterapicomposerwidget.h"
 
 
 class LaconicaComposerWidget : public TwitterApiComposerWidget

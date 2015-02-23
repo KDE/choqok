@@ -26,14 +26,14 @@
 
 #include <QDomElement>
 
-#include "choqokdebug.h"
+#include "laconicadebug.h"
 #include <KIO/Job>
 #include <KIO/JobClasses>
 #include <KLocalizedString>
 
 #include "choqokbehaviorsettings.h"
 
-#include "twitterapihelper/twitterapiaccount.h"
+#include "twitterapiaccount.h"
 
 const QRegExp LaconicaSearch::m_rId("tag:.+,[\\d-]+:(\\d+)");
 const QRegExp LaconicaSearch::mIdRegExp("(?:user|(?:.*notice))/([0-9]+)");
@@ -107,7 +107,7 @@ QUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
         if( page > 1 )
             url.addQueryItem( "page", QString::number( page ) );
     } else {
-        url = theAccount->apiUrl().url(QUrl::AddTrailingSlash).remove("api/", Qt::CaseInsensitive);
+        url = QUrl(theAccount->apiUrl().url().remove("/api", Qt::CaseInsensitive));
         url = url.adjusted(QUrl::StripTrailingSlash);
         url.setPath(url.path() + '/' + ( formattedQuery ));
     }
