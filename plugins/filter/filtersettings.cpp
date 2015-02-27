@@ -24,14 +24,10 @@
 
 #include "filtersettings.h"
 
-#include <QApplication>
 #include <QStringList>
 
 #include <KConfigGroup>
-#include "choqokdebug.h"
-#include <KGlobal>
 #include <KLocalizedString>
-#include <KSharedPtr>
 #include <KSharedConfig>
 
 #include "filter.h"
@@ -63,9 +59,9 @@ FilterSettings* FilterSettings::self()
     return _self;
 }
 
-FilterSettings::FilterSettings(): QObject(qApp)
+FilterSettings::FilterSettings(): QObject()
 {
-    conf = new KConfigGroup(KGlobal::config(), QLatin1String("Filter Plugin"));
+    conf = new KConfigGroup(KSharedConfig::openConfig(), QLatin1String("Filter Plugin"));
     readConfig();
 }
 
@@ -83,18 +79,18 @@ void FilterSettings::readConfig()
 {
     _filters.clear();
     //Filter group names are start with Filter_%Text%%Field%%Type%
-    KGlobal::config()->sync();
-    QStringList groups = KGlobal::config()->groupList();
+    KSharedConfig::openConfig()->sync();
+    QStringList groups = KSharedConfig::openConfig()->groupList();
     Q_FOREACH (const QString &grp, groups) {
         if(grp.startsWith(QLatin1String("Filter_"))){
-            Filter *f = new Filter(KGlobal::config()->group(grp), this);
+            Filter *f = new Filter(KSharedConfig::openConfig()->group(grp), this);
             if(f->filterText().isEmpty())
                 continue;
             _filters << f;
-            qCDebug(CHOQOK)<<"REEADING A FILTER";
+            //qCDebug(CHOQOK)<<"REEADING A FILTER";
         }
     }
-    qCDebug(CHOQOK)<<filters().count();
+    //qCDebug(CHOQOK)<<filters().count();
 
     _hideNoneFriendsReplies = conf->readEntry("hideNoneFriendsReplies", false);
     _hideRepliesNotRelatedToMe = conf->readEntry("hideRepliesNotRelatedToMe", false);
@@ -107,15 +103,15 @@ void FilterSettings::setFilters(const QList< Filter* > &filters)
 
 void FilterSettings::writeConfig()
 {
-    QStringList groups = KGlobal::config()->groupList();
+    QStringList groups = KSharedConfig::openConfig()->groupList();
     Q_FOREACH (const QString &grp, groups) {
         if(grp.startsWith(QLatin1String("Filter_"))){
-            KGlobal::config()->deleteGroup(grp);
+            KSharedConfig::openConfig()->deleteGroup(grp);
         }
     }
     conf->writeEntry("hideNoneFriendsReplies", _hideNoneFriendsReplies);
     conf->writeEntry("hideRepliesNotRelatedToMe", _hideRepliesNotRelatedToMe);
-    KGlobal::config()->sync();
+    KSharedConfig::openConfig()->sync();
 
     Q_FOREACH (Filter *f, _filters) {
         f->writeConfig();

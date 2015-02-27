@@ -28,9 +28,9 @@
 #include <QMap>
 #include <QObject>
 
-#include <KConfigSkeleton>
-
 #include "filter.h"
+
+class KConfigGroup;
 
 class FilterSettings : public QObject
 {

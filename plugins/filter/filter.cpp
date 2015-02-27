@@ -25,19 +25,20 @@
 #include "filter.h"
 
 #include <KConfigGroup>
-#include <KGlobal>
 #include <KSharedConfig>
 
 class Filter::Private{
 public:
     Private(const QString& text, Filter::FilterField field, Filter::FilterType type,
             Filter::FilterAction action, bool dontHide)
-    :filterField(field), filterText(text), filterType(type), filterAction(action), dontHideReplies(dontHide)
+    : filterField(field), filterText(text), filterType(type)
+    , filterAction(action), dontHideReplies(dontHide)
     {
-        config = new KConfigGroup(KGlobal::config(), QString::fromLatin1( "Filter_%1%2%3%4" ).arg( text )
-                                                                                             .arg( field )
-                                                                                             .arg( type )
-                                                                                             .arg( action ));
+        config = new KConfigGroup(KSharedConfig::openConfig(),
+                                  QString::fromLatin1( "Filter_%1%2%3%4" ).arg( text )
+                                                                          .arg( field )
+                                                                          .arg( type )
+                                                                          .arg( action ));
     }
 
     Private(const KConfigGroup &configGroup)
@@ -66,12 +67,10 @@ Filter::Filter(const QString& filterText, Filter::FilterField field, Filter::Fil
 Filter::Filter(const KConfigGroup &config, QObject* parent)
     : QObject(parent), d(new Private(config))
 {
-
 }
 
 Filter::~Filter()
 {
-
 }
 
 Filter::FilterField Filter::filterField() const

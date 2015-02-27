@@ -24,33 +24,30 @@
 
 #include "filtermanager.h"
 
+#include <QAction>
 #include <QTimer>
 
-#include <KAboutData>
-#include <QAction>
 #include <KActionCollection>
-#include <KGenericFactory>
+#include <KPluginFactory>
 #include <KMessageBox>
-#include "choqokdebug.h"
 
 #include "choqokuiglobal.h"
 #include "postwidget.h"
 #include "quickpost.h"
 #include "timelinewidget.h"
 
-#include "twitterapihelper/twitterapiaccount.h"
+#include "twitterapiaccount.h"
 
 #include "configurefilters.h"
 #include "filter.h"
 #include "filtersettings.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < FilterManager > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_filter" ) )
+K_PLUGIN_FACTORY_WITH_JSON( FilterManagerFactory, "choqok_filter.json",
+                            registerPlugin < FilterManager > (); )
 
 FilterManager::FilterManager(QObject* parent, const QList<QVariant>& )
-        :Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped)
+        :Choqok::Plugin( "choqok_filter", parent), state(Stopped)
 {
-    qCDebug(CHOQOK);
     QAction *action = new QAction(i18n("Configure Filters..."), this);
     actionCollection()->addAction("configureFilters", action);
     connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureFilters()));
@@ -176,7 +173,6 @@ void FilterManager::doFiltering(Choqok::UI::PostWidget* postToFilter, Filter::Fi
     QString css;
     switch(action){
         case Filter::Remove:
-            qCDebug(CHOQOK)<<"Post removed: "<<postToFilter->currentPost()->content;
             postToFilter->close();
             break;
         case Filter::Highlight:
@@ -204,7 +200,7 @@ bool FilterManager::parseSpecialRules(Choqok::UI::PostWidget* postToParse)
             postToParse->currentPost()->replyToUserName != postToParse->currentAccount()->username() ) {
             if( !postToParse->currentPost()->content.contains(postToParse->currentAccount()->username()) ) {
                 postToParse->close();
-                qCDebug(CHOQOK)<<"NOT RELATE TO ME FILTERING......";
+//                qCDebug(CHOQOK)<<"NOT RELATE TO ME FILTERING......";
                 return true;
             }
         }
@@ -218,7 +214,7 @@ bool FilterManager::parseSpecialRules(Choqok::UI::PostWidget* postToParse)
             !acc->friendsList().contains(postToParse->currentPost()->replyToUserName) ) {
             if( !postToParse->currentPost()->content.contains(postToParse->currentAccount()->username()) ) {
                 postToParse->close();
-                qCDebug(CHOQOK)<<"NONE FRIEND FILTERING......";
+//                qCDebug(CHOQOK)<<"NONE FRIEND FILTERING......";
                 return true;
             }
         }
@@ -244,7 +240,7 @@ void FilterManager::slotHidePost()
         FilterSettings::self()->setFilters(filterList);
         Choqok::UI::TimelineWidget *tm = wd->timelineWidget();
         if(tm){
-            qCDebug(CHOQOK)<<"Closing all posts";
+//            qCDebug(CHOQOK)<<"Closing all posts";
             Q_FOREACH (Choqok::UI::PostWidget *pw, tm->postWidgets()) {
                 if(pw->currentPost()->author.userName == username){
                     pw->close();

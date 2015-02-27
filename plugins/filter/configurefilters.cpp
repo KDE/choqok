@@ -24,13 +24,9 @@
 
 #include "configurefilters.h"
 
-#include <QVBoxLayout>
-
-#include "choqokdebug.h"
-#include <KLocale>
+#include <KLocalizedString>
 
 #include "addeditfilter.h"
-#include "filter.h"
 #include "filtersettings.h"
 
 ConfigureFilters::ConfigureFilters(QWidget* parent):
@@ -56,7 +52,8 @@ ConfigureFilters::ConfigureFilters(QWidget* parent):
 }
 
 ConfigureFilters::~ConfigureFilters()
-{}
+{
+}
 
 void ConfigureFilters::slotButtonClicked(int button)
 {
@@ -71,7 +68,6 @@ void ConfigureFilters::reloadFiltersTable()
 {
     ui.filters->clearContents();
     QList<Filter*> filters = FilterSettings::self()->filters();
-    qCDebug(CHOQOK)<<filters.count();
     Q_FOREACH (Filter *filter, filters) {
         addNewFilter(filter);
     }

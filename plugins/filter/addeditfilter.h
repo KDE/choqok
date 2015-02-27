@@ -27,9 +27,8 @@
 
 #include <KDialog>
 
+#include "filter.h"
 #include "ui_addeditfilter_base.h"
-
-class Filter;
 
 class AddEditFilter : public KDialog
 {

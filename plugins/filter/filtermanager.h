@@ -24,7 +24,6 @@
 #ifndef FILTERMANAGER_H
 #define FILTERMANAGER_H
 
-#include <QPixmap>
 #include <QPointer>
 #include <QQueue>
 
