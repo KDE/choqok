@@ -82,6 +82,8 @@ ChoqokTabBar::ChoqokTabBar(QWidget *parent) :
     p->position = (TabPosition)Choqok::AppearanceSettings::tabBarPosition();
     p->styled_tabbar = Choqok::AppearanceSettings::tabBarIsStyled();
     p->tab_alongside_widget = 0;
+    p->tab_closable = false;
+    p->selection_behavior = ChoqokTabBar::SelectPreviousTab;
 
 //     p->tab_widget = new QWidget();
     p->st_widget = new QStackedWidget();
