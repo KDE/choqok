@@ -51,7 +51,7 @@ public:
     ~PluginManagerPrivate()
     {
         if ( shutdownMode != DoneShutdown ) {
-            qCWarning(CHOQOK) << "Destructing plugin manager without going through the shutdown process! Backtrace is: " << endl;
+            qCWarning(CHOQOK) << "Destructing plugin manager without going through the shutdown process!" << endl;
         }
 
         // Clean up loadedPlugins manually, because PluginManager can't access our global
@@ -105,7 +105,6 @@ PluginManager::PluginManager() : QObject( )
 
 PluginManager::~PluginManager()
 {
-    qCDebug(CHOQOK);
 }
 
 QList<KPluginInfo> PluginManager::availablePlugins( const QString &category ) const

@@ -146,7 +146,7 @@ void TwitterApiMicroBlog::setTimelineInfos()
 
 TwitterApiMicroBlog::~TwitterApiMicroBlog()
 {
-    qCDebug(CHOQOK);
+    qDeleteAll(mTimelineInfos);
     delete d;
 }
 

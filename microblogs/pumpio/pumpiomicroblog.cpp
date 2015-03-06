@@ -79,6 +79,7 @@ PumpIOMicroBlog::PumpIOMicroBlog(QObject* parent, const QVariantList& args):
 
 PumpIOMicroBlog::~PumpIOMicroBlog()
 {
+    qDeleteAll(m_timelinesInfos);
     delete d;
 }
 
