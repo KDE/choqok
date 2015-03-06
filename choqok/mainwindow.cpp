@@ -133,14 +133,11 @@ void MainWindow::loadAllAccounts()
     qCDebug(CHOQOK);
 
     if( Choqok::BehaviorSettings::showSplashScreen() ){
-        KStandardDirs *stdDirs = KGlobal::dirs();
-        QString img = stdDirs->findResource( "data", "choqok/images/splash_screen.png" );
-        //         qCDebug(CHOQOK)<<img;
-        QPixmap splashpix( img );
-        if(splashpix.isNull())
-            qCritical()<<"Splash screen pixmap is NULL! URL: "<<img;
-        else{
-            m_splash = new QSplashScreen( splashpix, Qt::WindowStaysOnTopHint );
+        const QString splashpix(KGlobal::dirs()->findResource( "data", "choqok/images/splash_screen.png" ));
+        if (splashpix.isNull()) {
+            qCCritical(CHOQOK) << "Splash screen pixmap is NULL!";
+        } else {
+            m_splash = new QSplashScreen(splashpix, Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint );
             m_splash->show();
         }
     }
@@ -156,6 +153,7 @@ void MainWindow::loadAllAccounts()
         if(Choqok::BehaviorSettings::updateInterval() > 0)
             QTimer::singleShot(500, this, SIGNAL(updateTimelines()));
     } else {
+        m_splash->finish(this);
         delete m_splash;
         m_splash = 0;
     }
