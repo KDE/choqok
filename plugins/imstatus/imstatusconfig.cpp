@@ -26,18 +26,17 @@
 
 #include <QVBoxLayout>
 
-#include "choqokdebug.h"
-#include <KLocale>
+#include <KAboutData>
 #include <KPluginFactory>
 
 #include "imqdbus.h"
 #include "imstatussettings.h"
 
-K_PLUGIN_FACTORY ( IMStatusConfigFactory, registerPlugin < IMStatusConfig > (); )
-K_EXPORT_PLUGIN ( IMStatusConfigFactory ( "kcm_choqok_imstatus" ) )
+K_PLUGIN_FACTORY_WITH_JSON ( IMStatusConfigFactory, "choqok_imstatus_config.json",
+                             registerPlugin < IMStatusConfig > (); )
 
 IMStatusConfig::IMStatusConfig ( QWidget* parent, const QVariantList& args ) :
-        KCModule ( IMStatusConfigFactory::componentData(), parent, args )
+    KCModule ( KAboutData::pluginData("kcm_choqok_imstatus"), parent, args )
 {
     QVBoxLayout *layout = new QVBoxLayout ( this );
     QWidget *wd = new QWidget ( this );
@@ -56,14 +55,13 @@ IMStatusConfig::IMStatusConfig ( QWidget* parent, const QVariantList& args ) :
 
 IMStatusConfig::~IMStatusConfig()
 {
-
 }
 
 void IMStatusConfig::load()
 {
-    qCDebug(CHOQOK);
+    //qDebug();
     KCModule::load();
-    KConfigGroup grp ( KGlobal::config(), "IMStatus" );
+    KConfigGroup grp ( KSharedConfig::openConfig(), "IMStatus" );
     IMStatusSettings::self()->readConfig();
     ui.cfg_imclient->setCurrentIndex ( imList.indexOf ( IMStatusSettings::imclient() ) );
     ui.cfg_templtate->setPlainText ( IMStatusSettings::templtate().isEmpty() ?
@@ -74,7 +72,7 @@ void IMStatusConfig::load()
 
 void IMStatusConfig::save()
 {
-    qCDebug(CHOQOK);
+    //qDebug();
     KCModule::save();
     IMStatusSettings::setImclient ( ui.cfg_imclient->currentText() );
     IMStatusSettings::setTempltate ( ui.cfg_templtate->toPlainText() );

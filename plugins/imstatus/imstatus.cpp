@@ -24,11 +24,7 @@
 
 #include "imstatus.h"
 
-#include <QAction>
-#include <KActionCollection>
-#include <KAboutData>
-#include <KGenericFactory>
-#include <KMessageBox>
+#include <KPluginFactory>
 
 #include "choqokuiglobal.h"
 #include "quickpost.h"
@@ -36,8 +32,8 @@
 #include "imqdbus.h"
 #include "imstatussettings.h"
 
-K_PLUGIN_FACTORY ( MyPluginFactory, registerPlugin < IMStatus > (); )
-K_EXPORT_PLUGIN ( MyPluginFactory ( "choqok_imstatus" ) )
+K_PLUGIN_FACTORY_WITH_JSON ( IMStatusFactory, "choqok_imstatus.json",
+                             registerPlugin < IMStatus > (); )
 
 class IMStatusPrivate {
 public:
@@ -46,7 +42,7 @@ public:
 };
 
 IMStatus::IMStatus ( QObject* parent, const QList<QVariant>& )
-        : Choqok::Plugin ( MyPluginFactory::componentData(), parent ), d(new IMStatusPrivate())
+        : Choqok::Plugin ( "choqok_imstatus", parent ), d(new IMStatusPrivate())
 {
     QTimer::singleShot ( 500, this, SLOT ( update() ) );
     d->im = new IMQDBus(this);
@@ -83,3 +79,5 @@ void IMStatus::slotIMStatus ( Choqok::JobResult res, Choqok::Post* newPost )
         d->im->updateStatusMessage(IMStatusSettings::imclient(), statusMessage);
     }
 }
+
+#include "imstatus.moc"
