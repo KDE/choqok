@@ -25,14 +25,14 @@
 
 #include "nowlistening.h"
 
+#include <QAction>
 #include <QDBusConnectionInterface>
 #include <QDBusInterface>
 #include <QDBusReply>
 
-#include <KAboutData>
-#include <QAction>
 #include <KActionCollection>
-#include <KGenericFactory>
+#include <KLocalizedString>
+#include <KPluginFactory>
 #include <KMessageBox>
 
 #include "choqokuiglobal.h"
@@ -41,11 +41,11 @@
 
 #include "mpris.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < NowListening > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_nowlistening" ) )
+K_PLUGIN_FACTORY_WITH_JSON( NowListeningFactory, "choqok_nowlistening.json",
+                            registerPlugin < NowListening > (); )
 
 NowListening::NowListening(QObject* parent, const QList<QVariant>& )
-        :Choqok::Plugin(MyPluginFactory::componentData(), parent)
+    : Choqok::Plugin("choqok_nowlistening", parent)
 {
     QAction *action = new QAction(QIcon::fromTheme("media-playback-start"), i18n("Now Listening"), this);
     actionCollection()->addAction("nowListening", action);
@@ -264,4 +264,4 @@ void NowListening::slotPrepareNowListening()
         Choqok::UI::Global::quickPostWidget()->setText(text);
 }
 
-// #include "nowlistening.moc"
+#include "nowlistening.moc"

@@ -26,17 +26,16 @@
 
 #include <QVBoxLayout>
 
-#include <KLocale>
+#include <KAboutData>
 #include <KPluginFactory>
-#include "choqokdebug.h"
 
 #include "nowlisteningsettings.h"
 
-K_PLUGIN_FACTORY( NowListeningConfigFactory, registerPlugin < NowListeningConfig > (); )
-K_EXPORT_PLUGIN( NowListeningConfigFactory( "kcm_choqok_nowlistening" ) )
+K_PLUGIN_FACTORY_WITH_JSON( NowListeningConfigFactory, "choqok_nowlistening_config.json",
+                            registerPlugin < NowListeningConfig > (); )
 
-NowListeningConfig::NowListeningConfig(QWidget* parent, const QVariantList& args):
-        KCModule( NowListeningConfigFactory::componentData(), parent, args)
+NowListeningConfig::NowListeningConfig(QWidget* parent, const QVariantList& args)
+    : KCModule( KAboutData::pluginData("kcm_choqok_nowlistening"), parent, args)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
@@ -60,13 +59,11 @@ void NowListeningConfig::defaults()
 
 void NowListeningConfig::load()
 {
-    qCDebug(CHOQOK);
     KCModule::load();
 }
 
 void NowListeningConfig::save()
 {
-    qCDebug(CHOQOK);
     KCModule::save();
 }
 
