@@ -25,21 +25,23 @@
 #include "searchaction.h"
 
 #include <QAction>
+
 #include <KActionCollection>
-#include <KGenericFactory>
 #include <KMessageBox>
+#include <KLocalizedString>
+#include <KPluginFactory>
 
 #include "choqokuiglobal.h"
 #include "microblogwidget.h"
 
-#include "twitterapihelper/twitterapiaccount.h"
-#include "twitterapihelper/twitterapimicroblog.h"
+#include "twitterapiaccount.h"
+#include "twitterapimicroblog.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < SearchAction > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_searchaction" ) )
+K_PLUGIN_FACTORY_WITH_JSON( SearchActionFactory, "choqok_searchaction.json",
+                            registerPlugin < SearchAction > (); )
 
 SearchAction::SearchAction( QObject* parent, const QList< QVariant >& )
-    : Plugin(MyPluginFactory::componentData(), parent)
+    : Plugin("choqok_searchaction", parent)
 {
     QAction *action = new QAction(QIcon::fromTheme("edit-find"), i18n("Search..."), this);
     action->setShortcut(QKeySequence(Qt::ControlModifier | Qt::Key_F));
@@ -64,3 +66,5 @@ void SearchAction::slotSearch()
                            i18n("The Search action plugin does not support the current microblog."));
     }
 }
+
+#include "searchaction.moc"
