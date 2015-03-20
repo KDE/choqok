@@ -24,25 +24,23 @@
 
 #include "konqchoqok.h"
 
+#include <QDBusInterface>
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
+#include <QMenu>
 
+#include <KAboutData>
 #include <KActionCollection>
 #include <KActionMenu>
-#include <KConfigGroup>
-#include <KHTMLPart>
-#include <KMenu>
+#include <KLocalizedString>
 #include <KMessageBox>
 #include <KPluginFactory>
-#include <KPluginLoader>
 #include <KToggleAction>
 #include <KToolInvocation>
+#include <KWebPage>
 
-#ifdef HAVE_KWEBKITPART
-#include <QWebView>
-#include <KWebKitPart>
-#include "choqokdebug.h"
-#endif
+//static const KAboutData aboutdata("konqchoqokplugin", i18n("Konqueror Choqok Plugin") , "1.0" );
+K_PLUGIN_FACTORY_WITH_JSON( KonqPluginChoqokFactory, "konqchoqok.json", registerPlugin<KonqPluginChoqok>(); )
 
 KonqPluginChoqok::KonqPluginChoqok(QObject* parent, const QVariantList& )
     : Plugin( parent ) , m_interface(0)
@@ -99,30 +97,23 @@ void KonqPluginChoqok::slotpostSelectedText()
     QWidget *m_parentWidget;
     QString text;
 
-    if ( parent()->inherits("KHTMLPart") ) {
-    m_parentWidget = qobject_cast< KHTMLPart* >(parent())->widget();
-    text = QString(qobject_cast< KHTMLPart* >(parent())->selectedText());
-    }
-#ifdef HAVE_KWEBKITPART
-    else if ( parent()->inherits("KWebKitPart") ) {
-    m_parentWidget = qobject_cast< KWebKitPart* >(parent())->widget();
-    text = QString(qobject_cast< KWebKitPart* >(parent())->view()->selectedText());
-    }
-#endif
-    else {
-    return;
+    if ( parent()->inherits("KWebPage") ) {
+        m_parentWidget = qobject_cast< KWebPage* >(parent())->view();
+        text = QString(qobject_cast< KWebPage* >(parent())->selectedText());
+    } else {
+        return;
     }
 
     if (text.isEmpty()) {
-    KMessageBox::information( m_parentWidget,
+        KMessageBox::information( m_parentWidget,
                   i18n("You need to select text to post."),
                   i18n("Post Text with Choqok"));
-    return;
+        return;
     }
     
     if (!QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.choqok"))
     {
-    qCDebug(CHOQOK) << "Choqok is not running, starting it!..." << endl;
+    //qDebug() << "Choqok is not running, starting it!..." << endl;
     KToolInvocation::startServiceByDesktopName(QString("choqok"),
                            QStringList());
     }
@@ -141,10 +132,5 @@ void KonqPluginChoqok::toggleShortening(bool value)
     m_interface->call("setShortening", value );
     ((KToggleAction*) actionCollection()->action("shortening_choqok"))->setChecked(value);
 }
-
-
-K_PLUGIN_FACTORY(KonqPluginChoqokFactory,
-         registerPlugin<KonqPluginChoqok>(); )
-K_EXPORT_PLUGIN( KonqPluginChoqokFactory( "konqchoqok", "choqok" ) )
 
 #include "konqchoqok.moc"

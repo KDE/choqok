@@ -25,7 +25,7 @@
 #ifndef KONQCHOQOK_H
 #define KONQCHOQOK_H
 
-#include <QDBusInterface>
+class QDBusInterface;
 
 #include <KParts/Plugin>
 

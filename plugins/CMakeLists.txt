@@ -1,15 +1,24 @@
-
 add_subdirectory(shorteners)
 add_subdirectory(nowlistening)
-## add_subdirectory(untiny)
 add_subdirectory(searchaction)
 add_subdirectory(imagepreview)
 add_subdirectory(videopreview)
 add_subdirectory(uploaders)
 add_subdirectory(filter)
-#add_subdirectory(konqueror)
 add_subdirectory(imstatus)
-## add_subdirectory(translator)
 add_subdirectory(quickfilter)
 #add_subdirectory(betternotify)
 add_subdirectory(longurl)
+
+## add_subdirectory(translator)
+## add_subdirectory(untiny)
+
+find_package(KF5Parts)
+find_package(KF5WebKit)
+
+IF(KF5WebKit_FOUND AND KF5Parts_FOUND)
+    message(STATUS "FOUND KF5::WebKit and KF5::Parts: Will build \"Konqueror Choqok\" plugin")
+    add_subdirectory(konqueror)
+ELSEIF(KF5WebKit_FOUND AND KF5Parts_FOUND)
+    message(WARNING "Optional dependency \"KF5::WebKit\" or \"KF5::Parts\" NOT FOUND, won't build \"Konqueror Choqok\" plugin")
+ENDIF(KF5WebKit_FOUND AND KF5Parts_FOUND)
