@@ -24,19 +24,15 @@
 
 #include "quickfilter.h"
 
-#include <QDomDocument>
+#include <QAction>
 #include <QLabel>
-#include <QMutex>
 #include <QPushButton>
 #include <QToolBar>
 
-#include <QAction>
 #include <KActionCollection>
-#include <KCompletionBox>
-#include <KGenericFactory>
 #include <KLineEdit>
-#include <KMenuBar>
-#include "choqokdebug.h"
+#include <KLocalizedString>
+#include <KPluginFactory>
 
 #include "choqoktypes.h"
 #include "choqokuiglobal.h"
@@ -45,10 +41,11 @@
 #include "quickpost.h"
 #include "timelinewidget.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < QuickFilter > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_quickfilter" ) )
+K_PLUGIN_FACTORY_WITH_JSON( QuickFilterFactory, "choqok_quickfilter.json",
+                            registerPlugin < QuickFilter > (); )
 
-QuickFilter::QuickFilter(QObject* parent, const QList< QVariant >& args) : Choqok::Plugin(MyPluginFactory::componentData(), parent)
+QuickFilter::QuickFilter(QObject* parent, const QList< QVariant >& args)
+    : Choqok::Plugin("choqok_quickfilter", parent)
 {
     Q_UNUSED(args);
     m_authorAction = new QAction(QIcon::fromTheme("document-preview"), i18n("Filter by author"), this);
@@ -211,10 +208,9 @@ void QuickFilter::showAllPosts()
 
 void QuickFilter::filterNewPost(Choqok::UI::PostWidget* np, Choqok::Account* acc, QString timeline)
 {
-    qCDebug(CHOQOK)<<Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentAccount()->alias()<<acc->alias()<<timeline;
+    //qDebug()<<Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentAccount()->alias()<<acc->alias()<<timeline;
     if (Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentAccount() == acc &&
         Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentTimeline()->timelineName() == timeline) {
-        qCDebug(CHOQOK)<<"pass1";
         if (!m_aledit->text().isEmpty()) {
             if (!np->currentPost()->author.userName.contains(m_aledit->text()))
                 np->hide();
@@ -230,4 +226,4 @@ void QuickFilter::filterNewPost(Choqok::UI::PostWidget* np, Choqok::Account* acc
     }
 }
 
-
+#include "quickfilter.moc"
