@@ -28,7 +28,6 @@
 #include <qlayout.h>
 #include <untinysettings.h>
 #include <QVBoxLayout>
-#include "choqokdebug.h"
 
 K_PLUGIN_FACTORY( UnTinyConfigFactory, registerPlugin < UnTinyConfig > (); )
 K_EXPORT_PLUGIN( UnTinyConfigFactory( "kcm_choqok_untiny" ) )
@@ -57,13 +56,11 @@ void UnTinyConfig::defaults()
 
 void UnTinyConfig::load()
 {
-    qCDebug(CHOQOK);
     KCModule::load();
 }
 
 void UnTinyConfig::save()
 {
-    qCDebug(CHOQOK);
     KCModule::save();
 }
 

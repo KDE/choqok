@@ -93,7 +93,8 @@ void ImageShack::slotUpload(KJob* job)
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>(job);
         QDomDocument doc;
         doc.setContent(stj->data());
-        if(doc.firstChild().isNull()) {
+        if (doc.firstChild().isNull()) {
+            qWarning() << "Malformed response:" << stj->data();
             return;
         }
         QDomElement root = doc.documentElement();
@@ -126,6 +127,7 @@ void ImageShack::slotUpload(KJob* job)
             }
         }
         Q_EMIT uploadingFailed(localUrl, i18n("Malformed response"));
+        qWarning() << "Response not detected:" << stj->data();
     }
 }
 

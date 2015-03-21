@@ -68,6 +68,7 @@ void ConfigureFilters::reloadFiltersTable()
 {
     ui.filters->clearContents();
     QList<Filter*> filters = FilterSettings::self()->filters();
+    //qDebug() << filters.count();
     Q_FOREACH (Filter *filter, filters) {
         addNewFilter(filter);
     }

@@ -84,6 +84,7 @@ void PosterousConfig::save()
 {
     if ( ui.cfg_accountsList->currentIndex() > -1 ) {
         PosterousSettings::setAlias ( ui.cfg_accountsList->currentText() );
+        //qDebug() << PosterousSettings::alias();
     } else {
         PosterousSettings::setAlias ( QString() );
         KMessageBox::error ( this, i18n ( "You have to configure at least one Twitter account to use this plugin." ) );

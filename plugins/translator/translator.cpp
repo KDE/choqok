@@ -42,7 +42,6 @@
 #include <QVBoxLayout>
 #include <KDialog>
 #include <KTabWidget>
-#include "choqokdebug.h"
 #include "sharedtools.h"
 
 K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Translator > (); )
@@ -51,7 +50,6 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_translator" ) )
 Translator::Translator(QObject* parent, const QList< QVariant >& )
     :Choqok::Plugin(MyPluginFactory::componentData(), parent)
 {
-    qCDebug(CHOQOK);
     translateAction = new QAction(i18n("Translate to..."), this);
     Choqok::UI::PostWidget::addAction(translateAction);
     translateAction->setMenu(setupTranslateMenu());
@@ -90,7 +88,7 @@ void Translator::slotTranslated(KJob* job)
     if(!wd || !stj)
         return;
     QByteArray data = stj->data();
-//     qCDebug(CHOQOK)<<data;
+//     qDebug()<<data;
     QVariantMap json = QJson::Parser().parse(data).toMap();
     QString errorMessage;
     if(job->error() == KJob::NoError){

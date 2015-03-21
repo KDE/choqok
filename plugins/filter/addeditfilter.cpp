@@ -40,7 +40,8 @@ AddEditFilter::AddEditFilter(QWidget* parent, Filter *filter)
 
     setWindowTitle(i18n("Define new filter rules"));
 
-    if(filter){
+    if (filter) {
+        //qDebug() << filter->filterField();
         //Editing
         ui.filterField->setCurrentIndex(ui.filterField->findData(filter->filterField()));
         ui.filterType->setCurrentIndex(ui.filterType->findData(filter->filterType()));

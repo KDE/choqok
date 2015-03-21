@@ -74,6 +74,7 @@ QString Posterous::getAuthToken ( const QUrl &localUrl )
                 return tkn;
             } else {
                 Q_EMIT uploadingFailed ( localUrl, map.value ( "error" ).toString() );
+                qWarning() << "Parse error:" << data;
             }
         }
     } else {
@@ -175,6 +176,7 @@ void Posterous::slotUpload ( KJob* job )
         return;
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>(job);
+        //qDebug() << stj->data();
         const QJsonDocument json = QJsonDocument::fromJson(stj->data());
         if (!json.isNull()) {
             const QVariantMap map = json.toVariant().toMap();
@@ -188,6 +190,7 @@ void Posterous::slotUpload ( KJob* job )
             }
         } else {
             Q_EMIT uploadingFailed ( localUrl, i18n ( "Malformed response" ) );
+            qWarning() << "Parse error:" << stj->data();
         }
     }
 }

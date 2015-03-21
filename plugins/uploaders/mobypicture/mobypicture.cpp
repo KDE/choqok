@@ -145,6 +145,7 @@ void Mobypicture::slotUpload ( KJob* job )
         return;
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>(job);
+        //qDebug() << stj->data();
         const QJsonDocument json = QJsonDocument::fromJson(stj->data());
         if (!json.isNull()) {
             const QVariantMap map = json.toVariant().toMap();
@@ -166,6 +167,7 @@ void Mobypicture::slotUpload ( KJob* job )
             }
         } else {
             Q_EMIT uploadingFailed ( localUrl, i18n ( "Malformed response" ) );
+            qWarning() << "Parse error:" << stj->data();
         }
     }
 }

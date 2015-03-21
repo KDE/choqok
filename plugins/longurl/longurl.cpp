@@ -144,8 +144,8 @@ void LongUrl::servicesJobResult(KJob* job)
         if (!json.isNull()) {
             supportedServices = json.toVariant().toMap().uniqueKeys();
         }
-//    } else {
-//        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
+    } else {
+        qCritical() << "Job Error:" << job->errorString();
     }
     mServicesAreFetched = false;
     mServicesData.clear();

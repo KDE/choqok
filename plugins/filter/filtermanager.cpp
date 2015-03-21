@@ -102,7 +102,7 @@ void FilterManager::parse(Choqok::UI::PostWidget* postToParse)
 
     if(!postToParse)
         return;
-//     qCDebug(CHOQOK)<<"Processing: "<<postToParse->content();
+    //qDebug() << "Processing: "<<postToParse->content();
     Q_FOREACH (Filter* filter, FilterSettings::self()->filters()) {
         if(filter->filterText().isEmpty())
             return;
@@ -137,25 +137,25 @@ Filter::FilterAction FilterManager::filterText(const QString& textToCheck, Filte
     switch(filter->filterType()){
         case Filter::ExactMatch:
             if(textToCheck.compare( filter->filterText(), Qt::CaseInsensitive) == 0){
-//                 qCDebug(CHOQOK)<<"ExactMatch: " << filter->filterText();
+                 //qDebug() << "ExactMatch:" << filter->filterText();
                 filtered = true;
             }
             break;
         case Filter::RegExp:
             if( textToCheck.contains(QRegExp(filter->filterText())) ){
-//                 qCDebug(CHOQOK)<<"RegExp: " << filter->filterText();
+                 //qDebug() << "RegExp:" << filter->filterText();
                 filtered = true;
             }
             break;
         case Filter::Contain:
             if( textToCheck.contains(filter->filterText(), Qt::CaseInsensitive) ){
-//                 qCDebug(CHOQOK)<<"Contain: " << filter->filterText();
+                 //qDebug() << "Contain:" << filter->filterText();
                 filtered = true;
             }
             break;
         case Filter::DoesNotContain:
             if( !textToCheck.contains(filter->filterText(), Qt::CaseInsensitive) ){
-//                 qCDebug(CHOQOK)<<"DoesNotContain: " << filter->filterText();
+                 //qDebug() << "DoesNotContain:" << filter->filterText();
                 filtered = true;
             }
             break;
@@ -173,6 +173,7 @@ void FilterManager::doFiltering(Choqok::UI::PostWidget* postToFilter, Filter::Fi
     QString css;
     switch(action){
         case Filter::Remove:
+            //qDebug() << "Post removed:" << postToFilter->currentPost()->content;
             postToFilter->close();
             break;
         case Filter::Highlight:
@@ -200,7 +201,7 @@ bool FilterManager::parseSpecialRules(Choqok::UI::PostWidget* postToParse)
             postToParse->currentPost()->replyToUserName != postToParse->currentAccount()->username() ) {
             if( !postToParse->currentPost()->content.contains(postToParse->currentAccount()->username()) ) {
                 postToParse->close();
-//                qCDebug(CHOQOK)<<"NOT RELATE TO ME FILTERING......";
+//                qDebug() << "NOT RELATE TO ME FILTERING......";
                 return true;
             }
         }
@@ -214,7 +215,7 @@ bool FilterManager::parseSpecialRules(Choqok::UI::PostWidget* postToParse)
             !acc->friendsList().contains(postToParse->currentPost()->replyToUserName) ) {
             if( !postToParse->currentPost()->content.contains(postToParse->currentAccount()->username()) ) {
                 postToParse->close();
-//                qCDebug(CHOQOK)<<"NONE FRIEND FILTERING......";
+//                qDebug() << "NONE FRIEND FILTERING......";
                 return true;
             }
         }
@@ -240,7 +241,7 @@ void FilterManager::slotHidePost()
         FilterSettings::self()->setFilters(filterList);
         Choqok::UI::TimelineWidget *tm = wd->timelineWidget();
         if(tm){
-//            qCDebug(CHOQOK)<<"Closing all posts";
+//            qDebug() << "Closing all posts";
             Q_FOREACH (Choqok::UI::PostWidget *pw, tm->postWidgets()) {
                 if(pw->currentPost()->author.userName == username){
                     pw->close();

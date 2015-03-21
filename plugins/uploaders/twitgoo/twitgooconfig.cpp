@@ -73,6 +73,7 @@ void TwitgooConfig::save()
 {
     if ( ui.cfg_accountsList->currentIndex() > -1 ) {
         TwitgooSettings::setAlias ( ui.cfg_accountsList->currentText() );
+        //qDebug() << TwitgooSettings::alias();
     } else {
         TwitgooSettings::setAlias ( QString() );
         KMessageBox::error ( this, i18n ( "You have to configure at least one Twitter account to use this plugin." ) );

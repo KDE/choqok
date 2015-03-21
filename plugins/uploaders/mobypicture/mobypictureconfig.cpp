@@ -83,6 +83,7 @@ void MobypictureConfig::load()
 void MobypictureConfig::save()
 {
     if ( ui.cfg_accountsList->currentIndex() > -1 ) {
+        //qDebug() << MobypictureSettings::alias();
         MobypictureSettings::setAlias ( ui.cfg_accountsList->currentText() );
     } else {
         MobypictureSettings::setAlias ( QString() );

@@ -77,7 +77,7 @@ void IMQDBus::useKopete(const QString &statusMessage)
     msg.setArguments ( args );
     QDBusMessage rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
-        // qDebug() <<  "ERROR" << rep.errorMessage();
+        qWarning() <<  "Failed with error:" << rep.errorMessage();
         return;
     }
 }
@@ -91,7 +91,7 @@ void IMQDBus::usePsi(const QString &statusMessage)
     msg.setArguments ( args );
     QDBusMessage rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
-        // qDebug() <<  "ERROR" << rep.errorMessage();
+        qWarning() <<  "Failed with error:" << rep.errorMessage();
         return;
     }
 }
@@ -104,7 +104,7 @@ void IMQDBus::useSkype(const QString &statusMessage)
     msg.setArguments ( args );
     QDBusMessage rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
-        // qDebug() <<  "ERROR" << rep.errorMessage();
+        qWarning() <<  "Failed with error:" << rep.errorMessage();
         return;
     }
 
@@ -113,7 +113,7 @@ void IMQDBus::useSkype(const QString &statusMessage)
     msg.setArguments ( args );
     rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
-        // qDebug() <<  "ERROR" << rep.errorMessage();
+        qWarning() <<  "Failed with error:" << rep.errorMessage();
         return;
     }
 
@@ -122,7 +122,7 @@ void IMQDBus::useSkype(const QString &statusMessage)
     msg.setArguments ( args );
     rep = QDBusConnection::sessionBus().call ( msg );
     if ( rep.type() == QDBusMessage::ErrorMessage ) {
-        // qDebug() <<  "ERROR" << rep.errorMessage();
+        qWarning() <<  "Failed with error:" << rep.errorMessage();
         return;
     }
 }
@@ -132,7 +132,7 @@ void IMQDBus::usePidgin(const QString &statusMessage)
     QDBusMessage msg = QDBusMessage::createMethodCall ( "im.pidgin.purple.PurpleService", "/im/pidgin/purple/PurpleObject", "im.pidgin.purple.PurpleInterface", "PurpleSavedstatusGetCurrent" );
     QDBusReply<int> repUInt = QDBusConnection::sessionBus().call ( msg );
     if ( repUInt.error().isValid() ) {
-        // qDebug() << "ERROR:" << repUInt.error().message();
+        qWarning() <<  "Failed with error:" << repUInt.error().message();
         return;
     }
     int IDCurrentStatus = repUInt.value();
@@ -142,7 +142,7 @@ void IMQDBus::usePidgin(const QString &statusMessage)
     msg.setArguments ( args );
     repUInt = QDBusConnection::sessionBus().call ( msg );
     if ( repUInt.error().isValid() ) {
-        // qDebug() << "ERROR:" << repUInt.error().message();
+        qWarning() <<  "Failed with error:" << repUInt.error().message();
         return;
     }
     int currentStatusType = repUInt.value();
@@ -154,7 +154,7 @@ void IMQDBus::usePidgin(const QString &statusMessage)
     msg.setArguments ( args );
     repUInt = QDBusConnection::sessionBus().call ( msg );
     if ( repUInt.error().isValid() ) {
-        // qDebug() << "ERROR:" << repUInt.error().message();
+        qWarning() <<  "Failed with error:" << repUInt.error().message();
         return;
     }
     IDCurrentStatus = repUInt.value(); //ID of new status
@@ -166,7 +166,7 @@ void IMQDBus::usePidgin(const QString &statusMessage)
     msg.setArguments ( args );
     QDBusReply<void> repStr = QDBusConnection::sessionBus().call ( msg );
     if ( repStr.error().isValid() ) {
-        // qDebug() << "ERROR:" << repStr.error().message();
+        qWarning() <<  "Failed with error:" << repStr.error().message();
         return;
     }
 
@@ -176,7 +176,7 @@ void IMQDBus::usePidgin(const QString &statusMessage)
     msg.setArguments ( args );
     repStr = QDBusConnection::sessionBus().call ( msg );
     if ( repStr.error().isValid() ) {
-        // qDebug() << "ERROR:" << repStr.error().message();
+        qWarning() <<  "Failed with error:" << repStr.error().message();
         return;
     }
 }
@@ -201,9 +201,9 @@ void IMQDBus::useTelepathy(const QString &statusMessage)
 
 void IMQDBus::slotFinished(Tp::PendingOperation* po)
 {
-    //if (po->isError()) {
-    //    qDebug() << "Telepathy AccountManager failed to get ready:" << po->errorMessage();
-    //}
+    if (po->isError()) {
+        qCritical() << "Telepathy AccountManager failed to get ready:" << po->errorMessage();
+    }
 }
 
 #endif

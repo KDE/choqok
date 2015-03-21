@@ -52,6 +52,7 @@ TwitpicConfig::TwitpicConfig(QWidget* parent, const QVariantList& ):
 
 TwitpicConfig::~TwitpicConfig()
 {
+    //qDebug() << TwitpicSettings::alias();
 }
 
 void TwitpicConfig::load()
@@ -69,8 +70,10 @@ void TwitpicConfig::load()
 
 void TwitpicConfig::save()
 {
+    //qDebug() << ui.accountsList->currentIndex();
     if(ui.accountsList->currentIndex() > -1) {
         TwitpicSettings::setAlias( ui.accountsList->currentText() );
+        //qDebug() << TwitpicSettings::alias();
     } else {
         TwitpicSettings::setAlias(QString());
         KMessageBox::error(this, i18n("You have to configure at least one Twitter account to use this plugin."));

@@ -81,7 +81,6 @@ Bit_ly_Config::~Bit_ly_Config()
 
 void Bit_ly_Config::load()
 {
-//     qCDebug(CHOQOK);
     KCModule::load();
     KConfigGroup grp( KSharedConfig::openConfig(), "Bit.ly Shortener" );
     ui.kcfg_login->setText( grp.readEntry( "login", "" ) );
@@ -92,7 +91,6 @@ void Bit_ly_Config::load()
 
 void Bit_ly_Config::save()
 {
-//     qCDebug(CHOQOK);
     KCModule::save();
     KConfigGroup grp( KSharedConfig::openConfig(), "Bit.ly Shortener" );
     grp.writeEntry( "login", ui.kcfg_login->text() );

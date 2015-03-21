@@ -138,6 +138,7 @@ void Flickr::slotUpload(KJob* job)
     } else {
         QDomDocument rep;
         QByteArray buffer = qobject_cast<KIO::StoredTransferJob*>( job )->data();
+        //qDebug() << buffer;
         rep.setContent( buffer );
         QString photoId;
         QDomElement element = rep.documentElement();

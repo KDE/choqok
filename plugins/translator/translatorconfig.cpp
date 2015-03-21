@@ -30,7 +30,6 @@
 #include <QVBoxLayout>
 #include <kstandarddirs.h>
 #include <QFile>
-#include "choqokdebug.h"
 #include "sharedtools.h"
 
 K_PLUGIN_FACTORY( TranslatorConfigFactory, registerPlugin < TranslatorConfig > (); )
@@ -61,7 +60,6 @@ void TranslatorConfig::defaults()
 
 void TranslatorConfig::load()
 {
-    qCDebug(CHOQOK);
     langs = SharedTools::self()->languageCodes();
     QStringList selected = TranslatorSettings::languages();
     Q_FOREACH (const QString& ln, langs) {
@@ -80,7 +78,6 @@ void TranslatorConfig::load()
 
 void TranslatorConfig::save()
 {
-    qCDebug(CHOQOK);
     QStringList selected;
     int count = ui.languagesList->count();
     for(int i = 0; i < count; ++i){

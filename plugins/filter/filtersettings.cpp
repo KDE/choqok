@@ -87,10 +87,10 @@ void FilterSettings::readConfig()
             if(f->filterText().isEmpty())
                 continue;
             _filters << f;
-            //qCDebug(CHOQOK)<<"REEADING A FILTER";
+            //qDebug() << "REEADING A FILTER";
         }
     }
-    //qCDebug(CHOQOK)<<filters().count();
+    //qDebug() << filters().count();
 
     _hideNoneFriendsReplies = conf->readEntry("hideNoneFriendsReplies", false);
     _hideRepliesNotRelatedToMe = conf->readEntry("hideRepliesNotRelatedToMe", false);

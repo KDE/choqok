@@ -93,6 +93,7 @@ void Twitpic::upload(const QUrl &localUrl, const QByteArray& medium, const QByte
                                                                             QOAuth::HMAC_SHA1,
                                                                             params, QOAuth::ParseForHeaderArguments );
     credentials.insert(6, "realm=\"http://api.twitter.com/\",") ;
+    //qDebug()<<credentials
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("X-Verify-Credentials-Authorization: ") +
                      credentials);
@@ -127,6 +128,7 @@ void Twitpic::slotUpload(KJob* job)
                 Q_EMIT mediumUploaded(localUrl, map.value("url").toString());
             }
         } else {
+            qWarning() << "Parse error: " << stj->data();
             Q_EMIT uploadingFailed(localUrl, i18n("Malformed response"));
         }
     }

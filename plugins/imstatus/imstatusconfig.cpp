@@ -59,7 +59,6 @@ IMStatusConfig::~IMStatusConfig()
 
 void IMStatusConfig::load()
 {
-    //qDebug();
     KCModule::load();
     KConfigGroup grp ( KSharedConfig::openConfig(), "IMStatus" );
     IMStatusSettings::self()->readConfig();
@@ -72,7 +71,6 @@ void IMStatusConfig::load()
 
 void IMStatusConfig::save()
 {
-    //qDebug();
     KCModule::save();
     IMStatusSettings::setImclient ( ui.cfg_imclient->currentText() );
     IMStatusSettings::setTempltate ( ui.cfg_templtate->toPlainText() );
