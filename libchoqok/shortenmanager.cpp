@@ -24,10 +24,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "shortenmanager.h"
 
 #include <QApplication>
-#include <QtConcurrentRun>
-#include <QtGlobal>
 
-#include <KConfigGroup>
 #include "libchoqokdebug.h"
 #include <KSharedConfig>
 #include <KSharedPtr>

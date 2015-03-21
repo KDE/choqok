@@ -23,7 +23,6 @@
 
 #include "tinyarro_ws.h"
 
-#include <KAboutData>
 #include <KIO/Job>
 #include <KIO/NetAccess>
 #include <KLocalizedString>

@@ -24,15 +24,15 @@
 
 #include "twitterapisearchdialog.h"
 
-#include <QGridLayout>
 #include <QLabel>
+#include <QVBoxLayout>
 
 #include <KComboBox>
-#include "twitterapidebug.h"
 #include <KLineEdit>
 #include <KLocalizedString>
 
 #include "twitterapiaccount.h"
+#include "twitterapidebug.h"
 #include "twitterapimicroblog.h"
 #include "twitterapisearch.h"
 

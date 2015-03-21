@@ -23,7 +23,6 @@
 
 #include "bit_ly.h"
 
-#include <KAboutData>
 #include <KIO/Job>
 #include <KIO/NetAccess>
 #include <KLocalizedString>

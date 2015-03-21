@@ -25,7 +25,6 @@
 #include "imqdbus.h"
 
 #include <QDBusConnectionInterface>
-#include <QDBusInterface>
 #include <QDBusMessage>
 #include <QDBusReply>
 

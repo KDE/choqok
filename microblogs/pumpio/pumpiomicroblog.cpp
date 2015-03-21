@@ -30,10 +30,10 @@
 #include <QMenu>
 #include <QTextDocument>
 
-#include <KGenericFactory>
 #include <KIO/Job>
 #include <KIO/StoredTransferJob>
 #include <KMimeType>
+#include <KPluginFactory>
 
 #include "accountmanager.h"
 #include "application.h"

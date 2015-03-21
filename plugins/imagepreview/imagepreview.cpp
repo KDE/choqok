@@ -24,7 +24,6 @@
 
 #include "imagepreview.h"
 
-#include <QPointer>
 #include <QTimer>
 
 #include <KPluginFactory>

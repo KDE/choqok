@@ -26,7 +26,6 @@
 
 #include <QDebug>
 #include <QJsonDocument>
-#include <QQueue>
 #include <QSharedPointer>
 #include <QTimer>
 

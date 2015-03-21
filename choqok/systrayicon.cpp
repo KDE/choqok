@@ -23,7 +23,6 @@
 */
 #include "systrayicon.h"
 
-#include <QAction>
 #include <QPainter>
 #include <QTimer>
 

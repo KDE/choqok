@@ -26,7 +26,6 @@
 #include <QEventLoop>
 #include <QJsonDocument>
 
-#include <KAboutData>
 #include <KIO/Job>
 #include <KIO/NetAccess>
 #include <KLocalizedString>

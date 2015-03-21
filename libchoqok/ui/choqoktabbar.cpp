@@ -25,15 +25,12 @@
 #include "choqoktabbar.h"
 
 #include <QAction>
-#include <QContextMenuEvent>
 #include <QGridLayout>
 #include <QHash>
-#include <QHBoxLayout>
 #include <QList>
 #include <QResizeEvent>
 #include <QStackedWidget>
 #include <QToolBar>
-#include <QVBoxLayout>
 
 #include <QAction>
 #include <KMenu>

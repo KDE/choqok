@@ -24,7 +24,6 @@
 
 #include "indicatormanager.h"
 
-#include <QApplication>
 #include <QTimer>
 
 #include <QIcon>

@@ -23,7 +23,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "timelinewidget.h"
 
 #include <QLabel>
-#include <QLayoutItem>
 #include <QPointer>
 #include <QScrollArea>
 #include <QScrollBar>
@@ -31,12 +30,12 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QTimer>
 #include <QVBoxLayout>
 
-#include "libchoqokdebug.h"
 #include <KPushButton>
 
 #include "account.h"
 #include "choqokappearancesettings.h"
 #include "choqokbehaviorsettings.h"
+#include "libchoqokdebug.h"
 #include "microblog.h"
 #include "postwidget.h"
 #include "notifymanager.h"

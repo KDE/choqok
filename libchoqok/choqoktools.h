@@ -26,7 +26,6 @@
 #define CHOQOK_CHOQOKTOOLS_H
 
 #include <QColor>
-#include <QObject>
 #include <QUrl>
 
 #include "choqok_export.h"

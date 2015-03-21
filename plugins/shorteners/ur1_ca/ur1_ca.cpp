@@ -24,7 +24,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QEventLoop>
 
-#include <KAboutData>
 #include <KIO/Job>
 #include <KIO/NetAccess>
 #include <KLocalizedString>

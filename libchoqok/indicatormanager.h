@@ -25,8 +25,6 @@
 #ifndef INDICATORMANAGER_H
 #define INDICATORMANAGER_H
 
-#include <KNotification>
-#include <KLocalizedString>
 
 #include <qindicateserver.h>
 #include <qindicateindicator.h>

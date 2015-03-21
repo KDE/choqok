@@ -23,10 +23,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef POSTWIDGET_H
 #define POSTWIDGET_H
 
-#include <QTimer>
 
 #include <KDateTime>
-#include <KIcon>
 
 #include "account.h"
 #include "choqoktypes.h"

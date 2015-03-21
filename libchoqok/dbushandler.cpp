@@ -25,12 +25,10 @@
 
 #include "dbushandler.h"
 
-#include <QAction>
 #include <QDBusConnection>
 #include <QPointer>
 #include <QTextDocument>
 
-#include <KActionCollection>
 #include "libchoqokdebug.h"
 
 #include "ChoqokAdaptor.h"

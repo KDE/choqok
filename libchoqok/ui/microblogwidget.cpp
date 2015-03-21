@@ -25,7 +25,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QKeyEvent>
 #include <QLabel>
-#include <QLinearGradient>
 #include <QPainter>
 #include <QPainterPath>
 #include <QPointer>
@@ -33,12 +32,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <KDateTime>
 #include "libchoqokdebug.h"
-#include <KMenu>
 #include <KMessageBox>
 #include <KPushButton>
 #include <KStatusBar>
-#include <KTabWidget>
-#include <KToolBar>
 
 #include "account.h"
 #include "choqokappearancesettings.h"

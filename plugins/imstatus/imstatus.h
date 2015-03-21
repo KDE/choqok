@@ -24,7 +24,6 @@
 
 #include "plugin.h"
 
-#include <QTimer>
 
 #include "choqoktypes.h"
 

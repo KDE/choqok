@@ -26,7 +26,6 @@
 #define QUICKFILTER_H
 
 #include <QList>
-#include <QPointer>
 
 #include "plugin.h"
 

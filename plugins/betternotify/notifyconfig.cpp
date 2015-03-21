@@ -25,7 +25,6 @@
 #include "notifyconfig.h"
 
 #include <KAboutData>
-#include <KLocalizedString>
 #include <KPluginFactory>
 
 #include "account.h"

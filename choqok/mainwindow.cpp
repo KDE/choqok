@@ -29,7 +29,6 @@
 #include <QSplashScreen>
 #include <QStatusBar>
 #include <QTimer>
-#include <QWidgetAction>
 
 #include <KActionCollection>
 #include <KGlobal>

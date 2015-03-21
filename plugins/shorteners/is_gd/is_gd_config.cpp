@@ -27,7 +27,6 @@
 #include <QVBoxLayout>
 
 #include <KAboutData>
-#include <KLocalizedString>
 #include <KPluginFactory>
 
 #include "notifymanager.h"

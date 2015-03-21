@@ -25,9 +25,8 @@
 #include "twitterapisearchtimelinewidget.h"
 
 #include <QCheckBox>
-#include <QHBoxLayout>
 #include <QLabel>
-#include <QLayoutItem>
+#include <QHBoxLayout>
 
 #include "twitterapidebug.h"
 #include <KLocalizedString>

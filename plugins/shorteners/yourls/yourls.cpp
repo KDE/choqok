@@ -26,7 +26,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QUrl>
 
-#include <KAboutData>
 #include <KIO/Job>
 #include <KIO/NetAccess>
 #include <KLocalizedString>

@@ -24,8 +24,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "pumpiomicroblogwidget.h"
 
-#include <QFrame>
-#include <QLayout>
 
 #include "account.h"
 #include "timelinewidget.h"

@@ -24,9 +24,9 @@
 
 #include "notifymanager.h"
 
-#include <QApplication>
-#include <QtGlobal>
 #include <QTimer>
+
+#include <KNotification>
 
 #include "choqokbehaviorsettings.h"
 #include "choqokuiglobal.h"

@@ -23,11 +23,9 @@
 
 #include "pluginmanager.h"
 
-#include <QEventLoopLocker>
 #include <QRegExp>
 #include <QTimer>
 #include <QStack>
-#include <QUrl>
 
 #include <KConfigGroup>
 #include <KServiceTypeTrader>

@@ -27,7 +27,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QMap>
 #include <QWidget>
 
-#include <KIcon>
 
 #include "choqoktypes.h"
 #include "choqok_export.h"

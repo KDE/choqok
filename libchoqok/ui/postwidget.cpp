@@ -22,22 +22,19 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 #include "postwidget.h"
 
-#include <QBoxLayout>
 #include <QCloseEvent>
 #include <QGridLayout>
+#include <QTimer>
 
-#include "libchoqokdebug.h"
 #include <KLocalizedString>
-#include <KMenu>
 #include <KMessageBox>
-#include <KProcess>
 #include <KPushButton>
-#include <KToolInvocation>
 
 #include "choqokappearancesettings.h"
 #include "choqokbehaviorsettings.h"
 #include "choqoktools.h"
 #include "choqokuiglobal.h"
+#include "libchoqokdebug.h"
 #include "mediamanager.h"
 #include "quickpost.h"
 #include "timelinewidget.h"

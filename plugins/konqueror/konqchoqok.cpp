@@ -39,7 +39,6 @@
 #include <KToolInvocation>
 #include <KWebPage>
 
-//static const KAboutData aboutdata("konqchoqokplugin", i18n("Konqueror Choqok Plugin") , "1.0" );
 K_PLUGIN_FACTORY_WITH_JSON( KonqPluginChoqokFactory, "konqchoqok.json", registerPlugin<KonqPluginChoqok>(); )
 
 KonqPluginChoqok::KonqPluginChoqok(QObject* parent, const QVariantList& )
