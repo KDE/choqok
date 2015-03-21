@@ -80,7 +80,7 @@ const QString PostWidget::ownText("<table width=\"100%\" ><tr><td width=\"90%\" 
 
 const QString PostWidget::otherText("<table height=\"100%\" width=\"100%\"><tr><td rowspan=\"2\" width=\"48\">%1</td><td width=\"5\"><!-- EMPTY HAHA --></td><td colspan=\"2\" dir=\"%4\"><p>%2</p></td></tr><tr><td></td>%5</tr><tr><td ><!-- empty --></td><td></td><td colspan=\"2\" style=\"font-size:small;\" dir=\"ltr\" align=\"right\" width=\"100%\" valign=\"bottom\">%3</td></tr></table>");
 
-const QString PostWidget::baseStyle("KTextBrowser {border: 1px solid rgb(150,150,150);\
+const QString PostWidget::baseStyle("QTextBrowser {border: 1px solid rgb(150,150,150);\
 border-radius:5px; color:%1; background-color:%2; %3}\
 QPushButton{border:0px}");
 
