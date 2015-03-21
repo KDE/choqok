@@ -24,23 +24,22 @@
 #include "mainwindow.h"
 
 #include <QAction>
+#include <QMenu>
 #include <QMenuBar>
+#include <QPushButton>
 #include <QSplashScreen>
+#include <QStandardPaths>
 #include <QStatusBar>
+#include <QTabWidget>
 #include <QTimer>
 
 #include <KActionCollection>
-#include <KGlobal>
 #include <KGlobalAccel>
 #include <KLocalizedString>
-#include <KMenu>
 #include <KMessageBox>
 #include <KNotifyConfigWidget>
-#include <KPushButton>
-#include <KSettings/Dialog>
+#include <ksettings/Dialog>
 #include <KStandardAction>
-#include <KStandardDirs>
-#include <KTabWidget>
 #include <KXMLGUIFactory>
 
 #include "accountmanager.h"
@@ -132,7 +131,7 @@ void MainWindow::loadAllAccounts()
     qCDebug(CHOQOK);
 
     if (Choqok::BehaviorSettings::showSplashScreen()) {
-        const QString splashpix(KGlobal::dirs()->findResource("data", "choqok/images/splash_screen.png"));
+        const QPixmap splashpix(QStandardPaths::locate(QStandardPaths::DataLocation, "images/splash_screen.png"));
         if (splashpix.isNull()) {
             qCCritical(CHOQOK) << "Splash screen pixmap is NULL!";
         } else {
@@ -172,7 +171,7 @@ void MainWindow::nextTab(int delta, Qt::Orientation orientation)
     if (!isVisible()) {
         return;
     }
-    KTabWidget *widget = 0;
+    QTabWidget *widget = 0;
     switch (orientation) {
     case Qt::Vertical:
         widget = mainWidget;
@@ -495,9 +494,9 @@ void MainWindow::removeBlog(const QString &alias)
 void MainWindow::updateTabbarHiddenState()
 {
     if (mainWidget->count() <= 1 && !choqokMainButtonVisible) {
-        mainWidget->setTabBarHidden(true);
+        mainWidget->hide();
     } else {
-        mainWidget->setTabBarHidden(false);
+        mainWidget->show();
     }
 }
 
@@ -644,8 +643,8 @@ void MainWindow::slotShowSpecialMenu(bool show)
 {
     if (show) {
         if (!choqokMainButton) {
-            choqokMainButton = new KPushButton(QIcon::fromTheme("choqok"), QString(), mainWidget);
-            KMenu *menu = new KMenu(i18n("Choqok"), choqokMainButton);
+            choqokMainButton = new QPushButton(QIcon::fromTheme("choqok"), QString(), mainWidget);
+            QMenu *menu = new QMenu(i18n("Choqok"), choqokMainButton);
             menu->addAction(actionCollection()->action("choqok_new_post"));
             menu->addAction(actionCollection()->action("update_timeline"));
             menu->addAction(actionCollection()->action("choqok_mark_as_read"));

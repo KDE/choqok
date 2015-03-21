@@ -31,7 +31,7 @@
 #include "choqok_export.h"
 
 class QTimer;
-class KTabWidget;
+class QTabWidget;
 
 namespace Choqok
 {
@@ -68,7 +68,7 @@ protected:
     void hideEvent(QHideEvent *event);
     QSize sizeHint() const;
 
-    KTabWidget *mainWidget;
+    QTabWidget *mainWidget;
     QTimer *timelineTimer;
 };
 

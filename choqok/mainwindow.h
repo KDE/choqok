@@ -32,7 +32,7 @@
 #include "plugin.h"
 
 class QAction;
-class KPushButton;
+class QPushButton;
 class QSplashScreen;
 class ChoqokApplication;
 namespace Choqok
@@ -127,7 +127,7 @@ private:
     QAction *actUpdate;
     QAction *prefs;
     QAction *aboutChoqok;
-    KPushButton *choqokMainButton;
+    QPushButton *choqokMainButton;
     ChoqokApplication *app;
 
     int microblogCounter;

@@ -25,6 +25,7 @@ find_package(KF5 REQUIRED
     Emoticons
     GlobalAccel
     KCMUtils
+    Notifications
     NotifyConfig
     Sonnet
     Wallet

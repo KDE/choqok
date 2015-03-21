@@ -23,11 +23,11 @@
 
 #include "choqokmainwindow.h"
 
-#include <KStatusBar>
-#include <KTabWidget>
-#include "libchoqokdebug.h"
+#include <QStatusBar>
+#include <QTabWidget>
 
 #include "choqokbehaviorsettings.h"
+#include "libchoqokdebug.h"
 #include "microblogwidget.h"
 
 #ifdef QTINDICATE_BUILD
@@ -41,7 +41,7 @@ static const int TIMEOUT = 5000;
 Choqok::UI::MainWindow::MainWindow()
     : KXmlGuiWindow()
 {
-    mainWidget = new KTabWidget(this);
+    mainWidget = new QTabWidget(this);
     mainWidget->setDocumentMode(true);
     mainWidget->setMovable(true);
 #ifdef QTINDICATE_BUILD
