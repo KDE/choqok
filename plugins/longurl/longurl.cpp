@@ -24,6 +24,7 @@
 
 #include "longurl.h"
 
+#include <QDebug>
 #include <QJsonDocument>
 #include <QQueue>
 #include <QSharedPointer>
