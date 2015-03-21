@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -32,15 +31,16 @@
 namespace Choqok
 {
 
-enum JobResult{
+enum JobResult {
     Fail = 0,
     Success = 1
 };
 
-class CHOQOK_EXPORT User {
+class CHOQOK_EXPORT User
+{
 public:
     User()
-    :isProtected(false)
+        : isProtected(false)
     {}
     virtual ~User() {}
     QString userId;
@@ -54,11 +54,12 @@ public:
     uint followersCount;
 };
 
-class CHOQOK_EXPORT Post {
+class CHOQOK_EXPORT Post
+{
 public:
     Post()
-    :isFavorited(false), isPrivate(false), isError(false), isRead(false),
-     mediaSizeWidth(0), mediaSizeHeight(0), owners(0)
+        : isFavorited(false), isPrivate(false), isError(false), isRead(false),
+          mediaSizeWidth(0), mediaSizeHeight(0), owners(0)
     {}
     virtual ~Post() {}
     QDateTime creationDateTime;
@@ -86,7 +87,8 @@ public:
 /**
 Describe an specific timeline, Should use by @ref MicroBlog
 */
-class CHOQOK_EXPORT TimelineInfo {
+class CHOQOK_EXPORT TimelineInfo
+{
 public:
     QString name;
     QString description;
@@ -98,7 +100,6 @@ enum FilterAction{
     MoveTo = 1,
     CopyTo = 2
 };
-
 
 struct Filter {
 public:

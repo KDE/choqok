@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -23,7 +22,6 @@
 */
 
 #include "plugin.h"
-
 
 #include "choqoktypes.h"
 
@@ -37,13 +35,13 @@ class IMStatus : public Choqok::Plugin
 {
     Q_OBJECT
 public:
-    IMStatus ( QObject* parent, const QList< QVariant >& args );
+    IMStatus(QObject *parent, const QList< QVariant > &args);
     ~IMStatus();
 
 public Q_SLOTS:
-    void slotIMStatus ( Choqok::JobResult res, Choqok::Post* newPost );
+    void slotIMStatus(Choqok::JobResult res, Choqok::Post *newPost);
     void update();
 
 private:
-    IMStatusPrivate * const d;
+    IMStatusPrivate *const d;
 };

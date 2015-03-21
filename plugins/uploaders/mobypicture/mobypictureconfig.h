@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -33,7 +32,7 @@ class MobypictureConfig : public KCModule
 {
     Q_OBJECT
 public:
-    MobypictureConfig ( QWidget* parent, const QVariantList& );
+    MobypictureConfig(QWidget *parent, const QVariantList &);
     ~MobypictureConfig();
 
     virtual void save();

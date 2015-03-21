@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -33,27 +32,28 @@
 #include "postwidget.h"
 #include "twitterapiaccount.h"
 
-class TwitterApiShowThread::Private{
+class TwitterApiShowThread::Private
+{
 public:
     Private(Choqok::Account *currentAccount)
-        :account(currentAccount)
+        : account(currentAccount)
     {}
     QVBoxLayout *mainLayout;
     Choqok::Account *account;
     QString desiredPostId;
 };
 
-TwitterApiShowThread::TwitterApiShowThread(Choqok::Account* account, Choqok::Post* finalPost,
-                                           QWidget* parent)
-                                           : QWidget(parent), d(new Private(account))
+TwitterApiShowThread::TwitterApiShowThread(Choqok::Account *account, Choqok::Post *finalPost,
+        QWidget *parent)
+    : QWidget(parent), d(new Private(account))
 {
     qCDebug(CHOQOK);
     setupUi();
     setWindowTitle(i18n("Conversation"));
-    connect( account->microblog(), SIGNAL(postFetched(Choqok::Account*,Choqok::Post*)),
-             this, SLOT(slotAddNewPost(Choqok::Account*,Choqok::Post*)) );
+    connect(account->microblog(), SIGNAL(postFetched(Choqok::Account*,Choqok::Post*)),
+            this, SLOT(slotAddNewPost(Choqok::Account*,Choqok::Post*)));
     Choqok::UI::PostWidget *widget = d->account->microblog()->createPostWidget(d->account, finalPost, this);
-    if(widget) {
+    if (widget) {
         addPostWidgetToUi(widget);
         Choqok::Post *ps = new Choqok::Post;
         ps->postId = finalPost->replyToPostId;
@@ -61,7 +61,6 @@ TwitterApiShowThread::TwitterApiShowThread(Choqok::Account* account, Choqok::Pos
         d->account->microblog()->fetchPost(d->account, ps);
     }
 }
-
 
 TwitterApiShowThread::~TwitterApiShowThread()
 {
@@ -102,12 +101,12 @@ void TwitterApiShowThread::setupUi()
     gridLayout->addWidget(scrollArea);
 }
 
-void TwitterApiShowThread::slotAddNewPost(Choqok::Account* theAccount, Choqok::Post* post)
+void TwitterApiShowThread::slotAddNewPost(Choqok::Account *theAccount, Choqok::Post *post)
 {
     qCDebug(CHOQOK);
-    if(theAccount == d->account && post->postId == d->desiredPostId) {
+    if (theAccount == d->account && post->postId == d->desiredPostId) {
         Choqok::UI::PostWidget *widget = d->account->microblog()->createPostWidget(d->account, post, this);
-        if(widget) {
+        if (widget) {
             addPostWidgetToUi(widget);
             Choqok::Post *ps = new Choqok::Post;
             ps->postId = post->replyToPostId;
@@ -117,21 +116,21 @@ void TwitterApiShowThread::slotAddNewPost(Choqok::Account* theAccount, Choqok::P
     }
 }
 
-void TwitterApiShowThread::addPostWidgetToUi(Choqok::UI::PostWidget* widget)
+void TwitterApiShowThread::addPostWidgetToUi(Choqok::UI::PostWidget *widget)
 {
     qCDebug(CHOQOK);
     widget->initUi();
     widget->setRead();
     widget->setFocusProxy(this);
     widget->setObjectName(widget->currentPost()->postId);
-    connect( widget, SIGNAL(resendPost(const QString &)),
-             this, SIGNAL(forwardResendPost(const QString &)));
-    connect( widget, SIGNAL(resendPost(QString)),
-             this, SLOT(raiseMainWindow()) );
-    connect( widget, SIGNAL(reply(QString, QString)),
-             this, SLOT(raiseMainWindow()) );
-    connect( widget, SIGNAL(reply(QString,QString,QString)),
-             this, SIGNAL(forwardReply(QString,QString,QString)) );
+    connect(widget, SIGNAL(resendPost(QString)),
+            this, SIGNAL(forwardResendPost(QString)));
+    connect(widget, SIGNAL(resendPost(QString)),
+            this, SLOT(raiseMainWindow()));
+    connect(widget, SIGNAL(reply(QString,QString)),
+            this, SLOT(raiseMainWindow()));
+    connect(widget, SIGNAL(reply(QString,QString,QString)),
+            this, SIGNAL(forwardReply(QString,QString,QString)));
 //         connect( widget, SIGNAL(aboutClosing(QString,PostWidget*)),
 //                 SLOT(postWidgetClosed(QString,PostWidget*)) );
     d->mainLayout->insertWidget(0, widget);

@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -28,20 +27,21 @@
 
 #include "pluginmanager.h"
 
-namespace Choqok {
+namespace Choqok
+{
 
 class Plugin::Private
 {
 public:
-    
+
 };
 
-Plugin::Plugin( const QString &componentName, QObject *parent )
-: QObject( parent ), KXMLGUIClient(), d(new Private)
+Plugin::Plugin(const QString &componentName, QObject *parent)
+    : QObject(parent), KXMLGUIClient(), d(new Private)
 {
     //setComponentData( instance );
     setComponentName(componentName, componentName);
-    KSettings::Dispatcher::registerComponent( componentName, this, "settingsChanged" );
+    KSettings::Dispatcher::registerComponent(componentName, this, "settingsChanged");
 }
 
 Plugin::~Plugin()
@@ -51,7 +51,7 @@ Plugin::~Plugin()
 
 QString Plugin::pluginId() const
 {
-    return QString::fromLatin1( metaObject()->className() );
+    return QString::fromLatin1(metaObject()->className());
 }
 
 QString Plugin::displayName() const
@@ -71,7 +71,7 @@ QString Plugin::pluginIcon() const
 
 KPluginInfo Plugin::pluginInfo() const
 {
-    return PluginManager::self()->pluginInfo( this );
+    return PluginManager::self()->pluginInfo(this);
 }
 
 void Plugin::aboutToUnload()

@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -37,10 +36,10 @@
 #include "twitterapiaccount.h"
 #include "twitterapimicroblog.h"
 
-K_PLUGIN_FACTORY_WITH_JSON( SearchActionFactory, "choqok_searchaction.json",
-                            registerPlugin < SearchAction > (); )
+K_PLUGIN_FACTORY_WITH_JSON(SearchActionFactory, "choqok_searchaction.json",
+                           registerPlugin < SearchAction > ();)
 
-SearchAction::SearchAction( QObject* parent, const QList< QVariant >& )
+SearchAction::SearchAction(QObject *parent, const QList< QVariant > &)
     : Plugin("choqok_searchaction", parent)
 {
     QAction *action = new QAction(QIcon::fromTheme("edit-find"), i18n("Search..."), this);
@@ -57,8 +56,8 @@ SearchAction::~SearchAction()
 
 void SearchAction::slotSearch()
 {
-    TwitterApiAccount *curAccount = qobject_cast<TwitterApiAccount*>(Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentAccount());
-    if(curAccount){
+    TwitterApiAccount *curAccount = qobject_cast<TwitterApiAccount *>(Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentAccount());
+    if (curAccount) {
         TwitterApiMicroBlog *mBlog = qobject_cast<TwitterApiMicroBlog *>(curAccount->microblog());
         mBlog->showSearchDialog(curAccount);
     } else {

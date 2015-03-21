@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -41,7 +40,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "laconicamicroblog.h"
 
 LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblog,
-                                                    LaconicaAccount* account, QWidget* parent)
+        LaconicaAccount *account, QWidget *parent)
     : ChoqokEditAccountWidget(account, parent), mAccount(account), progress(0), isAuthenticated(false)
 {
     setupUi(this);
@@ -52,15 +51,15 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
 //     connect(kcfg_authMethod, SIGNAL(currentIndexChanged(int)), SLOT(slotAuthMethodChanged(int)));
 //     slotAuthMethodChanged(kcfg_authMethod->currentIndex());
     connect(kcfg_host, SIGNAL(editingFinished()), SLOT(slotCheckHostUrl()));
-    if(mAccount) {
-        kcfg_alias->setText( mAccount->alias() );
-        kcfg_host->setText( mAccount->host() );
-        kcfg_api->setText( mAccount->api() );
+    if (mAccount) {
+        kcfg_alias->setText(mAccount->alias());
+        kcfg_host->setText(mAccount->host());
+        kcfg_api->setText(mAccount->api());
 //         kcfg_oauthUsername->setText( mAccount->username() );
-        kcfg_basicUsername->setText( mAccount->username() );
-        kcfg_basicPassword->setText( mAccount->password() );
-        kcfg_changeExclamationMark->setChecked( mAccount->isChangeExclamationMark() );
-        kcfg_changeToString->setText( mAccount->changeExclamationMarkToText() );
+        kcfg_basicUsername->setText(mAccount->username());
+        kcfg_basicPassword->setText(mAccount->password());
+        kcfg_changeExclamationMark->setChecked(mAccount->isChangeExclamationMark());
+        kcfg_changeToString->setText(mAccount->changeExclamationMarkToText());
 //         if(mAccount->usingOAuth()){
 //             if( !mAccount->oauthConsumerKey().isEmpty() &&
 //                 !mAccount->oauthConsumerSecret().isEmpty() &&
@@ -83,12 +82,12 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
         QString newAccountAlias = microblog->serviceName();
         QString servName = newAccountAlias;
         int counter = 1;
-        while(Choqok::AccountManager::self()->findAccount(newAccountAlias)){
+        while (Choqok::AccountManager::self()->findAccount(newAccountAlias)) {
             newAccountAlias = QString("%1%2").arg(servName).arg(counter);
             counter++;
         }
-        setAccount( mAccount = new LaconicaAccount(microblog, newAccountAlias) );
-        kcfg_alias->setText( newAccountAlias );
+        setAccount(mAccount = new LaconicaAccount(microblog, newAccountAlias));
+        kcfg_alias->setText(newAccountAlias);
         const QRegExp userRegExp("([a-z0-9]){1,64}", Qt::CaseInsensitive);
         QValidator *userVal = new QRegExpValidator(userRegExp, 0);
         kcfg_basicUsername->setValidator(userVal);
@@ -107,14 +106,15 @@ bool LaconicaEditAccountWidget::validateData()
 //         if(kcfg_alias->text().isEmpty() || kcfg_oauthUsername->text().isEmpty() || !isAuthenticated)
 //             return false;
 //     } else {//Basic
-        if(kcfg_alias->text().isEmpty() || kcfg_basicUsername->text().isEmpty() ||
-            kcfg_basicPassword->text().isEmpty())
-            return false;
+    if (kcfg_alias->text().isEmpty() || kcfg_basicUsername->text().isEmpty() ||
+            kcfg_basicPassword->text().isEmpty()) {
+        return false;
+    }
 //     }
     return true;
 }
 
-Choqok::Account* LaconicaEditAccountWidget::apply()
+Choqok::Account *LaconicaEditAccountWidget::apply()
 {
     qCDebug(CHOQOK);
     /*if(kcfg_authMethod->currentIndex() == 0){
@@ -125,12 +125,12 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
         mAccount->setOauthTokenSecret( tokenSecret );
         mAccount->setUsingOAuth(true);
     } else*/ {
-        mAccount->setUsername( kcfg_basicUsername->text() );
-        mAccount->setPassword( kcfg_basicPassword->text() );
+        mAccount->setUsername(kcfg_basicUsername->text());
+        mAccount->setPassword(kcfg_basicPassword->text());
         mAccount->setUsingOAuth(false);
     }
-    mAccount->setHost( kcfg_host->text() );
-    mAccount->setApi( kcfg_api->text() );
+    mAccount->setHost(kcfg_host->text());
+    mAccount->setApi(kcfg_api->text());
     mAccount->setAlias(kcfg_alias->text());
     mAccount->setChangeExclamationMark(kcfg_changeExclamationMark->isChecked());
     mAccount->setChangeExclamationMarkToText(kcfg_changeToString->text());
@@ -154,7 +154,7 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
 //     qoauth->setConsumerKey( oauthConsumerKey );
 //     qoauth->setConsumerSecret( oauthConsumerSecret );
 //     qoauth->setRequestTimeout( 10000 );
-// 
+//
 //     // send a request for an unauthorized token
 //     QString oauthReqTokenUrl = QString("%1/%2/oauth/request_token").arg(kcfg_host->text()).arg(kcfg_api->text());
 // //     qCDebug(CHOQOK)<<oauthReqTokenUrl;
@@ -164,7 +164,7 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
 //         qoauth->requestToken( oauthReqTokenUrl, QOAuth::GET, QOAuth::HMAC_SHA1, params );
 //     setAuthenticated(false);
 //     kcfg_authorize->setIcon(QIcon::fromTheme("object-locked"));
-// 
+//
 //     // if no error occurred, read the received token and token secret
 //     if ( qoauth->error() == QOAuth::NoError ) {
 //         token = reply.value( QOAuth::tokenParameterName() );
@@ -182,7 +182,7 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
 //                                    Choqok::qoauthErrorText(qoauth->error()));
 //     }
 // }
-// 
+//
 // void LaconicaEditAccountWidget::getPinCode()
 // {
 //     isAuthenticated = false;
@@ -194,7 +194,7 @@ Choqok::Account* LaconicaEditAccountWidget::apply()
 //             return;
 //         QOAuth::ParamMap otherArgs;
 //         otherArgs.insert( "oauth_verifier", verifier.toUtf8() );
-// 
+//
 //         QOAuth::ParamMap reply =
 //         qoauth->accessToken( QString("%1/%2/oauth/access_token").arg(kcfg_host->text()).arg(kcfg_api->text()),
 //                              QOAuth::GET, token, tokenSecret, QOAuth::HMAC_SHA1, otherArgs );
@@ -222,8 +222,8 @@ void LaconicaEditAccountWidget::setTextLimit()
     QByteArray jobData;
     QString url = mAccount->host() + '/' + mAccount->api() + "/statusnet/config.json";
     KIO::TransferJob *job = KIO::get(QUrl(url), KIO::Reload, KIO::HideProgressInfo);
-    if ( !KIO::NetAccess::synchronousRun(job, 0, &jobData) ) {
-        qCCritical(CHOQOK)<<"Job error: " << job->errorString();
+    if (!KIO::NetAccess::synchronousRun(job, 0, &jobData)) {
+        qCCritical(CHOQOK) << "Job error: " << job->errorString();
         return;
     }
 
@@ -252,9 +252,9 @@ void LaconicaEditAccountWidget::loadTimelinesTableState()
         item->setToolTip(info->description);
         timelinesTable->setItem(newRow, 0, item);
 
-        QCheckBox *enable = new QCheckBox ( timelinesTable );
-        enable->setChecked ( mAccount->timelineNames().contains(timeline) );
-        timelinesTable->setCellWidget ( newRow, 1, enable );
+        QCheckBox *enable = new QCheckBox(timelinesTable);
+        enable->setChecked(mAccount->timelineNames().contains(timeline));
+        timelinesTable->setCellWidget(newRow, 1, enable);
     }
 }
 
@@ -262,10 +262,11 @@ void LaconicaEditAccountWidget::saveTimelinesTableState()
 {
     QStringList timelines;
     int rowCount = timelinesTable->rowCount();
-    for(int i=0; i<rowCount; ++i){
-        QCheckBox *enable = qobject_cast<QCheckBox*>(timelinesTable->cellWidget(i, 1));
-        if(enable && enable->isChecked())
-            timelines<<timelinesTable->item(i, 0)->data(32).toString();
+    for (int i = 0; i < rowCount; ++i) {
+        QCheckBox *enable = qobject_cast<QCheckBox *>(timelinesTable->cellWidget(i, 1));
+        if (enable && enable->isChecked()) {
+            timelines << timelinesTable->item(i, 0)->data(32).toString();
+        }
     }
     timelines.removeDuplicates();
     mAccount->setTimelineNames(timelines);
@@ -298,8 +299,9 @@ void LaconicaEditAccountWidget::saveTimelinesTableState()
 
 void LaconicaEditAccountWidget::slotCheckHostUrl()
 {
-    if( !kcfg_host->text().isEmpty() && !kcfg_host->text().startsWith(QLatin1String("http"),
-                                                                      Qt::CaseInsensitive) )
+    if (!kcfg_host->text().isEmpty() && !kcfg_host->text().startsWith(QLatin1String("http"),
+            Qt::CaseInsensitive)) {
         kcfg_host->setText(kcfg_host->text().prepend("http://"));
+    }
 }
 

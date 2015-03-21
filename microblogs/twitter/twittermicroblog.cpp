@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -56,10 +55,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "twittersearch.h"
 #include "twittertimelinewidget.h"
 
-K_PLUGIN_FACTORY_WITH_JSON( TwitterMicroBlogFactory, "choqok_twitter.json",
-                            registerPlugin < TwitterMicroBlog > (); )
+K_PLUGIN_FACTORY_WITH_JSON(TwitterMicroBlogFactory, "choqok_twitter.json",
+                           registerPlugin < TwitterMicroBlog > ();)
 
-TwitterMicroBlog::TwitterMicroBlog ( QObject* parent, const QVariantList&  )
+TwitterMicroBlog::TwitterMicroBlog(QObject *parent, const QVariantList &)
     : TwitterApiMicroBlog("choqok_twitter", parent)
 {
     qCDebug(CHOQOK);
@@ -70,8 +69,8 @@ TwitterMicroBlog::TwitterMicroBlog ( QObject* parent, const QVariantList&  )
 }
 void TwitterMicroBlog::setTimelineInfos()
 {
- //   hange description of replies to mentions
-    Choqok::TimelineInfo *t = mTimelineInfos["Reply"];    
+//   hange description of replies to mentions
+    Choqok::TimelineInfo *t = mTimelineInfos["Reply"];
     t->name = i18nc("Timeline Name", "Mentions");
     t->description = i18nc("Timeline description", "Mentions of you");
 }
@@ -81,96 +80,97 @@ TwitterMicroBlog::~TwitterMicroBlog()
     qCDebug(CHOQOK);
 }
 
-Choqok::Account * TwitterMicroBlog::createNewAccount( const QString &alias )
+Choqok::Account *TwitterMicroBlog::createNewAccount(const QString &alias)
 {
-    TwitterAccount *acc = qobject_cast<TwitterAccount*>( Choqok::AccountManager::self()->findAccount(alias) );
-    if(!acc) {
+    TwitterAccount *acc = qobject_cast<TwitterAccount *>(Choqok::AccountManager::self()->findAccount(alias));
+    if (!acc) {
         return new TwitterAccount(this, alias);
     } else {
         return 0;
     }
 }
 
-ChoqokEditAccountWidget * TwitterMicroBlog::createEditAccountWidget( Choqok::Account *account, QWidget *parent )
+ChoqokEditAccountWidget *TwitterMicroBlog::createEditAccountWidget(Choqok::Account *account, QWidget *parent)
 {
     qCDebug(CHOQOK);
-    TwitterAccount *acc = qobject_cast<TwitterAccount*>(account);
-    if(acc || !account)
+    TwitterAccount *acc = qobject_cast<TwitterAccount *>(account);
+    if (acc || !account) {
         return new TwitterEditAccountWidget(this, acc, parent);
-    else{
-        qCDebug(CHOQOK)<<"Account passed here is not a TwitterAccount!";
+    } else {
+        qCDebug(CHOQOK) << "Account passed here is not a TwitterAccount!";
         return 0L;
     }
 }
 
-Choqok::UI::MicroBlogWidget * TwitterMicroBlog::createMicroBlogWidget( Choqok::Account *account, QWidget *parent )
+Choqok::UI::MicroBlogWidget *TwitterMicroBlog::createMicroBlogWidget(Choqok::Account *account, QWidget *parent)
 {
     return new TwitterApiMicroBlogWidget(account, parent);
 }
 
-Choqok::UI::TimelineWidget * TwitterMicroBlog::createTimelineWidget( Choqok::Account *account,
-                                                                 const QString &timelineName, QWidget *parent )
+Choqok::UI::TimelineWidget *TwitterMicroBlog::createTimelineWidget(Choqok::Account *account,
+        const QString &timelineName, QWidget *parent)
 {
     return new TwitterTimelineWidget(account, timelineName, parent);
 }
 
-Choqok::UI::PostWidget* TwitterMicroBlog::createPostWidget(Choqok::Account* account,
-                                                           Choqok::Post *post, QWidget* parent)
+Choqok::UI::PostWidget *TwitterMicroBlog::createPostWidget(Choqok::Account *account,
+        Choqok::Post *post, QWidget *parent)
 {
     return new TwitterPostWidget(account, post, parent);
 }
 
-Choqok::UI::ComposerWidget* TwitterMicroBlog::createComposerWidget(Choqok::Account* account, QWidget* parent)
+Choqok::UI::ComposerWidget *TwitterMicroBlog::createComposerWidget(Choqok::Account *account, QWidget *parent)
 {
     return new TwitterComposerWidget(account, parent);
 }
 
-QString TwitterMicroBlog::profileUrl(Choqok::Account*, const QString& username) const
+QString TwitterMicroBlog::profileUrl(Choqok::Account *, const QString &username) const
 {
-    return QString( "https://twitter.com/#!/%1" ).arg( username );
+    return QString("https://twitter.com/#!/%1").arg(username);
 }
 
-QString TwitterMicroBlog::postUrl(Choqok::Account*, const QString& username,
-                                  const QString& postId) const
+QString TwitterMicroBlog::postUrl(Choqok::Account *, const QString &username,
+                                  const QString &postId) const
 {
-    return QString ( "https://twitter.com/%1/status/%2" ).arg ( username ).arg ( postId );
+    return QString("https://twitter.com/%1/status/%2").arg(username).arg(postId);
 }
 
-TwitterApiSearch* TwitterMicroBlog::searchBackend()
+TwitterApiSearch *TwitterMicroBlog::searchBackend()
 {
-    if(!mSearchBackend)
+    if (!mSearchBackend) {
         mSearchBackend = new TwitterSearch(this);
+    }
     return mSearchBackend;
 }
 
-void TwitterMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Choqok::Post* post,
-                                                 const QString& mediumToAttach)
+void TwitterMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Choqok::Post *post,
+        const QString &mediumToAttach)
 {
-    if( mediumToAttach.isEmpty() ){
+    if (mediumToAttach.isEmpty()) {
         TwitterApiMicroBlog::createPost(theAccount, post);
     } else {
         QByteArray picData;
         QString tmp;
         QUrl picUrl(mediumToAttach);
-        KIO::TransferJob *picJob = KIO::get( picUrl, KIO::Reload, KIO::HideProgressInfo);
-        if( !KIO::NetAccess::synchronousRun(picJob, 0, &picData) ){
-            qCCritical(CHOQOK)<<"Job error: " << picJob->errorString();
+        KIO::TransferJob *picJob = KIO::get(picUrl, KIO::Reload, KIO::HideProgressInfo);
+        if (!KIO::NetAccess::synchronousRun(picJob, 0, &picData)) {
+            qCCritical(CHOQOK) << "Job error: " << picJob->errorString();
             KMessageBox::detailedError(Choqok::UI::Global::mainWindow(),
-                                       i18n( "Uploading medium failed: cannot read the medium file." ),
-            picJob->errorString() );
+                                       i18n("Uploading medium failed: cannot read the medium file."),
+                                       picJob->errorString());
             return;
         }
-        if ( picData.count() == 0 ) {
+        if (picData.count() == 0) {
             qCCritical(CHOQOK) << "Cannot read the media file, please check if it exists.";
-            KMessageBox::error( Choqok::UI::Global::mainWindow(),
-                                i18n( "Uploading medium failed: cannot read the medium file." ) );
+            KMessageBox::error(Choqok::UI::Global::mainWindow(),
+                               i18n("Uploading medium failed: cannot read the medium file."));
             return;
         }
         ///Documentation: http://identi.ca/notice/17779990
-        TwitterAccount* account = qobject_cast<TwitterAccount*>(theAccount);
+        TwitterAccount *account = qobject_cast<TwitterAccount *>(theAccount);
         QUrl url = account->uploadUrl();
-        url.setPath( url.path() + "/statuses/update_with_media.json" );
-        QByteArray fileContentType = KMimeType::findByUrl( picUrl, 0, true )->name().toUtf8();
+        url.setPath(url.path() + "/statuses/update_with_media.json");
+        QByteArray fileContentType = KMimeType::findByUrl(picUrl, 0, true)->name().toUtf8();
 
         QMap<QString, QByteArray> formdata;
         formdata["status"] = post->content.toUtf8();
@@ -190,29 +190,30 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Cho
         QByteArray data = Choqok::MediaManager::createMultipartFormData(formdata, listMediafiles);
 
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
-        if ( !job ) {
+        if (!job) {
             qCCritical(CHOQOK) << "Cannot create a http POST request!";
             return;
         }
         job->addMetaData(QStringLiteral("content-type"),
-                         QStringLiteral("Content-Type: multipart/form-data; boundary=AaB03x") );
+                         QStringLiteral("Content-Type: multipart/form-data; boundary=AaB03x"));
         job->addMetaData(QStringLiteral("customHTTPHeader"),
                          QStringLiteral("Authorization: ") +
                          authorizationHeader(account, url, QOAuth::POST));
         mCreatePostMap[ job ] = post;
         mJobsAccount[job] = theAccount;
-        connect( job, SIGNAL( result( KJob* ) ),
-                 SLOT( slotCreatePost(KJob*) ) );
+        connect(job, SIGNAL(result(KJob*)),
+                SLOT(slotCreatePost(KJob*)));
         job->start();
     }
 }
 
-QString TwitterMicroBlog::generateRepeatedByUserTooltip(const QString& username)
+QString TwitterMicroBlog::generateRepeatedByUserTooltip(const QString &username)
 {
-    if( Choqok::AppearanceSettings::showRetweetsInChoqokWay() )
+    if (Choqok::AppearanceSettings::showRetweetsInChoqokWay()) {
         return i18n("Retweet of %1", username);
-    else
+    } else {
         return i18n("Retweeted by %1", username);
+    }
 }
 
 QString TwitterMicroBlog::repeatQuestion()
@@ -220,45 +221,45 @@ QString TwitterMicroBlog::repeatQuestion()
     return i18n("Retweet to your followers?");
 }
 
-QMenu* TwitterMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidget* parent)
+QMenu *TwitterMicroBlog::createActionsMenu(Choqok::Account *theAccount, QWidget *parent)
 {
     QMenu *menu = TwitterApiMicroBlog::createActionsMenu(theAccount, parent);
 
-    QAction *lists = new QAction( i18n("Add User List..."), menu );
-    lists->setData( theAccount->alias() );
-    connect( lists, SIGNAL(triggered(bool)), SLOT(showListDialog()) );
+    QAction *lists = new QAction(i18n("Add User List..."), menu);
+    lists->setData(theAccount->alias());
+    connect(lists, SIGNAL(triggered(bool)), SLOT(showListDialog()));
     menu->addAction(lists);
 
     return menu;
 }
 
-void TwitterMicroBlog::showListDialog(TwitterApiAccount* theAccount)
+void TwitterMicroBlog::showListDialog(TwitterApiAccount *theAccount)
 {
-    if( !theAccount ) {
+    if (!theAccount) {
         QAction *act = qobject_cast<QAction *>(sender());
-        theAccount = qobject_cast<TwitterApiAccount*>(
-                                    Choqok::AccountManager::self()->findAccount( act->data().toString() ) );
+        theAccount = qobject_cast<TwitterApiAccount *>(
+                         Choqok::AccountManager::self()->findAccount(act->data().toString()));
     }
-    QPointer<TwitterListDialog> listDlg = new TwitterListDialog( theAccount,
-                                                                 Choqok::UI::Global::mainWindow() );
+    QPointer<TwitterListDialog> listDlg = new TwitterListDialog(theAccount,
+            Choqok::UI::Global::mainWindow());
     listDlg->show();
 }
 
-void TwitterMicroBlog::fetchUserLists(TwitterAccount* theAccount, const QString& username)
+void TwitterMicroBlog::fetchUserLists(TwitterAccount *theAccount, const QString &username)
 {
     qCDebug(CHOQOK);
-    if ( !theAccount) {
+    if (!theAccount) {
         return;
     }
     QUrl url = theAccount->apiUrl();
-    url.setPath( url.path() + "/lists/ownerships.json" );
+    url.setPath(url.path() + "/lists/ownerships.json");
     QUrl url_for_oauth(url);//we need base URL (without params) to make OAuth signature with it!
     url.addQueryItem("screen_name", username);
     QOAuth::ParamMap params;
     params.insert("screen_name", username.toLatin1());
 
-    KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
-    if ( !job ) {
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
+    if (!job) {
         qCCritical(CHOQOK) << "TwitterMicroBlog::loadUserLists: Cannot create an http GET request!";
         return;
     }
@@ -268,35 +269,35 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount* theAccount, const QString&
                      authorizationHeader(theAccount, url_for_oauth, QOAuth::GET, params));
     mFetchUsersListMap[ job ] = username;
     mJobsAccount[ job ] = theAccount;
-    connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotFetchUserLists(KJob*) ) );
+    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchUserLists(KJob*)));
     job->start();
 }
 
-void TwitterMicroBlog::slotFetchUserLists(KJob* job)
+void TwitterMicroBlog::slotFetchUserLists(KJob *job)
 {
     qCDebug(CHOQOK);
-    if(!job) {
-        qCWarning(CHOQOK)<<"NULL Job returned";
+    if (!job) {
+        qCWarning(CHOQOK) << "NULL Job returned";
         return;
     }
     QString username = mFetchUsersListMap.take(job);
     Choqok::Account *theAccount = mJobsAccount.take(job);
-    if ( job->error() ) {
+    if (job->error()) {
         qCDebug(CHOQOK) << "Job Error: " << job->errorString();
-        Q_EMIT error ( theAccount, Choqok::MicroBlog::CommunicationError,
-                     i18n("Fetching %1's lists failed. %2", username, job->errorString()), Critical );
+        Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
+                     i18n("Fetching %1's lists failed. %2", username, job->errorString()), Critical);
     } else {
-        KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
+        KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> (job);
         QByteArray buffer = stj->data();
-        QList<Twitter::List> list = readUserListsFromJson ( theAccount, buffer );
-        if ( list.isEmpty() ) {
+        QList<Twitter::List> list = readUserListsFromJson(theAccount, buffer);
+        if (list.isEmpty()) {
             qCDebug(CHOQOK) << buffer;
             QString errorMsg;
             errorMsg = checkForError(buffer);
-            if( errorMsg.isEmpty() ){
+            if (errorMsg.isEmpty()) {
                 KMessageBox::information(choqokMainWindow, i18n("There is no list record for user %1", username));
             } else {
-                Q_EMIT error( theAccount, ServerError, errorMsg, Critical);
+                Q_EMIT error(theAccount, ServerError, errorMsg, Critical);
             }
         } else {
             Q_EMIT userLists(theAccount, username, list);
@@ -304,8 +305,8 @@ void TwitterMicroBlog::slotFetchUserLists(KJob* job)
     }
 }
 
-void TwitterMicroBlog::addListTimeline( TwitterAccount* theAccount, const QString& username,
-                                        const QString& listname )
+void TwitterMicroBlog::addListTimeline(TwitterAccount *theAccount, const QString &username,
+                                       const QString &listname)
 {
     qCDebug(CHOQOK);
     QStringList tms = theAccount->timelineNames();
@@ -320,9 +321,9 @@ void TwitterMicroBlog::addListTimeline( TwitterAccount* theAccount, const QStrin
 }
 
 // TODO: Change to new API
-void TwitterMicroBlog::setListTimelines(TwitterAccount* theAccount, const QStringList& lists)
+void TwitterMicroBlog::setListTimelines(TwitterAccount *theAccount, const QStringList &lists)
 {
-    qCDebug(CHOQOK)<<lists;
+    qCDebug(CHOQOK) << lists;
     QStringList tms = theAccount->timelineNames();
     Q_FOREACH (const QString &name, lists) {
         tms.append(name);
@@ -334,10 +335,10 @@ void TwitterMicroBlog::setListTimelines(TwitterAccount* theAccount, const QStrin
     theAccount->setTimelineNames(tms);
 }
 
-Choqok::TimelineInfo* TwitterMicroBlog::timelineInfo(const QString& timelineName)
+Choqok::TimelineInfo *TwitterMicroBlog::timelineInfo(const QString &timelineName)
 {
-    if(timelineName.startsWith('@')){
-        if(mListsInfo.contains(timelineName)) {
+    if (timelineName.startsWith('@')) {
+        if (mListsInfo.contains(timelineName)) {
             return mListsInfo.value(timelineName);
         } else {
             Choqok::TimelineInfo *info = new Choqok::TimelineInfo;
@@ -351,17 +352,17 @@ Choqok::TimelineInfo* TwitterMicroBlog::timelineInfo(const QString& timelineName
     }
 }
 
-QList< Twitter::List > TwitterMicroBlog::readUserListsFromJson(Choqok::Account* theAccount, QByteArray buffer)
+QList< Twitter::List > TwitterMicroBlog::readUserListsFromJson(Choqok::Account *theAccount, QByteArray buffer)
 {
     QList<Twitter::List> twitterList;
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
         const QVariantMap map = json.toVariant().toMap();
-        if (map.contains("lists") ) {
+        if (map.contains("lists")) {
             QVariantList list = map["lists"].toList();
             QVariantList::const_iterator it = list.constBegin();
             QVariantList::const_iterator endIt = list.constEnd();
-            for(; it != endIt; ++it){
+            for (; it != endIt; ++it) {
                 twitterList.append(readListFromJsonMap(theAccount, it->toMap()));
             }
         }
@@ -369,10 +370,10 @@ QList< Twitter::List > TwitterMicroBlog::readUserListsFromJson(Choqok::Account* 
     return twitterList;
 }
 
-Twitter::List TwitterMicroBlog::readListFromJsonMap(Choqok::Account* theAccount, QVariantMap map)
+Twitter::List TwitterMicroBlog::readListFromJsonMap(Choqok::Account *theAccount, QVariantMap map)
 {
     Twitter::List l;
-    l.author = readUser( theAccount, map["user"].toMap() );
+    l.author = readUser(theAccount, map["user"].toMap());
     l.description = map["description"].toString();
     l.fullname = map["full_name"].toString();
     l.isFollowing = map["following"].toBool();

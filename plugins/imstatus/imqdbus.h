@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -34,8 +33,9 @@
 
 #include <TelepathyQt/Types>
 
-namespace Tp {
-    class PendingOperation;
+namespace Tp
+{
+class PendingOperation;
 }
 #endif
 
@@ -47,7 +47,7 @@ class IMQDBus : public QObject
 {
     Q_OBJECT
 public:
-    IMQDBus (QObject *parent = 0);
+    IMQDBus(QObject *parent = 0);
     ~IMQDBus();
 
     void updateStatusMessage(const QString &im, const QString &statusMessage);

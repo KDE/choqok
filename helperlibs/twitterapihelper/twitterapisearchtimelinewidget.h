@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -28,15 +27,14 @@
 #include "timelinewidget.h"
 #include "twitterapisearch.h"
 
-
 class CHOQOK_HELPER_EXPORT TwitterApiSearchTimelineWidget : public Choqok::UI::TimelineWidget
 {
     Q_OBJECT
 public:
-    TwitterApiSearchTimelineWidget(Choqok::Account* account, const QString& timelineName,
-                                   const SearchInfo &info, QWidget* parent = 0);
+    TwitterApiSearchTimelineWidget(Choqok::Account *account, const QString &timelineName,
+                                   const SearchInfo &info, QWidget *parent = 0);
     ~TwitterApiSearchTimelineWidget();
-    virtual void addNewPosts(QList< Choqok::Post* >& postList);
+    virtual void addNewPosts(QList< Choqok::Post * > &postList);
     void removeAllPosts();
     SearchInfo &searchInfo() const;
 
@@ -51,12 +49,12 @@ protected Q_SLOTS:
     void reloadList();
     void loadNextPage();
     void loadPreviousPage();
-    void loadCustomPage(const QString&);
+    void loadCustomPage(const QString &);
 
 private:
     void addFooter();
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 #endif // TWITTERAPISEARCHTIMELINEWIDGET_H

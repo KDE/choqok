@@ -12,7 +12,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -92,7 +91,7 @@ class CHOQOK_EXPORT Plugin : public QObject, public KXMLGUIClient
 {
     Q_OBJECT
 public:
-    Plugin( const QString &componentName, QObject *parent );
+    Plugin(const QString &componentName, QObject *parent);
     virtual ~Plugin();
 
     /**
@@ -161,7 +160,7 @@ Q_SIGNALS:
 
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 }

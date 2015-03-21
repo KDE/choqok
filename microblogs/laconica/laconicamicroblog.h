@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -40,52 +39,52 @@ This plugin is to GNU social service.
 */
 class LaconicaMicroBlog : public TwitterApiMicroBlog
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-    LaconicaMicroBlog( QObject* parent, const QVariantList& args  );
+    LaconicaMicroBlog(QObject *parent, const QVariantList &args);
     ~LaconicaMicroBlog();
 
-    virtual Choqok::Account *createNewAccount( const QString &alias );
-    virtual ChoqokEditAccountWidget * createEditAccountWidget( Choqok::Account *account, QWidget *parent );
-    virtual Choqok::UI::MicroBlogWidget * createMicroBlogWidget( Choqok::Account *account, QWidget *parent );
-    virtual Choqok::UI::TimelineWidget * createTimelineWidget( Choqok::Account* account,
-                                                           const QString& timelineName, QWidget* parent );
-    virtual Choqok::UI::PostWidget* createPostWidget(Choqok::Account* account,
-                                                     Choqok::Post* post, QWidget* parent);
-    virtual Choqok::UI::ComposerWidget* createComposerWidget(Choqok::Account* account, QWidget* parent);
-    virtual QString profileUrl( Choqok::Account *account,const QString &username) const;
-    virtual QString postUrl ( Choqok::Account *account, const QString &username,
-                              const QString &postId ) const;
+    virtual Choqok::Account *createNewAccount(const QString &alias);
+    virtual ChoqokEditAccountWidget *createEditAccountWidget(Choqok::Account *account, QWidget *parent);
+    virtual Choqok::UI::MicroBlogWidget *createMicroBlogWidget(Choqok::Account *account, QWidget *parent);
+    virtual Choqok::UI::TimelineWidget *createTimelineWidget(Choqok::Account *account,
+            const QString &timelineName, QWidget *parent);
+    virtual Choqok::UI::PostWidget *createPostWidget(Choqok::Account *account,
+            Choqok::Post *post, QWidget *parent);
+    virtual Choqok::UI::ComposerWidget *createComposerWidget(Choqok::Account *account, QWidget *parent);
+    virtual QString profileUrl(Choqok::Account *account, const QString &username) const;
+    virtual QString postUrl(Choqok::Account *account, const QString &username,
+                            const QString &postId) const;
 
-    virtual TwitterApiSearch* searchBackend();
+    virtual TwitterApiSearch *searchBackend();
 
-    virtual void createPostWithAttachment(Choqok::Account* theAccount, Choqok::Post* post,
-                            const QString &mediumToAttach = QString());
-    virtual QString generateRepeatedByUserTooltip(const QString& username);
+    virtual void createPostWithAttachment(Choqok::Account *theAccount, Choqok::Post *post,
+                                          const QString &mediumToAttach = QString());
+    virtual QString generateRepeatedByUserTooltip(const QString &username);
     virtual QString repeatQuestion();
 
-    virtual void fetchConversation(Choqok::Account* theAccount, const QString& conversationId);
+    virtual void fetchConversation(Choqok::Account *theAccount, const QString &conversationId);
 
 Q_SIGNALS:
-    void conversationFetched( Choqok::Account* theAccount, const QString& conversationId,
-                              QList<Choqok::Post*> posts );
+    void conversationFetched(Choqok::Account *theAccount, const QString &conversationId,
+                             QList<Choqok::Post *> posts);
 
 protected:
-    virtual void listFriendsUsername(TwitterApiAccount* theAccount, bool active = false);
+    virtual void listFriendsUsername(TwitterApiAccount *theAccount, bool active = false);
 
 private:
-    void doRequestFriendsScreenName(TwitterApiAccount* theAccount, int page);
+    void doRequestFriendsScreenName(TwitterApiAccount *theAccount, int page);
 
 public:
-    virtual void requestFriendsScreenName(TwitterApiAccount* theAccount, bool active);
+    virtual void requestFriendsScreenName(TwitterApiAccount *theAccount, bool active);
 
     //virtual QStringList readUsersScreenNameFromXml(Choqok::Account* theAccount, const QByteArray& buffer);
 
 protected Q_SLOTS:
-    virtual void slotFetchConversation( KJob* job );
-    void slotRequestFriendsScreenName(KJob* job);
+    virtual void slotFetchConversation(KJob *job);
+    void slotRequestFriendsScreenName(KJob *job);
 private:
-    QMap<KJob*, QString> mFetchConversationMap;
+    QMap<KJob *, QString> mFetchConversationMap;
     QPointer<LaconicaSearch> mSearchBackend;
     int friendsPage;
 };

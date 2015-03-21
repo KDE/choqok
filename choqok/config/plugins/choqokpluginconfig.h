@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -32,14 +31,14 @@ class KPluginSelector;
 /**
  * Plugin selector. See KPluginSelector in kdelibs for documentation.
  *
- * @author 
+ * @author
  */
 class ChoqokPluginConfig : public KCModule
 {
     Q_OBJECT
 
 public:
-    ChoqokPluginConfig( QWidget *parent, const QVariantList &args  );
+    ChoqokPluginConfig(QWidget *parent, const QVariantList &args);
     ~ChoqokPluginConfig();
 
 public Q_SLOTS:
@@ -47,12 +46,10 @@ public Q_SLOTS:
     virtual void save();
 
     virtual void defaults();
-    void reparseConfiguration(const QByteArray&conf);
+    void reparseConfiguration(const QByteArray &conf);
 private:
     KPluginSelector *m_pluginSelector;
 };
 
 #endif
-
-// vim: set noet ts=4 sts=4 sw=4:
 

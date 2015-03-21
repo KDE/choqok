@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -41,10 +40,11 @@
 #include "twitterdebug.h"
 #include "twittermicroblog.h"
 
-class TwitterComposerWidget::Private{
+class TwitterComposerWidget::Private
+{
 public:
     Private()
-    :btnAttach(0), mediumName(0), btnCancel(0)
+        : btnAttach(0), mediumName(0), btnCancel(0)
     {}
     QString mediumToAttach;
     KPushButton *btnAttach;
@@ -53,11 +53,10 @@ public:
     QGridLayout *editorLayout;
 };
 
-
-TwitterComposerWidget::TwitterComposerWidget(Choqok::Account* account, QWidget* parent)
+TwitterComposerWidget::TwitterComposerWidget(Choqok::Account *account, QWidget *parent)
     : TwitterApiComposerWidget(account, parent), d(new Private)
 {
-    d->editorLayout = qobject_cast<QGridLayout*>(editorContainer()->layout());
+    d->editorLayout = qobject_cast<QGridLayout *>(editorContainer()->layout());
     d->btnAttach = new KPushButton(editorContainer());
     d->btnAttach->setIcon(QIcon::fromTheme("mail-attachment"));
     d->btnAttach->setToolTip(i18n("Attach a file"));
@@ -74,56 +73,57 @@ TwitterComposerWidget::~TwitterComposerWidget()
     delete d;
 }
 
-void TwitterComposerWidget::submitPost(const QString& txt)
+void TwitterComposerWidget::submitPost(const QString &txt)
 {
-    if( d->mediumToAttach.isEmpty() ){
+    if (d->mediumToAttach.isEmpty()) {
         Choqok::UI::ComposerWidget::submitPost(txt);
     } else {
         qCDebug(CHOQOK);
         editorContainer()->setEnabled(false);
         QString text = txt;
-        if( currentAccount()->postCharLimit() &&
-            text.size() > (int)currentAccount()->postCharLimit() )
+        if (currentAccount()->postCharLimit() &&
+                text.size() > (int)currentAccount()->postCharLimit()) {
             text = Choqok::ShortenManager::self()->parseText(text);
+        }
         setPostToSubmit(0L);
-        setPostToSubmit( new Choqok::Post );
+        setPostToSubmit(new Choqok::Post);
         postToSubmit()->content = text;
-        if( !replyToId.isEmpty() ) {
+        if (!replyToId.isEmpty()) {
             postToSubmit()->replyToPostId = replyToId;
         }
-        connect( currentAccount()->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-                SLOT(slotPostMediaSubmitted(Choqok::Account*,Choqok::Post*)) );
+        connect(currentAccount()->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
+                SLOT(slotPostMediaSubmitted(Choqok::Account*,Choqok::Post*)));
         connect(currentAccount()->microblog(),
-                SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,
-                                         QString,Choqok::MicroBlog::ErrorLevel)),
+                SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
+                                 QString, Choqok::MicroBlog::ErrorLevel)),
                 SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
         btnAbort = new KPushButton(QIcon::fromTheme("dialog-cancel"), i18n("Abort"), this);
         layout()->addWidget(btnAbort);
-        connect( btnAbort, SIGNAL(clicked(bool)), SLOT(abort()) );
-        TwitterMicroBlog *mBlog = qobject_cast<TwitterMicroBlog*>(currentAccount()->microblog());
-        mBlog->createPostWithAttachment( currentAccount(), postToSubmit(), d->mediumToAttach );
+        connect(btnAbort, SIGNAL(clicked(bool)), SLOT(abort()));
+        TwitterMicroBlog *mBlog = qobject_cast<TwitterMicroBlog *>(currentAccount()->microblog());
+        mBlog->createPostWithAttachment(currentAccount(), postToSubmit(), d->mediumToAttach);
     }
 }
 
-void TwitterComposerWidget::slotPostMediaSubmitted(Choqok::Account* theAccount, Choqok::Post* post)
+void TwitterComposerWidget::slotPostMediaSubmitted(Choqok::Account *theAccount, Choqok::Post *post)
 {
     qCDebug(CHOQOK);
-    if( currentAccount() == theAccount && post == postToSubmit() ) {
-        qCDebug(CHOQOK)<<"Accepted";
+    if (currentAccount() == theAccount && post == postToSubmit()) {
+        qCDebug(CHOQOK) << "Accepted";
         disconnect(currentAccount()->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-                   this, SLOT(slotPostMediaSubmitted(Choqok::Account*,Choqok::Post*)) );
+                   this, SLOT(slotPostMediaSubmitted(Choqok::Account*,Choqok::Post*)));
         disconnect(currentAccount()->microblog(),
-                    SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,
-                                    QString,Choqok::MicroBlog::ErrorLevel)),
-                    this, SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
-        if(btnAbort){
+                   SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
+                                    QString, Choqok::MicroBlog::ErrorLevel)),
+                   this, SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
+        if (btnAbort) {
             btnAbort->deleteLater();
         }
         Choqok::NotifyManager::success(i18n("New post submitted successfully"));
         editor()->clear();
         replyToId.clear();
         editorContainer()->setEnabled(true);
-        setPostToSubmit( 0L );
+        setPostToSubmit(0L);
         cancelAttachMedium();
         currentAccount()->microblog()->updateTimelines(currentAccount());
     }
@@ -132,20 +132,21 @@ void TwitterComposerWidget::slotPostMediaSubmitted(Choqok::Account* theAccount, 
 void TwitterComposerWidget::selectMediumToAttach()
 {
     qCDebug(CHOQOK);
-    d->mediumToAttach = KFileDialog::getOpenFileName( QUrl("kfiledialog:///image?global"),
-                                                      QString(), this,
-                                                      i18n("Select Media to Upload") );
-    if( d->mediumToAttach.isEmpty() )
+    d->mediumToAttach = KFileDialog::getOpenFileName(QUrl("kfiledialog:///image?global"),
+                        QString(), this,
+                        i18n("Select Media to Upload"));
+    if (d->mediumToAttach.isEmpty()) {
         return;
+    }
     QString fileName = QUrl(d->mediumToAttach).fileName();
-    if( !d->mediumName ){
-        qCDebug(CHOQOK)<<fileName;
+    if (!d->mediumName) {
+        qCDebug(CHOQOK) << fileName;
         d->mediumName = new QLabel(editorContainer());
         d->btnCancel = new KPushButton(editorContainer());
         d->btnCancel->setIcon(QIcon::fromTheme("list-remove"));
         d->btnCancel->setToolTip(i18n("Discard Attachment"));
         d->btnCancel->setMaximumWidth(d->btnCancel->height());
-        connect( d->btnCancel, SIGNAL(clicked(bool)), SLOT(cancelAttachMedium()) );
+        connect(d->btnCancel, SIGNAL(clicked(bool)), SLOT(cancelAttachMedium()));
 
         d->editorLayout->addWidget(d->mediumName, 1, 0);
         d->editorLayout->addWidget(d->btnCancel, 1, 1);

@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -34,14 +33,14 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "appearancedebug.h"
 #include "choqokappearancesettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON( ChoqokAppearanceConfigFactory, "choqok_appearanceconfig.json",
-                            registerPlugin<AppearanceConfig>(); )
+K_PLUGIN_FACTORY_WITH_JSON(ChoqokAppearanceConfigFactory, "choqok_appearanceconfig.json",
+                           registerPlugin<AppearanceConfig>();)
 
 class AppearanceConfig::Private
 {
 public:
     Private()
-     : mAppearanceTabCtl(0L)
+        : mAppearanceTabCtl(0L)
     {}
 
     KTabWidget *mAppearanceTabCtl;
@@ -49,27 +48,26 @@ public:
     Ui::AppearanceConfig_Base mPrefsBase;
 };
 
-
-AppearanceConfig::AppearanceConfig(QWidget *parent, const QVariantList &args )
-    : KCModule( KAboutData::pluginData("kcm_choqok_appearanceconfig"), parent, args )
+AppearanceConfig::AppearanceConfig(QWidget *parent, const QVariantList &args)
+    : KCModule(KAboutData::pluginData("kcm_choqok_appearanceconfig"), parent, args)
     , d(new Private())
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     // since the tab widget is already within a layout with margins in the KSettings::Dialog
     // it needs no margins of its own.
-    layout->setContentsMargins( 0, 0, 0, 0 );
+    layout->setContentsMargins(0, 0, 0, 0);
     d->mAppearanceTabCtl = new KTabWidget(this);
     d->mAppearanceTabCtl->setTabBarHidden(true);
     d->mAppearanceTabCtl->setDocumentMode(true);
     d->mAppearanceTabCtl->setObjectName("mAppearanceTabCtl");
-    layout->addWidget( d->mAppearanceTabCtl );
+    layout->addWidget(d->mAppearanceTabCtl);
 
 //     KConfigGroup config(KGlobal::config(), "ChatWindowSettings");
 
     // "Contact List" TAB =======================================================
     QWidget *appearsWidget = new QWidget(d->mAppearanceTabCtl);
     d->mPrefsBase.setupUi(appearsWidget);
-    addConfig( Choqok::AppearanceSettings::self(), appearsWidget );
+    addConfig(Choqok::AppearanceSettings::self(), appearsWidget);
 
     d->mAppearanceTabCtl->addTab(appearsWidget, i18n("Appearance"));
 
@@ -96,4 +94,3 @@ void AppearanceConfig::load()
 }
 
 #include "appearanceconfig.moc"
-// vim: set noet ts=4 sts=4 sw=4:

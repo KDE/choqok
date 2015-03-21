@@ -20,4 +20,3 @@
 #include "appearancedebug.h"
 Q_LOGGING_CATEGORY(CHOQOK, "org.kde.choqok.config.appearance")
 
-

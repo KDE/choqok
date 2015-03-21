@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -31,15 +30,17 @@
 
 #include "choqok_export.h"
 
-namespace Choqok {
+namespace Choqok
+{
 
-namespace UI {
+namespace UI
+{
 
 class CHOQOK_EXPORT UploadMediaDialog : public KDialog
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-    explicit UploadMediaDialog(QWidget* parent = 0, const QString &url = QString());
+    explicit UploadMediaDialog(QWidget *parent = 0, const QString &url = QString());
     ~UploadMediaDialog();
 
 protected:
@@ -48,16 +49,16 @@ protected:
     bool showed;
 
 protected Q_SLOTS:
-    void currentPluginChanged( int index );
+    void currentPluginChanged(int index);
     void slotAboutClicked();
     void slotConfigureClicked();
-    void slotMediumUploadFailed(const QUrl& localUrl, const QString& errorMessage);
-    void slotMediumUploaded(const QUrl& localUrl, const QString& remoteUrl);
+    void slotMediumUploadFailed(const QUrl &localUrl, const QString &errorMessage);
+    void slotMediumUploaded(const QUrl &localUrl, const QString &remoteUrl);
     void slotMediumChanged(const QString &url);
 
 private:
     class Private;
-    Private * const d;
+    Private *const d;
     QSize winSize;
 };
 

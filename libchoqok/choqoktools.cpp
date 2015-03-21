@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -31,12 +30,12 @@
 
 #include "choqokbehaviorsettings.h"
 
-void Choqok::openUrl(const QUrl& url)
+void Choqok::openUrl(const QUrl &url)
 {
-    if( Choqok::BehaviorSettings::useCustomBrowser() ) {
+    if (Choqok::BehaviorSettings::useCustomBrowser()) {
         QStringList args = Choqok::BehaviorSettings::customBrowser().split(' ');
         args.append(url.toString());
-        if( KProcess::startDetached( args ) == 0 ) {
+        if (KProcess::startDetached(args) == 0) {
             KToolInvocation::invokeBrowser(url.toString());
         }
     } else {
@@ -44,37 +43,36 @@ void Choqok::openUrl(const QUrl& url)
     }
 }
 
-
 QString Choqok::qoauthErrorText(int code)
 {
-    switch(code){
-        case QOAuth::NoError:
-            return i18n("No Error");
-        case QOAuth::BadRequest:
-            return i18n("Bad request");
-        case QOAuth::ConsumerKeyEmpty:
-        case QOAuth::ConsumerSecretEmpty:
-            return i18n("Consumer Key or Secret has not been provided");
-        case QOAuth::Forbidden:
-            return i18n("Forbidden");
-        case QOAuth::Timeout:
-            return i18n("Timeout on server");
-        case QOAuth::Unauthorized:
-            return i18n("Authorization Error");
-        case QOAuth::UnsupportedHttpMethod:
-            return i18n("Internal Error");
-        case QOAuth::OtherError:
-        case QOAuth::RSADecodingError:
-        case QOAuth::RSAKeyFileError:
-        case QOAuth::RSAPrivateKeyEmpty:
-            return i18n("Unknown Error");
-        default:
-            return QString();
+    switch (code) {
+    case QOAuth::NoError:
+        return i18n("No Error");
+    case QOAuth::BadRequest:
+        return i18n("Bad request");
+    case QOAuth::ConsumerKeyEmpty:
+    case QOAuth::ConsumerSecretEmpty:
+        return i18n("Consumer Key or Secret has not been provided");
+    case QOAuth::Forbidden:
+        return i18n("Forbidden");
+    case QOAuth::Timeout:
+        return i18n("Timeout on server");
+    case QOAuth::Unauthorized:
+        return i18n("Authorization Error");
+    case QOAuth::UnsupportedHttpMethod:
+        return i18n("Internal Error");
+    case QOAuth::OtherError:
+    case QOAuth::RSADecodingError:
+    case QOAuth::RSAKeyFileError:
+    case QOAuth::RSAPrivateKeyEmpty:
+        return i18n("Unknown Error");
+    default:
+        return QString();
     }
 }
 
-QString Choqok::getColorString(const QColor& color)
+QString Choqok::getColorString(const QColor &color)
 {
     return "rgb(" + QString::number(color.red()) + ',' + QString::number(color.green()) + ',' +
-    QString::number(color.blue()) + ')';
+           QString::number(color.blue()) + ')';
 }

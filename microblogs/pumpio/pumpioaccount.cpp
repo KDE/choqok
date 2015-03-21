@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -43,7 +42,7 @@ public:
     QStringList timelineNames;
 };
 
-PumpIOAccount::PumpIOAccount(PumpIOMicroBlog* parent, const QString& alias):
+PumpIOAccount::PumpIOAccount(PumpIOMicroBlog *parent, const QString &alias):
     Account(parent, alias), d(new Private)
 {
     d->host = configGroup()->readEntry("Host", QString());
@@ -85,9 +84,9 @@ void PumpIOAccount::writeConfig()
     configGroup()->writeEntry("Token", d->token);
     configGroup()->writeEntry("ConsumerKey", d->consumerKey);
     Choqok::PasswordManager::self()->writePassword(QString("%1_consumerSecret").arg(alias()),
-                                                   d->consumerSecret);
+            d->consumerSecret);
     Choqok::PasswordManager::self()->writePassword(QString("%1_tokenSecret").arg(alias()),
-                                                   d->tokenSecret);
+            d->tokenSecret);
     configGroup()->writeEntry("Following", d->following);
     configGroup()->writeEntry("Timelines", d->timelineNames);
     //TODO: write accounts lists
@@ -99,7 +98,7 @@ QString PumpIOAccount::host()
     return d->host;
 }
 
-void PumpIOAccount::setHost(const QString& host)
+void PumpIOAccount::setHost(const QString &host)
 {
     d->host = host;
 }
@@ -109,7 +108,7 @@ QString PumpIOAccount::consumerKey()
     return d->consumerKey;
 }
 
-void PumpIOAccount::setConsumerKey(const QString& consumerKey)
+void PumpIOAccount::setConsumerKey(const QString &consumerKey)
 {
     d->consumerKey = consumerKey;
     d->oAuth->setConsumerKey(consumerKey.toLocal8Bit());
@@ -120,7 +119,7 @@ QString PumpIOAccount::consumerSecret()
     return d->consumerSecret;
 }
 
-void PumpIOAccount::setConsumerSecret(const QString& consumerSecret)
+void PumpIOAccount::setConsumerSecret(const QString &consumerSecret)
 {
     d->consumerSecret = consumerSecret;
     d->oAuth->setConsumerSecret(consumerSecret.toLocal8Bit());
@@ -131,7 +130,7 @@ QString PumpIOAccount::token()
     return d->token;
 }
 
-void PumpIOAccount::setToken(const QString& token)
+void PumpIOAccount::setToken(const QString &token)
 {
     d->token = token;
 }
@@ -141,7 +140,7 @@ QString PumpIOAccount::tokenSecret()
     return d->tokenSecret;
 }
 
-void PumpIOAccount::setTokenSecret(const QString& tokenSecret)
+void PumpIOAccount::setTokenSecret(const QString &tokenSecret)
 {
     d->tokenSecret = tokenSecret;
 }
@@ -176,7 +175,7 @@ void PumpIOAccount::setLists(const QVariantList lists)
     d->lists.append(followersCollection);
 }
 
-void PumpIOAccount::setTimelineNames(const QStringList& list)
+void PumpIOAccount::setTimelineNames(const QStringList &list)
 {
     d->timelineNames.clear();
     Q_FOREACH (const QString &name, list) {
@@ -191,7 +190,7 @@ QString PumpIOAccount::webfingerID()
     return username() + '@' + QString(d->host).remove("https://");
 }
 
-QOAuth::Interface* PumpIOAccount::oAuth()
+QOAuth::Interface *PumpIOAccount::oAuth()
 {
     return d->oAuth;
 }

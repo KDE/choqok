@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -29,7 +28,8 @@
 
 #include "microblog.h"
 
-namespace Choqok {
+namespace Choqok
+{
 class Account;
 struct Post;
 }
@@ -40,25 +40,25 @@ class CHOQOK_HELPER_EXPORT TwitterApiDMessageDialog : public KDialog
 {
     Q_OBJECT
 public:
-    explicit TwitterApiDMessageDialog( TwitterApiAccount *theAccount, QWidget* parent = 0, Qt::WFlags flags = 0);
+    explicit TwitterApiDMessageDialog(TwitterApiAccount *theAccount, QWidget *parent = 0, Qt::WFlags flags = 0);
     ~TwitterApiDMessageDialog();
     void setTo(const QString &username);
 
 protected Q_SLOTS:
-    void friendsUsernameListed(TwitterApiAccount*,QStringList);
+    void friendsUsernameListed(TwitterApiAccount *, QStringList);
     void submitPost(QString);
     void reloadFriendslist();
-    void postCreated(Choqok::Account*,Choqok::Post*);
-    void errorPost(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,
-                   QString,Choqok::MicroBlog::ErrorLevel);
+    void postCreated(Choqok::Account *, Choqok::Post *);
+    void errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
+                   QString, Choqok::MicroBlog::ErrorLevel);
 
 protected:
-    virtual void setupUi( QWidget *mainWidget );
+    virtual void setupUi(QWidget *mainWidget);
     virtual void slotButtonClicked(int button);
 
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 #endif // TWITTERAPIDMESSAGEDIALOG_H

@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -51,9 +50,9 @@ class TwitterApiWhoisWidget::Private
 {
 public:
     Private(TwitterApiAccount *account, const QString &userN)
-    :currentAccount(account), waitFrame(0), job(0), username(userN)
+        : currentAccount(account), waitFrame(0), job(0), username(userN)
     {
-        mBlog = qobject_cast<TwitterApiMicroBlog*>(account->microblog());
+        mBlog = qobject_cast<TwitterApiMicroBlog *>(account->microblog());
     }
     KTextBrowser *wid;
     TwitterApiAccount *currentAccount;
@@ -72,8 +71,8 @@ public:
 //     bool isFollowing;
 };
 
-TwitterApiWhoisWidget::TwitterApiWhoisWidget(TwitterApiAccount* theAccount, const QString& username,
-                                             const Choqok::Post &post, QWidget* parent)
+TwitterApiWhoisWidget::TwitterApiWhoisWidget(TwitterApiAccount *theAccount, const QString &username,
+        const Choqok::Post &post, QWidget *parent)
     : QFrame(parent), d(new Private(theAccount, username))
 {
     qCDebug(CHOQOK);
@@ -87,12 +86,12 @@ TwitterApiWhoisWidget::TwitterApiWhoisWidget(TwitterApiAccount* theAccount, cons
 
     d->wid->setFrameShape(QFrame::NoFrame);
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setContentsMargins(0,0,0,0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(d->wid);
     this->setLayout(layout);
     this->setWindowFlags(Qt::Popup);// | Qt::FramelessWindowHint | Qt::Ta);
     d->wid->setOpenLinks(false);
-    connect(d->wid,SIGNAL(anchorClicked(const QUrl)),this,SLOT(checkAnchor(const QUrl)));
+    connect(d->wid, SIGNAL(anchorClicked(QUrl)), this, SLOT(checkAnchor(QUrl)));
     setupUi();
     setActionImages();
 }
@@ -103,55 +102,56 @@ TwitterApiWhoisWidget::~TwitterApiWhoisWidget()
     delete d;
 }
 
-void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount* theAccount, const QString& username)
+void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount *theAccount, const QString &username)
 {
     qCDebug(CHOQOK);
     QString urlStr;
     QString user = username;
-    if(user.contains('@')) {
+    if (user.contains('@')) {
         QStringList lst = user.split('@');
-        if(lst.count() == 2){//USER@HOST
+        if (lst.count() == 2) { //USER@HOST
             QString host = lst[1];
             urlStr = QString("http://%1/api").arg(host);
             user = lst[0];
         }
-    } else if( d->currentPost.source == "ostatus" && !d->currentPost.author.homePageUrl.isEmpty() ) {
+    } else if (d->currentPost.source == "ostatus" && !d->currentPost.author.homePageUrl.isEmpty()) {
         urlStr = d->currentPost.author.homePageUrl;
-        if(urlStr.endsWith(user)) {
+        if (urlStr.endsWith(user)) {
             int len = urlStr.length();
             int userLen = user.length();
             urlStr.remove(len - userLen, userLen);
-            qCDebug(CHOQOK)<<urlStr;
+            qCDebug(CHOQOK) << urlStr;
         }
         urlStr.append("api");
     } else {
         urlStr = theAccount->apiUrl().url();
     }
-    QUrl url( urlStr );
+    QUrl url(urlStr);
 
     url = url.adjusted(QUrl::StripTrailingSlash);
-    url.setPath(url.path() + ( QString( "/users/show/%1.json" ).arg(user)));
+    url.setPath(url.path() + (QString("/users/show/%1.json").arg(user)));
 
 //     qCDebug(CHOQOK) << url;
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
-    if ( d->currentPost.source != "ostatus" ) {
+    if (d->currentPost.source != "ostatus") {
         job->addMetaData(QStringLiteral("customHTTPHeader"),
                          QStringLiteral("Authorization: ") +
                          d->mBlog->authorizationHeader(theAccount, url, QOAuth::GET));
     }
     d->job = job;
-    connect( job, SIGNAL(result(KJob*)), SLOT(userInfoReceived(KJob*)));
+    connect(job, SIGNAL(result(KJob*)), SLOT(userInfoReceived(KJob*)));
     job->start();
 }
 
-void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
+void TwitterApiWhoisWidget::userInfoReceived(KJob *job)
 {
     qCDebug(CHOQOK);
-    if(job->error()){
-        qCCritical(CHOQOK)<<"Job Error: "<<job->errorString();
-        if( Choqok::UI::Global::mainWindow()->statusBar() )
+    if (job->error()) {
+        qCCritical(CHOQOK) << "Job Error: " << job->errorString();
+        if (Choqok::UI::Global::mainWindow()->statusBar()) {
             Choqok::UI::Global::mainWindow()->statusBar()->showMessage(job->errorString());
+        }
         slotCancel();
         return;
     }
@@ -159,7 +159,7 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
 //     qCDebug(CHOQOK)<<stj->data();
     const QJsonDocument json = QJsonDocument::fromJson(stj->data());
     if (json.isNull()) {
-        qCDebug(CHOQOK)<<"JSON parsing failed! Data is:\n\t"<<stj->data();
+        qCDebug(CHOQOK) << "JSON parsing failed! Data is:\n\t" << stj->data();
         d->errorMessage = i18n("Cannot load user information.");
         updateHtml();
         showForm();
@@ -171,7 +171,7 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
     QString timeStr;
     Choqok::Post post;
     d->errorMessage = map["error"].toString();
-    if( d->errorMessage.isEmpty() ) { //No Error
+    if (d->errorMessage.isEmpty()) {  //No Error
         post.author.realName = map["name"].toString();
         post.author.userName = map["screen_name"].toString();
         post.author.location = map["location"].toString();
@@ -197,42 +197,42 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob* job)
     updateHtml();
     showForm();
 
-    QPixmap userAvatar = Choqok::MediaManager::self()->fetchImage( post.author.profileImageUrl,
-                                                                    Choqok::MediaManager::Async );
+    QPixmap userAvatar = Choqok::MediaManager::self()->fetchImage(post.author.profileImageUrl,
+                         Choqok::MediaManager::Async);
 
-    if(!userAvatar.isNull()) {
-        d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"),
-                                         userAvatar );
+    if (!userAvatar.isNull()) {
+        d->wid->document()->addResource(QTextDocument::ImageResource, QUrl("img://profileImage"),
+                                        userAvatar);
     } else {
-        connect( Choqok::MediaManager::self(), SIGNAL( imageFetched(QString,QPixmap)),
-                this, SLOT(avatarFetched(QString, QPixmap) ) );
-        connect( Choqok::MediaManager::self(), SIGNAL(fetchError(QString,QString)),
-                this, SLOT(avatarFetchError(QString,QString)) );
+        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
+                this, SLOT(avatarFetched(QString,QPixmap)));
+        connect(Choqok::MediaManager::self(), SIGNAL(fetchError(QString,QString)),
+                this, SLOT(avatarFetchError(QString,QString)));
     }
 }
 
-void TwitterApiWhoisWidget::avatarFetched(const QString& remoteUrl, const QPixmap& pixmap)
+void TwitterApiWhoisWidget::avatarFetched(const QString &remoteUrl, const QPixmap &pixmap)
 {
     qCDebug(CHOQOK);
-    if ( remoteUrl == d->currentPost.author.profileImageUrl ) {
+    if (remoteUrl == d->currentPost.author.profileImageUrl) {
         const QUrl url("img://profileImage");
-        d->wid->document()->addResource( QTextDocument::ImageResource, url, pixmap );
+        d->wid->document()->addResource(QTextDocument::ImageResource, url, pixmap);
         updateHtml();
-        disconnect( Choqok::MediaManager::self(), SIGNAL( imageFetched(QString,QPixmap)),
-                    this, SLOT(avatarFetched(QString, QPixmap) ) );
-        disconnect( Choqok::MediaManager::self(), SIGNAL(fetchError(QString,QString)),
-                    this, SLOT(avatarFetchError(QString,QString))  );
+        disconnect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
+                   this, SLOT(avatarFetched(QString,QPixmap)));
+        disconnect(Choqok::MediaManager::self(), SIGNAL(fetchError(QString,QString)),
+                   this, SLOT(avatarFetchError(QString,QString)));
     }
 }
 
-void TwitterApiWhoisWidget::avatarFetchError(const QString& remoteUrl, const QString& errMsg)
+void TwitterApiWhoisWidget::avatarFetchError(const QString &remoteUrl, const QString &errMsg)
 {
     qCDebug(CHOQOK);
     Q_UNUSED(errMsg);
-    if( remoteUrl == d->currentPost.author.profileImageUrl ){
+    if (remoteUrl == d->currentPost.author.profileImageUrl) {
         ///Avatar fetching is failed! but will not disconnect to get the img if it fetches later!
         const QUrl url("img://profileImage");
-        d->wid->document()->addResource( QTextDocument::ImageResource, url, QIcon::fromTheme("image-missing").pixmap(48) );
+        d->wid->document()->addResource(QTextDocument::ImageResource, url, QIcon::fromTheme("image-missing").pixmap(48));
         updateHtml();
     }
 }
@@ -241,9 +241,9 @@ void TwitterApiWhoisWidget::updateHtml()
 {
     qCDebug(CHOQOK);
     QString html;
-    if( d->errorMessage.isEmpty() ) {
+    if (d->errorMessage.isEmpty()) {
         QString url = d->currentPost.author.homePageUrl.isEmpty() ? QString()
-                    : QString("<a title='%1' href='%1'>%1</a>").arg(d->currentPost.author.homePageUrl);
+                      : QString("<a title='%1' href='%1'>%1</a>").arg(d->currentPost.author.homePageUrl);
 
         QString mainTable = QString("<table width='100%'><tr>\
         <td width=49><img width=48 height=48 src='img://profileImage'/>\
@@ -253,25 +253,25 @@ void TwitterApiWhoisWidget::updateHtml()
         <b>@%3</b>&nbsp;<font size=3>%4</font><font size=2>%5</font><br/>\
         <i>%6</i><br/>\
         <font size=3>%7</font></td></tr></table>")
-        .arg(d->imgActions)
-        .arg(Qt::escape(d->currentPost.author.realName))
-        .arg(d->currentPost.author.userName).arg(Qt::escape(d->currentPost.author.location))
-        .arg(!d->timeZone.isEmpty() ? '(' + d->timeZone + ')' : QString())
-        .arg(d->currentPost.author.description)
-        .arg(url);
+                            .arg(d->imgActions)
+                            .arg(Qt::escape(d->currentPost.author.realName))
+                            .arg(d->currentPost.author.userName).arg(Qt::escape(d->currentPost.author.location))
+                            .arg(!d->timeZone.isEmpty() ? '(' + d->timeZone + ')' : QString())
+                            .arg(d->currentPost.author.description)
+                            .arg(url);
 
         QString countTable = QString("<table><tr>\
         <td><b>%1</b><br/>" + i18nc("User posts", "Posts") + "</td>\
         <td><b>%2</b><br/>" + i18nc("User friends", "Friends") + "</td>\
         <td><b>%3</b><br/>" + i18nc("User followers" , "Followers") + "</td>\
         </tr></table><br/>")
-        .arg(d->statusesCount)
-        .arg(d->friendsCount)
-        .arg(d->followersCount);
-        
+                             .arg(d->statusesCount)
+                             .arg(d->friendsCount)
+                             .arg(d->followersCount);
+
         html = mainTable + countTable;
-        
-        if (!d->currentPost.content.isEmpty()){
+
+        if (!d->currentPost.content.isEmpty()) {
             html.append(QString(i18n("<table><tr><b>Last Status:</b> %1</tr></table>")).arg(d->currentPost.content));
         }
 
@@ -287,18 +287,20 @@ void TwitterApiWhoisWidget::showForm()
     QPoint pos = d->waitFrame->pos();
     d->waitFrame->deleteLater();
     d->wid->resize(320, 200);
-    d->wid->document()->setTextWidth(width()-2);
+    d->wid->document()->setTextWidth(width() - 2);
     d->wid->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     int h = d->wid->document()->size().toSize().height() + 10;
     d->wid->setMinimumHeight(h);
     d->wid->setMaximumHeight(h);
-    this->resize(320,h+4);
+    this->resize(320, h + 4);
     int desktopHeight = QApplication::desktop()->height();
     int desktopWidth = QApplication::desktop()->width();
-    if( (pos.x() + this->width()) > desktopWidth )
+    if ((pos.x() + this->width()) > desktopWidth) {
         pos.setX(desktopWidth - width());
-    if( (pos.y() + this->height()) > desktopHeight )
+    }
+    if ((pos.y() + this->height()) > desktopHeight) {
         pos.setY(desktopHeight - height());
+    }
     move(pos);
     QWidget::show();
 }
@@ -310,26 +312,26 @@ void TwitterApiWhoisWidget::show(QPoint pos)
     d->waitFrame->setFrameShape(NoFrame);
     d->waitFrame->setWindowFlags(Qt::Popup);
 #pragma message("Port to KF5")
-/*    KAnimatedButton *waitButton = new KAnimatedButton;
-    waitButton->setToolTip(i18n("Please wait..."));
-    connect( waitButton, SIGNAL(clicked(bool)), SLOT(slotCancel()) );
-    waitButton->setIcons("process-working-kde");
-    waitButton->start();
+    /*    KAnimatedButton *waitButton = new KAnimatedButton;
+        waitButton->setToolTip(i18n("Please wait..."));
+        connect( waitButton, SIGNAL(clicked(bool)), SLOT(slotCancel()) );
+        waitButton->setIcons("process-working-kde");
+        waitButton->start();
 
-    QVBoxLayout *ly = new QVBoxLayout(d->waitFrame);
-    ly->setSpacing(0);
-    ly->setContentsMargins(0, 0, 0, 0);
-    ly->addWidget(waitButton);
+        QVBoxLayout *ly = new QVBoxLayout(d->waitFrame);
+        ly->setSpacing(0);
+        ly->setContentsMargins(0, 0, 0, 0);
+        ly->addWidget(waitButton);
 
-    d->waitFrame->move(pos - QPoint(15, 15));
-    d->waitFrame->show();*/
+        d->waitFrame->move(pos - QPoint(15, 15));
+        d->waitFrame->show();*/
 }
 
-void TwitterApiWhoisWidget::checkAnchor( const QUrl url )
+void TwitterApiWhoisWidget::checkAnchor(const QUrl url)
 {
     qCDebug(CHOQOK);
-    if(url.scheme()=="choqok"){
-        if(url.host()=="close"){
+    if (url.scheme() == "choqok") {
+        if (url.host() == "close") {
             this->close();
         } else if (url.host() == "subscribe") {
             d->mBlog->createFriendship(d->currentAccount, d->username);
@@ -344,71 +346,72 @@ void TwitterApiWhoisWidget::checkAnchor( const QUrl url )
 //             connect(d->mBlog, SIGNAL(userBlocked(Choqok::Account*,QString)), SLOT(slotUserBlocked(Choqok::Account*,QString)));
         }
     } else {
-            Choqok::openUrl(url);
-            close();
-        }
+        Choqok::openUrl(url);
+        close();
+    }
 }
 
 void TwitterApiWhoisWidget::setupUi()
 {
     qCDebug(CHOQOK);
-    d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://close"),
-                            QIcon::fromTheme("dialog-close").pixmap(16) );
-
+    d->wid->document()->addResource(QTextDocument::ImageResource, QUrl("icon://close"),
+                                    QIcon::fromTheme("dialog-close").pixmap(16));
 
     QString style = "color: %1; background-color: %2";
-    if ( Choqok::AppearanceSettings::isCustomUi() ) {
-        setStyleSheet( style.arg(Choqok::AppearanceSettings::readForeColor().name())
-                            .arg(Choqok::AppearanceSettings::readBackColor().name()) );
+    if (Choqok::AppearanceSettings::isCustomUi()) {
+        setStyleSheet(style.arg(Choqok::AppearanceSettings::readForeColor().name())
+                      .arg(Choqok::AppearanceSettings::readBackColor().name()));
     } else {
         QPalette p = window()->palette();
-        setStyleSheet( style.arg(p.color(QPalette::WindowText).name()).arg(p.color(QPalette::Window).name()) );
+        setStyleSheet(style.arg(p.color(QPalette::WindowText).name()).arg(p.color(QPalette::Window).name()));
     }
 }
 
 void TwitterApiWhoisWidget::slotCancel()
 {
     qCDebug(CHOQOK);
-    if(d->waitFrame)
+    if (d->waitFrame) {
         d->waitFrame->deleteLater();
-    if(d->job)
+    }
+    if (d->job) {
         d->job->kill();
+    }
     this->close();
 }
 
 void TwitterApiWhoisWidget::setActionImages()
 {
     d->imgActions.clear();
-    if(d->username.compare(d->currentAccount->username(), Qt::CaseInsensitive) != 0){
-        if( d->currentAccount->friendsList().contains(d->username, Qt::CaseInsensitive) ){
-            d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://unsubscribe"),
-                            QIcon::fromTheme("list-remove-user").pixmap(16) );
-            d->imgActions += "<a href='choqok://unsubscribe'><img src='icon://unsubscribe' title='"+
-                            i18n("Unsubscribe") +"'></a> ";
+    if (d->username.compare(d->currentAccount->username(), Qt::CaseInsensitive) != 0) {
+        if (d->currentAccount->friendsList().contains(d->username, Qt::CaseInsensitive)) {
+            d->wid->document()->addResource(QTextDocument::ImageResource, QUrl("icon://unsubscribe"),
+                                            QIcon::fromTheme("list-remove-user").pixmap(16));
+            d->imgActions += "<a href='choqok://unsubscribe'><img src='icon://unsubscribe' title='" +
+                             i18n("Unsubscribe") + "'></a> ";
         } else {
-            d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://subscribe"),
-                            QIcon::fromTheme("list-add-user").pixmap(16) );
-            d->imgActions += "<a href='choqok://subscribe'><img src='icon://subscribe' title='"+
-                            i18n("Subscribe") +"'></a> ";
+            d->wid->document()->addResource(QTextDocument::ImageResource, QUrl("icon://subscribe"),
+                                            QIcon::fromTheme("list-add-user").pixmap(16));
+            d->imgActions += "<a href='choqok://subscribe'><img src='icon://subscribe' title='" +
+                             i18n("Subscribe") + "'></a> ";
         }
 
-        d->wid->document()->addResource( QTextDocument::ImageResource, QUrl("icon://block"),
-                                         QIcon::fromTheme("dialog-cancel").pixmap(16) );
-        d->imgActions += "<a href='choqok://block'><img src='icon://block' title='"+ i18n("Block") +"'></a>";
+        d->wid->document()->addResource(QTextDocument::ImageResource, QUrl("icon://block"),
+                                        QIcon::fromTheme("dialog-cancel").pixmap(16));
+        d->imgActions += "<a href='choqok://block'><img src='icon://block' title='" + i18n("Block") + "'></a>";
     }
 }
 
-void TwitterApiWhoisWidget::slotFriendshipCreated(Choqok::Account* theAccount, const QString &username)
+void TwitterApiWhoisWidget::slotFriendshipCreated(Choqok::Account *theAccount, const QString &username)
 {
-    if(theAccount == d->currentAccount && username == d->username){
+    if (theAccount == d->currentAccount && username == d->username) {
         setActionImages();
         updateHtml();
     }
 }
 
-void TwitterApiWhoisWidget::slotFriendshipDestroyed(Choqok::Account* theAccount, const QString &username)
+void TwitterApiWhoisWidget::slotFriendshipDestroyed(Choqok::Account *theAccount, const QString &username)
 {
-    if(theAccount == d->currentAccount && username == d->username){
+    if (theAccount == d->currentAccount && username == d->username) {
         setActionImages();
         updateHtml();
     }

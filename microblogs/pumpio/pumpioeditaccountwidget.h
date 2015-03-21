@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -33,16 +32,15 @@
 class PumpIOAccount;
 class PumpIOMicroBlog;
 
-
 class PumpIOEditAccountWidget : public ChoqokEditAccountWidget, Ui::PumpIOEditAccountWidget
 {
     Q_OBJECT
 public:
-    explicit PumpIOEditAccountWidget(PumpIOMicroBlog* microblog, PumpIOAccount* account,
-                                     QWidget* parent);
+    explicit PumpIOEditAccountWidget(PumpIOMicroBlog *microblog, PumpIOAccount *account,
+                                     QWidget *parent);
     virtual ~PumpIOEditAccountWidget();
 
-    virtual Choqok::Account* apply();
+    virtual Choqok::Account *apply();
 
     virtual bool validateData();
 
@@ -55,7 +53,7 @@ private:
     void registerClient();
     void saveTimelinesTable();
 
-    PumpIOAccount* m_account;
+    PumpIOAccount *m_account;
     QOAuth::Interface *m_qoauth;
 };
 

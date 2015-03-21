@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -35,7 +34,7 @@ public:
     QString changeExclamationMarkToText;
 };
 
-LaconicaAccount::LaconicaAccount(LaconicaMicroBlog* parent, const QString &alias)
+LaconicaAccount::LaconicaAccount(LaconicaMicroBlog *parent, const QString &alias)
     : TwitterApiAccount(parent, alias), d(new Private)
 {
     d->changeExclamationMarkToText = configGroup()->readEntry("changeExclamationMarkText", QString('#'));
@@ -59,7 +58,7 @@ QString LaconicaAccount::changeExclamationMarkToText() const
     return d->changeExclamationMarkToText;
 }
 
-void LaconicaAccount::setChangeExclamationMarkToText(const QString& text)
+void LaconicaAccount::setChangeExclamationMarkToText(const QString &text)
 {
     d->changeExclamationMarkToText = text;
 }

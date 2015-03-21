@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -37,18 +36,18 @@ class Flickr : public Choqok::Uploader
 {
     Q_OBJECT
 public:
-    Flickr( QObject* parent, const QList< QVariant >& args );
+    Flickr(QObject *parent, const QList< QVariant > &args);
     ~Flickr();
 
-    virtual void upload(const QUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType);
-    QString base58encode( quint64 );
-    QByteArray createSign( QByteArray );
-    
+    virtual void upload(const QUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType);
+    QString base58encode(quint64);
+    QByteArray createSign(QByteArray);
+
 protected Q_SLOTS:
-    void slotUpload( KJob *job );
+    void slotUpload(KJob *job);
 
 private:
-    QMap<KJob*, QUrl> mUrlMap;
+    QMap<KJob *, QUrl> mUrlMap;
 };
 
 #endif //FLICKR_H

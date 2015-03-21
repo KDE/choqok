@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -39,52 +38,51 @@
 #include <KToolInvocation>
 #include <KWebPage>
 
-K_PLUGIN_FACTORY_WITH_JSON( KonqPluginChoqokFactory, "konqchoqok.json", registerPlugin<KonqPluginChoqok>(); )
+K_PLUGIN_FACTORY_WITH_JSON(KonqPluginChoqokFactory, "konqchoqok.json", registerPlugin<KonqPluginChoqok>();)
 
-KonqPluginChoqok::KonqPluginChoqok(QObject* parent, const QVariantList& )
-    : Plugin( parent ) , m_interface(0)
-{ 
+KonqPluginChoqok::KonqPluginChoqok(QObject *parent, const QVariantList &)
+    : Plugin(parent) , m_interface(0)
+{
     KActionMenu *menu = new KActionMenu(QIcon::fromTheme("choqok") , i18n("Choqok"),
-    actionCollection() );
-    actionCollection()->addAction( "action menu", menu);
-    menu->setDelayed( false );
-    
-    QAction *postaction = actionCollection()->addAction( "post_choqok" );
-    postaction->setText( i18n("Post Text with Choqok") );
-    connect( postaction, SIGNAL( triggered(bool) ), SLOT( slotpostSelectedText() ) );
-    menu->addAction( postaction );
-    
-    QAction *shortening = actionCollection()->add<KToggleAction>( "shortening_choqok");
-    shortening->setText( i18n("Shorten URL on Paste") );
-    connect( shortening, SIGNAL( toggled(bool) ), SLOT( toggleShortening(bool) ) );
-    menu->addAction( shortening );
-    
-    connect( menu->menu(), SIGNAL( aboutToShow() ), SLOT( updateActions() ) );
+                                        actionCollection());
+    actionCollection()->addAction("action menu", menu);
+    menu->setDelayed(false);
+
+    QAction *postaction = actionCollection()->addAction("post_choqok");
+    postaction->setText(i18n("Post Text with Choqok"));
+    connect(postaction, SIGNAL(triggered(bool)), SLOT(slotpostSelectedText()));
+    menu->addAction(postaction);
+
+    QAction *shortening = actionCollection()->add<KToggleAction>("shortening_choqok");
+    shortening->setText(i18n("Shorten URL on Paste"));
+    connect(shortening, SIGNAL(toggled(bool)), SLOT(toggleShortening(bool)));
+    menu->addAction(shortening);
+
+    connect(menu->menu(), SIGNAL(aboutToShow()), SLOT(updateActions()));
 }
 
 void KonqPluginChoqok::updateActions()
 {
-    
+
     // Is Choqok running?
     if (!QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.choqok")) {
-    ((KToggleAction*) actionCollection()->action("shortening_choqok"))->setEnabled(false);
-    return;
+        ((KToggleAction *) actionCollection()->action("shortening_choqok"))->setEnabled(false);
+        return;
     }
     // Choqok is running, so I can connect to it, if I haven't done yet.
     if (!m_interface) {
-    m_interface = new  QDBusInterface("org.kde.choqok",
-                        "/",
-                        "org.kde.choqok",
-                        QDBusConnection::sessionBus());
-    
+        m_interface = new  QDBusInterface("org.kde.choqok",
+                                          "/",
+                                          "org.kde.choqok",
+                                          QDBusConnection::sessionBus());
+
     }
     QDBusReply<bool> reply = m_interface->call("getShortening");
-    if ( reply.isValid() ) {
-      ((KToggleAction*) actionCollection()->action("shortening_choqok"))->setEnabled(true);
-      ((KToggleAction*) actionCollection()->action("shortening_choqok"))->setChecked(reply.value());
+    if (reply.isValid()) {
+        ((KToggleAction *) actionCollection()->action("shortening_choqok"))->setEnabled(true);
+        ((KToggleAction *) actionCollection()->action("shortening_choqok"))->setChecked(reply.value());
     }
 }
-
 
 KonqPluginChoqok::~KonqPluginChoqok()
 {
@@ -96,40 +94,39 @@ void KonqPluginChoqok::slotpostSelectedText()
     QWidget *m_parentWidget;
     QString text;
 
-    if ( parent()->inherits("KWebPage") ) {
-        m_parentWidget = qobject_cast< KWebPage* >(parent())->view();
-        text = QString(qobject_cast< KWebPage* >(parent())->selectedText());
+    if (parent()->inherits("KWebPage")) {
+        m_parentWidget = qobject_cast< KWebPage * >(parent())->view();
+        text = QString(qobject_cast< KWebPage * >(parent())->selectedText());
     } else {
         return;
     }
 
     if (text.isEmpty()) {
-        KMessageBox::information( m_parentWidget,
-                  i18n("You need to select text to post."),
-                  i18n("Post Text with Choqok"));
+        KMessageBox::information(m_parentWidget,
+                                 i18n("You need to select text to post."),
+                                 i18n("Post Text with Choqok"));
         return;
     }
-    
-    if (!QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.choqok"))
-    {
-    //qDebug() << "Choqok is not running, starting it!..." << endl;
-    KToolInvocation::startServiceByDesktopName(QString("choqok"),
-                           QStringList());
+
+    if (!QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.choqok")) {
+        //qDebug() << "Choqok is not running, starting it!..." << endl;
+        KToolInvocation::startServiceByDesktopName(QString("choqok"),
+                QStringList());
     }
     if (!m_interface) {
-    m_interface = new  QDBusInterface("org.kde.choqok",
-                        "/",
-                        "org.kde.choqok",
-                        QDBusConnection::sessionBus());
+        m_interface = new  QDBusInterface("org.kde.choqok",
+                                          "/",
+                                          "org.kde.choqok",
+                                          QDBusConnection::sessionBus());
     }
 
-    m_interface->call("postText",text);
+    m_interface->call("postText", text);
 }
 
 void KonqPluginChoqok::toggleShortening(bool value)
 {
-    m_interface->call("setShortening", value );
-    ((KToggleAction*) actionCollection()->action("shortening_choqok"))->setChecked(value);
+    m_interface->call("setShortening", value);
+    ((KToggleAction *) actionCollection()->action("shortening_choqok"))->setChecked(value);
 }
 
 #include "konqchoqok.moc"

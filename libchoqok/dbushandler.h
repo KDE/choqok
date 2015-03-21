@@ -12,7 +12,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -33,12 +32,11 @@
 
 #include "choqok_export.h"
 
-
 namespace Choqok
 {
 class DbusHandler;
 
-CHOQOK_EXPORT Choqok::DbusHandler* ChoqokDbus();
+CHOQOK_EXPORT Choqok::DbusHandler *ChoqokDbus();
 
 class CHOQOK_EXPORT DbusHandler : public QObject
 {
@@ -48,7 +46,7 @@ class CHOQOK_EXPORT DbusHandler : public QObject
     /**
      * Retrieve the DBus handler instance if it exists or build up a new one
      */
-    friend Choqok::DbusHandler* ChoqokDbus();
+    friend Choqok::DbusHandler *ChoqokDbus();
 
 public:
     DbusHandler();
@@ -61,11 +59,11 @@ public Q_SLOTS:
      *   setShortening: Control ShortenOnPaste option;
      */
 
-    void shareUrl( const QString &url, bool title = false);
-    void uploadFile( const QString &filename );
-    void postText( const QString &text );
+    void shareUrl(const QString &url, bool title = false);
+    void uploadFile(const QString &filename);
+    void postText(const QString &text);
     void updateTimelines();
-    void setShortening( bool flag);
+    void setShortening(bool flag);
     bool getShortening();
 
 private:
@@ -77,7 +75,7 @@ private:
 
 private Q_SLOTS:
     void slotcreatedQuickPost();
-    void slotTitleUrl( KJob* job );
+    void slotTitleUrl(KJob *job);
 
 };
 

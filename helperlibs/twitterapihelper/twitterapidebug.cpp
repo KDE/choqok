@@ -20,4 +20,3 @@
 #include "twitterapidebug.h"
 Q_LOGGING_CATEGORY(CHOQOK, "org.kde.choqok.twitterapi")
 
-

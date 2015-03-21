@@ -12,7 +12,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -48,8 +47,8 @@ public:
     KPushButton *btnReply;
 };
 
-PumpIOPostWidget::PumpIOPostWidget(Choqok::Account* account, Choqok::Post* post,
-                                   QWidget* parent):
+PumpIOPostWidget::PumpIOPostWidget(Choqok::Account *account, Choqok::Post *post,
+                                   QWidget *parent):
     PostWidget(account, post, parent), d(new Private)
 {
     mainWidget()->document()->addResource(QTextDocument::ImageResource,
@@ -62,7 +61,7 @@ PumpIOPostWidget::~PumpIOPostWidget()
     delete d;
 }
 
-void PumpIOPostWidget::checkAnchor(const QUrl& url)
+void PumpIOPostWidget::checkAnchor(const QUrl &url)
 {
     if (url.scheme() == "thread") {
         PumpIOShowThread *thread = new PumpIOShowThread(currentAccount(), currentPost());
@@ -79,18 +78,18 @@ QString PumpIOPostWidget::generateSign()
 {
     QString ss;
 
-    PumpIOPost *post = dynamic_cast<PumpIOPost* >(currentPost());
-    PumpIOAccount *account = qobject_cast<PumpIOAccount* >(currentAccount());
-    PumpIOMicroBlog *microblog = qobject_cast<PumpIOMicroBlog* >(account->microblog());
+    PumpIOPost *post = dynamic_cast<PumpIOPost * >(currentPost());
+    PumpIOAccount *account = qobject_cast<PumpIOAccount * >(currentAccount());
+    PumpIOMicroBlog *microblog = qobject_cast<PumpIOMicroBlog * >(account->microblog());
     if (post) {
         if (post->author.userName != account->username()) {
-            ss += "<b><a href='"+ microblog->profileUrl(account, post->author.homePageUrl)
+            ss += "<b><a href='" + microblog->profileUrl(account, post->author.homePageUrl)
                   + "' title=\"" + post->author.realName + "\">" +
                   post->author.userName + "</a></b> - ";
         }
 
         ss += "<a href=\"" + microblog->postUrl(account, post->author.userName,
-              post->postId) + "\" title=\"" +
+                                                post->postId) + "\" title=\"" +
               post->creationDateTime.toString(Qt::DefaultLocaleLongDate)
               + "\">%1</a>";
 
@@ -103,7 +102,7 @@ QString PumpIOPostWidget::generateSign()
             ss += " - ";
             ss += i18n("To:") + ' ';
 
-            Q_FOREACH (const QString& id, post->to) {
+            Q_FOREACH (const QString &id, post->to) {
                 if (id == PumpIOMicroBlog::PublicCollection) {
                     ss += i18n("Public") + ", ";
                 } else if (followers.indexIn(id) != -1) {
@@ -126,7 +125,7 @@ QString PumpIOPostWidget::generateSign()
             ss += " - ";
             ss += i18n("CC:") + ' ';
 
-            Q_FOREACH (const QString& id, post->cc) {
+            Q_FOREACH (const QString &id, post->cc) {
                 if (id == PumpIOMicroBlog::PublicCollection) {
                     ss += i18n("Public") + ", ";
                 } else if (followers.indexIn(id) != -1) {
@@ -149,7 +148,7 @@ QString PumpIOPostWidget::generateSign()
             ss += " - ";
             ss += i18n("Shared by:") + ' ';
 
-            Q_FOREACH (const QString& id, post->shares) {
+            Q_FOREACH (const QString &id, post->shares) {
                 if (id == "acct:" + account->webfingerID()) {
                     ss += i18n("You") + ", ";
                 } else {
@@ -186,7 +185,7 @@ void PumpIOPostWidget::initUi()
         QMenu *replyMenu = new QMenu(d->btnReply);
 
         QAction *replyToAct = new QAction(QIcon::fromTheme("edit-undo"), i18n("Reply to %1",
-                                      currentPost()->author.userName), replyMenu);
+                                          currentPost()->author.userName), replyMenu);
         replyMenu->addAction(replyToAct);
         connect(replyToAct, SIGNAL(triggered(bool)), SLOT(slotReplyTo()));
         connect(d->btnReply, SIGNAL(clicked(bool)), SLOT(slotReplyTo()));
@@ -202,21 +201,21 @@ void PumpIOPostWidget::toggleFavorite()
 {
     qCDebug(CHOQOK);
     setReadWithSignal();
-    PumpIOMicroBlog* microBlog = qobject_cast<PumpIOMicroBlog*>(currentAccount()->microblog());
-    connect(microBlog, SIGNAL(favorite(Choqok::Account*, Choqok::Post*)),
-            this, SLOT(slotToggleFavorite(Choqok::Account*, Choqok::Post*)));
+    PumpIOMicroBlog *microBlog = qobject_cast<PumpIOMicroBlog *>(currentAccount()->microblog());
+    connect(microBlog, SIGNAL(favorite(Choqok::Account*,Choqok::Post*)),
+            this, SLOT(slotToggleFavorite(Choqok::Account*,Choqok::Post*)));
     microBlog->toggleFavorite(currentAccount(), currentPost());
 }
 
-void PumpIOPostWidget::slotToggleFavorite(Choqok::Account*, Choqok::Post*)
+void PumpIOPostWidget::slotToggleFavorite(Choqok::Account *, Choqok::Post *)
 {
     qCDebug(CHOQOK);
     updateFavStat();
 }
 
-void PumpIOPostWidget::slotPostError(Choqok::Account* theAccount, Choqok::Post* post,
+void PumpIOPostWidget::slotPostError(Choqok::Account *theAccount, Choqok::Post *post,
                                      Choqok::MicroBlog::ErrorType error,
-                                     const QString& errorMessage)
+                                     const QString &errorMessage)
 {
     Q_UNUSED(error)
 
@@ -224,7 +223,7 @@ void PumpIOPostWidget::slotPostError(Choqok::Account* theAccount, Choqok::Post* 
     if (theAccount == currentAccount() && post == currentPost()) {
         qCDebug(CHOQOK) << errorMessage;
         disconnect(currentAccount()->microblog(), SIGNAL(postRemoved(Choqok::Account*,Choqok::Post*)),
-                  this, SLOT(slotCurrentPostRemoved(Choqok::Account*,Choqok::Post*)) );
+                   this, SLOT(slotCurrentPostRemoved(Choqok::Account*,Choqok::Post*)));
         disconnect(currentAccount()->microblog(),
                    SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,QString,Choqok::MicroBlog::ErrorLevel)),
                    this, SLOT(slotPostError(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,QString)));
@@ -235,7 +234,7 @@ void PumpIOPostWidget::slotResendPost()
 {
     qCDebug(CHOQOK);
     setReadWithSignal();
-    PumpIOMicroBlog* microBlog = qobject_cast<PumpIOMicroBlog*>(currentAccount()->microblog());
+    PumpIOMicroBlog *microBlog = qobject_cast<PumpIOMicroBlog *>(currentAccount()->microblog());
     microBlog->share(currentAccount(), currentPost());
 }
 
@@ -253,7 +252,7 @@ void PumpIOPostWidget::slotReplyTo()
 {
     qCDebug(CHOQOK);
     setReadWithSignal();
-    PumpIOPost *post = dynamic_cast<PumpIOPost* >(currentPost());
+    PumpIOPost *post = dynamic_cast<PumpIOPost * >(currentPost());
     if (post->type == "comment") {
         Q_EMIT reply(post->replyToPostId, post->replyToUserName, post->replyToObjectType);
     } else {
@@ -264,7 +263,7 @@ void PumpIOPostWidget::slotReplyTo()
 void PumpIOPostWidget::updateFavStat()
 {
     d->btnFavorite->setChecked(currentPost()->isFavorited);
-    if (currentPost()->isFavorited){
+    if (currentPost()->isFavorited) {
         d->btnFavorite->setIcon(QIcon::fromTheme("rating"));
     } else {
         d->btnFavorite->setIcon(unFavIcon);

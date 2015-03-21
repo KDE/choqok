@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -43,7 +42,7 @@ class CHOQOK_EXPORT Account : public QObject
 {
     Q_OBJECT
 public:
-    Account(MicroBlog *parent, const QString& alias);
+    Account(MicroBlog *parent, const QString &alias);
 
     ~Account();
     /**
@@ -58,13 +57,13 @@ public:
     virtual QStringList timelineNames() const;
 
     QString username() const;
-    void setUsername( const QString &name );
+    void setUsername(const QString &name);
 
     QString password() const;
-    void setPassword( const QString &pass );
+    void setPassword(const QString &pass);
 
     QString alias() const;
-    void setAlias( const QString &alias );
+    void setAlias(const QString &alias);
 
     bool isReadOnly() const;
     void setReadOnly(bool readonly = true);
@@ -94,7 +93,7 @@ public:
     *
     * @note This method is called by the UI, and should not be called elsewhere.
     */
-    void setPriority( uint priority );
+    void setPriority(uint priority);
 
     /**
     * Return the @ref KConfigGroup used to write and read special properties
@@ -107,11 +106,11 @@ public:
     KConfigGroup *configGroup() const;
 
 Q_SIGNALS:
-    void modified( Choqok::Account *theAccount );
+    void modified(Choqok::Account *theAccount);
 
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 }

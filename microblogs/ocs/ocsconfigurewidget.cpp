@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -34,28 +33,28 @@
 #include "ocsmicroblog.h"
 #include "ocsdebug.h"
 
-OCSConfigureWidget::OCSConfigureWidget(OCSMicroblog *microblog, OCSAccount* account, QWidget* parent)
+OCSConfigureWidget::OCSConfigureWidget(OCSMicroblog *microblog, OCSAccount *account, QWidget *parent)
     : ChoqokEditAccountWidget(account, parent), mAccount(account), mMicroblog(microblog), providersLoaded(false)
 {
     setupUi(this);
     cfg_provider->setCurrentItem(i18n("Loading..."), true);
-    if( microblog->isOperational() ) {
+    if (microblog->isOperational()) {
         slotprovidersLoaded();
     } else {
         connect(microblog, SIGNAL(initialized()), SLOT(slotprovidersLoaded()));
     }
-    if(mAccount){
+    if (mAccount) {
         cfg_alias->setText(mAccount->alias());
     } else {
         QString newAccountAlias = microblog->serviceName();
         QString servName = newAccountAlias;
         int counter = 1;
-        while(Choqok::AccountManager::self()->findAccount(newAccountAlias)){
+        while (Choqok::AccountManager::self()->findAccount(newAccountAlias)) {
             newAccountAlias = QString("%1%2").arg(servName).arg(counter);
             counter++;
         }
-        setAccount( mAccount = new OCSAccount(microblog, newAccountAlias) );
-        cfg_alias->setText( newAccountAlias );
+        setAccount(mAccount = new OCSAccount(microblog, newAccountAlias));
+        cfg_alias->setText(newAccountAlias);
     }
 }
 
@@ -66,20 +65,21 @@ OCSConfigureWidget::~OCSConfigureWidget()
 
 bool OCSConfigureWidget::validateData()
 {
-    if(!providersLoaded){
+    if (!providersLoaded) {
         KMessageBox::sorry(choqokMainWindow, i18n("You have to wait for providers list to be loaded."));
         return false;
     }
-    if( !cfg_alias->text().isEmpty() && cfg_provider->currentIndex() >= 0 )
+    if (!cfg_alias->text().isEmpty() && cfg_provider->currentIndex() >= 0) {
         return true;
-    else
+    } else {
         return false;
+    }
 }
 
-Choqok::Account* OCSConfigureWidget::apply()
+Choqok::Account *OCSConfigureWidget::apply()
 {
-    mAccount->setAlias( cfg_alias->text() );
-    mAccount->setProviderUrl( cfg_provider->itemData(cfg_provider->currentIndex()).toUrl() );
+    mAccount->setAlias(cfg_alias->text());
+    mAccount->setProviderUrl(cfg_provider->itemData(cfg_provider->currentIndex()).toUrl());
     mAccount->writeConfig();
     return mAccount;
 }
@@ -92,10 +92,11 @@ void OCSConfigureWidget::slotprovidersLoaded()
     QList <Attica::Provider> providerList = mMicroblog->providerManager()->providers();
     int selectedIndex = 0;
     Q_FOREACH (const Attica::Provider &p, providerList) {
-        qCDebug(CHOQOK)<<p.baseUrl();
+        qCDebug(CHOQOK) << p.baseUrl();
         cfg_provider->addItem(p.name(), p.baseUrl());
-        if(mAccount && mAccount->providerUrl() == p.baseUrl())
+        if (mAccount && mAccount->providerUrl() == p.baseUrl()) {
             selectedIndex = cfg_provider->count() - 1;
+        }
     }
     cfg_provider->setCurrentIndex(selectedIndex);
 }

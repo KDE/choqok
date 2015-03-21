@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -33,7 +32,7 @@
 
 namespace KIO
 {
-    class Job;
+class Job;
 }
 class KJob;
 namespace Choqok
@@ -48,7 +47,7 @@ class CHOQOK_EXPORT MediaManager : public QObject
 {
     Q_OBJECT
 public:
-    enum ReturnMode{
+    enum ReturnMode {
         Sync = 0, Async
     };
     ~MediaManager();
@@ -67,7 +66,7 @@ public:
      *
      * @return return @ref QPixmap of requested image if exists in cache, otherwise null pixmap
      */
-    QPixmap fetchImage( const QString& remoteUrl, ReturnMode mode = Sync );
+    QPixmap fetchImage(const QString &remoteUrl, ReturnMode mode = Sync);
 
     /**
      * @return KDE Default image
@@ -77,9 +76,9 @@ public:
     /**
      * @brief Parse a text for EmotIcons with kde default theme.
      */
-    QString parseEmoticons(const QString & text);
+    QString parseEmoticons(const QString &text);
 
-    static QPixmap convertToGrayScale( const QPixmap &pic );
+    static QPixmap convertToGrayScale(const QPixmap &pic);
 
     /**
     Upload medium at @p localUrl to @p pluginId service or to last used service when @p pluginId is empty.
@@ -87,7 +86,7 @@ public:
     @see mediumUploaded()
     @see mediumUploadFailed()
     */
-    void uploadMedium( const QUrl& localUrl, const QString& pluginId = QString() );
+    void uploadMedium(const QUrl &localUrl, const QString &pluginId = QString());
 
     /**
     Create and return a byte array containing a multipart/form-data to send with HTTP POST request
@@ -105,7 +104,7 @@ public:
         mediumType: type of medium file
     */
     static QByteArray createMultipartFormData(const QMap<QString, QByteArray> &formdata,
-                                       const QList< QMap<QString, QByteArray> > &mediaFiles);
+            const QList< QMap<QString, QByteArray> > &mediaFiles);
 
 public Q_SLOTS:
     /**
@@ -114,22 +113,22 @@ public Q_SLOTS:
     void clearImageCache();
 
 Q_SIGNALS:
-    void fetchError( const QString &remoteUrl, const QString &errMsg );
-    void imageFetched( const QString &remoteUrl, const QPixmap &pixmap );
+    void fetchError(const QString &remoteUrl, const QString &errMsg);
+    void imageFetched(const QString &remoteUrl, const QPixmap &pixmap);
 
-    void mediumUploaded( const QUrl &localUrl, const QString &remoteUrl );
-    void mediumUploadFailed( const QUrl &localUrl, const QString &errorMessage );
+    void mediumUploaded(const QUrl &localUrl, const QString &remoteUrl);
+    void mediumUploadFailed(const QUrl &localUrl, const QString &errorMessage);
 
 protected Q_SLOTS:
-    void slotImageFetched( KJob *job );
+    void slotImageFetched(KJob *job);
 
 protected:
     MediaManager();
 
 private:
     class Private;
-    Private * const d;
-    static MediaManager * mSelf;
+    Private *const d;
+    static MediaManager *mSelf;
 };
 
 }

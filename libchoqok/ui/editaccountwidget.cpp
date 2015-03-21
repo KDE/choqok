@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -30,8 +29,8 @@ public:
     Choqok::Account *account;
 };
 
-ChoqokEditAccountWidget::ChoqokEditAccountWidget( Choqok::Account* account, QWidget *parent)
-    :QWidget(parent), d(new ChoqokEditAccountWidgetPrivate)
+ChoqokEditAccountWidget::ChoqokEditAccountWidget(Choqok::Account *account, QWidget *parent)
+    : QWidget(parent), d(new ChoqokEditAccountWidgetPrivate)
 {
     d->account = account;
 }
@@ -41,7 +40,7 @@ ChoqokEditAccountWidget::~ChoqokEditAccountWidget()
     delete d;
 }
 
-Choqok::Account * ChoqokEditAccountWidget::account() const
+Choqok::Account *ChoqokEditAccountWidget::account() const
 {
     return d->account;
 }
@@ -51,7 +50,7 @@ bool ChoqokEditAccountWidget::validateData()
     return true;
 }
 
-void ChoqokEditAccountWidget::setAccount(Choqok::Account* account)
+void ChoqokEditAccountWidget::setAccount(Choqok::Account *account)
 {
     delete d->account;
     d->account = account;

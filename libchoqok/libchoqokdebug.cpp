@@ -20,4 +20,3 @@
 #include "libchoqokdebug.h"
 Q_LOGGING_CATEGORY(CHOQOK, "org.kde.choqok.lib")
 
-

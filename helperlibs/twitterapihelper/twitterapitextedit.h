@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -35,10 +34,10 @@ class KJob;
 
 class CHOQOK_HELPER_EXPORT TwitterApiTextEdit : public Choqok::UI::TextEdit
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    explicit TwitterApiTextEdit(Choqok::Account *theAccount, QWidget* parent = 0);
+    explicit TwitterApiTextEdit(Choqok::Account *theAccount, QWidget *parent = 0);
     ~TwitterApiTextEdit();
 
     void setCompleter(QCompleter *c);
@@ -60,7 +59,7 @@ private:
     void fetchTCoMaximumLength();
 
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 #endif // TWITTERAPITEXTEDIT_H

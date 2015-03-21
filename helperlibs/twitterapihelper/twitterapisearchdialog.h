@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -34,7 +33,7 @@ class CHOQOK_HELPER_EXPORT TwitterApiSearchDialog : public KDialog
 {
     Q_OBJECT
 public:
-    explicit TwitterApiSearchDialog(TwitterApiAccount* theAccount, QWidget* parent = 0);
+    explicit TwitterApiSearchDialog(TwitterApiAccount *theAccount, QWidget *parent = 0);
     ~TwitterApiSearchDialog();
 
 protected:
@@ -47,7 +46,7 @@ protected Q_SLOTS:
 
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 #endif // TWITTERAPISEARCHDIALOG_H

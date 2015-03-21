@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -44,7 +43,7 @@ class TwitterApiTextEdit::Private
 {
 public:
     Private(Choqok::Account *theAccount)
-    :c(0), acc(theAccount), tCoMaximumLength(0), tCoMaximumLengthHttps(0)
+        : c(0), acc(theAccount), tCoMaximumLength(0), tCoMaximumLengthHttps(0)
     {}
     Choqok::Account *acc;
     QCompleter *c;
@@ -52,8 +51,8 @@ public:
     int tCoMaximumLengthHttps;
 };
 
-TwitterApiTextEdit::TwitterApiTextEdit(Choqok::Account* theAccount, QWidget* parent)
-: TextEdit(theAccount->postCharLimit(), parent), d(new Private(theAccount))
+TwitterApiTextEdit::TwitterApiTextEdit(Choqok::Account *theAccount, QWidget *parent)
+    : TextEdit(theAccount->postCharLimit(), parent), d(new Private(theAccount))
 {
     qCDebug(CHOQOK);
     setTabChangesFocus(false);
@@ -67,19 +66,21 @@ TwitterApiTextEdit::~TwitterApiTextEdit()
 
 void TwitterApiTextEdit::setCompleter(QCompleter *completer)
 {
-    if (d->c)
+    if (d->c) {
         QObject::disconnect(d->c, 0, this, 0);
+    }
 
     d->c = completer;
 
-    if (!d->c)
+    if (!d->c) {
         return;
+    }
 
     d->c->setWidget(this);
     d->c->setCompletionMode(QCompleter::PopupCompletion);
     d->c->setCaseSensitivity(Qt::CaseInsensitive);
-    QObject::connect(d->c, SIGNAL(activated(const QString&)),
-                     this, SLOT(insertCompletion(const QString&)));
+    QObject::connect(d->c, SIGNAL(activated(QString)),
+                     this, SLOT(insertCompletion(QString)));
 }
 
 QCompleter *TwitterApiTextEdit::completer() const
@@ -87,21 +88,24 @@ QCompleter *TwitterApiTextEdit::completer() const
     return d->c;
 }
 
-void TwitterApiTextEdit::insertCompletion(const QString& completion)
+void TwitterApiTextEdit::insertCompletion(const QString &completion)
 {
-    if (d->c->widget() != this)
+    if (d->c->widget() != this) {
         return;
+    }
     QString textToInsert = completion + ' ';
     QTextCursor tc = textCursor();
     tc.movePosition(QTextCursor::EndOfWord);
     tc.select(QTextCursor::WordUnderCursor);
     bool startWithAt;
-    if(QString(qVersion()) >= "4.7.0")
-        startWithAt = toPlainText()[tc.selectionStart()-1] != '@';
-    else
+    if (QString(qVersion()) >= "4.7.0") {
+        startWithAt = toPlainText()[tc.selectionStart() - 1] != '@';
+    } else {
         startWithAt = !completion.startsWith('@');
-    if(startWithAt)
+    }
+    if (startWithAt) {
         textToInsert.prepend('@');
+    }
     tc.insertText(textToInsert);
     setTextCursor(tc);
 }
@@ -116,8 +120,9 @@ void TwitterApiTextEdit::insertCompletion(const QString& completion)
 #include "twitterapiwhoiswidget.h"
 void TwitterApiTextEdit::focusInEvent(QFocusEvent *e)
 {
-    if (d->c)
+    if (d->c) {
         d->c->setWidget(this);
+    }
     KTextEdit::focusInEvent(e);
 }
 
@@ -126,21 +131,21 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
     if (d->c && d->c->popup()->isVisible()) {
         // The following keys are forwarded by the completer to the widget
         switch (e->key()) {
-            case Qt::Key_Enter:
-            case Qt::Key_Return:
-            case Qt::Key_Escape:
+        case Qt::Key_Enter:
+        case Qt::Key_Return:
+        case Qt::Key_Escape:
 //             case Qt::Key_Backtab:
-                e->ignore();
-                return; // let the completer do default behavior
-            default:
+            e->ignore();
+            return; // let the completer do default behavior
+        default:
 //                 Choqok::UI::TextEdit::keyPressEvent(e);
-                break;
+            break;
         }
-    } else if(e->text().isEmpty()){
+    } else if (e->text().isEmpty()) {
         Choqok::UI::TextEdit::keyPressEvent(e);
         return;
     }
-    if(e->key() == Qt::Key_Tab){
+    if (e->key() == Qt::Key_Tab) {
         e->ignore();
         return;
     }
@@ -149,9 +154,10 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
     Choqok::UI::TextEdit::keyPressEvent(e);
 
     const bool ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier | Qt::AltModifier |
-                                                Qt::MetaModifier);
-    if (!d->c || (ctrlOrShift && e->text().isEmpty()))
+                             Qt::MetaModifier);
+    if (!d->c || (ctrlOrShift && e->text().isEmpty())) {
         return;
+    }
 
     static QString eow("~!@#$%^&*()+{}|:\"<>?,./;'[]\\-= "); // end of word
 //     bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
@@ -160,21 +166,22 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
     tc.select(QTextCursor::WordUnderCursor);
     QString completionPrefix = tc.selectedText();
     QChar charBeforeSelection;
-    if(completionPrefix.startsWith('@')){
+    if (completionPrefix.startsWith('@')) {
         charBeforeSelection = completionPrefix.at(0);
-        completionPrefix.remove(0,1);
+        completionPrefix.remove(0, 1);
     } else {
-      if (!toPlainText().isEmpty() && tc.selectionStart() > 0)
-        charBeforeSelection = toPlainText()[tc.selectionStart() - 1];
+        if (!toPlainText().isEmpty() && tc.selectionStart() > 0) {
+            charBeforeSelection = toPlainText()[tc.selectionStart() - 1];
+        }
     }
 
-    if ( !e->text().isEmpty() && (eow.contains(e->text().right(1)) || completionPrefix.length() < 1 ||
-                                  charBeforeSelection != '@') ) {
+    if (!e->text().isEmpty() && (eow.contains(e->text().right(1)) || completionPrefix.length() < 1 ||
+                                 charBeforeSelection != '@')) {
         d->c->popup()->hide();
         return;
     } else if ((e->key() != Qt::Key_Enter) && (e->key() != Qt::Key_Return)) {
-        if ( textCursor().selectedText().length() && 
-             textCursor().selectedText() != completionPrefix ) {
+        if (textCursor().selectedText().length() &&
+                textCursor().selectedText() != completionPrefix) {
             return;
         }
 
@@ -184,7 +191,7 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
         }
         QRect cr = cursorRect();
         cr.setWidth(d->c->popup()->sizeHintForColumn(0)
-        + d->c->popup()->verticalScrollBar()->sizeHint().width());
+                    + d->c->popup()->verticalScrollBar()->sizeHint().width());
         d->c->complete(cr); // popup it up!
     }
 }
@@ -215,16 +222,16 @@ void TwitterApiTextEdit::updateRemainingCharsCount()
             }
 
             if (remain < 0) {
-                lblRemainChar->setStyleSheet( "QLabel {color: red;}" );
+                lblRemainChar->setStyleSheet("QLabel {color: red;}");
             } else if (remain < 30) {
-                lblRemainChar->setStyleSheet( "QLabel {color: rgb(242, 179, 19);}" );
+                lblRemainChar->setStyleSheet("QLabel {color: rgb(242, 179, 19);}");
             } else {
-                lblRemainChar->setStyleSheet( "QLabel {color: green;}" );
+                lblRemainChar->setStyleSheet("QLabel {color: green;}");
             }
-            lblRemainChar->setText( QString::number(remain) );
+            lblRemainChar->setText(QString::number(remain));
         } else {
-            lblRemainChar->setText( QString::number(count) );
-            lblRemainChar->setStyleSheet( "QLabel {color: blue;}" );
+            lblRemainChar->setText(QString::number(count));
+            lblRemainChar->setStyleSheet("QLabel {color: blue;}");
         }
         txt.remove(QRegExp("@([^\\s\\W]+)"));
         txt = txt.trimmed();
@@ -232,7 +239,7 @@ void TwitterApiTextEdit::updateRemainingCharsCount()
             setFirstChar(txt[0]);
             txt.prepend(' ');
             QTextBlockFormat f;
-            f.setLayoutDirection( (Qt::LayoutDirection) txt.isRightToLeft() );
+            f.setLayoutDirection((Qt::LayoutDirection) txt.isRightToLeft());
             textCursor().mergeBlockFormat(f);
         }
     } else {
@@ -242,7 +249,7 @@ void TwitterApiTextEdit::updateRemainingCharsCount()
 
 void TwitterApiTextEdit::fetchTCoMaximumLength()
 {
-    TwitterApiAccount *acc = qobject_cast<TwitterApiAccount*>(d->acc);
+    TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(d->acc);
     if (acc) {
         QUrl url("https://api.twitter.com/1.1/help/configuration.json");
 
@@ -251,7 +258,7 @@ void TwitterApiTextEdit::fetchTCoMaximumLength()
             qCDebug(CHOQOK) << "Cannot create an http GET request!";
             return;
         }
-        TwitterApiMicroBlog *mBlog = qobject_cast<TwitterApiMicroBlog*>(acc->microblog());
+        TwitterApiMicroBlog *mBlog = qobject_cast<TwitterApiMicroBlog *>(acc->microblog());
         job->addMetaData(QStringLiteral("customHTTPHeader"),
                          QStringLiteral("Authorization: ") +
                          mBlog->authorizationHeader(acc, url, QOAuth::GET));
@@ -262,12 +269,12 @@ void TwitterApiTextEdit::fetchTCoMaximumLength()
     }
 }
 
-void TwitterApiTextEdit::slotTCoMaximumLength(KJob* job)
+void TwitterApiTextEdit::slotTCoMaximumLength(KJob *job)
 {
     if (job->error()) {
         qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     } else {
-        KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
+        KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
         const QJsonDocument json = QJsonDocument::fromJson(j->data());
         if (!json.isNull()) {
             const QVariantMap reply = json.toVariant().toMap();

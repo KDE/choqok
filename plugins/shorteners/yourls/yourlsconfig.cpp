@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -33,20 +32,20 @@
 
 #include "yourlssettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON( YourlsConfigFactory, "choqok_yourls_config.json",
-                            registerPlugin < YourlsConfig > (); )
+K_PLUGIN_FACTORY_WITH_JSON(YourlsConfigFactory, "choqok_yourls_config.json",
+                           registerPlugin < YourlsConfig > ();)
 
-YourlsConfig::YourlsConfig(QWidget* parent, const QVariantList& ):
-        KCModule( KAboutData::pluginData("kcm_choqok_yourls"), parent)
+YourlsConfig::YourlsConfig(QWidget *parent, const QVariantList &):
+    KCModule(KAboutData::pluginData("kcm_choqok_yourls"), parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
     wd->setObjectName("mYourlsCtl");
     ui.setupUi(wd);
-    addConfig( YourlsSettings::self(), wd );
+    addConfig(YourlsSettings::self(), wd);
     layout->addWidget(wd);
-    connect( ui.kcfg_username,SIGNAL(textChanged(QString)), SLOT(emitChanged()) );
-    connect( ui.cfg_password, SIGNAL(textChanged(QString)), SLOT(emitChanged()) );
+    connect(ui.kcfg_username, SIGNAL(textChanged(QString)), SLOT(emitChanged()));
+    connect(ui.cfg_password, SIGNAL(textChanged(QString)), SLOT(emitChanged()));
 }
 
 YourlsConfig::~YourlsConfig()
@@ -57,22 +56,22 @@ YourlsConfig::~YourlsConfig()
 void YourlsConfig::load()
 {
     KCModule::load();
-    ui.cfg_password->setText( Choqok::PasswordManager::self()->readPassword( QString("yourls_%1")
-                                                                      .arg(ui.kcfg_username->text()) ) );
+    ui.cfg_password->setText(Choqok::PasswordManager::self()->readPassword(QString("yourls_%1")
+                             .arg(ui.kcfg_username->text())));
 }
 
 void YourlsConfig::save()
 {
     KCModule::save();
     Choqok::PasswordManager::self()->writePassword(QString("yourls_%1").arg(ui.kcfg_username->text()),
-                                                   ui.cfg_password->text());
+            ui.cfg_password->text());
 }
 
 void YourlsConfig::emitChanged()
 {
     Q_EMIT changed(true);
-    disconnect( ui.kcfg_username, SIGNAL(textChanged(QString)), this, SLOT(emitChanged()) );
-    disconnect( ui.cfg_password, SIGNAL(textChanged(QString)), this, SLOT(emitChanged()) );
+    disconnect(ui.kcfg_username, SIGNAL(textChanged(QString)), this, SLOT(emitChanged()));
+    disconnect(ui.cfg_password, SIGNAL(textChanged(QString)), this, SLOT(emitChanged()));
 }
 
 #include "yourlsconfig.moc"

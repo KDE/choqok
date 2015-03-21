@@ -20,4 +20,3 @@
 #include "pluginsdebug.h"
 Q_LOGGING_CATEGORY(CHOQOK, "org.kde.choqok.config.plugins")
 
-

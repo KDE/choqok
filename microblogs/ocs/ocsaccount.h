@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -32,13 +31,13 @@ class OCSMicroblog;
 
 class OCSAccount : public Choqok::Account
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-    OCSAccount(OCSMicroblog* parent, const QString& alias);
+    OCSAccount(OCSMicroblog *parent, const QString &alias);
     virtual ~OCSAccount();
 
     QUrl providerUrl() const;
-    void setProviderUrl(const QUrl& url);
+    void setProviderUrl(const QUrl &url);
 
     Attica::Provider provider();
 
@@ -49,7 +48,7 @@ protected Q_SLOTS:
 
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 #endif // OCSACCOUNT_H

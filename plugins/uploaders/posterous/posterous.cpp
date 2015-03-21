@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -42,11 +41,11 @@
 
 #include "posteroussettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON( PosterousFactory, "choqok_posterous.json",
-                            registerPlugin < Posterous > (); )
+K_PLUGIN_FACTORY_WITH_JSON(PosterousFactory, "choqok_posterous.json",
+                           registerPlugin < Posterous > ();)
 
-Posterous::Posterous ( QObject* parent, const QList<QVariant>& )
-    : Choqok::Uploader( "choqok_posterous", parent )
+Posterous::Posterous(QObject *parent, const QList<QVariant> &)
+    : Choqok::Uploader("choqok_posterous", parent)
 {
 }
 
@@ -54,26 +53,25 @@ Posterous::~Posterous()
 {
 }
 
-QString Posterous::getAuthToken ( const QUrl &localUrl )
+QString Posterous::getAuthToken(const QUrl &localUrl)
 {
-    QUrl url ( "http://posterous.com/api/2/auth/token" );
+    QUrl url("http://posterous.com/api/2/auth/token");
     QString login = PosterousSettings::login();
-    QString pass = Choqok::PasswordManager::self()->readPassword ( QString ( "posterous_%1" ).arg ( PosterousSettings::login() ) );
-    KIO::Job* job = KIO::get ( url, KIO::Reload, KIO::HideProgressInfo );
+    QString pass = Choqok::PasswordManager::self()->readPassword(QString("posterous_%1").arg(PosterousSettings::login()));
+    KIO::Job *job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
     QByteArray data;
     QString token;
-    job->addMetaData( QStringLiteral("customHTTPHeader"),
-                      QStringLiteral("Authorization: Basic ") + QString("%1:%2").arg(login).arg(pass).toUtf8().toBase64() );
-    if ( KIO::NetAccess::synchronousRun ( job, 0, &data ) )
-    {
+    job->addMetaData(QStringLiteral("customHTTPHeader"),
+                     QStringLiteral("Authorization: Basic ") + QString("%1:%2").arg(login).arg(pass).toUtf8().toBase64());
+    if (KIO::NetAccess::synchronousRun(job, 0, &data)) {
         const QJsonDocument json = QJsonDocument::fromJson(data);
         if (!json.isNull()) {
             QVariantMap map = json.toVariant().toMap();
-            if ( map.contains ( "api_token" ) ) {
-                QString tkn = map.value ( "api_token" ).toString();
+            if (map.contains("api_token")) {
+                QString tkn = map.value("api_token").toString();
                 return tkn;
             } else {
-                Q_EMIT uploadingFailed ( localUrl, map.value ( "error" ).toString() );
+                Q_EMIT uploadingFailed(localUrl, map.value("error").toString());
                 qWarning() << "Parse error:" << data;
             }
         }
@@ -84,16 +82,16 @@ QString Posterous::getAuthToken ( const QUrl &localUrl )
     return QString();
 }
 
-void Posterous::upload ( const QUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType )
+void Posterous::upload(const QUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType)
 {
     PosterousSettings::self()->readConfig();
     KIO::StoredTransferJob *job = 0;
-    if ( PosterousSettings::basic() ) {
+    if (PosterousSettings::basic()) {
         QString login = PosterousSettings::login();
-        QString pass = Choqok::PasswordManager::self()->readPassword ( QString ( "posterous_%1" ).arg ( PosterousSettings::login() ) );
-        QString token = getAuthToken ( localUrl );
-        if ( !token.isEmpty() ) {
-            QUrl url ( "http://posterous.com/api/2/users/me/sites/primary/posts" );
+        QString pass = Choqok::PasswordManager::self()->readPassword(QString("posterous_%1").arg(PosterousSettings::login()));
+        QString token = getAuthToken(localUrl);
+        if (!token.isEmpty()) {
+            QUrl url("http://posterous.com/api/2/users/me/sites/primary/posts");
             QMap<QString, QByteArray> formdata;
             formdata["post[title]"] = QByteArray();
             formdata["post[body]"] = QByteArray();
@@ -107,26 +105,27 @@ void Posterous::upload ( const QUrl &localUrl, const QByteArray& medium, const Q
             mediafile["mediumType"] = mediumType;
             mediafile["medium"] = medium;
             QList< QMap<QString, QByteArray> > listMediafiles;
-            listMediafiles.append ( mediafile );
+            listMediafiles.append(mediafile);
 
-            QByteArray data = Choqok::MediaManager::createMultipartFormData ( formdata, listMediafiles );
-            job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo );
-            job->addMetaData( QStringLiteral("customHTTPHeader"),
-                              QStringLiteral("Authorization: Basic ") +
-                              QString("%1:%2").arg(login).arg(pass).toUtf8().toBase64() );
+            QByteArray data = Choqok::MediaManager::createMultipartFormData(formdata, listMediafiles);
+            job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
+            job->addMetaData(QStringLiteral("customHTTPHeader"),
+                             QStringLiteral("Authorization: Basic ") +
+                             QString("%1:%2").arg(login).arg(pass).toUtf8().toBase64());
         }
-    } else if ( PosterousSettings::oauth() ) {
+    } else if (PosterousSettings::oauth()) {
         QString alias = PosterousSettings::alias();
-        if ( alias.isEmpty() ) {
+        if (alias.isEmpty()) {
             qCritical() << "No account to use";
-            Q_EMIT uploadingFailed ( localUrl, i18n ( "There is no Twitter account configured to use." ) );
+            Q_EMIT uploadingFailed(localUrl, i18n("There is no Twitter account configured to use."));
             return;
         }
-        TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *> ( Choqok::AccountManager::self()->findAccount ( alias ) );
-        if ( !acc )
+        TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *> (Choqok::AccountManager::self()->findAccount(alias));
+        if (!acc) {
             return;
+        }
 
-        QUrl url ( "http://posterous.com/api2/upload.json" );
+        QUrl url("http://posterous.com/api2/upload.json");
 
         QMap<QString, QByteArray> formdata;
         formdata["source"] = "Choqok";
@@ -138,41 +137,41 @@ void Posterous::upload ( const QUrl &localUrl, const QByteArray& medium, const Q
         mediafile["mediumType"] = mediumType;
         mediafile["medium"] = medium;
         QList< QMap<QString, QByteArray> > listMediafiles;
-        listMediafiles.append ( mediafile );
+        listMediafiles.append(mediafile);
 
-        QByteArray data = Choqok::MediaManager::createMultipartFormData ( formdata, listMediafiles );
+        QByteArray data = Choqok::MediaManager::createMultipartFormData(formdata, listMediafiles);
 
-        KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, url, KIO::HideProgressInfo ) ;
+        KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
         QOAuth::ParamMap params;
         QString requrl = "https://api.twitter.com/1/account/verify_credentials.json";
-        QByteArray credentials = acc->oauthInterface()->createParametersString ( requrl,
+        QByteArray credentials = acc->oauthInterface()->createParametersString(requrl,
                                  QOAuth::GET, acc->oauthToken(),
                                  acc->oauthTokenSecret(),
                                  QOAuth::HMAC_SHA1,
-                                 params, QOAuth::ParseForHeaderArguments );
+                                 params, QOAuth::ParseForHeaderArguments);
 
-        QString cHeader = "X-Verify-Credentials-Authorization: " +  QString ( credentials ) + "\r\n";
-        cHeader.append ( "X-Auth-Service-Provider: https://api.twitter.com/1/account/verify_credentials.json" );
-        job->addMetaData ( "customHTTPHeader", cHeader );
+        QString cHeader = "X-Verify-Credentials-Authorization: " +  QString(credentials) + "\r\n";
+        cHeader.append("X-Auth-Service-Provider: https://api.twitter.com/1/account/verify_credentials.json");
+        job->addMetaData("customHTTPHeader", cHeader);
     }
-    if ( !job ) {
+    if (!job) {
         qCritical() << "Cannot create a http POST request!";
         return;
     }
-    job->addMetaData( QStringLiteral("content-type"),
-                      QStringLiteral("Content-Type: multipart/form-data; boundary=AaB03x") );
+    job->addMetaData(QStringLiteral("content-type"),
+                     QStringLiteral("Content-Type: multipart/form-data; boundary=AaB03x"));
     mUrlMap[job] = localUrl;
-    connect ( job, SIGNAL ( result ( KJob* ) ),
-              SLOT ( slotUpload ( KJob* ) ) );
+    connect(job, SIGNAL(result(KJob*)),
+            SLOT(slotUpload(KJob*)));
     job->start();
 }
 
-void Posterous::slotUpload ( KJob* job )
+void Posterous::slotUpload(KJob *job)
 {
-    QUrl localUrl = mUrlMap.take ( job );
-    if ( job->error() ) {
+    QUrl localUrl = mUrlMap.take(job);
+    if (job->error()) {
         qCritical() << "Job Error: " << job->errorString();
-        Q_EMIT uploadingFailed ( localUrl, job->errorString() );
+        Q_EMIT uploadingFailed(localUrl, job->errorString());
         return;
     } else {
         KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>(job);
@@ -180,16 +179,18 @@ void Posterous::slotUpload ( KJob* job )
         const QJsonDocument json = QJsonDocument::fromJson(stj->data());
         if (!json.isNull()) {
             const QVariantMap map = json.toVariant().toMap();
-            if ( map.contains ( "error" ) ) {
-                Q_EMIT uploadingFailed ( localUrl, map.value ( "error" ).toString() );
+            if (map.contains("error")) {
+                Q_EMIT uploadingFailed(localUrl, map.value("error").toString());
             } else {
-                if ( PosterousSettings::oauth() )
-                    Q_EMIT mediumUploaded ( localUrl, map.value ( "url" ).toString() );
-                if ( PosterousSettings::basic() )
-                    Q_EMIT mediumUploaded ( localUrl, map.value ( "full_url" ).toString() );
+                if (PosterousSettings::oauth()) {
+                    Q_EMIT mediumUploaded(localUrl, map.value("url").toString());
+                }
+                if (PosterousSettings::basic()) {
+                    Q_EMIT mediumUploaded(localUrl, map.value("full_url").toString());
+                }
             }
         } else {
-            Q_EMIT uploadingFailed ( localUrl, i18n ( "Malformed response" ) );
+            Q_EMIT uploadingFailed(localUrl, i18n("Malformed response"));
             qWarning() << "Parse error:" << stj->data();
         }
     }

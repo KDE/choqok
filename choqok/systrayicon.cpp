@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -32,8 +31,8 @@
 
 #include "choqokdebug.h"
 
-SysTrayIcon::SysTrayIcon( Choqok::UI::MainWindow* parent )
-: KStatusNotifierItem( parent ), _mainwin(parent), isOffline(false)
+SysTrayIcon::SysTrayIcon(Choqok::UI::MainWindow *parent)
+    : KStatusNotifierItem(parent), _mainwin(parent), isOffline(false)
 {
     qCDebug(CHOQOK);
     unread = 0;
@@ -41,7 +40,7 @@ SysTrayIcon::SysTrayIcon( Choqok::UI::MainWindow* parent )
     setCategory(ApplicationStatus);
     setStandardActionsEnabled(false);
 //     setStatus(Active);
-    setIconByName( currentIconName() );
+    setIconByName(currentIconName());
 }
 
 SysTrayIcon::~SysTrayIcon()
@@ -56,18 +55,19 @@ void SysTrayIcon::resetUnreadCount()
 
 QString SysTrayIcon::currentIconName()
 {
-    if(isOffline)
+    if (isOffline) {
         return "choqok_offline";
-    else
+    } else {
         return "choqok";
+    }
 }
 
-void SysTrayIcon::updateUnreadCount( int changeOfUnreadPosts )
+void SysTrayIcon::updateUnreadCount(int changeOfUnreadPosts)
 {
     qCDebug(CHOQOK);
     unread += changeOfUnreadPosts;
 
-    if ( unread <= 0 ) {
+    if (unread <= 0) {
         setIconByName(currentIconName());
         unread = 0;
         setStatus(Passive);
@@ -75,73 +75,73 @@ void SysTrayIcon::updateUnreadCount( int changeOfUnreadPosts )
         setStatus(Active);
         int oldWidth = 22;
 
-        QString countStr = QString::number( unread );
+        QString countStr = QString::number(unread);
         QFont f = KGlobalSettings::generalFont();
-        f.setBold( true );
+        f.setBold(true);
 
         float pointSize = f.pointSizeF();
-        QFontMetrics fm( f );
-        int w = fm.width( countStr );
-        if ( w > ( oldWidth - 2 ) ) {
-            pointSize *= float( oldWidth - 2 ) / float( w );
-            f.setPointSizeF( pointSize );
+        QFontMetrics fm(f);
+        int w = fm.width(countStr);
+        if (w > (oldWidth - 2)) {
+            pointSize *= float(oldWidth - 2) / float(w);
+            f.setPointSizeF(pointSize);
         }
 
         // overlay
-        QPixmap overlayImg = QIcon::fromTheme(currentIconName()).pixmap(22,22);
-        QPainter p( &overlayImg );
-        p.setFont( f );
-        KColorScheme scheme( QPalette::Active, KColorScheme::View );
+        QPixmap overlayImg = QIcon::fromTheme(currentIconName()).pixmap(22, 22);
+        QPainter p(&overlayImg);
+        p.setFont(f);
+        KColorScheme scheme(QPalette::Active, KColorScheme::View);
 
-        fm = QFontMetrics( f );
-        QRect boundingRect = fm.tightBoundingRect( countStr );
-        boundingRect.adjust( 0, 0, 0, 2 );
-        boundingRect.setHeight( qMin( boundingRect.height(), oldWidth ) );
-        boundingRect.moveTo(( oldWidth - boundingRect.width() ) / 2,
-                            (( oldWidth - boundingRect.height() ) / 2 ) - 1 );
-        p.setOpacity( 0.7 );
+        fm = QFontMetrics(f);
+        QRect boundingRect = fm.tightBoundingRect(countStr);
+        boundingRect.adjust(0, 0, 0, 2);
+        boundingRect.setHeight(qMin(boundingRect.height(), oldWidth));
+        boundingRect.moveTo((oldWidth - boundingRect.width()) / 2,
+                            ((oldWidth - boundingRect.height()) / 2) - 1);
+        p.setOpacity(0.7);
         QBrush br(QColor(255, 255, 255), Qt::SolidPattern);
-        p.setBrush( br );
-        p.setPen( QColor(255, 255, 255) );
-        p.drawRoundedRect( boundingRect, 2.0, 2.0 );
+        p.setBrush(br);
+        p.setPen(QColor(255, 255, 255));
+        p.drawRoundedRect(boundingRect, 2.0, 2.0);
 
-        p.setBrush( Qt::NoBrush );
-        p.setPen( QColor( 0, 0, 0 ) );
-        p.setOpacity( 1.0 );
-        p.drawText( overlayImg.rect(), Qt::AlignCenter, countStr );
-        setIconByPixmap( overlayImg );
+        p.setBrush(Qt::NoBrush);
+        p.setPen(QColor(0, 0, 0));
+        p.setOpacity(1.0);
+        p.drawText(overlayImg.rect(), Qt::AlignCenter, countStr);
+        setIconByPixmap(overlayImg);
     }
-    this->setToolTip( "choqok", i18n("Choqok"), i18np( "1 unread post", "%1 unread posts", unread ) );
+    this->setToolTip("choqok", i18n("Choqok"), i18np("1 unread post", "%1 unread posts", unread));
 }
 
-void SysTrayIcon::setTimeLineUpdatesEnabled( bool isEnabled )
+void SysTrayIcon::setTimeLineUpdatesEnabled(bool isEnabled)
 {
-    if ( isEnabled ) {
-        setToolTip( "choqok", i18n( "Choqok" ), QString() );
+    if (isEnabled) {
+        setToolTip("choqok", i18n("Choqok"), QString());
         setIconByName("choqok");
     } else {
-        setToolTip( "choqok", i18n( "Choqok - Disabled" ), QString() );
+        setToolTip("choqok", i18n("Choqok - Disabled"), QString());
         setIconByName("choqok_offline");
     }
     isOffline = !isEnabled;
-    updateUnreadCount( 0 );
+    updateUnreadCount(0);
 }
 
-void SysTrayIcon::slotJobDone( Choqok::JobResult result )
+void SysTrayIcon::slotJobDone(Choqok::JobResult result)
 {
     qCDebug(CHOQOK);
-    if ( result == Choqok::Success ) {
-        setOverlayIconByName( "task-complete" );
+    if (result == Choqok::Success) {
+        setOverlayIconByName("task-complete");
     } else {
-        setOverlayIconByName( "task-reject" );
+        setOverlayIconByName("task-reject");
     }
-    QTimer::singleShot( 5000, this, SLOT( slotRestoreIcon() ) );
+    QTimer::singleShot(5000, this, SLOT(slotRestoreIcon()));
 }
 
 void SysTrayIcon::slotRestoreIcon()
 {
     setOverlayIconByName(QString());
-    updateUnreadCount( 0 );
+    updateUnreadCount(0);
 }
 
 int SysTrayIcon::unreadCount() const

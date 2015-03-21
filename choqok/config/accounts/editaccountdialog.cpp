@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -32,10 +31,10 @@
 #include "accountsdebug.h"
 #include "editaccountwidget.h"
 
-EditAccountDialog::EditAccountDialog(ChoqokEditAccountWidget* editWidget, QWidget* parent, Qt::WFlags flags)
-        : KDialog(parent, flags), widget(editWidget)
+EditAccountDialog::EditAccountDialog(ChoqokEditAccountWidget *editWidget, QWidget *parent, Qt::WFlags flags)
+    : KDialog(parent, flags), widget(editWidget)
 {
-    if(!widget) {
+    if (!widget) {
         this->deleteLater();
         return;
     }
@@ -48,19 +47,19 @@ EditAccountDialog::~EditAccountDialog()
 
 }
 
-void EditAccountDialog::closeEvent(QCloseEvent* e)
+void EditAccountDialog::closeEvent(QCloseEvent *e)
 {
     KDialog::closeEvent(e);
 }
 
 void EditAccountDialog::slotButtonClicked(int button)
 {
-    qCDebug(CHOQOK)<<button;
-    if(button == KDialog::Ok) {
-        if( widget->validateData() ) {
-            if( widget->apply() ) {
-                    accept();
-                }
+    qCDebug(CHOQOK) << button;
+    if (button == KDialog::Ok) {
+        if (widget->validateData()) {
+            if (widget->apply()) {
+                accept();
+            }
         } else {
             KMessageBox::sorry(this, i18n("Cannot validate your input information.\nPlease check the fields' data.\nMaybe a required field is empty?"));
         }

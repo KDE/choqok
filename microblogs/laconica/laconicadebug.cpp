@@ -20,4 +20,3 @@
 #include "laconicadebug.h"
 Q_LOGGING_CATEGORY(CHOQOK, "org.kde.choqok.laconica")
 
-

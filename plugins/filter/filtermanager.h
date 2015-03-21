@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -32,8 +31,10 @@
 #include "filter.h"
 
 class QAction;
-namespace Choqok {
-namespace UI {
+namespace Choqok
+{
+namespace UI
+{
 class PostWidget;
 }
 }
@@ -47,26 +48,26 @@ class FilterManager : public Choqok::Plugin
 {
     Q_OBJECT
 public:
-    FilterManager( QObject* parent, const QList< QVariant >& args );
+    FilterManager(QObject *parent, const QList< QVariant > &args);
     ~FilterManager();
 
 protected Q_SLOTS:
-    void slotAddNewPostWidget( Choqok::UI::PostWidget* newWidget );
+    void slotAddNewPostWidget(Choqok::UI::PostWidget *newWidget);
     void startParsing();
     void slotConfigureFilters();
     void slotHidePost();
 
 private:
-    enum ParserState{ Stopped = 0, Running };
+    enum ParserState { Stopped = 0, Running };
     ParserState state;
 
-    Filter::FilterAction filterText(const QString &textToCheck, Filter * filter);
-    void doFiltering(Choqok::UI::PostWidget *postToFilter, Filter::FilterAction action );
+    Filter::FilterAction filterText(const QString &textToCheck, Filter *filter);
+    void doFiltering(Choqok::UI::PostWidget *postToFilter, Filter::FilterAction action);
 
-    void parse( Choqok::UI::PostWidget *postToParse );
+    void parse(Choqok::UI::PostWidget *postToParse);
     QQueue< QPointer<Choqok::UI::PostWidget> > postsQueue;
 
-    bool parseSpecialRules( Choqok::UI::PostWidget *postToParse );
+    bool parseSpecialRules(Choqok::UI::PostWidget *postToParse);
 
     QAction *hidePost;
 };

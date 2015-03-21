@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -35,20 +34,20 @@
 
 #include "twitgoosettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON( TwitgooConfigFactory, "choqok_twitgoo_config.json",
-                            registerPlugin < TwitgooConfig > (); )
+K_PLUGIN_FACTORY_WITH_JSON(TwitgooConfigFactory, "choqok_twitgoo_config.json",
+                           registerPlugin < TwitgooConfig > ();)
 
-TwitgooConfig::TwitgooConfig ( QWidget* parent, const QVariantList& )
-    : KCModule ( KAboutData::pluginData("kcm_choqok_twitgoo"), parent )
+TwitgooConfig::TwitgooConfig(QWidget *parent, const QVariantList &)
+    : KCModule(KAboutData::pluginData("kcm_choqok_twitgoo"), parent)
 {
-    QVBoxLayout *layout = new QVBoxLayout ( this );
-    QWidget *wd = new QWidget ( this );
-    wd->setObjectName ( "mTwitgooCtl" );
-    ui.setupUi ( wd );
-    addConfig ( TwitgooSettings::self(), wd );
-    layout->addWidget ( wd );
-    connect ( ui.cfg_accountsList, SIGNAL ( currentIndexChanged ( int ) ), SLOT ( emitChanged() ) );
-    connect ( ui.cfg_directLink, SIGNAL ( stateChanged ( int ) ), SLOT ( emitChanged() ) );
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    QWidget *wd = new QWidget(this);
+    wd->setObjectName("mTwitgooCtl");
+    ui.setupUi(wd);
+    addConfig(TwitgooSettings::self(), wd);
+    layout->addWidget(wd);
+    connect(ui.cfg_accountsList, SIGNAL(currentIndexChanged(int)), SLOT(emitChanged()));
+    connect(ui.cfg_directLink, SIGNAL(stateChanged(int)), SLOT(emitChanged()));
 }
 
 TwitgooConfig::~TwitgooConfig()
@@ -58,34 +57,34 @@ TwitgooConfig::~TwitgooConfig()
 void TwitgooConfig::load()
 {
     KCModule::load();
-    QList<Choqok::Account*> list = Choqok::AccountManager::self()->accounts();
+    QList<Choqok::Account *> list = Choqok::AccountManager::self()->accounts();
     Q_FOREACH (Choqok::Account *acc, list) {
-        if ( acc->inherits ( "TwitterAccount" ) ) {
-            ui.cfg_accountsList->addItem ( acc->alias() );
+        if (acc->inherits("TwitterAccount")) {
+            ui.cfg_accountsList->addItem(acc->alias());
         }
     }
     TwitgooSettings::self()->readConfig();
-    ui.cfg_accountsList->setCurrentItem ( TwitgooSettings::alias() );
-    ui.cfg_directLink->setChecked ( TwitgooSettings::directLink() );
+    ui.cfg_accountsList->setCurrentItem(TwitgooSettings::alias());
+    ui.cfg_directLink->setChecked(TwitgooSettings::directLink());
 }
 
 void TwitgooConfig::save()
 {
-    if ( ui.cfg_accountsList->currentIndex() > -1 ) {
-        TwitgooSettings::setAlias ( ui.cfg_accountsList->currentText() );
+    if (ui.cfg_accountsList->currentIndex() > -1) {
+        TwitgooSettings::setAlias(ui.cfg_accountsList->currentText());
         //qDebug() << TwitgooSettings::alias();
     } else {
-        TwitgooSettings::setAlias ( QString() );
-        KMessageBox::error ( this, i18n ( "You have to configure at least one Twitter account to use this plugin." ) );
+        TwitgooSettings::setAlias(QString());
+        KMessageBox::error(this, i18n("You have to configure at least one Twitter account to use this plugin."));
     }
-    TwitgooSettings::setDirectLink ( ui.cfg_directLink->isChecked() );
+    TwitgooSettings::setDirectLink(ui.cfg_directLink->isChecked());
     TwitgooSettings::self()->writeConfig();
     KCModule::save();
 }
 
 void TwitgooConfig::emitChanged()
 {
-    Q_EMIT changed ( true );
+    Q_EMIT changed(true);
 }
 
 #include "twitgooconfig.moc"

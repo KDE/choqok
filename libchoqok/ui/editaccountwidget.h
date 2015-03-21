@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -69,7 +68,7 @@ public:
      * If 'account' is 0L we are in the 'add account wizard', otherwise
      * we are editing an existing account.
      */
-    explicit ChoqokEditAccountWidget( Choqok::Account* account, QWidget* parent );
+    explicit ChoqokEditAccountWidget(Choqok::Account *account, QWidget *parent);
 
     /**
      * Destructor
@@ -92,17 +91,17 @@ public:
      * Get a pointer to the Choqok::Account passed to the constructor.
      * You can modify it any way you like, just don't delete the object.
      */
-    Choqok::Account * account() const;
+    Choqok::Account *account() const;
 
 protected:
 
     /**
     * Set the account
     */
-    void setAccount( Choqok::Account *account );
+    void setAccount(Choqok::Account *account);
 
 private:
-    ChoqokEditAccountWidgetPrivate * const d;
+    ChoqokEditAccountWidgetPrivate *const d;
 };
 
 #endif

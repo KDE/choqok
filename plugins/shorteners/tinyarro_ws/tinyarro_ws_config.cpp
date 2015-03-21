@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -34,42 +33,42 @@
 
 #include "tinyarro_ws_settings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON( Tinyarro_ws_ConfigFactory, "choqok_tinyarro_ws_config.json",
-                            registerPlugin < Tinyarro_ws_Config > (); )
+K_PLUGIN_FACTORY_WITH_JSON(Tinyarro_ws_ConfigFactory, "choqok_tinyarro_ws_config.json",
+                           registerPlugin < Tinyarro_ws_Config > ();)
 
-Tinyarro_ws_Config::Tinyarro_ws_Config(QWidget* parent, const QVariantList& ):
-        KCModule( KAboutData::pluginData("kcm_choqok_tinyarro_ws"), parent )
+Tinyarro_ws_Config::Tinyarro_ws_Config(QWidget *parent, const QVariantList &):
+    KCModule(KAboutData::pluginData("kcm_choqok_tinyarro_ws"), parent)
 {
-    QVBoxLayout *layout = new QVBoxLayout( this );
-    QWidget *wd = new QWidget( this );
-    wd->setObjectName( "mTinyarro_ws_Ctl" );
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    QWidget *wd = new QWidget(this);
+    wd->setObjectName("mTinyarro_ws_Ctl");
     ui.setupUi(wd);
-    addConfig( Tinyarro_ws_Settings::self(), wd );
-    layout->addWidget( wd );
+    addConfig(Tinyarro_ws_Settings::self(), wd);
+    layout->addWidget(wd);
     QString domain = ".ws";
-    hostList.insert( QChar( 0x27A8 ) + domain, "xn--ogi.ws" );
-    hostList.insert( QChar( 0x27AF ) + domain, "xn--vgi.ws" );
-    hostList.insert( QChar( 0x2794 ) + domain, "xn--3fi.ws" );
-    hostList.insert( QChar( 0x279E ) + domain, "xn--egi.ws" );
-    hostList.insert( QChar( 0x27BD ) + domain, "xn--9gi.ws" );
-    hostList.insert( QChar( 0x27B9 ) + domain, "xn--5gi.ws" );
-    hostList.insert( QChar( 0x2729 ) + domain, "xn--1ci.ws" );
-    hostList.insert( QChar( 0x273F ) + domain, "xn--odi.ws" );
-    hostList.insert( QChar( 0x2765 ) + domain, "xn--rei.ws" );
-    hostList.insert( QChar( 0x203A ) + domain, "xn--cwg.ws" );
-    hostList.insert( QChar( 0x2318 ) + domain, "xn--bih.ws" );
-    hostList.insert( QChar( 0x203D ) + domain, "xn--fwg.ws" );
-    hostList.insert( QChar( 0x2601 ) + domain, "xn--l3h.ws" );
-    hostList.insert( "ta.gd",                  "ta.gd" );
-    hostList.insert( i18n( "Random host" ),    "Random" );
+    hostList.insert(QChar(0x27A8) + domain, "xn--ogi.ws");
+    hostList.insert(QChar(0x27AF) + domain, "xn--vgi.ws");
+    hostList.insert(QChar(0x2794) + domain, "xn--3fi.ws");
+    hostList.insert(QChar(0x279E) + domain, "xn--egi.ws");
+    hostList.insert(QChar(0x27BD) + domain, "xn--9gi.ws");
+    hostList.insert(QChar(0x27B9) + domain, "xn--5gi.ws");
+    hostList.insert(QChar(0x2729) + domain, "xn--1ci.ws");
+    hostList.insert(QChar(0x273F) + domain, "xn--odi.ws");
+    hostList.insert(QChar(0x2765) + domain, "xn--rei.ws");
+    hostList.insert(QChar(0x203A) + domain, "xn--cwg.ws");
+    hostList.insert(QChar(0x2318) + domain, "xn--bih.ws");
+    hostList.insert(QChar(0x203D) + domain, "xn--fwg.ws");
+    hostList.insert(QChar(0x2601) + domain, "xn--l3h.ws");
+    hostList.insert("ta.gd",                  "ta.gd");
+    hostList.insert(i18n("Random host"),    "Random");
 
     QMap<QString, QString>::const_iterator i = hostList.constBegin();
-    while ( i != hostList.constEnd() ) {
-     ui.kcfg_tinyarro_ws_host->addItem( i.key() );
-     ++i;
+    while (i != hostList.constEnd()) {
+        ui.kcfg_tinyarro_ws_host->addItem(i.key());
+        ++i;
     }
 
-    connect( ui.kcfg_tinyarro_ws_host,SIGNAL(currentIndexChanged(int)), SLOT(emitChanged()) );
+    connect(ui.kcfg_tinyarro_ws_host, SIGNAL(currentIndexChanged(int)), SLOT(emitChanged()));
 }
 
 Tinyarro_ws_Config::~Tinyarro_ws_Config()

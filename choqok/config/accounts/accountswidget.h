@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -29,7 +28,8 @@
 #include <KCModule>
 
 class KMenu;
-namespace Choqok{
+namespace Choqok
+{
 class Account;
 }
 
@@ -37,7 +37,7 @@ class AccountsWidget: public KCModule, public Ui_AccountsWidgetBase
 {
     Q_OBJECT
 public:
-    AccountsWidget( QWidget *parent, const QVariantList& args  );
+    AccountsWidget(QWidget *parent, const QVariantList &args);
     ~AccountsWidget();
 
 public Q_SLOTS:
@@ -46,11 +46,11 @@ public Q_SLOTS:
 
 protected Q_SLOTS:
     void addAccount();
-    void editAccount( QString alias = QString() );
-    void removeAccount( QString alias = QString() );
+    void editAccount(QString alias = QString());
+    void removeAccount(QString alias = QString());
 
-    void slotAccountAdded( Choqok::Account* account );
-    void slotAccountRemoved( const QString alias );
+    void slotAccountAdded(Choqok::Account *account);
+    void slotAccountRemoved(const QString alias);
     void accountsTablestateChanged();
 
     void moveCurrentRowUp();
@@ -62,10 +62,10 @@ protected Q_SLOTS:
     void accountsTableCellClicked(int row, int column);
 private:
     void move(bool up);
-    QList<QTableWidgetItem*> takeRow(int row);
-    void setRow(int row, const QList<QTableWidgetItem*>& rowItems);
-    void addAccountToTable( Choqok::Account *account );
-    KMenu * createAddAccountMenu();
+    QList<QTableWidgetItem *> takeRow(int row);
+    void setRow(int row, const QList<QTableWidgetItem *> &rowItems);
+    void addAccountToTable(Choqok::Account *account);
+    KMenu *createAddAccountMenu();
     KMenu *mBlogMenu;
 };
 

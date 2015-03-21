@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -32,17 +31,17 @@
 
 #include "laconicamicroblog.h"
 
-LaconicaConversationTimelineWidget::LaconicaConversationTimelineWidget(Choqok::Account* curAccount,
-                                                                       const QString& convId, QWidget* parent)
-: TwitterApiTimelineWidget(curAccount, i18n("Conversation %1", convId), parent)
+LaconicaConversationTimelineWidget::LaconicaConversationTimelineWidget(Choqok::Account *curAccount,
+        const QString &convId, QWidget *parent)
+    : TwitterApiTimelineWidget(curAccount, i18n("Conversation %1", convId), parent)
 {
     setWindowTitle(i18n("Please wait..."));
-    LaconicaMicroBlog* mBlog = qobject_cast<LaconicaMicroBlog*>(curAccount->microblog());
+    LaconicaMicroBlog *mBlog = qobject_cast<LaconicaMicroBlog *>(curAccount->microblog());
     resize(choqokMainWindow->width(), 500);
     move(choqokMainWindow->pos());
     conversationId = convId;
-    connect( mBlog, SIGNAL(conversationFetched(Choqok::Account*,QString,QList<Choqok::Post*>)),
-             this, SLOT(slotConversationFetched(Choqok::Account*,QString,QList<Choqok::Post*>)) );
+    connect(mBlog, SIGNAL(conversationFetched(Choqok::Account*,QString,QList<Choqok::Post*>)),
+            this, SLOT(slotConversationFetched(Choqok::Account*,QString,QList<Choqok::Post*>)));
     mBlog->fetchConversation(curAccount, convId);
 }
 
@@ -59,14 +58,14 @@ void LaconicaConversationTimelineWidget::loadTimeline()
 {
 }
 
-void LaconicaConversationTimelineWidget::slotConversationFetched(Choqok::Account* theAccount,
-                                                                 const QString& convId,
-                                                                 QList< Choqok::Post* > posts)
+void LaconicaConversationTimelineWidget::slotConversationFetched(Choqok::Account *theAccount,
+        const QString &convId,
+        QList< Choqok::Post * > posts)
 {
-    if( currentAccount() == theAccount && convId == this->conversationId){
+    if (currentAccount() == theAccount && convId == this->conversationId) {
         setWindowTitle(i18n("Conversation"));
         addNewPosts(posts);
-        Q_FOREACH (Choqok::UI::PostWidget* post, postWidgets()) {
+        Q_FOREACH (Choqok::UI::PostWidget *post, postWidgets()) {
             post->setReadWithSignal();
         }
         QTimer::singleShot(0, this, SLOT(updateHeight()));
@@ -76,13 +75,15 @@ void LaconicaConversationTimelineWidget::slotConversationFetched(Choqok::Account
 void LaconicaConversationTimelineWidget::updateHeight()
 {
     int height = 25;
-    Q_FOREACH (Choqok::UI::PostWidget* wd, postWidgets()) {
+    Q_FOREACH (Choqok::UI::PostWidget *wd, postWidgets()) {
         height += wd->height() + 5;
     }
-    if(height > choqokMainWindow->height())
+    if (height > choqokMainWindow->height()) {
         height = choqokMainWindow->height();
+    }
     resize(width(), height);
-    if( !Choqok::AppearanceSettings::useReverseOrder() )
+    if (!Choqok::AppearanceSettings::useReverseOrder()) {
         scrollToBottom();
+    }
 }
 

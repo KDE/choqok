@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -36,7 +35,7 @@ bool Application::Private::isShuttingDown = false;
 bool Application::Private::isStartingUp = true;
 
 Application::Application(int &argc, char **argv)
-: QApplication(argc, argv), d(new Private)
+    : QApplication(argc, argv), d(new Private)
 {
 }
 

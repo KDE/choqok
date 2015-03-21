@@ -20,4 +20,3 @@
 #include "pumpiodebug.h"
 Q_LOGGING_CATEGORY(CHOQOK, "org.kde.choqok.pumpio")
 
-

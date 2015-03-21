@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -32,8 +31,9 @@
 
 #include "twitterapimicroblog.h"
 
-namespace QOAuth {
-    class Interface;
+namespace QOAuth
+{
+class Interface;
 }
 
 /**
@@ -43,18 +43,18 @@ class CHOQOK_HELPER_EXPORT TwitterApiAccount : public Choqok::Account
 {
     Q_OBJECT
 public:
-    TwitterApiAccount(TwitterApiMicroBlog* parent, const QString& alias);
+    TwitterApiAccount(TwitterApiMicroBlog *parent, const QString &alias);
     ~TwitterApiAccount();
     virtual void writeConfig();
 
     QString userId() const;
-    void setUserId( const QString &id );
+    void setUserId(const QString &id);
 
     int countOfPosts() const;
     void setCountOfPosts(int count);
 
     QString host() const;
-    void setHost( const QString &host );
+    void setHost(const QString &host);
 
     /**
     @return api path
@@ -65,7 +65,7 @@ public:
     http://identi.ca/api/ is @ref apiUrl()
     */
     QString api() const;
-    virtual void setApi( const QString &api );
+    virtual void setApi(const QString &api);
 
     /**
     Combined from @ref host and @ref api to use for connections and queries
@@ -75,37 +75,37 @@ public:
 
     QStringList friendsList() const;
 
-    void setFriendsList( const QStringList &list );
+    void setFriendsList(const QStringList &list);
 
     virtual QStringList timelineNames() const;
 
     virtual void setTimelineNames(const QStringList &list);
 
     QByteArray oauthToken() const;
-    void setOauthToken( const QByteArray &token );
+    void setOauthToken(const QByteArray &token);
 
     QByteArray oauthTokenSecret() const;
-    void setOauthTokenSecret( const QByteArray &tokenSecret );
+    void setOauthTokenSecret(const QByteArray &tokenSecret);
 
     QByteArray oauthConsumerKey() const;
-    void setOauthConsumerKey( const QByteArray &consumerKey );
+    void setOauthConsumerKey(const QByteArray &consumerKey);
 
     QByteArray oauthConsumerSecret() const;
-    void setOauthConsumerSecret( const QByteArray &consumerSecret );
+    void setOauthConsumerSecret(const QByteArray &consumerSecret);
 
     bool usingOAuth() const;
-    void setUsingOAuth( bool use = true );
+    void setUsingOAuth(bool use = true);
 
     QOAuth::Interface *oauthInterface();
 protected:
-    void setApiUrl( const QUrl &apiUrl );
-    void setHomepageUrl( const QUrl& homepageUrl );
+    void setApiUrl(const QUrl &apiUrl);
+    void setHomepageUrl(const QUrl &homepageUrl);
     void generateApiUrl();
     void initQOAuthInterface();
 
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 #endif // TWITTERACCOUNT_H

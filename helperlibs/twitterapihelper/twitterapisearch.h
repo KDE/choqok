@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -36,8 +35,8 @@ class CHOQOK_HELPER_EXPORT SearchInfo
 {
 public:
     SearchInfo();
-    SearchInfo( Choqok::Account *theAccount, const QString &queryStr,
-                int optionCode, bool IsBrowsable = false);
+    SearchInfo(Choqok::Account *theAccount, const QString &queryStr,
+               int optionCode, bool IsBrowsable = false);
     QString toString();
     bool fromString(const QString &str);
 
@@ -67,7 +66,7 @@ class CHOQOK_HELPER_EXPORT TwitterApiSearch : public QObject
 {
     Q_OBJECT
 public:
-    TwitterApiSearch(QObject* parent = 0);
+    TwitterApiSearch(QObject *parent = 0);
     virtual ~TwitterApiSearch();
 
     /**
@@ -85,25 +84,25 @@ public:
     */
     virtual QString optionCode(int option) = 0;
 
-    QDateTime dateFromString( const QString &date );
+    QDateTime dateFromString(const QString &date);
 
 public Q_SLOTS:
-    virtual void requestSearchResults( const SearchInfo &searchInfo,
-                                       const QString &sinceStatusId = QString(),
-                                       uint count = 0,
-                                       uint page = 1 ) = 0;
+    virtual void requestSearchResults(const SearchInfo &searchInfo,
+                                      const QString &sinceStatusId = QString(),
+                                      uint count = 0,
+                                      uint page = 1) = 0;
     /**
     This is for convenience
     */
-    void requestSearchResults( Choqok::Account *theAccount, const QString &query, int option,
-                                       const QString &sinceStatusId = QString(),
-                                       uint count = 0,
-                                       uint page = 1 );
+    void requestSearchResults(Choqok::Account *theAccount, const QString &query, int option,
+                              const QString &sinceStatusId = QString(),
+                              uint count = 0,
+                              uint page = 1);
 
 Q_SIGNALS:
-    void searchResultsReceived( const SearchInfo &searchInfo,
-                                QList<Choqok::Post*> &postsList );
-    void error( const QString &message );
+    void searchResultsReceived(const SearchInfo &searchInfo,
+                               QList<Choqok::Post *> &postsList);
+    void error(const QString &message);
 
 protected:
     /**
@@ -115,7 +114,7 @@ protected:
 
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 #endif // TWITTERAPISEARCH_H

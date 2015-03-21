@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -28,8 +27,9 @@
 
 #include "ui_pumpiomessagedialog.h"
 
-namespace Choqok {
-    class Account;
+namespace Choqok
+{
+class Account;
 }
 
 class PumpIOMessageDialog : public KDialog, Ui::PumpIOMessageDialog
@@ -37,7 +37,7 @@ class PumpIOMessageDialog : public KDialog, Ui::PumpIOMessageDialog
     Q_OBJECT
 
 public:
-    explicit PumpIOMessageDialog(Choqok::Account *theAccount, QWidget* parent = 0,
+    explicit PumpIOMessageDialog(Choqok::Account *theAccount, QWidget *parent = 0,
                                  Qt::WindowFlags flags = 0);
     virtual ~PumpIOMessageDialog();
 
@@ -46,11 +46,11 @@ protected Q_SLOTS:
     void cancelAttach();
     void fetchFollowing();
     void sendPost();
-    void slotFetchFollowing(Choqok::Account*);
+    void slotFetchFollowing(Choqok::Account *);
 
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 
 };
 

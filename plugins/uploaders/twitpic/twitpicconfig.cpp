@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -35,17 +34,17 @@
 
 #include "twitpicsettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON( TwitpicConfigFactory, "choqok_twitpic_config.json",
-                            registerPlugin < TwitpicConfig > (); )
+K_PLUGIN_FACTORY_WITH_JSON(TwitpicConfigFactory, "choqok_twitpic_config.json",
+                           registerPlugin < TwitpicConfig > ();)
 
-TwitpicConfig::TwitpicConfig(QWidget* parent, const QVariantList& ):
-    KCModule( KAboutData::pluginData("kcm_choqok_twitpic"), parent)
+TwitpicConfig::TwitpicConfig(QWidget *parent, const QVariantList &):
+    KCModule(KAboutData::pluginData("kcm_choqok_twitpic"), parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
     wd->setObjectName("mTwitpicCtl");
     ui.setupUi(wd);
-    addConfig( TwitpicSettings::self(), wd );
+    addConfig(TwitpicSettings::self(), wd);
     layout->addWidget(wd);
     connect(ui.accountsList, SIGNAL(currentIndexChanged(int)), SLOT(emitChanged()));
 }
@@ -58,9 +57,9 @@ TwitpicConfig::~TwitpicConfig()
 void TwitpicConfig::load()
 {
     KCModule::load();
-    QList<Choqok::Account*> list = Choqok::AccountManager::self()->accounts();
+    QList<Choqok::Account *> list = Choqok::AccountManager::self()->accounts();
     Q_FOREACH (Choqok::Account *acc, list) {
-        if(acc->inherits("TwitterAccount")){
+        if (acc->inherits("TwitterAccount")) {
             ui.accountsList->addItem(acc->alias());
         }
     }
@@ -71,8 +70,8 @@ void TwitpicConfig::load()
 void TwitpicConfig::save()
 {
     //qDebug() << ui.accountsList->currentIndex();
-    if(ui.accountsList->currentIndex() > -1) {
-        TwitpicSettings::setAlias( ui.accountsList->currentText() );
+    if (ui.accountsList->currentIndex() > -1) {
+        TwitpicSettings::setAlias(ui.accountsList->currentText());
         //qDebug() << TwitpicSettings::alias();
     } else {
         TwitpicSettings::setAlias(QString());

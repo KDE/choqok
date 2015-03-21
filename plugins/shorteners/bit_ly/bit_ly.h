@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -36,10 +35,10 @@ class Bit_ly : public Choqok::Shortener
 {
     Q_OBJECT
 public:
-    Bit_ly( QObject* parent, const QVariantList& args );
+    Bit_ly(QObject *parent, const QVariantList &args);
     ~Bit_ly();
 
-    virtual QString shorten( const QString& url );
+    virtual QString shorten(const QString &url);
 };
 
 #endif //BIT_LY_H

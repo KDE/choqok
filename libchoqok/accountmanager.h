@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -33,7 +32,6 @@ namespace Choqok
 /**
 Account manager class
 
-
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
 class CHOQOK_EXPORT AccountManager : public QObject
@@ -51,20 +49,20 @@ public:
      *
      * \return the instance of the AccountManager
      */
-    static AccountManager* self();
+    static AccountManager *self();
 
     /**
      * \brief Retrieve the list of accounts
      * \return a list of all the accounts
      */
-    const QList<Account *> & accounts() const;
+    const QList<Account *> &accounts() const;
 
     /**
      * \brief Return the account asked
      * \param alias is the alias of account
      * \return the Account object found
      */
-    Account * findAccount( const QString &alias );
+    Account *findAccount(const QString &alias);
 
     /**
      * @brief Add the account.
@@ -74,30 +72,30 @@ public:
      *
      * @return @p account, or 0L if the account was deleted because alias collision
      */
-    Account * registerAccount( Account * account );
+    Account *registerAccount(Account *account);
 
     /**
      * \brief Delete the account and clean the config data
      *
      * This is praticaly called by the account config page when you remove the account.
      */
-    bool removeAccount( const QString &alias );
+    bool removeAccount(const QString &alias);
 
     QString lastError() const;
-    static QString generatePostBackupFileName( const QString &alias, const QString &name );
+    static QString generatePostBackupFileName(const QString &alias, const QString &name);
 
 public Q_SLOTS:
     void loadAllAccounts();
 
 Q_SIGNALS:
-    void accountAdded( Choqok::Account *account );
-    void accountRemoved( const QString &alias );
+    void accountAdded(Choqok::Account *account);
+    void accountRemoved(const QString &alias);
     void allAccountsLoaded();
 
 private:
     AccountManager();
     class Private;
-    Private * const d;
+    Private *const d;
     static AccountManager *mSelf;
 };
 }

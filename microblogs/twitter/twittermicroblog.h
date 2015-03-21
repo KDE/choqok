@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -39,54 +38,54 @@ class KJob;
 */
 class TwitterMicroBlog : public TwitterApiMicroBlog
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-    TwitterMicroBlog( QObject* parent, const QVariantList& args  );
+    TwitterMicroBlog(QObject *parent, const QVariantList &args);
     ~TwitterMicroBlog();
 
-    virtual Choqok::Account *createNewAccount( const QString &alias );
-    virtual ChoqokEditAccountWidget * createEditAccountWidget( Choqok::Account *account, QWidget *parent );
-    virtual Choqok::UI::MicroBlogWidget * createMicroBlogWidget( Choqok::Account *account, QWidget *parent );
-    virtual Choqok::UI::TimelineWidget * createTimelineWidget( Choqok::Account* account,
-                                                           const QString& timelineName, QWidget* parent );
-    virtual Choqok::UI::PostWidget* createPostWidget(Choqok::Account* account,
-                                                     Choqok::Post* post, QWidget* parent);
-    virtual Choqok::UI::ComposerWidget* createComposerWidget(Choqok::Account* account, QWidget* parent);
+    virtual Choqok::Account *createNewAccount(const QString &alias);
+    virtual ChoqokEditAccountWidget *createEditAccountWidget(Choqok::Account *account, QWidget *parent);
+    virtual Choqok::UI::MicroBlogWidget *createMicroBlogWidget(Choqok::Account *account, QWidget *parent);
+    virtual Choqok::UI::TimelineWidget *createTimelineWidget(Choqok::Account *account,
+            const QString &timelineName, QWidget *parent);
+    virtual Choqok::UI::PostWidget *createPostWidget(Choqok::Account *account,
+            Choqok::Post *post, QWidget *parent);
+    virtual Choqok::UI::ComposerWidget *createComposerWidget(Choqok::Account *account, QWidget *parent);
 
-    virtual QString postUrl(Choqok::Account* account, const QString& username, const QString& postId) const;
+    virtual QString postUrl(Choqok::Account *account, const QString &username, const QString &postId) const;
 
-    virtual QString profileUrl(Choqok::Account* account, const QString& username) const;
+    virtual QString profileUrl(Choqok::Account *account, const QString &username) const;
 
-    virtual TwitterApiSearch* searchBackend();
+    virtual TwitterApiSearch *searchBackend();
 
-    virtual QString generateRepeatedByUserTooltip(const QString& username);
+    virtual QString generateRepeatedByUserTooltip(const QString &username);
     virtual QString repeatQuestion();
-    virtual QMenu* createActionsMenu(Choqok::Account* theAccount,
-                                     QWidget* parent = Choqok::UI::Global::mainWindow());
+    virtual QMenu *createActionsMenu(Choqok::Account *theAccount,
+                                     QWidget *parent = Choqok::UI::Global::mainWindow());
 
-    virtual void fetchUserLists(TwitterAccount* theAccount, const QString& username);
-    virtual void addListTimeline( TwitterAccount* theAccount, const QString& username,
-                                  const QString& listname );
-    virtual void setListTimelines(TwitterAccount* theAccount, const QStringList &lists);
+    virtual void fetchUserLists(TwitterAccount *theAccount, const QString &username);
+    virtual void addListTimeline(TwitterAccount *theAccount, const QString &username,
+                                 const QString &listname);
+    virtual void setListTimelines(TwitterAccount *theAccount, const QStringList &lists);
 
-    virtual Choqok::TimelineInfo* timelineInfo(const QString& timelineName);
+    virtual Choqok::TimelineInfo *timelineInfo(const QString &timelineName);
 
     void createPostWithAttachment(Choqok::Account *theAccount, Choqok::Post *post, const QString &mediumToAttach = QString());
 Q_SIGNALS:
-    void userLists(Choqok::Account* theAccount, const QString& username, QList<Twitter::List> lists);
+    void userLists(Choqok::Account *theAccount, const QString &username, QList<Twitter::List> lists);
 
 protected Q_SLOTS:
-    void showListDialog(TwitterApiAccount* theAccount = 0);
+    void showListDialog(TwitterApiAccount *theAccount = 0);
     void slotFetchUserLists(KJob *job);
 
 protected:
-    QList<Twitter::List> readUserListsFromJson(Choqok::Account* theAccount, QByteArray buffer);
-    Twitter::List readListFromJsonMap(Choqok::Account* theAccount, QVariantMap map);
-    QMap<KJob*, QString> mFetchUsersListMap;
+    QList<Twitter::List> readUserListsFromJson(Choqok::Account *theAccount, QByteArray buffer);
+    Twitter::List readListFromJsonMap(Choqok::Account *theAccount, QVariantMap map);
+    QMap<KJob *, QString> mFetchUsersListMap;
     virtual void setTimelineInfos();
 private:
     QPointer<TwitterSearch> mSearchBackend;
-    QMap<QString, Choqok::TimelineInfo*> mListsInfo;
+    QMap<QString, Choqok::TimelineInfo *> mListsInfo;
 };
 
 #endif

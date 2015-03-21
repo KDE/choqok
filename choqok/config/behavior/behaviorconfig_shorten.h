@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -38,7 +37,7 @@ class BehaviorConfig_Shorten: public QWidget, public Ui::BehaviorConfig_ShortenB
 {
     Q_OBJECT
 public:
-    BehaviorConfig_Shorten( QWidget *parent = 0 );
+    BehaviorConfig_Shorten(QWidget *parent = 0);
     ~BehaviorConfig_Shorten();
     void load();
     void save();
@@ -47,7 +46,7 @@ Q_SIGNALS:
     void changed(bool isChanged);
 
 private Q_SLOTS:
-    void currentPluginChanged( int index );
+    void currentPluginChanged(int index);
 
 protected Q_SLOTS:
     void slotAboutClicked();
@@ -57,7 +56,7 @@ private:
     QMap<QString, KPluginInfo> availablePlugins;
     Choqok::Shortener *currentShortener;
     QString prevShortener;
-    QList<KCModuleProxy*> moduleProxyList;
+    QList<KCModuleProxy *> moduleProxyList;
 };
 
 #endif

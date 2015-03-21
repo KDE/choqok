@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -35,7 +34,7 @@ class PumpIOAccount : public Choqok::Account
 {
     Q_OBJECT
 public:
-    explicit PumpIOAccount(PumpIOMicroBlog* parent, const QString& alias);
+    explicit PumpIOAccount(PumpIOMicroBlog *parent, const QString &alias);
     virtual ~PumpIOAccount();
 
     virtual QStringList timelineNames() const;
@@ -43,19 +42,19 @@ public:
     virtual void writeConfig();
 
     QString host();
-    void setHost(const QString& host);
+    void setHost(const QString &host);
 
     QString consumerKey();
-    void setConsumerKey(const QString& consumerKey);
+    void setConsumerKey(const QString &consumerKey);
 
     QString consumerSecret();
-    void setConsumerSecret(const QString& consumerSecret);
+    void setConsumerSecret(const QString &consumerSecret);
 
     QString token();
-    void setToken(const QString& token);
+    void setToken(const QString &token);
 
     QString tokenSecret();
-    void setTokenSecret(const QString& tokenSecret);
+    void setTokenSecret(const QString &tokenSecret);
 
     QStringList following();
     void setFollowing(const QStringList following);
@@ -63,7 +62,7 @@ public:
     QVariantList lists();
     void setLists(const QVariantList lists);
 
-    void setTimelineNames(const QStringList& list);
+    void setTimelineNames(const QStringList &list);
 
     QString webfingerID();
     QOAuth::Interface *oAuth();

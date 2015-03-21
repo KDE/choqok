@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -30,8 +29,10 @@
 #include "choqoktypes.h"
 #include "microblog.h"
 
-namespace Choqok {
-namespace UI {
+namespace Choqok
+{
+namespace UI
+{
 
 /**
 Widget for Quick posting
@@ -42,14 +43,14 @@ class CHOQOK_EXPORT QuickPost : public KDialog
 {
     Q_OBJECT
 public:
-    QuickPost( QWidget* parent = 0 );
+    QuickPost(QWidget *parent = 0);
     virtual ~QuickPost();
 
 public Q_SLOTS:
     void show();
-    void submitPost( const QString &newStatus );
-    void setText( const QString& text );
-    void appendText( const QString &text );
+    void submitPost(const QString &newStatus);
+    void setText(const QString &text);
+    void appendText(const QString &text);
 
 Q_SIGNALS:
     /**
@@ -58,7 +59,7 @@ Q_SIGNALS:
 
     @param result Result of posting, Could be Success or Fail
     */
-    void newPostSubmitted( Choqok::JobResult result, Choqok::Post* newPost = 0 );
+    void newPostSubmitted(Choqok::JobResult result, Choqok::Post *newPost = 0);
 
 protected:
     void loadAccounts();
@@ -66,19 +67,19 @@ protected:
 protected Q_SLOTS:
     void slotAttachMedium();
     void slotCurrentAccountChanged(int);
-    void checkAll( bool isAll );
+    void checkAll(bool isAll);
     virtual void slotButtonClicked(int button);
-    void addAccount( Choqok::Account* account );
-    void removeAccount( const QString &alias );
-    void accountModified( Choqok::Account *theAccount );
-    virtual void slotSubmitPost( Choqok::Account *theAccount, Choqok::Post *post );
-    void postError( Choqok::Account *theAccount, Choqok::Post* post,
-                    Choqok::MicroBlog::ErrorType error, const QString &errorMessage);
+    void addAccount(Choqok::Account *account);
+    void removeAccount(const QString &alias);
+    void accountModified(Choqok::Account *theAccount);
+    virtual void slotSubmitPost(Choqok::Account *theAccount, Choqok::Post *post);
+    void postError(Choqok::Account *theAccount, Choqok::Post *post,
+                   Choqok::MicroBlog::ErrorType error, const QString &errorMessage);
 
 private:
     void setupUi();
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 }

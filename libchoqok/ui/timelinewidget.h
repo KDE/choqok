@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -27,7 +26,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QMap>
 #include <QWidget>
 
-
 #include "choqoktypes.h"
 #include "choqok_export.h"
 
@@ -35,10 +33,12 @@ class QLabel;
 class QHBoxLayout;
 class QVBoxLayout;
 
-namespace Choqok {
+namespace Choqok
+{
 class Account;
 
-namespace UI {
+namespace UI
+{
 
 class PostWidget;
 /**
@@ -50,7 +50,7 @@ class CHOQOK_EXPORT TimelineWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TimelineWidget(Account *account, const QString &timelineName, QWidget* parent = 0);
+    TimelineWidget(Account *account, const QString &timelineName, QWidget *parent = 0);
     virtual ~TimelineWidget();
     void setTimelineName(const QString &type);
 
@@ -74,18 +74,18 @@ public:
     @brief Return Timeline icon
     If timelineIconName() is empty this can be useful
      */
-    QIcon& timelineIcon() const;
-    void setTimelineIcon(const QIcon& icon);
+    QIcon &timelineIcon() const;
+    void setTimelineIcon(const QIcon &icon);
 
     /**
      @brief Add new posts to UI.
     */
-    virtual void addNewPosts( QList< Choqok::Post* >& postList );
+    virtual void addNewPosts(QList< Choqok::Post * > &postList);
 
     /**
      @brief Adds a message in place of an empty timeline. Placeholder is removed when a post gets added.
     */
-    virtual void addPlaceholderMessage( const QString& message );
+    virtual void addPlaceholderMessage(const QString &message);
 
     /**
     @brief Return count of unread posts on this timeline.
@@ -100,7 +100,7 @@ public:
     /**
     @return list of all widgets available on this timeline
     */
-    QList<PostWidget*> postWidgets();
+    QList<PostWidget *> postWidgets();
 
     /**
      * @return true if this timeline is closable!
@@ -124,7 +124,7 @@ public Q_SLOTS:
     virtual void scrollToBottom();
 
 Q_SIGNALS:
-    void forwardResendPost( const QString &post );
+    void forwardResendPost(const QString &post);
     void forwardReply(const QString &txt, const QString &replyToId, const QString &replyToUsername);
     /**
     @brief Emit to inform MicroBlogWidget about changes on count of unread posts
@@ -138,7 +138,7 @@ protected Q_SLOTS:
     void slotOnePostReaded();
     virtual void saveTimeline();
     virtual void loadTimeline();
-    void postWidgetClosed( const QString &postId, PostWidget* widget );
+    void postWidgetClosed(const QString &postId, PostWidget *widget);
 
 protected:
     /**
@@ -153,13 +153,13 @@ protected:
     QVBoxLayout *mainLayout();
     QHBoxLayout *titleBarLayout();
     QLabel *timelineDescription();
-    virtual void setUnreadCount( int unread );
+    virtual void setUnreadCount(int unread);
     virtual void showMarkAllAsReadButton();
 
 private:
     void setupUi();
     class Private;
-    Private * const d;
+    Private *const d;
 };
 }
 }

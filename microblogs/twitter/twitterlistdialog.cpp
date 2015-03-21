@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -34,21 +33,21 @@
 #include "twitteraccount.h"
 #include "twittermicroblog.h"
 
-TwitterListDialog::TwitterListDialog(TwitterApiAccount* theAccount, QWidget* parent)
-: KDialog(parent)
+TwitterListDialog::TwitterListDialog(TwitterApiAccount *theAccount, QWidget *parent)
+    : KDialog(parent)
 {
-    if(theAccount){
-        account = qobject_cast<TwitterAccount*>(theAccount);
-        if(!account){
-        qCCritical(CHOQOK)<<"TwitterListDialog: ERROR, the provided account is not a valid Twitter account";
-        return;
+    if (theAccount) {
+        account = qobject_cast<TwitterAccount *>(theAccount);
+        if (!account) {
+            qCCritical(CHOQOK) << "TwitterListDialog: ERROR, the provided account is not a valid Twitter account";
+            return;
         }
     } else {
-        qCCritical(CHOQOK)<<"TwitterListDialog: ERROR, theAccount is NULL";
+        qCCritical(CHOQOK) << "TwitterListDialog: ERROR, theAccount is NULL";
         return;
     }
     setWindowTitle(i18n("Add List"));
-    blog = qobject_cast<TwitterMicroBlog*>(account->microblog());
+    blog = qobject_cast<TwitterMicroBlog *>(account->microblog());
     mainWidget = new QWidget(this);
     ui.setupUi(mainWidget);
     setMainWidget(mainWidget);
@@ -78,20 +77,21 @@ TwitterListDialog::~TwitterListDialog()
 
 void TwitterListDialog::slotButtonClicked(int button)
 {
-    if(button == KDialog::Ok){
-        if(ui.listname->text().isEmpty() || ui.username->text().isEmpty()){
+    if (button == KDialog::Ok) {
+        if (ui.listname->text().isEmpty() || ui.username->text().isEmpty()) {
             KMessageBox::error(this, i18n("You should provide both list author username and list name."));
         } else {
             blog->addListTimeline(account, ui.username->text(), ui.listname->text());
             accept();
         }
-    } else
+    } else {
         KDialog::slotButtonClicked(button);
+    }
 }
 
-void TwitterListDialog::slotUsernameChanged(const QString& name)
+void TwitterListDialog::slotUsernameChanged(const QString &name)
 {
-    if(name.endsWith('/')){
+    if (name.endsWith('/')) {
         QString n = name;
         n.chop(1);
         ui.username->setText(n);
@@ -103,39 +103,40 @@ void TwitterListDialog::slotUsernameChanged(const QString& name)
 
 void TwitterListDialog::loadUserLists()
 {
-    if(ui.username->text().isEmpty()){
+    if (ui.username->text().isEmpty()) {
         KMessageBox::error(choqokMainWindow, i18n("No user."));
         return;
     }
-    connect( blog, SIGNAL(userLists(Choqok::Account*,QString,QList<Twitter::List>)),
-             SLOT(slotLoadUserlists(Choqok::Account*,QString,QList<Twitter::List>)) );
+    connect(blog, SIGNAL(userLists(Choqok::Account*,QString,QList<Twitter::List>)),
+            SLOT(slotLoadUserlists(Choqok::Account*,QString,QList<Twitter::List>)));
     blog->fetchUserLists(account, ui.username->text());
 }
 
-void TwitterListDialog::slotLoadUserlists(Choqok::Account* theAccount, QString username,
-                                          QList<Twitter::List> list)
+void TwitterListDialog::slotLoadUserlists(Choqok::Account *theAccount, QString username,
+        QList<Twitter::List> list)
 {
-    if(theAccount == account && username == ui.username->text() && !list.isEmpty()){
+    if (theAccount == account && username == ui.username->text() && !list.isEmpty()) {
         listWidget->clear();
         QList<Twitter::List>::const_iterator it = list.constBegin();
         QList<Twitter::List>::const_iterator endIt = list.constEnd();
-        for(; it != endIt; ++it){
+        for (; it != endIt; ++it) {
             QListWidgetItem *item = new QListWidgetItem(listWidget);
             QString iText;
-            if(it->description.isEmpty())
+            if (it->description.isEmpty()) {
                 iText = it->fullname;
-            else
+            } else {
                 iText = QString("%1 [%2]").arg(it->fullname).arg(it->description);
+            }
             item->setText(iText);
             item->setData(32, it->slug);
             listWidget->addItem(item);
         }
-        connect( listWidget, SIGNAL(itemClicked(QListWidgetItem*)),
-                 SLOT(slotListItemChanged(QListWidgetItem*)) );
+        connect(listWidget, SIGNAL(itemClicked(QListWidgetItem*)),
+                SLOT(slotListItemChanged(QListWidgetItem*)));
     }
 }
 
-void TwitterListDialog::slotListItemChanged(QListWidgetItem* item)
+void TwitterListDialog::slotListItemChanged(QListWidgetItem *item)
 {
     ui.listname->setText(item->data(32).toString());
 }

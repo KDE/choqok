@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -34,30 +33,30 @@ class CHOQOK_HELPER_EXPORT TwitterApiPostWidget : public Choqok::UI::PostWidget
 {
     Q_OBJECT
 public:
-    TwitterApiPostWidget(Choqok::Account* account, Choqok::Post *post, QWidget* parent = 0);
+    TwitterApiPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
     ~TwitterApiPostWidget();
     virtual void initUi();
 
 protected Q_SLOTS:
-    virtual void checkAnchor(const QUrl & url);
+    virtual void checkAnchor(const QUrl &url);
     virtual void setFavorite();
     virtual void slotSetFavorite(Choqok::Account *theAccount, const QString &postId);
     virtual void slotReply();
-    void slotBasePostFetched(Choqok::Account* theAccount, Choqok::Post* post);
+    void slotBasePostFetched(Choqok::Account *theAccount, Choqok::Post *post);
     virtual void repeatPost();
     virtual void slotWriteTo();
     virtual void slotReplyToAll();
 
 protected:
 //     virtual void updateUi();
-    virtual QString prepareStatus(const QString& text);
+    virtual QString prepareStatus(const QString &text);
     virtual QString generateSign();
     void updateFavStat();
 
     static const QIcon unFavIcon;
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 
 };
 

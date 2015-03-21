@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -34,7 +33,7 @@ class ConfigureFilters : public KDialog
 {
     Q_OBJECT
 public:
-    ConfigureFilters(QWidget* parent);
+    ConfigureFilters(QWidget *parent);
     ~ConfigureFilters();
 
 protected Q_SLOTS:
@@ -42,8 +41,8 @@ protected Q_SLOTS:
     void slotAddFilter();
     void slotEditFilter();
     void slotRemoveFilter();
-    void addNewFilter(Filter* filter);
-    void slotUpdateFilter(Filter* filter);
+    void addNewFilter(Filter *filter);
+    void slotUpdateFilter(Filter *filter);
     void slotHideRepliesNotRelatedToMeToggled(bool enabled);
 
 private:

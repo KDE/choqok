@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -30,7 +29,7 @@
 class LaconicaPostWidget : public TwitterApiPostWidget
 {
 public:
-    LaconicaPostWidget(Choqok::Account* account, Choqok::Post* post, QWidget* parent = 0);
+    LaconicaPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
     ~LaconicaPostWidget();
     virtual void initUi();
 
@@ -39,8 +38,8 @@ protected:
     static const QRegExp mLaconicaUserRegExp;
     static const QRegExp mLaconicaHashRegExp;
     static const QRegExp mStatusNetUserRegExp;
-    virtual QString prepareStatus(const QString& text);
-    virtual void checkAnchor(const QUrl& url);
+    virtual QString prepareStatus(const QString &text);
+    virtual void checkAnchor(const QUrl &url);
     virtual QString generateSign();
     virtual void slotReplyToAll();
 

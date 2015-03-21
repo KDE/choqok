@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -41,7 +40,7 @@
 
 const QRegExp TwitterSearch::m_rId("tag:search.twitter.com,[0-9]+:([0-9]+)");
 
-TwitterSearch::TwitterSearch(QObject* parent): TwitterApiSearch(parent)
+TwitterSearch::TwitterSearch(QObject *parent): TwitterApiSearch(parent)
 {
     qCDebug(CHOQOK);
     mSearchCode[CustomSearch].clear();
@@ -56,25 +55,25 @@ TwitterSearch::TwitterSearch(QObject* parent): TwitterApiSearch(parent)
     mI18nSearchCode[ToUser] = i18nc("Posts sent to user", "To:");
     mI18nSearchCode[FromUser] = i18nc("Posts from user, Sent by user", "From:");
 
-    mSearchTypes[CustomSearch].first = i18n( "Custom Search" );
+    mSearchTypes[CustomSearch].first = i18n("Custom Search");
     mSearchTypes[CustomSearch].second = true;
 
-    mSearchTypes[ToUser].first = i18nc( "Tweets are Twitter posts",  "Tweets To This User" );
+    mSearchTypes[ToUser].first = i18nc("Tweets are Twitter posts",  "Tweets To This User");
     mSearchTypes[ToUser].second = true;
 
-    mSearchTypes[FromUser].first = i18nc( "Tweets are Twitter posts", "Tweets From This User" );
+    mSearchTypes[FromUser].first = i18nc("Tweets are Twitter posts", "Tweets From This User");
     mSearchTypes[FromUser].second = true;
 
-    mSearchTypes[ReferenceUser].first = i18nc( "Tweets are Twitter posts", "Tweets Including This Username" );
+    mSearchTypes[ReferenceUser].first = i18nc("Tweets are Twitter posts", "Tweets Including This Username");
     mSearchTypes[ReferenceUser].second = true;
 
-    mSearchTypes[ReferenceHashtag].first = i18nc( "Tweets are Twitter posts", "Tweets Including This Hashtag" );
+    mSearchTypes[ReferenceHashtag].first = i18nc("Tweets are Twitter posts", "Tweets Including This Hashtag");
     mSearchTypes[ReferenceHashtag].second = true;
 }
 
 void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
-                                         const QString& sinceStatusId,
-                                         uint count, uint page)
+        const QString &sinceStatusId,
+        uint count, uint page)
 {
     qCDebug(CHOQOK);
 
@@ -83,74 +82,74 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
     int option = searchInfo.option;
 
     QString formattedQuery = mSearchCode[option] + query;
-    QUrl url( "https://api.twitter.com/1.1/search/tweets.json" );
+    QUrl url("https://api.twitter.com/1.1/search/tweets.json");
     QUrl tmpUrl(url);
     url.addQueryItem("q", formattedQuery);
     QString q = url.query();
-    param.insert( "q", q.mid(q.indexOf('=') + 1).toLatin1() );
-    if( !sinceStatusId.isEmpty() ) {
-        url.addQueryItem( "since_id", sinceStatusId );
-        param.insert( "since_id", sinceStatusId.toLatin1() );
+    param.insert("q", q.mid(q.indexOf('=') + 1).toLatin1());
+    if (!sinceStatusId.isEmpty()) {
+        url.addQueryItem("since_id", sinceStatusId);
+        param.insert("since_id", sinceStatusId.toLatin1());
     }
     int cntStr = Choqok::BehaviorSettings::countOfPosts();
-    if( count && count <= 100 )	// Twitter API specifies a max count of 100
+    if (count && count <= 100) { // Twitter API specifies a max count of 100
         cntStr =  count;
-    else
-      cntStr = 100;
-    url.addQueryItem( "count", QString::number(cntStr) );
-    param.insert( "count", QString::number(cntStr).toLatin1() );
-    if( page > 1 ) {
-        url.addQueryItem( "page", QString::number( page ) );
-        param.insert( "page", QString::number( page ).toLatin1() );
+    } else {
+        cntStr = 100;
+    }
+    url.addQueryItem("count", QString::number(cntStr));
+    param.insert("count", QString::number(cntStr).toLatin1());
+    if (page > 1) {
+        url.addQueryItem("page", QString::number(page));
+        param.insert("page", QString::number(page).toLatin1());
     }
 
-    qCDebug(CHOQOK)<<url;
-    KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo );
-    if( !job ) {
+    qCDebug(CHOQOK) << url;
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
+    if (!job) {
         qCCritical(CHOQOK) << "Cannot create an http GET request!";
         return;
     }
 
-    TwitterAccount* account = qobject_cast< TwitterAccount* >(searchInfo.account);
-    TwitterApiMicroBlog *microblog = qobject_cast<TwitterApiMicroBlog*>(account->microblog());
+    TwitterAccount *account = qobject_cast< TwitterAccount * >(searchInfo.account);
+    TwitterApiMicroBlog *microblog = qobject_cast<TwitterApiMicroBlog *>(account->microblog());
 
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
                      microblog->authorizationHeader(account, tmpUrl, QOAuth::GET, param));
 
     mSearchJobs[job] = searchInfo;
-    connect( job, SIGNAL( result( KJob* ) ), this, SLOT( searchResultsReturned( KJob* ) ) );
+    connect(job, SIGNAL(result(KJob*)), this, SLOT(searchResultsReturned(KJob*)));
     job->start();
 }
 
-void TwitterSearch::searchResultsReturned(KJob* job)
+void TwitterSearch::searchResultsReturned(KJob *job)
 {
     qCDebug(CHOQOK);
     if (!job) {
         qCDebug(CHOQOK) << "job is a null pointer";
-        Q_EMIT error( i18n( "Unable to fetch search results." ) );
+        Q_EMIT error(i18n("Unable to fetch search results."));
         return;
     }
 
     SearchInfo info = mSearchJobs.take(job);
 
-    if( job->error() ) {
+    if (job->error()) {
         qCCritical(CHOQOK) << "Error: " << job->errorString();
-        Q_EMIT error( i18n( "Unable to fetch search results: %1", job->errorString() ) );
-        QList<Choqok::Post*> postsList;
-        Q_EMIT searchResultsReceived( info, postsList );
+        Q_EMIT error(i18n("Unable to fetch search results: %1", job->errorString()));
+        QList<Choqok::Post *> postsList;
+        Q_EMIT searchResultsReceived(info, postsList);
         return;
     }
-    KIO::StoredTransferJob *jj = qobject_cast<KIO::StoredTransferJob *>( job );
-    QList<Choqok::Post*> postsList = parseJson( jj->data() );
+    KIO::StoredTransferJob *jj = qobject_cast<KIO::StoredTransferJob *>(job);
+    QList<Choqok::Post *> postsList = parseJson(jj->data());
 
-
-    Q_EMIT searchResultsReceived( info, postsList );
+    Q_EMIT searchResultsReceived(info, postsList);
 }
 
-QList< Choqok::Post* > TwitterSearch::parseJson(QByteArray buffer)
+QList< Choqok::Post * > TwitterSearch::parseJson(QByteArray buffer)
 {
-    QList<Choqok::Post*> statusList;
+    QList<Choqok::Post *> statusList;
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
         const QVariantMap map = json.toVariant().toMap();
@@ -158,7 +157,7 @@ QList< Choqok::Post* > TwitterSearch::parseJson(QByteArray buffer)
             const QVariantList list = map["statuses"].toList();
             QVariantList::const_iterator it = list.constBegin();
             QVariantList::const_iterator endIt = list.constEnd();
-            for(; it != endIt; ++it){
+            for (; it != endIt; ++it) {
                 statusList.prepend(readStatusesFromJsonMap(it->toMap()));
             }
         }
@@ -166,7 +165,7 @@ QList< Choqok::Post* > TwitterSearch::parseJson(QByteArray buffer)
     return statusList;
 }
 
-Choqok::Post* TwitterSearch::readStatusesFromJsonMap(const QVariantMap& var)
+Choqok::Post *TwitterSearch::readStatusesFromJsonMap(const QVariantMap &var)
 {
     Choqok::Post *post = new Choqok::Post;
 
@@ -184,7 +183,7 @@ Choqok::Post* TwitterSearch::readStatusesFromJsonMap(const QVariantMap& var)
     post->replyToPostId = var["in_reply_to_status_id_str"].toString();
     post->replyToUserName = var["in_reply_to_screen_name"].toString();
 
-    post->link = QString ( "https://twitter.com/%1/status/%2" ).arg ( post->author.userName ).arg ( post->postId );
+    post->link = QString("https://twitter.com/%1/status/%2").arg(post->author.userName).arg(post->postId);
 
     return post;
 }

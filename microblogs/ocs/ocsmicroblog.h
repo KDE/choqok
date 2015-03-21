@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -28,33 +27,34 @@
 #include <Attica/Activity>
 
 class OCSAccount;
-namespace Attica {
+namespace Attica
+{
 class ProviderManager;
 class BaseJob;
 }
 
 class OCSMicroblog : public Choqok::MicroBlog
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-    OCSMicroblog(QObject* parent, const QVariantList& args);
+    OCSMicroblog(QObject *parent, const QVariantList &args);
     virtual ~OCSMicroblog();
 
-    virtual ChoqokEditAccountWidget* createEditAccountWidget(Choqok::Account* account, QWidget* parent);
-    virtual void createPost(Choqok::Account* theAccount, Choqok::Post* post);
-    virtual void abortCreatePost(Choqok::Account* theAccount, Choqok::Post* post = 0);
-    virtual void fetchPost(Choqok::Account* theAccount, Choqok::Post* post);
-    virtual void removePost(Choqok::Account* theAccount, Choqok::Post* post);
-    virtual void saveTimeline(Choqok::Account* account, const QString& timelineName,
-                              const QList< Choqok::UI::PostWidget* >& timeline);
-    virtual QList< Choqok::Post* > loadTimeline(Choqok::Account* account, const QString& timelineName);
-    virtual Choqok::Account* createNewAccount(const QString& alias);
-    virtual void updateTimelines(Choqok::Account* theAccount);
-    virtual Choqok::TimelineInfo* timelineInfo(const QString& timelineName);
+    virtual ChoqokEditAccountWidget *createEditAccountWidget(Choqok::Account *account, QWidget *parent);
+    virtual void createPost(Choqok::Account *theAccount, Choqok::Post *post);
+    virtual void abortCreatePost(Choqok::Account *theAccount, Choqok::Post *post = 0);
+    virtual void fetchPost(Choqok::Account *theAccount, Choqok::Post *post);
+    virtual void removePost(Choqok::Account *theAccount, Choqok::Post *post);
+    virtual void saveTimeline(Choqok::Account *account, const QString &timelineName,
+                              const QList< Choqok::UI::PostWidget * > &timeline);
+    virtual QList< Choqok::Post * > loadTimeline(Choqok::Account *account, const QString &timelineName);
+    virtual Choqok::Account *createNewAccount(const QString &alias);
+    virtual void updateTimelines(Choqok::Account *theAccount);
+    virtual Choqok::TimelineInfo *timelineInfo(const QString &timelineName);
 
-    virtual QString profileUrl(Choqok::Account* account, const QString& username) const;
+    virtual QString profileUrl(Choqok::Account *account, const QString &username) const;
 
-    Attica::ProviderManager* providerManager();
+    Attica::ProviderManager *providerManager();
 
     bool isOperational();
     virtual void aboutToUnload();
@@ -63,17 +63,17 @@ Q_SIGNALS:
     void initialized();
 
 protected Q_SLOTS:
-    void slotTimelineLoaded(Attica::BaseJob*);
-    void slotCreatePost(Attica::BaseJob*);
+    void slotTimelineLoaded(Attica::BaseJob *);
+    void slotCreatePost(Attica::BaseJob *);
     void slotDefaultProvidersLoaded();
 
 private:
-    enum Task{Update};
-    QList <Choqok::Post*> parseActivityList(const Attica::Activity::List &list);
-    Attica::ProviderManager* mProviderManager;
-    QMap<Attica::BaseJob*, OCSAccount*> mJobsAccount;
-    QMap<Attica::BaseJob*, Choqok::Post*> mJobsPost;
-    QMultiMap<Choqok::Account*, Task> scheduledTasks;
+    enum Task {Update};
+    QList <Choqok::Post *> parseActivityList(const Attica::Activity::List &list);
+    Attica::ProviderManager *mProviderManager;
+    QMap<Attica::BaseJob *, OCSAccount *> mJobsAccount;
+    QMap<Attica::BaseJob *, Choqok::Post *> mJobsPost;
+    QMultiMap<Choqok::Account *, Task> scheduledTasks;
     bool mIsOperational;
 };
 

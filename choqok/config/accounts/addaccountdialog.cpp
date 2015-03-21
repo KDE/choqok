@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -31,10 +30,10 @@
 #include "accountsdebug.h"
 #include "editaccountwidget.h"
 
-AddAccountDialog::AddAccountDialog( ChoqokEditAccountWidget *addWidget,QWidget* parent, Qt::WFlags flags)
-        : KDialog(parent, flags), widget(addWidget)
+AddAccountDialog::AddAccountDialog(ChoqokEditAccountWidget *addWidget, QWidget *parent, Qt::WFlags flags)
+    : KDialog(parent, flags), widget(addWidget)
 {
-    if(!widget) {
+    if (!widget) {
         this->deleteLater();
         return;
     }
@@ -47,22 +46,23 @@ AddAccountDialog::~AddAccountDialog()
 
 }
 
-void AddAccountDialog::closeEvent(QCloseEvent* e)
+void AddAccountDialog::closeEvent(QCloseEvent *e)
 {
     KDialog::closeEvent(e);
 }
 
 void AddAccountDialog::slotButtonClicked(int button)
 {
-    qCDebug(CHOQOK)<<button;
-    if(button == KDialog::Ok) {
-        if( widget->validateData() ){
-            if( Choqok::Account *acc = widget->apply() ) {
-                if( !Choqok::AccountManager::self()->registerAccount( acc ) )
-                    KMessageBox::detailedError( this, i18n("The Account registration failed."),
-                                                Choqok::AccountManager::self()->lastError() );
-                else
+    qCDebug(CHOQOK) << button;
+    if (button == KDialog::Ok) {
+        if (widget->validateData()) {
+            if (Choqok::Account *acc = widget->apply()) {
+                if (!Choqok::AccountManager::self()->registerAccount(acc))
+                    KMessageBox::detailedError(this, i18n("The Account registration failed."),
+                                               Choqok::AccountManager::self()->lastError());
+                else {
                     accept();
+                }
             }
         } else {
             KMessageBox::sorry(this, i18n("Cannot validate your input information.\nPlease check the fields' data.\nMaybe a required field is empty?"));

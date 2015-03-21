@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -26,17 +25,16 @@
 
 #include "composerwidget.h"
 
-
 class PumpIOComposerWidget : public Choqok::UI::ComposerWidget
 {
     Q_OBJECT
 public:
-    explicit PumpIOComposerWidget(Choqok::Account* account, QWidget* parent = 0);
+    explicit PumpIOComposerWidget(Choqok::Account *account, QWidget *parent = 0);
     virtual ~PumpIOComposerWidget();
 
 protected Q_SLOTS:
-    virtual void submitPost(const QString& text);
-    virtual void slotPostSubmited(Choqok::Account* theAccount, Choqok::Post* post);
+    virtual void submitPost(const QString &text);
+    virtual void slotPostSubmited(Choqok::Account *theAccount, Choqok::Post *post);
     void slotSetReply(const QString replyToId, const QString replyToUsername, const QString replyToObjectType);
 
     void cancelAttach();
@@ -44,7 +42,7 @@ protected Q_SLOTS:
 
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 
 };
 

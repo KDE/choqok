@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -37,11 +36,11 @@
 
 const static QString apiKey("ZMWLXQBOfb570310607355f90c601148a3203f0f");
 
-K_PLUGIN_FACTORY_WITH_JSON( ImageShackFactory, "choqok_imageshack.json",
-                            registerPlugin < ImageShack > (); )
+K_PLUGIN_FACTORY_WITH_JSON(ImageShackFactory, "choqok_imageshack.json",
+                           registerPlugin < ImageShack > ();)
 
-ImageShack::ImageShack(QObject* parent, const QList<QVariant>& )
-    :Choqok::Uploader("choqok_imageshack", parent)
+ImageShack::ImageShack(QObject *parent, const QList<QVariant> &)
+    : Choqok::Uploader("choqok_imageshack", parent)
 {
 }
 
@@ -49,9 +48,9 @@ ImageShack::~ImageShack()
 {
 }
 
-void ImageShack::upload(const QUrl &localUrl, const QByteArray& medium, const QByteArray& mediumType)
+void ImageShack::upload(const QUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType)
 {
-    if( !mediumType.startsWith(QByteArray("image/")) ){
+    if (!mediumType.startsWith(QByteArray("image/"))) {
         Q_EMIT uploadingFailed(localUrl, i18n("Just supporting image uploading"));
         return;
     }
@@ -68,24 +67,24 @@ void ImageShack::upload(const QUrl &localUrl, const QByteArray& medium, const QB
     QList< QMap<QString, QByteArray> > listMediafiles;
     listMediafiles.append(mediafile);
 
-    QByteArray data = Choqok::MediaManager::createMultipartFormData( formdata, listMediafiles );
+    QByteArray data = Choqok::MediaManager::createMultipartFormData(formdata, listMediafiles);
 
-    KIO::StoredTransferJob *job = KIO::storedHttpPost( data, url, KIO::HideProgressInfo ) ;
-    if ( !job ) {
+    KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
+    if (!job) {
         qCritical() << "Cannot create a http POST request!";
         return;
     }
-    job->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=AaB03x" );
+    job->addMetaData("content-type", "Content-Type: multipart/form-data; boundary=AaB03x");
     mUrlMap[job] = localUrl;
-    connect( job, SIGNAL( result( KJob* ) ),
-             SLOT( slotUpload(KJob*)) );
+    connect(job, SIGNAL(result(KJob*)),
+            SLOT(slotUpload(KJob*)));
     job->start();
 }
 
-void ImageShack::slotUpload(KJob* job)
+void ImageShack::slotUpload(KJob *job)
 {
-    QUrl localUrl = mUrlMap.take( job );
-    if ( job->error() ) {
+    QUrl localUrl = mUrlMap.take(job);
+    if (job->error()) {
         qCritical() << "Job Error: " << job->errorString();
         Q_EMIT uploadingFailed(localUrl, job->errorString());
         return;
@@ -98,15 +97,15 @@ void ImageShack::slotUpload(KJob* job)
             return;
         }
         QDomElement root = doc.documentElement();
-        if(root.tagName() == "imginfo"){
+        if (root.tagName() == "imginfo") {
             QDomNode node = root.firstChild();
-            while(!node.isNull()){
+            while (!node.isNull()) {
                 QDomElement elm = node.toElement();
-                if(elm.tagName() == "links"){
+                if (elm.tagName() == "links") {
                     QDomNode node2 = node.firstChild();
-                    while( !node2.isNull() ){
+                    while (!node2.isNull()) {
                         QDomElement elm2 = node2.toElement();
-                        if(elm2.tagName() == "yfrog_link"){
+                        if (elm2.tagName() == "yfrog_link") {
                             Q_EMIT mediumUploaded(localUrl, elm2.text());
                             return;
                         }
@@ -116,10 +115,10 @@ void ImageShack::slotUpload(KJob* job)
                 node = node.nextSibling();
             }
         } else {
-            if (root.tagName() == "links"){
+            if (root.tagName() == "links") {
                 QDomNode node = root.firstChild();
-                if( !node.isNull() ){
-                    if(node.toElement().tagName() == "error" ){
+                if (!node.isNull()) {
+                    if (node.toElement().tagName() == "error") {
                         Q_EMIT uploadingFailed(localUrl, node.toElement().text());
                         return;
                     }

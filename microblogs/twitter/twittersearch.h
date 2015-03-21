@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -42,24 +41,24 @@ class TwitterSearch : public TwitterApiSearch
 public:
     enum SearchType { CustomSearch = 0, ReferenceHashtag, FromUser, ToUser, ReferenceUser };
 
-    TwitterSearch(QObject* parent = 0);
+    TwitterSearch(QObject *parent = 0);
     ~TwitterSearch();
 
     virtual void requestSearchResults(const SearchInfo &searchInfo,
-                                      const QString& sinceStatusId = QString(),
+                                      const QString &sinceStatusId = QString(),
                                       uint count = 0, uint page = 1);
     virtual QString optionCode(int option);
 
 protected Q_SLOTS:
-    virtual void searchResultsReturned( KJob *job );
+    virtual void searchResultsReturned(KJob *job);
 
 protected:
-    QList< Choqok::Post* > parseJson(QByteArray buffer);
-    Choqok::Post* readStatusesFromJsonMap(const QVariantMap& var);
+    QList< Choqok::Post * > parseJson(QByteArray buffer);
+    Choqok::Post *readStatusesFromJsonMap(const QVariantMap &var);
 
     QMap<int, QString> mSearchCode;
     QMap<int, QString> mI18nSearchCode;
-    QMap<KJob*, SearchInfo> mSearchJobs;
+    QMap<KJob *, SearchInfo> mSearchJobs;
     static const QRegExp m_rId;
 };
 
