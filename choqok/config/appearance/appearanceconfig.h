@@ -24,12 +24,14 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef APPEARANCECONFIG_H
 #define APPEARANCECONFIG_H
 
+#include "ui_appearanceconfig_base.h"
+
 #include <KCModule>
 
 /**
  * @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
  */
-class AppearanceConfig : public KCModule
+class AppearanceConfig : public KCModule, public Ui_AppearanceConfig_Base
 {
     Q_OBJECT
 
@@ -37,11 +39,8 @@ public:
     AppearanceConfig(QWidget *parent, const QVariantList &args);
     ~AppearanceConfig();
 
+public Q_SLOTS:
     virtual void save();
     virtual void load();
-
-private:
-    class Private;
-    Private *const d;
 };
 #endif

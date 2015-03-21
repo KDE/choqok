@@ -23,6 +23,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "behaviorconfig_shorten.h"
 
 #include <QLayout>
+#include <QTabWidget>
 
 #include <KAboutData>
 #include <KDialog>
@@ -30,7 +31,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KCModuleInfo>
 #include <KCModuleProxy>
 #include <KPluginInfo>
-#include <KTabWidget>
 
 #include "choqokbehaviorsettings.h"
 #include "behaviordebug.h"
@@ -102,7 +102,7 @@ void BehaviorConfig_Shorten::save()
     Choqok::BehaviorSettings::setShortenerPlugin(shorten);
     if (prevShortener != shorten) {
         qCDebug(CHOQOK) << prevShortener << " -> " << shorten;
-        Choqok::BehaviorSettings::self()->writeConfig();
+        Choqok::BehaviorSettings::self()->save();
         Choqok::ShortenManager::self()->reloadConfig();
     }
 }
@@ -118,10 +118,10 @@ void BehaviorConfig_Shorten::slotAboutClicked()
     KAboutData aboutData(info.name(), info.name(), info.version(), info.comment(),
                          KAboutLicense::byKeyword(info.license()).key(), QString(),
                          QString(), info.website());
-    aboutData.setProgramIconName(info.icon());
     aboutData.addAuthor(info.author(), QString(), info.email());
 
     KAboutApplicationDialog aboutPlugin(aboutData, this);
+    aboutPlugin.setWindowIcon(QIcon::fromTheme(info.icon()));
     aboutPlugin.exec();
 }
 
@@ -134,9 +134,9 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
     QPointer<KDialog> configDialog = new KDialog(this);
     configDialog->setWindowTitle(pluginInfo.name());
     // The number of KCModuleProxies in use determines whether to use a tabwidget
-    KTabWidget *newTabWidget = 0;
+    QTabWidget *newTabWidget = 0;
     // Widget to use for the setting dialog's main widget,
-    // either a KTabWidget or a KCModuleProxy
+    // either a QTabWidget or a KCModuleProxy
     QWidget *mainWidget = 0;
     // Widget to use as the KCModuleProxy's parent.
     // The first proxy is owned by the dialog itself
@@ -152,7 +152,7 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
                     // we already created one KCModuleProxy, so we need a tab widget.
                     // Move the first proxy into the tab widget and ensure this and subsequent
                     // proxies are in the tab widget
-                    newTabWidget = new KTabWidget(configDialog);
+                    newTabWidget = new QTabWidget(configDialog);
                     moduleProxyParentWidget = newTabWidget;
                     mainWidget->setParent(newTabWidget);
                     KCModuleProxy *moduleProxy = qobject_cast<KCModuleProxy *>(mainWidget);

@@ -27,7 +27,7 @@
 
 #include <KCModule>
 
-class KMenu;
+class QMenu;
 namespace Choqok
 {
 class Account;
@@ -65,8 +65,8 @@ private:
     QList<QTableWidgetItem *> takeRow(int row);
     void setRow(int row, const QList<QTableWidgetItem *> &rowItems);
     void addAccountToTable(Choqok::Account *account);
-    KMenu *createAddAccountMenu();
-    KMenu *mBlogMenu;
+    QMenu *createAddAccountMenu();
+    QMenu *mBlogMenu;
 };
 
 #endif

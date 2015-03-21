@@ -24,9 +24,9 @@
 
 #include <QAction>
 #include <QCheckBox>
+#include <QMenu>
 
 #include <KAboutData>
-#include <KMenu>
 #include <KMessageBox>
 #include <KPluginFactory>
 #include <KPluginInfo>
@@ -240,9 +240,9 @@ void AccountsWidget::save()
     }
 }
 
-KMenu *AccountsWidget::createAddAccountMenu()
+QMenu *AccountsWidget::createAddAccountMenu()
 {
-    mBlogMenu = new KMenu(i18n("Select Micro-Blogging Service"), this);
+    mBlogMenu = new QMenu(i18n("Select Micro-Blogging Service"), this);
     const QList<KPluginInfo> list = Choqok::PluginManager::self()->availablePlugins("MicroBlogs");
     Q_FOREACH (const KPluginInfo &info, list) {
         QAction *act = new QAction(mBlogMenu);

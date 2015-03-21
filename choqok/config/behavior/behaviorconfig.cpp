@@ -26,6 +26,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "ui_behaviorconfig_general.h"
 #include "ui_behaviorconfig_notifications.h"
 
+#include <QTabWidget>
 #include <QVBoxLayout>
 
 #include <KAboutData>
@@ -33,7 +34,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KCModuleProxy>
 #include <KLocalizedString>
 #include <KPluginFactory>
-#include <KTabWidget>
 
 #include "behaviorconfig_shorten.h"
 #include "behaviordebug.h"
@@ -45,7 +45,7 @@ K_PLUGIN_FACTORY_WITH_JSON(ChoqokBehaviorConfigFactory, "choqok_behaviorconfig.j
 class BehaviorConfig::Private
 {
 public:
-    KTabWidget *mBehaviorTabCtl;
+    QTabWidget *mBehaviorTabCtl;
 
     Ui_BehaviorConfig_General mPrfsGeneral;
     Ui_BehaviorConfig_Notifications mPrfsNotify;
@@ -62,7 +62,7 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args)
     // since KSetting::Dialog has margins here, we don't need our own.
     layout->setContentsMargins(0, 0, 0, 0);
 
-    d->mBehaviorTabCtl = new KTabWidget(this);
+    d->mBehaviorTabCtl = new QTabWidget(this);
     d->mBehaviorTabCtl->setObjectName("mBehaviorTabCtl");
     layout->addWidget(d->mBehaviorTabCtl);
 
@@ -71,7 +71,7 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args)
     d->mPrfsGeneral.setupUi(mPrfsGeneralDlg);
     addConfig(Choqok::BehaviorSettings::self(), mPrfsGeneralDlg);
     d->mBehaviorTabCtl->addTab(mPrfsGeneralDlg, i18n("&General"));
-    d->mPrfsGeneral.kcfg_updateInterval->setSuffix(ki18np(" Minute", " Minutes"));
+    d->mPrfsGeneral.kcfg_updateInterval->setSuffix(ki18np(" Minute", " Minutes").toString());
 
 #ifdef QTINDICATE_BUILD
     // "Notifications" TAB ============================================================
@@ -79,7 +79,7 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args)
     d->mPrfsNotify.setupUi(mPrfsNotifyDlg);
     addConfig(Choqok::BehaviorSettings::self(), mPrfsNotifyDlg);
     d->mBehaviorTabCtl->addTab(mPrfsNotifyDlg, i18n("&Notifications"));
-    d->mPrfsNotify.kcfg_notifyInterval->setSuffix(ki18np(" Second", " Seconds"));
+    d->mPrfsNotify.kcfg_notifyInterval->setSuffix(ki18np(" Second", " Seconds").toString());
     /* Remove below code, when all functions on tab will work*/
     d->mPrfsNotify.kcfg_notifyInterval->setVisible(false);
     d->mPrfsNotify.kcfg_showAllNotifiesInOne->setVisible(false);

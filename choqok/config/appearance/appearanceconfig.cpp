@@ -21,14 +21,13 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 */
 #include "appearanceconfig.h"
-#include "ui_appearanceconfig_base.h"
 
+#include <QWidget>
 #include <QVBoxLayout>
 
 #include <KAboutData>
 #include <KLocalizedString>
 #include <KPluginFactory>
-#include <KTabWidget>
 
 #include "appearancedebug.h"
 #include "choqokappearancesettings.h"
@@ -36,49 +35,15 @@ along with this program; if not, see http://www.gnu.org/licenses/
 K_PLUGIN_FACTORY_WITH_JSON(ChoqokAppearanceConfigFactory, "choqok_appearanceconfig.json",
                            registerPlugin<AppearanceConfig>();)
 
-class AppearanceConfig::Private
-{
-public:
-    Private()
-        : mAppearanceTabCtl(0L)
-    {}
-
-    KTabWidget *mAppearanceTabCtl;
-
-    Ui::AppearanceConfig_Base mPrefsBase;
-};
-
 AppearanceConfig::AppearanceConfig(QWidget *parent, const QVariantList &args)
     : KCModule(KAboutData::pluginData("kcm_choqok_appearanceconfig"), parent, args)
-    , d(new Private())
 {
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    // since the tab widget is already within a layout with margins in the KSettings::Dialog
-    // it needs no margins of its own.
-    layout->setContentsMargins(0, 0, 0, 0);
-    d->mAppearanceTabCtl = new KTabWidget(this);
-    d->mAppearanceTabCtl->setTabBarHidden(true);
-    d->mAppearanceTabCtl->setDocumentMode(true);
-    d->mAppearanceTabCtl->setObjectName("mAppearanceTabCtl");
-    layout->addWidget(d->mAppearanceTabCtl);
-
-//     KConfigGroup config(KGlobal::config(), "ChatWindowSettings");
-
-    // "Contact List" TAB =======================================================
-    QWidget *appearsWidget = new QWidget(d->mAppearanceTabCtl);
-    d->mPrefsBase.setupUi(appearsWidget);
-    addConfig(Choqok::AppearanceSettings::self(), appearsWidget);
-
-    d->mAppearanceTabCtl->addTab(appearsWidget, i18n("Appearance"));
-
-    // ==========================================================================
-
+    setupUi(this);
     load();
 }
 
 AppearanceConfig::~AppearanceConfig()
 {
-    delete d;
 }
 
 void AppearanceConfig::save()

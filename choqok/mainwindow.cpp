@@ -73,8 +73,8 @@ background-color: qlineargradient(spread:reflect, x1:0.449382, y1:0, x2:0.448, y
 
 MainWindow::MainWindow(ChoqokApplication *application)
     : Choqok::UI::MainWindow(), sysIcon(0), quickWidget(0), s_settingsDialog(0),
-      m_splash(0), choqokMainButton(0), microblogCounter(0),
-      choqokMainButtonVisible(false), app(application)
+      m_splash(0), choqokMainButton(0), app(application),
+      microblogCounter(0), choqokMainButtonVisible(false)
 {
     qCDebug(CHOQOK);
     setAttribute(Qt::WA_DeleteOnClose, false);
@@ -416,7 +416,7 @@ void MainWindow::slotQuit()
     qCDebug(CHOQOK);
     Choqok::BehaviorSettings::setPosition(pos());
     timelineTimer->stop();
-    Choqok::BehaviorSettings::self()->writeConfig();
+    Choqok::BehaviorSettings::self()->save();
     app->quitChoqok();
 }
 
