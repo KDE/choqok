@@ -31,7 +31,8 @@
 #include <KCModule>
 
 #include "ui_notifyprefs.h"
-#include "dummynotification.h"
+
+class DummyNotification;
 
 class NotifySettings;
 class NotifyConfig : public KCModule

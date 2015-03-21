@@ -24,23 +24,21 @@
 
 #include "notifyconfig.h"
 
-#include <QFile>
-#include <QVBoxLayout>
-
-#include "choqokdebug.h"
-#include <KLocale>
+#include <KAboutData>
+#include <KLocalizedString>
 #include <KPluginFactory>
-#include <KStandardDirs>
 
 #include "account.h"
 #include "accountmanager.h"
+
+#include "dummynotification.h"
 #include "notifysettings.h"
 
-K_PLUGIN_FACTORY( NotifyConfigFactory, registerPlugin < NotifyConfig > (); )
-K_EXPORT_PLUGIN( NotifyConfigFactory( "kcm_choqok_notify" ) )
+K_PLUGIN_FACTORY_WITH_JSON( NotifyConfigFactory, "choqok_notify_config.json",
+                            registerPlugin < NotifyConfig > (); )
 
-NotifyConfig::NotifyConfig(QWidget* parent, const QVariantList& args):
-        KCModule( NotifyConfigFactory::componentData(), parent, args)
+NotifyConfig::NotifyConfig(QWidget* parent, const QVariantList& args)
+    : KCModule( KAboutData::pluginData("kcm_choqok_notify"), parent, args)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
@@ -113,7 +111,7 @@ void NotifyConfig::load()
 
 void NotifyConfig::save()
 {
-    qCDebug(CHOQOK)<< accounts.keys();
+    //qDebug()<< accounts.keys();
     settings->setAccounts(accounts);
     settings->setNotifyInterval(ui.interval->value());
     settings->setBackgroundColor(ui.backgroundColor->color());

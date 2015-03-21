@@ -23,10 +23,9 @@
 
 #include "dummynotification.h"
 
+#include <QIcon>
 #include <QMouseEvent>
 
-#include "choqokdebug.h"
-#include <QIcon>
 #include <KLocalizedString>
 
 #include "choqokappearancesettings.h"
@@ -74,7 +73,6 @@ void DummyNotification::mouseMoveEvent(QMouseEvent* ev)
 
 void DummyNotification::mousePressEvent(QMouseEvent* ev)
 {
-    qCDebug(CHOQOK);
     KTextBrowser::mousePressEvent(ev);
     isMoving = true;
     lastPressedPosition = ev->globalPos();
@@ -83,13 +81,11 @@ void DummyNotification::mousePressEvent(QMouseEvent* ev)
 void DummyNotification::mouseReleaseEvent(QMouseEvent* ev)
 {
     KTextBrowser::mouseReleaseEvent(ev);
-    qCDebug(CHOQOK);
     isMoving = false;
 }
 
 void DummyNotification::slotProcessAnchor(const QUrl& url)
 {
-    qCDebug(CHOQOK);
     if(url.scheme() == "choqok"){
         if(url.host() == "close"){
             Q_EMIT positionSelected(pos());

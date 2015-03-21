@@ -25,7 +25,7 @@
 #ifndef NOTIFICATION_H
 #define NOTIFICATION_H
 
-#include <KPushButton>
+class KPushButton;
 
 #include "postwidget.h"
 

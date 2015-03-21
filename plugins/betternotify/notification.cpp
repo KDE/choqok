@@ -24,16 +24,17 @@
 
 #include "notification.h"
 
+#include <QIcon>
 #include <QMouseEvent>
 #include <QVBoxLayout>
 
-#include "choqokdebug.h"
-#include <QIcon>
 #include <KLocalizedString>
+#include <KPushButton>
 
 #include "choqokappearancesettings.h"
 #include "choqoktools.h"
 #include "mediamanager.h"
+
 #include "notifysettings.h"
 
 const QRegExp Notification::dirRegExp("(RT|RD)|(@([^\\s\\W]+))|(#([^\\s\\W]+))|(!([^\\s\\W]+))");
@@ -41,7 +42,6 @@ const QRegExp Notification::dirRegExp("(RT|RD)|(@([^\\s\\W]+))|(#([^\\s\\W]+))|(
 Notification::Notification(Choqok::UI::PostWidget* postWidget)
 : QWidget(), post(postWidget), dir("ltr")
 {
-    qCDebug(CHOQOK);
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 //     setAttribute(Qt::WA_TranslucentBackground);
     setWindowOpacity(0.8);
@@ -73,18 +73,15 @@ Notification::Notification(Choqok::UI::PostWidget* postWidget)
 
 Notification::~Notification()
 {
-    qCDebug(CHOQOK);
 }
 
 QSize Notification::sizeHint() const
 {
-    qCDebug(CHOQOK);
     return QSize(NOTIFICATION_WIDTH, NOTIFICATION_HEIGHT);
 }
 
 void Notification::init()
 {
-    qCDebug(CHOQOK);
     QPixmap pix = Choqok::MediaManager::self()->fetchImage(post->currentPost()->author.profileImageUrl);
     if( !pix )
         pix = QPixmap( Choqok::MediaManager::self()->defaultImage() );
@@ -112,7 +109,6 @@ void Notification::init()
 
 void Notification::slotProcessAnchor(const QUrl& url)
 {
-    qCDebug(CHOQOK);
     if(url.scheme() == "choqok"){
         if(url.host() == "close"){
             Q_EMIT ignored();
@@ -122,14 +118,12 @@ void Notification::slotProcessAnchor(const QUrl& url)
 
 void Notification::slotClicked()
 {
-    qCDebug(CHOQOK);
     post->setReadWithSignal();
     Q_EMIT postReaded();
 }
 
 void Notification::setHeight()
 {
-    qCDebug(CHOQOK);
     mainWidget.document()->setTextWidth(mainWidget.width()-2);
     int h = mainWidget.document()->size().toSize().height() + 30;
     setMinimumHeight(h);
@@ -138,7 +132,6 @@ void Notification::setHeight()
 
 void Notification::setDirection()
 {
-    qCDebug(CHOQOK);
     QString txt = post->currentPost()->content;
     txt.remove(dirRegExp);
     txt = txt.trimmed();
@@ -149,7 +142,6 @@ void Notification::setDirection()
 
 void Notification::mouseMoveEvent(QMouseEvent* e)
 {
-    qCDebug(CHOQOK);
     e->accept();
 }
 
