@@ -24,11 +24,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QApplication>
 
-#include "libchoqokdebug.h"
 #include <KSharedConfig>
-#include <KSharedPtr>
 
 #include "choqokbehaviorsettings.h"
+#include "libchoqokdebug.h"
 #include "pluginmanager.h"
 #include "notifymanager.h"
 

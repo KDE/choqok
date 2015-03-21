@@ -27,19 +27,19 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QPainter>
 #include <QPainterPath>
 #include <QPointer>
+#include <QPushButton>
+#include <QStatusBar>
+#include <QTime>
 #include <QVBoxLayout>
 
-#include <KDateTime>
-#include "libchoqokdebug.h"
 #include <KMessageBox>
-#include <KPushButton>
-#include <KStatusBar>
 
 #include "account.h"
 #include "choqokappearancesettings.h"
 #include "choqoktextedit.h"
 #include "choqokuiglobal.h"
 #include "composerwidget.h"
+#include "libchoqokdebug.h"
 #include "notifymanager.h"
 #include "timelinewidget.h"
 
@@ -103,7 +103,7 @@ public:
     QMap<QString, TimelineWidget *> timelines;
     Choqok::UI::ChoqokTabBar *timelinesTabWidget;
     QLabel *latestUpdate;
-    KPushButton *btnMarkAllAsRead;
+    QPushButton *btnMarkAllAsRead;
     QHBoxLayout *toolbar;
     QFrame *toolbar_widget;
 };
@@ -211,7 +211,7 @@ void MicroBlogWidget::newTimelineDataRecieved(Choqok::Account *theAccount, const
     }
 
     qCDebug(CHOQOK) << d->account->alias() << ": " << type;
-    d->latestUpdate->setText(KDateTime::currentLocalDateTime().time().toString());
+    d->latestUpdate->setText(QTime::currentTime().toString());
     if (d->timelines.contains(type)) {
         d->timelines.value(type)->addNewPosts(data);
     } else {
@@ -273,7 +273,7 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change, Choqok::UI::TimelineWidg
 
     if (sum > 0) {
         if (!d->btnMarkAllAsRead) {
-            d->btnMarkAllAsRead = new KPushButton(this);
+            d->btnMarkAllAsRead = new QPushButton(this);
             d->btnMarkAllAsRead->setIcon(QIcon::fromTheme("mail-mark-read"));
             d->btnMarkAllAsRead->setIconSize(QSize(14, 14));
             d->btnMarkAllAsRead->setToolTip(i18n("Mark all timelines as read"));
@@ -386,11 +386,11 @@ void MicroBlogWidget::errorPost(Choqok::Account *theAccount, Choqok::Post *, Mic
 QLayout *MicroBlogWidget::createToolbar()
 {
     d->toolbar = new QHBoxLayout;
-    KPushButton *btnActions = new KPushButton(i18n("More"), this);
+    QPushButton *btnActions = new QPushButton(i18n("More"), this);
 
     QLabel *lblLatestUpdate = new QLabel(i18n("Latest update:"), this);
     lblLatestUpdate->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-    d->latestUpdate = new QLabel(KDateTime::currentLocalDateTime().time().toString(), this);
+    d->latestUpdate = new QLabel(QTime::currentTime().toString(), this);
     QFont fnt = lblLatestUpdate->font();
     fnt.setPointSize(fnt.pointSize() - 1);
     lblLatestUpdate->setFont(fnt);

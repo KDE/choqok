@@ -28,7 +28,6 @@
 #include <QDBusConnectionInterface>
 #include <QMenu>
 
-#include <KAboutData>
 #include <KActionCollection>
 #include <KActionMenu>
 #include <KLocalizedString>

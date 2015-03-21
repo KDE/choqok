@@ -22,16 +22,17 @@
 */
 #include "accountmanager.h"
 
+#include <QUrl>
+#include <QStandardPaths>
+
 #include <KConfig>
 #include <KConfigGroup>
-#include "libchoqokdebug.h"
 #include <KIO/NetAccess>
 #include <KLocalizedString>
-#include <KStandardDirs>
 #include <KSharedConfig>
-#include <QUrl>
 #include <KWallet/Wallet>
 
+#include "libchoqokdebug.h"
 #include "microblog.h"
 #include "passwordmanager.h"
 #include "pluginmanager.h"
@@ -130,7 +131,7 @@ bool AccountManager::removeAccount(const QString &alias)
             QStringList names = a->timelineNames();
             while (!names.isEmpty()) {
                 QString tmpFile;
-                tmpFile = KStandardDirs::locate("data",
+                tmpFile = QStandardPaths::locate(QStandardPaths::DataLocation,
                                                 generatePostBackupFileName(a->alias(), names.takeFirst()));
                 qCDebug(CHOQOK) << "Will remove " << tmpFile;
                 const QUrl path(tmpFile);

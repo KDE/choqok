@@ -24,10 +24,10 @@
 #include "laconicapostwidget.h"
 
 #include <QAction>
-#include "laconicadebug.h"
+#include <QMenu>
+#include <QPushButton>
+
 #include <KLocalizedString>
-#include <KMenu>
-#include <KPushButton>
 
 #include "choqokbehaviorsettings.h"
 #include "choqoktools.h"
@@ -38,10 +38,11 @@
 #include "twitterapimicroblog.h"
 #include "twitterapiwhoiswidget.h"
 
-#include "laconicasearch.h"
 #include "laconicaaccount.h"
-#include "laconicamicroblog.h"
 #include "laconicaconversationtimelinewidget.h"
+#include "laconicadebug.h"
+#include "laconicamicroblog.h"
+#include "laconicasearch.h"
 
 const QRegExp LaconicaPostWidget::mGroupRegExp("([\\s]|^)!([a-z0-9]+){1,64}",  Qt::CaseInsensitive);
 const QRegExp LaconicaPostWidget::mLaconicaUserRegExp("([\\s\\W]|^)@([a-z0-9_]+){1,64}(?!(@))", Qt::CaseInsensitive);
@@ -80,7 +81,7 @@ void LaconicaPostWidget::initUi()
 {
     TwitterApiPostWidget::initUi();
 
-    KPushButton *btn = buttons().value("btnResend");
+    QPushButton *btn = buttons().value("btnResend");
 
     if (btn) {
         QMenu *menu = new QMenu(btn);
@@ -149,7 +150,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl &url)
         unpcode.remove('-');
         unpcode.remove('_');
 
-        KMenu menu;
+        QMenu menu;
         QAction *search = new QAction(QIcon::fromTheme("system-search"),
                                       i18n("Search for %1", unpcode), &menu);
         QAction *openInBrowser = new QAction(QIcon::fromTheme("applications-internet"),
@@ -167,7 +168,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl &url)
                                  "/tag/" + unpcode));
         }
     } else if (scheme == "group") {
-        KMenu menu;
+        QMenu menu;
         QAction *search = new QAction(QIcon::fromTheme("system-search"),
                                       i18n("Show latest group posts"), &menu);
         QAction *openInBrowser = new QAction(QIcon::fromTheme("applications-internet"),
@@ -187,7 +188,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl &url)
     } else if (scheme == "user") {
         QString username = (url.userName().isEmpty() ? "" : QString("%1@").arg(url.userName())) +
                            url.host();
-        KMenu menu;
+        QMenu menu;
         QAction *info = new QAction(QIcon::fromTheme("user-identity"), i18nc("Who is user", "Who is %1",
                                     username), &menu);
         QAction *from = new QAction(QIcon::fromTheme("edit-find-user"), i18nc("Posts from user", "Posts from %1",

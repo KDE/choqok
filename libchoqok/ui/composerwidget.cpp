@@ -24,12 +24,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QGridLayout>
 #include <QLabel>
 #include <QPointer>
-
-#include "libchoqokdebug.h"
-#include <KPushButton>
+#include <QPushButton>
 
 #include "account.h"
 #include "choqoktextedit.h"
+#include "libchoqokdebug.h"
 #include "microblog.h"
 #include "notifymanager.h"
 #include "shortenmanager.h"
@@ -50,7 +49,7 @@ public:
     Choqok::Post *postToSubmit;
     QWidget *editorContainer;
     QPointer<QLabel> replyToUsernameLabel;
-    QPointer<KPushButton> btnCancelReply;
+    QPointer<QPushButton> btnCancelReply;
 };
 
 ComposerWidget::ComposerWidget(Choqok::Account *account, QWidget *parent /*= 0*/)
@@ -66,7 +65,7 @@ ComposerWidget::ComposerWidget(Choqok::Account *account, QWidget *parent /*= 0*/
     setEditor(new TextEdit(account->postCharLimit(), this));
 
     d->replyToUsernameLabel = new QLabel(editorContainer());
-    d->btnCancelReply = new KPushButton(editorContainer());
+    d->btnCancelReply = new QPushButton(editorContainer());
     d->btnCancelReply->setIcon(QIcon::fromTheme("dialog-cancel"));
     d->btnCancelReply->setToolTip(i18n("Discard Reply"));
     d->btnCancelReply->setMaximumWidth(d->btnCancelReply->height());
@@ -137,7 +136,7 @@ void ComposerWidget::submitPost(const QString &txt)
             SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
                              QString, Choqok::MicroBlog::ErrorLevel)),
             SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
-    btnAbort = new KPushButton(QIcon::fromTheme("dialog-cancel"), i18n("Abort"), this);
+    btnAbort = new QPushButton(QIcon::fromTheme("dialog-cancel"), i18n("Abort"), this);
     layout()->addWidget(btnAbort);
     connect(btnAbort, SIGNAL(clicked(bool)), SLOT(abort()));
     currentAccount()->microblog()->createPost(currentAccount(), d->postToSubmit);
@@ -219,7 +218,7 @@ void ComposerWidget::setPostToSubmit(Post *post)
     d->postToSubmit = post;
 }
 
-QPointer< KPushButton > ComposerWidget::btnCancelReply()
+QPointer< QPushButton > ComposerWidget::btnCancelReply()
 {
     return d->btnCancelReply;
 }

@@ -23,9 +23,8 @@
 
 #include "indicatormanager.h"
 
-#include <QTimer>
-
 #include <QIcon>
+#include <QTimer>
 
 #include "account.h"
 #include "accountmanager.h"

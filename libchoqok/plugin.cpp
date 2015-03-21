@@ -23,7 +23,7 @@
 #include "plugin.h"
 
 #include <KPluginInfo>
-#include <KSettings/Dispatcher>
+#include <ksettings/Dispatcher>
 
 #include "pluginmanager.h"
 

@@ -23,13 +23,12 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QLabel>
 #include <QPointer>
+#include <QPushButton>
 #include <QScrollArea>
 #include <QScrollBar>
 #include <QTextDocument>
 #include <QTimer>
 #include <QVBoxLayout>
-
-#include <KPushButton>
 
 #include "account.h"
 #include "choqokappearancesettings.h"
@@ -62,7 +61,7 @@ public:
     Account *currentAccount;
     QString timelineName;
     bool mStartUp;
-    QPointer<KPushButton> btnMarkAllAsRead;
+    QPointer<QPushButton> btnMarkAllAsRead;
     int unreadCount;
     QMap<QString, PostWidget *> posts;
     QMultiMap<QDateTime, PostWidget *>  sortedPostsList;
@@ -248,7 +247,7 @@ void TimelineWidget::addNewPosts(QList< Choqok::Post * > &postList)
 void TimelineWidget::showMarkAllAsReadButton()
 {
     if (!d->btnMarkAllAsRead) {
-        d->btnMarkAllAsRead = new KPushButton(this);
+        d->btnMarkAllAsRead = new QPushButton(this);
         d->btnMarkAllAsRead->setIcon(QIcon::fromTheme("mail-mark-read"));
         d->btnMarkAllAsRead->setToolTip(i18n("Mark timeline as read"));
         d->btnMarkAllAsRead->setMaximumSize(14, 14);

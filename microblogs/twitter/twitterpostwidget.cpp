@@ -24,9 +24,10 @@
 #include "twitterpostwidget.h"
 
 #include <QAction>
+#include <QMenu>
+#include <QPushButton>
+
 #include <KLocalizedString>
-#include <KMenu>
-#include <KPushButton>
 
 #include "choqoktools.h"
 
@@ -48,7 +49,7 @@ void TwitterPostWidget::initUi()
 {
     TwitterApiPostWidget::initUi();
 
-    KPushButton *btn = buttons().value("btnResend");
+    QPushButton *btn = buttons().value("btnResend");
 
     if (btn) {
         QMenu *menu = new QMenu(btn);
@@ -107,7 +108,7 @@ void TwitterPostWidget::checkAnchor(const QUrl &url)
                 QUrl::fromPunycode(url.host().toUtf8()),
                 (int)TwitterSearch::ReferenceHashtag);
     } else if (scheme == "user") {
-        KMenu menu;
+        QMenu menu;
         QAction *info = new QAction(QIcon::fromTheme("user-identity"), i18nc("Who is user", "Who is %1", url.host()),
                                     &menu);
         QAction *from = new QAction(QIcon::fromTheme("edit-find-user"), i18nc("Posts from user", "Posts from %1", url.host()),

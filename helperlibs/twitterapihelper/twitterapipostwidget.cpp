@@ -26,17 +26,17 @@
 #include <QAction>
 #include <QIcon>
 #include <QMenu>
+#include <QPushButton>
 
-#include "twitterapidebug.h"
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KPushButton>
 
 #include "choqokappearancesettings.h"
 #include "mediamanager.h"
 #include "microblog.h"
 #include "textbrowser.h"
 #include "twitterapiaccount.h"
+#include "twitterapidebug.h"
 #include "twitterapimicroblog.h"
 #include "twitterapishowthread.h"
 
@@ -50,7 +50,7 @@ public:
     {
         mBlog = qobject_cast<TwitterApiMicroBlog *>(account->microblog());
     }
-    KPushButton *btnFav;
+    QPushButton *btnFav;
     bool isBasePostShowed;
     TwitterApiMicroBlog *mBlog;
 };
@@ -71,7 +71,7 @@ void TwitterApiPostWidget::initUi()
 {
     Choqok::UI::PostWidget::initUi();
 
-    KPushButton *btnRe = addButton("btnReply", i18nc("@info:tooltip", "Reply"), "edit-undo");
+    QPushButton *btnRe = addButton("btnReply", i18nc("@info:tooltip", "Reply"), "edit-undo");
     QMenu *menu = new QMenu(btnRe);
 
     QAction *actRep = new QAction(QIcon::fromTheme("edit-undo"), i18n("Reply to %1", currentPost()->author.userName), menu);
@@ -91,7 +91,8 @@ void TwitterApiPostWidget::initUi()
     }
 
     menu->setDefaultAction(actRep);
-    btnRe->setDelayedMenu(menu);
+#pragma message("FIXME: Not available in QPushButton, port to KF5")
+//    btnRe->setDelayedMenu(menu);
 
     if (!currentPost()->isPrivate) {
         d->btnFav = addButton("btnFavorite", i18nc("@info:tooltip", "Favorite"), "rating");

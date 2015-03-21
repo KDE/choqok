@@ -25,13 +25,13 @@
 #include <QMenu>
 #include <QTimer>
 
-#include "libchoqokdebug.h"
 #include <KLocalizedString>
 
 #include "account.h"
 #include "accountmanager.h"
 #include "choqokbehaviorsettings.h"
 #include "composerwidget.h"
+#include "libchoqokdebug.h"
 #include "microblogwidget.h"
 #include "postwidget.h"
 #include "timelinewidget.h"

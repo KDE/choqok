@@ -30,7 +30,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "choqok_export.h"
 
 class QLabel;
-class KPushButton;
+class QPushButton;
 
 namespace Choqok
 {
@@ -66,7 +66,7 @@ protected:
     Sub classes can use another editor! (Should be a subclass of Choqok::Editor)
     */
     virtual void setEditor(TextEdit *editor);
-    QPointer<KPushButton> btnCancelReply();
+    QPointer<QPushButton> btnCancelReply();
     Account *currentAccount();
     QWidget *editorContainer();
     Choqok::Post *postToSubmit();
@@ -75,7 +75,7 @@ protected:
 
     QString replyToId;
     QString replyToUsername;
-    QPointer<KPushButton> btnAbort;
+    QPointer<QPushButton> btnAbort;
 
 private:
     class Private;

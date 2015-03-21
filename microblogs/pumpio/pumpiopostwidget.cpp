@@ -25,9 +25,9 @@
 
 #include <QAction>
 #include <QMenu>
+#include <QPushButton>
 
 #include <KLocalizedString>
-#include <KPushButton>
 
 #include "mediamanager.h"
 #include "textbrowser.h"
@@ -43,8 +43,8 @@ const QIcon PumpIOPostWidget::unFavIcon(Choqok::MediaManager::convertToGrayScale
 class PumpIOPostWidget::Private
 {
 public:
-    KPushButton *btnFavorite;
-    KPushButton *btnReply;
+    QPushButton *btnFavorite;
+    QPushButton *btnReply;
 };
 
 PumpIOPostWidget::PumpIOPostWidget(Choqok::Account *account, Choqok::Post *post,

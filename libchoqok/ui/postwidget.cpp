@@ -24,10 +24,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QCloseEvent>
 #include <QGridLayout>
 #include <QTimer>
+#include <QPushButton>
 
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KPushButton>
 
 #include "choqokappearancesettings.h"
 #include "choqokbehaviorsettings.h"
@@ -55,7 +55,7 @@ public:
     {
     }
     QGridLayout *buttonsLayout;
-    QMap<QString, KPushButton *> mUiButtons; //<Object name, Button>
+    QMap<QString, QPushButton *> mUiButtons; //<Object name, Button>
     Post *mCurrentPost;
     Account *mCurrentAccount;
 //         bool mRead;
@@ -82,7 +82,7 @@ const QString PostWidget::otherText("<table height=\"100%\" width=\"100%\"><tr><
 
 const QString PostWidget::baseStyle("KTextBrowser {border: 1px solid rgb(150,150,150);\
 border-radius:5px; color:%1; background-color:%2; %3}\
-KPushButton{border:0px}");
+QPushButton{border:0px}");
 
 const QString PostWidget::hrefTemplate("<a href='%1' title='%1' target='_blank'>%2</a>");
 
@@ -195,13 +195,13 @@ void PostWidget::initUi()
     }
 
     if (isRemoveAvailable()) {
-        KPushButton *btnRemove = addButton("btnRemove", i18nc("@info:tooltip", "Remove"), "edit-delete");
+        QPushButton *btnRemove = addButton("btnRemove", i18nc("@info:tooltip", "Remove"), "edit-delete");
         connect(btnRemove, SIGNAL(clicked(bool)), SLOT(removeCurrentPost()));
         baseText = &ownText;
     }
 
     if (isResendAvailable()) {
-        KPushButton *btnResend = addButton("btnResend", i18nc("@info:tooltip", "ReSend"), "retweet");
+        QPushButton *btnResend = addButton("btnResend", i18nc("@info:tooltip", "ReSend"), "retweet");
         connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
         baseText = &otherText;
     }
@@ -209,11 +209,11 @@ void PostWidget::initUi()
     /*
     if(d->mCurrentAccount->username().compare( d->mCurrentPost->author.userName, Qt::CaseInsensitive ) == 0
         || currentPost()->isPrivate) {
-        KPushButton *btnRemove = addButton("btnRemove", i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
+        QPushButton *btnRemove = addButton("btnRemove", i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
         connect(btnRemove, SIGNAL(clicked(bool)), SLOT(removeCurrentPost()));
         baseText = &ownText;
     } else {
-        KPushButton *btnResend = addButton("btnResend", i18nc( "@info:tooltip", "ReSend" ), "retweet" );
+        QPushButton *btnResend = addButton("btnResend", i18nc( "@info:tooltip", "ReSend" ), "retweet" );
         connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
         baseText = &otherText;
     }*/
@@ -255,15 +255,15 @@ void PostWidget::setStyle(const QColor &color, const QColor &back, const QColor 
     ownStyle = baseStyle.arg(getColorString(own), getColorString(ownBack), fntStr);
 }
 
-KPushButton *PostWidget::addButton(const QString &objName, const QString &toolTip, const QString &icon)
+QPushButton *PostWidget::addButton(const QString &objName, const QString &toolTip, const QString &icon)
 {
     return addButton(objName, toolTip, QIcon::fromTheme(icon));
 
 }
 
-KPushButton *PostWidget::addButton(const QString &objName, const QString &toolTip, const QIcon &icon)
+QPushButton *PostWidget::addButton(const QString &objName, const QString &toolTip, const QIcon &icon)
 {
-    KPushButton *button = new KPushButton(icon, QString(), _mainWidget);
+    QPushButton *button = new QPushButton(icon, QString(), _mainWidget);
     button->setObjectName(objName);
     button->setToolTip(toolTip);
     button->setIconSize(QSize(16, 16));
@@ -386,7 +386,7 @@ void PostWidget::resizeEvent(QResizeEvent *event)
 
 void PostWidget::enterEvent(QEvent *event)
 {
-    Q_FOREACH (KPushButton *btn, buttons()) {
+    Q_FOREACH (QPushButton *btn, buttons()) {
         if (btn) { //A crash happens here :/
             btn->show();
         }
@@ -396,7 +396,7 @@ void PostWidget::enterEvent(QEvent *event)
 
 void PostWidget::leaveEvent(QEvent *event)
 {
-    Q_FOREACH (KPushButton *btn, buttons()) {
+    Q_FOREACH (QPushButton *btn, buttons()) {
         if (btn) {
             btn->hide();
         }
@@ -448,11 +448,6 @@ void PostWidget::setDirection()
     if (txt.isRightToLeft()) {
         d->dir = "rtl";
     }
-}
-
-QString PostWidget::formatDateTime(const KDateTime &time)
-{
-    return formatDateTime(time.dateTime());
 }
 
 QString PostWidget::formatDateTime(const QDateTime &time)
@@ -597,7 +592,7 @@ void PostWidget::slotImageFetched(const QString &remoteUrl, const QPixmap &pixma
     }
 }
 
-QMap<QString, KPushButton * > &PostWidget::buttons()
+QMap<QString, QPushButton * > &PostWidget::buttons()
 {
     return d->mUiButtons;
 }

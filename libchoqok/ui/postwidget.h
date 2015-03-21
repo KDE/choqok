@@ -22,14 +22,14 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef POSTWIDGET_H
 #define POSTWIDGET_H
 
-#include <KDateTime>
+#include <QDateTime>
 
 #include "account.h"
 #include "choqoktypes.h"
 #include "microblog.h"
 
 class QAction;
-class KPushButton;
+class QPushButton;
 
 namespace Choqok
 {
@@ -202,7 +202,6 @@ protected:
     virtual void setDirection();
     virtual QString generateSign();
     virtual QString formatDateTime(const QDateTime &time);
-    virtual QString formatDateTime(const KDateTime &time);
     virtual bool isResendAvailable() ;
     virtual bool isRemoveAvailable() ;
     virtual bool isOwnPost();
@@ -212,9 +211,9 @@ protected:
     This function will add button to UI!
     @return added button, for some managements such as connect to a slot
     */
-    KPushButton *addButton(const QString &objName, const QString &toolTip, const QString &icon);
-    KPushButton *addButton(const QString &objName, const QString &toolTip, const QIcon &icon);
-    QMap<QString, KPushButton *> &buttons();
+    QPushButton *addButton(const QString &objName, const QString &toolTip, const QString &icon);
+    QPushButton *addButton(const QString &objName, const QString &toolTip, const QIcon &icon);
+    QMap<QString, QPushButton *> &buttons();
 
 protected:
     TextBrowser *_mainWidget;

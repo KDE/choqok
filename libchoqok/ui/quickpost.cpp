@@ -24,17 +24,18 @@
 #include "quickpost.h"
 
 #include <QCheckBox>
+#include <QComboBox>
 #include <QHBoxLayout>
+#include <QPointer>
+#include <QPushButton>
 
-#include <KComboBox>
-#include "libchoqokdebug.h"
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KPushButton>
 
 #include "accountmanager.h"
 #include "choqokbehaviorsettings.h"
 #include "choqoktextedit.h"
+#include "libchoqokdebug.h"
 #include "microblog.h"
 #include "notifymanager.h"
 #include "shortenmanager.h"
@@ -50,14 +51,14 @@ public:
         : submittedPost(0), isPostSubmitted(false)
     {}
     QCheckBox *all;
-    KComboBox *comboAccounts;
+    QComboBox *comboAccounts;
     TextEdit *txtPost;
 
     QHash< QString, Account * > accountsList;
     Post *submittedPost;
     QList<Account *> submittedAccounts;
     bool isPostSubmitted;
-    KPushButton *attach;
+    QPushButton *attach;
 //     QString replyToId;
 };
 
@@ -92,8 +93,8 @@ void QuickPost::setupUi()
 
     this->resize(Choqok::BehaviorSettings::quickPostDialogSize());
     d->all = new QCheckBox(i18nc("All accounts", "All"), this);
-    d->comboAccounts = new KComboBox(this);
-    d->attach = new KPushButton(QIcon::fromTheme("mail-attachment"), QString(), this);
+    d->comboAccounts = new QComboBox(this);
+    d->attach = new QPushButton(QIcon::fromTheme("mail-attachment"), QString(), this);
     d->attach->setMaximumWidth(d->attach->height());
     d->attach->setToolTip(i18n("Attach a file"));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -117,7 +118,7 @@ QuickPost::~QuickPost()
 {
     BehaviorSettings::setAll(d->all->isChecked());
     BehaviorSettings::setQuickPostDialogSize(this->size());
-    BehaviorSettings::self()->writeConfig();
+    BehaviorSettings::self()->save();
     delete d;
     qCDebug(CHOQOK);
 }

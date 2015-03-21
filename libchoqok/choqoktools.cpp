@@ -23,8 +23,9 @@
 
 #include "choqoktools.h"
 
+#include <QDesktopServices>
+
 #include <KProcess>
-#include <KToolInvocation>
 
 #include <QtOAuth/qoauth_namespace.h>
 
@@ -36,10 +37,10 @@ void Choqok::openUrl(const QUrl &url)
         QStringList args = Choqok::BehaviorSettings::customBrowser().split(' ');
         args.append(url.toString());
         if (KProcess::startDetached(args) == 0) {
-            KToolInvocation::invokeBrowser(url.toString());
+            QDesktopServices::openUrl(url);
         }
     } else {
-        KToolInvocation::invokeBrowser(url.toString());
+        QDesktopServices::openUrl(url);
     }
 }
 

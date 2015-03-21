@@ -24,7 +24,7 @@
 #ifndef TEXTBROWSER_H
 #define TEXTBROWSER_H
 
-#include <KTextBrowser>
+#include <QTextBrowser>
 
 #include "choqok_export.h"
 
@@ -35,7 +35,7 @@ namespace Choqok
 namespace UI
 {
 
-class CHOQOK_EXPORT TextBrowser : public KTextBrowser
+class CHOQOK_EXPORT TextBrowser : public QTextBrowser
 {
     Q_OBJECT
 public:

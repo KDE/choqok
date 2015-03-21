@@ -25,13 +25,12 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QApplication>
 
-#include <KApplication>
-#include "libchoqokdebug.h"
 #include <KMessageBox>
 #include <KWallet/Wallet>
 
 #include "choqokbehaviorsettings.h"
 #include "choqokuiglobal.h"
+#include "libchoqokdebug.h"
 
 namespace Choqok
 {

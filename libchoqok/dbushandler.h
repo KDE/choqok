@@ -28,7 +28,7 @@
 #include <QObject>
 #include <QString>
 #include <QTextDocument>
-#include <KIO/Job>
+#include <KJob>
 
 #include "choqok_export.h"
 

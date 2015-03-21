@@ -24,10 +24,12 @@ find_package(KF5 REQUIRED
     I18n
     Emoticons
     GlobalAccel
+    GuiAddons
     KCMUtils
     Notifications
     NotifyConfig
     Sonnet
+    TextWidgets
     Wallet
     WidgetsAddons
     XmlGui

@@ -28,10 +28,11 @@
 #include <QPointer>
 #include <QTextDocument>
 
-#include "libchoqokdebug.h"
+#include <KIO/Job>
 
 #include "ChoqokAdaptor.h"
 #include "choqokbehaviorsettings.h"
+#include "libchoqokdebug.h"
 #include "quickpost.h"
 #include "shortenmanager.h"
 #include "uploadmediadialog.h"

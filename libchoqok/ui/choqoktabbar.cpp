@@ -27,12 +27,10 @@
 #include <QGridLayout>
 #include <QHash>
 #include <QList>
+#include <QMenu>
 #include <QResizeEvent>
 #include <QStackedWidget>
 #include <QToolBar>
-
-#include <QAction>
-#include <KMenu>
 
 #include "choqokappearancesettings.h"
 
@@ -829,7 +827,7 @@ void ChoqokTabBar::contextMenuRequest(const QPoint &)
     styled.setChecked(styledTabBar());
     /*! ------------------------------------------------ */
 
-    KMenu menu;
+    QMenu menu;
     menu.addAction(&north);
     menu.addAction(&west);
     menu.addAction(&east);
@@ -867,7 +865,7 @@ ChoqokTabBar::~ChoqokTabBar()
     Choqok::AppearanceSettings::setTabBarPosition(tabPosition());
     Choqok::AppearanceSettings::setTabBarSize(iconSize().width());
     Choqok::AppearanceSettings::setTabBarIsStyled(p->styled_tabbar);
-    Choqok::AppearanceSettings::self()->writeConfig();
+    Choqok::AppearanceSettings::self()->save();
     setLinkedTabBar(false);
     delete p;
 }

@@ -24,21 +24,21 @@
 
 #include <QApplication>
 #include <QHash>
+#include <QIcon>
+#include <QMimeDatabase>
 
-#include "libchoqokdebug.h"
 #include <KEmoticons>
 #include <KEmoticonsTheme>
-#include <QIcon>
 #include <KImageCache>
 #include <KIO/Job>
 #include <KIO/JobClasses>
 #include <KIO/NetAccess>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KMimeType>
 
 #include "choqokbehaviorsettings.h"
 #include "choqokuiglobal.h"
+#include "libchoqokdebug.h"
 #include "pluginmanager.h"
 #include "uploader.h"
 
@@ -192,12 +192,12 @@ void MediaManager::uploadMedium(const QUrl &localUrl, const QString &pluginId)
         KMessageBox::error(UI::Global::mainWindow(), i18n("Uploading medium failed: cannot read the medium file."));
         return;
     }
-    QByteArray type = KMimeType::findByUrl(localUrl, 0, true)->name().toUtf8();
     connect(d->uploader, SIGNAL(mediumUploaded(QUrl,QString)),
             this, SIGNAL(mediumUploaded(QUrl,QString)));
     connect(d->uploader, SIGNAL(uploadingFailed(QUrl,QString)),
             this, SIGNAL(mediumUploadFailed(QUrl,QString)));
-    d->uploader->upload(localUrl, picData, type);
+    const QMimeDatabase db;
+    d->uploader->upload(localUrl, picData, db.mimeTypeForUrl(localUrl).name().toLocal8Bit());
 }
 
 QByteArray MediaManager::createMultipartFormData(const QMap< QString, QByteArray > &formdata,

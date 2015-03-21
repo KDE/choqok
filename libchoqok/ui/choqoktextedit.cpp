@@ -29,11 +29,11 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QMimeData>
 #include <QTimer>
 
-#include "libchoqokdebug.h"
 #include <KLocalizedString>
 #include <sonnet/speller.h>
 
 #include "choqokbehaviorsettings.h"
+#include "libchoqokdebug.h"
 #include "shortenmanager.h"
 
 namespace Choqok
@@ -283,7 +283,7 @@ void TextEdit::settingsChanged()
 
 void TextEdit::setupSpeller()
 {
-    BehaviorSettings::self()->readConfig();
+    BehaviorSettings::self()->load();
     d->curLang = BehaviorSettings::spellerLanguage();
     Sonnet::Speller s;
     if (d->curLang.isEmpty()) {
@@ -307,7 +307,7 @@ void TextEdit::setupSpeller()
 
 QSize TextEdit::minimumSizeHint() const
 {
-    const QSize size = QTextEdit::minimumSizeHint();
+    const QSize size = KTextEdit::minimumSizeHint();
     return QSize(size.width(), qMax(fontMetrics().height() * 3, size.height()));
 }
 

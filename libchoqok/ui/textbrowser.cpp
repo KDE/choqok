@@ -24,15 +24,16 @@
 #include "textbrowser.h"
 
 #include <QAbstractTextDocumentLayout>
+#include <QAction>
 #include <QApplication>
 #include <QClipboard>
 #include <QDrag>
+#include <QMenu>
 #include <QMimeData>
 #include <QPointer>
+#include <QTextBrowser>
 
-#include <QAction>
 #include <KLocalizedString>
-#include <KMenu>
 
 #include "postwidget.h"
 
@@ -53,7 +54,7 @@ public:
 QList< QPointer<QAction> > TextBrowser::Private::actions;
 
 TextBrowser::TextBrowser(QWidget *parent)
-    : KTextBrowser(parent, true), d(new Private)
+    : QTextBrowser(parent), d(new Private)
 {
     d->parent = qobject_cast<PostWidget *>(parent);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -79,7 +80,7 @@ void TextBrowser::mousePressEvent(QMouseEvent *ev)
         }
     }
     ev->accept();
-    KTextBrowser::mousePressEvent(ev);
+    QTextBrowser::mousePressEvent(ev);
 }
 
 void TextBrowser::mouseMoveEvent(QMouseEvent *ev)
@@ -100,10 +101,10 @@ void TextBrowser::mouseMoveEvent(QMouseEvent *ev)
                 drag->exec(Qt::CopyAction | Qt::MoveAction);
             }
         } else {
-            KTextBrowser::mouseMoveEvent(ev);
+            QTextBrowser::mouseMoveEvent(ev);
         }
     } else {
-        KTextBrowser::mouseMoveEvent(ev);
+        QTextBrowser::mouseMoveEvent(ev);
     }
     ev->accept();
 }
@@ -115,7 +116,7 @@ void TextBrowser::resizeEvent(QResizeEvent *e)
 
 void TextBrowser::contextMenuEvent(QContextMenuEvent *event)
 {
-    KMenu *menu = new KMenu(this);
+    QMenu *menu = new QMenu(this);
     QAction *copy = new QAction(i18nc("Copy text", "Copy"), this);
 //     copy->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_C ) );
     connect(copy, SIGNAL(triggered(bool)), SLOT(slotCopyPostContent()));
