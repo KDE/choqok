@@ -40,6 +40,7 @@
     <p xml:lang="pt">O Choqok é um cliente de micro-blogs que suporta os serviços do Twitter.com e do Pump.io</p>
     <p xml:lang="pt-BR">Choqok é um cliente de microblogging que suporte aos serviços do Pump.io e Twitter.com</p>
     <p xml:lang="sk">Choqok je mikro blogovací klient, ktorý podporuje služby Twitter.com a Pump.io </p>
+    <p xml:lang="sl">Choqok je odjemalec mikrobloganja, ki podpira storitvi Twitter.com in Pump.io</p>
     <p xml:lang="sv">Choqok är en klient för mikrobloggar som stöder tjänsterna Twitter.com och Pump.io</p>
     <p xml:lang="uk">Choqok — клієнтська програма для роботи з мікроблогами, у якій передбачено підтримку служб Twitter.com та Pump.io.</p>
     <p xml:lang="x-test">xxChoqok is a micro-blogging client which supports Twitter.com and Pump.io servicesxx</p>
@@ -97,6 +98,7 @@
       <li xml:lang="pt">Suporte para o serviço auto-alojado do Pump.io</li>
       <li xml:lang="pt-BR">Suporte ao serviço de hospedagem Pump.io</li>
       <li xml:lang="sk">Podporuje samo hostovaciu službu Pump.io</li>
+      <li xml:lang="sl">Podpora za lastno gostovano storitev Pump.io</li>
       <li xml:lang="sv">Stöder tjänsten Pump.io på egen värddator</li>
       <li xml:lang="uk">підтримка автономної власної служби Pump.io;</li>
       <li xml:lang="x-test">xxSupporting self hosted Pump.io servicexx</li>
@@ -111,6 +113,7 @@
       <li xml:lang="pt">Suporte para o serviço auto-alojado do GNU social</li>
       <li xml:lang="pt-BR">Suporte ao serviço de hospedagem GNU social</li>
       <li xml:lang="sk">Podporuje samo hostovaciu službu GNU</li>
+      <li xml:lang="sl">Podpora za lastno gostovano družabno storitev GNU</li>
       <li xml:lang="sv">Stöder tjänsten GNU social på egen värddator</li>
       <li xml:lang="uk">підтримка автономної власної служби GNU social;</li>
       <li xml:lang="x-test">xxSupporting self hosted GNU social servicexx</li>
