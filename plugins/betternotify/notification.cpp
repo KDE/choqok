@@ -27,7 +27,6 @@
 #include <QVBoxLayout>
 
 #include <KLocalizedString>
-#include <KPushButton>
 
 #include "choqokappearancesettings.h"
 #include "choqoktools.h"

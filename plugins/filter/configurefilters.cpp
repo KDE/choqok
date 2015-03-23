@@ -23,6 +23,8 @@
 
 #include "configurefilters.h"
 
+#include <QPointer>
+
 #include <KLocalizedString>
 
 #include "addeditfilter.h"

@@ -23,6 +23,8 @@
 
 #include "addeditfilter.h"
 
+#include <KLocalizedString>
+
 #include "filtersettings.h"
 
 AddEditFilter::AddEditFilter(QWidget *parent, Filter *filter)

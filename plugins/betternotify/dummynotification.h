@@ -23,9 +23,9 @@
 #ifndef DUMMYNOTIFICATION_H
 #define DUMMYNOTIFICATION_H
 
-#include <KTextBrowser>
+#include <QTextBrowser>
 
-class DummyNotification : public KTextBrowser
+class DummyNotification : public QTextBrowser
 {
     Q_OBJECT
 public:

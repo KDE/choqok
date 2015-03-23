@@ -60,7 +60,7 @@ void IMStatusConfig::load()
 {
     KCModule::load();
     KConfigGroup grp(KSharedConfig::openConfig(), "IMStatus");
-    IMStatusSettings::self()->readConfig();
+    IMStatusSettings::self()->load();
     ui.cfg_imclient->setCurrentIndex(imList.indexOf(IMStatusSettings::imclient()));
     ui.cfg_templtate->setPlainText(IMStatusSettings::templtate().isEmpty() ?
                                    "%username%: \"%status%\" at %time% from %client% (%url%)" : IMStatusSettings::templtate());
@@ -75,7 +75,7 @@ void IMStatusConfig::save()
     IMStatusSettings::setTempltate(ui.cfg_templtate->toPlainText());
     IMStatusSettings::setReply(ui.cfg_reply->isChecked());
     IMStatusSettings::setRepeat(ui.cfg_repeat->isChecked());
-    IMStatusSettings::self()->writeConfig();
+    IMStatusSettings::self()->save();
 }
 
 void IMStatusConfig::emitChanged()

@@ -22,9 +22,9 @@
 #ifndef MYTEXTBROWSER_H
 #define MYTEXTBROWSER_H
 
-#include <KTextBrowser>
+#include <QTextBrowser>
 
-class MyTextBrowser : public KTextBrowser
+class MyTextBrowser : public QTextBrowser
 {
     Q_OBJECT
 public:

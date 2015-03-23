@@ -20,6 +20,7 @@ PUBLIC
     Qt5::Core
     Qt5::Gui
     Qt5::Widgets
+    KF5::CoreAddons
     KF5::I18n
     KF5::KDELibs4Support
     choqok

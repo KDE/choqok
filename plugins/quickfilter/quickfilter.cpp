@@ -25,11 +25,11 @@
 
 #include <QAction>
 #include <QLabel>
+#include <QLineEdit>
 #include <QPushButton>
 #include <QToolBar>
 
 #include <KActionCollection>
-#include <KLineEdit>
 #include <KLocalizedString>
 #include <KPluginFactory>
 
@@ -113,11 +113,11 @@ void QuickFilter::createUiInterface()
     connect(m_textAction, SIGNAL(toggled(bool)), m_textToolbar, SLOT(setVisible(bool)));
     connect(m_authorToolbar, SIGNAL(visibilityChanged(bool)), SLOT(showAuthorFilterUiInterface(bool)));
     connect(m_textToolbar, SIGNAL(visibilityChanged(bool)), SLOT(showContentFilterUiInterface(bool)));
-    m_aledit = new KLineEdit(m_authorToolbar);
-    m_aledit->setClearButtonShown(true);
+    m_aledit = new QLineEdit(m_authorToolbar);
+    m_aledit->setClearButtonEnabled(true);
 
-    m_tledit = new KLineEdit(m_textToolbar);
-    m_tledit->setClearButtonShown(true);
+    m_tledit = new QLineEdit(m_textToolbar);
+    m_tledit->setClearButtonEnabled(true);
 
     QLabel *alabel = new QLabel(i18n("Author"), m_authorToolbar);
     QLabel *tlabel = new QLabel(i18n("Text"), m_textToolbar);

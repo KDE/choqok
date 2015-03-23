@@ -23,8 +23,6 @@
 #ifndef NOTIFICATION_H
 #define NOTIFICATION_H
 
-class KPushButton;
-
 #include "postwidget.h"
 
 #include "mytextbrowser.h"
@@ -59,8 +57,6 @@ private:
     Choqok::UI::PostWidget *post;
     QString dir;
     MyTextBrowser mainWidget;
-    KPushButton *btnShowChoqok;
-    KPushButton *btnRead;
 };
 
 #endif // NOTIFICATION_H

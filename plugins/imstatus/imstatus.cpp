@@ -66,7 +66,7 @@ void IMStatus::update()
 void IMStatus::slotIMStatus(Choqok::JobResult res, Choqok::Post *newPost)
 {
     if (res == Choqok::Success) {
-        IMStatusSettings::self()->readConfig();
+        IMStatusSettings::self()->load();
         QString statusMessage = IMStatusSettings::templtate();
         statusMessage.replace(QString("%status%"), newPost->content, Qt::CaseInsensitive);
         statusMessage.replace(QString("%username%"), newPost->author.userName, Qt::CaseInsensitive);

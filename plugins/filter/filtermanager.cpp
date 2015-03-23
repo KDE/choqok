@@ -27,8 +27,9 @@
 #include <QTimer>
 
 #include <KActionCollection>
-#include <KPluginFactory>
+#include <KLocalizedString>
 #include <KMessageBox>
+#include <KPluginFactory>
 
 #include "choqokuiglobal.h"
 #include "postwidget.h"

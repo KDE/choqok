@@ -39,7 +39,7 @@ K_PLUGIN_FACTORY_WITH_JSON(LongUrlFactory, "choqok_longurl.json",
 
 const QString baseLongUrlDorComUrl = QLatin1String("http://api.longurl.org/v2/");
 
-LongUrl::LongUrl(QObject *parent, const QList< QVariant > &args)
+LongUrl::LongUrl(QObject *parent, const QList< QVariant > &)
     : Choqok::Plugin("choqok_longurl", parent)
     , state(Stopped), mServicesAreFetched(false)
 {
@@ -135,6 +135,7 @@ void LongUrl::sheduleSupportedServicesFetch()
 
 void LongUrl::servicesDataReceived(KIO::Job *job, QByteArray data)
 {
+    Q_UNUSED(job);
     mServicesData->append(data);
 }
 

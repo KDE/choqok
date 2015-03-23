@@ -25,6 +25,7 @@ PUBLIC
     KF5::I18n
     KF5::KIOCore
     KF5::WidgetsAddons
+    KF5::XmlGui
     KF5::KDELibs4Support
     choqok
     twitterapihelper

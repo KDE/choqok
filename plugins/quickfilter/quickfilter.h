@@ -38,7 +38,7 @@ class PostWidget;
 }
 }
 
-class KLineEdit;
+class QLineEdit;
 class QToolBar;
 
 class QuickFilter : public Choqok::Plugin
@@ -66,8 +66,8 @@ private Q_SLOTS:
 private:
     QString m_filterUser;
     QString m_filterText;
-    KLineEdit *m_aledit;
-    KLineEdit *m_tledit;
+    QLineEdit *m_aledit;
+    QLineEdit *m_tledit;
     QToolBar *m_authorToolbar;
     QToolBar *m_textToolbar;
     QAction *m_authorAction;

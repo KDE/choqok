@@ -248,7 +248,7 @@ void NowListening::slotPrepareNowListening()
         return;
     }
 
-    NowListeningSettings::self()->readConfig();
+    NowListeningSettings::self()->load();
     QString text = NowListeningSettings::templateString();
     text.replace("%track%", trackInfo["tracknumber"].toString());
     text.replace("%title%", trackInfo["title"].toString());

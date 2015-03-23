@@ -33,7 +33,7 @@
 #include "postwidget.h"
 
 DummyNotification::DummyNotification(const QFont &font, const QColor &color, const QColor &background, QWidget *parent)
-    : KTextBrowser(parent), isMoving(false)
+    : QTextBrowser(parent), isMoving(false)
 {
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     setWindowOpacity(0.8);
@@ -61,7 +61,7 @@ DummyNotification::~DummyNotification()
 
 void DummyNotification::mouseMoveEvent(QMouseEvent *ev)
 {
-    KTextBrowser::mouseMoveEvent(ev);
+    QTextBrowser::mouseMoveEvent(ev);
     if (isMoving) {
         QPoint diff = ev->globalPos() - lastPressedPosition;
         lastPressedPosition = ev->globalPos();
@@ -72,14 +72,14 @@ void DummyNotification::mouseMoveEvent(QMouseEvent *ev)
 
 void DummyNotification::mousePressEvent(QMouseEvent *ev)
 {
-    KTextBrowser::mousePressEvent(ev);
+    QTextBrowser::mousePressEvent(ev);
     isMoving = true;
     lastPressedPosition = ev->globalPos();
 }
 
 void DummyNotification::mouseReleaseEvent(QMouseEvent *ev)
 {
-    KTextBrowser::mouseReleaseEvent(ev);
+    QTextBrowser::mouseReleaseEvent(ev);
     isMoving = false;
 }
 

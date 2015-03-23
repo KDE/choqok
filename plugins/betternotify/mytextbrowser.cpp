@@ -24,14 +24,12 @@
 #include <QMouseEvent>
 
 MyTextBrowser::MyTextBrowser(QWidget *parent)
-    : KTextBrowser(parent)
+    : QTextBrowser(parent)
 {
-
 }
 
 MyTextBrowser::~MyTextBrowser()
 {
-
 }
 
 void MyTextBrowser::enterEvent(QEvent *e)
@@ -51,6 +49,6 @@ void MyTextBrowser::mousePressEvent(QMouseEvent *ev)
     if (anchorAt(ev->pos()).isEmpty()) {
         Q_EMIT clicked();
     }
-    KTextBrowser::mousePressEvent(ev);
+    QTextBrowser::mousePressEvent(ev);
 }
 
