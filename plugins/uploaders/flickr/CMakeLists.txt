@@ -2,7 +2,7 @@ set(choqok_flickr_PART_SRCS
     flickr.cpp
 )
 
-kconfig_add_kcfg_files(choqok_flickr_PART_SRCS flickrsettings.kcfgc )
+kconfig_add_kcfg_files(choqok_flickr_PART_SRCS flickrsettings.kcfgc)
 
 add_library(choqok_flickr MODULE ${choqok_flickr_PART_SRCS})
 
@@ -49,7 +49,7 @@ PUBLIC
 )
 
 install(TARGETS kcm_choqok_flickr DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES flickrsettings.kcfg  DESTINATION ${KCFG_INSTALL_DIR})
+install(FILES flickrsettings.kcfg DESTINATION ${KCFG_INSTALL_DIR})
 install(FILES choqok_flickr_config.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
 add_subdirectory(icons)

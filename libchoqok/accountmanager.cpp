@@ -30,7 +30,7 @@
 #include <KIO/NetAccess>
 #include <KLocalizedString>
 #include <KSharedConfig>
-#include <KWallet/Wallet>
+#include <KWallet>
 
 #include "libchoqokdebug.h"
 #include "microblog.h"

@@ -13,10 +13,11 @@ kcoreaddons_desktop_to_json(choqok_searchaction choqok_searchaction.desktop)
 target_link_libraries(choqok_searchaction
 PUBLIC
     Qt5::Core
+    Qt5::Widgets
     KF5::CoreAddons
     KF5::I18n
     KF5::WidgetsAddons
-    KF5::KDELibs4Support
+    KF5::XmlGui
     choqok
     twitterapihelper
 )

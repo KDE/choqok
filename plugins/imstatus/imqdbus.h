@@ -30,7 +30,6 @@
 #include "config-imstatus.h"
 
 #if TELEPATHY_FOUND
-
 #include <TelepathyQt/Types>
 
 namespace Tp

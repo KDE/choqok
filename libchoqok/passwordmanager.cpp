@@ -26,7 +26,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QApplication>
 
 #include <KMessageBox>
-#include <KWallet/Wallet>
+#include <KWallet>
 
 #include "choqokbehaviorsettings.h"
 #include "choqokuiglobal.h"

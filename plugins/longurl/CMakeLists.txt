@@ -2,8 +2,9 @@ include_directories(
     ${CHOQOK_INCLUDES}
 )
 
-set( choqok_longurl_PART_SRCS
-longurl.cpp longurl.h)
+set(choqok_longurl_PART_SRCS
+    longurl.cpp
+)
 
 # kconfig_add_kcfg_files(choqok_longurl_PART_SRCS longurlsettings.kcfgc)
 
@@ -16,10 +17,9 @@ PUBLIC
     Qt5::Core
     KF5::CoreAddons
     KF5::KIOCore
-    KF5::KDELibs4Support
+    KF5::KIOWidgets
     choqok
 )
 
 install(TARGETS choqok_longurl DESTINATION ${PLUGIN_INSTALL_DIR})
-install( FILES choqok_longurl.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-
+install(FILES choqok_longurl.desktop DESTINATION ${SERVICES_INSTALL_DIR})

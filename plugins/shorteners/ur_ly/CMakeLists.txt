@@ -1,5 +1,6 @@
-set( choqok_ur_ly_SRCS
-ur_ly.cpp )
+set(choqok_ur_ly_SRCS
+    ur_ly.cpp
+)
 
 add_library(choqok_ur_ly MODULE ${choqok_ur_ly_SRCS})
 
@@ -16,5 +17,4 @@ PUBLIC
 )
 
 install(TARGETS choqok_ur_ly DESTINATION ${PLUGIN_INSTALL_DIR})
-
-install( FILES choqok_ur_ly.desktop  DESTINATION ${SERVICES_INSTALL_DIR})
+install(FILES choqok_ur_ly.desktop DESTINATION ${SERVICES_INSTALL_DIR})

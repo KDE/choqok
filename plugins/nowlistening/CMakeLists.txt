@@ -21,7 +21,7 @@ PUBLIC
     KF5::CoreAddons
     KF5::I18n
     KF5::WidgetsAddons
-    KF5::KDELibs4Support
+    KF5::XmlGui
     choqok
 )
 
@@ -41,9 +41,10 @@ kcoreaddons_desktop_to_json(kcm_choqok_nowlistening choqok_nowlistening_config.d
 
 target_link_libraries(kcm_choqok_nowlistening
 PUBLIC
+    Qt5::Widgets
     KF5::ConfigWidgets
     KF5::CoreAddons
-    KF5::KDELibs4Support
+    KF5::I18n
 )
 
 install(TARGETS kcm_choqok_nowlistening DESTINATION ${PLUGIN_INSTALL_DIR})

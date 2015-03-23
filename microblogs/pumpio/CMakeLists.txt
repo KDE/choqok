@@ -32,6 +32,7 @@ PUBLIC
     Qt5::Widgets
     KF5::I18n
     KF5::KIOCore
+    KF5::KIOWidgets
     KF5::WidgetsAddons
     KF5::KDELibs4Support
     qca-qt5

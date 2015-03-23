@@ -1,10 +1,10 @@
-
 include_directories(
-${CHOQOK_INCLUDES}
+    ${CHOQOK_INCLUDES}
 )
 
-set( choqok_videopreview_PART_SRCS
-videopreview.cpp )
+set(choqok_videopreview_PART_SRCS
+    videopreview.cpp
+)
 
 add_library(choqok_videopreview MODULE ${choqok_videopreview_PART_SRCS})
 
@@ -20,4 +20,4 @@ PUBLIC
 )
 
 install(TARGETS choqok_videopreview DESTINATION ${PLUGIN_INSTALL_DIR})
-install( FILES choqok_videopreview.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(FILES choqok_videopreview.desktop DESTINATION ${SERVICES_INSTALL_DIR})
