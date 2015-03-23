@@ -22,10 +22,9 @@
 
 #include "ocsaccount.h"
 
-#include "ocsdebug.h"
-
 #include <Attica/ProviderManager>
 
+#include "ocsdebug.h"
 #include "ocsmicroblog.h"
 
 class OCSAccount::Private

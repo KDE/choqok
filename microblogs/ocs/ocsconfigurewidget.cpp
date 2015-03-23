@@ -37,7 +37,7 @@ OCSConfigureWidget::OCSConfigureWidget(OCSMicroblog *microblog, OCSAccount *acco
     : ChoqokEditAccountWidget(account, parent), mAccount(account), mMicroblog(microblog), providersLoaded(false)
 {
     setupUi(this);
-    cfg_provider->setCurrentItem(i18n("Loading..."), true);
+    cfg_provider->setCurrentText(i18n("Loading..."));
     if (microblog->isOperational()) {
         slotprovidersLoaded();
     } else {
