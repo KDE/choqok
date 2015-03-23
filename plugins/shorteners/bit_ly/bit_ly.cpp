@@ -50,7 +50,7 @@ QString Bit_ly::shorten(const QString &url)
     QString login = "choqok";
     QString apiKey = "R_bdd1ae8b6191dd36e13fc77ca1d4f27f";
     QUrl reqUrl("http://api.bit.ly/v3/shorten");
-    Bit_ly_Settings::self()->readConfig();
+    Bit_ly_Settings::self()->load();
     QString userApiKey = Choqok::PasswordManager::self()->readPassword(QString("bitly_%1")
                          .arg(Bit_ly_Settings::login()));
     if (!Bit_ly_Settings::login().isEmpty() && !userApiKey.isEmpty()) {

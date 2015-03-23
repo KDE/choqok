@@ -24,7 +24,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="KLineEdit" name="kcfg_login"/>
+      <widget class="QLineEdit" name="kcfg_login"/>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="api_key">
@@ -37,7 +37,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="KLineEdit" name="kcfg_api_key">
+      <widget class="QLineEdit" name="kcfg_api_key">
        <property name="text">
         <string/>
        </property>
@@ -78,7 +78,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="KComboBox" name="kcfg_domain"/>
+      <widget class="QComboBox" name="kcfg_domain"/>
      </item>
      <item row="0" column="2">
       <widget class="QLabel" name="label">
@@ -104,13 +104,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>klineedit.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -26,6 +26,7 @@
 
 #include <KIO/Job>
 #include <KIO/NetAccess>
+#include <KLocalizedString>
 #include <KPluginFactory>
 
 #include "notifymanager.h"

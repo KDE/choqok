@@ -49,7 +49,7 @@ QString Tinyarro_ws::shorten(const QString &url)
 
     QUrl reqUrl("http://tinyarro.ws/api-create.php");
 
-    Tinyarro_ws_Settings::self()->readConfig();
+    Tinyarro_ws_Settings::self()->load();
 
     if (!Tinyarro_ws_Settings::tinyarro_ws_host_punny().isEmpty() ||
             Tinyarro_ws_Settings::tinyarro_ws_host_punny() != "Random") {
