@@ -27,11 +27,11 @@
 #include <QFile>
 #include <QJsonDocument>
 #include <QMenu>
+#include <QMimeDatabase>
 #include <QTextDocument>
 
 #include <KIO/Job>
 #include <KIO/StoredTransferJob>
-#include <KMimeType>
 #include <KPluginFactory>
 
 #include "accountmanager.h"
@@ -276,8 +276,9 @@ void PumpIOMicroBlog::createPostWithMedia(Choqok::Account *theAccount, Choqok::P
             return;
         }
 
-        KMimeType::Ptr mimetype = KMimeType::findByNameAndContent(filePath, data);
-        const QString mime = mimetype.data()->name();
+        const QMimeDatabase db;
+        const QMimeType mimetype = db.mimeTypeForFileNameAndData(filePath, data);
+        const QString mime = mimetype.name();
         if (mime == "application/octet-stream") {
             qCDebug(CHOQOK) << "Cannot retrieve file mimetype";
             return;

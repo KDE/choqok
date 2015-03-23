@@ -23,9 +23,9 @@
 #include "pumpiomessagedialog.h"
 
 #include <QPointer>
+#include <QPushButton>
 
 #include <KFileDialog>
-#include <KPushButton>
 
 #include "pumpioaccount.h"
 #include "pumpiodebug.h"
@@ -38,7 +38,7 @@ public:
     Choqok::Account *account;
     QString mediumToAttach;
     QPointer<QLabel> mediumName;
-    QPointer<KPushButton> btnCancel;
+    QPointer<QPushButton> btnCancel;
 };
 
 PumpIOMessageDialog::PumpIOMessageDialog(Choqok::Account *theAccount, QWidget *parent,
@@ -185,7 +185,7 @@ void PumpIOMessageDialog::attachMedia()
     const QString fileName = QUrl(d->mediumToAttach).fileName();
     if (!d->mediumName) {
         d->mediumName = new QLabel(this);
-        d->btnCancel = new KPushButton(this);
+        d->btnCancel = new QPushButton(this);
         d->btnCancel->setIcon(QIcon::fromTheme("list-remove"));
         d->btnCancel->setToolTip(i18n("Discard Attachment"));
         d->btnCancel->setMaximumWidth(d->btnCancel->height());

@@ -23,11 +23,11 @@
 #include "pumpioeditaccountwidget.h"
 
 #include <QCheckBox>
+#include <QInputDialog>
 #include <QJsonDocument>
 #include <QEventLoop>
 #include <QUrl>
 
-#include <KInputDialog>
 #include <KIO/AccessManager>
 #include <KIO/Job>
 #include <KIO/StoredTransferJob>
@@ -105,7 +105,7 @@ void PumpIOEditAccountWidget::authorizeUser()
         QUrl oAuthAuthorizeURL(m_account->host() + "/oauth/authorize");
         oAuthAuthorizeURL.addQueryItem("oauth_token", token);
         Choqok::openUrl(oAuthAuthorizeURL);
-        QString verifier = KInputDialog::getText(i18n("PIN"),
+        QString verifier = QInputDialog::getText(this, i18n("PIN"),
                            i18n("Enter the verifier code received from %1", m_account->host()));
 
         QOAuth::ParamMap oAuthVerifierParams;

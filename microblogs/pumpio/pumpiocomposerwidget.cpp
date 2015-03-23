@@ -25,12 +25,12 @@
 
 #include <QGridLayout>
 #include <QLabel>
+#include <QPushButton>
 #include <QSpacerItem>
 #include <QVBoxLayout>
 
 #include <KFileDialog>
 #include <KLocalizedString>
-#include <KPushButton>
 
 #include "account.h"
 #include "choqoktextedit.h"
@@ -44,9 +44,9 @@ class PumpIOComposerWidget::Private
 {
 public:
     QString mediumToAttach;
-    KPushButton *btnAttach;
+    QPushButton *btnAttach;
     QPointer<QLabel> mediumName;
-    QPointer<KPushButton> btnCancel;
+    QPointer<QPushButton> btnCancel;
     QGridLayout *editorLayout;
     QString replyToObjectType;
 };
@@ -56,7 +56,7 @@ PumpIOComposerWidget::PumpIOComposerWidget(Choqok::Account *account, QWidget *pa
     , d(new Private)
 {
     d->editorLayout = qobject_cast<QGridLayout *>(editorContainer()->layout());
-    d->btnAttach = new KPushButton(editorContainer());
+    d->btnAttach = new QPushButton(editorContainer());
     d->btnAttach->setIcon(QIcon::fromTheme("mail-attachment"));
     d->btnAttach->setToolTip(i18n("Attach a file"));
     d->btnAttach->setMaximumWidth(d->btnAttach->height());
@@ -93,7 +93,7 @@ void PumpIOComposerWidget::submitPost(const QString &text)
             SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
                              QString, Choqok::MicroBlog::ErrorLevel)), this,
             SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
-    btnAbort = new KPushButton(QIcon::fromTheme("dialog-cancel"), i18n("Abort"), this);
+    btnAbort = new QPushButton(QIcon::fromTheme("dialog-cancel"), i18n("Abort"), this);
     layout()->addWidget(btnAbort);
     connect(btnAbort, SIGNAL(clicked(bool)), SLOT(abort()));
 
@@ -152,7 +152,7 @@ void PumpIOComposerWidget::attachMedia()
     const QString fileName = QUrl(d->mediumToAttach).fileName();
     if (!d->mediumName) {
         d->mediumName = new QLabel(editorContainer());
-        d->btnCancel = new KPushButton(editorContainer());
+        d->btnCancel = new QPushButton(editorContainer());
         d->btnCancel->setIcon(QIcon::fromTheme("list-remove"));
         d->btnCancel->setToolTip(i18n("Discard Attachment"));
         d->btnCancel->setMaximumWidth(d->btnCancel->height());
