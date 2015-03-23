@@ -25,7 +25,6 @@
 
 #include <QDomElement>
 
-#include "laconicadebug.h"
 #include <KIO/Job>
 #include <KIO/JobClasses>
 #include <KLocalizedString>
@@ -33,6 +32,8 @@
 #include "choqokbehaviorsettings.h"
 
 #include "twitterapiaccount.h"
+
+#include "laconicadebug.h"
 
 const QRegExp LaconicaSearch::m_rId("tag:.+,[\\d-]+:(\\d+)");
 const QRegExp LaconicaSearch::mIdRegExp("(?:user|(?:.*notice))/([0-9]+)");

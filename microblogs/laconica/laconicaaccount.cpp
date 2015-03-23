@@ -24,7 +24,6 @@
 #include "laconicaaccount.h"
 
 #include "laconicadebug.h"
-
 #include "laconicamicroblog.h"
 
 class LaconicaAccount::Private

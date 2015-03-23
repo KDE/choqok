@@ -22,14 +22,14 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "laconicamicroblog.h"
 
-#include "laconicadebug.h"
+#include <QMimeDatabase>
+
 #include <KIO/JobClasses>
 #include <KIO/Job>
 #include <KIO/NetAccess>
 #include <KLocalizedString>
 #include <KPluginFactory>
 #include <KMessageBox>
-#include <KMimeType>
 
 #include "account.h"
 #include "accountmanager.h"
@@ -47,6 +47,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "laconicaaccount.h"
 #include "laconicacomposerwidget.h"
+#include "laconicadebug.h"
 #include "laconicaeditaccount.h"
 #include "laconicapostwidget.h"
 #include "laconicasearch.h"
@@ -182,7 +183,8 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Ch
         TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
         QUrl url = account->apiUrl();
         url.setPath(url.path() + "/statuses/update.xml");
-        QByteArray fileContentType = KMimeType::findByUrl(picUrl, 0, true)->name().toUtf8();
+        const QMimeDatabase db;
+        QByteArray fileContentType = db.mimeTypeForUrl(picUrl).name().toUtf8();
 
         QMap<QString, QByteArray> formdata;
         formdata["status"] = post->content.toUtf8();
@@ -233,6 +235,7 @@ QString LaconicaMicroBlog::repeatQuestion()
 
 void LaconicaMicroBlog::listFriendsUsername(TwitterApiAccount *theAccount, bool active)
 {
+    Q_UNUSED(active);
     friendsList.clear();
     if (theAccount) {
         doRequestFriendsScreenName(theAccount, 1);
@@ -241,6 +244,7 @@ void LaconicaMicroBlog::listFriendsUsername(TwitterApiAccount *theAccount, bool 
 
 void LaconicaMicroBlog::requestFriendsScreenName(TwitterApiAccount *theAccount, bool active)
 {
+    Q_UNUSED(active);
     doRequestFriendsScreenName(theAccount, 1);
 }
 

@@ -24,7 +24,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QJsonDocument>
 
-#include "laconicadebug.h"
 #include <KIO/AccessManager>
 #include <KIO/Job>
 #include <KIO/JobClasses>
@@ -37,6 +36,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "choqoktools.h"
 
 #include "laconicaaccount.h"
+#include "laconicadebug.h"
 #include "laconicamicroblog.h"
 
 LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblog,

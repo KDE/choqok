@@ -26,11 +26,10 @@
 #include <QLabel>
 #include <QLayout>
 #include <QPointer>
+#include <QPushButton>
 
-#include "laconicadebug.h"
 #include <KFileDialog>
 #include <KLocalizedString>
-#include <KPushButton>
 
 #include "account.h"
 #include "choqoktextedit.h"
@@ -40,6 +39,7 @@
 
 #include "twitterapitextedit.h"
 
+#include "laconicadebug.h"
 #include "laconicamicroblog.h"
 
 class LaconicaComposerWidget::Private
@@ -49,9 +49,9 @@ public:
         : btnAttach(0), mediumName(0), btnCancel(0)
     {}
     QString mediumToAttach;
-    KPushButton *btnAttach;
+    QPushButton *btnAttach;
     QPointer<QLabel> mediumName;
-    QPointer<KPushButton> btnCancel;
+    QPointer<QPushButton> btnCancel;
     QGridLayout *editorLayout;
 };
 
@@ -59,7 +59,7 @@ LaconicaComposerWidget::LaconicaComposerWidget(Choqok::Account *account, QWidget
     : TwitterApiComposerWidget(account, parent), d(new Private)
 {
     d->editorLayout = qobject_cast<QGridLayout *>(editorContainer()->layout());
-    d->btnAttach = new KPushButton(editorContainer());
+    d->btnAttach = new QPushButton(editorContainer());
     d->btnAttach->setIcon(QIcon::fromTheme("mail-attachment"));
     d->btnAttach->setToolTip(i18n("Attach a file"));
     d->btnAttach->setMaximumWidth(d->btnAttach->height());
@@ -101,7 +101,7 @@ void LaconicaComposerWidget::submitPost(const QString &txt)
                 SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
                                  QString, Choqok::MicroBlog::ErrorLevel)),
                 SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
-        btnAbort = new KPushButton(QIcon::fromTheme("dialog-cancel"), i18n("Abort"), this);
+        btnAbort = new QPushButton(QIcon::fromTheme("dialog-cancel"), i18n("Abort"), this);
         layout()->addWidget(btnAbort);
         connect(btnAbort, SIGNAL(clicked(bool)), SLOT(abort()));
         LaconicaMicroBlog *mBlog = qobject_cast<LaconicaMicroBlog *>(currentAccount()->microblog());
@@ -146,7 +146,7 @@ void LaconicaComposerWidget::selectMediumToAttach()
     if (!d->mediumName) {
         qCDebug(CHOQOK) << fileName;
         d->mediumName = new QLabel(editorContainer());
-        d->btnCancel = new KPushButton(editorContainer());
+        d->btnCancel = new QPushButton(editorContainer());
         d->btnCancel->setIcon(QIcon::fromTheme("list-remove"));
         d->btnCancel->setToolTip(i18n("Discard Attachment"));
         d->btnCancel->setMaximumWidth(d->btnCancel->height());
