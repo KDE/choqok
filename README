@@ -11,19 +11,17 @@ License:
     GNU GPL v2 or v3 or Later
 
 Requirements to build:
-     CMake 2.6
-     KDE 4 library Development packages! (On (K)Ubuntu/Debian it's kdelibs5-dev)
-     QJSon library (Development packages)
-     QOAuth library (Development packages)
-     QCA2 library (Development packages)
-     GetText: You need GNU GetText to compile translations. (If you don't want them, just remove "po" directory)
+     CMake 2.8.12
+     KDE Frameworks libraries 5.6
+     QOAuth-Qt5 library (Development packages)
+     QCA2-Qt5 library (Development packages)
 
 How To Build The Project
 -=-=-=-=-=-=-=-=-=-=-=-=-=
 $ cd choqok-src-root-dir [It's choqok-VERSION]
 $ mkdir build
 $ cd build
-$ cmake -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix` ..
+$ cmake -DKDE_INSTALL_USE_QT_SYS_PATHS=ON ..
 $ make
 $ sudo make install OR su -c 'make install'
 
