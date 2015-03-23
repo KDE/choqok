@@ -25,7 +25,7 @@
     </spacer>
    </item>
    <item row="4" column="2">
-    <widget class="KComboBox" name="cfg_accountsList">
+    <widget class="QComboBox" name="cfg_accountsList">
      <property name="minimumSize">
       <size>
        <width>150</width>
@@ -37,14 +37,14 @@
    <item row="4" column="0">
     <widget class="QRadioButton" name="cfg_oauth">
      <property name="text">
-      <string>Twitter account</string>
+      <string>&amp;Twitter account</string>
      </property>
     </widget>
    </item>
    <item row="1" column="0" colspan="3">
     <widget class="QRadioButton" name="cfg_basic">
      <property name="text">
-      <string>Posterous login and password:</string>
+      <string>Posterous &amp;login and password:</string>
      </property>
      <property name="checked">
       <bool>true</bool>
@@ -76,17 +76,14 @@
     </widget>
    </item>
    <item row="3" column="2">
-    <widget class="QLineEdit" name="cfg_password"/>
+    <widget class="QLineEdit" name="cfg_password">
+     <property name="echoMode">
+      <enum>QLineEdit::Password</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

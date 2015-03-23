@@ -84,7 +84,7 @@ QString Posterous::getAuthToken(const QUrl &localUrl)
 
 void Posterous::upload(const QUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType)
 {
-    PosterousSettings::self()->readConfig();
+    PosterousSettings::self()->load();
     KIO::StoredTransferJob *job = 0;
     if (PosterousSettings::basic()) {
         QString login = PosterousSettings::login();

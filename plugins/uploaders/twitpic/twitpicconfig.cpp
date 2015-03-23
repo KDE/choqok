@@ -63,8 +63,8 @@ void TwitpicConfig::load()
             ui.accountsList->addItem(acc->alias());
         }
     }
-    TwitpicSettings::self()->readConfig();
-    ui.accountsList->setCurrentItem(TwitpicSettings::alias());
+    TwitpicSettings::self()->load();
+    ui.accountsList->setCurrentText(TwitpicSettings::alias());
 }
 
 void TwitpicConfig::save()
@@ -77,7 +77,7 @@ void TwitpicConfig::save()
         TwitpicSettings::setAlias(QString());
         KMessageBox::error(this, i18n("You have to configure at least one Twitter account to use this plugin."));
     }
-    TwitpicSettings::self()->writeConfig();
+    TwitpicSettings::self()->save();
     KCModule::save();
 }
 

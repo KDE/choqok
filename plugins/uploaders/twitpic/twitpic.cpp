@@ -54,7 +54,7 @@ Twitpic::~Twitpic()
 
 void Twitpic::upload(const QUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType)
 {
-    TwitpicSettings::self()->readConfig();
+    TwitpicSettings::self()->load();
     QString alias = TwitpicSettings::alias();
     if (alias.isEmpty()) {
         qCritical() << "No account to use";

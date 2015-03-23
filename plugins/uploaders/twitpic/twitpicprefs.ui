@@ -35,17 +35,10 @@
     </spacer>
    </item>
    <item row="0" column="1">
-    <widget class="KComboBox" name="accountsList"/>
+    <widget class="QComboBox" name="accountsList"/>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

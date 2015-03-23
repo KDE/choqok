@@ -63,8 +63,8 @@ void TwitgooConfig::load()
             ui.cfg_accountsList->addItem(acc->alias());
         }
     }
-    TwitgooSettings::self()->readConfig();
-    ui.cfg_accountsList->setCurrentItem(TwitgooSettings::alias());
+    TwitgooSettings::self()->load();
+    ui.cfg_accountsList->setCurrentText(TwitgooSettings::alias());
     ui.cfg_directLink->setChecked(TwitgooSettings::directLink());
 }
 
@@ -78,7 +78,7 @@ void TwitgooConfig::save()
         KMessageBox::error(this, i18n("You have to configure at least one Twitter account to use this plugin."));
     }
     TwitgooSettings::setDirectLink(ui.cfg_directLink->isChecked());
-    TwitgooSettings::self()->writeConfig();
+    TwitgooSettings::self()->save();
     KCModule::save();
 }
 

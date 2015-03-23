@@ -69,13 +69,13 @@ void PosterousConfig::load()
             ui.cfg_accountsList->addItem(acc->alias());
         }
     }
-    PosterousSettings::self()->readConfig();
+    PosterousSettings::self()->load();
     ui.cfg_basic->setChecked(PosterousSettings::basic());
     ui.cfg_login->setText(PosterousSettings::login());
     ui.cfg_password->setText(Choqok::PasswordManager::self()->readPassword(QString("posterous_%1")
                              .arg(ui.cfg_login->text())));
     ui.cfg_oauth->setChecked(PosterousSettings::oauth());
-    ui.cfg_accountsList->setCurrentItem(PosterousSettings::alias());
+    ui.cfg_accountsList->setCurrentText(PosterousSettings::alias());
     emitChanged();
 }
 
@@ -94,7 +94,7 @@ void PosterousConfig::save()
     Choqok::PasswordManager::self()->writePassword(QString("posterous_%1").arg(ui.cfg_login->text()),
             ui.cfg_password->text());
     PosterousSettings::setOauth(ui.cfg_oauth->isChecked());
-    PosterousSettings::self()->writeConfig();
+    PosterousSettings::self()->save();
     KCModule::save();
 }
 

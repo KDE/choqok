@@ -22,7 +22,7 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="KComboBox" name="cfg_accountsList">
+    <widget class="QComboBox" name="cfg_accountsList">
      <property name="minimumSize">
       <size>
        <width>150</width>
@@ -53,13 +53,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

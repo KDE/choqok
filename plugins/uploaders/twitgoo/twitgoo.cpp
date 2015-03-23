@@ -55,7 +55,7 @@ Twitgoo::~Twitgoo()
 
 void Twitgoo::upload(const QUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType)
 {
-    TwitgooSettings::self()->readConfig();
+    TwitgooSettings::self()->load();
     QString alias = TwitgooSettings::alias();
     if (alias.isEmpty()) {
         qCritical() << "No account to use";
@@ -124,7 +124,7 @@ void Twitgoo::slotUpload(KJob *job)
                 QVariantMap err = map.value("err").toMap();
                 Q_EMIT uploadingFailed(localUrl, err.value("err_msg").toString());
             } else if (map.value("status") == QString("ok")) {
-                TwitgooSettings::self()->readConfig();
+                TwitgooSettings::self()->load();
                 QString val = TwitgooSettings::directLink() ? "imageurl" : "mediaurl";
                 Q_EMIT mediumUploaded(localUrl, map.value(val).toString());
             }

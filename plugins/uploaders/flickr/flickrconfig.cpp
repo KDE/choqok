@@ -26,15 +26,16 @@
 #include <QCryptographicHash>
 #include <QDomDocument>
 #include <QDomElement>
+#include <QPushButton>
 #include <QVBoxLayout>
 
 #include <KAboutData>
+#include <KConfigGroup>
 #include <KIO/Job>
 #include <KIO/NetAccess>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KPluginFactory>
-#include <KPushButton>
 #include <KSharedConfig>
 
 #include "choqoktools.h"
@@ -292,7 +293,7 @@ void FlickrConfig::slotAuthButton_clicked()
                      "&api_sig=" + createSign("frob" + m_frob.toUtf8() + "permswrite"));
         Choqok::openUrl(oUrl);
 
-        KPushButton *btn = new KPushButton(QIcon::fromTheme("dialog-ok"), i18n("Click here when you authorized Choqok"), this);
+        QPushButton *btn = new QPushButton(QIcon::fromTheme("dialog-ok"), i18n("Click here when you authorized Choqok"), this);
         connect(btn, SIGNAL(clicked(bool)), SLOT(getToken()));
         btn->setWindowFlags(Qt::Dialog);
         ui.authTab->layout()->addWidget(btn);

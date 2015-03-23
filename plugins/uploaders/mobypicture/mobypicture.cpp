@@ -55,7 +55,7 @@ Mobypicture::~Mobypicture()
 
 void Mobypicture::upload(const QUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType)
 {
-    MobypictureSettings::self()->readConfig();
+    MobypictureSettings::self()->load();
     KIO::StoredTransferJob *job = 0;
     QByteArray apiKey = "85LUKv3w6luUF6Pa";
     if (MobypictureSettings::oauth()) {
