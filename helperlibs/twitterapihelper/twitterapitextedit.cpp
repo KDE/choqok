@@ -43,7 +43,7 @@ class TwitterApiTextEdit::Private
 {
 public:
     Private(Choqok::Account *theAccount)
-        : c(0), acc(theAccount), tCoMaximumLength(0), tCoMaximumLengthHttps(0)
+        : acc(theAccount), c(0), tCoMaximumLength(0), tCoMaximumLengthHttps(0)
     {}
     Choqok::Account *acc;
     QCompleter *c;

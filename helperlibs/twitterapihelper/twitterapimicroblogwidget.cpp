@@ -26,12 +26,12 @@
 #include <QAction>
 #include <QFont>
 #include <QIcon>
+#include <QMenu>
 #include <QPainter>
 #include <QRect>
 #include <QToolButton>
 
 #include <KLocalizedString>
-#include <KMenu>
 
 #include "account.h"
 #include "composerwidget.h"
@@ -258,7 +258,7 @@ void TwitterApiMicroBlogWidget::slotContextMenu(QWidget *w, const QPoint &pt)
 {
     qCDebug(CHOQOK);
     Choqok::UI::TimelineWidget *sWidget = qobject_cast<Choqok::UI::TimelineWidget *>(w);
-    KMenu menu;
+    QMenu menu;
     QAction *mar = 0;
     QAction *ac = 0;
     if (sWidget->unreadCount() > 0) {

@@ -23,8 +23,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "twittereditaccount.h"
 
 #include <QCheckBox>
+#include <QInputDialog>
 
-#include <KInputDialog>
 #include <KIO/AccessManager>
 #include <KIO/Job>
 #include <KIO/JobClasses>
@@ -145,7 +145,7 @@ void TwitterEditAccountWidget::getPinCode()
 {
     isAuthenticated = false;
     while (!isAuthenticated) {
-        QString verifier = KInputDialog::getText(i18n("PIN"),
+        QString verifier = QInputDialog::getText(this, i18n("PIN"),
                            i18n("Enter the PIN received from Twitter:"));
         if (verifier.isEmpty()) {
             return;

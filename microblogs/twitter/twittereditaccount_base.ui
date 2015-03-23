@@ -7,12 +7,12 @@
     <x>0</x>
     <y>0</y>
     <width>387</width>
-    <height>347</height>
+    <height>387</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="KTabWidget" name="tabwidget">
+    <widget class="QTabWidget" name="tabwidget">
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -24,7 +24,7 @@
        <item row="0" column="0">
         <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>&amp;Alias:</string>
+          <string>A&amp;lias:</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -35,7 +35,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="KLineEdit" name="kcfg_alias">
+        <widget class="QLineEdit" name="kcfg_alias">
          <property name="toolTip">
           <string>The account alias</string>
          </property>
@@ -84,7 +84,7 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="KLineEdit" name="kcfg_username"/>
+           <widget class="QLineEdit" name="kcfg_username"/>
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_5">
@@ -97,9 +97,9 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="KLineEdit" name="kcfg_password">
-            <property name="passwordMode">
-             <bool>true</bool>
+           <widget class="QLineEdit" name="kcfg_password">
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
             </property>
            </widget>
           </item>
@@ -146,12 +146,17 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item row="2" column="0" colspan="2">
-           <widget class="KPushButton" name="kcfg_authorize">
+           <widget class="QPushButton" name="kcfg_authorize">
             <property name="toolTip">
              <string>Verify credentials</string>
             </property>
             <property name="text">
              <string>&amp;Authenticate with Twitter Service</string>
+            </property>
+            <property name="icon">
+             <iconset theme="object-locked">
+              <normaloff/>
+             </iconset>
             </property>
            </widget>
           </item>
@@ -216,22 +221,6 @@ p, li { white-space: pre-wrap; }
    <class>KLed</class>
    <extends>QWidget</extends>
    <header>kled.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>klineedit.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KTabWidget</class>
-   <extends>QTabWidget</extends>
-   <header>ktabwidget.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>

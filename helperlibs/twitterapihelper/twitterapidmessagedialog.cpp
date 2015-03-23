@@ -23,13 +23,13 @@
 
 #include "twitterapidmessagedialog.h"
 
+#include <QComboBox>
 #include <QLabel>
 #include <QHBoxLayout>
+#include <QPushButton>
 #include <QVBoxLayout>
 
-#include <KComboBox>
 #include <KLocalizedString>
-#include <KPushButton>
 #include <KSharedConfig>
 
 #include "choqoktextedit.h"
@@ -46,7 +46,7 @@ public:
     Private(TwitterApiAccount *theAccount)
         : account(theAccount)
     {}
-    KComboBox *comboFriendsList;
+    QComboBox *comboFriendsList;
     Choqok::UI::TextEdit *editor;
     TwitterApiAccount *account;
     Choqok::Post *sentPost;
@@ -84,10 +84,10 @@ TwitterApiDMessageDialog::~TwitterApiDMessageDialog()
 void TwitterApiDMessageDialog::setupUi(QWidget *mainWidget)
 {
     QLabel *lblTo = new QLabel(i18nc("Send message to", "To:"), this);
-    d->comboFriendsList = new KComboBox(this);
+    d->comboFriendsList = new QComboBox(this);
     d->comboFriendsList->setDuplicatesEnabled(false);
 
-    KPushButton *btnReload = new KPushButton(this);
+    QPushButton *btnReload = new QPushButton(this);
     btnReload->setToolTip(i18n("Reload friends list"));
     btnReload->setIcon(QIcon::fromTheme("view-refresh"));
     btnReload->setMaximumWidth(25);
@@ -115,7 +115,7 @@ void TwitterApiDMessageDialog::reloadFriendslist()
         connect(blog, SIGNAL(friendsUsernameListed(TwitterApiAccount*,QStringList)),
                 this, SLOT(friendsUsernameListed(TwitterApiAccount*,QStringList)));
         blog->listFriendsUsername(d->account);
-        d->comboFriendsList->setCurrentItem(i18n("Please wait..."), true);
+        d->comboFriendsList->setCurrentText(i18n("Please wait..."));
     }
 }
 
@@ -178,6 +178,6 @@ void TwitterApiDMessageDialog::errorPost(Choqok::Account *theAccount, Choqok::Po
 
 void TwitterApiDMessageDialog::setTo(const QString &username)
 {
-    d->comboFriendsList->setCurrentItem(username, true);
+    d->comboFriendsList->setCurrentText(username);
 }
 

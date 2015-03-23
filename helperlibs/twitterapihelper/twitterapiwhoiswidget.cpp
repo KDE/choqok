@@ -29,12 +29,13 @@
 #include <QPoint>
 #include <QPointer>
 #include <QStatusBar>
+#include <QTextBrowser>
 #include <QUrl>
 #include <QVBoxLayout>
 
+#include <KAnimatedButton>
 #include <KIO/Job>
 #include <KLocalizedString>
-#include <KTextBrowser>
 
 #include "choqokappearancesettings.h"
 #include "choqoktools.h"
@@ -54,7 +55,7 @@ public:
     {
         mBlog = qobject_cast<TwitterApiMicroBlog *>(account->microblog());
     }
-    KTextBrowser *wid;
+    QTextBrowser *wid;
     TwitterApiAccount *currentAccount;
     TwitterApiMicroBlog *mBlog;
     QFrame *waitFrame;
@@ -80,7 +81,7 @@ TwitterApiWhoisWidget::TwitterApiWhoisWidget(TwitterApiAccount *theAccount, cons
     d->currentPost = post;
     loadUserInfo(theAccount, username);
 
-    d->wid = new KTextBrowser(this);
+    d->wid = new QTextBrowser(this);
     setFrameShape(StyledPanel);
     setFrameShadow(Sunken);
 
@@ -311,20 +312,19 @@ void TwitterApiWhoisWidget::show(QPoint pos)
     d->waitFrame = new QFrame(this);
     d->waitFrame->setFrameShape(NoFrame);
     d->waitFrame->setWindowFlags(Qt::Popup);
-#pragma message("Port to KF5")
-    /*    KAnimatedButton *waitButton = new KAnimatedButton;
-        waitButton->setToolTip(i18n("Please wait..."));
-        connect( waitButton, SIGNAL(clicked(bool)), SLOT(slotCancel()) );
-        waitButton->setIcons("process-working-kde");
-        waitButton->start();
+    KAnimatedButton *waitButton = new KAnimatedButton;
+    waitButton->setToolTip(i18n("Please wait..."));
+    connect( waitButton, SIGNAL(clicked(bool)), SLOT(slotCancel()) );
+    waitButton->setAnimationPath("process-working-kde");
+    waitButton->start();
 
-        QVBoxLayout *ly = new QVBoxLayout(d->waitFrame);
-        ly->setSpacing(0);
-        ly->setContentsMargins(0, 0, 0, 0);
-        ly->addWidget(waitButton);
+    QVBoxLayout *ly = new QVBoxLayout(d->waitFrame);
+    ly->setSpacing(0);
+    ly->setContentsMargins(0, 0, 0, 0);
+    ly->addWidget(waitButton);
 
-        d->waitFrame->move(pos - QPoint(15, 15));
-        d->waitFrame->show();*/
+    d->waitFrame->move(pos - QPoint(15, 15));
+    d->waitFrame->show();
 }
 
 void TwitterApiWhoisWidget::checkAnchor(const QUrl url)

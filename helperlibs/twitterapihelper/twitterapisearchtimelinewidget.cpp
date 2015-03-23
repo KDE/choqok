@@ -26,10 +26,9 @@
 #include <QCheckBox>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QPushButton>
 
-#include "twitterapidebug.h"
 #include <KLocalizedString>
-#include <KPushButton>
 #include <KRestrictedLine>
 #include <KSeparator>
 
@@ -37,6 +36,8 @@
 #include "choqokbehaviorsettings.h"
 #include "choqoktypes.h"
 #include "postwidget.h"
+
+#include "twitterapidebug.h"
 #include "twitterapimicroblog.h"
 
 class TwitterApiSearchTimelineWidget::Private
@@ -45,9 +46,9 @@ public:
     Private(const SearchInfo &info)
         : currentPage(1), searchInfo(info), loadingAnotherPage(false)
     {}
-    QPointer<KPushButton> close;
-    QPointer<KPushButton> next;
-    QPointer<KPushButton> previous;
+    QPointer<QPushButton> close;
+    QPointer<QPushButton> next;
+    QPointer<QPushButton> previous;
     QPointer<KRestrictedLine> pageNumber;
     QPointer<QCheckBox> autoUpdate;
     uint currentPage;
@@ -94,17 +95,17 @@ void TwitterApiSearchTimelineWidget::addFooter()
 {
     QHBoxLayout *footer = titleBarLayout();
 
-    d->close = new KPushButton(QIcon::fromTheme("dialog-close"), QString(), this);
+    d->close = new QPushButton(QIcon::fromTheme("dialog-close"), QString(), this);
     d->close->setFixedSize(28, 28);
     d->close->setToolTip(i18n("Close Search"));
 
     if (d->searchInfo.isBrowsable) {
-        d->previous = new KPushButton(this);
+        d->previous = new QPushButton(this);
         d->previous->setIcon(QIcon::fromTheme("go-previous"));
         d->previous->setMaximumSize(28, 28);
         d->previous->setToolTip(i18n("Previous"));
 
-        d->next = new KPushButton(this);
+        d->next = new QPushButton(this);
         d->next->setIcon(QIcon::fromTheme("go-next"));
         d->next->setMaximumSize(28, 28);
         d->next->setToolTip(i18n("Next"));

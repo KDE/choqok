@@ -26,11 +26,11 @@
 #include <QScrollArea>
 #include <QVBoxLayout>
 
-#include "twitterapidebug.h"
 #include <KLocalizedString>
 
 #include "postwidget.h"
 #include "twitterapiaccount.h"
+#include "twitterapidebug.h"
 
 class TwitterApiShowThread::Private
 {

@@ -23,11 +23,11 @@
 
 #include "twitterapisearchdialog.h"
 
+#include <QComboBox>
 #include <QLabel>
+#include <QLineEdit>
 #include <QVBoxLayout>
 
-#include <KComboBox>
-#include <KLineEdit>
 #include <KLocalizedString>
 
 #include "twitterapiaccount.h"
@@ -48,8 +48,8 @@ public:
         }
         Q_ASSERT(mBlog);
     }
-    KComboBox *searchTypes;
-    KLineEdit *searchQuery;
+    QComboBox *searchTypes;
+    QLineEdit *searchQuery;
     TwitterApiAccount *account;
     TwitterApiMicroBlog *mBlog;
 };
@@ -76,7 +76,7 @@ void TwitterApiSearchDialog::createUi()
     QWidget *wd = new QWidget(this);
     setMainWidget(wd);
     QVBoxLayout *layout = new QVBoxLayout(wd);
-    d->searchTypes = new KComboBox(wd);
+    d->searchTypes = new QComboBox(wd);
     fillSearchTypes();
     qCDebug(CHOQOK);
     layout->addWidget(d->searchTypes);
@@ -87,7 +87,7 @@ void TwitterApiSearchDialog::createUi()
     lblType->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     queryLayout->addWidget(lblType);
 
-    d->searchQuery = new KLineEdit(this);
+    d->searchQuery = new QLineEdit(this);
     queryLayout->addWidget(d->searchQuery);
 
     setButtonText(Ok, i18nc("@action:button", "Search"));

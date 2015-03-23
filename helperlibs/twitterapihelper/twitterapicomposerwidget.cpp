@@ -26,15 +26,12 @@
 #include <QCompleter>
 #include <QStringListModel>
 
-#include <KPushButton>
-
-#include "twitterapidebug.h"
-
 #include "choqokbehaviorsettings.h"
 #include "choqokuiglobal.h"
 #include "postwidget.h"
 
 #include "twitterapiaccount.h"
+#include "twitterapidebug.h"
 #include "twitterapitextedit.h"
 
 class TwitterApiComposerWidget::Private
