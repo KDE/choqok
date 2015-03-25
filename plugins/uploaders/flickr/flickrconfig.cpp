@@ -31,8 +31,7 @@
 
 #include <KAboutData>
 #include <KConfigGroup>
-#include <KIO/Job>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KPluginFactory>
@@ -133,11 +132,11 @@ void FlickrConfig::getFrob()
     url.addQueryItem("api_sig",  createSign("methodflickr.auth.getFrob"));
 
     QString errMsg;
-    KIO::Job *job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    QByteArray data;
-    if (KIO::NetAccess::synchronousRun(job, 0, &data)) {
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
+    job->exec();
+    if (!job->error()) {
         QDomDocument rep;
-        rep.setContent(data);
+        rep.setContent(job->data());
         QDomElement element = rep.documentElement();
         if (element.tagName() == "rsp") {
             QString res;
@@ -193,12 +192,12 @@ void FlickrConfig::getToken()
     url.addQueryItem("api_sig",  createSign("frob" + m_frob.toUtf8() + "methodflickr.auth.getToken"));
 
     QString errMsg;
-    KIO::Job *job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    QByteArray data;
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
+    job->exec();
 
-    if (KIO::NetAccess::synchronousRun(job, 0, &data)) {
+    if (!job->error()) {
         QDomDocument rep;
-        rep.setContent(data);
+        rep.setContent(job->data());
         QDomElement element = rep.documentElement();
         if (element.tagName() == "rsp") {
             QString res;

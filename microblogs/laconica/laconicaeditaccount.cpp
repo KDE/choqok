@@ -24,10 +24,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QJsonDocument>
 
-#include <KIO/AccessManager>
-#include <KIO/Job>
-#include <KIO/JobClasses>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
+#include <KJobWidgets>
 
 #include <QtOAuth/QtOAuth>
 #include <QtOAuth/qoauth_namespace.h>
@@ -149,7 +147,7 @@ Choqok::Account *LaconicaEditAccountWidget::apply()
 //         kcfg_authMethod->setCurrentIndex(1);
 //         return;
 //     }
-//     qoauth = new QOAuth::Interface(new KIO::AccessManager(this), this);//TODO KDE 4.5 Change to use new class.
+//     qoauth = new QOAuth::Interface(new KIO::Integration::AccessManager(this), this);
 //     //TODO change this to have support for self hosted StatusNets
 //     qoauth->setConsumerKey( oauthConsumerKey );
 //     qoauth->setConsumerSecret( oauthConsumerSecret );
@@ -219,15 +217,15 @@ Choqok::Account *LaconicaEditAccountWidget::apply()
 
 void LaconicaEditAccountWidget::setTextLimit()
 {
-    QByteArray jobData;
     QString url = mAccount->host() + '/' + mAccount->api() + "/statusnet/config.json";
-    KIO::TransferJob *job = KIO::get(QUrl(url), KIO::Reload, KIO::HideProgressInfo);
-    if (!KIO::NetAccess::synchronousRun(job, 0, &jobData)) {
+    KIO::StoredTransferJob *job = KIO::storedGet(QUrl(url), KIO::Reload, KIO::HideProgressInfo);
+    job->exec();
+    if (job->error()) {
         qCCritical(CHOQOK) << "Job error: " << job->errorString();
         return;
     }
 
-    const QJsonDocument json = QJsonDocument::fromJson(jobData);
+    const QJsonDocument json = QJsonDocument::fromJson(job->data());
     if (!json.isNull()) {
         const QVariantMap siteInfos = json.toVariant().toMap()["site"].toMap();
         bool ok;

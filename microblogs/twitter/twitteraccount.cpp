@@ -22,9 +22,7 @@
 */
 
 #include "twitteraccount.h"
-
 #include "twitterdebug.h"
-
 #include "twittermicroblog.h"
 
 class TwitterAccount::Private

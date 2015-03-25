@@ -24,9 +24,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QMimeDatabase>
 
-#include <KIO/JobClasses>
-#include <KIO/Job>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
+#include <KJobWidgets>
 #include <KLocalizedString>
 #include <KPluginFactory>
 #include <KMessageBox>
@@ -162,17 +161,18 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Ch
     if (mediumToAttach.isEmpty()) {
         TwitterApiMicroBlog::createPost(theAccount, post);
     } else {
-        QByteArray picData;
         QString tmp;
         QUrl picUrl(mediumToAttach);
-        KIO::TransferJob *picJob = KIO::get(picUrl, KIO::Reload, KIO::HideProgressInfo);
-        if (!KIO::NetAccess::synchronousRun(picJob, 0, &picData)) {
+        KIO::StoredTransferJob *picJob = KIO::storedGet(picUrl, KIO::Reload, KIO::HideProgressInfo);
+        picJob->exec();
+        if (picJob->error()) {
             qCCritical(CHOQOK) << "Job error: " << picJob->errorString();
             KMessageBox::detailedError(Choqok::UI::Global::mainWindow(),
                                        i18n("Uploading medium failed: cannot read the medium file."),
                                        picJob->errorString());
             return;
         }
+        const QByteArray picData = picJob->data();
         if (picData.count() == 0) {
             qCCritical(CHOQOK) << "Cannot read the media file, please check if it exists.";
             KMessageBox::error(Choqok::UI::Global::mainWindow(),

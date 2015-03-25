@@ -26,8 +26,7 @@
 #include <QVBoxLayout>
 
 #include <KAboutData>
-#include <KIO/Job>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KPluginFactory>
@@ -106,7 +105,6 @@ void Bit_ly_Config::slotValidate()
 {
     ui.validate_button->setEnabled(false);
     ui.validate_button->setText(i18n("Checking..."));
-    QByteArray data;
     QString login = "choqok";
     QString apiKey = "R_bdd1ae8b6191dd36e13fc77ca1d4f27f";
     QUrl reqUrl("http://api.bit.ly/v3/validate");
@@ -122,10 +120,11 @@ void Bit_ly_Config::slotValidate()
     reqUrl.addQueryItem("apiKey", apiKey.toUtf8());
     reqUrl.addQueryItem("format", "txt");
 
-    KIO::Job *job = KIO::get(reqUrl, KIO::Reload, KIO::HideProgressInfo);
+    KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
+    job->exec();
 
-    if (KIO::NetAccess::synchronousRun(job, 0, &data)) {
-        QString output(data);
+    if (!job->error()) {
+        QString output(job->data());
         if (output.startsWith('0'))
             KMessageBox::error(this, i18nc("The your_api_key part of the URL is a fixed part of the URL "
                                            "and should probably not be changed in localization.",

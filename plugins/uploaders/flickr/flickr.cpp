@@ -28,8 +28,7 @@
 #include <QDomDocument>
 #include <QDomElement>
 
-#include <KIO/Job>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
 #include <KPluginFactory>
 
 #include "mediamanager.h"

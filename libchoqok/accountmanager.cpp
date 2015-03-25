@@ -27,7 +27,9 @@
 
 #include <KConfig>
 #include <KConfigGroup>
-#include <KIO/NetAccess>
+#include <KIO/DeleteJob>
+#include <KIO/StatJob>
+#include <KJobWidgets>
 #include <KLocalizedString>
 #include <KSharedConfig>
 #include <KWallet>
@@ -135,9 +137,12 @@ bool AccountManager::removeAccount(const QString &alias)
                                                 generatePostBackupFileName(a->alias(), names.takeFirst()));
                 qCDebug(CHOQOK) << "Will remove " << tmpFile;
                 const QUrl path(tmpFile);
-                if (KIO::NetAccess::exists(path, KIO::NetAccess::SourceSide, UI::Global::mainWindow())) {
-                    KIO::NetAccess::del(path, UI::Global::mainWindow());
-                }
+                KIO::StatJob *job = KIO::stat(path, KIO::StatJob::SourceSide, 1);
+                KJobWidgets::setWindow(job, UI::Global::mainWindow());
+                job->exec();
+                KIO::DeleteJob *delJob = KIO::del(path);
+                KJobWidgets::setWindow(delJob, UI::Global::mainWindow());
+                delJob->exec();
             }
             a->deleteLater();
             PasswordManager::self()->removePassword(alias);

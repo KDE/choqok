@@ -25,14 +25,12 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QAction>
 #include <QJsonDocument>
 #include <QMenu>
+#include <QMimeDatabase>
 
-#include <KPluginFactory>
-#include <KIO/Job>
-#include <KIO/JobClasses>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KMimeType>
+#include <KPluginFactory>
 
 #include "account.h"
 #include "accountmanager.h"
@@ -149,17 +147,18 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Cho
     if (mediumToAttach.isEmpty()) {
         TwitterApiMicroBlog::createPost(theAccount, post);
     } else {
-        QByteArray picData;
         QString tmp;
         QUrl picUrl(mediumToAttach);
-        KIO::TransferJob *picJob = KIO::get(picUrl, KIO::Reload, KIO::HideProgressInfo);
-        if (!KIO::NetAccess::synchronousRun(picJob, 0, &picData)) {
+        KIO::StoredTransferJob *picJob = KIO::storedGet(picUrl, KIO::Reload, KIO::HideProgressInfo);
+        picJob->exec();
+        if (picJob->error()) {
             qCCritical(CHOQOK) << "Job error: " << picJob->errorString();
             KMessageBox::detailedError(Choqok::UI::Global::mainWindow(),
                                        i18n("Uploading medium failed: cannot read the medium file."),
                                        picJob->errorString());
             return;
         }
+        const QByteArray picData = picJob->data();
         if (picData.count() == 0) {
             qCCritical(CHOQOK) << "Cannot read the media file, please check if it exists.";
             KMessageBox::error(Choqok::UI::Global::mainWindow(),
@@ -170,7 +169,8 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Cho
         TwitterAccount *account = qobject_cast<TwitterAccount *>(theAccount);
         QUrl url = account->uploadUrl();
         url.setPath(url.path() + "/statuses/update_with_media.json");
-        QByteArray fileContentType = KMimeType::findByUrl(picUrl, 0, true)->name().toUtf8();
+        const QMimeDatabase db;
+        QByteArray fileContentType = db.mimeTypeForUrl(picUrl).name().toUtf8();
 
         QMap<QString, QByteArray> formdata;
         formdata["status"] = post->content.toUtf8();

@@ -17,7 +17,6 @@ PUBLIC
     Qt5::Core
     KF5::CoreAddons
     KF5::KIOCore
-    KF5::KDELibs4Support
     ${QTOAUTH_LIBRARY}
     choqok
     twitterapihelper

@@ -26,8 +26,7 @@
 #include <QDebug>
 #include <QJsonDocument>
 
-#include <KIO/Job>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
 #include <KPluginFactory>
 
 #include "accountmanager.h"

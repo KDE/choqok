@@ -30,7 +30,6 @@
 #include <QMimeDatabase>
 #include <QTextDocument>
 
-#include <KIO/Job>
 #include <KIO/StoredTransferJob>
 #include <KPluginFactory>
 

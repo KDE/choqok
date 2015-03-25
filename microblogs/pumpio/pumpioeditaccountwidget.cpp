@@ -29,7 +29,6 @@
 #include <QUrl>
 
 #include <KIO/AccessManager>
-#include <KIO/Job>
 #include <KIO/StoredTransferJob>
 #include <KMessageBox>
 

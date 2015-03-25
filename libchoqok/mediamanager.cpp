@@ -30,9 +30,7 @@
 #include <KEmoticons>
 #include <KEmoticonsTheme>
 #include <KImageCache>
-#include <KIO/Job>
-#include <KIO/JobClasses>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 #include <KMessageBox>
 
@@ -101,7 +99,7 @@ QPixmap MediaManager::fetchImage(const QString &remoteUrl, ReturnMode mode /*= S
             return p;
         }
         QUrl srcUrl(remoteUrl);
-        KIO::Job *job = KIO::storedGet(srcUrl, KIO::NoReload, KIO::HideProgressInfo) ;
+        KIO::StoredTransferJob *job = KIO::storedGet(srcUrl, KIO::NoReload, KIO::HideProgressInfo) ;
         if (!job) {
             qCDebug(CHOQOK) << "Cannot create a FileCopyJob!";
             QString errMsg = i18n("Cannot create a KDE Job. Please check your installation.");
@@ -179,14 +177,15 @@ void MediaManager::uploadMedium(const QUrl &localUrl, const QString &pluginId)
     if (!d->uploader) {
         return;
     }
-    QByteArray picData;
-    KIO::TransferJob *picJob = KIO::get(localUrl, KIO::Reload, KIO::HideProgressInfo);
-    if (!KIO::NetAccess::synchronousRun(picJob, 0, &picData)) {
+    KIO::StoredTransferJob *picJob = KIO::storedGet(localUrl, KIO::Reload, KIO::HideProgressInfo);
+    picJob->exec();
+    if (picJob->error()) {
         qCritical() << "Job error: " << picJob->errorString();
         KMessageBox::detailedError(UI::Global::mainWindow(), i18n("Uploading medium failed: cannot read the medium file."),
                                    picJob->errorString());
         return;
     }
+    const QByteArray picData = picJob->data();
     if (picData.count() == 0) {
         qCritical() << "Cannot read the media file, please check if it exists.";
         KMessageBox::error(UI::Global::mainWindow(), i18n("Uploading medium failed: cannot read the medium file."));

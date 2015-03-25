@@ -26,8 +26,7 @@
 #include <QDebug>
 #include <QJsonDocument>
 
-#include <KIO/Job>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
 #include <KPluginFactory>
 
 #include <QtOAuth/QtOAuth>
@@ -58,12 +57,13 @@ QString Posterous::getAuthToken(const QUrl &localUrl)
     QUrl url("http://posterous.com/api/2/auth/token");
     QString login = PosterousSettings::login();
     QString pass = Choqok::PasswordManager::self()->readPassword(QString("posterous_%1").arg(PosterousSettings::login()));
-    KIO::Job *job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
-    QByteArray data;
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
     QString token;
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: Basic ") + QString("%1:%2").arg(login).arg(pass).toUtf8().toBase64());
-    if (KIO::NetAccess::synchronousRun(job, 0, &data)) {
+    job->exec();
+    if (!job->error()) {
+        const QByteArray data = job->data();
         const QJsonDocument json = QJsonDocument::fromJson(data);
         if (!json.isNull()) {
             QVariantMap map = json.toVariant().toMap();

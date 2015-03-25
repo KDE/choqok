@@ -25,8 +25,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QUrl>
 
-#include <KIO/Job>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 #include <KPluginFactory>
 
@@ -50,8 +49,6 @@ Yourls::~Yourls()
 
 QString Yourls::shorten(const QString &url)
 {
-    QByteArray data;                                                    /* output field */
-
     QUrl reqUrl(YourlsSettings::yourlsHost());
     reqUrl.addQueryItem("action", "shorturl");                          /* set action to shorturl */
     reqUrl.addQueryItem("format", "xml");                               /* get result as xml */
@@ -63,9 +60,11 @@ QString Yourls::shorten(const QString &url)
         reqUrl.addQueryItem("password", password);
     }
 
-    KIO::Job *job = KIO::get(reqUrl, KIO::Reload, KIO::HideProgressInfo);
+    KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
+    job->exec();
 
-    if (KIO::NetAccess::synchronousRun(job, 0, &data)) {
+    if (!job->error()) {
+        const QByteArray data = job->data();                            /* output field */
         QString output(data);
 
         QRegExp rx(QString("<shorturl>(.+)</shorturl>"));

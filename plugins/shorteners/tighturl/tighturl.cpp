@@ -23,9 +23,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "tighturl.h"
 
 #include <QEventLoop>
+#include <QUrl>
 
-#include <KIO/Job>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 #include <KPluginFactory>
 

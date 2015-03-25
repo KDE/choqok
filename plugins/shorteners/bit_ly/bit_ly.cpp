@@ -22,8 +22,7 @@
 
 #include "bit_ly.h"
 
-#include <KIO/Job>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 #include <KPluginFactory>
 
@@ -46,7 +45,6 @@ Bit_ly::~Bit_ly()
 
 QString Bit_ly::shorten(const QString &url)
 {
-    QByteArray data;
     QString login = "choqok";
     QString apiKey = "R_bdd1ae8b6191dd36e13fc77ca1d4f27f";
     QUrl reqUrl("http://api.bit.ly/v3/shorten");
@@ -67,9 +65,11 @@ QString Bit_ly::shorten(const QString &url)
     reqUrl.addQueryItem("longUrl", QUrl(url).url());
     reqUrl.addQueryItem("format", "txt");
 
-    KIO::Job *job = KIO::get(reqUrl, KIO::Reload, KIO::HideProgressInfo);
+    KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
+    job->exec();
 
-    if (KIO::NetAccess::synchronousRun(job, 0, &data)) {
+    if (!job->error()) {
+        const QByteArray data = job->data();
         QString output(data);
         QRegExp rx(QString("(http://((.*)+)/([a-zA-Z0-9])+)"));
         rx.indexIn(output);

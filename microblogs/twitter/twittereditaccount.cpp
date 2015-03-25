@@ -26,9 +26,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QInputDialog>
 
 #include <KIO/AccessManager>
-#include <KIO/Job>
-#include <KIO/JobClasses>
-#include <KIO/NetAccess>
 #include <KMessageBox>
 
 #include <QtOAuth/QtOAuth>
@@ -109,7 +106,7 @@ Choqok::Account *TwitterEditAccountWidget::apply()
 void TwitterEditAccountWidget::authorizeUser()
 {
     qCDebug(CHOQOK);
-    qoauth = new QOAuth::Interface(new KIO::AccessManager(this), this);//TODO KDE 4.5 Change to use new class.
+    qoauth = new QOAuth::Interface(new KIO::Integration::AccessManager(this), this);
     // set the consumer key and secret
     qoauth->setConsumerKey(twitterConsumerKey);
     qoauth->setConsumerSecret(twitterConsumerSecret);

@@ -24,9 +24,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QDebug>
 #include <QJsonDocument>
+#include <QUrl>
 
-#include <KIO/Job>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 #include <KPluginFactory>
 
@@ -46,13 +46,14 @@ Ur_ly::~Ur_ly()
 
 QString Ur_ly::shorten(const QString &url)
 {
-    QByteArray data;
     QUrl reqUrl("http://ur.ly/new.json");
     reqUrl.addQueryItem("href", QUrl(url).url());
 
-    KIO::Job *job = KIO::get(reqUrl, KIO::Reload, KIO::HideProgressInfo);
+    KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
+    job->exec();
 
-    if (KIO::NetAccess::synchronousRun(job, 0, &data)) {
+    if (!job->error()) {
+        const QByteArray data = job->data();
         const QJsonDocument json = QJsonDocument::fromJson(data);
         if (!json.isNull()) {
             const QVariantMap result = json.toVariant().toMap();

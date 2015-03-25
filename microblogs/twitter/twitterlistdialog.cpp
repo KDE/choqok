@@ -26,11 +26,11 @@
 #include <QGridLayout>
 #include <QListWidget>
 
-#include "twitterdebug.h"
 #include <KMessageBox>
 #include <KLocalizedString>
 
 #include "twitteraccount.h"
+#include "twitterdebug.h"
 #include "twittermicroblog.h"
 
 TwitterListDialog::TwitterListDialog(TwitterApiAccount *theAccount, QWidget *parent)

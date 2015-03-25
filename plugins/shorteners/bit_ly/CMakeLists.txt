@@ -14,7 +14,6 @@ PUBLIC
     KF5::CoreAddons
     KF5::I18n
     KF5::KIOCore
-    KF5::KDELibs4Support
     choqok
 )
 
@@ -42,7 +41,6 @@ PUBLIC
     KF5::I18n
     KF5::KIOCore
     KF5::WidgetsAddons
-    KF5::KDELibs4Support
     choqok
 )
 

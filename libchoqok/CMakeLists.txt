@@ -60,6 +60,7 @@ PUBLIC
     KF5::Emoticons
     KF5::GuiAddons
     KF5::I18n
+    KF5::KIOCore
     KF5::KCMUtils
     KF5::Notifications
     KF5::SonnetCore

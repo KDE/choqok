@@ -25,8 +25,7 @@
 
 #include <QDomElement>
 
-#include <KIO/Job>
-#include <KIO/JobClasses>
+#include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 
 #include "choqokbehaviorsettings.h"

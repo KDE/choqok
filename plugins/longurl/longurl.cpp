@@ -28,7 +28,7 @@
 #include <QSharedPointer>
 #include <QTimer>
 
-#include <KIO/JobUiDelegate>
+#include <KIO/TransferJob>
 #include <KPluginFactory>
 
 #include "postwidget.h"

@@ -25,8 +25,7 @@
 
 #include <QJsonDocument>
 
-#include <KIO/Job>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 #include <KPluginFactory>
 

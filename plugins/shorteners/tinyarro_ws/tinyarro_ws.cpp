@@ -22,8 +22,7 @@
 
 #include "tinyarro_ws.h"
 
-#include <KIO/Job>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 #include <KPluginFactory>
 
@@ -45,8 +44,6 @@ Tinyarro_ws::~Tinyarro_ws()
 
 QString Tinyarro_ws::shorten(const QString &url)
 {
-    QByteArray data;
-
     QUrl reqUrl("http://tinyarro.ws/api-create.php");
 
     Tinyarro_ws_Settings::self()->load();
@@ -58,10 +55,11 @@ QString Tinyarro_ws::shorten(const QString &url)
     reqUrl.addQueryItem("utfpure", "1");
     reqUrl.addQueryItem("url", QUrl(url).url());
 
-    KIO::Job *job = KIO::get(reqUrl, KIO::Reload, KIO::HideProgressInfo);
+    KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
+    job->exec();
 
-    if (KIO::NetAccess::synchronousRun(job, 0, &data)) {
-        QString output = QString::fromUtf8(data);
+    if (!job->error()) {
+        QString output = QString::fromUtf8(job->data());
 
         if (!output.isEmpty()) {
             if (output.startsWith(QString("http://"))) {

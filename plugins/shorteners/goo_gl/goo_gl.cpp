@@ -23,9 +23,9 @@
 #include "goo_gl.h"
 
 #include <QJsonDocument>
+#include <QUrl>
 
-#include <KIO/Job>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 #include <KPluginFactory>
 
@@ -53,10 +53,10 @@ QString Goo_gl::shorten(const QString &url)
         return url;
     }
     job->addMetaData("content-type", "Content-Type: application/json");
+    job->exec();
 
-    QByteArray data;
-    if (KIO::NetAccess::synchronousRun(job, 0, &data)) {
-        const QJsonDocument json = QJsonDocument::fromJson(data);
+    if (!job->error()) {
+        const QJsonDocument json = QJsonDocument::fromJson(job->data());
         if (!json.isNull()) {
             const QVariantMap map = json.toVariant().toMap();
             const QVariantMap error = map["error"].toMap();

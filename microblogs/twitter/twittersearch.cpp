@@ -25,8 +25,7 @@
 
 #include <QJsonDocument>
 
-#include <KIO/Job>
-#include <KIO/JobClasses>
+#include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 
 #include <QtOAuth/QtOAuth>

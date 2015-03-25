@@ -30,8 +30,8 @@
 #include <QEventLoop>
 #include <QTimer>
 
-#include <KIO/Job>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
+#include <KJobWidgets>
 #include <KPluginFactory>
 
 #include "choqokuiglobal.h"
@@ -157,13 +157,14 @@ QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWi
 {
     QString youtubeUrl = QString("http://gdata.youtube.com/feeds/api/videos/%1").arg(videoid);
     QUrl th_url(youtubeUrl);
-    KIO::TransferJob *job = KIO::get(th_url, KIO::NoReload, KIO::HideProgressInfo);
+    KIO::StoredTransferJob *job = KIO::storedGet(th_url, KIO::NoReload, KIO::HideProgressInfo);
+    KJobWidgets::setWindow(job, Choqok::UI::Global::mainWindow());
     QString title, description, thumb_url;
-    QByteArray data;
 
-    if (job && KIO::NetAccess::synchronousRun(job, Choqok::UI::Global::mainWindow(), &data)) {
+    job->exec();
+    if (!job->error()) {
         QDomDocument document;
-        document.setContent(data);
+        document.setContent(job->data());
         QDomElement root = document.documentElement();
         if (!root.isNull()) {
             QDomElement node;
@@ -201,13 +202,14 @@ QString VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidg
     QString vimeoUrl = QString("http://vimeo.com/api/v2/video/%1.xml").arg(videoid);
     QUrl th_url(vimeoUrl);
     QEventLoop loop;
-    KIO::TransferJob *job = KIO::get(th_url, KIO::NoReload, KIO::HideProgressInfo);
+    KIO::StoredTransferJob *job = KIO::storedGet(th_url, KIO::NoReload, KIO::HideProgressInfo);
+    KJobWidgets::setWindow(job, Choqok::UI::Global::mainWindow());
     QString title, description, thumb_url;
-    QByteArray data;
 
-    if (job && KIO::NetAccess::synchronousRun(job, Choqok::UI::Global::mainWindow(), &data)) {
+    job->exec();
+    if (!job->error()) {
         QDomDocument document;
-        document.setContent(data);
+        document.setContent(job->data());
         QDomElement root = document.documentElement();
         if (!root.isNull()) {
             QDomElement videotag;

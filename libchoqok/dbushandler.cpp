@@ -28,7 +28,7 @@
 #include <QPointer>
 #include <QTextDocument>
 
-#include <KIO/Job>
+#include <KIO/StoredTransferJob>
 
 #include "ChoqokAdaptor.h"
 #include "choqokbehaviorsettings.h"

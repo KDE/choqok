@@ -28,7 +28,6 @@
 #include <QQueue>
 #include <QSharedPointer>
 
-#include <KJob>
 #include <KIO/Job>
 
 #include "plugin.h"
