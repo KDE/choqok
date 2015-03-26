@@ -23,6 +23,8 @@
 
 #include "laconicaaccount.h"
 
+#include <KIO/Global>
+
 #include "laconicadebug.h"
 #include "laconicamicroblog.h"
 
@@ -74,8 +76,6 @@ void LaconicaAccount::setChangeExclamationMark(bool isChange)
 
 QUrl LaconicaAccount::homepageUrl() const
 {
-#pragma message("Port to KF5")
-//    return apiUrl().upUrl();
-    return apiUrl();
+    return KIO::upUrl(apiUrl());
 }
 
