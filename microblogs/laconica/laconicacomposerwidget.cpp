@@ -23,12 +23,12 @@
 
 #include "laconicacomposerwidget.h"
 
+#include <QFileDialog>
 #include <QLabel>
 #include <QLayout>
 #include <QPointer>
 #include <QPushButton>
 
-#include <KFileDialog>
 #include <KLocalizedString>
 
 #include "account.h"
@@ -136,9 +136,8 @@ void LaconicaComposerWidget::slotPostMediaSubmitted(Choqok::Account *theAccount,
 void LaconicaComposerWidget::selectMediumToAttach()
 {
     qCDebug(CHOQOK);
-    d->mediumToAttach = KFileDialog::getOpenFileName(QUrl("kfiledialog:///image?global"),
-                        QString(), this,
-                        i18n("Select Media to Upload"));
+    d->mediumToAttach = QFileDialog::getOpenFileName(this, i18n("Select Media to Upload"),
+                                                     QString(), QStringLiteral("Images"));
     if (d->mediumToAttach.isEmpty()) {
         return;
     }

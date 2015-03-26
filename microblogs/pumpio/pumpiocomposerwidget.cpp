@@ -23,13 +23,13 @@
 
 #include "pumpiocomposerwidget.h"
 
+#include <QFileDialog>
 #include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QSpacerItem>
 #include <QVBoxLayout>
 
-#include <KFileDialog>
 #include <KLocalizedString>
 
 #include "account.h"
@@ -142,9 +142,8 @@ void PumpIOComposerWidget::slotPostSubmited(Choqok::Account *theAccount, Choqok:
 void PumpIOComposerWidget::attachMedia()
 {
     qCDebug(CHOQOK);
-    d->mediumToAttach = KFileDialog::getOpenFileName(QUrl("kfiledialog:///image?global"),
-                        QString(), this,
-                        i18n("Select Media to Upload"));
+    d->mediumToAttach = QFileDialog::getOpenFileName(this, i18n("Select Media to Upload"),
+                                                     QString(), QStringLiteral("Images"));
     if (d->mediumToAttach.isEmpty()) {
         qCDebug(CHOQOK) << "No file selected";
         return;

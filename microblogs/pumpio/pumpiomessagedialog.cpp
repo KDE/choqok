@@ -22,10 +22,9 @@
 
 #include "pumpiomessagedialog.h"
 
+#include <QFileDialog>
 #include <QPointer>
 #include <QPushButton>
-
-#include <KFileDialog>
 
 #include "pumpioaccount.h"
 #include "pumpiodebug.h"
@@ -175,9 +174,8 @@ void PumpIOMessageDialog::sendPost()
 void PumpIOMessageDialog::attachMedia()
 {
     qCDebug(CHOQOK);
-    d->mediumToAttach = KFileDialog::getOpenFileName(QUrl("kfiledialog:///image?global"),
-                        QString(), this,
-                        i18n("Select Media to Upload"));
+    d->mediumToAttach = QFileDialog::getOpenFileName(this, i18n("Select Media to Upload"),
+                                                     QString(), QStringLiteral("Images"));
     if (d->mediumToAttach.isEmpty()) {
         qCDebug(CHOQOK) << "No file selected";
         return;

@@ -30,7 +30,6 @@ PUBLIC
     KF5::KIOCore
     KF5::KIOWidgets
     KF5::WidgetsAddons
-    KF5::KDELibs4Support
     choqok
     twitterapihelper
     ${QTOAUTH_LIBRARY}

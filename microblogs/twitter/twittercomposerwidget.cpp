@@ -23,13 +23,13 @@
 
 #include "twittercomposerwidget.h"
 
+#include <QFileDialog>
 #include <QGridLayout>
 #include <QLabel>
 #include <QPointer>
 #include <QPushButton>
 #include <QVBoxLayout>
 
-#include <KFileDialog>
 #include <KLocalizedString>
 
 #include "account.h"
@@ -132,9 +132,8 @@ void TwitterComposerWidget::slotPostMediaSubmitted(Choqok::Account *theAccount, 
 void TwitterComposerWidget::selectMediumToAttach()
 {
     qCDebug(CHOQOK);
-    d->mediumToAttach = KFileDialog::getOpenFileName(QUrl("kfiledialog:///image?global"),
-                        QString(), this,
-                        i18n("Select Media to Upload"));
+    d->mediumToAttach = QFileDialog::getOpenFileName(this, i18n("Select Media to Upload"),
+                                                     QString(), QStringLiteral("Images"));
     if (d->mediumToAttach.isEmpty()) {
         return;
     }
