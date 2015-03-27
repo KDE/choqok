@@ -161,9 +161,12 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <widget class="KIntSpinBox" name="kcfg_updateInterval">
+           <widget class="QSpinBox" name="kcfg_updateInterval">
             <property name="specialValueText">
              <string>Disabled</string>
+            </property>
+            <property name="suffix">
+             <string> minutes</string>
             </property>
             <property name="minimum">
              <number>0</number>
@@ -214,13 +217,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KIntSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>knuminput.h</header>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>kcfg_updateInterval</tabstop>
  </tabstops>

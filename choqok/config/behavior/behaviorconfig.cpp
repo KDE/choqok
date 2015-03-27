@@ -71,7 +71,6 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args)
     d->mPrfsGeneral.setupUi(mPrfsGeneralDlg);
     addConfig(Choqok::BehaviorSettings::self(), mPrfsGeneralDlg);
     d->mBehaviorTabCtl->addTab(mPrfsGeneralDlg, i18n("&General"));
-    d->mPrfsGeneral.kcfg_updateInterval->setSuffix(ki18np(" Minute", " Minutes"));
 
 #ifdef QTINDICATE_BUILD
     // "Notifications" TAB ============================================================
@@ -79,7 +78,6 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args)
     d->mPrfsNotify.setupUi(mPrfsNotifyDlg);
     addConfig(Choqok::BehaviorSettings::self(), mPrfsNotifyDlg);
     d->mBehaviorTabCtl->addTab(mPrfsNotifyDlg, i18n("&Notifications"));
-    d->mPrfsNotify.kcfg_notifyInterval->setSuffix(i18n(" Seconds"));
     /* Remove below code, when all functions on tab will work*/
     d->mPrfsNotify.kcfg_notifyInterval->setVisible(false);
     d->mPrfsNotify.kcfg_showAllNotifiesInOne->setVisible(false);

@@ -23,6 +23,9 @@
 
 #include "addaccountdialog.h"
 
+#include <QPushButton>
+#include <QVBoxLayout>
+
 #include <KLocalizedString>
 #include <KMessageBox>
 
@@ -31,44 +34,51 @@
 #include "editaccountwidget.h"
 
 AddAccountDialog::AddAccountDialog(ChoqokEditAccountWidget *addWidget, QWidget *parent, Qt::WFlags flags)
-    : KDialog(parent, flags), widget(addWidget)
+    : QDialog(parent, flags), widget(addWidget)
 {
     if (!widget) {
         this->deleteLater();
         return;
     }
-    setMainWidget(widget);
-    setCaption(i18n("Add New Account"));
+
+    setWindowTitle(i18n("Add New Account"));
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+    mainLayout->addWidget(widget);
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    mainLayout->addWidget(buttonBox);
 }
 
 AddAccountDialog::~AddAccountDialog()
 {
-
 }
 
-void AddAccountDialog::closeEvent(QCloseEvent *e)
+void AddAccountDialog::accept()
 {
-    KDialog::closeEvent(e);
-}
-
-void AddAccountDialog::slotButtonClicked(int button)
-{
-    qCDebug(CHOQOK) << button;
-    if (button == KDialog::Ok) {
-        if (widget->validateData()) {
-            if (Choqok::Account *acc = widget->apply()) {
-                if (!Choqok::AccountManager::self()->registerAccount(acc))
-                    KMessageBox::detailedError(this, i18n("The Account registration failed."),
-                                               Choqok::AccountManager::self()->lastError());
-                else {
-                    accept();
-                }
+    qCDebug(CHOQOK);
+    if (widget->validateData()) {
+        if (Choqok::Account *acc = widget->apply()) {
+            if (!Choqok::AccountManager::self()->registerAccount(acc)) {
+                KMessageBox::detailedError(this, i18n("The Account registration failed."),
+                                            Choqok::AccountManager::self()->lastError());
+            } else {
+                QDialog::accept();
             }
-        } else {
-            KMessageBox::sorry(this, i18n("Cannot validate your input information.\nPlease check the fields' data.\nMaybe a required field is empty?"));
         }
     } else {
-        Choqok::AccountManager::self()->removeAccount(widget->account()->alias());
-        KDialog::slotButtonClicked(button);
+        KMessageBox::sorry(this, i18n("Cannot validate your input information.\nPlease check the fields' data.\nMaybe a required field is empty?"));
     }
+}
+
+void AddAccountDialog::reject()
+{
+    Choqok::AccountManager::self()->removeAccount(widget->account()->alias());
+    QDialog::reject();
 }

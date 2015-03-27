@@ -24,7 +24,7 @@
 #ifndef ADDACCOUNTDIALOG_H
 #define ADDACCOUNTDIALOG_H
 
-#include <KDialog>
+#include <QDialog>
 
 class ChoqokEditAccountWidget;
 namespace Choqok
@@ -32,15 +32,16 @@ namespace Choqok
 class Account;
 }
 
-class AddAccountDialog : public KDialog
+class AddAccountDialog : public QDialog
 {
     Q_OBJECT
 public:
     explicit AddAccountDialog(ChoqokEditAccountWidget *addWidget, QWidget *parent = 0, Qt::WFlags flags = 0);
     ~AddAccountDialog();
-protected:
-    virtual void closeEvent(QCloseEvent *e);
-    virtual void slotButtonClicked(int button);
+
+protected Q_SLOTS:
+    virtual void accept();
+    virtual void reject();
 
 private:
     ChoqokEditAccountWidget *widget;

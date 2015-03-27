@@ -23,6 +23,10 @@
 
 #include "editaccountdialog.h"
 
+#include <QPushButton>
+#include <QVBoxLayout>
+
+#include <KConfigGroup>
 #include <KLocalizedString>
 #include <KMessageBox>
 
@@ -32,39 +36,41 @@
 #include "editaccountwidget.h"
 
 EditAccountDialog::EditAccountDialog(ChoqokEditAccountWidget *editWidget, QWidget *parent, Qt::WFlags flags)
-    : KDialog(parent, flags), widget(editWidget)
+    : QDialog(parent, flags), widget(editWidget)
 {
     if (!widget) {
         this->deleteLater();
         return;
     }
-    setMainWidget(widget);
-    setCaption(i18n("Edit Account"));
+
+    setWindowTitle(i18n("Edit Account"));
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+    mainLayout->addWidget(widget);
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    mainLayout->addWidget(buttonBox);
 }
 
 EditAccountDialog::~EditAccountDialog()
 {
-
 }
 
-void EditAccountDialog::closeEvent(QCloseEvent *e)
+void EditAccountDialog::accept()
 {
-    KDialog::closeEvent(e);
-}
-
-void EditAccountDialog::slotButtonClicked(int button)
-{
-    qCDebug(CHOQOK) << button;
-    if (button == KDialog::Ok) {
-        if (widget->validateData()) {
-            if (widget->apply()) {
-                accept();
-            }
-        } else {
-            KMessageBox::sorry(this, i18n("Cannot validate your input information.\nPlease check the fields' data.\nMaybe a required field is empty?"));
+    qCDebug(CHOQOK);
+    if (widget->validateData()) {
+        if (widget->apply()) {
+            QDialog::accept();
         }
     } else {
-        KDialog::slotButtonClicked(button);
+        KMessageBox::sorry(this, i18n("Cannot validate your input information.\nPlease check the fields' data.\nMaybe a required field is empty?"));
     }
 }
 

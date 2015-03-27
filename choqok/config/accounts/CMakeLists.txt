@@ -20,7 +20,6 @@ PUBLIC
     KF5::I18n
     KF5::Service
     KF5::WidgetsAddons
-    KF5::KDELibs4Support
     choqok
 )
 

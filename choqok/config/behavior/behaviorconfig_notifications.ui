@@ -35,6 +35,9 @@
      </item>
      <item>
       <widget class="QSpinBox" name="kcfg_notifyInterval">
+       <property name="suffix">
+        <string> seconds</string>
+       </property>
        <property name="minimum">
         <number>2</number>
        </property>

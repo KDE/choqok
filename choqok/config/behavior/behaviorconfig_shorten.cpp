@@ -22,11 +22,12 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 #include "behaviorconfig_shorten.h"
 
+#include <QDialog>
+#include <QDialogButtonBox>
 #include <QLayout>
 #include <QTabWidget>
 
 #include <KAboutData>
-#include <KDialog>
 #include <KAboutApplicationDialog>
 #include <KCModuleInfo>
 #include <KCModuleProxy>
@@ -131,7 +132,7 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
     KPluginInfo pluginInfo = availablePlugins.value(shortenPlugins->itemData(shortenPlugins->currentIndex()).toString());
     qCDebug(CHOQOK) << pluginInfo.name() << pluginInfo.kcmServices().count();
 
-    QPointer<KDialog> configDialog = new KDialog(this);
+    QPointer<QDialog> configDialog = new QDialog(this);
     configDialog->setWindowTitle(pluginInfo.name());
     // The number of KCModuleProxies in use determines whether to use a tabwidget
     QTabWidget *newTabWidget = 0;
@@ -180,14 +181,20 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
 
     // it could happen that we had services to show, but none of them were real modules.
     if (moduleProxyList.count()) {
-        configDialog->setButtons(KDialog::Ok | KDialog::Cancel);
-
         QWidget *showWidget = new QWidget(configDialog);
         QVBoxLayout *layout = new QVBoxLayout;
         showWidget->setLayout(layout);
         layout->addWidget(mainWidget);
-        layout->insertSpacing(-1, KDialog::marginHint());
-        configDialog->setMainWidget(showWidget);
+        layout->insertSpacing(-1, QApplication::style()->pixelMetric(QStyle::PM_DialogButtonsSeparator));
+
+        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+        QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+        okButton->setDefault(true);
+        okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+        connect(buttonBox, SIGNAL(accepted()), configDialog, SLOT(accept()));
+        connect(buttonBox, SIGNAL(rejected()), configDialog, SLOT(reject()));
+        layout->addWidget(buttonBox);
+        showWidget->adjustSize();
 
 //         connect(&configDialog, SIGNAL(defaultClicked()), this, SLOT(slotDefaultClicked()));
 
