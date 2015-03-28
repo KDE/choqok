@@ -22,11 +22,11 @@
 */
 #include "systrayicon.h"
 
+#include <QFontDatabase>
 #include <QPainter>
 #include <QTimer>
 
 #include <KColorScheme>
-#include <KGlobalSettings>
 #include <KLocalizedString>
 
 #include "choqokdebug.h"
@@ -76,7 +76,7 @@ void SysTrayIcon::updateUnreadCount(int changeOfUnreadPosts)
         int oldWidth = 22;
 
         QString countStr = QString::number(unread);
-        QFont f = KGlobalSettings::generalFont();
+        QFont f = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
         f.setBold(true);
 
         float pointSize = f.pointSizeF();
