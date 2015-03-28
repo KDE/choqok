@@ -24,12 +24,12 @@
 #ifndef CONFIGUREFILTERS_H
 #define CONFIGUREFILTERS_H
 
-#include <KDialog>
+#include <QDialog>
 
 #include "ui_filterprefs.h"
 
 class Filter;
-class ConfigureFilters : public KDialog
+class ConfigureFilters : public QDialog
 {
     Q_OBJECT
 public:
@@ -37,7 +37,7 @@ public:
     ~ConfigureFilters();
 
 protected Q_SLOTS:
-    virtual void slotButtonClicked(int button);
+    virtual void accept();
     void slotAddFilter();
     void slotEditFilter();
     void slotRemoveFilter();

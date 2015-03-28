@@ -23,16 +23,31 @@
 
 #include "addeditfilter.h"
 
+#include <QDialogButtonBox>
+#include <QPushButton>
+
 #include <KLocalizedString>
 
 #include "filtersettings.h"
 
 AddEditFilter::AddEditFilter(QWidget *parent, Filter *filter)
-    : KDialog(parent), currentFilter(filter)
+    : QDialog(parent), currentFilter(filter)
 {
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+
     QWidget *wd = new QWidget(this);
     ui.setupUi(wd);
-    setMainWidget(wd);
+    mainLayout->addWidget(wd);
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    mainLayout->addWidget(buttonBox);
+
     connect(ui.filterAction, SIGNAL(currentIndexChanged(int)), this, SLOT(slotFilterActionChanged(int)));
 
     setupFilterFields();
@@ -59,32 +74,28 @@ AddEditFilter::~AddEditFilter()
 {
 }
 
-void AddEditFilter::slotButtonClicked(int button)
+void AddEditFilter::accept()
 {
-    if (button == KDialog::Ok) {
-        Filter::FilterField field =
-            (Filter::FilterField) ui.filterField->itemData(ui.filterField->currentIndex()).toInt();
-        Filter::FilterType type =
-            (Filter::FilterType) ui.filterType->itemData(ui.filterType->currentIndex()).toInt();
-        Filter::FilterAction action =
-            (Filter::FilterAction) ui.filterAction->itemData(ui.filterAction->currentIndex()).toInt();
-        QString fText = ui.filterText->text();
-        bool dontHideReplies = ui.dontHideReplies->isChecked();
-        if (currentFilter) {
-            currentFilter->setFilterField(field);
-            currentFilter->setFilterText(fText);
-            currentFilter->setFilterType(type);
-            currentFilter->setFilterAction(action);
-            currentFilter->setDontHideReplies(dontHideReplies);
-            Q_EMIT filterUpdated(currentFilter);
-        } else {
-            currentFilter = new Filter(fText, field, type, action, dontHideReplies);
-            Q_EMIT newFilterRegistered(currentFilter);
-        }
-        accept();
+    Filter::FilterField field =
+        (Filter::FilterField) ui.filterField->itemData(ui.filterField->currentIndex()).toInt();
+    Filter::FilterType type =
+        (Filter::FilterType) ui.filterType->itemData(ui.filterType->currentIndex()).toInt();
+    Filter::FilterAction action =
+        (Filter::FilterAction) ui.filterAction->itemData(ui.filterAction->currentIndex()).toInt();
+    QString fText = ui.filterText->text();
+    bool dontHideReplies = ui.dontHideReplies->isChecked();
+    if (currentFilter) {
+        currentFilter->setFilterField(field);
+        currentFilter->setFilterText(fText);
+        currentFilter->setFilterType(type);
+        currentFilter->setFilterAction(action);
+        currentFilter->setDontHideReplies(dontHideReplies);
+        Q_EMIT filterUpdated(currentFilter);
     } else {
-        KDialog::slotButtonClicked(button);
+        currentFilter = new Filter(fText, field, type, action, dontHideReplies);
+        Q_EMIT newFilterRegistered(currentFilter);
     }
+    QDialog::accept();
 }
 
 void AddEditFilter::slotFilterActionChanged(int index)

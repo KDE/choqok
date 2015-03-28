@@ -23,7 +23,9 @@
 
 #include "configurefilters.h"
 
+#include <QDialogButtonBox>
 #include <QPointer>
+#include <QPushButton>
 
 #include <KLocalizedString>
 
@@ -31,12 +33,24 @@
 #include "filtersettings.h"
 
 ConfigureFilters::ConfigureFilters(QWidget *parent):
-    KDialog(parent)
+    QDialog(parent)
 {
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+
     QWidget *wd = new QWidget(this);
     wd->setObjectName("mFilteringCtl");
     ui.setupUi(wd);
-    setMainWidget(wd);
+    mainLayout->addWidget(wd);
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    mainLayout->addWidget(buttonBox);
+
     resize(500, 300);
 
     setWindowTitle(i18n("Configure Filters"));
@@ -56,14 +70,10 @@ ConfigureFilters::~ConfigureFilters()
 {
 }
 
-void ConfigureFilters::slotButtonClicked(int button)
+void ConfigureFilters::accept()
 {
-    if (button == Ok) {
-        saveFiltersTable();
-        accept();
-    } else {
-        KDialog::slotButtonClicked(button);
-    }
+    saveFiltersTable();
+    QDialog::accept();
 }
 
 void ConfigureFilters::reloadFiltersTable()

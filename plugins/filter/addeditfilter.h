@@ -24,12 +24,12 @@
 #ifndef ADDEDITFILTER_H
 #define ADDEDITFILTER_H
 
-#include <KDialog>
+#include <QDialog>
 
 #include "filter.h"
 #include "ui_addeditfilter_base.h"
 
-class AddEditFilter : public KDialog
+class AddEditFilter : public QDialog
 {
     Q_OBJECT
 public:
@@ -42,7 +42,7 @@ Q_SIGNALS:
 
 protected Q_SLOTS:
     void slotFilterActionChanged(int);
-    virtual void slotButtonClicked(int button);
+    virtual void accept();
 
 private:
     void setupFilterFields();
