@@ -23,7 +23,7 @@
 #ifndef QUICKPOST_H
 #define QUICKPOST_H
 
-#include <KDialog>
+#include <QDialog>
 
 #include "account.h"
 #include "choqoktypes.h"
@@ -39,7 +39,7 @@ Widget for Quick posting
 
     @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
-class CHOQOK_EXPORT QuickPost : public KDialog
+class CHOQOK_EXPORT QuickPost : public QDialog
 {
     Q_OBJECT
 public:
@@ -68,7 +68,7 @@ protected Q_SLOTS:
     void slotAttachMedium();
     void slotCurrentAccountChanged(int);
     void checkAll(bool isAll);
-    virtual void slotButtonClicked(int button);
+    virtual void accept();
     void addAccount(Choqok::Account *account);
     void removeAccount(const QString &alias);
     void accountModified(Choqok::Account *theAccount);

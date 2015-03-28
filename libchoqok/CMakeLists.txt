@@ -61,13 +61,14 @@ PUBLIC
     KF5::GuiAddons
     KF5::I18n
     KF5::KIOCore
+    KF5::KIOFileWidgets
     KF5::KCMUtils
+    KF5::JobWidgets
     KF5::Notifications
     KF5::SonnetCore
     KF5::TextWidgets
     KF5::XmlGui
     KF5::Wallet
-    KF5::KDELibs4Support
 )
 
 #if(QtIndicate_FOUND)

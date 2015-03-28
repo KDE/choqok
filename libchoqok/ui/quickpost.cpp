@@ -63,7 +63,7 @@ public:
 };
 
 QuickPost::QuickPost(QWidget *parent)
-    : KDialog(parent), d(new Private)
+    : QDialog(parent), d(new Private)
 {
     qCDebug(CHOQOK);
     setupUi();
@@ -83,15 +83,11 @@ QuickPost::QuickPost(QWidget *parent)
 
     d->all->setChecked(Choqok::BehaviorSettings::all());
     slotCurrentAccountChanged(d->comboAccounts->currentIndex());
-    setButtonText(Ok, i18nc("Submit post", "Submit"));
 }
 
 void QuickPost::setupUi()
 {
-    QWidget *wdg = new QWidget(this);
-    this->setMainWidget(wdg);
-
-    this->resize(Choqok::BehaviorSettings::quickPostDialogSize());
+    resize(Choqok::BehaviorSettings::quickPostDialogSize());
     d->all = new QCheckBox(i18nc("All accounts", "All"), this);
     d->comboAccounts = new QComboBox(this);
     d->attach = new QPushButton(QIcon::fromTheme("mail-attachment"), QString(), this);
@@ -106,12 +102,20 @@ void QuickPost::setupUi()
     d->txtPost = new TextEdit(0, this);
     d->txtPost->setTabChangesFocus(true);
     mainLayout->addWidget(d->txtPost);
-    if (wdg->layout()) {
-        wdg->layout()->deleteLater();
-    }
-    wdg->setLayout(mainLayout);
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    okButton->setText(i18nc("Submit post", "Submit"));
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    mainLayout->addWidget(buttonBox);
+
+    setLayout(mainLayout);
+
     d->txtPost->setFocus(Qt::OtherFocusReason);
-    this->setCaption(i18n("Quick Post"));
+    setWindowTitle(i18n("Quick Post"));
 }
 
 QuickPost::~QuickPost()
@@ -126,7 +130,7 @@ QuickPost::~QuickPost()
 void QuickPost::show()
 {
     d->txtPost->setFocus(Qt::OtherFocusReason);
-    KDialog::show();
+    QDialog::show();
 }
 
 void QuickPost::slotSubmitPost(Account *a, Post *post)
@@ -193,14 +197,10 @@ void QuickPost::submitPost(const QString &txt)
     d->isPostSubmitted = true;
 }
 
-void QuickPost::slotButtonClicked(int button)
+void QuickPost::accept()
 {
     qCDebug(CHOQOK);
-    if (button == KDialog::Ok) {
-        submitPost(d->txtPost->toPlainText());
-    } else {
-        KDialog::slotButtonClicked(button);
-    }
+    submitPost(d->txtPost->toPlainText());
 }
 
 void QuickPost::loadAccounts()

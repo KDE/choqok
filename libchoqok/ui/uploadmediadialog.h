@@ -24,9 +24,8 @@
 #ifndef UPLOADMEDIADIALOG_H
 #define UPLOADMEDIADIALOG_H
 
+#include <QDialog>
 #include <QUrl>
-
-#include <KDialog>
 
 #include "choqok_export.h"
 
@@ -36,7 +35,7 @@ namespace Choqok
 namespace UI
 {
 
-class CHOQOK_EXPORT UploadMediaDialog : public KDialog
+class CHOQOK_EXPORT UploadMediaDialog : public QDialog
 {
     Q_OBJECT
 public:
@@ -44,11 +43,11 @@ public:
     ~UploadMediaDialog();
 
 protected:
-    virtual void slotButtonClicked(int button);
     void load();
     bool showed;
 
 protected Q_SLOTS:
+    virtual void accept();
     void currentPluginChanged(int index);
     void slotAboutClicked();
     void slotConfigureClicked();

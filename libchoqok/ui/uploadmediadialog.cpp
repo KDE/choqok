@@ -57,15 +57,30 @@ public:
 };
 
 UploadMediaDialog::UploadMediaDialog(QWidget *parent, const QString &url)
-    : KDialog(parent), d(new Private)
+    : QDialog(parent), d(new Private)
 {
-    QWidget *wd = new QWidget(parent);
-    d->ui.setupUi(wd);
-    setMainWidget(wd);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(i18n("Upload Medium"));
-    resize(400, 300);
-    setButtonText(Ok, i18n("Upload"));
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    okButton->setText(i18n("Upload"));
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+
+    QWidget *wd = new QWidget;
+    mainLayout->addWidget(wd);
+    d->ui.setupUi(wd);
+
+    mainLayout->addWidget(buttonBox);
+
+    adjustSize();
+
     connect(d->ui.imageUrl, SIGNAL(textChanged(QString)),
             this, SLOT(slotMediumChanged(QString)));
     load();
@@ -83,7 +98,6 @@ UploadMediaDialog::UploadMediaDialog(QWidget *parent, const QString &url)
             SLOT(slotMediumUploaded(QUrl,QString)));
     connect(Choqok::MediaManager::self(), SIGNAL(mediumUploadFailed(QUrl,QString)),
             SLOT(slotMediumUploadFailed(QUrl,QString)));
-
 }
 
 UploadMediaDialog::~UploadMediaDialog()
@@ -106,30 +120,26 @@ void UploadMediaDialog::load()
     }
 }
 
-void UploadMediaDialog::slotButtonClicked(int button)
+void UploadMediaDialog::accept()
 {
-    if (button == KDialog::Ok) {
-        if (d->ui.uploaderPlugin->currentIndex() == -1 ||
-                !QFile::exists(d->ui.imageUrl->url().toLocalFile()) ||
-                !QFile(d->ui.imageUrl->url().toLocalFile()).size()) {
-            return;
-        }
-        if (d->progress) {
-            d->progress->deleteLater();
-        }
-        d->progress = new QProgressBar(this);
-        d->progress->setRange(0, 0);
-        d->progress->setFormat(i18n("Uploading..."));
-        mainWidget()->layout()->addWidget(d->progress);
-        Choqok::BehaviorSettings::setLastUsedUploaderPlugin(d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString());
-        d->localUrl = d->ui.imageUrl->url();
-        QString plugin = d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString();
-        showed = true;
-        winSize = size();
-        Choqok::MediaManager::self()->uploadMedium(d->localUrl, plugin);
-    } else {
-        KDialog::slotButtonClicked(button);
+    if (d->ui.uploaderPlugin->currentIndex() == -1 ||
+            !QFile::exists(d->ui.imageUrl->url().toLocalFile()) ||
+            !QFile(d->ui.imageUrl->url().toLocalFile()).size()) {
+        return;
     }
+    if (d->progress) {
+        d->progress->deleteLater();
+    }
+    d->progress = new QProgressBar(this);
+    d->progress->setRange(0, 0);
+    d->progress->setFormat(i18n("Uploading..."));
+    d->ui.verticalLayout->addWidget(d->progress);
+    Choqok::BehaviorSettings::setLastUsedUploaderPlugin(d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString());
+    d->localUrl = d->ui.imageUrl->url();
+    QString plugin = d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString();
+    showed = true;
+    winSize = size();
+    Choqok::MediaManager::self()->uploadMedium(d->localUrl, plugin);
 }
 
 void Choqok::UI::UploadMediaDialog::currentPluginChanged(int index)
@@ -163,7 +173,7 @@ void Choqok::UI::UploadMediaDialog::slotConfigureClicked()
     KPluginInfo pluginInfo = d->availablePlugins.value(d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString());
     qCDebug(CHOQOK) << pluginInfo.name() << pluginInfo.kcmServices().count();
 
-    QPointer<KDialog> configDialog = new KDialog(this);
+    QPointer<QDialog> configDialog = new QDialog(this);
     configDialog->setWindowTitle(pluginInfo.name());
     // The number of KCModuleProxies in use determines whether to use a tabwidget
     QTabWidget *newTabWidget = 0;
@@ -212,14 +222,20 @@ void Choqok::UI::UploadMediaDialog::slotConfigureClicked()
 
     // it could happen that we had services to show, but none of them were real modules.
     if (d->moduleProxyList.count()) {
-        configDialog->setButtons(KDialog::Ok | KDialog::Cancel);
-
         QWidget *showWidget = new QWidget(configDialog);
         QVBoxLayout *layout = new QVBoxLayout;
         showWidget->setLayout(layout);
         layout->addWidget(mainWidget);
-        layout->insertSpacing(-1, KDialog::marginHint());
-        configDialog->setMainWidget(showWidget);
+        layout->insertSpacing(-1, QApplication::style()->pixelMetric(QStyle::PM_DialogButtonsSeparator));
+
+        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+        QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+        okButton->setDefault(true);
+        okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+        connect(buttonBox, SIGNAL(accepted()), configDialog, SLOT(accept()));
+        connect(buttonBox, SIGNAL(rejected()), configDialog, SLOT(reject()));
+        layout->addWidget(buttonBox);
+        showWidget->adjustSize();
 
 //         connect(&configDialog, SIGNAL(defaultClicked()), this, SLOT(slotDefaultClicked()));
 
