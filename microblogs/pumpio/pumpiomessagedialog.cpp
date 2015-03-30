@@ -22,6 +22,7 @@
 
 #include "pumpiomessagedialog.h"
 
+#include <QDialogButtonBox>
 #include <QFileDialog>
 #include <QPointer>
 #include <QPushButton>
@@ -42,14 +43,20 @@ public:
 
 PumpIOMessageDialog::PumpIOMessageDialog(Choqok::Account *theAccount, QWidget *parent,
         Qt::WindowFlags flags)
-    : KDialog(parent, flags)
+    : QDialog(parent, flags)
     , d(new Private)
 {
     d->account = theAccount;
 
     setupUi(this);
 
-    setMainWidget(widget);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    verticalLayout->addWidget(buttonBox);
 
     PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
@@ -76,7 +83,6 @@ PumpIOMessageDialog::PumpIOMessageDialog(Choqok::Account *theAccount, QWidget *p
 
     connect(btnReload, SIGNAL(clicked(bool)), this, SLOT(fetchFollowing()));
     connect(btnAttach, SIGNAL(clicked(bool)), this, SLOT(attachMedia()));
-    connect(this, SIGNAL(okClicked()), this, SLOT(sendPost()));
 }
 
 PumpIOMessageDialog::~PumpIOMessageDialog()
@@ -125,7 +131,7 @@ void PumpIOMessageDialog::slotFetchFollowing(Choqok::Account *theAccount)
     }
 }
 
-void PumpIOMessageDialog::sendPost()
+void PumpIOMessageDialog::accept()
 {
     qCDebug(CHOQOK);
     PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(d->account);

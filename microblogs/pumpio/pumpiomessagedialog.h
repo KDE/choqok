@@ -23,7 +23,7 @@
 #ifndef PUMPIOMESSAGEDIALOG_H
 #define PUMPIOMESSAGEDIALOG_H
 
-#include <KDialog>
+#include <QDialog>
 
 #include "ui_pumpiomessagedialog.h"
 
@@ -32,7 +32,7 @@ namespace Choqok
 class Account;
 }
 
-class PumpIOMessageDialog : public KDialog, Ui::PumpIOMessageDialog
+class PumpIOMessageDialog : public QDialog, Ui::PumpIOMessageDialog
 {
     Q_OBJECT
 
@@ -42,10 +42,10 @@ public:
     virtual ~PumpIOMessageDialog();
 
 protected Q_SLOTS:
+    virtual void accept();
     void attachMedia();
     void cancelAttach();
     void fetchFollowing();
-    void sendPost();
     void slotFetchFollowing(Choqok::Account *);
 
 private:
