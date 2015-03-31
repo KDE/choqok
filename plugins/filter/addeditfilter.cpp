@@ -33,12 +33,7 @@
 AddEditFilter::AddEditFilter(QWidget *parent, Filter *filter)
     : QDialog(parent), currentFilter(filter)
 {
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    setLayout(mainLayout);
-
-    QWidget *wd = new QWidget(this);
-    ui.setupUi(wd);
-    mainLayout->addWidget(wd);
+    ui.setupUi(this);
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
@@ -46,7 +41,7 @@ AddEditFilter::AddEditFilter(QWidget *parent, Filter *filter)
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-    mainLayout->addWidget(buttonBox);
+    ui.formLayout->addRow(buttonBox);
 
     connect(ui.filterAction, SIGNAL(currentIndexChanged(int)), this, SLOT(slotFilterActionChanged(int)));
 

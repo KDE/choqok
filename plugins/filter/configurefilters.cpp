@@ -35,13 +35,14 @@
 ConfigureFilters::ConfigureFilters(QWidget *parent):
     QDialog(parent)
 {
+    setObjectName("mFilteringCtl");
+
     QVBoxLayout *mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
 
-    QWidget *wd = new QWidget(this);
-    wd->setObjectName("mFilteringCtl");
-    ui.setupUi(wd);
-    mainLayout->addWidget(wd);
+    ui.setupUi(this);
+
+    mainLayout->addLayout(ui.horizontalLayout);
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);

@@ -62,8 +62,7 @@ UploadMediaDialog::UploadMediaDialog(QWidget *parent, const QString &url)
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(i18n("Upload Medium"));
 
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    setLayout(mainLayout);
+    d->ui.setupUi(this);
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
@@ -72,12 +71,7 @@ UploadMediaDialog::UploadMediaDialog(QWidget *parent, const QString &url)
     okButton->setText(i18n("Upload"));
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-
-    QWidget *wd = new QWidget;
-    mainLayout->addWidget(wd);
-    d->ui.setupUi(wd);
-
-    mainLayout->addWidget(buttonBox);
+    d->ui.verticalLayout->addWidget(buttonBox);
 
     adjustSize();
 
