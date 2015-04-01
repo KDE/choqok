@@ -54,7 +54,7 @@ public:
 };
 
 TwitterApiDMessageDialog::TwitterApiDMessageDialog(TwitterApiAccount *theAccount, QWidget *parent,
-        Qt::WFlags flags)
+        Qt::WindowFlags flags)
     : QDialog(parent, flags), d(new Private(theAccount))
 {
     setWindowTitle(i18n("Send Private Message"));

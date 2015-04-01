@@ -143,7 +143,7 @@ void TimelineWidget::setupUi()
     d->lblDesc = new QLabel(this);
     TimelineInfo *info = currentAccount()->microblog()->timelineInfo(d->timelineName);
     if (info) {
-        d->lblDesc->setText(Qt::escape(info->description));
+        d->lblDesc->setText(info->description.toHtmlEscaped());
     }
     d->lblDesc->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     d->lblDesc->setWordWrap(true);

@@ -273,7 +273,7 @@ void FlickrConfig::setAuthenticated(bool authenticated)
         ui.authLed->on();
         ui.authLabel->setText(i18n("Authorized as %1").arg(m_username));
         if (!m_fullname.isEmpty()) {
-            ui.authLabel->setText(ui.authLabel->text() + QString(" (%1)").arg(Qt::escape(m_fullname)));
+            ui.authLabel->setText(ui.authLabel->text() + QString(" (%1)").arg(m_fullname.toHtmlEscaped()));
         }
     } else {
         ui.authButton->setIcon(QIcon::fromTheme("object-locked"));

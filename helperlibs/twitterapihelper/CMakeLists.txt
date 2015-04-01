@@ -35,7 +35,6 @@ PUBLIC
     KF5::KIOWidgets
     KF5::I18n
     KF5::WidgetsAddons
-    KF5::KDELibs4Support
     ${QTOAUTH_LIBRARY}
     qca-qt5
     choqok

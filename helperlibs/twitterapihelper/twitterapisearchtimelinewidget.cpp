@@ -25,11 +25,13 @@
 
 #include <QCheckBox>
 #include <QHBoxLayout>
+#include <QIntValidator>
 #include <QLabel>
+#include <QLineEdit>
+#include <QPointer>
 #include <QPushButton>
 
 #include <KLocalizedString>
-#include <KRestrictedLine>
 #include <KSeparator>
 
 #include "account.h"
@@ -49,7 +51,7 @@ public:
     QPointer<QPushButton> close;
     QPointer<QPushButton> next;
     QPointer<QPushButton> previous;
-    QPointer<KRestrictedLine> pageNumber;
+    QPointer<QLineEdit> pageNumber;
     QPointer<QCheckBox> autoUpdate;
     uint currentPage;
     SearchInfo searchInfo;
@@ -110,8 +112,8 @@ void TwitterApiSearchTimelineWidget::addFooter()
         d->next->setMaximumSize(28, 28);
         d->next->setToolTip(i18n("Next"));
 
-        d->pageNumber = new KRestrictedLine(this);
-        d->pageNumber->setValidChars("1234567890");
+        d->pageNumber = new QLineEdit(this);
+        d->pageNumber->setValidator(new QIntValidator);
         d->pageNumber->setMaxLength(2);
         d->pageNumber->setMaximumWidth(40);
         d->pageNumber->setAlignment(Qt::AlignCenter);

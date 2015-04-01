@@ -255,8 +255,8 @@ void TwitterApiWhoisWidget::updateHtml()
         <i>%6</i><br/>\
         <font size=3>%7</font></td></tr></table>")
                             .arg(d->imgActions)
-                            .arg(Qt::escape(d->currentPost.author.realName))
-                            .arg(d->currentPost.author.userName).arg(Qt::escape(d->currentPost.author.location))
+                            .arg(d->currentPost.author.realName.toHtmlEscaped())
+                            .arg(d->currentPost.author.userName).arg(d->currentPost.author.location.toHtmlEscaped())
                             .arg(!d->timeZone.isEmpty() ? '(' + d->timeZone + ')' : QString())
                             .arg(d->currentPost.author.description)
                             .arg(url);

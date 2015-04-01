@@ -12,6 +12,14 @@ include(KDEFrameworkCompilerSettings)
 include(KDECMakeSettings)
 include(FeatureSummary)
 
+# TODO: move away from QString(char*)
+remove_definitions(-DQT_NO_CAST_FROM_ASCII)
+# TODO: Build without deprecated QUrl methods
+add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0)
+
+# QCA still uses slots/signals keywords
+remove_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS)
+
 find_package(Qt5 CONFIG REQUIRED
     Core
     Concurrent
@@ -33,7 +41,6 @@ find_package(KF5 REQUIRED
     Wallet
     WidgetsAddons
     XmlGui
-    KDELibs4Support
 )
 
 #option(QTINDICATE_DISABLE "Disable support for notifications via indicator")
