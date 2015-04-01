@@ -268,8 +268,7 @@ void TwitterApiMicroBlogWidget::slotContextMenu(QWidget *w, const QPoint &pt)
     if (sWidget->isClosable()) {
         ac = new QAction(QIcon::fromTheme("tab-close"), i18n("Close Timeline"), &menu);
         QAction *closeAll = new QAction(QIcon::fromTheme("tab-close"), i18n("Close All"), &menu);
-        connect(closeAll, SIGNAL(triggered(Qt::MouseButtons,Qt::KeyboardModifiers)),
-                this, SLOT(closeAllSearches()));
+        connect(closeAll, SIGNAL(triggered(bool)), this, SLOT(closeAllSearches()));
         menu.addAction(ac);
         menu.addAction(closeAll);
     }
