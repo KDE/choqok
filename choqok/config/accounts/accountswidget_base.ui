@@ -11,7 +11,16 @@
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>1</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>1</number>
+   </property>
+   <property name="bottomMargin">
     <number>1</number>
    </property>
    <property name="spacing">
@@ -23,7 +32,7 @@
       <number>6</number>
      </property>
      <item>
-      <widget class="KPushButton" name="btnAdd">
+      <widget class="QPushButton" name="btnAdd">
        <property name="toolTip">
         <string>Add a new account</string>
        </property>
@@ -33,7 +42,7 @@
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="btnEdit">
+      <widget class="QPushButton" name="btnEdit">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -46,7 +55,7 @@
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="btnRemove">
+      <widget class="QPushButton" name="btnRemove">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -72,7 +81,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="KPushButton" name="btnUp">
+      <widget class="QPushButton" name="btnUp">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -82,7 +91,7 @@
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="btnDown">
+      <widget class="QPushButton" name="btnDown">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -155,13 +164,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>accountsTable</tabstop>
   <tabstop>btnAdd</tabstop>

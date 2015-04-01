@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -23,11 +22,9 @@
 */
 #include "account.h"
 
-#include <KDebug>
-#include <KGlobal>
 #include <KSharedConfig>
-#include <KSharedPtr>
 
+#include "libchoqokdebug.h"
 #include "microblog.h"
 #include "passwordmanager.h"
 
@@ -37,10 +34,10 @@ namespace Choqok
 class Account::Private
 {
 public:
-    Private(Choqok::MicroBlog* parent, const QString& mAlias)
+    Private(Choqok::MicroBlog *parent, const QString &mAlias)
         : alias(mAlias), blog(parent)
     {
-        configGroup = new KConfigGroup(KGlobal::config(), QString::fromLatin1( "Account_%1" ).arg( alias ));
+        configGroup = new KConfigGroup(KSharedConfig::openConfig(), QString::fromLatin1("Account_%1").arg(alias));
         username = configGroup->readEntry("Username", QString());
         priority = configGroup->readEntry("Priority", (uint)0);
         readonly = configGroup->readEntry("ReadOnly", false);
@@ -61,15 +58,15 @@ public:
     uint postCharLimit;
 };
 
-Account::Account(Choqok::MicroBlog* parent, const QString& alias)
+Account::Account(Choqok::MicroBlog *parent, const QString &alias)
     : QObject(parent), d(new Private(parent, alias))
 {
-    kDebug();
+    qCDebug(CHOQOK);
 }
 
 Account::~Account()
 {
-    kDebug()<<alias();
+    qCDebug(CHOQOK) << alias();
 //     writeConfig();
     delete d->configGroup;
     delete d;
@@ -77,16 +74,17 @@ Account::~Account()
 
 void Account::writeConfig()
 {
-    d->configGroup->writeEntry( "Alias", d->alias );
-    d->configGroup->writeEntry( "Username", d->username );
-    d->configGroup->writeEntry( "Priority", d->priority );
-    d->configGroup->writeEntry( "ReadOnly", d->readonly );
-    d->configGroup->writeEntry( "Enable", d->enable );
-    d->configGroup->writeEntry( "ShowInQuickPost", d->showInQuickPost );
-    d->configGroup->writeEntry( "MicroBlog", microblog()->pluginName() );
-    d->configGroup->writeEntry( "PostCharLimit", d->postCharLimit );
-    if(!password().isEmpty())
-        PasswordManager::self()->writePassword( d->alias, password() );
+    d->configGroup->writeEntry("Alias", d->alias);
+    d->configGroup->writeEntry("Username", d->username);
+    d->configGroup->writeEntry("Priority", d->priority);
+    d->configGroup->writeEntry("ReadOnly", d->readonly);
+    d->configGroup->writeEntry("Enable", d->enable);
+    d->configGroup->writeEntry("ShowInQuickPost", d->showInQuickPost);
+    d->configGroup->writeEntry("MicroBlog", microblog()->pluginName());
+    d->configGroup->writeEntry("PostCharLimit", d->postCharLimit);
+    if (!password().isEmpty()) {
+        PasswordManager::self()->writePassword(d->alias, password());
+    }
     d->configGroup->sync();
     Q_EMIT modified(this);
 }
@@ -96,7 +94,7 @@ QString Account::username() const
     return d->username;
 }
 
-void Account::setUsername( const QString & name )
+void Account::setUsername(const QString &name)
 {
     d->username = name;
 }
@@ -106,7 +104,7 @@ QString Account::password() const
     return d->password;
 }
 
-void Account::setPassword( const QString & pass )
+void Account::setPassword(const QString &pass)
 {
     d->password = pass;
 }
@@ -116,12 +114,12 @@ QString Account::alias() const
     return d->alias;
 }
 
-void Account::setAlias( const QString & alias )
+void Account::setAlias(const QString &alias)
 {
     d->alias = alias;
     d->configGroup->deleteGroup();
     delete d->configGroup;
-    d->configGroup = new KConfigGroup(KGlobal::config(), QString::fromLatin1( "Account_%1" ).arg( d->alias ));
+    d->configGroup = new KConfigGroup(KSharedConfig::openConfig(), QString::fromLatin1("Account_%1").arg(d->alias));
     writeConfig();
 }
 
@@ -139,7 +137,7 @@ MicroBlog *Account::microblog() const
     return d->blog;
 }
 
-void Account::setPriority( uint priority )
+void Account::setPriority(uint priority)
 {
     d->priority = priority;
 //     d->configGroup->writeEntry( "Priority", d->priority );
@@ -180,7 +178,7 @@ void Account::setShowInQuickPost(bool show)
     d->showInQuickPost = show;
 }
 
-KConfigGroup* Account::configGroup() const
+KConfigGroup *Account::configGroup() const
 {
     return d->configGroup;
 }
@@ -192,4 +190,3 @@ QStringList Account::timelineNames() const
 
 }
 
-#include "account.moc"

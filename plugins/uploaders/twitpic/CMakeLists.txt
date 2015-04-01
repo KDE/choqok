@@ -1,42 +1,50 @@
-
 include_directories(
-${CHOQOK_INCLUDES}
+    ${CHOQOK_INCLUDES}
 )
 
-add_subdirectory(icons)
-########### next target ###############
+set(choqok_twitpic_PART_SRCS
+    twitpic.cpp
+)
 
-set( choqok_twitpic_PART_SRCS
-twitpic.cpp)
+# ki18n_wrap_ui(choqok_twitpic_PART_SRCS twitpicuploadimage_base.ui)
 
-# kde4_add_ui_files(choqok_twitpic_PART_SRCS twitpicuploadimage_base.ui)
+kconfig_add_kcfg_files(choqok_twitpic_PART_SRCS twitpicsettings.kcfgc)
 
-kde4_add_kcfg_files(choqok_twitpic_PART_SRCS twitpicsettings.kcfgc )
+add_library(choqok_twitpic MODULE ${choqok_twitpic_PART_SRCS})
 
-kde4_add_plugin(choqok_twitpic ${choqok_twitpic_PART_SRCS})
+kcoreaddons_desktop_to_json(choqok_twitpic choqok_twitpic.desktop)
 
-target_link_libraries(choqok_twitpic ${KDE4_KIO_LIBS} ${QTOAUTH_LIBRARY} ${QJSON_LIBRARY} choqok twitterapihelper)
+target_link_libraries(choqok_twitpic
+PUBLIC
+    Qt5::Core
+    KF5::CoreAddons
+    KF5::I18n
+    KF5::KIOCore
+    ${QTOAUTH_LIBRARY}
+    choqok
+    twitterapihelper
+)
 
 install(TARGETS choqok_twitpic DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES choqok_twitpic.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
-########### next target ###############
-
-set( kcm_choqok_twitpic_PART_SRCS
+set(kcm_choqok_twitpic_PART_SRCS
 twitpicconfig.cpp )
 
-kde4_add_ui_files(kcm_choqok_twitpic_PART_SRCS twitpicprefs.ui )
+ki18n_wrap_ui(kcm_choqok_twitpic_PART_SRCS twitpicprefs.ui)
 
-kde4_add_kcfg_files(kcm_choqok_twitpic_PART_SRCS twitpicsettings.kcfgc )
+kconfig_add_kcfg_files(kcm_choqok_twitpic_PART_SRCS twitpicsettings.kcfgc )
 
-kde4_add_plugin(kcm_choqok_twitpic ${kcm_choqok_twitpic_PART_SRCS})
+add_library(kcm_choqok_twitpic MODULE ${kcm_choqok_twitpic_PART_SRCS})
 
-target_link_libraries(kcm_choqok_twitpic ${KDE4_KDEUI_LIBS} choqok)
+kcoreaddons_desktop_to_json(kcm_choqok_twitpic choqok_twitpic_config.desktop)
+
+target_link_libraries(kcm_choqok_twitpic choqok)
 
 install(TARGETS kcm_choqok_twitpic DESTINATION ${PLUGIN_INSTALL_DIR})
 
-########### next target ###############
-
-install( FILES twitpicsettings.kcfg  DESTINATION ${KCFG_INSTALL_DIR})
-install( FILES choqok_twitpic_config.desktop choqok_twitpic.desktop
-         DESTINATION ${SERVICES_INSTALL_DIR})
+install(FILES twitpicsettings.kcfg  DESTINATION ${KCFG_INSTALL_DIR})
+install(FILES choqok_twitpic_config.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 # install( FILES twitpicui.rc  DESTINATION  ${DATA_INSTALL_DIR}/choqok_twitpic )
+
+add_subdirectory(icons)

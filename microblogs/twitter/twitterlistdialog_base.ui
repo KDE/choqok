@@ -26,7 +26,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="KLineEdit" name="listname">
+  <widget class="QLineEdit" name="listname">
    <property name="geometry">
     <rect>
      <x>90</x>
@@ -52,7 +52,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="KLineEdit" name="username">
+  <widget class="QLineEdit" name="username">
    <property name="geometry">
     <rect>
      <x>88</x>
@@ -62,7 +62,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="KPushButton" name="loadUserLists">
+  <widget class="QPushButton" name="loadUserLists">
    <property name="geometry">
     <rect>
      <x>204</x>
@@ -79,18 +79,6 @@
    </property>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>klineedit.h</header>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>username</tabstop>
   <tabstop>loadUserLists</tabstop>

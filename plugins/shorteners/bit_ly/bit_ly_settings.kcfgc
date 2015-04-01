@@ -7,4 +7,4 @@ Singleton=true
 Mutators=true
 MemberVariables=private
 GlobalEnums=false
-IncludeFiles=klocale.h
+IncludeFiles=klocalizedstring.h

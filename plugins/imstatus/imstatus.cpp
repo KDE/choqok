@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,11 +23,7 @@
 
 #include "imstatus.h"
 
-#include <KAction>
-#include <KActionCollection>
-#include <KAboutData>
-#include <KGenericFactory>
-#include <KMessageBox>
+#include <KPluginFactory>
 
 #include "choqokuiglobal.h"
 #include "quickpost.h"
@@ -36,19 +31,20 @@
 #include "imqdbus.h"
 #include "imstatussettings.h"
 
-K_PLUGIN_FACTORY ( MyPluginFactory, registerPlugin < IMStatus > (); )
-K_EXPORT_PLUGIN ( MyPluginFactory ( "choqok_imstatus" ) )
+K_PLUGIN_FACTORY_WITH_JSON(IMStatusFactory, "choqok_imstatus.json",
+                           registerPlugin < IMStatus > ();)
 
-class IMStatusPrivate {
+class IMStatusPrivate
+{
 public:
     IMStatusPrivate() {}
     IMQDBus *im;
 };
 
-IMStatus::IMStatus ( QObject* parent, const QList<QVariant>& )
-        : Choqok::Plugin ( MyPluginFactory::componentData(), parent ), d(new IMStatusPrivate())
+IMStatus::IMStatus(QObject *parent, const QList<QVariant> &)
+    : Choqok::Plugin("choqok_imstatus", parent), d(new IMStatusPrivate())
 {
-    QTimer::singleShot ( 500, this, SLOT ( update() ) );
+    QTimer::singleShot(500, this, SLOT(update()));
     d->im = new IMQDBus(this);
 }
 
@@ -59,27 +55,33 @@ IMStatus::~IMStatus()
 
 void IMStatus::update()
 {
-    if ( Choqok::UI::Global::quickPostWidget() != 0 ) {
-        connect ( Choqok::UI::Global::quickPostWidget(), SIGNAL ( newPostSubmitted ( Choqok::JobResult, Choqok::Post* ) ),
-                  this, SLOT ( slotIMStatus ( Choqok::JobResult, Choqok::Post* ) ) );
+    if (Choqok::UI::Global::quickPostWidget() != 0) {
+        connect(Choqok::UI::Global::quickPostWidget(), SIGNAL(newPostSubmitted(Choqok::JobResult,Choqok::Post*)),
+                this, SLOT(slotIMStatus(Choqok::JobResult,Choqok::Post*)));
     } else {
-        QTimer::singleShot ( 500, this, SLOT ( update() ) );
+        QTimer::singleShot(500, this, SLOT(update()));
     }
 }
 
-void IMStatus::slotIMStatus ( Choqok::JobResult res, Choqok::Post* newPost )
+void IMStatus::slotIMStatus(Choqok::JobResult res, Choqok::Post *newPost)
 {
-    if ( res == Choqok::Success ) {
-        IMStatusSettings::self()->readConfig();
+    if (res == Choqok::Success) {
+        IMStatusSettings::self()->load();
         QString statusMessage = IMStatusSettings::templtate();
-        statusMessage.replace ( QString ( "%status%" ), newPost->content, Qt::CaseInsensitive );
-        statusMessage.replace ( QString ( "%username%" ), newPost->author.userName, Qt::CaseInsensitive );
-        statusMessage.replace ( QString ( "%fullname%" ), newPost->author.realName, Qt::CaseInsensitive );
-        statusMessage.replace ( QString ( "%time%" ), newPost->creationDateTime.toString ( "hh:mm:ss" ), Qt::CaseInsensitive );
-        statusMessage.replace ( QString ( "%url%" ), newPost->link, Qt::CaseInsensitive );
-        statusMessage.replace ( QString ( "%client%" ), QString ( "Choqok" ), Qt::CaseInsensitive );
-        if ( !IMStatusSettings::repeat() && !newPost->repeatedFromUsername.isEmpty() ) return;
-        if ( !IMStatusSettings::reply() && !newPost->replyToUserName.isEmpty() ) return;
+        statusMessage.replace(QString("%status%"), newPost->content, Qt::CaseInsensitive);
+        statusMessage.replace(QString("%username%"), newPost->author.userName, Qt::CaseInsensitive);
+        statusMessage.replace(QString("%fullname%"), newPost->author.realName, Qt::CaseInsensitive);
+        statusMessage.replace(QString("%time%"), newPost->creationDateTime.toString("hh:mm:ss"), Qt::CaseInsensitive);
+        statusMessage.replace(QString("%url%"), newPost->link, Qt::CaseInsensitive);
+        statusMessage.replace(QString("%client%"), QString("Choqok"), Qt::CaseInsensitive);
+        if (!IMStatusSettings::repeat() && !newPost->repeatedFromUsername.isEmpty()) {
+            return;
+        }
+        if (!IMStatusSettings::reply() && !newPost->replyToUserName.isEmpty()) {
+            return;
+        }
         d->im->updateStatusMessage(IMStatusSettings::imclient(), statusMessage);
     }
 }
+
+#include "imstatus.moc"

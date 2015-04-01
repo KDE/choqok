@@ -1,43 +1,69 @@
 project(choqok)
-cmake_minimum_required(VERSION 2.6)
-find_package(KDE4 REQUIRED 4.4)
-include (KDE4Defaults)
-add_definitions(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
-set(CHOQOK_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-set(CHOQOK_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
-set(CMAKE_MODULE_PATH ${CHOQOK_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
+cmake_minimum_required(VERSION 2.8.12)
 
-option(QTINDICATE_DISABLE "Disable support for notifications via indicator")
+find_package(ECM REQUIRED NO_MODULE)
 
-find_package(QJson REQUIRED)
-find_package(QCA2 REQUIRED)
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
+
+include(KDEInstallDirs)
+include(ECMInstallIcons)
+include(KDEFrameworkCompilerSettings)
+include(KDECMakeSettings)
+include(FeatureSummary)
+
+# TODO: move away from QString(char*)
+remove_definitions(-DQT_NO_CAST_FROM_ASCII)
+# TODO: Build without deprecated QUrl methods
+add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0)
+
+# QCA still uses slots/signals keywords
+remove_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS)
+
+find_package(Qt5 CONFIG REQUIRED
+    Core
+    Concurrent
+    DBus
+    Widgets
+)
+find_package(KF5 REQUIRED
+    ConfigWidgets
+    CoreAddons
+    I18n
+    Emoticons
+    GlobalAccel
+    GuiAddons
+    KCMUtils
+    Notifications
+    NotifyConfig
+    Sonnet
+    TextWidgets
+    Wallet
+    WidgetsAddons
+    XmlGui
+)
+
+#option(QTINDICATE_DISABLE "Disable support for notifications via indicator")
+
+find_package(Qca-qt5 REQUIRED)
 find_package(QtOAuth REQUIRED)
 
-if(NOT QTINDICATE_DISABLE)
-    find_package(QtIndicate)
-    if(QtIndicate_FOUND)
-        set(QTINDICATE_BUILD TRUE)
-	endif(QtIndicate_FOUND)
-endif(NOT QTINDICATE_DISABLE)
+#if(NOT QTINDICATE_DISABLE)
+#    find_package(QtIndicate)
+#    if(QtIndicate_FOUND)
+#        set(QTINDICATE_BUILD TRUE)
+#	endif(QtIndicate_FOUND)
+#endif(NOT QTINDICATE_DISABLE)
 
-if(QTINDICATE_BUILD)
-    message(STATUS "Found libindicate-qt: Will support notifications via indicator")
-else(QTINDICATE_BUILD)
-    message(STATUS "Optional dependency libindicate-qt not found: Won't support notifications via indicator")
-endif(QTINDICATE_BUILD)
+#if(QTINDICATE_BUILD)
+#    message(STATUS "Found libindicate-qt: Will support notifications via indicator")
+#else(QTINDICATE_BUILD)
+#    message(STATUS "Optional dependency libindicate-qt not found: Won't support notifications via indicator")
+#endif(QTINDICATE_BUILD)
 
 set(CHOQOK_INCLUDES
-${KDE4_INCLUDES}
-${QT_INCLUDES}
-${QJSON_INCLUDE_DIR}
-${QCA2_INCLUDE_DIR}
-${QTOAUTH_INCLUDE_DIR}
-${CHOQOK_SOURCE_DIR}/helperlibs
-${CHOQOK_BINARY_DIR}/helperlibs
-${CHOQOK_SOURCE_DIR}/libchoqok/
-${CHOQOK_BINARY_DIR}/libchoqok/
-${CHOQOK_SOURCE_DIR}/libchoqok/ui/
+${CMAKE_CURRENT_SOURCE_DIR}/libchoqok/
+${CMAKE_CURRENT_SOURCE_DIR}/libchoqok/ui
 )
 
 add_subdirectory( libchoqok )
@@ -49,5 +75,7 @@ add_subdirectory( microblogs )
 add_subdirectory( images )
 add_subdirectory( cmake )
 
-include(MacroOptionalAddSubdirectory)
-macro_optional_add_subdirectory( doc )
+include(ECMOptionalAddSubdirectory)
+ecm_optional_add_subdirectory( doc )
+
+feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

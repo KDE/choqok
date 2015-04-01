@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -25,20 +24,19 @@
 #ifndef EDITACCOUNTDIALOG_H
 #define EDITACCOUNTDIALOG_H
 
-#include <KDialog>
+#include <QDialog>
 
 class ChoqokEditAccountWidget;
 
-class EditAccountDialog : public KDialog
+class EditAccountDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit EditAccountDialog( ChoqokEditAccountWidget *editWidget, QWidget* parent = 0, Qt::WFlags flags = 0);
+    explicit EditAccountDialog(ChoqokEditAccountWidget *editWidget, QWidget *parent = 0, Qt::WFlags flags = 0);
     ~EditAccountDialog();
 
-protected:
-    virtual void closeEvent(QCloseEvent* e);
-    virtual void slotButtonClicked(int button);
+protected Q_SLOTS:
+    virtual void accept();
 
 private:
     ChoqokEditAccountWidget *widget;

@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,45 +23,48 @@
 
 #include "twitterapisearchdialog.h"
 
-#include <QGridLayout>
+#include <QComboBox>
+#include <QDialogButtonBox>
 #include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QVBoxLayout>
 
-#include <KComboBox>
-#include <KDebug>
-#include <KLineEdit>
 #include <KLocalizedString>
 
 #include "twitterapiaccount.h"
+#include "twitterapidebug.h"
 #include "twitterapimicroblog.h"
 #include "twitterapisearch.h"
 
 class TwitterApiSearchDialog::Private
 {
 public:
-    Private(TwitterApiAccount* theAccount)
-        :account(theAccount)
+    Private(TwitterApiAccount *theAccount)
+        : account(theAccount)
     {
-        kDebug();
-        mBlog = qobject_cast<TwitterApiMicroBlog*>(account->microblog());
-        if(!mBlog)
-            kError()<<"microblog is not a TwitterApiMicroBlog";
+        qCDebug(CHOQOK);
+        mBlog = qobject_cast<TwitterApiMicroBlog *>(account->microblog());
+        if (!mBlog) {
+            qCCritical(CHOQOK) << "microblog is not a TwitterApiMicroBlog";
+        }
         Q_ASSERT(mBlog);
     }
-    KComboBox *searchTypes;
-    KLineEdit *searchQuery;
-    TwitterApiAccount* account;
+    QComboBox *searchTypes;
+    QLineEdit *searchQuery;
+    TwitterApiAccount *account;
     TwitterApiMicroBlog *mBlog;
 };
 
-TwitterApiSearchDialog::TwitterApiSearchDialog(TwitterApiAccount* theAccount, QWidget* parent)
-: KDialog(parent), d(new Private(theAccount))
+TwitterApiSearchDialog::TwitterApiSearchDialog(TwitterApiAccount *theAccount, QWidget *parent)
+    : QDialog(parent), d(new Private(theAccount))
 {
-    kDebug();
+    qCDebug(CHOQOK);
     setWindowTitle(i18nc("@title:window", "Search"));
     setAttribute(Qt::WA_DeleteOnClose);
     createUi();
     d->searchQuery->setFocus();
-    connect(d->searchTypes, SIGNAL(currentIndexChanged(int)), SLOT(slotSearchTypeChanged(int)) );
+    connect(d->searchTypes, SIGNAL(currentIndexChanged(int)), SLOT(slotSearchTypeChanged(int)));
 }
 
 TwitterApiSearchDialog::~TwitterApiSearchDialog()
@@ -72,13 +74,16 @@ TwitterApiSearchDialog::~TwitterApiSearchDialog()
 
 void TwitterApiSearchDialog::createUi()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QWidget *wd = new QWidget(this);
-    setMainWidget(wd);
-    QVBoxLayout *layout = new QVBoxLayout(wd);
-    d->searchTypes = new KComboBox(wd);
+
+    QVBoxLayout *layout = new QVBoxLayout;
+    setLayout(layout);
+    layout->addWidget(wd);
+
+    d->searchTypes = new QComboBox(wd);
     fillSearchTypes();
-    kDebug();
+    qCDebug(CHOQOK);
     layout->addWidget(d->searchTypes);
 
     QHBoxLayout *queryLayout = new QHBoxLayout;
@@ -87,36 +92,41 @@ void TwitterApiSearchDialog::createUi()
     lblType->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     queryLayout->addWidget(lblType);
 
-    d->searchQuery = new KLineEdit(this);
+    d->searchQuery = new QLineEdit(this);
     queryLayout->addWidget(d->searchQuery);
 
-    setButtonText( Ok, i18nc("@action:button", "Search") );
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    okButton->setText(i18nc("@action:button", "Search"));
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    layout->addWidget(buttonBox);
+
+    adjustSize();
 }
 
 void TwitterApiSearchDialog::fillSearchTypes()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QMap<int, QPair<QString, bool> > searchTypes = d->mBlog->searchBackend()->getSearchTypes();
     int count = searchTypes.count();
-    for(int i = 0; i < count; ++i){
+    for (int i = 0; i < count; ++i) {
         d->searchTypes->insertItem(i, searchTypes[i].first);
     }
 }
 
-void TwitterApiSearchDialog::slotButtonClicked(int button)
+void TwitterApiSearchDialog::accept()
 {
-    if(button == Ok) {
-        bool isB = d->mBlog->searchBackend()->getSearchTypes()[d->searchTypes->currentIndex()].second;
-        SearchInfo info(d->account, d->searchQuery->text(), d->searchTypes->currentIndex(), isB);
-        d->mBlog->searchBackend()->requestSearchResults(info);
-        accept();
-    } else
-        KDialog::slotButtonClicked(button);
+    bool isB = d->mBlog->searchBackend()->getSearchTypes()[d->searchTypes->currentIndex()].second;
+    SearchInfo info(d->account, d->searchQuery->text(), d->searchTypes->currentIndex(), isB);
+    d->mBlog->searchBackend()->requestSearchResults(info);
+    QDialog::accept();
 }
 
-void TwitterApiSearchDialog::slotSearchTypeChanged(int )
+void TwitterApiSearchDialog::slotSearchTypeChanged(int)
 {
     d->searchQuery->setFocus();
 }
 
-#include "twitterapisearchdialog.moc"

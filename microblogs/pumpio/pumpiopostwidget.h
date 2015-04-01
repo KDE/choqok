@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -30,38 +29,38 @@ class PumpIOPostWidget : public Choqok::UI::PostWidget
 {
     Q_OBJECT
 public:
-    explicit PumpIOPostWidget(Choqok::Account* account, Choqok::Post* post, QWidget* parent = 0);
+    explicit PumpIOPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
     virtual ~PumpIOPostWidget();
 
-    virtual void checkAnchor(const QUrl& url);
+    virtual void checkAnchor(const QUrl &url);
 
     virtual QString generateSign();
 
     virtual void initUi();
 
 protected Q_SLOTS:
-    virtual void slotPostError(Choqok::Account* theAccount, Choqok::Post* post,
-                               Choqok::MicroBlog::ErrorType error, const QString& errorMessage);
+    virtual void slotPostError(Choqok::Account *theAccount, Choqok::Post *post,
+                               Choqok::MicroBlog::ErrorType error, const QString &errorMessage);
 
     virtual void slotResendPost();
 
     void slotReplyTo();
 
-    void slotToggleFavorite(Choqok::Account*, Choqok::Post*);
+    void slotToggleFavorite(Choqok::Account *, Choqok::Post *);
 
     void toggleFavorite();
 
 protected:
     virtual bool isResendAvailable();
 
-    static const KIcon unFavIcon;
+    static const QIcon unFavIcon;
 
 private:
     void updateFavStat();
     bool isReplyAvailable();
 
     class Private;
-    Private * const d;
+    Private *const d;
 
 };
 

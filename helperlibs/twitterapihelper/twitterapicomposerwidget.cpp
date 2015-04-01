@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -27,38 +26,38 @@
 #include <QCompleter>
 #include <QStringListModel>
 
-#include <KDebug>
-
 #include "choqokbehaviorsettings.h"
 #include "choqokuiglobal.h"
 #include "postwidget.h"
+
 #include "twitterapiaccount.h"
+#include "twitterapidebug.h"
 #include "twitterapitextedit.h"
 
 class TwitterApiComposerWidget::Private
 {
 public:
     Private()
-    :model(0)
+        : model(0)
     {}
     QStringListModel *model;
 };
 
-TwitterApiComposerWidget::TwitterApiComposerWidget(Choqok::Account* account, QWidget* parent)
-: Choqok::UI::ComposerWidget(account, parent), d(new Private)
+TwitterApiComposerWidget::TwitterApiComposerWidget(Choqok::Account *account, QWidget *parent)
+    : Choqok::UI::ComposerWidget(account, parent), d(new Private)
 {
-    kDebug();
-    d->model = new QStringListModel(qobject_cast<TwitterApiAccount*>(account)->friendsList(), this);
+    qCDebug(CHOQOK);
+    d->model = new QStringListModel(qobject_cast<TwitterApiAccount *>(account)->friendsList(), this);
 //     d->index = new QModelIndex(d->model->rowCount(), 0, 0, d->model);
-//     kDebug()<<d->index;
+//     qCDebug(CHOQOK)<<d->index;
     TwitterApiTextEdit *edit = new TwitterApiTextEdit(account, this);
     QCompleter *completer = new QCompleter(d->model, this);
     completer->setCaseSensitivity(Qt::CaseInsensitive);
     edit->setCompleter(completer);
     setEditor(edit);
-    connect( Choqok::UI::Global::SessionManager::self(),
-             SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
-             SLOT(slotNewPostReady(Choqok::UI::PostWidget*,Choqok::Account*)) );
+    connect(Choqok::UI::Global::SessionManager::self(),
+            SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
+            SLOT(slotNewPostReady(Choqok::UI::PostWidget*,Choqok::Account*)));
 }
 
 TwitterApiComposerWidget::~TwitterApiComposerWidget()
@@ -66,15 +65,15 @@ TwitterApiComposerWidget::~TwitterApiComposerWidget()
     delete d;
 }
 
-void TwitterApiComposerWidget::slotNewPostReady(Choqok::UI::PostWidget* widget, Choqok::Account* theAccount)
+void TwitterApiComposerWidget::slotNewPostReady(Choqok::UI::PostWidget *widget, Choqok::Account *theAccount)
 {
-    if(theAccount == currentAccount()){
+    if (theAccount == currentAccount()) {
         int row = d->model->rowCount();
         d->model->insertRow(row);
         QString name = widget->currentPost()->author.userName;
-        if( !name.isEmpty() && !d->model->stringList().contains(name) )
+        if (!name.isEmpty() && !d->model->stringList().contains(name)) {
             d->model->setData(d->model->index(row), name);
+        }
     }
 }
 
-#include "twitterapicomposerwidget.moc"

@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -25,25 +24,27 @@
 #ifndef TEXTBROWSER_H
 #define TEXTBROWSER_H
 
-#include <KTextBrowser>
+#include <QTextBrowser>
 
 #include "choqok_export.h"
 
-class KAction;
-namespace Choqok {
-
-namespace UI {
-
-class CHOQOK_EXPORT TextBrowser : public KTextBrowser
+class QAction;
+namespace Choqok
 {
-Q_OBJECT
+
+namespace UI
+{
+
+class CHOQOK_EXPORT TextBrowser : public QTextBrowser
+{
+    Q_OBJECT
 public:
-    TextBrowser(QWidget* parent = 0);
+    TextBrowser(QWidget *parent = 0);
     virtual ~TextBrowser();
-    static void addAction( KAction *action);
+    static void addAction(QAction *action);
 
 Q_SIGNALS:
-    void clicked(QMouseEvent* ev);
+    void clicked(QMouseEvent *ev);
 
 protected Q_SLOTS:
     void slotCopyLink();
@@ -54,15 +55,15 @@ protected Q_SLOTS:
     void slotCopyPostContent();
 
 protected:
-    virtual void wheelEvent(QWheelEvent* event);
-    virtual void mousePressEvent(QMouseEvent* ev);
-    virtual void mouseMoveEvent(QMouseEvent* ev);
-    virtual void resizeEvent(QResizeEvent* e);
-    virtual void contextMenuEvent(QContextMenuEvent* event);
+    virtual void wheelEvent(QWheelEvent *event);
+    virtual void mousePressEvent(QMouseEvent *ev);
+    virtual void mouseMoveEvent(QMouseEvent *ev);
+    virtual void resizeEvent(QResizeEvent *e);
+    virtual void contextMenuEvent(QContextMenuEvent *event);
 
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 }

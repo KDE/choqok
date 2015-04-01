@@ -1,29 +1,27 @@
-
-include_directories(
-${CHOQOK_INCLUDES}
+set(kcm_choqok_accountsconfig_PART_SRCS
+    accountsdebug.cpp
+    accountswidget.cpp
+    addaccountdialog.cpp
+    editaccountdialog.cpp
 )
 
-# link_directories(  )
+ki18n_wrap_ui(kcm_choqok_accountsconfig_PART_SRCS accountswidget_base.ui)
 
-########### next target ###############
+add_library(kcm_choqok_accountsconfig MODULE ${kcm_choqok_accountsconfig_PART_SRCS})
 
-set(kcm_choqok_accountsconfig_PART_SRCS
-accountswidget.cpp
-addaccountdialog.cpp
-editaccountdialog.cpp )
+kcoreaddons_desktop_to_json(kcm_choqok_accountsconfig choqok_accountsconfig.desktop)
 
+target_link_libraries(kcm_choqok_accountsconfig
+PUBLIC
+    Qt5::Core
+    Qt5::Widgets
+    KF5::CoreAddons
+    KF5::ConfigWidgets
+    KF5::I18n
+    KF5::Service
+    KF5::WidgetsAddons
+    choqok
+)
 
-kde4_add_ui_files(kcm_choqok_accountsconfig_PART_SRCS accountswidget_base.ui )
-
-kde4_add_plugin(kcm_choqok_accountsconfig ${kcm_choqok_accountsconfig_PART_SRCS})
-
-
-target_link_libraries(kcm_choqok_accountsconfig ${KDE4_KDEUI_LIBS} ${KDE4_KUTILS_LIBS} choqok)
-
-install(TARGETS kcm_choqok_accountsconfig  DESTINATION ${PLUGIN_INSTALL_DIR})
-
-
-########### install files ###############
-
-install( FILES choqok_accountsconfig.desktop  DESTINATION ${SERVICES_INSTALL_DIR})
-
+install(TARGETS kcm_choqok_accountsconfig DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES choqok_accountsconfig.desktop DESTINATION ${SERVICES_INSTALL_DIR})

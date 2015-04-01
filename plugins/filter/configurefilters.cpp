@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,54 +23,65 @@
 
 #include "configurefilters.h"
 
-#include <QVBoxLayout>
+#include <QDialogButtonBox>
+#include <QPointer>
+#include <QPushButton>
 
-#include <KDebug>
-#include <KLocale>
+#include <KLocalizedString>
 
 #include "addeditfilter.h"
-#include "filter.h"
 #include "filtersettings.h"
 
-ConfigureFilters::ConfigureFilters(QWidget* parent):
-        KDialog(parent)
+ConfigureFilters::ConfigureFilters(QWidget *parent):
+    QDialog(parent)
 {
-    QWidget *wd = new QWidget(this);
-    wd->setObjectName("mFilteringCtl");
-    ui.setupUi(wd);
-    setMainWidget(wd);
+    setObjectName("mFilteringCtl");
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+
+    ui.setupUi(this);
+
+    mainLayout->addLayout(ui.horizontalLayout);
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    mainLayout->addWidget(buttonBox);
+
     resize(500, 300);
 
     setWindowTitle(i18n("Configure Filters"));
 
-    ui.btnAdd->setIcon(KIcon("list-add"));
-    ui.btnEdit->setIcon(KIcon("document-edit"));
-    ui.btnRemove->setIcon(KIcon("list-remove"));
-    connect( ui.btnAdd, SIGNAL(clicked()), SLOT(slotAddFilter()) );
-    connect( ui.btnEdit, SIGNAL(clicked()), SLOT(slotEditFilter()));
-    connect( ui.btnRemove, SIGNAL(clicked()), SLOT(slotRemoveFilter()));
-    connect( ui.cfg_hideRepliesNotRelatedToMe, SIGNAL(toggled(bool)),
-             this, SLOT(slotHideRepliesNotRelatedToMeToggled(bool)));
+    ui.btnAdd->setIcon(QIcon::fromTheme("list-add"));
+    ui.btnEdit->setIcon(QIcon::fromTheme("document-edit"));
+    ui.btnRemove->setIcon(QIcon::fromTheme("list-remove"));
+    connect(ui.btnAdd, SIGNAL(clicked()), SLOT(slotAddFilter()));
+    connect(ui.btnEdit, SIGNAL(clicked()), SLOT(slotEditFilter()));
+    connect(ui.btnRemove, SIGNAL(clicked()), SLOT(slotRemoveFilter()));
+    connect(ui.cfg_hideRepliesNotRelatedToMe, SIGNAL(toggled(bool)),
+            this, SLOT(slotHideRepliesNotRelatedToMeToggled(bool)));
     reloadFiltersTable();
 }
 
 ConfigureFilters::~ConfigureFilters()
-{}
-
-void ConfigureFilters::slotButtonClicked(int button)
 {
-    if(button == Ok){
-        saveFiltersTable();
-        accept();
-    } else
-        KDialog::slotButtonClicked(button);
+}
+
+void ConfigureFilters::accept()
+{
+    saveFiltersTable();
+    QDialog::accept();
 }
 
 void ConfigureFilters::reloadFiltersTable()
 {
     ui.filters->clearContents();
-    QList<Filter*> filters = FilterSettings::self()->filters();
-    kDebug()<<filters.count();
+    QList<Filter *> filters = FilterSettings::self()->filters();
+    //qDebug() << filters.count();
     Q_FOREACH (Filter *filter, filters) {
         addNewFilter(filter);
     }
@@ -81,9 +91,9 @@ void ConfigureFilters::reloadFiltersTable()
 
 void ConfigureFilters::saveFiltersTable()
 {
-    QList<Filter*> list;
+    QList<Filter *> list;
     int count = ui.filters->rowCount();
-    for(int i=0; i<count; ++i){
+    for (int i = 0; i < count; ++i) {
         Filter::FilterField field = (Filter::FilterField) ui.filters->item(i, 0)->data(32).toInt();
         Filter::FilterType type = (Filter::FilterType) ui.filters->item(i, 1)->data(32).toInt();
         Filter::FilterAction action = (Filter::FilterAction) ui.filters->item(i, 3)->data(32).toInt();
@@ -107,7 +117,7 @@ void ConfigureFilters::slotAddFilter()
 
 void ConfigureFilters::slotEditFilter()
 {
-    if(ui.filters->selectedItems().count()>0){
+    if (ui.filters->selectedItems().count() > 0) {
         int row = ui.filters->currentRow();
         Filter::FilterField field = (Filter::FilterField) ui.filters->item(row, 0)->data(32).toInt();
         Filter::FilterType type = (Filter::FilterType) ui.filters->item(row, 1)->data(32).toInt();
@@ -123,13 +133,13 @@ void ConfigureFilters::slotEditFilter()
 
 void ConfigureFilters::slotRemoveFilter()
 {
-    if(ui.filters->selectedItems().count()>0){
+    if (ui.filters->selectedItems().count() > 0) {
         int row = ui.filters->currentRow();
         ui.filters->removeRow(row);
     }
 }
 
-void ConfigureFilters::addNewFilter(Filter* filter)
+void ConfigureFilters::addNewFilter(Filter *filter)
 {
     int row = ui.filters->rowCount();
     ui.filters->insertRow(row);
@@ -147,7 +157,7 @@ void ConfigureFilters::addNewFilter(Filter* filter)
     ui.filters->setItem(row, 3, item4);
 }
 
-void ConfigureFilters::slotUpdateFilter(Filter* filter)
+void ConfigureFilters::slotUpdateFilter(Filter *filter)
 {
     int row = ui.filters->currentRow();
     ui.filters->item(row, 0)->setText(FilterSettings::self()->filterFieldName(filter->filterField()));
@@ -165,7 +175,7 @@ void ConfigureFilters::slotUpdateFilter(Filter* filter)
 
 void ConfigureFilters::slotHideRepliesNotRelatedToMeToggled(bool enabled)
 {
-    if(enabled){
+    if (enabled) {
         ui.cfg_hideNoneFriendsReplies->setChecked(false);
         ui.cfg_hideNoneFriendsReplies->setEnabled(false);
     } else {
@@ -174,5 +184,3 @@ void ConfigureFilters::slotHideRepliesNotRelatedToMeToggled(bool enabled)
     }
 }
 
-
-#include "configurefilters.moc"

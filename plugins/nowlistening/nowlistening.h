@@ -12,7 +12,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -38,7 +37,7 @@ class NowListening : public Choqok::Plugin
 {
     Q_OBJECT
 public:
-    NowListening( QObject* parent, const QList< QVariant >& args );
+    NowListening(QObject *parent, const QList< QVariant > &args);
     ~NowListening();
 
 protected Q_SLOTS:

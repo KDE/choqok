@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,51 +23,49 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "tighturl.h"
 
 #include <QEventLoop>
+#include <QUrl>
 
-#include <KAboutData>
-#include <KDebug>
-#include <KGenericFactory>
-#include <KIO/Job>
-#include <KIO/NetAccess>
-#include <KGlobal>
+#include <KIO/StoredTransferJob>
+#include <KLocalizedString>
+#include <KPluginFactory>
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < TightUrl > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_tighturl" ) )
+#include "notifymanager.h"
 
-TightUrl::TightUrl( QObject *parent, const QVariantList & )
-: Choqok::Shortener( MyPluginFactory::componentData(), parent )
+K_PLUGIN_FACTORY_WITH_JSON(TightUrlFactory, "choqok_tighturl.json",
+                           registerPlugin < TightUrl > ();)
+
+TightUrl::TightUrl(QObject *parent, const QVariantList &)
+    : Choqok::Shortener("choqok_tighturl", parent)
 {
 }
 
-QString TightUrl::shorten( const QString &url )
+QString TightUrl::shorten(const QString &url)
 {
-    kDebug()<<"Using 2tu.us";
-    KUrl reqUrl( "http://2tu.us/" );
-    reqUrl.addQueryItem( "save", "y" );
-    reqUrl.addQueryItem( "url", KUrl( url ).url() );
+    QUrl reqUrl("http://2tu.us/");
+    reqUrl.addQueryItem("save", "y");
+    reqUrl.addQueryItem("url", QUrl(url).url());
 
     QEventLoop loop;
-    KIO::StoredTransferJob *job = KIO::storedGet( reqUrl, KIO::Reload, KIO::HideProgressInfo );
+    KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
     connect(job, SIGNAL(result(KJob*)), &loop, SLOT(quit()));
     job->start();
     loop.exec();
 
-    if ( job->error() == KJob::NoError ) {
+    if (job->error() == KJob::NoError) {
         QString output(job->data());
-        QRegExp rx( QString( "<code>(.+)</code>" ) );
+        QRegExp rx(QString("<code>(.+)</code>"));
         rx.setMinimal(true);
         rx.indexIn(output);
         output = rx.cap(1);
-        kDebug()<<output;
-        rx.setPattern( QString( "href=[\'\"](.+)[\'\"]" ) );
+        rx.setPattern(QString("href=[\'\"](.+)[\'\"]"));
         rx.indexIn(output);
         output = rx.cap(1);
-        kDebug() << "Short url is: " << output;
-        if(!output.isEmpty()) {
+        if (!output.isEmpty()) {
             return output;
         }
     } else {
-        kDebug() << "KJob ERROR: " << job->errorString() ;
+        Choqok::NotifyManager::error(i18n("Cannot create a short URL.\n%1",
+                                          job->errorString()), i18n("TightUrl Error"));
     }
     return url;
 }
@@ -77,4 +74,4 @@ TightUrl::~TightUrl()
 {
 }
 
-// #include "tighturl.moc"
+#include "tighturl.moc"

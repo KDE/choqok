@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -29,17 +28,16 @@
 #include <QQueue>
 #include <QSharedPointer>
 
-#include <KUrl>
+#include <KIO/Job>
 
 #include "plugin.h"
 
-namespace KIO {
-class Job;
-}
+class QUrl;
 
-class KJob;
-namespace Choqok {
-namespace UI {
+namespace Choqok
+{
+namespace UI
+{
 class PostWidget;
 }
 }
@@ -49,17 +47,17 @@ class LongUrl : public Choqok::Plugin
     typedef Choqok::Plugin base;
     Q_OBJECT
 public:
-    LongUrl( QObject* parent, const QList< QVariant >& args );
+    LongUrl(QObject *parent, const QList< QVariant > &args);
     ~LongUrl();
 
 protected Q_SLOTS:
-    void slotAddNewPostWidget( Choqok::UI::PostWidget *newWidget );
+    void slotAddNewPostWidget(Choqok::UI::PostWidget *newWidget);
     void startParsing();
-    void dataReceived(KIO::Job* job, QByteArray data);
-    void jobResult(KJob* job);
+    void dataReceived(KIO::Job *job, QByteArray data);
+    void jobResult(KJob *job);
     virtual void aboutToUnload();
-    void servicesDataReceived(KIO::Job* job, QByteArray data);
-    void servicesJobResult(KJob* job);
+    void servicesDataReceived(KIO::Job *job, QByteArray data);
+    void servicesJobResult(KJob *job);
 private:
     enum ParserState { Running = 0, Stopped };
     ParserState state;
@@ -67,29 +65,31 @@ private:
     typedef QPointer<Choqok::UI::PostWidget> PostWidgetPointer;
 
     void sheduleSupportedServicesFetch();
-    bool isServiceSupported(const QString& host);
-    void processJobResults(KJob* job);
+    bool isServiceSupported(const QString &host);
+    void processJobResults(KJob *job);
 
-    void parse( PostWidgetPointer postToParse );
-    KJob* sheduleParsing(const QString& shortUrl);
+    void parse(PostWidgetPointer postToParse);
+    KJob *sheduleParsing(const QString &shortUrl);
     void suspendJobs();
 
-    void replaceUrl(PostWidgetPointer post, const KUrl& fromUrl, const KUrl& toUrl);
+    void replaceUrl(PostWidgetPointer post, const QUrl &fromUrl, const QUrl &toUrl);
 
-    PostWidgetPointer takeJob(KJob* job) {
+    PostWidgetPointer takeJob(KJob *job)
+    {
         return mParsingList.take(job);
     }
 
-    void insertJob(KJob* job, PostWidgetPointer post) {
+    void insertJob(KJob *job, PostWidgetPointer post)
+    {
         mParsingList.insert(job, post);
     }
 
     QQueue< PostWidgetPointer > postsQueue;
-    QMap<KJob*, PostWidgetPointer > mParsingList;
+    QMap<KJob *, PostWidgetPointer > mParsingList;
     QStringList supportedServices;
-    typedef QMap<KJob*, QByteArray> DataMap;
+    typedef QMap<KJob *, QByteArray> DataMap;
     DataMap mData;
-    typedef QMap<KJob*, QString> UrlsMap;
+    typedef QMap<KJob *, QString> UrlsMap;
     UrlsMap mShortUrls;
     QSharedPointer<QByteArray> mServicesData;
     bool mServicesAreFetched;

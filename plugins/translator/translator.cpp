@@ -30,7 +30,7 @@
 #include <KIO/Job>
 #include <shortenmanager.h>
 #include "translatorsettings.h"
-#include <KAction>
+#include <QAction>
 #include <QMenu>
 #include <kstandarddirs.h>
 #include <QFile>
@@ -50,8 +50,7 @@ K_EXPORT_PLUGIN( MyPluginFactory( "choqok_translator" ) )
 Translator::Translator(QObject* parent, const QList< QVariant >& )
     :Choqok::Plugin(MyPluginFactory::componentData(), parent)
 {
-    kDebug();
-    translateAction = new KAction(i18n("Translate to..."), this);
+    translateAction = new QAction(i18n("Translate to..."), this);
     Choqok::UI::PostWidget::addAction(translateAction);
     translateAction->setMenu(setupTranslateMenu());
     connect(TranslatorSettings::self(), SIGNAL(configChanged()), SLOT(slotUpdateMenu()));
@@ -64,13 +63,13 @@ Translator::~Translator()
 
 void Translator::translate()
 {
-    QString lang = qobject_cast<KAction*>(sender())->data().toString();
+    QString lang = qobject_cast<QAction *>(sender())->data().toString();
     Choqok::UI::PostWidget *wd;
     wd = dynamic_cast<Choqok::UI::PostWidgetUserData *>(translateAction->userData(32))->postWidget();
     if(!wd || lang.isEmpty())
         return;
 
-    KUrl url ( "https://www.googleapis.com/language/translate/v2");
+    QUrl url ( "https://www.googleapis.com/language/translate/v2");
     url.addQueryItem("key", "AIzaSyBqB4DN7CRIvMl4NKmffC-QlFilGVVRsmI");
     url.addQueryItem("q", wd->content());
     url.addQueryItem("format", "html");
@@ -89,7 +88,7 @@ void Translator::slotTranslated(KJob* job)
     if(!wd || !stj)
         return;
     QByteArray data = stj->data();
-//     kDebug()<<data;
+//     qDebug()<<data;
     QVariantMap json = QJson::Parser().parse(data).toMap();
     QString errorMessage;
     if(job->error() == KJob::NoError){
@@ -126,14 +125,14 @@ QMenu* Translator::setupTranslateMenu()
         KIcon icon;
 		icon.addPixmap(QPixmap(SharedTools::self()->languageFlag(lang)));
         QString langStr = KGlobal::locale()->languageCodeToName(lang);
-        KAction* act =
-        new KAction(icon, langStr.isEmpty() ? SharedTools::self()->missingLangs().value(lang) : langStr, 0);
+        QAction * act =
+        new QAction(icon, langStr.isEmpty() ? SharedTools::self()->missingLangs().value(lang) : langStr, 0);
         act->setData(lang);
         connect( act, SIGNAL(triggered(bool)), SLOT(translate()));
         menu->addAction(act);
     }
     menu->addSeparator();
-    KAction* setup = new KAction(KIcon("configure"), i18n("Configure Translator"), menu);
+    QAction * setup = new QAction(QIcon::fromTheme("configure"), i18n("Configure Translator"), menu);
     connect(setup, SIGNAL(triggered(bool)), this, SLOT(slotConfigureTranslator()));
     menu->addAction(setup);
     return menu;

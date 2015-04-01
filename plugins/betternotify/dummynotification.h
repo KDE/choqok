@@ -10,7 +10,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -21,29 +20,28 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-
 #ifndef DUMMYNOTIFICATION_H
 #define DUMMYNOTIFICATION_H
 
-#include <KTextBrowser>
+#include <QTextBrowser>
 
-class DummyNotification : public KTextBrowser
+class DummyNotification : public QTextBrowser
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-    DummyNotification(const QFont &font, const QColor &color, const QColor &background,QWidget* parent);
+    DummyNotification(const QFont &font, const QColor &color, const QColor &background, QWidget *parent);
     virtual ~DummyNotification();
 
 protected:
-    virtual void mouseMoveEvent(QMouseEvent* ev);
-    virtual void mousePressEvent(QMouseEvent* ev);
-    virtual void mouseReleaseEvent(QMouseEvent* ev);
+    virtual void mouseMoveEvent(QMouseEvent *ev);
+    virtual void mousePressEvent(QMouseEvent *ev);
+    virtual void mouseReleaseEvent(QMouseEvent *ev);
 
 Q_SIGNALS:
     void positionSelected(QPoint position);
 
 protected Q_SLOTS:
-    void slotProcessAnchor(const QUrl& url);
+    void slotProcessAnchor(const QUrl &url);
 
 private:
     QPoint lastPressedPosition;

@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -23,49 +22,54 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 #include "behaviorconfig_shorten.h"
 
+#include <QDialog>
+#include <QDialogButtonBox>
 #include <QLayout>
+#include <QTabWidget>
 
+#include <KAboutData>
 #include <KAboutApplicationDialog>
 #include <KCModuleInfo>
 #include <KCModuleProxy>
-#include <KDebug>
 #include <KPluginInfo>
-#include <KTabWidget>
 
 #include "choqokbehaviorsettings.h"
+#include "behaviordebug.h"
 #include "pluginmanager.h"
 #include "shortenmanager.h"
 
-BehaviorConfig_Shorten::BehaviorConfig_Shorten( QWidget *parent )
-    :QWidget(parent),currentShortener(0)
+BehaviorConfig_Shorten::BehaviorConfig_Shorten(QWidget *parent)
+    : QWidget(parent), currentShortener(0)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     setupUi(this);
     Choqok::ShortenManager::self();
     connect(shortenPlugins, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
-    aboutPlugin->setIcon(KIcon("help-about"));
-    configPlugin->setIcon(KIcon("configure"));
-    connect( aboutPlugin, SIGNAL(clicked(bool)), SLOT(slotAboutClicked()) );
-    connect( configPlugin, SIGNAL(clicked(bool)), SLOT(slotConfigureClicked()) );
+    aboutPlugin->setIcon(QIcon::fromTheme("help-about"));
+    configPlugin->setIcon(QIcon::fromTheme("configure"));
+    connect(aboutPlugin, SIGNAL(clicked(bool)), SLOT(slotAboutClicked()));
+    connect(configPlugin, SIGNAL(clicked(bool)), SLOT(slotConfigureClicked()));
 }
 
 BehaviorConfig_Shorten::~BehaviorConfig_Shorten()
 {
-    kDebug();
+    qCDebug(CHOQOK);
 }
 
-void BehaviorConfig_Shorten::currentPluginChanged( int index )
+void BehaviorConfig_Shorten::currentPluginChanged(int index)
 {
-    if( shortenPlugins->itemData(index).toString() == prevShortener)
+    if (shortenPlugins->itemData(index).toString() == prevShortener) {
         Q_EMIT changed(false);
-    else
+    } else {
         Q_EMIT changed(true);
+    }
     QString key = shortenPlugins->itemData(index).toString();
-//     kDebug()<<key;
-    if( !key.isEmpty() && key != "none" && availablePlugins.value(key).kcmServices().count() > 0 )
+//     qCDebug(CHOQOK)<<key;
+    if (!key.isEmpty() && key != "none" && availablePlugins.value(key).kcmServices().count() > 0) {
         configPlugin->setEnabled(true);
-    else
+    } else {
         configPlugin->setEnabled(false);
+    }
 //     if(currentShortener){
 //         layout()->removeWidget(currentShortener->configWidget());
 // //         currentShortener->deleteLater();
@@ -81,13 +85,13 @@ void BehaviorConfig_Shorten::load()
 {
     QList<KPluginInfo> plugins = Choqok::PluginManager::self()->availablePlugins("Shorteners");
     shortenPlugins->clear();
-    shortenPlugins->addItem( i18nc("No shortener service", "None"), QLatin1String("none") );
-    Q_FOREACH (const KPluginInfo& plugin, plugins) {
-        shortenPlugins->addItem( KIcon(plugin.icon()), plugin.name(), plugin.pluginName());
+    shortenPlugins->addItem(i18nc("No shortener service", "None"), QLatin1String("none"));
+    Q_FOREACH (const KPluginInfo &plugin, plugins) {
+        shortenPlugins->addItem(QIcon::fromTheme(plugin.icon()), plugin.name(), plugin.pluginName());
         availablePlugins.insert(plugin.pluginName(), plugin);
     }
     prevShortener = Choqok::BehaviorSettings::shortenerPlugin();
-    if(!prevShortener.isEmpty()) {
+    if (!prevShortener.isEmpty()) {
         shortenPlugins->setCurrentIndex(shortenPlugins->findData(prevShortener));
         //         currentPluginChanged(kcfg_plugins->currentIndex());
     }
@@ -97,9 +101,9 @@ void BehaviorConfig_Shorten::save()
 {
     const QString shorten = shortenPlugins->itemData(shortenPlugins->currentIndex()).toString();
     Choqok::BehaviorSettings::setShortenerPlugin(shorten);
-    if( prevShortener != shorten ) {
-        kDebug()<<prevShortener<<" -> "<<shorten;
-        Choqok::BehaviorSettings::self()->writeConfig();
+    if (prevShortener != shorten) {
+        qCDebug(CHOQOK) << prevShortener << " -> " << shorten;
+        Choqok::BehaviorSettings::self()->save();
         Choqok::ShortenManager::self()->reloadConfig();
     }
 }
@@ -107,37 +111,40 @@ void BehaviorConfig_Shorten::save()
 void BehaviorConfig_Shorten::slotAboutClicked()
 {
     const QString shorten = shortenPlugins->itemData(shortenPlugins->currentIndex()).toString();
-    if(shorten == "none")
+    if (shorten == "none") {
         return;
+    }
     KPluginInfo info = availablePlugins.value(shorten);
 
-    KAboutData aboutData(info.name().toUtf8(), info.name().toUtf8(), ki18n(info.name().toUtf8()), info.version().toUtf8(), ki18n(info.comment().toUtf8()), KAboutLicense::byKeyword(info.license()).key(), ki18n(QByteArray()), ki18n(QByteArray()), info.website().toLatin1());
-    aboutData.setProgramIconName(info.icon());
-    aboutData.addAuthor(ki18n(info.author().toUtf8()), ki18n(QByteArray()), info.email().toUtf8(), 0);
+    KAboutData aboutData(info.name(), info.name(), info.version(), info.comment(),
+                         KAboutLicense::byKeyword(info.license()).key(), QString(),
+                         QString(), info.website());
+    aboutData.addAuthor(info.author(), QString(), info.email());
 
-    KAboutApplicationDialog aboutPlugin(&aboutData, this);
+    KAboutApplicationDialog aboutPlugin(aboutData, this);
+    aboutPlugin.setWindowIcon(QIcon::fromTheme(info.icon()));
     aboutPlugin.exec();
 }
 
 void BehaviorConfig_Shorten::slotConfigureClicked()
 {
-    kDebug();
-    KPluginInfo pluginInfo = availablePlugins.value( shortenPlugins->itemData(shortenPlugins->currentIndex() ).toString() );
-    kDebug()<<pluginInfo.name()<<pluginInfo.kcmServices().count();
+    qCDebug(CHOQOK);
+    KPluginInfo pluginInfo = availablePlugins.value(shortenPlugins->itemData(shortenPlugins->currentIndex()).toString());
+    qCDebug(CHOQOK) << pluginInfo.name() << pluginInfo.kcmServices().count();
 
-    QPointer<KDialog> configDialog = new KDialog(this);
+    QPointer<QDialog> configDialog = new QDialog(this);
     configDialog->setWindowTitle(pluginInfo.name());
     // The number of KCModuleProxies in use determines whether to use a tabwidget
-    KTabWidget *newTabWidget = 0;
+    QTabWidget *newTabWidget = 0;
     // Widget to use for the setting dialog's main widget,
-    // either a KTabWidget or a KCModuleProxy
-    QWidget * mainWidget = 0;
+    // either a QTabWidget or a KCModuleProxy
+    QWidget *mainWidget = 0;
     // Widget to use as the KCModuleProxy's parent.
     // The first proxy is owned by the dialog itself
     QWidget *moduleProxyParentWidget = configDialog;
 
-    Q_FOREACH (const KService::Ptr &servicePtr, pluginInfo.kcmServices() ) {
-        if(!servicePtr->noDisplay()) {
+    Q_FOREACH (const KService::Ptr &servicePtr, pluginInfo.kcmServices()) {
+        if (!servicePtr->noDisplay()) {
             KCModuleInfo moduleInfo(servicePtr);
             KCModuleProxy *currentModuleProxy = new KCModuleProxy(moduleInfo, moduleProxyParentWidget);
             if (currentModuleProxy->realModule()) {
@@ -146,10 +153,10 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
                     // we already created one KCModuleProxy, so we need a tab widget.
                     // Move the first proxy into the tab widget and ensure this and subsequent
                     // proxies are in the tab widget
-                    newTabWidget = new KTabWidget(configDialog);
+                    newTabWidget = new QTabWidget(configDialog);
                     moduleProxyParentWidget = newTabWidget;
-                    mainWidget->setParent( newTabWidget );
-                    KCModuleProxy *moduleProxy = qobject_cast<KCModuleProxy*>(mainWidget);
+                    mainWidget->setParent(newTabWidget);
+                    KCModuleProxy *moduleProxy = qobject_cast<KCModuleProxy *>(mainWidget);
                     if (moduleProxy) {
                         newTabWidget->addTab(mainWidget, moduleProxy->moduleInfo().moduleName());
                         mainWidget = newTabWidget;
@@ -174,14 +181,20 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
 
     // it could happen that we had services to show, but none of them were real modules.
     if (moduleProxyList.count()) {
-        configDialog->setButtons(KDialog::Ok | KDialog::Cancel);
-
         QWidget *showWidget = new QWidget(configDialog);
         QVBoxLayout *layout = new QVBoxLayout;
         showWidget->setLayout(layout);
         layout->addWidget(mainWidget);
-        layout->insertSpacing(-1, KDialog::marginHint());
-        configDialog->setMainWidget(showWidget);
+        layout->insertSpacing(-1, QApplication::style()->pixelMetric(QStyle::PM_DialogButtonsSeparator));
+
+        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+        QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+        okButton->setDefault(true);
+        okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+        connect(buttonBox, SIGNAL(accepted()), configDialog, SLOT(accept()));
+        connect(buttonBox, SIGNAL(rejected()), configDialog, SLOT(reject()));
+        layout->addWidget(buttonBox);
+        showWidget->adjustSize();
 
 //         connect(&configDialog, SIGNAL(defaultClicked()), this, SLOT(slotDefaultClicked()));
 
@@ -204,4 +217,3 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
     }
 }
 
-#include "behaviorconfig_shorten.moc"

@@ -12,7 +12,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -26,18 +25,19 @@
 #define CHOQOKPLUGINMANAGER_H
 
 #include <QList>
-#include <QObject>
 
+#include <KPluginInfo>
+
+#include "plugin.h"
 #include "choqok_export.h"
 
-class KPluginInfo;
+class QEventLoopLocker;
 
 namespace Choqok
 {
 
-class Plugin;
 class Protocol;
-typedef QList<Plugin*> PluginList;
+typedef QList<Plugin *> PluginList;
 class PluginManagerPrivate;
 
 /**
@@ -47,13 +47,13 @@ class CHOQOK_EXPORT PluginManager : public QObject
 {
     friend class PluginManagerPrivate;
     Q_OBJECT
-    Q_ENUMS( PluginLoadMode )
+    Q_ENUMS(PluginLoadMode)
 
 public:
     /**
      * Retrieve the plugin loader instance.
      */
-    static PluginManager* self();
+    static PluginManager *self();
 
     /**
      * Returns a list of all available plugins for the given category.
@@ -65,14 +65,14 @@ public:
      * You can query all information on the plugins through the KPluginInfo
      * interface.
      */
-    QList<KPluginInfo> availablePlugins( const QString &category = QString() ) const;
+    QList<KPluginInfo> availablePlugins(const QString &category = QString()) const;
 
     /**
      * Returns a list of all plugins that are actually loaded.
      * If you omit the category you get all, otherwise it's a filtered list.
      * See also @ref availablePlugins().
      */
-    PluginList loadedPlugins( const QString &category = QString() ) const;
+    PluginList loadedPlugins(const QString &category = QString()) const;
 
     /**
      * @brief Search by plugin name. This is the key used as X-KDE-PluginInfo-Name in
@@ -84,13 +84,12 @@ public:
      * If you want to also load the plugin you can better use @ref loadPlugin, which returns
      * the pointer to the plugin if it's already loaded.
      */
-    Plugin *plugin( const QString &pluginName ) const;
+    Plugin *plugin(const QString &pluginName) const;
 
     /**
      * @return the KPluginInfo for the specified plugin
      */
-    KPluginInfo pluginInfo( const Choqok::Plugin *plugin ) const;
-
+    KPluginInfo pluginInfo(const Choqok::Plugin *plugin) const;
 
     /**
      * Shuts down the plugin manager on Choqok shutdown, but first
@@ -119,7 +118,7 @@ public:
      *
      * Returns false when no appropriate plugin can be found.
      */
-    bool setPluginEnabled( const QString &name, bool enabled = true );
+    bool setPluginEnabled(const QString &name, bool enabled = true);
 
     /**
      * This method check if all the plugins are loaded.
@@ -145,12 +144,12 @@ public Q_SLOTS:
      *
      * See also @ref plugin().
      */
-    Plugin *loadPlugin( const QString &pluginId, PluginLoadMode mode = LoadSync );
+    Plugin *loadPlugin(const QString &pluginId, PluginLoadMode mode = LoadSync);
 
     /**
      * @brief Unload the plugin specified by @p pluginName
      */
-    bool unloadPlugin( const QString &pluginName );
+    bool unloadPlugin(const QString &pluginName);
 
     /**
      * @brief Loads all the enabled plugins. Also used to reread the
@@ -162,12 +161,12 @@ Q_SIGNALS:
     /**
      * @brief Signals a new plugin has just been loaded.
      */
-    void pluginLoaded( Choqok::Plugin *plugin );
+    void pluginLoaded(Choqok::Plugin *plugin);
 
     /**
      * @brief Signals a plugin has just been unloaded.
      */
-    void pluginUnloaded( const QString &pluginName );
+    void pluginUnloaded(const QString &pluginName);
 
     /**
      * @brief All plugins have been loaded by the plugin manager.
@@ -194,7 +193,7 @@ private Q_SLOTS:
     /**
      * @brief Cleans up some references if the plugin is destroyed
      */
-    void slotPluginDestroyed( QObject *plugin );
+    void slotPluginDestroyed(QObject *plugin);
 
     /**
      * shutdown() starts a timer, when it fires we force all plugins
@@ -233,7 +232,7 @@ private:
      * Called by @ref loadPlugin directly or through the queue for async plugin
      * loading.
      */
-    Plugin * loadPluginInternal( const QString &pluginId );
+    Plugin *loadPluginInternal(const QString &pluginId);
 
     /**
      * @internal
@@ -242,10 +241,16 @@ private:
      *
      * Returns a null pointer when no plugin info is found.
      */
-    KPluginInfo infoForPluginId( const QString &pluginId ) const;
+    KPluginInfo infoForPluginId(const QString &pluginId) const;
 
     PluginManager();
     ~PluginManager();
+
+    // We want to add a reference to the application's event loop so we
+    // can remain in control when all windows are removed.
+    // This way we can unload plugins asynchronously, which is more
+    // robust if they are still doing processing.
+    QEventLoopLocker lock;
 
 };
 
@@ -253,4 +258,3 @@ private:
 
 #endif // KOPETEPLUGINMANAGER_H
 
-// vim: set noet ts=4 sts=4 sw=4:

@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,9 +23,6 @@
 
 #ifndef INDICATORMANAGER_H
 #define INDICATORMANAGER_H
-
-#include <KNotification>
-#include <KLocalizedString>
 
 #include <qindicateserver.h>
 #include <qindicateindicator.h>
@@ -41,9 +37,9 @@ class CHOQOK_EXPORT MessageIndicatorManager : public QObject
 {
     Q_OBJECT
 public:
-    static MessageIndicatorManager* self();
+    static MessageIndicatorManager *self();
     ~MessageIndicatorManager();
-    void newPostInc ( int unread, const QString& alias, const QString& timeline );
+    void newPostInc(int unread, const QString &alias, const QString &timeline);
     QIndicate::Server *iServer;
     QIndicate::Indicator *iIndicator;
 
@@ -52,10 +48,10 @@ private:
     static MessageIndicatorManager *mSelf;
     QMap<QString, int> showList;
     QMap<QString, QIndicate::Indicator *> iList;
-    QImage getIconByAlias( const QString& alias );
+    QImage getIconByAlias(const QString &alias);
 
 public Q_SLOTS:
-    void slotDisplay ( QIndicate::Indicator* );
+    void slotDisplay(QIndicate::Indicator *);
     void slotShowMainWindow();
     void slotCanWorkWithAccs();
     void slotupdateUnreadCount(int change, int sum);

@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,27 +23,28 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QHideEvent>
 #include <QPointer>
+#include <QShowEvent>
 
-#include <KXmlGuiWindow>
-
-#include "account.h"
 #include "choqokmainwindow.h"
+#include "account.h"
+#include "plugin.h"
 
-class KPushButton;
-class KAction;
-class KSplashScreen;
+class QAction;
+class QPushButton;
+class QSplashScreen;
+class ChoqokApplication;
 namespace Choqok
 {
 namespace UI
 {
-    class QuickPost;
+class QuickPost;
 }
-    class Plugin;
 }
 namespace KSettings
 {
-    class Dialog;
+class Dialog;
 }
 
 class SysTrayIcon;
@@ -64,7 +64,7 @@ public:
     /**
     * Default Constructor
     */
-    MainWindow();
+    MainWindow(ChoqokApplication *application);
 
     /**
     * Default Destructor
@@ -72,17 +72,17 @@ public:
     virtual ~MainWindow();
 
 protected:
-    virtual void hideEvent(QHideEvent* event);
-    virtual void showEvent(QShowEvent* );
+    virtual void hideEvent(QHideEvent *event);
+    virtual void showEvent(QShowEvent *);
 
 private Q_SLOTS:
     void nextTab(int delta, Qt::Orientation orientation);
     void loadAllAccounts();
-    void newPluginAvailable( Choqok::Plugin *plugin );
-    void addBlog( Choqok::Account *account, bool isStartup = false );
-    void removeBlog( const QString &alias );
-    void setTimeLineUpdatesEnabled( bool isEnabled );
-    void setNotificationsEnabled( bool isEnabled );
+    void newPluginAvailable(Choqok::Plugin *plugin);
+    void addBlog(Choqok::Account *account, bool isStartup = false);
+    void removeBlog(const QString &alias);
+    void setTimeLineUpdatesEnabled(bool isEnabled);
+    void setNotificationsEnabled(bool isEnabled);
     void triggerQuickPost();
     void toggleMainWindow();
     void slotMarkAllAsRead();
@@ -96,7 +96,7 @@ private Q_SLOTS:
     void settingsChanged();
     void slotQuit();
     void showBlog();
-    void slotUpdateUnreadCount( int change, int sum );
+    void slotUpdateUnreadCount(int change, int sum);
     void slotCurrentBlogChanged(int);
 
     //Using this for splash screen
@@ -119,15 +119,16 @@ private:
     SysTrayIcon *sysIcon;
     Choqok::UI::QuickPost *quickWidget;
     KSettings::Dialog *s_settingsDialog;
-    QPointer<KSplashScreen> m_splash;
-    KAction *enableUpdates;
-    KAction *newTwit;
-    KAction *showMain;
-    KAction *actQuit;
-    KAction *actUpdate;
-    KAction *prefs;
-    KAction *aboutChoqok;
-    KPushButton *choqokMainButton;
+    QPointer<QSplashScreen> m_splash;
+    QAction *enableUpdates;
+    QAction *newTwit;
+    QAction *showMain;
+    QAction *actQuit;
+    QAction *actUpdate;
+    QAction *prefs;
+    QAction *aboutChoqok;
+    QPushButton *choqokMainButton;
+    ChoqokApplication *app;
 
     int microblogCounter;
     bool choqokMainButtonVisible;

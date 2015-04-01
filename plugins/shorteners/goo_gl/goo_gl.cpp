@@ -11,7 +11,6 @@
     by the membership of KDE e.V. ), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -23,23 +22,19 @@
 
 #include "goo_gl.h"
 
-#include <KAboutData>
-#include <KDebug>
-#include <KGenericFactory>
-#include <KGlobal>
-#include <KIO/Job>
-#include <KIO/NetAccess>
+#include <QJsonDocument>
+#include <QUrl>
 
-#include <qjson/parser.h>
-#include <qjson/serializer.h>
+#include <KIO/StoredTransferJob>
+#include <KLocalizedString>
+#include <KPluginFactory>
 
 #include "notifymanager.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Goo_gl > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_goo_gl" ) )
+K_PLUGIN_FACTORY_WITH_JSON(Goo_glFactory, "choqok_goo_gl.json", registerPlugin < Goo_gl > ();)
 
-Goo_gl::Goo_gl( QObject* parent, const QVariantList& )
-        : Choqok::Shortener( MyPluginFactory::componentData(), parent )
+Goo_gl::Goo_gl(QObject *parent, const QVariantList &)
+    : Choqok::Shortener("choqok_goo_gl", parent)
 {
 }
 
@@ -47,38 +42,33 @@ Goo_gl::~Goo_gl()
 {
 }
 
-QString Goo_gl::shorten( const QString& url )
+QString Goo_gl::shorten(const QString &url)
 {
-    kDebug() << "Using goo.gl";
-
     QVariantMap req;
     req.insert("longUrl", url);
-    QJson::Serializer serializer;
-    QByteArray data = serializer.serialize(req);
-
-    KIO::StoredTransferJob *job = KIO::storedHttpPost ( data, KUrl("https://www.googleapis.com/urlshortener/v1/url"), KIO::HideProgressInfo ) ;
-    if (!job){
-      Choqok::NotifyManager::error( i18n("Error when creating job"), i18n("Goo.gl Error") );
-      return url;
+    const QByteArray json = QJsonDocument::fromVariant(req).toJson();
+    KIO::StoredTransferJob *job = KIO::storedHttpPost(json, QUrl("https://www.googleapis.com/urlshortener/v1/url"), KIO::HideProgressInfo) ;
+    if (!job) {
+        Choqok::NotifyManager::error(i18n("Error when creating job"), i18n("Goo.gl Error"));
+        return url;
     }
     job->addMetaData("content-type", "Content-Type: application/json");
+    job->exec();
 
-    if ( KIO::NetAccess::synchronousRun( job, 0, &data ) ) {
-        QString output( data );
-        QJson::Parser parser;
-        bool ok;
-        QVariantMap map = parser.parse( data , &ok ).toMap();
-        if ( ok ) {
-            QVariantMap error = map["error"].toMap();
-            if ( !error.isEmpty() ) {
-                Choqok::NotifyManager::error( error["message"].toString(), i18n("Goo.gl Error") );
+    if (!job->error()) {
+        const QJsonDocument json = QJsonDocument::fromJson(job->data());
+        if (!json.isNull()) {
+            const QVariantMap map = json.toVariant().toMap();
+            const QVariantMap error = map["error"].toMap();
+            if (!error.isEmpty()) {
+                Choqok::NotifyManager::error(error["message"].toString(), i18n("Goo.gl Error"));
                 return url;
             }
             return map[ "id" ].toString();
         }
-        Choqok::NotifyManager::error( i18n("Malformed response"), i18n("Goo.gl Error")  );
+        Choqok::NotifyManager::error(i18n("Malformed response"), i18n("Goo.gl Error"));
     } else {
-        Choqok::NotifyManager::error( i18n("Cannot create a short URL.\n%1", job->errorString()), i18n("Goo.gl Error") );
+        Choqok::NotifyManager::error(i18n("Cannot create a short URL.\n%1", job->errorString()), i18n("Goo.gl Error"));
     }
     return url;
 }

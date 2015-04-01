@@ -10,7 +10,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -23,10 +22,9 @@
 
 #include "dummynotification.h"
 
+#include <QIcon>
 #include <QMouseEvent>
 
-#include <KDebug>
-#include <KIcon>
 #include <KLocalizedString>
 
 #include "choqokappearancesettings.h"
@@ -34,8 +32,8 @@
 #include "notifysettings.h"
 #include "postwidget.h"
 
-DummyNotification::DummyNotification(const QFont& font, const QColor& color, const QColor& background, QWidget* parent)
-: KTextBrowser(parent), isMoving(false)
+DummyNotification::DummyNotification(const QFont &font, const QColor &color, const QColor &background, QWidget *parent)
+    : QTextBrowser(parent), isMoving(false)
 {
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     setWindowOpacity(0.8);
@@ -44,27 +42,27 @@ DummyNotification::DummyNotification(const QFont& font, const QColor& color, con
     setOpenExternalLinks(false);
     setOpenLinks(false);
     setTextInteractionFlags(Qt::LinksAccessibleByMouse);
-    document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"), KIcon("choqok").pixmap(48) );
-    document()->addResource( QTextDocument::ImageResource, QUrl("icon://close"),
-                                        KIcon("dialog-ok").pixmap(16) );
+    document()->addResource(QTextDocument::ImageResource, QUrl("img://profileImage"), QIcon::fromTheme("choqok").pixmap(48));
+    document()->addResource(QTextDocument::ImageResource, QUrl("icon://close"),
+                            QIcon::fromTheme("dialog-ok").pixmap(16));
     setText(baseText.arg(i18n("Choqok")).arg(i18n("KDE Rocks! :)")).arg(i18n("OK")));
     connect(this, SIGNAL(anchorClicked(QUrl)), SLOT(slotProcessAnchor(QUrl)));
 
     QString fntStr = "font-family:\"" + font.family() + "\"; font-size:" + QString::number(font.pointSize()) + "pt;";
     fntStr += (font.bold() ? " font-weight:bold;" : QString()) + (font.italic() ? " font-style:italic;" : QString());
-    QString style = Choqok::UI::PostWidget::getBaseStyle().arg( Choqok::getColorString(color), Choqok::getColorString(background), fntStr);
+    QString style = Choqok::UI::PostWidget::getBaseStyle().arg(Choqok::getColorString(color), Choqok::getColorString(background), fntStr);
 
-    setStyleSheet( style );
+    setStyleSheet(style);
 }
 
 DummyNotification::~DummyNotification()
 {
 }
 
-void DummyNotification::mouseMoveEvent(QMouseEvent* ev)
+void DummyNotification::mouseMoveEvent(QMouseEvent *ev)
 {
-    KTextBrowser::mouseMoveEvent(ev);
-    if(isMoving){
+    QTextBrowser::mouseMoveEvent(ev);
+    if (isMoving) {
         QPoint diff = ev->globalPos() - lastPressedPosition;
         lastPressedPosition = ev->globalPos();
         QPoint newPos = pos() + diff;
@@ -72,26 +70,23 @@ void DummyNotification::mouseMoveEvent(QMouseEvent* ev)
     }
 }
 
-void DummyNotification::mousePressEvent(QMouseEvent* ev)
+void DummyNotification::mousePressEvent(QMouseEvent *ev)
 {
-    kDebug();
-    KTextBrowser::mousePressEvent(ev);
+    QTextBrowser::mousePressEvent(ev);
     isMoving = true;
     lastPressedPosition = ev->globalPos();
 }
 
-void DummyNotification::mouseReleaseEvent(QMouseEvent* ev)
+void DummyNotification::mouseReleaseEvent(QMouseEvent *ev)
 {
-    KTextBrowser::mouseReleaseEvent(ev);
-    kDebug();
+    QTextBrowser::mouseReleaseEvent(ev);
     isMoving = false;
 }
 
-void DummyNotification::slotProcessAnchor(const QUrl& url)
+void DummyNotification::slotProcessAnchor(const QUrl &url)
 {
-    kDebug();
-    if(url.scheme() == "choqok"){
-        if(url.host() == "close"){
+    if (url.scheme() == "choqok") {
+        if (url.host() == "close") {
             Q_EMIT positionSelected(pos());
         }
     }

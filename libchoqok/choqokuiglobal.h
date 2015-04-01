@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -37,52 +36,51 @@ namespace Choqok
 
 class Account;
 
-
 namespace UI
 {
 class PostWidget;
 class QuickPost;
 
-    /**
-    * This namespace contains the Choqok user interface's global widgets
-    * UI Plugins can use these
-    */
+/**
+* This namespace contains the Choqok user interface's global widgets
+* UI Plugins can use these
+*/
 namespace Global
 {
-    /**
-    * Set the main widget to widget
-    */
-    CHOQOK_EXPORT void setMainWindow( Choqok::UI::MainWindow *window );
-    /**
-    * Returns the main widget - this is the widget that message boxes
-    * and KNotify stuff should use as a parent.
-    */
-    CHOQOK_EXPORT Choqok::UI::MainWindow *mainWindow();
+/**
+* Set the main widget to widget
+*/
+CHOQOK_EXPORT void setMainWindow(Choqok::UI::MainWindow *window);
+/**
+* Returns the main widget - this is the widget that message boxes
+* and KNotify stuff should use as a parent.
+*/
+CHOQOK_EXPORT Choqok::UI::MainWindow *mainWindow();
 
-    CHOQOK_EXPORT void setQuickPostWidget( QuickPost *quickPost );
+CHOQOK_EXPORT void setQuickPostWidget(QuickPost *quickPost);
 
-    CHOQOK_EXPORT QuickPost * quickPostWidget();
+CHOQOK_EXPORT QuickPost *quickPostWidget();
 
-    class CHOQOK_EXPORT SessionManager : public QObject
-    {
-        Q_OBJECT
-    public:
-        ~SessionManager();
-        static SessionManager *self();
-        void emitNewPostWidgetAdded( Choqok::UI::PostWidget *widget, Choqok::Account *theAccount,
-                                    const QString &timelineName = QString() );
+class CHOQOK_EXPORT SessionManager : public QObject
+{
+    Q_OBJECT
+public:
+    ~SessionManager();
+    static SessionManager *self();
+    void emitNewPostWidgetAdded(Choqok::UI::PostWidget *widget, Choqok::Account *theAccount,
+                                const QString &timelineName = QString());
 
-    Q_SIGNALS:
-        void newPostWidgetAdded( Choqok::UI::PostWidget *widget, Choqok::Account *theAccount,
-                                 const QString &timelineName);
+Q_SIGNALS:
+    void newPostWidgetAdded(Choqok::UI::PostWidget *widget, Choqok::Account *theAccount,
+                            const QString &timelineName);
 
-    public Q_SLOTS:
-        void resetNotifyManager();
+public Q_SLOTS:
+    void resetNotifyManager();
 
-    private:
-        static SessionManager *m_self;
-        SessionManager();
-    };
+private:
+    static SessionManager *m_self;
+    SessionManager();
+};
 } //Global::UI
 
 } //UI

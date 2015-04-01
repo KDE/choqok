@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -26,25 +25,25 @@
 
 #include <QVBoxLayout>
 
-#include <KLocale>
+#include <KAboutData>
 #include <KPluginFactory>
 
 #include "nowlisteningsettings.h"
 
-K_PLUGIN_FACTORY( NowListeningConfigFactory, registerPlugin < NowListeningConfig > (); )
-K_EXPORT_PLUGIN( NowListeningConfigFactory( "kcm_choqok_nowlistening" ) )
+K_PLUGIN_FACTORY_WITH_JSON(NowListeningConfigFactory, "choqok_nowlistening_config.json",
+                           registerPlugin < NowListeningConfig > ();)
 
-NowListeningConfig::NowListeningConfig(QWidget* parent, const QVariantList& args):
-        KCModule( NowListeningConfigFactory::componentData(), parent, args)
+NowListeningConfig::NowListeningConfig(QWidget *parent, const QVariantList &args)
+    : KCModule(KAboutData::pluginData("kcm_choqok_nowlistening"), parent, args)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
     wd->setObjectName("mNowListeningCtl");
     ui.setupUi(wd);
-    addConfig( NowListeningSettings::self(), wd );
+    addConfig(NowListeningSettings::self(), wd);
     layout->addWidget(wd);
     setButtons(KCModule::Apply | KCModule::Default);
-    connect( ui.kcfg_templateString, SIGNAL(textChanged()), SLOT(emitChanged()) );
+    connect(ui.kcfg_templateString, SIGNAL(textChanged()), SLOT(emitChanged()));
 }
 
 NowListeningConfig::~NowListeningConfig()
@@ -59,20 +58,18 @@ void NowListeningConfig::defaults()
 
 void NowListeningConfig::load()
 {
-    kDebug();
     KCModule::load();
 }
 
 void NowListeningConfig::save()
 {
-    kDebug();
     KCModule::save();
 }
 
 void NowListeningConfig::emitChanged()
 {
     Q_EMIT changed(true);
-    disconnect( ui.kcfg_templateString, SIGNAL(textChanged()), this, SLOT(emitChanged()) );
+    disconnect(ui.kcfg_templateString, SIGNAL(textChanged()), this, SLOT(emitChanged()));
 }
 
 #include "nowlisteningconfig.moc"

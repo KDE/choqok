@@ -1,18 +1,25 @@
-#include(DBusMacros)
-
-include_directories(
-${CHOQOK_INCLUDES}
+set(konqchoqokplugin_SRCS
+    konqchoqok.cpp
 )
 
-set(konqchoqokplugin_SRCS konqchoqok.cpp)
+add_library(konqchoqokplugin MODULE ${konqchoqokplugin_SRCS})
 
-kde4_add_plugin(konqchoqokplugin ${konqchoqokplugin_SRCS})
+kcoreaddons_desktop_to_json(konqchoqokplugin konqchoqok.desktop)
 
-target_link_libraries(konqchoqokplugin ${KDE4_KHTML_LIBS} choqok )
+target_link_libraries(konqchoqokplugin
+PUBLIC
+    Qt5::DBus
+    Qt5::Widgets
+    KF5::CoreAddons
+    KF5::I18n
+    KF5::Parts
+    KF5::Service
+    KF5::WebKit
+    KF5::WidgetsAddons
+    KF5::XmlGui
+)
 
-install(TARGETS konqchoqokplugin DESTINATION ${PLUGIN_INSTALL_DIR} )
-
-install(FILES konqchoqok.rc konqchoqok.desktop DESTINATION ${DATA_INSTALL_DIR}/khtml/kpartplugins )
-
-install( FILES choqok_share.desktop DESTINATION ${SERVICES_INSTALL_DIR}/ServiceMenus )
-install( FILES choqok_upload.desktop DESTINATION ${SERVICES_INSTALL_DIR}/ServiceMenus )
+install(TARGETS konqchoqokplugin DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES konqchoqok.rc konqchoqok.desktop DESTINATION ${DATA_INSTALL_DIR}/khtml/kpartplugins)
+install(FILES choqok_share.desktop DESTINATION ${SERVICES_INSTALL_DIR}/ServiceMenus)
+install(FILES choqok_upload.desktop DESTINATION ${SERVICES_INSTALL_DIR}/ServiceMenus)

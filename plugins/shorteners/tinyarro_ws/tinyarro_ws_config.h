@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,6 +23,8 @@
 #ifndef TINYARRO_WS_H
 #define TINYARRO_WS_H
 
+#include <QVariantList>
+
 #include <KCModule>
 
 #include "ui_tinyarro_ws_prefs.h"
@@ -32,7 +33,7 @@ class Tinyarro_ws_Config : public KCModule
 {
     Q_OBJECT
 public:
-    Tinyarro_ws_Config(QWidget* parent, const QVariantList&);
+    Tinyarro_ws_Config(QWidget *parent, const QVariantList &);
     ~Tinyarro_ws_Config();
 
     virtual void save();

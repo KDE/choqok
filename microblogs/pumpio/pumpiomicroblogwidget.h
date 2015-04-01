@@ -12,7 +12,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -27,19 +26,18 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "microblogwidget.h"
 
-
 class PumpIOMicroBlogWidget : public Choqok::UI::MicroBlogWidget
 {
     Q_OBJECT
 public:
-    explicit PumpIOMicroBlogWidget(Choqok::Account* account, QWidget* parent = 0);
+    explicit PumpIOMicroBlogWidget(Choqok::Account *account, QWidget *parent = 0);
     virtual ~PumpIOMicroBlogWidget();
-    
+
     virtual void initUi();
 
 protected:
-    virtual Choqok::UI::TimelineWidget* addTimelineWidgetToUi(const QString &name);
-    
+    virtual Choqok::UI::TimelineWidget *addTimelineWidgetToUi(const QString &name);
+
 };
 
 #endif // PUMPIOMICROBLOGWIDGET_H

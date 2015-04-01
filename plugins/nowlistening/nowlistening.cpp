@@ -12,7 +12,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -25,14 +24,14 @@
 
 #include "nowlistening.h"
 
+#include <QAction>
 #include <QDBusConnectionInterface>
 #include <QDBusInterface>
 #include <QDBusReply>
 
-#include <KAboutData>
-#include <KAction>
 #include <KActionCollection>
-#include <KGenericFactory>
+#include <KLocalizedString>
+#include <KPluginFactory>
 #include <KMessageBox>
 
 #include "choqokuiglobal.h"
@@ -41,13 +40,13 @@
 
 #include "mpris.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < NowListening > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_nowlistening" ) )
+K_PLUGIN_FACTORY_WITH_JSON(NowListeningFactory, "choqok_nowlistening.json",
+                           registerPlugin < NowListening > ();)
 
-NowListening::NowListening(QObject* parent, const QList<QVariant>& )
-        :Choqok::Plugin(MyPluginFactory::componentData(), parent)
+NowListening::NowListening(QObject *parent, const QList<QVariant> &)
+    : Choqok::Plugin("choqok_nowlistening", parent)
 {
-    KAction *action = new KAction(KIcon("media-playback-start"), i18n("Now Listening"), this);
+    QAction *action = new QAction(QIcon::fromTheme("media-playback-start"), i18n("Now Listening"), this);
     actionCollection()->addAction("nowListening", action);
     connect(action, SIGNAL(triggered(bool)), SLOT(slotPrepareNowListening()));
     setXMLFile("nowlisteningui.rc");
@@ -65,56 +64,56 @@ void NowListening::slotPrepareNowListening()
     bool playerFound = false;
     bool isPlaying = false;
 
-    MPRIS amarok ("amarok");
+    MPRIS amarok("amarok");
     if (amarok.isValid()) {
         if (amarok.isPlaying()) {
-            trackInfo=amarok.getTrackMetadata();
-            isPlaying=true;
+            trackInfo = amarok.getTrackMetadata();
+            isPlaying = true;
         }
-        playerFound=true;
-        player="Amarok";
+        playerFound = true;
+        player = "Amarok";
     }
 
-    MPRIS audacious ("audacious");
+    MPRIS audacious("audacious");
     if (!isPlaying && audacious.isValid()) {
         if (audacious.isPlaying()) {
-            trackInfo=audacious.getTrackMetadata();
-            isPlaying=true;
+            trackInfo = audacious.getTrackMetadata();
+            isPlaying = true;
         }
-        playerFound=true;
-        player="Audacious";
+        playerFound = true;
+        player = "Audacious";
     }
-    
+
     // MPRIS id of Dragon Player contain pid of it.
     QStringList playersList = MPRIS::getRunningPlayers();
-    if ( !playersList.isEmpty() && playersList.indexOf( QRegExp( "dragonplayer(.*)" ) ) > -1) {
-      int i = playersList.indexOf( QRegExp( "dragonplayer(.*)" ) );
-      MPRIS dragon ( playersList.at( i ) );
-      if ( !isPlaying && dragon.isValid() ) {
-          if ( dragon.isPlaying() ) {
-              trackInfo = dragon.getTrackMetadata();
-              isPlaying = true;
-          }
-          playerFound = true;
-          player = "Dragon Player";
-      }
+    if (!playersList.isEmpty() && playersList.indexOf(QRegExp("dragonplayer(.*)")) > -1) {
+        int i = playersList.indexOf(QRegExp("dragonplayer(.*)"));
+        MPRIS dragon(playersList.at(i));
+        if (!isPlaying && dragon.isValid()) {
+            if (dragon.isPlaying()) {
+                trackInfo = dragon.getTrackMetadata();
+                isPlaying = true;
+            }
+            playerFound = true;
+            player = "Dragon Player";
+        }
     }
 
     //need to enable MPRIS Plugin (Qmmp +0.4)
-    MPRIS qmmp ("qmmp");
+    MPRIS qmmp("qmmp");
     if (!isPlaying && qmmp.isValid()) {
         if (qmmp.isPlaying()) {
-            trackInfo=qmmp.getTrackMetadata();
-            isPlaying=true;
+            trackInfo = qmmp.getTrackMetadata();
+            isPlaying = true;
         }
-        playerFound=true;
-        player="Qmmp";
+        playerFound = true;
+        player = "Qmmp";
     }
-    
+
     // only works if enabled D-BUS control interface in VLC (VLC 0.9.0+)
-    MPRIS vlc ( "vlc" );
-    if ( !isPlaying && vlc.isValid() ) {
-        if ( vlc.isPlaying() ) {
+    MPRIS vlc("vlc");
+    if (!isPlaying && vlc.isValid()) {
+        if (vlc.isPlaying()) {
             trackInfo = vlc.getTrackMetadata();
             isPlaying = true;
         }
@@ -136,103 +135,102 @@ void NowListening::slotPrepareNowListening()
     */
 
     if (!isPlaying && QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.juk").value()) {
-        QDBusInterface jukPlayer ( "org.kde.juk",
-                                   "/Player",
-                                   "org.kde.juk.player" );
-        if ( ((QDBusReply<bool>)jukPlayer.call ( "playing" )).value() ) {
-            QDBusReply< QString> reply = jukPlayer.call ("trackProperty","Title" );
-            trackInfo.insert ( "title",reply.value() );
+        QDBusInterface jukPlayer("org.kde.juk",
+                                 "/Player",
+                                 "org.kde.juk.player");
+        if (((QDBusReply<bool>)jukPlayer.call("playing")).value()) {
+            QDBusReply< QString> reply = jukPlayer.call("trackProperty", "Title");
+            trackInfo.insert("title", reply.value());
 
-            reply = jukPlayer.call ( "trackProperty","Track" );
-            trackInfo.insert ( "track",reply.value() );
+            reply = jukPlayer.call("trackProperty", "Track");
+            trackInfo.insert("track", reply.value());
 
-            reply = jukPlayer.call ( "trackProperty","Album" );
-            trackInfo.insert ( "album",reply.value() );
+            reply = jukPlayer.call("trackProperty", "Album");
+            trackInfo.insert("album", reply.value());
 
-            reply = jukPlayer.call ( "trackProperty","Artist" );
-            trackInfo.insert ( "artist",reply.value() );
+            reply = jukPlayer.call("trackProperty", "Artist");
+            trackInfo.insert("artist", reply.value());
 
-            reply = jukPlayer.call ( "trackProperty","Year" );
-            trackInfo.insert ( "year",reply.value() );
+            reply = jukPlayer.call("trackProperty", "Year");
+            trackInfo.insert("year", reply.value());
 
-            reply = jukPlayer.call ( "trackProperty","Genre" );
-            trackInfo.insert ( "genre",reply.value() );
-            isPlaying=true;
+            reply = jukPlayer.call("trackProperty", "Genre");
+            trackInfo.insert("genre", reply.value());
+            isPlaying = true;
         }
-        playerFound=true;
-        player="JuK";
+        playerFound = true;
+        player = "JuK";
     }
 
     if (!isPlaying && QDBusConnection::sessionBus().interface()->isServiceRegistered("org.gnome.Rhythmbox").value())  {
-        QDBusInterface rhythmboxPlayer ( "org.gnome.Rhythmbox" ,
-                                         "/org/gnome/Rhythmbox/Player",
-                                         "org.gnome.Rhythmbox.Player" );
-        if (((QDBusReply<bool>)rhythmboxPlayer.call ( "getPlaying" )).value()) {
-            QDBusReply<QString> uri = rhythmboxPlayer.call ( "getPlayingUri" );
+        QDBusInterface rhythmboxPlayer("org.gnome.Rhythmbox" ,
+                                       "/org/gnome/Rhythmbox/Player",
+                                       "org.gnome.Rhythmbox.Player");
+        if (((QDBusReply<bool>)rhythmboxPlayer.call("getPlaying")).value()) {
+            QDBusReply<QString> uri = rhythmboxPlayer.call("getPlayingUri");
 
-            QDBusInterface rhythmboxShell ( "org.gnome.Rhythmbox" ,
-                                            "/org/gnome/Rhythmbox/Shell",
-                                            "org.gnome.Rhythmbox.Shell" );
+            QDBusInterface rhythmboxShell("org.gnome.Rhythmbox" ,
+                                          "/org/gnome/Rhythmbox/Shell",
+                                          "org.gnome.Rhythmbox.Shell");
 
-            QDBusReply< QMap<QString, QVariant> > reply = rhythmboxShell.call ( "getSongProperties",uri.value() );
-            trackInfo=reply.value();
-            isPlaying=true;
+            QDBusReply< QMap<QString, QVariant> > reply = rhythmboxShell.call("getSongProperties", uri.value());
+            trackInfo = reply.value();
+            isPlaying = true;
         }
-        playerFound=true;
-        player="Rhythmbox";
+        playerFound = true;
+        player = "Rhythmbox";
     }
-
 
     if (!isPlaying && QDBusConnection::sessionBus().interface()->isServiceRegistered("org.exaile.Exaile").value()) {
 
-        QDBusInterface exailePlayer ( "org.exaile.Exaile",
-                                      "/org/exaile/Exaile",
-                                      "org.exaile.Exaile" );
-        if (((QDBusReply<bool> ) exailePlayer.call ( "IsPlaying" )).value()) {
+        QDBusInterface exailePlayer("org.exaile.Exaile",
+                                    "/org/exaile/Exaile",
+                                    "org.exaile.Exaile");
+        if (((QDBusReply<bool>) exailePlayer.call("IsPlaying")).value()) {
             QDBusReply<QString> reply = exailePlayer.call("GetTrackAttr", "tracknumber");
-            trackInfo.insert("tracknumber",reply.value());
+            trackInfo.insert("tracknumber", reply.value());
             reply = exailePlayer.call("GetTrackAttr", "title");
-            trackInfo.insert("title",reply.value());
+            trackInfo.insert("title", reply.value());
             reply = exailePlayer.call("GetTrackAttr", "album");
-            trackInfo.insert("album",reply.value());
+            trackInfo.insert("album", reply.value());
             reply = exailePlayer.call("GetTrackAttr", "artist");
-            trackInfo.insert("artist",reply.value());
+            trackInfo.insert("artist", reply.value());
             reply = exailePlayer.call("GetTrackAttr", "year");
-            trackInfo.insert("year",reply.value());
+            trackInfo.insert("year", reply.value());
             reply = exailePlayer.call("GetTrackAttr", "genre");
-            trackInfo.insert("genre",reply.value());
-            isPlaying=true;
+            trackInfo.insert("genre", reply.value());
+            isPlaying = true;
         }
-        playerFound=true;
-        player="Exaile";
+        playerFound = true;
+        player = "Exaile";
     }
 
     if (!isPlaying && QDBusConnection::sessionBus().interface()->isServiceRegistered("org.bansheeproject.Banshee").value()) {
         // provide for new interface in Banshee 1.0+
-        QDBusInterface bansheePlayer ( "org.bansheeproject.Banshee",
-                                       "/org/bansheeproject/Banshee/PlayerEngine",
-                                       "org.bansheeproject.Banshee.PlayerEngine" );
-        if (!((QDBusReply<QString>) bansheePlayer.call ( "GetCurrentState" )).value().compare ( "playing" )) {
-            QDBusReply< QMap<QString, QVariant> > reply = bansheePlayer.call ( "GetCurrentTrack" );
+        QDBusInterface bansheePlayer("org.bansheeproject.Banshee",
+                                     "/org/bansheeproject/Banshee/PlayerEngine",
+                                     "org.bansheeproject.Banshee.PlayerEngine");
+        if (!((QDBusReply<QString>) bansheePlayer.call("GetCurrentState")).value().compare("playing")) {
+            QDBusReply< QMap<QString, QVariant> > reply = bansheePlayer.call("GetCurrentTrack");
             trackInfo = reply.value();
-            trackInfo.insert ( "title", trackInfo["name"] );
-            isPlaying=true;
+            trackInfo.insert("title", trackInfo["name"]);
+            isPlaying = true;
         }
-        playerFound=true;
-        player="Banshee";
+        playerFound = true;
+        player = "Banshee";
     }
 
     //trying to find not supported players that implamented the MPRIS-Dbus interface
     if (!isPlaying && !MPRIS::getRunningPlayers().isEmpty()) {
         QStringList players = MPRIS::getRunningPlayers();
 
-        for (int i=0; i<players.size(); i++) { //looking for the first playing player
-            playerFound=true;
+        for (int i = 0; i < players.size(); i++) { //looking for the first playing player
+            playerFound = true;
             QString playerName = players.at(i);
-            MPRIS mprisPlayer (playerName);
+            MPRIS mprisPlayer(playerName);
             if (mprisPlayer.isValid() && mprisPlayer.isPlaying()) {
-                trackInfo=mprisPlayer.getTrackMetadata();
-                isPlaying=true;
+                trackInfo = mprisPlayer.getTrackMetadata();
+                isPlaying = true;
                 player = mprisPlayer.getPlayerIdentification().left(
                              mprisPlayer.getPlayerIdentification().lastIndexOf(" ")); //remove the version of player
                 break;
@@ -250,7 +248,7 @@ void NowListening::slotPrepareNowListening()
         return;
     }
 
-    NowListeningSettings::self()->readConfig();
+    NowListeningSettings::self()->load();
     QString text = NowListeningSettings::templateString();
     text.replace("%track%", trackInfo["tracknumber"].toString());
     text.replace("%title%", trackInfo["title"].toString());
@@ -260,8 +258,9 @@ void NowListening::slotPrepareNowListening()
     text.replace("%genre%", trackInfo["genre"].toString());
     text.replace("%player%", player);
 
-    if (Choqok::UI::Global::quickPostWidget() )
+    if (Choqok::UI::Global::quickPostWidget()) {
         Choqok::UI::Global::quickPostWidget()->setText(text);
+    }
 }
 
-// #include "nowlistening.moc"
+#include "nowlistening.moc"

@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,23 +23,20 @@
 
 #include "notifyconfig.h"
 
-#include <QFile>
-#include <QVBoxLayout>
-
-#include <KDebug>
-#include <KLocale>
+#include <KAboutData>
 #include <KPluginFactory>
-#include <KStandardDirs>
 
 #include "account.h"
 #include "accountmanager.h"
+
+#include "dummynotification.h"
 #include "notifysettings.h"
 
-K_PLUGIN_FACTORY( NotifyConfigFactory, registerPlugin < NotifyConfig > (); )
-K_EXPORT_PLUGIN( NotifyConfigFactory( "kcm_choqok_notify" ) )
+K_PLUGIN_FACTORY_WITH_JSON(NotifyConfigFactory, "choqok_notify_config.json",
+                           registerPlugin < NotifyConfig > ();)
 
-NotifyConfig::NotifyConfig(QWidget* parent, const QVariantList& args):
-        KCModule( NotifyConfigFactory::componentData(), parent, args)
+NotifyConfig::NotifyConfig(QWidget *parent, const QVariantList &args)
+    : KCModule(KAboutData::pluginData("kcm_choqok_notify"), parent, args)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
@@ -50,12 +46,12 @@ NotifyConfig::NotifyConfig(QWidget* parent, const QVariantList& args):
     connect(ui.accountsList, SIGNAL(currentRowChanged(int)), SLOT(updateTimelinesList()));
     connect(ui.timelinesList, SIGNAL(itemSelectionChanged()), SLOT(timelineSelectionChanged()));
     connect(ui.interval, SIGNAL(valueChanged(int)), this, SLOT(emitChanged()));
-    connect(ui.adjustPosition, SIGNAL(clicked()), this, SLOT(slotAdjustNotificationPosition()) );
+    connect(ui.adjustPosition, SIGNAL(clicked()), this, SLOT(slotAdjustNotificationPosition()));
     connect(ui.backgroundColor, SIGNAL(changed(QColor)), this, SLOT(emitChanged()));
     connect(ui.foregroundColor, SIGNAL(changed(QColor)), this, SLOT(emitChanged()));
     connect(ui.font, SIGNAL(fontSelected(QFont)), this, SLOT(emitChanged()));
     settings = new NotifySettings(this);
-    ui.lblArrow->setPixmap(KIcon("arrow-right").pixmap(48));
+    ui.lblArrow->setPixmap(QIcon::fromTheme("arrow-right").pixmap(48));
 }
 
 NotifyConfig::~NotifyConfig()
@@ -67,17 +63,17 @@ void NotifyConfig::emitChanged()
     Q_EMIT changed(true);
 }
 
-
 void NotifyConfig::updateTimelinesList()
 {
     ui.timelinesList->blockSignals(true);
     ui.timelinesList->clear();
     QString acc = ui.accountsList->currentItem()->text();
-    Choqok::Account* account = Choqok::AccountManager::self()->findAccount(acc);
-    Q_FOREACH (const QString& tm, account->timelineNames()) {
+    Choqok::Account *account = Choqok::AccountManager::self()->findAccount(acc);
+    Q_FOREACH (const QString &tm, account->timelineNames()) {
         ui.timelinesList->addItem(tm);
-        if(accounts[acc].contains(tm))
-            ui.timelinesList->item(ui.timelinesList->count()-1)->setSelected(true);
+        if (accounts[acc].contains(tm)) {
+            ui.timelinesList->item(ui.timelinesList->count() - 1)->setSelected(true);
+        }
     }
     ui.timelinesList->blockSignals(false);
 }
@@ -85,7 +81,7 @@ void NotifyConfig::updateTimelinesList()
 void NotifyConfig::timelineSelectionChanged()
 {
     QStringList lst;
-    Q_FOREACH (QListWidgetItem* item, ui.timelinesList->selectedItems()) {
+    Q_FOREACH (QListWidgetItem *item, ui.timelinesList->selectedItems()) {
         lst.append(item->text());
     }
     accounts[ui.accountsList->currentItem()->text()] = lst;
@@ -98,10 +94,10 @@ void NotifyConfig::load()
 
     ui.interval->setValue(settings->notifyInterval());
 
-    Q_FOREACH (const QString& acc, accounts.keys()) {
+    Q_FOREACH (const QString &acc, accounts.keys()) {
         ui.accountsList->addItem(acc);
     }
-    if(ui.accountsList->count()>0) {
+    if (ui.accountsList->count() > 0) {
         ui.accountsList->setCurrentRow(0);
         updateTimelinesList();
     }
@@ -113,7 +109,7 @@ void NotifyConfig::load()
 
 void NotifyConfig::save()
 {
-    kDebug()<< accounts.keys();
+    //qDebug()<< accounts.keys();
     settings->setAccounts(accounts);
     settings->setNotifyInterval(ui.interval->value());
     settings->setBackgroundColor(ui.backgroundColor->color());
@@ -125,7 +121,7 @@ void NotifyConfig::save()
 void NotifyConfig::slotAdjustNotificationPosition()
 {
     ui.adjustPosition->setDisabled(true);
-    if(!dummy){
+    if (!dummy) {
         dummy = new DummyNotification(ui.font->font(), ui.foregroundColor->color(),
                                       ui.backgroundColor->color(), this);
         dummy->setAttribute(Qt::WA_DeleteOnClose);

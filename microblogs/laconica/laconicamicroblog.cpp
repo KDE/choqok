@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -23,17 +22,13 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "laconicamicroblog.h"
 
-#include <QDomElement>
+#include <QMimeDatabase>
 
-#include <KAboutData>
-#include <KDebug>
-#include <KGenericFactory>
-#include <KIO/JobClasses>
-#include <KIO/Job>
-#include <KIO/NetAccess>
-#include <KLocale>
+#include <KIO/StoredTransferJob>
+#include <KJobWidgets>
+#include <KLocalizedString>
+#include <KPluginFactory>
 #include <KMessageBox>
-#include <KMimeType>
 
 #include "account.h"
 #include "accountmanager.h"
@@ -45,23 +40,24 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "postwidget.h"
 #include "timelinewidget.h"
 
-#include "twitterapihelper/twitterapimicroblogwidget.h"
-#include "twitterapihelper/twitterapipostwidget.h"
-#include "twitterapihelper/twitterapitimelinewidget.h"
+#include "twitterapimicroblogwidget.h"
+#include "twitterapipostwidget.h"
+#include "twitterapitimelinewidget.h"
 
 #include "laconicaaccount.h"
 #include "laconicacomposerwidget.h"
+#include "laconicadebug.h"
 #include "laconicaeditaccount.h"
 #include "laconicapostwidget.h"
 #include "laconicasearch.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < LaconicaMicroBlog > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_laconica" ) )
+K_PLUGIN_FACTORY_WITH_JSON(LaconicaFactory, "choqok_laconica.json",
+                           registerPlugin < LaconicaMicroBlog > ();)
 
-LaconicaMicroBlog::LaconicaMicroBlog ( QObject* parent, const QVariantList&  )
-: TwitterApiMicroBlog(MyPluginFactory::componentData(), parent), friendsPage(1)
+LaconicaMicroBlog::LaconicaMicroBlog(QObject *parent, const QVariantList &)
+    : TwitterApiMicroBlog("choqok_laconica", parent), friendsPage(1)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     setServiceName("GNU social");
     mTimelineInfos["ReTweets"]->name = i18nc("Timeline name", "Repeated");
     mTimelineInfos["ReTweets"]->description = i18nc("Timeline description", "Your posts that were repeated by others");
@@ -70,120 +66,125 @@ LaconicaMicroBlog::LaconicaMicroBlog ( QObject* parent, const QVariantList&  )
 
 LaconicaMicroBlog::~LaconicaMicroBlog()
 {
-    kDebug();
+    qCDebug(CHOQOK);
 }
 
-Choqok::Account * LaconicaMicroBlog::createNewAccount( const QString &alias )
+Choqok::Account *LaconicaMicroBlog::createNewAccount(const QString &alias)
 {
-    LaconicaAccount *acc = qobject_cast<LaconicaAccount*>( Choqok::AccountManager::self()->findAccount(alias) );
-    if(!acc) {
+    LaconicaAccount *acc = qobject_cast<LaconicaAccount *>(Choqok::AccountManager::self()->findAccount(alias));
+    if (!acc) {
         return new LaconicaAccount(this, alias);
     } else {
         return 0;
     }
 }
 
-ChoqokEditAccountWidget * LaconicaMicroBlog::createEditAccountWidget( Choqok::Account *account, QWidget *parent )
+ChoqokEditAccountWidget *LaconicaMicroBlog::createEditAccountWidget(Choqok::Account *account, QWidget *parent)
 {
-    kDebug();
-    LaconicaAccount *acc = qobject_cast<LaconicaAccount*>(account);
-    if(acc || !account)
+    qCDebug(CHOQOK);
+    LaconicaAccount *acc = qobject_cast<LaconicaAccount *>(account);
+    if (acc || !account) {
         return new LaconicaEditAccountWidget(this, acc, parent);
-    else{
-        kDebug()<<"Account passed here is not a LaconicaAccount!";
+    } else {
+        qCDebug(CHOQOK) << "Account passed here is not a LaconicaAccount!";
         return 0L;
     }
 }
 
-Choqok::UI::MicroBlogWidget * LaconicaMicroBlog::createMicroBlogWidget( Choqok::Account *account, QWidget *parent )
+Choqok::UI::MicroBlogWidget *LaconicaMicroBlog::createMicroBlogWidget(Choqok::Account *account, QWidget *parent)
 {
     return new TwitterApiMicroBlogWidget(account, parent);
 }
 
-Choqok::UI::TimelineWidget * LaconicaMicroBlog::createTimelineWidget( Choqok::Account *account,
-                                                                 const QString &timelineName, QWidget *parent )
+Choqok::UI::TimelineWidget *LaconicaMicroBlog::createTimelineWidget(Choqok::Account *account,
+        const QString &timelineName, QWidget *parent)
 {
     return new TwitterApiTimelineWidget(account, timelineName, parent);
 }
 
-Choqok::UI::PostWidget* LaconicaMicroBlog::createPostWidget(Choqok::Account* account,
-                                                            Choqok::Post *post, QWidget* parent)
+Choqok::UI::PostWidget *LaconicaMicroBlog::createPostWidget(Choqok::Account *account,
+        Choqok::Post *post, QWidget *parent)
 {
     return new LaconicaPostWidget(account, post, parent);
 }
 
-Choqok::UI::ComposerWidget* LaconicaMicroBlog::createComposerWidget(Choqok::Account* account, QWidget* parent)
+Choqok::UI::ComposerWidget *LaconicaMicroBlog::createComposerWidget(Choqok::Account *account, QWidget *parent)
 {
     return new LaconicaComposerWidget(account, parent);
 }
 
-QString LaconicaMicroBlog::profileUrl( Choqok::Account *account, const QString &username) const
+QString LaconicaMicroBlog::profileUrl(Choqok::Account *account, const QString &username) const
 {
-    TwitterApiAccount *acc = qobject_cast<TwitterApiAccount*>(account);
-    if(username.contains('@')){
+    TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(account);
+    if (username.contains('@')) {
         QStringList lst = username.split('@', QString::SkipEmptyParts);
-        if(lst.count() == 2){
-            if(lst[1].endsWith(QString(".status.net"))){
+        if (lst.count() == 2) {
+            if (lst[1].endsWith(QString(".status.net"))) {
                 return QString("http://").arg(lst[1]);
             } else {
                 return QString("http://%1/%2").arg(lst[1]).arg(lst[0]);
             }
         }
     }
-    if(acc){
-        return QString( acc->homepageUrl().prettyUrl(KUrl::AddTrailingSlash) + username) ;
-    } else
+    if (acc) {
+        return QString(acc->homepageUrl().toDisplayString() + '/' + username) ;
+    } else {
         return QString();
+    }
 }
 
-QString LaconicaMicroBlog::postUrl ( Choqok::Account *account,  const QString &username,
-                                     const QString &postId ) const
+QString LaconicaMicroBlog::postUrl(Choqok::Account *account,  const QString &username,
+                                   const QString &postId) const
 {
     Q_UNUSED(username)
-    TwitterApiAccount *acc = qobject_cast<TwitterApiAccount*>(account);
-    if(acc){
-        KUrl url( acc->homepageUrl() );
-        url.addPath ( QString("/notice/%1" ).arg ( postId ) );
-        return QString ( url.prettyUrl() );
-    } else
+    TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(account);
+    if (acc) {
+        QUrl url(acc->homepageUrl());
+        url.setPath(url.path() + QString("/notice/%1").arg(postId));
+        return QString(url.toDisplayString());
+    } else {
         return QString();
+    }
 }
 
-TwitterApiSearch* LaconicaMicroBlog::searchBackend()
+TwitterApiSearch *LaconicaMicroBlog::searchBackend()
 {
-    if(!mSearchBackend)
+    if (!mSearchBackend) {
         mSearchBackend = new LaconicaSearch(this);
+    }
     return mSearchBackend;
 }
 
-void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Choqok::Post* post,
-                                                 const QString& mediumToAttach)
+void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Choqok::Post *post,
+        const QString &mediumToAttach)
 {
-    if( mediumToAttach.isEmpty() ){
+    if (mediumToAttach.isEmpty()) {
         TwitterApiMicroBlog::createPost(theAccount, post);
     } else {
-        QByteArray picData;
         QString tmp;
-        KUrl picUrl(mediumToAttach);
-        KIO::TransferJob *picJob = KIO::get( picUrl, KIO::Reload, KIO::HideProgressInfo);
-        if( !KIO::NetAccess::synchronousRun(picJob, 0, &picData) ){
-            kError()<<"Job error: " << picJob->errorString();
+        QUrl picUrl(mediumToAttach);
+        KIO::StoredTransferJob *picJob = KIO::storedGet(picUrl, KIO::Reload, KIO::HideProgressInfo);
+        picJob->exec();
+        if (picJob->error()) {
+            qCCritical(CHOQOK) << "Job error: " << picJob->errorString();
             KMessageBox::detailedError(Choqok::UI::Global::mainWindow(),
-                                       i18n( "Uploading medium failed: cannot read the medium file." ),
-            picJob->errorString() );
+                                       i18n("Uploading medium failed: cannot read the medium file."),
+                                       picJob->errorString());
             return;
         }
-        if ( picData.count() == 0 ) {
-            kError() << "Cannot read the media file, please check if it exists.";
-            KMessageBox::error( Choqok::UI::Global::mainWindow(),
-                                i18n( "Uploading medium failed: cannot read the medium file." ) );
+        const QByteArray picData = picJob->data();
+        if (picData.count() == 0) {
+            qCCritical(CHOQOK) << "Cannot read the media file, please check if it exists.";
+            KMessageBox::error(Choqok::UI::Global::mainWindow(),
+                               i18n("Uploading medium failed: cannot read the medium file."));
             return;
         }
         ///Documentation: http://identi.ca/notice/17779990
-        TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
-        KUrl url = account->apiUrl();
-        url.addPath ( "/statuses/update.xml" );
-        QByteArray fileContentType = KMimeType::findByUrl( picUrl, 0, true )->name().toUtf8();
+        TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
+        QUrl url = account->apiUrl();
+        url.setPath(url.path() + "/statuses/update.xml");
+        const QMimeDatabase db;
+        QByteArray fileContentType = db.mimeTypeForUrl(picUrl).name().toUtf8();
 
         QMap<QString, QByteArray> formdata;
         formdata["status"] = post->content.toUtf8();
@@ -201,26 +202,30 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account* theAccount, Ch
         QByteArray data = Choqok::MediaManager::createMultipartFormData(formdata, listMediafiles);
 
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
-        if ( !job ) {
-            kError() << "Cannot create a http POST request!";
+        if (!job) {
+            qCCritical(CHOQOK) << "Cannot create a http POST request!";
             return;
         }
-        job->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=AaB03x" );
-        job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::POST));
+        job->addMetaData(QStringLiteral("content-type"),
+                         QStringLiteral("Content-Type: multipart/form-data; boundary=AaB03x"));
+        job->addMetaData(QStringLiteral("customHTTPHeader"),
+                         QStringLiteral("Authorization: ") +
+                         authorizationHeader(account, url, QOAuth::POST));
         mCreatePostMap[ job ] = post;
         mJobsAccount[job] = theAccount;
-        connect( job, SIGNAL( result( KJob* ) ),
-                 SLOT( slotCreatePost(KJob*) ) );
+        connect(job, SIGNAL(result(KJob*)),
+                SLOT(slotCreatePost(KJob*)));
         job->start();
     }
 }
 
-QString LaconicaMicroBlog::generateRepeatedByUserTooltip(const QString& username)
+QString LaconicaMicroBlog::generateRepeatedByUserTooltip(const QString &username)
 {
-    if( Choqok::AppearanceSettings::showRetweetsInChoqokWay() )
+    if (Choqok::AppearanceSettings::showRetweetsInChoqokWay()) {
         return i18n("Repeat of %1", username);
-    else
+    } else {
         return i18n("Repeated by %1", username);
+    }
 }
 
 QString LaconicaMicroBlog::repeatQuestion()
@@ -228,67 +233,71 @@ QString LaconicaMicroBlog::repeatQuestion()
     return i18n("Repeat this notice?");
 }
 
-void LaconicaMicroBlog::listFriendsUsername(TwitterApiAccount* theAccount, bool active)
+void LaconicaMicroBlog::listFriendsUsername(TwitterApiAccount *theAccount, bool active)
 {
+    Q_UNUSED(active);
     friendsList.clear();
-    if ( theAccount ) {
+    if (theAccount) {
         doRequestFriendsScreenName(theAccount, 1);
     }
 }
 
-void LaconicaMicroBlog::requestFriendsScreenName(TwitterApiAccount* theAccount, bool active)
+void LaconicaMicroBlog::requestFriendsScreenName(TwitterApiAccount *theAccount, bool active)
 {
+    Q_UNUSED(active);
     doRequestFriendsScreenName(theAccount, 1);
 }
 
-void LaconicaMicroBlog::doRequestFriendsScreenName(TwitterApiAccount* theAccount, int page)
+void LaconicaMicroBlog::doRequestFriendsScreenName(TwitterApiAccount *theAccount, int page)
 {
-    kDebug();
-    TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
-    KUrl url = account->apiUrl();
-    url.addPath( QString("/statuses/friends.%1").arg(format));
+    qCDebug(CHOQOK);
+    TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
+    QUrl url = account->apiUrl();
+    url = url.adjusted(QUrl::StripTrailingSlash);
+    url.setPath(url.path() + (QString("/statuses/friends.%1").arg(format)));
     QOAuth::ParamMap params;
-    if( page > 1 ) {
-        params.insert( "page", QByteArray::number( page ) );
-        url.addQueryItem( "page", QString::number( page ) );
+    if (page > 1) {
+        params.insert("page", QByteArray::number(page));
+        url.addQueryItem("page", QString::number(page));
     }
 
-    KIO::StoredTransferJob *job = KIO::storedGet( url, KIO::Reload, KIO::HideProgressInfo ) ;
-    if ( !job ) {
-        kDebug() << "Cannot create an http GET request!";
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
+    if (!job) {
+        qCDebug(CHOQOK) << "Cannot create an http GET request!";
         return;
     }
-    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url,
-                                                                                 QOAuth::GET, params));
+    job->addMetaData(QStringLiteral("customHTTPHeader"),
+                     QStringLiteral("Authorization: ") +
+                     authorizationHeader(account, url, QOAuth::GET, params));
     mJobsAccount[job] = theAccount;
-    connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFriendsScreenName(KJob*) ) );
+    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRequestFriendsScreenName(KJob*)));
     job->start();
 }
 
-void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob* job)
+void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob *job)
 {
-    kDebug();
-    TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount *>( mJobsAccount.take(job) );
-    KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
+    qCDebug(CHOQOK);
+    TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount *>(mJobsAccount.take(job));
+    KIO::StoredTransferJob *stJob = qobject_cast<KIO::StoredTransferJob *>(job);
     QStringList newList;
     //if(format=="json"){
-        newList = readUsersScreenName( theAccount, stJob->data() );
+    newList = readUsersScreenName(theAccount, stJob->data());
     //} else {
     //    newList = readUsersScreenNameFromXml( theAccount, stJob->data() );
     //}
     friendsList << newList;
-    if ( newList.count() == 100 ) {
-        doRequestFriendsScreenName( theAccount, ++friendsPage );
+    if (newList.count() == 100) {
+        doRequestFriendsScreenName(theAccount, ++friendsPage);
     } else {
         friendsList.removeDuplicates();
         theAccount->setFriendsList(friendsList);
-        Q_EMIT friendsUsernameListed( theAccount, friendsList );
+        Q_EMIT friendsUsernameListed(theAccount, friendsList);
     }
 }
 
 /*QStringList LaconicaMicroBlog::readUsersScreenNameFromXml(Choqok::Account* theAccount, const QByteArray& buffer)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     QStringList list;
     QDomDocument document;
     document.setContent( buffer );
@@ -300,7 +309,7 @@ void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob* job)
             Q_EMIT error(theAccount, ServerError, err, Critical);
         } else {
             err = i18n( "Retrieving the friends list failed. The data returned from the server is corrupted." );
-            kDebug() << "there's no users tag in XML\t the XML is: \n" << buffer;
+            qCDebug(CHOQOK) << "there's no users tag in XML\t the XML is: \n" << buffer;
             Q_EMIT error(theAccount, ParsingError, err, Critical);
             list<<QString(' ');
         }
@@ -310,7 +319,7 @@ void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob* job)
     QString timeStr;
     while ( !node.isNull() ) {
         if ( node.toElement().tagName() != "user" ) {
-            kDebug() << "there's no user tag in XML!\n"<<buffer;
+            qCDebug(CHOQOK) << "there's no user tag in XML!\n"<<buffer;
             return list;
         }
         QDomNode node2 = node.firstChild();
@@ -326,50 +335,52 @@ void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob* job)
     return list;
 }*/
 
-void LaconicaMicroBlog::fetchConversation(Choqok::Account* theAccount, const QString& conversationId)
+void LaconicaMicroBlog::fetchConversation(Choqok::Account *theAccount, const QString &conversationId)
 {
-    kDebug();
-    if ( conversationId.isEmpty()) {
+    qCDebug(CHOQOK);
+    if (conversationId.isEmpty()) {
         return;
     }
-    TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
-    KUrl url = account->apiUrl();
-    url.addPath ( QString("/statusnet/conversation/%1.%2").arg(conversationId).arg(format) );
+    TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
+    QUrl url = account->apiUrl();
+    url.setPath(QString("/statusnet/conversation/%1.%2").arg(conversationId).arg(format));
 
-    KIO::StoredTransferJob *job = KIO::storedGet ( url, KIO::Reload, KIO::HideProgressInfo ) ;
-    if ( !job ) {
-        kDebug() << "Cannot create an http GET request!";
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
+    if (!job) {
+        qCDebug(CHOQOK) << "Cannot create an http GET request!";
         return;
     }
-    job->addMetaData("customHTTPHeader", "Authorization: " + authorizationHeader(account, url, QOAuth::GET));
+    job->addMetaData(QStringLiteral("customHTTPHeader"),
+                     QStringLiteral("Authorization: ") +
+                     authorizationHeader(account, url, QOAuth::GET));
     mFetchConversationMap[ job ] = conversationId;
     mJobsAccount[ job ] = theAccount;
-    connect ( job, SIGNAL ( result ( KJob* ) ), this, SLOT ( slotFetchConversation ( KJob* ) ) );
+    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchConversation(KJob*)));
     job->start();
 }
 
-void LaconicaMicroBlog::slotFetchConversation(KJob* job)
+void LaconicaMicroBlog::slotFetchConversation(KJob *job)
 {
-    kDebug();
-    if(!job) {
-        kWarning()<<"NULL Job returned";
+    qCDebug(CHOQOK);
+    if (!job) {
+        qCWarning(CHOQOK) << "NULL Job returned";
         return;
     }
-    QList<Choqok::Post*> posts;
+    QList<Choqok::Post *> posts;
     QString conversationId = mFetchConversationMap.take(job);
     Choqok::Account *theAccount = mJobsAccount.take(job);
-    if ( job->error() ) {
-        kDebug() << "Job Error: " << job->errorString();
-        Q_EMIT error ( theAccount, Choqok::MicroBlog::CommunicationError,
-                     i18n("Fetching conversation failed. %1", job->errorString()), Normal );
+    if (job->error()) {
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
+        Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
+                     i18n("Fetching conversation failed. %1", job->errorString()), Normal);
     } else {
-        KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> ( job );
+        KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> (job);
         //if(format=="json"){
-            posts = readTimeline ( theAccount, stj->data() );
+        posts = readTimeline(theAccount, stj->data());
         //} else {
         //    posts = readTimelineFromXml ( theAccount, stj->data() );
         //}
-        if( !posts.isEmpty() ){
+        if (!posts.isEmpty()) {
             Q_EMIT conversationFetched(theAccount, conversationId, posts);
         }
     }

@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -25,21 +24,19 @@
 
 #include <QApplication>
 #include <QHash>
+#include <QIcon>
+#include <QMimeDatabase>
 
-#include <KDebug>
 #include <KEmoticons>
 #include <KEmoticonsTheme>
-#include <KIcon>
 #include <KImageCache>
-#include <KIO/Job>
-#include <KIO/JobClasses>
-#include <KIO/NetAccess>
-#include <KLocale>
+#include <KIO/StoredTransferJob>
+#include <KLocalizedString>
 #include <KMessageBox>
-#include <KMimeType>
 
 #include "choqokbehaviorsettings.h"
 #include "choqokuiglobal.h"
+#include "libchoqokdebug.h"
 #include "pluginmanager.h"
 #include "uploader.h"
 
@@ -50,161 +47,163 @@ class MediaManager::Private
 {
 public:
     Private()
-    :emoticons(KEmoticons().theme()),cache("choqok-userimages", 30000000), uploader(0)
+        : emoticons(KEmoticons().theme()), cache("choqok-userimages", 30000000), uploader(0)
     {}
     KEmoticonsTheme emoticons;
     KImageCache cache;
-    QHash<KJob*, QString> queue;
+    QHash<KJob *, QString> queue;
     QPixmap defaultImage;
     Uploader *uploader;
 };
 
 MediaManager::MediaManager()
-    : QObject( qApp ), d(new Private)
+    : QObject(qApp), d(new Private)
 {
-  KIcon icon("image-loading");
-  d->defaultImage = icon.pixmap(48);
+    d->defaultImage = QIcon::fromTheme("image-loading").pixmap(48);
 }
 
 MediaManager::~MediaManager()
 {
     delete d;
     mSelf = 0L;
-    kDebug();
 }
 
-MediaManager * MediaManager::mSelf = 0L;
+MediaManager *MediaManager::mSelf = 0L;
 
-MediaManager * MediaManager::self()
+MediaManager *MediaManager::self()
 {
-    if ( !mSelf )
+    if (!mSelf) {
         mSelf = new MediaManager;
+    }
     return mSelf;
 }
 
-QPixmap& MediaManager::defaultImage()
+QPixmap &MediaManager::defaultImage()
 {
     return d->defaultImage;
 }
 
-QString MediaManager::parseEmoticons(const QString& text)
+QString MediaManager::parseEmoticons(const QString &text)
 {
-  return d->emoticons.parseEmoticons(text,KEmoticonsTheme::DefaultParse,QStringList() << "(e)");
+    return d->emoticons.parseEmoticons(text, KEmoticonsTheme::DefaultParse, QStringList() << "(e)");
 }
 
-QPixmap MediaManager::fetchImage( const QString& remoteUrl, ReturnMode mode /*= Sync*/ )
+QPixmap MediaManager::fetchImage(const QString &remoteUrl, ReturnMode mode /*= Sync*/)
 {
     QPixmap p;
-    if( d->cache.findPixmap(remoteUrl, &p) ) {
+    if (d->cache.findPixmap(remoteUrl, &p)) {
         Q_EMIT imageFetched(remoteUrl, p);
-    } else if(mode == Async) {
-        if ( d->queue.values().contains( remoteUrl ) ) {
+    } else if (mode == Async) {
+        if (d->queue.values().contains(remoteUrl)) {
             ///The file is on the way, wait to download complete.
             return p;
         }
-        KUrl srcUrl(remoteUrl);
-        KIO::Job *job = KIO::storedGet( srcUrl, KIO::NoReload, KIO::HideProgressInfo ) ;
-        if ( !job ) {
-            kDebug() << "Cannot create a FileCopyJob!";
-            QString errMsg = i18n( "Cannot create a KDE Job. Please check your installation.");
-            Q_EMIT fetchError( remoteUrl, errMsg );
+        QUrl srcUrl(remoteUrl);
+        KIO::StoredTransferJob *job = KIO::storedGet(srcUrl, KIO::NoReload, KIO::HideProgressInfo) ;
+        if (!job) {
+            qCDebug(CHOQOK) << "Cannot create a FileCopyJob!";
+            QString errMsg = i18n("Cannot create a KDE Job. Please check your installation.");
+            Q_EMIT fetchError(remoteUrl, errMsg);
             return p;
         }
-        d->queue.insert(job, remoteUrl );
-        connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotImageFetched( KJob * ) ) );
+        d->queue.insert(job, remoteUrl);
+        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotImageFetched(KJob*)));
         job->start();
     }
     return p;
 }
 
-void MediaManager::slotImageFetched( KJob * job )
+void MediaManager::slotImageFetched(KJob *job)
 {
-    KIO::StoredTransferJob *baseJob = qobject_cast<KIO::StoredTransferJob *>( job );
+    KIO::StoredTransferJob *baseJob = qobject_cast<KIO::StoredTransferJob *>(job);
     QString remote = d->queue.value(job);
-    d->queue.remove( job );
-    if ( job->error() ) {
-        kDebug() << "Job error: " << job->error() << "\t" << job->errorString();
-        QString errMsg = i18n( "Cannot download image from %1.",
-                               job->errorString() );
-        Q_EMIT fetchError( remote, errMsg );
+    d->queue.remove(job);
+    if (job->error()) {
+        qCDebug(CHOQOK) << "Job error: " << job->error() << "\t" << job->errorString();
+        QString errMsg = i18n("Cannot download image from %1.",
+                              job->errorString());
+        Q_EMIT fetchError(remote, errMsg);
     } else {
         QPixmap p;
-        if( !baseJob->data().startsWith(QByteArray("<?xml version=\"")) &&
-            p.loadFromData( baseJob->data() ) ) {
-            d->cache.insertPixmap( remote, p );
-            Q_EMIT imageFetched( remote, p );
+        if (!baseJob->data().startsWith(QByteArray("<?xml version=\"")) &&
+                p.loadFromData(baseJob->data())) {
+            d->cache.insertPixmap(remote, p);
+            Q_EMIT imageFetched(remote, p);
         } else {
-            kDebug()<<"Parse Error: \nBase Url:"<<baseJob->url()<<"\ndata:"<<baseJob->data();
-            Q_EMIT fetchError( remote, i18n( "The download failed. The returned file is corrupted." ) );
+            qCDebug(CHOQOK) << "Parse Error: \nBase Url:" << baseJob->url() << "\ndata:" << baseJob->data();
+            Q_EMIT fetchError(remote, i18n("The download failed. The returned file is corrupted."));
         }
     }
 }
 
 void MediaManager::clearImageCache()
 {
-  d->cache.clear();
+    d->cache.clear();
 }
 
-QPixmap MediaManager::convertToGrayScale(const QPixmap& pic)
+QPixmap MediaManager::convertToGrayScale(const QPixmap &pic)
 {
     QImage result = pic.toImage();
-    for ( int y = 0; y < result.height(); ++y ) {
-        for ( int x = 0; x < result.width(); ++x ) {
-            int pixel = result.pixel( x, y );
-            int gray = qGray( pixel );
-            int alpha = qAlpha( pixel );
-            result.setPixel( x, y, qRgba( gray, gray, gray, alpha ) );
+    for (int y = 0; y < result.height(); ++y) {
+        for (int x = 0; x < result.width(); ++x) {
+            int pixel = result.pixel(x, y);
+            int gray = qGray(pixel);
+            int alpha = qAlpha(pixel);
+            result.setPixel(x, y, qRgba(gray, gray, gray, alpha));
         }
     }
-    return QPixmap::fromImage( result );
+    return QPixmap::fromImage(result);
 }
 
-void MediaManager::uploadMedium(const KUrl& localUrl, const QString& pluginId)
+void MediaManager::uploadMedium(const QUrl &localUrl, const QString &pluginId)
 {
     QString pId = pluginId;
-    if(pId.isEmpty())
+    if (pId.isEmpty()) {
         pId = Choqok::BehaviorSettings::lastUsedUploaderPlugin();
-    if(pId.isEmpty()){
+    }
+    if (pId.isEmpty()) {
         Q_EMIT mediumUploadFailed(localUrl, i18n("No pluginId specified, And last used plugin is null."));
         return;
     }
-    if(!d->uploader){
+    if (!d->uploader) {
         Plugin *plugin = PluginManager::self()->loadPlugin(pId);
-        d->uploader = qobject_cast<Uploader*>(plugin);
-    } else if(d->uploader->pluginName() != pId) {
-//         kDebug()<<"CREATING A NEW UPLOADER OBJECT";
+        d->uploader = qobject_cast<Uploader *>(plugin);
+    } else if (d->uploader->pluginName() != pId) {
+//         qCDebug(CHOQOK)<<"CREATING A NEW UPLOADER OBJECT";
         PluginManager::self()->unloadPlugin(d->uploader->pluginName());
         Plugin *plugin = PluginManager::self()->loadPlugin(pId);
-        d->uploader = qobject_cast<Uploader*>(plugin);
+        d->uploader = qobject_cast<Uploader *>(plugin);
     }
-    if(!d->uploader)
-        return;
-    QByteArray picData;
-    KIO::TransferJob *picJob = KIO::get( localUrl, KIO::Reload, KIO::HideProgressInfo);
-    if( !KIO::NetAccess::synchronousRun(picJob, 0, &picData) ){
-        kError()<<"Job error: " << picJob->errorString();
-        KMessageBox::detailedError(UI::Global::mainWindow(), i18n( "Uploading medium failed: cannot read the medium file." ),
-                                               picJob->errorString() );
-                                               return;
-    }
-    if ( picData.count() == 0 ) {
-        kError() << "Cannot read the media file, please check if it exists.";
-        KMessageBox::error( UI::Global::mainWindow(), i18n( "Uploading medium failed: cannot read the medium file." ) );
+    if (!d->uploader) {
         return;
     }
-    QByteArray type = KMimeType::findByUrl( localUrl, 0, true )->name().toUtf8();
-    connect( d->uploader, SIGNAL(mediumUploaded(KUrl,QString)),
-             this, SIGNAL(mediumUploaded(KUrl,QString)) );
-    connect( d->uploader, SIGNAL(uploadingFailed(KUrl,QString)),
-             this, SIGNAL(mediumUploadFailed(KUrl,QString)) );
-    d->uploader->upload(localUrl, picData, type);
+    KIO::StoredTransferJob *picJob = KIO::storedGet(localUrl, KIO::Reload, KIO::HideProgressInfo);
+    picJob->exec();
+    if (picJob->error()) {
+        qCritical() << "Job error: " << picJob->errorString();
+        KMessageBox::detailedError(UI::Global::mainWindow(), i18n("Uploading medium failed: cannot read the medium file."),
+                                   picJob->errorString());
+        return;
+    }
+    const QByteArray picData = picJob->data();
+    if (picData.count() == 0) {
+        qCritical() << "Cannot read the media file, please check if it exists.";
+        KMessageBox::error(UI::Global::mainWindow(), i18n("Uploading medium failed: cannot read the medium file."));
+        return;
+    }
+    connect(d->uploader, SIGNAL(mediumUploaded(QUrl,QString)),
+            this, SIGNAL(mediumUploaded(QUrl,QString)));
+    connect(d->uploader, SIGNAL(uploadingFailed(QUrl,QString)),
+            this, SIGNAL(mediumUploadFailed(QUrl,QString)));
+    const QMimeDatabase db;
+    d->uploader->upload(localUrl, picData, db.mimeTypeForUrl(localUrl).name().toLocal8Bit());
 }
 
-QByteArray MediaManager::createMultipartFormData(const QMap< QString, QByteArray >& formdata,
-                                                 const QList< QMap< QString, QByteArray > >& mediaFiles)
+QByteArray MediaManager::createMultipartFormData(const QMap< QString, QByteArray > &formdata,
+        const QList< QMap< QString, QByteArray > > &mediaFiles)
 {
     QByteArray newLine("\r\n");
-    QString formHeader( newLine + "Content-Disposition: form-data; name=\"%1\"" );
+    QString formHeader(newLine + "Content-Disposition: form-data; name=\"%1\"");
     QByteArray header("--AaB03x");
     QByteArray footer("--AaB03x--");
     QString fileHeader(newLine + "Content-Disposition: file; name=\"%1\"; filename=\"%2\"");
@@ -212,11 +211,11 @@ QByteArray MediaManager::createMultipartFormData(const QMap< QString, QByteArray
 
     data.append(header);
 
-    if ( !mediaFiles.isEmpty() ) {
+    if (!mediaFiles.isEmpty()) {
         QList< QMap< QString, QByteArray > >::const_iterator it1 = mediaFiles.constBegin();
         QList< QMap< QString, QByteArray > >::const_iterator endIt1 = mediaFiles.constEnd();
-        for(; it1!=endIt1; ++it1){
-            data.append( fileHeader.arg(it1->value("name").data()).arg(it1->value("filename").data()).toUtf8() );
+        for (; it1 != endIt1; ++it1) {
+            data.append(fileHeader.arg(it1->value("name").data()).arg(it1->value("filename").data()).toUtf8());
             data.append(newLine + "Content-Type: " + it1->value("mediumType"));
             data.append(newLine);
             data.append(newLine + it1->value("medium"));
@@ -225,7 +224,7 @@ QByteArray MediaManager::createMultipartFormData(const QMap< QString, QByteArray
 
     QMap< QString, QByteArray >::const_iterator it = formdata.constBegin();
     QMap< QString, QByteArray >::const_iterator endIt = formdata.constEnd();
-    for(;it!=endIt; ++it){
+    for (; it != endIt; ++it) {
         data.append(newLine);
         data.append(header);
         data.append(formHeader.arg(it.key()).toLatin1());
@@ -239,4 +238,3 @@ QByteArray MediaManager::createMultipartFormData(const QMap< QString, QByteArray
 }
 
 }
-#include "mediamanager.moc"

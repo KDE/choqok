@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -23,20 +22,19 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef POSTWIDGET_H
 #define POSTWIDGET_H
 
-#include <QTimer>
-
-#include <KDateTime>
-#include <KIcon>
+#include <QDateTime>
 
 #include "account.h"
 #include "choqoktypes.h"
 #include "microblog.h"
 
-class KAction;
-class KPushButton;
+class QAction;
+class QPushButton;
 
-namespace Choqok {
-namespace UI {
+namespace Choqok
+{
+namespace UI
+{
 
 class TextBrowser;
 
@@ -49,9 +47,9 @@ Attribute "Qt::WA_DeleteOnClose" is enabled at construtor! So please use close()
 class CHOQOK_EXPORT PostWidget : public QWidget
 {
     Q_OBJECT
-    Q_PROPERTY (bool read READ isRead)
+    Q_PROPERTY(bool read READ isRead)
 public:
-    explicit PostWidget( Choqok::Account* account, Choqok::Post* post, QWidget* parent = 0 );
+    explicit PostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
     virtual ~PostWidget();
     Post *currentPost() const;
     virtual void setRead(bool read = true);
@@ -75,10 +73,10 @@ public:
 
     @see setUiStyle()
     */
-    static void setStyle( const QColor& unreadColor, const QColor& unreadBack,
-                          const QColor& readColor, const QColor& readBack,
-                          const QColor& ownColor, const QColor& ownBack,
-                          const QFont& font);
+    static void setStyle(const QColor &unreadColor, const QColor &unreadBack,
+                         const QColor &readColor, const QColor &readBack,
+                         const QColor &ownColor, const QColor &ownBack,
+                         const QFont &font);
 
     /**
     @brief Set current post
@@ -87,13 +85,13 @@ public:
 
     After changing current post, Don't forget to call @ref initUi() to update post UI.
     */
-    void setCurrentPost( Post *post );
+    void setCurrentPost(Post *post);
 
     /**
     @brief Sets Post sign
     sign is the text that showed as sign of this post under post content.
     */
-    void setSign( const QString &sign );
+    void setSign(const QString &sign);
 
     /**
     @return post sign
@@ -105,7 +103,7 @@ public:
     @brief Sets post content
     Post content is an html text that showed as post text.
     */
-    void setContent( const QString &content );
+    void setContent(const QString &content);
 
     /**
     @return post content
@@ -115,7 +113,7 @@ public:
 
     void deleteLater();
 
-    TextBrowser * mainWidget();
+    TextBrowser *mainWidget();
 
     QStringList urls();
 
@@ -123,9 +121,9 @@ public:
 
     /**
      * Plugins can add status specific actions and process them internally
-     * 
+     *
      */
-    static void addAction( KAction *action );
+    static void addAction(QAction *action);
 
     static QString getBaseStyle();
 
@@ -154,11 +152,11 @@ Q_SIGNALS:
     Emitted when this widget is about to close!
     postId and this returned!
     */
-    void aboutClosing( const QString &postId, PostWidget *widget);
+    void aboutClosing(const QString &postId, PostWidget *widget);
 
 protected Q_SLOTS:
 
-    virtual void checkAnchor(const QUrl & url);
+    virtual void checkAnchor(const QUrl &url);
     /**
     Set height of widget related to text contents
     */
@@ -180,43 +178,42 @@ protected Q_SLOTS:
     /**
     Internal slot to remove/close/destroy this post after bing deleted
     */
-    void slotCurrentPostRemoved( Choqok::Account *theAccount, Choqok::Post *post );
+    void slotCurrentPostRemoved(Choqok::Account *theAccount, Choqok::Post *post);
 
-    virtual void slotPostError( Choqok::Account *theAccount, Choqok::Post *post,
-                                Choqok::MicroBlog::ErrorType error, const QString &errorMessage);
+    virtual void slotPostError(Choqok::Account *theAccount, Choqok::Post *post,
+                               Choqok::MicroBlog::ErrorType error, const QString &errorMessage);
 
-    void avatarFetchError( const QString &remoteUrl, const QString &errMsg );
-    void avatarFetched( const QString &remoteUrl, const QPixmap &pixmap );
+    void avatarFetchError(const QString &remoteUrl, const QString &errMsg);
+    void avatarFetched(const QString &remoteUrl, const QPixmap &pixmap);
 
-    void slotImageFetched( const QString &remoteUrl, const QPixmap &pixmap );
-    virtual void mousePressEvent(QMouseEvent* ev);
+    void slotImageFetched(const QString &remoteUrl, const QPixmap &pixmap);
+    virtual void mousePressEvent(QMouseEvent *ev);
 
 protected:
     virtual void setupUi();
-    virtual void closeEvent(QCloseEvent* event);
+    virtual void closeEvent(QCloseEvent *event);
     virtual void setupAvatar();
     virtual void fetchImage();
-    virtual void wheelEvent(QWheelEvent* );
-    virtual void resizeEvent ( QResizeEvent * event );
-    virtual void enterEvent ( QEvent * event );
-    virtual void leaveEvent ( QEvent * event );
-    virtual QString prepareStatus( const QString &text );
+    virtual void wheelEvent(QWheelEvent *);
+    virtual void resizeEvent(QResizeEvent *event);
+    virtual void enterEvent(QEvent *event);
+    virtual void leaveEvent(QEvent *event);
+    virtual QString prepareStatus(const QString &text);
     virtual void setDirection();
     virtual QString generateSign();
-    virtual QString formatDateTime( const QDateTime &time );
-    virtual QString formatDateTime( const KDateTime &time );
+    virtual QString formatDateTime(const QDateTime &time);
     virtual bool isResendAvailable() ;
     virtual bool isRemoveAvailable() ;
     virtual bool isOwnPost();
-    virtual QString removeTags(const QString& text) const;
+    virtual QString removeTags(const QString &text) const;
     /**
     @brief Create and Add a new button to widget
     This function will add button to UI!
     @return added button, for some managements such as connect to a slot
     */
-    KPushButton * addButton(const QString & objName, const QString & toolTip, const QString & icon);
-    KPushButton * addButton(const QString & objName, const QString & toolTip, const KIcon & icon);
-    QMap<QString, KPushButton*> &buttons();
+    QPushButton *addButton(const QString &objName, const QString &toolTip, const QString &icon);
+    QPushButton *addButton(const QString &objName, const QString &toolTip, const QIcon &icon);
+    QMap<QString, QPushButton *> &buttons();
 
 protected:
     TextBrowser *_mainWidget;
@@ -231,7 +228,7 @@ protected:
     static const QString otherText;
     static const QRegExp dirRegExp;
 
-    void setAvatarText( const QString &text );
+    void setAvatarText(const QString &text);
     QString avatarText() const;
     virtual QString generateResendText();
 
@@ -243,16 +240,14 @@ private:
 class CHOQOK_EXPORT PostWidgetUserData : public QObjectUserData
 {
 public:
-    PostWidgetUserData( PostWidget *postWidget );
+    PostWidgetUserData(PostWidget *postWidget);
     virtual ~PostWidgetUserData();
     PostWidget *postWidget();
     void setPostWidget(PostWidget *widget);
 
-
-
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 }

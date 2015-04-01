@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,26 +23,27 @@
 
 #include "twitterapiaccount.h"
 
-#include <KDebug>
 #include <KIO/AccessManager>
 
 #include <QtOAuth/QtOAuth>
 
 #include "passwordmanager.h"
+
+#include "twitterapidebug.h"
 #include "twitterapimicroblog.h"
 
 class TwitterApiAccount::Private
 {
 public:
     Private()
-        :api('/'), usingOauth(true), qoauth(0)
+        : api('/'), usingOauth(true), qoauth(0)
     {}
     QString userId;
     int count;
     QString host;
     QString api;
-    KUrl apiUrl;
-    KUrl homepageUrl;
+    QUrl apiUrl;
+    QUrl homepageUrl;
     QStringList friendsList;
     QStringList timelineNames;
     QByteArray oauthToken;
@@ -54,10 +54,10 @@ public:
     QOAuth::Interface *qoauth;
 };
 
-TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString &alias)
+TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog *parent, const QString &alias)
     : Account(parent, alias), d(new Private)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     d->usingOauth = configGroup()->readEntry("UsingOAuth", false);
     d->userId = configGroup()->readEntry("UserId", QString());
     d->count = configGroup()->readEntry("CountOfPosts", 20);
@@ -67,17 +67,17 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString 
     d->oauthToken = configGroup()->readEntry("OAuthToken", QByteArray());
     d->oauthConsumerKey = configGroup()->readEntry("OAuthConsumerKey", QByteArray());
     d->oauthConsumerSecret = Choqok::PasswordManager::self()->readPassword(
-                                            QString("%1_consumerSecret").arg(alias) ).toUtf8();
+                                 QString("%1_consumerSecret").arg(alias)).toUtf8();
     d->oauthTokenSecret = Choqok::PasswordManager::self()->readPassword(
-                                            QString("%1_tokenSecret").arg(alias) ).toUtf8();
-    setApi( configGroup()->readEntry("Api", QString('/') ) );
+                              QString("%1_tokenSecret").arg(alias)).toUtf8();
+    setApi(configGroup()->readEntry("Api", QString('/')));
 
-    kDebug()<<"UsingOAuth: "<<d->usingOauth;
-    if(d->usingOauth){
+    qCDebug(CHOQOK) << "UsingOAuth: " << d->usingOauth;
+    if (d->usingOauth) {
         initQOAuthInterface();
     }
 
-    if( d->timelineNames.isEmpty() ){
+    if (d->timelineNames.isEmpty()) {
         QStringList list = parent->timelineNames();
         list.removeOne("Public");
         list.removeOne("Favorite");
@@ -85,7 +85,7 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog* parent, const QString 
         d->timelineNames = list;
     }
 
-    if( d->friendsList.isEmpty() ){
+    if (d->friendsList.isEmpty()) {
         parent->listFriendsUsername(this);
         //Result will set on TwitterApiMicroBlog!
     }
@@ -108,12 +108,12 @@ void TwitterApiAccount::writeConfig()
     configGroup()->writeEntry("Api", d->api);
     configGroup()->writeEntry("Friends", d->friendsList);
     configGroup()->writeEntry("Timelines", d->timelineNames);
-    configGroup()->writeEntry("OAuthToken", d->oauthToken );
-    configGroup()->writeEntry("OAuthConsumerKey", d->oauthConsumerKey );
-    Choqok::PasswordManager::self()->writePassword( QString("%1_consumerSecret").arg(alias()),
-                                                    QString::fromUtf8(d->oauthConsumerSecret) );
-    Choqok::PasswordManager::self()->writePassword( QString("%1_tokenSecret").arg(alias()),
-                                                    QString::fromUtf8( d->oauthTokenSecret) );
+    configGroup()->writeEntry("OAuthToken", d->oauthToken);
+    configGroup()->writeEntry("OAuthConsumerKey", d->oauthConsumerKey);
+    Choqok::PasswordManager::self()->writePassword(QString("%1_consumerSecret").arg(alias()),
+            QString::fromUtf8(d->oauthConsumerSecret));
+    Choqok::PasswordManager::self()->writePassword(QString("%1_tokenSecret").arg(alias()),
+            QString::fromUtf8(d->oauthTokenSecret));
     Choqok::Account::writeConfig();
 }
 
@@ -122,7 +122,7 @@ QString TwitterApiAccount::userId() const
     return d->userId;
 }
 
-void TwitterApiAccount::setUserId( const QString &id )
+void TwitterApiAccount::setUserId(const QString &id)
 {
     d->userId = id;
 }
@@ -137,7 +137,7 @@ void TwitterApiAccount::setCountOfPosts(int count)
     d->count = count;
 }
 
-KUrl TwitterApiAccount::apiUrl() const
+QUrl TwitterApiAccount::apiUrl() const
 {
     return d->apiUrl;
 }
@@ -147,7 +147,7 @@ QString TwitterApiAccount::host() const
     return d->host;
 }
 
-void TwitterApiAccount::setApiUrl(const KUrl& apiUrl)
+void TwitterApiAccount::setApiUrl(const QUrl &apiUrl)
 {
     d->apiUrl = apiUrl;
 }
@@ -157,37 +157,39 @@ QString TwitterApiAccount::api() const
     return d->api;
 }
 
-void TwitterApiAccount::setApi(const QString& api)
+void TwitterApiAccount::setApi(const QString &api)
 {
     d->api = api;
     generateApiUrl();
 }
 
-void TwitterApiAccount::setHost(const QString& host)
+void TwitterApiAccount::setHost(const QString &host)
 {
     d->host = host;
     generateApiUrl();
 }
 
-KUrl TwitterApiAccount::homepageUrl() const
+QUrl TwitterApiAccount::homepageUrl() const
 {
     return d->homepageUrl;
 }
 
 void TwitterApiAccount::generateApiUrl()
 {
-    if(!host().startsWith(QLatin1String("http")))//NOTE: This is for compatibility by prev versions. remove it after 1.0 release
+    if (!host().startsWith(QLatin1String("http"))) { //NOTE: This is for compatibility by prev versions. remove it after 1.0 release
         setHost(host().prepend("http://"));
-    KUrl url(host());
+    }
+    QUrl url(host());
 
     setHomepageUrl(url);
 
-    url.addPath(api());
+    url = url.adjusted(QUrl::StripTrailingSlash);
+    url.setPath(url.path() + '/' + (api()));
     setApiUrl(url);
 }
 
-void TwitterApiAccount::setHomepageUrl(const KUrl& homepageUrl)
-{ 
+void TwitterApiAccount::setHomepageUrl(const QUrl &homepageUrl)
+{
     d->homepageUrl = homepageUrl;
 }
 
@@ -196,7 +198,7 @@ QStringList TwitterApiAccount::friendsList() const
     return d->friendsList;
 }
 
-void TwitterApiAccount::setFriendsList(const QStringList& list)
+void TwitterApiAccount::setFriendsList(const QStringList &list)
 {
     d->friendsList = list;
     writeConfig();
@@ -207,12 +209,13 @@ QStringList TwitterApiAccount::timelineNames() const
     return d->timelineNames;
 }
 
-void TwitterApiAccount::setTimelineNames(const QStringList& list)
+void TwitterApiAccount::setTimelineNames(const QStringList &list)
 {
     d->timelineNames.clear();
     Q_FOREACH (const QString &name, list) {
-        if(microblog()->timelineNames().contains(name))
-            d->timelineNames<<name;
+        if (microblog()->timelineNames().contains(name)) {
+            d->timelineNames << name;
+        }
     }
 }
 
@@ -221,7 +224,7 @@ QByteArray TwitterApiAccount::oauthToken() const
     return d->oauthToken;
 }
 
-void TwitterApiAccount::setOauthToken(const QByteArray& token)
+void TwitterApiAccount::setOauthToken(const QByteArray &token)
 {
     d->oauthToken = token;
 }
@@ -231,7 +234,7 @@ QByteArray TwitterApiAccount::oauthTokenSecret() const
     return d->oauthTokenSecret;
 }
 
-void TwitterApiAccount::setOauthTokenSecret(const QByteArray& tokenSecret)
+void TwitterApiAccount::setOauthTokenSecret(const QByteArray &tokenSecret)
 {
     d->oauthTokenSecret = tokenSecret;
 }
@@ -241,7 +244,7 @@ QByteArray TwitterApiAccount::oauthConsumerKey() const
     return d->oauthConsumerKey;
 }
 
-void TwitterApiAccount::setOauthConsumerKey(const QByteArray& consumerKey)
+void TwitterApiAccount::setOauthConsumerKey(const QByteArray &consumerKey)
 {
     d->oauthConsumerKey = consumerKey;
 }
@@ -251,7 +254,7 @@ QByteArray TwitterApiAccount::oauthConsumerSecret() const
     return d->oauthConsumerSecret;
 }
 
-void TwitterApiAccount::setOauthConsumerSecret(const QByteArray& consumerSecret)
+void TwitterApiAccount::setOauthConsumerSecret(const QByteArray &consumerSecret)
 {
     d->oauthConsumerSecret = consumerSecret;
 }
@@ -263,29 +266,29 @@ bool TwitterApiAccount::usingOAuth() const
 
 void TwitterApiAccount::setUsingOAuth(bool use)
 {
-    if(use)
+    if (use) {
         initQOAuthInterface();
-    else{
+    } else {
         delete d->qoauth;
         d->qoauth = 0L;
     }
     d->usingOauth = use;
 }
 
-QOAuth::Interface* TwitterApiAccount::oauthInterface()
+QOAuth::Interface *TwitterApiAccount::oauthInterface()
 {
     return d->qoauth;
 }
 
 void TwitterApiAccount::initQOAuthInterface()
 {
-    kDebug();
-    if(!d->qoauth)
+    qCDebug(CHOQOK);
+    if (!d->qoauth) {
         d->qoauth = new QOAuth::Interface(new KIO::AccessManager(this), this);
+    }
     d->qoauth->setConsumerKey(d->oauthConsumerKey);
     d->qoauth->setConsumerSecret(d->oauthConsumerSecret);
     d->qoauth->setRequestTimeout(20000);
     d->qoauth->setIgnoreSslErrors(true);
 }
 
-#include "twitterapiaccount.moc"

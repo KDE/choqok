@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -23,9 +22,9 @@
 
 #include "pumpioshowthread.h"
 
-#include <KDebug>
-#include <KLocale>
+#include <KLocalizedString>
 
+#include "pumpiodebug.h"
 #include "pumpiomicroblog.h"
 #include "pumpiopost.h"
 #include "pumpiopostwidget.h"
@@ -33,13 +32,13 @@
 class PumpIOShowThread::Private
 {
 public:
-    Choqok::Account* account;
+    Choqok::Account *account;
     QString postId;
 };
 
-PumpIOShowThread::PumpIOShowThread(Choqok::Account* account, Choqok::Post* post,
-                                   QWidget* parent): QWidget(parent)
-                                   , d(new Private)
+PumpIOShowThread::PumpIOShowThread(Choqok::Account *account, Choqok::Post *post,
+                                   QWidget *parent): QWidget(parent)
+    , d(new Private)
 {
     d->account = account;
     d->postId = post->postId;
@@ -51,23 +50,23 @@ PumpIOShowThread::PumpIOShowThread(Choqok::Account* account, Choqok::Post* post,
     connect(account->microblog(), SIGNAL(postFetched(Choqok::Account*,Choqok::Post*)),
             this, SLOT(slotAddPost(Choqok::Account*,Choqok::Post*)));
 
-    PumpIOPost* p = dynamic_cast<PumpIOPost*>(post);
+    PumpIOPost *p = dynamic_cast<PumpIOPost *>(post);
     if (p) {
         PumpIOPostWidget *widget = new PumpIOPostWidget(account, p, this);
         widget->initUi();
         widget->setRead();
         mainLayout->insertWidget(0, widget);
         connect(widget, SIGNAL(reply(QString,QString,QString)),
-                this, SIGNAL(forwardReply(QString, QString, QString)));
+                this, SIGNAL(forwardReply(QString,QString,QString)));
 
-        PumpIOMicroBlog* microblog = qobject_cast<PumpIOMicroBlog* >(account->microblog());
+        PumpIOMicroBlog *microblog = qobject_cast<PumpIOMicroBlog * >(account->microblog());
         if (microblog) {
             microblog->fetchReplies(account, p->replies);
         } else {
-            kDebug() << "Microblog is not a PumpIOMicroBlog";
+            qCDebug(CHOQOK) << "Microblog is not a PumpIOMicroBlog";
         }
     } else {
-        kDebug() << "Post is not a PumpIOPost";
+        qCDebug(CHOQOK) << "Post is not a PumpIOPost";
     }
 }
 
@@ -76,9 +75,9 @@ PumpIOShowThread::~PumpIOShowThread()
     delete d;
 }
 
-void PumpIOShowThread::slotAddPost(Choqok::Account* theAccount, Choqok::Post* post)
+void PumpIOShowThread::slotAddPost(Choqok::Account *theAccount, Choqok::Post *post)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if (theAccount == d->account && post->replyToPostId == d->postId) {
         PumpIOPostWidget *widget = new PumpIOPostWidget(theAccount, post, this);
         widget->initUi();

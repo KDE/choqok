@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
-<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
-"dtd/kdex.dtd" [
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
   <!ENTITY kappname "&choqok;">
   <!ENTITY package "extragear">
   <!ENTITY % addindex "IGNORE">
@@ -27,21 +27,25 @@
 <address>&Anne-Marie.Mahfouf.mail;</address>
 </affiliation>
 </author>
+<author>
+<firstname>Andrea</firstname>
+<surname>Scarpino</surname>
+<affiliation>
+<address>scarpino@kde.org</address>
+</affiliation>
+</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2009-03-25</date>
-<releaseinfo>0.5</releaseinfo>
-
-
+<date>2015-01-25</date>
+<releaseinfo>1.5</releaseinfo>
 
 <abstract>
 <para>&choqok; is a micro-blogging client for KDE
 (<ulink url="http://choqok.gnufolks.org">http://choqok.gnufolks.org</ulink>).</para>
 </abstract>
-
 
 <keywordset>
 <keyword>KDE</keyword>
@@ -373,7 +377,7 @@ toolbar.
 <chapter id="credits-and-license">
 <title>Credits and License</title>
 
-<para>&choqok; copyright 2008-2009 Mehrdad Momeny <email>mehrdad.momeny@gmail.com</email>
+<para>&choqok; copyright 2008-2015 Mehrdad Momeny <email>mehrdad.momeny@gmail.com</email>
 </para>
 <para>Documentation copyright 2009 Mehrdad Momeny <email>mehrdad.momeny@gmail.com</email>
 </para>

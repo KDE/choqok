@@ -1,34 +1,33 @@
-
-find_package(LibAttica)
-
-IF(LIBATTICA_FOUND)
-    message(STATUS "FOUND LibAttica: Will build \"Open Collaboration Services\" plugin")
-    include_directories(
+include_directories(
     ${CHOQOK_INCLUDES}
-    ${LIBATTICA_INCLUDE_DIR}
-    ${CMAKE_CURRENT_BINARY_DIR}
-    )
+)
 
-    set( choqok_ocs_SRCS
+set(choqok_ocs_SRCS
     ocsaccount.cpp
+    ocsdebug.cpp
     ocsmicroblog.cpp
     ocsconfigurewidget.cpp
-    )
+)
 
-    kde4_add_ui_files(choqok_ocs_SRCS
+ki18n_wrap_ui(choqok_ocs_SRCS
     ocsconfigurebase.ui
-    )
+)
 
-    kde4_add_plugin(choqok_ocs ${choqok_ocs_SRCS})
+add_library(choqok_ocs MODULE ${choqok_ocs_SRCS})
 
-    target_link_libraries(choqok_ocs ${KDE4_KDEUI_LIBS} ${LIBATTICA_LIBRARIES} choqok)
+kcoreaddons_desktop_to_json(choqok_ocs choqok_ocs.desktop)
 
-    # Install
+target_link_libraries(choqok_ocs
+PUBLIC
+    KF5::Attica
+    KF5::ConfigCore
+    KF5::CoreAddons
+    KF5::I18n
+    KF5::WidgetsAddons
+    choqok
+)
 
-    install(TARGETS choqok_ocs DESTINATION ${PLUGIN_INSTALL_DIR})
-    install( FILES choqok_ocs.desktop  DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS choqok_ocs DESTINATION ${PLUGIN_INSTALL_DIR})
+install( FILES choqok_ocs.desktop  DESTINATION ${SERVICES_INSTALL_DIR})
 
-    add_subdirectory(icons)
-ELSE(LIBATTICA_FOUND)
-    message(WARNING "Optional dependency \"LibAttica\" NOT FOUND, won't build \"Open Collaboration Services\" plugin")
-ENDIF(LIBATTICA_FOUND)
+add_subdirectory(icons)

@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -25,23 +24,25 @@
 #include "filter.h"
 
 #include <KConfigGroup>
-#include <KGlobal>
 #include <KSharedConfig>
 
-class Filter::Private{
+class Filter::Private
+{
 public:
-    Private(const QString& text, Filter::FilterField field, Filter::FilterType type,
+    Private(const QString &text, Filter::FilterField field, Filter::FilterType type,
             Filter::FilterAction action, bool dontHide)
-    :filterField(field), filterText(text), filterType(type), filterAction(action), dontHideReplies(dontHide)
+        : filterField(field), filterText(text), filterType(type)
+        , filterAction(action), dontHideReplies(dontHide)
     {
-        config = new KConfigGroup(KGlobal::config(), QString::fromLatin1( "Filter_%1%2%3%4" ).arg( text )
-                                                                                             .arg( field )
-                                                                                             .arg( type )
-                                                                                             .arg( action ));
+        config = new KConfigGroup(KSharedConfig::openConfig(),
+                                  QString::fromLatin1("Filter_%1%2%3%4").arg(text)
+                                  .arg(field)
+                                  .arg(type)
+                                  .arg(action));
     }
 
     Private(const KConfigGroup &configGroup)
-    :config(new KConfigGroup(configGroup))
+        : config(new KConfigGroup(configGroup))
     {
         filterText = config->readEntry("Text", QString());
         filterField = (FilterField) config->readEntry("Field", 0);
@@ -58,20 +59,18 @@ public:
     KConfigGroup *config;
 };
 
-Filter::Filter(const QString& filterText, Filter::FilterField field, Filter::FilterType type,
-               Filter::FilterAction action, bool dontHide, QObject* parent)
-               : QObject(parent), d(new Private(filterText, field, type, action, dontHide))
+Filter::Filter(const QString &filterText, Filter::FilterField field, Filter::FilterType type,
+               Filter::FilterAction action, bool dontHide, QObject *parent)
+    : QObject(parent), d(new Private(filterText, field, type, action, dontHide))
 {}
 
-Filter::Filter(const KConfigGroup &config, QObject* parent)
+Filter::Filter(const KConfigGroup &config, QObject *parent)
     : QObject(parent), d(new Private(config))
 {
-
 }
 
 Filter::~Filter()
 {
-
 }
 
 Filter::FilterField Filter::filterField() const
@@ -89,7 +88,7 @@ QString Filter::filterText() const
     return d->filterText;
 }
 
-void Filter::setFilterText(const QString& text)
+void Filter::setFilterText(const QString &text)
 {
     d->filterText = text;
 }

@@ -12,7 +12,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -34,13 +33,12 @@
 #include <QDBusMetaType>
 #include <QDBusReply>
 
-
-Q_DECLARE_METATYPE( MPRIS::MprisStatusStruct )
+Q_DECLARE_METATYPE(MPRIS::MprisStatusStruct)
 
 /**
  * Marshall the MprisStatus structure into a DBus argument
  */
-QDBusArgument &operator<<( QDBusArgument &argument, const MPRIS::MprisStatusStruct  &status )
+QDBusArgument &operator<<(QDBusArgument &argument, const MPRIS::MprisStatusStruct  &status)
 {
     argument.beginStructure();
     argument << status.Status << status.hasShuffle << status.hasRepeat << status.hasPlaylistRepeat;
@@ -48,12 +46,10 @@ QDBusArgument &operator<<( QDBusArgument &argument, const MPRIS::MprisStatusStru
     return argument;
 }
 
-
-
 /**
  * Demarshall the MprisPlayerStatus structure from a DBus argument
  */
-const QDBusArgument &operator>>( const QDBusArgument &argument, MPRIS::MprisStatusStruct  &status )
+const QDBusArgument &operator>>(const QDBusArgument &argument, MPRIS::MprisStatusStruct  &status)
 {
     argument.beginStructure();
     argument >> status.Status >> status.hasShuffle >> status.hasRepeat >> status.hasPlaylistRepeat;
@@ -65,32 +61,32 @@ MPRIS::MPRIS(const QString PlayerName)
 {
     qDBusRegisterMetaType<MprisStatusStruct>();
     const QString serviceName = QString("org.mpris.").append(PlayerName);
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName).value())
-        valid=true;
-    else {
-        valid=false;
+    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName).value()) {
+        valid = true;
+    } else {
+        valid = false;
         return;
     }
-    QDBusInterface playerInterface (serviceName,
-                                    "/Player",
-                                    "org.freedesktop.MediaPlayer");
+    QDBusInterface playerInterface(serviceName,
+                                   "/Player",
+                                   "org.freedesktop.MediaPlayer");
     QDBusReply<MprisStatusStruct> getStatus = playerInterface.call("GetStatus");
-    QDBusReply< QMap<QString, QVariant> > getMetadata = playerInterface.call ( "GetMetadata" );
+    QDBusReply< QMap<QString, QVariant> > getMetadata = playerInterface.call("GetMetadata");
 
     if (!getStatus.isValid() || !getMetadata.isValid()) {
-        valid=false;
+        valid = false;
         return;
     }
     status = getStatus.value();
-    trackInfo=getMetadata.value();
+    trackInfo = getMetadata.value();
     QDBusInterface rootInterface(serviceName,
                                  "/",
                                  "org.freedesktop.MediaPlayer");
     QDBusReply<QString> getIdentity = rootInterface.call("Identity");
     if (getIdentity.isValid()) {
-        Identity=getIdentity.value();
+        Identity = getIdentity.value();
     } else {
-        valid=false;
+        valid = false;
         return;
     }
 }
@@ -104,7 +100,7 @@ QStringList MPRIS::getRunningPlayers()
 {
     QStringList services = QDBusConnection::sessionBus().interface()->registeredServiceNames().value().filter("org.mpris.");
     services.removeDuplicates();
-    services.replaceInStrings("org.mpris.","");
+    services.replaceInStrings("org.mpris.", "");
     return services;
 }
 

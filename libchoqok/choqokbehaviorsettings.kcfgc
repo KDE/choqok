@@ -9,4 +9,4 @@ NameSpace=Choqok
 SetUserTexts=false
 Singleton=true
 Visibility=CHOQOK_EXPORT
-IncludeFiles=choqok_export.h,klocale.h
+IncludeFiles=choqok_export.h,klocalizedstring.h

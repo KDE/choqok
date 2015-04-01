@@ -12,7 +12,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -26,52 +25,53 @@
 #define QUICKFILTER_H
 
 #include <QList>
-#include <QPointer>
 
 #include "plugin.h"
 
-class KAction;
-namespace Choqok {
-    class Account;
-    namespace UI {
-        class PostWidget;
-    }
+class QAction;
+namespace Choqok
+{
+class Account;
+namespace UI
+{
+class PostWidget;
+}
 }
 
-class KLineEdit;
+class QLineEdit;
 class QToolBar;
 
 class QuickFilter : public Choqok::Plugin
 {
     Q_OBJECT
 public:
-    QuickFilter(QObject* parent, const QList< QVariant >& args);
+    QuickFilter(QObject *parent, const QList< QVariant > &args);
     ~QuickFilter();
-    
+
 public Q_SLOTS:
     void createUiInterface();
     void showAuthorFilterUiInterface(bool);
     void showContentFilterUiInterface(bool);
     void showAllPosts();
-    
+
 protected Q_SLOTS:
     void filterByAuthor();
     void filterByContent();
-    void filterNewPost(Choqok::UI::PostWidget*, Choqok::Account*, QString);
-    
+    void filterNewPost(Choqok::UI::PostWidget *, Choqok::Account *, QString);
+
 private Q_SLOTS:
     void updateUser(QString user);
     void updateContent(QString text);
-    
+
 private:
     QString m_filterUser;
     QString m_filterText;
-    KLineEdit *m_aledit;
-    KLineEdit *m_tledit;
+    QLineEdit *m_aledit;
+    QLineEdit *m_tledit;
     QToolBar *m_authorToolbar;
     QToolBar *m_textToolbar;
-    KAction *m_authorAction;
-    KAction *m_textAction;
+    QAction *m_authorAction;
+    QAction *m_textAction;
 };
 
 #endif // QUICKFILTER_H

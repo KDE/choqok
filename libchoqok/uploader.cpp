@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,10 +23,11 @@
 
 #include "uploader.h"
 
-namespace Choqok{
+namespace Choqok
+{
 
-Choqok::Uploader::Uploader(const KComponentData& instance, QObject* parent)
-    : Plugin(instance, parent)
+Choqok::Uploader::Uploader(const QString &componentName, QObject *parent)
+    : Plugin(componentName, parent)
 {
 
 }
@@ -37,4 +37,3 @@ Choqok::Uploader::~Uploader()
 
 }
 
-#include "uploader.moc"

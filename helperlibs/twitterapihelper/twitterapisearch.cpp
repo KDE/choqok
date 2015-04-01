@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -23,6 +22,8 @@
 */
 
 #include "twitterapisearch.h"
+
+#include "accountmanager.h"
 
 #include <stdio.h>
 
@@ -47,7 +48,7 @@ public:
     QMap<QString, int> monthes;
 };
 
-TwitterApiSearch::TwitterApiSearch(QObject* parent)
+TwitterApiSearch::TwitterApiSearch(QObject *parent)
     : QObject(parent), d(new Private)
 {
 
@@ -63,24 +64,25 @@ QMap< int, QPair<QString, bool> > &TwitterApiSearch::getSearchTypes()
     return mSearchTypes;
 }
 
-void TwitterApiSearch::requestSearchResults(Choqok::Account* theAccount, const QString& query,
-                                            int option, const QString& sinceStatusId,
-                                            uint count, uint page)
+void TwitterApiSearch::requestSearchResults(Choqok::Account *theAccount, const QString &query,
+        int option, const QString &sinceStatusId,
+        uint count, uint page)
 {
     bool isB = getSearchTypes()[option].second;
     SearchInfo info(theAccount, query, option, isB);
     requestSearchResults(info, sinceStatusId, count, page);
 }
 
-QDateTime TwitterApiSearch::dateFromString ( const QString &date )
+QDateTime TwitterApiSearch::dateFromString(const QString &date)
 {
     char s[10];
     int year, day, hours, minutes, seconds, tz;
-    sscanf( qPrintable ( date ), "%*s %s %d %d:%d:%d %d %d", s, &day, &hours, &minutes, &seconds, &tz, &year );
+    sscanf(qPrintable(date), "%*s %s %d %d:%d:%d %d %d", s, &day, &hours, &minutes, &seconds, &tz, &year);
     int month = d->monthes[s];
-    QDateTime recognized ( QDate ( year, month, day ), QTime ( hours, minutes, seconds ) );
-    if(tz == 0)//tz is the timezone, in Twitter it's always UTC(0) in Identica it's local +/-NUMBER
-        recognized.setTimeSpec( Qt::UTC );
+    QDateTime recognized(QDate(year, month, day), QTime(hours, minutes, seconds));
+    if (tz == 0) { //tz is the timezone, in Twitter it's always UTC(0) in Identica it's local +/-NUMBER
+        recognized.setTimeSpec(Qt::UTC);
+    }
     return recognized.toLocalTime();
 }
 
@@ -89,17 +91,18 @@ SearchInfo::SearchInfo()
 
 }
 
-SearchInfo::SearchInfo(Choqok::Account* theAccount, const QString& queryStr, int optionCode, bool IsBrowsable)
-:account(theAccount), option(optionCode), query(queryStr), isBrowsable(IsBrowsable)
+SearchInfo::SearchInfo(Choqok::Account *theAccount, const QString &queryStr, int optionCode, bool IsBrowsable)
+    : account(theAccount), option(optionCode), query(queryStr), isBrowsable(IsBrowsable)
 {
 
 }
 
-bool SearchInfo::fromString(const QString& str)
+bool SearchInfo::fromString(const QString &str)
 {
     QStringList lis = str.split(",,,");
-    if( lis.count() != 4 )
+    if (lis.count() != 4) {
         return false;
+    }
     account = Choqok::AccountManager::self()->findAccount(lis[0]);
     option = lis[1].toInt();
     query = lis[2];

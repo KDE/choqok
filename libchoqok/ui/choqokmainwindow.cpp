@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,10 +23,11 @@
 
 #include "choqokmainwindow.h"
 
-#include <KStatusBar>
-#include <KTabWidget>
+#include <QStatusBar>
+#include <QTabWidget>
 
 #include "choqokbehaviorsettings.h"
+#include "libchoqokdebug.h"
 #include "microblogwidget.h"
 
 #ifdef QTINDICATE_BUILD
@@ -39,9 +39,9 @@ using namespace Choqok::UI;
 static const int TIMEOUT = 5000;
 
 Choqok::UI::MainWindow::MainWindow()
-    :KXmlGuiWindow()
+    : KXmlGuiWindow()
 {
-    mainWidget = new KTabWidget( this );
+    mainWidget = new QTabWidget(this);
     mainWidget->setDocumentMode(true);
     mainWidget->setMovable(true);
 #ifdef QTINDICATE_BUILD
@@ -56,32 +56,33 @@ Choqok::UI::MainWindow::~MainWindow()
 
 QSize MainWindow::sizeHint() const
 {
-    return QSize( 350, 400 );
+    return QSize(350, 400);
 }
 
-void MainWindow::showStatusMessage( const QString &message, bool isPermanent )
+void MainWindow::showStatusMessage(const QString &message, bool isPermanent)
 {
-    if ( isPermanent ) {
-        statusBar()->showMessage( message );
+    if (isPermanent) {
+        statusBar()->showMessage(message);
     } else {
-        statusBar()->showMessage( message, TIMEOUT );
+        statusBar()->showMessage(message, TIMEOUT);
     }
 }
 
-void MainWindow::hideEvent( QHideEvent * event )
+void MainWindow::hideEvent(QHideEvent *event)
 {
     Q_UNUSED(event);
-    if( !this->isVisible() ) {
-        kDebug();
-        if( Choqok::BehaviorSettings::markAllAsReadOnHideToSystray() )
+    if (!this->isVisible()) {
+        qCDebug(CHOQOK);
+        if (Choqok::BehaviorSettings::markAllAsReadOnHideToSystray()) {
             Q_EMIT markAllAsRead();
+        }
         Q_EMIT removeOldPosts();
     }
 }
 
-Choqok::UI::MicroBlogWidget* MainWindow::currentMicroBlog()
+Choqok::UI::MicroBlogWidget *MainWindow::currentMicroBlog()
 {
-    return qobject_cast<Choqok::UI::MicroBlogWidget*>(mainWidget->currentWidget());
+    return qobject_cast<Choqok::UI::MicroBlogWidget *>(mainWidget->currentWidget());
 }
 
 void Choqok::UI::MainWindow::activateChoqok()
@@ -91,19 +92,20 @@ void Choqok::UI::MainWindow::activateChoqok()
     raise();
 }
 
-QList<Choqok::UI::MicroBlogWidget*> Choqok::UI::MainWindow::microBlogsWidgetsList()
+QList<Choqok::UI::MicroBlogWidget *> Choqok::UI::MainWindow::microBlogsWidgetsList()
 {
-   QList<Choqok::UI::MicroBlogWidget*> lst;
-   if ( mainWidget->currentWidget() )
-      for ( int i = 0;i < mainWidget->count();i++ )
-          lst.append( qobject_cast<Choqok::UI::MicroBlogWidget*>( mainWidget->widget( i ) ) );
-   return lst;
+    QList<Choqok::UI::MicroBlogWidget *> lst;
+    if (mainWidget->currentWidget())
+        for (int i = 0; i < mainWidget->count(); i++) {
+            lst.append(qobject_cast<Choqok::UI::MicroBlogWidget *>(mainWidget->widget(i)));
+        }
+    return lst;
 }
 
-void Choqok::UI::MainWindow::activateTab( int k )
+void Choqok::UI::MainWindow::activateTab(int k)
 {
-   if ( mainWidget->count() >= k )
-       mainWidget->setCurrentIndex( k );
+    if (mainWidget->count() >= k) {
+        mainWidget->setCurrentIndex(k);
+    }
 }
 
-#include "choqokmainwindow.moc"

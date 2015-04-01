@@ -1,5 +1,5 @@
 
-add_subdirectory(twitpic)
+#add_subdirectory(twitpic)
 add_subdirectory(imageshack)
 add_subdirectory(flickr)
 add_subdirectory(mobypicture)

@@ -67,4 +67,3 @@ QString SharedTools::languageFlag(const QString& languageCode) const
     return KStandardDirs::locate( "locale", QString( "l10n/%1/flag.png" ).arg( languageCode.toLower() ) );
 }
 
-#include "sharedtools.moc"

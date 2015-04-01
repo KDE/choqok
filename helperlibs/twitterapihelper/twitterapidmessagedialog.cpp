@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,73 +23,74 @@
 
 #include "twitterapidmessagedialog.h"
 
+#include <QComboBox>
+#include <QDialogButtonBox>
 #include <QLabel>
+#include <QHBoxLayout>
+#include <QPushButton>
 #include <QVBoxLayout>
 
-#include <KComboBox>
-#include <KDebug>
 #include <KLocalizedString>
-#include <KMessageBox>
-#include <KPushButton>
+#include <KSharedConfig>
 
 #include "choqoktextedit.h"
 #include "microblog.h"
 #include "notifymanager.h"
-#include "twitterapimicroblog.h"
+
 #include "twitterapiaccount.h"
+#include "twitterapidebug.h"
+#include "twitterapimicroblog.h"
 
 class TwitterApiDMessageDialog::Private
 {
 public:
     Private(TwitterApiAccount *theAccount)
-    :account(theAccount)
+        : account(theAccount)
     {}
-    KComboBox *comboFriendsList;
+    QComboBox *comboFriendsList;
     Choqok::UI::TextEdit *editor;
     TwitterApiAccount *account;
     Choqok::Post *sentPost;
 };
 
-TwitterApiDMessageDialog::TwitterApiDMessageDialog(TwitterApiAccount *theAccount, QWidget* parent,
-                                                   Qt::WFlags flags)
-    : KDialog(parent, flags), d(new Private(theAccount))
+TwitterApiDMessageDialog::TwitterApiDMessageDialog(TwitterApiAccount *theAccount, QWidget *parent,
+        Qt::WindowFlags flags)
+    : QDialog(parent, flags), d(new Private(theAccount))
 {
     setWindowTitle(i18n("Send Private Message"));
     setAttribute(Qt::WA_DeleteOnClose);
     QWidget *wg = new QWidget(this, flags);
-    setMainWidget(wg);
     setupUi(wg);
-    KConfigGroup grp(KGlobal::config(), "TwitterApi");
-    resize( grp.readEntry("DMessageDialogSize", QSize(300, 200)) );
+    KConfigGroup grp(KSharedConfig::openConfig(), "TwitterApi");
+    resize(grp.readEntry("DMessageDialogSize", QSize(300, 200)));
     QStringList list = theAccount->friendsList();
-    if( list.isEmpty() ){
+    if (list.isEmpty()) {
         reloadFriendslist();
     } else {
         list.sort();
         d->comboFriendsList->addItems(list);
     }
-    setButtonText(Ok, i18nc("Send private message", "Send"));
 }
 
 TwitterApiDMessageDialog::~TwitterApiDMessageDialog()
 {
-    KConfigGroup grp(KGlobal::config(), "TwitterApi");
+    KConfigGroup grp(KSharedConfig::openConfig(), "TwitterApi");
     grp.writeEntry("DMessageDialogSize", size());
     grp.sync();
     delete d;
 }
 
-void TwitterApiDMessageDialog::setupUi( QWidget *mainWidget )
+void TwitterApiDMessageDialog::setupUi(QWidget *mainWidget)
 {
-    QLabel *lblTo = new QLabel( i18nc("Send message to", "To:"), this);
-    d->comboFriendsList = new KComboBox(this);
+    QLabel *lblTo = new QLabel(i18nc("Send message to", "To:"), this);
+    d->comboFriendsList = new QComboBox(this);
     d->comboFriendsList->setDuplicatesEnabled(false);
 
-    KPushButton *btnReload = new KPushButton(this);
+    QPushButton *btnReload = new QPushButton(this);
     btnReload->setToolTip(i18n("Reload friends list"));
-    btnReload->setIcon(KIcon("view-refresh"));
+    btnReload->setIcon(QIcon::fromTheme("view-refresh"));
     btnReload->setMaximumWidth(25);
-    connect( btnReload, SIGNAL(clicked(bool)), SLOT(reloadFriendslist()) );
+    connect(btnReload, SIGNAL(clicked(bool)), SLOT(reloadFriendslist()));
 
     QVBoxLayout *mainLayout = new QVBoxLayout(mainWidget);
     QHBoxLayout *toLayout = new QHBoxLayout;
@@ -100,46 +100,52 @@ void TwitterApiDMessageDialog::setupUi( QWidget *mainWidget )
     toLayout->addWidget(btnReload);
     mainLayout->addLayout(toLayout);
 
-    d->editor = new Choqok::UI::TextEdit( d->account->postCharLimit() );
-    connect( d->editor, SIGNAL(returnPressed(QString)), SLOT(submitPost(QString)) );
+    d->editor = new Choqok::UI::TextEdit(d->account->postCharLimit());
+    connect(d->editor, SIGNAL(returnPressed(QString)), SLOT(submitPost(QString)));
     mainLayout->addWidget(d->editor);
     d->editor->setFocus();
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    okButton->setText(i18nc("Send private message", "Send"));
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    mainLayout->addWidget(buttonBox);
 }
 
 void TwitterApiDMessageDialog::reloadFriendslist()
 {
     d->comboFriendsList->clear();
-    TwitterApiMicroBlog * blog = qobject_cast<TwitterApiMicroBlog*>(d->account->microblog());
-    if(blog) {
-        connect( blog, SIGNAL(friendsUsernameListed(TwitterApiAccount*,QStringList)),
-                 this, SLOT(friendsUsernameListed(TwitterApiAccount*,QStringList)) );
-                 blog->listFriendsUsername(d->account);
-                 d->comboFriendsList->setCurrentItem(i18n("Please wait..."), true);
+    TwitterApiMicroBlog *blog = qobject_cast<TwitterApiMicroBlog *>(d->account->microblog());
+    if (blog) {
+        connect(blog, SIGNAL(friendsUsernameListed(TwitterApiAccount*,QStringList)),
+                this, SLOT(friendsUsernameListed(TwitterApiAccount*,QStringList)));
+        blog->listFriendsUsername(d->account);
+        d->comboFriendsList->setCurrentText(i18n("Please wait..."));
     }
 }
 
-void TwitterApiDMessageDialog::slotButtonClicked(int button)
+void TwitterApiDMessageDialog::accept()
 {
-    if(button == KDialog::Ok){
-        submitPost( d->editor->toPlainText() );
-    } else {
-        KDialog::slotButtonClicked(button);
-    }
+    submitPost(d->editor->toPlainText());
 }
 
 void TwitterApiDMessageDialog::submitPost(QString text)
 {
-    if( d->account->friendsList().isEmpty() || text.isEmpty() || d->comboFriendsList->currentText().isEmpty())
+    if (d->account->friendsList().isEmpty() || text.isEmpty() || d->comboFriendsList->currentText().isEmpty()) {
         return;
+    }
     hide();
-    connect( d->account->microblog(),
-                SIGNAL( errorPost(Choqok::Account*, Choqok::Post*,
-                                Choqok::MicroBlog::ErrorType,QString, Choqok::MicroBlog::ErrorLevel) ),
-                this,
-                SLOT(errorPost(Choqok::Account*,Choqok::Post*,
-                            Choqok::MicroBlog::ErrorType,QString,Choqok::MicroBlog::ErrorLevel)));
-    connect( d->account->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-            this, SLOT(postCreated(Choqok::Account*,Choqok::Post*)) );
+    connect(d->account->microblog(),
+            SIGNAL(errorPost(Choqok::Account *, Choqok::Post *,
+                             Choqok::MicroBlog::ErrorType, QString, Choqok::MicroBlog::ErrorLevel)),
+            this,
+            SLOT(errorPost(Choqok::Account *, Choqok::Post *,
+                           Choqok::MicroBlog::ErrorType, QString, Choqok::MicroBlog::ErrorLevel)));
+    connect(d->account->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
+            this, SLOT(postCreated(Choqok::Account*,Choqok::Post*)));
     d->sentPost = new Choqok::Post;
     d->sentPost->isPrivate = true;
     d->sentPost->replyToUserName = d->comboFriendsList->currentText();
@@ -147,36 +153,35 @@ void TwitterApiDMessageDialog::submitPost(QString text)
     d->account->microblog()->createPost(d->account, d->sentPost);
 }
 
-void TwitterApiDMessageDialog::friendsUsernameListed(TwitterApiAccount* theAccount, QStringList list)
+void TwitterApiDMessageDialog::friendsUsernameListed(TwitterApiAccount *theAccount, QStringList list)
 {
-    if(theAccount == d->account){
+    if (theAccount == d->account) {
         d->comboFriendsList->clear();
         list.sort();
         d->comboFriendsList->addItems(list);
     }
 }
 
-void TwitterApiDMessageDialog::postCreated(Choqok::Account* theAccount, Choqok::Post* thePost)
+void TwitterApiDMessageDialog::postCreated(Choqok::Account *theAccount, Choqok::Post *thePost)
 {
-    if(theAccount == d->account && thePost == d->sentPost){
-        kDebug();
+    if (theAccount == d->account && thePost == d->sentPost) {
+        qCDebug(CHOQOK);
         accept();
     }
 }
 
-void TwitterApiDMessageDialog::errorPost(Choqok::Account* theAccount, Choqok::Post* thePost,
-                                         Choqok::MicroBlog::ErrorType , QString ,
-                                         Choqok::MicroBlog::ErrorLevel )
+void TwitterApiDMessageDialog::errorPost(Choqok::Account *theAccount, Choqok::Post *thePost,
+        Choqok::MicroBlog::ErrorType , QString ,
+        Choqok::MicroBlog::ErrorLevel)
 {
-    if(theAccount == d->account && thePost == d->sentPost){
-        kDebug();
+    if (theAccount == d->account && thePost == d->sentPost) {
+        qCDebug(CHOQOK);
         show();
     }
 }
 
-void TwitterApiDMessageDialog::setTo(const QString& username)
+void TwitterApiDMessageDialog::setTo(const QString &username)
 {
-    d->comboFriendsList->setCurrentItem(username, true);
+    d->comboFriendsList->setCurrentText(username);
 }
 
-#include "twitterapidmessagedialog.moc"

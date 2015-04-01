@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -23,10 +22,9 @@
 
 #include "ocsaccount.h"
 
-#include <KDebug>
+#include <Attica/ProviderManager>
 
-#include <attica/providermanager.h>
-
+#include "ocsdebug.h"
 #include "ocsmicroblog.h"
 
 class OCSAccount::Private
@@ -34,15 +32,15 @@ class OCSAccount::Private
 public:
     QUrl providerUrl;
     Attica::Provider provider;
-    OCSMicroblog* mBlog;
+    OCSMicroblog *mBlog;
 };
 
-OCSAccount::OCSAccount(OCSMicroblog* parent, const QString& alias)
-: Account(parent, alias), d(new Private)
+OCSAccount::OCSAccount(OCSMicroblog *parent, const QString &alias)
+    : Account(parent, alias), d(new Private)
 {
-    kDebug()<<alias;
+    qCDebug(CHOQOK) << alias;
     d->mBlog = parent;
-    setProviderUrl( QUrl(configGroup()->readEntry("ProviderUrl", QString())) );
+    setProviderUrl(QUrl(configGroup()->readEntry("ProviderUrl", QString())));
 }
 
 OCSAccount::~OCSAccount()
@@ -61,14 +59,15 @@ QUrl OCSAccount::providerUrl() const
     return d->providerUrl;
 }
 
-void OCSAccount::setProviderUrl(const QUrl& url)
+void OCSAccount::setProviderUrl(const QUrl &url)
 {
-    kDebug()<<url;
+    qCDebug(CHOQOK) << url;
     d->providerUrl = url;
-    if(d->mBlog->isOperational())
+    if (d->mBlog->isOperational()) {
         slotDefaultProvidersLoaded();
-    else
+    } else {
         connect(d->mBlog, SIGNAL(initialized()), SLOT(slotDefaultProvidersLoaded()));
+    }
 }
 
 Attica::Provider OCSAccount::provider()
@@ -81,4 +80,3 @@ void OCSAccount::slotDefaultProvidersLoaded()
     d->provider = d->mBlog->providerManager()->providerByUrl(d->providerUrl);
 }
 
-#include "ocsaccount.moc"

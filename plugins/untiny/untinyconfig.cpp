@@ -56,13 +56,11 @@ void UnTinyConfig::defaults()
 
 void UnTinyConfig::load()
 {
-    kDebug();
     KCModule::load();
 }
 
 void UnTinyConfig::save()
 {
-    kDebug();
     KCModule::save();
 }
 

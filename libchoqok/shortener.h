@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -28,8 +27,8 @@
 
 #include "plugin.h"
 
-
-namespace Choqok{
+namespace Choqok
+{
 /**
 @brief The base class for a Shortener plugin main class.
 
@@ -37,16 +36,16 @@ namespace Choqok{
 */
 class CHOQOK_EXPORT Shortener : public Plugin
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     virtual ~Shortener();
     /**
         Shorten the @p url and return the shortened URL
     */
-    virtual QString shorten( const QString &url );
+    virtual QString shorten(const QString &url);
 
 protected:
-    Shortener( const KComponentData &instance, QObject *parent );
+    Shortener(const QString &componentName, QObject *parent);
 };
 }//End Namespace Choqok
 #endif

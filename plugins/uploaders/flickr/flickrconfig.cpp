@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -26,52 +25,50 @@
 
 #include <QCryptographicHash>
 #include <QDomDocument>
-#include <QTextDocument>
+#include <QDomElement>
+#include <QPushButton>
 #include <QVBoxLayout>
 
 #include <KAboutData>
-#include <KAction>
-#include <KActionCollection>
-#include <KGenericFactory>
-#include <KIO/Job>
-#include <KIO/NetAccess>
-#include <KLocale>
+#include <KConfigGroup>
+#include <KIO/StoredTransferJob>
+#include <KLocalizedString>
 #include <KMessageBox>
 #include <KPluginFactory>
-#include <KPushButton>
+#include <KSharedConfig>
 
 #include "choqoktools.h"
 #include "passwordmanager.h"
 
 #include "flickrsettings.h"
 
-K_PLUGIN_FACTORY( FlickrConfigFactory, registerPlugin < FlickrConfig > (); )
-K_EXPORT_PLUGIN( FlickrConfigFactory( "kcm_choqok_flickr" ) )
+K_PLUGIN_FACTORY_WITH_JSON(FlickrConfigFactory, "choqok_flickr_config.json",
+                           registerPlugin < FlickrConfig > ();)
 
 const QString apiKey = "13f602e6e705834d8cdd5dd2ccb19651";
 const QString apiSecret = "98c89dbe39ae3bea";
-QString apiKeSec = apiSecret + QString( "api_key" ) + apiKey;
+const QString apiKeSec = apiSecret + QString("api_key") + apiKey;
 
-FlickrConfig::FlickrConfig(QWidget* parent, const QVariantList& ):
-        KCModule( FlickrConfigFactory::componentData(), parent)
+FlickrConfig::FlickrConfig(QWidget *parent, const QVariantList &)
+    : KCModule(KAboutData::pluginData("kcm_choqok_flickr"), parent)
 {
-    QVBoxLayout *layout = new QVBoxLayout( this );
-    QWidget *wd = new QWidget( this );
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    QWidget *wd = new QWidget(this);
     wd->setObjectName("mFlickrCtl");
     ui.setupUi(wd);
-    addConfig( FlickrSettings::self(), wd );
+    addConfig(FlickrSettings::self(), wd);
     layout->addWidget(wd);
 
-    connect( ui.authButton, SIGNAL( clicked() ), SLOT(slotAuthButton_clicked()) );
-    connect( ui.cfg_shorturl, SIGNAL( stateChanged(int)), SLOT(emitChanged()) );
-    connect( ui.cfg_forprivate, SIGNAL( clicked(bool)), SLOT(emitChanged()) );
-    connect( ui.cfg_forfriends, SIGNAL( stateChanged(int)), SLOT(emitChanged()) );
-    connect( ui.cfg_forfamily, SIGNAL( stateChanged(int)), SLOT(emitChanged()) );
-    connect( ui.cfg_forpublic, SIGNAL( clicked(bool)), SLOT(emitChanged()) );
-    connect( ui.cfg_safe, SIGNAL( clicked(bool)), SLOT(emitChanged()) );
-    connect( ui.cfg_moderate, SIGNAL( clicked(bool)), SLOT(emitChanged()) );
-    connect( ui.cfg_restricted, SIGNAL( clicked(bool)), SLOT(emitChanged()) );
-    connect( ui.cfg_hidefromsearch, SIGNAL( stateChanged(int)), SLOT(emitChanged()) );
+    connect(ui.authButton, SIGNAL(clicked()), SLOT(slotAuthButton_clicked()));
+    connect(ui.cfg_shorturl, SIGNAL(stateChanged(int)), SLOT(emitChanged()));
+    connect(ui.cfg_forprivate, SIGNAL(clicked(bool)), SLOT(emitChanged()));
+    connect(ui.cfg_forfriends, SIGNAL(stateChanged(int)), SLOT(emitChanged()));
+    connect(ui.cfg_forfamily, SIGNAL(stateChanged(int)), SLOT(emitChanged()));
+    connect(ui.cfg_forpublic, SIGNAL(clicked(bool)), SLOT(emitChanged()));
+    connect(ui.cfg_safe, SIGNAL(clicked(bool)), SLOT(emitChanged()));
+    connect(ui.cfg_moderate, SIGNAL(clicked(bool)), SLOT(emitChanged()));
+    connect(ui.cfg_restricted, SIGNAL(clicked(bool)), SLOT(emitChanged()));
+    connect(ui.cfg_hidefromsearch, SIGNAL(stateChanged(int)), SLOT(emitChanged()));
 }
 
 FlickrConfig::~FlickrConfig()
@@ -80,45 +77,43 @@ FlickrConfig::~FlickrConfig()
 
 void FlickrConfig::load()
 {
-    kDebug();
     KCModule::load();
-    KConfigGroup grp( KGlobal::config(), "Flickr Uploader" );
-    m_nsid = grp.readEntry( "nsid", "");
-    m_username = grp.readEntry( "username", "");
-    m_fullname = grp.readEntry( "fullname", "");
-    ui.cfg_shorturl->setChecked( grp.readEntry( "shorturl", true ) );
-    ui.cfg_forprivate->setChecked( grp.readEntry( "forprivate", false ) );
-    ui.cfg_forfriends->setChecked( grp.readEntry( "forfriends", false ));
-    ui.cfg_forfamily->setChecked( grp.readEntry( "forfamily", false ));
-    ui.cfg_forpublic->setChecked( grp.readEntry( "forpublic", true ) );
-    ui.cfg_safe->setChecked( grp.readEntry( "safe", true ) );
-    ui.cfg_moderate->setChecked( grp.readEntry( "moderate", false ) );
-    ui.cfg_restricted->setChecked( grp.readEntry( "restricted", false ) );
-    ui.cfg_hidefromsearch->setChecked( grp.readEntry( "hidefromsearch", false ) );
-    m_token = Choqok::PasswordManager::self()->readPassword( QString( "flickr_%1" )
-              .arg( m_username ) );
+    KConfigGroup grp(KSharedConfig::openConfig(), "Flickr Uploader");
+    m_nsid = grp.readEntry("nsid", "");
+    m_username = grp.readEntry("username", "");
+    m_fullname = grp.readEntry("fullname", "");
+    ui.cfg_shorturl->setChecked(grp.readEntry("shorturl", true));
+    ui.cfg_forprivate->setChecked(grp.readEntry("forprivate", false));
+    ui.cfg_forfriends->setChecked(grp.readEntry("forfriends", false));
+    ui.cfg_forfamily->setChecked(grp.readEntry("forfamily", false));
+    ui.cfg_forpublic->setChecked(grp.readEntry("forpublic", true));
+    ui.cfg_safe->setChecked(grp.readEntry("safe", true));
+    ui.cfg_moderate->setChecked(grp.readEntry("moderate", false));
+    ui.cfg_restricted->setChecked(grp.readEntry("restricted", false));
+    ui.cfg_hidefromsearch->setChecked(grp.readEntry("hidefromsearch", false));
+    m_token = Choqok::PasswordManager::self()->readPassword(QString("flickr_%1")
+              .arg(m_username));
     setAuthenticated(!m_token.isEmpty());
 }
 
 void FlickrConfig::save()
 {
-    kDebug();
     KCModule::save();
-    KConfigGroup grp( KGlobal::config(), "Flickr Uploader" );
-    grp.writeEntry( "nsid", m_nsid );
-    grp.writeEntry( "username", m_username );
-    grp.writeEntry( "fullname", m_fullname );
-    grp.writeEntry( "shorturl", ui.cfg_shorturl->isChecked() );
-    grp.writeEntry( "forprivate", ui.cfg_forprivate->isChecked() );
-    grp.writeEntry( "forfriends", ui.cfg_forfriends->isChecked() );
-    grp.writeEntry( "forfamily", ui.cfg_forfamily->isChecked() );
-    grp.writeEntry( "forpublic", ui.cfg_forpublic->isChecked() );
-    grp.writeEntry( "safe", ui.cfg_safe->isChecked() );
-    grp.writeEntry( "moderate", ui.cfg_moderate->isChecked() );
-    grp.writeEntry( "restricted", ui.cfg_restricted->isChecked() );
-    grp.writeEntry( "hidefromsearch", ui.cfg_hidefromsearch->isChecked() );
-    Choqok::PasswordManager::self()->writePassword( QString( "flickr_%1" ).arg( m_username ),
-            m_token );
+    KConfigGroup grp(KSharedConfig::openConfig(), "Flickr Uploader");
+    grp.writeEntry("nsid", m_nsid);
+    grp.writeEntry("username", m_username);
+    grp.writeEntry("fullname", m_fullname);
+    grp.writeEntry("shorturl", ui.cfg_shorturl->isChecked());
+    grp.writeEntry("forprivate", ui.cfg_forprivate->isChecked());
+    grp.writeEntry("forfriends", ui.cfg_forfriends->isChecked());
+    grp.writeEntry("forfamily", ui.cfg_forfamily->isChecked());
+    grp.writeEntry("forpublic", ui.cfg_forpublic->isChecked());
+    grp.writeEntry("safe", ui.cfg_safe->isChecked());
+    grp.writeEntry("moderate", ui.cfg_moderate->isChecked());
+    grp.writeEntry("restricted", ui.cfg_restricted->isChecked());
+    grp.writeEntry("hidefromsearch", ui.cfg_hidefromsearch->isChecked());
+    Choqok::PasswordManager::self()->writePassword(QString("flickr_%1").arg(m_username),
+            m_token);
 }
 
 void FlickrConfig::emitChanged()
@@ -130,92 +125,93 @@ void FlickrConfig::emitChanged()
 
 void FlickrConfig::getFrob()
 {
-    kDebug()<<"Get Frob";
     m_frob.clear();
-    KUrl url( "http://flickr.com/services/rest/" );
-    url.addQueryItem( "method", "flickr.auth.getFrob" );
-    url.addQueryItem( "api_key", apiKey.toUtf8() );
-    url.addQueryItem( "api_sig",  createSign( "methodflickr.auth.getFrob" ) );
+    QUrl url("http://flickr.com/services/rest/");
+    url.addQueryItem("method", "flickr.auth.getFrob");
+    url.addQueryItem("api_key", apiKey.toUtf8());
+    url.addQueryItem("api_sig",  createSign("methodflickr.auth.getFrob"));
 
     QString errMsg;
-    KIO::Job* job = KIO::get ( url, KIO::Reload, KIO::HideProgressInfo );
-    QByteArray data;
-    if ( KIO::NetAccess::synchronousRun ( job, 0, &data ) ) {
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
+    job->exec();
+    if (!job->error()) {
         QDomDocument rep;
-        rep.setContent( data );
+        rep.setContent(job->data());
         QDomElement element = rep.documentElement();
-        if ( element.tagName() == "rsp" ) {
+        if (element.tagName() == "rsp") {
             QString res;
-            res = element.attribute( "stat" , "fail" );
+            res = element.attribute("stat" , "fail");
             QDomNode node = element.firstChild();
-            while ( !node.isNull() ) {
+            while (!node.isNull()) {
                 QDomElement elem = node.toElement();
-                if ( res == "ok" ) {
-                    if (elem.tagName() == "frob")
+                if (res == "ok") {
+                    if (elem.tagName() == "frob") {
                         m_frob = elem.text();
+                    }
                     return;
-                } else if ( res == "fail" ) {
+                } else if (res == "fail") {
                     if (elem.tagName() == "err") {
                         errMsg = elem.text();
-                        int errCode = elem.attribute( "code" , "0" ).toInt();
+                        int errCode = elem.attribute("code" , "0").toInt();
                         switch (errCode) {
                         case 96:
                         case 97:
-                            errMsg = i18n( "Signature problem. Please try again later" );
+                            errMsg = i18n("Signature problem. Please try again later");
                             break;
                         case 105:
-                            errMsg = i18n( "The requested service is temporarily unavailable. Try again later" );
+                            errMsg = i18n("The requested service is temporarily unavailable. Try again later");
                             break;
                         default:
-                            errMsg = i18n( "Unknown Error: %1. Please try again later" ).arg( errCode );
+                            errMsg = i18n("Unknown Error: %1. Please try again later").arg(errCode);
                             break;
                         }
                     }
                 } else {
-                    errMsg = i18n( "Malformed response" );
+                    errMsg = i18n("Malformed response");
                 }
                 node = node.nextSibling();
             }
         } else {
-            errMsg = i18n( "Malformed response" );
+            errMsg = i18n("Malformed response");
         }
     } else {
         errMsg = job->errorString();
     }
-    if (!errMsg.isEmpty())
-        KMessageBox::error( ui.gridLayout->widget(), errMsg, i18n("Flickr authorization") );
+    if (!errMsg.isEmpty()) {
+        KMessageBox::error(ui.gridLayout->widget(), errMsg, i18n("Flickr authorization"));
+    }
 }
 
 void FlickrConfig::getToken()
 {
-    kDebug()<<"Get Token";
     m_token.clear();
-    KUrl url( "http://flickr.com/services/rest/" );
-    url.addQueryItem( "method", "flickr.auth.getToken" );
-    url.addQueryItem( "api_key", apiKey.toUtf8() );
-    url.addQueryItem( "frob", m_frob.toUtf8() );
-    url.addQueryItem( "api_sig",  createSign( "frob" + m_frob.toUtf8() + "methodflickr.auth.getToken" ) );
+    QUrl url("http://flickr.com/services/rest/");
+    url.addQueryItem("method", "flickr.auth.getToken");
+    url.addQueryItem("api_key", apiKey.toUtf8());
+    url.addQueryItem("frob", m_frob.toUtf8());
+    url.addQueryItem("api_sig",  createSign("frob" + m_frob.toUtf8() + "methodflickr.auth.getToken"));
 
     QString errMsg;
-    KIO::Job* job = KIO::get ( url, KIO::Reload, KIO::HideProgressInfo );
-    QByteArray data;
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
+    job->exec();
 
-    if ( KIO::NetAccess::synchronousRun ( job, 0, &data ) ) {
+    if (!job->error()) {
         QDomDocument rep;
-        rep.setContent( data );
+        rep.setContent(job->data());
         QDomElement element = rep.documentElement();
-        if ( element.tagName() == "rsp" ) {
+        if (element.tagName() == "rsp") {
             QString res;
-            res = element.attribute( "stat" , "fail" );
+            res = element.attribute("stat" , "fail");
             QDomNode node = element.firstChild();
-            while ( !node.isNull() ) {
+            while (!node.isNull()) {
                 QDomElement elem = node.toElement();
-                if ( res == "ok" ) {
+                if (res == "ok") {
                     QDomNode authNode = node.firstChild();
-                    while ( !authNode.isNull()) {
+                    while (!authNode.isNull()) {
                         QDomElement elem = authNode.toElement();
-                        if (elem.tagName() == "token")
+                        if (elem.tagName() == "token") {
                             m_token = elem.text();
+                        }
 
                         if (elem.tagName() == "user") {
                             m_nsid = elem.attribute("nsid");
@@ -224,42 +220,42 @@ void FlickrConfig::getToken()
                         }
                         authNode = authNode.nextSibling();
                     }
-                } else if ( res == "fail" ) {
+                } else if (res == "fail") {
                     if (elem.tagName() == "err") {
                         errMsg = elem.text();
-                        int errCode = elem.attribute( "code" , "0" ).toInt();
+                        int errCode = elem.attribute("code" , "0").toInt();
                         switch (errCode) {
                         case 96:
                         case 97:
                         case 108:
-                            errMsg = i18n( "Something happens with signature. Please retry" );
+                            errMsg = i18n("Something happens with signature. Please retry");
                             break;
                         case 105:
-                            errMsg = i18n( "The requested service is temporarily unavailable. Try again later" );
+                            errMsg = i18n("The requested service is temporarily unavailable. Try again later");
                             break;
                         default:
-                            errMsg = i18n( "Something happens wrong. Error %1. Try again later" ).arg( errCode );
+                            errMsg = i18n("Something happens wrong. Error %1. Try again later").arg(errCode);
                             break;
                         }
                     }
                 } else {
-                    errMsg = i18n( "Malformed response" );
+                    errMsg = i18n("Malformed response");
                 }
                 node = node.nextSibling();
             }
         } else {
-            errMsg = i18n( "Malformed response" );
+            errMsg = i18n("Malformed response");
         }
     } else {
         errMsg = job->errorString();
     }
-    
+
     if (!errMsg.isEmpty()) {
-        KMessageBox::error( ui.gridLayout->widget(), errMsg, i18n("Flickr authorization") );
+        KMessageBox::error(ui.gridLayout->widget(), errMsg, i18n("Flickr authorization"));
         return;
     }
 
-    if ( !m_token.isEmpty() ) {
+    if (!m_token.isEmpty()) {
         setAuthenticated(true);
         FlickrConfig::save();
         ui.tabWidget->setCurrentIndex(1);
@@ -273,13 +269,14 @@ void FlickrConfig::setAuthenticated(bool authenticated)
 {
     isAuthenticated = authenticated;
     if (authenticated) {
-        ui.authButton->setIcon(KIcon("object-unlocked"));
+        ui.authButton->setIcon(QIcon::fromTheme("object-unlocked"));
         ui.authLed->on();
         ui.authLabel->setText(i18n("Authorized as %1").arg(m_username));
-        if (!m_fullname.isEmpty())
-            ui.authLabel->setText(ui.authLabel->text() + QString(" (%1)").arg(Qt::escape(m_fullname)));
+        if (!m_fullname.isEmpty()) {
+            ui.authLabel->setText(ui.authLabel->text() + QString(" (%1)").arg(m_fullname.toHtmlEscaped()));
+        }
     } else {
-        ui.authButton->setIcon(KIcon("object-locked"));
+        ui.authButton->setIcon(QIcon::fromTheme("object-locked"));
         ui.authLed->off();
         ui.authLabel->setText(i18n("Not authorized"));
     }
@@ -288,15 +285,14 @@ void FlickrConfig::setAuthenticated(bool authenticated)
 void FlickrConfig::slotAuthButton_clicked()
 {
     getFrob();
-    if ( !m_frob.isEmpty() ) {
-        QString oUrl = "http://flickr.com/services/auth/?";
-        oUrl.append( "api_key=" + apiKey );
-        oUrl.append( "&perms=write" );
-        oUrl.append( "&frob=" + m_frob );
-        oUrl.append( "&api_sig=" + createSign( "frob" + m_frob.toUtf8() + "permswrite" ) );
-        Choqok::openUrl( oUrl );
+    if (!m_frob.isEmpty()) {
+        QUrl oUrl("http://flickr.com/services/auth/?");
+        oUrl.setPath(oUrl.path() + "api_key=" + apiKey +
+                     "&perms=write&frob=" + m_frob +
+                     "&api_sig=" + createSign("frob" + m_frob.toUtf8() + "permswrite"));
+        Choqok::openUrl(oUrl);
 
-        KPushButton *btn = new KPushButton(KIcon("dialog-ok"), i18n("Click here when you authorized Choqok"), this);
+        QPushButton *btn = new QPushButton(QIcon::fromTheme("dialog-ok"), i18n("Click here when you authorized Choqok"), this);
         connect(btn, SIGNAL(clicked(bool)), SLOT(getToken()));
         btn->setWindowFlags(Qt::Dialog);
         ui.authTab->layout()->addWidget(btn);
@@ -306,9 +302,9 @@ void FlickrConfig::slotAuthButton_clicked()
     }
 }
 
-QByteArray FlickrConfig::createSign( QByteArray req )
+QByteArray FlickrConfig::createSign(QByteArray req)
 {
-    return QCryptographicHash::hash( apiKeSec.toUtf8().append( req ),QCryptographicHash::Md5 ).toHex();
+    return QCryptographicHash::hash(apiKeSec.toUtf8().append(req), QCryptographicHash::Md5).toHex();
 }
 
 #include "flickrconfig.moc"

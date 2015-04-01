@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,43 +23,42 @@
 
 #include "twittercomposerwidget.h"
 
-#include <QHBoxLayout>
+#include <QFileDialog>
+#include <QGridLayout>
 #include <QLabel>
-#include <QLayout>
 #include <QPointer>
+#include <QPushButton>
+#include <QVBoxLayout>
 
-#include <KDebug>
-#include <KFileDialog>
 #include <KLocalizedString>
-#include <KPushButton>
 
 #include "account.h"
 #include "choqoktextedit.h"
-#include "microblog.h"
 #include "notifymanager.h"
 #include "shortenmanager.h"
 
+#include "twitterdebug.h"
 #include "twittermicroblog.h"
 
-class TwitterComposerWidget::Private{
+class TwitterComposerWidget::Private
+{
 public:
     Private()
-    :btnAttach(0), mediumName(0), btnCancel(0)
+        : btnAttach(0), mediumName(0), btnCancel(0)
     {}
     QString mediumToAttach;
-    KPushButton *btnAttach;
+    QPushButton *btnAttach;
     QPointer<QLabel> mediumName;
-    QPointer<KPushButton> btnCancel;
+    QPointer<QPushButton> btnCancel;
     QGridLayout *editorLayout;
 };
 
-
-TwitterComposerWidget::TwitterComposerWidget(Choqok::Account* account, QWidget* parent)
+TwitterComposerWidget::TwitterComposerWidget(Choqok::Account *account, QWidget *parent)
     : TwitterApiComposerWidget(account, parent), d(new Private)
 {
-    d->editorLayout = qobject_cast<QGridLayout*>(editorContainer()->layout());
-    d->btnAttach = new KPushButton(editorContainer());
-    d->btnAttach->setIcon(KIcon("mail-attachment"));
+    d->editorLayout = qobject_cast<QGridLayout *>(editorContainer()->layout());
+    d->btnAttach = new QPushButton(editorContainer());
+    d->btnAttach->setIcon(QIcon::fromTheme("mail-attachment"));
     d->btnAttach->setToolTip(i18n("Attach a file"));
     d->btnAttach->setMaximumWidth(d->btnAttach->height());
     connect(d->btnAttach, SIGNAL(clicked(bool)), this, SLOT(selectMediumToAttach()));
@@ -75,56 +73,57 @@ TwitterComposerWidget::~TwitterComposerWidget()
     delete d;
 }
 
-void TwitterComposerWidget::submitPost(const QString& txt)
+void TwitterComposerWidget::submitPost(const QString &txt)
 {
-    if( d->mediumToAttach.isEmpty() ){
+    if (d->mediumToAttach.isEmpty()) {
         Choqok::UI::ComposerWidget::submitPost(txt);
     } else {
-        kDebug();
+        qCDebug(CHOQOK);
         editorContainer()->setEnabled(false);
         QString text = txt;
-        if( currentAccount()->postCharLimit() &&
-            text.size() > (int)currentAccount()->postCharLimit() )
+        if (currentAccount()->postCharLimit() &&
+                text.size() > (int)currentAccount()->postCharLimit()) {
             text = Choqok::ShortenManager::self()->parseText(text);
+        }
         setPostToSubmit(0L);
-        setPostToSubmit( new Choqok::Post );
+        setPostToSubmit(new Choqok::Post);
         postToSubmit()->content = text;
-        if( !replyToId.isEmpty() ) {
+        if (!replyToId.isEmpty()) {
             postToSubmit()->replyToPostId = replyToId;
         }
-        connect( currentAccount()->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-                SLOT(slotPostMediaSubmitted(Choqok::Account*,Choqok::Post*)) );
+        connect(currentAccount()->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
+                SLOT(slotPostMediaSubmitted(Choqok::Account*,Choqok::Post*)));
         connect(currentAccount()->microblog(),
-                SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,
-                                         QString,Choqok::MicroBlog::ErrorLevel)),
+                SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
+                                 QString, Choqok::MicroBlog::ErrorLevel)),
                 SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
-        btnAbort = new KPushButton(KIcon("dialog-cancel"), i18n("Abort"), this);
+        btnAbort = new QPushButton(QIcon::fromTheme("dialog-cancel"), i18n("Abort"), this);
         layout()->addWidget(btnAbort);
-        connect( btnAbort, SIGNAL(clicked(bool)), SLOT(abort()) );
-        TwitterMicroBlog *mBlog = qobject_cast<TwitterMicroBlog*>(currentAccount()->microblog());
-        mBlog->createPostWithAttachment( currentAccount(), postToSubmit(), d->mediumToAttach );
+        connect(btnAbort, SIGNAL(clicked(bool)), SLOT(abort()));
+        TwitterMicroBlog *mBlog = qobject_cast<TwitterMicroBlog *>(currentAccount()->microblog());
+        mBlog->createPostWithAttachment(currentAccount(), postToSubmit(), d->mediumToAttach);
     }
 }
 
-void TwitterComposerWidget::slotPostMediaSubmitted(Choqok::Account* theAccount, Choqok::Post* post)
+void TwitterComposerWidget::slotPostMediaSubmitted(Choqok::Account *theAccount, Choqok::Post *post)
 {
-    kDebug();
-    if( currentAccount() == theAccount && post == postToSubmit() ) {
-        kDebug()<<"Accepted";
+    qCDebug(CHOQOK);
+    if (currentAccount() == theAccount && post == postToSubmit()) {
+        qCDebug(CHOQOK) << "Accepted";
         disconnect(currentAccount()->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-                   this, SLOT(slotPostMediaSubmitted(Choqok::Account*,Choqok::Post*)) );
+                   this, SLOT(slotPostMediaSubmitted(Choqok::Account*,Choqok::Post*)));
         disconnect(currentAccount()->microblog(),
-                    SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,
-                                    QString,Choqok::MicroBlog::ErrorLevel)),
-                    this, SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
-        if(btnAbort){
+                   SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
+                                    QString, Choqok::MicroBlog::ErrorLevel)),
+                   this, SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
+        if (btnAbort) {
             btnAbort->deleteLater();
         }
         Choqok::NotifyManager::success(i18n("New post submitted successfully"));
         editor()->clear();
         replyToId.clear();
         editorContainer()->setEnabled(true);
-        setPostToSubmit( 0L );
+        setPostToSubmit(0L);
         cancelAttachMedium();
         currentAccount()->microblog()->updateTimelines(currentAccount());
     }
@@ -132,21 +131,21 @@ void TwitterComposerWidget::slotPostMediaSubmitted(Choqok::Account* theAccount, 
 
 void TwitterComposerWidget::selectMediumToAttach()
 {
-    kDebug();
-    d->mediumToAttach = KFileDialog::getOpenFileName( KUrl("kfiledialog:///image?global"),
-                                                      QString(), this,
-                                                      i18n("Select Media to Upload") );
-    if( d->mediumToAttach.isEmpty() )
+    qCDebug(CHOQOK);
+    d->mediumToAttach = QFileDialog::getOpenFileName(this, i18n("Select Media to Upload"),
+                                                     QString(), QStringLiteral("Images"));
+    if (d->mediumToAttach.isEmpty()) {
         return;
-    QString fileName = KUrl(d->mediumToAttach).fileName();
-    if( !d->mediumName ){
-        kDebug()<<fileName;
+    }
+    QString fileName = QUrl(d->mediumToAttach).fileName();
+    if (!d->mediumName) {
+        qCDebug(CHOQOK) << fileName;
         d->mediumName = new QLabel(editorContainer());
-        d->btnCancel = new KPushButton(editorContainer());
-        d->btnCancel->setIcon(KIcon("list-remove"));
+        d->btnCancel = new QPushButton(editorContainer());
+        d->btnCancel->setIcon(QIcon::fromTheme("list-remove"));
         d->btnCancel->setToolTip(i18n("Discard Attachment"));
         d->btnCancel->setMaximumWidth(d->btnCancel->height());
-        connect( d->btnCancel, SIGNAL(clicked(bool)), SLOT(cancelAttachMedium()) );
+        connect(d->btnCancel, SIGNAL(clicked(bool)), SLOT(cancelAttachMedium()));
 
         d->editorLayout->addWidget(d->mediumName, 1, 0);
         d->editorLayout->addWidget(d->btnCancel, 1, 1);
@@ -157,7 +156,7 @@ void TwitterComposerWidget::selectMediumToAttach()
 
 void TwitterComposerWidget::cancelAttachMedium()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     delete d->mediumName;
     d->mediumName = 0;
     delete d->btnCancel;
@@ -165,4 +164,3 @@ void TwitterComposerWidget::cancelAttachMedium()
     d->mediumToAttach.clear();
 }
 
-#include "twittercomposerwidget.moc"

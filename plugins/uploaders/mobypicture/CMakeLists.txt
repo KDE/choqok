@@ -1,40 +1,55 @@
-
 include_directories(
-${CHOQOK_INCLUDES}
+    ${CHOQOK_INCLUDES}
 )
 
-########### next target ###############
+set(choqok_mobypicture_PART_SRCS
+    mobypicture.cpp
+)
 
-set( choqok_mobypicture_PART_SRCS
-mobypicture.cpp)
+kconfig_add_kcfg_files(choqok_mobypicture_PART_SRCS mobypicturesettings.kcfgc)
 
-kde4_add_kcfg_files(choqok_mobypicture_PART_SRCS mobypicturesettings.kcfgc )
+add_library(choqok_mobypicture MODULE ${choqok_mobypicture_PART_SRCS})
 
-kde4_add_plugin(choqok_mobypicture ${choqok_mobypicture_PART_SRCS})
+kcoreaddons_desktop_to_json(choqok_mobypicture choqok_mobypicture.desktop)
 
-target_link_libraries(choqok_mobypicture ${KDE4_KIO_LIBS} ${QTOAUTH_LIBRARY} ${QJSON_LIBRARY} choqok twitterapihelper)
+target_link_libraries(choqok_mobypicture
+PUBLIC
+    Qt5::Core
+    KF5::CoreAddons
+    KF5::KIOCore
+    ${QTOAUTH_LIBRARY}
+    choqok
+    twitterapihelper
+)
 
 install(TARGETS choqok_mobypicture DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES choqok_mobypicture.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
-########### next target ###############
+set(kcm_choqok_mobypicture_PART_SRCS
+    mobypictureconfig.cpp
+)
 
-set( kcm_choqok_mobypicture_PART_SRCS
-mobypictureconfig.cpp )
+ki18n_wrap_ui(kcm_choqok_mobypicture_PART_SRCS mobypictureprefs.ui)
 
-kde4_add_ui_files(kcm_choqok_mobypicture_PART_SRCS mobypictureprefs.ui )
+kconfig_add_kcfg_files(kcm_choqok_mobypicture_PART_SRCS mobypicturesettings.kcfgc)
 
-kde4_add_kcfg_files(kcm_choqok_mobypicture_PART_SRCS mobypicturesettings.kcfgc )
+add_library(kcm_choqok_mobypicture MODULE ${kcm_choqok_mobypicture_PART_SRCS})
 
-kde4_add_plugin(kcm_choqok_mobypicture ${kcm_choqok_mobypicture_PART_SRCS})
+kcoreaddons_desktop_to_json(kcm_choqok_mobypicture choqok_mobypicture_config.desktop)
 
-target_link_libraries(kcm_choqok_mobypicture ${KDE4_KDEUI_LIBS} choqok)
+target_link_libraries(kcm_choqok_mobypicture
+PUBLIC
+    Qt5::Widgets
+    KF5::ConfigWidgets
+    KF5::CoreAddons
+    KF5::I18n
+    KF5::KIOCore
+    KF5::WidgetsAddons
+    choqok
+)
 
 install(TARGETS kcm_choqok_mobypicture DESTINATION ${PLUGIN_INSTALL_DIR})
-
-########### next target ###############
-
-install( FILES mobypicturesettings.kcfg  DESTINATION ${KCFG_INSTALL_DIR})
-install( FILES choqok_mobypicture_config.desktop choqok_mobypicture.desktop
-         DESTINATION ${SERVICES_INSTALL_DIR})
+install(FILES mobypicturesettings.kcfg DESTINATION ${KCFG_INSTALL_DIR})
+install(FILES choqok_mobypicture_config.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
 add_subdirectory(icons)

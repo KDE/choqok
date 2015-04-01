@@ -1,24 +1,22 @@
-
-include_directories(
-${CHOQOK_INCLUDES}
+set(choqok_imageshack_PART_SRCS
+    imageshack.cpp
 )
 
-add_subdirectory(icons)
+add_library(choqok_imageshack MODULE ${choqok_imageshack_PART_SRCS})
 
-########### next target ###############
+kcoreaddons_desktop_to_json(choqok_imageshack choqok_imageshack.desktop)
 
-set( choqok_imageshack_PART_SRCS
-imageshack.cpp)
-
-# kde4_add_kcfg_files(choqok_imageshack_PART_SRCS imageshacksettings.kcfgc )
-
-kde4_add_plugin(choqok_imageshack ${choqok_imageshack_PART_SRCS})
-
-target_link_libraries(choqok_imageshack ${KDE4_KIO_LIBS} choqok)
+target_link_libraries(choqok_imageshack
+PUBLIC
+    Qt5::Core
+    Qt5::Xml
+    KF5::CoreAddons
+    KF5::I18n
+    KF5::KIOCore
+    choqok
+)
 
 install(TARGETS choqok_imageshack DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES choqok_imageshack.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
-########### next target ###############
-
-install( FILES choqok_imageshack.desktop
-         DESTINATION ${SERVICES_INSTALL_DIR})
+add_subdirectory(icons)

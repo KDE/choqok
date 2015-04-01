@@ -12,7 +12,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,19 +23,20 @@
 
 #include "pumpiocomposerwidget.h"
 
+#include <QFileDialog>
 #include <QGridLayout>
 #include <QLabel>
+#include <QPushButton>
 #include <QSpacerItem>
 #include <QVBoxLayout>
 
-#include <KDebug>
-#include <KFileDialog>
 #include <KLocalizedString>
 
 #include "account.h"
 #include "choqoktextedit.h"
 #include "shortenmanager.h"
 
+#include "pumpiodebug.h"
 #include "pumpiomicroblog.h"
 #include "pumpiopost.h"
 
@@ -44,20 +44,20 @@ class PumpIOComposerWidget::Private
 {
 public:
     QString mediumToAttach;
-    KPushButton *btnAttach;
+    QPushButton *btnAttach;
     QPointer<QLabel> mediumName;
-    QPointer<KPushButton> btnCancel;
+    QPointer<QPushButton> btnCancel;
     QGridLayout *editorLayout;
     QString replyToObjectType;
 };
 
-PumpIOComposerWidget::PumpIOComposerWidget(Choqok::Account* account, QWidget* parent)
-                                          : ComposerWidget(account, parent)
-                                          , d(new Private)
+PumpIOComposerWidget::PumpIOComposerWidget(Choqok::Account *account, QWidget *parent)
+    : ComposerWidget(account, parent)
+    , d(new Private)
 {
-    d->editorLayout = qobject_cast<QGridLayout*>(editorContainer()->layout());
-    d->btnAttach = new KPushButton(editorContainer());
-    d->btnAttach->setIcon(KIcon("mail-attachment"));
+    d->editorLayout = qobject_cast<QGridLayout *>(editorContainer()->layout());
+    d->btnAttach = new QPushButton(editorContainer());
+    d->btnAttach->setIcon(QIcon::fromTheme("mail-attachment"));
     d->btnAttach->setToolTip(i18n("Attach a file"));
     d->btnAttach->setMaximumWidth(d->btnAttach->height());
     connect(d->btnAttach, SIGNAL(clicked(bool)), this, SLOT(attachMedia()));
@@ -72,13 +72,13 @@ PumpIOComposerWidget::~PumpIOComposerWidget()
     delete d;
 }
 
-void PumpIOComposerWidget::submitPost(const QString& text)
+void PumpIOComposerWidget::submitPost(const QString &text)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     editorContainer()->setEnabled(false);
     QString txt = text;
     if (currentAccount()->postCharLimit() &&
-        txt.size() > (int) currentAccount()->postCharLimit()) {
+            txt.size() > (int) currentAccount()->postCharLimit()) {
         txt = Choqok::ShortenManager::self()->parseText(txt);
     }
     setPostToSubmit(0L);
@@ -90,14 +90,14 @@ void PumpIOComposerWidget::submitPost(const QString& text)
     connect(currentAccount()->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
             this, SLOT(slotPostSubmited(Choqok::Account*,Choqok::Post*)));
     connect(currentAccount()->microblog(),
-            SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,
-                             QString,Choqok::MicroBlog::ErrorLevel)), this,
+            SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
+                             QString, Choqok::MicroBlog::ErrorLevel)), this,
             SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
-    btnAbort = new KPushButton(KIcon("dialog-cancel"), i18n("Abort"), this);
+    btnAbort = new QPushButton(QIcon::fromTheme("dialog-cancel"), i18n("Abort"), this);
     layout()->addWidget(btnAbort);
-    connect( btnAbort, SIGNAL(clicked(bool)), SLOT(abort()) );
+    connect(btnAbort, SIGNAL(clicked(bool)), SLOT(abort()));
 
-    PumpIOMicroBlog *mBlog = qobject_cast<PumpIOMicroBlog* >(currentAccount()->microblog());
+    PumpIOMicroBlog *mBlog = qobject_cast<PumpIOMicroBlog * >(currentAccount()->microblog());
     if (d->mediumToAttach.isEmpty()) {
         if (replyToId.isEmpty()) {
             currentAccount()->microblog()->createPost(currentAccount(), postToSubmit());
@@ -116,18 +116,18 @@ void PumpIOComposerWidget::submitPost(const QString& text)
     }
 }
 
-void PumpIOComposerWidget::slotPostSubmited(Choqok::Account* theAccount, Choqok::Post* post)
+void PumpIOComposerWidget::slotPostSubmited(Choqok::Account *theAccount, Choqok::Post *post)
 {
-    kDebug();
-    if( currentAccount() == theAccount && post == postToSubmit() ) {
-        kDebug()<<"Accepted";
+    qCDebug(CHOQOK);
+    if (currentAccount() == theAccount && post == postToSubmit()) {
+        qCDebug(CHOQOK) << "Accepted";
         disconnect(currentAccount()->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-                    this, SLOT(slotPostSubmited(Choqok::Account*,Choqok::Post*)) );
+                   this, SLOT(slotPostSubmited(Choqok::Account*,Choqok::Post*)));
         disconnect(currentAccount()->microblog(),
-                    SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,
-                             QString,Choqok::MicroBlog::ErrorLevel)),
-                    this, SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
-        if(btnAbort){
+                   SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
+                                    QString, Choqok::MicroBlog::ErrorLevel)),
+                   this, SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
+        if (btnAbort) {
             btnAbort->deleteLater();
         }
         editor()->clear();
@@ -141,19 +141,18 @@ void PumpIOComposerWidget::slotPostSubmited(Choqok::Account* theAccount, Choqok:
 
 void PumpIOComposerWidget::attachMedia()
 {
-    kDebug();
-    d->mediumToAttach = KFileDialog::getOpenFileName(KUrl("kfiledialog:///image?global"),
-                                                     QString(), this,
-                                                     i18n("Select Media to Upload"));
+    qCDebug(CHOQOK);
+    d->mediumToAttach = QFileDialog::getOpenFileName(this, i18n("Select Media to Upload"),
+                                                     QString(), QStringLiteral("Images"));
     if (d->mediumToAttach.isEmpty()) {
-        kDebug() << "No file selected";
+        qCDebug(CHOQOK) << "No file selected";
         return;
     }
-    const QString fileName = KUrl(d->mediumToAttach).fileName();
+    const QString fileName = QUrl(d->mediumToAttach).fileName();
     if (!d->mediumName) {
         d->mediumName = new QLabel(editorContainer());
-        d->btnCancel = new KPushButton(editorContainer());
-        d->btnCancel->setIcon(KIcon("list-remove"));
+        d->btnCancel = new QPushButton(editorContainer());
+        d->btnCancel->setIcon(QIcon::fromTheme("list-remove"));
         d->btnCancel->setToolTip(i18n("Discard Attachment"));
         d->btnCancel->setMaximumWidth(d->btnCancel->height());
         connect(d->btnCancel, SIGNAL(clicked(bool)), SLOT(cancelAttach()));
@@ -167,7 +166,7 @@ void PumpIOComposerWidget::attachMedia()
 
 void PumpIOComposerWidget::cancelAttach()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     delete d->mediumName;
     d->mediumName = 0;
     delete d->btnCancel;
@@ -177,12 +176,12 @@ void PumpIOComposerWidget::cancelAttach()
 
 void PumpIOComposerWidget::slotSetReply(const QString replyToId, const QString replyToUsername, const QString replyToObjectType)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     this->replyToId = replyToId;
     this->replyToUsername = replyToUsername;
     d->replyToObjectType = replyToObjectType;
 
-    if(!replyToUsername.isEmpty()){
+    if (!replyToUsername.isEmpty()) {
         replyToUsernameLabel()->setText(i18n("Replying to <b>%1</b>", replyToUsername));
         btnCancelReply()->show();
         replyToUsernameLabel()->show();

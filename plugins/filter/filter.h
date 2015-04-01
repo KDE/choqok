@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -32,8 +31,8 @@ class Filter : public QObject
 {
     Q_OBJECT
 public:
-    enum FilterType{ Contain = 0, ExactMatch, RegExp, DoesNotContain };
-    enum FilterField{ Content = 0, AuthorUsername, ReplyToUsername, Source };
+    enum FilterType { Contain = 0, ExactMatch, RegExp, DoesNotContain };
+    enum FilterField { Content = 0, AuthorUsername, ReplyToUsername, Source };
     enum FilterAction { None = 0, Remove, Highlight};
 
     /**
@@ -41,21 +40,21 @@ public:
     */
     explicit Filter(const QString &filterText, FilterField field = Content,
                     FilterType type = Contain, FilterAction action = Remove,
-                    bool dontHide = false, QObject* parent = 0);
-    explicit Filter( const KConfigGroup& config, QObject* parent = 0);
+                    bool dontHide = false, QObject *parent = 0);
+    explicit Filter(const KConfigGroup &config, QObject *parent = 0);
     virtual ~Filter();
 
     QString filterText() const;
-    void setFilterText( const QString &text );
+    void setFilterText(const QString &text);
 
     FilterField filterField() const;
-    void setFilterField( FilterField field );
+    void setFilterField(FilterField field);
 
     FilterType filterType() const;
-    void setFilterType( FilterType type );
+    void setFilterType(FilterType type);
 
     FilterAction filterAction() const;
-    void setFilterAction( FilterAction action );
+    void setFilterAction(FilterAction action);
 
     bool dontHideReplies() const;
     void setDontHideReplies(bool dontHide);
@@ -64,7 +63,7 @@ public:
 
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 #endif // FILTER_H

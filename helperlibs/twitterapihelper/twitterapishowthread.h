@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -29,9 +28,11 @@
 
 #include "choqoktypes.h"
 
-namespace Choqok {
+namespace Choqok
+{
 class Account;
-namespace UI{
+namespace UI
+{
 class PostWidget;
 }
 }
@@ -40,15 +41,15 @@ class CHOQOK_HELPER_EXPORT TwitterApiShowThread : public QWidget
 {
     Q_OBJECT
 public:
-    TwitterApiShowThread( Choqok::Account *account, Choqok::Post *finalPost, QWidget* parent = 0);
+    TwitterApiShowThread(Choqok::Account *account, Choqok::Post *finalPost, QWidget *parent = 0);
     ~TwitterApiShowThread();
 
 protected Q_SLOTS:
-    void slotAddNewPost( Choqok::Account *theAccount, Choqok::Post *post );
+    void slotAddNewPost(Choqok::Account *theAccount, Choqok::Post *post);
     void raiseMainWindow();
 
 Q_SIGNALS:
-    void forwardResendPost( const QString &post );
+    void forwardResendPost(const QString &post);
     void forwardReply(const QString &txt, const QString &replyToId, const QString &replyToUsername);
 
 protected:
@@ -57,7 +58,7 @@ private:
     void setupUi();
 
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 #endif // TWITTERAPISHOWTHREAD_H

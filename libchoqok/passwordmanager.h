@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -44,14 +43,14 @@ class CHOQOK_EXPORT PasswordManager : public QObject
 public:
     ~PasswordManager();
     static PasswordManager *self();
-    QString readPassword(const QString& alias);
+    QString readPassword(const QString &alias);
     bool writePassword(const QString &alias, const QString &password);
-    bool removePassword(const QString& alias);
+    bool removePassword(const QString &alias);
 
 private:
     PasswordManager();
     class Private;
-    Private * const d;
+    Private *const d;
     static PasswordManager *mSelf;
 };
 }

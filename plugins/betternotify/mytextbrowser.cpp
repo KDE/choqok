@@ -10,7 +10,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -20,39 +19,36 @@
     along with this program; if not, see http://www.gnu.org/licenses/
 */
 
-
 #include "mytextbrowser.h"
 
 #include <QMouseEvent>
 
-MyTextBrowser::MyTextBrowser(QWidget* parent)
-    : KTextBrowser(parent)
+MyTextBrowser::MyTextBrowser(QWidget *parent)
+    : QTextBrowser(parent)
 {
-
 }
 
 MyTextBrowser::~MyTextBrowser()
 {
-
 }
 
-void MyTextBrowser::enterEvent(QEvent* e)
+void MyTextBrowser::enterEvent(QEvent *e)
 {
     QWidget::enterEvent(e);
     Q_EMIT mouseEntered();
 }
 
-void MyTextBrowser::leaveEvent(QEvent* e)
+void MyTextBrowser::leaveEvent(QEvent *e)
 {
     QWidget::leaveEvent(e);
     Q_EMIT mouseLeaved();
 }
 
-void MyTextBrowser::mousePressEvent(QMouseEvent* ev)
+void MyTextBrowser::mousePressEvent(QMouseEvent *ev)
 {
-    if(anchorAt(ev->pos()).isEmpty())
+    if (anchorAt(ev->pos()).isEmpty()) {
         Q_EMIT clicked();
-    KTextBrowser::mousePressEvent(ev);
+    }
+    QTextBrowser::mousePressEvent(ev);
 }
 
-#include "mytextbrowser.moc"

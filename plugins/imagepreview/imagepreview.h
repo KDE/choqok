@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -25,41 +24,39 @@
 #ifndef IMAGEPREVIEW_H
 #define IMAGEPREVIEW_H
 
-#include <QPointer>
 #include <QQueue>
-
-#include <KUrl>
+#include <QPixmap>
+#include <QVariant>
 
 #include "plugin.h"
 
-namespace KIO {
-class Job;
-}
-
-namespace Choqok {
-namespace UI {
+namespace Choqok
+{
+namespace UI
+{
 class PostWidget;
 }
 }
 
+class QPointer<Choqok::UI::PostWidget *>;
 
 class ImagePreview : public Choqok::Plugin
 {
     Q_OBJECT
 public:
-    ImagePreview( QObject* parent, const QList< QVariant >& args );
+    ImagePreview(QObject *parent, const QList< QVariant > &args);
     ~ImagePreview();
 
 protected Q_SLOTS:
-    void slotAddNewPostWidget( Choqok::UI::PostWidget *newWidget );
+    void slotAddNewPostWidget(Choqok::UI::PostWidget *newWidget);
     void startParsing();
-    void slotImageFetched(const QString &remoteUrl,const QPixmap &pixmap);
+    void slotImageFetched(const QString &remoteUrl, const QPixmap &pixmap);
 
 private:
-    enum ParserState{ Running = 0, Stopped };
+    enum ParserState { Running = 0, Stopped };
     ParserState state;
 
-    void parse( Choqok::UI::PostWidget *postToParse );
+    void parse(Choqok::UI::PostWidget *postToParse);
     QQueue< QPointer<Choqok::UI::PostWidget> > postsQueue;
     QMap<QString, QPointer<Choqok::UI::PostWidget> > mParsingList;//remoteUrl, Post
     QMap<QString, QString> mBaseUrlMap;//remoteUrl, BaseUrl

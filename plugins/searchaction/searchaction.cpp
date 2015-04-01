@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,25 +23,27 @@
 
 #include "searchaction.h"
 
-#include <KAction>
+#include <QAction>
+
 #include <KActionCollection>
-#include <KGenericFactory>
 #include <KMessageBox>
+#include <KLocalizedString>
+#include <KPluginFactory>
 
 #include "choqokuiglobal.h"
 #include "microblogwidget.h"
 
-#include "twitterapihelper/twitterapiaccount.h"
-#include "twitterapihelper/twitterapimicroblog.h"
+#include "twitterapiaccount.h"
+#include "twitterapimicroblog.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < SearchAction > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_searchaction" ) )
+K_PLUGIN_FACTORY_WITH_JSON(SearchActionFactory, "choqok_searchaction.json",
+                           registerPlugin < SearchAction > ();)
 
-SearchAction::SearchAction( QObject* parent, const QList< QVariant >& )
-    : Plugin(MyPluginFactory::componentData(), parent)
+SearchAction::SearchAction(QObject *parent, const QList< QVariant > &)
+    : Plugin("choqok_searchaction", parent)
 {
-    KAction *action = new KAction(KIcon("edit-find"), i18n("Search..."), this);
-    action->setShortcut(KShortcut(Qt::ControlModifier | Qt::Key_F));
+    QAction *action = new QAction(QIcon::fromTheme("edit-find"), i18n("Search..."), this);
+    action->setShortcut(QKeySequence(Qt::ControlModifier | Qt::Key_F));
     actionCollection()->addAction("search", action);
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSearch()));
     setXMLFile("searchactionui.rc");
@@ -55,8 +56,8 @@ SearchAction::~SearchAction()
 
 void SearchAction::slotSearch()
 {
-    TwitterApiAccount *curAccount = qobject_cast<TwitterApiAccount*>(Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentAccount());
-    if(curAccount){
+    TwitterApiAccount *curAccount = qobject_cast<TwitterApiAccount *>(Choqok::UI::Global::mainWindow()->currentMicroBlog()->currentAccount());
+    if (curAccount) {
         TwitterApiMicroBlog *mBlog = qobject_cast<TwitterApiMicroBlog *>(curAccount->microblog());
         mBlog->showSearchDialog(curAccount);
     } else {
@@ -64,3 +65,5 @@ void SearchAction::slotSearch()
                            i18n("The Search action plugin does not support the current microblog."));
     }
 }
+
+#include "searchaction.moc"

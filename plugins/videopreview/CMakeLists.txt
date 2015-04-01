@@ -1,22 +1,23 @@
-
 include_directories(
-${CHOQOK_INCLUDES}
+    ${CHOQOK_INCLUDES}
 )
 
-########### next target ###############
+set(choqok_videopreview_PART_SRCS
+    videopreview.cpp
+)
 
-set( choqok_videopreview_PART_SRCS
-videopreview.cpp )
+add_library(choqok_videopreview MODULE ${choqok_videopreview_PART_SRCS})
 
+kcoreaddons_desktop_to_json(choqok_videopreview choqok_videopreview.desktop)
 
-kde4_add_plugin(choqok_videopreview ${choqok_videopreview_PART_SRCS})
-
-target_link_libraries(choqok_videopreview ${KDE4_KIO_LIBS} choqok)
+target_link_libraries(choqok_videopreview
+PUBLIC
+    Qt5::Core
+    KF5::CoreAddons
+    KF5::KIOCore
+    KF5::KIOWidgets
+    choqok
+)
 
 install(TARGETS choqok_videopreview DESTINATION ${PLUGIN_INSTALL_DIR})
-
-
-########### next target ###############
-
-install( FILES choqok_videopreview.desktop
-         DESTINATION ${SERVICES_INSTALL_DIR})
+install(FILES choqok_videopreview.desktop DESTINATION ${SERVICES_INSTALL_DIR})

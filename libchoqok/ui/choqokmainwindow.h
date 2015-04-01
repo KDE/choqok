@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -25,15 +24,19 @@
 #ifndef CHOQOK_UI_MAINWINDOW_H
 #define CHOQOK_UI_MAINWINDOW_H
 
+#include <QHideEvent>
+
 #include <KXmlGuiWindow>
 
 #include "choqok_export.h"
 
-class KTabWidget;
+class QTimer;
+class QTabWidget;
 
-namespace Choqok {
-
-namespace UI {
+namespace Choqok
+{
+namespace UI
+{
 class MicroBlogWidget;
 
 class CHOQOK_EXPORT MainWindow : public KXmlGuiWindow
@@ -47,11 +50,11 @@ public:
     @return current active microblog widget
     */
     Choqok::UI::MicroBlogWidget *currentMicroBlog();
-    QList<Choqok::UI::MicroBlogWidget*> microBlogsWidgetsList();
-    void activateTab( int k );
+    QList<Choqok::UI::MicroBlogWidget *> microBlogsWidgetsList();
+    void activateTab(int k);
 
 public Q_SLOTS:
-    void showStatusMessage( const QString &message, bool isPermanent = false );
+    void showStatusMessage(const QString &message, bool isPermanent = false);
     void activateChoqok();
 
 Q_SIGNALS:
@@ -62,10 +65,10 @@ Q_SIGNALS:
     void currentMicroBlogWidgetChanged(Choqok::UI::MicroBlogWidget *widget);
 
 protected:
-    void hideEvent( QHideEvent * event );
+    void hideEvent(QHideEvent *event);
     QSize sizeHint() const;
 
-    KTabWidget *mainWidget;
+    QTabWidget *mainWidget;
     QTimer *timelineTimer;
 };
 

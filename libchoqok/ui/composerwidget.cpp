@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -23,38 +22,38 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "composerwidget.h"
 
 #include <QGridLayout>
-#include <QHBoxLayout>
 #include <QLabel>
 #include <QPointer>
-
-#include <KDebug>
-#include <KPushButton>
+#include <QPushButton>
 
 #include "account.h"
 #include "choqoktextedit.h"
+#include "libchoqokdebug.h"
 #include "microblog.h"
 #include "notifymanager.h"
 #include "shortenmanager.h"
 
-namespace Choqok {
-namespace UI {
+namespace Choqok
+{
+namespace UI
+{
 
 class ComposerWidget::Private
 {
 public:
-    Private( Account *account)
-    :editor(0), currentAccount(account), postToSubmit(0)
+    Private(Account *account)
+        : editor(0), currentAccount(account), postToSubmit(0)
     {}
     QPointer<TextEdit> editor;
     Account *currentAccount;
     Choqok::Post *postToSubmit;
     QWidget *editorContainer;
     QPointer<QLabel> replyToUsernameLabel;
-    QPointer<KPushButton> btnCancelReply;
+    QPointer<QPushButton> btnCancelReply;
 };
 
-ComposerWidget::ComposerWidget(Choqok::Account* account, QWidget* parent /*= 0*/)
-: QWidget(parent), btnAbort(0), d(new Private(account))
+ComposerWidget::ComposerWidget(Choqok::Account *account, QWidget *parent /*= 0*/)
+    : QWidget(parent), btnAbort(0), d(new Private(account))
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -66,11 +65,11 @@ ComposerWidget::ComposerWidget(Choqok::Account* account, QWidget* parent /*= 0*/
     setEditor(new TextEdit(account->postCharLimit(), this));
 
     d->replyToUsernameLabel = new QLabel(editorContainer());
-    d->btnCancelReply = new KPushButton(editorContainer());
-    d->btnCancelReply->setIcon(KIcon("dialog-cancel"));
+    d->btnCancelReply = new QPushButton(editorContainer());
+    d->btnCancelReply->setIcon(QIcon::fromTheme("dialog-cancel"));
     d->btnCancelReply->setToolTip(i18n("Discard Reply"));
     d->btnCancelReply->setMaximumWidth(d->btnCancelReply->height());
-    connect( d->btnCancelReply, SIGNAL(clicked(bool)), SLOT(editorCleared()) );
+    connect(d->btnCancelReply, SIGNAL(clicked(bool)), SLOT(editorCleared()));
     internalLayout->addWidget(d->replyToUsernameLabel, 2, 0);
     internalLayout->addWidget(d->btnCancelReply, 2, 1);
 
@@ -83,31 +82,32 @@ ComposerWidget::~ComposerWidget()
     delete d;
 }
 
-void ComposerWidget::setEditor(TextEdit* editor)
+void ComposerWidget::setEditor(TextEdit *editor)
 {
-    kDebug();
-    if(d->editor)
+    qCDebug(CHOQOK);
+    if (d->editor) {
         d->editor->deleteLater();
+    }
     d->editor = editor;
-    kDebug();
-    if(d->editor) {
-        QGridLayout *internalLayout = qobject_cast<QGridLayout*>(d->editorContainer->layout());
+    qCDebug(CHOQOK);
+    if (d->editor) {
+        QGridLayout *internalLayout = qobject_cast<QGridLayout *>(d->editorContainer->layout());
         internalLayout->addWidget(d->editor, 0, 0);
         connect(d->editor, SIGNAL(returnPressed(QString)), SLOT(submitPost(QString)));
         connect(d->editor, SIGNAL(textChanged()), SLOT(editorTextChanged()));
         connect(d->editor, SIGNAL(cleared()), SLOT(editorCleared()));
         editorTextChanged();
     } else {
-        kDebug()<<"Editor is NULL!";
+        qCDebug(CHOQOK) << "Editor is NULL!";
     }
 }
 
-void ComposerWidget::setText(const QString& text, const QString& replyToId, const QString& replyToUsername)
+void ComposerWidget::setText(const QString &text, const QString &replyToId, const QString &replyToUsername)
 {
     d->editor->prependText(text);
     this->replyToId = replyToId;
     this->replyToUsername = replyToUsername;
-    if( !replyToUsername.isEmpty() ){
+    if (!replyToUsername.isEmpty()) {
         d->replyToUsernameLabel->setText(i18n("Replying to <b>%1</b>", replyToUsername));
         d->btnCancelReply->show();
         d->replyToUsernameLabel->show();
@@ -115,44 +115,45 @@ void ComposerWidget::setText(const QString& text, const QString& replyToId, cons
     d->editor->setFocus();
 }
 
-void ComposerWidget::submitPost( const QString &txt )
+void ComposerWidget::submitPost(const QString &txt)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     editorContainer()->setEnabled(false);
     QString text = txt;
-    if( currentAccount()->postCharLimit() &&
-       text.size() > (int)currentAccount()->postCharLimit() )
+    if (currentAccount()->postCharLimit() &&
+            text.size() > (int)currentAccount()->postCharLimit()) {
         text = Choqok::ShortenManager::self()->parseText(text);
+    }
     delete d->postToSubmit;
     d->postToSubmit = new Choqok::Post;
     d->postToSubmit->content = text;
-    if( !replyToId.isEmpty() ) {
+    if (!replyToId.isEmpty()) {
         d->postToSubmit->replyToPostId = replyToId;
     }
     connect(d->currentAccount->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-            SLOT(slotPostSubmited(Choqok::Account*,Choqok::Post*)) );
+            SLOT(slotPostSubmited(Choqok::Account*,Choqok::Post*)));
     connect(d->currentAccount->microblog(),
-            SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,
-                             QString,Choqok::MicroBlog::ErrorLevel)),
+            SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
+                             QString, Choqok::MicroBlog::ErrorLevel)),
             SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
-    btnAbort = new KPushButton(KIcon("dialog-cancel"), i18n("Abort"), this);
+    btnAbort = new QPushButton(QIcon::fromTheme("dialog-cancel"), i18n("Abort"), this);
     layout()->addWidget(btnAbort);
-    connect( btnAbort, SIGNAL(clicked(bool)), SLOT(abort()) );
-    currentAccount()->microblog()->createPost( currentAccount(),d->postToSubmit);
+    connect(btnAbort, SIGNAL(clicked(bool)), SLOT(abort()));
+    currentAccount()->microblog()->createPost(currentAccount(), d->postToSubmit);
 }
 
-void ComposerWidget::slotPostSubmited(Choqok::Account* theAccount, Choqok::Post* post)
+void ComposerWidget::slotPostSubmited(Choqok::Account *theAccount, Choqok::Post *post)
 {
-    kDebug();
-    if( currentAccount() == theAccount && post == d->postToSubmit ) {
-        kDebug()<<"Accepted";
+    qCDebug(CHOQOK);
+    if (currentAccount() == theAccount && post == d->postToSubmit) {
+        qCDebug(CHOQOK) << "Accepted";
         disconnect(d->currentAccount->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-                    this, SLOT(slotPostSubmited(Choqok::Account*,Choqok::Post*)) );
+                   this, SLOT(slotPostSubmited(Choqok::Account*,Choqok::Post*)));
         disconnect(d->currentAccount->microblog(),
-                    SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,
-                             QString,Choqok::MicroBlog::ErrorLevel)),
-                    this, SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
-        if(btnAbort){
+                   SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
+                                    QString, Choqok::MicroBlog::ErrorLevel)),
+                   this, SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
+        if (btnAbort) {
             btnAbort->deleteLater();
         }
         d->editor->clear();
@@ -164,18 +165,18 @@ void ComposerWidget::slotPostSubmited(Choqok::Account* theAccount, Choqok::Post*
     }
 }
 
-void ComposerWidget::slotErrorPost(Account* theAccount, Post* post)
+void ComposerWidget::slotErrorPost(Account *theAccount, Post *post)
 {
-    kDebug();
-    if(theAccount == d->currentAccount && post == d->postToSubmit) {
-        kDebug();
+    qCDebug(CHOQOK);
+    if (theAccount == d->currentAccount && post == d->postToSubmit) {
+        qCDebug(CHOQOK);
         disconnect(d->currentAccount->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-                   this, SLOT(slotPostSubmited(Choqok::Account*,Choqok::Post*)) );
+                   this, SLOT(slotPostSubmited(Choqok::Account*,Choqok::Post*)));
         disconnect(d->currentAccount->microblog(),
-                   SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,
-                          QString,Choqok::MicroBlog::ErrorLevel)),
+                   SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
+                                    QString, Choqok::MicroBlog::ErrorLevel)),
                    this, SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
-        if(btnAbort){
+        if (btnAbort) {
             btnAbort->deleteLater();
         }
         editorContainer()->setEnabled(true);
@@ -185,45 +186,44 @@ void ComposerWidget::slotErrorPost(Account* theAccount, Post* post)
 
 void ComposerWidget::editorTextChanged()
 {
-    if(d->editor->toPlainText().length()) {
+    if (d->editor->toPlainText().length()) {
         d->editor->setMaximumHeight(qMax(d->editor->fontMetrics().height() * 3,
                                          80));
         d->editor->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    }
-    else {
+    } else {
         d->editor->setMaximumHeight(qMax(d->editor->fontMetrics().height(),
                                          30));
         d->editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     }
 }
 
-TextEdit* ComposerWidget::editor()
+TextEdit *ComposerWidget::editor()
 {
     return d->editor;
 }
 
-QWidget* ComposerWidget::editorContainer()
+QWidget *ComposerWidget::editorContainer()
 {
     return d->editorContainer;
 }
 
-Post* ComposerWidget::postToSubmit()
+Post *ComposerWidget::postToSubmit()
 {
     return d->postToSubmit;
 }
 
-void ComposerWidget::setPostToSubmit(Post* post)
+void ComposerWidget::setPostToSubmit(Post *post)
 {
     delete d->postToSubmit;
     d->postToSubmit = post;
 }
 
-QPointer< KPushButton > ComposerWidget::btnCancelReply()
+QPointer< QPushButton > ComposerWidget::btnCancelReply()
 {
     return d->btnCancelReply;
 }
 
-Account* ComposerWidget::currentAccount()
+Account *ComposerWidget::currentAccount()
 {
     return d->currentAccount;
 }
@@ -243,7 +243,7 @@ void ComposerWidget::editorCleared()
 
 void ComposerWidget::abort()
 {
-    if(btnAbort){
+    if (btnAbort) {
         btnAbort->deleteLater();
     }
     editorContainer()->setEnabled(true);
@@ -253,4 +253,3 @@ void ComposerWidget::abort()
 
 }
 }
-#include "composerwidget.moc"

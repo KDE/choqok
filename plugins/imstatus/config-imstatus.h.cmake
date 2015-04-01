@@ -1,1 +1,1 @@
-#define TELEPATHY_FOUND ${TelepathyQt4_FOUND}
+#define TELEPATHY_FOUND ${TelepathyQt5_FOUND}

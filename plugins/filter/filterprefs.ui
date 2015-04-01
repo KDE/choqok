@@ -12,7 +12,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="KTabWidget" name="ktabwidget">
+    <widget class="QTabWidget" name="ktabwidget">
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -73,14 +73,14 @@
           </spacer>
          </item>
          <item>
-          <widget class="KPushButton" name="btnAdd">
+          <widget class="QPushButton" name="btnAdd">
            <property name="toolTip">
             <string>Add</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="KPushButton" name="btnEdit">
+          <widget class="QPushButton" name="btnEdit">
            <property name="toolTip">
             <string>Modify</string>
            </property>
@@ -100,7 +100,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="KPushButton" name="btnRemove">
+          <widget class="QPushButton" name="btnRemove">
            <property name="toolTip">
             <string>Remove</string>
            </property>
@@ -154,19 +154,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KTabWidget</class>
-   <extends>QTabWidget</extends>
-   <header>ktabwidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

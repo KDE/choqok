@@ -30,7 +30,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Shortening &amp;service:</string>
+        <string>Shor&amp;tening service:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -41,7 +41,7 @@
       </widget>
      </item>
      <item>
-      <widget class="KComboBox" name="shortenPlugins">
+      <widget class="QComboBox" name="shortenPlugins">
        <property name="sizePolicy">
         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -51,14 +51,14 @@
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="configPlugin">
+      <widget class="QPushButton" name="configPlugin">
        <property name="toolTip">
         <string>Configure plugin</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="aboutPlugin">
+      <widget class="QPushButton" name="aboutPlugin">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -87,18 +87,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>kcfg_shortenOnPaste</tabstop>
   <tabstop>kcfg_removeHttp</tabstop>

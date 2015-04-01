@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -25,9 +24,11 @@
 #ifndef TWITTERACCOUNT_H
 #define TWITTERACCOUNT_H
 
+#include <QUrl>
+
 #include "account.h"
 
-#include "twitterapihelper/twitterapiaccount.h"
+#include "twitterapiaccount.h"
 
 class TwitterMicroBlog;
 /**
@@ -38,20 +39,19 @@ class TwitterAccount : public TwitterApiAccount
 {
     Q_OBJECT
 public:
-    TwitterAccount(TwitterMicroBlog* parent, const QString& alias);
+    TwitterAccount(TwitterMicroBlog *parent, const QString &alias);
     ~TwitterAccount();
 
     void setApi(const QString &api);
 
-    KUrl uploadUrl() const;
+    QUrl uploadUrl() const;
 
     QString uploadHost() const;
     void setUploadHost(const QString &uploadHost);
 
 protected:
-    void setUploadUrl(const KUrl &url);
+    void setUploadUrl(const QUrl &url);
     void generateUploadUrl();
-
 
 private:
     class Private;

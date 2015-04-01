@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -26,14 +25,14 @@
 #include "twitterapimicroblog.h"
 #include "postwidget.h"
 
-TwitterApiTimelineWidget::TwitterApiTimelineWidget(Choqok::Account* account, const QString& timelineName,
-                                                   QWidget* parent)
+TwitterApiTimelineWidget::TwitterApiTimelineWidget(Choqok::Account *account, const QString &timelineName,
+        QWidget *parent)
     : TimelineWidget(account, timelineName, parent)
 {
-    if(timelineName == "Favorite"){
-        TwitterApiMicroBlog* mBlog = qobject_cast<TwitterApiMicroBlog*>(account->microblog());
-        connect( mBlog, SIGNAL(favoriteRemoved(Choqok::Account*,QString)),
-                 this, SLOT(removeUnFavoritedPost(Choqok::Account*,QString)) );
+    if (timelineName == "Favorite") {
+        TwitterApiMicroBlog *mBlog = qobject_cast<TwitterApiMicroBlog *>(account->microblog());
+        connect(mBlog, SIGNAL(favoriteRemoved(Choqok::Account*,QString)),
+                this, SLOT(removeUnFavoritedPost(Choqok::Account*,QString)));
     }
 }
 
@@ -42,10 +41,10 @@ TwitterApiTimelineWidget::~TwitterApiTimelineWidget()
 
 }
 
-void TwitterApiTimelineWidget::removeUnFavoritedPost(Choqok::Account* theAccount, const QString& postId)
+void TwitterApiTimelineWidget::removeUnFavoritedPost(Choqok::Account *theAccount, const QString &postId)
 {
-    if(theAccount == currentAccount()){
-        if(posts().contains(postId)) {
+    if (theAccount == currentAccount()) {
+        if (posts().contains(postId)) {
             posts().value(postId)->close();
         }
     }

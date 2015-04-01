@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -25,7 +24,7 @@
 #ifndef LACONICASEARCH_H
 #define LACONICASEARCH_H
 
-#include "twitterapihelper/twitterapisearch.h"
+#include "twitterapisearch.h"
 
 class KJob;
 
@@ -40,26 +39,26 @@ class LaconicaSearch : public TwitterApiSearch
     Q_OBJECT
 public:
     enum SearchType { ReferenceHashtag = 0, ReferenceGroup, FromUser, ToUser };
-    LaconicaSearch(QObject* parent = 0);
+    LaconicaSearch(QObject *parent = 0);
     ~LaconicaSearch();
     virtual void requestSearchResults(const SearchInfo &searchInfo,
-                                      const QString& sinceStatusId = QString(),
+                                      const QString &sinceStatusId = QString(),
                                       uint count = 0, uint page = 1);
     virtual QString optionCode(int option);
 
 protected:
-    virtual KUrl buildUrl( const SearchInfo &searchInfo,
-                           QString sinceStatusId = QString(),
-                           uint count = 0, uint page = 1 );
-    QList<Choqok::Post*> parseRss( const QByteArray &buffer );
-    QList<Choqok::Post*> parseAtom( const QByteArray &buffer );
+    virtual QUrl buildUrl(const SearchInfo &searchInfo,
+                          QString sinceStatusId = QString(),
+                          uint count = 0, uint page = 1);
+    QList<Choqok::Post *> parseRss(const QByteArray &buffer);
+    QList<Choqok::Post *> parseAtom(const QByteArray &buffer);
 
 protected Q_SLOTS:
-    virtual void searchResultsReturned( KJob *job );
+    virtual void searchResultsReturned(KJob *job);
 
 private:
     QMap<int, QString> mSearchCode;
-    QMap<KJob*, SearchInfo> mSearchJobs;
+    QMap<KJob *, SearchInfo> mSearchJobs;
     static const QRegExp mIdRegExp;
     static const QRegExp m_rId;
 };

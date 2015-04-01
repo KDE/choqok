@@ -10,7 +10,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -21,16 +20,13 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-
 #include "notifysettings.h"
 
 #include <QDesktopWidget>
 #include <QMap>
 
 #include <KConfigGroup>
-#include <KGlobal>
 #include <KSharedConfig>
-#include <KSharedConfigPtr>
 
 #include "accountmanager.h"
 
@@ -47,11 +43,11 @@ public:
     QFont font;
 };
 
-NotifySettings::NotifySettings(QObject* parent)
-:QObject(parent), d(new Private)
+NotifySettings::NotifySettings(QObject *parent)
+    : QObject(parent), d(new Private)
 {
-    d->conf = new KConfigGroup(KGlobal::config(), QString::fromLatin1( "BetterNotify Plugin" ));
-    d->accountsConf = new KConfigGroup(KGlobal::config(), QString::fromLatin1( "BetterNotify Accounts Config" ));
+    d->conf = new KConfigGroup(KSharedConfig::openConfig(), QString::fromLatin1("BetterNotify Plugin"));
+    d->accountsConf = new KConfigGroup(KSharedConfig::openConfig(), QString::fromLatin1("BetterNotify Accounts Config"));
     load();
 }
 
@@ -75,16 +71,16 @@ void NotifySettings::load()
 {
     d->accounts.clear();
     d->accountsConf->sync();
-    Q_FOREACH (Choqok::Account* acc, Choqok::AccountManager::self()->accounts()) {
-        d->accounts.insert( acc->alias(), d->accountsConf->readEntry(acc->alias(), QStringList()));
+    Q_FOREACH (Choqok::Account *acc, Choqok::AccountManager::self()->accounts()) {
+        d->accounts.insert(acc->alias(), d->accountsConf->readEntry(acc->alias(), QStringList()));
     }
     d->conf->sync();
     d->interval = d->conf->readEntry("Interval", 7);
     QRect screenRect(QDesktopWidget().screenGeometry());
-    QPoint defaultPosition = QPoint(screenRect.center().x()-NOTIFICATION_WIDTH/2, 30);
+    QPoint defaultPosition = QPoint(screenRect.center().x() - NOTIFICATION_WIDTH / 2, 30);
     d->position = d->conf->readEntry("NotifyPosition", defaultPosition);
-    screenRect.adjust(0, 0, -1*NOTIFICATION_WIDTH, -1*NOTIFICATION_HEIGHT);
-    if(!screenRect.contains( d->position )){
+    screenRect.adjust(0, 0, -1 * NOTIFICATION_WIDTH, -1 * NOTIFICATION_HEIGHT);
+    if (!screenRect.contains(d->position)) {
         d->position = defaultPosition;
     }
     d->backgroundColor = d->conf->readEntry("NotifyBackground", QColor(0, 0, 0));
@@ -94,7 +90,7 @@ void NotifySettings::load()
 
 void NotifySettings::save()
 {
-    Q_FOREACH (Choqok::Account* acc, Choqok::AccountManager::self()->accounts()) {
+    Q_FOREACH (Choqok::Account *acc, Choqok::AccountManager::self()->accounts()) {
         d->accountsConf->writeEntry(acc->alias(), d->accounts.value(acc->alias()));
     }
     d->conf->writeEntry("Interval", d->interval);
@@ -120,7 +116,7 @@ QPoint NotifySettings::position() const
     return d->position;
 }
 
-void NotifySettings::setPosition(const QPoint& position)
+void NotifySettings::setPosition(const QPoint &position)
 {
     d->position = position;
 }
@@ -130,7 +126,7 @@ QColor NotifySettings::backgroundColor() const
     return d->backgroundColor;
 }
 
-void NotifySettings::setBackgroundColor(const QColor& color)
+void NotifySettings::setBackgroundColor(const QColor &color)
 {
     d->backgroundColor = color;
 }
@@ -140,7 +136,7 @@ QFont NotifySettings::font() const
     return d->font;
 }
 
-void NotifySettings::setFont(const QFont& font)
+void NotifySettings::setFont(const QFont &font)
 {
     d->font = font;
 }
@@ -150,7 +146,7 @@ QColor NotifySettings::foregroundColor() const
     return d->foregroundColor;
 }
 
-void NotifySettings::setForegroundColor(const QColor& color)
+void NotifySettings::setForegroundColor(const QColor &color)
 {
     d->foregroundColor = color;
 }

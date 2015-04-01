@@ -10,7 +10,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -29,14 +28,14 @@
 #include <QPointer>
 #include <QTimer>
 
-#include <KUrl>
-
 #include "plugin.h"
 
 class Notification;
-namespace Choqok {
-namespace UI {
-    class PostWidget;
+namespace Choqok
+{
+namespace UI
+{
+class PostWidget;
 }
 class Account;
 }
@@ -45,22 +44,22 @@ class Notify : public Choqok::Plugin
 {
     Q_OBJECT
 public:
-    Notify( QObject* parent, const QList< QVariant >& args );
+    Notify(QObject *parent, const QList< QVariant > &args);
     ~Notify();
 
 protected Q_SLOTS:
-    void slotNewPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString);
+    void slotNewPostWidgetAdded(Choqok::UI::PostWidget *, Choqok::Account *, QString);
     void notifyNextPost();
     void stopNotifications();
     void slotPostReaded();
 
 private:
-    void notify( QPointer< Choqok::UI::PostWidget > post );
-    void hideLastNotificationAndShowThis(Notification* nextNotificationToShow = 0);
+    void notify(QPointer< Choqok::UI::PostWidget > post);
+    void hideLastNotificationAndShowThis(Notification *nextNotificationToShow = 0);
 
     QTimer timer;
     QMap<QString, QStringList> accountsList;
-    QQueue<Choqok::UI::PostWidget*> postQueueToNotify;
+    QQueue<Choqok::UI::PostWidget *> postQueueToNotify;
     Notification *notification;
     QPoint notifyPosition;
 };

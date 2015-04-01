@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -25,20 +24,20 @@
 #ifndef TWITTERPOSTWIDGET_H
 #define TWITTERPOSTWIDGET_H
 
-#include "twitterapihelper/twitterapipostwidget.h"
+#include "twitterapipostwidget.h"
 
 class TwitterPostWidget : public TwitterApiPostWidget
 {
 public:
-    TwitterPostWidget(Choqok::Account* account, Choqok::Post* post, QWidget* parent = 0);
+    TwitterPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
     virtual void initUi();
 
 protected Q_SLOTS:
     virtual void slotReplyToAll();
 
 protected:
-    virtual QString prepareStatus(const QString& text);
-    virtual void checkAnchor(const QUrl& url);
+    virtual QString prepareStatus(const QString &text);
+    virtual void checkAnchor(const QUrl &url);
 
     static const QRegExp mTwitterUserRegExp;
     static const QRegExp mTwitterTagRegExp;

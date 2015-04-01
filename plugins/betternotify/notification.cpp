@@ -10,7 +10,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -21,27 +20,25 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-
 #include "notification.h"
 
+#include <QIcon>
 #include <QMouseEvent>
 #include <QVBoxLayout>
 
-#include <KDebug>
-#include <KIcon>
 #include <KLocalizedString>
 
 #include "choqokappearancesettings.h"
 #include "choqoktools.h"
 #include "mediamanager.h"
+
 #include "notifysettings.h"
 
 const QRegExp Notification::dirRegExp("(RT|RD)|(@([^\\s\\W]+))|(#([^\\s\\W]+))|(!([^\\s\\W]+))");
 
-Notification::Notification(Choqok::UI::PostWidget* postWidget)
-: QWidget(), post(postWidget), dir("ltr")
+Notification::Notification(Choqok::UI::PostWidget *postWidget)
+    : QWidget(), post(postWidget), dir("ltr")
 {
-    kDebug();
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 //     setAttribute(Qt::WA_TranslucentBackground);
     setWindowOpacity(0.8);
@@ -63,9 +60,9 @@ Notification::Notification(Choqok::UI::PostWidget* postWidget)
 
     QString fntStr = "font-family:\"" + fnt.family() + "\"; font-size:" + QString::number(fnt.pointSize()) + "pt;";
     fntStr += (fnt.bold() ? " font-weight:bold;" : QString()) + (fnt.italic() ? " font-style:italic;" : QString());
-    QString style = Choqok::UI::PostWidget::getBaseStyle().arg( Choqok::getColorString(color), Choqok::getColorString(back), fntStr);
+    QString style = Choqok::UI::PostWidget::getBaseStyle().arg(Choqok::getColorString(color), Choqok::getColorString(back), fntStr);
 
-    setStyleSheet( style );
+    setStyleSheet(style);
 
     init();
     connect(&mainWidget, SIGNAL(anchorClicked(QUrl)), SLOT(slotProcessAnchor(QUrl)));
@@ -73,31 +70,29 @@ Notification::Notification(Choqok::UI::PostWidget* postWidget)
 
 Notification::~Notification()
 {
-    kDebug();
 }
 
 QSize Notification::sizeHint() const
 {
-    kDebug();
     return QSize(NOTIFICATION_WIDTH, NOTIFICATION_HEIGHT);
 }
 
 void Notification::init()
 {
-    kDebug();
     QPixmap pix = Choqok::MediaManager::self()->fetchImage(post->currentPost()->author.profileImageUrl);
-    if( !pix )
-        pix = QPixmap( Choqok::MediaManager::self()->defaultImage() );
-    mainWidget.document()->addResource( QTextDocument::ImageResource, QUrl("img://profileImage"), pix );
-    mainWidget.document()->addResource( QTextDocument::ImageResource, QUrl("icon://close"),
-                                        KIcon("dialog-close").pixmap(16) );
+    if (!pix) {
+        pix = QPixmap(Choqok::MediaManager::self()->defaultImage());
+    }
+    mainWidget.document()->addResource(QTextDocument::ImageResource, QUrl("img://profileImage"), pix);
+    mainWidget.document()->addResource(QTextDocument::ImageResource, QUrl("icon://close"),
+                                       QIcon::fromTheme("dialog-close").pixmap(16));
     mainWidget.setText(baseText.arg(post->currentPost()->author.userName)
-                               .arg(post->currentPost()->content)
-                               .arg(dir)
-                               .arg(i18n("Ignore")));
+                       .arg(post->currentPost()->content)
+                       .arg(dir)
+                       .arg(i18n("Ignore")));
 
     QVBoxLayout *l = new QVBoxLayout(this);
-    l->setContentsMargins(0,0,0,0);
+    l->setContentsMargins(0, 0, 0, 0);
     l->setSpacing(0);
     l->addWidget(&mainWidget);
 
@@ -110,11 +105,10 @@ void Notification::init()
     //TODO Show remaining post count to notify
 }
 
-void Notification::slotProcessAnchor(const QUrl& url)
+void Notification::slotProcessAnchor(const QUrl &url)
 {
-    kDebug();
-    if(url.scheme() == "choqok"){
-        if(url.host() == "close"){
+    if (url.scheme() == "choqok") {
+        if (url.host() == "close") {
             Q_EMIT ignored();
         }
     }
@@ -122,15 +116,13 @@ void Notification::slotProcessAnchor(const QUrl& url)
 
 void Notification::slotClicked()
 {
-    kDebug();
     post->setReadWithSignal();
     Q_EMIT postReaded();
 }
 
 void Notification::setHeight()
 {
-    kDebug();
-    mainWidget.document()->setTextWidth(mainWidget.width()-2);
+    mainWidget.document()->setTextWidth(mainWidget.width() - 2);
     int h = mainWidget.document()->size().toSize().height() + 30;
     setMinimumHeight(h);
     setMaximumHeight(h);
@@ -138,19 +130,16 @@ void Notification::setHeight()
 
 void Notification::setDirection()
 {
-    kDebug();
     QString txt = post->currentPost()->content;
     txt.remove(dirRegExp);
     txt = txt.trimmed();
-    if( txt.isRightToLeft() ) {
+    if (txt.isRightToLeft()) {
         dir = "rtl";
     }
 }
 
-void Notification::mouseMoveEvent(QMouseEvent* e)
+void Notification::mouseMoveEvent(QMouseEvent *e)
 {
-    kDebug();
     e->accept();
 }
 
-#include "notification.moc"

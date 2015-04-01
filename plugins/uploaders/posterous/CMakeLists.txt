@@ -1,40 +1,54 @@
-
 include_directories(
-${CHOQOK_INCLUDES}
+    ${CHOQOK_INCLUDES}
 )
 
-########### next target ###############
+set(choqok_posterous_PART_SRCS
+    posterous.cpp
+)
 
-set( choqok_posterous_PART_SRCS
-posterous.cpp)
+kconfig_add_kcfg_files(choqok_posterous_PART_SRCS posteroussettings.kcfgc)
 
-kde4_add_kcfg_files(choqok_posterous_PART_SRCS posteroussettings.kcfgc )
+add_library(choqok_posterous MODULE ${choqok_posterous_PART_SRCS})
 
-kde4_add_plugin(choqok_posterous ${choqok_posterous_PART_SRCS})
+kcoreaddons_desktop_to_json(choqok_posterous choqok_posterous.desktop)
 
-target_link_libraries(choqok_posterous ${KDE4_KIO_LIBS} ${QTOAUTH_LIBRARY} ${QJSON_LIBRARY} choqok twitterapihelper)
+target_link_libraries(choqok_posterous
+PUBLIC
+    Qt5::Core
+    KF5::CoreAddons
+    KF5::KIOCore
+    ${QTOAUTH_LIBRARY}
+    choqok
+    twitterapihelper
+)
 
 install(TARGETS choqok_posterous DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES choqok_posterous.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
-########### next target ###############
+set(kcm_choqok_posterous_PART_SRCS
+    posterousconfig.cpp
+)
 
-set( kcm_choqok_posterous_PART_SRCS
-posterousconfig.cpp )
+ki18n_wrap_ui(kcm_choqok_posterous_PART_SRCS posterousprefs.ui)
 
-kde4_add_ui_files(kcm_choqok_posterous_PART_SRCS posterousprefs.ui )
+kconfig_add_kcfg_files(kcm_choqok_posterous_PART_SRCS posteroussettings.kcfgc)
 
-kde4_add_kcfg_files(kcm_choqok_posterous_PART_SRCS posteroussettings.kcfgc )
+add_library(kcm_choqok_posterous MODULE ${kcm_choqok_posterous_PART_SRCS})
 
-kde4_add_plugin(kcm_choqok_posterous ${kcm_choqok_posterous_PART_SRCS})
+kcoreaddons_desktop_to_json(kcm_choqok_posterous choqok_posterous_config.desktop)
 
-target_link_libraries(kcm_choqok_posterous ${KDE4_KDEUI_LIBS} choqok)
+target_link_libraries(kcm_choqok_posterous
+PUBLIC
+    Qt5::Widgets
+    KF5::ConfigWidgets
+    KF5::CoreAddons
+    KF5::I18n
+    KF5::WidgetsAddons
+    choqok
+)
 
 install(TARGETS kcm_choqok_posterous DESTINATION ${PLUGIN_INSTALL_DIR})
-
-########### next target ###############
-
-install( FILES posteroussettings.kcfg  DESTINATION ${KCFG_INSTALL_DIR})
-install( FILES choqok_posterous_config.desktop choqok_posterous.desktop
-         DESTINATION ${SERVICES_INSTALL_DIR})
+install(FILES posteroussettings.kcfg DESTINATION ${KCFG_INSTALL_DIR})
+install(FILES choqok_posterous_config.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
 add_subdirectory(icons)

@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -25,7 +24,11 @@
 #ifndef TWITTERAPIMICROBLOGWIDGET_H
 #define TWITTERAPIMICROBLOGWIDGET_H
 
+#include <QMap>
+#include <QPoint>
+
 #include "microblogwidget.h"
+#include "timelinewidget.h"
 #include "twitterapisearch.h"
 
 class TwitterApiSearchTimelineWidget;
@@ -34,13 +37,13 @@ class CHOQOK_HELPER_EXPORT TwitterApiMicroBlogWidget : public Choqok::UI::MicroB
 {
     Q_OBJECT
 public:
-    explicit TwitterApiMicroBlogWidget(Choqok::Account* account, QWidget* parent = 0);
+    explicit TwitterApiMicroBlogWidget(Choqok::Account *account, QWidget *parent = 0);
     ~TwitterApiMicroBlogWidget();
     virtual void initUi();
 
 public Q_SLOTS:
 //     virtual void markAllAsRead();
-    void slotContextMenu(QWidget *w, const QPoint& pt);
+    void slotContextMenu(QWidget *w, const QPoint &pt);
 
 protected Q_SLOTS:
     void closeAllSearches();
@@ -49,17 +52,17 @@ protected Q_SLOTS:
 //     void slotCurrentTimelineChanged(int);
     virtual void saveSearchTimelinesState();
     virtual void loadSearchTimelinesState();
-    virtual void slotSearchResultsReceived( const SearchInfo &info,
-                                            QList<Choqok::Post*> &postsList );
+    virtual void slotSearchResultsReceived(const SearchInfo &info,
+                                           QList<Choqok::Post *> &postsList);
 
 protected:
-    void closeSearch(Choqok::UI::TimelineWidget* searchWidget);
-    QMap<QString, TwitterApiSearchTimelineWidget*> mSearchTimelines;
-    TwitterApiSearchTimelineWidget* addSearchTimelineWidgetToUi(const QString& name,
-                                                                const SearchInfo &info);
+    void closeSearch(Choqok::UI::TimelineWidget *searchWidget);
+    QMap<QString, TwitterApiSearchTimelineWidget *> mSearchTimelines;
+    TwitterApiSearchTimelineWidget *addSearchTimelineWidgetToUi(const QString &name,
+            const SearchInfo &info);
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 #endif // TWITTERAPIMICROBLOGWIDGET_H

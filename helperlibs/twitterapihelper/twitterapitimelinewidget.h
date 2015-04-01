@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -26,16 +25,15 @@
 
 #include "timelinewidget.h"
 
-
 class CHOQOK_HELPER_EXPORT TwitterApiTimelineWidget : public Choqok::UI::TimelineWidget
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-    TwitterApiTimelineWidget(Choqok::Account* account, const QString& timelineName, QWidget* parent = 0);
+    TwitterApiTimelineWidget(Choqok::Account *account, const QString &timelineName, QWidget *parent = 0);
     virtual ~TwitterApiTimelineWidget();
 
 protected Q_SLOTS:
-    void removeUnFavoritedPost(Choqok::Account* theAccount, const QString& postId);
+    void removeUnFavoritedPost(Choqok::Account *theAccount, const QString &postId);
 };
 
 #endif // TWITTERAPITIMELINEWIDGET_H

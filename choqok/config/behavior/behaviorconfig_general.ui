@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>417</width>
-    <height>389</height>
+    <height>402</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -47,7 +47,7 @@
       <item>
        <widget class="QGroupBox" name="kcfg_enableSysTray">
         <property name="title">
-         <string>Enable System Tray</string>
+         <string>Enable System &amp;Tray</string>
         </property>
         <property name="checkable">
          <bool>true</bool>
@@ -85,7 +85,7 @@
          </widget>
         </item>
         <item>
-         <widget class="KLineEdit" name="kcfg_customBrowser">
+         <widget class="QLineEdit" name="kcfg_customBrowser">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -103,7 +103,7 @@
          </widget>
         </item>
         <item>
-         <widget class="KLineEdit" name="kcfg_customRT">
+         <widget class="QLineEdit" name="kcfg_customRT">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -161,9 +161,12 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <widget class="KIntSpinBox" name="kcfg_updateInterval">
+           <widget class="QSpinBox" name="kcfg_updateInterval">
             <property name="specialValueText">
              <string>Disabled</string>
+            </property>
+            <property name="suffix">
+             <string> minutes</string>
             </property>
             <property name="minimum">
              <number>0</number>
@@ -174,7 +177,7 @@
            </widget>
           </item>
           <item>
-           <widget class="KIntSpinBox" name="kcfg_countOfPosts">
+           <widget class="QSpinBox" name="kcfg_countOfPosts">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -214,18 +217,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>klineedit.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KIntSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>knuminput.h</header>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>kcfg_updateInterval</tabstop>
  </tabstops>

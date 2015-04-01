@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -23,13 +22,13 @@
 
 #include "pumpiomessagedialog.h"
 
+#include <QDialogButtonBox>
+#include <QFileDialog>
 #include <QPointer>
-
-#include <KDebug>
-#include <KFileDialog>
-#include <KPushButton>
+#include <QPushButton>
 
 #include "pumpioaccount.h"
+#include "pumpiodebug.h"
 #include "pumpiomicroblog.h"
 #include "pumpiopost.h"
 
@@ -39,23 +38,29 @@ public:
     Choqok::Account *account;
     QString mediumToAttach;
     QPointer<QLabel> mediumName;
-    QPointer<KPushButton> btnCancel;
+    QPointer<QPushButton> btnCancel;
 };
 
-PumpIOMessageDialog::PumpIOMessageDialog(Choqok::Account* theAccount, QWidget* parent,
-                                         Qt::WindowFlags flags)
-                                        : KDialog(parent, flags)
-                                        , d(new Private)
+PumpIOMessageDialog::PumpIOMessageDialog(Choqok::Account *theAccount, QWidget *parent,
+        Qt::WindowFlags flags)
+    : QDialog(parent, flags)
+    , d(new Private)
 {
     d->account = theAccount;
 
     setupUi(this);
 
-    setMainWidget(widget);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    verticalLayout->addWidget(buttonBox);
 
-    PumpIOAccount* acc = qobject_cast<PumpIOAccount *>(theAccount);
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
-        Q_FOREACH (const QVariant& list, acc->lists()) {
+        Q_FOREACH (const QVariant &list, acc->lists()) {
             QVariantMap l = list.toMap();
             QListWidgetItem *item = new QListWidgetItem;
             item->setText(l.value("name").toString());
@@ -67,7 +72,7 @@ PumpIOMessageDialog::PumpIOMessageDialog(Choqok::Account* theAccount, QWidget* p
         toList->sortItems();
         ccList->sortItems();
 
-        Q_FOREACH (const QString& username, acc->following()) {
+        Q_FOREACH (const QString &username, acc->following()) {
             QListWidgetItem *item = new QListWidgetItem;
             item->setText(PumpIOMicroBlog::userNameFromAcct(username));
             item->setData(Qt::UserRole, username);
@@ -78,7 +83,6 @@ PumpIOMessageDialog::PumpIOMessageDialog(Choqok::Account* theAccount, QWidget* p
 
     connect(btnReload, SIGNAL(clicked(bool)), this, SLOT(fetchFollowing()));
     connect(btnAttach, SIGNAL(clicked(bool)), this, SLOT(attachMedia()));
-    connect(this, SIGNAL(okClicked()), this, SLOT(sendPost()));
 }
 
 PumpIOMessageDialog::~PumpIOMessageDialog()
@@ -88,10 +92,10 @@ PumpIOMessageDialog::~PumpIOMessageDialog()
 
 void PumpIOMessageDialog::fetchFollowing()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     toList->clear();
     ccList->clear();
-    PumpIOMicroBlog *microblog = qobject_cast<PumpIOMicroBlog*>(d->account->microblog());
+    PumpIOMicroBlog *microblog = qobject_cast<PumpIOMicroBlog *>(d->account->microblog());
     if (microblog) {
         microblog->fetchFollowing(d->account);
         connect(microblog, SIGNAL(followingFetched(Choqok::Account*)), this,
@@ -99,13 +103,13 @@ void PumpIOMessageDialog::fetchFollowing()
     }
 }
 
-void PumpIOMessageDialog::slotFetchFollowing(Choqok::Account* theAccount)
+void PumpIOMessageDialog::slotFetchFollowing(Choqok::Account *theAccount)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if (theAccount == d->account) {
-        PumpIOAccount* acc = qobject_cast<PumpIOAccount *>(theAccount);
+        PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
         if (acc) {
-            Q_FOREACH (const QVariant& list, acc->lists()) {
+            Q_FOREACH (const QVariant &list, acc->lists()) {
                 QVariantMap l = list.toMap();
                 QListWidgetItem *item = new QListWidgetItem;
                 item->setText(l.value("name").toString());
@@ -116,7 +120,7 @@ void PumpIOMessageDialog::slotFetchFollowing(Choqok::Account* theAccount)
             toList->sortItems();
             ccList->sortItems();
 
-            Q_FOREACH (const QString& username, acc->following()) {
+            Q_FOREACH (const QString &username, acc->following()) {
                 QListWidgetItem *item = new QListWidgetItem;
                 item->setText(PumpIOMicroBlog::userNameFromAcct(username));
                 item->setData(Qt::UserRole, username);
@@ -127,19 +131,19 @@ void PumpIOMessageDialog::slotFetchFollowing(Choqok::Account* theAccount)
     }
 }
 
-void PumpIOMessageDialog::sendPost()
+void PumpIOMessageDialog::accept()
 {
-    kDebug();
-    PumpIOAccount* acc = qobject_cast<PumpIOAccount *>(d->account);
+    qCDebug(CHOQOK);
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(d->account);
     if (acc) {
         if (acc->following().isEmpty() || txtMessage->toPlainText().isEmpty()
-            || (toList->selectedItems().isEmpty() && ccList->selectedItems().isEmpty())) {
+                || (toList->selectedItems().isEmpty() && ccList->selectedItems().isEmpty())) {
             return;
         }
         hide();
-        PumpIOMicroBlog* microblog = qobject_cast<PumpIOMicroBlog*>(d->account->microblog());
+        PumpIOMicroBlog *microblog = qobject_cast<PumpIOMicroBlog *>(d->account->microblog());
         if (microblog) {
-            PumpIOPost* post = new PumpIOPost;
+            PumpIOPost *post = new PumpIOPost;
             post->content = txtMessage->toPlainText();
 
             QVariantList to;
@@ -175,19 +179,18 @@ void PumpIOMessageDialog::sendPost()
 
 void PumpIOMessageDialog::attachMedia()
 {
-    kDebug();
-    d->mediumToAttach = KFileDialog::getOpenFileName(KUrl("kfiledialog:///image?global"),
-                                                     QString(), this,
-                                                     i18n("Select Media to Upload"));
+    qCDebug(CHOQOK);
+    d->mediumToAttach = QFileDialog::getOpenFileName(this, i18n("Select Media to Upload"),
+                                                     QString(), QStringLiteral("Images"));
     if (d->mediumToAttach.isEmpty()) {
-        kDebug() << "No file selected";
+        qCDebug(CHOQOK) << "No file selected";
         return;
     }
-    const QString fileName = KUrl(d->mediumToAttach).fileName();
+    const QString fileName = QUrl(d->mediumToAttach).fileName();
     if (!d->mediumName) {
         d->mediumName = new QLabel(this);
-        d->btnCancel = new KPushButton(this);
-        d->btnCancel->setIcon(KIcon("list-remove"));
+        d->btnCancel = new QPushButton(this);
+        d->btnCancel->setIcon(QIcon::fromTheme("list-remove"));
         d->btnCancel->setToolTip(i18n("Discard Attachment"));
         d->btnCancel->setMaximumWidth(d->btnCancel->height());
         connect(d->btnCancel, SIGNAL(clicked(bool)), SLOT(cancelAttach()));
@@ -201,7 +204,7 @@ void PumpIOMessageDialog::attachMedia()
 
 void PumpIOMessageDialog::cancelAttach()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     delete d->mediumName;
     d->mediumName = 0;
     delete d->btnCancel;

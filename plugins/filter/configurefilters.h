@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -25,25 +24,25 @@
 #ifndef CONFIGUREFILTERS_H
 #define CONFIGUREFILTERS_H
 
-#include <KDialog>
+#include <QDialog>
 
 #include "ui_filterprefs.h"
 
 class Filter;
-class ConfigureFilters : public KDialog
+class ConfigureFilters : public QDialog
 {
     Q_OBJECT
 public:
-    ConfigureFilters(QWidget* parent);
+    ConfigureFilters(QWidget *parent);
     ~ConfigureFilters();
 
 protected Q_SLOTS:
-    virtual void slotButtonClicked(int button);
+    virtual void accept();
     void slotAddFilter();
     void slotEditFilter();
     void slotRemoveFilter();
-    void addNewFilter(Filter* filter);
-    void slotUpdateFilter(Filter* filter);
+    void addNewFilter(Filter *filter);
+    void slotUpdateFilter(Filter *filter);
     void slotHideRepliesNotRelatedToMeToggled(bool enabled);
 
 private:

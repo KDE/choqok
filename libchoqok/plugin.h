@@ -12,7 +12,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -71,11 +70,10 @@ Comment=Plugin that do some nice stuff
 * The constructor of your plugin should looks like this:
 *
 * \code
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < MyPlugin > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_myplugin" ) )
+K_PLUGIN_FACTORY_WITH_JSON( MyPluginFactory, "choqok_plugin.json", registerPlugin < MyPlugin > (); )
 
 MyPlugin::MyPlugin( QObject *parent, const char *name, const QList\<QVariant\> &  args  )
-: Choqok::Plugin( MyPluginFactory::componentData(), parent, name )
+: Choqok::Plugin( name, parent )
 {
 //...
 }
@@ -93,7 +91,7 @@ class CHOQOK_EXPORT Plugin : public QObject, public KXMLGUIClient
 {
     Q_OBJECT
 public:
-    Plugin( const KComponentData &instance, QObject *parent );
+    Plugin(const QString &componentName, QObject *parent);
     virtual ~Plugin();
 
     /**
@@ -162,7 +160,7 @@ Q_SIGNALS:
 
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 }

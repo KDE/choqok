@@ -27,11 +27,10 @@
 
 #include <plugin.h>
 #include <qqueue.h>
-#include <KUrl>
 #include <QPointer>
 
 class QMenu;
-class KAction;
+class QAction;
 namespace KIO {
 class Job;
 }
@@ -64,7 +63,7 @@ private:
 
     QMap<KJob*, Choqok::UI::PostWidget*> mJobPostWidget;
     QStringList langs;
-    KAction *translateAction;
+    QAction *translateAction;
 };
 
 #endif //TRANSLATOR_H

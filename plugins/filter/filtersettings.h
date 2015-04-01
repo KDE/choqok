@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -28,9 +27,9 @@
 #include <QMap>
 #include <QObject>
 
-#include <KConfigSkeleton>
-
 #include "filter.h"
+
+class KConfigGroup;
 
 class FilterSettings : public QObject
 {
@@ -39,8 +38,8 @@ public:
     static FilterSettings *self();
     virtual ~FilterSettings();
 
-    QList<Filter*> filters() const;
-    void setFilters(const QList< Filter* >& filters);
+    QList<Filter *> filters() const;
+    void setFilters(const QList< Filter * > &filters);
     void writeConfig();
     void readConfig();
 
@@ -49,9 +48,9 @@ public:
     static QMap<Filter::FilterAction, QString> filterActionsMap();
 
     static QString filterFieldName(Filter::FilterField field);
-    static Filter::FilterField filterFieldFromName( const QString &name );
+    static Filter::FilterField filterFieldFromName(const QString &name);
     static QString filterTypeName(Filter::FilterType type);
-    static Filter::FilterType filterTypeFromName( const QString &name );
+    static Filter::FilterType filterTypeFromName(const QString &name);
     static QString filterActionName(Filter::FilterAction action);
     static Filter::FilterAction filterActionFromName(const QString &name);
 
@@ -64,7 +63,7 @@ private:
     FilterSettings();
     static FilterSettings *_self;
 
-    QList<Filter*> _filters;
+    QList<Filter *> _filters;
     static QMap<Filter::FilterField, QString> _filterFieldName;
     static QMap<Filter::FilterType, QString> _filterTypeName;
     static QMap<Filter::FilterAction, QString> _filterActionName;

@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,10 +23,9 @@
 
 #include "notifymanager.h"
 
-#include <QApplication>
 #include <QTimer>
 
-#include <KGlobal>
+#include <KNotification>
 
 #include "choqokbehaviorsettings.h"
 #include "choqokuiglobal.h"
@@ -45,15 +43,15 @@ public:
         QObject::connect(&lastErrorClearance, SIGNAL(timeout()),
                          Choqok::UI::Global::SessionManager::self(), SLOT(resetNotifyManager()));
     }
-    void triggerNotify( const QString &eventId, const QString &title,
-                        const QString &message,
-                        KNotification::NotificationFlags flags = KNotification::CloseOnTimeout );
+    void triggerNotify(const QString &eventId, const QString &title,
+                       const QString &message,
+                       KNotification::NotificationFlags flags = KNotification::CloseOnTimeout);
 
     QList<QString> lastErrorMessages;
     QTimer          lastErrorClearance;
 };
 
-K_GLOBAL_STATIC(NotifyManagerPrivate, _nmp)
+Q_GLOBAL_STATIC(NotifyManagerPrivate, _nmp)
 
 NotifyManager::NotifyManager()
 {
@@ -68,18 +66,18 @@ void NotifyManager::resetNotifyManager()
     _nmp->lastErrorMessages.clear();
 }
 
-void NotifyManager::success( const QString& message, const QString& title )
+void NotifyManager::success(const QString &message, const QString &title)
 {
-    if(Choqok::UI::Global::mainWindow()->isActiveWindow()){
+    if (Choqok::UI::Global::mainWindow()->isActiveWindow()) {
         choqokMainWindow->showStatusMessage(message);
     } else {
         _nmp->triggerNotify("job-success", title, message);
     }
 }
 
-void NotifyManager::error( const QString& message, const QString& title )
+void NotifyManager::error(const QString &message, const QString &title)
 {
-    if( !_nmp->lastErrorMessages.contains(message) ){
+    if (!_nmp->lastErrorMessages.contains(message)) {
         _nmp->triggerNotify("job-error", title, message);
         _nmp->lastErrorMessages.append(message);
         _nmp->lastErrorClearance.start();
@@ -87,31 +85,31 @@ void NotifyManager::error( const QString& message, const QString& title )
 
 }
 
-void NotifyManager::newPostArrived( const QString& message, const QString& title )
+void NotifyManager::newPostArrived(const QString &message, const QString &title)
 {
-    QString fullMsg = QString( "<b>%1:</b><br/>%2" ).arg(title).arg(message);
-    if(Choqok::UI::Global::mainWindow()->isActiveWindow()){
+    QString fullMsg = QString("<b>%1:</b><br/>%2").arg(title).arg(message);
+    if (Choqok::UI::Global::mainWindow()->isActiveWindow()) {
         choqokMainWindow->showStatusMessage(message);
     } else {
-        if ( Choqok::BehaviorSettings::knotify() ){
-             KNotification *n = new KNotification("new-post-arrived", choqokMainWindow);
-             n->setActions(QStringList(i18nc( "Show Choqok MainWindow", "Show Choqok")));
-             n->setText(fullMsg);
-             QObject::connect(n, SIGNAL(activated(uint)), choqokMainWindow, SLOT(activateChoqok()));
-             n->sendEvent();
+        if (Choqok::BehaviorSettings::knotify()) {
+            KNotification *n = new KNotification("new-post-arrived", choqokMainWindow);
+            n->setActions(QStringList(i18nc("Show Choqok MainWindow", "Show Choqok")));
+            n->setText(fullMsg);
+            QObject::connect(n, SIGNAL(activated(uint)), choqokMainWindow, SLOT(activateChoqok()));
+            n->sendEvent();
         }
     }
 }
 
-void NotifyManager::shortening( const QString& message, const QString& title )
+void NotifyManager::shortening(const QString &message, const QString &title)
 {
     _nmp->triggerNotify("shortening", title, message);
 }
 
-void NotifyManagerPrivate::triggerNotify(const QString& eventId, const QString& title,
-                             const QString& message, KNotification::NotificationFlags flags)
+void NotifyManagerPrivate::triggerNotify(const QString &eventId, const QString &title,
+        const QString &message, KNotification::NotificationFlags flags)
 {
-    QString fullMsg = QString( "<b>%1:</b><br/>%2" ).arg(title).arg(message);
+    QString fullMsg = QString("<b>%1:</b><br/>%2").arg(title).arg(message);
     KNotification::event(eventId, fullMsg, QPixmap(), Choqok::UI::Global::mainWindow(), flags);
 }
 

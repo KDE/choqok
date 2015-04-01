@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -23,35 +22,35 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "timelinewidget.h"
 
 #include <QLabel>
-#include <QLayoutItem>
 #include <QPointer>
+#include <QPushButton>
 #include <QScrollArea>
 #include <QScrollBar>
 #include <QTextDocument>
 #include <QTimer>
 #include <QVBoxLayout>
 
-#include <KDebug>
-#include <KPushButton>
-
 #include "account.h"
 #include "choqokappearancesettings.h"
 #include "choqokbehaviorsettings.h"
+#include "libchoqokdebug.h"
 #include "microblog.h"
 #include "postwidget.h"
 #include "notifymanager.h"
 
-namespace Choqok {
-namespace UI {
+namespace Choqok
+{
+namespace UI
+{
 
 class TimelineWidget::Private
 {
 public:
     Private(Account *account, const QString &timelineName)
-        :currentAccount(account), timelineName(timelineName),
-         btnMarkAllAsRead(0), unreadCount(0), placeholderLabel(0), info(0), isClosable(false)
+        : currentAccount(account), timelineName(timelineName),
+          btnMarkAllAsRead(0), unreadCount(0), placeholderLabel(0), info(0), isClosable(false)
     {
-        if(account->microblog()->isValidTimeline(timelineName)) {
+        if (account->microblog()->isValidTimeline(timelineName)) {
             info = account->microblog()->timelineInfo(timelineName);
         } else {//It's search timeline
             info = new Choqok::TimelineInfo;
@@ -62,7 +61,7 @@ public:
     Account *currentAccount;
     QString timelineName;
     bool mStartUp;
-    QPointer<KPushButton> btnMarkAllAsRead;
+    QPointer<QPushButton> btnMarkAllAsRead;
     int unreadCount;
     QMap<QString, PostWidget *> posts;
     QMultiMap<QDateTime, PostWidget *>  sortedPostsList;
@@ -74,10 +73,10 @@ public:
     int order;            // 0: web, -1: natural
     Choqok::TimelineInfo *info;
     bool isClosable;
-    KIcon timelineIcon;
+    QIcon timelineIcon;
 };
 
-TimelineWidget::TimelineWidget(Choqok::Account* account, const QString &timelineName, QWidget* parent /*= 0*/)
+TimelineWidget::TimelineWidget(Choqok::Account *account, const QString &timelineName, QWidget *parent /*= 0*/)
     : QWidget(parent), d(new Private(account, timelineName))
 {
     setAttribute(Qt::WA_DeleteOnClose);
@@ -92,20 +91,20 @@ TimelineWidget::~TimelineWidget()
 
 void TimelineWidget::loadTimeline()
 {
-    QList<Choqok::Post*> list = currentAccount()->microblog()->loadTimeline(currentAccount(), timelineName());
+    QList<Choqok::Post *> list = currentAccount()->microblog()->loadTimeline(currentAccount(), timelineName());
     connect(currentAccount()->microblog(), SIGNAL(saveTimelines()), SLOT(saveTimeline()));
-    
-    if(!BehaviorSettings::markAllAsReadOnExit()) {
-      addNewPosts(list);
+
+    if (!BehaviorSettings::markAllAsReadOnExit()) {
+        addNewPosts(list);
     } else {
-      QList<Post*>::const_iterator it, endIt = list.constEnd();
-      for(it = list.constBegin(); it!= endIt; ++it){
-          PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, *it, this);
-          if(pw) {
-              pw->setRead();
-              addPostWidgetToUi(pw);
-          }
-      }
+        QList<Post *>::const_iterator it, endIt = list.constEnd();
+        for (it = list.constBegin(); it != endIt; ++it) {
+            PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, *it, this);
+            if (pw) {
+                pw->setRead();
+                addPostWidgetToUi(pw);
+            }
+        }
     }
 }
 
@@ -124,12 +123,12 @@ QString TimelineWidget::timelineIconName()
     return d->info->icon;
 }
 
-void TimelineWidget::setTimelineIcon(const KIcon& icon)
+void TimelineWidget::setTimelineIcon(const QIcon &icon)
 {
     d->timelineIcon = icon;
 }
 
-KIcon& TimelineWidget::timelineIcon() const
+QIcon &TimelineWidget::timelineIcon() const
 {
     return d->timelineIcon;
 }
@@ -143,8 +142,9 @@ void TimelineWidget::setupUi()
 {
     d->lblDesc = new QLabel(this);
     TimelineInfo *info = currentAccount()->microblog()->timelineInfo(d->timelineName);
-    if(info)
-        d->lblDesc->setText(Qt::escape(info->description));
+    if (info) {
+        d->lblDesc->setText(info->description.toHtmlEscaped());
+    }
     d->lblDesc->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     d->lblDesc->setWordWrap(true);
     d->lblDesc->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
@@ -184,26 +184,27 @@ void TimelineWidget::setupUi()
     gridLayout->addLayout(d->titleBarLayout);
     gridLayout->addWidget(d->scrollArea);
     if (AppearanceSettings::useReverseOrder()) {
-    d->order = -1;
-    QTimer::singleShot(0, this, SLOT(scrollToBottom()));
-    } else
-    d->order = 0;
+        d->order = -1;
+        QTimer::singleShot(0, this, SLOT(scrollToBottom()));
+    } else {
+        d->order = 0;
+    }
 }
 
 void TimelineWidget::removeOldPosts()
 {
     int count = d->sortedPostsList.count() - BehaviorSettings::countOfPosts();
-//     kDebug()<<count;
-    while( count > 0 && !d->sortedPostsList.isEmpty() ){
+//     qCDebug(CHOQOK)<<count;
+    while (count > 0 && !d->sortedPostsList.isEmpty()) {
         PostWidget *wd = d->sortedPostsList.values().first();
-        if(wd && wd->isRead()){
+        if (wd && wd->isRead()) {
             wd->close();
         }
         --count;
     }
 }
 
-void TimelineWidget::addPlaceholderMessage ( const QString& msg )
+void TimelineWidget::addPlaceholderMessage(const QString &msg)
 {
     if (d->posts.keys().length() == 0) {
         if (!d->placeholderLabel) {
@@ -214,27 +215,29 @@ void TimelineWidget::addPlaceholderMessage ( const QString& msg )
     }
 }
 
-void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList)
+void TimelineWidget::addNewPosts(QList< Choqok::Post * > &postList)
 {
-    kDebug()<<d->currentAccount->alias()<<' '<<d->timelineName<<' '<<postList.count();
-    QList<Post*>::const_iterator it, endIt = postList.constEnd();
+    qCDebug(CHOQOK) << d->currentAccount->alias() << ' ' << d->timelineName << ' ' << postList.count();
+    QList<Post *>::const_iterator it, endIt = postList.constEnd();
     int unread = 0;
-    for(it = postList.constBegin(); it!= endIt; ++it){
-        if(d->posts.keys().contains((*it)->postId))
+    for (it = postList.constBegin(); it != endIt; ++it) {
+        if (d->posts.keys().contains((*it)->postId)) {
             continue;
+        }
         PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, *it, this);
-        if(pw) {
+        if (pw) {
             addPostWidgetToUi(pw);
-            if( !pw->isRead() )
+            if (!pw->isRead()) {
                 ++unread;
+            }
         }
     }
     removeOldPosts();
-    if(unread){
+    if (unread) {
         d->unreadCount += unread;
-        Choqok::NotifyManager::newPostArrived( i18np( "1 new post in %2(%3)",
-                                                      "%1 new posts in %2(%3)",
-                                                      unread, currentAccount()->alias(), d->timelineName ) );
+        Choqok::NotifyManager::newPostArrived(i18np("1 new post in %2(%3)",
+                                              "%1 new posts in %2(%3)",
+                                              unread, currentAccount()->alias(), d->timelineName));
 
         Q_EMIT updateUnreadCount(unread);
         showMarkAllAsReadButton();
@@ -243,30 +246,30 @@ void TimelineWidget::addNewPosts( QList< Choqok::Post* >& postList)
 
 void TimelineWidget::showMarkAllAsReadButton()
 {
-    if(!d->btnMarkAllAsRead){
-        d->btnMarkAllAsRead = new KPushButton(this);
-        d->btnMarkAllAsRead->setIcon(KIcon("mail-mark-read"));
+    if (!d->btnMarkAllAsRead) {
+        d->btnMarkAllAsRead = new QPushButton(this);
+        d->btnMarkAllAsRead->setIcon(QIcon::fromTheme("mail-mark-read"));
         d->btnMarkAllAsRead->setToolTip(i18n("Mark timeline as read"));
         d->btnMarkAllAsRead->setMaximumSize(14, 14);
-        d->btnMarkAllAsRead->setIconSize(QSize(12,12));
+        d->btnMarkAllAsRead->setIconSize(QSize(12, 12));
         connect(d->btnMarkAllAsRead, SIGNAL(clicked(bool)), SLOT(markAllAsRead()));
         d->titleBarLayout->addWidget(d->btnMarkAllAsRead);
     }
 }
 
-void TimelineWidget::addPostWidgetToUi(PostWidget* widget)
+void TimelineWidget::addPostWidgetToUi(PostWidget *widget)
 {
     widget->initUi();
     widget->setFocusProxy(this);
     widget->setObjectName(widget->currentPost()->postId);
-    connect( widget, SIGNAL(resendPost(const QString &)),
-             this, SIGNAL(forwardResendPost(const QString &)));
-    connect( widget, SIGNAL(reply(QString,QString,QString)),
-             this, SIGNAL(forwardReply(QString,QString,QString)) );
-    connect( widget, SIGNAL(postReaded()),
-            this, SLOT(slotOnePostReaded()) );
-    connect( widget, SIGNAL(aboutClosing(QString,PostWidget*)),
-             SLOT(postWidgetClosed(QString,PostWidget*)) );
+    connect(widget, SIGNAL(resendPost(QString)),
+            this, SIGNAL(forwardResendPost(QString)));
+    connect(widget, SIGNAL(reply(QString,QString,QString)),
+            this, SIGNAL(forwardReply(QString,QString,QString)));
+    connect(widget, SIGNAL(postReaded()),
+            this, SLOT(slotOnePostReaded()));
+    connect(widget, SIGNAL(aboutClosing(QString,PostWidget*)),
+            SLOT(postWidgetClosed(QString,PostWidget*)));
     d->mainLayout->insertWidget(d->order, widget);
     d->posts.insert(widget->currentPost()->postId, widget);
     d->sortedPostsList.insert(widget->currentPost()->creationDateTime, widget);
@@ -290,7 +293,7 @@ void TimelineWidget::setUnreadCount(int unread)
 
 void TimelineWidget::markAllAsRead()
 {
-    if( d->unreadCount > 0 ) {
+    if (d->unreadCount > 0) {
         Q_FOREACH (PostWidget *pw, d->sortedPostsList) {
             pw->setRead();
         }
@@ -307,7 +310,7 @@ void TimelineWidget::scrollToBottom()
     triggerAction(QAbstractSlider::SliderToMaximum);
 }
 
-Account* TimelineWidget::currentAccount()
+Account *TimelineWidget::currentAccount()
 {
     return d->currentAccount;
 }
@@ -323,49 +326,50 @@ void TimelineWidget::slotOnePostReaded()
 {
     d->unreadCount--;
     Q_EMIT updateUnreadCount(-1);
-    if(d->unreadCount == 0){
+    if (d->unreadCount == 0) {
         d->btnMarkAllAsRead->deleteLater();
     }
 }
 
 void TimelineWidget::saveTimeline()
 {
-    if(currentAccount()->microblog())
-        currentAccount()->microblog()->saveTimeline( currentAccount(), timelineName(), posts().values() );
+    if (currentAccount()->microblog()) {
+        currentAccount()->microblog()->saveTimeline(currentAccount(), timelineName(), posts().values());
+    }
 }
 
-QList< PostWidget* > TimelineWidget::postWidgets()
+QList< PostWidget * > TimelineWidget::postWidgets()
 {
     return posts().values();
 }
 
-void TimelineWidget::postWidgetClosed(const QString& postId, PostWidget* post)
+void TimelineWidget::postWidgetClosed(const QString &postId, PostWidget *post)
 {
     d->posts.remove(postId);
     d->sortedPostsList.remove(post->currentPost()->creationDateTime, post);
 }
 
-QMap< QString, PostWidget* >& TimelineWidget::posts() const
+QMap< QString, PostWidget * > &TimelineWidget::posts() const
 {
     return d->posts;
 }
 
-QMultiMap< QDateTime, PostWidget* >& TimelineWidget::sortedPostsList() const
+QMultiMap< QDateTime, PostWidget * > &TimelineWidget::sortedPostsList() const
 {
     return d->sortedPostsList;
 }
 
-QLabel* TimelineWidget::timelineDescription()
+QLabel *TimelineWidget::timelineDescription()
 {
     return d->lblDesc;
 }
 
-QVBoxLayout* TimelineWidget::mainLayout()
+QVBoxLayout *TimelineWidget::mainLayout()
 {
     return d->mainLayout;
 }
 
-QHBoxLayout* TimelineWidget::titleBarLayout()
+QHBoxLayout *TimelineWidget::titleBarLayout()
 {
     return d->titleBarLayout;
 }
@@ -382,4 +386,3 @@ void TimelineWidget::setClosable(bool isClosable)
 
 }
 }
-#include "timelinewidget.moc"

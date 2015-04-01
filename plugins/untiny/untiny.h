@@ -27,7 +27,7 @@
 
 #include <plugin.h>
 #include <qqueue.h>
-#include <KUrl>
+#include <QUrl>
 #include <QPointer>
 
 namespace KIO {
@@ -53,7 +53,7 @@ public:
 
 protected Q_SLOTS:
     void slotAddNewPostWidget( Choqok::UI::PostWidget *newWidget );
-    void slot301Redirected(KIO::Job*,KUrl,KUrl);
+    void slot301Redirected(KIO::Job*,QUrl,QUrl);
     void startParsing();
 
 private:

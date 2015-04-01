@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -23,34 +22,34 @@
 */
 
 #include "twitteraccount.h"
-
-#include <KDebug>
-
+#include "twitterdebug.h"
 #include "twittermicroblog.h"
 
 class TwitterAccount::Private
 {
 public:
     QString uploadHost;
-    KUrl uploadUrl;
+    QUrl uploadUrl;
 //     QStringList lists;
 };
 
-TwitterAccount::TwitterAccount(TwitterMicroBlog* parent, const QString &alias)
+TwitterAccount::TwitterAccount(TwitterMicroBlog *parent, const QString &alias)
     : TwitterApiAccount(parent, alias), d(new Private)
 {
     setHost("https://api.twitter.com");
     setUploadHost("https://api.twitter.com");
     setApi("1.1");
-    kDebug() << "Set API version to 1.1";
+    qCDebug(CHOQOK) << "Set API version to 1.1";
 //     d->lists = configGroup()->readEntry("lists", QStringList());
     QStringList lists;
-    Q_FOREACH (const QString & tm, timelineNames()) {
-        if(tm.startsWith('@'))
+    Q_FOREACH (const QString &tm, timelineNames()) {
+        if (tm.startsWith('@')) {
             lists.append(tm);
+        }
     }
-    if(!lists.isEmpty())
+    if (!lists.isEmpty()) {
         parent->setListTimelines(this, lists);
+    }
 }
 
 TwitterAccount::~TwitterAccount()
@@ -64,12 +63,12 @@ void TwitterAccount::setApi(const QString &api)
     generateUploadUrl();
 }
 
-KUrl TwitterAccount::uploadUrl() const
+QUrl TwitterAccount::uploadUrl() const
 {
     return d->uploadUrl;
 }
 
-void TwitterAccount::setUploadUrl(const KUrl &url)
+void TwitterAccount::setUploadUrl(const QUrl &url)
 {
     d->uploadUrl = url;
 }
@@ -86,19 +85,20 @@ void TwitterAccount::setUploadHost(const QString &uploadHost)
 
 void TwitterAccount::generateUploadUrl()
 {
-    if(!uploadHost().startsWith(QLatin1String("http")))//NOTE: This is for compatibility by prev versions. remove it after 1.0 release
+    if (!uploadHost().startsWith(QLatin1String("http"))) { //NOTE: This is for compatibility by prev versions. remove it after 1.0 release
         setUploadHost(uploadHost().prepend("http://"));
-    KUrl url(uploadHost());
+    }
+    QUrl url(uploadHost());
 
-    url.addPath(api());
+    url = url.adjusted(QUrl::StripTrailingSlash);
+    url.setPath(url.path() + '/' + (api()));
     setUploadUrl(url);
 }
-
 
 /*
 void TwitterAccount::writeConfig()
 {
-    kDebug()<<d->lists;
+    qCDebug(CHOQOK)<<d->lists;
     configGroup()->writeEntry("lists", d->lists);
     TwitterApiAccount::writeConfig();
 }
@@ -113,4 +113,3 @@ void TwitterAccount::removeList(const QString& name)
     d->lists.removeOne(name);
 }*/
 
-#include "twitteraccount.moc"

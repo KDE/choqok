@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -23,22 +22,19 @@
 
 #include "tinyarro_ws.h"
 
-#include <KAboutData>
-#include <KDebug>
-#include <KGenericFactory>
-#include <KGlobal>
-#include <KIO/Job>
-#include <KIO/NetAccess>
+#include <KIO/StoredTransferJob>
+#include <KLocalizedString>
+#include <KPluginFactory>
 
 #include "notifymanager.h"
 
 #include "tinyarro_ws_settings.h"
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < Tinyarro_ws > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_tinyarro_ws" ) )
+K_PLUGIN_FACTORY_WITH_JSON(Tinyarro_wsFactory, "choqok_tinyarro_ws.json",
+                           registerPlugin < Tinyarro_ws > ();)
 
-Tinyarro_ws::Tinyarro_ws( QObject *parent, const QVariantList & )
-    : Choqok::Shortener( MyPluginFactory::componentData(), parent )
+Tinyarro_ws::Tinyarro_ws(QObject *parent, const QVariantList &)
+    : Choqok::Shortener("choqok_tinyarro_ws", parent)
 {
 }
 
@@ -46,35 +42,35 @@ Tinyarro_ws::~Tinyarro_ws()
 {
 }
 
-QString Tinyarro_ws::shorten( const QString &url )
+QString Tinyarro_ws::shorten(const QString &url)
 {
-    kDebug();
-    QByteArray data;
+    QUrl reqUrl("http://tinyarro.ws/api-create.php");
 
-    KUrl reqUrl( "http://tinyarro.ws/api-create.php" );
+    Tinyarro_ws_Settings::self()->load();
 
-    Tinyarro_ws_Settings::self()->readConfig();
-
-    if( !Tinyarro_ws_Settings::tinyarro_ws_host_punny().isEmpty() || 
-        Tinyarro_ws_Settings::tinyarro_ws_host_punny() != "Random" ) {
-        reqUrl.addQueryItem( "host", Tinyarro_ws_Settings::tinyarro_ws_host_punny() );
+    if (!Tinyarro_ws_Settings::tinyarro_ws_host_punny().isEmpty() ||
+            Tinyarro_ws_Settings::tinyarro_ws_host_punny() != "Random") {
+        reqUrl.addQueryItem("host", Tinyarro_ws_Settings::tinyarro_ws_host_punny());
     }
-    reqUrl.addQueryItem( "utfpure", "1" );
-    reqUrl.addQueryItem( "url", KUrl( url ).url() );
+    reqUrl.addQueryItem("utfpure", "1");
+    reqUrl.addQueryItem("url", QUrl(url).url());
 
-    KIO::Job *job = KIO::get( reqUrl, KIO::Reload, KIO::HideProgressInfo );
+    KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
+    job->exec();
 
-    if ( KIO::NetAccess::synchronousRun( job, 0, &data ) ) {
-        QString output = QString::fromUtf8( data );
+    if (!job->error()) {
+        QString output = QString::fromUtf8(job->data());
 
-        if( !output.isEmpty() ) {
-            kDebug() << "Short url is: " << output;
-            if ( output.startsWith( QString( "http://" ) ) )
-              return output;
+        if (!output.isEmpty()) {
+            if (output.startsWith(QString("http://"))) {
+                return output;
+            }
         }
-        Choqok::NotifyManager::error( output, i18n( "Tinyarro.ws error" ) );
+        Choqok::NotifyManager::error(output, i18n("Tinyarro.ws error"));
     } else {
-        Choqok::NotifyManager::error( i18n( "Cannot create a short URL.\n%1", job->errorString() ) );
+        Choqok::NotifyManager::error(i18n("Cannot create a short URL.\n%1", job->errorString()));
     }
     return url;
 }
+
+#include "tinyarro_ws.moc"

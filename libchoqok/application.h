@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,17 +23,18 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef CHOQOK_APPLICATION_H
 #define CHOQOK_APPLICATION_H
 
-#include <KUniqueApplication>
+#include <QApplication>
 
 #include "choqok_export.h"
 
-namespace Choqok {
-
-class CHOQOK_EXPORT Application : public KUniqueApplication
+namespace Choqok
 {
-Q_OBJECT
+
+class CHOQOK_EXPORT Application : public QApplication
+{
+    Q_OBJECT
 public:
-    Application();
+    Application(int &argc, char **argv);
     virtual ~Application();
 
     /**
@@ -51,7 +51,7 @@ protected:
 
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 }

@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -21,20 +20,20 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see http://www.gnu.org/licenses/
 */
 
-
 #ifndef CHOQOKSHORTENMANAGER_H
 #define CHOQOKSHORTENMANAGER_H
 
 #include <QObject>
-
-#include <KUrl>
+#include <QUrl>
 
 #include "shortener.h"
 
-namespace Choqok{
-  namespace UI {
-    class PostWidget;
-  }
+namespace Choqok
+{
+namespace UI
+{
+class PostWidget;
+}
 
 class ShortenManagerPrivate;
 /**
@@ -64,13 +63,13 @@ public:
     */
     void reloadConfig();
 
-    void emitNewUnshortenedUrl( Choqok::UI::PostWidget *widget, const KUrl& fromUrl, const KUrl& toUrl);
+    void emitNewUnshortenedUrl(Choqok::UI::PostWidget *widget, const QUrl &fromUrl, const QUrl &toUrl);
 
-  Q_SIGNALS:
-    void newUnshortenedUrl( Choqok::UI::PostWidget *widget, const KUrl& fromUrl, const KUrl& toUrl);
+Q_SIGNALS:
+    void newUnshortenedUrl(Choqok::UI::PostWidget *widget, const QUrl &fromUrl, const QUrl &toUrl);
 
 private:
-    ShortenManager(QObject *parent=0);
+    ShortenManager(QObject *parent = 0);
     ~ShortenManager();
 };
 

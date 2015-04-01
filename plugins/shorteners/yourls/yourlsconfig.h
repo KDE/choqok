@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -25,6 +24,8 @@
 #ifndef YOURLSCONFIG_H
 #define YOURLSCONFIG_H
 
+#include <QVariantList>
+
 #include <KCModule>
 
 #include "ui_yourlsprefs.h"
@@ -33,7 +34,7 @@ class YourlsConfig : public KCModule
 {
     Q_OBJECT
 public:
-    YourlsConfig(QWidget* parent, const QVariantList&);
+    YourlsConfig(QWidget *parent, const QVariantList &);
     ~YourlsConfig();
 
     virtual void save();

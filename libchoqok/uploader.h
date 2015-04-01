@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -25,11 +24,12 @@
 #ifndef UPLOADER_H
 #define UPLOADER_H
 
-#include <KUrl>
+#include <QUrl>
 
 #include "plugin.h"
 
-namespace Choqok {
+namespace Choqok
+{
 
 /**
 @brief The base class for Medium uploader plugins.
@@ -38,20 +38,20 @@ namespace Choqok {
 */
 class CHOQOK_EXPORT Uploader : public Plugin
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     virtual ~Uploader();
 
     /*virtual void upload( const QString &localUrl, const QByteArray &mediumType,
                             const QString &optionalMessage = QString() )*/;
-    virtual void upload( const KUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType) = 0;
+    virtual void upload(const QUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType) = 0;
 
 Q_SIGNALS:
-    void mediumUploaded( const KUrl &localUrl, const QString &remoteUrl );
-    void uploadingFailed( const KUrl &localUrl, const QString &errorMessage );
+    void mediumUploaded(const QUrl &localUrl, const QString &remoteUrl);
+    void uploadingFailed(const QUrl &localUrl, const QString &errorMessage);
 
 protected:
-    Uploader( const KComponentData &instance, QObject *parent );
+    Uploader(const QString &componentName, QObject *parent);
 };
 
 }

@@ -10,7 +10,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -21,11 +20,8 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-
 #ifndef NOTIFICATION_H
 #define NOTIFICATION_H
-
-#include <KPushButton>
 
 #include "postwidget.h"
 
@@ -33,9 +29,9 @@
 
 class Notification : public QWidget
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-    Notification(Choqok::UI::PostWidget* post);
+    Notification(Choqok::UI::PostWidget *post);
     virtual ~Notification();
     void init();
 
@@ -48,11 +44,11 @@ Q_SIGNALS:
     void mouseLeaved();
 
 protected Q_SLOTS:
-    void slotProcessAnchor(const QUrl& url);
+    void slotProcessAnchor(const QUrl &url);
     void slotClicked();
 
 protected:
-    virtual void mouseMoveEvent(QMouseEvent* );
+    virtual void mouseMoveEvent(QMouseEvent *);
 
 private:
     void setDirection();
@@ -61,8 +57,6 @@ private:
     Choqok::UI::PostWidget *post;
     QString dir;
     MyTextBrowser mainWidget;
-    KPushButton* btnShowChoqok;
-    KPushButton* btnRead;
 };
 
 #endif // NOTIFICATION_H

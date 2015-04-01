@@ -12,7 +12,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,19 +23,15 @@
 
 #include "pumpiomicroblog.h"
 
+#include <QAction>
 #include <QFile>
+#include <QJsonDocument>
 #include <QMenu>
+#include <QMimeDatabase>
 #include <QTextDocument>
 
-#include <qjson/parser.h>
-#include <qjson/serializer.h>
-
-#include <KAction>
-#include <KDebug>
-#include <KGenericFactory>
-#include <KIO/Job>
 #include <KIO/StoredTransferJob>
-#include <KMimeType>
+#include <KPluginFactory>
 
 #include "accountmanager.h"
 #include "application.h"
@@ -45,6 +40,7 @@
 
 #include "pumpioaccount.h"
 #include "pumpiocomposerwidget.h"
+#include "pumpiodebug.h"
 #include "pumpioeditaccountwidget.h"
 #include "pumpiomessagedialog.h"
 #include "pumpiomicroblogwidget.h"
@@ -54,21 +50,21 @@
 class PumpIOMicroBlog::Private
 {
 public:
-    Private():countOfTimelinesToSave(0)
+    Private(): countOfTimelinesToSave(0)
     {}
     int countOfTimelinesToSave;
 };
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < PumpIOMicroBlog > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_pumpio" ) )
+K_PLUGIN_FACTORY_WITH_JSON(PumpIOMicroBlogFactory, "choqok_pumpio.json",
+                           registerPlugin < PumpIOMicroBlog > ();)
 
 const QString PumpIOMicroBlog::inboxActivity("/api/user/%1/inbox");
 const QString PumpIOMicroBlog::outboxActivity("/api/user/%1/feed");
 
 const QString PumpIOMicroBlog::PublicCollection("http://activityschema.org/collection/public");
 
-PumpIOMicroBlog::PumpIOMicroBlog(QObject* parent, const QVariantList& args):
-    MicroBlog(MyPluginFactory::componentData(), parent), d(new Private)
+PumpIOMicroBlog::PumpIOMicroBlog(QObject *parent, const QVariantList &args):
+    MicroBlog(QStringLiteral("Pump.IO") , parent), d(new Private)
 {
     Q_UNUSED(args)
     setServiceName("Pump.io");
@@ -81,17 +77,18 @@ PumpIOMicroBlog::PumpIOMicroBlog(QObject* parent, const QVariantList& args):
 
 PumpIOMicroBlog::~PumpIOMicroBlog()
 {
+    qDeleteAll(m_timelinesInfos);
     delete d;
 }
 
-void PumpIOMicroBlog::abortAllJobs(Choqok::Account* theAccount)
+void PumpIOMicroBlog::abortAllJobs(Choqok::Account *theAccount)
 {
     Q_FOREACH (KJob *job, m_accountJobs.keys(theAccount)) {
         job->kill(KJob::EmitResult);
     }
 }
 
-void PumpIOMicroBlog::abortCreatePost(Choqok::Account* theAccount, Choqok::Post* post)
+void PumpIOMicroBlog::abortCreatePost(Choqok::Account *theAccount, Choqok::Post *post)
 {
     if (m_createPostJobs.isEmpty()) {
         return;
@@ -101,8 +98,8 @@ void PumpIOMicroBlog::abortCreatePost(Choqok::Account* theAccount, Choqok::Post*
         return;
     }
 
-    Q_FOREACH (KJob *job, m_createPostJobs.keys()){
-        if( m_accountJobs[job] == theAccount) {
+    Q_FOREACH (KJob *job, m_createPostJobs.keys()) {
+        if (m_accountJobs[job] == theAccount) {
             job->kill(KJob::EmitResult);
         }
     }
@@ -110,19 +107,19 @@ void PumpIOMicroBlog::abortCreatePost(Choqok::Account* theAccount, Choqok::Post*
 
 void PumpIOMicroBlog::aboutToUnload()
 {
-    Q_FOREACH (Choqok::Account* acc, Choqok::AccountManager::self()->accounts()) {
-        if (acc->microblog() == this){
+    Q_FOREACH (Choqok::Account *acc, Choqok::AccountManager::self()->accounts()) {
+        if (acc->microblog() == this) {
             d->countOfTimelinesToSave += acc->timelineNames().count();
         }
     }
     Q_EMIT saveTimelines();
 }
 
-QMenu* PumpIOMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidget* parent)
+QMenu *PumpIOMicroBlog::createActionsMenu(Choqok::Account *theAccount, QWidget *parent)
 {
     QMenu *menu = MicroBlog::createActionsMenu(theAccount, parent);
 
-    KAction *directMessge = new KAction(KIcon("mail-message-new"), i18n("Send Private Message..."), menu);
+    QAction *directMessge = new QAction(QIcon::fromTheme("mail-message-new"), i18n("Send Private Message..."), menu);
     directMessge->setData(theAccount->alias());
     connect(directMessge, SIGNAL(triggered(bool)), this, SLOT(showDirectMessageDialog()));
     menu->addAction(directMessge);
@@ -130,41 +127,41 @@ QMenu* PumpIOMicroBlog::createActionsMenu(Choqok::Account* theAccount, QWidget* 
     return menu;
 }
 
-Choqok::UI::MicroBlogWidget* PumpIOMicroBlog::createMicroBlogWidget(Choqok::Account* account, QWidget* parent)
+Choqok::UI::MicroBlogWidget *PumpIOMicroBlog::createMicroBlogWidget(Choqok::Account *account, QWidget *parent)
 {
     return new PumpIOMicroBlogWidget(account, parent);
 }
 
-Choqok::UI::ComposerWidget* PumpIOMicroBlog::createComposerWidget(Choqok::Account* account, QWidget* parent)
+Choqok::UI::ComposerWidget *PumpIOMicroBlog::createComposerWidget(Choqok::Account *account, QWidget *parent)
 {
     return new PumpIOComposerWidget(account, parent);
 }
 
-ChoqokEditAccountWidget* PumpIOMicroBlog::createEditAccountWidget(Choqok::Account* account,
-                                                                  QWidget* parent)
+ChoqokEditAccountWidget *PumpIOMicroBlog::createEditAccountWidget(Choqok::Account *account,
+        QWidget *parent)
 {
-    PumpIOAccount *acc = qobject_cast<PumpIOAccount* >(account);
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount * >(account);
     if (acc || !account) {
         return new PumpIOEditAccountWidget(this, acc, parent);
     } else {
-        kDebug() << "Account passed here was not a valid PumpIOAccount!";
+        qCDebug(CHOQOK) << "Account passed here was not a valid PumpIOAccount!";
         return 0;
     }
 }
 
-Choqok::Account* PumpIOMicroBlog::createNewAccount(const QString& alias)
+Choqok::Account *PumpIOMicroBlog::createNewAccount(const QString &alias)
 {
-    PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(
-        Choqok::AccountManager::self()->findAccount(alias) );
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(
+                             Choqok::AccountManager::self()->findAccount(alias));
     if (!acc) {
         return new PumpIOAccount(this, alias);
     } else {
-        kDebug() << "Cannot create a new PumpIOAccount!";
+        qCDebug(CHOQOK) << "Cannot create a new PumpIOAccount!";
         return 0;
     }
 }
 
-void PumpIOMicroBlog::createPost(Choqok::Account* theAccount, Choqok::Post* post)
+void PumpIOMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *post)
 {
     QVariantList to;
     QVariantMap thePublic;
@@ -175,10 +172,10 @@ void PumpIOMicroBlog::createPost(Choqok::Account* theAccount, Choqok::Post* post
     createPost(theAccount, post, to);
 }
 
-void PumpIOMicroBlog::createPost(Choqok::Account* theAccount, Choqok::Post* post,
-                                 const QVariantList& to, const QVariantList& cc)
+void PumpIOMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *post,
+                                 const QVariantList &to, const QVariantList &cc)
 {
-    PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
         QVariantMap object;
         if (!post->postId.isEmpty()) {
@@ -198,16 +195,16 @@ void PumpIOMicroBlog::createPost(Choqok::Account* theAccount, Choqok::Post* post
         item.insert("to", to);
         item.insert("cc", cc);
 
-        QJson::Serializer serializer;
-        const QByteArray data = serializer.serialize(item);
+        const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
-        KUrl url(acc->host());
-        url.addPath(outboxActivity.arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/json");
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
         if (!job) {
-            kDebug() << "Cannot create an http POST request!";
+            qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
         }
         m_accountJobs[job] = acc;
@@ -215,13 +212,13 @@ void PumpIOMicroBlog::createPost(Choqok::Account* theAccount, Choqok::Post* post
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCreatePost(KJob*)));
         job->start();
     } else {
-        kDebug() << "theAccount is not a PumpIOAccount!";
+        qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
     }
 }
 
-void PumpIOMicroBlog::createReply(Choqok::Account* theAccount, PumpIOPost* post)
+void PumpIOMicroBlog::createReply(Choqok::Account *theAccount, PumpIOPost *post)
 {
-    PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
         post->type = "comment";
 
@@ -242,16 +239,16 @@ void PumpIOMicroBlog::createReply(Choqok::Account* theAccount, PumpIOPost* post)
         item.insert("verb", "post");
         item.insert("object", object);
 
-        QJson::Serializer serializer;
-        const QByteArray data = serializer.serialize(item);
+        const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
-        KUrl url(acc->host());
-        url.addPath(outboxActivity.arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/json");
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
         if (!job) {
-            kDebug() << "Cannot create an http POST request!";
+            qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
         }
         m_accountJobs[job] = acc;
@@ -259,14 +256,14 @@ void PumpIOMicroBlog::createReply(Choqok::Account* theAccount, PumpIOPost* post)
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCreatePost(KJob*)));
         job->start();
     } else {
-        kDebug() << "theAccount is not a PumpIOAccount!";
+        qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
     }
 }
 
-void PumpIOMicroBlog::createPostWithMedia(Choqok::Account* theAccount, Choqok::Post* post,
-                                          const QString& filePath)
+void PumpIOMicroBlog::createPostWithMedia(Choqok::Account *theAccount, Choqok::Post *post,
+        const QString &filePath)
 {
-    PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
         QFile media(filePath);
         QByteArray data;
@@ -274,24 +271,26 @@ void PumpIOMicroBlog::createPostWithMedia(Choqok::Account* theAccount, Choqok::P
             data = media.readAll();
             media.close();
         } else {
-            kDebug() << "Cannot read the file";
+            qCDebug(CHOQOK) << "Cannot read the file";
             return;
         }
 
-        KMimeType::Ptr mimetype = KMimeType::findByNameAndContent(filePath, data);
-        const QString mime = mimetype.data()->name();
+        const QMimeDatabase db;
+        const QMimeType mimetype = db.mimeTypeForFileNameAndData(filePath, data);
+        const QString mime = mimetype.name();
         if (mime == "application/octet-stream") {
-            kDebug() << "Cannot retrieve file mimetype";
+            qCDebug(CHOQOK) << "Cannot retrieve file mimetype";
             return;
         }
 
-        KUrl url(acc->host());
-        url.addPath(QString("/api/user/%1/uploads").arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + (QString("/api/user/%1/uploads").arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: " + mime);
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
         if (!job) {
-            kDebug() << "Cannot create an http POST request!";
+            qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
         }
         m_accountJobs[job] = acc;
@@ -299,30 +298,30 @@ void PumpIOMicroBlog::createPostWithMedia(Choqok::Account* theAccount, Choqok::P
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotUpload(KJob*)));
         job->start();
     } else {
-        kDebug() << "theAccount is not a PumpIOAccount!";
+        qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
     }
 }
 
-Choqok::UI::PostWidget* PumpIOMicroBlog::createPostWidget(Choqok::Account* account,
-                                                          Choqok::Post* post,
-                                                          QWidget* parent)
+Choqok::UI::PostWidget *PumpIOMicroBlog::createPostWidget(Choqok::Account *account,
+        Choqok::Post *post,
+        QWidget *parent)
 {
     return new PumpIOPostWidget(account, post, parent);
 }
 
-void PumpIOMicroBlog::fetchPost(Choqok::Account* theAccount, Choqok::Post* post)
+void PumpIOMicroBlog::fetchPost(Choqok::Account *theAccount, Choqok::Post *post)
 {
-    PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
         if (!post->link.startsWith(acc->host())) {
-            kDebug() << "You can only fetch posts from your host!";
+            qCDebug(CHOQOK) << "You can only fetch posts from your host!";
             return;
         }
-        KUrl url(post->link);
+        QUrl url(post->link);
 
         KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
         if (!job) {
-            kDebug() << "Cannot create an http GET request!";
+            qCDebug(CHOQOK) << "Cannot create an http GET request!";
             return;
         }
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::GET));
@@ -330,13 +329,13 @@ void PumpIOMicroBlog::fetchPost(Choqok::Account* theAccount, Choqok::Post* post)
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchPost(KJob*)));
         job->start();
     } else {
-        kDebug() << "theAccount is not a PumpIOAccount!";
+        qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
     }
 }
 
-void PumpIOMicroBlog::removePost(Choqok::Account* theAccount, Choqok::Post* post)
+void PumpIOMicroBlog::removePost(Choqok::Account *theAccount, Choqok::Post *post)
 {
-    PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
         QVariantMap object;
         object.insert("id", post->postId);
@@ -346,16 +345,16 @@ void PumpIOMicroBlog::removePost(Choqok::Account* theAccount, Choqok::Post* post
         item.insert("verb", "delete");
         item.insert("object", object);
 
-        QJson::Serializer serializer;
-        const QByteArray data = serializer.serialize(item);
+        const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
-        KUrl url(acc->host());
-        url.addPath(outboxActivity.arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/json");
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
         if (!job) {
-            kDebug() << "Cannot create an http POST request!";
+            qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
         }
         m_accountJobs[job] = acc;
@@ -363,17 +362,17 @@ void PumpIOMicroBlog::removePost(Choqok::Account* theAccount, Choqok::Post* post
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRemovePost(KJob*)));
         job->start();
     } else {
-        kDebug() << "theAccount is not a PumpIOAccount!";
+        qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
     }
 }
 
-QList< Choqok::Post* > PumpIOMicroBlog::loadTimeline(Choqok::Account* account,
-                                                     const QString& timelineName)
+QList< Choqok::Post * > PumpIOMicroBlog::loadTimeline(Choqok::Account *account,
+        const QString &timelineName)
 {
-    QList< Choqok::Post* > list;
+    QList< Choqok::Post * > list;
     const QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(),
-                                                                                timelineName);
-    const KConfig postsBackup( "choqok/" + fileName, KConfig::NoGlobals, "data" );
+                             timelineName);
+    const KConfig postsBackup(fileName, KConfig::NoGlobals, QStandardPaths::DataLocation);
     const QStringList tmpList = postsBackup.groupList();
 
     // don't load old archives
@@ -382,12 +381,12 @@ QList< Choqok::Post* > PumpIOMicroBlog::loadTimeline(Choqok::Account* account,
     }
 
     QList<QDateTime> groupList;
-    Q_FOREACH (const QString& str, tmpList) {
+    Q_FOREACH (const QString &str, tmpList) {
         groupList.append(QDateTime::fromString(str));
     }
     qSort(groupList);
     PumpIOPost *st;
-    Q_FOREACH (const QDateTime& datetime, groupList) {
+    Q_FOREACH (const QDateTime &datetime, groupList) {
         st = new PumpIOPost;
         KConfigGroup grp(&postsBackup, datetime.toString());
         st->creationDateTime = grp.readEntry("creationDateTime", QDateTime::currentDateTime());
@@ -426,14 +425,14 @@ QList< Choqok::Post* > PumpIOMicroBlog::loadTimeline(Choqok::Account* account,
     return list;
 }
 
-QString PumpIOMicroBlog::postUrl(Choqok::Account* account, const QString& username,
-                                 const QString& postId) const
+QString PumpIOMicroBlog::postUrl(Choqok::Account *account, const QString &username,
+                                 const QString &postId) const
 {
     Q_UNUSED(account);
     return QString(postId).replace("/api/", '/' + username + '/');
 }
 
-QString PumpIOMicroBlog::profileUrl(Choqok::Account* account, const QString& username) const
+QString PumpIOMicroBlog::profileUrl(Choqok::Account *account, const QString &username) const
 {
     Q_UNUSED(account)
     if (username.contains("acct:")) {
@@ -443,21 +442,21 @@ QString PumpIOMicroBlog::profileUrl(Choqok::Account* account, const QString& use
     }
 }
 
-void PumpIOMicroBlog::saveTimeline(Choqok::Account* account, const QString& timelineName,
-                                   const QList< Choqok::UI::PostWidget* >& timeline)
+void PumpIOMicroBlog::saveTimeline(Choqok::Account *account, const QString &timelineName,
+                                   const QList< Choqok::UI::PostWidget * > &timeline)
 {
     const QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(),
-                                                                                timelineName);
-    KConfig postsBackup("choqok/" + fileName, KConfig::NoGlobals, "data");
+                             timelineName);
+    KConfig postsBackup(fileName, KConfig::NoGlobals, QStandardPaths::DataLocation);
 
     ///Clear previous data:
-    Q_FOREACH (const QString& group, postsBackup.groupList()) {
+    Q_FOREACH (const QString &group, postsBackup.groupList()) {
         postsBackup.deleteGroup(group);
     }
 
     QList< Choqok::UI::PostWidget *>::const_iterator it, endIt = timeline.constEnd();
     for (it = timeline.constBegin(); it != endIt; ++it) {
-        PumpIOPost *post = dynamic_cast<PumpIOPost* >((*it)->currentPost());
+        PumpIOPost *post = dynamic_cast<PumpIOPost * >((*it)->currentPost());
         KConfigGroup grp(&postsBackup, post->creationDateTime.toString());
         grp.writeEntry("creationDateTime", post->creationDateTime);
         grp.writeEntry("postId", post->postId);
@@ -496,102 +495,104 @@ void PumpIOMicroBlog::saveTimeline(Choqok::Account* account, const QString& time
     }
 }
 
-Choqok::TimelineInfo* PumpIOMicroBlog::timelineInfo(const QString& timelineName)
+Choqok::TimelineInfo *PumpIOMicroBlog::timelineInfo(const QString &timelineName)
 {
     return m_timelinesInfos.value(timelineName);
 }
 
-void PumpIOMicroBlog::updateTimelines(Choqok::Account* theAccount)
+void PumpIOMicroBlog::updateTimelines(Choqok::Account *theAccount)
 {
-    PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
-        Q_FOREACH (const QString& timeline, acc->timelineNames()) {
-            KUrl url(acc->host());
-            url.addPath(m_timelinesPaths[timeline].arg(acc->username()));
+        Q_FOREACH (const QString &timeline, acc->timelineNames()) {
+            QUrl url(acc->host());
+            url = url.adjusted(QUrl::StripTrailingSlash);
+            url.setPath(url.path() + '/' + (m_timelinesPaths[timeline].arg(acc->username())));
 
             QOAuth::ParamMap oAuthParams;
             const QString lastActivityId(lastTimelineId(theAccount, timeline));
             if (!lastActivityId.isEmpty()) {
                 oAuthParams.insert("count", QByteArray::number(200));
-                oAuthParams.insert("since", KUrl::toPercentEncoding(lastActivityId));
+                oAuthParams.insert("since", QUrl::toPercentEncoding(lastActivityId));
             } else {
                 oAuthParams.insert("count", QByteArray::number(Choqok::BehaviorSettings::countOfPosts()));
             }
 
             KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
             if (!job) {
-                kDebug() << "Cannot create an http GET request!";
+                qCDebug(CHOQOK) << "Cannot create an http GET request!";
                 continue;
             }
             job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::GET,
-                                                                       oAuthParams));
+                             oAuthParams));
             m_timelinesRequests[job] = timeline;
             m_accountJobs[job] = acc;
             connect(job, SIGNAL(result(KJob*)), this, SLOT(slotUpdateTimeline(KJob*)));
             job->start();
         }
     } else {
-        kDebug() << "theAccount is not a PumpIOAccount!";
+        qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
     }
 }
 
-void PumpIOMicroBlog::fetchFollowing(Choqok::Account* theAccount)
+void PumpIOMicroBlog::fetchFollowing(Choqok::Account *theAccount)
 {
-    PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
-        KUrl url(acc->host());
-        url.addPath(QString("/api/user/%1/following").arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + (QString("/api/user/%1/following").arg(acc->username())));
 
         QOAuth::ParamMap oAuthParams;
         oAuthParams.insert("count", QByteArray::number(200));
         if (!acc->following().isEmpty()) {
-            oAuthParams.insert("since", KUrl::toPercentEncoding(acc->following().last()));
+            oAuthParams.insert("since", QUrl::toPercentEncoding(acc->following().last()));
         }
 
         KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
         if (!job) {
-            kDebug() << "Cannot create an http GET request!";
+            qCDebug(CHOQOK) << "Cannot create an http GET request!";
             return;
         }
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::GET,
-                                                                   oAuthParams));
+                         oAuthParams));
         m_accountJobs[job] = acc;
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFollowing(KJob*)));
         job->start();
     } else {
-        kDebug() << "theAccount is not a PumpIOAccount!";
+        qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
     }
 }
 
-void PumpIOMicroBlog::fetchLists(Choqok::Account* theAccount)
+void PumpIOMicroBlog::fetchLists(Choqok::Account *theAccount)
 {
-    PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
-        KUrl url(acc->host());
-        url.addPath(QString("/api/user/%1/lists/person").arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + (QString("/api/user/%1/lists/person").arg(acc->username())));
 
         QOAuth::ParamMap oAuthParams;
         oAuthParams.insert("count", QByteArray::number(200));
 
         KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
         if (!job) {
-            kDebug() << "Cannot create an http GET request!";
+            qCDebug(CHOQOK) << "Cannot create an http GET request!";
             return;
         }
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::GET,
-                                                                   oAuthParams));
+                         oAuthParams));
         m_accountJobs[job] = acc;
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotLists(KJob*)));
         job->start();
     } else {
-        kDebug() << "theAccount is not a PumpIOAccount!";
+        qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
     }
 }
 
-
-void PumpIOMicroBlog::share(Choqok::Account* theAccount, Choqok::Post* post)
+void PumpIOMicroBlog::share(Choqok::Account *theAccount, Choqok::Post *post)
 {
-    PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
         QVariantMap object;
         object.insert("objectType", post->type);
@@ -601,16 +602,16 @@ void PumpIOMicroBlog::share(Choqok::Account* theAccount, Choqok::Post* post)
         item.insert("verb", "share");
         item.insert("object", object);
 
-        QJson::Serializer serializer;
-        const QByteArray data = serializer.serialize(item);
+        const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
-        KUrl url(acc->host());
-        url.addPath(outboxActivity.arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/json");
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
         if (!job) {
-            kDebug() << "Cannot create an http POST request!";
+            qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
         }
         m_accountJobs[job] = acc;
@@ -618,13 +619,13 @@ void PumpIOMicroBlog::share(Choqok::Account* theAccount, Choqok::Post* post)
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotShare(KJob*)));
         job->start();
     } else {
-        kDebug() << "theAccount is not a PumpIOAccount!";
+        qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
     }
 }
 
-void PumpIOMicroBlog::toggleFavorite(Choqok::Account* theAccount, Choqok::Post* post)
+void PumpIOMicroBlog::toggleFavorite(Choqok::Account *theAccount, Choqok::Post *post)
 {
-    PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
         QVariantMap object;
         object.insert("objectType", post->type);
@@ -634,16 +635,16 @@ void PumpIOMicroBlog::toggleFavorite(Choqok::Account* theAccount, Choqok::Post* 
         item.insert("verb", post->isFavorited ? "unfavorite" : "favorite");
         item.insert("object", object);
 
-        QJson::Serializer serializer;
-        const QByteArray data = serializer.serialize(item);
+        const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
-        KUrl url(acc->host());
-        url.addPath(outboxActivity.arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/json");
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
         if (!job) {
-            kDebug() << "Cannot create an http POST request!";
+            qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
         }
         m_accountJobs[job] = acc;
@@ -651,234 +652,234 @@ void PumpIOMicroBlog::toggleFavorite(Choqok::Account* theAccount, Choqok::Post* 
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFavorite(KJob*)));
         job->start();
     } else {
-        kDebug() << "theAccount is not a PumpIOAccount!";
+        qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
     }
 }
 
 void PumpIOMicroBlog::showDirectMessageDialog()
 {
-    kDebug();
-    const QString alias = qobject_cast<KAction *>(sender())->data().toString();
-    PumpIOAccount *theAccount = qobject_cast<PumpIOAccount*>(Choqok::AccountManager::self()->findAccount(alias));
+    qCDebug(CHOQOK);
+    const QString alias = qobject_cast<QAction *>(sender())->data().toString();
+    PumpIOAccount *theAccount = qobject_cast<PumpIOAccount *>(Choqok::AccountManager::self()->findAccount(alias));
     PumpIOMessageDialog *msg = new PumpIOMessageDialog(theAccount, Choqok::UI::Global::mainWindow());
     msg->show();
 }
 
-void PumpIOMicroBlog::slotCreatePost(KJob* job)
+void PumpIOMicroBlog::slotCreatePost(KJob *job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if (!job) {
-        kDebug() << "Job is null pointer";
+        qCDebug(CHOQOK) << "Job is null pointer";
         return;
     }
     Choqok::Post *post = m_createPostJobs.take(job);
     Choqok::Account *theAccount = m_accountJobs.take(job);
     if (!post || !theAccount) {
-        kDebug() << "Account or Post is NULL pointer";
+        qCDebug(CHOQOK) << "Account or Post is NULL pointer";
         return;
     }
     int ret = 1;
     if (job->error()) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     } else {
-        KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantMap reply = parser.parse(j->data(), &ok).toMap();
-        if (ok) {
+        KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const QVariantMap reply = json.toVariant().toMap();
             if (!reply["object"].toMap().value("id").toString().isEmpty()) {
                 Choqok::NotifyManager::success(i18n("New post submitted successfully"));
                 ret = 0;
                 Q_EMIT postCreated(theAccount, post);
             }
         } else {
-            kDebug() << "Cannot parse JSON reply";
+            qCDebug(CHOQOK) << "Cannot parse JSON reply";
         }
     }
 
     if (ret) {
         Q_EMIT errorPost(theAccount, post, Choqok::MicroBlog::CommunicationError,
-                       i18n("Creating the new post failed. %1", job->errorString()),
-                       MicroBlog::Critical);
+                         i18n("Creating the new post failed. %1", job->errorString()),
+                         MicroBlog::Critical);
     }
 }
 
-void PumpIOMicroBlog::slotFavorite(KJob* job)
+void PumpIOMicroBlog::slotFavorite(KJob *job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if (!job) {
-        kDebug() << "Job is null pointer";
+        qCDebug(CHOQOK) << "Job is null pointer";
         return;
     }
     Choqok::Post *post = m_favoriteJobs.take(job);
     Choqok::Account *theAccount = m_accountJobs.take(job);
     if (!post || !theAccount) {
-        kDebug() << "Account or Post is NULL pointer";
+        qCDebug(CHOQOK) << "Account or Post is NULL pointer";
         return;
     }
     if (job->error()) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
         Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
-                   i18n("Cannot set/unset the post as favorite. %1", job->errorString()));
+                     i18n("Cannot set/unset the post as favorite. %1", job->errorString()));
     } else {
         post->isFavorited = !post->isFavorited;
         Q_EMIT favorite(theAccount, post);
     }
 }
 
-void PumpIOMicroBlog::slotFetchPost(KJob* job)
+void PumpIOMicroBlog::slotFetchPost(KJob *job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if (!job) {
-        kDebug() << "Job is null pointer";
+        qCDebug(CHOQOK) << "Job is null pointer";
         return;
     }
     Choqok::Account *theAccount = m_accountJobs.take(job);
     if (!theAccount) {
-        kDebug() << "Account or postId is NULL pointer";
+        qCDebug(CHOQOK) << "Account or postId is NULL pointer";
         return;
     }
     int ret = 1;
     if (job->error()) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     } else {
-        KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantMap reply = parser.parse(j->data(), &ok).toMap();
-        if (ok) {
-            PumpIOPost* post = new PumpIOPost;
+        KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const QVariantMap reply = json.toVariant().toMap();
+            PumpIOPost *post = new PumpIOPost;
             readPost(reply, post);
             ret = 0;
             Q_EMIT postFetched(theAccount, post);
         } else {
-            kDebug() << "Cannot parse JSON reply";
+            qCDebug(CHOQOK) << "Cannot parse JSON reply";
         }
     }
 
     if (ret) {
         Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
-                   i18n("Cannot fetch post. %1", job->errorString()),
-                   MicroBlog::Critical);
+                     i18n("Cannot fetch post. %1", job->errorString()),
+                     MicroBlog::Critical);
     }
 }
 
-void PumpIOMicroBlog::slotFetchReplies(KJob* job)
+void PumpIOMicroBlog::slotFetchReplies(KJob *job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if (!job) {
-        kDebug() << "Job is null pointer";
+        qCDebug(CHOQOK) << "Job is null pointer";
         return;
     }
     Choqok::Account *theAccount = m_accountJobs.take(job);
     if (!theAccount) {
-        kDebug() << "Account or postId is NULL pointer";
+        qCDebug(CHOQOK) << "Account or postId is NULL pointer";
         return;
     }
     int ret = 1;
     if (job->error()) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     } else {
-        KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantMap reply = parser.parse(j->data(), &ok).toMap();
-        if (ok) {
+        KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const QVariantMap reply = json.toVariant().toMap();
             const QVariantList items = reply["items"].toList();
             for (int i = items.size() - 1; i >= 0; i--) {
                 QVariantMap item = items.at(i).toMap();
-                PumpIOPost* r = new PumpIOPost;
+                PumpIOPost *r = new PumpIOPost;
                 readPost(item, r);
                 r->replyToPostId = reply["url"].toString().remove("/replies");
                 Q_EMIT postFetched(theAccount, r);
             }
             ret = 0;
         } else {
-            kDebug() << "Cannot parse JSON reply";
+            qCDebug(CHOQOK) << "Cannot parse JSON reply";
         }
     }
 
     if (ret) {
         Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
-                   i18n("Cannot fetch replies. %1", job->errorString()),
-                   MicroBlog::Critical);
+                     i18n("Cannot fetch replies. %1", job->errorString()),
+                     MicroBlog::Critical);
     }
 }
 
-void PumpIOMicroBlog::slotFollowing(KJob* job)
+void PumpIOMicroBlog::slotFollowing(KJob *job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if (!job) {
-        kDebug() << "Job is null pointer";
+        qCDebug(CHOQOK) << "Job is null pointer";
         return;
     }
     Choqok::Account *theAccount = m_accountJobs.take(job);
     if (!theAccount) {
-        kDebug() << "Account is NULL pointer";
+        qCDebug(CHOQOK) << "Account is NULL pointer";
         return;
     }
     if (job->error()) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     }
     bool ret = 1;
-    PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
         Choqok::UI::Global::mainWindow()->showStatusMessage(
             i18n("Following list for account %1 has been updated.",
-            acc->username()));
-        KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantList items = parser.parse(j->data(), &ok).toMap().value("items").toList();
-        if (ok) {
+                 acc->username()));
+        KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const QVariantList items = json.toVariant().toMap().value("items").toList();
             QStringList following;
-            Q_FOREACH (const QVariant& element, items) {
+            Q_FOREACH (const QVariant &element, items) {
                 following.append(element.toMap().value("id").toString());
             }
             acc->setFollowing(following);
             ret = 0;
             Q_EMIT followingFetched(acc);
         } else {
-            kDebug() << "Cannot parse JSON reply";
+            qCDebug(CHOQOK) << "Cannot parse JSON reply";
         }
     } else {
-        kDebug() << "theAccount is not a PumpIOAccount!";
+        qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
     }
 
     if (ret) {
         Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
-                   i18n("Cannot retrieve the following list. %1", job->errorString()));
+                     i18n("Cannot retrieve the following list. %1", job->errorString()));
     }
 }
 
-void PumpIOMicroBlog::slotLists(KJob* job)
+void PumpIOMicroBlog::slotLists(KJob *job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if (!job) {
-        kDebug() << "Job is null pointer";
+        qCDebug(CHOQOK) << "Job is null pointer";
         return;
     }
     Choqok::Account *theAccount = m_accountJobs.take(job);
     if (!theAccount) {
-        kDebug() << "Account is NULL pointer";
+        qCDebug(CHOQOK) << "Account is NULL pointer";
         return;
     }
     if (job->error()) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     }
     bool ret = 1;
-    PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
         Choqok::UI::Global::mainWindow()->showStatusMessage(
             i18n("Lists for account %1 has been updated.",
-            acc->username()));
-        KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantList items = parser.parse(j->data(), &ok).toMap().value("items").toList();
-        if (ok) {
+                 acc->username()));
+        KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const QVariantList items = json.toVariant().toMap().value("items").toList();
             QVariantList lists;
-            Q_FOREACH (const QVariant& element, items) {
+            Q_FOREACH (const QVariant &element, items) {
                 QVariantMap e = element.toMap();
                 QVariantMap list;
                 list.insert("id", e.value("id").toString());
@@ -889,147 +890,146 @@ void PumpIOMicroBlog::slotLists(KJob* job)
             ret = 0;
             Q_EMIT listsFetched(acc);
         } else {
-            kDebug() << "Cannot parse JSON reply";
+            qCDebug(CHOQOK) << "Cannot parse JSON reply";
         }
     } else {
-        kDebug() << "theAccount is not a PumpIOAccount!";
+        qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
     }
 
     if (ret) {
         Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
-                   i18n("Cannot retrieve the lists. %1", job->errorString()));
+                     i18n("Cannot retrieve the lists. %1", job->errorString()));
     }
 }
 
-void PumpIOMicroBlog::slotShare(KJob* job)
+void PumpIOMicroBlog::slotShare(KJob *job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if (!job) {
-        kDebug() << "Job is null pointer";
+        qCDebug(CHOQOK) << "Job is null pointer";
         return;
     }
     Choqok::Post *post = m_shareJobs.take(job);
     Choqok::Account *theAccount = m_accountJobs.take(job);
     if (!post || !theAccount) {
-        kDebug() << "Account or Post is NULL pointer";
+        qCDebug(CHOQOK) << "Account or Post is NULL pointer";
         return;
     }
     int ret = 1;
     if (job->error()) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     } else {
         Choqok::UI::Global::mainWindow()->showStatusMessage(
-                            i18n("The post has been shared."));
-        KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantMap object = parser.parse(j->data(), &ok).toMap().value("object").toMap();
-        if (ok) {
+            i18n("The post has been shared."));
+        KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const QVariantMap object = json.toVariant().toMap().value("object").toMap();
             ret = 0;
         } else {
-            kDebug() << "Cannot parse JSON reply";
+            qCDebug(CHOQOK) << "Cannot parse JSON reply";
         }
     }
 
     if (ret) {
         Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
-                   i18n("Cannot share the post. %1", job->errorString()));
+                     i18n("Cannot share the post. %1", job->errorString()));
     }
 }
 
-void PumpIOMicroBlog::slotRemovePost(KJob* job)
+void PumpIOMicroBlog::slotRemovePost(KJob *job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if (!job) {
-        kDebug() << "Job is null pointer";
+        qCDebug(CHOQOK) << "Job is null pointer";
         return;
     }
     Choqok::Post *post = m_removePostJobs.take(job);
     Choqok::Account *theAccount = m_accountJobs.take(job);
     if (!post || !theAccount) {
-        kDebug() << "Account or Post is NULL pointer";
+        qCDebug(CHOQOK) << "Account or Post is NULL pointer";
         return;
     }
     int ret = 1;
     if (job->error()) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     } else {
-        KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantMap object = parser.parse(j->data(), &ok).toMap().value("object").toMap();
-        if (ok) {
+        KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const QVariantMap object = json.toVariant().toMap().value("object").toMap();
             if (!object["deleted"].toString().isEmpty()) {
                 Choqok::NotifyManager::success(i18n("Post removed successfully"));
                 ret = 0;
                 Q_EMIT postRemoved(theAccount, post);
             }
         } else {
-            kDebug() << "Cannot parse JSON reply";
+            qCDebug(CHOQOK) << "Cannot parse JSON reply";
         }
     }
 
     if (ret) {
         Q_EMIT errorPost(theAccount, post, Choqok::MicroBlog::CommunicationError,
-                       i18n("Removing the post failed. %1", job->errorString()),
-                       MicroBlog::Critical);
+                         i18n("Removing the post failed. %1", job->errorString()),
+                         MicroBlog::Critical);
     }
 }
 
-void PumpIOMicroBlog::slotUpdatePost(KJob* job)
+void PumpIOMicroBlog::slotUpdatePost(KJob *job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if (!job) {
-        kDebug() << "Job is null pointer";
+        qCDebug(CHOQOK) << "Job is null pointer";
         return;
     }
     Choqok::Post *post = m_updateJobs.take(job);
     Choqok::Account *account = m_accountJobs.take(job);
     if (!post || !account) {
-        kDebug() << "Account or Post is NULL pointer";
+        qCDebug(CHOQOK) << "Account or Post is NULL pointer";
         return;
     }
     int ret = 1;
     if (job->error()) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     } else {
-        KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantMap reply = parser.parse(j->data(), &ok).toMap();
-        if (ok) {
+        KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
             ret = 0;
             createPost(account, post);
         } else {
-            kDebug() << "Cannot parse JSON reply";
+            qCDebug(CHOQOK) << "Cannot parse JSON reply";
         }
     }
 
     if (ret) {
         Q_EMIT error(account, Choqok::MicroBlog::CommunicationError,
-                   i18n("An error occurred when updating the post"));
+                     i18n("An error occurred when updating the post"));
     }
 }
 
-void PumpIOMicroBlog::slotUpdateTimeline(KJob* job)
+void PumpIOMicroBlog::slotUpdateTimeline(KJob *job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if (!job) {
-        kDebug() << "Job is null pointer";
+        qCDebug(CHOQOK) << "Job is null pointer";
         return;
     }
     Choqok::Account *account = m_accountJobs.take(job);
     if (!account) {
-        kDebug() << "Account or Post is NULL pointer";
+        qCDebug(CHOQOK) << "Account or Post is NULL pointer";
         return;
     }
     if (job->error()) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
         Q_EMIT error(account, Choqok::MicroBlog::CommunicationError,
-                   i18n("An error occurred when fetching the timeline"));
+                     i18n("An error occurred when fetching the timeline"));
     } else {
-        KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        const QList<Choqok::Post* > list = readTimeline(j->data());
+        KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
+        const QList<Choqok::Post * > list = readTimeline(j->data());
         const QString timeline(m_timelinesRequests.take(job));
         if (!list.isEmpty()) {
             setLastTimelineId(account, timeline, list.last()->conversationId);
@@ -1039,28 +1039,28 @@ void PumpIOMicroBlog::slotUpdateTimeline(KJob* job)
     }
 }
 
-void PumpIOMicroBlog::slotUpload(KJob* job)
+void PumpIOMicroBlog::slotUpload(KJob *job)
 {
-    kDebug();
+    qCDebug(CHOQOK);
     if (!job) {
-        kDebug() << "Job is null pointer";
+        qCDebug(CHOQOK) << "Job is null pointer";
         return;
     }
     Choqok::Post *post = m_uploadJobs.take(job);
     Choqok::Account *account = m_accountJobs.take(job);
     if (!post || !account) {
-        kDebug() << "Account or Post is NULL pointer";
+        qCDebug(CHOQOK) << "Account or Post is NULL pointer";
         return;
     }
     int ret = 1;
     if (job->error()) {
-        kDebug() << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
     } else {
-        KIO::StoredTransferJob* j = qobject_cast<KIO::StoredTransferJob* >(job);
-        bool ok;
-        QJson::Parser parser;
-        const QVariantMap reply = parser.parse(j->data(), &ok).toMap();
-        if (ok) {
+        KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
+
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const QVariantMap reply = json.toVariant().toMap();
             const QString id = reply["id"].toString();
             if (!id.isEmpty()) {
                 post->postId = id;
@@ -1069,42 +1069,42 @@ void PumpIOMicroBlog::slotUpload(KJob* job)
                 updatePost(account, post);
             }
         } else {
-            kDebug() << "Cannot parse JSON reply";
+            qCDebug(CHOQOK) << "Cannot parse JSON reply";
         }
 
     }
 
     if (ret) {
         Q_EMIT error(account, Choqok::MicroBlog::CommunicationError,
-                   i18n("An error occurred when uploading the media"));
+                     i18n("An error occurred when uploading the media"));
     }
 }
 
-QString PumpIOMicroBlog::authorizationMetaData(PumpIOAccount* account, const KUrl& url,
-                                               const QOAuth::HttpMethod& method,
-                                               const QOAuth::ParamMap& paramMap) const
+QString PumpIOMicroBlog::authorizationMetaData(PumpIOAccount *account, const QUrl &url,
+        const QOAuth::HttpMethod &method,
+        const QOAuth::ParamMap &paramMap) const
 {
     const QByteArray authorization = account->oAuth()->createParametersString(url.url(),
-                                                       method, account->token().toLocal8Bit(),
-                                                       account->tokenSecret().toLocal8Bit(),
-                                                       QOAuth::HMAC_SHA1, paramMap,
-                                                       QOAuth::ParseForHeaderArguments);
-    return "Authorization: " + authorization;
+                                     method, account->token().toLocal8Bit(),
+                                     account->tokenSecret().toLocal8Bit(),
+                                     QOAuth::HMAC_SHA1, paramMap,
+                                     QOAuth::ParseForHeaderArguments);
+    return QStringLiteral("Authorization: ") + authorization;
 }
 
-void PumpIOMicroBlog::fetchReplies(Choqok::Account* theAccount, const QString& url)
+void PumpIOMicroBlog::fetchReplies(Choqok::Account *theAccount, const QString &url)
 {
-    PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
         if (!url.startsWith(acc->host())) {
-            kDebug() << "You can only fetch replies from your host!";
+            qCDebug(CHOQOK) << "You can only fetch replies from your host!";
             return;
         }
-        KUrl u(url);
+        QUrl u(url);
 
         KIO::StoredTransferJob *job = KIO::storedGet(u, KIO::Reload, KIO::HideProgressInfo);
         if (!job) {
-            kDebug() << "Cannot create an http GET request!";
+            qCDebug(CHOQOK) << "Cannot create an http GET request!";
             return;
         }
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, u, QOAuth::GET));
@@ -1112,24 +1112,24 @@ void PumpIOMicroBlog::fetchReplies(Choqok::Account* theAccount, const QString& u
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchReplies(KJob*)));
         job->start();
     } else {
-        kDebug() << "theAccount is not a PumpIOAccount!";
+        qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
     }
 }
 
-QString PumpIOMicroBlog::lastTimelineId(Choqok::Account* theAccount,
-                                         const QString& timeline) const
+QString PumpIOMicroBlog::lastTimelineId(Choqok::Account *theAccount,
+                                        const QString &timeline) const
 {
-    kDebug() << "Latest ID for timeline " << timeline << m_timelinesLatestIds[theAccount][timeline];
+    qCDebug(CHOQOK) << "Latest ID for timeline " << timeline << m_timelinesLatestIds[theAccount][timeline];
     return m_timelinesLatestIds[theAccount][timeline];
 }
 
-Choqok::Post* PumpIOMicroBlog::readPost(const QVariantMap& var, Choqok::Post* post)
+Choqok::Post *PumpIOMicroBlog::readPost(const QVariantMap &var, Choqok::Post *post)
 {
-    PumpIOPost *p = dynamic_cast< PumpIOPost* >(post);
+    PumpIOPost *p = dynamic_cast< PumpIOPost * >(post);
     if (p) {
         QVariantMap object;
         if (var.value("verb").toString() == "post" ||
-            var.value("verb").toString() == "share") {
+                var.value("verb").toString() == "share") {
             object = var["object"].toMap();
         } else {
             object = var;
@@ -1154,7 +1154,7 @@ Choqok::Post* PumpIOMicroBlog::readPost(const QVariantMap& var, Choqok::Post* po
             }
         }
         p->creationDateTime = QDateTime::fromString(var["published"].toString(),
-                                                   Qt::ISODate);
+                              Qt::ISODate);
         p->creationDateTime.setTimeSpec(Qt::UTC);
         if (object["pump_io"].isNull()) {
             p->link = object["id"].toString();
@@ -1175,7 +1175,7 @@ Choqok::Post* PumpIOMicroBlog::readPost(const QVariantMap& var, Choqok::Post* po
         if (var.value("verb").toString() == "share") {
             actor = object["author"].toMap();
             const QVariantList shares = object["shares"].toMap().value("items").toList();
-            Q_FOREACH (const QVariant& element, shares) {
+            Q_FOREACH (const QVariant &element, shares) {
                 p->shares.append(element.toMap().value("id").toString());
             }
         } else {
@@ -1204,7 +1204,7 @@ Choqok::Post* PumpIOMicroBlog::readPost(const QVariantMap& var, Choqok::Post* po
         }
 
         const QVariantList to = var["to"].toList();
-        Q_FOREACH (const QVariant& element, to) {
+        Q_FOREACH (const QVariant &element, to) {
             QVariantMap toElementMap = element.toMap();
             QString toElementType = toElementMap.value("objectType").toString();
             if (toElementType == "person" || toElementType == "collection") {
@@ -1213,7 +1213,7 @@ Choqok::Post* PumpIOMicroBlog::readPost(const QVariantMap& var, Choqok::Post* po
         }
 
         const QVariantList cc = var["cc"].toList();
-        Q_FOREACH (const QVariant& element, cc) {
+        Q_FOREACH (const QVariant &element, cc) {
             QVariantMap ccElementMap = element.toMap();
             QString ccElementType = ccElementMap.value("objectType").toString();
             if (ccElementType == "person" || ccElementType == "collection") {
@@ -1230,19 +1230,18 @@ Choqok::Post* PumpIOMicroBlog::readPost(const QVariantMap& var, Choqok::Post* po
 
         return p;
     } else {
-        kDebug() << "post is not a PumpIOPost!";
+        qCDebug(CHOQOK) << "post is not a PumpIOPost!";
         return post;
     }
 }
 
-QList< Choqok::Post* > PumpIOMicroBlog::readTimeline(const QByteArray& buffer)
+QList< Choqok::Post * > PumpIOMicroBlog::readTimeline(const QByteArray &buffer)
 {
-    QList<Choqok::Post* > posts;
-    bool ok;
-    QJson::Parser parser;
-    const QVariantList list = parser.parse(buffer, &ok).toMap().value("items").toList();
-    if (ok) {
-        Q_FOREACH (const QVariant& element, list) {
+    QList<Choqok::Post * > posts;
+    const QJsonDocument json = QJsonDocument::fromJson(buffer);
+    if (!json.isNull()) {
+        const QVariantList list = json.toVariant().toMap().value("items").toList();
+        Q_FOREACH (const QVariant &element, list) {
             const QVariantMap elementMap = element.toMap();
             if (!elementMap["object"].toMap().value("deleted").isNull()) {
                 // Skip deleted posts
@@ -1251,15 +1250,15 @@ QList< Choqok::Post* > PumpIOMicroBlog::readTimeline(const QByteArray& buffer)
             posts.prepend(readPost(elementMap, new PumpIOPost));
         }
     } else {
-        kDebug() << "Cannot parse JSON reply";
+        qCDebug(CHOQOK) << "Cannot parse JSON reply";
     }
 
     return posts;
 }
 
-void PumpIOMicroBlog::setLastTimelineId(Choqok::Account* theAccount,
-                                        const QString& timeline,
-                                        const QString& id)
+void PumpIOMicroBlog::setLastTimelineId(Choqok::Account *theAccount,
+                                        const QString &timeline,
+                                        const QString &id)
 {
     m_timelinesLatestIds[theAccount][timeline] = id;
 }
@@ -1295,9 +1294,9 @@ void PumpIOMicroBlog::setTimelinesInfo()
     m_timelinesPaths["Outbox"] = outboxActivity + "/major/";
 }
 
-void PumpIOMicroBlog::updatePost(Choqok::Account* theAccount, Choqok::Post* post)
+void PumpIOMicroBlog::updatePost(Choqok::Account *theAccount, Choqok::Post *post)
 {
-    PumpIOAccount *acc = qobject_cast<PumpIOAccount*>(theAccount);
+    PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
         QVariantMap object;
         object.insert("id", post->postId);
@@ -1316,16 +1315,16 @@ void PumpIOMicroBlog::updatePost(Choqok::Account* theAccount, Choqok::Post* post
         item.insert("object", object);
         item.insert("to", to);
 
-        QJson::Serializer serializer;
-        const QByteArray data = serializer.serialize(item);
+        const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
-        KUrl url(acc->host());
-        url.addPath(outboxActivity.arg(acc->username()));
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/json");
         job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
         if (!job) {
-            kDebug() << "Cannot create an http POST request!";
+            qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
         }
         m_accountJobs[job] = acc;
@@ -1333,11 +1332,11 @@ void PumpIOMicroBlog::updatePost(Choqok::Account* theAccount, Choqok::Post* post
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotUpdatePost(KJob*)));
         job->start();
     } else {
-        kDebug() << "theAccount is not a PumpIOAccount!";
+        qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
     }
 }
 
-QString PumpIOMicroBlog::hostFromAcct(const QString& acct)
+QString PumpIOMicroBlog::hostFromAcct(const QString &acct)
 {
     if (acct.contains("acct:")) {
         return acct.split(':')[1].split('@')[1];
@@ -1346,7 +1345,7 @@ QString PumpIOMicroBlog::hostFromAcct(const QString& acct)
     return acct;
 }
 
-QString PumpIOMicroBlog::userNameFromAcct(const QString& acct)
+QString PumpIOMicroBlog::userNameFromAcct(const QString &acct)
 {
     if (acct.contains("acct:")) {
         return acct.split(':')[1].split('@')[0];
@@ -1354,3 +1353,5 @@ QString PumpIOMicroBlog::userNameFromAcct(const QString& acct)
 
     return acct;
 }
+
+#include "pumpiomicroblog.moc"

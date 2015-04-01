@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,27 +23,25 @@
 #include "pumpioeditaccountwidget.h"
 
 #include <QCheckBox>
+#include <QInputDialog>
+#include <QJsonDocument>
 #include <QEventLoop>
+#include <QUrl>
 
-#include <qjson/parser.h>
-
-#include <KDebug>
-#include <KInputDialog>
 #include <KIO/AccessManager>
-#include <KIO/Job>
 #include <KIO/StoredTransferJob>
 #include <KMessageBox>
-#include <KUrl>
 
 #include "choqoktools.h"
 #include "accountmanager.h"
 
 #include "pumpioaccount.h"
+#include "pumpiodebug.h"
 #include "pumpiomicroblog.h"
 
-PumpIOEditAccountWidget::PumpIOEditAccountWidget(PumpIOMicroBlog* microblog,
-                                                 PumpIOAccount* account,
-                                                 QWidget* parent):
+PumpIOEditAccountWidget::PumpIOEditAccountWidget(PumpIOMicroBlog *microblog,
+        PumpIOAccount *account,
+        QWidget *parent):
     ChoqokEditAccountWidget(account, parent)
     , m_account(account)
 {
@@ -76,7 +73,7 @@ PumpIOEditAccountWidget::~PumpIOEditAccountWidget()
 {
 }
 
-Choqok::Account* PumpIOEditAccountWidget::apply()
+Choqok::Account *PumpIOEditAccountWidget::apply()
 {
     m_account->setAlias(kcfg_alias->text());
     m_account->setUsername(kcfg_webfingerid->text().split('@')[0]);
@@ -87,7 +84,7 @@ Choqok::Account* PumpIOEditAccountWidget::apply()
 
 void PumpIOEditAccountWidget::authorizeUser()
 {
-    kDebug();
+    qCDebug(CHOQOK);
     m_qoauth = new QOAuth::Interface(new KIO::Integration::AccessManager(this), this);
     if (m_account->consumerKey().isEmpty() || m_account->consumerSecret().isEmpty()) {
         registerClient();
@@ -98,44 +95,44 @@ void PumpIOEditAccountWidget::authorizeUser()
     QOAuth::ParamMap oAuthParams;
     oAuthParams.insert("oauth_callback", "oob");
     QOAuth::ParamMap oAuthRequest = m_qoauth->requestToken(m_account->host() + "/oauth/request_token",
-                                                    QOAuth::GET, QOAuth::HMAC_SHA1, oAuthParams);
+                                    QOAuth::GET, QOAuth::HMAC_SHA1, oAuthParams);
 
     if (m_qoauth->error() == QOAuth::NoError) {
         const QString token = oAuthRequest.value(QOAuth::tokenParameterName());
         const QString tokenSecret = oAuthRequest.value(QOAuth::tokenSecretParameterName());
 
-        KUrl oAuthAuthorizeURL(m_account->host() + "/oauth/authorize");
+        QUrl oAuthAuthorizeURL(m_account->host() + "/oauth/authorize");
         oAuthAuthorizeURL.addQueryItem("oauth_token", token);
         Choqok::openUrl(oAuthAuthorizeURL);
-        QString verifier = KInputDialog::getText( i18n("PIN"),
+        QString verifier = QInputDialog::getText(this, i18n("PIN"),
                            i18n("Enter the verifier code received from %1", m_account->host()));
 
         QOAuth::ParamMap oAuthVerifierParams;
         oAuthVerifierParams.insert("oauth_verifier", verifier.toUtf8());
         QOAuth::ParamMap oAuthVerifierRequest = m_qoauth->accessToken(
-                                                m_account->host() + "/oauth/access_token",
-                                                QOAuth::POST, token.toLocal8Bit(),
-                                                tokenSecret.toLocal8Bit(),
-                                                QOAuth::HMAC_SHA1, oAuthVerifierParams);
+                m_account->host() + "/oauth/access_token",
+                QOAuth::POST, token.toLocal8Bit(),
+                tokenSecret.toLocal8Bit(),
+                QOAuth::HMAC_SHA1, oAuthVerifierParams);
         if (m_qoauth->error() == QOAuth::NoError) {
             m_account->setToken(oAuthVerifierRequest.value(QOAuth::tokenParameterName()));
             m_account->setTokenSecret(oAuthVerifierRequest.value(QOAuth::tokenSecretParameterName()));
             if (isAuthenticated()) {
                 KMessageBox::information(this, i18n("Choqok is authorized successfully."),
-                                        i18n("Authorized"));
+                                         i18n("Authorized"));
             }
         } else {
-            kDebug() << "QOAuth error: " + Choqok::qoauthErrorText(m_qoauth->error());
+            qCDebug(CHOQOK) << "QOAuth error: " + Choqok::qoauthErrorText(m_qoauth->error());
         }
     } else {
-        kDebug() << "QOAuth error: " + Choqok::qoauthErrorText(m_qoauth->error());
+        qCDebug(CHOQOK) << "QOAuth error: " + Choqok::qoauthErrorText(m_qoauth->error());
     }
 }
 
 bool PumpIOEditAccountWidget::validateData()
 {
     if (kcfg_webfingerid->text().isEmpty() || !kcfg_webfingerid->text().contains('@')
-        || !isAuthenticated()) {
+            || !isAuthenticated()) {
         return false;
     } else {
         return true;
@@ -147,7 +144,7 @@ bool PumpIOEditAccountWidget::isAuthenticated()
     if (m_account->token().isEmpty() || m_account->tokenSecret().isEmpty()) {
         return false;
     } else {
-        kcfg_authorize->setIcon(KIcon("object-unlocked"));
+        kcfg_authorize->setIcon(QIcon::fromTheme("object-unlocked"));
         kcfg_authenticateLed->setState(KLed::On);
         kcfg_authenticateStatus->setText(i18n("Authenticated"));
         return true;
@@ -156,7 +153,7 @@ bool PumpIOEditAccountWidget::isAuthenticated()
 
 void PumpIOEditAccountWidget::loadTimelinesTable()
 {
-     Q_FOREACH (const QString &timeline, m_account->microblog()->timelineNames()) {
+    Q_FOREACH (const QString &timeline, m_account->microblog()->timelineNames()) {
         int newRow = timelinesTable->rowCount();
         timelinesTable->insertRow(newRow);
         timelinesTable->setItem(newRow, 0, new QTableWidgetItem(timeline));
@@ -171,15 +168,15 @@ void PumpIOEditAccountWidget::registerClient()
 {
     if (kcfg_webfingerid->text().contains('@')) {
         m_account->setHost("https://" + kcfg_webfingerid->text().split('@')[1]);
-        KUrl url(m_account->host() + "/api/client/register");
+        QUrl url(m_account->host() + "/api/client/register");
         QByteArray data("{"
                         " \"type\": \"client_associate\", "
                         " \"application_type\": \"native\", "
                         " \"application_name\": \"Choqok\" "
                         "}");
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
-        if ( !job ) {
-            kDebug() << "Cannot create an http POST request!";
+        if (!job) {
+            qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
         }
         job->addMetaData("content-type", "Content-Type: application/json");
@@ -189,22 +186,22 @@ void PumpIOEditAccountWidget::registerClient()
         loop.exec();
 
         if (job->error()) {
-            kDebug() << "An error occurred in Job";
+            qCDebug(CHOQOK) << "An error occurred in Job";
             return;
         } else {
             KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *>(job);
-            bool ok;
-            QJson::Parser parser;
-            QVariantMap result = parser.parse(stj->data(), &ok).toMap();
-            if (ok) {
-                m_account->setConsumerKey(result.value("client_id").toString());
-                m_account->setConsumerSecret(result.value("client_secret").toString());
+
+            const QJsonDocument json = QJsonDocument::fromJson(stj->data());
+            if (!json.isNull()) {
+                const QVariantMap result = json.toVariant().toMap();
+                m_account->setConsumerKey(result["client_id"].toString());
+                m_account->setConsumerSecret(result["client_secret"].toString());
             } else {
-                kDebug() << "Cannot parse JSON reply";
+                qCDebug(CHOQOK) << "Cannot parse JSON reply";
             }
         }
     } else {
-        kDebug() << "webfingerID is not valid";
+        qCDebug(CHOQOK) << "webfingerID is not valid";
     }
 }
 
@@ -212,7 +209,7 @@ void PumpIOEditAccountWidget::saveTimelinesTable()
 {
     QStringList timelines;
     for (int i = 0; i < timelinesTable->rowCount(); ++i) {
-        QCheckBox *enable = qobject_cast<QCheckBox*>(timelinesTable->cellWidget(i, 1));
+        QCheckBox *enable = qobject_cast<QCheckBox *>(timelinesTable->cellWidget(i, 1));
         if (enable && enable->isChecked()) {
             timelines.append(timelinesTable->item(i, 0)->text());
         }

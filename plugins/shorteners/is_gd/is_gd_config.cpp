@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,32 +23,27 @@
 
 #include "is_gd_config.h"
 
-#include <QLayout>
+#include <QVBoxLayout>
 
 #include <KAboutData>
-#include <KGenericFactory>
-#include <KIO/Job>
-#include <KIO/NetAccess>
-#include <KLocale>
-#include <KMessageBox>
 #include <KPluginFactory>
 
 #include "notifymanager.h"
 
 #include "is_gd_settings.h"
 
-K_PLUGIN_FACTORY( Is_gd_ConfigFactory, registerPlugin < Is_gd_Config > (); )
-K_EXPORT_PLUGIN( Is_gd_ConfigFactory( "kcm_choqok_is_gd" ) )
+K_PLUGIN_FACTORY_WITH_JSON(Is_gd_ConfigFactory, "choqok_is_gd_config.json",
+                           registerPlugin < Is_gd_Config > ();)
 
-Is_gd_Config::Is_gd_Config(QWidget* parent, const QVariantList& ):
-        KCModule( Is_gd_ConfigFactory::componentData(), parent)
+Is_gd_Config::Is_gd_Config(QWidget *parent, const QVariantList &):
+    KCModule(KAboutData::pluginData("kcm_choqok_is_gd"), parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
     wd->setObjectName("mIsGdCtl");
     wd->setMinimumWidth(200);
     ui.setupUi(wd);
-    addConfig( Is_gd_Settings::self(), wd );
+    addConfig(Is_gd_Settings::self(), wd);
     layout->addWidget(wd);
 }
 
@@ -69,7 +63,7 @@ void Is_gd_Config::save()
 
 void Is_gd_Config::emitChanged()
 {
-    Q_EMIT changed( true );
+    Q_EMIT changed(true);
 }
 
 #include "is_gd_config.moc"

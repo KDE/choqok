@@ -12,7 +12,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -35,10 +34,10 @@ class Ur_ly : public Choqok::Shortener
 {
     Q_OBJECT
 public:
-    Ur_ly( QObject* parent, const QVariantList& args  );
+    Ur_ly(QObject *parent, const QVariantList &args);
     ~Ur_ly();
-public:
-    QString shorten( const QString &url );
+
+    virtual QString shorten(const QString &url);
 };
 
 #endif

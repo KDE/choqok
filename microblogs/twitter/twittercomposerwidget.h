@@ -11,7 +11,6 @@
     by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -25,19 +24,18 @@
 #ifndef LACONICACOMPOSERWIDGET_H
 #define LACONICACOMPOSERWIDGET_H
 
-#include "twitterapihelper/twitterapicomposerwidget.h"
-
+#include "twitterapicomposerwidget.h"
 
 class TwitterComposerWidget : public TwitterApiComposerWidget
 {
     Q_OBJECT
 public:
-    explicit TwitterComposerWidget(Choqok::Account* account, QWidget* parent = 0);
+    explicit TwitterComposerWidget(Choqok::Account *account, QWidget *parent = 0);
     ~TwitterComposerWidget();
 
 protected Q_SLOTS:
-    virtual void submitPost(const QString& text);
-    virtual void slotPostMediaSubmitted(Choqok::Account *theAccount, Choqok::Post* post);
+    virtual void submitPost(const QString &text);
+    virtual void slotPostMediaSubmitted(Choqok::Account *theAccount, Choqok::Post *post);
 //     virtual void slotErrorPost(Choqok::Account* theAccount,Choqok::Post* post);
     virtual void selectMediumToAttach();
     virtual void cancelAttachMedium();

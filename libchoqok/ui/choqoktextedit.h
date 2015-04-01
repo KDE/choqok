@@ -11,7 +11,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -29,8 +28,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 class QLabel;
 
-namespace Choqok {
-namespace UI {
+namespace Choqok
+{
+namespace UI
+{
 /**
 
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
@@ -43,7 +44,7 @@ public:
     \brief Constructor
     @param charLimit Character limit for current account. 0 means no limit
     */
-    explicit TextEdit(uint charLimit = 0, QWidget* parent = 0);
+    explicit TextEdit(uint charLimit = 0, QWidget *parent = 0);
     virtual ~TextEdit();
     void clear();
     void setCharLimit(uint charLimit = 0);
@@ -53,12 +54,12 @@ public:
     void appendText(const QString &text);
 
 protected:
-    virtual void keyPressEvent(QKeyEvent* );
-    virtual void insertFromMimeData ( const QMimeData *source );
+    virtual void keyPressEvent(QKeyEvent *);
+    virtual void insertFromMimeData(const QMimeData *source);
     virtual QSize minimumSizeHint() const;
 
 Q_SIGNALS:
-    void returnPressed( const QString &txt );
+    void returnPressed(const QString &txt);
 //     void charsRemain( int count );
     void cleared();
 
@@ -67,7 +68,7 @@ protected Q_SLOTS:
     void settingsChanged();
     void slotChangeSpellerLanguage();
     void setupSpeller();
-    void slotAboutToShowContextMenu(QMenu* menu);
+    void slotAboutToShowContextMenu(QMenu *menu);
     void shortenUrls();
 
 protected:
@@ -79,7 +80,7 @@ protected:
 
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 }
 }

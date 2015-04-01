@@ -12,7 +12,6 @@ accepted by the membership of KDE e.V. (or its successor approved
 by the membership of KDE e.V.), which shall act as a proxy
 defined in Section 14 of version 3 of the license.
 
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -23,20 +22,21 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 #include "ur_ly.h"
 
-#include <KAboutData>
-#include <KDebug>
-#include <KGenericFactory>
-#include <KGlobal>
-#include <KIO/Job>
-#include <KIO/NetAccess>
+#include <QDebug>
+#include <QJsonDocument>
+#include <QUrl>
 
-#include <qjson/parser.h>
+#include <KIO/StoredTransferJob>
+#include <KLocalizedString>
+#include <KPluginFactory>
 
-K_PLUGIN_FACTORY ( MyPluginFactory, registerPlugin < Ur_ly> (); )
-K_EXPORT_PLUGIN ( MyPluginFactory ( "choqok_ur_ly" ) )
+#include "notifymanager.h"
 
-Ur_ly::Ur_ly ( QObject* parent, const QVariantList& )
-    : Choqok::Shortener ( MyPluginFactory::componentData(), parent )
+K_PLUGIN_FACTORY_WITH_JSON(Ur_lyFactory, "choqok_ur_ly.json",
+                           registerPlugin < Ur_ly> ();)
+
+Ur_ly::Ur_ly(QObject *parent, const QVariantList &)
+    : Choqok::Shortener("choqok_ur_ly", parent)
 {
 }
 
@@ -44,27 +44,34 @@ Ur_ly::~Ur_ly()
 {
 }
 
-
-QString Ur_ly::shorten ( const QString& url )
+QString Ur_ly::shorten(const QString &url)
 {
-    kDebug() << "Using ur.ly";
-    QByteArray data;
-    KUrl reqUrl ( "http://ur.ly/new.json" );
-    reqUrl.addQueryItem( "href", KUrl( url ).url() );
+    QUrl reqUrl("http://ur.ly/new.json");
+    reqUrl.addQueryItem("href", QUrl(url).url());
 
-    KIO::Job* job = KIO::get ( reqUrl, KIO::Reload, KIO::HideProgressInfo );
+    KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
+    job->exec();
 
-    if ( KIO::NetAccess::synchronousRun ( job, 0, &data ) ){
-        QJson::Parser parser;
-        bool ok;
-        QVariantMap result = parser.parse(data, &ok).toMap();
-        if ( ok && result.contains("code") ) {
-            return QString("http://ur.ly/%1").arg(result.value("code").toString());
-        } else{
-            kError()<<"Ur_ly::shorten: Parse error, Job error: "<<job->errorString()<<"\n Data:"<<data;
+    if (!job->error()) {
+        const QByteArray data = job->data();
+        const QJsonDocument json = QJsonDocument::fromJson(data);
+        if (!json.isNull()) {
+            const QVariantMap result = json.toVariant().toMap();
+
+            if (result.contains("code")) {
+                return QString("http://ur.ly/%1").arg(result.value("code").toString());
+            }
+        } else {
+            qCritical() << "Ur_ly::shorten: Parse error, Job error:" << job->errorString();
+            qCritical() << "Data:" << data;
+            Choqok::NotifyManager::error(i18n("Malformed response"), i18n("Ur.ly Error"));
         }
     } else {
-        kDebug() << "Cannot create a shortened url.\t" << job->errorString();
+        qCritical() << "Cannot create a shortened url:" << job->errorString();
+        Choqok::NotifyManager::error(i18n("Cannot create a short URL.\n%1",
+                                          job->errorString()), i18n("Ur.ly Error"));
     }
     return url;
 }
+
+#include "ur_ly.moc"
