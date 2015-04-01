@@ -165,7 +165,10 @@ void QuickPost::postError(Account *a, Choqok::Post *post,
 void QuickPost::submitPost(const QString &txt)
 {
     qCDebug(CHOQOK);
-    QString newPost = txt;
+    if (txt.isEmpty()) {
+        KMessageBox::error(choqokMainWindow, i18n("Cannot create a post without any text."));
+        return;
+    }
     Choqok::Account *currentAccount = d->accountsList.value(d->comboAccounts->currentText());
     if (!currentAccount) {
         KMessageBox::error(choqokMainWindow, i18n("Please configure at least one account to be included in \"Quick Post\".\nSettings -> Configure Choqok... -> Accounts"));
@@ -173,9 +176,10 @@ void QuickPost::submitPost(const QString &txt)
     }
     this->hide();
     d->submittedAccounts.clear();
+    QString newPost = txt;
     if (currentAccount->postCharLimit() &&
-            newPost.size() > (int)currentAccount->postCharLimit()) {
-        newPost = Choqok::ShortenManager::self()->parseText(newPost);
+            txt.size() > (int)currentAccount->postCharLimit()) {
+        newPost = Choqok::ShortenManager::self()->parseText(txt);
     }
     delete d->submittedPost;
     if (d->all->isChecked()) {
