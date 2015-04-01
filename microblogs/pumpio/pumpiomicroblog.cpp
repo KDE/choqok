@@ -175,6 +175,13 @@ void PumpIOMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *post
 void PumpIOMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *post,
                                  const QVariantList &to, const QVariantList &cc)
 {
+    if (!post || post->content.isEmpty()) {
+        qCDebug(CHOQOK) << "ERROR: Status text is empty!";
+        Q_EMIT errorPost(theAccount, post, Choqok::MicroBlog::OtherError,
+                         i18n("Creating the new post failed. Text is empty."), MicroBlog::Critical);
+        return;
+    }
+
     PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
         QVariantMap object;
