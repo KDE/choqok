@@ -1272,8 +1272,7 @@ QList< Choqok::Post * > TwitterApiMicroBlog::readTimeline(Choqok::Account *theAc
 }
 
 Choqok::Post *TwitterApiMicroBlog::readPost(Choqok::Account *theAccount,
-        const QByteArray &buffer,
-        Choqok::Post *post)
+        const QByteArray &buffer, Choqok::Post *post)
 {
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
@@ -1291,8 +1290,7 @@ Choqok::Post *TwitterApiMicroBlog::readPost(Choqok::Account *theAccount,
 }
 
 Choqok::Post *TwitterApiMicroBlog::readPost(Choqok::Account *theAccount,
-        const QVariantMap &var,
-        Choqok::Post *post)
+        const QVariantMap &var, Choqok::Post *post)
 {
     if (!post) {
         qCCritical(CHOQOK) << "TwitterApiMicroBlog::readPost: post is NULL!";
@@ -1320,9 +1318,8 @@ Choqok::Post *TwitterApiMicroBlog::readPost(Choqok::Account *theAccount,
         post->media = mediaMap["media_url"].toString() + ":small";
         QVariantMap sizes = mediaMap["sizes"].toMap();
         QVariantMap w = sizes["small"].toMap();
-        qCCritical(CHOQOK) << "size: " << w;
-        post->mediaSizeWidth = w["w"].toInt() !=  0L ? w["w"].toInt() : 0;
-        post->mediaSizeHeight = w["h"].toInt() != 0L ? w["h"].toInt() : 0;
+        post->mediaSizeWidth = w["w"].toInt() != 0 ? w["w"].toInt() : 0;
+        post->mediaSizeHeight = w["h"].toInt() != 0 ? w["h"].toInt() : 0;
     } else {
         post->media = "";
         post->mediaSizeHeight = 0;

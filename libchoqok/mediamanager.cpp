@@ -101,7 +101,7 @@ QPixmap MediaManager::fetchImage(const QString &remoteUrl, ReturnMode mode /*= S
         QUrl srcUrl(remoteUrl);
         KIO::StoredTransferJob *job = KIO::storedGet(srcUrl, KIO::NoReload, KIO::HideProgressInfo) ;
         if (!job) {
-            qCDebug(CHOQOK) << "Cannot create a FileCopyJob!";
+            qCCritical(CHOQOK) << "Cannot create a FileCopyJob!";
             QString errMsg = i18n("Cannot create a KDE Job. Please check your installation.");
             Q_EMIT fetchError(remoteUrl, errMsg);
             return p;
@@ -119,7 +119,7 @@ void MediaManager::slotImageFetched(KJob *job)
     QString remote = d->queue.value(job);
     d->queue.remove(job);
     if (job->error()) {
-        qCDebug(CHOQOK) << "Job error: " << job->error() << "\t" << job->errorString();
+        qCCritical(CHOQOK) << "Job error: " << job->error() << "\t" << job->errorString();
         QString errMsg = i18n("Cannot download image from %1.",
                               job->errorString());
         Q_EMIT fetchError(remote, errMsg);
@@ -130,8 +130,8 @@ void MediaManager::slotImageFetched(KJob *job)
             d->cache.insertPixmap(remote, p);
             Q_EMIT imageFetched(remote, p);
         } else {
-            qCDebug(CHOQOK) << "Parse Error: \nBase Url:" << baseJob->url() << "\ndata:" << baseJob->data();
-            Q_EMIT fetchError(remote, i18n("The download failed. The returned file is corrupted."));
+            qCCritical(CHOQOK) << "Cannot parse reply from " << baseJob->url().toDisplayString();
+            Q_EMIT fetchError(remote, i18n("The request failed. Cannot get image file."));
         }
     }
 }
