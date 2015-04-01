@@ -24,7 +24,7 @@
 #ifndef TWITTERAPIDMESSAGEDIALOG_H
 #define TWITTERAPIDMESSAGEDIALOG_H
 
-#include <KDialog>
+#include <QDialog>
 
 #include "microblog.h"
 
@@ -36,7 +36,7 @@ struct Post;
 
 class TwitterApiAccount;
 
-class CHOQOK_HELPER_EXPORT TwitterApiDMessageDialog : public KDialog
+class CHOQOK_HELPER_EXPORT TwitterApiDMessageDialog : public QDialog
 {
     Q_OBJECT
 public:
@@ -45,6 +45,7 @@ public:
     void setTo(const QString &username);
 
 protected Q_SLOTS:
+    virtual void accept();
     void friendsUsernameListed(TwitterApiAccount *, QStringList);
     void submitPost(QString);
     void reloadFriendslist();
@@ -54,7 +55,6 @@ protected Q_SLOTS:
 
 protected:
     virtual void setupUi(QWidget *mainWidget);
-    virtual void slotButtonClicked(int button);
 
 private:
     class Private;

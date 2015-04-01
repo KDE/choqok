@@ -24,8 +24,10 @@
 #include "twitterapisearchdialog.h"
 
 #include <QComboBox>
+#include <QDialogButtonBox>
 #include <QLabel>
 #include <QLineEdit>
+#include <QPushButton>
 #include <QVBoxLayout>
 
 #include <KLocalizedString>
@@ -55,7 +57,7 @@ public:
 };
 
 TwitterApiSearchDialog::TwitterApiSearchDialog(TwitterApiAccount *theAccount, QWidget *parent)
-    : KDialog(parent), d(new Private(theAccount))
+    : QDialog(parent), d(new Private(theAccount))
 {
     qCDebug(CHOQOK);
     setWindowTitle(i18nc("@title:window", "Search"));
@@ -74,8 +76,11 @@ void TwitterApiSearchDialog::createUi()
 {
     qCDebug(CHOQOK);
     QWidget *wd = new QWidget(this);
-    setMainWidget(wd);
-    QVBoxLayout *layout = new QVBoxLayout(wd);
+
+    QVBoxLayout *layout = new QVBoxLayout;
+    setLayout(layout);
+    layout->addWidget(wd);
+
     d->searchTypes = new QComboBox(wd);
     fillSearchTypes();
     qCDebug(CHOQOK);
@@ -90,7 +95,16 @@ void TwitterApiSearchDialog::createUi()
     d->searchQuery = new QLineEdit(this);
     queryLayout->addWidget(d->searchQuery);
 
-    setButtonText(Ok, i18nc("@action:button", "Search"));
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    okButton->setText(i18nc("@action:button", "Search"));
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    layout->addWidget(buttonBox);
+
+    adjustSize();
 }
 
 void TwitterApiSearchDialog::fillSearchTypes()
@@ -103,16 +117,12 @@ void TwitterApiSearchDialog::fillSearchTypes()
     }
 }
 
-void TwitterApiSearchDialog::slotButtonClicked(int button)
+void TwitterApiSearchDialog::accept()
 {
-    if (button == Ok) {
-        bool isB = d->mBlog->searchBackend()->getSearchTypes()[d->searchTypes->currentIndex()].second;
-        SearchInfo info(d->account, d->searchQuery->text(), d->searchTypes->currentIndex(), isB);
-        d->mBlog->searchBackend()->requestSearchResults(info);
-        accept();
-    } else {
-        KDialog::slotButtonClicked(button);
-    }
+    bool isB = d->mBlog->searchBackend()->getSearchTypes()[d->searchTypes->currentIndex()].second;
+    SearchInfo info(d->account, d->searchQuery->text(), d->searchTypes->currentIndex(), isB);
+    d->mBlog->searchBackend()->requestSearchResults(info);
+    QDialog::accept();
 }
 
 void TwitterApiSearchDialog::slotSearchTypeChanged(int)

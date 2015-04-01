@@ -28,7 +28,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QStandardPaths>
 
 #include <KIO/Job>
-#include <KIO/JobClasses>
 #include <KLocalizedString>
 #include <KSharedConfig>
 

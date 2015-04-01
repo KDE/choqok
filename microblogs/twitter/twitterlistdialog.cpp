@@ -34,7 +34,7 @@
 #include "twittermicroblog.h"
 
 TwitterListDialog::TwitterListDialog(TwitterApiAccount *theAccount, QWidget *parent)
-    : KDialog(parent)
+    : QDialog(parent)
 {
     if (theAccount) {
         account = qobject_cast<TwitterAccount *>(theAccount);
@@ -50,42 +50,48 @@ TwitterListDialog::TwitterListDialog(TwitterApiAccount *theAccount, QWidget *par
     blog = qobject_cast<TwitterMicroBlog *>(account->microblog());
     mainWidget = new QWidget(this);
     ui.setupUi(mainWidget);
-    setMainWidget(mainWidget);
     connect(ui.username, SIGNAL(textChanged(QString)), SLOT(slotUsernameChanged(QString)));
     connect(ui.loadUserLists, SIGNAL(clicked(bool)), SLOT(loadUserLists()));
     QRegExp rx("([a-z0-9_]){1,20}(\\/)", Qt::CaseInsensitive);
     QValidator *val = new QRegExpValidator(rx, 0);
     ui.username->setValidator(val);
     ui.username->setFocus();
-    setButtonText(Ok, i18n("Add"));
-    setButtonGuiItem(Cancel, KStandardGuiItem::close());
     listWidget = new QListWidget(this);
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(ui.label, 0, 0);
     layout->addWidget(ui.username, 0, 1);
     layout->addWidget(ui.loadUserLists, 0, 2);
-    layout->addWidget(listWidget, 1, 0, 1, 3);
+    layout->addWidget(listWidget, 1, 0, 1, -1);
     layout->addWidget(ui.label_2, 2, 0);
-    layout->addWidget(ui.listname, 2, 1, 2, 3);
+    layout->addWidget(ui.listname, 2, 1, 1, -1);
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    okButton->setText(i18n("Add"));
+    QPushButton *cancelButton = buttonBox->button(QDialogButtonBox::Cancel);
+    cancelButton->setIcon(KStandardGuiItem::close().icon());
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    layout->addWidget(buttonBox, 3, 3, 1, -1);
+
     mainWidget->setLayout(layout);
+
+    mainWidget->adjustSize();
 }
 
 TwitterListDialog::~TwitterListDialog()
 {
-
 }
 
-void TwitterListDialog::slotButtonClicked(int button)
+void TwitterListDialog::accept()
 {
-    if (button == KDialog::Ok) {
-        if (ui.listname->text().isEmpty() || ui.username->text().isEmpty()) {
-            KMessageBox::error(this, i18n("You should provide both list author username and list name."));
-        } else {
-            blog->addListTimeline(account, ui.username->text(), ui.listname->text());
-            accept();
-        }
+    if (ui.listname->text().isEmpty() || ui.username->text().isEmpty()) {
+        KMessageBox::error(this, i18n("You should provide both list author username and list name."));
     } else {
-        KDialog::slotButtonClicked(button);
+        blog->addListTimeline(account, ui.username->text(), ui.listname->text());
+        QDialog::accept();
     }
 }
 

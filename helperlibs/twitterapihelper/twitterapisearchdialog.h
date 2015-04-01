@@ -24,12 +24,12 @@
 #ifndef TWITTERAPISEARCHDIALOG_H
 #define TWITTERAPISEARCHDIALOG_H
 
-#include <KDialog>
+#include <QDialog>
 
 #include "choqok_export.h"
 
 class TwitterApiAccount;
-class CHOQOK_HELPER_EXPORT TwitterApiSearchDialog : public KDialog
+class CHOQOK_HELPER_EXPORT TwitterApiSearchDialog : public QDialog
 {
     Q_OBJECT
 public:
@@ -39,9 +39,9 @@ public:
 protected:
     virtual void createUi();
     virtual void fillSearchTypes();
-    virtual void slotButtonClicked(int button);
 
 protected Q_SLOTS:
+    virtual void accept();
     void slotSearchTypeChanged(int);
 
 private:

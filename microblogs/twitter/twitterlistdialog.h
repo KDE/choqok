@@ -24,7 +24,7 @@
 #ifndef TWITTERLISTDIALOG_H
 #define TWITTERLISTDIALOG_H
 
-#include <KDialog>
+#include <QDialog>
 
 #include "ui_twitterlistdialog_base.h"
 #include "twitterlist.h"
@@ -40,17 +40,15 @@ class TwitterMicroBlog;
 class TwitterAccount;
 class TwitterApiAccount;
 
-class TwitterListDialog : public KDialog
+class TwitterListDialog : public QDialog
 {
     Q_OBJECT
 public:
     explicit TwitterListDialog(TwitterApiAccount *theAccount, QWidget *parent = 0);
     virtual ~TwitterListDialog();
 
-protected:
-    virtual void slotButtonClicked(int button);
-
 protected Q_SLOTS:
+    virtual void accept();
     void slotUsernameChanged(const QString &name);
     void loadUserLists();
     void slotLoadUserlists(Choqok::Account *theAccount, QString username, QList<Twitter::List> list);

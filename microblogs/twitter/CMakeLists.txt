@@ -31,7 +31,6 @@ target_link_libraries(choqok_twitter
     KF5::KIOCore
     KF5::KIOWidgets
     KF5::WidgetsAddons
-    KF5::KDELibs4Support
     ${QTOAUTH_LIBRARY}
     qca-qt5
     choqok

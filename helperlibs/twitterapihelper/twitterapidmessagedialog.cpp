@@ -24,6 +24,7 @@
 #include "twitterapidmessagedialog.h"
 
 #include <QComboBox>
+#include <QDialogButtonBox>
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QPushButton>
@@ -54,12 +55,11 @@ public:
 
 TwitterApiDMessageDialog::TwitterApiDMessageDialog(TwitterApiAccount *theAccount, QWidget *parent,
         Qt::WFlags flags)
-    : KDialog(parent, flags), d(new Private(theAccount))
+    : QDialog(parent, flags), d(new Private(theAccount))
 {
     setWindowTitle(i18n("Send Private Message"));
     setAttribute(Qt::WA_DeleteOnClose);
     QWidget *wg = new QWidget(this, flags);
-    setMainWidget(wg);
     setupUi(wg);
     KConfigGroup grp(KSharedConfig::openConfig(), "TwitterApi");
     resize(grp.readEntry("DMessageDialogSize", QSize(300, 200)));
@@ -70,7 +70,6 @@ TwitterApiDMessageDialog::TwitterApiDMessageDialog(TwitterApiAccount *theAccount
         list.sort();
         d->comboFriendsList->addItems(list);
     }
-    setButtonText(Ok, i18nc("Send private message", "Send"));
 }
 
 TwitterApiDMessageDialog::~TwitterApiDMessageDialog()
@@ -105,6 +104,15 @@ void TwitterApiDMessageDialog::setupUi(QWidget *mainWidget)
     connect(d->editor, SIGNAL(returnPressed(QString)), SLOT(submitPost(QString)));
     mainLayout->addWidget(d->editor);
     d->editor->setFocus();
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    okButton->setText(i18nc("Send private message", "Send"));
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    mainLayout->addWidget(buttonBox);
 }
 
 void TwitterApiDMessageDialog::reloadFriendslist()
@@ -119,13 +127,9 @@ void TwitterApiDMessageDialog::reloadFriendslist()
     }
 }
 
-void TwitterApiDMessageDialog::slotButtonClicked(int button)
+void TwitterApiDMessageDialog::accept()
 {
-    if (button == KDialog::Ok) {
-        submitPost(d->editor->toPlainText());
-    } else {
-        KDialog::slotButtonClicked(button);
-    }
+    submitPost(d->editor->toPlainText());
 }
 
 void TwitterApiDMessageDialog::submitPost(QString text)
