@@ -799,15 +799,14 @@ void TwitterApiMicroBlog::requestTimeLine(Choqok::Account *theAccount, QString t
     // returned timelines have the same JSON format
     if (timelineApiPath[type].contains("lists/statuses")) {
 
-        // type contains @username/timelinename, we only need the timeline name here
-        int index = type.indexOf("/");
-        QString slug = type.mid(index + 1);
-
+        // type contains @username/timelinename
+        const QString slug = type.mid(type.indexOf("/") + 1);
         url.addQueryItem("slug", slug);
         params.insert("slug", slug.toLatin1());
 
-        url.addQueryItem("owner_screen_name", theAccount->username());
-        params.insert("owner_screen_name", theAccount->username().toLatin1());
+        const QString owner = type.mid(1, type.indexOf("/") - 1);
+        url.addQueryItem("owner_screen_name", owner);
+        params.insert("owner_screen_name", owner.toLatin1());
     } else {
         if (account->usingOAuth()) {    //TODO: Check if needed
             if (!latestStatusId.isEmpty()) {
