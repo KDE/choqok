@@ -24,25 +24,23 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef CHOQOK_EXPORT_H
 #define CHOQOK_EXPORT_H
 
-#include <kdemacros.h>
-
 #ifndef CHOQOK_EXPORT
 # if defined(MAKE_CHOQOK_LIB)
 // We are building this library
-# define CHOQOK_EXPORT KDE_EXPORT
+# define CHOQOK_EXPORT Q_DECL_EXPORT
 # else
 // We are using this library
-# define CHOQOK_EXPORT KDE_IMPORT
+# define CHOQOK_EXPORT Q_DECL_IMPORT
 # endif
 #endif
 
 #ifndef CHOQOK_HELPER_EXPORT
 # if defined(MAKE_TWITTERAPIHELPER_LIB)
 // We are building this library
-# define CHOQOK_HELPER_EXPORT KDE_EXPORT
+# define CHOQOK_HELPER_EXPORT Q_DECL_EXPORT
 # else
 // We are using this library
-# define CHOQOK_HELPER_EXPORT KDE_IMPORT
+# define CHOQOK_HELPER_EXPORT Q_DECL_IMPORT
 # endif
 #endif
 
