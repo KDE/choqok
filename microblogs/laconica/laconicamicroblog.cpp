@@ -61,7 +61,6 @@ LaconicaMicroBlog::LaconicaMicroBlog(QObject *parent, const QVariantList &)
     setServiceName("GNU social");
     mTimelineInfos["ReTweets"]->name = i18nc("Timeline name", "Repeated");
     mTimelineInfos["ReTweets"]->description = i18nc("Timeline description", "Your posts that were repeated by others");
-//     setServiceHomepageUrl("http://twitter.com/");
 }
 
 LaconicaMicroBlog::~LaconicaMicroBlog()

@@ -44,9 +44,9 @@
 K_PLUGIN_FACTORY_WITH_JSON(VideoPreviewFactory, "choqok_videopreview.json",
                            registerPlugin < VideoPreview > ();)
 
-const QRegExp VideoPreview::mYouTuRegExp("(http://youtu.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])");
-const QRegExp VideoPreview::mYouTubeRegExp("(http://www.youtube.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])");
-const QRegExp VideoPreview::mVimeoRegExp("(http://(.+)?vimeo.com/(.+)[&]?)");
+const QRegExp VideoPreview::mYouTuRegExp("(https?://youtu.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])");
+const QRegExp VideoPreview::mYouTubeRegExp("(https?://www.youtube.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])");
+const QRegExp VideoPreview::mVimeoRegExp("(https?://(.+)?vimeo.com/(.+)[&]?)");
 
 const QRegExp VideoPreview::mYouTuCode("youtu.(.+)/(.+)[?&]?");
 
@@ -155,7 +155,7 @@ void VideoPreview::parse(QPointer<Choqok::UI::PostWidget> postToParse)
 
 QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWidget > postToParse)
 {
-    QString youtubeUrl = QString("http://gdata.youtube.com/feeds/api/videos/%1").arg(videoid);
+    QString youtubeUrl = QString("https://gdata.youtube.com/feeds/api/videos/%1").arg(videoid);
     QUrl th_url(youtubeUrl);
     KIO::StoredTransferJob *job = KIO::storedGet(th_url, KIO::NoReload, KIO::HideProgressInfo);
     KJobWidgets::setWindow(job, Choqok::UI::Global::mainWindow());
@@ -187,7 +187,7 @@ QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWi
         description = description.left(70);
 
         mParsingList.insert(thumb_url, postToParse);
-        mBaseUrlMap.insert(thumb_url, "http://www.youtube.com/watch?v=" + videoid);
+        mBaseUrlMap.insert(thumb_url, "https://www.youtube.com/watch?v=" + videoid);
         mTitleVideoMap.insert(thumb_url, title);
         mDescriptionVideoMap.insert(thumb_url, description);
     } else {
@@ -199,7 +199,7 @@ QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWi
 
 QString VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidget > postToParse)
 {
-    QString vimeoUrl = QString("http://vimeo.com/api/v2/video/%1.xml").arg(videoid);
+    QString vimeoUrl = QString("https://vimeo.com/api/v2/video/%1.xml").arg(videoid);
     QUrl th_url(vimeoUrl);
     QEventLoop loop;
     KIO::StoredTransferJob *job = KIO::storedGet(th_url, KIO::NoReload, KIO::HideProgressInfo);
@@ -233,7 +233,7 @@ QString VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidg
         description = description.left(70);
 
         mParsingList.insert(thumb_url, postToParse);
-        mBaseUrlMap.insert(thumb_url, "http://vimeo.com/" + videoid);
+        mBaseUrlMap.insert(thumb_url, "https://vimeo.com/" + videoid);
         mTitleVideoMap.insert(thumb_url, title);
         mDescriptionVideoMap.insert(thumb_url, description);
     } else {

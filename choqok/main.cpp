@@ -44,7 +44,7 @@ int main(int argc, char **argv)
     about.addAuthor(i18n("Mehrdad Momeny"), i18n("Author, Developer and Maintainer"),
                     "mehrdad.momeny@gmail.com", "http://momeny.wordpress.com");
     about.addAuthor(i18n("Andrey Esin"), i18n("Developer"),
-                    "gmlastik@gmail.com", "http://twitter.com/la_stik");
+                    "gmlastik@gmail.com", "https://twitter.com/la_stik");
     about.addAuthor(i18n("Andrea Scarpino"), i18n("Developer"),
                     "scarpino@kde.org", "http://www.andreascarpino.it");
 
@@ -53,7 +53,7 @@ int main(int argc, char **argv)
     about.addCredit(i18n("Daniel Schaal"), i18n("UI improvements"), "daniel@foto-schaal.de");
     about.addCredit(i18n("Stephen Henderson"), i18n("Search API implementation"), "hendersonsk@gmail.com");
     about.addCredit(i18n("Tejas Dinkar"), i18n("Developer"),
-                    "tejasdinkar@gmail.com", "http://twitter.com/tdinkar");
+                    "tejasdinkar@gmail.com", "https://twitter.com/tdinkar");
     about.addCredit(i18n("Emanuele Bigiarini"), i18n("D-Bus and Konqueror plugin"), "pulmro@gmail.com");
     about.addCredit(i18n("Alex Infantes"), i18n("Improvements on Image preview plugin"),
                     "alexandro82@gmail.com");

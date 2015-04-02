@@ -303,7 +303,7 @@ QString OCSMicroblog::profileUrl(Choqok::Account *account, const QString &userna
 {
     OCSAccount *acc = qobject_cast<OCSAccount *>(account);
     if (acc->providerUrl().host().contains("opendesktop.org")) {
-        return QString("http://opendesktop.org/usermanager/search.php?username=%1").arg(username);
+        return QString("https://opendesktop.org/usermanager/search.php?username=%1").arg(username);
     }
     return QString();
 }

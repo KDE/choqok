@@ -126,7 +126,7 @@ void FlickrConfig::emitChanged()
 void FlickrConfig::getFrob()
 {
     m_frob.clear();
-    QUrl url("http://flickr.com/services/rest/");
+    QUrl url("https://flickr.com/services/rest/");
     url.addQueryItem("method", "flickr.auth.getFrob");
     url.addQueryItem("api_key", apiKey.toUtf8());
     url.addQueryItem("api_sig",  createSign("methodflickr.auth.getFrob"));
@@ -185,7 +185,7 @@ void FlickrConfig::getFrob()
 void FlickrConfig::getToken()
 {
     m_token.clear();
-    QUrl url("http://flickr.com/services/rest/");
+    QUrl url("https://flickr.com/services/rest/");
     url.addQueryItem("method", "flickr.auth.getToken");
     url.addQueryItem("api_key", apiKey.toUtf8());
     url.addQueryItem("frob", m_frob.toUtf8());
@@ -286,7 +286,7 @@ void FlickrConfig::slotAuthButton_clicked()
 {
     getFrob();
     if (!m_frob.isEmpty()) {
-        QUrl oUrl("http://flickr.com/services/auth/?");
+        QUrl oUrl("https://flickr.com/services/auth/?");
         oUrl.setPath(oUrl.path() + "api_key=" + apiKey +
                      "&perms=write&frob=" + m_frob +
                      "&api_sig=" + createSign("frob" + m_frob.toUtf8() + "permswrite"));

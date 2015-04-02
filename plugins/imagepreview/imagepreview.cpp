@@ -35,7 +35,7 @@
 K_PLUGIN_FACTORY_WITH_JSON(ImagePreviewFactory, "choqok_imagepreview.json",
                            registerPlugin < ImagePreview > ();)
 
-const QRegExp ImagePreview::mTwitpicRegExp("(http://twitpic.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
+const QRegExp ImagePreview::mTwitpicRegExp("(https://twitpic.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
 const QRegExp ImagePreview::mYFrogRegExp("(http://yfrog.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])");
 const QRegExp ImagePreview::mTweetphotoRegExp("(http://tweetphoto.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
 const QRegExp ImagePreview::mPlixiRegExp("(http://plixi.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
@@ -96,13 +96,13 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
     QStringList PumpIORedirectList;
     QString content = postToParse->currentPost()->content;
 
-    //Twitpic: http://www.twitpic.com/api.do
+    //Twitpic: https://www.twitpic.com/api.do
     while ((pos = mTwitpicRegExp.indexIn(content, pos)) != -1) {
         pos += mTwitpicRegExp.matchedLength();
         twitpicRedirectList << mTwitpicRegExp.cap(0);
     }
     Q_FOREACH (const QString &url, twitpicRedirectList) {
-        QString twitpicUrl = QString("http://twitpic.com/show/mini%1").arg(QString(url).remove("http://twitpic.com"));
+        QString twitpicUrl = QString("https://twitpic.com/show/mini%1").arg(QString(url).remove("https://twitpic.com"));
         connect(Choqok::MediaManager::self(),
                 SIGNAL(imageFetched(QString,QPixmap)),
                 SLOT(slotImageFetched(QString,QPixmap)));

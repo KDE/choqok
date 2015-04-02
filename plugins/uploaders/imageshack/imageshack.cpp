@@ -53,7 +53,7 @@ void ImageShack::upload(const QUrl &localUrl, const QByteArray &medium, const QB
         Q_EMIT uploadingFailed(localUrl, i18n("Just supporting image uploading"));
         return;
     }
-    QUrl url("http://www.imageshack.us/upload_api.php");
+    QUrl url("https://www.imageshack.us/upload_api.php");
     QMap<QString, QByteArray> formdata;
     formdata["key"] = apiKey.toLatin1();
     formdata["rembar"] = "1";

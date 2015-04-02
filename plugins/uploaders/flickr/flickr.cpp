@@ -54,7 +54,7 @@ Flickr::~Flickr()
 
 void Flickr::upload(const QUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType)
 {
-    QUrl url("http://api.flickr.com/services/upload/");
+    QUrl url("https://api.flickr.com/services/upload/");
     FlickrSettings::self()->load();
     QString token = Choqok::PasswordManager::self()->readPassword(QString("flickr_%1")
                     .arg(FlickrSettings::username()));
@@ -154,9 +154,9 @@ void Flickr::slotUpload(KJob *job)
 
                     QString remUrl;
                     if (FlickrSettings::shorturl()) {
-                        remUrl = "http://flic.kr/p/" + base58encode(photoId.toULongLong());
+                        remUrl = "https://flic.kr/p/" + base58encode(photoId.toULongLong());
                     } else {
-                        remUrl = "http://flickr.com/photos/" + FlickrSettings::nsid() + '/' + photoId;
+                        remUrl = "https://flickr.com/photos/" + FlickrSettings::nsid() + '/' + photoId;
                     }
 
                     Q_EMIT mediumUploaded(localUrl, remUrl);
