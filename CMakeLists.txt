@@ -29,6 +29,7 @@ find_package(Qt5 CONFIG REQUIRED
 find_package(KF5 REQUIRED
     ConfigWidgets
     CoreAddons
+    DocTools
     I18n
     Emoticons
     GlobalAccel
