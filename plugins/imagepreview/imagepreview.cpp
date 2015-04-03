@@ -35,7 +35,7 @@
 K_PLUGIN_FACTORY_WITH_JSON(ImagePreviewFactory, "choqok_imagepreview.json",
                            registerPlugin < ImagePreview > ();)
 
-const QRegExp ImagePreview::mTwitpicRegExp("(https://twitpic.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
+const QRegExp ImagePreview::mTwitpicRegExp("(https?://twitpic.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
 const QRegExp ImagePreview::mYFrogRegExp("(http://yfrog.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])");
 const QRegExp ImagePreview::mTweetphotoRegExp("(http://tweetphoto.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
 const QRegExp ImagePreview::mPlixiRegExp("(http://plixi.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])");
