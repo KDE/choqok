@@ -36,6 +36,7 @@ find_package(KF5 REQUIRED
     GlobalAccel
     GuiAddons
     KCMUtils
+    KIO
     Notifications
     NotifyConfig
     Sonnet
