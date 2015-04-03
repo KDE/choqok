@@ -32,6 +32,7 @@
     </p>
     <p xml:lang="bs">Choqok je mikro-blog klijent koji podržava Twitter.com i Pump.io  usluge</p>
     <p xml:lang="ca">El Choqok és un client de micro-blogs que implementa els serveis de Twitter.com i Pump.io</p>
+    <p xml:lang="de">Choqok ist ein Mikro-Blogging-Programm, das derzeit die Dienste Twitter.com und Pump.iounterstützt</p>
     <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com and Pump.io services</p>
     <p xml:lang="es">Choqok es un cliente de microblogueo que soporta los servicios Twitter.com y Pump.io</p>
     <p xml:lang="fi">Choqok on mikroblogausasiakas, joka tukee Twitter.com- ja Pump.io-palveluja</p>
@@ -62,7 +63,7 @@
     <p xml:lang="nds">Markmalen:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
     <p xml:lang="pl">Możliwości:</p>
-    <p xml:lang="pt">Características:</p>
+    <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="pt-BR">Funcionalidades:</p>
     <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="sl">Zmožnosti:</p>
@@ -96,6 +97,7 @@
       <li xml:lang="ca">Implementació per al servei Pump.io auto hostatjat</li>
       <li xml:lang="en-GB">Supporting self hosted Pump.io service</li>
       <li xml:lang="es">Soporta el servicio auto hospedado Pump.io</li>
+      <li xml:lang="fi">Tukee itse isännöityä Pump.io-palvelua</li>
       <li xml:lang="fr">Prise en charge du service auto-hébergé Pump.io</li>
       <li xml:lang="gl">Compatíbel con servizos de microblogue baseados en Pump.io.</li>
       <li xml:lang="nl">Ondersteuning voor zelf gehoste Pump.io service</li>
@@ -112,6 +114,7 @@
       <li xml:lang="ca">Implementació per al servei social de la GNU auto hostatjat</li>
       <li xml:lang="en-GB">Supporting self hosted GNU social service</li>
       <li xml:lang="es">Soporta el servicio auto hospedado GNU social</li>
+      <li xml:lang="fi">Tukee itse isännöityä GNU social -palvelu</li>
       <li xml:lang="fr">Prise en charge du service social auto-hébergé GNU</li>
       <li xml:lang="gl">Compatíbel con servizos de microblogue baseados en GNU social.</li>
       <li xml:lang="nl">Ondersteuning voor zelf gehoste GNU sociaal service</li>
