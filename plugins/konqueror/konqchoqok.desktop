@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Service
 Icon=choqok
-X-KDE-Library=libkonqchoqokplugin
+X-KDE-Library=kf5/parts/konqchoqokplugin
 X-KDE-PluginInfo-Author=Emanuele Bigiarini
 X-KDE-PluginInfo-Email=pulmro@gmail.com
 X-KDE-PluginInfo-Name=konqchoqokplugin

@@ -32,4 +32,4 @@ PUBLIC
 
 install(TARGETS choqok_filter DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES choqok_filter.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-install(FILES filterui.rc DESTINATION ${DATA_INSTALL_DIR}/choqok_filter)
+install(FILES filterui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/choqok_filter)
