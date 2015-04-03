@@ -24,6 +24,7 @@ find_package(Qt5 CONFIG REQUIRED
     Core
     Concurrent
     DBus
+    Network
     Widgets
 )
 find_package(KF5 REQUIRED
