@@ -1,275 +1,278 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
-  <class>LaconicaEditAccountBase</class>
-  <widget class="QWidget" name="LaconicaEditAccountBase">
-    <property name="geometry">
-      <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>444</width>
-        <height>497</height>
-      </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0">
-        <widget class="QTabWidget" name="tabwidget">
-          <property name="currentIndex">
-            <number>0</number>
-          </property>
-          <widget class="QWidget" name="tabAccount">
-            <attribute name="title">
-              <string>GNU social Account</string>
-            </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout">
-              <item>
-                <layout class="QGridLayout" name="gridLayout_4">
-                  <item row="0" column="0">
-                    <widget class="QLabel" name="label_3">
-                      <property name="text">
-                        <string>&amp;Alias:</string>
-                      </property>
-                      <property name="alignment">
-                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                      </property>
-                      <property name="buddy">
-                        <cstring>kcfg_alias</cstring>
-                      </property>
-                    </widget>
-                  </item>
-                  <item row="0" column="1">
-                    <widget class="QLineEdit" name="kcfg_alias">
-                      <property name="toolTip">
-                        <string>The account alias</string>
-                      </property>
-                      <property name="whatsThis">
-                        <string>The alias is the name you want to give to your account. It should be unique. You can have several connections to the same service so the alias lets you give them names.</string>
-                      </property>
-                    </widget>
-                  </item>
-                  <item row="1" column="1">
-                    <widget class="QLabel" name="label">
-                      <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                        </sizepolicy>
-                      </property>
-                      <property name="text">
-                        <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+ <class>LaconicaEditAccountBase</class>
+ <widget class="QWidget" name="LaconicaEditAccountBase">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>444</width>
+    <height>497</height>
+   </rect>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
+    <widget class="QTabWidget" name="tabwidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tabAccount">
+      <attribute name="title">
+       <string>GNU social Account</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>A&amp;lias:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="buddy">
+            <cstring>kcfg_alias</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="kcfg_alias">
+           <property name="toolTip">
+            <string>The account alias</string>
+           </property>
+           <property name="whatsThis">
+            <string>The alias is the name you want to give to your account. It should be unique. You can have several connections to the same service so the alias lets you give them names.</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'DejaVu Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:8pt; font-weight:600;"&gt;Note:&lt;/span&gt;&lt;span style=" font-size:8pt;"&gt; The alias must be unique.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                      </property>
-                      <property name="alignment">
-                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                      </property>
-                      <property name="wordWrap">
-                        <bool>true</bool>
-                      </property>
-                    </widget>
-                  </item>
-                </layout>
-              </item>
-              <item>
-                <widget class="QGroupBox" name="groupBox_2">
-                  <property name="title">
-                    <string>Server</string>
-                  </property>
-                  <layout class="QGridLayout" name="gridLayout">
-                    <item row="1" column="0">
-                      <widget class="QLabel" name="label_4">
-                        <property name="text">
-                          <string>API path:</string>
-                        </property>
-                        <property name="alignment">
-                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                        </property>
-                        <property name="buddy">
-                          <cstring>kcfg_api</cstring>
-                        </property>
-                      </widget>
-                    </item>
-                    <item row="1" column="1">
-                      <widget class="QLineEdit" name="kcfg_api">
-                        <property name="text">
-                          <string notr="true">api</string>
-                        </property>
-                      </widget>
-                    </item>
-                    <item row="0" column="0">
-                      <widget class="QLabel" name="label_2">
-                        <property name="text">
-                          <string>GNU social server:</string>
-                        </property>
-                        <property name="alignment">
-                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                        </property>
-                        <property name="buddy">
-                          <cstring>kcfg_host</cstring>
-                        </property>
-                      </widget>
-                    </item>
-                    <item row="0" column="1">
-                      <widget class="QLineEdit" name="kcfg_host"/>
-                    </item>
-                  </layout>
-                </widget>
-              </item>
-              <item>
-                <widget class="QGroupBox" name="kcfg_BasicBox">
-                  <property name="title">
-                    <string>Basic Authentication</string>
-                  </property>
-                  <layout class="QFormLayout" name="formLayout">
-                    <item row="1" column="1">
-                      <widget class="QLineEdit" name="kcfg_basicUsername">
-                        <property name="toolTip">
-                          <string>The name you use to connect to the service</string>
-                        </property>
-                      </widget>
-                    </item>
-                    <item row="2" column="0">
-                      <widget class="QLabel" name="textLabel1_3">
-                        <property name="text">
-                          <string>Password:</string>
-                        </property>
-                        <property name="alignment">
-                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                        </property>
-                      </widget>
-                    </item>
-                    <item row="2" column="1">
-                      <widget class="QLineEdit" name="kcfg_basicPassword">
-                        <property name="toolTip">
-                          <string>The name you use to connect to the service</string>
-                        </property>
-                      </widget>
-                    </item>
-                    <item row="1" column="0">
-                      <widget class="QLabel" name="textLabel1_2">
-                        <property name="text">
-                          <string>Username:</string>
-                        </property>
-                        <property name="alignment">
-                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                        </property>
-                      </widget>
-                    </item>
-                  </layout>
-                </widget>
-              </item>
-              <item>
-                <spacer name="verticalSpacer_2">
-                  <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                    <size>
-                      <width>20</width>
-                      <height>0</height>
-                    </size>
-                  </property>
-                </spacer>
-              </item>
-            </layout>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'DejaVu Sans'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt; The alias must be unique.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
           </widget>
-          <widget class="QWidget" name="tabTimelines">
-            <attribute name="title">
-              <string>Timelines Configuration</string>
-            </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_5">
-              <item>
-                <widget class="QLabel" name="label_6">
-                  <property name="font">
-                    <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                    </font>
-                  </property>
-                  <property name="text">
-                    <string>Which timelines do you like to be enabled?</string>
-                  </property>
-                </widget>
-              </item>
-              <item>
-                <widget class="QTableWidget" name="timelinesTable">
-                  <column>
-                    <property name="text">
-                      <string>Name</string>
-                    </property>
-                  </column>
-                  <column>
-                    <property name="text">
-                      <string>Enable</string>
-                    </property>
-                  </column>
-                </widget>
-              </item>
-            </layout>
-          </widget>
-          <widget class="QWidget" name="tabConf">
-            <attribute name="title">
-              <string>Configuration</string>
-            </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
-              <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_2">
-                  <item>
-                    <widget class="QCheckBox" name="kcfg_changeExclamationMark">
-                      <property name="toolTip">
-                        <string>To prevent spamming on some groups, you can set here to change the exclamation point (that used to refer to a group), to something else (e.g. nothing.)</string>
-                      </property>
-                      <property name="text">
-                        <string>On re-dent, change exclamation mark to:</string>
-                      </property>
-                      <property name="checked">
-                        <bool>true</bool>
-                      </property>
-                    </widget>
-                  </item>
-                  <item>
-                    <widget class="QLineEdit" name="kcfg_changeToString">
-                      <property name="text">
-                        <string>#</string>
-                      </property>
-                      <property name="maxLength">
-                        <number>10</number>
-                      </property>
-                    </widget>
-                  </item>
-                </layout>
-              </item>
-              <item>
-                <spacer name="verticalSpacer">
-                  <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                    <size>
-                      <width>20</width>
-                      <height>40</height>
-                    </size>
-                  </property>
-                </spacer>
-              </item>
-            </layout>
-          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Server</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>API path:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="buddy">
+             <cstring>kcfg_api</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="kcfg_api">
+            <property name="text">
+             <string notr="true">api</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>&amp;GNU social server:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="buddy">
+             <cstring>kcfg_host</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="kcfg_host"/>
+          </item>
+         </layout>
         </widget>
-      </item>
-    </layout>
-  </widget>
-  <tabstops>
-    <tabstop>kcfg_alias</tabstop>
-    <tabstop>kcfg_host</tabstop>
-    <tabstop>kcfg_api</tabstop>
-    <tabstop>kcfg_basicUsername</tabstop>
-    <tabstop>kcfg_basicPassword</tabstop>
-    <tabstop>tabwidget</tabstop>
-    <tabstop>timelinesTable</tabstop>
-    <tabstop>kcfg_changeExclamationMark</tabstop>
-    <tabstop>kcfg_changeToString</tabstop>
-  </tabstops>
-  <resources/>
-  <connections/>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="kcfg_BasicBox">
+         <property name="title">
+          <string>Basic Authentication</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="kcfg_basicUsername">
+            <property name="toolTip">
+             <string>The name you use to connect to the service</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="textLabel1_3">
+            <property name="text">
+             <string>Password:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="kcfg_basicPassword">
+            <property name="toolTip">
+             <string>The name you use to connect to the service</string>
+            </property>
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="textLabel1_2">
+            <property name="text">
+             <string>Username:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabTimelines">
+      <attribute name="title">
+       <string>Timelines Configuration</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Which timelines do you like to be enabled?</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTableWidget" name="timelinesTable">
+         <column>
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Enable</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabConf">
+      <attribute name="title">
+       <string>Configuration</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QCheckBox" name="kcfg_changeExclamationMark">
+           <property name="toolTip">
+            <string>To prevent spamming on some groups, you can set here to change the exclamation point (that used to refer to a group), to something else (e.g. nothing.)</string>
+           </property>
+           <property name="text">
+            <string>On re-dent, change exclamation mark to:</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="kcfg_changeToString">
+           <property name="text">
+            <string>#</string>
+           </property>
+           <property name="maxLength">
+            <number>10</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>kcfg_alias</tabstop>
+  <tabstop>kcfg_host</tabstop>
+  <tabstop>kcfg_api</tabstop>
+  <tabstop>kcfg_basicUsername</tabstop>
+  <tabstop>kcfg_basicPassword</tabstop>
+  <tabstop>tabwidget</tabstop>
+  <tabstop>timelinesTable</tabstop>
+  <tabstop>kcfg_changeExclamationMark</tabstop>
+  <tabstop>kcfg_changeToString</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
 </ui>
