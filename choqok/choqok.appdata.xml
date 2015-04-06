@@ -26,6 +26,7 @@
   <name xml:lang="sv">Choqok</name>
   <name xml:lang="uk">Choqok</name>
   <name xml:lang="x-test">xxChoqokxx</name>
+  <name xml:lang="zh-CN">Choqok</name>
   <description>
     <p>
       Choqok is a micro-blogging client which supports Twitter.com and Pump.io services
@@ -70,6 +71,7 @@
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
+    <p xml:lang="zh-CN">功能：</p>
     <ul>
       <li>Supporting Twitter.com micro-blogging service</li>
       <li xml:lang="bs">Podrška Twitter.com mikro-blog usluge</li>
@@ -207,6 +209,7 @@
       <li xml:lang="sv">Integrering med Twitpic.com</li>
       <li xml:lang="uk">інтеграція з Twitpic.com;</li>
       <li xml:lang="x-test">xxTwitpic.com integrationxx</li>
+      <li xml:lang="zh-CN">Twitpic.com 集成</li>
       <li>Supporting Multiple Accounts simultaneously</li>
       <li xml:lang="bs">Podrška za više računa istovremeno</li>
       <li xml:lang="ca">Implementació per a múltiples comptes simultanis</li>
@@ -268,6 +271,7 @@
       <li xml:lang="sv">Integrering med plånboken</li>
       <li xml:lang="uk">інтеграція з KWallet;</li>
       <li xml:lang="x-test">xxKWallet integrationxx</li>
+      <li xml:lang="zh-CN">KWallet 集成</li>
       <li>Ability to make a quick tweet with global shortcuts (Ctrl+Meta+T)</li>
       <li xml:lang="bs">Sposobnost da se napravi brzi tweet sa globalnim prečicama (Ctrl+Meta+T)</li>
       <li xml:lang="ca">La capacitat per fer un «tweet» ràpid amb dreceres globals (Ctrl+Meta+T)</li>
