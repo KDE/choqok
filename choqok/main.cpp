@@ -38,6 +38,7 @@ static const char version[] = "1.5";
 int main(int argc, char **argv)
 {
     qCDebug(CHOQOK) << "Choqok " << version;
+    KLocalizedString::setApplicationDomain("choqok");
     KAboutData about("choqok", "Choqok", version, i18n(description),
                      KAboutLicense::GPL_V3, i18n("(C) 2008-2010 Mehrdad Momeny\n(C) 2011-2015 Choqok Developers"),
                      QString(), "http://choqok.gnufolks.org/");
