@@ -30,6 +30,7 @@
 #include <QSplashScreen>
 #include <QStandardPaths>
 #include <QStatusBar>
+#include <QTabBar>
 #include <QTabWidget>
 #include <QTimer>
 
@@ -494,9 +495,9 @@ void MainWindow::removeBlog(const QString &alias)
 void MainWindow::updateTabbarHiddenState()
 {
     if (mainWidget->count() <= 1 && !choqokMainButtonVisible) {
-        mainWidget->hide();
+        mainWidget->tabBar()->hide();
     } else {
-        mainWidget->show();
+        mainWidget->tabBar()->show();
     }
 }
 
