@@ -72,11 +72,6 @@ int main(int argc, char **argv)
     configFiles << QLatin1String("choqokrc");
     rcFiles << QLatin1String("choqokui.rc");
 
-    Kdelibs4ConfigMigrator migrator(QLatin1String("choqok")); // the same name defined in the aboutData
-    migrator.setConfigFiles(configFiles);
-    migrator.setUiFiles(rcFiles);
-    migrator.migrate();
-
     ChoqokApplication app(argc, argv);
     app.setApplicationVersion(version);
 
@@ -87,6 +82,11 @@ int main(int argc, char **argv)
     about.setupCommandLine(&parser);
     parser.process(app);
     about.processCommandLine(&parser);
+
+    Kdelibs4ConfigMigrator migrator(QLatin1String("choqok")); // the same name defined in the aboutData
+    migrator.setConfigFiles(configFiles);
+    migrator.setUiFiles(rcFiles);
+    migrator.migrate();
 
     return app.exec();
 }
