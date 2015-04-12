@@ -10,6 +10,7 @@ X-KDE-ParentComponents=choqok
 X-KDE-Weight=20
 
 Name=Accounts
+Name[ar]=الحسابات
 Name[bg]=Сметки
 Name[bs]=Nalozi
 Name[ca]=Comptes
@@ -53,6 +54,7 @@ Name[x-test]=xxAccountsxx
 Name[zh_CN]=账户
 Name[zh_TW]=帳號
 Comment=Manage Your Accounts
+Comment[ar]=أدر حساباتك
 Comment[bg]=Управление на сметките
 Comment[bs]=Upravljalj svojim nalozima
 Comment[ca]=Gestioneu els vostres comptes

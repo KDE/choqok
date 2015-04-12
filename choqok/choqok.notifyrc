@@ -1,6 +1,7 @@
 [Global]
 IconName=choqok
 Comment=Choqok
+Comment[ar]=چغوك
 Comment[bg]=Choqok
 Comment[bs]=Choqok
 Comment[ca]=Choqok
@@ -48,6 +49,7 @@ Comment[zh_TW]=Choqok
 
 [Event/new-post-arrived]
 Name=New Post Arrived
+Name[ar]=وصلت تدوينة جديدة
 Name[bg]=Получено ново съобщение
 Name[bs]=Stigla nova objava
 Name[ca]=Ha arribat un nou article
@@ -85,6 +87,7 @@ Name[x-test]=xxNew Post Arrivedxx
 Name[zh_CN]=发话了
 Name[zh_TW]=新的文章已抵達
 Comment=New post arrived
+Comment[ar]=وصلت تدوينة جديدة
 Comment[bg]=Получено ново съобщение
 Comment[bs]=Stigla nova objava
 Comment[ca]=Ha arribat un nou article
@@ -126,6 +129,7 @@ Persistent=True
 
 [Event/job-success]
 Name=Job Success
+Name[ar]=نجحت مهمّة
 Name[bg]=Успешна задача
 Name[bs]=Uspješno završen posao
 Name[ca]=Tasca efectuada
@@ -161,6 +165,7 @@ Name[x-test]=xxJob Successxx
 Name[zh_CN]=任务成功
 Name[zh_TW]=工作成功
 Comment=A job finished successfully
+Comment[ar]=نجحت مهمّة ما
 Comment[bg]=Успешно приключена задача
 Comment[bs]=Posao uspješno završio
 Comment[ca]=Una tasca ha finalitzat amb èxit
@@ -200,6 +205,7 @@ Action=Popup
 
 [Event/job-error]
 Name=Job Error
+Name[ar]=خطأ مهمّة
 Name[bg]=Грешка в задача
 Name[bs]=Greška u poslu
 Name[ca]=Error de tasca
@@ -238,6 +244,7 @@ Name[x-test]=xxJob Errorxx
 Name[zh_CN]=任务错误
 Name[zh_TW]=工作錯誤
 Comment=There was an error while performing a job
+Comment[ar]=حدث خطأ أثناء تنفيذ مهمّة ما
 Comment[bg]=Грешка при изпълнение на задача
 Comment[bs]=Došlo je do greške prilikom obavljanja posla
 Comment[ca]=S'ha produït un error en executar una tasca
@@ -280,6 +287,7 @@ Action=Popup
 
 [Event/shortening]
 Name=Shortening
+Name[ar]=يقصّر
 Name[bg]=Съкращаване
 Name[bs]=Skraćenje
 Name[ca]=Escurçament
@@ -316,6 +324,7 @@ Name[x-test]=xxShorteningxx
 Name[zh_CN]=缩短
 Name[zh_TW]=縮短
 Comment=Shortening a URL
+Comment[ar]=يقصّر عنوان ما
 Comment[bg]=Съкращаване на адрес
 Comment[bs]=Skraćivanje URL-a
 Comment[ca]=S'està escurçant un URL

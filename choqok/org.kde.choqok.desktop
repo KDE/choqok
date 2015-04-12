@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Choqok
+Name[ar]=چغوك
 Name[bg]=Choqok
 Name[bs]=Choqok
 Name[ca]=Choqok
@@ -49,6 +50,7 @@ Icon=choqok
 Type=Application
 Categories=Network;
 GenericName=Micro-blogging Client
+GenericName[ar]=عميل تدوين مصغّر
 GenericName[bg]=Клиент за микроблогове в KDE
 GenericName[bs]=Mikro-blog klijent
 GenericName[ca]=Client de micro-blogs

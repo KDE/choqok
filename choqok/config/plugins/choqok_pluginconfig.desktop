@@ -10,6 +10,7 @@ X-KDE-ParentComponents=choqok
 X-KDE-Weight=200
 
 Name=Plugins
+Name[ar]=الملحقات
 Name[bg]=Приставки
 Name[bs]=Priključci
 Name[ca]=Connectors
@@ -53,6 +54,7 @@ Name[x-test]=xxPluginsxx
 Name[zh_CN]=插件
 Name[zh_TW]=外掛程式
 Comment=Select and Configure Plugins
+Comment[ar]=اختر الملحقات واضبطها
 Comment[bg]=Избор и настройки на приставките
 Comment[bs]=Odabir i podešavanje priključaka
 Comment[ca]=Selecció i configuració dels connectors
