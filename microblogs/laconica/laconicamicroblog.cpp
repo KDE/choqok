@@ -114,12 +114,12 @@ Choqok::UI::ComposerWidget *LaconicaMicroBlog::createComposerWidget(Choqok::Acco
 
 Choqok::Post *LaconicaMicroBlog::readPost(Choqok::Account *account, const QVariantMap &var, Choqok::Post *post)
 {
-    post = TwitterApiMicroBlog::readPost(account, var, post);
-
     if (!post) {
-        qCCritical(CHOQOK) << "TwitterApiMicroBlog::readPost: post is NULL!";
+        qCCritical(CHOQOK) << "LaconicaMicroBlog::readPost: post is NULL!";
         return 0;
     }
+
+    post = TwitterApiMicroBlog::readPost(account, var, post);
 
     post->postId = var["id"].toString();
 

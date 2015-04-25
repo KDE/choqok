@@ -1305,6 +1305,7 @@ Choqok::Post *TwitterApiMicroBlog::readPost(Choqok::Account *theAccount,
     post->source = var["source"].toString();
     QVariantMap userMap = var["user"].toMap();
     post->author.description = userMap["description"].toString();
+    post->author.location = userMap["location"].toString();
     post->author.realName = userMap["name"].toString();
     post->author.userId = userMap["id"].toString();
     post->author.userName = userMap["screen_name"].toString();
