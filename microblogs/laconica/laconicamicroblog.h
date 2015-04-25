@@ -70,6 +70,8 @@ Q_SIGNALS:
                              QList<Choqok::Post *> posts);
 
 protected:
+    using TwitterApiMicroBlog::readPost;
+    virtual Choqok::Post *readPost(Choqok::Account *account, const QVariantMap &var, Choqok::Post *post);
     virtual void listFriendsUsername(TwitterApiAccount *theAccount, bool active = false);
 
 private:

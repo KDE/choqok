@@ -112,6 +112,20 @@ Choqok::UI::ComposerWidget *LaconicaMicroBlog::createComposerWidget(Choqok::Acco
     return new LaconicaComposerWidget(account, parent);
 }
 
+Choqok::Post *LaconicaMicroBlog::readPost(Choqok::Account *account, const QVariantMap &var, Choqok::Post *post)
+{
+    post = TwitterApiMicroBlog::readPost(account, var, post);
+
+    if (!post) {
+        qCCritical(CHOQOK) << "TwitterApiMicroBlog::readPost: post is NULL!";
+        return 0;
+    }
+
+    post->postId = var["id"].toString();
+
+    return post;
+}
+
 QString LaconicaMicroBlog::profileUrl(Choqok::Account *account, const QString &username) const
 {
     TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(account);
