@@ -245,7 +245,7 @@ bool PumpIOPostWidget::isReplyAvailable()
 
 bool PumpIOPostWidget::isResendAvailable()
 {
-    return (currentPost()->type != "comment");
+    return PostWidget::isResendAvailable() && (currentPost()->type != "comment");
 }
 
 void PumpIOPostWidget::slotReplyTo()
