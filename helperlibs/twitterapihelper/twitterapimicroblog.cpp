@@ -1298,8 +1298,8 @@ Choqok::Post *TwitterApiMicroBlog::readPost(Choqok::Account *theAccount,
     post->content = var["text"].toString();
     post->creationDateTime = dateFromString(var["created_at"].toString());
     post->isFavorited = var["favorited"].toBool();
-    post->postId = var["id_str"].toString();
-    post->replyToPostId = var["in_reply_to_status_id_str"].toString();
+    post->postId = var["id"].toString();
+    post->replyToPostId = var["in_reply_to_status_id"].toString();
     post->replyToUserId = var["in_reply_to_user_id"].toString();
     post->replyToUserName = var["in_reply_to_screen_name"].toString();
     post->source = var["source"].toString();
@@ -1423,21 +1423,11 @@ Choqok::Post *TwitterApiMicroBlog::readDirectMessage(Choqok::Account *theAccount
 
 Choqok::User *TwitterApiMicroBlog::readUserInfo(const QByteArray &buffer)
 {
-    //qCCritical(CHOQOK)<<"TwitterApiMicroBlog::readUserInfoFromJson: NOT IMPLEMENTED YET!";
-    Choqok::User *user = new Choqok::User;
+    Choqok::User *user;
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
-        const QVariantMap map = json.toVariant().toMap();
-        // iterate over the list
-        user->description = map["description"].toString();
-        user->followersCount = map["followers_count"].toUInt();
-        user->homePageUrl = map["url"].toString();
-        user->isProtected = map["protected"].toBool();
-        user->location = map["location"].toString();
-        user->profileImageUrl = map["profile_image_url"].toString();
-        user->realName = map["name"].toString();
-        user->userId = map["id"].toString();
-        user->userName = map["screen_name"].toString();
+        Choqok::User u(readUser(0, json.toVariant().toMap()));
+        user = &u;
     } else {
         QString err = i18n("Retrieving the friends list failed. The data returned from the server is corrupted.");
         qCDebug(CHOQOK) << "JSON parse error: the buffer is: \n" << buffer;
@@ -1485,7 +1475,7 @@ Choqok::User TwitterApiMicroBlog::readUser(Choqok::Account *theAccount, const QV
     u.location = map["location"].toString();
     u.profileImageUrl = map["profile_image_url"].toString();
     u.realName = map["name"].toString();
-    u.userId = map["id"].toString();
+    u.userId = map["id_str"].toString();
     u.userName = map["screen_name"].toString();
     return u;
 }

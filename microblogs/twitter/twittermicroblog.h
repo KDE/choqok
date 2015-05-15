@@ -81,6 +81,8 @@ protected Q_SLOTS:
 protected:
     QList<Twitter::List> readUserListsFromJson(Choqok::Account *theAccount, QByteArray buffer);
     Twitter::List readListFromJsonMap(Choqok::Account *theAccount, QVariantMap map);
+    using TwitterApiMicroBlog::readPost;
+    virtual Choqok::Post *readPost(Choqok::Account *account, const QVariantMap &var, Choqok::Post *post);
     QMap<KJob *, QString> mFetchUsersListMap;
     virtual void setTimelineInfos();
 private:

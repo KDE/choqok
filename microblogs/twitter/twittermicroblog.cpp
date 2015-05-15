@@ -387,4 +387,23 @@ Twitter::List TwitterMicroBlog::readListFromJsonMap(Choqok::Account *theAccount,
     return l;
 }
 
+Choqok::Post *TwitterMicroBlog::readPost(Choqok::Account *account, const QVariantMap &var, Choqok::Post *post)
+{
+    if (!post) {
+        qCCritical(CHOQOK) << "TwitterMicroBlog::readPost: post is NULL!";
+        return 0;
+    }
+
+    post = TwitterApiMicroBlog::readPost(account, var, post);
+
+    post->postId = var["id_str"].toString();
+    post->replyToPostId = var["in_reply_to_status_id_str"].toString();
+    post->replyToUserId = var["in_reply_to_user_id_str"].toString();
+
+    QVariantMap userMap = var["user"].toMap();
+    post->author.userId = userMap["id_str"].toString();
+
+    return post;
+}
+
 #include "twittermicroblog.moc"
