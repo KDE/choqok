@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FilteringPrefsBase</class>
- <widget class="QWidget" name="FilteringPrefsBase">
+ <class>mFilteringCtl</class>
+ <widget class="QWidget" name="mFilteringCtl">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -9,6 +9,9 @@
     <width>523</width>
     <height>341</height>
    </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Configure Filters</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
@@ -77,12 +80,18 @@
            <property name="toolTip">
             <string>Add</string>
            </property>
+           <property name="icon">
+            <iconset theme="list-add"/>
+           </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btnEdit">
            <property name="toolTip">
             <string>Modify</string>
+           </property>
+           <property name="icon">
+            <iconset theme="edit-rename"/>
            </property>
           </widget>
          </item>
@@ -103,6 +112,9 @@
           <widget class="QPushButton" name="btnRemove">
            <property name="toolTip">
             <string>Remove</string>
+           </property>
+           <property name="icon">
+            <iconset theme="list-remove"/>
            </property>
           </widget>
          </item>

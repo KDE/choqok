@@ -30,7 +30,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Shor&amp;tening service:</string>
+        <string>Shortening ser&amp;vice:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -55,6 +55,9 @@
        <property name="toolTip">
         <string>Configure plugin</string>
        </property>
+       <property name="icon">
+        <iconset theme="configure"/>
+       </property>
       </widget>
      </item>
      <item>
@@ -67,6 +70,9 @@
        </property>
        <property name="toolTip">
         <string>About plugin</string>
+       </property>
+       <property name="icon">
+        <iconset theme="help-about"/>
        </property>
       </widget>
      </item>

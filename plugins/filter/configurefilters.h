@@ -48,7 +48,7 @@ protected Q_SLOTS:
 private:
     void reloadFiltersTable();
     void saveFiltersTable();
-    Ui_FilteringPrefsBase ui;
+    Ui_mFilteringCtl ui;
 };
 
 #endif // CONFIGUREFILTERS_H

@@ -45,8 +45,6 @@ BehaviorConfig_Shorten::BehaviorConfig_Shorten(QWidget *parent)
     setupUi(this);
     Choqok::ShortenManager::self();
     connect(shortenPlugins, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
-    aboutPlugin->setIcon(QIcon::fromTheme("help-about"));
-    configPlugin->setIcon(QIcon::fromTheme("configure"));
     connect(aboutPlugin, SIGNAL(clicked(bool)), SLOT(slotAboutClicked()));
     connect(configPlugin, SIGNAL(clicked(bool)), SLOT(slotConfigureClicked()));
 }

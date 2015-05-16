@@ -65,11 +65,6 @@ AccountsWidget::AccountsWidget(QWidget *parent, const QVariantList &args)
     connect(Choqok::AccountManager::self(), SIGNAL(accountRemoved(QString)),
             SLOT(slotAccountRemoved(QString)));
 
-    btnAdd->setIcon(QIcon::fromTheme("list-add"));
-    btnEdit->setIcon(QIcon::fromTheme("edit-rename"));
-    btnRemove->setIcon(QIcon::fromTheme("list-remove"));
-    btnUp->setIcon(QIcon::fromTheme("go-up"));
-    btnDown->setIcon(QIcon::fromTheme("go-down"));
     btnAdd->setMenu(createAddAccountMenu());
 //     load();
 }

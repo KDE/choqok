@@ -35,8 +35,6 @@
 ConfigureFilters::ConfigureFilters(QWidget *parent):
     QDialog(parent)
 {
-    setObjectName("mFilteringCtl");
-
     QVBoxLayout *mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
 
@@ -54,11 +52,6 @@ ConfigureFilters::ConfigureFilters(QWidget *parent):
 
     resize(500, 300);
 
-    setWindowTitle(i18n("Configure Filters"));
-
-    ui.btnAdd->setIcon(QIcon::fromTheme("list-add"));
-    ui.btnEdit->setIcon(QIcon::fromTheme("document-edit"));
-    ui.btnRemove->setIcon(QIcon::fromTheme("list-remove"));
     connect(ui.btnAdd, SIGNAL(clicked()), SLOT(slotAddFilter()));
     connect(ui.btnEdit, SIGNAL(clicked()), SLOT(slotEditFilter()));
     connect(ui.btnRemove, SIGNAL(clicked()), SLOT(slotRemoveFilter()));
