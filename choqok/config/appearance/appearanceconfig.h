@@ -38,9 +38,5 @@ class AppearanceConfig : public KCModule, public Ui_AppearanceConfig_Base
 public:
     AppearanceConfig(QWidget *parent, const QVariantList &args);
     ~AppearanceConfig();
-
-public Q_SLOTS:
-    virtual void save();
-    virtual void load();
 };
 #endif

@@ -25,6 +25,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QWidget>
 
 #include <KAboutData>
+#include <KConfigDialog>
 #include <KPluginFactory>
 
 #include "appearancedebug.h"
@@ -37,23 +38,14 @@ AppearanceConfig::AppearanceConfig(QWidget *parent, const QVariantList &args)
     : KCModule(KAboutData::pluginData("kcm_choqok_appearanceconfig"), parent, args)
 {
     setupUi(this);
+
+    addConfig(Choqok::AppearanceSettings::self(), this);
+
     load();
 }
 
 AppearanceConfig::~AppearanceConfig()
 {
-}
-
-void AppearanceConfig::save()
-{
-    KCModule::save();
-    qCDebug(CHOQOK) << "called";
-}
-
-void AppearanceConfig::load()
-{
-    KCModule::load();
-    qCDebug(CHOQOK) << "called";
 }
 
 #include "appearanceconfig.moc"
