@@ -44,7 +44,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "twitterapipostwidget.h"
 #include "twitterapitimelinewidget.h"
 
-#include "gnusocialpost.h"
 #include "laconicaaccount.h"
 #include "laconicacomposerwidget.h"
 #include "laconicadebug.h"
@@ -124,15 +123,7 @@ Choqok::Post *LaconicaMicroBlog::readPost(Choqok::Account *account, const QVaria
 
     post->link = var["external_url"].toString();
 
-    GNUSocialPost *p = dynamic_cast< GNUSocialPost * >(post);
-    if (!p) {
-        qCCritical(CHOQOK) << "post is not a GNUSocialPost!";
-        return 0;
-    }
-
-    p->replyToProfileUrl = var["in_reply_to_profileurl"].toString();
-
-    return p;
+    return post;
 }
 
 QString LaconicaMicroBlog::profileUrl(Choqok::Account *account, const QString &username) const

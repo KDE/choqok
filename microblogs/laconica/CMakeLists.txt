@@ -4,7 +4,6 @@ include_directories(
 )
 
 set(choqok_laconica_SRCS
-    gnusocialpost.cpp
     laconicaaccount.cpp
     laconicadebug.cpp
     laconicamicroblog.cpp
