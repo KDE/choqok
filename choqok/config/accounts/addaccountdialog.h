@@ -41,7 +41,6 @@ public:
 
 protected Q_SLOTS:
     virtual void accept();
-    virtual void reject();
 
 private:
     ChoqokEditAccountWidget *widget;
