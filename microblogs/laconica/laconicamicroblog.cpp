@@ -291,13 +291,13 @@ void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob *job)
 {
     qCDebug(CHOQOK);
     TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount *>(mJobsAccount.take(job));
+    if (job->error()) {
+        Q_EMIT error(theAccount, ServerError, i18n("Friends list for account %1 could not be updated:\n%2",
+                     theAccount->username(), job->errorString()), Normal);
+        return;
+    }
     KIO::StoredTransferJob *stJob = qobject_cast<KIO::StoredTransferJob *>(job);
-    QStringList newList;
-    //if(format=="json"){
-    newList = readUsersScreenName(theAccount, stJob->data());
-    //} else {
-    //    newList = readUsersScreenNameFromXml( theAccount, stJob->data() );
-    //}
+    QStringList newList = readUsersScreenName(theAccount, stJob->data());
     friendsList << newList;
     if (newList.count() == 100) {
         doRequestFriendsScreenName(theAccount, ++friendsPage);

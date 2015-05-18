@@ -25,7 +25,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QWidget>
 
 #include <KAboutData>
-#include <KConfigDialog>
 #include <KPluginFactory>
 
 #include "appearancedebug.h"
