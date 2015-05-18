@@ -49,8 +49,6 @@ AddEditFilter::AddEditFilter(QWidget *parent, Filter *filter)
     setupFilterTypes();
     setupFilterActions();
 
-    setWindowTitle(i18n("Define new filter rules"));
-
     if (filter) {
         //qDebug() << filter->filterField();
         //Editing

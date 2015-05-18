@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Thread</string>
+   <string/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -30,8 +30,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>108</width>
-        <height>102</height>
+        <width>104</width>
+        <height>98</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="mainLayout">

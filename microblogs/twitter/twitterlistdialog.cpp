@@ -46,7 +46,6 @@ TwitterListDialog::TwitterListDialog(TwitterApiAccount *theAccount, QWidget *par
         qCCritical(CHOQOK) << "TwitterListDialog: ERROR, theAccount is NULL";
         return;
     }
-    setWindowTitle(i18n("Add List"));
     blog = qobject_cast<TwitterMicroBlog *>(account->microblog());
     mainWidget = new QWidget(this);
     ui.setupUi(mainWidget);

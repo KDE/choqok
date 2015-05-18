@@ -10,6 +10,9 @@
     <height>85</height>
    </rect>
   </property>
+  <property name="windowTitle">
+   <string>Add List</string>
+  </property>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
