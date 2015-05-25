@@ -24,30 +24,30 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QRegExp>
 
-const QString protocols = "((https?|ftps?)://)";
-const QString subdomains = "(([a-z0-9\\-_]{1,}\\.)?)";
-const QString auth = "(([a-z0-9\\-_]{1,})((:[\\S]{1,})?)@)";
-const QString domains = "(([a-z0-9\\-\\x0080-\\xFFFF_]){1,63}\\.)+";
-const QString port = "(:(6553[0-5]|655[0-2][0-9]|65[0-4][\\d]{2}|6[0-4][\\d]{3}|[1-5][\\d]{4}|[1-9][\\d]{0,3}))";
-const QString zone("((a[cdefgilmnoqrstuwxz])|(b[abdefghijlmnorstvwyz])|(c[acdfghiklmnoruvxyz])|(d[ejkmoz])|(e[ceghrstu])|\
+const QString protocols = QLatin1String("((https?|ftps?)://)");
+const QString subdomains = QLatin1String("(([a-z0-9\\-_]{1,}\\.)?)");
+const QString auth = QLatin1String("(([a-z0-9\\-_]{1,})((:[\\S]{1,})?)@)");
+const QString domains = QLatin1String("(([a-z0-9\\-\\x0080-\\xFFFF_]){1,63}\\.)+");
+const QString port = QLatin1String("(:(6553[0-5]|655[0-2][0-9]|65[0-4][\\d]{2}|6[0-4][\\d]{3}|[1-5][\\d]{4}|[1-9][\\d]{0,3}))");
+const QString zone = QLatin1String("((a[cdefgilmnoqrstuwxz])|(b[abdefghijlmnorstvwyz])|(c[acdfghiklmnoruvxyz])|(d[ejkmoz])|(e[ceghrstu])|\
 (f[ijkmor])|(g[abdefghilmnpqrstuwy])|(h[kmnrtu])|(i[delmnoqrst])|(j[emop])|(k[eghimnprwyz])|(l[abcikrstuvy])|\
 (m[acdefghklmnopqrstuvwxyz])|(n[acefgilopruz])|(om)|(p[aefghklnrstwy])|(qa)|(r[eosuw])|(s[abcdeghijklmnortuvyz])|\
 (t[cdfghjkmnoprtvwz])|(u[agksyz])|(v[aceginu])|(w[fs])|(ye)|(z[amrw])\
 |(asia|com|info|net|org|biz|name|pro|aero|cat|coop|edu|jobs|mobi|museum|tel|travel|gov|int|mil|local|xxx)|(中国)|(公司)|(网络)|(صر)|(امارات)|(рф))");
-const QString ip = "(25[0-5]|[2][0-4][0-9]|[0-1]?[\\d]{1,2})(\\.(25[0-5]|[2][0-4][0-9]|[0-1]?[\\d]{1,2})){3}";
-const QString params = "(((\\/)[\\w:/\\?#\\[\\]@!\\$&\\(\\)\\*%\\+,;=\\._~\\x0080-\\xFFFF\\-\\|]{1,}|%[0-9a-f]{2})?)";
+const QString ip = QLatin1String("(25[0-5]|[2][0-4][0-9]|[0-1]?[\\d]{1,2})(\\.(25[0-5]|[2][0-4][0-9]|[0-1]?[\\d]{1,2})){3}");
+const QString params = QLatin1String("(((\\/)[\\w:/\\?#\\[\\]@!\\$&\\(\\)\\*%\\+,;=\\._~\\x0080-\\xFFFF\\-\\|]{1,}|%[0-9a-f]{2})?)");
 const QString excludingCharacters = QString::fromLatin1("[^\\s`!()\\[\\]{};:'\".,<>?%1%2%3%4%5%6]")
                                     .arg(QChar(0x00AB)).arg(QChar(0x00BB)).arg(QChar(0x201C)).arg(QChar(0x201D)).arg(QChar(0x2018)).arg(QChar(0x2019));
 
-const QRegExp UrlUtils::mUrlRegExp("(((((" + protocols + auth + "?)?)" +
+const QRegExp UrlUtils::mUrlRegExp(QLatin1String("(((((") + protocols + auth + QLatin1String("?)?)") +
                                    subdomains +
-                                   '(' + domains +
-                                   zone + "(?!(\\w))))|(" + protocols + '(' + ip + ")+))" +
-                                   '(' + port + "?)" + "((\\/)?)"  +
-                                   params + ')' + excludingCharacters, Qt::CaseInsensitive);
+                                   QLatin1Char('(') + domains +
+                                   zone + QLatin1String("(?!(\\w))))|(") + protocols + QLatin1Char('(') + ip + QLatin1String(")+))") +
+                                   QLatin1Char('(') + port + QLatin1String("?)") + QLatin1String("((\\/)?)")  +
+                                   params + QLatin1Char(')') + excludingCharacters, Qt::CaseInsensitive);
 
-const QRegExp UrlUtils::mEmailRegExp('^' + auth + subdomains + domains + zone);
-const QString hrefTemplate("<a href='%1' title='%1'>%2</a>");
+const QRegExp UrlUtils::mEmailRegExp(QLatin1Char('^') + auth + subdomains + domains + zone);
+const QString hrefTemplate = QLatin1String("<a href='%1' title='%1'>%2</a>");
 
 UrlUtils::UrlUtils()
 {
@@ -64,8 +64,8 @@ QStringList UrlUtils::detectUrls(const QString &text)
     int pos = 0;
     while (((pos = mUrlRegExp.indexIn(text, pos)) != -1)) {
         const QString link = mUrlRegExp.cap(0);
-        if ((pos - 1 > -1 && (text.at(pos - 1) != '@' &&
-                              text.at(pos - 1) != '#' && text.at(pos - 1) != '!')) ||
+        if ((pos - 1 > -1 && (text.at(pos - 1) != QLatin1Char('@') &&
+                              text.at(pos - 1) != QLatin1Char('#') && text.at(pos - 1) != QLatin1Char('!'))) ||
                 (pos == 0)) {
             detectedUrls << link;
         }
@@ -83,10 +83,10 @@ QString UrlUtils::detectEmails(const QString &text)
     while (((pos = mEmailRegExp.indexIn(mailtoText, pos)) != -1)) {
         QString link = mEmailRegExp.cap(0);
         QString tmplink = link;
-        if ((pos - 1 > -1 && (mailtoText.at(pos - 1) != '@' &&
-                              mailtoText.at(pos - 1) != '#' && mailtoText.at(pos - 1) != '!')) ||
+        if ((pos - 1 > -1 && (mailtoText.at(pos - 1) != QLatin1Char('@') &&
+                              mailtoText.at(pos - 1) != QLatin1Char('#') && mailtoText.at(pos - 1) != QLatin1Char('!'))) ||
                 pos == 0) {
-            tmplink.prepend("mailto:");
+            tmplink.prepend(QLatin1String("mailto:"));
             mailtoText.remove(pos, link.length());
             tmplink = hrefTemplate.arg(tmplink, link);
             mailtoText.insert(pos, tmplink);

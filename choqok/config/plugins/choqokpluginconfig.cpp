@@ -38,7 +38,7 @@ K_PLUGIN_FACTORY_WITH_JSON(ChoqokPluginConfigFactory, "choqok_pluginconfig.json"
                            registerPlugin<ChoqokPluginConfig>();)
 
 ChoqokPluginConfig::ChoqokPluginConfig(QWidget *parent, const QVariantList &args)
-    : KCModule(KAboutData::pluginData("kcm_choqok_pluginconfig"), parent, args)
+    : KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_pluginconfig")), parent, args)
 {
     m_pluginSelector = new KPluginSelector(this);
 
@@ -50,8 +50,8 @@ ChoqokPluginConfig::ChoqokPluginConfig(QWidget *parent, const QVariantList &args
     connect(m_pluginSelector, SIGNAL(configCommitted(QByteArray)),
             this, SLOT(reparseConfiguration(QByteArray)));
 
-    m_pluginSelector->addPlugins(Choqok::PluginManager::self()->availablePlugins("Plugins"),
-                                 KPluginSelector::ReadConfigFile, i18n("General Plugins"), "Plugins");
+    m_pluginSelector->addPlugins(Choqok::PluginManager::self()->availablePlugins(QLatin1String("Plugins")),
+                                 KPluginSelector::ReadConfigFile, i18n("General Plugins"), QLatin1String("Plugins"));
 //     m_pluginSelector->addPlugins( Choqok::PluginManager::self()->availablePlugins( "Shorteners" ),
 //                                   KPluginSelector::ReadConfigFile, i18n("Shortener Plugins"), "Shorteners");
     m_pluginSelector->load();
@@ -63,7 +63,7 @@ ChoqokPluginConfig::~ChoqokPluginConfig()
 
 void ChoqokPluginConfig::reparseConfiguration(const QByteArray &conf)
 {
-    KSettings::Dispatcher::reparseConfiguration(conf);
+    KSettings::Dispatcher::reparseConfiguration(QLatin1String(conf));
 }
 
 void ChoqokPluginConfig::load()

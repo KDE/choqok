@@ -34,7 +34,7 @@ K_PLUGIN_FACTORY_WITH_JSON(Ur1_caFactory, "choqok_ur1_ca.json",
                            registerPlugin < Ur1_ca> ();)
 
 Ur1_ca::Ur1_ca(QObject *parent, const QVariantList &)
-    : Choqok::Shortener("choqok_ur1_ca", parent)
+    : Choqok::Shortener(QLatin1String("choqok_ur1_ca"), parent)
 {
 }
 
@@ -44,27 +44,27 @@ Ur1_ca::~Ur1_ca()
 
 QString Ur1_ca::shorten(const QString &url)
 {
-    QUrl reqUrl("http://ur1.ca/");
+    QUrl reqUrl(QLatin1String("http://ur1.ca/"));
     QString temp;
-    temp = QUrl::toPercentEncoding(url);
+    temp = QLatin1String(QUrl::toPercentEncoding(url));
 
     QByteArray parg("longurl=");
     parg.append(temp.toAscii());
 
     QEventLoop loop;
     KIO::StoredTransferJob *job = KIO::storedHttpPost(parg, reqUrl, KIO::HideProgressInfo);
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+    job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/x-www-form-urlencoded"));
     connect(job, SIGNAL(result(KJob*)), &loop, SLOT(quit()));
     job->start();
     loop.exec();
 
     if (job->error() == KJob::NoError) {
-        QString output(job->data());
-        QRegExp rx(QString("<p class=[\'\"]success[\'\"]>(.*)</p>"));
+        QString output(QLatin1String(job->data()));
+        QRegExp rx(QString::fromLatin1("<p class=[\'\"]success[\'\"]>(.*)</p>"));
         rx.setMinimal(true);
         rx.indexIn(output);
         output = rx.cap(1);
-        rx.setPattern(QString("href=[\'\"](.*)[\'\"]"));
+        rx.setPattern(QString::fromLatin1("href=[\'\"](.*)[\'\"]"));
         rx.indexIn(output);
         output = rx.cap(1);
         if (!output.isEmpty()) {

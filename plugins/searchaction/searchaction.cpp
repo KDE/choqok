@@ -40,13 +40,13 @@ K_PLUGIN_FACTORY_WITH_JSON(SearchActionFactory, "choqok_searchaction.json",
                            registerPlugin < SearchAction > ();)
 
 SearchAction::SearchAction(QObject *parent, const QList< QVariant > &)
-    : Plugin("choqok_searchaction", parent)
+    : Plugin(QLatin1String("choqok_searchaction"), parent)
 {
-    QAction *action = new QAction(QIcon::fromTheme("edit-find"), i18n("Search..."), this);
+    QAction *action = new QAction(QIcon::fromTheme(QLatin1String("edit-find")), i18n("Search..."), this);
     action->setShortcut(QKeySequence(Qt::ControlModifier | Qt::Key_F));
-    actionCollection()->addAction("search", action);
+    actionCollection()->addAction(QLatin1String("search"), action);
     connect(action, SIGNAL(triggered(bool)), SLOT(slotSearch()));
-    setXMLFile("searchactionui.rc");
+    setXMLFile(QLatin1String("searchactionui.rc"));
 }
 
 SearchAction::~SearchAction()

@@ -36,7 +36,7 @@ class TwitterApiAccount::Private
 {
 public:
     Private()
-        : api('/'), usingOauth(true), qoauth(0)
+        : api(QLatin1Char('/')), usingOauth(true), qoauth(0)
     {}
     QString userId;
     int count;
@@ -67,10 +67,10 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog *parent, const QString 
     d->oauthToken = configGroup()->readEntry("OAuthToken", QByteArray());
     d->oauthConsumerKey = configGroup()->readEntry("OAuthConsumerKey", QByteArray());
     d->oauthConsumerSecret = Choqok::PasswordManager::self()->readPassword(
-                                 QString("%1_consumerSecret").arg(alias)).toUtf8();
+                                 QString::fromLatin1("%1_consumerSecret").arg(alias)).toUtf8();
     d->oauthTokenSecret = Choqok::PasswordManager::self()->readPassword(
-                              QString("%1_tokenSecret").arg(alias)).toUtf8();
-    setApi(configGroup()->readEntry("Api", QString('/')));
+                              QString::fromLatin1("%1_tokenSecret").arg(alias)).toUtf8();
+    setApi(configGroup()->readEntry(QLatin1String("Api"), QString::fromLatin1("/")));
 
     qCDebug(CHOQOK) << "UsingOAuth: " << d->usingOauth;
     if (d->usingOauth) {
@@ -79,9 +79,9 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog *parent, const QString 
 
     if (d->timelineNames.isEmpty()) {
         QStringList list = parent->timelineNames();
-        list.removeOne("Public");
-        list.removeOne("Favorite");
-        list.removeOne("ReTweets");
+        list.removeOne(QLatin1String("Public"));
+        list.removeOne(QLatin1String("Favorite"));
+        list.removeOne(QLatin1String("ReTweets"));
         d->timelineNames = list;
     }
 
@@ -110,9 +110,9 @@ void TwitterApiAccount::writeConfig()
     configGroup()->writeEntry("Timelines", d->timelineNames);
     configGroup()->writeEntry("OAuthToken", d->oauthToken);
     configGroup()->writeEntry("OAuthConsumerKey", d->oauthConsumerKey);
-    Choqok::PasswordManager::self()->writePassword(QString("%1_consumerSecret").arg(alias()),
+    Choqok::PasswordManager::self()->writePassword(QString::fromLatin1("%1_consumerSecret").arg(alias()),
             QString::fromUtf8(d->oauthConsumerSecret));
-    Choqok::PasswordManager::self()->writePassword(QString("%1_tokenSecret").arg(alias()),
+    Choqok::PasswordManager::self()->writePassword(QString::fromLatin1("%1_tokenSecret").arg(alias()),
             QString::fromUtf8(d->oauthTokenSecret));
     Choqok::Account::writeConfig();
 }
@@ -177,14 +177,14 @@ QUrl TwitterApiAccount::homepageUrl() const
 void TwitterApiAccount::generateApiUrl()
 {
     if (!host().startsWith(QLatin1String("http"))) { //NOTE: This is for compatibility by prev versions. remove it after 1.0 release
-        setHost(host().prepend("http://"));
+        setHost(host().prepend(QLatin1String("http://")));
     }
     QUrl url(host());
 
     setHomepageUrl(url);
 
     url = url.adjusted(QUrl::StripTrailingSlash);
-    url.setPath(url.path() + '/' + (api()));
+    url.setPath(url.path() + QLatin1Char('/') + (api()));
     setApiUrl(url);
 }
 

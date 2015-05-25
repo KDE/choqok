@@ -38,7 +38,7 @@ public:
 LaconicaAccount::LaconicaAccount(LaconicaMicroBlog *parent, const QString &alias)
     : TwitterApiAccount(parent, alias), d(new Private)
 {
-    d->changeExclamationMarkToText = configGroup()->readEntry("changeExclamationMarkText", QString('#'));
+    d->changeExclamationMarkToText = configGroup()->readEntry(QLatin1String("changeExclamationMarkText"), QString::fromLatin1("#"));
     d->isChangeExclamationMark = configGroup()->readEntry("isChangeExclamationMark", false);
 }
 

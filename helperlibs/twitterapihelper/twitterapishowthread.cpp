@@ -77,13 +77,13 @@ void TwitterApiShowThread::setupUi()
     QSpacerItem *verticalSpacer;
     gridLayout = new QVBoxLayout(this);
     gridLayout->setMargin(0);
-    gridLayout->setObjectName("gridLayout");
+    gridLayout->setObjectName(QLatin1String("gridLayout"));
     scrollArea = new QScrollArea(this);
-    scrollArea->setObjectName("scrollArea");
+    scrollArea->setObjectName(QLatin1String("scrollArea"));
     scrollArea->setFrameShape(QFrame::NoFrame);
     scrollArea->setWidgetResizable(true);
     scrollAreaWidgetContents = new QWidget();
-    scrollAreaWidgetContents->setObjectName("scrollAreaWidgetContents");
+    scrollAreaWidgetContents->setObjectName(QLatin1String("scrollAreaWidgetContents"));
     scrollAreaWidgetContents->setGeometry(QRect(0, 0, 254, 300));
     verticalLayout_2 = new QVBoxLayout(scrollAreaWidgetContents);
     verticalLayout_2->setMargin(1);

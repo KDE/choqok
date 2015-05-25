@@ -60,7 +60,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, MPRIS::MprisStatu
 MPRIS::MPRIS(const QString PlayerName)
 {
     qDBusRegisterMetaType<MprisStatusStruct>();
-    const QString serviceName = QString("org.mpris.").append(PlayerName);
+    const QString serviceName = QString::fromLatin1("org.mpris.").append(PlayerName);
     if (QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName).value()) {
         valid = true;
     } else {
@@ -68,10 +68,10 @@ MPRIS::MPRIS(const QString PlayerName)
         return;
     }
     QDBusInterface playerInterface(serviceName,
-                                   "/Player",
-                                   "org.freedesktop.MediaPlayer");
-    QDBusReply<MprisStatusStruct> getStatus = playerInterface.call("GetStatus");
-    QDBusReply< QMap<QString, QVariant> > getMetadata = playerInterface.call("GetMetadata");
+                                   QLatin1String("/Player"),
+                                   QLatin1String("org.freedesktop.MediaPlayer"));
+    QDBusReply<MprisStatusStruct> getStatus = playerInterface.call(QLatin1String("GetStatus"));
+    QDBusReply< QMap<QString, QVariant> > getMetadata = playerInterface.call(QLatin1String("GetMetadata"));
 
     if (!getStatus.isValid() || !getMetadata.isValid()) {
         valid = false;
@@ -80,9 +80,9 @@ MPRIS::MPRIS(const QString PlayerName)
     status = getStatus.value();
     trackInfo = getMetadata.value();
     QDBusInterface rootInterface(serviceName,
-                                 "/",
-                                 "org.freedesktop.MediaPlayer");
-    QDBusReply<QString> getIdentity = rootInterface.call("Identity");
+                                 QLatin1String("/"),
+                                 QLatin1String("org.freedesktop.MediaPlayer"));
+    QDBusReply<QString> getIdentity = rootInterface.call(QLatin1String("Identity"));
     if (getIdentity.isValid()) {
         Identity = getIdentity.value();
     } else {
@@ -98,9 +98,9 @@ MPRIS::~MPRIS()
 
 QStringList MPRIS::getRunningPlayers()
 {
-    QStringList services = QDBusConnection::sessionBus().interface()->registeredServiceNames().value().filter("org.mpris.");
+    QStringList services = QDBusConnection::sessionBus().interface()->registeredServiceNames().value().filter(QLatin1String("org.mpris."));
     services.removeDuplicates();
-    services.replaceInStrings("org.mpris.", "");
+    services.replaceInStrings(QLatin1String("org.mpris."), QLatin1String(""));
     return services;
 }
 

@@ -156,22 +156,22 @@ void TextEdit::updateRemainingCharsCount()
         if (d->charLimit) {
             int remain = d->charLimit - count;
             if (remain < 0) {
-                lblRemainChar->setStyleSheet("QLabel {color: red;}");
+                lblRemainChar->setStyleSheet(QLatin1String("QLabel {color: red;}"));
             } else if (remain < 30) {
-                lblRemainChar->setStyleSheet("QLabel {color: rgb(242, 179, 19);}");
+                lblRemainChar->setStyleSheet(QLatin1String("QLabel {color: rgb(242, 179, 19);}"));
             } else {
-                lblRemainChar->setStyleSheet("QLabel {color: green;}");
+                lblRemainChar->setStyleSheet(QLatin1String("QLabel {color: green;}"));
             }
             lblRemainChar->setText(QString::number(remain));
         } else {
             lblRemainChar->setText(QString::number(count));
-            lblRemainChar->setStyleSheet("QLabel {color: blue;}");
+            lblRemainChar->setStyleSheet(QLatin1String("QLabel {color: blue;}"));
         }
-        txt.remove(QRegExp("@([^\\s\\W]+)"));
+        txt.remove(QRegExp(QLatin1String("@([^\\s\\W]+)")));
         txt = txt.trimmed();
         if (d->firstChar != txt[0]) {
             d->firstChar = txt[0];
-            txt.prepend(' ');
+            txt.prepend(QLatin1Char(' '));
             QTextBlockFormat f;
             f.setLayoutDirection((Qt::LayoutDirection) txt.isRightToLeft());
             textCursor().mergeBlockFormat(f);
@@ -261,7 +261,7 @@ void TextEdit::setText(const QString &text)
 void TextEdit::prependText(const QString &text)
 {
     QString tmp = text;
-    tmp.append(' ' + toPlainText());
+    tmp.append(QLatin1Char(' ') + toPlainText());
     setPlainText(tmp);
 }
 
@@ -269,9 +269,9 @@ void TextEdit::appendText(const QString &text)
 {
     QString tmp = toPlainText();
     if (tmp.isEmpty()) {
-        tmp = text + ' ';
+        tmp = text + QLatin1Char(' ');
     } else {
-        tmp.append(' ' + text);
+        tmp.append(QLatin1Char(' ') + text);
     }
     setPlainText(tmp);
 }

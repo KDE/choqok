@@ -57,20 +57,20 @@ along with this program; if not, see http://www.gnu.org/licenses/
 class TwitterApiMicroBlog::Private
 {
 public:
-    Private(): countOfTimelinesToSave(0), friendsCursor("-1")
+    Private(): countOfTimelinesToSave(0), friendsCursor(QLatin1String("-1"))
     {
-        monthes["Jan"] = 1;
-        monthes["Feb"] = 2;
-        monthes["Mar"] = 3;
-        monthes["Apr"] = 4;
-        monthes["May"] = 5;
-        monthes["Jun"] = 6;
-        monthes["Jul"] = 7;
-        monthes["Aug"] = 8;
-        monthes["Sep"] = 9;
-        monthes["Oct"] = 10;
-        monthes["Nov"] = 11;
-        monthes["Dec"] = 12;
+        monthes[QLatin1String("Jan")] = 1;
+        monthes[QLatin1String("Feb")] = 2;
+        monthes[QLatin1String("Mar")] = 3;
+        monthes[QLatin1String("Apr")] = 4;
+        monthes[QLatin1String("May")] = 5;
+        monthes[QLatin1String("Jun")] = 6;
+        monthes[QLatin1String("Jul")] = 7;
+        monthes[QLatin1String("Aug")] = 8;
+        monthes[QLatin1String("Sep")] = 9;
+        monthes[QLatin1String("Oct")] = 10;
+        monthes[QLatin1String("Nov")] = 11;
+        monthes[QLatin1String("Dec")] = 12;
     }
     int countOfTimelinesToSave;
     QString friendsCursor;
@@ -85,15 +85,15 @@ TwitterApiMicroBlog::TwitterApiMicroBlog(const QString &componentName, QObject *
     format = grp.readEntry("format", "json");
 
     QStringList timelineTypes;
-    timelineTypes << "Home" << "Reply" << "Inbox" << "Outbox" << "Favorite" << "ReTweets" << "Public";
+    timelineTypes << QLatin1String("Home") << QLatin1String("Reply") << QLatin1String("Inbox") << QLatin1String("Outbox") << QLatin1String("Favorite") << QLatin1String("ReTweets") << QLatin1String("Public");
     setTimelineNames(timelineTypes);
-    timelineApiPath["Home"] = "/statuses/home_timeline.%1";
-    timelineApiPath["Reply"] = "/statuses/replies.%1";
-    timelineApiPath["Inbox"] = "/direct_messages.%1";
-    timelineApiPath["Outbox"] = "/direct_messages/sent.%1";
-    timelineApiPath["Favorite"] = "/favorites/list.%1";
-    timelineApiPath["ReTweets"] = "/statuses/retweets_of_me.%1";
-    timelineApiPath["Public"] = "/statuses/public_timeline.%1";
+    timelineApiPath[QLatin1String("Home")] = QLatin1String("/statuses/home_timeline.%1");
+    timelineApiPath[QLatin1String("Reply")] = QLatin1String("/statuses/replies.%1");
+    timelineApiPath[QLatin1String("Inbox")] = QLatin1String("/direct_messages.%1");
+    timelineApiPath[QLatin1String("Outbox")] = QLatin1String("/direct_messages/sent.%1");
+    timelineApiPath[QLatin1String("Favorite")] = QLatin1String("/favorites/list.%1");
+    timelineApiPath[QLatin1String("ReTweets")] = QLatin1String("/statuses/retweets_of_me.%1");
+    timelineApiPath[QLatin1String("Public")] = QLatin1String("/statuses/public_timeline.%1");
     setTimelineInfos();
 }
 
@@ -102,44 +102,44 @@ void TwitterApiMicroBlog::setTimelineInfos()
     Choqok::TimelineInfo *t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "Home");
     t->description = i18nc("Timeline description", "You and your friends");
-    t->icon = "user-home";
-    mTimelineInfos["Home"] = t;
+    t->icon = QLatin1String("user-home");
+    mTimelineInfos[QLatin1String("Home")] = t;
 
     t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "Reply");
     t->description = i18nc("Timeline description", "Replies to you");
-    t->icon = "edit-undo";
-    mTimelineInfos["Reply"] = t;
+    t->icon = QLatin1String("edit-undo");
+    mTimelineInfos[QLatin1String("Reply")] = t;
 
     t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "Inbox");
     t->description = i18nc("Timeline description", "Your incoming private messages");
-    t->icon = "mail-folder-inbox";
-    mTimelineInfos["Inbox"] = t;
+    t->icon = QLatin1String("mail-folder-inbox");
+    mTimelineInfos[QLatin1String("Inbox")] = t;
 
     t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "Outbox");
     t->description = i18nc("Timeline description", "Private messages you have sent");
-    t->icon = "mail-folder-outbox";
-    mTimelineInfos["Outbox"] = t;
+    t->icon = QLatin1String("mail-folder-outbox");
+    mTimelineInfos[QLatin1String("Outbox")] = t;
 
     t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "Favorite");
     t->description = i18nc("Timeline description", "Your favorites");
-    t->icon = "favorites";
-    mTimelineInfos["Favorite"] = t;
+    t->icon = QLatin1String("favorites");
+    mTimelineInfos[QLatin1String("Favorite")] = t;
 
     t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "Public");
     t->description = i18nc("Timeline description", "Public timeline");
-    t->icon = "folder-green";
-    mTimelineInfos["Public"] = t;
+    t->icon = QLatin1String("folder-green");
+    mTimelineInfos[QLatin1String("Public")] = t;
 
     t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "ReTweets");
     t->description = i18nc("Timeline description", "Your posts that were ReTweeted by others");
-    t->icon = "folder-red";
-    mTimelineInfos["ReTweets"] = t;
+    t->icon = QLatin1String("folder-red");
+    mTimelineInfos[QLatin1String("ReTweets")] = t;
 }
 
 TwitterApiMicroBlog::~TwitterApiMicroBlog()
@@ -152,17 +152,17 @@ QMenu *TwitterApiMicroBlog::createActionsMenu(Choqok::Account *theAccount, QWidg
 {
     QMenu *menu = MicroBlog::createActionsMenu(theAccount, parent);
 
-    QAction *directMessge = new QAction(QIcon::fromTheme("mail-message-new"), i18n("Send Private Message..."), menu);
+    QAction *directMessge = new QAction(QIcon::fromTheme(QLatin1String("mail-message-new")), i18n("Send Private Message..."), menu);
     directMessge->setData(theAccount->alias());
     connect(directMessge, SIGNAL(triggered(bool)), SLOT(showDirectMessageDialog()));
     menu->addAction(directMessge);
 
-    QAction *search = new QAction(QIcon::fromTheme("edit-find"), i18n("Search..."), menu);
+    QAction *search = new QAction(QIcon::fromTheme(QLatin1String("edit-find")), i18n("Search..."), menu);
     search->setData(theAccount->alias());
     connect(search, SIGNAL(triggered(bool)), SLOT(showSearchDialog()));
     menu->addAction(search);
 
-    QAction *updateFriendsList = new QAction(QIcon::fromTheme("arrow-down"), i18n("Update Friends List"), menu);
+    QAction *updateFriendsList = new QAction(QIcon::fromTheme(QLatin1String("arrow-down")), i18n("Update Friends List"), menu);
     updateFriendsList->setData(theAccount->alias());
     connect(updateFriendsList, SIGNAL(triggered(bool)), SLOT(slotUpdateFriendsList()));
     menu->addAction(updateFriendsList);
@@ -174,7 +174,7 @@ QList< Choqok::Post * > TwitterApiMicroBlog::loadTimeline(Choqok::Account *accou
         const QString &timelineName)
 {
     QList< Choqok::Post * > list;
-    if (timelineName.compare("Favorite") == 0) {
+    if (timelineName.compare(QLatin1String("Favorite")) == 0) {
         return list;    //NOTE Won't cache favorites, and this is for compatibility with older versions!
     }
     qCDebug(CHOQOK) << timelineName;
@@ -235,7 +235,7 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
                                        const QString &timelineName,
                                        const QList< Choqok::UI::PostWidget * > &timeline)
 {
-    if (timelineName.compare("Favorite") != 0) {
+    if (timelineName.compare(QLatin1String("Favorite")) != 0) {
         qCDebug(CHOQOK);
         QString fileName = Choqok::AccountManager::generatePostBackupFileName(account->alias(), timelineName);
         KConfig postsBackup(fileName, KConfig::NoGlobals, QStandardPaths::DataLocation);
@@ -313,7 +313,7 @@ void TwitterApiMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *
     }
     if (!post->isPrivate) {  ///Status Update
         QUrl url = account->apiUrl();
-        url.setPath(url.path() + QString("/statuses/update.%1").arg(format));
+        url.setPath(url.path() + QString::fromLatin1("/statuses/update.%1").arg(format));
         params.insert("status", QUrl::toPercentEncoding(post->content));
         if (!post->replyToPostId.isEmpty()) {
             params.insert("in_reply_to_status_id", post->replyToPostId.toLocal8Bit());
@@ -336,7 +336,7 @@ void TwitterApiMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *
                          QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
         job->addMetaData(QStringLiteral("customHTTPHeader"),
                          QStringLiteral("Authorization: ") +
-                         authorizationHeader(account, url, QOAuth::POST, params));
+                         QLatin1String(authorizationHeader(account, url, QOAuth::POST, params)));
         mCreatePostMap[ job ] = post;
         mJobsAccount[job] = theAccount;
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCreatePost(KJob*)));
@@ -344,7 +344,7 @@ void TwitterApiMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *
     } else {///Direct message
         QString recipientScreenName = post->replyToUserName;
         QUrl url = account->apiUrl();
-        url.setPath(url.path() + QString("/direct_messages/new.%1").arg(format));
+        url.setPath(url.path() + QString::fromLatin1("/direct_messages/new.%1").arg(format));
         params.insert("user", recipientScreenName.toLocal8Bit());
         params.insert("text", QUrl::toPercentEncoding(post->content));
         data = "user=";
@@ -365,7 +365,7 @@ void TwitterApiMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *
                          QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
         job->addMetaData(QStringLiteral("customHTTPHeader"),
                          QStringLiteral("Authorization: ")
-                         + authorizationHeader(account, url, QOAuth::POST, params));
+                         + QLatin1String(authorizationHeader(account, url, QOAuth::POST, params)));
         mCreatePostMap[ job ] = post;
         mJobsAccount[job] = theAccount;
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCreatePost(KJob*)));
@@ -382,7 +382,7 @@ void TwitterApiMicroBlog::repeatPost(Choqok::Account *theAccount, const QString 
     }
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(url.path() + QString("/statuses/retweet/%1.%2").arg(postId).arg(format));
+    url.setPath(url.path() + QString::fromLatin1("/statuses/retweet/%1.%2").arg(postId).arg(format));
     QByteArray data;
     KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
     if (!job) {
@@ -393,7 +393,7 @@ void TwitterApiMicroBlog::repeatPost(Choqok::Account *theAccount, const QString 
                      QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     authorizationHeader(account, url, QOAuth::POST));
+                     QLatin1String(authorizationHeader(account, url, QOAuth::POST)));
     Choqok::Post *post = new Choqok::Post;
     post->postId = postId;
     mCreatePostMap[ job ] = post;
@@ -478,7 +478,7 @@ void TwitterApiMicroBlog::fetchPost(Choqok::Account *theAccount, Choqok::Post *p
     }
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(url.path() + QString("/statuses/show/%1.%2").arg(post->postId).arg(format));
+    url.setPath(url.path() + QString::fromLatin1("/statuses/show/%1.%2").arg(post->postId).arg(format));
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
     if (!job) {
@@ -490,7 +490,7 @@ void TwitterApiMicroBlog::fetchPost(Choqok::Account *theAccount, Choqok::Post *p
     }
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     authorizationHeader(account, url, QOAuth::GET));
+                     QLatin1String(authorizationHeader(account, url, QOAuth::GET)));
     mFetchPostMap[ job ] = post;
     mJobsAccount[ job ] = theAccount;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchPost(KJob*)));
@@ -541,9 +541,9 @@ void TwitterApiMicroBlog::removePost(Choqok::Account *theAccount, Choqok::Post *
         TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
         QUrl url = account->apiUrl();
         if (!post->isPrivate) {
-            url.setPath(url.path() + "/statuses/destroy/" + post->postId + ".json");
+            url.setPath(url.path() + QLatin1String("/statuses/destroy/") + post->postId + QLatin1String(".json"));
         } else {
-            url.setPath(url.path() + "/direct_messages/destroy/" + post->postId + ".json");
+            url.setPath(url.path() + QLatin1String("/direct_messages/destroy/") + post->postId + QLatin1String(".json"));
         }
         KIO::StoredTransferJob *job = KIO::storedHttpPost(QByteArray(), url, KIO::HideProgressInfo) ;
         if (!job) {
@@ -554,7 +554,7 @@ void TwitterApiMicroBlog::removePost(Choqok::Account *theAccount, Choqok::Post *
         }
         job->addMetaData(QStringLiteral("customHTTPHeader"),
                          QStringLiteral("Authorization: ") +
-                         authorizationHeader(account, url, QOAuth::POST));
+                         QLatin1String(authorizationHeader(account, url, QOAuth::POST)));
         mRemovePostMap[job] = post;
         mJobsAccount[job] = theAccount;
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRemovePost(KJob*)));
@@ -594,9 +594,9 @@ void TwitterApiMicroBlog::createFavorite(Choqok::Account *theAccount, const QStr
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
     //url.addPath ( QString("/favorites/create.json?id=%1").arg(postId));
-    url.setPath(url.path() + "/favorites/create.json");
+    url.setPath(url.path() + QLatin1String("/favorites/create.json"));
     QUrl tmp(url);
-    url.addQueryItem("id", postId);
+    url.addQueryItem(QLatin1String("id"), postId);
 
     QOAuth::ParamMap params;
     params.insert("id", postId.toLatin1());
@@ -611,7 +611,7 @@ void TwitterApiMicroBlog::createFavorite(Choqok::Account *theAccount, const QStr
     }
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     authorizationHeader(account, tmp, QOAuth::POST, params));
+                     QLatin1String(authorizationHeader(account, tmp, QOAuth::POST, params)));
     mFavoriteMap[job] = postId;
     mJobsAccount[job] = theAccount;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCreateFavorite(KJob*)));
@@ -647,10 +647,10 @@ void TwitterApiMicroBlog::removeFavorite(Choqok::Account *theAccount, const QStr
     qCDebug(CHOQOK);
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(url.path() + "/favorites/destroy.json");
+    url.setPath(url.path() + QLatin1String("/favorites/destroy.json"));
 
     QUrl tmp(url);
-    url.addQueryItem("id", postId);
+    url.addQueryItem(QLatin1String("id"), postId);
 
     QOAuth::ParamMap params;
     params.insert("id", postId.toLatin1());
@@ -665,7 +665,7 @@ void TwitterApiMicroBlog::removeFavorite(Choqok::Account *theAccount, const QStr
     }
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     authorizationHeader(account, tmp, QOAuth::POST, params));
+                     QLatin1String(authorizationHeader(account, tmp, QOAuth::POST, params)));
     mFavoriteMap[job] = postId;
     mJobsAccount[job] = theAccount;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRemoveFavorite(KJob*)));
@@ -699,7 +699,7 @@ void TwitterApiMicroBlog::slotRemoveFavorite(KJob *job)
 void TwitterApiMicroBlog::listFriendsUsername(TwitterApiAccount *theAccount, bool active)
 {
     friendsList.clear();
-    d->friendsCursor = "-1";
+    d->friendsCursor = QLatin1String("-1");
     if (theAccount) {
         requestFriendsScreenName(theAccount, active);
     }
@@ -711,13 +711,13 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount *theAccount
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
     url = url.adjusted(QUrl::StripTrailingSlash);
-    url.setPath(url.path() + (QString("/friends/list.json")));
+    url.setPath(url.path() + (QString::fromLatin1("/friends/list.json")));
     QUrl tmpUrl(url);
-    url.addQueryItem("cursor", d->friendsCursor);
-    url.addQueryItem("count", QString("200"));
+    url.addQueryItem(QLatin1String("cursor"), d->friendsCursor);
+    url.addQueryItem(QLatin1String("count"), QString::fromLatin1("200"));
     QOAuth::ParamMap params;
     params.insert("cursor", d->friendsCursor.toLatin1());
-    params.insert("count", QString("200").toLatin1());
+    params.insert("count", QString::fromLatin1("200").toLatin1());
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
     if (!job) {
@@ -726,7 +726,7 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount *theAccount
     }
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     authorizationHeader(account, tmpUrl, QOAuth::GET, params));
+                     QLatin1String(authorizationHeader(account, tmpUrl, QOAuth::GET, params)));
     mJobsAccount[job] = theAccount;
     if (active) {
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRequestFriendsScreenNameActive(KJob*)));
@@ -764,7 +764,7 @@ void TwitterApiMicroBlog::finishRequestFriendsScreenName(KJob *job, bool active)
     if (! checkForError(stJob->data()).isEmpty()) {           // if an error occurred, do not replace the friends list.
         theAccount->setFriendsList(friendsList);
         Q_EMIT friendsUsernameListed(theAccount, friendsList);
-    } else if (QString::compare(d->friendsCursor, "0")) {   // if the cursor is not "0", there is more friends data to be had
+    } else if (QString::compare(d->friendsCursor, QLatin1String("0"))) {   // if the cursor is not "0", there is more friends data to be had
         friendsList << newList;
         requestFriendsScreenName(theAccount, active);
     } else {
@@ -797,15 +797,15 @@ void TwitterApiMicroBlog::requestTimeLine(Choqok::Account *theAccount, QString t
     QOAuth::ParamMap params;
     // needed because lists have different parameter names but
     // returned timelines have the same JSON format
-    if (timelineApiPath[type].contains("lists/statuses")) {
+    if (timelineApiPath[type].contains(QLatin1String("lists/statuses"))) {
 
         // type contains @username/timelinename
-        const QString slug = type.mid(type.indexOf("/") + 1);
-        url.addQueryItem("slug", slug);
+        const QString slug = type.mid(type.indexOf(QLatin1String("/")) + 1);
+        url.addQueryItem(QLatin1String("slug"), slug);
         params.insert("slug", slug.toLatin1());
 
-        const QString owner = type.mid(1, type.indexOf("/") - 1);
-        url.addQueryItem("owner_screen_name", owner);
+        const QString owner = type.mid(1, type.indexOf(QLatin1String("/")) - 1);
+        url.addQueryItem(QString::fromLatin1("owner_screen_name"), owner);
         params.insert("owner_screen_name", owner.toLatin1());
     } else {
         if (account->usingOAuth()) {    //TODO: Check if needed
@@ -822,15 +822,15 @@ void TwitterApiMicroBlog::requestTimeLine(Choqok::Account *theAccount, QString t
             }
         }
         if (!latestStatusId.isEmpty()) {
-            url.addQueryItem("since_id", latestStatusId);
+            url.addQueryItem(QLatin1String("since_id"), latestStatusId);
             countOfPost = 200;
         }
-        url.addQueryItem("count", QString::number(countOfPost));
+        url.addQueryItem(QLatin1String("count"), QString::number(countOfPost));
         if (!maxId.isEmpty()) {
-            url.addQueryItem("max_id", maxId);
+            url.addQueryItem(QLatin1String("max_id"), maxId);
         }
         if (page) {
-            url.addQueryItem("page", QString::number(page));
+            url.addQueryItem(QLatin1String("page"), QString::number(page));
         }
     }
     qCDebug(CHOQOK) << "Latest " << type << " Id: " << latestStatusId;// << " apiReq: " << url;
@@ -844,7 +844,7 @@ void TwitterApiMicroBlog::requestTimeLine(Choqok::Account *theAccount, QString t
     }
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ")
-                     + authorizationHeader(account, tmpUrl, QOAuth::GET, params));
+                     + QLatin1String(authorizationHeader(account, tmpUrl, QOAuth::GET, params)));
     mRequestTimelineMap[job] = type;
     mJobsAccount[job] = theAccount;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRequestTimeline(KJob*)));
@@ -869,7 +869,7 @@ void TwitterApiMicroBlog::slotRequestTimeline(KJob *job)
     if (isValidTimeline(type)) {
         KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob *>(job);
         QList<Choqok::Post *> list;
-        if (type == "Inbox" || type == "Outbox") {
+        if (type == QLatin1String("Inbox") || type == QLatin1String("Outbox")) {
             list = readDirectMessages(theAccount, j->data());
         } else {
             list = readTimeline(theAccount, j->data());
@@ -923,7 +923,7 @@ QDateTime TwitterApiMicroBlog::dateFromString(const QString &date)
     char s[10];
     int year, day, hours, minutes, seconds, tz;
     sscanf(qPrintable(date), "%*s %s %d %d:%d:%d %d %d", s, &day, &hours, &minutes, &seconds, &tz, &year);
-    int month = d->monthes[s];
+    int month = d->monthes[QLatin1String(s)];
     QDateTime recognized(QDate(year, month, day), QTime(hours, minutes, seconds));
     if (tz == 0) { //tz is the timezone, in Twitter it's always UTC(0) in Identica it's local +/-NUMBER
         recognized.setTimeSpec(Qt::UTC);
@@ -992,9 +992,9 @@ void TwitterApiMicroBlog::createFriendship(Choqok::Account *theAccount, const QS
     qCDebug(CHOQOK);
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(url.path() + "/friendships/create.json");
+    url.setPath(url.path() + QLatin1String("/friendships/create.json"));
     QUrl tmp(url);
-    url.addQueryItem("screen_name", username.toLatin1());
+    url.addQueryItem(QLatin1String("screen_name"), username);
 
     QOAuth::ParamMap params;
     params.insert("screen_name", username.toLatin1());
@@ -1007,7 +1007,7 @@ void TwitterApiMicroBlog::createFriendship(Choqok::Account *theAccount, const QS
     }
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     authorizationHeader(account, tmp, QOAuth::POST, params));
+                     QLatin1String(authorizationHeader(account, tmp, QOAuth::POST, params)));
     mJobsAccount[job] = theAccount;
     mFriendshipMap[ job ] = username;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCreateFriendship(KJob*)));
@@ -1057,9 +1057,9 @@ void TwitterApiMicroBlog::destroyFriendship(Choqok::Account *theAccount, const Q
     qCDebug(CHOQOK);
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(url.path() + "/friendships/destroy.json");
+    url.setPath(url.path() + QLatin1String("/friendships/destroy.json"));
     QUrl tmp(url);
-    url.addQueryItem("screen_name", username.toLatin1());
+    url.addQueryItem(QLatin1String("screen_name"), username);
 
     QOAuth::ParamMap params;
     params.insert("screen_name", username.toLatin1());
@@ -1071,7 +1071,7 @@ void TwitterApiMicroBlog::destroyFriendship(Choqok::Account *theAccount, const Q
     }
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     authorizationHeader(account, tmp, QOAuth::POST, params));
+                     QLatin1String(authorizationHeader(account, tmp, QOAuth::POST, params)));
     mJobsAccount[job] = theAccount;
     mFriendshipMap[ job ] = username;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotDestroyFriendship(KJob*)));
@@ -1121,9 +1121,9 @@ void TwitterApiMicroBlog::blockUser(Choqok::Account *theAccount, const QString &
     qCDebug(CHOQOK);
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(url.path() + "/blocks/create.json");
+    url.setPath(url.path() + QLatin1String("/blocks/create.json"));
     QUrl tmp(url);
-    url.addQueryItem("screen_name", username.toLatin1());
+    url.addQueryItem(QLatin1String("screen_name"), username);
 
     QOAuth::ParamMap params;
     params.insert("screen_name", username.toLatin1());
@@ -1135,7 +1135,7 @@ void TwitterApiMicroBlog::blockUser(Choqok::Account *theAccount, const QString &
     }
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     authorizationHeader(account, tmp, QOAuth::POST, params));
+                     QLatin1String(authorizationHeader(account, tmp, QOAuth::POST, params)));
     mJobsAccount[job] = theAccount;
     mFriendshipMap[ job ] = username;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotBlockUser(KJob*)));
@@ -1148,9 +1148,9 @@ void TwitterApiMicroBlog::reportUserAsSpam(Choqok::Account *theAccount, const QS
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
     url = url.adjusted(QUrl::StripTrailingSlash);
-    url.setPath(url.path() + ("/users/report_spam.json"));
+    url.setPath(url.path() + QLatin1String("/users/report_spam.json"));
     QUrl tmp(url);
-    url.addQueryItem("screen_name", username.toLatin1());
+    url.addQueryItem(QLatin1String("screen_name"), username);
 
     QOAuth::ParamMap params;
     params.insert("screen_name", username.toLatin1());
@@ -1162,7 +1162,7 @@ void TwitterApiMicroBlog::reportUserAsSpam(Choqok::Account *theAccount, const QS
     }
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     authorizationHeader(account, tmp, QOAuth::POST, params));
+                     QLatin1String(authorizationHeader(account, tmp, QOAuth::POST, params)));
     mJobsAccount[job] = theAccount;
     mFriendshipMap[ job ] = username;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotReportUser(KJob*)));
@@ -1233,13 +1233,13 @@ QString TwitterApiMicroBlog::checkForError(const QByteArray &buffer)
     if (!json.isNull()) {
         const QVariantMap map = json.toVariant().toMap();
         QStringList errors;
-        if (map.contains("errors")) {
-            for (int i = 0; i < map["errors"].toList().count(); i++) {
-                errors.append(map["errors"].toList()[i].toMap()["message"].toString());
+        if (map.contains(QLatin1String("errors"))) {
+            for (int i = 0; i < map[QLatin1String("errors")].toList().count(); i++) {
+                errors.append(map[QLatin1String("errors")].toList()[i].toMap()[QLatin1String("message")].toString());
                 qCCritical(CHOQOK) << "Error: " << errors.last();
             }
 
-            return errors.join(";");
+            return errors.join(QLatin1String(";"));
         }
     }
     return QString();
@@ -1295,39 +1295,39 @@ Choqok::Post *TwitterApiMicroBlog::readPost(Choqok::Account *theAccount,
         qCCritical(CHOQOK) << "TwitterApiMicroBlog::readPost: post is NULL!";
         return 0;
     }
-    post->content = var["text"].toString();
-    post->creationDateTime = dateFromString(var["created_at"].toString());
-    post->isFavorited = var["favorited"].toBool();
-    post->postId = var["id"].toString();
-    post->replyToPostId = var["in_reply_to_status_id"].toString();
-    post->replyToUserId = var["in_reply_to_user_id"].toString();
-    post->replyToUserName = var["in_reply_to_screen_name"].toString();
-    post->source = var["source"].toString();
-    QVariantMap userMap = var["user"].toMap();
-    post->author.description = userMap["description"].toString();
-    post->author.location = userMap["location"].toString();
-    post->author.realName = userMap["name"].toString();
-    post->author.userId = userMap["id"].toString();
-    post->author.userName = userMap["screen_name"].toString();
-    post->author.profileImageUrl = userMap["profile_image_url"].toString();
-    QVariantMap entities = var["entities"].toMap();
+    post->content = var[QLatin1String("text")].toString();
+    post->creationDateTime = dateFromString(var[QLatin1String("created_at")].toString());
+    post->isFavorited = var[QLatin1String("favorited")].toBool();
+    post->postId = var[QLatin1String("id")].toString();
+    post->replyToPostId = var[QLatin1String("in_reply_to_status_id")].toString();
+    post->replyToUserId = var[QLatin1String("in_reply_to_user_id")].toString();
+    post->replyToUserName = var[QLatin1String("in_reply_to_screen_name")].toString();
+    post->source = var[QLatin1String("source")].toString();
+    QVariantMap userMap = var[QLatin1String("user")].toMap();
+    post->author.description = userMap[QLatin1String("description")].toString();
+    post->author.location = userMap[QLatin1String("location")].toString();
+    post->author.realName = userMap[QLatin1String("name")].toString();
+    post->author.userId = userMap[QLatin1String("id")].toString();
+    post->author.userName = userMap[QLatin1String("screen_name")].toString();
+    post->author.profileImageUrl = userMap[QLatin1String("profile_image_url")].toString();
+    QVariantMap entities = var[QLatin1String("entities")].toMap();
     QVariantMap mediaMap;
-    QVariantList media = entities["media"].toList();
+    QVariantList media = entities[QLatin1String("media")].toList();
     if (media.size() > 0) {
         mediaMap = media.at(0).toMap();
-        post->media = mediaMap["media_url"].toString() + ":small";
-        QVariantMap sizes = mediaMap["sizes"].toMap();
-        QVariantMap w = sizes["small"].toMap();
-        post->mediaSizeWidth = w["w"].toInt() != 0 ? w["w"].toInt() : 0;
-        post->mediaSizeHeight = w["h"].toInt() != 0 ? w["h"].toInt() : 0;
+        post->media = mediaMap[QLatin1String("media_url")].toString() + QLatin1String(":small");
+        QVariantMap sizes = mediaMap[QLatin1String("sizes")].toMap();
+        QVariantMap w = sizes[QLatin1String("small")].toMap();
+        post->mediaSizeWidth = w[QLatin1String("w")].toInt() != 0 ? w[QLatin1String("w")].toInt() : 0;
+        post->mediaSizeHeight = w[QLatin1String("h")].toInt() != 0 ? w[QLatin1String("h")].toInt() : 0;
     } else {
-        post->media = "";
+        post->media = QLatin1String("");
         post->mediaSizeHeight = 0;
         post->mediaSizeWidth = 0;
     }
 
     Choqok::Post *repeatedPost = 0;
-    QVariantMap retweetedMap = var["retweeted_status"].toMap();
+    QVariantMap retweetedMap = var[QLatin1String("retweeted_status")].toMap();
     if (!retweetedMap.isEmpty()) {
         repeatedPost = readPost(theAccount, retweetedMap, new Choqok::Post);
         setRepeatedOfInfo(post, repeatedPost);
@@ -1385,21 +1385,21 @@ Choqok::Post *TwitterApiMicroBlog::readDirectMessage(Choqok::Account *theAccount
     QString senderId, recipientId, timeStr, senderScreenName, recipientScreenName, senderProfileImageUrl,
             senderName, senderDescription, recipientProfileImageUrl, recipientName, recipientDescription;
 
-    msg->creationDateTime = dateFromString(var["created_at"].toString());
-    msg->content = var["text"].toString();
-    msg->postId = var["id"].toString();;
-    senderId = var["sender_id"].toString();
-    recipientId = var["recipient_id"].toString();
-    senderScreenName = var["sender_screen_name"].toString();
-    recipientScreenName = var["recipient_screen_name"].toString();
-    QVariantMap sender = var["sender"].toMap();
-    senderProfileImageUrl = sender["profile_image_url"].toString();
-    senderName = sender["name"].toString();
-    senderDescription = sender["description"].toString();
-    QVariantMap recipient = var["recipient"].toMap();
-    recipientProfileImageUrl = recipient["profile_image_url"].toString();
-    recipientName = recipient["name"].toString();
-    recipientDescription = recipient["description"].toString();
+    msg->creationDateTime = dateFromString(var[QLatin1String("created_at")].toString());
+    msg->content = var[QLatin1String("text")].toString();
+    msg->postId = var[QLatin1String("id")].toString();;
+    senderId = var[QLatin1String("sender_id")].toString();
+    recipientId = var[QLatin1String("recipient_id")].toString();
+    senderScreenName = var[QLatin1String("sender_screen_name")].toString();
+    recipientScreenName = var[QLatin1String("recipient_screen_name")].toString();
+    QVariantMap sender = var[QLatin1String("sender")].toMap();
+    senderProfileImageUrl = sender[QLatin1String("profile_image_url")].toString();
+    senderName = sender[QLatin1String("name")].toString();
+    senderDescription = sender[QLatin1String("description")].toString();
+    QVariantMap recipient = var[QLatin1String("recipient")].toMap();
+    recipientProfileImageUrl = recipient[QLatin1String("profile_image_url")].toString();
+    recipientName = recipient[QLatin1String("name")].toString();
+    recipientDescription = recipient[QLatin1String("description")].toString();
     if (senderScreenName.compare(theAccount->username(), Qt::CaseInsensitive) == 0) {
         msg->author.description = recipientDescription;
         msg->author.userName = recipientScreenName;
@@ -1443,17 +1443,17 @@ QStringList TwitterApiMicroBlog::readUsersScreenName(Choqok::Account *theAccount
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
         const QVariantMap map = json.toVariant().toMap();
-        QVariantList jsonList = map["users"].toList();
-        QString nextCursor = map["next_cursor_str"].toString();
+        QVariantList jsonList = map[QLatin1String("users")].toList();
+        QString nextCursor = map[QLatin1String("next_cursor_str")].toString();
 
         if (nextCursor.isEmpty()) {
-            nextCursor = "0"; // we probably ran the rate limit; stop bugging the server already
+            nextCursor = QLatin1String("0"); // we probably ran the rate limit; stop bugging the server already
         }
 
         QVariantList::const_iterator it = jsonList.constBegin();
         QVariantList::const_iterator endIt = jsonList.constEnd();
         for (; it != endIt; ++it) {
-            list << it->toMap()["screen_name"].toString();
+            list << it->toMap()[QLatin1String("screen_name")].toString();
         }
         d->friendsCursor = nextCursor;
     } else {
@@ -1468,15 +1468,15 @@ Choqok::User TwitterApiMicroBlog::readUser(Choqok::Account *theAccount, const QV
 {
     Q_UNUSED(theAccount);
     Choqok::User u;
-    u.description = map["description"].toString();
-    u.followersCount = map["followers_count"].toUInt();
-    u.homePageUrl = map["url"].toString();
-    u.isProtected = map["protected"].toBool();
-    u.location = map["location"].toString();
-    u.profileImageUrl = map["profile_image_url"].toString();
-    u.realName = map["name"].toString();
-    u.userId = map["id_str"].toString();
-    u.userName = map["screen_name"].toString();
+    u.description = map[QLatin1String("description")].toString();
+    u.followersCount = map[QLatin1String("followers_count")].toUInt();
+    u.homePageUrl = map[QLatin1String("url")].toString();
+    u.isProtected = map[QLatin1String("protected")].toBool();
+    u.location = map[QLatin1String("location")].toString();
+    u.profileImageUrl = map[QLatin1String("profile_image_url")].toString();
+    u.realName = map[QLatin1String("name")].toString();
+    u.userId = map[QLatin1String("id_str")].toString();
+    u.userName = map[QLatin1String("screen_name")].toString();
     return u;
 }
 

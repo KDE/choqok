@@ -34,16 +34,16 @@
 
 #include "laconicadebug.h"
 
-const QRegExp LaconicaSearch::m_rId("tag:.+,[\\d-]+:(\\d+)");
-const QRegExp LaconicaSearch::mIdRegExp("(?:user|(?:.*notice))/([0-9]+)");
+const QRegExp LaconicaSearch::m_rId(QLatin1String("tag:.+,[\\d-]+:(\\d+)"));
+const QRegExp LaconicaSearch::mIdRegExp(QLatin1String("(?:user|(?:.*notice))/([0-9]+)"));
 
 LaconicaSearch::LaconicaSearch(QObject *parent): TwitterApiSearch(parent)
 {
     qCDebug(CHOQOK);
-    mSearchCode[ReferenceGroup] = '!';
-    mSearchCode[ToUser] = '@';
+    mSearchCode[ReferenceGroup] = QLatin1Char('!');
+    mSearchCode[ToUser] = QLatin1Char('@');
     mSearchCode[FromUser].clear();
-    mSearchCode[ReferenceHashtag] = '#';
+    mSearchCode[ReferenceHashtag] = QLatin1Char('#');
 
     mSearchTypes[ReferenceHashtag].first = i18nc("Dents are Identica posts", "Dents Including This Hashtag");
     mSearchTypes[ReferenceHashtag].second = true;
@@ -72,19 +72,19 @@ QUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
     QString formattedQuery;
     switch (searchInfo.option) {
     case ToUser:
-        formattedQuery = searchInfo.query + "/replies/rss";
+        formattedQuery = searchInfo.query + QLatin1String("/replies/rss");
         break;
     case FromUser:
-        formattedQuery = searchInfo.query + "/rss";
+        formattedQuery = searchInfo.query + QLatin1String("/rss");
         break;
     case ReferenceGroup:
-        formattedQuery = "group/" + searchInfo.query + "/rss";
+        formattedQuery = QLatin1String("group/") + searchInfo.query + QLatin1String("/rss");
         break;
     case ReferenceHashtag:
         formattedQuery = searchInfo.query;
         break;
     default:
-        formattedQuery = searchInfo.query + "/rss";
+        formattedQuery = searchInfo.query + QLatin1String("/rss");
         break;
     };
 
@@ -94,23 +94,23 @@ QUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
     if (searchInfo.option == ReferenceHashtag) {
         url = theAccount->apiUrl();
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + ("/search.atom"));
-        url.addQueryItem("q", formattedQuery);
+        url.setPath(url.path() + QLatin1String("/search.atom"));
+        url.addQueryItem(QLatin1String("q"), formattedQuery);
         if (!sinceStatusId.isEmpty()) {
-            url.addQueryItem("since_id", sinceStatusId);
+            url.addQueryItem(QLatin1String("since_id"), sinceStatusId);
         }
         int cntStr = Choqok::BehaviorSettings::countOfPosts();
         if (count && count <= 100) {
             cntStr =  count;
         }
-        url.addQueryItem("rpp", QString::number(cntStr));
+        url.addQueryItem(QLatin1String("rpp"), QString::number(cntStr));
         if (page > 1) {
-            url.addQueryItem("page", QString::number(page));
+            url.addQueryItem(QLatin1String("page"), QString::number(page));
         }
     } else {
-        url = QUrl(theAccount->apiUrl().url().remove("/api", Qt::CaseInsensitive));
+        url = QUrl(theAccount->apiUrl().url().remove(QLatin1String("/api"), Qt::CaseInsensitive));
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + '/' + (formattedQuery));
+        url.setPath(url.path() + QLatin1Char('/') + (formattedQuery));
     }
     return url;
 }
@@ -174,7 +174,7 @@ QList< Choqok::Post * > LaconicaSearch::parseAtom(const QByteArray &buffer)
 
     QDomElement root = document.documentElement();
 
-    if (root.tagName() != "feed") {
+    if (root.tagName() != QLatin1String("feed")) {
         qCDebug(CHOQOK) << "There is no feed element in Atom feed " << buffer.data();
         return statusList;
     }
@@ -182,7 +182,7 @@ QList< Choqok::Post * > LaconicaSearch::parseAtom(const QByteArray &buffer)
     QDomNode node = root.firstChild();
     QString timeStr;
     while (!node.isNull()) {
-        if (node.toElement().tagName() != "entry") {
+        if (node.toElement().tagName() != QLatin1String("entry")) {
             node = node.nextSibling();
             continue;
         }
@@ -193,7 +193,7 @@ QList< Choqok::Post * > LaconicaSearch::parseAtom(const QByteArray &buffer)
 
         while (!entryNode.isNull()) {
             QDomElement elm = entryNode.toElement();
-            if (elm.tagName() == "id") {
+            if (elm.tagName() == QLatin1String("id")) {
                 // Fomatting example: "tag:search.twitter.com,2005:1235016836"
                 QString id;
                 if (m_rId.exactMatch(elm.text())) {
@@ -202,7 +202,7 @@ QList< Choqok::Post * > LaconicaSearch::parseAtom(const QByteArray &buffer)
                 /*                sscanf( qPrintable( elm.text() ),
                 "tag:search.twitter.com,%*d:%d", &id);*/
                 status->postId = id;
-            } else if (elm.tagName() == "published") {
+            } else if (elm.tagName() == QLatin1String("published")) {
                 // Formatting example: "2009-02-21T19:42:39Z"
                 // Need to extract date in similar fashion to dateFromString
                 int year, month, day, hour, minute, second;
@@ -211,20 +211,20 @@ QList< Choqok::Post * > LaconicaSearch::parseAtom(const QByteArray &buffer)
                 QDateTime recognized(QDate(year, month, day), QTime(hour, minute, second));
                 recognized.setTimeSpec(Qt::UTC);
                 status->creationDateTime = recognized;
-            } else if (elm.tagName() == "title") {
+            } else if (elm.tagName() == QLatin1String("title")) {
                 status->content = elm.text();
-            } else if (elm.tagName() == "link") {
-                if (elm.attribute("rel") == "related") {
-                    status->author.profileImageUrl = elm.attribute("href");
-                } else if (elm.attribute("rel") == "alternate") {
-                    status->link = elm.attribute("href");
+            } else if (elm.tagName() == QLatin1String("link")) {
+                if (elm.attribute(QLatin1String("rel")) == QLatin1String("related")) {
+                    status->author.profileImageUrl = elm.attribute(QLatin1String("href"));
+                } else if (elm.attribute(QLatin1String("rel")) == QLatin1String("alternate")) {
+                    status->link = elm.attribute(QLatin1String("href"));
                 }
-            } else if (elm.tagName() == "author") {
+            } else if (elm.tagName() == QLatin1String("author")) {
                 QDomNode userNode = entryNode.firstChild();
                 while (!userNode.isNull()) {
-                    if (userNode.toElement().tagName() == "name") {
+                    if (userNode.toElement().tagName() == QLatin1String("name")) {
                         QString fullName = userNode.toElement().text();
-                        int bracketPos = fullName.indexOf(" ", 0);
+                        int bracketPos = fullName.indexOf(QLatin1String(" "), 0);
                         QString screenName = fullName.left(bracketPos);
                         QString name = fullName.right(fullName.size() - bracketPos - 2);
                         name.chop(1);
@@ -233,7 +233,7 @@ QList< Choqok::Post * > LaconicaSearch::parseAtom(const QByteArray &buffer)
                     }
                     userNode = userNode.nextSibling();
                 }
-            } else if (elm.tagName() == "twitter:source") {
+            } else if (elm.tagName() == QLatin1String("twitter:source")) {
                 status->source = QUrl::fromPercentEncoding(elm.text().toAscii());
             }
             entryNode = entryNode.nextSibling();
@@ -255,7 +255,7 @@ QList< Choqok::Post * > LaconicaSearch::parseRss(const QByteArray &buffer)
 
     QDomElement root = document.documentElement();
 
-    if (root.tagName() != "rdf:RDF") {
+    if (root.tagName() != QLatin1String("rdf:RDF")) {
         qCDebug(CHOQOK) << "There is no rdf:RDF element in RSS feed " << buffer.data();
         return statusList;
     }
@@ -263,14 +263,14 @@ QList< Choqok::Post * > LaconicaSearch::parseRss(const QByteArray &buffer)
     QDomNode node = root.firstChild();
     QString timeStr;
     while (!node.isNull()) {
-        if (node.toElement().tagName() != "item") {
+        if (node.toElement().tagName() != QLatin1String("item")) {
             node = node.nextSibling();
             continue;
         }
 
         Choqok::Post *status = new Choqok::Post;
 
-        QDomAttr statusIdAttr = node.toElement().attributeNode("rdf:about");
+        QDomAttr statusIdAttr = node.toElement().attributeNode(QLatin1String("rdf:about"));
         QString statusId;
         if (mIdRegExp.exactMatch(statusIdAttr.value())) {
             statusId = mIdRegExp.cap(1);
@@ -281,39 +281,39 @@ QList< Choqok::Post * > LaconicaSearch::parseRss(const QByteArray &buffer)
         QDomNode itemNode = node.firstChild();
 
         while (!itemNode.isNull()) {
-            if (itemNode.toElement().tagName() == "title") {
+            if (itemNode.toElement().tagName() == QLatin1String("title")) {
                 QString content = itemNode.toElement().text();
 
-                int nameSep = content.indexOf(':', 0);
+                int nameSep = content.indexOf(QLatin1Char(':'), 0);
                 QString screenName = content.left(nameSep);
                 QString statusText = content.right(content.size() - nameSep - 2);
 
                 status->author.userName = screenName;
                 status->content = statusText;
-            } else if (itemNode.toElement().tagName() == "dc:date") {
+            } else if (itemNode.toElement().tagName() == QLatin1String("dc:date")) {
                 int year, month, day, hour, minute, second;
                 sscanf(qPrintable(itemNode.toElement().text()),
                        "%d-%d-%dT%d:%d:%d%*s", &year, &month, &day, &hour, &minute, &second);
                 QDateTime recognized(QDate(year, month, day), QTime(hour, minute, second));
                 recognized.setTimeSpec(Qt::UTC);
                 status->creationDateTime = recognized;
-            } else if (itemNode.toElement().tagName() == "dc:creator") {
+            } else if (itemNode.toElement().tagName() == QLatin1String("dc:creator")) {
                 status->author.realName = itemNode.toElement().text();
-            } else if (itemNode.toElement().tagName() == "sioc:reply_of") {
-                QDomAttr userIdAttr = itemNode.toElement().attributeNode("rdf:resource");
+            } else if (itemNode.toElement().tagName() == QLatin1String("sioc:reply_of")) {
+                QDomAttr userIdAttr = itemNode.toElement().attributeNode(QLatin1String("rdf:resource"));
                 QString id;
                 if (mIdRegExp.exactMatch(userIdAttr.value())) {
                     id = mIdRegExp.cap(1);
                 }
                 status->replyToPostId = id;
-            } else if (itemNode.toElement().tagName() == "statusnet:postIcon") {
-                QDomAttr imageAttr = itemNode.toElement().attributeNode("rdf:resource");
+            } else if (itemNode.toElement().tagName() == QLatin1String("statusnet:postIcon")) {
+                QDomAttr imageAttr = itemNode.toElement().attributeNode(QLatin1String("rdf:resource"));
                 status->author.profileImageUrl = imageAttr.value();
-            } else if (itemNode.toElement().tagName() == "link") {
+            } else if (itemNode.toElement().tagName() == QLatin1String("link")) {
 //                 QDomAttr imageAttr = itemNode.toElement().attributeNode( "rdf:resource" );
                 status->link = itemNode.toElement().text();
-            } else if (itemNode.toElement().tagName() == "sioc:has_discussion") {
-                status->conversationId = itemNode.toElement().attributeNode("rdf:resource").value();
+            } else if (itemNode.toElement().tagName() == QLatin1String("sioc:has_discussion")) {
+                status->conversationId = itemNode.toElement().attributeNode(QLatin1String("rdf:resource")).value();
             }
 
             itemNode = itemNode.nextSibling();

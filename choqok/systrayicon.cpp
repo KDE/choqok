@@ -56,9 +56,9 @@ void SysTrayIcon::resetUnreadCount()
 QString SysTrayIcon::currentIconName()
 {
     if (isOffline) {
-        return "choqok_offline";
+        return QLatin1String("choqok_offline");
     } else {
-        return "choqok";
+        return QLatin1String("choqok");
     }
 }
 
@@ -111,17 +111,17 @@ void SysTrayIcon::updateUnreadCount(int changeOfUnreadPosts)
         p.drawText(overlayImg.rect(), Qt::AlignCenter, countStr);
         setIconByPixmap(overlayImg);
     }
-    this->setToolTip("choqok", i18n("Choqok"), i18np("1 unread post", "%1 unread posts", unread));
+    this->setToolTip(QLatin1String("choqok"), i18n("Choqok"), i18np("1 unread post", "%1 unread posts", unread));
 }
 
 void SysTrayIcon::setTimeLineUpdatesEnabled(bool isEnabled)
 {
     if (isEnabled) {
-        setToolTip("choqok", i18n("Choqok"), QString());
-        setIconByName("choqok");
+        setToolTip(QLatin1String("choqok"), i18n("Choqok"), QString());
+        setIconByName(QLatin1String("choqok"));
     } else {
-        setToolTip("choqok", i18n("Choqok - Disabled"), QString());
-        setIconByName("choqok_offline");
+        setToolTip(QLatin1String("choqok"), i18n("Choqok - Disabled"), QString());
+        setIconByName(QLatin1String("choqok_offline"));
     }
     isOffline = !isEnabled;
     updateUnreadCount(0);
@@ -131,9 +131,9 @@ void SysTrayIcon::slotJobDone(Choqok::JobResult result)
 {
     qCDebug(CHOQOK);
     if (result == Choqok::Success) {
-        setOverlayIconByName("task-complete");
+        setOverlayIconByName(QLatin1String("task-complete"));
     } else {
-        setOverlayIconByName("task-reject");
+        setOverlayIconByName(QLatin1String("task-reject"));
     }
     QTimer::singleShot(5000, this, SLOT(slotRestoreIcon()));
 }

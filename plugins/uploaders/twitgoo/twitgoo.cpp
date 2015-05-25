@@ -44,7 +44,7 @@ K_PLUGIN_FACTORY_WITH_JSON(TwitgooFactory, "choqok_twitgoo.json",
                            registerPlugin < Twitgoo > ();)
 
 Twitgoo::Twitgoo(QObject *parent, const QList<QVariant> &)
-    : Choqok::Uploader("choqok_twitgoo", parent)
+    : Choqok::Uploader(QLatin1String("choqok_twitgoo"), parent)
 {
 }
 
@@ -66,17 +66,17 @@ void Twitgoo::upload(const QUrl &localUrl, const QByteArray &medium, const QByte
         return;
     }
 
-    QUrl url("http://twitgoo.com/api/upload");
+    QUrl url(QLatin1String("http://twitgoo.com/api/upload"));
 
     QMap<QString, QByteArray> formdata;
-    formdata["source"] = "Choqok";
-    formdata["format"] = "json";
+    formdata[QLatin1String("source")] = "Choqok";
+    formdata[QLatin1String("format")] = "json";
 
     QMap<QString, QByteArray> mediafile;
-    mediafile["name"] = "media";
-    mediafile["filename"] = localUrl.fileName().toUtf8();
-    mediafile["mediumType"] = mediumType;
-    mediafile["medium"] = medium;
+    mediafile[QLatin1String("name")] = "media";
+    mediafile[QLatin1String("filename")] = localUrl.fileName().toUtf8();
+    mediafile[QLatin1String("mediumType")] = mediumType;
+    mediafile[QLatin1String("medium")] = medium;
     QList< QMap<QString, QByteArray> > listMediafiles;
     listMediafiles.append(mediafile);
 
@@ -86,14 +86,14 @@ void Twitgoo::upload(const QUrl &localUrl, const QByteArray &medium, const QByte
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("X-Auth-Service-Provider: https://api.twitter.com/1/account/verify_credentials.json"));
     QOAuth::ParamMap params;
-    QString requrl = "https://api.twitter.com/1/account/verify_credentials.json";
+    QString requrl = QLatin1String("https://api.twitter.com/1/account/verify_credentials.json");
     QByteArray credentials = acc->oauthInterface()->createParametersString(requrl,
                              QOAuth::GET, acc->oauthToken(),
                              acc->oauthTokenSecret(),
                              QOAuth::HMAC_SHA1,
                              params, QOAuth::ParseForHeaderArguments);
     job->addMetaData(QStringLiteral("customHTTPHeader"),
-                     QStringLiteral("X-Verify-Credentials-Authorization: ") + credentials);
+                     QStringLiteral("X-Verify-Credentials-Authorization: ") + QLatin1String(credentials));
     if (!job) {
         qCritical() << "Cannot create a http POST request!";
         return;
@@ -119,12 +119,12 @@ void Twitgoo::slotUpload(KJob *job)
         const QJsonDocument json = QJsonDocument::fromJson(stj->data());
         if (!json.isNull()) {
             QVariantMap map = json.toVariant().toMap();
-            if (map.value("status") == QString("fail")) {
-                QVariantMap err = map.value("err").toMap();
-                Q_EMIT uploadingFailed(localUrl, err.value("err_msg").toString());
-            } else if (map.value("status") == QString("ok")) {
+            if (map.value(QLatin1String("status")) == QString::fromLatin1("fail")) {
+                QVariantMap err = map.value(QLatin1String("err")).toMap();
+                Q_EMIT uploadingFailed(localUrl, err.value(QLatin1String("err_msg")).toString());
+            } else if (map.value(QLatin1String("status")) == QString::fromLatin1("ok")) {
                 TwitgooSettings::self()->load();
-                QString val = TwitgooSettings::directLink() ? "imageurl" : "mediaurl";
+                QString val = TwitgooSettings::directLink() ? QLatin1String("imageurl") : QLatin1String("mediaurl");
                 Q_EMIT mediumUploaded(localUrl, map.value(val).toString());
             }
         } else {

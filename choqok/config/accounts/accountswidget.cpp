@@ -44,7 +44,7 @@ K_PLUGIN_FACTORY_WITH_JSON(ChoqokAccountsConfigFactory, "choqok_accountsconfig.j
                            registerPlugin<AccountsWidget>();)
 
 AccountsWidget::AccountsWidget(QWidget *parent, const QVariantList &args)
-    : KCModule(KAboutData::pluginData("kcm_choqok_accountsconfig") , parent, args)
+    : KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_accountsconfig")) , parent, args)
 {
     qCDebug(CHOQOK);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -238,7 +238,7 @@ void AccountsWidget::save()
 QMenu *AccountsWidget::createAddAccountMenu()
 {
     mBlogMenu = new QMenu(i18n("Select Micro-Blogging Service"), this);
-    const QList<KPluginInfo> list = Choqok::PluginManager::self()->availablePlugins("MicroBlogs");
+    const QList<KPluginInfo> list = Choqok::PluginManager::self()->availablePlugins(QLatin1String("MicroBlogs"));
     Q_FOREACH (const KPluginInfo &info, list) {
         QAction *act = new QAction(mBlogMenu);
         act->setText(info.name());

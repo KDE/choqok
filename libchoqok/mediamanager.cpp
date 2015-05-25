@@ -47,7 +47,7 @@ class MediaManager::Private
 {
 public:
     Private()
-        : emoticons(KEmoticons().theme()), cache("choqok-userimages", 30000000), uploader(0)
+        : emoticons(KEmoticons().theme()), cache(QLatin1String("choqok-userimages"), 30000000), uploader(0)
     {}
     KEmoticonsTheme emoticons;
     KImageCache cache;
@@ -59,7 +59,7 @@ public:
 MediaManager::MediaManager()
     : QObject(qApp), d(new Private)
 {
-    d->defaultImage = QIcon::fromTheme("image-loading").pixmap(48);
+    d->defaultImage = QIcon::fromTheme(QLatin1String("image-loading")).pixmap(48);
 }
 
 MediaManager::~MediaManager()
@@ -85,7 +85,7 @@ QPixmap &MediaManager::defaultImage()
 
 QString MediaManager::parseEmoticons(const QString &text)
 {
-    return d->emoticons.parseEmoticons(text, KEmoticonsTheme::DefaultParse, QStringList() << "(e)");
+    return d->emoticons.parseEmoticons(text, KEmoticonsTheme::DefaultParse, QStringList() << QLatin1String("(e)"));
 }
 
 QPixmap MediaManager::fetchImage(const QString &remoteUrl, ReturnMode mode /*= Sync*/)
@@ -203,10 +203,10 @@ QByteArray MediaManager::createMultipartFormData(const QMap< QString, QByteArray
         const QList< QMap< QString, QByteArray > > &mediaFiles)
 {
     QByteArray newLine("\r\n");
-    QString formHeader(newLine + "Content-Disposition: form-data; name=\"%1\"");
+    QString formHeader(QLatin1String(newLine) + QLatin1String("Content-Disposition: form-data; name=\"%1\""));
     QByteArray header("--AaB03x");
     QByteArray footer("--AaB03x--");
-    QString fileHeader(newLine + "Content-Disposition: file; name=\"%1\"; filename=\"%2\"");
+    QString fileHeader(QLatin1String(newLine) + QLatin1String("Content-Disposition: file; name=\"%1\"; filename=\"%2\""));
     QByteArray data;
 
     data.append(header);
@@ -215,10 +215,10 @@ QByteArray MediaManager::createMultipartFormData(const QMap< QString, QByteArray
         QList< QMap< QString, QByteArray > >::const_iterator it1 = mediaFiles.constBegin();
         QList< QMap< QString, QByteArray > >::const_iterator endIt1 = mediaFiles.constEnd();
         for (; it1 != endIt1; ++it1) {
-            data.append(fileHeader.arg(it1->value("name").data()).arg(it1->value("filename").data()).toUtf8());
-            data.append(newLine + "Content-Type: " + it1->value("mediumType"));
+            data.append(fileHeader.arg(QString::fromLatin1(it1->value(QLatin1String("name")).data())).arg(QString::fromLatin1(it1->value(QLatin1String("filename")).data())).toUtf8());
+            data.append(newLine + "Content-Type: " + it1->value(QLatin1String("mediumType")));
             data.append(newLine);
-            data.append(newLine + it1->value("medium"));
+            data.append(newLine + it1->value(QLatin1String("medium")));
         }
     }
 

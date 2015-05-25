@@ -51,7 +51,7 @@ TwitterListDialog::TwitterListDialog(TwitterApiAccount *theAccount, QWidget *par
     ui.setupUi(mainWidget);
     connect(ui.username, SIGNAL(textChanged(QString)), SLOT(slotUsernameChanged(QString)));
     connect(ui.loadUserLists, SIGNAL(clicked(bool)), SLOT(loadUserLists()));
-    QRegExp rx("([a-z0-9_]){1,20}(\\/)", Qt::CaseInsensitive);
+    QRegExp rx(QLatin1String("([a-z0-9_]){1,20}(\\/)"), Qt::CaseInsensitive);
     QValidator *val = new QRegExpValidator(rx, 0);
     ui.username->setValidator(val);
     ui.username->setFocus();
@@ -96,7 +96,7 @@ void TwitterListDialog::accept()
 
 void TwitterListDialog::slotUsernameChanged(const QString &name)
 {
-    if (name.endsWith('/')) {
+    if (name.endsWith(QLatin1Char('/'))) {
         QString n = name;
         n.chop(1);
         ui.username->setText(n);
@@ -130,7 +130,7 @@ void TwitterListDialog::slotLoadUserlists(Choqok::Account *theAccount, QString u
             if (it->description.isEmpty()) {
                 iText = it->fullname;
             } else {
-                iText = QString("%1 [%2]").arg(it->fullname).arg(it->description);
+                iText = QString::fromLatin1("%1 [%2]").arg(it->fullname).arg(it->description);
             }
             item->setText(iText);
             item->setData(32, it->slug);

@@ -38,7 +38,7 @@ http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
         <default>false</default>
     </entry>
     <entry name="font" type="Font">
-        <default>QFont("DejaVu Sans", 9)</default>
+        <default>QFont(QLatin1String("DejaVu Sans"), 9)</default>
     </entry>
 </group>
 <group name="TabBar">

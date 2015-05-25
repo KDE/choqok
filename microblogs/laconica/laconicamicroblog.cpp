@@ -55,12 +55,12 @@ K_PLUGIN_FACTORY_WITH_JSON(LaconicaFactory, "choqok_laconica.json",
                            registerPlugin < LaconicaMicroBlog > ();)
 
 LaconicaMicroBlog::LaconicaMicroBlog(QObject *parent, const QVariantList &)
-    : TwitterApiMicroBlog("choqok_laconica", parent), friendsPage(1)
+    : TwitterApiMicroBlog(QLatin1String("choqok_laconica"), parent), friendsPage(1)
 {
     qCDebug(CHOQOK);
-    setServiceName("GNU social");
-    mTimelineInfos["ReTweets"]->name = i18nc("Timeline name", "Repeated");
-    mTimelineInfos["ReTweets"]->description = i18nc("Timeline description", "Your posts that were repeated by others");
+    setServiceName(QLatin1String("GNU social"));
+    mTimelineInfos[QLatin1String("ReTweets")]->name = i18nc("Timeline name", "Repeated");
+    mTimelineInfos[QLatin1String("ReTweets")]->description = i18nc("Timeline description", "Your posts that were repeated by others");
 }
 
 LaconicaMicroBlog::~LaconicaMicroBlog()
@@ -121,7 +121,7 @@ Choqok::Post *LaconicaMicroBlog::readPost(Choqok::Account *account, const QVaria
 
     post = TwitterApiMicroBlog::readPost(account, var, post);
 
-    post->link = var["external_url"].toString();
+    post->link = var[QLatin1String("external_url")].toString();
 
     return post;
 }
@@ -129,18 +129,18 @@ Choqok::Post *LaconicaMicroBlog::readPost(Choqok::Account *account, const QVaria
 QString LaconicaMicroBlog::profileUrl(Choqok::Account *account, const QString &username) const
 {
     TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(account);
-    if (username.contains('@')) {
-        QStringList lst = username.split('@', QString::SkipEmptyParts);
+    if (username.contains(QLatin1Char('@'))) {
+        QStringList lst = username.split(QLatin1Char('@'), QString::SkipEmptyParts);
         if (lst.count() == 2) {
-            if (lst[1].endsWith(QString(".status.net"))) {
-                return QString("http://").arg(lst[1]);
+            if (lst[1].endsWith(QString::fromLatin1(".status.net"))) {
+                return QString::fromLatin1("http://").arg(lst[1]);
             } else {
-                return QString("http://%1/%2").arg(lst[1]).arg(lst[0]);
+                return QString::fromLatin1("http://%1/%2").arg(lst[1]).arg(lst[0]);
             }
         }
     }
     if (acc) {
-        return QString(acc->homepageUrl().toDisplayString() + '/' + username) ;
+        return QString(acc->homepageUrl().toDisplayString() + QLatin1Char('/') + username) ;
     } else {
         return QString();
     }
@@ -153,7 +153,7 @@ QString LaconicaMicroBlog::postUrl(Choqok::Account *account,  const QString &use
     TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(account);
     if (acc) {
         QUrl url(acc->homepageUrl());
-        url.setPath(url.path() + QString("/notice/%1").arg(postId));
+        url.setPath(url.path() + QString::fromLatin1("/notice/%1").arg(postId));
         return QString(url.toDisplayString());
     } else {
         return QString();
@@ -195,20 +195,20 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Ch
         ///Documentation: http://identi.ca/notice/17779990
         TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
         QUrl url = account->apiUrl();
-        url.setPath(url.path() + "/statuses/update.xml");
+        url.setPath(url.path() + QLatin1String("/statuses/update.xml"));
         const QMimeDatabase db;
         QByteArray fileContentType = db.mimeTypeForUrl(picUrl).name().toUtf8();
 
         QMap<QString, QByteArray> formdata;
-        formdata["status"] = post->content.toUtf8();
-        formdata["in_reply_to_status_id"] = post->replyToPostId.toLatin1();
-        formdata["source"] = "choqok";
+        formdata[QLatin1String("status")] = post->content.toUtf8();
+        formdata[QLatin1String("in_reply_to_status_id")] = post->replyToPostId.toLatin1();
+        formdata[QLatin1String("source")] = "choqok";
 
         QMap<QString, QByteArray> mediafile;
-        mediafile["name"] = "media";
-        mediafile["filename"] = picUrl.fileName().toUtf8();
-        mediafile["mediumType"] = fileContentType;
-        mediafile["medium"] = picData;
+        mediafile[QLatin1String("name")] = "media";
+        mediafile[QLatin1String("filename")] = picUrl.fileName().toUtf8();
+        mediafile[QLatin1String("mediumType")] = fileContentType;
+        mediafile[QLatin1String("medium")] = picData;
         QList< QMap<QString, QByteArray> > listMediafiles;
         listMediafiles.append(mediafile);
 
@@ -223,7 +223,7 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Ch
                          QStringLiteral("Content-Type: multipart/form-data; boundary=AaB03x"));
         job->addMetaData(QStringLiteral("customHTTPHeader"),
                          QStringLiteral("Authorization: ") +
-                         authorizationHeader(account, url, QOAuth::POST));
+                         QLatin1String(authorizationHeader(account, url, QOAuth::POST)));
         mCreatePostMap[ job ] = post;
         mJobsAccount[job] = theAccount;
         connect(job, SIGNAL(result(KJob*)),
@@ -267,11 +267,11 @@ void LaconicaMicroBlog::doRequestFriendsScreenName(TwitterApiAccount *theAccount
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
     url = url.adjusted(QUrl::StripTrailingSlash);
-    url.setPath(url.path() + (QString("/statuses/friends.%1").arg(format)));
+    url.setPath(url.path() + (QString::fromLatin1("/statuses/friends.%1").arg(format)));
     QOAuth::ParamMap params;
     if (page > 1) {
         params.insert("page", QByteArray::number(page));
-        url.addQueryItem("page", QString::number(page));
+        url.addQueryItem(QLatin1String("page"), QString::number(page));
     }
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
@@ -281,7 +281,7 @@ void LaconicaMicroBlog::doRequestFriendsScreenName(TwitterApiAccount *theAccount
     }
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     authorizationHeader(account, url, QOAuth::GET, params));
+                     QLatin1String(authorizationHeader(account, url, QOAuth::GET, params)));
     mJobsAccount[job] = theAccount;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRequestFriendsScreenName(KJob*)));
     job->start();
@@ -356,7 +356,7 @@ void LaconicaMicroBlog::fetchConversation(Choqok::Account *theAccount, const QSt
     }
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(QString("/statusnet/conversation/%1.%2").arg(conversationId).arg(format));
+    url.setPath(QString::fromLatin1("/statusnet/conversation/%1.%2").arg(conversationId).arg(format));
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
     if (!job) {
@@ -365,7 +365,7 @@ void LaconicaMicroBlog::fetchConversation(Choqok::Account *theAccount, const QSt
     }
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     authorizationHeader(account, url, QOAuth::GET));
+                     QLatin1String(authorizationHeader(account, url, QOAuth::GET)));
     mFetchConversationMap[ job ] = conversationId;
     mJobsAccount[ job ] = theAccount;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchConversation(KJob*)));

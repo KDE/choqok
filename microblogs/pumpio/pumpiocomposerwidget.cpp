@@ -57,7 +57,7 @@ PumpIOComposerWidget::PumpIOComposerWidget(Choqok::Account *account, QWidget *pa
 {
     d->editorLayout = qobject_cast<QGridLayout *>(editorContainer()->layout());
     d->btnAttach = new QPushButton(editorContainer());
-    d->btnAttach->setIcon(QIcon::fromTheme("mail-attachment"));
+    d->btnAttach->setIcon(QIcon::fromTheme(QLatin1String("mail-attachment")));
     d->btnAttach->setToolTip(i18n("Attach a file"));
     d->btnAttach->setMaximumWidth(d->btnAttach->height());
     connect(d->btnAttach, SIGNAL(clicked(bool)), this, SLOT(attachMedia()));
@@ -93,7 +93,7 @@ void PumpIOComposerWidget::submitPost(const QString &text)
             SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
                              QString, Choqok::MicroBlog::ErrorLevel)), this,
             SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
-    btnAbort = new QPushButton(QIcon::fromTheme("dialog-cancel"), i18n("Abort"), this);
+    btnAbort = new QPushButton(QIcon::fromTheme(QLatin1String("dialog-cancel")), i18n("Abort"), this);
     layout()->addWidget(btnAbort);
     connect(btnAbort, SIGNAL(clicked(bool)), SLOT(abort()));
 
@@ -152,7 +152,7 @@ void PumpIOComposerWidget::attachMedia()
     if (!d->mediumName) {
         d->mediumName = new QLabel(editorContainer());
         d->btnCancel = new QPushButton(editorContainer());
-        d->btnCancel->setIcon(QIcon::fromTheme("list-remove"));
+        d->btnCancel->setIcon(QIcon::fromTheme(QLatin1String("list-remove")));
         d->btnCancel->setToolTip(i18n("Discard Attachment"));
         d->btnCancel->setMaximumWidth(d->btnCancel->height());
         connect(d->btnCancel, SIGNAL(clicked(bool)), SLOT(cancelAttach()));

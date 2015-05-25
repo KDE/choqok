@@ -35,15 +35,15 @@ K_PLUGIN_FACTORY_WITH_JSON(TightUrlFactory, "choqok_tighturl.json",
                            registerPlugin < TightUrl > ();)
 
 TightUrl::TightUrl(QObject *parent, const QVariantList &)
-    : Choqok::Shortener("choqok_tighturl", parent)
+    : Choqok::Shortener(QLatin1String("choqok_tighturl"), parent)
 {
 }
 
 QString TightUrl::shorten(const QString &url)
 {
-    QUrl reqUrl("http://2tu.us/");
-    reqUrl.addQueryItem("save", "y");
-    reqUrl.addQueryItem("url", QUrl(url).url());
+    QUrl reqUrl(QLatin1String("http://2tu.us/"));
+    reqUrl.addQueryItem(QLatin1String("save"), QLatin1String("y"));
+    reqUrl.addQueryItem(QLatin1String("url"), QUrl(url).url());
 
     QEventLoop loop;
     KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
@@ -52,12 +52,12 @@ QString TightUrl::shorten(const QString &url)
     loop.exec();
 
     if (job->error() == KJob::NoError) {
-        QString output(job->data());
-        QRegExp rx(QString("<code>(.+)</code>"));
+        QString output(QLatin1String(job->data()));
+        QRegExp rx(QString::fromLatin1("<code>(.+)</code>"));
         rx.setMinimal(true);
         rx.indexIn(output);
         output = rx.cap(1);
-        rx.setPattern(QString("href=[\'\"](.+)[\'\"]"));
+        rx.setPattern(QString::fromLatin1("href=[\'\"](.+)[\'\"]"));
         rx.indexIn(output);
         output = rx.cap(1);
         if (!output.isEmpty()) {

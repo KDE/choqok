@@ -51,7 +51,7 @@ class PostWidget::Private
 {
 public:
     Private(Account *account, Choqok::Post *post)
-        : mCurrentPost(post), mCurrentAccount(account), dir("ltr"), timeline(0)
+        : mCurrentPost(post), mCurrentAccount(account), dir(QLatin1String("ltr")), timeline(0)
     {
     }
     QGridLayout *buttonsLayout;
@@ -76,22 +76,22 @@ public:
     TimelineWidget *timeline;
 };
 
-const QString PostWidget::ownText("<table width=\"100%\" ><tr><td width=\"90%\" dir=\"%4\">%2</td><td  rowspan=\"2\" align=\"right\">%1</td></tr><tr>%5</tr><tr><td colspan=\"2\"  style=\"font-size:small;\" dir=\"ltr\" align=\"right\" width=\"100%\" valign=\"bottom\">%3</td></tr></table>");
+const QString PostWidget::ownText(QLatin1String("<table width=\"100%\" ><tr><td width=\"90%\" dir=\"%4\">%2</td><td  rowspan=\"2\" align=\"right\">%1</td></tr><tr>%5</tr><tr><td colspan=\"2\"  style=\"font-size:small;\" dir=\"ltr\" align=\"right\" width=\"100%\" valign=\"bottom\">%3</td></tr></table>"));
 
-const QString PostWidget::otherText("<table height=\"100%\" width=\"100%\"><tr><td rowspan=\"2\" width=\"48\">%1</td><td width=\"5\"><!-- EMPTY HAHA --></td><td colspan=\"2\" dir=\"%4\"><p>%2</p></td></tr><tr><td></td>%5</tr><tr><td ><!-- empty --></td><td></td><td colspan=\"2\" style=\"font-size:small;\" dir=\"ltr\" align=\"right\" width=\"100%\" valign=\"bottom\">%3</td></tr></table>");
+const QString PostWidget::otherText(QLatin1String("<table height=\"100%\" width=\"100%\"><tr><td rowspan=\"2\" width=\"48\">%1</td><td width=\"5\"><!-- EMPTY HAHA --></td><td colspan=\"2\" dir=\"%4\"><p>%2</p></td></tr><tr><td></td>%5</tr><tr><td ><!-- empty --></td><td></td><td colspan=\"2\" style=\"font-size:small;\" dir=\"ltr\" align=\"right\" width=\"100%\" valign=\"bottom\">%3</td></tr></table>"));
 
-const QString PostWidget::baseStyle("QTextBrowser {border: 1px solid rgb(150,150,150);\
+const QString PostWidget::baseStyle(QLatin1String("QTextBrowser {border: 1px solid rgb(150,150,150);\
 border-radius:5px; color:%1; background-color:%2; %3}\
-QPushButton{border:0px}");
+QPushButton{border:0px}"));
 
-const QString PostWidget::hrefTemplate("<a href='%1' title='%1' target='_blank'>%2</a>");
+const QString PostWidget::hrefTemplate(QLatin1String("<a href='%1' title='%1' target='_blank'>%2</a>"));
 
-const QRegExp PostWidget::dirRegExp("(RT|RD)|(@([^\\s\\W]+))|(#([^\\s\\W]+))|(!([^\\s\\W]+))");
+const QRegExp PostWidget::dirRegExp(QLatin1String("(RT|RD)|(@([^\\s\\W]+))|(#([^\\s\\W]+))|(!([^\\s\\W]+))"));
 
 QString PostWidget::readStyle;
 QString PostWidget::unreadStyle;
 QString PostWidget::ownStyle;
-const QString PostWidget::webIconText("&#9755;");
+const QString PostWidget::webIconText(QLatin1String("&#9755;"));
 
 PostWidget::PostWidget(Account *account, Choqok::Post *post, QWidget *parent/* = 0*/)
     : QWidget(parent), _mainWidget(new TextBrowser(this)), d(new Private(account, post))
@@ -118,9 +118,9 @@ PostWidget::PostWidget(Account *account, Choqok::Post *post, QWidget *parent/* =
 
 void PostWidget::checkAnchor(const QUrl &url)
 {
-    if (url.scheme() == "choqok") {
-        if (url.host() == "showoriginalpost") {
-            setContent(prepareStatus(currentPost()->content).replace("<a href", "<a style=\"text-decoration:none\" href", Qt::CaseInsensitive));
+    if (url.scheme() == QLatin1String("choqok")) {
+        if (url.host() == QLatin1String("showoriginalpost")) {
+            setContent(prepareStatus(currentPost()->content).replace(QLatin1String("<a href"), QLatin1String("<a style=\"text-decoration:none\" href"), Qt::CaseInsensitive));
             updateUi();
         }
     } else {
@@ -146,17 +146,17 @@ Account *PostWidget::currentAccount()
 QString PostWidget::generateSign()
 {
     QString ss;
-    ss = "<b><a href='" + d->mCurrentAccount->microblog()->profileUrl(d->mCurrentAccount,
+    ss = QLatin1String("<b><a href='") + d->mCurrentAccount->microblog()->profileUrl(d->mCurrentAccount,
             d->mCurrentPost->author.userName)
-         + "' title=\"" +
-         d->mCurrentPost->author.description + "\">" + d->mCurrentPost->author.userName +
-         "</a> - </b>";
+         + QLatin1String("' title=\"") +
+         d->mCurrentPost->author.description + QLatin1String("\">") + d->mCurrentPost->author.userName +
+         QLatin1String("</a> - </b>");
 
-    ss += "<a href=\"" + d->mCurrentPost->link +
-          "\" title=\"" + d->mCurrentPost->creationDateTime.toString(Qt::DefaultLocaleLongDate) + "\">%1</a>";
+    ss += QLatin1String("<a href=\"") + d->mCurrentPost->link +
+          QLatin1String("\" title=\"") + d->mCurrentPost->creationDateTime.toString(Qt::DefaultLocaleLongDate) + QLatin1String("\">%1</a>");
 
     if (!d->mCurrentPost->source.isNull()) {
-        ss += " - " + d->mCurrentPost->source;
+        ss += QLatin1String(" - ") + d->mCurrentPost->source;
     }
 
     return ss;
@@ -185,7 +185,7 @@ void PostWidget::setupUi()
 void PostWidget::initUi()
 {
     setupUi();
-    _mainWidget->document()->addResource(QTextDocument::ImageResource, QUrl("img://profileImage"),
+    _mainWidget->document()->addResource(QTextDocument::ImageResource, QUrl(QLatin1String("img://profileImage")),
                                          MediaManager::self()->defaultImage());
 
     if (isOwnPost()) {
@@ -195,13 +195,13 @@ void PostWidget::initUi()
     }
 
     if (isRemoveAvailable()) {
-        QPushButton *btnRemove = addButton("btnRemove", i18nc("@info:tooltip", "Remove"), "edit-delete");
+        QPushButton *btnRemove = addButton(QLatin1String("btnRemove"), i18nc("@info:tooltip", "Remove"), QLatin1String("edit-delete"));
         connect(btnRemove, SIGNAL(clicked(bool)), SLOT(removeCurrentPost()));
         baseText = &ownText;
     }
 
     if (isResendAvailable()) {
-        QPushButton *btnResend = addButton("btnResend", i18nc("@info:tooltip", "ReSend"), "retweet");
+        QPushButton *btnResend = addButton(QLatin1String("btnResend"), i18nc("@info:tooltip", "ReSend"), QLatin1String("retweet"));
         connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
         baseText = &otherText;
     }
@@ -218,9 +218,9 @@ void PostWidget::initUi()
         baseText = &otherText;
     }*/
 
-    d->mProfileImage = "<img src=\"img://profileImage\" title=\"" + d->mCurrentPost->author.realName + "\" width=\"48\" height=\"48\" />";
+    d->mProfileImage = QLatin1String("<img src=\"img://profileImage\" title=\"") + d->mCurrentPost->author.realName + QLatin1String("\" width=\"48\" height=\"48\" />");
     if (!d->imageUrl.isEmpty()) {
-        d->mImage = QString("<td width=\"%1\" height=\"%2\" style=\"padding-left: 5px; padding-left: 5px;\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
+        d->mImage = QString::fromLatin1("<td width=\"%1\" height=\"%2\" style=\"padding-left: 5px; padding-left: 5px;\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
     }
     d->mContent = prepareStatus(d->mCurrentPost->content);
     d->mSign = generateSign();
@@ -229,10 +229,10 @@ void PostWidget::initUi()
     setDirection();
     setUiStyle();
 
-    d->mContent.replace("<a href", "<a style=\"text-decoration:none\" href", Qt::CaseInsensitive);
-    d->mContent.replace("\n", "<br/>");
+    d->mContent.replace(QLatin1String("<a href"), QLatin1String("<a style=\"text-decoration:none\" href"), Qt::CaseInsensitive);
+    d->mContent.replace(QLatin1String("\n"), QLatin1String("<br/>"));
 
-    d->mSign.replace("<a href", "<a style=\"text-decoration:none\" href", Qt::CaseInsensitive);
+    d->mSign.replace(QLatin1String("<a href"), QLatin1String("<a style=\"text-decoration:none\" href"), Qt::CaseInsensitive);
 
     updateUi();
 }
@@ -248,8 +248,8 @@ void PostWidget::updateUi()
 
 void PostWidget::setStyle(const QColor &color, const QColor &back, const QColor &read, const QColor &readBack, const QColor &own, const QColor &ownBack, const QFont &font)
 {
-    QString fntStr = "font-family:\"" + font.family() + "\"; font-size:" + QString::number(font.pointSize()) + "pt;";
-    fntStr += (font.bold() ? " font-weight:bold;" : QString()) + (font.italic() ? " font-style:italic;" : QString());
+    QString fntStr = QLatin1String("font-family:\"") + font.family() + QLatin1String("\"; font-size:") + QString::number(font.pointSize()) + QLatin1String("pt;");
+    fntStr += (font.bold() ? QLatin1String(" font-weight:bold;") : QString()) + (font.italic() ? QLatin1String(" font-style:italic;") : QString());
     unreadStyle = baseStyle.arg(getColorString(color), getColorString(back), fntStr);
     readStyle = baseStyle.arg(getColorString(read), getColorString(readBack), fntStr);
     ownStyle = baseStyle.arg(getColorString(own), getColorString(ownBack), fntStr);
@@ -369,13 +369,13 @@ void PostWidget::resizeEvent(QResizeEvent *event)
         int newW = newPixmap.width();
         int newH = newPixmap.height();
 
-        const QUrl url("img://postImage");
+        const QUrl url(QLatin1String("img://postImage"));
         // only use scaled image if it's smaller than the original one
         if (newW <= d->originalImage.width() && newH <= d->originalImage.height()) { // never scale up
-            d->mImage = QString("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(newW, newH);
+            d->mImage = QString::fromLatin1("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(newW, newH);
             _mainWidget->document()->addResource(QTextDocument::ImageResource, url, newPixmap);
         } else {
-            d->mImage = QString("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
+            d->mImage = QString::fromLatin1("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
             _mainWidget->document()->addResource(QTextDocument::ImageResource, url, d->originalImage);
         }
     }
@@ -415,7 +415,7 @@ QString PostWidget::prepareStatus(const QString &txt)
         QString httpUrl(url);
         if (!httpUrl.startsWith(QLatin1String("http"), Qt::CaseInsensitive) &&
                 !httpUrl.startsWith(QLatin1String("ftp"), Qt::CaseInsensitive)) {
-            httpUrl.prepend("http://");
+            httpUrl.prepend(QLatin1String("http://"));
             text.replace(url, httpUrl);
         }
 
@@ -435,8 +435,8 @@ QString PostWidget::removeTags(const QString &text) const
 {
     QString txt(text);
 
-    txt.replace('<', "&lt;");
-    txt.replace('>', "&gt;");
+    txt.replace(QLatin1Char('<'), QLatin1String("&lt;"));
+    txt.replace(QLatin1Char('>'), QLatin1String("&gt;"));
 
     return txt;
 }
@@ -446,7 +446,7 @@ void PostWidget::setDirection()
     txt.remove(dirRegExp);
     txt = txt.trimmed();
     if (txt.isRightToLeft()) {
-        d->dir = "rtl";
+        d->dir = QLatin1String("rtl");
     }
 }
 
@@ -517,10 +517,10 @@ void PostWidget::slotResendPost()
 QString PostWidget::generateResendText()
 {
     if (BehaviorSettings::useCustomRT()) {
-        return QString(BehaviorSettings::customRT()) + " @" + currentPost()->author.userName + ": " + currentPost()->content;
+        return QString(BehaviorSettings::customRT()) + QLatin1String(" @") + currentPost()->author.userName + QLatin1String(": ") + currentPost()->content;
     } else {
         QChar re(0x267B);
-        return QString(re) + " @" + currentPost()->author.userName + ": " + currentPost()->content;
+        return QString(re) + QLatin1String(" @") + currentPost()->author.userName + QLatin1String(": ") + currentPost()->content;
     }
 }
 
@@ -557,7 +557,7 @@ void PostWidget::setupAvatar()
 void PostWidget::avatarFetched(const QString &remoteUrl, const QPixmap &pixmap)
 {
     if (remoteUrl == d->mCurrentPost->author.profileImageUrl) {
-        const QUrl url("img://profileImage");
+        const QUrl url(QLatin1String("img://profileImage"));
         _mainWidget->document()->addResource(QTextDocument::ImageResource, url, pixmap);
         updateUi();
         disconnect(MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
@@ -572,9 +572,9 @@ void PostWidget::avatarFetchError(const QString &remoteUrl, const QString &errMs
     Q_UNUSED(errMsg);
     if (remoteUrl == d->mCurrentPost->author.profileImageUrl) {
         ///Avatar fetching is failed! but will not disconnect to get the img if it fetches later!
-        const QUrl url("img://profileImage");
+        const QUrl url(QLatin1String("img://profileImage"));
         _mainWidget->document()->addResource(QTextDocument::ImageResource,
-                                             url, QIcon::fromTheme("image-missing").pixmap(48));
+                                             url, QIcon::fromTheme(QLatin1String("image-missing")).pixmap(48));
         updateUi();
     }
 }
@@ -583,7 +583,7 @@ void PostWidget::slotImageFetched(const QString &remoteUrl, const QPixmap &pixma
 {
 
     if (remoteUrl == d->imageUrl) {
-        const QUrl url("img://postImage");
+        const QUrl url(QLatin1String("img://postImage"));
         QPixmap newPixmap = pixmap.scaled(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
         _mainWidget->document()->addResource(QTextDocument::ImageResource, url, newPixmap);
         d->originalImage = pixmap;

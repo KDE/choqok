@@ -119,7 +119,7 @@ MainWindow::MainWindow(ChoqokApplication *application)
     if (pos.x() != -1 && pos.y() != -1) {
         move(pos);
     }
-    actionCollection()->action("choqok_hide_menubar")->setChecked(menuBar()->isHidden());
+    actionCollection()->action(QLatin1String("choqok_hide_menubar"))->setChecked(menuBar()->isHidden());
 }
 
 MainWindow::~MainWindow()
@@ -132,7 +132,7 @@ void MainWindow::loadAllAccounts()
     qCDebug(CHOQOK);
 
     if (Choqok::BehaviorSettings::showSplashScreen()) {
-        const QPixmap splashpix(QStandardPaths::locate(QStandardPaths::DataLocation, "images/splash_screen.png"));
+        const QPixmap splashpix(QStandardPaths::locate(QStandardPaths::DataLocation, QLatin1String("images/splash_screen.png")));
         if (splashpix.isNull()) {
             qCCritical(CHOQOK) << "Splash screen pixmap is NULL!";
         } else {
@@ -206,19 +206,19 @@ void MainWindow::setupActions()
     actQuit = KStandardAction::quit(this, SLOT(slotQuit()), actionCollection());
     prefs = KStandardAction::preferences(this, SLOT(slotConfigChoqok()), actionCollection());
 
-    actUpdate = new QAction(QIcon::fromTheme("view-refresh"), i18n("Update Timelines"), this);
+    actUpdate = new QAction(QIcon::fromTheme(QLatin1String("view-refresh")), i18n("Update Timelines"), this);
     actionCollection()->addAction(QLatin1String("update_timeline"), actUpdate);
     actionCollection()->setDefaultShortcut(actUpdate, QKeySequence(Qt::Key_F5));
     KGlobalAccel::setGlobalShortcut(actUpdate, QKeySequence(Qt::CTRL | Qt::META | Qt::Key_F5));
     connect(actUpdate, SIGNAL(triggered(bool)), this, SIGNAL(updateTimelines()));
 
-    newTwit = new QAction(QIcon::fromTheme("document-new"), i18n("Quick Post"), this);
+    newTwit = new QAction(QIcon::fromTheme(QLatin1String("document-new")), i18n("Quick Post"), this);
     actionCollection()->addAction(QLatin1String("choqok_new_post"), newTwit);
     actionCollection()->setDefaultShortcut(newTwit, QKeySequence(Qt::CTRL | Qt::Key_T));
     KGlobalAccel::setGlobalShortcut(newTwit, QKeySequence(Qt::CTRL | Qt::META | Qt::Key_T));
     connect(newTwit, SIGNAL(triggered(bool)), this, SLOT(triggerQuickPost()));
 
-    QAction *markRead = new QAction(QIcon::fromTheme("mail-mark-read"), i18n("Mark All As Read"), this);
+    QAction *markRead = new QAction(QIcon::fromTheme(QLatin1String("mail-mark-read")), i18n("Mark All As Read"), this);
     actionCollection()->addAction(QLatin1String("choqok_mark_as_read"), markRead);
     actionCollection()->setDefaultShortcut(markRead, QKeySequence(Qt::CTRL | Qt::Key_R));
     connect(markRead, SIGNAL(triggered(bool)), this, SIGNAL(markAllAsRead()));
@@ -235,7 +235,7 @@ void MainWindow::setupActions()
 
     QAction *act = KStandardAction::configureNotifications(this, SLOT(slotConfNotifications()),
                    actionCollection());
-    actionCollection()->addAction("settings_notifications", act);
+    actionCollection()->addAction(QLatin1String("settings_notifications"), act);
 
     enableUpdates = new QAction(i18n("Enable Update Timer"), this);
     enableUpdates->setCheckable(true);
@@ -256,7 +256,7 @@ void MainWindow::setupActions()
     connect(hideMenuBar, SIGNAL(toggled(bool)), menuBar(), SLOT(setHidden(bool)));
     connect(hideMenuBar, SIGNAL(toggled(bool)), this, SLOT(slotShowSpecialMenu(bool)));
 
-    QAction *clearAvatarCache = new QAction(QIcon::fromTheme("edit-clear"), i18n("Clear Avatar Cache"), this);
+    QAction *clearAvatarCache = new QAction(QIcon::fromTheme(QLatin1String("edit-clear")), i18n("Clear Avatar Cache"), this);
     actionCollection()->addAction(QLatin1String("choqok_clear_avatar_cache"), clearAvatarCache);
     QString tip = i18n("You have to restart Choqok to load avatars again");
     clearAvatarCache->setToolTip(tip);
@@ -264,11 +264,11 @@ void MainWindow::setupActions()
     connect(clearAvatarCache, SIGNAL(triggered()),
             Choqok::MediaManager::self(), SLOT(clearImageCache()));
 
-    QAction *uploadMedium = new QAction(QIcon::fromTheme("arrow-up"), i18n("Upload Medium..."), this);
+    QAction *uploadMedium = new QAction(QIcon::fromTheme(QLatin1String("arrow-up")), i18n("Upload Medium..."), this);
     actionCollection()->addAction(QLatin1String("choqok_upload_medium"), uploadMedium);
     connect(uploadMedium, SIGNAL(triggered(bool)), this, SLOT(slotUploadMedium()));
 
-    QAction *donate = new QAction(QIcon::fromTheme("help-donate"), i18n("Donate"), this);
+    QAction *donate = new QAction(QIcon::fromTheme(QLatin1String("help-donate")), i18n("Donate"), this);
     actionCollection()->addAction(QLatin1String("choqok_donate"), donate);
     connect(donate, SIGNAL(triggered(bool)), this, SLOT(slotDonate()));
 }
@@ -396,17 +396,17 @@ void MainWindow::updateSysTray()
 void MainWindow::slotBehaviorConfigChanged()
 {
     if (Choqok::BehaviorSettings::notifyEnabled()) {
-        actionCollection()->action("choqok_enable_notify")->setChecked(true);
+        actionCollection()->action(QLatin1String("choqok_enable_notify"))->setChecked(true);
     } else {
-        actionCollection()->action("choqok_enable_notify")->setChecked(false);
+        actionCollection()->action(QLatin1String("choqok_enable_notify"))->setChecked(false);
     }
     if (Choqok::BehaviorSettings::updateInterval() > 0) {
         timelineTimer->setInterval(Choqok::BehaviorSettings::updateInterval() * 60000);
         timelineTimer->start();
-        actionCollection()->action("choqok_enable_updates")->setChecked(true);
+        actionCollection()->action(QLatin1String("choqok_enable_updates"))->setChecked(true);
     } else {
         timelineTimer->stop();
-        actionCollection()->action("choqok_enable_updates")->setChecked(false);
+        actionCollection()->action(QLatin1String("choqok_enable_updates"))->setChecked(false);
     }
 
     updateSysTray();
@@ -426,10 +426,10 @@ void MainWindow::disableApp()
     qCDebug(CHOQOK);
     timelineTimer->stop();
 //     qCDebug(CHOQOK)<<"timelineTimer stoped";
-    actionCollection()->action("update_timeline")->setEnabled(false);
-    actionCollection()->action("choqok_new_post")->setEnabled(false);
+    actionCollection()->action(QLatin1String("update_timeline"))->setEnabled(false);
+    actionCollection()->action(QLatin1String("choqok_new_post"))->setEnabled(false);
 //     actionCollection()->action( "choqok_search" )->setEnabled( false );
-    actionCollection()->action("choqok_mark_as_read")->setEnabled(false);
+    actionCollection()->action(QLatin1String("choqok_mark_as_read"))->setEnabled(false);
 //     actionCollection()->action( "choqok_now_listening" )->setEnabled( false );
 }
 
@@ -440,10 +440,10 @@ void MainWindow::enableApp()
         timelineTimer->start();
 //         qCDebug(CHOQOK)<<"timelineTimer started";
     }
-    actionCollection()->action("update_timeline")->setEnabled(true);
-    actionCollection()->action("choqok_new_post")->setEnabled(true);
+    actionCollection()->action(QLatin1String("update_timeline"))->setEnabled(true);
+    actionCollection()->action(QLatin1String("choqok_new_post"))->setEnabled(true);
 //     actionCollection()->action( "choqok_search" )->setEnabled( true );
-    actionCollection()->action("choqok_mark_as_read")->setEnabled(true);
+    actionCollection()->action(QLatin1String("choqok_mark_as_read"))->setEnabled(true);
 //     actionCollection()->action( "choqok_now_listening" )->setEnabled( true );
 }
 
@@ -522,7 +522,7 @@ void MainWindow::slotUpdateUnreadCount(int change, int sum)
             return;
         }
         if (sum > 0) {
-            mainWidget->setTabText(tabIndex, wd->currentAccount()->alias() + QString("(%1)").arg(sum));
+            mainWidget->setTabText(tabIndex, wd->currentAccount()->alias() + QString::fromLatin1("(%1)").arg(sum));
         } else {
             mainWidget->setTabText(tabIndex, wd->currentAccount()->alias());
         }
@@ -644,18 +644,18 @@ void MainWindow::slotShowSpecialMenu(bool show)
 {
     if (show) {
         if (!choqokMainButton) {
-            choqokMainButton = new QPushButton(QIcon::fromTheme("choqok"), QString(), mainWidget);
+            choqokMainButton = new QPushButton(QIcon::fromTheme(QLatin1String("choqok")), QString(), mainWidget);
             QMenu *menu = new QMenu(i18n("Choqok"), choqokMainButton);
-            menu->addAction(actionCollection()->action("choqok_new_post"));
-            menu->addAction(actionCollection()->action("update_timeline"));
-            menu->addAction(actionCollection()->action("choqok_mark_as_read"));
-            menu->addAction(actionCollection()->action("choqok_upload_medium"));
+            menu->addAction(actionCollection()->action(QLatin1String("choqok_new_post")));
+            menu->addAction(actionCollection()->action(QLatin1String("update_timeline")));
+            menu->addAction(actionCollection()->action(QLatin1String("choqok_mark_as_read")));
+            menu->addAction(actionCollection()->action(QLatin1String("choqok_upload_medium")));
             menu->addSeparator();
-            menu->addAction(actionCollection()->action("choqok_enable_updates"));
-            menu->addAction(actionCollection()->action("choqok_hide_menubar"));
+            menu->addAction(actionCollection()->action(QLatin1String("choqok_enable_updates")));
+            menu->addAction(actionCollection()->action(QLatin1String("choqok_hide_menubar")));
             menu->addAction(prefs);
             menu->addSeparator();
-            menu->addAction(actionCollection()->action("choqok_donate"));
+            menu->addAction(actionCollection()->action(QLatin1String("choqok_donate")));
             menu->addSeparator();
             menu->addAction(showMain);
             menu->addAction(actQuit);
@@ -673,6 +673,6 @@ void MainWindow::slotShowSpecialMenu(bool show)
 
 void MainWindow::slotDonate()
 {
-    Choqok::openUrl(QUrl("http://choqok.gnufolks.org/about/contribute/"));
+    Choqok::openUrl(QUrl(QLatin1String("http://choqok.gnufolks.org/about/contribute/")));
 }
 

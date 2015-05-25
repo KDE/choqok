@@ -46,12 +46,12 @@ K_PLUGIN_FACTORY_WITH_JSON(FilterManagerFactory, "choqok_filter.json",
                            registerPlugin < FilterManager > ();)
 
 FilterManager::FilterManager(QObject *parent, const QList<QVariant> &)
-    : Choqok::Plugin("choqok_filter", parent), state(Stopped)
+    : Choqok::Plugin(QLatin1String("choqok_filter"), parent), state(Stopped)
 {
     QAction *action = new QAction(i18n("Configure Filters..."), this);
-    actionCollection()->addAction("configureFilters", action);
+    actionCollection()->addAction(QLatin1String("configureFilters"), action);
     connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureFilters()));
-    setXMLFile("filterui.rc");
+    setXMLFile(QLatin1String("filterui.rc"));
     connect(Choqok::UI::Global::SessionManager::self(),
             SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
             SLOT(slotAddNewPostWidget(Choqok::UI::PostWidget*)));
@@ -113,7 +113,7 @@ void FilterManager::parse(Choqok::UI::PostWidget *postToParse)
         if (filter->filterAction() == Filter::Remove && filter->dontHideReplies() &&
                 (postToParse->currentPost()->replyToUserName.compare(postToParse->currentAccount()->username(),
                         Qt::CaseInsensitive) == 0 ||
-                 postToParse->currentPost()->content.contains(QString("@%1").arg(postToParse->currentAccount()->username())))
+                 postToParse->currentPost()->content.contains(QString::fromLatin1("@%1").arg(postToParse->currentAccount()->username())))
            ) {
             continue;
         }
@@ -184,7 +184,7 @@ void FilterManager::doFiltering(Choqok::UI::PostWidget *postToFilter, Filter::Fi
         break;
     case Filter::Highlight:
         css = postToFilter->styleSheet();
-        css.replace("border: 1px solid rgb(150,150,150)", "border: 2px solid rgb(255,0,0)");
+        css.replace(QLatin1String("border: 1px solid rgb(150,150,150)"), QLatin1String("border: 2px solid rgb(255,0,0)"));
         postToFilter->setStyleSheet(css);
         break;
     case Filter::None:

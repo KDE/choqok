@@ -71,14 +71,14 @@ void NotifyManager::success(const QString &message, const QString &title)
     if (Choqok::UI::Global::mainWindow()->isActiveWindow()) {
         choqokMainWindow->showStatusMessage(message);
     } else {
-        _nmp->triggerNotify("job-success", title, message);
+        _nmp->triggerNotify(QLatin1String("job-success"), title, message);
     }
 }
 
 void NotifyManager::error(const QString &message, const QString &title)
 {
     if (!_nmp->lastErrorMessages.contains(message)) {
-        _nmp->triggerNotify("job-error", title, message);
+        _nmp->triggerNotify(QLatin1String("job-error"), title, message);
         _nmp->lastErrorMessages.append(message);
         _nmp->lastErrorClearance.start();
     }
@@ -87,12 +87,12 @@ void NotifyManager::error(const QString &message, const QString &title)
 
 void NotifyManager::newPostArrived(const QString &message, const QString &title)
 {
-    QString fullMsg = QString("<b>%1:</b><br/>%2").arg(title).arg(message);
+    QString fullMsg = QString::fromLatin1("<b>%1:</b><br/>%2").arg(title).arg(message);
     if (Choqok::UI::Global::mainWindow()->isActiveWindow()) {
         choqokMainWindow->showStatusMessage(message);
     } else {
         if (Choqok::BehaviorSettings::knotify()) {
-            KNotification *n = new KNotification("new-post-arrived", choqokMainWindow);
+            KNotification *n = new KNotification(QLatin1String("new-post-arrived"), choqokMainWindow);
             n->setActions(QStringList(i18nc("Show Choqok MainWindow", "Show Choqok")));
             n->setText(fullMsg);
             QObject::connect(n, SIGNAL(activated(uint)), choqokMainWindow, SLOT(activateChoqok()));
@@ -103,13 +103,13 @@ void NotifyManager::newPostArrived(const QString &message, const QString &title)
 
 void NotifyManager::shortening(const QString &message, const QString &title)
 {
-    _nmp->triggerNotify("shortening", title, message);
+    _nmp->triggerNotify(QLatin1String("shortening"), title, message);
 }
 
 void NotifyManagerPrivate::triggerNotify(const QString &eventId, const QString &title,
         const QString &message, KNotification::NotificationFlags flags)
 {
-    QString fullMsg = QString("<b>%1:</b><br/>%2").arg(title).arg(message);
+    QString fullMsg = QString::fromLatin1("<b>%1:</b><br/>%2").arg(title).arg(message);
     KNotification::event(eventId, fullMsg, QPixmap(), Choqok::UI::Global::mainWindow(), flags);
 }
 

@@ -34,7 +34,7 @@ K_PLUGIN_FACTORY_WITH_JSON(Tinyarro_wsFactory, "choqok_tinyarro_ws.json",
                            registerPlugin < Tinyarro_ws > ();)
 
 Tinyarro_ws::Tinyarro_ws(QObject *parent, const QVariantList &)
-    : Choqok::Shortener("choqok_tinyarro_ws", parent)
+    : Choqok::Shortener(QLatin1String("choqok_tinyarro_ws"), parent)
 {
 }
 
@@ -44,16 +44,16 @@ Tinyarro_ws::~Tinyarro_ws()
 
 QString Tinyarro_ws::shorten(const QString &url)
 {
-    QUrl reqUrl("http://tinyarro.ws/api-create.php");
+    QUrl reqUrl(QLatin1String("http://tinyarro.ws/api-create.php"));
 
     Tinyarro_ws_Settings::self()->load();
 
     if (!Tinyarro_ws_Settings::tinyarro_ws_host_punny().isEmpty() ||
-            Tinyarro_ws_Settings::tinyarro_ws_host_punny() != "Random") {
-        reqUrl.addQueryItem("host", Tinyarro_ws_Settings::tinyarro_ws_host_punny());
+            Tinyarro_ws_Settings::tinyarro_ws_host_punny() != QLatin1String("Random")) {
+        reqUrl.addQueryItem(QLatin1String("host"), Tinyarro_ws_Settings::tinyarro_ws_host_punny());
     }
-    reqUrl.addQueryItem("utfpure", "1");
-    reqUrl.addQueryItem("url", QUrl(url).url());
+    reqUrl.addQueryItem(QLatin1String("utfpure"), QLatin1String("1"));
+    reqUrl.addQueryItem(QLatin1String("url"), QUrl(url).url());
 
     KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
     job->exec();
@@ -62,7 +62,7 @@ QString Tinyarro_ws::shorten(const QString &url)
         QString output = QString::fromUtf8(job->data());
 
         if (!output.isEmpty()) {
-            if (output.startsWith(QString("http://"))) {
+            if (output.startsWith(QString::fromLatin1("http://"))) {
                 return output;
             }
         }

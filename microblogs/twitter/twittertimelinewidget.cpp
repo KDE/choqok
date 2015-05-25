@@ -26,7 +26,7 @@ TwitterTimelineWidget::TwitterTimelineWidget(Choqok::Account *account, const QSt
         QWidget *parent)
     : TwitterApiTimelineWidget(account, timelineName, parent)
 {
-    if (timelineName.startsWith('@')) {
+    if (timelineName.startsWith(QLatin1Char('@'))) {
         setClosable();
     }
 }

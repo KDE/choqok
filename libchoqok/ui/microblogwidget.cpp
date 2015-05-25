@@ -274,7 +274,7 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change, Choqok::UI::TimelineWidg
     if (sum > 0) {
         if (!d->btnMarkAllAsRead) {
             d->btnMarkAllAsRead = new QPushButton(this);
-            d->btnMarkAllAsRead->setIcon(QIcon::fromTheme("mail-mark-read"));
+            d->btnMarkAllAsRead->setIcon(QIcon::fromTheme(QLatin1String("mail-mark-read")));
             d->btnMarkAllAsRead->setIconSize(QSize(14, 14));
             d->btnMarkAllAsRead->setToolTip(i18n("Mark all timelines as read"));
             d->btnMarkAllAsRead->setMaximumWidth(d->btnMarkAllAsRead->height());
@@ -298,7 +298,7 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change, Choqok::UI::TimelineWidg
         if (wd->unreadCount() > 0) {
             d->timelinesTabWidget->setTabIcon(tabIndex , addNumToIcon(timelinesTabWidget()->tabIcon(tabIndex) , wd->unreadCount() , QSize(40, 40) , palette()));
             d->timelinesTabWidget->setTabText(tabIndex, wd->timelineInfoName() +
-                                              QString("(%1)").arg(wd->unreadCount()));
+                                              QString::fromLatin1("(%1)").arg(wd->unreadCount()));
         } else {
             if (!wd->timelineIconName().isEmpty()) {
                 d->timelinesTabWidget->setTabIcon(tabIndex , QIcon::fromTheme(wd->timelineIconName()));

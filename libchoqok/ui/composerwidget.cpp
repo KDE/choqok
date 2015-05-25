@@ -66,7 +66,7 @@ ComposerWidget::ComposerWidget(Choqok::Account *account, QWidget *parent /*= 0*/
 
     d->replyToUsernameLabel = new QLabel(editorContainer());
     d->btnCancelReply = new QPushButton(editorContainer());
-    d->btnCancelReply->setIcon(QIcon::fromTheme("dialog-cancel"));
+    d->btnCancelReply->setIcon(QIcon::fromTheme(QLatin1String("dialog-cancel")));
     d->btnCancelReply->setToolTip(i18n("Discard Reply"));
     d->btnCancelReply->setMaximumWidth(d->btnCancelReply->height());
     connect(d->btnCancelReply, SIGNAL(clicked(bool)), SLOT(editorCleared()));
@@ -136,7 +136,7 @@ void ComposerWidget::submitPost(const QString &txt)
             SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
                              QString, Choqok::MicroBlog::ErrorLevel)),
             SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
-    btnAbort = new QPushButton(QIcon::fromTheme("dialog-cancel"), i18n("Abort"), this);
+    btnAbort = new QPushButton(QIcon::fromTheme(QLatin1String("dialog-cancel")), i18n("Abort"), this);
     layout()->addWidget(btnAbort);
     connect(btnAbort, SIGNAL(clicked(bool)), SLOT(abort()));
     currentAccount()->microblog()->createPost(currentAccount(), d->postToSubmit);

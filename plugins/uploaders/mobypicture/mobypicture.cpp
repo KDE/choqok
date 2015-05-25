@@ -44,7 +44,7 @@ K_PLUGIN_FACTORY_WITH_JSON(MobypictureFactory, "choqok_mobypicture.json",
                            registerPlugin < Mobypicture > ();)
 
 Mobypicture::Mobypicture(QObject *parent, const QList<QVariant> &)
-    : Choqok::Uploader("choqok_mobypicture", parent)
+    : Choqok::Uploader(QLatin1String("choqok_mobypicture"), parent)
 {
 }
 
@@ -69,17 +69,17 @@ void Mobypicture::upload(const QUrl &localUrl, const QByteArray &medium, const Q
             return;
         }
 
-        QUrl url("https://api.mobypicture.com/2.0/upload");
+        QUrl url(QLatin1String("https://api.mobypicture.com/2.0/upload"));
 
         QMap<QString, QByteArray> formdata;
-        formdata["key"] = apiKey;
-        formdata["message"] = QString().toUtf8();
+        formdata[QLatin1String("key")] = apiKey;
+        formdata[QLatin1String("message")] = QString().toUtf8();
 
         QMap<QString, QByteArray> mediafile;
-        mediafile["name"] = "media";
-        mediafile["filename"] = localUrl.fileName().toUtf8();
-        mediafile["mediumType"] = mediumType;
-        mediafile["medium"] = medium;
+        mediafile[QLatin1String("name")] = "media";
+        mediafile[QLatin1String("filename")] = localUrl.fileName().toUtf8();
+        mediafile[QLatin1String("mediumType")] = mediumType;
+        mediafile[QLatin1String("medium")] = medium;
         QList< QMap<QString, QByteArray> > listMediafiles;
         listMediafiles.append(mediafile);
 
@@ -87,40 +87,40 @@ void Mobypicture::upload(const QUrl &localUrl, const QByteArray &medium, const Q
 
         job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
         QOAuth::ParamMap params;
-        QString requrl = "https://api.twitter.com/1/account/verify_credentials.json";
+        QString requrl = QLatin1String("https://api.twitter.com/1/account/verify_credentials.json");
         QByteArray credentials = acc->oauthInterface()->createParametersString(requrl,
                                  QOAuth::GET, acc->oauthToken(),
                                  acc->oauthTokenSecret(),
                                  QOAuth::HMAC_SHA1,
                                  params, QOAuth::ParseForHeaderArguments);
 
-        QString cHeader = "X-Verify-Credentials-Authorization: " +  QString(credentials) + "\r\n";
-        cHeader.append("X-Auth-Service-Provider: https://api.twitter.com/1/account/verify_credentials.json");
-        job->addMetaData("customHTTPHeader", cHeader);
+        QString cHeader = QLatin1String("X-Verify-Credentials-Authorization: ") +  QLatin1String(credentials) + QLatin1String("\r\n");
+        cHeader.append(QLatin1String("X-Auth-Service-Provider: https://api.twitter.com/1/account/verify_credentials.json"));
+        job->addMetaData(QLatin1String("customHTTPHeader"), cHeader);
     } else if (MobypictureSettings::basic()) {
-        QUrl url("https://api.mobypicture.com");
+        QUrl url(QLatin1String("https://api.mobypicture.com"));
         QString login = MobypictureSettings::login();
-        QString pass = Choqok::PasswordManager::self()->readPassword(QString("mobypicture_%1")
+        QString pass = Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("mobypicture_%1")
                        .arg(MobypictureSettings::login()));
         QMap<QString, QByteArray> formdata;
-        formdata["k"] = apiKey;
-        formdata["u"] = login.toUtf8();
-        formdata["p"] = pass.toUtf8();
-        formdata["s"] = "none";
-        formdata["format"] = "json";
+        formdata[QLatin1String("k")] = apiKey;
+        formdata[QLatin1String("u")] = login.toUtf8();
+        formdata[QLatin1String("p")] = pass.toUtf8();
+        formdata[QLatin1String("s")] = "none";
+        formdata[QLatin1String("format")] = "json";
 
         QMap<QString, QByteArray> mediafile;
-        mediafile["name"] = "i";
-        mediafile["filename"] = localUrl.fileName().toUtf8();
-        mediafile["mediumType"] = mediumType;
-        mediafile["medium"] = medium;
+        mediafile[QLatin1String("name")] = "i";
+        mediafile[QLatin1String("filename")] = localUrl.fileName().toUtf8();
+        mediafile[QLatin1String("mediumType")] = mediumType;
+        mediafile[QLatin1String("medium")] = medium;
         QList< QMap<QString, QByteArray> > listMediafiles;
         listMediafiles.append(mediafile);
         QByteArray data = Choqok::MediaManager::createMultipartFormData(formdata, listMediafiles);
 
         job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
         job->addMetaData(QStringLiteral("Authorization"),
-                         QStringLiteral("Basic ") + QString("%1:%2").arg(login).arg(pass).toUtf8().toBase64());
+                         QStringLiteral("Basic ") + QLatin1String(QString::fromLatin1("%1:%2").arg(login).arg(pass).toUtf8().toBase64()));
     }
 
     if (!job) {
@@ -149,19 +149,19 @@ void Mobypicture::slotUpload(KJob *job)
         if (!json.isNull()) {
             const QVariantMap map = json.toVariant().toMap();
             if (MobypictureSettings::oauth()) {
-                if (map.contains("errors")) {
-                    QVariantMap err = map.value("errors").toMap();
-                    Q_EMIT uploadingFailed(localUrl, err.value("message").toString());
-                } else if (map.contains("media")) {
-                    QVariantMap media = map.value("media").toMap();
-                    Q_EMIT mediumUploaded(localUrl, media.value("mediaurl").toString());
+                if (map.contains(QLatin1String("errors"))) {
+                    QVariantMap err = map.value(QLatin1String("errors")).toMap();
+                    Q_EMIT uploadingFailed(localUrl, err.value(QLatin1String("message")).toString());
+                } else if (map.contains(QLatin1String("media"))) {
+                    QVariantMap media = map.value(QLatin1String("media")).toMap();
+                    Q_EMIT mediumUploaded(localUrl, media.value(QLatin1String("mediaurl")).toString());
                 }
             }
             if (MobypictureSettings::basic()) {
-                if (map.value("result") == "0" &&  map.contains("url")) {
-                    Q_EMIT mediumUploaded(localUrl, map.value("url").toString());
+                if (map.value(QLatin1String("result")) == QLatin1String("0") &&  map.contains(QLatin1String("url"))) {
+                    Q_EMIT mediumUploaded(localUrl, map.value(QLatin1String("url")).toString());
                 } else {
-                    Q_EMIT uploadingFailed(localUrl, map.value("message").toString());
+                    Q_EMIT uploadingFailed(localUrl, map.value(QLatin1String("message")).toString());
                 }
             }
         } else {

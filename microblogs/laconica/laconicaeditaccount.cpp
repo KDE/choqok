@@ -81,12 +81,12 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
         QString servName = newAccountAlias;
         int counter = 1;
         while (Choqok::AccountManager::self()->findAccount(newAccountAlias)) {
-            newAccountAlias = QString("%1%2").arg(servName).arg(counter);
+            newAccountAlias = QString::fromLatin1("%1%2").arg(servName).arg(counter);
             counter++;
         }
         setAccount(mAccount = new LaconicaAccount(microblog, newAccountAlias));
         kcfg_alias->setText(newAccountAlias);
-        const QRegExp userRegExp("([a-z0-9]){1,64}", Qt::CaseInsensitive);
+        const QRegExp userRegExp(QLatin1String("([a-z0-9]){1,64}"), Qt::CaseInsensitive);
         QValidator *userVal = new QRegExpValidator(userRegExp, 0);
         kcfg_basicUsername->setValidator(userVal);
     }
@@ -217,7 +217,7 @@ Choqok::Account *LaconicaEditAccountWidget::apply()
 
 void LaconicaEditAccountWidget::setTextLimit()
 {
-    QString url = mAccount->host() + '/' + mAccount->api() + "/statusnet/config.json";
+    QString url = mAccount->host() + QLatin1Char('/') + mAccount->api() + QLatin1String("/statusnet/config.json");
     KIO::StoredTransferJob *job = KIO::storedGet(QUrl(url), KIO::Reload, KIO::HideProgressInfo);
     job->exec();
     if (job->error()) {
@@ -227,9 +227,9 @@ void LaconicaEditAccountWidget::setTextLimit()
 
     const QJsonDocument json = QJsonDocument::fromJson(job->data());
     if (!json.isNull()) {
-        const QVariantMap siteInfos = json.toVariant().toMap()["site"].toMap();
+        const QVariantMap siteInfos = json.toVariant().toMap()[QLatin1String("site")].toMap();
         bool ok;
-        mAccount->setPostCharLimit(siteInfos["textlimit"].toUInt(&ok));
+        mAccount->setPostCharLimit(siteInfos[QLatin1String("textlimit")].toUInt(&ok));
         if (!ok) {
             qCDebug(CHOQOK) << "Cannot parse text limit value";
             mAccount->setPostCharLimit(140);
@@ -299,7 +299,7 @@ void LaconicaEditAccountWidget::slotCheckHostUrl()
 {
     if (!kcfg_host->text().isEmpty() && !kcfg_host->text().startsWith(QLatin1String("http"),
             Qt::CaseInsensitive)) {
-        kcfg_host->setText(kcfg_host->text().prepend("http://"));
+        kcfg_host->setText(kcfg_host->text().prepend(QLatin1String("http://")));
     }
 }
 

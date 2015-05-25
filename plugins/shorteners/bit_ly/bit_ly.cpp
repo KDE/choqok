@@ -35,7 +35,7 @@ K_PLUGIN_FACTORY_WITH_JSON(Bit_lyFactory, "choqok_bit_ly.json",
                            registerPlugin < Bit_ly > ();)
 
 Bit_ly::Bit_ly(QObject *parent, const QVariantList &)
-    : Choqok::Shortener("choqok_bit_ly", parent)
+    : Choqok::Shortener(QLatin1String("choqok_bit_ly"), parent)
 {
 }
 
@@ -45,47 +45,47 @@ Bit_ly::~Bit_ly()
 
 QString Bit_ly::shorten(const QString &url)
 {
-    QString login = "choqok";
-    QString apiKey = "R_bdd1ae8b6191dd36e13fc77ca1d4f27f";
-    QUrl reqUrl("http://api.bit.ly/v3/shorten");
+    QString login = QLatin1String("choqok");
+    QString apiKey = QLatin1String("R_bdd1ae8b6191dd36e13fc77ca1d4f27f");
+    QUrl reqUrl(QLatin1String("http://api.bit.ly/v3/shorten"));
     Bit_ly_Settings::self()->load();
-    QString userApiKey = Choqok::PasswordManager::self()->readPassword(QString("bitly_%1")
+    QString userApiKey = Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("bitly_%1")
                          .arg(Bit_ly_Settings::login()));
     if (!Bit_ly_Settings::login().isEmpty() && !userApiKey.isEmpty()) {
-        reqUrl.addQueryItem("x_login", Bit_ly_Settings::login());
-        reqUrl.addQueryItem("x_apiKey", userApiKey);
+        reqUrl.addQueryItem(QLatin1String("x_login"), Bit_ly_Settings::login());
+        reqUrl.addQueryItem(QLatin1String("x_apiKey"), userApiKey);
     }
 
-    if (Bit_ly_Settings::domain() == "j.mp") { //bit.ly is default domain
-        reqUrl.addQueryItem("domain", "j.mp");
+    if (Bit_ly_Settings::domain() == QLatin1String("j.mp")) { //bit.ly is default domain
+        reqUrl.addQueryItem(QLatin1String("domain"), QLatin1String("j.mp"));
     }
 
-    reqUrl.addQueryItem("login", login.toUtf8());
-    reqUrl.addQueryItem("apiKey", apiKey.toUtf8());
-    reqUrl.addQueryItem("longUrl", QUrl(url).url());
-    reqUrl.addQueryItem("format", "txt");
+    reqUrl.addQueryItem(QLatin1String("login"), QLatin1String(login.toUtf8()));
+    reqUrl.addQueryItem(QLatin1String("apiKey"), QLatin1String(apiKey.toUtf8()));
+    reqUrl.addQueryItem(QLatin1String("longUrl"), QUrl(url).url());
+    reqUrl.addQueryItem(QLatin1String("format"), QLatin1String("txt"));
 
     KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
     job->exec();
 
     if (!job->error()) {
         const QByteArray data = job->data();
-        QString output(data);
-        QRegExp rx(QString("(http://((.*)+)/([a-zA-Z0-9])+)"));
+        QString output = QLatin1String(data);
+        QRegExp rx(QString::fromLatin1("(http://((.*)+)/([a-zA-Z0-9])+)"));
         rx.indexIn(output);
         QString bitlyUrl = rx.cap(0);
         if (!bitlyUrl.isEmpty()) {
             return bitlyUrl;
         }
 
-        QString err = QString(data);
-        if (output.startsWith(QString("INVALID_X_APIKEY"))) {
+        QString err = QLatin1String(data);
+        if (output.startsWith(QString::fromLatin1("INVALID_X_APIKEY"))) {
             err = i18n("API key is invalid");
         }
-        if (output.startsWith(QString("INVALID_X_LOGIN"))) {
+        if (output.startsWith(QString::fromLatin1("INVALID_X_LOGIN"))) {
             err = i18n("Login is invalid");
         }
-        if (output.startsWith(QString("RATE_LIMIT_EXCEEDED"))) {
+        if (output.startsWith(QString::fromLatin1("RATE_LIMIT_EXCEEDED"))) {
             err = i18n("Rate limit exceeded. Try another shortener.");
         }
 

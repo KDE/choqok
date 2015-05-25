@@ -44,19 +44,19 @@
 #include "laconicamicroblog.h"
 #include "laconicasearch.h"
 
-const QRegExp LaconicaPostWidget::mGroupRegExp("([\\s]|^)!([a-z0-9]+){1,64}",  Qt::CaseInsensitive);
-const QRegExp LaconicaPostWidget::mLaconicaUserRegExp("([\\s\\W]|^)@([a-z0-9_]+){1,64}(?!(@))", Qt::CaseInsensitive);
-const QRegExp LaconicaPostWidget::mLaconicaHashRegExp("([\\s]|^)#([\\w_\\.\\-]+)", Qt::CaseInsensitive);
+const QRegExp LaconicaPostWidget::mGroupRegExp(QLatin1String("([\\s]|^)!([a-z0-9]+){1,64}"),  Qt::CaseInsensitive);
+const QRegExp LaconicaPostWidget::mLaconicaUserRegExp(QLatin1String("([\\s\\W]|^)@([a-z0-9_]+){1,64}(?!(@))"), Qt::CaseInsensitive);
+const QRegExp LaconicaPostWidget::mLaconicaHashRegExp(QLatin1String("([\\s]|^)#([\\w_\\.\\-]+)"), Qt::CaseInsensitive);
 
-const QString subdomains = "(([a-z0-9-_]\\.)?)";
-const QString dname = "(([a-z0-9-\\x0080-\\xFFFF]){1,63}\\.)+";
-const QString zone("((a[cdefgilmnoqrstuwxz])|(b[abdefghijlmnorstvwyz])|(c[acdfghiklmnoruvxyz])|(d[ejkmoz])|(e[ceghrstu])|\
+const QString subdomains = QLatin1String("(([a-z0-9-_]\\.)?)");
+const QString dname = QLatin1String("(([a-z0-9-\\x0080-\\xFFFF]){1,63}\\.)+");
+const QString zone = QLatin1String("((a[cdefgilmnoqrstuwxz])|(b[abdefghijlmnorstvwyz])|(c[acdfghiklmnoruvxyz])|(d[ejkmoz])|(e[ceghrstu])|\
 (f[ijkmor])|(g[abdefghilmnpqrstuwy])|(h[kmnrtu])|(i[delmnoqrst])|(j[emop])|(k[eghimnprwyz])|(l[abcikrstuvy])|\
 (m[acdefghklmnopqrstuvwxyz])|(n[acefgilopruz])|(om)|(p[aefghklnrstwy])|(qa)|(r[eosuw])|(s[abcdeghijklmnortuvyz])|\
 (t[cdfghjkmnoprtvwz])|(u[agksyz])|(v[aceginu])|(w[fs])|(ye)|(z[amrw])\
 |(asia|com|info|net|org|biz|name|pro|aero|cat|coop|edu|jobs|mobi|museum|tel|travel|gov|int|mil|local)|(中国)|(公司)|(网络)|(صر)|(امارات)|(рф))");
-const QString domain = '(' + subdomains + dname + zone + ')';
-const QRegExp LaconicaPostWidget::mStatusNetUserRegExp("([\\s\\W]|^)@(([a-z0-9]+){1,64}@" + domain + ')', Qt::CaseInsensitive);
+const QString domain = QLatin1Char('(') + subdomains + dname + zone + QLatin1Char(')');
+const QRegExp LaconicaPostWidget::mStatusNetUserRegExp(QLatin1String("([\\s\\W]|^)@(([a-z0-9]+){1,64}@") + domain + QLatin1Char(')'), Qt::CaseInsensitive);
 
 class LaconicaPostWidget::Private
 {
@@ -81,7 +81,7 @@ void LaconicaPostWidget::initUi()
 {
     TwitterApiPostWidget::initUi();
 
-    QPushButton *btn = buttons().value("btnResend");
+    QPushButton *btn = buttons().value(QLatin1String("btnResend"));
 
     if (btn) {
         QMenu *menu = new QMenu(btn);
@@ -106,7 +106,7 @@ void LaconicaPostWidget::slotReplyToAll()
     QStringList nicks;
     nicks.append(currentPost()->author.userName);
 
-    QString txt = QString("@%1 ").arg(currentPost()->author.userName);
+    QString txt = QString::fromLatin1("@%1 ").arg(currentPost()->author.userName);
 
     int pos = 0;
     while ((pos = mLaconicaUserRegExp.indexIn(currentPost()->content, pos)) != -1) {
@@ -114,7 +114,7 @@ void LaconicaPostWidget::slotReplyToAll()
                 mLaconicaUserRegExp.cap(2).toLower() != currentPost()->author.userName &&
                 !nicks.contains(mLaconicaUserRegExp.cap(2).toLower())) {
             nicks.append(mLaconicaUserRegExp.cap(2));
-            txt += QString("@%1 ").arg(mLaconicaUserRegExp.cap(2));
+            txt += QString::fromLatin1("@%1 ").arg(mLaconicaUserRegExp.cap(2));
         }
         pos += mLaconicaUserRegExp.matchedLength();
     }
@@ -127,10 +127,10 @@ void LaconicaPostWidget::slotReplyToAll()
 QString LaconicaPostWidget::prepareStatus(const QString &text)
 {
     QString res = TwitterApiPostWidget::prepareStatus(text);
-    res.replace(mStatusNetUserRegExp, "\\1@<a href='user://\\2'>\\2</a>");
-    res.replace(mLaconicaUserRegExp, "\\1@<a href='user://\\2'>\\2</a>");
-    res.replace(mGroupRegExp, "\\1!<a href='group://\\2'>\\2</a>");
-    res.replace(mLaconicaHashRegExp, "\\1#<a href='tag://\\2'>\\2</a>");
+    res.replace(mStatusNetUserRegExp, QLatin1String("\\1@<a href='user://\\2'>\\2</a>"));
+    res.replace(mLaconicaUserRegExp, QLatin1String("\\1@<a href='user://\\2'>\\2</a>"));
+    res.replace(mGroupRegExp, QLatin1String("\\1!<a href='group://\\2'>\\2</a>"));
+    res.replace(mLaconicaHashRegExp, QLatin1String("\\1#<a href='tag://\\2'>\\2</a>"));
 
     return res;
 }
@@ -144,16 +144,16 @@ void LaconicaPostWidget::checkAnchor(const QUrl &url)
 {
     QString scheme = url.scheme();
     QAction *ret;
-    if (scheme == "tag") {
+    if (scheme == QLatin1String("tag")) {
         QString unpcode = QUrl::fromPunycode(url.host().toUtf8());
-        unpcode.remove('.');
-        unpcode.remove('-');
-        unpcode.remove('_');
+        unpcode.remove(QLatin1Char('.'));
+        unpcode.remove(QLatin1Char('-'));
+        unpcode.remove(QLatin1Char('_'));
 
         QMenu menu;
-        QAction *search = new QAction(QIcon::fromTheme("system-search"),
+        QAction *search = new QAction(QIcon::fromTheme(QLatin1String("system-search")),
                                       i18n("Search for %1", unpcode), &menu);
-        QAction *openInBrowser = new QAction(QIcon::fromTheme("applications-internet"),
+        QAction *openInBrowser = new QAction(QIcon::fromTheme(QLatin1String("applications-internet")),
                                              i18n("Open tag page in browser"), &menu);
         menu.addAction(search);
         menu.addAction(openInBrowser);
@@ -165,13 +165,13 @@ void LaconicaPostWidget::checkAnchor(const QUrl &url)
                     LaconicaSearch::ReferenceHashtag);
         } else if (ret == openInBrowser) {
             Choqok::openUrl(QUrl(d->account->homepageUrl().toDisplayString() +
-                                 "/tag/" + unpcode));
+                                 QLatin1String("/tag/") + unpcode));
         }
-    } else if (scheme == "group") {
+    } else if (scheme == QLatin1String("group")) {
         QMenu menu;
-        QAction *search = new QAction(QIcon::fromTheme("system-search"),
+        QAction *search = new QAction(QIcon::fromTheme(QLatin1String("system-search")),
                                       i18n("Show latest group posts"), &menu);
-        QAction *openInBrowser = new QAction(QIcon::fromTheme("applications-internet"),
+        QAction *openInBrowser = new QAction(QIcon::fromTheme(QLatin1String("applications-internet")),
                                              i18n("Open group page in browser"), &menu);
         menu.addAction(search);
         menu.addAction(openInBrowser);
@@ -183,23 +183,23 @@ void LaconicaPostWidget::checkAnchor(const QUrl &url)
                     LaconicaSearch::ReferenceGroup);
         } else if (ret == openInBrowser) {
             Choqok::openUrl(QUrl(d->account->homepageUrl().toDisplayString() +
-                                 "/group/" + url.host()));
+                                 QLatin1String("/group/") + url.host()));
         }
-    } else if (scheme == "user") {
-        QString username = (url.userName().isEmpty() ? "" : QString("%1@").arg(url.userName())) +
+    } else if (scheme == QLatin1String("user")) {
+        QString username = (url.userName().isEmpty() ? QString() : QString::fromLatin1("%1@").arg(url.userName())) +
                            url.host();
         QMenu menu;
-        QAction *info = new QAction(QIcon::fromTheme("user-identity"), i18nc("Who is user", "Who is %1",
+        QAction *info = new QAction(QIcon::fromTheme(QLatin1String("user-identity")), i18nc("Who is user", "Who is %1",
                                     username), &menu);
-        QAction *from = new QAction(QIcon::fromTheme("edit-find-user"), i18nc("Posts from user", "Posts from %1",
+        QAction *from = new QAction(QIcon::fromTheme(QLatin1String("edit-find-user")), i18nc("Posts from user", "Posts from %1",
                                     username), &menu);
-        QAction *to = new QAction(QIcon::fromTheme("meeting-attending"), i18nc("Replies to user", "Replies to %1",
+        QAction *to = new QAction(QIcon::fromTheme(QLatin1String("meeting-attending")), i18nc("Replies to user", "Replies to %1",
                                   username), &menu);
-        QAction *openInBrowser = new QAction(QIcon::fromTheme("applications-internet"),
+        QAction *openInBrowser = new QAction(QIcon::fromTheme(QLatin1String("applications-internet")),
                                              i18nc("Open profile page in browser",
                                                      "Open profile in browser"), &menu);
         menu.addAction(info);
-        if (currentPost()->source != "ostatus") {
+        if (currentPost()->source != QLatin1String("ostatus")) {
             menu.addAction(from);
             menu.addAction(to);
             from->setData(LaconicaSearch::FromUser);
@@ -214,29 +214,29 @@ void LaconicaPostWidget::checkAnchor(const QUrl &url)
         QAction *subscribe = 0, *block = 0, *replyTo = 0, *dMessage = 0;
         if (accountUsername != postUsername) {
             menu.addSeparator();
-            QMenu *actionsMenu = menu.addMenu(QIcon::fromTheme("applications-system"), i18n("Actions"));
-            replyTo = new QAction(QIcon::fromTheme("edit-undo"), i18nc("Write a message to user attention", "Write to %1",
+            QMenu *actionsMenu = menu.addMenu(QIcon::fromTheme(QLatin1String("applications-system")), i18n("Actions"));
+            replyTo = new QAction(QIcon::fromTheme(QLatin1String("edit-undo")), i18nc("Write a message to user attention", "Write to %1",
                                   username), actionsMenu);
             actionsMenu->addAction(replyTo);
             if (d->account->friendsList().contains(username)) {
-                dMessage = new QAction(QIcon::fromTheme("mail-message-new"), i18nc("Send direct message to user",
+                dMessage = new QAction(QIcon::fromTheme(QLatin1String("mail-message-new")), i18nc("Send direct message to user",
                                        "Send private message to %1",
                                        username), actionsMenu);
                 actionsMenu->addAction(dMessage);
                 isSubscribe = false;//It's UnSubscribe
-                subscribe = new QAction(QIcon::fromTheme("list-remove-user"),
+                subscribe = new QAction(QIcon::fromTheme(QLatin1String("list-remove-user")),
                                         i18nc("Unsubscribe from user",
                                               "Unsubscribe from %1", username), actionsMenu);
             } else {
                 isSubscribe = true;
-                subscribe = new QAction(QIcon::fromTheme("list-add-user"),
+                subscribe = new QAction(QIcon::fromTheme(QLatin1String("list-add-user")),
                                         i18nc("Subscribe to user",
                                               "Subscribe to %1", username), actionsMenu);
             }
-            block = new QAction(QIcon::fromTheme("dialog-cancel"),
+            block = new QAction(QIcon::fromTheme(QLatin1String("dialog-cancel")),
                                 i18nc("Block user",
                                       "Block %1", username), actionsMenu);
-            if (currentPost()->source != "ostatus") {
+            if (currentPost()->source != QLatin1String("ostatus")) {
                 actionsMenu->addAction(subscribe);
                 actionsMenu->addAction(block);
             }
@@ -268,7 +268,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl &url)
             }
             return;
         } else if (ret == replyTo) {
-            Q_EMIT reply(QString("@%1").arg(username), QString(), username);
+            Q_EMIT reply(QString::fromLatin1("@%1").arg(username), QString(), username);
             return;
         } else if (ret == dMessage) {
             d->mBlog->showDirectMessageDialog(d->account, username);
@@ -278,7 +278,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl &url)
         d->mBlog->searchBackend()->requestSearchResults(currentAccount(),
                 url.host(),
                 type);
-    } else if (scheme == "conversation") {
+    } else if (scheme == QLatin1String("conversation")) {
         LaconicaConversationTimelineWidget *tm = new LaconicaConversationTimelineWidget(currentAccount(),
                 url.host());
         connect(tm, SIGNAL(forwardReply(QString,QString,QString)), this, SIGNAL(reply(QString,QString,QString)));

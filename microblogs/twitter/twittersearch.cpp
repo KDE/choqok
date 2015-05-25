@@ -37,20 +37,20 @@
 #include "twitteraccount.h"
 #include "twitterdebug.h"
 
-const QRegExp TwitterSearch::m_rId("tag:search.twitter.com,[0-9]+:([0-9]+)");
+const QRegExp TwitterSearch::m_rId(QLatin1String("tag:search.twitter.com,[0-9]+:([0-9]+)"));
 
 TwitterSearch::TwitterSearch(QObject *parent): TwitterApiSearch(parent)
 {
     qCDebug(CHOQOK);
     mSearchCode[CustomSearch].clear();
-    mSearchCode[ToUser] = "to:";
-    mSearchCode[FromUser] = "from:";
-    mSearchCode[ReferenceUser] = '@';
-    mSearchCode[ReferenceHashtag] = '#';
+    mSearchCode[ToUser] = QLatin1String("to:");
+    mSearchCode[FromUser] = QLatin1String("from:");
+    mSearchCode[ReferenceUser] = QLatin1Char('@');
+    mSearchCode[ReferenceHashtag] = QLatin1Char('#');
 
     mI18nSearchCode[CustomSearch].clear();
-    mI18nSearchCode[ReferenceUser] = '@';
-    mI18nSearchCode[ReferenceHashtag] = '#';
+    mI18nSearchCode[ReferenceUser] = QLatin1Char('@');
+    mI18nSearchCode[ReferenceHashtag] = QLatin1Char('#');
     mI18nSearchCode[ToUser] = i18nc("Posts sent to user", "To:");
     mI18nSearchCode[FromUser] = i18nc("Posts from user, Sent by user", "From:");
 
@@ -81,13 +81,13 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
     int option = searchInfo.option;
 
     QString formattedQuery = mSearchCode[option] + query;
-    QUrl url("https://api.twitter.com/1.1/search/tweets.json");
+    QUrl url(QLatin1String("https://api.twitter.com/1.1/search/tweets.json"));
     QUrl tmpUrl(url);
-    url.addQueryItem("q", formattedQuery);
+    url.addQueryItem(QLatin1String("q"), formattedQuery);
     QString q = url.query();
-    param.insert("q", q.mid(q.indexOf('=') + 1).toLatin1());
+    param.insert("q", q.mid(q.indexOf(QLatin1Char('=')) + 1).toLatin1());
     if (!sinceStatusId.isEmpty()) {
-        url.addQueryItem("since_id", sinceStatusId);
+        url.addQueryItem(QLatin1String("since_id"), sinceStatusId);
         param.insert("since_id", sinceStatusId.toLatin1());
     }
     int cntStr = Choqok::BehaviorSettings::countOfPosts();
@@ -96,10 +96,10 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
     } else {
         cntStr = 100;
     }
-    url.addQueryItem("count", QString::number(cntStr));
+    url.addQueryItem(QLatin1String("count"), QString::number(cntStr));
     param.insert("count", QString::number(cntStr).toLatin1());
     if (page > 1) {
-        url.addQueryItem("page", QString::number(page));
+        url.addQueryItem(QLatin1String("page"), QString::number(page));
         param.insert("page", QString::number(page).toLatin1());
     }
 
@@ -115,7 +115,7 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
 
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     microblog->authorizationHeader(account, tmpUrl, QOAuth::GET, param));
+                     QLatin1String(microblog->authorizationHeader(account, tmpUrl, QOAuth::GET, param)));
 
     mSearchJobs[job] = searchInfo;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(searchResultsReturned(KJob*)));
@@ -152,8 +152,8 @@ QList< Choqok::Post * > TwitterSearch::parseJson(QByteArray buffer)
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
         const QVariantMap map = json.toVariant().toMap();
-        if (map.contains("statuses")) {
-            const QVariantList list = map["statuses"].toList();
+        if (map.contains(QLatin1String("statuses"))) {
+            const QVariantList list = map[QLatin1String("statuses")].toList();
             QVariantList::const_iterator it = list.constBegin();
             QVariantList::const_iterator endIt = list.constEnd();
             for (; it != endIt; ++it) {
@@ -168,21 +168,21 @@ Choqok::Post *TwitterSearch::readStatusesFromJsonMap(const QVariantMap &var)
 {
     Choqok::Post *post = new Choqok::Post;
 
-    post->content = var["text"].toString();
+    post->content = var[QLatin1String("text")].toString();
     //%*s %s %d %d:%d:%d %d %d
-    post->creationDateTime = dateFromString(var["created_at"].toString());
-    post->postId = var["id"].toString();
-    post->source = var["source"].toString();
-    QVariantMap userMap = var["user"].toMap();
-    post->author.realName = userMap["name"].toString();
-    post->author.userName = userMap["screen_name"].toString();
-    post->author.profileImageUrl = userMap["profile_image_url"].toString();
+    post->creationDateTime = dateFromString(var[QLatin1String("created_at")].toString());
+    post->postId = var[QLatin1String("id")].toString();
+    post->source = var[QLatin1String("source")].toString();
+    QVariantMap userMap = var[QLatin1String("user")].toMap();
+    post->author.realName = userMap[QLatin1String("name")].toString();
+    post->author.userName = userMap[QLatin1String("screen_name")].toString();
+    post->author.profileImageUrl = userMap[QLatin1String("profile_image_url")].toString();
     post->isPrivate = false;
     post->isFavorited = false;
-    post->replyToPostId = var["in_reply_to_status_id_str"].toString();
-    post->replyToUserName = var["in_reply_to_screen_name"].toString();
+    post->replyToPostId = var[QLatin1String("in_reply_to_status_id_str")].toString();
+    post->replyToUserName = var[QLatin1String("in_reply_to_screen_name")].toString();
 
-    post->link = QString("https://twitter.com/%1/status/%2").arg(post->author.userName).arg(post->postId);
+    post->link = QString::fromLatin1("https://twitter.com/%1/status/%2").arg(post->author.userName).arg(post->postId);
 
     return post;
 }

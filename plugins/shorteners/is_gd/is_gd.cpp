@@ -36,7 +36,7 @@
 K_PLUGIN_FACTORY_WITH_JSON(Is_gdFactory, "choqok_is_gd.json", registerPlugin < Is_gd > ();)
 
 Is_gd::Is_gd(QObject *parent, const QVariantList &)
-    : Choqok::Shortener("choqok_is_gd", parent)
+    : Choqok::Shortener(QLatin1String("choqok_is_gd"), parent)
 {
 }
 
@@ -48,11 +48,11 @@ QString Is_gd::shorten(const QString &url)
 {
     Is_gd_Settings::self()->load();
 
-    QUrl reqUrl("https://is.gd/create.php");
-    reqUrl.addQueryItem("format", "json");
-    reqUrl.addQueryItem("url", QUrl(url).url());
+    QUrl reqUrl(QLatin1String("https://is.gd/create.php"));
+    reqUrl.addQueryItem(QLatin1String("format"), QLatin1String("json"));
+    reqUrl.addQueryItem(QLatin1String("url"), QUrl(url).url());
     if (Is_gd_Settings::logstats()) {
-        reqUrl.addQueryItem("logstats", "true");
+        reqUrl.addQueryItem(QLatin1String("logstats"), QLatin1String("true"));
     }
 
     QEventLoop loop;
@@ -67,11 +67,11 @@ QString Is_gd::shorten(const QString &url)
         if (!json.isNull()) {
             const QVariantMap map = json.toVariant().toMap();
 
-            if (!map[ "errorcode" ].toString().isEmpty()) {
-                Choqok::NotifyManager::error(map[ "errormessage" ].toString(), i18n("is.gd Error"));
+            if (!map[ QLatin1String("errorcode") ].toString().isEmpty()) {
+                Choqok::NotifyManager::error(map[ QLatin1String("errormessage") ].toString(), i18n("is.gd Error"));
                 return url;
             }
-            QString shorturl = map[ "shorturl" ].toString();
+            QString shorturl = map[ QLatin1String("shorturl") ].toString();
             if (!shorturl.isEmpty()) {
                 return shorturl;
             }

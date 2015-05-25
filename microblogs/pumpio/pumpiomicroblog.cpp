@@ -58,19 +58,19 @@ public:
 K_PLUGIN_FACTORY_WITH_JSON(PumpIOMicroBlogFactory, "choqok_pumpio.json",
                            registerPlugin < PumpIOMicroBlog > ();)
 
-const QString PumpIOMicroBlog::inboxActivity("/api/user/%1/inbox");
-const QString PumpIOMicroBlog::outboxActivity("/api/user/%1/feed");
+const QString PumpIOMicroBlog::inboxActivity(QLatin1String("/api/user/%1/inbox"));
+const QString PumpIOMicroBlog::outboxActivity(QLatin1String("/api/user/%1/feed"));
 
-const QString PumpIOMicroBlog::PublicCollection("http://activityschema.org/collection/public");
+const QString PumpIOMicroBlog::PublicCollection(QLatin1String("http://activityschema.org/collection/public"));
 
 PumpIOMicroBlog::PumpIOMicroBlog(QObject *parent, const QVariantList &args):
     MicroBlog(QStringLiteral("Pump.IO") , parent), d(new Private)
 {
     Q_UNUSED(args)
-    setServiceName("Pump.io");
-    setServiceHomepageUrl("http://pump.io");
+    setServiceName(QLatin1String("Pump.io"));
+    setServiceHomepageUrl(QLatin1String("http://pump.io"));
     QStringList timelineNames;
-    timelineNames << "Activity" << "Favorites" << "Inbox" << "Outbox";
+    timelineNames << QLatin1String("Activity") << QLatin1String("Favorites") << QLatin1String("Inbox") << QLatin1String("Outbox");
     setTimelineNames(timelineNames);
     setTimelinesInfo();
 }
@@ -119,7 +119,7 @@ QMenu *PumpIOMicroBlog::createActionsMenu(Choqok::Account *theAccount, QWidget *
 {
     QMenu *menu = MicroBlog::createActionsMenu(theAccount, parent);
 
-    QAction *directMessge = new QAction(QIcon::fromTheme("mail-message-new"), i18n("Send Private Message..."), menu);
+    QAction *directMessge = new QAction(QIcon::fromTheme(QLatin1String("mail-message-new")), i18n("Send Private Message..."), menu);
     directMessge->setData(theAccount->alias());
     connect(directMessge, SIGNAL(triggered(bool)), this, SLOT(showDirectMessageDialog()));
     menu->addAction(directMessge);
@@ -165,8 +165,8 @@ void PumpIOMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *post
 {
     QVariantList to;
     QVariantMap thePublic;
-    thePublic.insert("objectType", "collection");
-    thePublic.insert("id", PumpIOMicroBlog::PublicCollection);
+    thePublic.insert(QLatin1String("objectType"), QLatin1String("collection"));
+    thePublic.insert(QLatin1String("id"), PumpIOMicroBlog::PublicCollection);
     to.append(thePublic);
 
     createPost(theAccount, post, to);
@@ -186,30 +186,30 @@ void PumpIOMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *post
     if (acc) {
         QVariantMap object;
         if (!post->postId.isEmpty()) {
-            object.insert("id", post->postId);
+            object.insert(QLatin1String("id"), post->postId);
         }
         if (post->type.isEmpty()) {
-            post->type = "note";
+            post->type = QLatin1String("note");
         }
-        object.insert("objectType", post->type);
+        object.insert(QLatin1String("objectType"), post->type);
         //Convert URLs to href form
-        post->content.replace(QRegExp("((?:https?|ftp)://\\S+)"), "<a href=\"\\1\">\\1</a>");
-        object.insert("content", QUrl::toPercentEncoding(post->content));
+        post->content.replace(QRegExp(QLatin1String("((?:https?|ftp)://\\S+)")), QLatin1String("<a href=\"\\1\">\\1</a>"));
+        object.insert(QLatin1String("content"), QUrl::toPercentEncoding(post->content));
 
         QVariantMap item;
-        item.insert("verb", "post");
-        item.insert("object", object);
-        item.insert("to", to);
-        item.insert("cc", cc);
+        item.insert(QLatin1String("verb"), QLatin1String("post"));
+        item.insert(QLatin1String("object"), object);
+        item.insert(QLatin1String("to"), to);
+        item.insert(QLatin1String("cc"), cc);
 
         const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
+        url.setPath(url.path() + QLatin1Char('/') + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
-        job->addMetaData("content-type", "Content-Type: application/json");
-        job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
+        job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
+        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QOAuth::POST));
         if (!job) {
             qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
@@ -227,33 +227,33 @@ void PumpIOMicroBlog::createReply(Choqok::Account *theAccount, PumpIOPost *post)
 {
     PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
-        post->type = "comment";
+        post->type = QLatin1String("comment");
 
         QVariantMap object;
-        object.insert("objectType", post->type);
+        object.insert(QLatin1String("objectType"), post->type);
         //Convert URLs to href form
-        post->content.replace(QRegExp("((?:https?|ftp)://\\S+)"), "<a href=\"\\1\">\\1</a>");
-        object.insert("content", QUrl::toPercentEncoding(post->content));
+        post->content.replace(QRegExp(QLatin1String("((?:https?|ftp)://\\S+)")), QLatin1String("<a href=\"\\1\">\\1</a>"));
+        object.insert(QLatin1String("content"), QUrl::toPercentEncoding(post->content));
 
         if (!post->replyToPostId.isEmpty()) {
             QVariantMap inReplyTo;
-            inReplyTo.insert("id", post->replyToPostId);
-            inReplyTo.insert("objectType", post->replyToObjectType);
-            object.insert("inReplyTo", inReplyTo);
+            inReplyTo.insert(QLatin1String("id"), post->replyToPostId);
+            inReplyTo.insert(QLatin1String("objectType"), post->replyToObjectType);
+            object.insert(QLatin1String("inReplyTo"), inReplyTo);
         }
 
         QVariantMap item;
-        item.insert("verb", "post");
-        item.insert("object", object);
+        item.insert(QLatin1String("verb"), QLatin1String("post"));
+        item.insert(QLatin1String("object"), object);
 
         const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
+        url.setPath(url.path() + QLatin1Char('/') + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
-        job->addMetaData("content-type", "Content-Type: application/json");
-        job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
+        job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
+        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QOAuth::POST));
         if (!job) {
             qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
@@ -285,17 +285,17 @@ void PumpIOMicroBlog::createPostWithMedia(Choqok::Account *theAccount, Choqok::P
         const QMimeDatabase db;
         const QMimeType mimetype = db.mimeTypeForFileNameAndData(filePath, data);
         const QString mime = mimetype.name();
-        if (mime == "application/octet-stream") {
+        if (mime == QLatin1String("application/octet-stream")) {
             qCDebug(CHOQOK) << "Cannot retrieve file mimetype";
             return;
         }
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + (QString("/api/user/%1/uploads").arg(acc->username())));
+        url.setPath(url.path() + (QString::fromLatin1("/api/user/%1/uploads").arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
-        job->addMetaData("content-type", "Content-Type: " + mime);
-        job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
+        job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: ") + mime);
+        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QOAuth::POST));
         if (!job) {
             qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
@@ -331,7 +331,7 @@ void PumpIOMicroBlog::fetchPost(Choqok::Account *theAccount, Choqok::Post *post)
             qCDebug(CHOQOK) << "Cannot create an http GET request!";
             return;
         }
-        job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::GET));
+        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QOAuth::GET));
         m_accountJobs[job] = acc;
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchPost(KJob*)));
         job->start();
@@ -345,21 +345,21 @@ void PumpIOMicroBlog::removePost(Choqok::Account *theAccount, Choqok::Post *post
     PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
         QVariantMap object;
-        object.insert("id", post->postId);
-        object.insert("objectType", post->type);
+        object.insert(QLatin1String("id"), post->postId);
+        object.insert(QLatin1String("objectType"), post->type);
 
         QVariantMap item;
-        item.insert("verb", "delete");
-        item.insert("object", object);
+        item.insert(QLatin1String("verb"), QLatin1String("delete"));
+        item.insert(QLatin1String("object"), object);
 
         const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
+        url.setPath(url.path() + QLatin1Char('/') + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
-        job->addMetaData("content-type", "Content-Type: application/json");
-        job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
+        job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
+        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QOAuth::POST));
         if (!job) {
             qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
@@ -436,14 +436,14 @@ QString PumpIOMicroBlog::postUrl(Choqok::Account *account, const QString &userna
                                  const QString &postId) const
 {
     Q_UNUSED(account);
-    return QString(postId).replace("/api/", '/' + username + '/');
+    return QString(postId).replace(QLatin1String("/api/"), QLatin1Char('/') + username + QLatin1Char('/'));
 }
 
 QString PumpIOMicroBlog::profileUrl(Choqok::Account *account, const QString &username) const
 {
     Q_UNUSED(account)
-    if (username.contains("acct:")) {
-        return QString("https://%1/%2").arg(hostFromAcct(username)).arg(userNameFromAcct(username));
+    if (username.contains(QLatin1String("acct:"))) {
+        return QString::fromLatin1("https://%1/%2").arg(hostFromAcct(username)).arg(userNameFromAcct(username));
     } else {
         return username;
     }
@@ -514,7 +514,7 @@ void PumpIOMicroBlog::updateTimelines(Choqok::Account *theAccount)
         Q_FOREACH (const QString &timeline, acc->timelineNames()) {
             QUrl url(acc->host());
             url = url.adjusted(QUrl::StripTrailingSlash);
-            url.setPath(url.path() + '/' + (m_timelinesPaths[timeline].arg(acc->username())));
+            url.setPath(url.path() + QLatin1Char('/') + (m_timelinesPaths[timeline].arg(acc->username())));
 
             QOAuth::ParamMap oAuthParams;
             const QString lastActivityId(lastTimelineId(theAccount, timeline));
@@ -530,7 +530,7 @@ void PumpIOMicroBlog::updateTimelines(Choqok::Account *theAccount)
                 qCDebug(CHOQOK) << "Cannot create an http GET request!";
                 continue;
             }
-            job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::GET,
+            job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QOAuth::GET,
                              oAuthParams));
             m_timelinesRequests[job] = timeline;
             m_accountJobs[job] = acc;
@@ -548,7 +548,7 @@ void PumpIOMicroBlog::fetchFollowing(Choqok::Account *theAccount)
     if (acc) {
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + (QString("/api/user/%1/following").arg(acc->username())));
+        url.setPath(url.path() + (QString::fromLatin1("/api/user/%1/following").arg(acc->username())));
 
         QOAuth::ParamMap oAuthParams;
         oAuthParams.insert("count", QByteArray::number(200));
@@ -561,7 +561,7 @@ void PumpIOMicroBlog::fetchFollowing(Choqok::Account *theAccount)
             qCDebug(CHOQOK) << "Cannot create an http GET request!";
             return;
         }
-        job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::GET,
+        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QOAuth::GET,
                          oAuthParams));
         m_accountJobs[job] = acc;
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFollowing(KJob*)));
@@ -577,7 +577,7 @@ void PumpIOMicroBlog::fetchLists(Choqok::Account *theAccount)
     if (acc) {
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + (QString("/api/user/%1/lists/person").arg(acc->username())));
+        url.setPath(url.path() + (QString::fromLatin1("/api/user/%1/lists/person").arg(acc->username())));
 
         QOAuth::ParamMap oAuthParams;
         oAuthParams.insert("count", QByteArray::number(200));
@@ -587,7 +587,7 @@ void PumpIOMicroBlog::fetchLists(Choqok::Account *theAccount)
             qCDebug(CHOQOK) << "Cannot create an http GET request!";
             return;
         }
-        job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::GET,
+        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QOAuth::GET,
                          oAuthParams));
         m_accountJobs[job] = acc;
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotLists(KJob*)));
@@ -602,21 +602,21 @@ void PumpIOMicroBlog::share(Choqok::Account *theAccount, Choqok::Post *post)
     PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
         QVariantMap object;
-        object.insert("objectType", post->type);
-        object.insert("id", post->postId);
+        object.insert(QLatin1String("objectType"), post->type);
+        object.insert(QLatin1String("id"), post->postId);
 
         QVariantMap item;
-        item.insert("verb", "share");
-        item.insert("object", object);
+        item.insert(QLatin1String("verb"), QLatin1String("share"));
+        item.insert(QLatin1String("object"), object);
 
         const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
+        url.setPath(url.path() + QLatin1Char('/') + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
-        job->addMetaData("content-type", "Content-Type: application/json");
-        job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
+        job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
+        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QOAuth::POST));
         if (!job) {
             qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
@@ -635,21 +635,21 @@ void PumpIOMicroBlog::toggleFavorite(Choqok::Account *theAccount, Choqok::Post *
     PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
         QVariantMap object;
-        object.insert("objectType", post->type);
-        object.insert("id", post->postId);
+        object.insert(QLatin1String("objectType"), post->type);
+        object.insert(QLatin1String("id"), post->postId);
 
         QVariantMap item;
-        item.insert("verb", post->isFavorited ? "unfavorite" : "favorite");
-        item.insert("object", object);
+        item.insert(QLatin1String("verb"), post->isFavorited ? QLatin1String("unfavorite") : QLatin1String("favorite"));
+        item.insert(QLatin1String("object"), object);
 
         const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
+        url.setPath(url.path() + QLatin1Char('/') + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
-        job->addMetaData("content-type", "Content-Type: application/json");
-        job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
+        job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
+        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QOAuth::POST));
         if (!job) {
             qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
@@ -694,7 +694,7 @@ void PumpIOMicroBlog::slotCreatePost(KJob *job)
         const QJsonDocument json = QJsonDocument::fromJson(j->data());
         if (!json.isNull()) {
             const QVariantMap reply = json.toVariant().toMap();
-            if (!reply["object"].toMap().value("id").toString().isEmpty()) {
+            if (!reply[QLatin1String("object")].toMap().value(QLatin1String("id")).toString().isEmpty()) {
                 Choqok::NotifyManager::success(i18n("New post submitted successfully"));
                 ret = 0;
                 Q_EMIT postCreated(theAccount, post);
@@ -792,12 +792,12 @@ void PumpIOMicroBlog::slotFetchReplies(KJob *job)
         const QJsonDocument json = QJsonDocument::fromJson(j->data());
         if (!json.isNull()) {
             const QVariantMap reply = json.toVariant().toMap();
-            const QVariantList items = reply["items"].toList();
+            const QVariantList items = reply[QLatin1String("items")].toList();
             for (int i = items.size() - 1; i >= 0; i--) {
                 QVariantMap item = items.at(i).toMap();
                 PumpIOPost *r = new PumpIOPost;
                 readPost(item, r);
-                r->replyToPostId = reply["url"].toString().remove("/replies");
+                r->replyToPostId = reply[QLatin1String("url")].toString().remove(QLatin1String("/replies"));
                 Q_EMIT postFetched(theAccount, r);
             }
             ret = 0;
@@ -838,10 +838,10 @@ void PumpIOMicroBlog::slotFollowing(KJob *job)
 
         const QJsonDocument json = QJsonDocument::fromJson(j->data());
         if (!json.isNull()) {
-            const QVariantList items = json.toVariant().toMap().value("items").toList();
+            const QVariantList items = json.toVariant().toMap().value(QLatin1String("items")).toList();
             QStringList following;
             Q_FOREACH (const QVariant &element, items) {
-                following.append(element.toMap().value("id").toString());
+                following.append(element.toMap().value(QLatin1String("id")).toString());
             }
             acc->setFollowing(following);
             ret = 0;
@@ -884,13 +884,13 @@ void PumpIOMicroBlog::slotLists(KJob *job)
 
         const QJsonDocument json = QJsonDocument::fromJson(j->data());
         if (!json.isNull()) {
-            const QVariantList items = json.toVariant().toMap().value("items").toList();
+            const QVariantList items = json.toVariant().toMap().value(QLatin1String("items")).toList();
             QVariantList lists;
             Q_FOREACH (const QVariant &element, items) {
                 QVariantMap e = element.toMap();
                 QVariantMap list;
-                list.insert("id", e.value("id").toString());
-                list.insert("name", e.value("displayName").toString());
+                list.insert(QLatin1String("id"), e.value(QLatin1String("id")).toString());
+                list.insert(QLatin1String("name"), e.value(QLatin1String("displayName")).toString());
                 lists.append(list);
             }
             acc->setLists(lists);
@@ -932,7 +932,7 @@ void PumpIOMicroBlog::slotShare(KJob *job)
 
         const QJsonDocument json = QJsonDocument::fromJson(j->data());
         if (!json.isNull()) {
-            const QVariantMap object = json.toVariant().toMap().value("object").toMap();
+            const QVariantMap object = json.toVariant().toMap().value(QLatin1String("object")).toMap();
             ret = 0;
         } else {
             qCDebug(CHOQOK) << "Cannot parse JSON reply";
@@ -966,8 +966,8 @@ void PumpIOMicroBlog::slotRemovePost(KJob *job)
 
         const QJsonDocument json = QJsonDocument::fromJson(j->data());
         if (!json.isNull()) {
-            const QVariantMap object = json.toVariant().toMap().value("object").toMap();
-            if (!object["deleted"].toString().isEmpty()) {
+            const QVariantMap object = json.toVariant().toMap().value(QLatin1String("object")).toMap();
+            if (!object[QLatin1String("deleted")].toString().isEmpty()) {
                 Choqok::NotifyManager::success(i18n("Post removed successfully"));
                 ret = 0;
                 Q_EMIT postRemoved(theAccount, post);
@@ -1068,10 +1068,10 @@ void PumpIOMicroBlog::slotUpload(KJob *job)
         const QJsonDocument json = QJsonDocument::fromJson(j->data());
         if (!json.isNull()) {
             const QVariantMap reply = json.toVariant().toMap();
-            const QString id = reply["id"].toString();
+            const QString id = reply[QLatin1String("id")].toString();
             if (!id.isEmpty()) {
                 post->postId = id;
-                post->type = reply["objectType"].toString();
+                post->type = reply[QLatin1String("objectType")].toString();
                 ret = 0;
                 updatePost(account, post);
             }
@@ -1096,7 +1096,7 @@ QString PumpIOMicroBlog::authorizationMetaData(PumpIOAccount *account, const QUr
                                      account->tokenSecret().toLocal8Bit(),
                                      QOAuth::HMAC_SHA1, paramMap,
                                      QOAuth::ParseForHeaderArguments);
-    return QStringLiteral("Authorization: ") + authorization;
+    return QStringLiteral("Authorization: ") + QLatin1String(authorization);
 }
 
 void PumpIOMicroBlog::fetchReplies(Choqok::Account *theAccount, const QString &url)
@@ -1114,7 +1114,7 @@ void PumpIOMicroBlog::fetchReplies(Choqok::Account *theAccount, const QString &u
             qCDebug(CHOQOK) << "Cannot create an http GET request!";
             return;
         }
-        job->addMetaData("customHTTPHeader", authorizationMetaData(acc, u, QOAuth::GET));
+        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, u, QOAuth::GET));
         m_accountJobs[job] = acc;
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchReplies(KJob*)));
         job->start();
@@ -1135,104 +1135,104 @@ Choqok::Post *PumpIOMicroBlog::readPost(const QVariantMap &var, Choqok::Post *po
     PumpIOPost *p = dynamic_cast< PumpIOPost * >(post);
     if (p) {
         QVariantMap object;
-        if (var.value("verb").toString() == "post" ||
-                var.value("verb").toString() == "share") {
-            object = var["object"].toMap();
+        if (var.value(QLatin1String("verb")).toString() == QLatin1String("post") ||
+                var.value(QLatin1String("verb")).toString() == QLatin1String("share")) {
+            object = var[QLatin1String("object")].toMap();
         } else {
             object = var;
         }
 
         QTextDocument content;
-        if (!object["displayName"].isNull()) {
-            content.setHtml(object["displayName"].toString());
+        if (!object[QLatin1String("displayName")].isNull()) {
+            content.setHtml(object[QLatin1String("displayName")].toString());
             p->content = content.toPlainText().trimmed();
-            p->content += '\n';
+            p->content += QLatin1Char('\n');
         }
 
-        content.setHtml(object["content"].toString());
+        content.setHtml(object[QLatin1String("content")].toString());
         p->content += content.toPlainText().trimmed();
 
-        if (!object["fullImage"].isNull()) {
-            const QVariantMap fullImage = object["fullImage"].toMap();
+        if (!object[QLatin1String("fullImage")].isNull()) {
+            const QVariantMap fullImage = object[QLatin1String("fullImage")].toMap();
             if (!fullImage.isEmpty()) {
-                p->media = fullImage["url"].toString();
-                p->mediaSizeHeight = fullImage["height"].toInt();
-                p->mediaSizeWidth = fullImage["width"].toInt();
+                p->media = fullImage[QLatin1String("url")].toString();
+                p->mediaSizeHeight = fullImage[QLatin1String("height")].toInt();
+                p->mediaSizeWidth = fullImage[QLatin1String("width")].toInt();
             }
         }
-        p->creationDateTime = QDateTime::fromString(var["published"].toString(),
+        p->creationDateTime = QDateTime::fromString(var[QLatin1String("published")].toString(),
                               Qt::ISODate);
         p->creationDateTime.setTimeSpec(Qt::UTC);
-        if (object["pump_io"].isNull()) {
-            p->link = object["id"].toString();
+        if (object[QLatin1String("pump_io")].isNull()) {
+            p->link = object[QLatin1String("id")].toString();
         } else {
-            p->link = object["pump_io"].toMap().value("proxyURL").toString();
+            p->link = object[QLatin1String("pump_io")].toMap().value(QLatin1String("proxyURL")).toString();
         }
-        p->type = object["objectType"].toString();
-        p->isFavorited = object["liked"].toBool();
+        p->type = object[QLatin1String("objectType")].toString();
+        p->isFavorited = object[QLatin1String("liked")].toBool();
         if (p->isFavorited) {
             p->isRead = true;
         }
-        p->postId = object["id"].toString();
-        p->conversationId = var["id"].toString();
+        p->postId = object[QLatin1String("id")].toString();
+        p->conversationId = var[QLatin1String("id")].toString();
 
         QString author;
-        var["author"].isNull() ? author = "actor" : author = "author";
+        var[QLatin1String("author")].isNull() ? author = QLatin1String("actor") : author = QLatin1String("author");
         QVariantMap actor;
-        if (var.value("verb").toString() == "share") {
-            actor = object["author"].toMap();
-            const QVariantList shares = object["shares"].toMap().value("items").toList();
+        if (var.value(QLatin1String("verb")).toString() == QLatin1String("share")) {
+            actor = object[QLatin1String("author")].toMap();
+            const QVariantList shares = object[QLatin1String("shares")].toMap().value(QLatin1String("items")).toList();
             Q_FOREACH (const QVariant &element, shares) {
-                p->shares.append(element.toMap().value("id").toString());
+                p->shares.append(element.toMap().value(QLatin1String("id")).toString());
             }
         } else {
             actor = var[author].toMap();
         }
-        const QString userId = actor["id"].toString();
-        const QString homePageUrl = actor["url"].toString();
+        const QString userId = actor[QLatin1String("id")].toString();
+        const QString homePageUrl = actor[QLatin1String("url")].toString();
         p->author.userId = userId;
-        p->author.userName = actor["preferredUsername"].toString();
-        p->author.realName = actor["displayName"].toString();
+        p->author.userName = actor[QLatin1String("preferredUsername")].toString();
+        p->author.realName = actor[QLatin1String("displayName")].toString();
         p->author.homePageUrl = homePageUrl;
-        p->author.location = actor["location"].toMap().value("displayName").toString();
-        p->author.description = actor["summary"].toString();
+        p->author.location = actor[QLatin1String("location")].toMap().value(QLatin1String("displayName")).toString();
+        p->author.description = actor[QLatin1String("summary")].toString();
 
-        const QString profileImageUrl = actor["image"].toMap().value("url").toString();
+        const QString profileImageUrl = actor[QLatin1String("image")].toMap().value(QLatin1String("url")).toString();
         if (!profileImageUrl.isEmpty()) {
             p->author.profileImageUrl = profileImageUrl;
-        } else if (actor["objectType"].toString() == "service") {
-            p->author.profileImageUrl = homePageUrl + "images/default.png";
+        } else if (actor[QLatin1String("objectType")].toString() == QLatin1String("service")) {
+            p->author.profileImageUrl = homePageUrl + QLatin1String("images/default.png");
         } else {
-            p->author.profileImageUrl = QString("https://%1/%2").arg(hostFromAcct(userId)).arg("images/default.png");
+            p->author.profileImageUrl = QString::fromLatin1("https://%1/%2").arg(hostFromAcct(userId)).arg(QLatin1String("images/default.png"));
         }
 
-        if (!var["generator"].isNull()) {
-            p->source = var["generator"].toMap().value("displayName").toString();
+        if (!var[QLatin1String("generator")].isNull()) {
+            p->source = var[QLatin1String("generator")].toMap().value(QLatin1String("displayName")).toString();
         }
 
-        const QVariantList to = var["to"].toList();
+        const QVariantList to = var[QLatin1String("to")].toList();
         Q_FOREACH (const QVariant &element, to) {
             QVariantMap toElementMap = element.toMap();
-            QString toElementType = toElementMap.value("objectType").toString();
-            if (toElementType == "person" || toElementType == "collection") {
-                p->to.append(toElementMap.value("id").toString());
+            QString toElementType = toElementMap.value(QLatin1String("objectType")).toString();
+            if (toElementType == QLatin1String("person") || toElementType == QLatin1String("collection")) {
+                p->to.append(toElementMap.value(QLatin1String("id")).toString());
             }
         }
 
-        const QVariantList cc = var["cc"].toList();
+        const QVariantList cc = var[QLatin1String("cc")].toList();
         Q_FOREACH (const QVariant &element, cc) {
             QVariantMap ccElementMap = element.toMap();
-            QString ccElementType = ccElementMap.value("objectType").toString();
-            if (ccElementType == "person" || ccElementType == "collection") {
-                p->cc.append(ccElementMap.value("id").toString());
+            QString ccElementType = ccElementMap.value(QLatin1String("objectType")).toString();
+            if (ccElementType == QLatin1String("person") || ccElementType == QLatin1String("collection")) {
+                p->cc.append(ccElementMap.value(QLatin1String("id")).toString());
             }
         }
 
-        const QVariantMap replies = object["replies"].toMap();
-        if (replies.value("pump_io").isNull()) {
-            p->replies = replies["url"].toString();
+        const QVariantMap replies = object[QLatin1String("replies")].toMap();
+        if (replies.value(QLatin1String("pump_io")).isNull()) {
+            p->replies = replies[QLatin1String("url")].toString();
         } else {
-            p->replies = replies["pump_io"].toMap().value("proxyURL").toString();
+            p->replies = replies[QLatin1String("pump_io")].toMap().value(QLatin1String("proxyURL")).toString();
         }
 
         return p;
@@ -1247,10 +1247,10 @@ QList< Choqok::Post * > PumpIOMicroBlog::readTimeline(const QByteArray &buffer)
     QList<Choqok::Post * > posts;
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
-        const QVariantList list = json.toVariant().toMap().value("items").toList();
+        const QVariantList list = json.toVariant().toMap().value(QLatin1String("items")).toList();
         Q_FOREACH (const QVariant &element, list) {
             const QVariantMap elementMap = element.toMap();
-            if (!elementMap["object"].toMap().value("deleted").isNull()) {
+            if (!elementMap[QLatin1String("object")].toMap().value(QLatin1String("deleted")).isNull()) {
                 // Skip deleted posts
                 continue;
             }
@@ -1275,30 +1275,30 @@ void PumpIOMicroBlog::setTimelinesInfo()
     Choqok::TimelineInfo *t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "Activity");
     t->description = i18nc("Timeline description", "You and people you follow");
-    t->icon = "user-home";
-    m_timelinesInfos["Activity"] = t;
-    m_timelinesPaths["Activity"] = inboxActivity + "/major";
+    t->icon = QLatin1String("user-home");
+    m_timelinesInfos[QLatin1String("Activity")] = t;
+    m_timelinesPaths[QLatin1String("Activity")] = inboxActivity + QLatin1String("/major");
 
     t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "Favorites");
     t->description = i18nc("Timeline description", "Posts you favorited");
-    t->icon = "favorites";
-    m_timelinesInfos["Favorites"] = t;
-    m_timelinesPaths["Favorites"] = "/api/user/%1/favorites";
+    t->icon = QLatin1String("favorites");
+    m_timelinesInfos[QLatin1String("Favorites")] = t;
+    m_timelinesPaths[QLatin1String("Favorites")] = QLatin1String("/api/user/%1/favorites");
 
     t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "Inbox");
     t->description = i18nc("Timeline description", "Posts sent to you");
-    t->icon = "mail-folder-inbox";
-    m_timelinesInfos["Inbox"] = t;
-    m_timelinesPaths["Inbox"] = inboxActivity + "/direct/major/";
+    t->icon = QLatin1String("mail-folder-inbox");
+    m_timelinesInfos[QLatin1String("Inbox")] = t;
+    m_timelinesPaths[QLatin1String("Inbox")] = inboxActivity + QLatin1String("/direct/major/");
 
     t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "Outbox");
     t->description = i18nc("Timeline description", "Posts you sent");
-    t->icon = "mail-folder-outbox";
-    m_timelinesInfos["Outbox"] = t;
-    m_timelinesPaths["Outbox"] = outboxActivity + "/major/";
+    t->icon = QLatin1String("mail-folder-outbox");
+    m_timelinesInfos[QLatin1String("Outbox")] = t;
+    m_timelinesPaths[QLatin1String("Outbox")] = outboxActivity + QLatin1String("/major/");
 }
 
 void PumpIOMicroBlog::updatePost(Choqok::Account *theAccount, Choqok::Post *post)
@@ -1306,30 +1306,30 @@ void PumpIOMicroBlog::updatePost(Choqok::Account *theAccount, Choqok::Post *post
     PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
         QVariantMap object;
-        object.insert("id", post->postId);
-        object.insert("objectType", post->type);
-        object.insert("content", QUrl::toPercentEncoding(post->content));
+        object.insert(QLatin1String("id"), post->postId);
+        object.insert(QLatin1String("objectType"), post->type);
+        object.insert(QLatin1String("content"), QUrl::toPercentEncoding(post->content));
 
         // https://github.com/e14n/pump.io/issues/885
         QVariantList to;
         QVariantMap thePublic;
-        thePublic.insert("objectType", "collection");
-        thePublic.insert("id", PumpIOMicroBlog::PublicCollection);
+        thePublic.insert(QLatin1String("objectType"), QLatin1String("collection"));
+        thePublic.insert(QLatin1String("id"), PumpIOMicroBlog::PublicCollection);
         to.append(thePublic);
 
         QVariantMap item;
-        item.insert("verb", "update");
-        item.insert("object", object);
-        item.insert("to", to);
+        item.insert(QLatin1String("verb"), QLatin1String("update"));
+        item.insert(QLatin1String("object"), object);
+        item.insert(QLatin1String("to"), to);
 
         const QByteArray data = QJsonDocument::fromVariant(item).toJson();
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + '/' + (outboxActivity.arg(acc->username())));
+        url.setPath(url.path() + QLatin1Char('/') + (outboxActivity.arg(acc->username())));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
-        job->addMetaData("content-type", "Content-Type: application/json");
-        job->addMetaData("customHTTPHeader", authorizationMetaData(acc, url, QOAuth::POST));
+        job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
+        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QOAuth::POST));
         if (!job) {
             qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
@@ -1345,8 +1345,8 @@ void PumpIOMicroBlog::updatePost(Choqok::Account *theAccount, Choqok::Post *post
 
 QString PumpIOMicroBlog::hostFromAcct(const QString &acct)
 {
-    if (acct.contains("acct:")) {
-        return acct.split(':')[1].split('@')[1];
+    if (acct.contains(QLatin1String("acct:"))) {
+        return acct.split(QLatin1Char(':'))[1].split(QLatin1Char('@'))[1];
     }
 
     return acct;
@@ -1354,8 +1354,8 @@ QString PumpIOMicroBlog::hostFromAcct(const QString &acct)
 
 QString PumpIOMicroBlog::userNameFromAcct(const QString &acct)
 {
-    if (acct.contains("acct:")) {
-        return acct.split(':')[1].split('@')[0];
+    if (acct.contains(QLatin1String("acct:"))) {
+        return acct.split(QLatin1Char(':'))[1].split(QLatin1Char('@'))[0];
     }
 
     return acct;

@@ -38,7 +38,7 @@
 #include "pumpiopost.h"
 #include "pumpioshowthread.h"
 
-const QIcon PumpIOPostWidget::unFavIcon(Choqok::MediaManager::convertToGrayScale(QIcon::fromTheme("rating").pixmap(16)));
+const QIcon PumpIOPostWidget::unFavIcon(Choqok::MediaManager::convertToGrayScale(QIcon::fromTheme(QLatin1String("rating")).pixmap(16)));
 
 class PumpIOPostWidget::Private
 {
@@ -52,8 +52,8 @@ PumpIOPostWidget::PumpIOPostWidget(Choqok::Account *account, Choqok::Post *post,
     PostWidget(account, post, parent), d(new Private)
 {
     mainWidget()->document()->addResource(QTextDocument::ImageResource,
-                                          QUrl("icon://thread"),
-                                          QIcon::fromTheme("go-top").pixmap(10));
+                                          QUrl(QLatin1String("icon://thread")),
+                                          QIcon::fromTheme(QLatin1String("go-top")).pixmap(10));
 }
 
 PumpIOPostWidget::~PumpIOPostWidget()
@@ -63,7 +63,7 @@ PumpIOPostWidget::~PumpIOPostWidget()
 
 void PumpIOPostWidget::checkAnchor(const QUrl &url)
 {
-    if (url.scheme() == "thread") {
+    if (url.scheme() == QLatin1String("thread")) {
         PumpIOShowThread *thread = new PumpIOShowThread(currentAccount(), currentPost());
         connect(thread, SIGNAL(forwardReply(QString,QString,QString)),
                 this, SIGNAL(reply(QString,QString,QString)));
@@ -83,88 +83,88 @@ QString PumpIOPostWidget::generateSign()
     PumpIOMicroBlog *microblog = qobject_cast<PumpIOMicroBlog * >(account->microblog());
     if (post) {
         if (post->author.userName != account->username()) {
-            ss += "<b><a href='" + microblog->profileUrl(account, post->author.homePageUrl)
-                  + "' title=\"" + post->author.realName + "\">" +
-                  post->author.userName + "</a></b> - ";
+            ss += QLatin1String("<b><a href='") + microblog->profileUrl(account, post->author.homePageUrl)
+                  + QLatin1String("' title=\"") + post->author.realName + QLatin1String("\">") +
+                  post->author.userName + QLatin1String("</a></b> - ");
         }
 
-        ss += "<a href=\"" + microblog->postUrl(account, post->author.userName,
-                                                post->postId) + "\" title=\"" +
+        ss += QLatin1String("<a href=\"") + microblog->postUrl(account, post->author.userName,
+                                                post->postId) + QLatin1String("\" title=\"") +
               post->creationDateTime.toString(Qt::DefaultLocaleLongDate)
-              + "\">%1</a>";
+              + QLatin1String("\">%1</a>");
 
         if (!post->source.isEmpty()) {
-            ss += " - " + post->source;
+            ss += QLatin1String(" - ") + post->source;
         }
 
-        const QRegExp followers("/api/user/\\w+/followers");
+        const QRegExp followers(QLatin1String("/api/user/\\w+/followers"));
         if (!post->to.isEmpty()) {
-            ss += " - ";
-            ss += i18n("To:") + ' ';
+            ss += QLatin1String(" - ");
+            ss += i18n("To:") + QLatin1Char(' ');
 
             Q_FOREACH (const QString &id, post->to) {
                 if (id == PumpIOMicroBlog::PublicCollection) {
-                    ss += i18n("Public") + ", ";
+                    ss += i18n("Public") + QLatin1String(", ");
                 } else if (followers.indexIn(id) != -1) {
-                    ss += "<a href=\"" + QString(id).remove("/api/user") + "\">"
-                          + i18n("Followers") + "</a>, ";
-                } else if (id == "acct:" + account->webfingerID()) {
-                    ss += i18n("You") + ", ";
+                    ss += QLatin1String("<a href=\"") + QString(id).remove(QLatin1String("/api/user")) + QLatin1String("\">")
+                          + i18n("Followers") + QLatin1String("</a>, ");
+                } else if (id == QLatin1String("acct:") + account->webfingerID()) {
+                    ss += i18n("You") + QLatin1String(", ");
                 } else {
-                    ss += "<a href=\"" + microblog->profileUrl(account, id)
-                          + "\">" + PumpIOMicroBlog::userNameFromAcct(id) + "</a>, ";
+                    ss += QLatin1String("<a href=\"") + microblog->profileUrl(account, id)
+                          + QLatin1String("\">") + PumpIOMicroBlog::userNameFromAcct(id) + QLatin1String("</a>, ");
                 }
             }
 
-            if (ss.endsWith(", ")) {
+            if (ss.endsWith(QLatin1String(", "))) {
                 ss.chop(2);
             }
         }
 
         if (!post->cc.isEmpty()) {
-            ss += " - ";
-            ss += i18n("CC:") + ' ';
+            ss += QLatin1String(" - ");
+            ss += i18n("CC:") + QLatin1Char(' ');
 
             Q_FOREACH (const QString &id, post->cc) {
                 if (id == PumpIOMicroBlog::PublicCollection) {
-                    ss += i18n("Public") + ", ";
+                    ss += i18n("Public") + QLatin1String(", ");
                 } else if (followers.indexIn(id) != -1) {
-                    ss += "<a href=\"" + QString(id).remove("/api/user") + "\">"
-                          + i18n("Followers") + "</a>, ";
-                } else if (id == "acct:" + account->webfingerID()) {
-                    ss += i18n("You") + ", ";
+                    ss += QLatin1String("<a href=\"") + QString(id).remove(QLatin1String("/api/user")) + QLatin1String("\">")
+                          + i18n("Followers") + QLatin1String("</a>, ");
+                } else if (id == QLatin1String("acct:") + account->webfingerID()) {
+                    ss += i18n("You") + QLatin1String(", ");
                 } else {
-                    ss += "<a href=\"" + microblog->profileUrl(account, id)
-                          + "\">" + PumpIOMicroBlog::userNameFromAcct(id) + "</a>, ";
+                    ss += QLatin1String("<a href=\"") + microblog->profileUrl(account, id)
+                          + QLatin1String("\">") + PumpIOMicroBlog::userNameFromAcct(id) + QLatin1String("</a>, ");
                 }
             }
 
-            if (ss.endsWith(", ")) {
+            if (ss.endsWith(QLatin1String(", "))) {
                 ss.chop(2);
             }
         }
 
         if (!post->shares.isEmpty()) {
-            ss += " - ";
-            ss += i18n("Shared by:") + ' ';
+            ss += QLatin1String(" - ");
+            ss += i18n("Shared by:") + QLatin1Char(' ');
 
             Q_FOREACH (const QString &id, post->shares) {
-                if (id == "acct:" + account->webfingerID()) {
-                    ss += i18n("You") + ", ";
+                if (id == QLatin1String("acct:") + account->webfingerID()) {
+                    ss += i18n("You") + QLatin1String(", ");
                 } else {
-                    ss += "<a href=\"" + microblog->profileUrl(account, id)
-                          + "\">" + PumpIOMicroBlog::userNameFromAcct(id) + "</a>, ";
+                    ss += QLatin1String("<a href=\"") + microblog->profileUrl(account, id)
+                          + QLatin1String("\">") + PumpIOMicroBlog::userNameFromAcct(id) + QLatin1String("</a>, ");
                 }
             }
 
-            if (ss.endsWith(", ")) {
+            if (ss.endsWith(QLatin1String(", "))) {
                 ss.chop(2);
             }
         }
 
-        ss += " - ";
+        ss += QLatin1String(" - ");
         ss += i18n("View replies");
-        ss += " <a href=\"thread://\"><img src=\"icon://thread\"/></a>";
+        ss += QLatin1String(" <a href=\"thread://\"><img src=\"icon://thread\"/></a>");
     } else {
         qCDebug(CHOQOK) << "post is not a PumpIOPost!";
     }
@@ -177,21 +177,21 @@ void PumpIOPostWidget::initUi()
     Choqok::UI::PostWidget::initUi();
 
     if (isResendAvailable()) {
-        buttons().value("btnResend")->setToolTip(i18nc("@info:tooltip", "Share"));
+        buttons().value(QLatin1String("btnResend"))->setToolTip(i18nc("@info:tooltip", "Share"));
     }
 
     if (isReplyAvailable()) {
-        d->btnReply = addButton("btnReply", i18nc("@info:tooltip", "Reply"), "edit-undo");
+        d->btnReply = addButton(QLatin1String("btnReply"), i18nc("@info:tooltip", "Reply"), QLatin1String("edit-undo"));
         QMenu *replyMenu = new QMenu(d->btnReply);
 
-        QAction *replyToAct = new QAction(QIcon::fromTheme("edit-undo"), i18n("Reply to %1",
+        QAction *replyToAct = new QAction(QIcon::fromTheme(QLatin1String("edit-undo")), i18n("Reply to %1",
                                           currentPost()->author.userName), replyMenu);
         replyMenu->addAction(replyToAct);
         connect(replyToAct, SIGNAL(triggered(bool)), SLOT(slotReplyTo()));
         connect(d->btnReply, SIGNAL(clicked(bool)), SLOT(slotReplyTo()));
     }
 
-    d->btnFavorite = addButton("btnFavorite", i18nc("@info:tooltip", "Like"), "rating");
+    d->btnFavorite = addButton(QLatin1String("btnFavorite"), i18nc("@info:tooltip", "Like"), QLatin1String("rating"));
     d->btnFavorite->setCheckable(true);
     connect(d->btnFavorite, SIGNAL(clicked(bool)), this, SLOT(toggleFavorite()));
     updateFavStat();
@@ -240,12 +240,12 @@ void PumpIOPostWidget::slotResendPost()
 
 bool PumpIOPostWidget::isReplyAvailable()
 {
-    return (currentPost()->type != "comment");
+    return (currentPost()->type != QLatin1String("comment"));
 }
 
 bool PumpIOPostWidget::isResendAvailable()
 {
-    return PostWidget::isResendAvailable() && (currentPost()->type != "comment");
+    return PostWidget::isResendAvailable() && (currentPost()->type != QLatin1String("comment"));
 }
 
 void PumpIOPostWidget::slotReplyTo()
@@ -253,7 +253,7 @@ void PumpIOPostWidget::slotReplyTo()
     qCDebug(CHOQOK);
     setReadWithSignal();
     PumpIOPost *post = dynamic_cast<PumpIOPost * >(currentPost());
-    if (post->type == "comment") {
+    if (post->type == QLatin1String("comment")) {
         Q_EMIT reply(post->replyToPostId, post->replyToUserName, post->replyToObjectType);
     } else {
         Q_EMIT reply(post->postId, PumpIOMicroBlog::userNameFromAcct(post->author.userId), post->type);
@@ -264,7 +264,7 @@ void PumpIOPostWidget::updateFavStat()
 {
     d->btnFavorite->setChecked(currentPost()->isFavorited);
     if (currentPost()->isFavorited) {
-        d->btnFavorite->setIcon(QIcon::fromTheme("rating"));
+        d->btnFavorite->setIcon(QIcon::fromTheme(QLatin1String("rating")));
     } else {
         d->btnFavorite->setIcon(unFavIcon);
     }

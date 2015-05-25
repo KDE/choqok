@@ -325,7 +325,7 @@ int ChoqokTabBar::insertTab(int index , QWidget *widget , const QIcon &input_ico
 {
     QIcon icon(input_icon);
     if (input_icon.isNull()) {
-        icon = QIcon::fromTheme("edit-find");
+        icon = QIcon::fromTheme(QLatin1String("edit-find"));
     }
 
     QAction *action = new QAction(icon , name , this);
@@ -597,17 +597,17 @@ void ChoqokTabBar::init_style()
     /*! ----------------- Setup Colors -------------------- */
 
     QColor tmp = palette().color(QPalette::Active , QPalette::WindowText);
-    QString highlight_back("rgba(%1,%2,%3,%4)");
-    highlight_back = highlight_back.arg(QString::number(tmp.red()) , QString::number(tmp.green()) , QString::number(tmp.blue()) , "113");
+    QString highlight_back(QLatin1String("rgba(%1,%2,%3,%4)"));
+    highlight_back = highlight_back.arg(QString::number(tmp.red()) , QString::number(tmp.green()) , QString::number(tmp.blue()) , QLatin1String("113"));
 
     tmp = palette().color(QPalette::Active , QPalette::WindowText);
-    QString shadow("rgba(%1,%2,%3,%4)");
-    shadow = shadow.arg(QString::number(tmp.red()) , QString::number(tmp.green()) , QString::number(tmp.blue()) , "173");
+    QString shadow(QLatin1String("rgba(%1,%2,%3,%4)"));
+    shadow = shadow.arg(QString::number(tmp.red()) , QString::number(tmp.green()) , QString::number(tmp.blue()) , QLatin1String("173"));
 
     tmp = palette().color(QPalette::Active , QPalette::Highlight);
     tmp.setHsv(tmp.hue() , tmp.saturation() , tmp.value() / 2);
-    QString alt_highlight("rgba(%1,%2,%3,%4)");
-    alt_highlight = alt_highlight.arg(QString::number(tmp.red()) , QString::number(tmp.green()) , QString::number(tmp.blue()) , "255");
+    QString alt_highlight(QLatin1String("rgba(%1,%2,%3,%4)"));
+    alt_highlight = alt_highlight.arg(QString::number(tmp.red()) , QString::number(tmp.green()) , QString::number(tmp.blue()) , QLatin1String("255"));
 
     /*! -------------------------------------------------- */
 
@@ -615,9 +615,9 @@ void ChoqokTabBar::init_style()
     switch (static_cast<int>(tabPosition())) {
     case ChoqokTabBar::North :
         p->toolbar->setStyleSheet(
-            "QToolBar{ "
-            "background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 " + shadow + ", stop:0.10 " + alt_highlight + ","
-            " stop:0.90 palette(highlight), stop:1 " + shadow + ");"
+            QLatin1String("QToolBar{ "
+            "background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 ") + shadow + QLatin1String(", stop:0.10 ") + alt_highlight + QLatin1String(","
+            " stop:0.90 palette(highlight), stop:1 ") + shadow + QLatin1String(");"
             "border-style: solid;"
             "padding: 0px}"
 
@@ -627,16 +627,16 @@ void ChoqokTabBar::init_style()
             "padding-top:    6px;"
             "padding-bottom: 6px;"
             "margin: 0px; }"
-            "QToolButton:checked{ background-color: qconicalgradient(cx:0.5, cy:0.85, angle:90, stop:0 transparent, stop:0.3500 " + highlight_back +
-            ", stop:0.3700 palette(window), stop:0.6500 palette(window), stop:0.6700 " + highlight_back + ", stop:1 transparent); }"
-            "QToolButton:hover:!checked{ background-color: qlineargradient(x1:0, y1:3, x2:0, y2:0, stop:0 " + shadow + ",stop:1 transparent); }"
+            "QToolButton:checked{ background-color: qconicalgradient(cx:0.5, cy:0.85, angle:90, stop:0 transparent, stop:0.3500 ") + highlight_back +
+            QLatin1String(", stop:0.3700 palette(window), stop:0.6500 palette(window), stop:0.6700 ") + highlight_back + QLatin1String(", stop:1 transparent); }"
+            "QToolButton:hover:!checked{ background-color: qlineargradient(x1:0, y1:3, x2:0, y2:0, stop:0 ") + shadow + QLatin1String(",stop:1 transparent); }")
         );
         break;
     case ChoqokTabBar::South :
         p->toolbar->setStyleSheet(
-            "QToolBar{ "
-            "background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 " + shadow + ", stop:0.10 palette(highlight),"
-            " stop:0.90 " + alt_highlight + ", stop:1 " + shadow + ");"
+            QLatin1String("QToolBar{ "
+            "background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 ") + shadow + QLatin1String(", stop:0.10 palette(highlight),"
+            " stop:0.90 ") + alt_highlight + QLatin1String(", stop:1 ") + shadow + QLatin1String(");"
             "border-style: solid;"
             "padding: 0px}"
 
@@ -646,16 +646,16 @@ void ChoqokTabBar::init_style()
             "padding-top:    6px;"
             "padding-bottom: 6px;"
             "margin: 0px; }"
-            "QToolButton:checked{ background-color: qconicalgradient(cx:0.5, cy:0.15, angle:270, stop:0 transparent, stop:0.3500 " + highlight_back +
-            ", stop:0.3700 palette(window), stop:0.6500 palette(window), stop:0.6700 " + highlight_back + ", stop:1 transparent); }"
-            "QToolButton:hover:!checked{ background-color: qlineargradient(x1:0, y1:-2, x2:0, y2:1, stop:0 " + shadow + ",stop:1 transparent); }"
+            "QToolButton:checked{ background-color: qconicalgradient(cx:0.5, cy:0.15, angle:270, stop:0 transparent, stop:0.3500 ") + highlight_back +
+            QLatin1String(", stop:0.3700 palette(window), stop:0.6500 palette(window), stop:0.6700 ") + highlight_back + QLatin1String(", stop:1 transparent); }"
+            "QToolButton:hover:!checked{ background-color: qlineargradient(x1:0, y1:-2, x2:0, y2:1, stop:0 ") + shadow + QLatin1String(",stop:1 transparent); }")
         );
         break;
     case ChoqokTabBar::West :
         p->toolbar->setStyleSheet(
-            "QToolBar{ "
-            "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 " + alt_highlight + ", stop:0.90 palette(highlight), "
-            "stop:1 " + shadow + ");"
+            QLatin1String("QToolBar{ "
+            "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 ") + alt_highlight + QLatin1String(", stop:0.90 palette(highlight), "
+            "stop:1 ") + shadow + QLatin1String(");"
             "border-style: solid;"
             "padding: 0px}"
 
@@ -665,16 +665,16 @@ void ChoqokTabBar::init_style()
             "padding-top:    2px;"
             "padding-bottom: 2px;"
             "margin: 0px; }"
-            "QToolButton:checked{ background-color: qconicalgradient(cx:0.85, cy:0.5, angle:180, stop:0 transparent, stop:0.3500 " + highlight_back +
-            ", stop:0.3700 palette(window), stop:0.6500 palette(window), stop:0.6700 " + highlight_back + ", stop:1 transparent); }"
-            "QToolButton:hover:!checked{ background-color: qlineargradient(x1:3, y1:0, x2:0, y2:0, stop:0 " + shadow + ",stop:1 transparent); }"
+            "QToolButton:checked{ background-color: qconicalgradient(cx:0.85, cy:0.5, angle:180, stop:0 transparent, stop:0.3500 ") + highlight_back +
+            QLatin1String(", stop:0.3700 palette(window), stop:0.6500 palette(window), stop:0.6700 ") + highlight_back + QLatin1String(", stop:1 transparent); }"
+            "QToolButton:hover:!checked{ background-color: qlineargradient(x1:3, y1:0, x2:0, y2:0, stop:0 ") + shadow + QLatin1String(",stop:1 transparent); }")
         );
         break;
     case ChoqokTabBar::East :
         p->toolbar->setStyleSheet(
-            "QToolBar{ "
-            "background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 " + alt_highlight + ", stop:0.90 palette(highlight), "
-            "stop:1 " + shadow + ");"
+            QLatin1String("QToolBar{ "
+            "background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 ") + alt_highlight + QLatin1String(", stop:0.90 palette(highlight), "
+            "stop:1 ") + shadow + QLatin1String(");"
             "border-style: solid;"
             "padding: 0px}"
 
@@ -684,9 +684,9 @@ void ChoqokTabBar::init_style()
             "padding-top:    2px;"
             "padding-bottom: 2px;"
             "margin: 0px; }"
-            "QToolButton:checked{ background-color: qconicalgradient(cx:0.15, cy:0.5, angle:0, stop:0 transparent, stop:0.3500 " + highlight_back +
-            ", stop:0.3700 palette(window), stop:0.6500 palette(window), stop:0.6700 " + highlight_back + ", stop:1 transparent); }"
-            "QToolButton:hover:!checked{ background-color: qlineargradient(x1:-2, y1:0, x2:1, y2:0, stop:0 " + shadow + ",stop:1 transparent); }"
+            "QToolButton:checked{ background-color: qconicalgradient(cx:0.15, cy:0.5, angle:0, stop:0 transparent, stop:0.3500 ") + highlight_back +
+            QLatin1String(", stop:0.3700 palette(window), stop:0.6500 palette(window), stop:0.6700 ") + highlight_back + QLatin1String(", stop:1 transparent); }"
+            "QToolButton:hover:!checked{ background-color: qlineargradient(x1:-2, y1:0, x2:1, y2:0, stop:0 ") + shadow + QLatin1String(",stop:1 transparent); }")
         );
         break;
     }

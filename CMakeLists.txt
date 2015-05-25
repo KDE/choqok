@@ -12,8 +12,6 @@ include(KDEFrameworkCompilerSettings)
 include(KDECMakeSettings)
 include(FeatureSummary)
 
-# TODO: move away from QString(char*)
-remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 # TODO: Build without deprecated QUrl methods
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0)
 

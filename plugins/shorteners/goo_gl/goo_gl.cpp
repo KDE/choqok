@@ -34,7 +34,7 @@
 K_PLUGIN_FACTORY_WITH_JSON(Goo_glFactory, "choqok_goo_gl.json", registerPlugin < Goo_gl > ();)
 
 Goo_gl::Goo_gl(QObject *parent, const QVariantList &)
-    : Choqok::Shortener("choqok_goo_gl", parent)
+    : Choqok::Shortener(QLatin1String("choqok_goo_gl"), parent)
 {
 }
 
@@ -45,26 +45,26 @@ Goo_gl::~Goo_gl()
 QString Goo_gl::shorten(const QString &url)
 {
     QVariantMap req;
-    req.insert("longUrl", url);
+    req.insert(QLatin1String("longUrl"), url);
     const QByteArray json = QJsonDocument::fromVariant(req).toJson();
-    KIO::StoredTransferJob *job = KIO::storedHttpPost(json, QUrl("https://www.googleapis.com/urlshortener/v1/url"), KIO::HideProgressInfo) ;
+    KIO::StoredTransferJob *job = KIO::storedHttpPost(json, QUrl(QLatin1String("https://www.googleapis.com/urlshortener/v1/url")), KIO::HideProgressInfo) ;
     if (!job) {
         Choqok::NotifyManager::error(i18n("Error when creating job"), i18n("Goo.gl Error"));
         return url;
     }
-    job->addMetaData("content-type", "Content-Type: application/json");
+    job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
     job->exec();
 
     if (!job->error()) {
         const QJsonDocument json = QJsonDocument::fromJson(job->data());
         if (!json.isNull()) {
             const QVariantMap map = json.toVariant().toMap();
-            const QVariantMap error = map["error"].toMap();
+            const QVariantMap error = map[QLatin1String("error")].toMap();
             if (!error.isEmpty()) {
-                Choqok::NotifyManager::error(error["message"].toString(), i18n("Goo.gl Error"));
+                Choqok::NotifyManager::error(error[QLatin1String("message")].toString(), i18n("Goo.gl Error"));
                 return url;
             }
-            return map[ "id" ].toString();
+            return map[ QLatin1String("id") ].toString();
         }
         Choqok::NotifyManager::error(i18n("Malformed response"), i18n("Goo.gl Error"));
     } else {

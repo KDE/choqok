@@ -40,7 +40,7 @@ K_PLUGIN_FACTORY_WITH_JSON(LongUrlFactory, "choqok_longurl.json",
 const QString baseLongUrlDorComUrl = QLatin1String("http://api.longurl.org/v2/");
 
 LongUrl::LongUrl(QObject *parent, const QList< QVariant > &)
-    : Choqok::Plugin("choqok_longurl", parent)
+    : Choqok::Plugin(QLatin1String("choqok_longurl"), parent)
     , state(Stopped), mServicesAreFetched(false)
 {
     sheduleSupportedServicesFetch();
@@ -72,8 +72,8 @@ void LongUrl::parse(QPointer< Choqok::UI::PostWidget > postToParse)
         if (pureList[i].length() > 30) {
             continue;
         }
-        if (!pureList[i].startsWith(QString("http"), Qt::CaseInsensitive)) {
-            pureList[i].prepend("http://");
+        if (!pureList[i].startsWith(QString::fromLatin1("http"), Qt::CaseInsensitive)) {
+            pureList[i].prepend(QLatin1String("http://"));
         }
         redirectList << pureList[i];
     }
@@ -117,8 +117,8 @@ void LongUrl::replaceUrl(LongUrl::PostWidgetPointer post, const QUrl &fromUrl, c
     if (post) {
         QString content = post->content();
         QString fromUrlStr = fromUrl.url();
-        content.replace(QRegExp("title='" + fromUrlStr + '\''), "title='" + toUrl.url() + '\'');
-        content.replace(QRegExp("href='" + fromUrlStr + '\''), "href='" + toUrl.url() + '\'');
+        content.replace(QRegExp(QLatin1String("title='") + fromUrlStr + QLatin1Char('\'')), QLatin1String("title='") + toUrl.url() + QLatin1Char('\''));
+        content.replace(QRegExp(QLatin1String("href='") + fromUrlStr + QLatin1Char('\'')), QLatin1String("href='") + toUrl.url() + QLatin1Char('\''));
         post->setContent(content);
         Choqok::ShortenManager::self()->emitNewUnshortenedUrl(post, fromUrl, toUrl);
     }
@@ -128,7 +128,7 @@ void LongUrl::sheduleSupportedServicesFetch()
 {
     mServicesAreFetched = true;
     mServicesData = QSharedPointer<QByteArray>(new QByteArray());
-    KIO::TransferJob *job = KIO::get(QUrl(baseLongUrlDorComUrl + "services?format=json"), KIO::NoReload, KIO::HideProgressInfo);
+    KIO::TransferJob *job = KIO::get(QUrl(baseLongUrlDorComUrl + QLatin1String("services?format=json")), KIO::NoReload, KIO::HideProgressInfo);
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)), SLOT(servicesDataReceived(KIO::Job*,QByteArray)));
     connect(job, SIGNAL(result(KJob*)), SLOT(servicesJobResult(KJob*)));
 }

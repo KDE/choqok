@@ -64,7 +64,7 @@ TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
         QString servName = newAccountAlias;
         int counter = 1;
         while (Choqok::AccountManager::self()->findAccount(newAccountAlias)) {
-            newAccountAlias = QString("%1%2").arg(servName).arg(counter);
+            newAccountAlias = QString::fromLatin1("%1%2").arg(servName).arg(counter);
             counter++;
         }
         setAccount(mAccount = new TwitterAccount(microblog, newAccountAlias));
@@ -118,7 +118,7 @@ void TwitterEditAccountWidget::authorizeUser()
 
     // send a request for an unauthorized token
     QOAuth::ParamMap reply =
-        qoauth->requestToken("https://twitter.com/oauth/request_token",
+        qoauth->requestToken(QLatin1String("https://twitter.com/oauth/request_token"),
                              QOAuth::GET, QOAuth::HMAC_SHA1);
 
     // if no error occurred, read the received token and token secret
@@ -126,9 +126,9 @@ void TwitterEditAccountWidget::authorizeUser()
         token = reply.value(QOAuth::tokenParameterName());
         tokenSecret = reply.value(QOAuth::tokenSecretParameterName());
         qCDebug(CHOQOK) << "token: " << token;
-        QUrl url("https://twitter.com/oauth/authorize");
-        url.addQueryItem("oauth_token", token);
-        url.addQueryItem("oauth_callback", "oob");
+        QUrl url(QLatin1String("https://twitter.com/oauth/authorize"));
+        url.addQueryItem(QLatin1String("oauth_token"), QLatin1String(token));
+        url.addQueryItem(QLatin1String("oauth_callback"), QLatin1String("oob"));
         Choqok::openUrl(url);
         getPinCode();
     } else {
@@ -152,11 +152,11 @@ void TwitterEditAccountWidget::getPinCode()
 
         // send a request to exchange Request Token for an Access Token
         QOAuth::ParamMap reply =
-            qoauth->accessToken("https://twitter.com/oauth/access_token", QOAuth::POST, token,
+            qoauth->accessToken(QLatin1String("https://twitter.com/oauth/access_token"), QOAuth::POST, token,
                                 tokenSecret, QOAuth::HMAC_SHA1, otherArgs);
         // if no error occurred, read the Access Token (and other arguments, if applicable)
         if (qoauth->error() == QOAuth::NoError) {
-            username = reply.value("screen_name");
+            username = QLatin1String(reply.value("screen_name"));
             token = reply.value(QOAuth::tokenParameterName());
             tokenSecret = reply.value(QOAuth::tokenSecretParameterName());
             setAuthenticated(true);
@@ -174,11 +174,11 @@ void TwitterEditAccountWidget::setAuthenticated(bool authenticated)
 {
     isAuthenticated = authenticated;
     if (authenticated) {
-        kcfg_authorize->setIcon(QIcon::fromTheme("object-unlocked"));
+        kcfg_authorize->setIcon(QIcon::fromTheme(QLatin1String("object-unlocked")));
         kcfg_authenticateLed->on();
         kcfg_authenticateStatus->setText(i18n("Authenticated"));
     } else {
-        kcfg_authorize->setIcon(QIcon::fromTheme("object-locked"));
+        kcfg_authorize->setIcon(QIcon::fromTheme(QLatin1String("object-locked")));
         kcfg_authenticateLed->off();
         kcfg_authenticateStatus->setText(i18n("Not Authenticated"));
     }

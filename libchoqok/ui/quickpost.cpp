@@ -90,7 +90,7 @@ void QuickPost::setupUi()
     resize(Choqok::BehaviorSettings::quickPostDialogSize());
     d->all = new QCheckBox(i18nc("All accounts", "All"), this);
     d->comboAccounts = new QComboBox(this);
-    d->attach = new QPushButton(QIcon::fromTheme("mail-attachment"), QString(), this);
+    d->attach = new QPushButton(QIcon::fromTheme(QLatin1String("mail-attachment")), QString(), this);
     d->attach->setMaximumWidth(d->attach->height());
     d->attach->setToolTip(i18n("Attach a file"));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -286,7 +286,7 @@ void QuickPost::accountModified(Account *theAccount)
 void QuickPost::slotAttachMedium()
 {
     KMessageBox::information(this, i18n("Link to uploaded medium will be added here after uploading process succeed."),
-                             QString(), "quickPostAttachMedium");
+                             QString(), QLatin1String("quickPostAttachMedium"));
     QPointer<UploadMediaDialog> dlg = new UploadMediaDialog(this);
     dlg->show();
 }

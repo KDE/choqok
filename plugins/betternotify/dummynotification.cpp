@@ -42,14 +42,14 @@ DummyNotification::DummyNotification(const QFont &font, const QColor &color, con
     setOpenExternalLinks(false);
     setOpenLinks(false);
     setTextInteractionFlags(Qt::LinksAccessibleByMouse);
-    document()->addResource(QTextDocument::ImageResource, QUrl("img://profileImage"), QIcon::fromTheme("choqok").pixmap(48));
-    document()->addResource(QTextDocument::ImageResource, QUrl("icon://close"),
-                            QIcon::fromTheme("dialog-ok").pixmap(16));
+    document()->addResource(QTextDocument::ImageResource, QUrl(QLatin1String("img://profileImage")), QIcon::fromTheme(QLatin1String("choqok")).pixmap(48));
+    document()->addResource(QTextDocument::ImageResource, QUrl(QLatin1String("icon://close")),
+                            QIcon::fromTheme(QLatin1String("dialog-ok")).pixmap(16));
     setText(baseText.arg(i18n("Choqok")).arg(i18n("KDE Rocks! :)")).arg(i18n("OK")));
     connect(this, SIGNAL(anchorClicked(QUrl)), SLOT(slotProcessAnchor(QUrl)));
 
-    QString fntStr = "font-family:\"" + font.family() + "\"; font-size:" + QString::number(font.pointSize()) + "pt;";
-    fntStr += (font.bold() ? " font-weight:bold;" : QString()) + (font.italic() ? " font-style:italic;" : QString());
+    QString fntStr = QLatin1String("font-family:\"") + font.family() + QLatin1String("\"; font-size:") + QString::number(font.pointSize()) + QLatin1String("pt;");
+    fntStr += (font.bold() ? QLatin1String(" font-weight:bold;") : QString()) + (font.italic() ? QLatin1String(" font-style:italic;") : QString());
     QString style = Choqok::UI::PostWidget::getBaseStyle().arg(Choqok::getColorString(color), Choqok::getColorString(background), fntStr);
 
     setStyleSheet(style);
@@ -85,8 +85,8 @@ void DummyNotification::mouseReleaseEvent(QMouseEvent *ev)
 
 void DummyNotification::slotProcessAnchor(const QUrl &url)
 {
-    if (url.scheme() == "choqok") {
-        if (url.host() == "close") {
+    if (url.scheme() == QLatin1String("choqok")) {
+        if (url.host() == QLatin1String("close")) {
             Q_EMIT positionSelected(pos());
         }
     }

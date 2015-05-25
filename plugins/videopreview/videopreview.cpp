@@ -44,14 +44,14 @@
 K_PLUGIN_FACTORY_WITH_JSON(VideoPreviewFactory, "choqok_videopreview.json",
                            registerPlugin < VideoPreview > ();)
 
-const QRegExp VideoPreview::mYouTuRegExp("(https?://youtu.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])");
-const QRegExp VideoPreview::mYouTubeRegExp("(https?://www.youtube.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])");
-const QRegExp VideoPreview::mVimeoRegExp("(https?://(.+)?vimeo.com/(.+)[&]?)");
+const QRegExp VideoPreview::mYouTuRegExp(QLatin1String("(https?://youtu.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])"));
+const QRegExp VideoPreview::mYouTubeRegExp(QLatin1String("(https?://www.youtube.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])"));
+const QRegExp VideoPreview::mVimeoRegExp(QLatin1String("(https?://(.+)?vimeo.com/(.+)[&]?)"));
 
-const QRegExp VideoPreview::mYouTuCode("youtu.(.+)/(.+)[?&]?");
+const QRegExp VideoPreview::mYouTuCode(QLatin1String("youtu.(.+)/(.+)[?&]?"));
 
 VideoPreview::VideoPreview(QObject *parent, const QList< QVariant > &)
-    : Choqok::Plugin("choqok_videopreview", parent)
+    : Choqok::Plugin(QLatin1String("choqok_videopreview"), parent)
     , state(Stopped)
 {
     connect(Choqok::UI::Global::SessionManager::self(),
@@ -83,7 +83,7 @@ void VideoPreview::slotNewUnshortenedUrl(Choqok::UI::PostWidget *widget, const Q
     Q_UNUSED(fromUrl)
     if (mYouTubeRegExp.indexIn(toUrl.toDisplayString()) != -1) {
         QUrl thisurl(mYouTubeRegExp.cap(0));
-        QString thumbUrl = parseYoutube(thisurl.queryItemValue("v"), widget);
+        QString thumbUrl = parseYoutube(thisurl.queryItemValue(QLatin1String("v")), widget);
         connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
                 SLOT(slotImageFetched(QString,QPixmap)));
         Choqok::MediaManager::self()->fetchImage(thumbUrl, Choqok::MediaManager::Async);
@@ -136,7 +136,7 @@ void VideoPreview::parse(QPointer<Choqok::UI::PostWidget> postToParse)
         } else if (pos2 >= 0) {
             pos = pos2 + mYouTubeRegExp.matchedLength();
             QUrl thisurl(mYouTubeRegExp.cap(0));
-            thumbList << parseYoutube(thisurl.queryItemValue("v"), postToParse);
+            thumbList << parseYoutube(thisurl.queryItemValue(QLatin1String("v")), postToParse);
         } else if (pos3 >= 0) {
             pos = pos3 + mVimeoRegExp.matchedLength();
             thumbList << parseVimeo(mVimeoRegExp.cap(3), postToParse);
@@ -155,7 +155,7 @@ void VideoPreview::parse(QPointer<Choqok::UI::PostWidget> postToParse)
 
 QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWidget > postToParse)
 {
-    QString youtubeUrl = QString("https://gdata.youtube.com/feeds/api/videos/%1").arg(videoid);
+    QString youtubeUrl = QString::fromLatin1("https://gdata.youtube.com/feeds/api/videos/%1").arg(videoid);
     QUrl th_url(youtubeUrl);
     KIO::StoredTransferJob *job = KIO::storedGet(th_url, KIO::NoReload, KIO::HideProgressInfo);
     KJobWidgets::setWindow(job, Choqok::UI::Global::mainWindow());
@@ -168,26 +168,26 @@ QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWi
         QDomElement root = document.documentElement();
         if (!root.isNull()) {
             QDomElement node;
-            node = root.firstChildElement("title");
+            node = root.firstChildElement(QLatin1String("title"));
             if (!node.isNull()) {
                 title = QString(node.text());
             }
-            node = root.firstChildElement("media:group");
-            node = node.firstChildElement("media:description");
+            node = root.firstChildElement(QLatin1String("media:group"));
+            node = node.firstChildElement(QLatin1String("media:description"));
             if (!node.isNull()) {
                 description = QString(node.text());
             }
 
-            node = node.nextSiblingElement("media:thumbnail");
+            node = node.nextSiblingElement(QLatin1String("media:thumbnail"));
             if (!node.isNull()) {
-                thumb_url = QString(node.attributeNode("url").value());
+                thumb_url = QString(node.attributeNode(QLatin1String("url")).value());
             }
         }
 
         description = description.left(70);
 
         mParsingList.insert(thumb_url, postToParse);
-        mBaseUrlMap.insert(thumb_url, "https://www.youtube.com/watch?v=" + videoid);
+        mBaseUrlMap.insert(thumb_url, QLatin1String("https://www.youtube.com/watch?v=") + videoid);
         mTitleVideoMap.insert(thumb_url, title);
         mDescriptionVideoMap.insert(thumb_url, description);
     } else {
@@ -199,7 +199,7 @@ QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWi
 
 QString VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidget > postToParse)
 {
-    QString vimeoUrl = QString("https://vimeo.com/api/v2/video/%1.xml").arg(videoid);
+    QString vimeoUrl = QString::fromLatin1("https://vimeo.com/api/v2/video/%1.xml").arg(videoid);
     QUrl th_url(vimeoUrl);
     QEventLoop loop;
     KIO::StoredTransferJob *job = KIO::storedGet(th_url, KIO::NoReload, KIO::HideProgressInfo);
@@ -213,18 +213,18 @@ QString VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidg
         QDomElement root = document.documentElement();
         if (!root.isNull()) {
             QDomElement videotag;
-            videotag = root.firstChildElement("video");
+            videotag = root.firstChildElement(QLatin1String("video"));
             if (!videotag.isNull()) {
                 QDomElement node;
-                node = videotag.firstChildElement("title");
+                node = videotag.firstChildElement(QLatin1String("title"));
                 if (!node.isNull()) {
                     title = QString(node.text());
                 }
-                node = videotag.firstChildElement("description");
+                node = videotag.firstChildElement(QLatin1String("description"));
                 if (!node.isNull()) {
                     description = QString(node.text());
                 }
-                node = videotag.firstChildElement("thumbnail_small");
+                node = videotag.firstChildElement(QLatin1String("thumbnail_small"));
                 if (!node.isNull()) {
                     thumb_url = QString(node.text());
                 }
@@ -233,7 +233,7 @@ QString VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidg
         description = description.left(70);
 
         mParsingList.insert(thumb_url, postToParse);
-        mBaseUrlMap.insert(thumb_url, "https://vimeo.com/" + videoid);
+        mBaseUrlMap.insert(thumb_url, QLatin1String("https://vimeo.com/") + videoid);
         mTitleVideoMap.insert(thumb_url, title);
         mDescriptionVideoMap.insert(thumb_url, description);
     } else {
@@ -255,13 +255,13 @@ void VideoPreview::slotImageFetched(const QString &remoteUrl, const QPixmap &pix
     }
     QString content = postToParse->content();
     QUrl imgU(remoteUrl);
-    imgU.setScheme("img");
+    imgU.setScheme(QLatin1String("img"));
     postToParse->mainWidget()->document()->addResource(QTextDocument::ImageResource, imgU, pixmap);
 
-    QString temp("<br/><table><tr><td rowspan=2><img align='left' height=64 src='"
-                 + imgU.toDisplayString() + "' /></td>");
-    temp.append("<td><a href='" + baseUrl + "' title='" + baseUrl + "'><b>" + title + "</b></a></td></tr>");
-    temp.append("<tr><font size=\"-1\">" + description + "</font></tr></table>");
+    QString temp(QLatin1String("<br/><table><tr><td rowspan=2><img align='left' height=64 src='")
+                 + imgU.toDisplayString() + QLatin1String("' /></td>"));
+    temp.append(QLatin1String("<td><a href='") + baseUrl + QLatin1String("' title='") + baseUrl + QLatin1String("'><b>") + title + QLatin1String("</b></a></td></tr>"));
+    temp.append(QLatin1String("<tr><font size=\"-1\">") + description + QLatin1String("</font></tr></table>"));
 
     content.append(temp);
     postToParse->setContent(content);

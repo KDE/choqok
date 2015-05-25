@@ -84,8 +84,8 @@ UploadMediaDialog::UploadMediaDialog(QWidget *parent, const QString &url)
         d->ui.imageUrl->setUrl(QUrl(url));
     }
     connect(d->ui.uploaderPlugin, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
-    d->ui.aboutPlugin->setIcon(QIcon::fromTheme("help-about"));
-    d->ui.configPlugin->setIcon(QIcon::fromTheme("configure"));
+    d->ui.aboutPlugin->setIcon(QIcon::fromTheme(QLatin1String("help-about")));
+    d->ui.configPlugin->setIcon(QIcon::fromTheme(QLatin1String("configure")));
     connect(d->ui.aboutPlugin, SIGNAL(clicked(bool)), SLOT(slotAboutClicked()));
     connect(d->ui.configPlugin, SIGNAL(clicked(bool)), SLOT(slotConfigureClicked()));
     connect(Choqok::MediaManager::self(), SIGNAL(mediumUploaded(QUrl,QString)),
@@ -101,7 +101,7 @@ UploadMediaDialog::~UploadMediaDialog()
 
 void UploadMediaDialog::load()
 {
-    QList<KPluginInfo> plugins = Choqok::PluginManager::self()->availablePlugins("Uploaders");
+    QList<KPluginInfo> plugins = Choqok::PluginManager::self()->availablePlugins(QLatin1String("Uploaders"));
     qCDebug(CHOQOK) << plugins.count();
 
     Q_FOREACH (const KPluginInfo &plugin, plugins) {
@@ -235,7 +235,7 @@ void Choqok::UI::UploadMediaDialog::slotConfigureClicked()
 
         if (configDialog->exec() == QDialog::Accepted) {
             Q_FOREACH (KCModuleProxy *moduleProxy, d->moduleProxyList) {
-                QStringList parentComponents = moduleProxy->moduleInfo().service()->property("X-KDE-ParentComponents").toStringList();
+                QStringList parentComponents = moduleProxy->moduleInfo().service()->property(QLatin1String("X-KDE-ParentComponents")).toStringList();
                 moduleProxy->save();
 //                 foreach (const QString &parentComponent, parentComponents) {
 //                     emit configCommitted(parentComponent.toLatin1());

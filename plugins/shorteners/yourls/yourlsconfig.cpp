@@ -36,11 +36,11 @@ K_PLUGIN_FACTORY_WITH_JSON(YourlsConfigFactory, "choqok_yourls_config.json",
                            registerPlugin < YourlsConfig > ();)
 
 YourlsConfig::YourlsConfig(QWidget *parent, const QVariantList &):
-    KCModule(KAboutData::pluginData("kcm_choqok_yourls"), parent)
+    KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_yourls")), parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
-    wd->setObjectName("mYourlsCtl");
+    wd->setObjectName(QLatin1String("mYourlsCtl"));
     ui.setupUi(wd);
     addConfig(YourlsSettings::self(), wd);
     layout->addWidget(wd);
@@ -56,14 +56,14 @@ YourlsConfig::~YourlsConfig()
 void YourlsConfig::load()
 {
     KCModule::load();
-    ui.cfg_password->setText(Choqok::PasswordManager::self()->readPassword(QString("yourls_%1")
+    ui.cfg_password->setText(Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("yourls_%1")
                              .arg(ui.kcfg_username->text())));
 }
 
 void YourlsConfig::save()
 {
     KCModule::save();
-    Choqok::PasswordManager::self()->writePassword(QString("yourls_%1").arg(ui.kcfg_username->text()),
+    Choqok::PasswordManager::self()->writePassword(QString::fromLatin1("yourls_%1").arg(ui.kcfg_username->text()),
             ui.cfg_password->text());
 }
 

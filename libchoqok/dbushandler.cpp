@@ -46,8 +46,8 @@ DbusHandler::DbusHandler()
 {
     m_self = this;
     new ChoqokAdaptor(this);
-    QDBusConnection::sessionBus().registerService("org.kde.choqok");
-    QDBusConnection::sessionBus().registerObject("/", this);
+    QDBusConnection::sessionBus().registerService(QLatin1String("org.kde.choqok"));
+    QDBusConnection::sessionBus().registerObject(QLatin1String("/"), this);
 }
 
 DbusHandler::~DbusHandler()
@@ -96,7 +96,7 @@ void DbusHandler::slotTitleUrl(KJob *job)
         text.append(m_doc.metaInformation(QTextDocument::DocumentTitle));
     }
     QString url = stj->url().toDisplayString();
-    text.append(' ' + prepareUrl(url));
+    text.append(QLatin1Char(' ') + prepareUrl(url));
     postText(text);
 }
 

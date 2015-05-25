@@ -34,7 +34,7 @@ K_PLUGIN_FACTORY_WITH_JSON(ChoqokAppearanceConfigFactory, "choqok_appearanceconf
                            registerPlugin<AppearanceConfig>();)
 
 AppearanceConfig::AppearanceConfig(QWidget *parent, const QVariantList &args)
-    : KCModule(KAboutData::pluginData("kcm_choqok_appearanceconfig"), parent, args)
+    : KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_appearanceconfig")), parent, args)
 {
     setupUi(this);
 

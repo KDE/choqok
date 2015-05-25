@@ -42,17 +42,17 @@ K_PLUGIN_FACTORY_WITH_JSON(KonqPluginChoqokFactory, "konqchoqok.json", registerP
 KonqPluginChoqok::KonqPluginChoqok(QObject *parent, const QVariantList &)
     : Plugin(parent) , m_interface(0)
 {
-    KActionMenu *menu = new KActionMenu(QIcon::fromTheme("choqok") , i18n("Choqok"),
+    KActionMenu *menu = new KActionMenu(QIcon::fromTheme(QLatin1String("choqok")) , i18n("Choqok"),
                                         actionCollection());
-    actionCollection()->addAction("action menu", menu);
+    actionCollection()->addAction(QLatin1String("action menu"), menu);
     menu->setDelayed(false);
 
-    QAction *postaction = actionCollection()->addAction("post_choqok");
+    QAction *postaction = actionCollection()->addAction(QLatin1String("post_choqok"));
     postaction->setText(i18n("Post Text with Choqok"));
     connect(postaction, SIGNAL(triggered(bool)), SLOT(slotpostSelectedText()));
     menu->addAction(postaction);
 
-    QAction *shortening = actionCollection()->add<KToggleAction>("shortening_choqok");
+    QAction *shortening = actionCollection()->add<KToggleAction>(QLatin1String("shortening_choqok"));
     shortening->setText(i18n("Shorten URL on Paste"));
     connect(shortening, SIGNAL(toggled(bool)), SLOT(toggleShortening(bool)));
     menu->addAction(shortening);
@@ -64,22 +64,22 @@ void KonqPluginChoqok::updateActions()
 {
 
     // Is Choqok running?
-    if (!QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.choqok")) {
-        ((KToggleAction *) actionCollection()->action("shortening_choqok"))->setEnabled(false);
+    if (!QDBusConnection::sessionBus().interface()->isServiceRegistered(QLatin1String("org.kde.choqok"))) {
+        ((KToggleAction *) actionCollection()->action(QLatin1String("shortening_choqok")))->setEnabled(false);
         return;
     }
     // Choqok is running, so I can connect to it, if I haven't done yet.
     if (!m_interface) {
-        m_interface = new  QDBusInterface("org.kde.choqok",
-                                          "/",
-                                          "org.kde.choqok",
+        m_interface = new  QDBusInterface(QLatin1String("org.kde.choqok"),
+                                          QLatin1String("/"),
+                                          QLatin1String("org.kde.choqok"),
                                           QDBusConnection::sessionBus());
 
     }
-    QDBusReply<bool> reply = m_interface->call("getShortening");
+    QDBusReply<bool> reply = m_interface->call(QLatin1String("getShortening"));
     if (reply.isValid()) {
-        ((KToggleAction *) actionCollection()->action("shortening_choqok"))->setEnabled(true);
-        ((KToggleAction *) actionCollection()->action("shortening_choqok"))->setChecked(reply.value());
+        ((KToggleAction *) actionCollection()->action(QLatin1String("shortening_choqok")))->setEnabled(true);
+        ((KToggleAction *) actionCollection()->action(QLatin1String("shortening_choqok")))->setChecked(reply.value());
     }
 }
 
@@ -107,25 +107,25 @@ void KonqPluginChoqok::slotpostSelectedText()
         return;
     }
 
-    if (!QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.choqok")) {
+    if (!QDBusConnection::sessionBus().interface()->isServiceRegistered(QLatin1String("org.kde.choqok"))) {
         //qDebug() << "Choqok is not running, starting it!..." << endl;
-        KToolInvocation::startServiceByDesktopName(QString("choqok"),
+        KToolInvocation::startServiceByDesktopName(QString::fromLatin1("choqok"),
                 QStringList());
     }
     if (!m_interface) {
-        m_interface = new  QDBusInterface("org.kde.choqok",
-                                          "/",
-                                          "org.kde.choqok",
+        m_interface = new  QDBusInterface(QLatin1String("org.kde.choqok"),
+                                          QLatin1String("/"),
+                                          QLatin1String("org.kde.choqok"),
                                           QDBusConnection::sessionBus());
     }
 
-    m_interface->call("postText", text);
+    m_interface->call(QLatin1String("postText"), text);
 }
 
 void KonqPluginChoqok::toggleShortening(bool value)
 {
-    m_interface->call("setShortening", value);
-    ((KToggleAction *) actionCollection()->action("shortening_choqok"))->setChecked(value);
+    m_interface->call(QLatin1String("setShortening"), value);
+    ((KToggleAction *) actionCollection()->action(QLatin1String("shortening_choqok")))->setChecked(value);
 }
 
 #include "konqchoqok.moc"

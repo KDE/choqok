@@ -84,55 +84,55 @@ public:
 
     const QString getLocation()       // Url to the media (local files are represented as a file:// url)
     {
-        return trackInfo["location"].toString();
+        return trackInfo[QLatin1String("location")].toString();
     }
     const QString getTitle()          // Name
     {
-        return trackInfo["title"].toString();
+        return trackInfo[QLatin1String("title")].toString();
     }
     const QString getArtist()          // Name of artist or band performing the work
     {
-        return trackInfo["artist"].toString();
+        return trackInfo[QLatin1String("artist")].toString();
     }
     const QString getAlbum()          // Name of compilation the work is part of
     {
-        return trackInfo["album"].toString();
+        return trackInfo[QLatin1String("album")].toString();
     }
     const QString getTracknumber()      // The position if it's part of a larger set, it may have to be converted to an integer. This MAY be extended with a '/' character and a numeric string containing the total number of elements in the set. E.g. '69/1337'.
     {
-        return trackInfo["tracknumber"].toString();
+        return trackInfo[QLatin1String("tracknumber")].toString();
     }
     uint getTime()          // The duration in seconds
     {
-        return trackInfo["time"].toUInt();
+        return trackInfo[QLatin1String("time")].toUInt();
     }
     uint getMtime()          // The duration in milliseconds
     {
-        return trackInfo["mtime"].toUInt();
+        return trackInfo[QLatin1String("mtime")].toUInt();
     }
     const QString getGenre()          // The genre. This MAY begin with a numerical value reflecting the genre in a previously known array of genres, such as ID3 genres. See http://www.linuxselfhelp.com/HOWTO/MP3-HOWTO-13.html#ss13.3
     {
-        return trackInfo["genre"].toString();
+        return trackInfo[QLatin1String("genre")].toString();
     }
     const QString getComment()      // A comment about the work
     {
-        return trackInfo["comment"].toString();
+        return trackInfo[QLatin1String("comment")].toString();
     }
     uint getRating()          // A 'taste' rate value, out of 5. 0-5 or 1-5?
     {
-        return trackInfo["rating"].toUInt();
+        return trackInfo[QLatin1String("rating")].toUInt();
     }
     uint getYear()          // The year when the performing was realized, i.e. 2007.
     {
-        return trackInfo["year"].toUInt();
+        return trackInfo[QLatin1String("year")].toUInt();
     }
     uint getDate()          // When the performing was realized, for precise needs. It is represented as epoch, i.e. the number of seconds since « 00:00:00 1970-01-01 UTC »
     {
-        return trackInfo["date"].toUInt();
+        return trackInfo[QLatin1String("date")].toUInt();
     }
     const QString getArturl()          // An URI to an image associated with the work
     {
-        return trackInfo["arturl"].toString();
+        return trackInfo[QLatin1String("arturl")].toString();
     }
     const QVariantMap getTrackMetadata()
     {

@@ -48,8 +48,8 @@ PumpIOAccount::PumpIOAccount(PumpIOMicroBlog *parent, const QString &alias):
     d->host = configGroup()->readEntry("Host", QString());
     d->token = configGroup()->readEntry("Token", QString());
     d->consumerKey = configGroup()->readEntry("ConsumerKey", QString());
-    d->consumerSecret = Choqok::PasswordManager::self()->readPassword(QString("%1_consumerSecret").arg(alias));
-    d->tokenSecret = Choqok::PasswordManager::self()->readPassword(QString("%1_tokenSecret").arg(alias));
+    d->consumerSecret = Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("%1_consumerSecret").arg(alias));
+    d->tokenSecret = Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("%1_tokenSecret").arg(alias));
     d->oAuth = new QOAuth::Interface(new KIO::AccessManager(this), this);
     d->oAuth->setConsumerKey(d->consumerKey.toLocal8Bit());
     d->oAuth->setConsumerSecret(d->consumerSecret.toLocal8Bit());
@@ -83,9 +83,9 @@ void PumpIOAccount::writeConfig()
     configGroup()->writeEntry("Host", d->host);
     configGroup()->writeEntry("Token", d->token);
     configGroup()->writeEntry("ConsumerKey", d->consumerKey);
-    Choqok::PasswordManager::self()->writePassword(QString("%1_consumerSecret").arg(alias()),
+    Choqok::PasswordManager::self()->writePassword(QString::fromLatin1("%1_consumerSecret").arg(alias()),
             d->consumerSecret);
-    Choqok::PasswordManager::self()->writePassword(QString("%1_tokenSecret").arg(alias()),
+    Choqok::PasswordManager::self()->writePassword(QString::fromLatin1("%1_tokenSecret").arg(alias()),
             d->tokenSecret);
     configGroup()->writeEntry("Following", d->following);
     configGroup()->writeEntry("Timelines", d->timelineNames);
@@ -166,12 +166,12 @@ void PumpIOAccount::setLists(const QVariantList lists)
 {
     d->lists = lists;
     QVariantMap publicCollection;
-    publicCollection.insert("id", PumpIOMicroBlog::PublicCollection);
-    publicCollection.insert("name", "Public");
+    publicCollection.insert(QLatin1String("id"), PumpIOMicroBlog::PublicCollection);
+    publicCollection.insert(QLatin1String("name"), QLatin1String("Public"));
     d->lists.append(publicCollection);
     QVariantMap followersCollection;
-    followersCollection.insert("id", QString(d->host + "/api/user/" + username() + "/followers"));
-    followersCollection.insert("name", "Followers");
+    followersCollection.insert(QLatin1String("id"), QString(d->host + QLatin1String("/api/user/") + username() + QLatin1String("/followers")));
+    followersCollection.insert(QLatin1String("name"), QLatin1String("Followers"));
     d->lists.append(followersCollection);
 }
 
@@ -187,7 +187,7 @@ void PumpIOAccount::setTimelineNames(const QStringList &list)
 
 QString PumpIOAccount::webfingerID()
 {
-    return username() + '@' + QString(d->host).remove("https://");
+    return username() + QLatin1Char('@') + QString(d->host).remove(QLatin1String("https://"));
 }
 
 QOAuth::Interface *PumpIOAccount::oAuth()

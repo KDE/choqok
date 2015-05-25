@@ -34,10 +34,10 @@
 
 #include "notifysettings.h"
 
-const QRegExp Notification::dirRegExp("(RT|RD)|(@([^\\s\\W]+))|(#([^\\s\\W]+))|(!([^\\s\\W]+))");
+const QRegExp Notification::dirRegExp(QLatin1String("(RT|RD)|(@([^\\s\\W]+))|(#([^\\s\\W]+))|(!([^\\s\\W]+))"));
 
 Notification::Notification(Choqok::UI::PostWidget *postWidget)
-    : QWidget(), post(postWidget), dir("ltr")
+    : QWidget(), post(postWidget), dir(QLatin1String("ltr"))
 {
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 //     setAttribute(Qt::WA_TranslucentBackground);
@@ -58,8 +58,8 @@ Notification::Notification(Choqok::UI::PostWidget *postWidget)
     QColor color = set.foregroundColor();
     QColor back = set.backgroundColor();
 
-    QString fntStr = "font-family:\"" + fnt.family() + "\"; font-size:" + QString::number(fnt.pointSize()) + "pt;";
-    fntStr += (fnt.bold() ? " font-weight:bold;" : QString()) + (fnt.italic() ? " font-style:italic;" : QString());
+    QString fntStr = QLatin1String("font-family:\"") + fnt.family() + QLatin1String("\"; font-size:") + QString::number(fnt.pointSize()) + QLatin1String("pt;");
+    fntStr += (fnt.bold() ? QLatin1String(" font-weight:bold;") : QString()) + (fnt.italic() ? QLatin1String(" font-style:italic;") : QString());
     QString style = Choqok::UI::PostWidget::getBaseStyle().arg(Choqok::getColorString(color), Choqok::getColorString(back), fntStr);
 
     setStyleSheet(style);
@@ -83,9 +83,9 @@ void Notification::init()
     if (!pix) {
         pix = QPixmap(Choqok::MediaManager::self()->defaultImage());
     }
-    mainWidget.document()->addResource(QTextDocument::ImageResource, QUrl("img://profileImage"), pix);
-    mainWidget.document()->addResource(QTextDocument::ImageResource, QUrl("icon://close"),
-                                       QIcon::fromTheme("dialog-close").pixmap(16));
+    mainWidget.document()->addResource(QTextDocument::ImageResource, QUrl(QLatin1String("img://profileImage")), pix);
+    mainWidget.document()->addResource(QTextDocument::ImageResource, QUrl(QLatin1String("icon://close")),
+                                       QIcon::fromTheme(QLatin1String("dialog-close")).pixmap(16));
     mainWidget.setText(baseText.arg(post->currentPost()->author.userName)
                        .arg(post->currentPost()->content)
                        .arg(dir)
@@ -107,8 +107,8 @@ void Notification::init()
 
 void Notification::slotProcessAnchor(const QUrl &url)
 {
-    if (url.scheme() == "choqok") {
-        if (url.host() == "close") {
+    if (url.scheme() == QLatin1String("choqok")) {
+        if (url.host() == QLatin1String("close")) {
             Q_EMIT ignored();
         }
     }
@@ -134,7 +134,7 @@ void Notification::setDirection()
     txt.remove(dirRegExp);
     txt = txt.trimmed();
     if (txt.isRightToLeft()) {
-        dir = "rtl";
+        dir = QLatin1String("rtl");
     }
 }
 

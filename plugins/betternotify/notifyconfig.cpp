@@ -36,11 +36,11 @@ K_PLUGIN_FACTORY_WITH_JSON(NotifyConfigFactory, "choqok_notify_config.json",
                            registerPlugin < NotifyConfig > ();)
 
 NotifyConfig::NotifyConfig(QWidget *parent, const QVariantList &args)
-    : KCModule(KAboutData::pluginData("kcm_choqok_notify"), parent, args)
+    : KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_notify")), parent, args)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
-    wd->setObjectName("mNotifyCtl");
+    wd->setObjectName(QLatin1String("mNotifyCtl"));
     ui.setupUi(wd);
     layout->addWidget(wd);
     connect(ui.accountsList, SIGNAL(currentRowChanged(int)), SLOT(updateTimelinesList()));
@@ -51,7 +51,7 @@ NotifyConfig::NotifyConfig(QWidget *parent, const QVariantList &args)
     connect(ui.foregroundColor, SIGNAL(changed(QColor)), this, SLOT(emitChanged()));
     connect(ui.font, SIGNAL(fontSelected(QFont)), this, SLOT(emitChanged()));
     settings = new NotifySettings(this);
-    ui.lblArrow->setPixmap(QIcon::fromTheme("arrow-right").pixmap(48));
+    ui.lblArrow->setPixmap(QIcon::fromTheme(QLatin1String("arrow-right")).pixmap(48));
 }
 
 NotifyConfig::~NotifyConfig()

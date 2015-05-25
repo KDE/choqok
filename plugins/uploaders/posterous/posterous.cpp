@@ -44,7 +44,7 @@ K_PLUGIN_FACTORY_WITH_JSON(PosterousFactory, "choqok_posterous.json",
                            registerPlugin < Posterous > ();)
 
 Posterous::Posterous(QObject *parent, const QList<QVariant> &)
-    : Choqok::Uploader("choqok_posterous", parent)
+    : Choqok::Uploader(QLatin1String("choqok_posterous"), parent)
 {
 }
 
@@ -54,24 +54,24 @@ Posterous::~Posterous()
 
 QString Posterous::getAuthToken(const QUrl &localUrl)
 {
-    QUrl url("http://posterous.com/api/2/auth/token");
+    QUrl url(QLatin1String("http://posterous.com/api/2/auth/token"));
     QString login = PosterousSettings::login();
-    QString pass = Choqok::PasswordManager::self()->readPassword(QString("posterous_%1").arg(PosterousSettings::login()));
+    QString pass = Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("posterous_%1").arg(PosterousSettings::login()));
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
     QString token;
     job->addMetaData(QStringLiteral("customHTTPHeader"),
-                     QStringLiteral("Authorization: Basic ") + QString("%1:%2").arg(login).arg(pass).toUtf8().toBase64());
+                     QStringLiteral("Authorization: Basic ") + QLatin1String(QString::fromLatin1("%1:%2").arg(login).arg(pass).toUtf8().toBase64()));
     job->exec();
     if (!job->error()) {
         const QByteArray data = job->data();
         const QJsonDocument json = QJsonDocument::fromJson(data);
         if (!json.isNull()) {
             QVariantMap map = json.toVariant().toMap();
-            if (map.contains("api_token")) {
-                QString tkn = map.value("api_token").toString();
+            if (map.contains(QLatin1String("api_token"))) {
+                QString tkn = map.value(QLatin1String("api_token")).toString();
                 return tkn;
             } else {
-                Q_EMIT uploadingFailed(localUrl, map.value("error").toString());
+                Q_EMIT uploadingFailed(localUrl, map.value(QLatin1String("error")).toString());
                 qWarning() << "Parse error:" << data;
             }
         }
@@ -88,22 +88,22 @@ void Posterous::upload(const QUrl &localUrl, const QByteArray &medium, const QBy
     KIO::StoredTransferJob *job = 0;
     if (PosterousSettings::basic()) {
         QString login = PosterousSettings::login();
-        QString pass = Choqok::PasswordManager::self()->readPassword(QString("posterous_%1").arg(PosterousSettings::login()));
+        QString pass = Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("posterous_%1").arg(PosterousSettings::login()));
         QString token = getAuthToken(localUrl);
         if (!token.isEmpty()) {
-            QUrl url("http://posterous.com/api/2/users/me/sites/primary/posts");
+            QUrl url(QLatin1String("http://posterous.com/api/2/users/me/sites/primary/posts"));
             QMap<QString, QByteArray> formdata;
-            formdata["post[title]"] = QByteArray();
-            formdata["post[body]"] = QByteArray();
-            formdata["autopost"] = "0";
-            formdata["source"] = "Choqok";
-            formdata["api_token"] = token.toUtf8();
+            formdata[QLatin1String("post[title]")] = QByteArray();
+            formdata[QLatin1String("post[body]")] = QByteArray();
+            formdata[QLatin1String("autopost")] = "0";
+            formdata[QLatin1String("source")] = "Choqok";
+            formdata[QLatin1String("api_token")] = token.toUtf8();
 
             QMap<QString, QByteArray> mediafile;
-            mediafile["name"] = "media";
-            mediafile["filename"] = localUrl.fileName().toUtf8();
-            mediafile["mediumType"] = mediumType;
-            mediafile["medium"] = medium;
+            mediafile[QLatin1String("name")] = "media";
+            mediafile[QLatin1String("filename")] = localUrl.fileName().toUtf8();
+            mediafile[QLatin1String("mediumType")] = mediumType;
+            mediafile[QLatin1String("medium")] = medium;
             QList< QMap<QString, QByteArray> > listMediafiles;
             listMediafiles.append(mediafile);
 
@@ -111,7 +111,7 @@ void Posterous::upload(const QUrl &localUrl, const QByteArray &medium, const QBy
             job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
             job->addMetaData(QStringLiteral("customHTTPHeader"),
                              QStringLiteral("Authorization: Basic ") +
-                             QString("%1:%2").arg(login).arg(pass).toUtf8().toBase64());
+                             QLatin1String(QString::fromLatin1("%1:%2").arg(login).arg(pass).toUtf8().toBase64()));
         }
     } else if (PosterousSettings::oauth()) {
         QString alias = PosterousSettings::alias();
@@ -125,17 +125,17 @@ void Posterous::upload(const QUrl &localUrl, const QByteArray &medium, const QBy
             return;
         }
 
-        QUrl url("http://posterous.com/api2/upload.json");
+        QUrl url(QLatin1String("http://posterous.com/api2/upload.json"));
 
         QMap<QString, QByteArray> formdata;
-        formdata["source"] = "Choqok";
-        formdata["sourceLink"] = "http://choqok.gnufolks.org/";
+        formdata[QLatin1String("source")] = "Choqok";
+        formdata[QLatin1String("sourceLink")] = "http://choqok.gnufolks.org/";
 
         QMap<QString, QByteArray> mediafile;
-        mediafile["name"] = "media";
-        mediafile["filename"] = localUrl.fileName().toUtf8();
-        mediafile["mediumType"] = mediumType;
-        mediafile["medium"] = medium;
+        mediafile[QLatin1String("name")] = "media";
+        mediafile[QLatin1String("filename")] = localUrl.fileName().toUtf8();
+        mediafile[QLatin1String("mediumType")] = mediumType;
+        mediafile[QLatin1String("medium")] = medium;
         QList< QMap<QString, QByteArray> > listMediafiles;
         listMediafiles.append(mediafile);
 
@@ -143,16 +143,16 @@ void Posterous::upload(const QUrl &localUrl, const QByteArray &medium, const QBy
 
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
         QOAuth::ParamMap params;
-        QString requrl = "https://api.twitter.com/1/account/verify_credentials.json";
+        QString requrl = QLatin1String("https://api.twitter.com/1/account/verify_credentials.json");
         QByteArray credentials = acc->oauthInterface()->createParametersString(requrl,
                                  QOAuth::GET, acc->oauthToken(),
                                  acc->oauthTokenSecret(),
                                  QOAuth::HMAC_SHA1,
                                  params, QOAuth::ParseForHeaderArguments);
 
-        QString cHeader = "X-Verify-Credentials-Authorization: " +  QString(credentials) + "\r\n";
-        cHeader.append("X-Auth-Service-Provider: https://api.twitter.com/1/account/verify_credentials.json");
-        job->addMetaData("customHTTPHeader", cHeader);
+        QString cHeader = QLatin1String("X-Verify-Credentials-Authorization: ") +  QLatin1String(credentials) + QLatin1String("\r\n");
+        cHeader.append(QLatin1String("X-Auth-Service-Provider: https://api.twitter.com/1/account/verify_credentials.json"));
+        job->addMetaData(QLatin1String("customHTTPHeader"), cHeader);
     }
     if (!job) {
         qCritical() << "Cannot create a http POST request!";
@@ -179,14 +179,14 @@ void Posterous::slotUpload(KJob *job)
         const QJsonDocument json = QJsonDocument::fromJson(stj->data());
         if (!json.isNull()) {
             const QVariantMap map = json.toVariant().toMap();
-            if (map.contains("error")) {
-                Q_EMIT uploadingFailed(localUrl, map.value("error").toString());
+            if (map.contains(QLatin1String("error"))) {
+                Q_EMIT uploadingFailed(localUrl, map.value(QLatin1String("error")).toString());
             } else {
                 if (PosterousSettings::oauth()) {
-                    Q_EMIT mediumUploaded(localUrl, map.value("url").toString());
+                    Q_EMIT mediumUploaded(localUrl, map.value(QLatin1String("url")).toString());
                 }
                 if (PosterousSettings::basic()) {
-                    Q_EMIT mediumUploaded(localUrl, map.value("full_url").toString());
+                    Q_EMIT mediumUploaded(localUrl, map.value(QLatin1String("full_url")).toString());
                 }
             }
         } else {

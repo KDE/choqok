@@ -63,7 +63,7 @@ void BehaviorConfig_Shorten::currentPluginChanged(int index)
     }
     QString key = shortenPlugins->itemData(index).toString();
 //     qCDebug(CHOQOK)<<key;
-    if (!key.isEmpty() && key != "none" && availablePlugins.value(key).kcmServices().count() > 0) {
+    if (!key.isEmpty() && key != QLatin1String("none") && availablePlugins.value(key).kcmServices().count() > 0) {
         configPlugin->setEnabled(true);
     } else {
         configPlugin->setEnabled(false);
@@ -81,7 +81,7 @@ void BehaviorConfig_Shorten::currentPluginChanged(int index)
 
 void BehaviorConfig_Shorten::load()
 {
-    QList<KPluginInfo> plugins = Choqok::PluginManager::self()->availablePlugins("Shorteners");
+    QList<KPluginInfo> plugins = Choqok::PluginManager::self()->availablePlugins(QLatin1String("Shorteners"));
     shortenPlugins->clear();
     shortenPlugins->addItem(i18nc("No shortener service", "None"), QLatin1String("none"));
     Q_FOREACH (const KPluginInfo &plugin, plugins) {
@@ -109,7 +109,7 @@ void BehaviorConfig_Shorten::save()
 void BehaviorConfig_Shorten::slotAboutClicked()
 {
     const QString shorten = shortenPlugins->itemData(shortenPlugins->currentIndex()).toString();
-    if (shorten == "none") {
+    if (shorten == QLatin1String("none")) {
         return;
     }
     KPluginInfo info = availablePlugins.value(shorten);
@@ -198,7 +198,7 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
 
         if (configDialog->exec() == QDialog::Accepted) {
             Q_FOREACH (KCModuleProxy *moduleProxy, moduleProxyList) {
-                QStringList parentComponents = moduleProxy->moduleInfo().service()->property("X-KDE-ParentComponents").toStringList();
+                QStringList parentComponents = moduleProxy->moduleInfo().service()->property(QLatin1String("X-KDE-ParentComponents")).toStringList();
                 moduleProxy->save();
 //                 foreach (const QString &parentComponent, parentComponents) {
 //                     emit configCommitted(parentComponent.toLatin1());

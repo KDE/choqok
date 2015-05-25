@@ -36,7 +36,7 @@ K_PLUGIN_FACTORY_WITH_JSON(Ur_lyFactory, "choqok_ur_ly.json",
                            registerPlugin < Ur_ly> ();)
 
 Ur_ly::Ur_ly(QObject *parent, const QVariantList &)
-    : Choqok::Shortener("choqok_ur_ly", parent)
+    : Choqok::Shortener(QLatin1String("choqok_ur_ly"), parent)
 {
 }
 
@@ -46,8 +46,8 @@ Ur_ly::~Ur_ly()
 
 QString Ur_ly::shorten(const QString &url)
 {
-    QUrl reqUrl("http://ur.ly/new.json");
-    reqUrl.addQueryItem("href", QUrl(url).url());
+    QUrl reqUrl(QLatin1String("http://ur.ly/new.json"));
+    reqUrl.addQueryItem(QLatin1String("href"), QUrl(url).url());
 
     KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
     job->exec();
@@ -58,8 +58,8 @@ QString Ur_ly::shorten(const QString &url)
         if (!json.isNull()) {
             const QVariantMap result = json.toVariant().toMap();
 
-            if (result.contains("code")) {
-                return QString("http://ur.ly/%1").arg(result.value("code").toString());
+            if (result.contains(QLatin1String("code"))) {
+                return QString::fromLatin1("http://ur.ly/%1").arg(result.value(QLatin1String("code")).toString());
             }
         } else {
             qCritical() << "Ur_ly::shorten: Parse error, Job error:" << job->errorString();

@@ -39,30 +39,30 @@ int main(int argc, char **argv)
 {
     qCDebug(CHOQOK) << "Choqok " << version;
     KLocalizedString::setApplicationDomain("choqok");
-    KAboutData about("choqok", "Choqok", version, i18n(description),
+    KAboutData about(QLatin1String("choqok"), QLatin1String("Choqok"), QLatin1String(version), i18n(description),
                      KAboutLicense::GPL_V3, i18n("(C) 2008-2010 Mehrdad Momeny\n(C) 2011-2015 Choqok Developers"),
-                     QString(), "http://choqok.gnufolks.org/");
+                     QString(), QLatin1String("http://choqok.gnufolks.org/"));
     about.addAuthor(i18n("Mehrdad Momeny"), i18n("Author, Developer and Maintainer"),
-                    "mehrdad.momeny@gmail.com", "http://momeny.wordpress.com");
+                    QLatin1String("mehrdad.momeny@gmail.com"), QLatin1String("http://momeny.wordpress.com"));
     about.addAuthor(i18n("Andrey Esin"), i18n("Developer"),
-                    "gmlastik@gmail.com", "https://twitter.com/la_stik");
+                    QLatin1String("gmlastik@gmail.com"), QLatin1String("https://twitter.com/la_stik"));
     about.addAuthor(i18n("Andrea Scarpino"), i18n("Developer"),
-                    "scarpino@kde.org", "http://www.andreascarpino.it");
+                    QLatin1String("scarpino@kde.org"), QLatin1String("http://www.andreascarpino.it"));
 
-    about.addCredit(i18n("Roozbeh Shafiee"), i18n("Artworks"), "roozbeh@roozbehonline.com");
-    about.addCredit(i18n("Shahrzad Shojaei"), i18n("Artworks"), "shahrzadesign@gmail.com");
-    about.addCredit(i18n("Daniel Schaal"), i18n("UI improvements"), "daniel@foto-schaal.de");
-    about.addCredit(i18n("Stephen Henderson"), i18n("Search API implementation"), "hendersonsk@gmail.com");
+    about.addCredit(i18n("Roozbeh Shafiee"), i18n("Artworks"), QLatin1String("roozbeh@roozbehonline.com"));
+    about.addCredit(i18n("Shahrzad Shojaei"), i18n("Artworks"), QLatin1String("shahrzadesign@gmail.com"));
+    about.addCredit(i18n("Daniel Schaal"), i18n("UI improvements"), QLatin1String("daniel@foto-schaal.de"));
+    about.addCredit(i18n("Stephen Henderson"), i18n("Search API implementation"), QLatin1String("hendersonsk@gmail.com"));
     about.addCredit(i18n("Tejas Dinkar"), i18n("Developer"),
-                    "tejasdinkar@gmail.com", "https://twitter.com/tdinkar");
-    about.addCredit(i18n("Emanuele Bigiarini"), i18n("D-Bus and Konqueror plugin"), "pulmro@gmail.com");
+                    QLatin1String("tejasdinkar@gmail.com"), QLatin1String("https://twitter.com/tdinkar"));
+    about.addCredit(i18n("Emanuele Bigiarini"), i18n("D-Bus and Konqueror plugin"), QLatin1String("pulmro@gmail.com"));
     about.addCredit(i18n("Alex Infantes"), i18n("Improvements on Image preview plugin"),
-                    "alexandro82@gmail.com");
-    about.addCredit(i18n("Bardia Daneshvar"), i18n("UI improvements"), "bardia.daneshvar@gmail.com");
+                    QLatin1String("alexandro82@gmail.com"));
+    about.addCredit(i18n("Bardia Daneshvar"), i18n("UI improvements"), QLatin1String("bardia.daneshvar@gmail.com"));
     about.addCredit(i18n("Atanas Gospodinov"), i18n("Twitter photo upload"));
-    about.addCredit(i18n("Daniel Kreuter"), i18n("Twitter microblog developer"), "daniel.kreuter85@gmail.com");
-    about.addCredit(i18n("Lim Yuen Hoe"), i18n("Bug fixes and improvements"), "yuenhoe86@gmail.com");
-    about.addCredit(i18n("Ahmed I. Khalil"), i18n("Various improvements"), "ahmedibrahimkhali@gmail.com");
+    about.addCredit(i18n("Daniel Kreuter"), i18n("Twitter microblog developer"), QLatin1String("daniel.kreuter85@gmail.com"));
+    about.addCredit(i18n("Lim Yuen Hoe"), i18n("Bug fixes and improvements"), QLatin1String("yuenhoe86@gmail.com"));
+    about.addCredit(i18n("Ahmed I. Khalil"), i18n("Various improvements"), QLatin1String("ahmedibrahimkhali@gmail.com"));
 
     //TODO before next release, Add new contributers to credits
 
@@ -73,7 +73,7 @@ int main(int argc, char **argv)
     rcFiles << QLatin1String("choqokui.rc");
 
     ChoqokApplication app(argc, argv);
-    app.setApplicationVersion(version);
+    app.setApplicationVersion(QLatin1String(version));
 
     QCommandLineParser parser;
     KAboutData::setApplicationData(about);

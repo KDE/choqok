@@ -44,16 +44,16 @@ K_PLUGIN_FACTORY_WITH_JSON(QuickFilterFactory, "choqok_quickfilter.json",
                            registerPlugin < QuickFilter > ();)
 
 QuickFilter::QuickFilter(QObject *parent, const QList< QVariant > &args)
-    : Choqok::Plugin("choqok_quickfilter", parent)
+    : Choqok::Plugin(QLatin1String("choqok_quickfilter"), parent)
 {
     Q_UNUSED(args);
-    m_authorAction = new QAction(QIcon::fromTheme("document-preview"), i18n("Filter by author"), this);
+    m_authorAction = new QAction(QIcon::fromTheme(QLatin1String("document-preview")), i18n("Filter by author"), this);
     m_authorAction->setCheckable(true);
-    m_textAction = new QAction(QIcon::fromTheme("document-preview"), i18n("Filter by content"), this);
+    m_textAction = new QAction(QIcon::fromTheme(QLatin1String("document-preview")), i18n("Filter by content"), this);
     m_textAction->setCheckable(true);
-    actionCollection()->addAction("filterByAuthor", m_authorAction);
-    actionCollection()->addAction("filterByContent", m_textAction);
-    setXMLFile("quickfilterui.rc");
+    actionCollection()->addAction(QLatin1String("filterByAuthor"), m_authorAction);
+    actionCollection()->addAction(QLatin1String("filterByContent"), m_textAction);
+    setXMLFile(QLatin1String("quickfilterui.rc"));
     createUiInterface();
     connect(Choqok::UI::Global::mainWindow(), SIGNAL(currentMicroBlogWidgetChanged(Choqok::UI::MicroBlogWidget*)), this, SLOT(showAllPosts()));
 }
@@ -106,9 +106,9 @@ void QuickFilter::filterByContent()
 void QuickFilter::createUiInterface()
 {
     m_authorToolbar = new QToolBar(i18n("Filter out timeline by author"), Choqok::UI::Global::mainWindow());
-    m_authorToolbar->setObjectName("authorFilterToolbar");
+    m_authorToolbar->setObjectName(QLatin1String("authorFilterToolbar"));
     m_textToolbar = new QToolBar(i18n("Filter out timeline by text"), Choqok::UI::Global::mainWindow());
-    m_textToolbar->setObjectName("textFilterToolbar");
+    m_textToolbar->setObjectName(QLatin1String("textFilterToolbar"));
     connect(m_authorAction, SIGNAL(toggled(bool)), m_authorToolbar, SLOT(setVisible(bool)));
     connect(m_textAction, SIGNAL(toggled(bool)), m_textToolbar, SLOT(setVisible(bool)));
     connect(m_authorToolbar, SIGNAL(visibilityChanged(bool)), SLOT(showAuthorFilterUiInterface(bool)));
@@ -123,14 +123,14 @@ void QuickFilter::createUiInterface()
     QLabel *tlabel = new QLabel(i18n("Text"), m_textToolbar);
     m_authorToolbar->addWidget(alabel);
     m_authorToolbar->addWidget(m_aledit);
-    QPushButton *authorCloseButton = new QPushButton(QIcon::fromTheme("dialog-close"), QString() , m_authorToolbar);
+    QPushButton *authorCloseButton = new QPushButton(QIcon::fromTheme(QLatin1String("dialog-close")), QString() , m_authorToolbar);
     authorCloseButton->setMaximumWidth(authorCloseButton->height());
     connect(authorCloseButton, SIGNAL(clicked(bool)), m_authorToolbar, SLOT(hide()));
     m_authorToolbar->addWidget(authorCloseButton);
 
     m_textToolbar->addWidget(tlabel);
     m_textToolbar->addWidget(m_tledit);
-    QPushButton *textCloseButton = new QPushButton(QIcon::fromTheme("dialog-close"), QString() , m_textToolbar);
+    QPushButton *textCloseButton = new QPushButton(QIcon::fromTheme(QLatin1String("dialog-close")), QString() , m_textToolbar);
     textCloseButton->setMaximumWidth(textCloseButton->height());
     connect(textCloseButton, SIGNAL(clicked(bool)), m_textToolbar, SLOT(hide()));
     m_textToolbar->addWidget(textCloseButton);

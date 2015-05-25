@@ -39,11 +39,11 @@ K_PLUGIN_FACTORY_WITH_JSON(MobypictureConfigFactory, "choqok_mobypicture_config.
                            registerPlugin < MobypictureConfig > ();)
 
 MobypictureConfig::MobypictureConfig(QWidget *parent, const QVariantList &)
-    : KCModule(KAboutData::pluginData("kcm_choqok_mobypicture"), parent)
+    : KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_mobypicture")), parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
-    wd->setObjectName("mMobypictureCtl");
+    wd->setObjectName(QLatin1String("mMobypictureCtl"));
     ui.setupUi(wd);
     addConfig(MobypictureSettings::self(), wd);
     layout->addWidget(wd);
@@ -71,7 +71,7 @@ void MobypictureConfig::load()
     MobypictureSettings::self()->load();
     ui.cfg_basic->setChecked(MobypictureSettings::basic());
     ui.cfg_login->setText(MobypictureSettings::login());
-    ui.cfg_pin->setText(Choqok::PasswordManager::self()->readPassword(QString("mobypicture_%1")
+    ui.cfg_pin->setText(Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("mobypicture_%1")
                         .arg(ui.cfg_login->text())));
     ui.cfg_oauth->setChecked(MobypictureSettings::oauth());
     ui.cfg_accountsList->setCurrentText(MobypictureSettings::alias());
@@ -90,7 +90,7 @@ void MobypictureConfig::save()
 
     MobypictureSettings::setBasic(ui.cfg_basic->isChecked());
     MobypictureSettings::setLogin(ui.cfg_login->text());
-    Choqok::PasswordManager::self()->writePassword(QString("mobypicture_%1").arg(ui.cfg_login->text()),
+    Choqok::PasswordManager::self()->writePassword(QString::fromLatin1("mobypicture_%1").arg(ui.cfg_login->text()),
             ui.cfg_pin->text());
     MobypictureSettings::setOauth(ui.cfg_oauth->isChecked());
     MobypictureSettings::self()->save();

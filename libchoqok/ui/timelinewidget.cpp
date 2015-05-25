@@ -158,13 +158,13 @@ void TimelineWidget::setupUi()
     QSpacerItem *verticalSpacer;
     gridLayout = new QVBoxLayout(this);
     gridLayout->setMargin(0);
-    gridLayout->setObjectName("gridLayout");
+    gridLayout->setObjectName(QLatin1String("gridLayout"));
     d->scrollArea = new QScrollArea(this);
-    d->scrollArea->setObjectName("scrollArea");
+    d->scrollArea->setObjectName(QLatin1String("scrollArea"));
     d->scrollArea->setFrameShape(QFrame::NoFrame);
     d->scrollArea->setWidgetResizable(true);
     scrollAreaWidgetContents = new QWidget();
-    scrollAreaWidgetContents->setObjectName("scrollAreaWidgetContents");
+    scrollAreaWidgetContents->setObjectName(QLatin1String("scrollAreaWidgetContents"));
     scrollAreaWidgetContents->setGeometry(QRect(0, 0, 254, 300));
     verticalLayout_2 = new QVBoxLayout(scrollAreaWidgetContents);
     verticalLayout_2->setMargin(1);
@@ -248,7 +248,7 @@ void TimelineWidget::showMarkAllAsReadButton()
 {
     if (!d->btnMarkAllAsRead) {
         d->btnMarkAllAsRead = new QPushButton(this);
-        d->btnMarkAllAsRead->setIcon(QIcon::fromTheme("mail-mark-read"));
+        d->btnMarkAllAsRead->setIcon(QIcon::fromTheme(QLatin1String("mail-mark-read")));
         d->btnMarkAllAsRead->setToolTip(i18n("Mark timeline as read"));
         d->btnMarkAllAsRead->setMaximumSize(14, 14);
         d->btnMarkAllAsRead->setIconSize(QSize(12, 12));

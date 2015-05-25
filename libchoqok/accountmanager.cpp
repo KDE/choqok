@@ -216,7 +216,7 @@ void AccountManager::loadAllAccounts()
 
 QString AccountManager::generatePostBackupFileName(const QString &alias, const QString &name)
 {
-    return QString(alias + '_' + name + "_backuprc");
+    return QString(alias + QLatin1Char('_') + name + QLatin1String("_backuprc"));
 }
 
 QString AccountManager::lastError() const

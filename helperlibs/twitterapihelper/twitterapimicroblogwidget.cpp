@@ -120,7 +120,7 @@ void TwitterApiMicroBlogWidget::slotSearchResultsReceived(const SearchInfo &info
     qCDebug(CHOQOK);
     if (info.account == currentAccount()) {
         qCDebug(CHOQOK) << postsList.count();
-        QString name = QString("%1%2").arg(d->mBlog->searchBackend()->optionCode(info.option)).arg(info.query);
+        QString name = QString::fromLatin1("%1%2").arg(d->mBlog->searchBackend()->optionCode(info.option)).arg(info.query);
         if (mSearchTimelines.contains(name)) {
             mSearchTimelines.value(name)->addNewPosts(postsList);
         } else {
@@ -145,13 +145,13 @@ TwitterApiSearchTimelineWidget *TwitterApiMicroBlogWidget::addSearchTimelineWidg
         timelines().insert(name, mbw);
         timelinesTabWidget()->addTab(mbw, name);
         QString textToAdd = name;
-        if (textToAdd.contains(':')) {
-            QStringList splitted = textToAdd.split(QChar(':'));
-            textToAdd = splitted.first().at(0) + QString(':') + splitted[1].left(3);
+        if (textToAdd.contains(QLatin1Char(':'))) {
+            QStringList splitted = textToAdd.split(QChar::fromLatin1(':'));
+            textToAdd = splitted.first().at(0) + QString::fromLatin1(":") + splitted[1].left(3);
         } else {
             textToAdd = textToAdd.left(4);
         }
-        QIcon icon = addTextToIcon(QIcon::fromTheme("edit-find"), textToAdd, QSize(40, 40), palette());
+        QIcon icon = addTextToIcon(QIcon::fromTheme(QLatin1String("edit-find")), textToAdd, QSize(40, 40), palette());
         mbw->setTimelineIcon(icon);
         timelinesTabWidget()->setTabIcon(timelinesTabWidget()->indexOf(mbw), icon);
         connect(mbw, SIGNAL(updateUnreadCount(int)),
@@ -229,12 +229,12 @@ void TwitterApiMicroBlogWidget::saveSearchTimelinesState()
     int count = currentAccount()->configGroup()->readEntry("SearchCount", 0);
     int i = 0;
     while (i < count) {
-        currentAccount()->configGroup()->deleteEntry("Search" + QString::number(i));
+        currentAccount()->configGroup()->deleteEntry(QLatin1String("Search") + QString::number(i));
         ++i;
     }
     i = 0;
     Q_FOREACH (TwitterApiSearchTimelineWidget *tm, mSearchTimelines) {
-        currentAccount()->configGroup()->writeEntry("Search" + QString::number(i), tm->searchInfo().toString());
+        currentAccount()->configGroup()->writeEntry(QLatin1String("Search") + QString::number(i), tm->searchInfo().toString());
         ++i;
     }
     currentAccount()->configGroup()->writeEntry("SearchCount", i);
@@ -243,11 +243,11 @@ void TwitterApiMicroBlogWidget::saveSearchTimelinesState()
 void TwitterApiMicroBlogWidget::loadSearchTimelinesState()
 {
     qCDebug(CHOQOK);
-    int count = currentAccount()->configGroup()->readEntry("SearchCount", 0);
+    int count = currentAccount()->configGroup()->readEntry(QLatin1String("SearchCount"), 0);
     int i = 0;
     while (i < count) {
         SearchInfo info;
-        if (info.fromString(currentAccount()->configGroup()->readEntry("Search" + QString::number(i), QString()))) {
+        if (info.fromString(currentAccount()->configGroup()->readEntry(QLatin1String("Search") + QString::number(i), QString()))) {
             qobject_cast<TwitterApiMicroBlog *>(currentAccount()->microblog())->searchBackend()->requestSearchResults(info);
         }
         ++i;
@@ -262,12 +262,12 @@ void TwitterApiMicroBlogWidget::slotContextMenu(QWidget *w, const QPoint &pt)
     QAction *mar = 0;
     QAction *ac = 0;
     if (sWidget->unreadCount() > 0) {
-        mar = new QAction(QIcon::fromTheme("mail-mark-read"), i18n("Mark timeline as read"), &menu);
+        mar = new QAction(QIcon::fromTheme(QLatin1String("mail-mark-read")), i18n("Mark timeline as read"), &menu);
         menu.addAction(mar);
     }
     if (sWidget->isClosable()) {
-        ac = new QAction(QIcon::fromTheme("tab-close"), i18n("Close Timeline"), &menu);
-        QAction *closeAll = new QAction(QIcon::fromTheme("tab-close"), i18n("Close All"), &menu);
+        ac = new QAction(QIcon::fromTheme(QLatin1String("tab-close")), i18n("Close Timeline"), &menu);
+        QAction *closeAll = new QAction(QIcon::fromTheme(QLatin1String("tab-close")), i18n("Close All"), &menu);
         connect(closeAll, SIGNAL(triggered(bool)), this, SLOT(closeAllSearches()));
         menu.addAction(ac);
         menu.addAction(closeAll);

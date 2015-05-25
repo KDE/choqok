@@ -33,13 +33,13 @@
 
 #include "mediamanager.h"
 
-const static QString apiKey("ZMWLXQBOfb570310607355f90c601148a3203f0f");
+const static QString apiKey = QLatin1String("ZMWLXQBOfb570310607355f90c601148a3203f0f");
 
 K_PLUGIN_FACTORY_WITH_JSON(ImageShackFactory, "choqok_imageshack.json",
                            registerPlugin < ImageShack > ();)
 
 ImageShack::ImageShack(QObject *parent, const QList<QVariant> &)
-    : Choqok::Uploader("choqok_imageshack", parent)
+    : Choqok::Uploader(QLatin1String("choqok_imageshack"), parent)
 {
 }
 
@@ -53,16 +53,16 @@ void ImageShack::upload(const QUrl &localUrl, const QByteArray &medium, const QB
         Q_EMIT uploadingFailed(localUrl, i18n("Just supporting image uploading"));
         return;
     }
-    QUrl url("https://www.imageshack.us/upload_api.php");
+    QUrl url(QLatin1String("https://www.imageshack.us/upload_api.php"));
     QMap<QString, QByteArray> formdata;
-    formdata["key"] = apiKey.toLatin1();
-    formdata["rembar"] = "1";
+    formdata[QLatin1String("key")] = apiKey.toLatin1();
+    formdata[QLatin1String("rembar")] = "1";
 
     QMap<QString, QByteArray> mediafile;
-    mediafile["name"] = "fileupload";
-    mediafile["filename"] = localUrl.fileName().toUtf8();
-    mediafile["mediumType"] = mediumType;
-    mediafile["medium"] = medium;
+    mediafile[QLatin1String("name")] = "fileupload";
+    mediafile[QLatin1String("filename")] = localUrl.fileName().toUtf8();
+    mediafile[QLatin1String("mediumType")] = mediumType;
+    mediafile[QLatin1String("medium")] = medium;
     QList< QMap<QString, QByteArray> > listMediafiles;
     listMediafiles.append(mediafile);
 
@@ -73,7 +73,7 @@ void ImageShack::upload(const QUrl &localUrl, const QByteArray &medium, const QB
         qCritical() << "Cannot create a http POST request!";
         return;
     }
-    job->addMetaData("content-type", "Content-Type: multipart/form-data; boundary=AaB03x");
+    job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: multipart/form-data; boundary=AaB03x"));
     mUrlMap[job] = localUrl;
     connect(job, SIGNAL(result(KJob*)),
             SLOT(slotUpload(KJob*)));
@@ -96,15 +96,15 @@ void ImageShack::slotUpload(KJob *job)
             return;
         }
         QDomElement root = doc.documentElement();
-        if (root.tagName() == "imginfo") {
+        if (root.tagName() == QLatin1String("imginfo")) {
             QDomNode node = root.firstChild();
             while (!node.isNull()) {
                 QDomElement elm = node.toElement();
-                if (elm.tagName() == "links") {
+                if (elm.tagName() == QLatin1String("links")) {
                     QDomNode node2 = node.firstChild();
                     while (!node2.isNull()) {
                         QDomElement elm2 = node2.toElement();
-                        if (elm2.tagName() == "yfrog_link") {
+                        if (elm2.tagName() == QLatin1String("yfrog_link")) {
                             Q_EMIT mediumUploaded(localUrl, elm2.text());
                             return;
                         }
@@ -114,10 +114,10 @@ void ImageShack::slotUpload(KJob *job)
                 node = node.nextSibling();
             }
         } else {
-            if (root.tagName() == "links") {
+            if (root.tagName() == QLatin1String("links")) {
                 QDomNode node = root.firstChild();
                 if (!node.isNull()) {
-                    if (node.toElement().tagName() == "error") {
+                    if (node.toElement().tagName() == QLatin1String("error")) {
                         Q_EMIT uploadingFailed(localUrl, node.toElement().text());
                         return;
                     }

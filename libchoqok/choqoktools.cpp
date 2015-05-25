@@ -34,7 +34,7 @@
 void Choqok::openUrl(const QUrl &url)
 {
     if (Choqok::BehaviorSettings::useCustomBrowser()) {
-        QStringList args = Choqok::BehaviorSettings::customBrowser().split(' ');
+        QStringList args = Choqok::BehaviorSettings::customBrowser().split(QLatin1Char(' '));
         args.append(url.toString());
         if (KProcess::startDetached(args) == 0) {
             QDesktopServices::openUrl(url);
@@ -74,6 +74,6 @@ QString Choqok::qoauthErrorText(int code)
 
 QString Choqok::getColorString(const QColor &color)
 {
-    return "rgb(" + QString::number(color.red()) + ',' + QString::number(color.green()) + ',' +
-           QString::number(color.blue()) + ')';
+    return QLatin1String("rgb(") + QString::number(color.red()) + QLatin1Char(',') + QString::number(color.green()) + QLatin1Char(',') +
+           QString::number(color.blue()) + QLatin1Char(')');
 }

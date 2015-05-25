@@ -36,15 +36,15 @@
 
 #include "flickrsettings.h"
 
-const static QString apiKey = "13f602e6e705834d8cdd5dd2ccb19651";
-const static QString apiSecret = "98c89dbe39ae3bea";
-const static QString apiKeSec = apiSecret + QString("api_key") + apiKey;
+const static QString apiKey = QLatin1String("13f602e6e705834d8cdd5dd2ccb19651");
+const static QString apiSecret = QLatin1String("98c89dbe39ae3bea");
+const static QString apiKeSec = apiSecret + QString::fromLatin1("api_key") + apiKey;
 
 K_PLUGIN_FACTORY_WITH_JSON(FlickrFactory, "choqok_flickr.json",
                            registerPlugin < Flickr > ();)
 
 Flickr::Flickr(QObject *parent, const QList<QVariant> &)
-    : Choqok::Uploader("choqok_flickr", parent)
+    : Choqok::Uploader(QLatin1String("choqok_flickr"), parent)
 {
 }
 
@@ -54,61 +54,61 @@ Flickr::~Flickr()
 
 void Flickr::upload(const QUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType)
 {
-    QUrl url("https://api.flickr.com/services/upload/");
+    QUrl url(QLatin1String("https://api.flickr.com/services/upload/"));
     FlickrSettings::self()->load();
-    QString token = Choqok::PasswordManager::self()->readPassword(QString("flickr_%1")
+    QString token = Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("flickr_%1")
                     .arg(FlickrSettings::username()));
     QMap<QString, QByteArray> formdata;
-    formdata["api_key"] = apiKey.toUtf8();
-    formdata["auth_token"] = token.toUtf8();
+    formdata[QLatin1String("api_key")] = apiKey.toUtf8();
+    formdata[QLatin1String("auth_token")] = token.toUtf8();
 
     QString preSign;
     if (FlickrSettings::hidefromsearch()) {
-        formdata["hidden"] = QByteArray("2");
-        preSign.append("hidden2");
+        formdata[QLatin1String("hidden")] = QByteArray("2");
+        preSign.append(QLatin1String("hidden2"));
     } else {
-        formdata["hidden"] = QByteArray("1");
-        preSign.append("hidden1");
+        formdata[QLatin1String("hidden")] = QByteArray("1");
+        preSign.append(QLatin1String("hidden1"));
     }
 
     if (FlickrSettings::forprivate()) {
 
         if (FlickrSettings::forfamily()) {
-            formdata["is_family"] = QByteArray("1");
-            preSign.append("is_family1");
+            formdata[QLatin1String("is_family")] = QByteArray("1");
+            preSign.append(QLatin1String("is_family1"));
         }
 
         if (FlickrSettings::forfriends()) {
-            formdata["is_friend"] = QByteArray("1");
-            preSign.append("is_friend1");
+            formdata[QLatin1String("is_friend")] = QByteArray("1");
+            preSign.append(QLatin1String("is_friend1"));
         }
-        formdata["is_public"] = QByteArray("0");
-        preSign.append("is_public0");
+        formdata[QLatin1String("is_public")] = QByteArray("0");
+        preSign.append(QLatin1String("is_public0"));
     } else if (FlickrSettings::forpublic()) {
-        formdata["is_public"] = QByteArray("1");
-        preSign.append("is_public1");
+        formdata[QLatin1String("is_public")] = QByteArray("1");
+        preSign.append(QLatin1String("is_public1"));
     }
 
     if (FlickrSettings::safe()) {
-        formdata["safety_level"] = QByteArray("1");
-        preSign.append("safety_level1");
+        formdata[QLatin1String("safety_level")] = QByteArray("1");
+        preSign.append(QLatin1String("safety_level1"));
     }
     if (FlickrSettings::moderate()) {
-        formdata["safety_level"] = QByteArray("2");
-        preSign.append("safety_level2");
+        formdata[QLatin1String("safety_level")] = QByteArray("2");
+        preSign.append(QLatin1String("safety_level2"));
     }
     if (FlickrSettings::restricted()) {
-        formdata["safety_level"] = QByteArray("3");
-        preSign.append("safety_level3");
+        formdata[QLatin1String("safety_level")] = QByteArray("3");
+        preSign.append(QLatin1String("safety_level3"));
     }
 
-    formdata["api_sig"] = createSign("auth_token" + token.toUtf8() + preSign.toUtf8());
+    formdata[QLatin1String("api_sig")] = createSign("auth_token" + token.toUtf8() + preSign.toUtf8());
 
     QMap<QString, QByteArray> mediafile;
-    mediafile["name"] = "photo";
-    mediafile["filename"] = localUrl.fileName().toUtf8();
-    mediafile["mediumType"] = mediumType;
-    mediafile["medium"] = medium;
+    mediafile[QLatin1String("name")] = "photo";
+    mediafile[QLatin1String("filename")] = localUrl.fileName().toUtf8();
+    mediafile[QLatin1String("mediumType")] = mediumType;
+    mediafile[QLatin1String("medium")] = medium;
     QList< QMap<QString, QByteArray> > listMediafiles;
     listMediafiles.append(mediafile);
 
@@ -119,7 +119,7 @@ void Flickr::upload(const QUrl &localUrl, const QByteArray &medium, const QByteA
         qCritical() << "Cannot create a http POST request!";
         return;
     }
-    job->addMetaData("content-type", "Content-Type: multipart/form-data; boundary=AaB03x");
+    job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: multipart/form-data; boundary=AaB03x"));
     mUrlMap[job] = localUrl;
     connect(job, SIGNAL(result(KJob*)),
             SLOT(slotUpload(KJob*)));
@@ -140,33 +140,33 @@ void Flickr::slotUpload(KJob *job)
         rep.setContent(buffer);
         QString photoId;
         QDomElement element = rep.documentElement();
-        if (element.tagName() == "rsp") {
+        if (element.tagName() == QLatin1String("rsp")) {
             QString res;
-            res = element.attribute("stat" , "fail");
+            res = element.attribute(QLatin1String("stat") , QLatin1String("fail"));
             QDomNode node = element.firstChild();
             while (!node.isNull()) {
                 QDomElement elem = node.toElement();
-                if (res == "ok") {
+                if (res == QLatin1String("ok")) {
 
-                    if (elem.tagName() == "photoid") {
+                    if (elem.tagName() == QLatin1String("photoid")) {
                         photoId = elem.text();
                     }
 
                     QString remUrl;
                     if (FlickrSettings::shorturl()) {
-                        remUrl = "https://flic.kr/p/" + base58encode(photoId.toULongLong());
+                        remUrl = QLatin1String("https://flic.kr/p/") + base58encode(photoId.toULongLong());
                     } else {
-                        remUrl = "https://flickr.com/photos/" + FlickrSettings::nsid() + '/' + photoId;
+                        remUrl = QLatin1String("https://flickr.com/photos/") + FlickrSettings::nsid() + QLatin1Char('/') + photoId;
                     }
 
                     Q_EMIT mediumUploaded(localUrl, remUrl);
                     return;
 
-                } else if (res == "fail") {
+                } else if (res == QLatin1String("fail")) {
                     QString errMsg;
-                    if (elem.tagName() == "err") {
+                    if (elem.tagName() == QLatin1String("err")) {
                         errMsg = elem.text();
-                        int errCode = elem.attribute("code" , "0").toInt();
+                        int errCode = elem.attribute(QLatin1String("code") , QLatin1String("0")).toInt();
                         switch (errCode) {
                         case 2:
                             errMsg = i18n("The photo required argument was missing");
@@ -219,7 +219,7 @@ void Flickr::slotUpload(KJob *job)
 
 QString Flickr::base58encode(quint64 num)
 {
-    QString alphabet = "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
+    QString alphabet = QLatin1String("123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ");
     uint baseCount = alphabet.count();
     QString encoded;
     while (num >= baseCount) {

@@ -54,7 +54,7 @@ public:
 };
 
 BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args)
-    : KCModule(KAboutData::pluginData("kcm_choqok_behaviorconfig"), parent, args)
+    : KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_behaviorconfig")), parent, args)
     , d(new Private)
 {
     qCDebug(CHOQOK);
@@ -63,7 +63,7 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args)
     layout->setContentsMargins(0, 0, 0, 0);
 
     d->mBehaviorTabCtl = new QTabWidget(this);
-    d->mBehaviorTabCtl->setObjectName("mBehaviorTabCtl");
+    d->mBehaviorTabCtl->setObjectName(QLatin1String("mBehaviorTabCtl"));
     layout->addWidget(d->mBehaviorTabCtl);
 
     // "General" TAB ============================================================
@@ -90,7 +90,7 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args)
     addConfig(Choqok::BehaviorSettings::self(), d->mPrfsShorten);
     d->mBehaviorTabCtl->addTab(d->mPrfsShorten, i18n("URL &Shortening"));
 
-    KCModuleInfo proxyInfo("proxy.desktop");
+    KCModuleInfo proxyInfo(QLatin1String("proxy.desktop"));
     d->proxyModule = new KCModuleProxy(proxyInfo, parent);
     d->mBehaviorTabCtl->addTab(d->proxyModule, proxyInfo.moduleName());
 

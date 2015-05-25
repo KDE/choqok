@@ -93,18 +93,18 @@ void TwitterApiTextEdit::insertCompletion(const QString &completion)
     if (d->c->widget() != this) {
         return;
     }
-    QString textToInsert = completion + ' ';
+    QString textToInsert = completion + QLatin1Char(' ');
     QTextCursor tc = textCursor();
     tc.movePosition(QTextCursor::EndOfWord);
     tc.select(QTextCursor::WordUnderCursor);
     bool startWithAt;
-    if (QString(qVersion()) >= "4.7.0") {
-        startWithAt = toPlainText()[tc.selectionStart() - 1] != '@';
+    if (QString::fromLatin1(qVersion()) >= QLatin1String("4.7.0")) {
+        startWithAt = toPlainText()[tc.selectionStart() - 1] != QLatin1Char('@');
     } else {
-        startWithAt = !completion.startsWith('@');
+        startWithAt = !completion.startsWith(QLatin1Char('@'));
     }
     if (startWithAt) {
-        textToInsert.prepend('@');
+        textToInsert.prepend(QLatin1Char('@'));
     }
     tc.insertText(textToInsert);
     setTextCursor(tc);
@@ -159,14 +159,14 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
         return;
     }
 
-    static QString eow("~!@#$%^&*()+{}|:\"<>?,./;'[]\\-= "); // end of word
+    static QString eow(QLatin1String("~!@#$%^&*()+{}|:\"<>?,./;'[]\\-= ")); // end of word
 //     bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
     //Implemented internally to get the char before selection :D
     QTextCursor tc = textCursor();
     tc.select(QTextCursor::WordUnderCursor);
     QString completionPrefix = tc.selectedText();
     QChar charBeforeSelection;
-    if (completionPrefix.startsWith('@')) {
+    if (completionPrefix.startsWith(QLatin1Char('@'))) {
         charBeforeSelection = completionPrefix.at(0);
         completionPrefix.remove(0, 1);
     } else {
@@ -176,7 +176,7 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
     }
 
     if (!e->text().isEmpty() && (eow.contains(e->text().right(1)) || completionPrefix.length() < 1 ||
-                                 charBeforeSelection != '@')) {
+                                 charBeforeSelection != QLatin1Char('@'))) {
         d->c->popup()->hide();
         return;
     } else if ((e->key() != Qt::Key_Enter) && (e->key() != Qt::Key_Return)) {
@@ -207,11 +207,11 @@ void TwitterApiTextEdit::updateRemainingCharsCount()
 
             Q_FOREACH (const QString &url, UrlUtils::detectUrls(txt)) {
                 // Twitter does not wrapps urls with login informations
-                if (!url.contains("@")) {
+                if (!url.contains(QLatin1String("@"))) {
                     int diff = -1;
-                    if (url.startsWith("http://")) {
+                    if (url.startsWith(QLatin1String("http://"))) {
                         diff = url.length() - d->tCoMaximumLength;
-                    } else if (url.startsWith("https://")) {
+                    } else if (url.startsWith(QLatin1String("https://"))) {
                         diff = url.length() - d->tCoMaximumLengthHttps;
                     }
 
@@ -222,22 +222,22 @@ void TwitterApiTextEdit::updateRemainingCharsCount()
             }
 
             if (remain < 0) {
-                lblRemainChar->setStyleSheet("QLabel {color: red;}");
+                lblRemainChar->setStyleSheet(QLatin1String("QLabel {color: red;}"));
             } else if (remain < 30) {
-                lblRemainChar->setStyleSheet("QLabel {color: rgb(242, 179, 19);}");
+                lblRemainChar->setStyleSheet(QLatin1String("QLabel {color: rgb(242, 179, 19);}"));
             } else {
-                lblRemainChar->setStyleSheet("QLabel {color: green;}");
+                lblRemainChar->setStyleSheet(QLatin1String("QLabel {color: green;}"));
             }
             lblRemainChar->setText(QString::number(remain));
         } else {
             lblRemainChar->setText(QString::number(count));
-            lblRemainChar->setStyleSheet("QLabel {color: blue;}");
+            lblRemainChar->setStyleSheet(QLatin1String(QLatin1String("QLabel {color: blue;}")));
         }
-        txt.remove(QRegExp("@([^\\s\\W]+)"));
+        txt.remove(QRegExp(QLatin1String("@([^\\s\\W]+)")));
         txt = txt.trimmed();
         if (firstChar() != txt[0]) {
             setFirstChar(txt[0]);
-            txt.prepend(' ');
+            txt.prepend(QLatin1Char(' '));
             QTextBlockFormat f;
             f.setLayoutDirection((Qt::LayoutDirection) txt.isRightToLeft());
             textCursor().mergeBlockFormat(f);
@@ -251,7 +251,7 @@ void TwitterApiTextEdit::fetchTCoMaximumLength()
 {
     TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(d->acc);
     if (acc) {
-        QUrl url("https://api.twitter.com/1.1/help/configuration.json");
+        QUrl url(QLatin1String("https://api.twitter.com/1.1/help/configuration.json"));
 
         KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
         if (!job) {
@@ -261,7 +261,7 @@ void TwitterApiTextEdit::fetchTCoMaximumLength()
         TwitterApiMicroBlog *mBlog = qobject_cast<TwitterApiMicroBlog *>(acc->microblog());
         job->addMetaData(QStringLiteral("customHTTPHeader"),
                          QStringLiteral("Authorization: ") +
-                         mBlog->authorizationHeader(acc, url, QOAuth::GET));
+                         QLatin1String(mBlog->authorizationHeader(acc, url, QOAuth::GET)));
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotTCoMaximumLength(KJob*)));
         job->start();
     } else {
@@ -278,8 +278,8 @@ void TwitterApiTextEdit::slotTCoMaximumLength(KJob *job)
         const QJsonDocument json = QJsonDocument::fromJson(j->data());
         if (!json.isNull()) {
             const QVariantMap reply = json.toVariant().toMap();
-            d->tCoMaximumLength = reply["short_url_length"].toInt();
-            d->tCoMaximumLengthHttps = reply["short_url_length_https"].toInt();
+            d->tCoMaximumLength = reply[QLatin1String("short_url_length")].toInt();
+            d->tCoMaximumLengthHttps = reply[QLatin1String("short_url_length_https")].toInt();
         } else {
             qCDebug(CHOQOK) << "Cannot parse JSON reply";
         }

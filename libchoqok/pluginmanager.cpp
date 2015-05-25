@@ -42,7 +42,7 @@ public:
     PluginManagerPrivate() : shutdownMode(StartingUp), isAllPluginsLoaded(false)
     {
         plugins = KPluginInfo::fromServices(KServiceTypeTrader::self()->query(QLatin1String("Choqok/Plugin"),
-                                            QString("[X-Choqok-Version] == %1").arg(CHOQOK_PLUGIN_VERSION)));
+                                            QString::fromLatin1("[X-Choqok-Version] == %1").arg(CHOQOK_PLUGIN_VERSION)));
     }
 
     ~PluginManagerPrivate()
@@ -359,7 +359,7 @@ Plugin *PluginManager::loadPluginInternal(const QString &pluginId)
 
         qCDebug(CHOQOK) << "Successfully loaded plugin '" << pluginId << "'";
 
-        if (plugin->pluginInfo().category() != "MicroBlogs" && plugin->pluginInfo().category() != "Shorteners") {
+        if (plugin->pluginInfo().category() != QLatin1String("MicroBlogs") && plugin->pluginInfo().category() != QLatin1String("Shorteners")) {
             qCDebug(CHOQOK) << "Emitting pluginLoaded()";
             Q_EMIT pluginLoaded(plugin);
         }

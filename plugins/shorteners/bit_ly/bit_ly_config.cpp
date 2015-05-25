@@ -41,20 +41,20 @@ K_PLUGIN_FACTORY_WITH_JSON(Bit_ly_ConfigFactory, "choqok_bit_ly_config.json",
                            registerPlugin < Bit_ly_Config > ();)
 
 Bit_ly_Config::Bit_ly_Config(QWidget *parent, const QVariantList &):
-    KCModule(KAboutData::pluginData("kcm_choqok_bit_ly"), parent)
+    KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_bit_ly")), parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
-    wd->setObjectName("mBitLYCtl");
+    wd->setObjectName(QLatin1String("mBitLYCtl"));
     wd->setMinimumWidth(400);
     ui.setupUi(wd);
     addConfig(Bit_ly_Settings::self(), wd);
     layout->addWidget(wd);
 
-    QRegExp rx("([a-z0-9_]){4,32}", Qt::CaseInsensitive);
+    QRegExp rx(QLatin1String("([a-z0-9_]){4,32}"), Qt::CaseInsensitive);
     QValidator *val0 = new QRegExpValidator(rx, 0);
     ui.kcfg_login->setValidator(val0);
-    rx.setPattern("([a-z0-9_]){1,40}");
+    rx.setPattern(QLatin1String("([a-z0-9_]){1,40}"));
     QValidator *val1 = new QRegExpValidator(rx, 0);
     ui.kcfg_api_key->setValidator(val1);
 
@@ -63,7 +63,7 @@ Bit_ly_Config::Bit_ly_Config(QWidget *parent, const QVariantList &):
                                  "and should probably not be changed in localization.",
                                  "You can find your API key <a href=\"http://bit.ly/a/your_api_key\">here</a>"));
 
-    domains << "bit.ly" << "j.mp";
+    domains << QLatin1String("bit.ly") << QLatin1String("j.mp");
     ui.kcfg_domain->addItems(domains);
 
     connect(ui.kcfg_login, SIGNAL(textChanged(QString)), SLOT(emitChanged()));
@@ -82,7 +82,7 @@ void Bit_ly_Config::load()
     KConfigGroup grp(KSharedConfig::openConfig(), "Bit.ly Shortener");
     ui.kcfg_login->setText(grp.readEntry("login", ""));
     ui.kcfg_domain->setCurrentIndex(domains.indexOf(grp.readEntry("domain", "bit.ly")));
-    ui.kcfg_api_key->setText(Choqok::PasswordManager::self()->readPassword(QString("bitly_%1")
+    ui.kcfg_api_key->setText(Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("bitly_%1")
                              .arg(ui.kcfg_login->text())));
 }
 
@@ -92,7 +92,7 @@ void Bit_ly_Config::save()
     KConfigGroup grp(KSharedConfig::openConfig(), "Bit.ly Shortener");
     grp.writeEntry("login", ui.kcfg_login->text());
     grp.writeEntry("domain", domains.at(ui.kcfg_domain->currentIndex()));
-    Choqok::PasswordManager::self()->writePassword(QString("bitly_%1").arg(ui.kcfg_login->text()),
+    Choqok::PasswordManager::self()->writePassword(QString::fromLatin1("bitly_%1").arg(ui.kcfg_login->text()),
             ui.kcfg_api_key->text());
 }
 
@@ -105,32 +105,32 @@ void Bit_ly_Config::slotValidate()
 {
     ui.validate_button->setEnabled(false);
     ui.validate_button->setText(i18n("Checking..."));
-    QString login = "choqok";
-    QString apiKey = "R_bdd1ae8b6191dd36e13fc77ca1d4f27f";
-    QUrl reqUrl("http://api.bit.ly/v3/validate");
+    QString login = QLatin1String("choqok");
+    QString apiKey = QLatin1String("R_bdd1ae8b6191dd36e13fc77ca1d4f27f");
+    QUrl reqUrl(QLatin1String("http://api.bit.ly/v3/validate"));
 
-    reqUrl.addQueryItem("x_login", ui.kcfg_login->text());
-    reqUrl.addQueryItem("x_apiKey", ui.kcfg_api_key->text());
+    reqUrl.addQueryItem(QLatin1String("x_login"), ui.kcfg_login->text());
+    reqUrl.addQueryItem(QLatin1String("x_apiKey"), ui.kcfg_api_key->text());
 
-    if (Bit_ly_Settings::domain() == "j.mp") {   //bit.ly is default domain
-        reqUrl.addQueryItem("domain", "j.mp");
+    if (Bit_ly_Settings::domain() == QLatin1String("j.mp")) {   //bit.ly is default domain
+        reqUrl.addQueryItem(QLatin1String("domain"), QLatin1String("j.mp"));
     }
 
-    reqUrl.addQueryItem("login", login.toUtf8());
-    reqUrl.addQueryItem("apiKey", apiKey.toUtf8());
-    reqUrl.addQueryItem("format", "txt");
+    reqUrl.addQueryItem(QLatin1String("login"), QLatin1String(login.toUtf8()));
+    reqUrl.addQueryItem(QLatin1String("apiKey"), QLatin1String(apiKey.toUtf8()));
+    reqUrl.addQueryItem(QLatin1String("format"), QLatin1String("txt"));
 
     KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
     job->exec();
 
     if (!job->error()) {
-        QString output(job->data());
-        if (output.startsWith('0'))
+        QString output(QLatin1String(job->data()));
+        if (output.startsWith(QLatin1Char('0')))
             KMessageBox::error(this, i18nc("The your_api_key part of the URL is a fixed part of the URL "
                                            "and should probably not be changed in localization.",
                                            "Provided data is invalid. Try another login or API key.\n"
                                            "You can find it on http://bit.ly/a/your_api_key"));
-        if (output.startsWith('1')) {
+        if (output.startsWith(QLatin1Char('1'))) {
             KMessageBox::information(this, i18n("You entered valid information."));
         }
     } else {

@@ -37,30 +37,30 @@ K_PLUGIN_FACTORY_WITH_JSON(Tinyarro_ws_ConfigFactory, "choqok_tinyarro_ws_config
                            registerPlugin < Tinyarro_ws_Config > ();)
 
 Tinyarro_ws_Config::Tinyarro_ws_Config(QWidget *parent, const QVariantList &):
-    KCModule(KAboutData::pluginData("kcm_choqok_tinyarro_ws"), parent)
+    KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_tinyarro_ws")), parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
-    wd->setObjectName("mTinyarro_ws_Ctl");
+    wd->setObjectName(QLatin1String("mTinyarro_ws_Ctl"));
     ui.setupUi(wd);
     addConfig(Tinyarro_ws_Settings::self(), wd);
     layout->addWidget(wd);
-    QString domain = ".ws";
-    hostList.insert(QChar(0x27A8) + domain, "xn--ogi.ws");
-    hostList.insert(QChar(0x27AF) + domain, "xn--vgi.ws");
-    hostList.insert(QChar(0x2794) + domain, "xn--3fi.ws");
-    hostList.insert(QChar(0x279E) + domain, "xn--egi.ws");
-    hostList.insert(QChar(0x27BD) + domain, "xn--9gi.ws");
-    hostList.insert(QChar(0x27B9) + domain, "xn--5gi.ws");
-    hostList.insert(QChar(0x2729) + domain, "xn--1ci.ws");
-    hostList.insert(QChar(0x273F) + domain, "xn--odi.ws");
-    hostList.insert(QChar(0x2765) + domain, "xn--rei.ws");
-    hostList.insert(QChar(0x203A) + domain, "xn--cwg.ws");
-    hostList.insert(QChar(0x2318) + domain, "xn--bih.ws");
-    hostList.insert(QChar(0x203D) + domain, "xn--fwg.ws");
-    hostList.insert(QChar(0x2601) + domain, "xn--l3h.ws");
-    hostList.insert("ta.gd",                  "ta.gd");
-    hostList.insert(i18n("Random host"),    "Random");
+    QString domain = QLatin1String(".ws");
+    hostList.insert(QChar(0x27A8) + domain, QLatin1String("xn--ogi.ws"));
+    hostList.insert(QChar(0x27AF) + domain, QLatin1String("xn--vgi.ws"));
+    hostList.insert(QChar(0x2794) + domain, QLatin1String("xn--3fi.ws"));
+    hostList.insert(QChar(0x279E) + domain, QLatin1String("xn--egi.ws"));
+    hostList.insert(QChar(0x27BD) + domain, QLatin1String("xn--9gi.ws"));
+    hostList.insert(QChar(0x27B9) + domain, QLatin1String("xn--5gi.ws"));
+    hostList.insert(QChar(0x2729) + domain, QLatin1String("xn--1ci.ws"));
+    hostList.insert(QChar(0x273F) + domain, QLatin1String("xn--odi.ws"));
+    hostList.insert(QChar(0x2765) + domain, QLatin1String("xn--rei.ws"));
+    hostList.insert(QChar(0x203A) + domain, QLatin1String("xn--cwg.ws"));
+    hostList.insert(QChar(0x2318) + domain, QLatin1String("xn--bih.ws"));
+    hostList.insert(QChar(0x203D) + domain, QLatin1String("xn--fwg.ws"));
+    hostList.insert(QChar(0x2601) + domain, QLatin1String("xn--l3h.ws"));
+    hostList.insert(QLatin1String("ta.gd"),                  QLatin1String("ta.gd"));
+    hostList.insert(i18n("Random host"),    QLatin1String("Random"));
 
     QMap<QString, QString>::const_iterator i = hostList.constBegin();
     while (i != hostList.constEnd()) {

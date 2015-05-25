@@ -36,11 +36,11 @@ K_PLUGIN_FACTORY_WITH_JSON(Is_gd_ConfigFactory, "choqok_is_gd_config.json",
                            registerPlugin < Is_gd_Config > ();)
 
 Is_gd_Config::Is_gd_Config(QWidget *parent, const QVariantList &):
-    KCModule(KAboutData::pluginData("kcm_choqok_is_gd"), parent)
+    KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_is_gd")), parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
-    wd->setObjectName("mIsGdCtl");
+    wd->setObjectName(QLatin1String("mIsGdCtl"));
     wd->setMinimumWidth(200);
     ui.setupUi(wd);
     addConfig(Is_gd_Settings::self(), wd);

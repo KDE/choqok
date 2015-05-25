@@ -32,8 +32,8 @@
 #define NOTIFICATION_WIDTH 300
 #define NOTIFICATION_HEIGHT 70
 
-const QString baseText("<table height=\"100%\" width=\"100%\"><tr><td rowspan=\"2\"\
-width=\"48\"><img src=\"img://profileImage\" width=\"48\" height=\"48\" /></td><td width=\"5\"><!-- EMPTY HAHA --></td><td><b>%1 :</b><a href='choqok://close'><img src='icon://close' title='%4' align='right' /></a><div dir=\"%3\">%2</div></td></tr></table>");
+const QString baseText(QLatin1String("<table height=\"100%\" width=\"100%\"><tr><td rowspan=\"2\"\
+width=\"48\"><img src=\"img://profileImage\" width=\"48\" height=\"48\" /></td><td width=\"5\"><!-- EMPTY HAHA --></td><td><b>%1 :</b><a href='choqok://close'><img src='icon://close' title='%4' align='right' /></a><div dir=\"%3\">%2</div></td></tr></table>"));
 
 class NotifySettings : public QObject
 {

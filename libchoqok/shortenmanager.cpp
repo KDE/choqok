@@ -45,8 +45,8 @@ public:
     ShortenManagerPrivate()
         : backend(0)
     {
-        findUrlRegExp.setPattern("(ftps?|https?)://");
-        removeUrlRegExp.setPattern("^(https?)://");
+        findUrlRegExp.setPattern(QString::fromLatin1("(ftps?|https?)://"));
+        removeUrlRegExp.setPattern(QString::fromLatin1("^(https?)://"));
         reloadConfig();
     }
     void reloadConfig()
@@ -125,11 +125,11 @@ void ShortenManager::reloadConfig()
 QString ShortenManager::parseText(const QString &text)
 {
     qCDebug(CHOQOK);
-    QString t = "";
+    QString t;
     int i = 0, j = 0;
     while ((j = text.indexOf(_smp->findUrlRegExp, i)) != -1) {
         t += text.mid(i, j - i);
-        int k = text.indexOf(' ', j);
+        int k = text.indexOf(QLatin1Char(' '), j);
         if (k == -1) {
             k = text.length();
         }

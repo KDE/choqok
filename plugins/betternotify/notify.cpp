@@ -40,7 +40,7 @@ K_PLUGIN_FACTORY_WITH_JSON(NotifyFactory, "choqok_notify.json",
                            registerPlugin < Notify > ();)
 
 Notify::Notify(QObject *parent, const QList< QVariant > &)
-    : Choqok::Plugin("choqok_betternotify", parent), notification(0)
+    : Choqok::Plugin(QLatin1String("choqok_betternotify"), parent), notification(0)
 {
     NotifySettings set;
     accountsList = set.accounts();

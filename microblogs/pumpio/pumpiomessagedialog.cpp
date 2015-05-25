@@ -63,8 +63,8 @@ PumpIOMessageDialog::PumpIOMessageDialog(Choqok::Account *theAccount, QWidget *p
         Q_FOREACH (const QVariant &list, acc->lists()) {
             QVariantMap l = list.toMap();
             QListWidgetItem *item = new QListWidgetItem;
-            item->setText(l.value("name").toString());
-            item->setData(Qt::UserRole, l.value("id").toString());
+            item->setText(l.value(QLatin1String("name")).toString());
+            item->setData(Qt::UserRole, l.value(QLatin1String("id")).toString());
             toList->addItem(item);
             ccList->addItem(item->clone());
         }
@@ -112,8 +112,8 @@ void PumpIOMessageDialog::slotFetchFollowing(Choqok::Account *theAccount)
             Q_FOREACH (const QVariant &list, acc->lists()) {
                 QVariantMap l = list.toMap();
                 QListWidgetItem *item = new QListWidgetItem;
-                item->setText(l.value("name").toString());
-                item->setData(Qt::UserRole, l.value("id").toString());
+                item->setText(l.value(QLatin1String("name")).toString());
+                item->setData(Qt::UserRole, l.value(QLatin1String("id")).toString());
                 toList->addItem(item);
                 ccList->addItem(item->clone());
             }
@@ -150,12 +150,12 @@ void PumpIOMessageDialog::accept()
             Q_FOREACH (QListWidgetItem *item, toList->selectedItems()) {
                 QVariantMap user;
                 QString id = item->data(Qt::UserRole).toString();
-                if (id.contains("acct:")) {
-                    user.insert("objectType", "person");
+                if (id.contains(QLatin1String("acct:"))) {
+                    user.insert(QLatin1String("objectType"), QLatin1String("person"));
                 } else {
-                    user.insert("objectType", "collection");
+                    user.insert(QLatin1String("objectType"), QLatin1String("collection"));
                 }
-                user.insert("id", id);
+                user.insert(QLatin1String("id"), id);
                 to.append(user);
             }
 
@@ -163,12 +163,12 @@ void PumpIOMessageDialog::accept()
             Q_FOREACH (QListWidgetItem *item, ccList->selectedItems()) {
                 QVariantMap user;
                 QString id = item->data(Qt::UserRole).toString();
-                if (id.contains("acct:")) {
-                    user.insert("objectType", "person");
+                if (id.contains(QLatin1String("acct:"))) {
+                    user.insert(QLatin1String("objectType"), QLatin1String("person"));
                 } else {
-                    user.insert("objectType", "collection");
+                    user.insert(QLatin1String("objectType"), QLatin1String("collection"));
                 }
-                user.insert("id", id);
+                user.insert(QLatin1String("id"), id);
                 cc.append(user);
             }
 
@@ -190,7 +190,7 @@ void PumpIOMessageDialog::attachMedia()
     if (!d->mediumName) {
         d->mediumName = new QLabel(this);
         d->btnCancel = new QPushButton(this);
-        d->btnCancel->setIcon(QIcon::fromTheme("list-remove"));
+        d->btnCancel->setIcon(QIcon::fromTheme(QLatin1String("list-remove")));
         d->btnCancel->setToolTip(i18n("Discard Attachment"));
         d->btnCancel->setMaximumWidth(d->btnCancel->height());
         connect(d->btnCancel, SIGNAL(clicked(bool)), SLOT(cancelAttach()));

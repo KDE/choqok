@@ -35,11 +35,11 @@
 #include <TelepathyQt/PendingReady>
 #endif
 
-const QString IM_KOPETE = "Kopete";
-const QString IM_PSI = "Psi";
-const QString IM_SKYPE = "Skype";
-const QString IM_PIDGIN = "Pidgin";
-const QString IM_TELEPATHY = "Telepathy";
+const QString IM_KOPETE = QLatin1String("Kopete");
+const QString IM_PSI = QLatin1String("Psi");
+const QString IM_SKYPE = QLatin1String("Skype");
+const QString IM_PIDGIN = QLatin1String("Pidgin");
+const QString IM_TELEPATHY = QLatin1String("Telepathy");
 
 IMQDBus::IMQDBus(QObject *parent) : QObject(parent)
 {
@@ -79,7 +79,7 @@ void IMQDBus::updateStatusMessage(const QString &im, const QString &statusMessag
 
 void IMQDBus::useKopete(const QString &statusMessage)
 {
-    QDBusMessage msg = QDBusMessage::createMethodCall("org.kde.kopete", "/Kopete", "org.kde.Kopete", "setStatusMessage");
+    QDBusMessage msg = QDBusMessage::createMethodCall(QLatin1String("org.kde.kopete"), QLatin1String("/Kopete"), QLatin1String("org.kde.Kopete"), QLatin1String("setStatusMessage"));
     QList<QVariant> args;
     args.append(QVariant(statusMessage));
     msg.setArguments(args);
@@ -92,9 +92,9 @@ void IMQDBus::useKopete(const QString &statusMessage)
 
 void IMQDBus::usePsi(const QString &statusMessage)
 {
-    QDBusMessage msg = QDBusMessage::createMethodCall("org.psi-im.Psi", "/Main", "org.psi_im.Psi.Main", "setStatus");
+    QDBusMessage msg = QDBusMessage::createMethodCall(QLatin1String("org.psi-im.Psi"), QLatin1String("/Main"), QLatin1String("org.psi_im.Psi.Main"), QLatin1String("setStatus"));
     QList<QVariant> args;
-    args.append(QVariant("online"));
+    args.append(QVariant(QLatin1String("online")));
     args.append(QVariant(statusMessage));
     msg.setArguments(args);
     QDBusMessage rep = QDBusConnection::sessionBus().call(msg);
@@ -106,9 +106,9 @@ void IMQDBus::usePsi(const QString &statusMessage)
 
 void IMQDBus::useSkype(const QString &statusMessage)
 {
-    QDBusMessage msg = QDBusMessage::createMethodCall("com.Skype.API", "/com/Skype", "com.Skype.API", "Invoke");
+    QDBusMessage msg = QDBusMessage::createMethodCall(QLatin1String("com.Skype.API"), QLatin1String("/com/Skype"), QLatin1String("com.Skype.API"), QLatin1String("Invoke"));
     QList<QVariant> args;
-    args.append(QVariant(QString("NAME Choqok")));
+    args.append(QVariant(QString::fromLatin1("NAME Choqok")));
     msg.setArguments(args);
     QDBusMessage rep = QDBusConnection::sessionBus().call(msg);
     if (rep.type() == QDBusMessage::ErrorMessage) {
@@ -117,7 +117,7 @@ void IMQDBus::useSkype(const QString &statusMessage)
     }
 
     args.clear();
-    args.append(QVariant(QString("PROTOCOL 7")));
+    args.append(QVariant(QString::fromLatin1("PROTOCOL 7")));
     msg.setArguments(args);
     rep = QDBusConnection::sessionBus().call(msg);
     if (rep.type() == QDBusMessage::ErrorMessage) {
@@ -126,7 +126,7 @@ void IMQDBus::useSkype(const QString &statusMessage)
     }
 
     args.clear();
-    args.append(QVariant(QString("SET PROFILE MOOD_TEXT %1").arg(statusMessage)));
+    args.append(QVariant(QString::fromLatin1("SET PROFILE MOOD_TEXT %1").arg(statusMessage)));
     msg.setArguments(args);
     rep = QDBusConnection::sessionBus().call(msg);
     if (rep.type() == QDBusMessage::ErrorMessage) {
@@ -137,14 +137,14 @@ void IMQDBus::useSkype(const QString &statusMessage)
 
 void IMQDBus::usePidgin(const QString &statusMessage)
 {
-    QDBusMessage msg = QDBusMessage::createMethodCall("im.pidgin.purple.PurpleService", "/im/pidgin/purple/PurpleObject", "im.pidgin.purple.PurpleInterface", "PurpleSavedstatusGetCurrent");
+    QDBusMessage msg = QDBusMessage::createMethodCall(QLatin1String("im.pidgin.purple.PurpleService"), QLatin1String("/im/pidgin/purple/PurpleObject"), QLatin1String("im.pidgin.purple.PurpleInterface"), QLatin1String("PurpleSavedstatusGetCurrent"));
     QDBusReply<int> repUInt = QDBusConnection::sessionBus().call(msg);
     if (repUInt.error().isValid()) {
         qWarning() <<  "Failed with error:" << repUInt.error().message();
         return;
     }
     int IDCurrentStatus = repUInt.value();
-    msg = QDBusMessage::createMethodCall("im.pidgin.purple.PurpleService", "/im/pidgin/purple/PurpleObject", "im.pidgin.purple.PurpleInterface", "PurpleSavedstatusGetType");
+    msg = QDBusMessage::createMethodCall(QLatin1String("im.pidgin.purple.PurpleService"), QLatin1String("/im/pidgin/purple/PurpleObject"), QLatin1String("im.pidgin.purple.PurpleInterface"), QLatin1String("PurpleSavedstatusGetType"));
     QList<QVariant> args;
     args.append(QVariant(IDCurrentStatus));
     msg.setArguments(args);
@@ -155,7 +155,7 @@ void IMQDBus::usePidgin(const QString &statusMessage)
     }
     int currentStatusType = repUInt.value();
 
-    msg = QDBusMessage::createMethodCall("im.pidgin.purple.PurpleService", "/im/pidgin/purple/PurpleObject", "im.pidgin.purple.PurpleInterface", "PurpleSavedstatusNew");
+    msg = QDBusMessage::createMethodCall(QLatin1String("im.pidgin.purple.PurpleService"), QLatin1String("/im/pidgin/purple/PurpleObject"), QLatin1String("im.pidgin.purple.PurpleInterface"), QLatin1String("PurpleSavedstatusNew"));
     args.clear();
     args.append(QVariant(QString()));
     args.append(QVariant(currentStatusType));
@@ -167,7 +167,7 @@ void IMQDBus::usePidgin(const QString &statusMessage)
     }
     IDCurrentStatus = repUInt.value(); //ID of new status
 
-    msg = QDBusMessage::createMethodCall("im.pidgin.purple.PurpleService", "/im/pidgin/purple/PurpleObject", "im.pidgin.purple.PurpleInterface", "PurpleSavedstatusSetMessage");
+    msg = QDBusMessage::createMethodCall(QLatin1String("im.pidgin.purple.PurpleService"), QLatin1String("/im/pidgin/purple/PurpleObject"), QLatin1String("im.pidgin.purple.PurpleInterface"), QLatin1String("PurpleSavedstatusSetMessage"));
     args.clear();
     args.append(QVariant(IDCurrentStatus));
     args.append(QVariant(statusMessage));
@@ -178,7 +178,7 @@ void IMQDBus::usePidgin(const QString &statusMessage)
         return;
     }
 
-    msg = QDBusMessage::createMethodCall("im.pidgin.purple.PurpleService", "/im/pidgin/purple/PurpleObject", "im.pidgin.purple.PurpleInterface", "PurpleSavedstatusActivate");
+    msg = QDBusMessage::createMethodCall(QLatin1String("im.pidgin.purple.PurpleService"), QLatin1String("/im/pidgin/purple/PurpleObject"), QLatin1String("im.pidgin.purple.PurpleInterface"), QLatin1String("PurpleSavedstatusActivate"));
     args.clear();
     args.append(QVariant(IDCurrentStatus));
     msg.setArguments(args);
@@ -222,20 +222,20 @@ IMQDBus::~IMQDBus()
 QStringList IMQDBus::scanForIMs()
 {
     QStringList ims;
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered("com.Skype.API").value()) {
+    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(QLatin1String("com.Skype.API")).value()) {
         ims << IM_SKYPE;
     }
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.psi-im.Psi").value()) {
+    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(QLatin1String("org.psi-im.Psi")).value()) {
         ims << IM_PSI;
     }
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.kopete").value()) {
+    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(QLatin1String("org.kde.kopete")).value()) {
         ims << IM_KOPETE;
     }
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered("im.pidgin.purple.PurpleService").value()) {
+    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(QLatin1String("im.pidgin.purple.PurpleService")).value()) {
         ims << IM_PIDGIN;
     }
 #if TELEPATHY_FOUND
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.freedesktop.Telepathy.AccountManager").value()) {
+    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(QLatin1String("org.freedesktop.Telepathy.AccountManager")).value()) {
         ims << IM_TELEPATHY;
     }
 #endif

@@ -36,14 +36,14 @@ public:
 TwitterAccount::TwitterAccount(TwitterMicroBlog *parent, const QString &alias)
     : TwitterApiAccount(parent, alias), d(new Private)
 {
-    setHost("https://api.twitter.com");
-    setUploadHost("https://api.twitter.com");
-    setApi("1.1");
+    setHost(QLatin1String("https://api.twitter.com"));
+    setUploadHost(QLatin1String("https://api.twitter.com"));
+    setApi(QLatin1String("1.1"));
     qCDebug(CHOQOK) << "Set API version to 1.1";
 //     d->lists = configGroup()->readEntry("lists", QStringList());
     QStringList lists;
     Q_FOREACH (const QString &tm, timelineNames()) {
-        if (tm.startsWith('@')) {
+        if (tm.startsWith(QLatin1Char('@'))) {
             lists.append(tm);
         }
     }
@@ -86,12 +86,12 @@ void TwitterAccount::setUploadHost(const QString &uploadHost)
 void TwitterAccount::generateUploadUrl()
 {
     if (!uploadHost().startsWith(QLatin1String("http"))) { //NOTE: This is for compatibility by prev versions. remove it after 1.0 release
-        setUploadHost(uploadHost().prepend("http://"));
+        setUploadHost(uploadHost().prepend(QLatin1String("http://")));
     }
     QUrl url(uploadHost());
 
     url = url.adjusted(QUrl::StripTrailingSlash);
-    url.setPath(url.path() + '/' + (api()));
+    url.setPath(url.path() + QLatin1Char('/') + (api()));
     setUploadUrl(url);
 }
 

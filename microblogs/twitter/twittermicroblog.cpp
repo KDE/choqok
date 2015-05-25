@@ -57,18 +57,18 @@ K_PLUGIN_FACTORY_WITH_JSON(TwitterMicroBlogFactory, "choqok_twitter.json",
                            registerPlugin < TwitterMicroBlog > ();)
 
 TwitterMicroBlog::TwitterMicroBlog(QObject *parent, const QVariantList &)
-    : TwitterApiMicroBlog("choqok_twitter", parent)
+    : TwitterApiMicroBlog(QLatin1String("choqok_twitter"), parent)
 {
     qCDebug(CHOQOK);
-    setServiceName("Twitter");
-    setServiceHomepageUrl("https://twitter.com/");
-    timelineApiPath["Reply"] = "/statuses/mentions_timeline.%1";
+    setServiceName(QLatin1String("Twitter"));
+    setServiceHomepageUrl(QLatin1String("https://twitter.com/"));
+    timelineApiPath[QLatin1String("Reply")] = QLatin1String("/statuses/mentions_timeline.%1");
     setTimelineInfos();
 }
 void TwitterMicroBlog::setTimelineInfos()
 {
 //   hange description of replies to mentions
-    Choqok::TimelineInfo *t = mTimelineInfos["Reply"];
+    Choqok::TimelineInfo *t = mTimelineInfos[QLatin1String("Reply")];
     t->name = i18nc("Timeline Name", "Mentions");
     t->description = i18nc("Timeline description", "Mentions of you");
 }
@@ -124,13 +124,13 @@ Choqok::UI::ComposerWidget *TwitterMicroBlog::createComposerWidget(Choqok::Accou
 
 QString TwitterMicroBlog::profileUrl(Choqok::Account *, const QString &username) const
 {
-    return QString("https://twitter.com/#!/%1").arg(username);
+    return QString::fromLatin1("https://twitter.com/#!/%1").arg(username);
 }
 
 QString TwitterMicroBlog::postUrl(Choqok::Account *, const QString &username,
                                   const QString &postId) const
 {
-    return QString("https://twitter.com/%1/status/%2").arg(username).arg(postId);
+    return QString::fromLatin1("https://twitter.com/%1/status/%2").arg(username).arg(postId);
 }
 
 TwitterApiSearch *TwitterMicroBlog::searchBackend()
@@ -168,22 +168,22 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Cho
         ///Documentation: http://identi.ca/notice/17779990
         TwitterAccount *account = qobject_cast<TwitterAccount *>(theAccount);
         QUrl url = account->uploadUrl();
-        url.setPath(url.path() + "/statuses/update_with_media.json");
+        url.setPath(url.path() + QLatin1String("/statuses/update_with_media.json"));
         const QMimeDatabase db;
         QByteArray fileContentType = db.mimeTypeForUrl(picUrl).name().toUtf8();
 
         QMap<QString, QByteArray> formdata;
-        formdata["status"] = post->content.toUtf8();
+        formdata[QLatin1String("status")] = post->content.toUtf8();
         if (!post->replyToPostId.isEmpty()) {
-            formdata["in_reply_to_status_id"] = post->replyToPostId.toLatin1();
+            formdata[QLatin1String("in_reply_to_status_id")] = post->replyToPostId.toLatin1();
         }
-        formdata["source"] = "choqok";
+        formdata[QLatin1String("source")] = "choqok";
 
         QMap<QString, QByteArray> mediafile;
-        mediafile["name"] = "media[]";
-        mediafile["filename"] = picUrl.fileName().toUtf8();
-        mediafile["mediumType"] = fileContentType;
-        mediafile["medium"] = picData;
+        mediafile[QLatin1String("name")] = "media[]";
+        mediafile[QLatin1String("filename")] = picUrl.fileName().toUtf8();
+        mediafile[QLatin1String("mediumType")] = fileContentType;
+        mediafile[QLatin1String("medium")] = picData;
         QList< QMap<QString, QByteArray> > listMediafiles;
         listMediafiles.append(mediafile);
 
@@ -198,7 +198,7 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Cho
                          QStringLiteral("Content-Type: multipart/form-data; boundary=AaB03x"));
         job->addMetaData(QStringLiteral("customHTTPHeader"),
                          QStringLiteral("Authorization: ") +
-                         authorizationHeader(account, url, QOAuth::POST));
+                         QLatin1String(authorizationHeader(account, url, QOAuth::POST)));
         mCreatePostMap[ job ] = post;
         mJobsAccount[job] = theAccount;
         connect(job, SIGNAL(result(KJob*)),
@@ -252,9 +252,9 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount *theAccount, const QString 
         return;
     }
     QUrl url = theAccount->apiUrl();
-    url.setPath(url.path() + "/lists/ownerships.json");
+    url.setPath(url.path() + QLatin1String("/lists/ownerships.json"));
     QUrl url_for_oauth(url);//we need base URL (without params) to make OAuth signature with it!
-    url.addQueryItem("screen_name", username);
+    url.addQueryItem(QLatin1String("screen_name"), username);
     QOAuth::ParamMap params;
     params.insert("screen_name", username.toLatin1());
 
@@ -266,7 +266,7 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount *theAccount, const QString 
 
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     authorizationHeader(theAccount, url_for_oauth, QOAuth::GET, params));
+                     QLatin1String(authorizationHeader(theAccount, url_for_oauth, QOAuth::GET, params)));
     mFetchUsersListMap[ job ] = username;
     mJobsAccount[ job ] = theAccount;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchUserLists(KJob*)));
@@ -310,13 +310,13 @@ void TwitterMicroBlog::addListTimeline(TwitterAccount *theAccount, const QString
 {
     qCDebug(CHOQOK);
     QStringList tms = theAccount->timelineNames();
-    QString name = QString("@%1/%2").arg(username).arg(listname);
+    QString name = QString::fromLatin1("@%1/%2").arg(username).arg(listname);
     tms.append(name);
     addTimelineName(name);
     theAccount->setTimelineNames(tms);
     theAccount->writeConfig();
-    QString url = QString("/lists/statuses");
-    timelineApiPath[name] = url + ".%1";
+    QString url = QString::fromLatin1("/lists/statuses");
+    timelineApiPath[name] = url + QLatin1String(".%1");
     updateTimelines(theAccount);
 }
 
@@ -328,8 +328,8 @@ void TwitterMicroBlog::setListTimelines(TwitterAccount *theAccount, const QStrin
     Q_FOREACH (const QString &name, lists) {
         tms.append(name);
         addTimelineName(name);
-        QString url = QString("/lists/statuses");
-        timelineApiPath[name] = url + ".%1";
+        QString url = QString::fromLatin1("/lists/statuses");
+        timelineApiPath[name] = url + QLatin1String(".%1");
     }
     tms.removeDuplicates();
     theAccount->setTimelineNames(tms);
@@ -337,13 +337,13 @@ void TwitterMicroBlog::setListTimelines(TwitterAccount *theAccount, const QStrin
 
 Choqok::TimelineInfo *TwitterMicroBlog::timelineInfo(const QString &timelineName)
 {
-    if (timelineName.startsWith('@')) {
+    if (timelineName.startsWith(QLatin1Char('@'))) {
         if (mListsInfo.contains(timelineName)) {
             return mListsInfo.value(timelineName);
         } else {
             Choqok::TimelineInfo *info = new Choqok::TimelineInfo;
             info->description = info->name = timelineName;
-            info->icon = "format-list-unordered";
+            info->icon = QLatin1String("format-list-unordered");
             mListsInfo.insert(timelineName, info);
             return info;
         }
@@ -358,8 +358,8 @@ QList< Twitter::List > TwitterMicroBlog::readUserListsFromJson(Choqok::Account *
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
         const QVariantMap map = json.toVariant().toMap();
-        if (map.contains("lists")) {
-            QVariantList list = map["lists"].toList();
+        if (map.contains(QLatin1String("lists"))) {
+            QVariantList list = map[QLatin1String("lists")].toList();
             QVariantList::const_iterator it = list.constBegin();
             QVariantList::const_iterator endIt = list.constEnd();
             for (; it != endIt; ++it) {
@@ -373,17 +373,17 @@ QList< Twitter::List > TwitterMicroBlog::readUserListsFromJson(Choqok::Account *
 Twitter::List TwitterMicroBlog::readListFromJsonMap(Choqok::Account *theAccount, QVariantMap map)
 {
     Twitter::List l;
-    l.author = readUser(theAccount, map["user"].toMap());
-    l.description = map["description"].toString();
-    l.fullname = map["full_name"].toString();
-    l.isFollowing = map["following"].toBool();
-    l.listId = map["id"].toString();
-    l.memberCount = map["member_count"].toInt();
-    l.mode = (map["mode"].toString() == "public" ? Twitter::Public : Twitter::Private);
-    l.name = map["name"].toString();
-    l.slug = map["slug"].toString();
-    l.subscriberCount = map["subscriber_count"].toInt();
-    l.uri = map["uri"].toString();
+    l.author = readUser(theAccount, map[QLatin1String("user")].toMap());
+    l.description = map[QLatin1String("description")].toString();
+    l.fullname = map[QLatin1String("full_name")].toString();
+    l.isFollowing = map[QLatin1String("following")].toBool();
+    l.listId = map[QLatin1String("id")].toString();
+    l.memberCount = map[QLatin1String("member_count")].toInt();
+    l.mode = (map[QLatin1String("mode")].toString() == QLatin1String("public") ? Twitter::Public : Twitter::Private);
+    l.name = map[QLatin1String("name")].toString();
+    l.slug = map[QLatin1String("slug")].toString();
+    l.subscriberCount = map[QLatin1String("subscriber_count")].toInt();
+    l.uri = map[QLatin1String("uri")].toString();
     return l;
 }
 
@@ -396,12 +396,12 @@ Choqok::Post *TwitterMicroBlog::readPost(Choqok::Account *account, const QVarian
 
     post = TwitterApiMicroBlog::readPost(account, var, post);
 
-    post->postId = var["id_str"].toString();
-    post->replyToPostId = var["in_reply_to_status_id_str"].toString();
-    post->replyToUserId = var["in_reply_to_user_id_str"].toString();
+    post->postId = var[QLatin1String("id_str")].toString();
+    post->replyToPostId = var[QLatin1String("in_reply_to_status_id_str")].toString();
+    post->replyToUserId = var[QLatin1String("in_reply_to_user_id_str")].toString();
 
-    QVariantMap userMap = var["user"].toMap();
-    post->author.userId = userMap["id_str"].toString();
+    QVariantMap userMap = var[QLatin1String("user")].toMap();
+    post->author.userId = userMap[QLatin1String("id_str")].toString();
 
     return post;
 }

@@ -42,14 +42,14 @@ K_PLUGIN_FACTORY_WITH_JSON(OCSMicroblogFactory, "choqok_ocs.json",
                            registerPlugin < OCSMicroblog > ();)
 
 OCSMicroblog::OCSMicroblog(QObject *parent, const QVariantList &)
-    : MicroBlog("choqok_ocs", parent)
+    : MicroBlog(QLatin1String("choqok_ocs"), parent)
     , mProviderManager(new Attica::ProviderManager)
     , mIsOperational(false)
 {
     connect(mProviderManager, SIGNAL(defaultProvidersLoaded()),
             this, SLOT(slotDefaultProvidersLoaded()));
     mProviderManager->loadDefaultProviders();
-    setServiceName("Social Desktop Activities");
+    setServiceName(QLatin1String("Social Desktop Activities"));
 }
 
 OCSMicroblog::~OCSMicroblog()
@@ -231,7 +231,7 @@ void OCSMicroblog::slotTimelineLoaded(Attica::BaseJob *job)
     OCSAccount *acc = mJobsAccount.take(job);
     if (job->metadata().error() == Attica::Metadata::NoError) {
         Attica::Activity::List actList = static_cast< Attica::ListJob<Attica::Activity> * >(job)->itemList();
-        Q_EMIT timelineDataReceived(acc, "Activity", parseActivityList(actList));
+        Q_EMIT timelineDataReceived(acc, QLatin1String("Activity"), parseActivityList(actList));
     } else {
         Q_EMIT error(acc, ServerError, job->metadata().message(), Low);
     }
@@ -251,10 +251,10 @@ QList< Choqok::Post * > OCSMicroblog::parseActivityList(const Attica::Activity::
         pst->author.userId = act.associatedPerson().id();
         pst->author.userName = act.associatedPerson().id();
         pst->author.homePageUrl = act.associatedPerson().homepage();
-        pst->author.location = QString("%1(%2)").arg(act.associatedPerson().country())
+        pst->author.location = QString::fromLatin1("%1(%2)").arg(act.associatedPerson().country())
                                .arg(act.associatedPerson().city());
         pst->author.profileImageUrl = act.associatedPerson().avatarUrl().toString();
-        pst->author.realName = QString("%1 %2").arg(act.associatedPerson().firstName())
+        pst->author.realName = QString::fromLatin1("%1 %2").arg(act.associatedPerson().firstName())
                                .arg(act.associatedPerson().lastName());
         resultList.insert(0, pst);
     }
@@ -263,11 +263,11 @@ QList< Choqok::Post * > OCSMicroblog::parseActivityList(const Attica::Activity::
 
 Choqok::TimelineInfo *OCSMicroblog::timelineInfo(const QString &timelineName)
 {
-    if (timelineName == "Activity") {
+    if (timelineName == QLatin1String("Activity")) {
         Choqok::TimelineInfo *info = new Choqok::TimelineInfo;
         info->name = i18nc("Timeline Name", "Activity");
         info->description = i18n("Social activities");
-        info->icon = "user-home";
+        info->icon = QLatin1String("user-home");
         return info;
     } else {
         qCCritical(CHOQOK) << "timelineName is not valid!";
@@ -302,8 +302,8 @@ void OCSMicroblog::slotDefaultProvidersLoaded()
 QString OCSMicroblog::profileUrl(Choqok::Account *account, const QString &username) const
 {
     OCSAccount *acc = qobject_cast<OCSAccount *>(account);
-    if (acc->providerUrl().host().contains("opendesktop.org")) {
-        return QString("https://opendesktop.org/usermanager/search.php?username=%1").arg(username);
+    if (acc->providerUrl().host().contains(QLatin1String("opendesktop.org"))) {
+        return QString::fromLatin1("https://opendesktop.org/usermanager/search.php?username=%1").arg(username);
     }
     return QString();
 }

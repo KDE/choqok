@@ -35,11 +35,11 @@ K_PLUGIN_FACTORY_WITH_JSON(IMStatusConfigFactory, "choqok_imstatus_config.json",
                            registerPlugin < IMStatusConfig > ();)
 
 IMStatusConfig::IMStatusConfig(QWidget *parent, const QVariantList &args) :
-    KCModule(KAboutData::pluginData("kcm_choqok_imstatus"), parent, args)
+    KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_imstatus")), parent, args)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
-    wd->setObjectName("mIMStatusCtl");
+    wd->setObjectName(QLatin1String("mIMStatusCtl"));
     ui.setupUi(wd);
     addConfig(IMStatusSettings::self(), wd);
     layout->addWidget(wd);
@@ -63,7 +63,7 @@ void IMStatusConfig::load()
     IMStatusSettings::self()->load();
     ui.cfg_imclient->setCurrentIndex(imList.indexOf(IMStatusSettings::imclient()));
     ui.cfg_templtate->setPlainText(IMStatusSettings::templtate().isEmpty() ?
-                                   "%username%: \"%status%\" at %time% from %client% (%url%)" : IMStatusSettings::templtate());
+                                   QLatin1String("%username%: \"%status%\" at %time% from %client% (%url%)") : IMStatusSettings::templtate());
     ui.cfg_reply->setChecked(IMStatusSettings::reply());
     ui.cfg_repeat->setChecked(IMStatusSettings::repeat());
 }

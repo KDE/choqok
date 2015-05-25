@@ -39,11 +39,11 @@ K_PLUGIN_FACTORY_WITH_JSON(PosterousConfigFactory, "choqok_posterous_config.json
                            registerPlugin < PosterousConfig > ();)
 
 PosterousConfig::PosterousConfig(QWidget *parent, const QVariantList &) :
-    KCModule(KAboutData::pluginData("kcm_choqok_posterous"), parent)
+    KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_posterous")), parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);
-    wd->setObjectName("mPosterousCtl");
+    wd->setObjectName(QLatin1String("mPosterousCtl"));
     ui.setupUi(wd);
     addConfig(PosterousSettings::self(), wd);
     layout->addWidget(wd);
@@ -72,7 +72,7 @@ void PosterousConfig::load()
     PosterousSettings::self()->load();
     ui.cfg_basic->setChecked(PosterousSettings::basic());
     ui.cfg_login->setText(PosterousSettings::login());
-    ui.cfg_password->setText(Choqok::PasswordManager::self()->readPassword(QString("posterous_%1")
+    ui.cfg_password->setText(Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("posterous_%1")
                              .arg(ui.cfg_login->text())));
     ui.cfg_oauth->setChecked(PosterousSettings::oauth());
     ui.cfg_accountsList->setCurrentText(PosterousSettings::alias());
@@ -91,7 +91,7 @@ void PosterousConfig::save()
 
     PosterousSettings::setBasic(ui.cfg_basic->isChecked());
     PosterousSettings::setLogin(ui.cfg_login->text());
-    Choqok::PasswordManager::self()->writePassword(QString("posterous_%1").arg(ui.cfg_login->text()),
+    Choqok::PasswordManager::self()->writePassword(QString::fromLatin1("posterous_%1").arg(ui.cfg_login->text()),
             ui.cfg_password->text());
     PosterousSettings::setOauth(ui.cfg_oauth->isChecked());
     PosterousSettings::self()->save();

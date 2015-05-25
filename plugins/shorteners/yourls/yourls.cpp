@@ -38,7 +38,7 @@ K_PLUGIN_FACTORY_WITH_JSON(YourlsFactory, "choqok_yourls.json",
                            registerPlugin < Yourls > ();)
 
 Yourls::Yourls(QObject *parent, const QVariantList &)
-    : Choqok::Shortener("choqok_yourls", parent)
+    : Choqok::Shortener(QLatin1String("choqok_yourls"), parent)
 {
     connect(YourlsSettings::self(), SIGNAL(configChanged()),
             SLOT(reloadConfigs()));
@@ -50,14 +50,14 @@ Yourls::~Yourls()
 QString Yourls::shorten(const QString &url)
 {
     QUrl reqUrl(YourlsSettings::yourlsHost());
-    reqUrl.addQueryItem("action", "shorturl");                          /* set action to shorturl */
-    reqUrl.addQueryItem("format", "xml");                               /* get result as xml */
-    reqUrl.addQueryItem("url", QUrl(url).url());                        /* url to be shorted */
-    password = Choqok::PasswordManager::self()->readPassword(
-                   QString("yourls_%1").arg(YourlsSettings::username())).toUtf8();
+    reqUrl.addQueryItem(QLatin1String("action"), QLatin1String("shorturl"));                          /* set action to shorturl */
+    reqUrl.addQueryItem(QLatin1String("format"), QLatin1String("xml"));                               /* get result as xml */
+    reqUrl.addQueryItem(QLatin1String("url"), QUrl(url).url());                        /* url to be shorted */
+    password = QLatin1String(Choqok::PasswordManager::self()->readPassword(
+                   QString::fromLatin1("yourls_%1").arg(YourlsSettings::username())).toUtf8());
     if (!YourlsSettings::username().isEmpty()) {
-        reqUrl.addQueryItem("username", YourlsSettings::username());
-        reqUrl.addQueryItem("password", password);
+        reqUrl.addQueryItem(QLatin1String("username"), YourlsSettings::username());
+        reqUrl.addQueryItem(QLatin1String("password"), password);
     }
 
     KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
@@ -65,9 +65,9 @@ QString Yourls::shorten(const QString &url)
 
     if (!job->error()) {
         const QByteArray data = job->data();                            /* output field */
-        QString output(data);
+        QString output = QLatin1String(data);
 
-        QRegExp rx(QString("<shorturl>(.+)</shorturl>"));
+        QRegExp rx(QString::fromLatin1("<shorturl>(.+)</shorturl>"));
         rx.setMinimal(true);
         rx.indexIn(output);
         output = rx.cap(1);
@@ -75,8 +75,8 @@ QString Yourls::shorten(const QString &url)
         if (!output.isEmpty()) {
             return output;
         } else {
-            output = data;
-            QRegExp rx(QString("<message>(.+)</message>"));
+            output = QLatin1String(data);
+            QRegExp rx(QString::fromLatin1("<message>(.+)</message>"));
             rx.setMinimal(true);
             rx.indexIn(output);
             output = rx.cap(1);
@@ -92,8 +92,8 @@ QString Yourls::shorten(const QString &url)
 
 void Yourls::reloadConfigs()
 {
-    password = Choqok::PasswordManager::self()->readPassword(
-                   QString("yourls_%1").arg(YourlsSettings::username())).toUtf8();
+    password = QLatin1String(Choqok::PasswordManager::self()->readPassword(
+                   QString::fromLatin1("yourls_%1").arg(YourlsSettings::username())).toUtf8());
 }
 
 #include "yourls.moc"

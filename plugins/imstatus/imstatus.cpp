@@ -42,7 +42,7 @@ public:
 };
 
 IMStatus::IMStatus(QObject *parent, const QList<QVariant> &)
-    : Choqok::Plugin("choqok_imstatus", parent), d(new IMStatusPrivate())
+    : Choqok::Plugin(QLatin1String("choqok_imstatus"), parent), d(new IMStatusPrivate())
 {
     QTimer::singleShot(500, this, SLOT(update()));
     d->im = new IMQDBus(this);
@@ -68,12 +68,12 @@ void IMStatus::slotIMStatus(Choqok::JobResult res, Choqok::Post *newPost)
     if (res == Choqok::Success) {
         IMStatusSettings::self()->load();
         QString statusMessage = IMStatusSettings::templtate();
-        statusMessage.replace(QString("%status%"), newPost->content, Qt::CaseInsensitive);
-        statusMessage.replace(QString("%username%"), newPost->author.userName, Qt::CaseInsensitive);
-        statusMessage.replace(QString("%fullname%"), newPost->author.realName, Qt::CaseInsensitive);
-        statusMessage.replace(QString("%time%"), newPost->creationDateTime.toString("hh:mm:ss"), Qt::CaseInsensitive);
-        statusMessage.replace(QString("%url%"), newPost->link, Qt::CaseInsensitive);
-        statusMessage.replace(QString("%client%"), QString("Choqok"), Qt::CaseInsensitive);
+        statusMessage.replace(QString::fromLatin1("%status%"), newPost->content, Qt::CaseInsensitive);
+        statusMessage.replace(QString::fromLatin1("%username%"), newPost->author.userName, Qt::CaseInsensitive);
+        statusMessage.replace(QString::fromLatin1("%fullname%"), newPost->author.realName, Qt::CaseInsensitive);
+        statusMessage.replace(QString::fromLatin1("%time%"), newPost->creationDateTime.toString(QLatin1String("hh:mm:ss")), Qt::CaseInsensitive);
+        statusMessage.replace(QString::fromLatin1("%url%"), newPost->link, Qt::CaseInsensitive);
+        statusMessage.replace(QString::fromLatin1("%client%"), QString::fromLatin1("Choqok"), Qt::CaseInsensitive);
         if (!IMStatusSettings::repeat() && !newPost->repeatedFromUsername.isEmpty()) {
             return;
         }

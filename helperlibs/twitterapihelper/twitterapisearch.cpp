@@ -32,18 +32,18 @@ class TwitterApiSearch::Private
 public:
     Private()
     {
-        monthes["Jan"] = 1;
-        monthes["Feb"] = 2;
-        monthes["Mar"] = 3;
-        monthes["Apr"] = 4;
-        monthes["May"] = 5;
-        monthes["Jun"] = 6;
-        monthes["Jul"] = 7;
-        monthes["Aug"] = 8;
-        monthes["Sep"] = 9;
-        monthes["Oct"] = 10;
-        monthes["Nov"] = 11;
-        monthes["Dec"] = 12;
+        monthes[QLatin1String("Jan")] = 1;
+        monthes[QLatin1String("Feb")] = 2;
+        monthes[QLatin1String("Mar")] = 3;
+        monthes[QLatin1String("Apr")] = 4;
+        monthes[QLatin1String("May")] = 5;
+        monthes[QLatin1String("Jun")] = 6;
+        monthes[QLatin1String("Jul")] = 7;
+        monthes[QLatin1String("Aug")] = 8;
+        monthes[QLatin1String("Sep")] = 9;
+        monthes[QLatin1String("Oct")] = 10;
+        monthes[QLatin1String("Nov")] = 11;
+        monthes[QLatin1String("Dec")] = 12;
     }
     QMap<QString, int> monthes;
 };
@@ -78,7 +78,7 @@ QDateTime TwitterApiSearch::dateFromString(const QString &date)
     char s[10];
     int year, day, hours, minutes, seconds, tz;
     sscanf(qPrintable(date), "%*s %s %d %d:%d:%d %d %d", s, &day, &hours, &minutes, &seconds, &tz, &year);
-    int month = d->monthes[s];
+    int month = d->monthes[QLatin1String(s)];
     QDateTime recognized(QDate(year, month, day), QTime(hours, minutes, seconds));
     if (tz == 0) { //tz is the timezone, in Twitter it's always UTC(0) in Identica it's local +/-NUMBER
         recognized.setTimeSpec(Qt::UTC);
@@ -99,7 +99,7 @@ SearchInfo::SearchInfo(Choqok::Account *theAccount, const QString &queryStr, int
 
 bool SearchInfo::fromString(const QString &str)
 {
-    QStringList lis = str.split(",,,");
+    QStringList lis = str.split(QLatin1String(",,,"));
     if (lis.count() != 4) {
         return false;
     }
@@ -112,5 +112,5 @@ bool SearchInfo::fromString(const QString &str)
 
 QString SearchInfo::toString()
 {
-    return account->alias() + ",,," + QString::number(option) + ",,," + query + ",,," + QString::number(isBrowsable);
+    return account->alias() + QLatin1String(",,,") + QString::number(option) + QLatin1String(",,,") + query + QLatin1String(",,,") + QString::number(isBrowsable);
 }
