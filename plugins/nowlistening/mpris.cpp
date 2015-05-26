@@ -100,7 +100,7 @@ QStringList MPRIS::getRunningPlayers()
 {
     QStringList services = QDBusConnection::sessionBus().interface()->registeredServiceNames().value().filter(QLatin1String("org.mpris."));
     services.removeDuplicates();
-    services.replaceInStrings(QLatin1String("org.mpris."), QLatin1String(""));
+    services.replaceInStrings(QLatin1String("org.mpris."), QString());
     return services;
 }
 

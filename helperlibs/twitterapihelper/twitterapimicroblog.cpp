@@ -1341,7 +1341,7 @@ Choqok::Post *TwitterApiMicroBlog::readPost(Choqok::Account *theAccount,
         post->mediaSizeWidth = w[QLatin1String("w")].toInt() != 0 ? w[QLatin1String("w")].toInt() : 0;
         post->mediaSizeHeight = w[QLatin1String("h")].toInt() != 0 ? w[QLatin1String("h")].toInt() : 0;
     } else {
-        post->media = QLatin1String("");
+        post->media = QString();
         post->mediaSizeHeight = 0;
         post->mediaSizeWidth = 0;
     }
