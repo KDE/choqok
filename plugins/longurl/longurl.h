@@ -27,6 +27,7 @@
 #include <QPointer>
 #include <QQueue>
 #include <QSharedPointer>
+#include <QUrlQuery>
 
 #include <KIO/Job>
 

@@ -271,7 +271,9 @@ void LaconicaMicroBlog::doRequestFriendsScreenName(TwitterApiAccount *theAccount
     QOAuth::ParamMap params;
     if (page > 1) {
         params.insert("page", QByteArray::number(page));
-        url.addQueryItem(QLatin1String("page"), QString::number(page));
+        QUrlQuery urlQuery;
+        urlQuery.addQueryItem(QLatin1String("page"), QString::number(page));
+        url.setQuery(urlQuery);
     }
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;

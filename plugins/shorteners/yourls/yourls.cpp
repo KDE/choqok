@@ -50,16 +50,18 @@ Yourls::~Yourls()
 QString Yourls::shorten(const QString &url)
 {
     QUrl reqUrl(YourlsSettings::yourlsHost());
-    reqUrl.addQueryItem(QLatin1String("action"), QLatin1String("shorturl"));                          /* set action to shorturl */
-    reqUrl.addQueryItem(QLatin1String("format"), QLatin1String("xml"));                               /* get result as xml */
-    reqUrl.addQueryItem(QLatin1String("url"), QUrl(url).url());                        /* url to be shorted */
+    QUrlQuery reqQuery;
+    reqQuery.addQueryItem(QLatin1String("action"), QLatin1String("shorturl"));           /* set action to shorturl */
+    reqQuery.addQueryItem(QLatin1String("format"), QLatin1String("xml"));                /* get result as xml */
+    reqQuery.addQueryItem(QLatin1String("url"), QUrl(url).url());                        /* url to be shorted */
     password = QLatin1String(Choqok::PasswordManager::self()->readPassword(
                    QString::fromLatin1("yourls_%1").arg(YourlsSettings::username())).toUtf8());
     if (!YourlsSettings::username().isEmpty()) {
-        reqUrl.addQueryItem(QLatin1String("username"), YourlsSettings::username());
-        reqUrl.addQueryItem(QLatin1String("password"), password);
+        reqQuery.addQueryItem(QLatin1String("username"), YourlsSettings::username());
+        reqQuery.addQueryItem(QLatin1String("password"), password);
     }
 
+    reqUrl.setQuery(reqQuery);
     KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
     job->exec();
 

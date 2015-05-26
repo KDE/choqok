@@ -83,11 +83,13 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
     QString formattedQuery = mSearchCode[option] + query;
     QUrl url(QLatin1String("https://api.twitter.com/1.1/search/tweets.json"));
     QUrl tmpUrl(url);
-    url.addQueryItem(QLatin1String("q"), formattedQuery);
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem(QLatin1String("q"), formattedQuery);
+    url.setQuery(urlQuery);
     QString q = url.query();
     param.insert("q", q.mid(q.indexOf(QLatin1Char('=')) + 1).toLatin1());
     if (!sinceStatusId.isEmpty()) {
-        url.addQueryItem(QLatin1String("since_id"), sinceStatusId);
+        urlQuery.addQueryItem(QLatin1String("since_id"), sinceStatusId);
         param.insert("since_id", sinceStatusId.toLatin1());
     }
     int cntStr = Choqok::BehaviorSettings::countOfPosts();
@@ -96,12 +98,13 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
     } else {
         cntStr = 100;
     }
-    url.addQueryItem(QLatin1String("count"), QString::number(cntStr));
+    urlQuery.addQueryItem(QLatin1String("count"), QString::number(cntStr));
     param.insert("count", QString::number(cntStr).toLatin1());
     if (page > 1) {
-        url.addQueryItem(QLatin1String("page"), QString::number(page));
+        urlQuery.addQueryItem(QLatin1String("page"), QString::number(page));
         param.insert("page", QString::number(page).toLatin1());
     }
+    url.setQuery(urlQuery);
 
     qCDebug(CHOQOK) << url;
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);

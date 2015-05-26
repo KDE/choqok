@@ -42,8 +42,10 @@ TightUrl::TightUrl(QObject *parent, const QVariantList &)
 QString TightUrl::shorten(const QString &url)
 {
     QUrl reqUrl(QLatin1String("http://2tu.us/"));
-    reqUrl.addQueryItem(QLatin1String("save"), QLatin1String("y"));
-    reqUrl.addQueryItem(QLatin1String("url"), QUrl(url).url());
+    QUrlQuery reqQuery;
+    reqQuery.addQueryItem(QLatin1String("save"), QLatin1String("y"));
+    reqQuery.addQueryItem(QLatin1String("url"), QUrl(url).url());
+    reqUrl.setQuery(reqQuery);
 
     QEventLoop loop;
     KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);

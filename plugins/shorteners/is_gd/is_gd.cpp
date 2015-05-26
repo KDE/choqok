@@ -49,12 +49,14 @@ QString Is_gd::shorten(const QString &url)
     Is_gd_Settings::self()->load();
 
     QUrl reqUrl(QLatin1String("https://is.gd/create.php"));
-    reqUrl.addQueryItem(QLatin1String("format"), QLatin1String("json"));
-    reqUrl.addQueryItem(QLatin1String("url"), QUrl(url).url());
+    QUrlQuery reqQuery;
+    reqQuery.addQueryItem(QLatin1String("format"), QLatin1String("json"));
+    reqQuery.addQueryItem(QLatin1String("url"), QUrl(url).url());
     if (Is_gd_Settings::logstats()) {
-        reqUrl.addQueryItem(QLatin1String("logstats"), QLatin1String("true"));
+        reqQuery.addQueryItem(QLatin1String("logstats"), QLatin1String("true"));
     }
 
+    reqUrl.setQuery(reqQuery);
     QEventLoop loop;
     KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
     connect(job, SIGNAL(result(KJob*)), &loop, SLOT(quit()));

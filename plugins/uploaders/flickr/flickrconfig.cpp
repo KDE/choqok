@@ -127,9 +127,11 @@ void FlickrConfig::getFrob()
 {
     m_frob.clear();
     QUrl url(QLatin1String("https://flickr.com/services/rest/"));
-    url.addQueryItem(QLatin1String("method"), QLatin1String("flickr.auth.getFrob"));
-    url.addQueryItem(QLatin1String("api_key"), QLatin1String(apiKey.toUtf8()));
-    url.addQueryItem(QLatin1String("api_sig"),  QLatin1String(createSign("methodflickr.auth.getFrob")));
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem(QLatin1String("method"), QLatin1String("flickr.auth.getFrob"));
+    urlQuery.addQueryItem(QLatin1String("api_key"), QLatin1String(apiKey.toUtf8()));
+    urlQuery.addQueryItem(QLatin1String("api_sig"),  QLatin1String(createSign("methodflickr.auth.getFrob")));
+    url.setQuery(urlQuery);
 
     QString errMsg;
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
@@ -186,10 +188,12 @@ void FlickrConfig::getToken()
 {
     m_token.clear();
     QUrl url(QLatin1String("https://flickr.com/services/rest/"));
-    url.addQueryItem(QLatin1String("method"), QLatin1String("flickr.auth.getToken"));
-    url.addQueryItem(QLatin1String("api_key"), QLatin1String(apiKey.toUtf8()));
-    url.addQueryItem(QLatin1String("frob"), QLatin1String(m_frob.toUtf8()));
-    url.addQueryItem(QLatin1String("api_sig"),  QLatin1String(createSign("frob" + m_frob.toUtf8() + "methodflickr.auth.getToken")));
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem(QLatin1String("method"), QLatin1String("flickr.auth.getToken"));
+    urlQuery.addQueryItem(QLatin1String("api_key"), QLatin1String(apiKey.toUtf8()));
+    urlQuery.addQueryItem(QLatin1String("frob"), QLatin1String(m_frob.toUtf8()));
+    urlQuery.addQueryItem(QLatin1String("api_sig"),  QLatin1String(createSign("frob" + m_frob.toUtf8() + "methodflickr.auth.getToken")));
+    url.setQuery(urlQuery);
 
     QString errMsg;
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);

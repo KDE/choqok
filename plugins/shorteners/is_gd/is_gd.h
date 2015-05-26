@@ -24,6 +24,7 @@
 #define IS_GD_H
 
 #include <QVariantList>
+#include <QUrlQuery>
 
 #include "shortener.h"
 

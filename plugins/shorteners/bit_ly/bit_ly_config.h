@@ -25,6 +25,7 @@
 #define BIT_LY_CONFIG_H
 
 #include <QVariantList>
+#include <QUrlQuery>
 
 #include <KCModule>
 

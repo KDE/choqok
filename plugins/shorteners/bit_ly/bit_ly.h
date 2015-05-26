@@ -24,6 +24,7 @@
 #define BIT_LY_H
 
 #include <QVariantList>
+#include <QUrlQuery>
 
 #include "shortener.h"
 

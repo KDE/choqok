@@ -108,17 +108,19 @@ void Bit_ly_Config::slotValidate()
     QString login = QLatin1String("choqok");
     QString apiKey = QLatin1String("R_bdd1ae8b6191dd36e13fc77ca1d4f27f");
     QUrl reqUrl(QLatin1String("http://api.bit.ly/v3/validate"));
+    QUrlQuery reqQuery;
 
-    reqUrl.addQueryItem(QLatin1String("x_login"), ui.kcfg_login->text());
-    reqUrl.addQueryItem(QLatin1String("x_apiKey"), ui.kcfg_api_key->text());
+    reqQuery.addQueryItem(QLatin1String("x_login"), ui.kcfg_login->text());
+    reqQuery.addQueryItem(QLatin1String("x_apiKey"), ui.kcfg_api_key->text());
 
     if (Bit_ly_Settings::domain() == QLatin1String("j.mp")) {   //bit.ly is default domain
-        reqUrl.addQueryItem(QLatin1String("domain"), QLatin1String("j.mp"));
+        reqQuery.addQueryItem(QLatin1String("domain"), QLatin1String("j.mp"));
     }
 
-    reqUrl.addQueryItem(QLatin1String("login"), QLatin1String(login.toUtf8()));
-    reqUrl.addQueryItem(QLatin1String("apiKey"), QLatin1String(apiKey.toUtf8()));
-    reqUrl.addQueryItem(QLatin1String("format"), QLatin1String("txt"));
+    reqQuery.addQueryItem(QLatin1String("login"), QLatin1String(login.toUtf8()));
+    reqQuery.addQueryItem(QLatin1String("apiKey"), QLatin1String(apiKey.toUtf8()));
+    reqQuery.addQueryItem(QLatin1String("format"), QLatin1String("txt"));
+    reqUrl.setQuery(reqQuery);
 
     KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
     job->exec();

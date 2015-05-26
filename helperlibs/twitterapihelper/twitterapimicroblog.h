@@ -23,6 +23,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #define TWITTERAPIMICROBLOG_H
 
 #include <QDateTime>
+#include <QUrlQuery>
 
 #include <QtOAuth/qoauth_namespace.h>
 

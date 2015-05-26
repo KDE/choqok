@@ -105,7 +105,7 @@ void TwitterPostWidget::checkAnchor(const QUrl &url)
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(currentAccount());
     if (scheme == QLatin1String("tag")) {
         blog->searchBackend()->requestSearchResults(currentAccount(),
-                QUrl::fromPunycode(url.host().toUtf8()),
+                QUrl::fromAce(url.host().toUtf8()),
                 (int)TwitterSearch::ReferenceHashtag);
     } else if (scheme == QLatin1String("user")) {
         QMenu menu;

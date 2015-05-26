@@ -32,6 +32,7 @@
 #include <QRegExp>
 #include <QVariant>
 #include <QUrl>
+#include <QUrlQuery>
 
 #include "plugin.h"
 

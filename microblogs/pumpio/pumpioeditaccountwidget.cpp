@@ -102,7 +102,10 @@ void PumpIOEditAccountWidget::authorizeUser()
         const QString tokenSecret = QLatin1String( oAuthRequest.value(QOAuth::tokenSecretParameterName()));
 
         QUrl oAuthAuthorizeURL(m_account->host() + QLatin1String("/oauth/authorize"));
-        oAuthAuthorizeURL.addQueryItem(QLatin1String("oauth_token"), token);
+        QUrlQuery oAuthAuthorizeQuery;
+        oAuthAuthorizeQuery.addQueryItem(QLatin1String("oauth_token"), token);
+        oAuthAuthorizeURL.setQuery(oAuthAuthorizeQuery);
+
         Choqok::openUrl(oAuthAuthorizeURL);
         QString verifier = QInputDialog::getText(this, i18n("PIN"),
                            i18n("Enter the verifier code received from %1", m_account->host()));

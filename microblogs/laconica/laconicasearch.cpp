@@ -95,18 +95,20 @@ QUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
         url = theAccount->apiUrl();
         url = url.adjusted(QUrl::StripTrailingSlash);
         url.setPath(url.path() + QLatin1String("/search.atom"));
-        url.addQueryItem(QLatin1String("q"), formattedQuery);
+        QUrlQuery urlQuery;
+        urlQuery.addQueryItem(QLatin1String("q"), formattedQuery);
         if (!sinceStatusId.isEmpty()) {
-            url.addQueryItem(QLatin1String("since_id"), sinceStatusId);
+            urlQuery.addQueryItem(QLatin1String("since_id"), sinceStatusId);
         }
         int cntStr = Choqok::BehaviorSettings::countOfPosts();
         if (count && count <= 100) {
             cntStr =  count;
         }
-        url.addQueryItem(QLatin1String("rpp"), QString::number(cntStr));
+        urlQuery.addQueryItem(QLatin1String("rpp"), QString::number(cntStr));
         if (page > 1) {
-            url.addQueryItem(QLatin1String("page"), QString::number(page));
+            urlQuery.addQueryItem(QLatin1String("page"), QString::number(page));
         }
+        url.setQuery(urlQuery);
     } else {
         url = QUrl(theAccount->apiUrl().url().remove(QLatin1String("/api"), Qt::CaseInsensitive));
         url = url.adjusted(QUrl::StripTrailingSlash);
@@ -234,7 +236,7 @@ QList< Choqok::Post * > LaconicaSearch::parseAtom(const QByteArray &buffer)
                     userNode = userNode.nextSibling();
                 }
             } else if (elm.tagName() == QLatin1String("twitter:source")) {
-                status->source = QUrl::fromPercentEncoding(elm.text().toAscii());
+                status->source = QUrl::fromPercentEncoding(elm.text().toLatin1());
             }
             entryNode = entryNode.nextSibling();
         }

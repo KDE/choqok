@@ -127,8 +127,10 @@ void TwitterEditAccountWidget::authorizeUser()
         tokenSecret = reply.value(QOAuth::tokenSecretParameterName());
         qCDebug(CHOQOK) << "token: " << token;
         QUrl url(QLatin1String("https://twitter.com/oauth/authorize"));
-        url.addQueryItem(QLatin1String("oauth_token"), QLatin1String(token));
-        url.addQueryItem(QLatin1String("oauth_callback"), QLatin1String("oob"));
+        QUrlQuery urlQuery;
+        urlQuery.addQueryItem(QLatin1String("oauth_token"), QLatin1String(token));
+        urlQuery.addQueryItem(QLatin1String("oauth_callback"), QLatin1String("oob"));
+        url.setQuery(urlQuery);
         Choqok::openUrl(url);
         getPinCode();
     } else {

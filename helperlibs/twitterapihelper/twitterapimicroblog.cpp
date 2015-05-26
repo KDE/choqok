@@ -596,7 +596,10 @@ void TwitterApiMicroBlog::createFavorite(Choqok::Account *theAccount, const QStr
     //url.addPath ( QString("/favorites/create.json?id=%1").arg(postId));
     url.setPath(url.path() + QLatin1String("/favorites/create.json"));
     QUrl tmp(url);
-    url.addQueryItem(QLatin1String("id"), postId);
+
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem(QLatin1String("id"), postId);
+    url.setQuery(urlQuery);
 
     QOAuth::ParamMap params;
     params.insert("id", postId.toLatin1());
@@ -650,7 +653,9 @@ void TwitterApiMicroBlog::removeFavorite(Choqok::Account *theAccount, const QStr
     url.setPath(url.path() + QLatin1String("/favorites/destroy.json"));
 
     QUrl tmp(url);
-    url.addQueryItem(QLatin1String("id"), postId);
+    QUrlQuery tmpUrlQuery;
+    tmpUrlQuery.addQueryItem(QLatin1String("id"), postId);
+    url.setQuery(tmpUrlQuery);
 
     QOAuth::ParamMap params;
     params.insert("id", postId.toLatin1());
@@ -713,8 +718,10 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount *theAccount
     url = url.adjusted(QUrl::StripTrailingSlash);
     url.setPath(url.path() + (QString::fromLatin1("/friends/list.json")));
     QUrl tmpUrl(url);
-    url.addQueryItem(QLatin1String("cursor"), d->friendsCursor);
-    url.addQueryItem(QLatin1String("count"), QString::fromLatin1("200"));
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem(QLatin1String("cursor"), d->friendsCursor);
+    urlQuery.addQueryItem(QLatin1String("count"), QString::fromLatin1("200"));
+    url.setQuery(urlQuery);
     QOAuth::ParamMap params;
     params.insert("cursor", d->friendsCursor.toLatin1());
     params.insert("count", QString::fromLatin1("200").toLatin1());
@@ -798,16 +805,20 @@ void TwitterApiMicroBlog::requestTimeLine(Choqok::Account *theAccount, QString t
     // needed because lists have different parameter names but
     // returned timelines have the same JSON format
     if (timelineApiPath[type].contains(QLatin1String("lists/statuses"))) {
+        QUrlQuery urlQuery;
 
         // type contains @username/timelinename
         const QString slug = type.mid(type.indexOf(QLatin1String("/")) + 1);
-        url.addQueryItem(QLatin1String("slug"), slug);
+        urlQuery.addQueryItem(QLatin1String("slug"), slug);
         params.insert("slug", slug.toLatin1());
 
         const QString owner = type.mid(1, type.indexOf(QLatin1String("/")) - 1);
-        url.addQueryItem(QString::fromLatin1("owner_screen_name"), owner);
+        urlQuery.addQueryItem(QString::fromLatin1("owner_screen_name"), owner);
         params.insert("owner_screen_name", owner.toLatin1());
+
+        url.setQuery(urlQuery);
     } else {
+        QUrlQuery urlQuery;
         if (account->usingOAuth()) {    //TODO: Check if needed
             if (!latestStatusId.isEmpty()) {
                 params.insert("since_id", latestStatusId.toLatin1());
@@ -822,16 +833,17 @@ void TwitterApiMicroBlog::requestTimeLine(Choqok::Account *theAccount, QString t
             }
         }
         if (!latestStatusId.isEmpty()) {
-            url.addQueryItem(QLatin1String("since_id"), latestStatusId);
+            urlQuery.addQueryItem(QLatin1String("since_id"), latestStatusId);
             countOfPost = 200;
         }
-        url.addQueryItem(QLatin1String("count"), QString::number(countOfPost));
+        urlQuery.addQueryItem(QLatin1String("count"), QString::number(countOfPost));
         if (!maxId.isEmpty()) {
-            url.addQueryItem(QLatin1String("max_id"), maxId);
+            urlQuery.addQueryItem(QLatin1String("max_id"), maxId);
         }
         if (page) {
-            url.addQueryItem(QLatin1String("page"), QString::number(page));
+            urlQuery.addQueryItem(QLatin1String("page"), QString::number(page));
         }
+        url.setQuery(urlQuery);
     }
     qCDebug(CHOQOK) << "Latest " << type << " Id: " << latestStatusId;// << " apiReq: " << url;
 
@@ -994,7 +1006,9 @@ void TwitterApiMicroBlog::createFriendship(Choqok::Account *theAccount, const QS
     QUrl url = account->apiUrl();
     url.setPath(url.path() + QLatin1String("/friendships/create.json"));
     QUrl tmp(url);
-    url.addQueryItem(QLatin1String("screen_name"), username);
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem(QLatin1String("screen_name"), username);
+    url.setQuery(urlQuery);
 
     QOAuth::ParamMap params;
     params.insert("screen_name", username.toLatin1());
@@ -1059,7 +1073,9 @@ void TwitterApiMicroBlog::destroyFriendship(Choqok::Account *theAccount, const Q
     QUrl url = account->apiUrl();
     url.setPath(url.path() + QLatin1String("/friendships/destroy.json"));
     QUrl tmp(url);
-    url.addQueryItem(QLatin1String("screen_name"), username);
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem(QLatin1String("screen_name"), username);
+    url.setQuery(urlQuery);
 
     QOAuth::ParamMap params;
     params.insert("screen_name", username.toLatin1());
@@ -1123,7 +1139,9 @@ void TwitterApiMicroBlog::blockUser(Choqok::Account *theAccount, const QString &
     QUrl url = account->apiUrl();
     url.setPath(url.path() + QLatin1String("/blocks/create.json"));
     QUrl tmp(url);
-    url.addQueryItem(QLatin1String("screen_name"), username);
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem(QLatin1String("screen_name"), username);
+    url.setQuery(urlQuery);
 
     QOAuth::ParamMap params;
     params.insert("screen_name", username.toLatin1());
@@ -1150,7 +1168,9 @@ void TwitterApiMicroBlog::reportUserAsSpam(Choqok::Account *theAccount, const QS
     url = url.adjusted(QUrl::StripTrailingSlash);
     url.setPath(url.path() + QLatin1String("/users/report_spam.json"));
     QUrl tmp(url);
-    url.addQueryItem(QLatin1String("screen_name"), username);
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem(QLatin1String("screen_name"), username);
+    url.setQuery(urlQuery);
 
     QOAuth::ParamMap params;
     params.insert("screen_name", username.toLatin1());

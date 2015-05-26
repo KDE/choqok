@@ -12,9 +12,6 @@ include(KDEFrameworkCompilerSettings)
 include(KDECMakeSettings)
 include(FeatureSummary)
 
-# TODO: Build without deprecated QUrl methods
-add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0)
-
 # QCA still uses slots/signals keywords
 remove_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS)
 

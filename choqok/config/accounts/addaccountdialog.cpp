@@ -33,7 +33,7 @@
 #include "accountsdebug.h"
 #include "editaccountwidget.h"
 
-AddAccountDialog::AddAccountDialog(ChoqokEditAccountWidget *addWidget, QWidget *parent, Qt::WFlags flags)
+AddAccountDialog::AddAccountDialog(ChoqokEditAccountWidget *addWidget, QWidget *parent, Qt::WindowFlags flags)
     : QDialog(parent, flags), widget(addWidget)
 {
     if (!widget) {

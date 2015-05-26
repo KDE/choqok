@@ -254,7 +254,9 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount *theAccount, const QString 
     QUrl url = theAccount->apiUrl();
     url.setPath(url.path() + QLatin1String("/lists/ownerships.json"));
     QUrl url_for_oauth(url);//we need base URL (without params) to make OAuth signature with it!
-    url.addQueryItem(QLatin1String("screen_name"), username);
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem(QLatin1String("screen_name"), username);
+    url.setQuery(urlQuery);
     QOAuth::ParamMap params;
     params.insert("screen_name", username.toLatin1());
 

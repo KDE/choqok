@@ -47,7 +47,9 @@ Ur_ly::~Ur_ly()
 QString Ur_ly::shorten(const QString &url)
 {
     QUrl reqUrl(QLatin1String("http://ur.ly/new.json"));
-    reqUrl.addQueryItem(QLatin1String("href"), QUrl(url).url());
+    QUrlQuery reqQuery;
+    reqQuery.addQueryItem(QLatin1String("href"), QUrl(url).url());
+    reqUrl.setQuery(reqQuery);
 
     KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
     job->exec();

@@ -24,6 +24,7 @@
 #define TINYARROWS_WS_H
 
 #include <QVariantList>
+#include <QUrlQuery>
 
 #include "shortener.h"
 

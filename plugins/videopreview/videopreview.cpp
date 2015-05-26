@@ -83,7 +83,8 @@ void VideoPreview::slotNewUnshortenedUrl(Choqok::UI::PostWidget *widget, const Q
     Q_UNUSED(fromUrl)
     if (mYouTubeRegExp.indexIn(toUrl.toDisplayString()) != -1) {
         QUrl thisurl(mYouTubeRegExp.cap(0));
-        QString thumbUrl = parseYoutube(thisurl.queryItemValue(QLatin1String("v")), widget);
+        QUrlQuery thisurlQuery(thisurl);
+        QString thumbUrl = parseYoutube(thisurlQuery.queryItemValue(QLatin1String("v")), widget);
         connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
                 SLOT(slotImageFetched(QString,QPixmap)));
         Choqok::MediaManager::self()->fetchImage(thumbUrl, Choqok::MediaManager::Async);
@@ -136,7 +137,8 @@ void VideoPreview::parse(QPointer<Choqok::UI::PostWidget> postToParse)
         } else if (pos2 >= 0) {
             pos = pos2 + mYouTubeRegExp.matchedLength();
             QUrl thisurl(mYouTubeRegExp.cap(0));
-            thumbList << parseYoutube(thisurl.queryItemValue(QLatin1String("v")), postToParse);
+            QUrlQuery thisurlQuery(thisurl);
+            thumbList << parseYoutube(thisurlQuery.queryItemValue(QLatin1String("v")), postToParse);
         } else if (pos3 >= 0) {
             pos = pos3 + mVimeoRegExp.matchedLength();
             thumbList << parseVimeo(mVimeoRegExp.cap(3), postToParse);

@@ -45,15 +45,17 @@ Tinyarro_ws::~Tinyarro_ws()
 QString Tinyarro_ws::shorten(const QString &url)
 {
     QUrl reqUrl(QLatin1String("http://tinyarro.ws/api-create.php"));
+    QUrlQuery reqQuery;
 
     Tinyarro_ws_Settings::self()->load();
 
     if (!Tinyarro_ws_Settings::tinyarro_ws_host_punny().isEmpty() ||
             Tinyarro_ws_Settings::tinyarro_ws_host_punny() != QLatin1String("Random")) {
-        reqUrl.addQueryItem(QLatin1String("host"), Tinyarro_ws_Settings::tinyarro_ws_host_punny());
+        reqQuery.addQueryItem(QLatin1String("host"), Tinyarro_ws_Settings::tinyarro_ws_host_punny());
     }
-    reqUrl.addQueryItem(QLatin1String("utfpure"), QLatin1String("1"));
-    reqUrl.addQueryItem(QLatin1String("url"), QUrl(url).url());
+    reqQuery.addQueryItem(QLatin1String("utfpure"), QLatin1String("1"));
+    reqQuery.addQueryItem(QLatin1String("url"), QUrl(url).url());
+    reqUrl.setQuery(reqQuery);
 
     KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
     job->exec();

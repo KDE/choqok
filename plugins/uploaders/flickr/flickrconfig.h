@@ -24,6 +24,8 @@
 #ifndef FLICKRCONFIG_H
 #define FLICKRCONFIG_H
 
+#include <QUrlQuery>
+
 #include <KCModule>
 
 #include "ui_flickrprefs.h"

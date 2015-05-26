@@ -49,7 +49,7 @@ QString Ur1_ca::shorten(const QString &url)
     temp = QLatin1String(QUrl::toPercentEncoding(url));
 
     QByteArray parg("longurl=");
-    parg.append(temp.toAscii());
+    parg.append(temp.toLatin1());
 
     QEventLoop loop;
     KIO::StoredTransferJob *job = KIO::storedHttpPost(parg, reqUrl, KIO::HideProgressInfo);

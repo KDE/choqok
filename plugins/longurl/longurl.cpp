@@ -163,9 +163,12 @@ KJob *LongUrl::sheduleParsing(const QString &shortUrl)
     QUrl url(shortUrl);
     if (isServiceSupported(url.host())) {
         QUrl request = QUrl(baseLongUrlDorComUrl + QLatin1String("expand"));
-        request.addQueryItem(QLatin1String("url"), url.url());
-        request.addQueryItem(QLatin1String("format"), QLatin1String("json"));
-        request.addQueryItem(QLatin1String("user-agent"), QLatin1String("Choqok"));
+        QUrlQuery requestQuery;
+        requestQuery.addQueryItem(QLatin1String("url"), url.url());
+        requestQuery.addQueryItem(QLatin1String("format"), QLatin1String("json"));
+        requestQuery.addQueryItem(QLatin1String("user-agent"), QLatin1String("Choqok"));
+        request.setQuery(requestQuery);
+
         KIO::TransferJob *job = KIO::get(request, KIO::NoReload, KIO::HideProgressInfo);
         mData.insert(job, QByteArray());
         mShortUrls.insert(job, shortUrl);
