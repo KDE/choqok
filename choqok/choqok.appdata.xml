@@ -34,7 +34,7 @@
     </p>
     <p xml:lang="ar">چغوك هو عميل تدوين مصغّر يدعم خدمتيّ Twitter.com و Pump.io</p>
     <p xml:lang="bs">Choqok je mikro-blog klijent koji podržava Twitter.com i Pump.io  usluge</p>
-    <p xml:lang="ca">El Choqok és un client de micro-blogs que implementa els serveis de Twitter.com i Pump.io</p>
+    <p xml:lang="ca">El Choqok és un client de microblogs que implementa els serveis de Twitter.com i Pump.io</p>
     <p xml:lang="de">Choqok ist ein Mikro-Blogging-Programm, das derzeit die Dienste Twitter.com und Pump.iounterstützt</p>
     <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com and Pump.io services</p>
     <p xml:lang="es">Choqok es un cliente de microblogueo que soporta los servicios Twitter.com y Pump.io</p>
@@ -79,7 +79,7 @@
       <li>Supporting Twitter.com micro-blogging service</li>
       <li xml:lang="ar">دعم خدمة التّدوين المصغّر Twitter.com</li>
       <li xml:lang="bs">Podrška Twitter.com mikro-blog usluge</li>
-      <li xml:lang="ca">Implementació del servei de micro-blog Twitter.com</li>
+      <li xml:lang="ca">Implementació del servei de microblog Twitter.com</li>
       <li xml:lang="de">Unterstützung für den Micro-Blogging-Dienst Twitter.com</li>
       <li xml:lang="el">Υποστηρίζει την υπηρεσία μικρο-ιστολογίου Twitter.com</li>
       <li xml:lang="en-GB">Supporting Twitter.com micro-blogging service</li>
