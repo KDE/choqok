@@ -1,3 +1,16 @@
+=== Version x.y -- ??? ===
+* Migrated to Qt and KDE Frameworks 5 (config files are migrated first time)
+* Twitter: fix user lists loading [BUG:345641]
+* GNU Social: fix medium attachment to post
+* Pump.IO: do not show resend button for own posts
+* Pump.IO: display avatar image in own posts on the right
+* Pump.IO: do not create a post if there's no text
+* Rename StatusNet as GNU Social
+* Fixed a bug that remove the account with the same alias when adding a new one with the same alias
+* Do not create a quick post if there's no text
+* Use HTTPS when available
+* Dropped Twitpic plugin (service is dead)
+
 === Version 1.5 -- 25-Jan-2015 ===
 * Yourls plugin fixed. (by Benjamin Marwell) [BUG:265219]
 * Pump.io plugin added. (by Andrea Scarpino) [BUG:319348]
