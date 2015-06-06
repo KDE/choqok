@@ -147,8 +147,7 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Cho
     if (mediumToAttach.isEmpty()) {
         TwitterApiMicroBlog::createPost(theAccount, post);
     } else {
-        QString tmp;
-        QUrl picUrl(mediumToAttach);
+        const QUrl picUrl = QUrl::fromUserInput(mediumToAttach);
         KIO::StoredTransferJob *picJob = KIO::storedGet(picUrl, KIO::Reload, KIO::HideProgressInfo);
         picJob->exec();
         if (picJob->error()) {

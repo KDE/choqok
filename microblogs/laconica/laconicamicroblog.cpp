@@ -174,8 +174,7 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Ch
     if (mediumToAttach.isEmpty()) {
         TwitterApiMicroBlog::createPost(theAccount, post);
     } else {
-        QString tmp;
-        QUrl picUrl(mediumToAttach);
+        const QUrl picUrl = QUrl::fromUserInput(mediumToAttach);
         KIO::StoredTransferJob *picJob = KIO::storedGet(picUrl, KIO::Reload, KIO::HideProgressInfo);
         picJob->exec();
         if (picJob->error()) {
@@ -195,7 +194,7 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Ch
         ///Documentation: http://identi.ca/notice/17779990
         TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
         QUrl url = account->apiUrl();
-        url.setPath(url.path() + QLatin1String("/statuses/update.xml"));
+        url.setPath(url.path() + QString::fromLatin1("/statuses/update.%1").arg(format));
         const QMimeDatabase db;
         QByteArray fileContentType = db.mimeTypeForUrl(picUrl).name().toUtf8();
 
