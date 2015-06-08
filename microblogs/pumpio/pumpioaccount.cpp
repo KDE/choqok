@@ -33,19 +33,16 @@ class PumpIOAccount::Private
 public:
     QString consumerKey;
     QString consumerSecret;
-    QString host;
     QString token;
     QString tokenSecret;
     QStringList following;
     QVariantList lists;
     QOAuth::Interface *oAuth;
-    QStringList timelineNames;
 };
 
 PumpIOAccount::PumpIOAccount(PumpIOMicroBlog *parent, const QString &alias):
     Account(parent, alias), d(new Private)
 {
-    d->host = configGroup()->readEntry("Host", QString());
     d->token = configGroup()->readEntry("Token", QString());
     d->consumerKey = configGroup()->readEntry("ConsumerKey", QString());
     d->consumerSecret = Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("%1_consumerSecret").arg(alias));
@@ -55,7 +52,6 @@ PumpIOAccount::PumpIOAccount(PumpIOMicroBlog *parent, const QString &alias):
     d->oAuth->setConsumerSecret(d->consumerSecret.toLocal8Bit());
     d->following = configGroup()->readEntry("Following", QStringList());
     d->lists = QVariantList();
-    d->timelineNames = configGroup()->readEntry("Timelines", QStringList());
 
     if (d->timelineNames.isEmpty()) {
         d->timelineNames = microblog()->timelineNames();
