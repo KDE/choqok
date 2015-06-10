@@ -39,20 +39,16 @@ public:
     {
         configGroup = new KConfigGroup(KSharedConfig::openConfig(), QString::fromLatin1("Account_%1").arg(alias));
         username = configGroup->readEntry("Username", QString());
-        host = configGroup->readEntry("Host", QString());
-        priority = configGroup->readEntry("Priority", 0);
+        priority = configGroup->readEntry("Priority", (uint)0);
         readonly = configGroup->readEntry("ReadOnly", false);
         showInQuickPost = configGroup->readEntry("ShowInQuickPost", true);
         enable = configGroup->readEntry("Enable", true);
         postCharLimit = configGroup->readEntry("PostCharLimit", 140);
-        timelineNames = configGroup->readEntry("Timelines", QStringList());
         password = PasswordManager::self()->readPassword(alias);
     }
     QString username;
     QString password;
     QString alias;
-    QString host;
-    QStringList timelineNames;
     MicroBlog *blog;
     KConfigGroup *configGroup;
     uint priority;

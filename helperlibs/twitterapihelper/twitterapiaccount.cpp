@@ -40,10 +40,12 @@ public:
     {}
     QString userId;
     int count;
+    QString host;
     QString api;
     QUrl apiUrl;
     QUrl homepageUrl;
     QStringList friendsList;
+    QStringList timelineNames;
     QByteArray oauthToken;
     QByteArray oauthTokenSecret;
     QByteArray oauthConsumerKey;
@@ -59,14 +61,16 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog *parent, const QString 
     d->usingOauth = configGroup()->readEntry("UsingOAuth", false);
     d->userId = configGroup()->readEntry("UserId", QString());
     d->count = configGroup()->readEntry("CountOfPosts", 20);
+    d->host = configGroup()->readEntry("Host", QString());
     d->friendsList = configGroup()->readEntry("Friends", QStringList());
+    d->timelineNames = configGroup()->readEntry("Timelines", QStringList());
     d->oauthToken = configGroup()->readEntry("OAuthToken", QByteArray());
     d->oauthConsumerKey = configGroup()->readEntry("OAuthConsumerKey", QByteArray());
     d->oauthConsumerSecret = Choqok::PasswordManager::self()->readPassword(
                                  QString::fromLatin1("%1_consumerSecret").arg(alias)).toUtf8();
     d->oauthTokenSecret = Choqok::PasswordManager::self()->readPassword(
                               QString::fromLatin1("%1_tokenSecret").arg(alias)).toUtf8();
-    setApi(configGroup()->readEntry(QLatin1String("Api"), QLatin1Char('/')));
+    setApi(configGroup()->readEntry(QLatin1String("Api"), QString::fromLatin1("/")));
 
     qCDebug(CHOQOK) << "UsingOAuth: " << d->usingOauth;
     if (d->usingOauth) {
@@ -172,8 +176,13 @@ QUrl TwitterApiAccount::homepageUrl() const
 
 void TwitterApiAccount::generateApiUrl()
 {
-    const QUrl url(host());
+    if (!host().startsWith(QLatin1String("http"))) { //NOTE: This is for compatibility by prev versions. remove it after 1.0 release
+        setHost(host().prepend(QLatin1String("http://")));
+    }
+    QUrl url(host());
+
     setHomepageUrl(url);
+
     url = url.adjusted(QUrl::StripTrailingSlash);
     url.setPath(url.path() + QLatin1Char('/') + (api()));
     setApiUrl(url);
