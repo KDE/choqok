@@ -35,7 +35,7 @@
     <p xml:lang="ar">چغوك هو عميل تدوين مصغّر يدعم خدمتيّ Twitter.com و Pump.io</p>
     <p xml:lang="bs">Choqok je mikro-blog klijent koji podržava Twitter.com i Pump.io  usluge</p>
     <p xml:lang="ca">El Choqok és un client de microblogs que implementa els serveis de Twitter.com i Pump.io</p>
-    <p xml:lang="de">Choqok ist ein Mikro-Blogging-Programm, das derzeit die Dienste Twitter.com und Pump.iounterstützt</p>
+    <p xml:lang="de">Choqok ist ein Mikro-Blogging-Programm, das derzeit die Dienste Twitter.com und Pump.io unterstützt</p>
     <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com and Pump.io services</p>
     <p xml:lang="es">Choqok es un cliente de microblogueo que soporta los servicios Twitter.com y Pump.io</p>
     <p xml:lang="fi">Choqok on mikroblogausasiakas, joka tukee Twitter.com- ja Pump.io-palveluja</p>
@@ -180,6 +180,7 @@
       <li xml:lang="ar">دعم إرسال الرّسائل المباشرة واستقبالها</li>
       <li xml:lang="bs">Podrška za slanje i primanje izravnih poruka</li>
       <li xml:lang="ca">Implementació per enviar i rebre missatges directes</li>
+      <li xml:lang="de">Direktes Senden und Empfangen von Nachrichten über DCC</li>
       <li xml:lang="el">Υποστηρίζει την άμεση αποστολή και λήψη μηνυμάτων</li>
       <li xml:lang="en-GB">Support for send and receive direct messages</li>
       <li xml:lang="es">Soporta el envío y la recepción de mensajes directos</li>
@@ -224,6 +225,7 @@
       <li xml:lang="ar">دعم عدّة حسابات في آن واحد</li>
       <li xml:lang="bs">Podrška za više računa istovremeno</li>
       <li xml:lang="ca">Implementació per a múltiples comptes simultanis</li>
+      <li xml:lang="de">Unterstützung für mehrere gleichzeitige Zugänge</li>
       <li xml:lang="el">Υποστηρίζει πολλούς λογαριασμούς ταυτόχρονα</li>
       <li xml:lang="en-GB">Supporting Multiple Accounts simultaneously</li>
       <li xml:lang="es">Soporta múltiples cuentas simultáneamente</li>
@@ -331,6 +333,7 @@
       <li xml:lang="ar">دعم تقصير العناوين الأكبر من 30 محرفًا (تُصغّر عند لصقها)</li>
       <li xml:lang="bs">Podrška za skraćenje url-ova sa više od 30 karaktera (skratiti prilikom mogućnosti lijepljenja)</li>
       <li xml:lang="ca">Implementació per escurçar els URL amb més de 30 caràcters (escurça en enganxar)</li>
+      <li xml:lang="de">Unterstützung für das Kürzen von Adressen (URLs) mit mehr als 30 Zeichen, Kürzen beim Einfügen</li>
       <li xml:lang="el">Υποστηρίζει τη συρρίκνωση URL που έχουν περισσότερους από 30 χαρακτήρες (συρρίκνωση σε επικόλληση)</li>
       <li xml:lang="en-GB">Support for shortening urls with more than 30 characters (shorten on paste)</li>
       <li xml:lang="es">Soporte para abreviar URL que tengan más de 30 caracteres (abreviatura al pegar)</li>
@@ -352,6 +355,7 @@
       <li xml:lang="ar">دعم ضبط مظهر قوائم الحالة</li>
       <li xml:lang="bs">Podrška za konfiguraciju izgleda liste statusa</li>
       <li xml:lang="ca">Implementació per a configurar l'aparença de les llistes d'estat</li>
+      <li xml:lang="de">Unterstützt die Einstellung des Erscheinungsbilds der Statusliste</li>
       <li xml:lang="el">Υποστηρίζει τη διαμόρφωση της εμφάνισης σε λίστες καταστάσεων</li>
       <li xml:lang="en-GB">Support for configuring status lists appearance</li>
       <li xml:lang="es">Soporte para configurar la apariencia de las listas de estados</li>
