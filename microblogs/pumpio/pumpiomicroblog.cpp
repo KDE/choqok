@@ -1215,7 +1215,11 @@ Choqok::Post *PumpIOMicroBlog::readPost(const QVariantMap &var, Choqok::Post *po
             QVariantMap toElementMap = element.toMap();
             QString toElementType = toElementMap.value(QLatin1String("objectType")).toString();
             if (toElementType == QLatin1String("person") || toElementType == QLatin1String("collection")) {
-                p->to.append(toElementMap.value(QLatin1String("id")).toString());
+                const QString toId = toElementMap.value(QLatin1String("id")).toString();
+
+                if (toId.compare(QLatin1String("acct:")) != 0) {
+                    p->to.append(toId);
+                }
             }
         }
 
@@ -1224,7 +1228,11 @@ Choqok::Post *PumpIOMicroBlog::readPost(const QVariantMap &var, Choqok::Post *po
             QVariantMap ccElementMap = element.toMap();
             QString ccElementType = ccElementMap.value(QLatin1String("objectType")).toString();
             if (ccElementType == QLatin1String("person") || ccElementType == QLatin1String("collection")) {
-                p->cc.append(ccElementMap.value(QLatin1String("id")).toString());
+                const QString ccId = ccElementMap.value(QLatin1String("id")).toString();
+
+                if (ccId.compare(QLatin1String("acct:")) != 0) {
+                    p->cc.append(ccId);
+                }
             }
         }
 
