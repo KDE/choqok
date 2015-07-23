@@ -59,8 +59,7 @@ TwitterApiDMessageDialog::TwitterApiDMessageDialog(TwitterApiAccount *theAccount
 {
     setWindowTitle(i18n("Send Private Message"));
     setAttribute(Qt::WA_DeleteOnClose);
-    QWidget *wg = new QWidget(this, flags);
-    setupUi(wg);
+    setupUi(this);
     KConfigGroup grp(KSharedConfig::openConfig(), "TwitterApi");
     resize(grp.readEntry("DMessageDialogSize", QSize(300, 200)));
     QStringList list = theAccount->friendsList();
@@ -93,8 +92,8 @@ void TwitterApiDMessageDialog::setupUi(QWidget *mainWidget)
     connect(btnReload, SIGNAL(clicked(bool)), SLOT(reloadFriendslist()));
 
     QVBoxLayout *mainLayout = new QVBoxLayout(mainWidget);
-    QHBoxLayout *toLayout = new QHBoxLayout;
 
+    QHBoxLayout *toLayout = new QHBoxLayout;
     toLayout->addWidget(lblTo);
     toLayout->addWidget(d->comboFriendsList);
     toLayout->addWidget(btnReload);
