@@ -73,6 +73,7 @@ protected:
     using TwitterApiMicroBlog::readPost;
     virtual Choqok::Post *readPost(Choqok::Account *account, const QVariantMap &var, Choqok::Post *post);
     virtual void listFriendsUsername(TwitterApiAccount *theAccount, bool active = false);
+    virtual QStringList readUsersScreenName(Choqok::Account *theAccount, const QByteArray &buffer);
 
 private:
     void doRequestFriendsScreenName(TwitterApiAccount *theAccount, int page);

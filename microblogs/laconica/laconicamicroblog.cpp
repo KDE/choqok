@@ -22,6 +22,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "laconicamicroblog.h"
 
+#include <QJsonArray>
+#include <QJsonDocument>
 #include <QMimeDatabase>
 
 #include <KIO/StoredTransferJob>
@@ -201,7 +203,7 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Ch
         QMap<QString, QByteArray> formdata;
         formdata[QLatin1String("status")] = post->content.toUtf8();
         formdata[QLatin1String("in_reply_to_status_id")] = post->replyToPostId.toLatin1();
-        formdata[QLatin1String("source")] = "choqok";
+        formdata[QLatin1String("source")] = QCoreApplication::applicationName().toLatin1();
 
         QMap<QString, QByteArray> mediafile;
         mediafile[QLatin1String("name")] = "media";
@@ -252,6 +254,34 @@ void LaconicaMicroBlog::listFriendsUsername(TwitterApiAccount *theAccount, bool 
     if (theAccount) {
         doRequestFriendsScreenName(theAccount, 1);
     }
+}
+
+QStringList LaconicaMicroBlog::readUsersScreenName(Choqok::Account *theAccount, const QByteArray &buffer)
+{
+    QStringList list;
+    const QJsonDocument json = QJsonDocument::fromJson(buffer);
+    if (!json.isNull()) {
+        TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
+
+        Q_FOREACH (const QJsonValue &u, json.array()) {
+            const QJsonObject user = u.toObject();
+
+            if (user.contains(QStringLiteral("statusnet_profile_url"))) {
+                const QUrl profile(user.value(QStringLiteral("statusnet_profile_url")).toString());
+
+                // QUrl::host() is needed to skip scheme check
+                if (profile.host().compare(QUrl(account->host()).host()) == 0) {
+                    // Remove the initial slash from path
+                    list.append(profile.path().replace(0, 1, QString()));
+                }
+            }
+        }
+    } else {
+        QString err = i18n("Retrieving the friends list failed. The data returned from the server is corrupted.");
+        qCDebug(CHOQOK) << "JSON parse error: the buffer is: \n" << buffer;
+        Q_EMIT error(theAccount, ParsingError, err, Critical);
+    }
+    return list;
 }
 
 void LaconicaMicroBlog::requestFriendsScreenName(TwitterApiAccount *theAccount, bool active)

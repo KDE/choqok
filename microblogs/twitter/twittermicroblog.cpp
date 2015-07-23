@@ -176,7 +176,7 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Cho
         if (!post->replyToPostId.isEmpty()) {
             formdata[QLatin1String("in_reply_to_status_id")] = post->replyToPostId.toLatin1();
         }
-        formdata[QLatin1String("source")] = "choqok";
+        formdata[QLatin1String("source")] = QCoreApplication::applicationName().toLatin1();
 
         QMap<QString, QByteArray> mediafile;
         mediafile[QLatin1String("name")] = "media[]";

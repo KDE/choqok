@@ -764,8 +764,7 @@ void TwitterApiMicroBlog::finishRequestFriendsScreenName(KJob *job, bool active)
                      theAccount->username(), stJob->errorString()), level);
         return;
     }
-    QStringList newList;
-    newList = readUsersScreenName(theAccount, stJob->data());
+    QStringList newList = readUsersScreenName(theAccount, stJob->data());
     newList.removeDuplicates();
     if (! checkForError(stJob->data()).isEmpty()) {           // if an error occurred, do not replace the friends list.
         theAccount->setFriendsList(friendsList);
