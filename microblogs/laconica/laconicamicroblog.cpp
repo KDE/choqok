@@ -130,17 +130,15 @@ Choqok::Post *LaconicaMicroBlog::readPost(Choqok::Account *account, const QVaria
 
 QString LaconicaMicroBlog::profileUrl(Choqok::Account *account, const QString &username) const
 {
-    TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(account);
     if (username.contains(QLatin1Char('@'))) {
-        QStringList lst = username.split(QLatin1Char('@'), QString::SkipEmptyParts);
+        const QStringList lst = username.split(QLatin1Char('@'), QString::SkipEmptyParts);
+
         if (lst.count() == 2) {
-            if (lst[1].endsWith(QString::fromLatin1(".status.net"))) {
-                return QString::fromLatin1("http://").arg(lst[1]);
-            } else {
-                return QString::fromLatin1("http://%1/%2").arg(lst[1]).arg(lst[0]);
-            }
+            return QString::fromLatin1("https://%1/%2").arg(lst[1]).arg(lst[0]);
         }
     }
+
+    TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(account);
     if (acc) {
         return QString(acc->homepageUrl().toDisplayString() + QLatin1Char('/') + username) ;
     } else {
