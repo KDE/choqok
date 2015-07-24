@@ -81,8 +81,7 @@ TwitterApiMicroBlog::TwitterApiMicroBlog(const QString &componentName, QObject *
     : MicroBlog(componentName, parent), d(new Private)
 {
     qCDebug(CHOQOK);
-    KConfigGroup grp(KSharedConfig::openConfig(), "TwitterApi");
-    format = grp.readEntry("format", "json");
+    format = QLatin1String("json");
 
     QStringList timelineTypes;
     timelineTypes << QLatin1String("Home") << QLatin1String("Reply") << QLatin1String("Inbox") << QLatin1String("Outbox") << QLatin1String("Favorite") << QLatin1String("ReTweets") << QLatin1String("Public");
