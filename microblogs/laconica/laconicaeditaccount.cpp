@@ -298,8 +298,8 @@ void LaconicaEditAccountWidget::saveTimelinesTableState()
 void LaconicaEditAccountWidget::slotCheckHostUrl()
 {
     if (!kcfg_host->text().isEmpty() && !kcfg_host->text().startsWith(QLatin1String("http"),
-            Qt::CaseInsensitive)) {
-        kcfg_host->setText(kcfg_host->text().prepend(QLatin1String("http://")));
+            Qt::CaseInsensitive) && !kcfg_host->text().startsWith(QLatin1String("https"))) {
+        kcfg_host->setText(kcfg_host->text().prepend(QLatin1String("https://")));
     }
 }
 

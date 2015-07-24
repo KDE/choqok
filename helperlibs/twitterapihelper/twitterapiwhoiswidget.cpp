@@ -112,7 +112,7 @@ void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount *theAccount, const QS
         QStringList lst = user.split(QLatin1Char('@'));
         if (lst.count() == 2) { //USER@HOST
             QString host = lst[1];
-            urlStr = QString::fromLatin1("http://%1/api").arg(host);
+            urlStr = QString::fromLatin1("https://%1/api").arg(host);
             user = lst[0];
         }
     } else if (d->currentPost.source == QLatin1String("ostatus") && !d->currentPost.author.homePageUrl.isEmpty()) {
