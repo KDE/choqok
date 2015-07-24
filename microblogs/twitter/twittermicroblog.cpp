@@ -167,7 +167,7 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Cho
         ///Documentation: http://identi.ca/notice/17779990
         TwitterAccount *account = qobject_cast<TwitterAccount *>(theAccount);
         QUrl url = account->uploadUrl();
-        url.setPath(url.path() + QLatin1String("/statuses/update_with_media.json"));
+        url.setPath(url.path() + QStringLiteral("/statuses/update_with_media.%1").arg(format));
         const QMimeDatabase db;
         QByteArray fileContentType = db.mimeTypeForUrl(picUrl).name().toUtf8();
 
@@ -251,7 +251,7 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount *theAccount, const QString 
         return;
     }
     QUrl url = theAccount->apiUrl();
-    url.setPath(url.path() + QLatin1String("/lists/ownerships.json"));
+    url.setPath(url.path() + QStringLiteral("/lists/ownerships.%1").arg(format));
     QUrl url_for_oauth(url);//we need base URL (without params) to make OAuth signature with it!
     QUrlQuery urlQuery;
     urlQuery.addQueryItem(QLatin1String("screen_name"), username);

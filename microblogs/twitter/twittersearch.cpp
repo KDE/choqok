@@ -76,12 +76,15 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
 {
     qCDebug(CHOQOK);
 
+    TwitterAccount *account = qobject_cast< TwitterAccount * >(searchInfo.account);
+
     QOAuth::ParamMap param;
     QString query = searchInfo.query;
     int option = searchInfo.option;
 
     QString formattedQuery = mSearchCode[option] + query;
-    QUrl url(QLatin1String("https://api.twitter.com/1.1/search/tweets.json"));
+    QUrl url = account->apiUrl();
+    url.setPath(url.path() + QString::fromLatin1("/search/tweets.json"));
     QUrl tmpUrl(url);
     QUrlQuery urlQuery;
     urlQuery.addQueryItem(QLatin1String("q"), formattedQuery);
@@ -113,7 +116,6 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
         return;
     }
 
-    TwitterAccount *account = qobject_cast< TwitterAccount * >(searchInfo.account);
     TwitterApiMicroBlog *microblog = qobject_cast<TwitterApiMicroBlog *>(account->microblog());
 
     job->addMetaData(QStringLiteral("customHTTPHeader"),
