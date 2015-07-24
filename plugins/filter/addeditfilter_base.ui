@@ -6,75 +6,133 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>226</width>
-    <height>189</height>
+    <width>220</width>
+    <height>198</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Define new filter rules</string>
   </property>
-  <layout class="QFormLayout" name="formLayout">
-   <property name="fieldGrowthPolicy">
-    <enum>QFormLayout::ExpandingFieldsGrow</enum>
-   </property>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Fi&amp;lter field:</string>
-     </property>
-     <property name="buddy">
-      <cstring>filterField</cstring>
-     </property>
-    </widget>
+  <layout class="QVBoxLayout" name="formLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Fi&amp;lter field:</string>
+       </property>
+       <property name="buddy">
+        <cstring>filterField</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QComboBox" name="filterField"/>
+     </item>
+    </layout>
    </item>
-   <item row="0" column="1">
-    <widget class="QComboBox" name="filterField"/>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Fi&amp;lter type:</string>
+       </property>
+       <property name="buddy">
+        <cstring>filterType</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QComboBox" name="filterType"/>
+     </item>
+    </layout>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Filter &amp;type:</string>
-     </property>
-     <property name="buddy">
-      <cstring>filterType</cstring>
-     </property>
-    </widget>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Te&amp;xt:</string>
+       </property>
+       <property name="buddy">
+        <cstring>filterText</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="filterText"/>
+     </item>
+    </layout>
    </item>
-   <item row="1" column="1">
-    <widget class="QComboBox" name="filterType"/>
+   <item>
+    <widget class="KSeparator" name="kseparator"/>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Te&amp;xt:</string>
-     </property>
-     <property name="buddy">
-      <cstring>filterText</cstring>
-     </property>
-    </widget>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Filter action:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QComboBox" name="filterAction"/>
+     </item>
+    </layout>
    </item>
-   <item row="2" column="1">
-    <widget class="QLineEdit" name="filterText"/>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Filter action:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1">
-    <widget class="QComboBox" name="filterAction"/>
-   </item>
-   <item row="5" column="0" colspan="2">
+   <item>
     <widget class="QCheckBox" name="dontHideReplies">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string>Do not hide replies to me</string>
      </property>
     </widget>
-   </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="KSeparator" name="kseparator"/>
    </item>
   </layout>
  </widget>

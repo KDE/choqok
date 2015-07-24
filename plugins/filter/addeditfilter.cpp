@@ -41,7 +41,7 @@ AddEditFilter::AddEditFilter(QWidget *parent, Filter *filter)
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-    ui.formLayout->addRow(buttonBox);
+    ui.formLayout->addWidget(buttonBox);
 
     connect(ui.filterAction, SIGNAL(currentIndexChanged(int)), this, SLOT(slotFilterActionChanged(int)));
 
