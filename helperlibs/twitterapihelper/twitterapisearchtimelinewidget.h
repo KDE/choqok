@@ -49,10 +49,12 @@ protected Q_SLOTS:
     void reloadList();
     void loadNextPage();
     void loadPreviousPage();
-    void loadCustomPage(const QString &);
+    void loadCustomPage();
 
 private:
     void addFooter();
+    void loadCustomPage(const QString &);
+
     class Private;
     Private *const d;
 };

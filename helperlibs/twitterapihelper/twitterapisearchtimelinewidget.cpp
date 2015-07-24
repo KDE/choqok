@@ -125,7 +125,7 @@ void TwitterApiSearchTimelineWidget::addFooter()
         footer->addWidget(new KSeparator(Qt::Vertical, this));
         connect(d->next, SIGNAL(clicked(bool)), SLOT(loadNextPage()));
         connect(d->previous, SIGNAL(clicked(bool)), SLOT(loadPreviousPage()));
-        connect(d->pageNumber, SIGNAL(returnPressed(QString)), SLOT(loadCustomPage(QString)));
+        connect(d->pageNumber, SIGNAL(returnPressed()), SLOT(loadCustomPage()));
     }
     footer->addWidget(d->close);
     connect(d->close, SIGNAL(clicked(bool)), this, SIGNAL(closeMe()));
@@ -158,6 +158,11 @@ void TwitterApiSearchTimelineWidget::addNewPosts(QList< Choqok::Post * > &postLi
 void TwitterApiSearchTimelineWidget::reloadList()
 {
     loadCustomPage(QString::number(d->currentPage));
+}
+
+void TwitterApiSearchTimelineWidget::loadCustomPage()
+{
+    loadCustomPage(d->pageNumber->text());
 }
 
 void TwitterApiSearchTimelineWidget::loadCustomPage(const QString &pageNumber)
