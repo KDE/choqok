@@ -72,7 +72,7 @@ void PosterousConfig::load()
     PosterousSettings::self()->load();
     ui.cfg_basic->setChecked(PosterousSettings::basic());
     ui.cfg_login->setText(PosterousSettings::login());
-    ui.cfg_password->setText(Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("posterous_%1")
+    ui.cfg_password->setText(Choqok::PasswordManager::self()->readPassword(QStringLiteral("posterous_%1")
                              .arg(ui.cfg_login->text())));
     ui.cfg_oauth->setChecked(PosterousSettings::oauth());
     ui.cfg_accountsList->setCurrentText(PosterousSettings::alias());
@@ -91,7 +91,7 @@ void PosterousConfig::save()
 
     PosterousSettings::setBasic(ui.cfg_basic->isChecked());
     PosterousSettings::setLogin(ui.cfg_login->text());
-    Choqok::PasswordManager::self()->writePassword(QString::fromLatin1("posterous_%1").arg(ui.cfg_login->text()),
+    Choqok::PasswordManager::self()->writePassword(QStringLiteral("posterous_%1").arg(ui.cfg_login->text()),
             ui.cfg_password->text());
     PosterousSettings::setOauth(ui.cfg_oauth->isChecked());
     PosterousSettings::self()->save();

@@ -109,7 +109,7 @@ void KonqPluginChoqok::slotpostSelectedText()
 
     if (!QDBusConnection::sessionBus().interface()->isServiceRegistered(QLatin1String("org.kde.choqok"))) {
         //qDebug() << "Choqok is not running, starting it!..." << endl;
-        KToolInvocation::startServiceByDesktopName(QString::fromLatin1("choqok"),
+        KToolInvocation::startServiceByDesktopName(QLatin1String("choqok"),
                 QStringList());
     }
     if (!m_interface) {

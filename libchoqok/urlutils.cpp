@@ -36,7 +36,7 @@ const QString zone = QLatin1String("((a[cdefgilmnoqrstuwxz])|(b[abdefghijlmnorst
 |(asia|com|info|net|org|biz|name|pro|aero|cat|coop|edu|jobs|mobi|museum|tel|travel|gov|int|mil|local|xxx)|(中国)|(公司)|(网络)|(صر)|(امارات)|(рф))");
 const QString ip = QLatin1String("(25[0-5]|[2][0-4][0-9]|[0-1]?[\\d]{1,2})(\\.(25[0-5]|[2][0-4][0-9]|[0-1]?[\\d]{1,2})){3}");
 const QString params = QLatin1String("(((\\/)[\\w:/\\?#\\[\\]@!\\$&\\(\\)\\*%\\+,;=\\._~\\x0080-\\xFFFF\\-\\|]{1,}|%[0-9a-f]{2})?)");
-const QString excludingCharacters = QString::fromLatin1("[^\\s`!()\\[\\]{};:'\".,<>?%1%2%3%4%5%6]")
+const QString excludingCharacters = QStringLiteral("[^\\s`!()\\[\\]{};:'\".,<>?%1%2%3%4%5%6]")
                                     .arg(QChar(0x00AB)).arg(QChar(0x00BB)).arg(QChar(0x201C)).arg(QChar(0x201D)).arg(QChar(0x2018)).arg(QChar(0x2019));
 
 const QRegExp UrlUtils::mUrlRegExp(QLatin1String("(((((") + protocols + auth + QLatin1String("?)?)") +

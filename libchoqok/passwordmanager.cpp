@@ -74,7 +74,7 @@ public:
             return true;
         } else if (!conf) {
             cfg = new KConfig(QLatin1String("choqok/secretsrc"), KConfig::NoGlobals, QStandardPaths::DataLocation);
-            conf = new KConfigGroup(cfg, QString::fromLatin1("Secrets"));
+            conf = new KConfigGroup(cfg, QLatin1String("Secrets"));
             KMessageBox::information(Choqok::UI::Global::mainWindow(),
                                      i18n("Cannot open KDE Wallet manager, your secrets will be stored as plain text. You can install KWallet to fix this."), QString(), QLatin1String("DontShowKWalletProblem"),
                                      KMessageBox::Dangerous);

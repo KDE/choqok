@@ -157,7 +157,7 @@ QString TwitterApiPostWidget::generateSign()
     if (!currentPost()->repeatedFromUsername.isEmpty()) {
         QString retweet;
         retweet += QLatin1String("<br/>")
-                   +  d->mBlog->generateRepeatedByUserTooltip(QString::fromLatin1("<a href='user://%1'>%2</a>").arg(currentPost()->repeatedFromUsername).arg(currentPost()->repeatedFromUsername));
+                   +  d->mBlog->generateRepeatedByUserTooltip(QStringLiteral("<a href='user://%1'>%2</a>").arg(currentPost()->repeatedFromUsername).arg(currentPost()->repeatedFromUsername));
         sign.append(retweet);
     }
     sign.prepend(QLatin1String("<p dir='ltr'>"));
@@ -172,11 +172,11 @@ void TwitterApiPostWidget::slotReply()
         TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(currentAccount());
         d->mBlog->showDirectMessageDialog(account, currentPost()->author.userName);
     } else {
-        QString replyto = QString::fromLatin1("@%1").arg(currentPost()->author.userName);
+        QString replyto = QStringLiteral("@%1").arg(currentPost()->author.userName);
         QString postId = currentPost()->postId;
         QString username = currentPost()->author.userName;
         if (!currentPost()->repeatedFromUsername.isEmpty()) {
-            replyto.prepend(QString::fromLatin1("@%1 ").arg(currentPost()->repeatedFromUsername));
+            replyto.prepend(QStringLiteral("@%1 ").arg(currentPost()->repeatedFromUsername));
             postId = currentPost()->repeatedPostId;
         }
         Q_EMIT reply(replyto, postId,  username);
@@ -185,12 +185,12 @@ void TwitterApiPostWidget::slotReply()
 
 void TwitterApiPostWidget::slotWriteTo()
 {
-    Q_EMIT reply(QString::fromLatin1("@%1").arg(currentPost()->author.userName), QString(), currentPost()->author.userName);
+    Q_EMIT reply(QStringLiteral("@%1").arg(currentPost()->author.userName), QString(), currentPost()->author.userName);
 }
 
 void TwitterApiPostWidget::slotReplyToAll()
 {
-    QString txt = QString::fromLatin1("@%1").arg(currentPost()->author.userName);
+    QString txt = QStringLiteral("@%1").arg(currentPost()->author.userName);
     Q_EMIT reply(txt, currentPost()->postId, currentPost()->author.userName);
 }
 

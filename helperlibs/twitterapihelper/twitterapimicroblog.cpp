@@ -312,7 +312,7 @@ void TwitterApiMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *
     }
     if (!post->isPrivate) {  ///Status Update
         QUrl url = account->apiUrl();
-        url.setPath(url.path() + QString::fromLatin1("/statuses/update.%1").arg(format));
+        url.setPath(url.path() + QStringLiteral("/statuses/update.%1").arg(format));
         params.insert("status", QUrl::toPercentEncoding(post->content));
         if (!post->replyToPostId.isEmpty()) {
             params.insert("in_reply_to_status_id", post->replyToPostId.toLocal8Bit());
@@ -343,7 +343,7 @@ void TwitterApiMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *
     } else {///Direct message
         QString recipientScreenName = post->replyToUserName;
         QUrl url = account->apiUrl();
-        url.setPath(url.path() + QString::fromLatin1("/direct_messages/new.%1").arg(format));
+        url.setPath(url.path() + QStringLiteral("/direct_messages/new.%1").arg(format));
         params.insert("user", recipientScreenName.toLocal8Bit());
         params.insert("text", QUrl::toPercentEncoding(post->content));
         data = "user=";
@@ -381,7 +381,7 @@ void TwitterApiMicroBlog::repeatPost(Choqok::Account *theAccount, const QString 
     }
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(url.path() + QString::fromLatin1("/statuses/retweet/%1.%2").arg(postId).arg(format));
+    url.setPath(url.path() + QStringLiteral("/statuses/retweet/%1.%2").arg(postId).arg(format));
     QByteArray data;
     KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
     if (!job) {
@@ -477,7 +477,7 @@ void TwitterApiMicroBlog::fetchPost(Choqok::Account *theAccount, Choqok::Post *p
     }
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(url.path() + QString::fromLatin1("/statuses/show/%1.%2").arg(post->postId).arg(format));
+    url.setPath(url.path() + QStringLiteral("/statuses/show/%1.%2").arg(post->postId).arg(format));
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
     if (!job) {
@@ -540,9 +540,9 @@ void TwitterApiMicroBlog::removePost(Choqok::Account *theAccount, Choqok::Post *
         TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
         QUrl url = account->apiUrl();
         if (!post->isPrivate) {
-            url.setPath(url.path() + QString::fromLatin1("/statuses/destroy/%1.%2").arg(post->postId).arg(format));
+            url.setPath(url.path() + QStringLiteral("/statuses/destroy/%1.%2").arg(post->postId).arg(format));
         } else {
-            url.setPath(url.path() + QString::fromLatin1("/direct_messages/destroy/%1.%2").arg(post->postId).arg(format));
+            url.setPath(url.path() + QStringLiteral("/direct_messages/destroy/%1.%2").arg(post->postId).arg(format));
         }
         KIO::StoredTransferJob *job = KIO::storedHttpPost(QByteArray(), url, KIO::HideProgressInfo) ;
         if (!job) {
@@ -592,7 +592,7 @@ void TwitterApiMicroBlog::createFavorite(Choqok::Account *theAccount, const QStr
     qCDebug(CHOQOK);
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(url.path() + QString::fromLatin1("/favorites/create.%1").arg(format));
+    url.setPath(url.path() + QStringLiteral("/favorites/create.%1").arg(format));
     QUrl tmp(url);
 
     QUrlQuery urlQuery;
@@ -648,7 +648,7 @@ void TwitterApiMicroBlog::removeFavorite(Choqok::Account *theAccount, const QStr
     qCDebug(CHOQOK);
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(url.path() + QString::fromLatin1("/favorites/destroy.%1").arg(format));
+    url.setPath(url.path() + QStringLiteral("/favorites/destroy.%1").arg(format));
 
     QUrl tmp(url);
     QUrlQuery tmpUrlQuery;
@@ -714,15 +714,15 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount *theAccount
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
     url = url.adjusted(QUrl::StripTrailingSlash);
-    url.setPath(url.path() + (QString::fromLatin1("/friends/list.%1").arg(format)));
+    url.setPath(url.path() + (QStringLiteral("/friends/list.%1").arg(format)));
     QUrl tmpUrl(url);
     QUrlQuery urlQuery;
     urlQuery.addQueryItem(QLatin1String("cursor"), d->friendsCursor);
-    urlQuery.addQueryItem(QLatin1String("count"), QString::fromLatin1("200"));
+    urlQuery.addQueryItem(QLatin1String("count"), QLatin1String("200"));
     url.setQuery(urlQuery);
     QOAuth::ParamMap params;
     params.insert("cursor", d->friendsCursor.toLatin1());
-    params.insert("count", QString::fromLatin1("200").toLatin1());
+    params.insert("count", QStringLiteral("200").toLatin1());
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
     if (!job) {
@@ -810,7 +810,7 @@ void TwitterApiMicroBlog::requestTimeLine(Choqok::Account *theAccount, QString t
         params.insert("slug", slug.toLatin1());
 
         const QString owner = type.mid(1, type.indexOf(QLatin1String("/")) - 1);
-        urlQuery.addQueryItem(QString::fromLatin1("owner_screen_name"), owner);
+        urlQuery.addQueryItem(QLatin1String("owner_screen_name"), owner);
         params.insert("owner_screen_name", owner.toLatin1());
 
         url.setQuery(urlQuery);
@@ -1001,7 +1001,7 @@ void TwitterApiMicroBlog::createFriendship(Choqok::Account *theAccount, const QS
     qCDebug(CHOQOK);
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(url.path() + QString::fromLatin1("/friendships/create.%1").arg(format));
+    url.setPath(url.path() + QStringLiteral("/friendships/create.%1").arg(format));
     QUrl tmp(url);
     QUrlQuery urlQuery;
     urlQuery.addQueryItem(QLatin1String("screen_name"), username);
@@ -1068,7 +1068,7 @@ void TwitterApiMicroBlog::destroyFriendship(Choqok::Account *theAccount, const Q
     qCDebug(CHOQOK);
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(url.path() + QString::fromLatin1("/friendships/destroy.%1").arg(format));
+    url.setPath(url.path() + QStringLiteral("/friendships/destroy.%1").arg(format));
     QUrl tmp(url);
     QUrlQuery urlQuery;
     urlQuery.addQueryItem(QLatin1String("screen_name"), username);
@@ -1134,7 +1134,7 @@ void TwitterApiMicroBlog::blockUser(Choqok::Account *theAccount, const QString &
     qCDebug(CHOQOK);
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(url.path() + QString::fromLatin1("/blocks/create.%1").arg(format));
+    url.setPath(url.path() + QStringLiteral("/blocks/create.%1").arg(format));
     QUrl tmp(url);
     QUrlQuery urlQuery;
     urlQuery.addQueryItem(QLatin1String("screen_name"), username);
@@ -1163,7 +1163,7 @@ void TwitterApiMicroBlog::reportUserAsSpam(Choqok::Account *theAccount, const QS
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
     url = url.adjusted(QUrl::StripTrailingSlash);
-    url.setPath(url.path() + QString::fromLatin1("/users/report_spam.%1").arg(format));
+    url.setPath(url.path() + QStringLiteral("/users/report_spam.%1").arg(format));
     QUrl tmp(url);
     QUrlQuery urlQuery;
     urlQuery.addQueryItem(QLatin1String("screen_name"), username);

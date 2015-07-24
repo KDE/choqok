@@ -108,7 +108,7 @@ void IMQDBus::useSkype(const QString &statusMessage)
 {
     QDBusMessage msg = QDBusMessage::createMethodCall(QLatin1String("com.Skype.API"), QLatin1String("/com/Skype"), QLatin1String("com.Skype.API"), QLatin1String("Invoke"));
     QList<QVariant> args;
-    args.append(QVariant(QString::fromLatin1("NAME Choqok")));
+    args.append(QVariant(QLatin1String("NAME Choqok")));
     msg.setArguments(args);
     QDBusMessage rep = QDBusConnection::sessionBus().call(msg);
     if (rep.type() == QDBusMessage::ErrorMessage) {
@@ -117,7 +117,7 @@ void IMQDBus::useSkype(const QString &statusMessage)
     }
 
     args.clear();
-    args.append(QVariant(QString::fromLatin1("PROTOCOL 7")));
+    args.append(QVariant(QLatin1String("PROTOCOL 7")));
     msg.setArguments(args);
     rep = QDBusConnection::sessionBus().call(msg);
     if (rep.type() == QDBusMessage::ErrorMessage) {
@@ -126,7 +126,7 @@ void IMQDBus::useSkype(const QString &statusMessage)
     }
 
     args.clear();
-    args.append(QVariant(QString::fromLatin1("SET PROFILE MOOD_TEXT %1").arg(statusMessage)));
+    args.append(QVariant(QStringLiteral("SET PROFILE MOOD_TEXT %1").arg(statusMessage)));
     msg.setArguments(args);
     rep = QDBusConnection::sessionBus().call(msg);
     if (rep.type() == QDBusMessage::ErrorMessage) {

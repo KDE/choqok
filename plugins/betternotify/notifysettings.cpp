@@ -46,8 +46,8 @@ public:
 NotifySettings::NotifySettings(QObject *parent)
     : QObject(parent), d(new Private)
 {
-    d->conf = new KConfigGroup(KSharedConfig::openConfig(), QString::fromLatin1("BetterNotify Plugin"));
-    d->accountsConf = new KConfigGroup(KSharedConfig::openConfig(), QString::fromLatin1("BetterNotify Accounts Config"));
+    d->conf = new KConfigGroup(KSharedConfig::openConfig(), QLatin1String("BetterNotify Plugin"));
+    d->accountsConf = new KConfigGroup(KSharedConfig::openConfig(), QLatin1String("BetterNotify Accounts Config"));
     load();
 }
 

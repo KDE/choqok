@@ -60,7 +60,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, MPRIS::MprisStatu
 MPRIS::MPRIS(const QString PlayerName)
 {
     qDBusRegisterMetaType<MprisStatusStruct>();
-    const QString serviceName = QString::fromLatin1("org.mpris.").append(PlayerName);
+    const QString serviceName = QStringLiteral("org.mpris.%1").arg(PlayerName);
     if (QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName).value()) {
         valid = true;
     } else {

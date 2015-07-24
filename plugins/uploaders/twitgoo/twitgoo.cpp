@@ -119,10 +119,10 @@ void Twitgoo::slotUpload(KJob *job)
         const QJsonDocument json = QJsonDocument::fromJson(stj->data());
         if (!json.isNull()) {
             QVariantMap map = json.toVariant().toMap();
-            if (map.value(QLatin1String("status")) == QString::fromLatin1("fail")) {
+            if (map.value(QLatin1String("status")) == QLatin1String("fail")) {
                 QVariantMap err = map.value(QLatin1String("err")).toMap();
                 Q_EMIT uploadingFailed(localUrl, err.value(QLatin1String("err_msg")).toString());
-            } else if (map.value(QLatin1String("status")) == QString::fromLatin1("ok")) {
+            } else if (map.value(QLatin1String("status")) == QLatin1String("ok")) {
                 TwitgooSettings::self()->load();
                 QString val = TwitgooSettings::directLink() ? QLatin1String("imageurl") : QLatin1String("mediaurl");
                 Q_EMIT mediumUploaded(localUrl, map.value(val).toString());

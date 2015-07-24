@@ -130,7 +130,7 @@ void TwitterListDialog::slotLoadUserlists(Choqok::Account *theAccount, QString u
             if (it->description.isEmpty()) {
                 iText = it->fullname;
             } else {
-                iText = QString::fromLatin1("%1 [%2]").arg(it->fullname).arg(it->description);
+                iText = QStringLiteral("%1 [%2]").arg(it->fullname).arg(it->description);
             }
             item->setText(iText);
             item->setData(32, it->slug);

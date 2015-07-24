@@ -72,7 +72,7 @@ void LongUrl::parse(QPointer< Choqok::UI::PostWidget > postToParse)
         if (pureList[i].length() > 30) {
             continue;
         }
-        if (!pureList[i].startsWith(QString::fromLatin1("http"), Qt::CaseInsensitive)) {
+        if (!pureList[i].startsWith(QLatin1String("http"), Qt::CaseInsensitive)) {
             pureList[i].prepend(QLatin1String("http://"));
         }
         redirectList << pureList[i];

@@ -80,7 +80,7 @@ void TwitterPostWidget::slotReplyToAll()
     QStringList nicks;
     nicks.append(currentPost()->author.userName);
 
-    QString txt = QString::fromLatin1("@%1 ").arg(currentPost()->author.userName);
+    QString txt = QStringLiteral("@%1 ").arg(currentPost()->author.userName);
 
     int pos = 0;
     while ((pos = mTwitterUserRegExp.indexIn(currentPost()->content, pos)) != -1) {
@@ -88,7 +88,7 @@ void TwitterPostWidget::slotReplyToAll()
                 mTwitterUserRegExp.cap(2).toLower() != currentPost()->author.userName &&
                 !nicks.contains(mTwitterUserRegExp.cap(2).toLower())) {
             nicks.append(mTwitterUserRegExp.cap(2));
-            txt += QString::fromLatin1("@%1 ").arg(mTwitterUserRegExp.cap(2));
+            txt += QStringLiteral("@%1 ").arg(mTwitterUserRegExp.cap(2));
         }
         pos += mTwitterUserRegExp.matchedLength();
     }
@@ -195,7 +195,7 @@ void TwitterPostWidget::checkAnchor(const QUrl &url)
             Choqok::openUrl(QUrl(currentAccount()->microblog()->profileUrl(currentAccount(), url.host())));
             return;
         } else if (ret == replyTo) {
-            Q_EMIT reply(QString::fromLatin1("@%1").arg(url.host()), QString(), url.host());
+            Q_EMIT reply(QStringLiteral("@%1").arg(url.host()), QString(), url.host());
             return;
         } else if (ret == dMessage) {
             blog->showDirectMessageDialog(account, url.host());

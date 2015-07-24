@@ -48,8 +48,8 @@ PumpIOAccount::PumpIOAccount(PumpIOMicroBlog *parent, const QString &alias):
     d->host = configGroup()->readEntry("Host", QString());
     d->token = configGroup()->readEntry("Token", QString());
     d->consumerKey = configGroup()->readEntry("ConsumerKey", QString());
-    d->consumerSecret = Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("%1_consumerSecret").arg(alias));
-    d->tokenSecret = Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("%1_tokenSecret").arg(alias));
+    d->consumerSecret = Choqok::PasswordManager::self()->readPassword(QStringLiteral("%1_consumerSecret").arg(alias));
+    d->tokenSecret = Choqok::PasswordManager::self()->readPassword(QStringLiteral("%1_tokenSecret").arg(alias));
     d->oAuth = new QOAuth::Interface(new KIO::AccessManager(this), this);
     d->oAuth->setConsumerKey(d->consumerKey.toLocal8Bit());
     d->oAuth->setConsumerSecret(d->consumerSecret.toLocal8Bit());
@@ -83,9 +83,9 @@ void PumpIOAccount::writeConfig()
     configGroup()->writeEntry("Host", d->host);
     configGroup()->writeEntry("Token", d->token);
     configGroup()->writeEntry("ConsumerKey", d->consumerKey);
-    Choqok::PasswordManager::self()->writePassword(QString::fromLatin1("%1_consumerSecret").arg(alias()),
+    Choqok::PasswordManager::self()->writePassword(QStringLiteral("%1_consumerSecret").arg(alias()),
             d->consumerSecret);
-    Choqok::PasswordManager::self()->writePassword(QString::fromLatin1("%1_tokenSecret").arg(alias()),
+    Choqok::PasswordManager::self()->writePassword(QStringLiteral("%1_tokenSecret").arg(alias()),
             d->tokenSecret);
     configGroup()->writeEntry("Following", d->following);
     configGroup()->writeEntry("Timelines", d->timelineNames);

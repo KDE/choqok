@@ -215,7 +215,7 @@ QByteArray MediaManager::createMultipartFormData(const QMap< QString, QByteArray
         QList< QMap< QString, QByteArray > >::const_iterator it1 = mediaFiles.constBegin();
         QList< QMap< QString, QByteArray > >::const_iterator endIt1 = mediaFiles.constEnd();
         for (; it1 != endIt1; ++it1) {
-            data.append(fileHeader.arg(QString::fromLatin1(it1->value(QLatin1String("name")).data())).arg(QString::fromLatin1(it1->value(QLatin1String("filename")).data())).toUtf8());
+            data.append(fileHeader.arg(QLatin1String(it1->value(QLatin1String("name")).data())).arg(QLatin1String(it1->value(QLatin1String("filename")).data())).toUtf8());
             data.append(newLine + "Content-Type: " + it1->value(QLatin1String("mediumType")));
             data.append(newLine);
             data.append(newLine + it1->value(QLatin1String("medium")));

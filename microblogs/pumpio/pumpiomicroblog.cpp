@@ -292,7 +292,7 @@ void PumpIOMicroBlog::createPostWithMedia(Choqok::Account *theAccount, Choqok::P
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + (QString::fromLatin1("/api/user/%1/uploads").arg(acc->username())));
+        url.setPath(url.path() + QStringLiteral("/api/user/%1/uploads").arg(acc->username()));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: ") + mime);
         job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QOAuth::POST));
@@ -443,7 +443,7 @@ QString PumpIOMicroBlog::profileUrl(Choqok::Account *account, const QString &use
 {
     Q_UNUSED(account)
     if (username.contains(QLatin1String("acct:"))) {
-        return QString::fromLatin1("https://%1/%2").arg(hostFromAcct(username)).arg(userNameFromAcct(username));
+        return QStringLiteral("https://%1/%2").arg(hostFromAcct(username)).arg(userNameFromAcct(username));
     } else {
         return username;
     }
@@ -548,7 +548,7 @@ void PumpIOMicroBlog::fetchFollowing(Choqok::Account *theAccount)
     if (acc) {
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + (QString::fromLatin1("/api/user/%1/following").arg(acc->username())));
+        url.setPath(url.path() + QStringLiteral("/api/user/%1/following").arg(acc->username()));
 
         QOAuth::ParamMap oAuthParams;
         oAuthParams.insert("count", QByteArray::number(200));
@@ -577,7 +577,7 @@ void PumpIOMicroBlog::fetchLists(Choqok::Account *theAccount)
     if (acc) {
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + (QString::fromLatin1("/api/user/%1/lists/person").arg(acc->username())));
+        url.setPath(url.path() + QStringLiteral("/api/user/%1/lists/person").arg(acc->username()));
 
         QOAuth::ParamMap oAuthParams;
         oAuthParams.insert("count", QByteArray::number(200));
@@ -1203,7 +1203,7 @@ Choqok::Post *PumpIOMicroBlog::readPost(const QVariantMap &var, Choqok::Post *po
         } else if (actor[QLatin1String("objectType")].toString() == QLatin1String("service")) {
             p->author.profileImageUrl = homePageUrl + QLatin1String("images/default.png");
         } else {
-            p->author.profileImageUrl = QString::fromLatin1("https://%1/%2").arg(hostFromAcct(userId)).arg(QLatin1String("images/default.png"));
+            p->author.profileImageUrl = QStringLiteral("https://%1/images/default.png").arg(hostFromAcct(userId));
         }
 
         if (!var[QLatin1String("generator")].isNull()) {

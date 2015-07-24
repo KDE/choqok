@@ -50,7 +50,7 @@ QString Bit_ly::shorten(const QString &url)
     QUrl reqUrl(QLatin1String("http://api.bit.ly/v3/shorten"));
     QUrlQuery reqQuery;
     Bit_ly_Settings::self()->load();
-    QString userApiKey = Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("bitly_%1")
+    QString userApiKey = Choqok::PasswordManager::self()->readPassword(QStringLiteral("bitly_%1")
                          .arg(Bit_ly_Settings::login()));
     if (!Bit_ly_Settings::login().isEmpty() && !userApiKey.isEmpty()) {
         reqQuery.addQueryItem(QLatin1String("x_login"), Bit_ly_Settings::login());
@@ -73,7 +73,7 @@ QString Bit_ly::shorten(const QString &url)
     if (!job->error()) {
         const QByteArray data = job->data();
         QString output = QLatin1String(data);
-        QRegExp rx(QString::fromLatin1("(http://((.*)+)/([a-zA-Z0-9])+)"));
+        QRegExp rx(QLatin1String("(http://((.*)+)/([a-zA-Z0-9])+)"));
         rx.indexIn(output);
         QString bitlyUrl = rx.cap(0);
         if (!bitlyUrl.isEmpty()) {
@@ -81,13 +81,13 @@ QString Bit_ly::shorten(const QString &url)
         }
 
         QString err = QLatin1String(data);
-        if (output.startsWith(QString::fromLatin1("INVALID_X_APIKEY"))) {
+        if (output.startsWith(QLatin1String("INVALID_X_APIKEY"))) {
             err = i18n("API key is invalid");
         }
-        if (output.startsWith(QString::fromLatin1("INVALID_X_LOGIN"))) {
+        if (output.startsWith(QLatin1String("INVALID_X_LOGIN"))) {
             err = i18n("Login is invalid");
         }
-        if (output.startsWith(QString::fromLatin1("RATE_LIMIT_EXCEEDED"))) {
+        if (output.startsWith(QLatin1String("RATE_LIMIT_EXCEEDED"))) {
             err = i18n("Rate limit exceeded. Try another shortener.");
         }
 

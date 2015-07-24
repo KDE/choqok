@@ -120,7 +120,7 @@ void TwitterApiMicroBlogWidget::slotSearchResultsReceived(const SearchInfo &info
     qCDebug(CHOQOK);
     if (info.account == currentAccount()) {
         qCDebug(CHOQOK) << postsList.count();
-        QString name = QString::fromLatin1("%1%2").arg(d->mBlog->searchBackend()->optionCode(info.option)).arg(info.query);
+        QString name = QStringLiteral("%1%2").arg(d->mBlog->searchBackend()->optionCode(info.option)).arg(info.query);
         if (mSearchTimelines.contains(name)) {
             mSearchTimelines.value(name)->addNewPosts(postsList);
         } else {
@@ -146,8 +146,8 @@ TwitterApiSearchTimelineWidget *TwitterApiMicroBlogWidget::addSearchTimelineWidg
         timelinesTabWidget()->addTab(mbw, name);
         QString textToAdd = name;
         if (textToAdd.contains(QLatin1Char(':'))) {
-            QStringList splitted = textToAdd.split(QChar::fromLatin1(':'));
-            textToAdd = splitted.first().at(0) + QString::fromLatin1(":") + splitted[1].left(3);
+            QStringList splitted = textToAdd.split(QLatin1Char(':'));
+            textToAdd = splitted.first().at(0) + QLatin1Char(':') + splitted[1].left(3);
         } else {
             textToAdd = textToAdd.left(4);
         }

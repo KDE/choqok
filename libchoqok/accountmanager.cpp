@@ -122,7 +122,7 @@ bool AccountManager::removeAccount(const QString &alias)
 {
     qCDebug(CHOQOK) << "Removing " << alias;
     int count = d->accounts.count();
-    d->conf->deleteGroup(QString::fromLatin1("Account_%1").arg(alias));
+    d->conf->deleteGroup(QStringLiteral("Account_%1").arg(alias));
     d->conf->sync();
     for (int i = 0; i < count; ++i) {
         if (d->accounts[i]->alias() == alias) {
@@ -186,7 +186,7 @@ void AccountManager::loadAllAccounts()
         ac->deleteLater();
     }
     d->accounts.clear();
-    const QStringList accountGroups = d->conf->groupList().filter(QRegExp(QString::fromLatin1("^Account_")));
+    const QStringList accountGroups = d->conf->groupList().filter(QRegExp(QLatin1String("^Account_")));
     qCDebug(CHOQOK) << accountGroups;
     Q_FOREACH (const QString &grp, accountGroups) {
         qCDebug(CHOQOK) << grp;

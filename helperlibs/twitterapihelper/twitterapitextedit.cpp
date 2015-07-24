@@ -247,7 +247,7 @@ void TwitterApiTextEdit::fetchTCoMaximumLength()
     TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(d->acc);
     if (acc) {
         QUrl url = acc->apiUrl();
-        url.setPath(url.path() + QString::fromLatin1("/help/configuration.json"));
+        url.setPath(url.path() + QLatin1String("/help/configuration.json"));
 
         KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
         if (!job) {

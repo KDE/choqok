@@ -106,7 +106,7 @@ void LaconicaPostWidget::slotReplyToAll()
     QStringList nicks;
     nicks.append(currentPost()->author.userName);
 
-    QString txt = QString::fromLatin1("@%1 ").arg(currentPost()->author.userName);
+    QString txt = QStringLiteral("@%1 ").arg(currentPost()->author.userName);
 
     int pos = 0;
     while ((pos = mLaconicaUserRegExp.indexIn(currentPost()->content, pos)) != -1) {
@@ -114,7 +114,7 @@ void LaconicaPostWidget::slotReplyToAll()
                 mLaconicaUserRegExp.cap(2).toLower() != currentPost()->author.userName &&
                 !nicks.contains(mLaconicaUserRegExp.cap(2).toLower())) {
             nicks.append(mLaconicaUserRegExp.cap(2));
-            txt += QString::fromLatin1("@%1 ").arg(mLaconicaUserRegExp.cap(2));
+            txt += QStringLiteral("@%1 ").arg(mLaconicaUserRegExp.cap(2));
         }
         pos += mLaconicaUserRegExp.matchedLength();
     }
@@ -186,7 +186,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl &url)
                                  QLatin1String("/group/") + url.host()));
         }
     } else if (scheme == QLatin1String("user")) {
-        QString username = (url.userName().isEmpty() ? QString() : QString::fromLatin1("%1@").arg(url.userName())) +
+        QString username = (url.userName().isEmpty() ? QString() : QStringLiteral("%1@").arg(url.userName())) +
                            url.host();
         QMenu menu;
         QAction *info = new QAction(QIcon::fromTheme(QLatin1String("user-identity")), i18nc("Who is user", "Who is %1",
@@ -268,7 +268,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl &url)
             }
             return;
         } else if (ret == replyTo) {
-            Q_EMIT reply(QString::fromLatin1("@%1").arg(username), QString(), username);
+            Q_EMIT reply(QStringLiteral("@%1").arg(username), QString(), username);
             return;
         } else if (ret == dMessage) {
             d->mBlog->showDirectMessageDialog(d->account, username);

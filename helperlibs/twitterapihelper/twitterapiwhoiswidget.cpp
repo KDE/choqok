@@ -112,7 +112,7 @@ void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount *theAccount, const QS
         QStringList lst = user.split(QLatin1Char('@'));
         if (lst.count() == 2) { //USER@HOST
             QString host = lst[1];
-            urlStr = QString::fromLatin1("https://%1/api").arg(host);
+            urlStr = QStringLiteral("https://%1/api").arg(host);
             user = lst[0];
         }
     } else if (d->currentPost.source == QLatin1String("ostatus") && !d->currentPost.author.homePageUrl.isEmpty()) {
@@ -130,7 +130,7 @@ void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount *theAccount, const QS
     QUrl url(urlStr);
 
     url = url.adjusted(QUrl::StripTrailingSlash);
-    url.setPath(url.path() + (QString::fromLatin1("/users/show/%1.json").arg(user)));
+    url.setPath(url.path() + (QStringLiteral("/users/show/%1.json").arg(user)));
 
 //     qCDebug(CHOQOK) << url;
 
@@ -244,13 +244,13 @@ void TwitterApiWhoisWidget::updateHtml()
     QString html;
     if (d->errorMessage.isEmpty()) {
         QString url = d->currentPost.author.homePageUrl.isEmpty() ? QString()
-                      : QString::fromLatin1("<a title='%1' href='%1'>%1</a>").arg(d->currentPost.author.homePageUrl);
+                      : QStringLiteral("<a title='%1' href='%1'>%1</a>").arg(d->currentPost.author.homePageUrl);
 
         QString mainTable = QString(QLatin1String("<table width='100%'><tr>\
         <td width=49><img width=48 height=48 src='img://profileImage'/>\
         <center><table width='100%' cellpadding='3'><tr>%1</tr></table></center></td>\
         <td><table width='100%'><tr><td><font size=5><b>%2</b></font></td>\
-        <td><a href='choqok://close'><img src='icon://close' title='") + i18n("Close") + QLatin1String("' align='right' /></a></td></tr></table><br/>\
+        <td><a href='choqok://close'><img src='icon://close' title='") + i18n("Close") + QStringLiteral("' align='right' /></a></td></tr></table><br/>\
         <b>@%3</b>&nbsp;<font size=3>%4</font><font size=2>%5</font><br/>\
         <i>%6</i><br/>\
         <font size=3>%7</font></td></tr></table>"))

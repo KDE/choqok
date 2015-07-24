@@ -37,7 +37,7 @@ public:
     Private(Choqok::MicroBlog *parent, const QString &mAlias)
         : alias(mAlias), blog(parent)
     {
-        configGroup = new KConfigGroup(KSharedConfig::openConfig(), QString::fromLatin1("Account_%1").arg(alias));
+        configGroup = new KConfigGroup(KSharedConfig::openConfig(), QStringLiteral("Account_%1").arg(alias));
         username = configGroup->readEntry("Username", QString());
         priority = configGroup->readEntry("Priority", (uint)0);
         readonly = configGroup->readEntry("ReadOnly", false);
@@ -119,7 +119,7 @@ void Account::setAlias(const QString &alias)
     d->alias = alias;
     d->configGroup->deleteGroup();
     delete d->configGroup;
-    d->configGroup = new KConfigGroup(KSharedConfig::openConfig(), QString::fromLatin1("Account_%1").arg(d->alias));
+    d->configGroup = new KConfigGroup(KSharedConfig::openConfig(), QStringLiteral("Account_%1").arg(d->alias));
     writeConfig();
 }
 

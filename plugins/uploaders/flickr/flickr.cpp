@@ -38,7 +38,7 @@
 
 const static QString apiKey = QLatin1String("13f602e6e705834d8cdd5dd2ccb19651");
 const static QString apiSecret = QLatin1String("98c89dbe39ae3bea");
-const static QString apiKeSec = apiSecret + QString::fromLatin1("api_key") + apiKey;
+const static QString apiKeSec = apiSecret + QLatin1String("api_key") + apiKey;
 
 K_PLUGIN_FACTORY_WITH_JSON(FlickrFactory, "choqok_flickr.json",
                            registerPlugin < Flickr > ();)
@@ -56,7 +56,7 @@ void Flickr::upload(const QUrl &localUrl, const QByteArray &medium, const QByteA
 {
     QUrl url(QLatin1String("https://api.flickr.com/services/upload/"));
     FlickrSettings::self()->load();
-    QString token = Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("flickr_%1")
+    QString token = Choqok::PasswordManager::self()->readPassword(QStringLiteral("flickr_%1")
                     .arg(FlickrSettings::username()));
     QMap<QString, QByteArray> formdata;
     formdata[QLatin1String("api_key")] = apiKey.toUtf8();

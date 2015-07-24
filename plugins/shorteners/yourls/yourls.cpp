@@ -55,7 +55,7 @@ QString Yourls::shorten(const QString &url)
     reqQuery.addQueryItem(QLatin1String("format"), QLatin1String("xml"));                /* get result as xml */
     reqQuery.addQueryItem(QLatin1String("url"), QUrl(url).url());                        /* url to be shorted */
     password = QLatin1String(Choqok::PasswordManager::self()->readPassword(
-                   QString::fromLatin1("yourls_%1").arg(YourlsSettings::username())).toUtf8());
+                   QStringLiteral("yourls_%1").arg(YourlsSettings::username())).toUtf8());
     if (!YourlsSettings::username().isEmpty()) {
         reqQuery.addQueryItem(QLatin1String("username"), YourlsSettings::username());
         reqQuery.addQueryItem(QLatin1String("password"), password);
@@ -69,7 +69,7 @@ QString Yourls::shorten(const QString &url)
         const QByteArray data = job->data();                            /* output field */
         QString output = QLatin1String(data);
 
-        QRegExp rx(QString::fromLatin1("<shorturl>(.+)</shorturl>"));
+        QRegExp rx(QLatin1String("<shorturl>(.+)</shorturl>"));
         rx.setMinimal(true);
         rx.indexIn(output);
         output = rx.cap(1);
@@ -78,7 +78,7 @@ QString Yourls::shorten(const QString &url)
             return output;
         } else {
             output = QLatin1String(data);
-            QRegExp rx(QString::fromLatin1("<message>(.+)</message>"));
+            QRegExp rx(QLatin1String("<message>(.+)</message>"));
             rx.setMinimal(true);
             rx.indexIn(output);
             output = rx.cap(1);
@@ -95,7 +95,7 @@ QString Yourls::shorten(const QString &url)
 void Yourls::reloadConfigs()
 {
     password = QLatin1String(Choqok::PasswordManager::self()->readPassword(
-                   QString::fromLatin1("yourls_%1").arg(YourlsSettings::username())).toUtf8());
+                   QStringLiteral("yourls_%1").arg(YourlsSettings::username())).toUtf8());
 }
 
 #include "yourls.moc"

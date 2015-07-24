@@ -35,7 +35,7 @@ public:
         , filterAction(action), dontHideReplies(dontHide)
     {
         config = new KConfigGroup(KSharedConfig::openConfig(),
-                                  QString::fromLatin1("Filter_%1%2%3%4").arg(text)
+                                  QStringLiteral("Filter_%1%2%3%4").arg(text)
                                   .arg(field)
                                   .arg(type)
                                   .arg(action));

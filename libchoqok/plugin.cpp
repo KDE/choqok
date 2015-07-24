@@ -51,7 +51,7 @@ Plugin::~Plugin()
 
 QString Plugin::pluginId() const
 {
-    return QString::fromLatin1(metaObject()->className());
+    return QLatin1String(metaObject()->className());
 }
 
 QString Plugin::displayName() const

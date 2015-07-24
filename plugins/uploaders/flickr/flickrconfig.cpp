@@ -47,7 +47,7 @@ K_PLUGIN_FACTORY_WITH_JSON(FlickrConfigFactory, "choqok_flickr_config.json",
 
 const QString apiKey = QLatin1String("13f602e6e705834d8cdd5dd2ccb19651");
 const QString apiSecret = QLatin1String("98c89dbe39ae3bea");
-const QString apiKeSec = apiSecret + QString::fromLatin1("api_key") + apiKey;
+const QString apiKeSec = apiSecret + QLatin1String("api_key") + apiKey;
 
 FlickrConfig::FlickrConfig(QWidget *parent, const QVariantList &)
     : KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_flickr")), parent)
@@ -91,7 +91,7 @@ void FlickrConfig::load()
     ui.cfg_moderate->setChecked(grp.readEntry("moderate", false));
     ui.cfg_restricted->setChecked(grp.readEntry("restricted", false));
     ui.cfg_hidefromsearch->setChecked(grp.readEntry("hidefromsearch", false));
-    m_token = Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("flickr_%1")
+    m_token = Choqok::PasswordManager::self()->readPassword(QStringLiteral("flickr_%1")
               .arg(m_username));
     setAuthenticated(!m_token.isEmpty());
 }
@@ -112,7 +112,7 @@ void FlickrConfig::save()
     grp.writeEntry("moderate", ui.cfg_moderate->isChecked());
     grp.writeEntry("restricted", ui.cfg_restricted->isChecked());
     grp.writeEntry("hidefromsearch", ui.cfg_hidefromsearch->isChecked());
-    Choqok::PasswordManager::self()->writePassword(QString::fromLatin1("flickr_%1").arg(m_username),
+    Choqok::PasswordManager::self()->writePassword(QStringLiteral("flickr_%1").arg(m_username),
             m_token);
 }
 
@@ -277,7 +277,7 @@ void FlickrConfig::setAuthenticated(bool authenticated)
         ui.authLed->on();
         ui.authLabel->setText(i18n("Authorized as %1").arg(m_username));
         if (!m_fullname.isEmpty()) {
-            ui.authLabel->setText(ui.authLabel->text() + QString::fromLatin1(" (%1)").arg(m_fullname.toHtmlEscaped()));
+            ui.authLabel->setText(ui.authLabel->text() + QStringLiteral(" (%1)").arg(m_fullname.toHtmlEscaped()));
         }
     } else {
         ui.authButton->setIcon(QIcon::fromTheme(QLatin1String("object-locked")));

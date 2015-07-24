@@ -220,7 +220,7 @@ void PostWidget::initUi()
 
     d->mProfileImage = QLatin1String("<img src=\"img://profileImage\" title=\"") + d->mCurrentPost->author.realName + QLatin1String("\" width=\"48\" height=\"48\" />");
     if (!d->imageUrl.isEmpty()) {
-        d->mImage = QString::fromLatin1("<td width=\"%1\" height=\"%2\" style=\"padding-left: 5px; padding-left: 5px;\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
+        d->mImage = QStringLiteral("<td width=\"%1\" height=\"%2\" style=\"padding-left: 5px; padding-left: 5px;\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
     }
     d->mContent = prepareStatus(d->mCurrentPost->content);
     d->mSign = generateSign();
@@ -372,10 +372,10 @@ void PostWidget::resizeEvent(QResizeEvent *event)
         const QUrl url(QLatin1String("img://postImage"));
         // only use scaled image if it's smaller than the original one
         if (newW <= d->originalImage.width() && newH <= d->originalImage.height()) { // never scale up
-            d->mImage = QString::fromLatin1("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(newW, newH);
+            d->mImage = QStringLiteral("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(newW, newH);
             _mainWidget->document()->addResource(QTextDocument::ImageResource, url, newPixmap);
         } else {
-            d->mImage = QString::fromLatin1("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
+            d->mImage = QStringLiteral("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
             _mainWidget->document()->addResource(QTextDocument::ImageResource, url, d->originalImage);
         }
     }

@@ -134,7 +134,7 @@ QString LaconicaMicroBlog::profileUrl(Choqok::Account *account, const QString &u
         const QStringList lst = username.split(QLatin1Char('@'), QString::SkipEmptyParts);
 
         if (lst.count() == 2) {
-            return QString::fromLatin1("https://%1/%2").arg(lst[1]).arg(lst[0]);
+            return QStringLiteral("https://%1/%2").arg(lst[1]).arg(lst[0]);
         }
     }
 
@@ -153,8 +153,8 @@ QString LaconicaMicroBlog::postUrl(Choqok::Account *account,  const QString &use
     TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(account);
     if (acc) {
         QUrl url(acc->homepageUrl());
-        url.setPath(url.path() + QString::fromLatin1("/notice/%1").arg(postId));
-        return QString(url.toDisplayString());
+        url.setPath(url.path() + QStringLiteral("/notice/%1").arg(postId));
+        return url.toDisplayString();
     } else {
         return QString();
     }
@@ -194,7 +194,7 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Ch
         ///Documentation: http://identi.ca/notice/17779990
         TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
         QUrl url = account->apiUrl();
-        url.setPath(url.path() + QString::fromLatin1("/statuses/update.%1").arg(format));
+        url.setPath(url.path() + QStringLiteral("/statuses/update.%1").arg(format));
         const QMimeDatabase db;
         QByteArray fileContentType = db.mimeTypeForUrl(picUrl).name().toUtf8();
 
@@ -294,7 +294,7 @@ void LaconicaMicroBlog::doRequestFriendsScreenName(TwitterApiAccount *theAccount
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
     url = url.adjusted(QUrl::StripTrailingSlash);
-    url.setPath(url.path() + (QString::fromLatin1("/statuses/friends.%1").arg(format)));
+    url.setPath(url.path() + QStringLiteral("/statuses/friends.%1").arg(format));
     QOAuth::ParamMap params;
     if (page > 1) {
         params.insert("page", QByteArray::number(page));
@@ -385,7 +385,7 @@ void LaconicaMicroBlog::fetchConversation(Choqok::Account *theAccount, const QSt
     }
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(QString::fromLatin1("/statusnet/conversation/%1.%2").arg(conversationId).arg(format));
+    url.setPath(QStringLiteral("/statusnet/conversation/%1.%2").arg(conversationId).arg(format));
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
     if (!job) {

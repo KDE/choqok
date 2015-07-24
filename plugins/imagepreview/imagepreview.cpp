@@ -102,7 +102,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
         twitpicRedirectList << mTwitpicRegExp.cap(0);
     }
     Q_FOREACH (const QString &url, twitpicRedirectList) {
-        QString twitpicUrl = QString::fromLatin1("https://twitpic.com/show/mini%1").arg(QString(url).remove(QLatin1String("https://twitpic.com")));
+        QString twitpicUrl = QStringLiteral("https://twitpic.com/show/mini%1").arg(QString(url).remove(QLatin1String("https://twitpic.com")));
         connect(Choqok::MediaManager::self(),
                 SIGNAL(imageFetched(QString,QPixmap)),
                 SLOT(slotImageFetched(QString,QPixmap)));
@@ -171,7 +171,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
         connect(Choqok::MediaManager::self(),
                 SIGNAL(imageFetched(QString,QPixmap)),
                 SLOT(slotImageFetched(QString,QPixmap)));
-        QString ImgLyUrl = QString::fromLatin1("http://img.ly/show/thumb%1").arg(QString(url).remove(QLatin1String("http://img.ly")));
+        QString ImgLyUrl = QStringLiteral("http://img.ly/show/thumb%1").arg(QString(url).remove(QLatin1String("http://img.ly")));
         mParsingList.insert(ImgLyUrl, postToParse);
         mBaseUrlMap.insert(ImgLyUrl, url);
         Choqok::MediaManager::self()->fetchImage(ImgLyUrl, Choqok::MediaManager::Async);

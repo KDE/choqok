@@ -157,7 +157,7 @@ void VideoPreview::parse(QPointer<Choqok::UI::PostWidget> postToParse)
 
 QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWidget > postToParse)
 {
-    QString youtubeUrl = QString::fromLatin1("https://gdata.youtube.com/feeds/api/videos/%1").arg(videoid);
+    QString youtubeUrl = QStringLiteral("https://gdata.youtube.com/feeds/api/videos/%1").arg(videoid);
     QUrl th_url(youtubeUrl);
     KIO::StoredTransferJob *job = KIO::storedGet(th_url, KIO::NoReload, KIO::HideProgressInfo);
     KJobWidgets::setWindow(job, Choqok::UI::Global::mainWindow());
@@ -201,7 +201,7 @@ QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWi
 
 QString VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidget > postToParse)
 {
-    QString vimeoUrl = QString::fromLatin1("https://vimeo.com/api/v2/video/%1.xml").arg(videoid);
+    QString vimeoUrl = QStringLiteral("https://vimeo.com/api/v2/video/%1.xml").arg(videoid);
     QUrl th_url(vimeoUrl);
     QEventLoop loop;
     KIO::StoredTransferJob *job = KIO::storedGet(th_url, KIO::NoReload, KIO::HideProgressInfo);

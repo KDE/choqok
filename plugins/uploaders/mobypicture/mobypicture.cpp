@@ -100,7 +100,7 @@ void Mobypicture::upload(const QUrl &localUrl, const QByteArray &medium, const Q
     } else if (MobypictureSettings::basic()) {
         QUrl url(QLatin1String("https://api.mobypicture.com"));
         QString login = MobypictureSettings::login();
-        QString pass = Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("mobypicture_%1")
+        QString pass = Choqok::PasswordManager::self()->readPassword(QStringLiteral("mobypicture_%1")
                        .arg(MobypictureSettings::login()));
         QMap<QString, QByteArray> formdata;
         formdata[QLatin1String("k")] = apiKey;
@@ -119,16 +119,16 @@ void Mobypicture::upload(const QUrl &localUrl, const QByteArray &medium, const Q
         QByteArray data = Choqok::MediaManager::createMultipartFormData(formdata, listMediafiles);
 
         job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
-        job->addMetaData(QStringLiteral("Authorization"),
-                         QStringLiteral("Basic ") + QLatin1String(QString::fromLatin1("%1:%2").arg(login).arg(pass).toUtf8().toBase64()));
+        job->addMetaData(QLatin1String("Authorization"),
+                         QLatin1String("Basic ") + QLatin1String(QStringLiteral("%1:%2").arg(login).arg(pass).toUtf8().toBase64()));
     }
 
     if (!job) {
         qCritical() << "Cannot create a http POST request!";
         return;
     }
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: multipart/form-data; boundary=AaB03x"));
+    job->addMetaData(QLatin1String("content-type"),
+                     QLatin1String("Content-Type: multipart/form-data; boundary=AaB03x"));
     mUrlMap[job] = localUrl;
     connect(job, SIGNAL(result(KJob*)),
             SLOT(slotUpload(KJob*)));

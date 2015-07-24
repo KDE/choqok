@@ -42,7 +42,7 @@ public:
     PluginManagerPrivate() : shutdownMode(StartingUp), isAllPluginsLoaded(false)
     {
         plugins = KPluginInfo::fromServices(KServiceTypeTrader::self()->query(QLatin1String("Choqok/Plugin"),
-                                            QString::fromLatin1("[X-Choqok-Version] == %1").arg(CHOQOK_PLUGIN_VERSION)));
+                                            QStringLiteral("[X-Choqok-Version] == %1").arg(CHOQOK_PLUGIN_VERSION)));
     }
 
     ~PluginManagerPrivate()
@@ -348,7 +348,7 @@ Plugin *PluginManager::loadPluginInternal(const QString &pluginId)
     }
 
     QString error;
-    Plugin *plugin = KServiceTypeTrader::createInstanceFromQuery<Plugin>(QString::fromLatin1("Choqok/Plugin"), QString::fromLatin1("[X-KDE-PluginInfo-Name]=='%1'").arg(pluginId), this, QVariantList(), &error);
+    Plugin *plugin = KServiceTypeTrader::createInstanceFromQuery<Plugin>(QLatin1String("Choqok/Plugin"), QStringLiteral("[X-KDE-PluginInfo-Name]=='%1'").arg(pluginId), this, QVariantList(), &error);
 
     if (plugin) {
         _kpmp->loadedPlugins.insert(info, plugin);
@@ -417,7 +417,7 @@ Plugin *PluginManager::plugin(const QString &_pluginId) const
     //        the handling - Martijn
     QString pluginId = _pluginId;
     if (pluginId.endsWith(QLatin1String("Protocol"))) {
-        pluginId = QLatin1String("choqok_") + _pluginId.toLower().remove(QString::fromLatin1("protocol"));
+        pluginId = QLatin1String("choqok_") + _pluginId.toLower().remove(QLatin1String("protocol"));
     }
     // End hack
 

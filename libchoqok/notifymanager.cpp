@@ -87,7 +87,7 @@ void NotifyManager::error(const QString &message, const QString &title)
 
 void NotifyManager::newPostArrived(const QString &message, const QString &title)
 {
-    QString fullMsg = QString::fromLatin1("<b>%1:</b><br/>%2").arg(title).arg(message);
+    QString fullMsg = QStringLiteral("<b>%1:</b><br/>%2").arg(title).arg(message);
     if (Choqok::UI::Global::mainWindow()->isActiveWindow()) {
         choqokMainWindow->showStatusMessage(message);
     } else {
@@ -109,7 +109,7 @@ void NotifyManager::shortening(const QString &message, const QString &title)
 void NotifyManagerPrivate::triggerNotify(const QString &eventId, const QString &title,
         const QString &message, KNotification::NotificationFlags flags)
 {
-    QString fullMsg = QString::fromLatin1("<b>%1:</b><br/>%2").arg(title).arg(message);
+    QString fullMsg = QStringLiteral("<b>%1:</b><br/>%2").arg(title).arg(message);
     KNotification::event(eventId, fullMsg, QPixmap(), Choqok::UI::Global::mainWindow(), flags);
 }
 

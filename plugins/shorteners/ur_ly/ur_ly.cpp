@@ -61,7 +61,7 @@ QString Ur_ly::shorten(const QString &url)
             const QVariantMap result = json.toVariant().toMap();
 
             if (result.contains(QLatin1String("code"))) {
-                return QString::fromLatin1("http://ur.ly/%1").arg(result.value(QLatin1String("code")).toString());
+                return QStringLiteral("http://ur.ly/%1").arg(result.value(QLatin1String("code")).toString());
             }
         } else {
             qCritical() << "Ur_ly::shorten: Parse error, Job error:" << job->errorString();

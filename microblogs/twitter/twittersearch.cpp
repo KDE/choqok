@@ -84,7 +84,7 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
 
     QString formattedQuery = mSearchCode[option] + query;
     QUrl url = account->apiUrl();
-    url.setPath(url.path() + QString::fromLatin1("/search/tweets.json"));
+    url.setPath(url.path() + QLatin1String("/search/tweets.json"));
     QUrl tmpUrl(url);
     QUrlQuery urlQuery;
     urlQuery.addQueryItem(QLatin1String("q"), formattedQuery);
@@ -187,7 +187,7 @@ Choqok::Post *TwitterSearch::readStatusesFromJsonMap(const QVariantMap &var)
     post->replyToPostId = var[QLatin1String("in_reply_to_status_id_str")].toString();
     post->replyToUserName = var[QLatin1String("in_reply_to_screen_name")].toString();
 
-    post->link = QString::fromLatin1("https://twitter.com/%1/status/%2").arg(post->author.userName).arg(post->postId);
+    post->link = QStringLiteral("https://twitter.com/%1/status/%2").arg(post->author.userName).arg(post->postId);
 
     return post;
 }

@@ -124,13 +124,13 @@ Choqok::UI::ComposerWidget *TwitterMicroBlog::createComposerWidget(Choqok::Accou
 
 QString TwitterMicroBlog::profileUrl(Choqok::Account *, const QString &username) const
 {
-    return QString::fromLatin1("https://twitter.com/#!/%1").arg(username);
+    return QStringLiteral("https://twitter.com/#!/%1").arg(username);
 }
 
 QString TwitterMicroBlog::postUrl(Choqok::Account *, const QString &username,
                                   const QString &postId) const
 {
-    return QString::fromLatin1("https://twitter.com/%1/status/%2").arg(username).arg(postId);
+    return QStringLiteral("https://twitter.com/%1/status/%2").arg(username).arg(postId);
 }
 
 TwitterApiSearch *TwitterMicroBlog::searchBackend()
@@ -311,12 +311,12 @@ void TwitterMicroBlog::addListTimeline(TwitterAccount *theAccount, const QString
 {
     qCDebug(CHOQOK);
     QStringList tms = theAccount->timelineNames();
-    QString name = QString::fromLatin1("@%1/%2").arg(username).arg(listname);
+    QString name = QStringLiteral("@%1/%2").arg(username).arg(listname);
     tms.append(name);
     addTimelineName(name);
     theAccount->setTimelineNames(tms);
     theAccount->writeConfig();
-    QString url = QString::fromLatin1("/lists/statuses");
+    QString url = QLatin1String("/lists/statuses");
     timelineApiPath[name] = url + QLatin1String(".%1");
     updateTimelines(theAccount);
 }
@@ -329,7 +329,7 @@ void TwitterMicroBlog::setListTimelines(TwitterAccount *theAccount, const QStrin
     Q_FOREACH (const QString &name, lists) {
         tms.append(name);
         addTimelineName(name);
-        QString url = QString::fromLatin1("/lists/statuses");
+        QString url = QLatin1String("/lists/statuses");
         timelineApiPath[name] = url + QLatin1String(".%1");
     }
     tms.removeDuplicates();

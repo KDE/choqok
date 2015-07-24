@@ -113,7 +113,7 @@ void FilterManager::parse(Choqok::UI::PostWidget *postToParse)
         if (filter->filterAction() == Filter::Remove && filter->dontHideReplies() &&
                 (postToParse->currentPost()->replyToUserName.compare(postToParse->currentAccount()->username(),
                         Qt::CaseInsensitive) == 0 ||
-                 postToParse->currentPost()->content.contains(QString::fromLatin1("@%1").arg(postToParse->currentAccount()->username())))
+                 postToParse->currentPost()->content.contains(QStringLiteral("@%1").arg(postToParse->currentAccount()->username())))
            ) {
             continue;
         }

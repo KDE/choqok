@@ -56,11 +56,10 @@ QString Posterous::getAuthToken(const QUrl &localUrl)
 {
     QUrl url(QLatin1String("http://posterous.com/api/2/auth/token"));
     QString login = PosterousSettings::login();
-    QString pass = Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("posterous_%1").arg(PosterousSettings::login()));
+    QString pass = Choqok::PasswordManager::self()->readPassword(QStringLiteral("posterous_%1").arg(PosterousSettings::login()));
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
-    QString token;
-    job->addMetaData(QStringLiteral("customHTTPHeader"),
-                     QStringLiteral("Authorization: Basic ") + QLatin1String(QString::fromLatin1("%1:%2").arg(login).arg(pass).toUtf8().toBase64()));
+    job->addMetaData(QLatin1String("customHTTPHeader"),
+                     QLatin1String("Authorization: Basic ") + QLatin1String(QStringLiteral("%1:%2").arg(login).arg(pass).toUtf8().toBase64()));
     job->exec();
     if (!job->error()) {
         const QByteArray data = job->data();
@@ -88,7 +87,7 @@ void Posterous::upload(const QUrl &localUrl, const QByteArray &medium, const QBy
     KIO::StoredTransferJob *job = 0;
     if (PosterousSettings::basic()) {
         QString login = PosterousSettings::login();
-        QString pass = Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("posterous_%1").arg(PosterousSettings::login()));
+        QString pass = Choqok::PasswordManager::self()->readPassword(QStringLiteral("posterous_%1").arg(PosterousSettings::login()));
         QString token = getAuthToken(localUrl);
         if (!token.isEmpty()) {
             QUrl url(QLatin1String("http://posterous.com/api/2/users/me/sites/primary/posts"));
@@ -109,9 +108,9 @@ void Posterous::upload(const QUrl &localUrl, const QByteArray &medium, const QBy
 
             QByteArray data = Choqok::MediaManager::createMultipartFormData(formdata, listMediafiles);
             job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
-            job->addMetaData(QStringLiteral("customHTTPHeader"),
-                             QStringLiteral("Authorization: Basic ") +
-                             QLatin1String(QString::fromLatin1("%1:%2").arg(login).arg(pass).toUtf8().toBase64()));
+            job->addMetaData(QLatin1String("customHTTPHeader"),
+                             QLatin1String("Authorization: Basic ") +
+                             QLatin1String(QStringLiteral("%1:%2").arg(login).arg(pass).toUtf8().toBase64()));
         }
     } else if (PosterousSettings::oauth()) {
         QString alias = PosterousSettings::alias();

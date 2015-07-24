@@ -50,7 +50,7 @@ OCSConfigureWidget::OCSConfigureWidget(OCSMicroblog *microblog, OCSAccount *acco
         QString servName = newAccountAlias;
         int counter = 1;
         while (Choqok::AccountManager::self()->findAccount(newAccountAlias)) {
-            newAccountAlias = QString::fromLatin1("%1%2").arg(servName).arg(counter);
+            newAccountAlias = QStringLiteral("%1%2").arg(servName).arg(counter);
             counter++;
         }
         setAccount(mAccount = new OCSAccount(microblog, newAccountAlias));

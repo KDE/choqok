@@ -56,14 +56,14 @@ YourlsConfig::~YourlsConfig()
 void YourlsConfig::load()
 {
     KCModule::load();
-    ui.cfg_password->setText(Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("yourls_%1")
+    ui.cfg_password->setText(Choqok::PasswordManager::self()->readPassword(QStringLiteral("yourls_%1")
                              .arg(ui.kcfg_username->text())));
 }
 
 void YourlsConfig::save()
 {
     KCModule::save();
-    Choqok::PasswordManager::self()->writePassword(QString::fromLatin1("yourls_%1").arg(ui.kcfg_username->text()),
+    Choqok::PasswordManager::self()->writePassword(QStringLiteral("yourls_%1").arg(ui.kcfg_username->text()),
             ui.cfg_password->text());
 }
 

@@ -60,11 +60,11 @@ QString Ur1_ca::shorten(const QString &url)
 
     if (job->error() == KJob::NoError) {
         QString output(QLatin1String(job->data()));
-        QRegExp rx(QString::fromLatin1("<p class=[\'\"]success[\'\"]>(.*)</p>"));
+        QRegExp rx(QLatin1String("<p class=[\'\"]success[\'\"]>(.*)</p>"));
         rx.setMinimal(true);
         rx.indexIn(output);
         output = rx.cap(1);
-        rx.setPattern(QString::fromLatin1("href=[\'\"](.*)[\'\"]"));
+        rx.setPattern(QLatin1String("href=[\'\"](.*)[\'\"]"));
         rx.indexIn(output);
         output = rx.cap(1);
         if (!output.isEmpty()) {

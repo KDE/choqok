@@ -522,7 +522,7 @@ void MainWindow::slotUpdateUnreadCount(int change, int sum)
             return;
         }
         if (sum > 0) {
-            mainWidget->setTabText(tabIndex, wd->currentAccount()->alias() + QString::fromLatin1("(%1)").arg(sum));
+            mainWidget->setTabText(tabIndex, wd->currentAccount()->alias() + QStringLiteral("(%1)").arg(sum));
         } else {
             mainWidget->setTabText(tabIndex, wd->currentAccount()->alias());
         }

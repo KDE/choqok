@@ -67,9 +67,9 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog *parent, const QString 
     d->oauthToken = configGroup()->readEntry("OAuthToken", QByteArray());
     d->oauthConsumerKey = configGroup()->readEntry("OAuthConsumerKey", QByteArray());
     d->oauthConsumerSecret = Choqok::PasswordManager::self()->readPassword(
-                                 QString::fromLatin1("%1_consumerSecret").arg(alias)).toUtf8();
+                                 QStringLiteral("%1_consumerSecret").arg(alias)).toUtf8();
     d->oauthTokenSecret = Choqok::PasswordManager::self()->readPassword(
-                              QString::fromLatin1("%1_tokenSecret").arg(alias)).toUtf8();
+                              QStringLiteral("%1_tokenSecret").arg(alias)).toUtf8();
     setApi(configGroup()->readEntry(QLatin1String("Api"), QString::fromLatin1("/")));
 
     qCDebug(CHOQOK) << "UsingOAuth: " << d->usingOauth;
@@ -110,9 +110,9 @@ void TwitterApiAccount::writeConfig()
     configGroup()->writeEntry("Timelines", d->timelineNames);
     configGroup()->writeEntry("OAuthToken", d->oauthToken);
     configGroup()->writeEntry("OAuthConsumerKey", d->oauthConsumerKey);
-    Choqok::PasswordManager::self()->writePassword(QString::fromLatin1("%1_consumerSecret").arg(alias()),
+    Choqok::PasswordManager::self()->writePassword(QStringLiteral("%1_consumerSecret").arg(alias()),
             QString::fromUtf8(d->oauthConsumerSecret));
-    Choqok::PasswordManager::self()->writePassword(QString::fromLatin1("%1_tokenSecret").arg(alias()),
+    Choqok::PasswordManager::self()->writePassword(QStringLiteral("%1_tokenSecret").arg(alias()),
             QString::fromUtf8(d->oauthTokenSecret));
     Choqok::Account::writeConfig();
 }

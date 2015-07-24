@@ -64,7 +64,7 @@ QString Tinyarro_ws::shorten(const QString &url)
         QString output = QString::fromUtf8(job->data());
 
         if (!output.isEmpty()) {
-            if (output.startsWith(QString::fromLatin1("http://"))) {
+            if (output.startsWith(QLatin1String("http://"))) {
                 return output;
             }
         }

@@ -82,7 +82,7 @@ void Bit_ly_Config::load()
     KConfigGroup grp(KSharedConfig::openConfig(), "Bit.ly Shortener");
     ui.kcfg_login->setText(grp.readEntry("login", ""));
     ui.kcfg_domain->setCurrentIndex(domains.indexOf(grp.readEntry("domain", "bit.ly")));
-    ui.kcfg_api_key->setText(Choqok::PasswordManager::self()->readPassword(QString::fromLatin1("bitly_%1")
+    ui.kcfg_api_key->setText(Choqok::PasswordManager::self()->readPassword(QStringLiteral("bitly_%1")
                              .arg(ui.kcfg_login->text())));
 }
 
@@ -92,7 +92,7 @@ void Bit_ly_Config::save()
     KConfigGroup grp(KSharedConfig::openConfig(), "Bit.ly Shortener");
     grp.writeEntry("login", ui.kcfg_login->text());
     grp.writeEntry("domain", domains.at(ui.kcfg_domain->currentIndex()));
-    Choqok::PasswordManager::self()->writePassword(QString::fromLatin1("bitly_%1").arg(ui.kcfg_login->text()),
+    Choqok::PasswordManager::self()->writePassword(QStringLiteral("bitly_%1").arg(ui.kcfg_login->text()),
             ui.kcfg_api_key->text());
 }
 

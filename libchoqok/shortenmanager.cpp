@@ -45,8 +45,8 @@ public:
     ShortenManagerPrivate()
         : backend(0)
     {
-        findUrlRegExp.setPattern(QString::fromLatin1("(ftps?|https?)://"));
-        removeUrlRegExp.setPattern(QString::fromLatin1("^(https?)://"));
+        findUrlRegExp.setPattern(QLatin1String("(ftps?|https?)://"));
+        removeUrlRegExp.setPattern(QLatin1String("^(https?)://"));
         reloadConfig();
     }
     void reloadConfig()

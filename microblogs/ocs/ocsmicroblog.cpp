@@ -251,10 +251,10 @@ QList< Choqok::Post * > OCSMicroblog::parseActivityList(const Attica::Activity::
         pst->author.userId = act.associatedPerson().id();
         pst->author.userName = act.associatedPerson().id();
         pst->author.homePageUrl = act.associatedPerson().homepage();
-        pst->author.location = QString::fromLatin1("%1(%2)").arg(act.associatedPerson().country())
+        pst->author.location = QStringLiteral("%1(%2)").arg(act.associatedPerson().country())
                                .arg(act.associatedPerson().city());
         pst->author.profileImageUrl = act.associatedPerson().avatarUrl().toString();
-        pst->author.realName = QString::fromLatin1("%1 %2").arg(act.associatedPerson().firstName())
+        pst->author.realName = QStringLiteral("%1 %2").arg(act.associatedPerson().firstName())
                                .arg(act.associatedPerson().lastName());
         resultList.insert(0, pst);
     }
@@ -303,7 +303,7 @@ QString OCSMicroblog::profileUrl(Choqok::Account *account, const QString &userna
 {
     OCSAccount *acc = qobject_cast<OCSAccount *>(account);
     if (acc->providerUrl().host().contains(QLatin1String("opendesktop.org"))) {
-        return QString::fromLatin1("https://opendesktop.org/usermanager/search.php?username=%1").arg(username);
+        return QStringLiteral("https://opendesktop.org/usermanager/search.php?username=%1").arg(username);
     }
     return QString();
 }
