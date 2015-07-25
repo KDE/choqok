@@ -401,6 +401,9 @@ Choqok::Post *TwitterMicroBlog::readPost(Choqok::Account *account, const QVarian
     post->replyToPostId = var[QLatin1String("in_reply_to_status_id_str")].toString();
     post->replyToUserId = var[QLatin1String("in_reply_to_user_id_str")].toString();
 
+    //postId is changed, regenerate link url
+    post->link = postUrl(account, post->author.userName, post->postId);
+
     QVariantMap userMap = var[QLatin1String("user")].toMap();
     post->author.userId = userMap[QLatin1String("id_str")].toString();
 
