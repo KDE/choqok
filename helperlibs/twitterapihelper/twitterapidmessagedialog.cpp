@@ -114,6 +114,12 @@ void TwitterApiDMessageDialog::setupUi(QWidget *mainWidget)
     mainLayout->addWidget(buttonBox);
 }
 
+void TwitterApiDMessageDialog::setFriends(const QStringList friends)
+{
+    d->comboFriendsList->clear();
+    d->comboFriendsList->addItems(friends);
+}
+
 void TwitterApiDMessageDialog::reloadFriendslist()
 {
     d->comboFriendsList->clear();

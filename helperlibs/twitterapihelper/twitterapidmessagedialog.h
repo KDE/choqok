@@ -46,6 +46,7 @@ public:
 
 protected Q_SLOTS:
     virtual void accept();
+
     void friendsUsernameListed(TwitterApiAccount *, QStringList);
     void submitPost(QString);
     void reloadFriendslist();
@@ -55,6 +56,7 @@ protected Q_SLOTS:
 
 protected:
     virtual void setupUi(QWidget *mainWidget);
+    void setFriends(const QStringList friends);
 
 private:
     class Private;

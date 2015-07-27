@@ -49,6 +49,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "laconicaaccount.h"
 #include "laconicacomposerwidget.h"
 #include "laconicadebug.h"
+#include "laconicadmessagedialog.h"
 #include "laconicaeditaccount.h"
 #include "laconicapostwidget.h"
 #include "laconicasearch.h"
@@ -259,19 +260,11 @@ QStringList LaconicaMicroBlog::readUsersScreenName(Choqok::Account *theAccount, 
     QStringList list;
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
-        TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
-
         Q_FOREACH (const QJsonValue &u, json.array()) {
             const QJsonObject user = u.toObject();
 
             if (user.contains(QStringLiteral("statusnet_profile_url"))) {
-                const QUrl profile(user.value(QStringLiteral("statusnet_profile_url")).toString());
-
-                // QUrl::host() is needed to skip scheme check
-                if (profile.host().compare(QUrl(account->host()).host()) == 0) {
-                    // Remove the initial slash from path
-                    list.append(profile.path().replace(0, 1, QString()));
-                }
+                list.append(user.value(QLatin1String("statusnet_profile_url")).toString());
             }
         }
     } else {
@@ -286,6 +279,20 @@ void LaconicaMicroBlog::requestFriendsScreenName(TwitterApiAccount *theAccount, 
 {
     Q_UNUSED(active);
     doRequestFriendsScreenName(theAccount, 1);
+}
+
+void LaconicaMicroBlog::showDirectMessageDialog(TwitterApiAccount *theAccount, const QString &toUsername)
+{
+    qCDebug(CHOQOK);
+    if (!theAccount) {
+        QAction *act = qobject_cast<QAction *>(sender());
+        theAccount = qobject_cast<TwitterApiAccount *>(Choqok::AccountManager::self()->findAccount(act->data().toString()));
+    }
+    LaconicaDMessageDialog *dmsg = new LaconicaDMessageDialog(theAccount, Choqok::UI::Global::mainWindow());
+    if (!toUsername.isEmpty()) {
+        dmsg->setTo(toUsername);
+    }
+    dmsg->show();
 }
 
 void LaconicaMicroBlog::doRequestFriendsScreenName(TwitterApiAccount *theAccount, int page)
@@ -399,6 +406,17 @@ void LaconicaMicroBlog::fetchConversation(Choqok::Account *theAccount, const QSt
     mJobsAccount[ job ] = theAccount;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchConversation(KJob*)));
     job->start();
+}
+
+QString LaconicaMicroBlog::usernameFromProfileUrl(const QString &profileUrl)
+{
+    // Remove the initial slash from path
+    return QUrl(profileUrl).path().remove(0, 1);
+}
+
+QString LaconicaMicroBlog::hostFromProfileUrl(const QString &profileUrl)
+{
+    return QUrl(profileUrl).host();
 }
 
 void LaconicaMicroBlog::slotFetchConversation(KJob *job)

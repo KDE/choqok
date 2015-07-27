@@ -6,6 +6,7 @@ include_directories(
 set(choqok_laconica_SRCS
     laconicaaccount.cpp
     laconicadebug.cpp
+    laconicadmessagedialog.cpp
     laconicamicroblog.cpp
     laconicasearch.cpp
     laconicaeditaccount.cpp

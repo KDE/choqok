@@ -65,6 +65,13 @@ public:
 
     virtual void fetchConversation(Choqok::Account *theAccount, const QString &conversationId);
 
+    virtual void requestFriendsScreenName(TwitterApiAccount *theAccount, bool active);
+
+    virtual void showDirectMessageDialog(TwitterApiAccount *theAccount = 0, const QString &toUsername = QString());
+
+    static QString usernameFromProfileUrl(const QString &profileUrl);
+    static QString hostFromProfileUrl(const QString &profileUrl);
+
 Q_SIGNALS:
     void conversationFetched(Choqok::Account *theAccount, const QString &conversationId,
                              QList<Choqok::Post *> posts);
@@ -75,18 +82,13 @@ protected:
     virtual void listFriendsUsername(TwitterApiAccount *theAccount, bool active = false);
     virtual QStringList readUsersScreenName(Choqok::Account *theAccount, const QByteArray &buffer);
 
-private:
-    void doRequestFriendsScreenName(TwitterApiAccount *theAccount, int page);
-
-public:
-    virtual void requestFriendsScreenName(TwitterApiAccount *theAccount, bool active);
-
-    //virtual QStringList readUsersScreenNameFromXml(Choqok::Account* theAccount, const QByteArray& buffer);
-
 protected Q_SLOTS:
     virtual void slotFetchConversation(KJob *job);
     void slotRequestFriendsScreenName(KJob *job);
+
 private:
+    void doRequestFriendsScreenName(TwitterApiAccount *theAccount, int page);
+
     QMap<KJob *, QString> mFetchConversationMap;
     QPointer<LaconicaSearch> mSearchBackend;
     int friendsPage;
