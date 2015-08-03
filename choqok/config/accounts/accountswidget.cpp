@@ -112,10 +112,11 @@ void AccountsWidget::editAccount(QString alias)
         QPointer<EditAccountDialog> d = new EditAccountDialog(eaw, this);
         d->setModal(true);
         d->exec();
+
+        emitChanged();
+
         // Needs for update alias after editing account
-        if (currentAccount) {
-            accountsTable->setItem(currentRow, 0, new QTableWidgetItem(currentAccount->alias()));
-        }
+        accountsTable->setItem(currentRow, 0, new QTableWidgetItem(currentAccount->alias()));
     }
 }
 
