@@ -151,7 +151,7 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Cho
         KIO::StoredTransferJob *picJob = KIO::storedGet(picUrl, KIO::Reload, KIO::HideProgressInfo);
         picJob->exec();
         if (picJob->error()) {
-            qCCritical(CHOQOK) << "Job error: " << picJob->errorString();
+            qCCritical(CHOQOK) << "Job error:" << picJob->errorString();
             KMessageBox::detailedError(Choqok::UI::Global::mainWindow(),
                                        i18n("Uploading medium failed: cannot read the medium file."),
                                        picJob->errorString());
@@ -284,7 +284,7 @@ void TwitterMicroBlog::slotFetchUserLists(KJob *job)
     QString username = mFetchUsersListMap.take(job);
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if (job->error()) {
-        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
         Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
                      i18n("Fetching %1's lists failed. %2", username, job->errorString()), Critical);
     } else {

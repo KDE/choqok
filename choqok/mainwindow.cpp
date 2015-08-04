@@ -449,7 +449,7 @@ void MainWindow::enableApp()
 
 void MainWindow::addBlog(Choqok::Account *account, bool isStartup)
 {
-    qCDebug(CHOQOK) << "Adding new Blog, Alias: " << account->alias() << "Blog: " << account->microblog()->serviceName();
+    qCDebug(CHOQOK) << "Adding new Blog, Alias:" << account->alias() << "Blog:" << account->microblog()->serviceName();
 
     Choqok::UI::MicroBlogWidget *widget = account->microblog()->createMicroBlogWidget(account, this);
     connect(widget, SIGNAL(loaded()), SLOT(oneMicroblogLoaded()));
@@ -503,7 +503,7 @@ void MainWindow::updateTabbarHiddenState()
 
 void MainWindow::slotUpdateUnreadCount(int change, int sum)
 {
-    qCDebug(CHOQOK) << "Change: " << change << " Sum: " << sum;
+    qCDebug(CHOQOK) << "Change:" << change << "Sum:" << sum;
     Choqok::UI::MicroBlogWidget *wd = qobject_cast<Choqok::UI::MicroBlogWidget *>(sender());
 
     if (sysIcon) {

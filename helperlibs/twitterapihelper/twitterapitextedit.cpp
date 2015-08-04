@@ -268,7 +268,7 @@ void TwitterApiTextEdit::fetchTCoMaximumLength()
 void TwitterApiTextEdit::slotTCoMaximumLength(KJob *job)
 {
     if (job->error()) {
-        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
     } else {
         KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
         const QJsonDocument json = QJsonDocument::fromJson(j->data());

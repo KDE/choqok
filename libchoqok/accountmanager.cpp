@@ -107,7 +107,7 @@ const QList< Account * > &AccountManager::accounts() const
 
 Account *AccountManager::findAccount(const QString &alias)
 {
-    qCDebug(CHOQOK) << "Finding: " << alias;
+    qCDebug(CHOQOK) << "Finding:" << alias;
     int count = d->accounts.count();
     for (int i = 0; i < count; ++i) {
         if (d->accounts[i]->alias() == alias) {
@@ -120,7 +120,7 @@ Account *AccountManager::findAccount(const QString &alias)
 
 bool AccountManager::removeAccount(const QString &alias)
 {
-    qCDebug(CHOQOK) << "Removing " << alias;
+    qCDebug(CHOQOK) << "Removing" << alias;
     int count = d->accounts.count();
     d->conf->deleteGroup(QStringLiteral("Account_%1").arg(alias));
     d->conf->sync();
@@ -156,7 +156,7 @@ bool AccountManager::removeAccount(const QString &alias)
 
 Account *AccountManager::registerAccount(Account *account)
 {
-    qCDebug(CHOQOK) << "Adding: " << account->alias();
+    qCDebug(CHOQOK) << "Adding:" << account->alias();
 
     if (!account || d->accounts.contains(account) || account->alias().isEmpty()) {
         return 0L;
@@ -209,7 +209,7 @@ void AccountManager::loadAllAccounts()
             }
         }
     }
-    qCDebug(CHOQOK) << d->accounts.count() << " accounts loaded.";
+    qCDebug(CHOQOK) << d->accounts.count() << "accounts loaded.";
     d->accounts = sortAccountsByPriority(d->accounts);
     Q_EMIT allAccountsLoaded();
 }

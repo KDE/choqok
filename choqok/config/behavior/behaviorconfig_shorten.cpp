@@ -100,7 +100,7 @@ void BehaviorConfig_Shorten::save()
     const QString shorten = shortenPlugins->itemData(shortenPlugins->currentIndex()).toString();
     Choqok::BehaviorSettings::setShortenerPlugin(shorten);
     if (prevShortener != shorten) {
-        qCDebug(CHOQOK) << prevShortener << " -> " << shorten;
+        qCDebug(CHOQOK) << prevShortener << "->" << shorten;
         Choqok::BehaviorSettings::self()->save();
         Choqok::ShortenManager::self()->reloadConfig();
     }

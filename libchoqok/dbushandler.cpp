@@ -88,7 +88,7 @@ void DbusHandler::slotTitleUrl(KJob *job)
     }
     KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> (job);
     if (job->error()) {
-        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
     } else {
         QByteArray data = stj->data();
         QTextCodec *codec = QTextCodec::codecForHtml(data);

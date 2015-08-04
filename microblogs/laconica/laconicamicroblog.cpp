@@ -179,7 +179,7 @@ void LaconicaMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Ch
         KIO::StoredTransferJob *picJob = KIO::storedGet(picUrl, KIO::Reload, KIO::HideProgressInfo);
         picJob->exec();
         if (picJob->error()) {
-            qCCritical(CHOQOK) << "Job error: " << picJob->errorString();
+            qCCritical(CHOQOK) << "Job error:" << picJob->errorString();
             KMessageBox::detailedError(Choqok::UI::Global::mainWindow(),
                                        i18n("Uploading medium failed: cannot read the medium file."),
                                        picJob->errorString());
@@ -269,7 +269,7 @@ QStringList LaconicaMicroBlog::readUsersScreenName(Choqok::Account *theAccount, 
         }
     } else {
         QString err = i18n("Retrieving the friends list failed. The data returned from the server is corrupted.");
-        qCDebug(CHOQOK) << "JSON parse error: the buffer is: \n" << buffer;
+        qCDebug(CHOQOK) << "JSON parse error:the buffer is: \n" << buffer;
         Q_EMIT error(theAccount, ParsingError, err, Critical);
     }
     return list;
@@ -430,7 +430,7 @@ void LaconicaMicroBlog::slotFetchConversation(KJob *job)
     QString conversationId = mFetchConversationMap.take(job);
     Choqok::Account *theAccount = mJobsAccount.take(job);
     if (job->error()) {
-        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
         Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
                      i18n("Fetching conversation failed. %1", job->errorString()), Normal);
     } else {

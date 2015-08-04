@@ -210,7 +210,7 @@ void MicroBlogWidget::newTimelineDataRecieved(Choqok::Account *theAccount, const
         return;
     }
 
-    qCDebug(CHOQOK) << d->account->alias() << ": " << type;
+    qCDebug(CHOQOK) << d->account->alias() << ":" << type;
     d->latestUpdate->setText(QTime::currentTime().toString());
     if (d->timelines.contains(type)) {
         d->timelines.value(type)->addNewPosts(data);

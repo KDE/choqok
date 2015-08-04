@@ -139,7 +139,7 @@ void Mobypicture::slotUpload(KJob *job)
 {
     QUrl localUrl = mUrlMap.take(job);
     if (job->error()) {
-        qCritical() << "Job Error: " << job->errorString();
+        qCritical() << "Job Error:" << job->errorString();
         Q_EMIT uploadingFailed(localUrl, job->errorString());
         return;
     } else {

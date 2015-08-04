@@ -72,7 +72,7 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog *parent, const QString 
                               QStringLiteral("%1_tokenSecret").arg(alias)).toUtf8();
     setApi(configGroup()->readEntry(QLatin1String("Api"), QString::fromLatin1("/")));
 
-    qCDebug(CHOQOK) << "UsingOAuth: " << d->usingOauth;
+    qCDebug(CHOQOK) << "UsingOAuth:" << d->usingOauth;
     if (d->usingOauth) {
         initQOAuthInterface();
     }

@@ -175,7 +175,7 @@ Choqok::Account *LaconicaEditAccountWidget::apply()
 //         kcfg_authorize->setEnabled(false);
 //         getPinCode();
 //     } else {
-//         qCDebug(CHOQOK)<<"ERROR: " <<qoauth->error()<<' '<<Choqok::qoauthErrorText(qoauth->error());
+//         qCDebug(CHOQOK)<<"ERROR:" <<qoauth->error()<<Choqok::qoauthErrorText(qoauth->error());
 //         KMessageBox::detailedError(this, i18n("Authentication Error"),
 //                                    Choqok::qoauthErrorText(qoauth->error()));
 //     }
@@ -221,7 +221,7 @@ void LaconicaEditAccountWidget::setTextLimit()
     KIO::StoredTransferJob *job = KIO::storedGet(QUrl(url), KIO::Reload, KIO::HideProgressInfo);
     job->exec();
     if (job->error()) {
-        qCCritical(CHOQOK) << "Job error: " << job->errorString();
+        qCCritical(CHOQOK) << "Job error:" << job->errorString();
         return;
     }
 

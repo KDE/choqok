@@ -139,7 +139,7 @@ void TwitterSearch::searchResultsReturned(KJob *job)
     SearchInfo info = mSearchJobs.take(job);
 
     if (job->error()) {
-        qCCritical(CHOQOK) << "Error: " << job->errorString();
+        qCCritical(CHOQOK) << "Error:" << job->errorString();
         Q_EMIT error(i18n("Unable to fetch search results: %1", job->errorString()));
         QList<Choqok::Post *> postsList;
         Q_EMIT searchResultsReceived(info, postsList);

@@ -112,7 +112,7 @@ void Twitpic::slotUpload(KJob *job)
 {
     QUrl localUrl = mUrlMap.take(job);
     if (job->error()) {
-        qCritical() << "Job Error: " << job->errorString();
+        qCritical() << "Job Error:" << job->errorString();
         Q_EMIT uploadingFailed(localUrl, job->errorString());
         return;
     } else {
@@ -127,7 +127,7 @@ void Twitpic::slotUpload(KJob *job)
                 Q_EMIT mediumUploaded(localUrl, map.value("url").toString());
             }
         } else {
-            qWarning() << "Parse error: " << stj->data();
+            qWarning() << "Parse error:" << stj->data();
             Q_EMIT uploadingFailed(localUrl, i18n("Malformed response"));
         }
     }

@@ -119,7 +119,7 @@ void MediaManager::slotImageFetched(KJob *job)
     QString remote = d->queue.value(job);
     d->queue.remove(job);
     if (job->error()) {
-        qCCritical(CHOQOK) << "Job error: " << job->error() << "\t" << job->errorString();
+        qCCritical(CHOQOK) << "Job error:" << job->error() << "\t" << job->errorString();
         QString errMsg = i18n("Cannot download image from %1.",
                               job->errorString());
         Q_EMIT fetchError(remote, errMsg);
@@ -180,7 +180,7 @@ void MediaManager::uploadMedium(const QUrl &localUrl, const QString &pluginId)
     KIO::StoredTransferJob *picJob = KIO::storedGet(localUrl, KIO::Reload, KIO::HideProgressInfo);
     picJob->exec();
     if (picJob->error()) {
-        qCritical() << "Job error: " << picJob->errorString();
+        qCritical() << "Job error:" << picJob->errorString();
         KMessageBox::detailedError(UI::Global::mainWindow(), i18n("Uploading medium failed: cannot read the medium file."),
                                    picJob->errorString());
         return;

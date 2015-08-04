@@ -95,7 +95,7 @@ ShortenManager *ShortenManager::self()
 QString ShortenManager::shortenUrl(const QString &url)
 {
     if (_smp->backend) {
-        qCDebug(CHOQOK) << "Shortening: " << url;
+        qCDebug(CHOQOK) << "Shortening:" << url;
         NotifyManager::shortening(url);
 // #ifndef QT_NO_CONCURRENT
         ///Commented due KIO doesn't support running in another thread

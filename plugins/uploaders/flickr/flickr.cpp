@@ -130,7 +130,7 @@ void Flickr::slotUpload(KJob *job)
 {
     QUrl localUrl = mUrlMap.take(job);
     if (job->error()) {
-        qCritical() << "Job Error: " << job->errorString();
+        qCritical() << "Job Error:" << job->errorString();
         Q_EMIT uploadingFailed(localUrl, job->errorString());
         return;
     } else {
@@ -198,7 +198,7 @@ void Flickr::slotUpload(KJob *job)
                             errMsg = i18n("The requested service is temporarily unavailable. Try again later");
                             break;
                         default:
-                            errMsg = i18n("Unknown Error: %1. Please try again later", errCode);
+                            errMsg = i18n("Unknown Error:%1. Please try again later", errCode);
                             break;
                         }
                         Q_EMIT uploadingFailed(localUrl, errMsg);

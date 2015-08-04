@@ -687,7 +687,7 @@ void PumpIOMicroBlog::slotCreatePost(KJob *job)
     }
     int ret = 1;
     if (job->error()) {
-        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
     } else {
         KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
 
@@ -725,7 +725,7 @@ void PumpIOMicroBlog::slotFavorite(KJob *job)
         return;
     }
     if (job->error()) {
-        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
         Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
                      i18n("Cannot set/unset the post as favorite. %1", job->errorString()));
     } else {
@@ -748,7 +748,7 @@ void PumpIOMicroBlog::slotFetchPost(KJob *job)
     }
     int ret = 1;
     if (job->error()) {
-        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
     } else {
         KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
 
@@ -785,7 +785,7 @@ void PumpIOMicroBlog::slotFetchReplies(KJob *job)
     }
     int ret = 1;
     if (job->error()) {
-        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
     } else {
         KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
 
@@ -826,7 +826,7 @@ void PumpIOMicroBlog::slotFollowing(KJob *job)
         return;
     }
     if (job->error()) {
-        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
     }
     bool ret = 1;
     PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
@@ -872,7 +872,7 @@ void PumpIOMicroBlog::slotLists(KJob *job)
         return;
     }
     if (job->error()) {
-        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
     }
     bool ret = 1;
     PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
@@ -924,7 +924,7 @@ void PumpIOMicroBlog::slotShare(KJob *job)
     }
     int ret = 1;
     if (job->error()) {
-        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
     } else {
         Choqok::UI::Global::mainWindow()->showStatusMessage(
             i18n("The post has been shared."));
@@ -960,7 +960,7 @@ void PumpIOMicroBlog::slotRemovePost(KJob *job)
     }
     int ret = 1;
     if (job->error()) {
-        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
     } else {
         KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
 
@@ -999,7 +999,7 @@ void PumpIOMicroBlog::slotUpdatePost(KJob *job)
     }
     int ret = 1;
     if (job->error()) {
-        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
     } else {
         KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
 
@@ -1031,7 +1031,7 @@ void PumpIOMicroBlog::slotUpdateTimeline(KJob *job)
         return;
     }
     if (job->error()) {
-        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
         Q_EMIT error(account, Choqok::MicroBlog::CommunicationError,
                      i18n("An error occurred when fetching the timeline"));
     } else {
@@ -1061,7 +1061,7 @@ void PumpIOMicroBlog::slotUpload(KJob *job)
     }
     int ret = 1;
     if (job->error()) {
-        qCDebug(CHOQOK) << "Job Error: " << job->errorString();
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
     } else {
         KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
 

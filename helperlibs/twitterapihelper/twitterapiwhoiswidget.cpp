@@ -149,7 +149,7 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob *job)
 {
     qCDebug(CHOQOK);
     if (job->error()) {
-        qCCritical(CHOQOK) << "Job Error: " << job->errorString();
+        qCCritical(CHOQOK) << "Job Error:" << job->errorString();
         if (Choqok::UI::Global::mainWindow()->statusBar()) {
             Choqok::UI::Global::mainWindow()->statusBar()->showMessage(job->errorString());
         }

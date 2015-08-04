@@ -125,10 +125,10 @@ void PumpIOEditAccountWidget::authorizeUser()
                                          i18n("Authorized"));
             }
         } else {
-            qCDebug(CHOQOK) << QLatin1String("QOAuth error: ") + Choqok::qoauthErrorText(m_qoauth->error());
+            qCDebug(CHOQOK) << QLatin1String("QOAuth error:") + Choqok::qoauthErrorText(m_qoauth->error());
         }
     } else {
-        qCDebug(CHOQOK) << QLatin1String("QOAuth error: ") + Choqok::qoauthErrorText(m_qoauth->error());
+        qCDebug(CHOQOK) << QLatin1String("QOAuth error:") + Choqok::qoauthErrorText(m_qoauth->error());
     }
 }
 

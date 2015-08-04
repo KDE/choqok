@@ -125,7 +125,7 @@ void TwitterEditAccountWidget::authorizeUser()
     if (qoauth->error() == QOAuth::NoError) {
         token = reply.value(QOAuth::tokenParameterName());
         tokenSecret = reply.value(QOAuth::tokenSecretParameterName());
-        qCDebug(CHOQOK) << "token: " << token;
+        qCDebug(CHOQOK) << "token:" << token;
         QUrl url(QLatin1String("https://twitter.com/oauth/authorize"));
         QUrlQuery urlQuery;
         urlQuery.addQueryItem(QLatin1String("oauth_token"), QLatin1String(token));
@@ -134,7 +134,7 @@ void TwitterEditAccountWidget::authorizeUser()
         Choqok::openUrl(url);
         getPinCode();
     } else {
-        qCDebug(CHOQOK) << "ERROR: " << qoauth->error() << ' ' << Choqok::qoauthErrorText(qoauth->error());
+        qCDebug(CHOQOK) << "ERROR:" << qoauth->error() << Choqok::qoauthErrorText(qoauth->error());
         KMessageBox::detailedError(this, i18n("Authorization Error"),
                                    Choqok::qoauthErrorText(qoauth->error()));
     }
@@ -165,7 +165,7 @@ void TwitterEditAccountWidget::getPinCode()
             KMessageBox::information(this, i18n("Choqok is authorized successfully."),
                                      i18n("Authorized"));
         } else {
-            qCDebug(CHOQOK) << "ERROR: " << qoauth->error() << ' ' << Choqok::qoauthErrorText(qoauth->error());
+            qCDebug(CHOQOK) << "ERROR:" << qoauth->error() << Choqok::qoauthErrorText(qoauth->error());
             KMessageBox::detailedError(this, i18n("Authorization Error"),
                                        Choqok::qoauthErrorText(qoauth->error()));
         }

@@ -149,7 +149,7 @@ void PluginManager::shutdown()
 {
     qCDebug(CHOQOK);
     if (_kpmp->shutdownMode != PluginManagerPrivate::Running) {
-        qCDebug(CHOQOK) << "called when not running.  / state = " << _kpmp->shutdownMode;
+        qCDebug(CHOQOK) << "called when not running.  / state =" << _kpmp->shutdownMode;
         return;
     }
 
@@ -220,7 +220,7 @@ void PluginManager::slotShutdownTimeout()
     }
 
     qCWarning(CHOQOK) << "Some plugins didn't shutdown in time!" << endl
-                      << "Remaining plugins: " << remaining << endl
+                      << "Remaining plugins:" << remaining << endl
                       << "Forcing Choqok shutdown now." << endl;
 
     slotShutdownDone();
@@ -335,7 +335,7 @@ Plugin *PluginManager::loadPlugin(const QString &_pluginId, PluginLoadMode mode 
 
 Plugin *PluginManager::loadPluginInternal(const QString &pluginId)
 {
-    qCDebug(CHOQOK) << "Loading Plugin: " << pluginId;
+    qCDebug(CHOQOK) << "Loading Plugin:" << pluginId;
 
     KPluginInfo info = infoForPluginId(pluginId);
     if (!info.isValid()) {
@@ -368,7 +368,7 @@ Plugin *PluginManager::loadPluginInternal(const QString &pluginId)
 //         if ( protocol )
 //             emit protocolLoaded( protocol );
     } else {
-        qCDebug(CHOQOK) << "Loading plugin " << pluginId << " failed, KServiceTypeTrader reported error: " << error ;
+        qCDebug(CHOQOK) << "Loading plugin" << pluginId << "failed, KServiceTypeTrader reported error:" << error ;
     }
 
     return plugin;

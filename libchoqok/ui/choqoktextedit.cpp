@@ -289,7 +289,7 @@ void TextEdit::setupSpeller()
     if (d->curLang.isEmpty()) {
         d->curLang = s.defaultLanguage();
     }
-    qCDebug(CHOQOK) << "Current LANG: " << d->curLang;
+    qCDebug(CHOQOK) << "Current LANG:" << d->curLang;
     QMap<QString, QString> list = s.availableDictionaries();
     QMap<QString, QString>::const_iterator it = list.constBegin(), endIt = list.constEnd();
     for (; it != endIt; ++it) {
