@@ -65,13 +65,10 @@ void OCSMicroblog::saveTimeline(Choqok::Account *account, const QString &timelin
     KConfig postsBackup(fileName, KConfig::NoGlobals, QStandardPaths::DataLocation);
 
     ///Clear previous data:
-    QStringList prevList = postsBackup.groupList();
-    int c = prevList.count();
-    if (c > 0) {
-        for (int i = 0; i < c; ++i) {
-            postsBackup.deleteGroup(prevList[i]);
-        }
+    Q_FOREACH (const QString &group, postsBackup.groupList()) {
+        postsBackup.deleteGroup(group);
     }
+
     QList< Choqok::UI::PostWidget *>::const_iterator it, endIt = timeline.constEnd();
     for (it = timeline.constBegin(); it != endIt; ++it) {
         const Choqok::Post *post = (*it)->currentPost();

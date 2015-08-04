@@ -53,14 +53,11 @@ public:
 
         // Clean up loadedPlugins manually, because PluginManager can't access our global
         // static once this destructor has started.
-        while (!loadedPlugins.empty()) {
-            InfoToPluginMap::ConstIterator it = loadedPlugins.constBegin();
-            qCWarning(CHOQOK) << "Deleting stale plugin '" << it.value()->objectName() << "'";
-            KPluginInfo info = it.key();
-            Plugin *plugin = it.value();
-            loadedPlugins.remove(info);
+        Q_FOREACH (const KPluginInfo &p, loadedPlugins.keys()) {
+            Plugin *plugin = loadedPlugins.value(p);
             plugin->disconnect(&instance, SLOT(slotPluginDestroyed(QObject*)));
             plugin->deleteLater();;
+            loadedPlugins.remove(p);
         }
     }
 
@@ -110,10 +107,9 @@ QList<KPluginInfo> PluginManager::availablePlugins(const QString &category) cons
     }
 
     QList<KPluginInfo> result;
-    QList<KPluginInfo>::ConstIterator it;
-    for (it = _kpmp->plugins.constBegin(); it != _kpmp->plugins.constEnd(); ++it) {
-        if (it->category() == category && !(*it).service()->noDisplay()) {
-            result.append(*it);
+    Q_FOREACH (const KPluginInfo &p, _kpmp->plugins) {
+        if ((p.category().compare(category) == 0) && !p.service()->noDisplay()) {
+            result.append(p);
         }
     }
 
@@ -124,10 +120,9 @@ PluginList PluginManager::loadedPlugins(const QString &category) const
 {
     PluginList result;
 
-    for (PluginManagerPrivate::InfoToPluginMap::ConstIterator it = _kpmp->loadedPlugins.constBegin();
-            it != _kpmp->loadedPlugins.constEnd(); ++it) {
-        if (category.isEmpty() || it.key().category() == category) {
-            result.append(it.value());
+    Q_FOREACH (const KPluginInfo &p, _kpmp->loadedPlugins.keys()) {
+        if (category.isEmpty() || p.category().compare(category) == 0) {
+            result.append(_kpmp->loadedPlugins.value(p));
         }
     }
 
@@ -136,12 +131,12 @@ PluginList PluginManager::loadedPlugins(const QString &category) const
 
 KPluginInfo PluginManager::pluginInfo(const Plugin *plugin) const
 {
-    for (PluginManagerPrivate::InfoToPluginMap::ConstIterator it = _kpmp->loadedPlugins.constBegin();
-            it != _kpmp->loadedPlugins.constEnd(); ++it) {
-        if (it.value() == plugin) {
-            return it.key();
+    Q_FOREACH (const KPluginInfo &p, _kpmp->loadedPlugins.keys()) {
+        if (_kpmp->loadedPlugins.value(p) == plugin) {
+            return p;
         }
     }
+
     return KPluginInfo();
 }
 
@@ -214,9 +209,8 @@ void PluginManager::slotShutdownTimeout()
     }
 
     QStringList remaining;
-    for (PluginManagerPrivate::InfoToPluginMap::ConstIterator it = _kpmp->loadedPlugins.constBegin();
-            it != _kpmp->loadedPlugins.constEnd(); ++it) {
-        remaining.append(it.value()->pluginId());
+    Q_FOREACH (Plugin *p, _kpmp->loadedPlugins.values()) {
+        remaining.append(p->pluginId());
     }
 
     qCWarning(CHOQOK) << "Some plugins didn't shutdown in time!" << endl
@@ -239,26 +233,22 @@ void PluginManager::loadAllPlugins()
     if (config->hasGroup(QLatin1String("Plugins"))) {
         QMap<QString, bool> pluginsMap;
 
-        QMap<QString, QString> entries = config->entryMap(QLatin1String("Plugins"));
-        QMap<QString, QString>::Iterator it;
-        for (it = entries.begin(); it != entries.end(); ++it) {
-            QString key = it.key();
+        const QMap<QString, QString> entries = config->entryMap(QLatin1String("Plugins"));
+        Q_FOREACH (const QString key, entries) {
             if (key.endsWith(QLatin1String("Enabled"))) {
-                pluginsMap.insert(key.left(key.length() - 7), (it.value() == QLatin1String("true")));
+                pluginsMap.insert(key.left(key.length() - 7), (entries.value(key).compare(QLatin1String("true")) == 0));
             }
         }
 
-        QList<KPluginInfo> plugins = availablePlugins(QString::null);      //krazy:exclude=nullstrassign for old broken gcc
-        QList<KPluginInfo>::ConstIterator it2 = plugins.constBegin();
-        QList<KPluginInfo>::ConstIterator end = plugins.constEnd();
-        for (; it2 != end; ++it2) {
-            if (it2->category() == QLatin1String("MicroBlogs") ||
-                    it2->category() == QLatin1String("Shorteners")) {
+        Q_FOREACH (const KPluginInfo &p, availablePlugins(QString::null)) { //krazy:exclude=nullstrassign for old broken gcc
+            if ((p.category().compare(QLatin1String("MicroBlogs")) == 0) ||
+                    (p.category().compare(QLatin1String("Shorteners")) == 0))
+            {
                 continue;
             }
 
-            QString pluginName = it2->pluginName();
-            if (pluginsMap.value(pluginName, it2->isPluginEnabledByDefault())) {
+            const QString pluginName = p.pluginName();
+            if (pluginsMap.value(pluginName, p.isPluginEnabledByDefault())) {
                 if (!plugin(pluginName)) {
                     _kpmp->pluginsToLoad.push(pluginName);
                 }
@@ -273,16 +263,15 @@ void PluginManager::loadAllPlugins()
         }
     } else {
         // we had no config, so we load any plugins that should be loaded by default.
-        QList<KPluginInfo> plugins = availablePlugins(QString::null);      //krazy:exclude=nullstrassign for old broken gcc
-        QList<KPluginInfo>::ConstIterator it = plugins.constBegin();
-        QList<KPluginInfo>::ConstIterator end = plugins.constEnd();
-        for (; it != end; ++it) {
-            if (it->category() == QLatin1String("MicroBlogs") ||
-                    it->category() == QLatin1String("Shorteners")) {
+        Q_FOREACH (const KPluginInfo &p, availablePlugins(QString::null)) { //krazy:exclude=nullstrassign for old broken gcc
+            if ((p.category().compare(QLatin1String("MicroBlogs")) == 0) ||
+                    (p.category().compare(QLatin1String("Shorteners")) == 0))
+            {
                 continue;
             }
-            if (it->isPluginEnabledByDefault()) {
-                _kpmp->pluginsToLoad.push(it->pluginName());
+
+            if (p.isPluginEnabledByDefault()) {
+                _kpmp->pluginsToLoad.push(p.pluginName());
             }
         }
     }
@@ -378,7 +367,7 @@ bool PluginManager::unloadPlugin(const QString &spec)
 {
     qCDebug(CHOQOK) << spec;
     if (Plugin *thePlugin = plugin(spec)) {
-        qCDebug(CHOQOK) << "Unloading " << spec;
+        qCDebug(CHOQOK) << "Unloading" << spec;
         thePlugin->aboutToUnload();
         return true;
     } else {
@@ -389,11 +378,10 @@ bool PluginManager::unloadPlugin(const QString &spec)
 void PluginManager::slotPluginDestroyed(QObject *plugin)
 {
     qCDebug(CHOQOK);
-    for (PluginManagerPrivate::InfoToPluginMap::Iterator it = _kpmp->loadedPlugins.begin();
-            it != _kpmp->loadedPlugins.end(); ++it) {
-        if (it.value() == plugin) {
-            QString pluginName = it.key().pluginName();
-            _kpmp->loadedPlugins.erase(it);
+    Q_FOREACH (const KPluginInfo &p, _kpmp->loadedPlugins.keys()) {
+        if (_kpmp->loadedPlugins.value(p) == plugin) {
+            const QString pluginName = p.pluginName();
+            _kpmp->loadedPlugins.remove(p);
             Q_EMIT pluginUnloaded(pluginName);
             break;
         }
@@ -435,10 +423,9 @@ Plugin *PluginManager::plugin(const QString &_pluginId) const
 
 KPluginInfo PluginManager::infoForPluginId(const QString &pluginId) const
 {
-    QList<KPluginInfo>::ConstIterator it;
-    for (it = _kpmp->plugins.constBegin(); it != _kpmp->plugins.constEnd(); ++it) {
-        if (it->pluginName() == pluginId) {
-            return *it;
+    Q_FOREACH (const KPluginInfo &p, _kpmp->plugins) {
+        if (p.pluginName().compare(pluginId) == 0) {
+            return p;
         }
     }
 

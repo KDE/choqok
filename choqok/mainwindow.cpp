@@ -143,10 +143,10 @@ void MainWindow::loadAllAccounts()
 
     settingsChanged();
     QList<Choqok::Account *> accList = Choqok::AccountManager::self()->accounts();
-    int count = microblogCounter = accList.count();
+    const int count = microblogCounter = accList.count();
     if (count > 0) {
-        for (int i = 0; i < count; ++i) {
-            addBlog(accList.at(i), true);
+        Q_FOREACH (Choqok::Account *ac, accList) {
+            addBlog(ac, true);
         }
         qCDebug(CHOQOK) << "All accounts loaded.";
         if (Choqok::BehaviorSettings::updateInterval() > 0) {

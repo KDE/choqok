@@ -65,10 +65,9 @@ MessageIndicatorManager::~MessageIndicatorManager()
 void MessageIndicatorManager::slotCanWorkWithAccs()
 {
     QList<Choqok::UI::MicroBlogWidget *> lst = choqokMainWindow->microBlogsWidgetsList();
-    QList< Choqok::Account * > accs = Choqok::AccountManager::self()->accounts();
-    if (lst.count() == accs.count()) {
-        for (int i = 0; i < choqokMainWindow->microBlogsWidgetsList().count(); i++) {
-            connect(lst.at(i), SIGNAL(updateUnreadCount(int,int)), SLOT(slotupdateUnreadCount(int,int)));
+    if (lst.count() == Choqok::AccountManager::self()->accounts().count()) {
+        Q_FOREACH (Choqok::UI::MicroBlogWidget *microBlog, lst) {
+            connect(microBlog, SIGNAL(updateUnreadCount(int,int)), SLOT(slotupdateUnreadCount(int,int)));
         }
     } else {
         QTimer::singleShot(500, this, SLOT(slotCanWorkWithAccs()));

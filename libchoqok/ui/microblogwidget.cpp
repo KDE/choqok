@@ -55,7 +55,7 @@ QIcon addNumToIcon(const QIcon &big , int number , const QSize &result_size , co
     QList<QIcon::Mode> mods;
     mods << QIcon::Active /*<< QIcon::Disabled << QIcon::Selected*/;
 
-    for (int i = 0 ; i < mods.count() ; i++) {
+    Q_FOREACH (const QIcon::Mode &m, mods) {
         QPixmap pixmap = big.pixmap(result_size);
         QPainter painter(&pixmap);
         QFont font;
@@ -84,7 +84,7 @@ QIcon addNumToIcon(const QIcon &big , int number , const QSize &result_size , co
         painter.setPen(palette.color(QPalette::Active , QPalette::Text));
         painter.drawText(rct , Qt::AlignHCenter | Qt::AlignVCenter , QString::number(number));
 
-        result.addPixmap(pixmap , mods.at(i));
+        result.addPixmap(pixmap , m);
     }
 
     return result;

@@ -240,13 +240,10 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
         KConfig postsBackup(fileName, KConfig::NoGlobals, QStandardPaths::DataLocation);
 
         ///Clear previous data:
-        QStringList prevList = postsBackup.groupList();
-        int c = prevList.count();
-        if (c > 0) {
-            for (int i = 0; i < c; ++i) {
-                postsBackup.deleteGroup(prevList[i]);
-            }
+        Q_FOREACH (const QString &group, postsBackup.groupList()) {
+            postsBackup.deleteGroup(group);
         }
+
         QList< Choqok::UI::PostWidget *>::const_iterator it, endIt = timeline.constEnd();
         for (it = timeline.constBegin(); it != endIt; ++it) {
             const Choqok::Post *post = ((*it)->currentPost());
@@ -1249,14 +1246,14 @@ QString TwitterApiMicroBlog::checkForError(const QByteArray &buffer)
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
         const QVariantMap map = json.toVariant().toMap();
-        QStringList errors;
         if (map.contains(QLatin1String("errors"))) {
-            for (int i = 0; i < map[QLatin1String("errors")].toList().count(); i++) {
-                errors.append(map[QLatin1String("errors")].toList()[i].toMap()[QLatin1String("message")].toString());
+            QStringList errors;
+            Q_FOREACH (const QVariant &msg, map[QLatin1String("errors")].toList()) {
+                errors.append(msg.toMap()[QLatin1String("message")].toString());
                 qCCritical(CHOQOK) << "Error:" << errors.last();
             }
 
-            return errors.join(QLatin1String(";"));
+            return errors.join(QLatin1Char(';'));
         }
     }
     return QString();

@@ -210,10 +210,8 @@ void QuickPost::accept()
 void QuickPost::loadAccounts()
 {
     qCDebug(CHOQOK);
-    QList<Account *> ac = AccountManager::self()->accounts();
-    QListIterator<Account *> it(ac);
-    while (it.hasNext()) {
-        addAccount(it.next());
+    Q_FOREACH (Choqok::Account *ac, AccountManager::self()->accounts()) {
+        addAccount(ac);
     }
 }
 

@@ -222,17 +222,15 @@ void NowListening::slotPrepareNowListening()
 
     //trying to find not supported players that implamented the MPRIS-Dbus interface
     if (!isPlaying && !MPRIS::getRunningPlayers().isEmpty()) {
-        QStringList players = MPRIS::getRunningPlayers();
 
-        for (int i = 0; i < players.size(); i++) { //looking for the first playing player
+        Q_FOREACH (const QString &playerName, MPRIS::getRunningPlayers()) {
             playerFound = true;
-            QString playerName = players.at(i);
             MPRIS mprisPlayer(playerName);
             if (mprisPlayer.isValid() && mprisPlayer.isPlaying()) {
                 trackInfo = mprisPlayer.getTrackMetadata();
                 isPlaying = true;
                 player = mprisPlayer.getPlayerIdentification().left(
-                             mprisPlayer.getPlayerIdentification().lastIndexOf(QLatin1String(" "))); //remove the version of player
+                             mprisPlayer.getPlayerIdentification().lastIndexOf(QLatin1Char(' '))); //remove the version of player
                 break;
             }
         }

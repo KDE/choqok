@@ -108,12 +108,12 @@ const QList< Account * > &AccountManager::accounts() const
 Account *AccountManager::findAccount(const QString &alias)
 {
     qCDebug(CHOQOK) << "Finding:" << alias;
-    int count = d->accounts.count();
-    for (int i = 0; i < count; ++i) {
-        if (d->accounts[i]->alias() == alias) {
-            return d->accounts[i];
+    Q_FOREACH (Account *ac, d->accounts) {
+        if (ac->alias().compare(alias) == 0) {
+            return ac;
         }
     }
+
     d->lastError = i18n("There is no account with alias %1.", alias);
     return 0L;
 }
@@ -163,15 +163,14 @@ Account *AccountManager::registerAccount(Account *account)
     }
 
     // If this account already exists, do nothing
-    QListIterator<Account *> it(d->accounts);
-    while (it.hasNext()) {
-        Account *curracc = it.next();
+    Q_FOREACH (Choqok::Account *curracc, d->accounts) {
         if (account->alias() == curracc->alias()) {
             d->lastError = i18n("An account with this alias already exists: a unique alias has to be specified.");
             qCDebug(CHOQOK) << "An account with this alias already exists: a unique alias has to be specified.";
             return 0L;
         }
     }
+
     d->accounts.append(account);
     d->accounts = sortAccountsByPriority(d->accounts);
 
