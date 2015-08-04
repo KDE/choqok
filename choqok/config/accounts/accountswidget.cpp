@@ -196,11 +196,12 @@ void AccountsWidget::accountsTablestateChanged()
 void AccountsWidget::load()
 {
     qCDebug(CHOQOK);
-    QList<Choqok::Account *> ac = Choqok::AccountManager::self()->accounts();
-    QListIterator<Choqok::Account *> it(ac);
-    while (it.hasNext()) {
-        Choqok::Account *current = it.next();
-        addAccountToTable(current);
+
+    accountsTable->clearContents();
+    accountsTable->setRowCount(0);
+
+    Q_FOREACH (Choqok::Account *ac, Choqok::AccountManager::self()->accounts()) {
+       addAccountToTable(ac);
     }
     accountsTable->resizeColumnsToContents();
 }
@@ -208,7 +209,8 @@ void AccountsWidget::load()
 void AccountsWidget::save()
 {
     qCDebug(CHOQOK);
-    int rowCount = accountsTable->rowCount();
+
+    const int rowCount = accountsTable->rowCount();
     bool changed;
     for (int i = 0; i < rowCount; ++i) {
         changed = false;
