@@ -234,7 +234,7 @@ void PluginManager::loadAllPlugins()
         QMap<QString, bool> pluginsMap;
 
         const QMap<QString, QString> entries = config->entryMap(QLatin1String("Plugins"));
-        Q_FOREACH (const QString key, entries) {
+        Q_FOREACH (const QString key, entries.keys()) {
             if (key.endsWith(QLatin1String("Enabled"))) {
                 pluginsMap.insert(key.left(key.length() - 7), (entries.value(key).compare(QLatin1String("true")) == 0));
             }
