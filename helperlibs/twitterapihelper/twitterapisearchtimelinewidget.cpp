@@ -205,7 +205,7 @@ void TwitterApiSearchTimelineWidget::slotUpdateSearchResults()
     }
 }
 
-SearchInfo &TwitterApiSearchTimelineWidget::searchInfo() const
+SearchInfo TwitterApiSearchTimelineWidget::searchInfo() const
 {
     return d->searchInfo;
 }

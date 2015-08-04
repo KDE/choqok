@@ -217,7 +217,7 @@ void TimelineWidget::addPlaceholderMessage(const QString &msg)
 
 void TimelineWidget::addNewPosts(QList< Choqok::Post * > &postList)
 {
-    qCDebug(CHOQOK) << d->currentAccount->alias() << ' ' << d->timelineName << ' ' << postList.count();
+    qCDebug(CHOQOK) << d->currentAccount->alias() << d->timelineName << postList.count();
     QList<Post *>::const_iterator it, endIt = postList.constEnd();
     int unread = 0;
     for (it = postList.constBegin(); it != endIt; ++it) {
@@ -246,15 +246,17 @@ void TimelineWidget::addNewPosts(QList< Choqok::Post * > &postList)
 
 void TimelineWidget::showMarkAllAsReadButton()
 {
-    if (!d->btnMarkAllAsRead) {
-        d->btnMarkAllAsRead = new QPushButton(this);
-        d->btnMarkAllAsRead->setIcon(QIcon::fromTheme(QLatin1String("mail-mark-read")));
-        d->btnMarkAllAsRead->setToolTip(i18n("Mark timeline as read"));
-        d->btnMarkAllAsRead->setMaximumSize(14, 14);
-        d->btnMarkAllAsRead->setIconSize(QSize(12, 12));
-        connect(d->btnMarkAllAsRead, SIGNAL(clicked(bool)), SLOT(markAllAsRead()));
-        d->titleBarLayout->addWidget(d->btnMarkAllAsRead);
+    if (d->btnMarkAllAsRead) {
+        delete d->btnMarkAllAsRead;
     }
+
+    d->btnMarkAllAsRead = new QPushButton(this);
+    d->btnMarkAllAsRead->setIcon(QIcon::fromTheme(QLatin1String("mail-mark-read")));
+    d->btnMarkAllAsRead->setToolTip(i18n("Mark timeline as read"));
+    d->btnMarkAllAsRead->setMaximumSize(14, 14);
+    d->btnMarkAllAsRead->setIconSize(QSize(12, 12));
+    connect(d->btnMarkAllAsRead, SIGNAL(clicked(bool)), SLOT(markAllAsRead()));
+    d->titleBarLayout->addWidget(d->btnMarkAllAsRead);
 }
 
 void TimelineWidget::addPostWidgetToUi(PostWidget *widget)

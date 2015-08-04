@@ -36,7 +36,7 @@ public:
     ~TwitterApiSearchTimelineWidget();
     virtual void addNewPosts(QList< Choqok::Post * > &postList);
     void removeAllPosts();
-    SearchInfo &searchInfo() const;
+    SearchInfo searchInfo() const;
 
 Q_SIGNALS:
     void closeMe();
