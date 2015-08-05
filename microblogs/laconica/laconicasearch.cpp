@@ -28,8 +28,6 @@
 #include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 
-#include "choqokbehaviorsettings.h"
-
 #include "twitterapiaccount.h"
 
 #include "laconicadebug.h"
@@ -100,9 +98,11 @@ QUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
         if (!sinceStatusId.isEmpty()) {
             urlQuery.addQueryItem(QLatin1String("since_id"), sinceStatusId);
         }
-        int cntStr = Choqok::BehaviorSettings::countOfPosts();
-        if (count && count <= 100) {
-            cntStr =  count;
+        int cntStr;
+        if (count && count <= 100) { // GNU Social allows max 100 notices
+            cntStr = count;
+        } else {
+            cntStr = 100;
         }
         urlQuery.addQueryItem(QLatin1String("rpp"), QString::number(cntStr));
         if (page > 1) {
