@@ -30,8 +30,6 @@
 
 #include <QtOAuth/QtOAuth>
 
-#include "choqokbehaviorsettings.h"
-
 #include "twitterapimicroblog.h"
 
 #include "twitteraccount.h"
@@ -71,9 +69,9 @@ TwitterSearch::TwitterSearch(QObject *parent): TwitterApiSearch(parent)
 }
 
 void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
-        const QString &sinceStatusId,
-        uint count, uint page)
+        const QString &sinceStatusId, uint count, uint page)
 {
+    Q_UNUSED(page)
     qCDebug(CHOQOK);
 
     TwitterAccount *account = qobject_cast< TwitterAccount * >(searchInfo.account);
@@ -95,18 +93,14 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
         urlQuery.addQueryItem(QLatin1String("since_id"), sinceStatusId);
         param.insert("since_id", sinceStatusId.toLatin1());
     }
-    int cntStr = Choqok::BehaviorSettings::countOfPosts();
+    int cntStr;
     if (count && count <= 100) { // Twitter API specifies a max count of 100
-        cntStr =  count;
+        cntStr = count;
     } else {
         cntStr = 100;
     }
     urlQuery.addQueryItem(QLatin1String("count"), QString::number(cntStr));
     param.insert("count", QString::number(cntStr).toLatin1());
-    if (page > 1) {
-        urlQuery.addQueryItem(QLatin1String("page"), QString::number(page));
-        param.insert("page", QString::number(page).toLatin1());
-    }
     url.setQuery(urlQuery);
 
     qCDebug(CHOQOK) << url;
@@ -136,37 +130,26 @@ void TwitterSearch::searchResultsReturned(KJob *job)
         return;
     }
 
-    SearchInfo info = mSearchJobs.take(job);
-
+    QList<Choqok::Post *> postsList;
     if (job->error()) {
         qCCritical(CHOQOK) << "Error:" << job->errorString();
         Q_EMIT error(i18n("Unable to fetch search results: %1", job->errorString()));
-        QList<Choqok::Post *> postsList;
-        Q_EMIT searchResultsReceived(info, postsList);
-        return;
-    }
-    KIO::StoredTransferJob *jj = qobject_cast<KIO::StoredTransferJob *>(job);
-    QList<Choqok::Post *> postsList = parseJson(jj->data());
+    } else {
+        KIO::StoredTransferJob *jj = qobject_cast<KIO::StoredTransferJob *>(job);
+        const QJsonDocument json = QJsonDocument::fromJson(jj->data());
 
-    Q_EMIT searchResultsReceived(info, postsList);
-}
+        if (!json.isNull()) {
+            const QVariantMap map = json.toVariant().toMap();
 
-QList< Choqok::Post * > TwitterSearch::parseJson(QByteArray buffer)
-{
-    QList<Choqok::Post *> statusList;
-    const QJsonDocument json = QJsonDocument::fromJson(buffer);
-    if (!json.isNull()) {
-        const QVariantMap map = json.toVariant().toMap();
-        if (map.contains(QLatin1String("statuses"))) {
-            const QVariantList list = map[QLatin1String("statuses")].toList();
-            QVariantList::const_iterator it = list.constBegin();
-            QVariantList::const_iterator endIt = list.constEnd();
-            for (; it != endIt; ++it) {
-                statusList.prepend(readStatusesFromJsonMap(it->toMap()));
+            if (map.contains(QLatin1String("statuses"))) {
+                Q_FOREACH (const QVariant elem, map[QLatin1String("statuses")].toList()) {
+                    postsList.prepend(readStatusesFromJsonMap(elem.toMap()));
+                }
             }
         }
     }
-    return statusList;
+
+    Q_EMIT searchResultsReceived(mSearchJobs.take(job), postsList);
 }
 
 Choqok::Post *TwitterSearch::readStatusesFromJsonMap(const QVariantMap &var)

@@ -53,7 +53,6 @@ protected Q_SLOTS:
     virtual void searchResultsReturned(KJob *job);
 
 protected:
-    QList< Choqok::Post * > parseJson(QByteArray buffer);
     Choqok::Post *readStatusesFromJsonMap(const QVariantMap &var);
 
     QMap<int, QString> mSearchCode;
