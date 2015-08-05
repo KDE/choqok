@@ -83,9 +83,9 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
     const QUrl tmpUrl(url);
 
     QUrlQuery urlQuery;
-    const QString formattedQuery = mSearchCode[searchInfo.option] + searchInfo.query;
-    urlQuery.addQueryItem(QLatin1String("q"),  formattedQuery);
-    param.insert("q", QUrl::toPercentEncoding(formattedQuery));
+    const QByteArray formattedQuery(QUrl::toPercentEncoding(mSearchCode[searchInfo.option] + searchInfo.query));
+    urlQuery.addQueryItem(QLatin1String("q"), QString::fromLatin1(formattedQuery));
+    param.insert("q", formattedQuery);
 
     if (!sinceStatusId.isEmpty()) {
         urlQuery.addQueryItem(QLatin1String("since_id"), sinceStatusId);
