@@ -55,6 +55,7 @@ public:
         // static once this destructor has started.
         Q_FOREACH (const KPluginInfo &p, loadedPlugins.keys()) {
             Plugin *plugin = loadedPlugins.value(p);
+            qCWarning(CHOQOK) << "Deleting stale plugin '" << plugin->objectName() << "'";
             plugin->disconnect(&instance, SLOT(slotPluginDestroyed(QObject*)));
             plugin->deleteLater();;
             loadedPlugins.remove(p);
@@ -234,7 +235,7 @@ void PluginManager::loadAllPlugins()
         QMap<QString, bool> pluginsMap;
 
         const QMap<QString, QString> entries = config->entryMap(QLatin1String("Plugins"));
-        Q_FOREACH (const QString key, entries.keys()) {
+        Q_FOREACH (const QString &key, entries.keys()) {
             if (key.endsWith(QLatin1String("Enabled"))) {
                 pluginsMap.insert(key.left(key.length() - 7), (entries.value(key).compare(QLatin1String("true")) == 0));
             }
