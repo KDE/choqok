@@ -75,24 +75,23 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
     qCDebug(CHOQOK);
 
     TwitterAccount *account = qobject_cast< TwitterAccount * >(searchInfo.account);
+    QUrl url = account->apiUrl();
 
     QOAuth::ParamMap param;
-    QString query = searchInfo.query;
-    int option = searchInfo.option;
 
-    QString formattedQuery = mSearchCode[option] + query;
-    QUrl url = account->apiUrl();
     url.setPath(url.path() + QLatin1String("/search/tweets.json"));
-    QUrl tmpUrl(url);
+    const QUrl tmpUrl(url);
+
     QUrlQuery urlQuery;
-    urlQuery.addQueryItem(QLatin1String("q"), formattedQuery);
-    url.setQuery(urlQuery);
-    QString q = url.query();
-    param.insert("q", q.mid(q.indexOf(QLatin1Char('=')) + 1).toLatin1());
+    const QString formattedQuery = mSearchCode[searchInfo.option] + searchInfo.query;
+    urlQuery.addQueryItem(QLatin1String("q"),  formattedQuery);
+    param.insert("q", QUrl::toPercentEncoding(formattedQuery));
+
     if (!sinceStatusId.isEmpty()) {
         urlQuery.addQueryItem(QLatin1String("since_id"), sinceStatusId);
         param.insert("since_id", sinceStatusId.toLatin1());
     }
+
     int cntStr;
     if (count && count <= 100) { // Twitter API specifies a max count of 100
         cntStr = count;
@@ -101,6 +100,7 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
     }
     urlQuery.addQueryItem(QLatin1String("count"), QString::number(cntStr));
     param.insert("count", QString::number(cntStr).toLatin1());
+
     url.setQuery(urlQuery);
 
     qCDebug(CHOQOK) << url;
