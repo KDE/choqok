@@ -35,9 +35,7 @@
 K_PLUGIN_FACTORY_WITH_JSON(ImagePreviewFactory, "choqok_imagepreview.json",
                            registerPlugin < ImagePreview > ();)
 
-const QRegExp ImagePreview::mTwitpicRegExp(QLatin1String("(https?://twitpic.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])"));
 const QRegExp ImagePreview::mYFrogRegExp(QLatin1String("(http://yfrog.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])"));
-const QRegExp ImagePreview::mTweetphotoRegExp(QLatin1String("(http://tweetphoto.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])"));
 const QRegExp ImagePreview::mPlixiRegExp(QLatin1String("(http://plixi.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])"));
 const QRegExp ImagePreview::mImgLyRegExp(QLatin1String("(http://img.ly/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])"));
 const QRegExp ImagePreview::mTwitgooRegExp(QLatin1String("(http://(([a-zA-Z0-9]+\\.)?)twitgoo.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])"));
@@ -87,29 +85,12 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
         return;
     }
     int pos = 0;
-    QStringList twitpicRedirectList;
     QStringList yfrogRedirectList;
-    QStringList TweetphotoRedirectList;
     QStringList PlixiRedirectList;
     QStringList ImgLyRedirectList;
     QStringList TwitgooRedirectList;
     QStringList PumpIORedirectList;
     QString content = postToParse->currentPost()->content;
-
-    //Twitpic: https://www.twitpic.com/api.do
-    while ((pos = mTwitpicRegExp.indexIn(content, pos)) != -1) {
-        pos += mTwitpicRegExp.matchedLength();
-        twitpicRedirectList << mTwitpicRegExp.cap(0);
-    }
-    Q_FOREACH (const QString &url, twitpicRedirectList) {
-        QString twitpicUrl = QStringLiteral("https://twitpic.com/show/mini%1").arg(QString(url).remove(QLatin1String("https://twitpic.com")));
-        connect(Choqok::MediaManager::self(),
-                SIGNAL(imageFetched(QString,QPixmap)),
-                SLOT(slotImageFetched(QString,QPixmap)));
-        mParsingList.insert(twitpicUrl, postToParse);
-        mBaseUrlMap.insert(twitpicUrl, url);
-        Choqok::MediaManager::self()->fetchImage(twitpicUrl, Choqok::MediaManager::Async);
-    }
 
     //YFrog: http://code.google.com/p/imageshackapi/wiki/YFROGurls
     //       http://code.google.com/p/imageshackapi/wiki/YFROGthumbnails
@@ -127,22 +108,6 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
         mParsingList.insert(yfrogThumbnailUrl, postToParse);
         mBaseUrlMap.insert(yfrogThumbnailUrl, url);
         Choqok::MediaManager::self()->fetchImage(yfrogThumbnailUrl, Choqok::MediaManager::Async);
-    }
-
-    //Tweetphoto; http://groups.google.com/group/tweetphoto/web/fetch-image-from-tweetphoto-url
-    pos = 0;
-    while ((pos = mTweetphotoRegExp.indexIn(content, pos)) != -1) {
-        pos += mTweetphotoRegExp.matchedLength();
-        TweetphotoRedirectList << mTweetphotoRegExp.cap(0);
-    }
-    Q_FOREACH (const QString &url, TweetphotoRedirectList) {
-        connect(Choqok::MediaManager::self(),
-                SIGNAL(imageFetched(QString,QPixmap)),
-                SLOT(slotImageFetched(QString,QPixmap)));
-        QString TweetphotoUrl = QLatin1String("http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=") + url;
-        mParsingList.insert(TweetphotoUrl, postToParse);
-        mBaseUrlMap.insert(TweetphotoUrl, url);
-        Choqok::MediaManager::self()->fetchImage(TweetphotoUrl, Choqok::MediaManager::Async);
     }
 
     //Plixy; http://groups.google.com/group/plixi/web/fetch-photos-from-url
@@ -224,7 +189,6 @@ void ImagePreview::slotImageFetched(const QString &remoteUrl, const QPixmap &pix
     QUrl imgU(remoteUrl);
     imgU.setScheme(QLatin1String("img"));
 //     imgUrl.replace("http://","img://");
-    QString size;
     QPixmap pix = pixmap;
     if (pixmap.width() > 200) {
         pix = pixmap.scaledToWidth(200);

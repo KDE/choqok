@@ -61,9 +61,7 @@ private:
     QMap<QString, QPointer<Choqok::UI::PostWidget> > mParsingList;//remoteUrl, Post
     QMap<QString, QString> mBaseUrlMap;//remoteUrl, BaseUrl
 
-    static const QRegExp mTwitpicRegExp;
     static const QRegExp mYFrogRegExp;
-    static const QRegExp mTweetphotoRegExp;
     static const QRegExp mPlixiRegExp;
     static const QRegExp mImgLyRegExp;
     static const QRegExp mTwitgooRegExp;
