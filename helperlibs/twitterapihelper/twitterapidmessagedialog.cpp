@@ -62,7 +62,7 @@ TwitterApiDMessageDialog::TwitterApiDMessageDialog(TwitterApiAccount *theAccount
     setupUi(this);
     KConfigGroup grp(KSharedConfig::openConfig(), "TwitterApi");
     resize(grp.readEntry("DMessageDialogSize", QSize(300, 200)));
-    QStringList list = theAccount->friendsList();
+    QStringList list = theAccount->followersList();
     if (list.isEmpty()) {
         reloadFriendslist();
     } else {
@@ -125,9 +125,9 @@ void TwitterApiDMessageDialog::reloadFriendslist()
     d->comboFriendsList->clear();
     TwitterApiMicroBlog *blog = qobject_cast<TwitterApiMicroBlog *>(d->account->microblog());
     if (blog) {
-        connect(blog, SIGNAL(friendsUsernameListed(TwitterApiAccount*,QStringList)),
-                this, SLOT(friendsUsernameListed(TwitterApiAccount*,QStringList)));
-        blog->listFriendsUsername(d->account);
+        connect(blog, SIGNAL(followersUsernameListed(TwitterApiAccount*,QStringList)),
+                this, SLOT(followersUsernameListed(TwitterApiAccount*,QStringList)));
+        blog->listFollowersUsername(d->account);
         d->comboFriendsList->setCurrentText(i18n("Please wait..."));
     }
 }
@@ -158,7 +158,7 @@ void TwitterApiDMessageDialog::submitPost(QString text)
     d->account->microblog()->createPost(d->account, d->sentPost);
 }
 
-void TwitterApiDMessageDialog::friendsUsernameListed(TwitterApiAccount *theAccount, QStringList list)
+void TwitterApiDMessageDialog::followersUsernameListed(TwitterApiAccount *theAccount, QStringList list)
 {
     if (theAccount == d->account) {
         d->comboFriendsList->clear();

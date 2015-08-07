@@ -77,6 +77,10 @@ public:
 
     void setFriendsList(const QStringList &list);
 
+    QStringList followersList() const;
+
+    void setFollowersList(const QStringList &list);
+
     virtual QStringList timelineNames() const;
 
     virtual void setTimelineNames(const QStringList &list);

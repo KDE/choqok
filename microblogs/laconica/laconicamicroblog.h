@@ -80,7 +80,7 @@ protected:
     using TwitterApiMicroBlog::readPost;
     virtual Choqok::Post *readPost(Choqok::Account *account, const QVariantMap &var, Choqok::Post *post);
     virtual void listFriendsUsername(TwitterApiAccount *theAccount, bool active = false);
-    virtual QStringList readUsersScreenName(Choqok::Account *theAccount, const QByteArray &buffer);
+    virtual QStringList readFriendsScreenName(Choqok::Account *theAccount, const QByteArray &buffer);
 
 protected Q_SLOTS:
     virtual void slotFetchConversation(KJob *job);

@@ -74,6 +74,7 @@ public:
     }
     int countOfTimelinesToSave;
     QString friendsCursor;
+    QString followersCursor;
     QMap<QString, int> monthes;
 };
 
@@ -760,7 +761,7 @@ void TwitterApiMicroBlog::finishRequestFriendsScreenName(KJob *job, bool active)
                      theAccount->username(), stJob->errorString()), level);
         return;
     }
-    QStringList newList = readUsersScreenName(theAccount, stJob->data());
+    QStringList newList = readFriendsScreenName(theAccount, stJob->data());
     newList.removeDuplicates();
     if (! checkForError(stJob->data()).isEmpty()) {           // if an error occurred, do not replace the friends list.
         theAccount->setFriendsList(friendsList);
@@ -774,6 +775,87 @@ void TwitterApiMicroBlog::finishRequestFriendsScreenName(KJob *job, bool active)
         Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Friends list for account %1 has been updated.",
                 theAccount->username()));
         Q_EMIT friendsUsernameListed(theAccount, friendsList);
+    }
+}
+
+void TwitterApiMicroBlog::listFollowersUsername(TwitterApiAccount* theAccount, bool active)
+{
+    followersList.clear();
+    d->followersCursor = QLatin1String("-1");
+    if ( theAccount ) {
+        requestFollowersScreenName(theAccount, active);
+    }
+}
+
+void TwitterApiMicroBlog::requestFollowersScreenName(TwitterApiAccount* theAccount, bool active)
+{
+    qCDebug(CHOQOK);
+    TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
+    QUrl url = account->apiUrl();
+    url = url.adjusted(QUrl::StripTrailingSlash);
+    url.setPath(url.path() + (QStringLiteral("/followers/list.%1").arg(format)));
+    QUrl tmpUrl(url);
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem(QLatin1String("cursor"), d->followersCursor);
+    urlQuery.addQueryItem(QLatin1String("count"), QLatin1String("200"));
+    url.setQuery(urlQuery);
+    QOAuth::ParamMap params;
+    params.insert("cursor", d->followersCursor.toLatin1());
+    params.insert("count", QStringLiteral("200").toLatin1());
+
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
+    if (!job) {
+        qCDebug(CHOQOK) << "Cannot create an http GET request!";
+        return;
+    }
+    job->addMetaData(QStringLiteral("customHTTPHeader"),
+                     QStringLiteral("Authorization: ") +
+                     QLatin1String(authorizationHeader(account, tmpUrl, QOAuth::GET, params)));
+    mJobsAccount[job] = theAccount;
+    if (active) {
+        connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFollowersScreenNameActive(KJob*) ) );
+    } else {
+        connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFollowersScreenNamePassive(KJob*) ) );
+    }
+    job->start();
+    Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Updating followers list for account %1...", theAccount->username()));
+}
+
+void TwitterApiMicroBlog::slotRequestFollowersScreenNameActive(KJob* job)
+{
+    finishRequestFollowersScreenName(job, true);
+}
+
+void TwitterApiMicroBlog::slotRequestFollowersScreenNamePassive(KJob* job)
+{
+    finishRequestFollowersScreenName(job, false);
+}
+
+void TwitterApiMicroBlog::finishRequestFollowersScreenName(KJob* job, bool active)
+{
+    qCDebug(CHOQOK);
+    TwitterApiAccount *theAccount = qobject_cast<TwitterApiAccount *>( mJobsAccount.take(job) );
+    KIO::StoredTransferJob* stJob = qobject_cast<KIO::StoredTransferJob*>( job );
+    Choqok::MicroBlog::ErrorLevel level = active ? Critical : Low;
+    if (stJob->error()) {
+        Q_EMIT error(theAccount, ServerError, i18n("Followers list for account %1 could not be updated:\n%2",
+            theAccount->username(), stJob->errorString()), level);
+        return;
+    }
+    QStringList newList = readFollowersScreenName(theAccount, stJob->data());
+    newList.removeDuplicates();
+    if (!checkForError(stJob->data()).isEmpty()) {        // if an error occurred, do not replace the friends list.
+        theAccount->setFollowersList(followersList);
+        Q_EMIT followersUsernameListed(theAccount, followersList);
+    } else if (QString::compare(d->followersCursor, QLatin1String("0"))) {    // if the cursor is not "0", there is more friends data to be had
+        followersList << newList;
+        requestFollowersScreenName(theAccount, active);
+    } else {
+        followersList << newList;
+        theAccount->setFollowersList(followersList);
+        Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Followers list for account %1 has been updated.",
+            theAccount->username()) );
+        Q_EMIT followersUsernameListed(theAccount, followersList);
     }
 }
 
@@ -1450,7 +1532,7 @@ Choqok::User *TwitterApiMicroBlog::readUserInfo(const QByteArray &buffer)
     return user;
 }
 
-QStringList TwitterApiMicroBlog::readUsersScreenName(Choqok::Account *theAccount,
+QStringList TwitterApiMicroBlog::readFriendsScreenName(Choqok::Account *theAccount,
         const QByteArray &buffer)
 {
     QStringList list;
@@ -1464,10 +1546,8 @@ QStringList TwitterApiMicroBlog::readUsersScreenName(Choqok::Account *theAccount
             nextCursor = QLatin1String("0"); // we probably ran the rate limit; stop bugging the server already
         }
 
-        QVariantList::const_iterator it = jsonList.constBegin();
-        QVariantList::const_iterator endIt = jsonList.constEnd();
-        for (; it != endIt; ++it) {
-            list << it->toMap()[QLatin1String("screen_name")].toString();
+        Q_FOREACH (const QVariant &user, jsonList) {
+            list << user.toMap()[QLatin1String("screen_name")].toString();
         }
         d->friendsCursor = nextCursor;
     } else {
@@ -1475,6 +1555,35 @@ QStringList TwitterApiMicroBlog::readUsersScreenName(Choqok::Account *theAccount
         qCDebug(CHOQOK) << "JSON parse error:the buffer is: \n" << buffer;
         Q_EMIT error(theAccount, ParsingError, err, Critical);
     }
+
+    return list;
+}
+
+QStringList TwitterApiMicroBlog::readFollowersScreenName(Choqok::Account *theAccount,
+        const QByteArray &buffer)
+{
+    QStringList list;
+    const QJsonDocument json = QJsonDocument::fromJson(buffer);
+    if (!json.isNull()) {
+        const QVariantMap map = json.toVariant().toMap();
+        QVariantList jsonList = map[QLatin1String("users")].toList();
+        QString nextCursor = map[QLatin1String("next_cursor_str")].toString();
+
+        if (nextCursor.isEmpty()) {
+            nextCursor = QLatin1String("0"); // we probably ran the rate limit; stop bugging the server already
+        }
+
+        Q_FOREACH (const QVariant &user, jsonList) {
+            list << user.toMap()[QLatin1String("screen_name")].toString();
+        }
+
+        d->followersCursor = nextCursor;
+    } else {
+        QString err = i18n("Retrieving the followers list failed. The data returned from the server is corrupted.");
+        qCDebug(CHOQOK) << "JSON parse error:the buffer is: \n" << buffer;
+        Q_EMIT error(theAccount, ParsingError, err, Critical);
+    }
+
     return list;
 }
 

@@ -47,7 +47,7 @@ public:
 protected Q_SLOTS:
     virtual void accept();
 
-    void friendsUsernameListed(TwitterApiAccount *, QStringList);
+    void followersUsernameListed(TwitterApiAccount *, QStringList);
     void submitPost(QString);
     void reloadFriendslist();
     void postCreated(Choqok::Account *, Choqok::Post *);

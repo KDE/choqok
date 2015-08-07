@@ -131,6 +131,8 @@ public:
 
     virtual void listFriendsUsername(TwitterApiAccount *theAccount, bool active = false);
 
+    virtual void listFollowersUsername(TwitterApiAccount *theAccount, bool active = false);
+
     virtual Choqok::TimelineInfo *timelineInfo(const QString &timelineName);
 
     /**
@@ -175,6 +177,7 @@ Q_SIGNALS:
     void favoriteCreated(Choqok::Account *theAccount, const QString &postId);
     void favoriteRemoved(Choqok::Account *theAccount, const QString &postId);
     void friendsUsernameListed(TwitterApiAccount *theAccount, const QStringList &friendsList);
+    void followersUsernameListed(TwitterApiAccount *theAccount, const QStringList &friendsList);
 
     void friendshipCreated(Choqok::Account *theAccount, const QString &newFriendUsername);
     void friendshipDestroyed(Choqok::Account *theAccount, const QString &username);
@@ -190,6 +193,9 @@ protected Q_SLOTS:
     virtual void requestFriendsScreenName(TwitterApiAccount *theAccount, bool active);
     void slotRequestFriendsScreenNameActive(KJob *job);
     void slotRequestFriendsScreenNamePassive(KJob *job);
+    virtual void requestFollowersScreenName(TwitterApiAccount *theAccount, bool active);
+    void slotRequestFollowersScreenNameActive(KJob *job);
+    void slotRequestFollowersScreenNamePassive(KJob *job);
     virtual void slotCreateFriendship(KJob *job);
     virtual void slotDestroyFriendship(KJob *job);
     virtual void slotBlockUser(KJob *job);
@@ -217,7 +223,8 @@ protected:
     virtual Choqok::Post *readDirectMessage(Choqok::Account *theAccount, const QByteArray &buffer);
     virtual Choqok::Post *readDirectMessage(Choqok::Account *theAccount, const QVariantMap &var);
     virtual QList<Choqok::Post *> readDirectMessages(Choqok::Account *theAccount, const QByteArray &buffer);
-    virtual QStringList readUsersScreenName(Choqok::Account *theAccount, const QByteArray &buffer);
+    virtual QStringList readFriendsScreenName(Choqok::Account *theAccount, const QByteArray &buffer);
+    virtual QStringList readFollowersScreenName(Choqok::Account *theAccount, const QByteArray &buffer);
     virtual Choqok::User *readUserInfo(const QByteArray &buffer);
     virtual Choqok::User readUser(Choqok::Account *theAccount, const QVariantMap &map);
     /**
@@ -225,6 +232,7 @@ protected:
     */
     virtual QString checkForError(const QByteArray &buffer);
     void finishRequestFriendsScreenName(KJob *job, bool active);
+    void finishRequestFollowersScreenName(KJob *job, bool active);
 
     ///==========================================
     QHash<QString, QString> timelineApiPath;//TimelineType, path
@@ -240,6 +248,7 @@ protected:
     QMap<KJob *, QString> mFriendshipMap;
     QString format;
     QStringList friendsList;
+    QStringList followersList;
 
 private:
     class Private;

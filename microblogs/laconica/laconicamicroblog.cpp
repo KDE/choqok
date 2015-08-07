@@ -255,7 +255,7 @@ void LaconicaMicroBlog::listFriendsUsername(TwitterApiAccount *theAccount, bool 
     }
 }
 
-QStringList LaconicaMicroBlog::readUsersScreenName(Choqok::Account *theAccount, const QByteArray &buffer)
+QStringList LaconicaMicroBlog::readFriendsScreenName(Choqok::Account *theAccount, const QByteArray &buffer)
 {
     QStringList list;
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
@@ -333,7 +333,7 @@ void LaconicaMicroBlog::slotRequestFriendsScreenName(KJob *job)
         return;
     }
     KIO::StoredTransferJob *stJob = qobject_cast<KIO::StoredTransferJob *>(job);
-    QStringList newList = readUsersScreenName(theAccount, stJob->data());
+    QStringList newList = readFriendsScreenName(theAccount, stJob->data());
     friendsList << newList;
     if (newList.count() == 100) {
         doRequestFriendsScreenName(theAccount, ++friendsPage);

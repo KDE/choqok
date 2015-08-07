@@ -45,6 +45,7 @@ public:
     QUrl apiUrl;
     QUrl homepageUrl;
     QStringList friendsList;
+    QStringList followersList;
     QStringList timelineNames;
     QByteArray oauthToken;
     QByteArray oauthTokenSecret;
@@ -63,6 +64,7 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog *parent, const QString 
     d->count = configGroup()->readEntry("CountOfPosts", 20);
     d->host = configGroup()->readEntry("Host", QString());
     d->friendsList = configGroup()->readEntry("Friends", QStringList());
+    d->friendsList = configGroup()->readEntry("Followers", QStringList());
     d->timelineNames = configGroup()->readEntry("Timelines", QStringList());
     d->oauthToken = configGroup()->readEntry("OAuthToken", QByteArray());
     d->oauthConsumerKey = configGroup()->readEntry("OAuthConsumerKey", QByteArray());
@@ -107,6 +109,7 @@ void TwitterApiAccount::writeConfig()
     configGroup()->writeEntry("Host", d->host);
     configGroup()->writeEntry("Api", d->api);
     configGroup()->writeEntry("Friends", d->friendsList);
+    configGroup()->writeEntry("Followers", d->followersList);
     configGroup()->writeEntry("Timelines", d->timelineNames);
     configGroup()->writeEntry("OAuthToken", d->oauthToken);
     configGroup()->writeEntry("OAuthConsumerKey", d->oauthConsumerKey);
@@ -201,6 +204,17 @@ QStringList TwitterApiAccount::friendsList() const
 void TwitterApiAccount::setFriendsList(const QStringList &list)
 {
     d->friendsList = list;
+    writeConfig();
+}
+
+QStringList TwitterApiAccount::followersList() const
+{
+    return d->followersList;
+}
+
+void TwitterApiAccount::setFollowersList(const QStringList& list)
+{
+    d->followersList = list;
     writeConfig();
 }
 
