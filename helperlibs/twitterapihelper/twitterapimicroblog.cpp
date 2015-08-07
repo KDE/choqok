@@ -245,9 +245,8 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
             postsBackup.deleteGroup(group);
         }
 
-        QList< Choqok::UI::PostWidget *>::const_iterator it, endIt = timeline.constEnd();
-        for (it = timeline.constBegin(); it != endIt; ++it) {
-            const Choqok::Post *post = ((*it)->currentPost());
+        Q_FOREACH (Choqok::UI::PostWidget *wd, timeline) {
+            const Choqok::Post *post = (wd->currentPost());
             KConfigGroup grp(&postsBackup, post->creationDateTime.toString());
             grp.writeEntry("creationDateTime", post->creationDateTime);
             grp.writeEntry("postId", post->postId);
@@ -1347,21 +1346,17 @@ QList< Choqok::Post * > TwitterApiMicroBlog::readTimeline(Choqok::Account *theAc
     QList<Choqok::Post *> postList;
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
-        QVariantList list = json.toVariant().toList();
-        QVariantList::const_iterator it = list.constBegin();
-        QVariantList::const_iterator endIt = list.constEnd();
-        for (; it != endIt; ++it) {
-            postList.prepend(readPost(theAccount, it->toMap(), new Choqok::Post));
+        Q_FOREACH (const QVariant &list, json.toVariant().toList()) {
+            postList.prepend(readPost(theAccount, list.toMap(), new Choqok::Post));
         }
     } else {
-        QString err = checkForError(buffer);
+        const QString err = checkForError(buffer);
         if (err.isEmpty()) {
             qCCritical(CHOQOK) << "JSON parsing failed.\nBuffer was: \n" << buffer;
             Q_EMIT error(theAccount, ParsingError, i18n("Could not parse the data that has been received from the server."));
         } else {
             Q_EMIT error(theAccount, ServerError, err);
         }
-        return postList;
     }
     return postList;
 }
@@ -1440,21 +1435,17 @@ QList< Choqok::Post * > TwitterApiMicroBlog::readDirectMessages(Choqok::Account 
     QList<Choqok::Post *> postList;
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
-        QVariantList list = json.toVariant().toList();
-        QVariantList::const_iterator it = list.constBegin();
-        QVariantList::const_iterator endIt = list.constEnd();
-        for (; it != endIt; ++it) {
-            postList.prepend(readDirectMessage(theAccount, it->toMap()));
+        Q_FOREACH (const QVariant &list, json.toVariant().toList()) {
+            postList.prepend(readDirectMessage(theAccount, list.toMap()));
         }
     } else {
-        QString err = checkForError(buffer);
+        const QString err = checkForError(buffer);
         if (err.isEmpty()) {
             qCCritical(CHOQOK) << "JSON parsing failed.\nBuffer was: \n" << buffer;
             Q_EMIT error(theAccount, ParsingError, i18n("Could not parse the data that has been received from the server."));
         } else {
             Q_EMIT error(theAccount, ServerError, err);
         }
-        return postList;
     }
     return postList;
 }

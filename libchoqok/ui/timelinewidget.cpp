@@ -97,9 +97,8 @@ void TimelineWidget::loadTimeline()
     if (!BehaviorSettings::markAllAsReadOnExit()) {
         addNewPosts(list);
     } else {
-        QList<Post *>::const_iterator it, endIt = list.constEnd();
-        for (it = list.constBegin(); it != endIt; ++it) {
-            PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, *it, this);
+        Q_FOREACH (Choqok::Post *p, list) {
+            PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, p, this);
             if (pw) {
                 pw->setRead();
                 addPostWidgetToUi(pw);
@@ -218,13 +217,12 @@ void TimelineWidget::addPlaceholderMessage(const QString &msg)
 void TimelineWidget::addNewPosts(QList< Choqok::Post * > &postList)
 {
     qCDebug(CHOQOK) << d->currentAccount->alias() << d->timelineName << postList.count();
-    QList<Post *>::const_iterator it, endIt = postList.constEnd();
     int unread = 0;
-    for (it = postList.constBegin(); it != endIt; ++it) {
-        if (d->posts.keys().contains((*it)->postId)) {
+    Q_FOREACH (Choqok::Post *p, postList) {
+        if (d->posts.keys().contains(p->postId)) {
             continue;
         }
-        PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, *it, this);
+        PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, p, this);
         if (pw) {
             addPostWidgetToUi(pw);
             if (!pw->isRead()) {

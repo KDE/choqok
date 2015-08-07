@@ -62,10 +62,8 @@ Tinyarro_ws_Config::Tinyarro_ws_Config(QWidget *parent, const QVariantList &):
     hostList.insert(QLatin1String("ta.gd"),                  QLatin1String("ta.gd"));
     hostList.insert(i18n("Random host"),    QLatin1String("Random"));
 
-    QMap<QString, QString>::const_iterator i = hostList.constBegin();
-    while (i != hostList.constEnd()) {
-        ui.kcfg_tinyarro_ws_host->addItem(i.key());
-        ++i;
+    Q_FOREACH (const QString &host, hostList.keys()) {
+        ui.kcfg_tinyarro_ws_host->addItem(host);
     }
 
     connect(ui.kcfg_tinyarro_ws_host, SIGNAL(currentIndexChanged(int)), SLOT(emitChanged()));

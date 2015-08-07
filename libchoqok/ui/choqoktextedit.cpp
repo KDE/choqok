@@ -290,18 +290,17 @@ void TextEdit::setupSpeller()
         d->curLang = s.defaultLanguage();
     }
     qCDebug(CHOQOK) << "Current LANG:" << d->curLang;
-    QMap<QString, QString> list = s.availableDictionaries();
-    QMap<QString, QString>::const_iterator it = list.constBegin(), endIt = list.constEnd();
-    for (; it != endIt; ++it) {
-        QAction *act = new QAction(it.key(), d->langActions);
-        act->setData(it.value());
+    Q_FOREACH (const QString &dict, s.availableDictionaries().keys()) {
+        const QString value = s.availableDictionaries().value(dict);
+        QAction *act = new QAction(dict, d->langActions);
+        act->setData(value);
         act->setCheckable(true);
-        if (d->curLang == it.value()) {
+        if (d->curLang == value) {
             act->setChecked(true);
         }
         connect(act, SIGNAL(triggered(bool)), SLOT(slotChangeSpellerLanguage()));
         d->langActions->addAction(act);
-        d->langActionMap.insert(it.value(), act);
+        d->langActionMap.insert(value, act);
     }
 }
 

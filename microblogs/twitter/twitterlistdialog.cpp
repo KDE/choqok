@@ -120,20 +120,18 @@ void TwitterListDialog::loadUserLists()
 void TwitterListDialog::slotLoadUserlists(Choqok::Account *theAccount, QString username,
         QList<Twitter::List> list)
 {
-    if (theAccount == account && username == ui.username->text() && !list.isEmpty()) {
+    if (theAccount == account && QString::compare(username, ui.username->text()) && !list.isEmpty()) {
         listWidget->clear();
-        QList<Twitter::List>::const_iterator it = list.constBegin();
-        QList<Twitter::List>::const_iterator endIt = list.constEnd();
-        for (; it != endIt; ++it) {
+        Q_FOREACH (const Twitter::List &l, list) {
             QListWidgetItem *item = new QListWidgetItem(listWidget);
             QString iText;
-            if (it->description.isEmpty()) {
-                iText = it->fullname;
+            if (l.description.isEmpty()) {
+                iText = l.fullname;
             } else {
-                iText = QStringLiteral("%1 [%2]").arg(it->fullname).arg(it->description);
+                iText = QStringLiteral("%1 [%2]").arg(l.fullname).arg(l.description);
             }
             item->setText(iText);
-            item->setData(32, it->slug);
+            item->setData(32, l.slug);
             listWidget->addItem(item);
         }
         connect(listWidget, SIGNAL(itemClicked(QListWidgetItem*)),

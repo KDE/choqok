@@ -69,9 +69,8 @@ void OCSMicroblog::saveTimeline(Choqok::Account *account, const QString &timelin
         postsBackup.deleteGroup(group);
     }
 
-    QList< Choqok::UI::PostWidget *>::const_iterator it, endIt = timeline.constEnd();
-    for (it = timeline.constBegin(); it != endIt; ++it) {
-        const Choqok::Post *post = (*it)->currentPost();
+    Q_FOREACH (Choqok::UI::PostWidget *wd, timeline) {
+        const Choqok::Post *post = wd->currentPost();
         KConfigGroup grp(&postsBackup, post->creationDateTime.toString());
         grp.writeEntry("creationDateTime", post->creationDateTime);
         grp.writeEntry("postId", post->postId);
@@ -283,12 +282,10 @@ void OCSMicroblog::slotDefaultProvidersLoaded()
     mIsOperational = true;
     Q_EMIT initialized();
 
-    QMultiMap<Choqok::Account *, Task>::const_iterator it = scheduledTasks.constBegin();
-    QMultiMap<Choqok::Account *, Task>::const_iterator endIt = scheduledTasks.constEnd();
-    for (; it != endIt; ++it) {
-        switch (it.value()) {
+    Q_FOREACH (Choqok::Account *acc, scheduledTasks.keys()) {
+        switch (scheduledTasks.value(acc)) {
         case Update:
-            updateTimelines(it.key());
+            updateTimelines(acc);
             break;
         default:
             break;

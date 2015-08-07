@@ -98,24 +98,24 @@ void AddEditFilter::slotFilterActionChanged(int index)
 
 void AddEditFilter::setupFilterFields()
 {
-    QMap<Filter::FilterField, QString>::const_iterator it, endIt = FilterSettings::filterFieldsMap().constEnd();
-    for (it = FilterSettings::filterFieldsMap().constBegin(); it != endIt; ++it) {
-        ui.filterField->addItem(it.value(), it.key());
+    const QMap<Filter::FilterField, QString> fields = FilterSettings::filterFieldsMap();
+    Q_FOREACH (const Filter::FilterField &field, fields.keys()) {
+        ui.filterField->addItem(fields.value(field), field);
     }
 }
 
 void AddEditFilter::setupFilterTypes()
 {
-    QMap<Filter::FilterType, QString>::const_iterator it, endIt = FilterSettings::filterTypesMap().constEnd();
-    for (it = FilterSettings::filterTypesMap().constBegin(); it != endIt; ++it) {
-        ui.filterType->addItem(it.value(), it.key());
+    const QMap<Filter::FilterType, QString> types = FilterSettings::filterTypesMap();
+    Q_FOREACH (const Filter::FilterType &type, types.keys()) {
+        ui.filterType->addItem(types.value(type), type);
     }
 }
 
 void AddEditFilter::setupFilterActions()
 {
-    QMap<Filter::FilterAction, QString>::const_iterator it, endIt = FilterSettings::filterActionsMap().constEnd();
-    for (it = FilterSettings::filterActionsMap().constBegin(); it != endIt; ++it) {
-        ui.filterAction->addItem(it.value(), it.key());
+    const QMap<Filter::FilterAction, QString> actions = FilterSettings::filterActionsMap();
+    Q_FOREACH (const Filter::FilterAction &action, actions.keys()) {
+        ui.filterAction->addItem(actions.value(action), action);
     }
 }

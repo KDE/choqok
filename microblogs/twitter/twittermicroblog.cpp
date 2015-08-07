@@ -360,11 +360,8 @@ QList< Twitter::List > TwitterMicroBlog::readUserListsFromJson(Choqok::Account *
     if (!json.isNull()) {
         const QVariantMap map = json.toVariant().toMap();
         if (map.contains(QLatin1String("lists"))) {
-            QVariantList list = map[QLatin1String("lists")].toList();
-            QVariantList::const_iterator it = list.constBegin();
-            QVariantList::const_iterator endIt = list.constEnd();
-            for (; it != endIt; ++it) {
-                twitterList.append(readListFromJsonMap(theAccount, it->toMap()));
+            Q_FOREACH (const QVariant &list, map[QLatin1String("lists")].toList()) {
+                twitterList.append(readListFromJsonMap(theAccount, list.toMap()));
             }
         }
     }

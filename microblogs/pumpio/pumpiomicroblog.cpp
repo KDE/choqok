@@ -461,9 +461,8 @@ void PumpIOMicroBlog::saveTimeline(Choqok::Account *account, const QString &time
         postsBackup.deleteGroup(group);
     }
 
-    QList< Choqok::UI::PostWidget *>::const_iterator it, endIt = timeline.constEnd();
-    for (it = timeline.constBegin(); it != endIt; ++it) {
-        PumpIOPost *post = dynamic_cast<PumpIOPost * >((*it)->currentPost());
+    Q_FOREACH (Choqok::UI::PostWidget *wd, timeline) {
+        PumpIOPost *post = dynamic_cast<PumpIOPost * >(wd->currentPost());
         KConfigGroup grp(&postsBackup, post->creationDateTime.toString());
         grp.writeEntry("creationDateTime", post->creationDateTime);
         grp.writeEntry("postId", post->postId);
