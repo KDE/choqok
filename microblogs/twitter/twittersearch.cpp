@@ -77,15 +77,22 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
     TwitterAccount *account = qobject_cast< TwitterAccount * >(searchInfo.account);
     QUrl url = account->apiUrl();
 
+    QUrlQuery urlQuery;
     QOAuth::ParamMap param;
 
-    url.setPath(url.path() + QLatin1String("/search/tweets.json"));
-    const QUrl tmpUrl(url);
+    const QString query = searchInfo.query;
+    if (searchInfo.option == TwitterSearch::FromUser) {
+        url.setPath(url.path() + QLatin1String("/statuses/user_timeline.json"));
 
-    QUrlQuery urlQuery;
-    const QByteArray formattedQuery(QUrl::toPercentEncoding(mSearchCode[searchInfo.option] + searchInfo.query));
-    urlQuery.addQueryItem(QLatin1String("q"), QString::fromLatin1(formattedQuery));
-    param.insert("q", formattedQuery);
+        urlQuery.addQueryItem(QLatin1String("screen_name"), query);
+        param.insert("screen_name", query.toLatin1());
+    } else {
+        url.setPath(url.path() + QLatin1String("/search/tweets.json"));
+
+        const QByteArray formattedQuery(QUrl::toPercentEncoding(mSearchCode[searchInfo.option] + query));
+        urlQuery.addQueryItem(QLatin1String("q"), QString::fromLatin1(formattedQuery));
+        param.insert("q", formattedQuery);
+    }
 
     if (!sinceStatusId.isEmpty()) {
         urlQuery.addQueryItem(QLatin1String("since_id"), sinceStatusId);
@@ -101,6 +108,7 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
     urlQuery.addQueryItem(QLatin1String("count"), QString::number(cntStr));
     param.insert("count", QString::number(cntStr).toLatin1());
 
+    const QUrl tmpUrl(url);
     url.setQuery(urlQuery);
 
     qCDebug(CHOQOK) << url;
@@ -130,6 +138,7 @@ void TwitterSearch::searchResultsReturned(KJob *job)
         return;
     }
 
+    const SearchInfo info = mSearchJobs.take(job);
     QList<Choqok::Post *> postsList;
     if (job->error()) {
         qCCritical(CHOQOK) << "Error:" << job->errorString();
@@ -139,17 +148,23 @@ void TwitterSearch::searchResultsReturned(KJob *job)
         const QJsonDocument json = QJsonDocument::fromJson(jj->data());
 
         if (!json.isNull()) {
-            const QVariantMap map = json.toVariant().toMap();
-
-            if (map.contains(QLatin1String("statuses"))) {
-                Q_FOREACH (const QVariant elem, map[QLatin1String("statuses")].toList()) {
+            if (info.option == TwitterSearch::FromUser) {
+                Q_FOREACH (const QVariant elem, json.toVariant().toList()) {
                     postsList.prepend(readStatusesFromJsonMap(elem.toMap()));
+                }
+            } else {
+                const QVariantMap map = json.toVariant().toMap();
+
+                if (map.contains(QLatin1String("statuses"))) {
+                    Q_FOREACH (const QVariant elem, map[QLatin1String("statuses")].toList()) {
+                        postsList.prepend(readStatusesFromJsonMap(elem.toMap()));
+                    }
                 }
             }
         }
     }
 
-    Q_EMIT searchResultsReceived(mSearchJobs.take(job), postsList);
+    Q_EMIT searchResultsReceived(info, postsList);
 }
 
 Choqok::Post *TwitterSearch::readStatusesFromJsonMap(const QVariantMap &var)

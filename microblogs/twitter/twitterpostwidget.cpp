@@ -29,6 +29,7 @@
 
 #include <KLocalizedString>
 
+#include "choqokbehaviorsettings.h"
 #include "choqoktools.h"
 
 #include "twitterapiaccount.h"
@@ -203,8 +204,7 @@ void TwitterPostWidget::checkAnchor(const QUrl &url)
         }
         int type = ret->data().toInt();
         blog->searchBackend()->requestSearchResults(currentAccount(),
-                url.host(),
-                type);
+                url.host(), type, QString(), Choqok::BehaviorSettings::countOfPosts());
     } else {
         TwitterApiPostWidget::checkAnchor(url);
     }
