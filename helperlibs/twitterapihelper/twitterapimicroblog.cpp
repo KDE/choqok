@@ -219,6 +219,7 @@ QList< Choqok::Post * > TwitterApiMicroBlog::loadTimeline(Choqok::Account *accou
             st->isRead = grp.readEntry("isRead", true);
             st->repeatedFromUsername = grp.readEntry("repeatedFrom", QString());
             st->repeatedPostId = grp.readEntry("repeatedPostId", QString());
+            st->repeatedDateTime = grp.readEntry("repeatedDateTime", QDateTime());
             st->conversationId = grp.readEntry("conversationId", QString());
             st->media = grp.readEntry("mediaUrl", QString());
             st->mediaSizeWidth = grp.readEntry("mediaWidth", 0);
@@ -267,6 +268,7 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
             grp.writeEntry("isRead" , post->isRead);
             grp.writeEntry("repeatedFrom", post->repeatedFromUsername);
             grp.writeEntry("repeatedPostId", post->repeatedPostId);
+            grp.writeEntry("repeatedDateTime", post->repeatedDateTime);
             grp.writeEntry("conversationId", post->conversationId);
             grp.writeEntry("mediaUrl", post->media);
             grp.writeEntry("mediaWidth", post->mediaSizeWidth);
@@ -986,23 +988,19 @@ QByteArray TwitterApiMicroBlog::authorizationHeader(TwitterApiAccount *theAccoun
 
 void TwitterApiMicroBlog::setRepeatedOfInfo(Choqok::Post *post, Choqok::Post *repeatedPost)
 {
+    post->content = repeatedPost->content;
+    post->replyToPostId = repeatedPost->replyToPostId;
+    post->replyToUserId = repeatedPost->replyToUserId;
+    post->replyToUserName = repeatedPost->replyToUserName;
+    post->repeatedPostId = repeatedPost->postId;
+    post->repeatedDateTime = repeatedPost->creationDateTime;
+
     if (Choqok::AppearanceSettings::showRetweetsInChoqokWay()) {
-        post->content = repeatedPost->content;
-        post->replyToPostId = repeatedPost->replyToPostId;
-        post->replyToUserId = repeatedPost->replyToUserId;
-        post->replyToUserName = repeatedPost->replyToUserName;
         post->repeatedFromUsername = repeatedPost->author.userName;
-        post->repeatedPostId = repeatedPost->postId;
     } else {
-        post->content = repeatedPost->content;
-        post->replyToPostId = repeatedPost->replyToPostId;
-        post->replyToUserId = repeatedPost->replyToUserId;
-        post->replyToUserName = repeatedPost->replyToUserName;
         post->repeatedFromUsername = post->author.userName;
         post->author = repeatedPost->author;
-        post->repeatedPostId = repeatedPost->postId;
     }
-    //post->creationDateTime = repeatedPost->creationDateTime;
 }
 
 QDateTime TwitterApiMicroBlog::dateFromString(const QString &date)

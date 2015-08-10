@@ -110,14 +110,17 @@ QString TwitterApiPostWidget::prepareStatus(const QString &text)
 QString TwitterApiPostWidget::generateSign()
 {
     QString sign;
-    QString profUrl = currentAccount()->microblog()->profileUrl(currentAccount(),
-                      currentPost()->author.userName);
     sign = QLatin1String("<b><a href='user://") + currentPost()->author.userName + QLatin1String("' title=\"") +
            currentPost()->author.description.toHtmlEscaped() + QLatin1String("\">") + currentPost()->author.userName +
            QLatin1String("</a> - </b>");
     //<img src=\"icon://web\" />
-    sign += QLatin1String("<a href=\"") + currentPost()->link +
-            QLatin1String("\" title=\"") + currentPost()->creationDateTime.toString(Qt::DefaultLocaleLongDate) + QLatin1String("\">%1</a>");
+    if (currentPost()->repeatedDateTime.isNull()) {
+        sign += QLatin1String("<a href=\"") + currentPost()->link +
+                QLatin1String("\" title=\"") + currentPost()->creationDateTime.toString(Qt::DefaultLocaleLongDate) + QLatin1String("\">%1</a>");
+    } else {
+        sign += QLatin1String("<a href=\"") + currentPost()->link +
+                QLatin1String("\" title=\"") + currentPost()->repeatedDateTime.toString(Qt::DefaultLocaleLongDate) + QLatin1String("\">%1</a>");
+    }
     if (currentPost()->isPrivate) {
         if (currentPost()->replyToUserName.compare(currentAccount()->username(), Qt::CaseInsensitive) == 0) {
             sign.prepend(QLatin1String("From "));

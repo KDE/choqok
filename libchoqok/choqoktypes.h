@@ -78,6 +78,7 @@ public:
     bool isRead;
     QString repeatedFromUsername;
     QString repeatedPostId;
+    QDateTime repeatedDateTime;
     QString conversationId;
     QString media;          // first Image of Post, if available
     int mediaSizeWidth;

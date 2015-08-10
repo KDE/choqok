@@ -152,8 +152,13 @@ QString PostWidget::generateSign()
          d->mCurrentPost->author.description + QLatin1String("\">") + d->mCurrentPost->author.userName +
          QLatin1String("</a> - </b>");
 
-    ss += QLatin1String("<a href=\"") + d->mCurrentPost->link +
-          QLatin1String("\" title=\"") + d->mCurrentPost->creationDateTime.toString(Qt::DefaultLocaleLongDate) + QLatin1String("\">%1</a>");
+    if (d->mCurrentPost->repeatedDateTime.isNull()) {
+        ss += QLatin1String("<a href=\"") + d->mCurrentPost->link +
+            QLatin1String("\" title=\"") + d->mCurrentPost->creationDateTime.toString(Qt::DefaultLocaleLongDate) + QLatin1String("\">%1</a>");
+    } else {
+        ss += QLatin1String("<a href=\"") + d->mCurrentPost->link +
+            QLatin1String("\" title=\"") + d->mCurrentPost->repeatedDateTime.toString(Qt::DefaultLocaleLongDate) + QLatin1String("\">%1</a>");
+    }
 
     if (!d->mCurrentPost->source.isNull()) {
         ss += QLatin1String(" - ") + d->mCurrentPost->source;
@@ -239,8 +244,15 @@ void PostWidget::initUi()
 
 void PostWidget::updateUi()
 {
+    QDateTime time;
+    if (d->mCurrentPost->repeatedDateTime.isNull()) {
+        time = d->mCurrentPost->creationDateTime;
+    } else {
+        time = d->mCurrentPost->repeatedDateTime;
+    }
+
     _mainWidget->setHtml(baseText->arg(d->mProfileImage, d->mContent,
-                                       d->mSign.arg(formatDateTime(d->mCurrentPost->creationDateTime)),
+                                       d->mSign.arg(formatDateTime(time)),
                                        d->dir,
                                        d->mImage
                                       ));
