@@ -226,7 +226,7 @@ QList< Choqok::Post * > LaconicaSearch::parseAtom(const QByteArray &buffer)
                 while (!userNode.isNull()) {
                     if (userNode.toElement().tagName() == QLatin1String("name")) {
                         QString fullName = userNode.toElement().text();
-                        int bracketPos = fullName.indexOf(QLatin1String(" "), 0);
+                        int bracketPos = fullName.indexOf(QLatin1Char(' '), 0);
                         QString screenName = fullName.left(bracketPos);
                         QString name = fullName.right(fullName.size() - bracketPos - 2);
                         name.chop(1);

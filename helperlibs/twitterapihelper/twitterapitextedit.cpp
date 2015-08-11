@@ -112,7 +112,6 @@ void TwitterApiTextEdit::insertCompletion(const QString &completion)
 //     return tc.selectedText();
 // }
 
-#include "twitterapiwhoiswidget.h"
 void TwitterApiTextEdit::focusInEvent(QFocusEvent *e)
 {
     if (d->c) {
@@ -202,7 +201,7 @@ void TwitterApiTextEdit::updateRemainingCharsCount()
 
             Q_FOREACH (const QString &url, UrlUtils::detectUrls(txt)) {
                 // Twitter does not wrapps urls with login informations
-                if (!url.contains(QLatin1String("@"))) {
+                if (!url.contains(QLatin1Char('@'))) {
                     int diff = -1;
                     if (url.startsWith(QLatin1String("http://"))) {
                         diff = url.length() - d->tCoMaximumLength;

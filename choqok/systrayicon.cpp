@@ -91,7 +91,6 @@ void SysTrayIcon::updateUnreadCount(int changeOfUnreadPosts)
         QPixmap overlayImg = QIcon::fromTheme(currentIconName()).pixmap(22, 22);
         QPainter p(&overlayImg);
         p.setFont(f);
-        KColorScheme scheme(QPalette::Active, KColorScheme::View);
 
         fm = QFontMetrics(f);
         QRect boundingRect = fm.tightBoundingRect(countStr);
