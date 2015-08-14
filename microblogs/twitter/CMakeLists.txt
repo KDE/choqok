@@ -6,6 +6,7 @@ set(choqok_twitter_SRCS
     twittercomposerwidget.cpp
     twitteraccount.cpp
     twitterdebug.cpp
+    twitterdmessagedialog.cpp
     twittermicroblog.cpp
     twitterpostwidget.cpp
     twittersearch.cpp

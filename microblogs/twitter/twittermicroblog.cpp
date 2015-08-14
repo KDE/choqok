@@ -47,6 +47,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "twitteraccount.h"
 #include "twittercomposerwidget.h"
 #include "twitterdebug.h"
+#include "twitterdmessagedialog.h"
 #include "twittereditaccount.h"
 #include "twitterlistdialog.h"
 #include "twitterpostwidget.h"
@@ -204,6 +205,21 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Cho
                 SLOT(slotCreatePost(KJob*)));
         job->start();
     }
+}
+
+void TwitterMicroBlog::showDirectMessageDialog(TwitterApiAccount *theAccount, const QString &toUsername)
+{
+    qCDebug(CHOQOK);
+    if (!theAccount) {
+        QAction *act = qobject_cast<QAction *>(sender());
+        theAccount = qobject_cast<TwitterApiAccount *>(
+                         Choqok::AccountManager::self()->findAccount(act->data().toString()));
+    }
+    TwitterDMessageDialog *dmsg = new TwitterDMessageDialog(theAccount, Choqok::UI::Global::mainWindow());
+    if (!toUsername.isEmpty()) {
+        dmsg->setTo(toUsername);
+    }
+    dmsg->show();
 }
 
 QString TwitterMicroBlog::generateRepeatedByUserTooltip(const QString &username)

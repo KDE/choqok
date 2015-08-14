@@ -74,6 +74,10 @@ public:
 Q_SIGNALS:
     void userLists(Choqok::Account *theAccount, const QString &username, QList<Twitter::List> lists);
 
+public Q_SLOTS:
+    virtual void showDirectMessageDialog(TwitterApiAccount *theAccount = 0,
+                                         const QString &toUsername = QString());
+
 protected Q_SLOTS:
     void showListDialog(TwitterApiAccount *theAccount = 0);
     void slotFetchUserLists(KJob *job);

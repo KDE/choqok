@@ -32,6 +32,11 @@ namespace Choqok
 {
 class Account;
 struct Post;
+
+    namespace UI
+    {
+        class TextEdit;
+    }
 }
 
 class TwitterApiAccount;
@@ -57,6 +62,7 @@ protected Q_SLOTS:
 protected:
     virtual void setupUi(QWidget *mainWidget);
     void setFriends(const QStringList friends);
+    Choqok::UI::TextEdit *editor();
 
 private:
     class Private;

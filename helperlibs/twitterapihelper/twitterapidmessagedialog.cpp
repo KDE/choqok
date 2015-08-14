@@ -120,6 +120,11 @@ void TwitterApiDMessageDialog::setFriends(const QStringList friends)
     d->comboFriendsList->addItems(friends);
 }
 
+Choqok::UI::TextEdit *TwitterApiDMessageDialog::editor()
+{
+    return d->editor;
+}
+
 void TwitterApiDMessageDialog::reloadFriendslist()
 {
     d->comboFriendsList->clear();

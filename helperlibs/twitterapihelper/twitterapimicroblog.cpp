@@ -1020,8 +1020,7 @@ void TwitterApiMicroBlog::aboutToUnload()
     Q_EMIT saveTimelines();
 }
 
-void TwitterApiMicroBlog::showDirectMessageDialog(TwitterApiAccount *theAccount/* = 0*/,
-        const QString &toUsername/* = QString()*/)
+void TwitterApiMicroBlog::showDirectMessageDialog(TwitterApiAccount *theAccount, const QString &toUsername)
 {
     qCDebug(CHOQOK);
     if (!theAccount) {
