@@ -79,12 +79,16 @@ protected Q_SLOTS:
     void slotFetchUserLists(KJob *job);
 
 protected:
-    QList<Twitter::List> readUserListsFromJson(Choqok::Account *theAccount, QByteArray buffer);
-    Twitter::List readListFromJsonMap(Choqok::Account *theAccount, QVariantMap map);
+    using TwitterApiMicroBlog::readDirectMessage;
+    virtual Choqok::Post *readDirectMessage(Choqok::Account *theAccount, const QVariantMap &var);
     using TwitterApiMicroBlog::readPost;
     virtual Choqok::Post *readPost(Choqok::Account *account, const QVariantMap &var, Choqok::Post *post);
-    QMap<KJob *, QString> mFetchUsersListMap;
     virtual void setTimelineInfos();
+
+    QList<Twitter::List> readUserListsFromJson(Choqok::Account *theAccount, QByteArray buffer);
+    Twitter::List readListFromJsonMap(Choqok::Account *theAccount, QVariantMap map);
+    QMap<KJob *, QString> mFetchUsersListMap;
+
 private:
     QPointer<TwitterSearch> mSearchBackend;
     QMap<QString, Choqok::TimelineInfo *> mListsInfo;

@@ -876,13 +876,12 @@ void TwitterApiMicroBlog::requestTimeLine(Choqok::Account *theAccount, QString t
     QUrl url = account->apiUrl();
     url.setPath(url.path() + timelineApiPath[type].arg(format));
     QUrl tmpUrl(url);
-    int countOfPost = Choqok::BehaviorSettings::countOfPosts();
 
+    QUrlQuery urlQuery;
     QOAuth::ParamMap params;
     // needed because lists have different parameter names but
     // returned timelines have the same JSON format
     if (timelineApiPath[type].contains(QLatin1String("lists/statuses"))) {
-        QUrlQuery urlQuery;
 
         // type contains @username/timelinename
         const QString slug = type.mid(type.indexOf(QLatin1String("/")) + 1);
@@ -892,36 +891,30 @@ void TwitterApiMicroBlog::requestTimeLine(Choqok::Account *theAccount, QString t
         const QString owner = type.mid(1, type.indexOf(QLatin1String("/")) - 1);
         urlQuery.addQueryItem(QLatin1String("owner_screen_name"), owner);
         params.insert("owner_screen_name", owner.toLatin1());
-
-        url.setQuery(urlQuery);
     } else {
-        QUrlQuery urlQuery;
-        if (account->usingOAuth()) {    //TODO: Check if needed
-            if (!latestStatusId.isEmpty()) {
-                params.insert("since_id", latestStatusId.toLatin1());
-                countOfPost = 200;
-            }
-            params.insert("count", QByteArray::number(countOfPost));
-            if (!maxId.isEmpty()) {
-                params.insert("max_id", maxId.toLatin1());
-            }
-            if (page) {
-                params.insert("page", QByteArray::number(page));
-            }
-        }
+        int countOfPost = Choqok::BehaviorSettings::countOfPosts();
         if (!latestStatusId.isEmpty()) {
             urlQuery.addQueryItem(QLatin1String("since_id"), latestStatusId);
+            params.insert("since_id", latestStatusId.toLatin1());
             countOfPost = 200;
         }
+
         urlQuery.addQueryItem(QLatin1String("count"), QString::number(countOfPost));
+        params.insert("count", QByteArray::number(countOfPost));
+
         if (!maxId.isEmpty()) {
             urlQuery.addQueryItem(QLatin1String("max_id"), maxId);
+            params.insert("max_id", maxId.toLatin1());
         }
+
         if (page) {
             urlQuery.addQueryItem(QLatin1String("page"), QString::number(page));
+            params.insert("page", QByteArray::number(page));
         }
-        url.setQuery(urlQuery);
     }
+
+    url.setQuery(urlQuery);
+
     qCDebug(CHOQOK) << "Latest" << type << "Id:" << latestStatusId;// << "apiReq:" << url;
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
@@ -1467,7 +1460,7 @@ Choqok::Post *TwitterApiMicroBlog::readDirectMessage(Choqok::Account *theAccount
     Choqok::Post *msg = new Choqok::Post;
 
     msg->isPrivate = true;
-    QString senderId, recipientId, timeStr, senderScreenName, recipientScreenName, senderProfileImageUrl,
+    QString senderId, recipientId, senderScreenName, recipientScreenName, senderProfileImageUrl,
             senderName, senderDescription, recipientProfileImageUrl, recipientName, recipientDescription;
 
     msg->creationDateTime = dateFromString(var[QLatin1String("created_at")].toString());

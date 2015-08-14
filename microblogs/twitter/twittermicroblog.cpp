@@ -306,6 +306,22 @@ void TwitterMicroBlog::slotFetchUserLists(KJob *job)
     }
 }
 
+Choqok::Post *TwitterMicroBlog::readDirectMessage(Choqok::Account *theAccount, const QVariantMap &var)
+{
+    qCDebug(CHOQOK);
+
+    Choqok::Post *post = TwitterApiMicroBlog::readDirectMessage(theAccount, var);
+
+    if (!post) {
+        qCCritical(CHOQOK) << "post is NULL!";
+        return 0;
+    }
+
+    post->postId = var[QLatin1String("id_str")].toString();
+
+    return post;
+}
+
 void TwitterMicroBlog::addListTimeline(TwitterAccount *theAccount, const QString &username,
                                        const QString &listname)
 {
