@@ -132,17 +132,19 @@ bool AccountManager::removeAccount(const QString &alias)
             }
             QStringList names = a->timelineNames();
             while (!names.isEmpty()) {
-                QString tmpFile;
-                tmpFile = QStandardPaths::locate(QStandardPaths::DataLocation,
-                                                generatePostBackupFileName(a->alias(), names.takeFirst()));
-                qCDebug(CHOQOK) << "Will remove " << tmpFile;
-                const QUrl path(tmpFile);
-                KIO::StatJob *job = KIO::stat(path, KIO::StatJob::SourceSide, 1);
-                KJobWidgets::setWindow(job, UI::Global::mainWindow());
-                job->exec();
-                KIO::DeleteJob *delJob = KIO::del(path);
-                KJobWidgets::setWindow(delJob, UI::Global::mainWindow());
-                delJob->exec();
+                const QString tmpFile = QStandardPaths::locate(QStandardPaths::DataLocation,
+                                                               generatePostBackupFileName(a->alias(), names.takeFirst()));
+                qCDebug(CHOQOK) << "Will remove" << tmpFile;
+                const QUrl path = QUrl::fromLocalFile(tmpFile);
+
+                if (path.isValid()) {
+                    KIO::StatJob *job = KIO::stat(path, KIO::StatJob::SourceSide, 1);
+                    KJobWidgets::setWindow(job, UI::Global::mainWindow());
+                    job->exec();
+                    KIO::DeleteJob *delJob = KIO::del(path);
+                    KJobWidgets::setWindow(delJob, UI::Global::mainWindow());
+                    delJob->exec();
+                }
             }
             a->deleteLater();
             PasswordManager::self()->removePassword(alias);
