@@ -37,7 +37,7 @@
     <p xml:lang="ca">El Choqok és un client de microblogs que implementa els serveis de Twitter.com i Pump.io</p>
     <p xml:lang="de">Choqok ist ein Mikro-Blogging-Programm, das derzeit die Dienste Twitter.com und Pump.io unterstützt</p>
     <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com and Pump.io services</p>
-    <p xml:lang="es">Choqok es un cliente de microblogueo que soporta los servicios Twitter.com y Pump.io</p>
+    <p xml:lang="es">Choqok es un cliente de microblogueo que admite los servicios Twitter.com y Pump.io</p>
     <p xml:lang="fi">Choqok on mikroblogausasiakas, joka tukee Twitter.com- ja Pump.io-palveluja</p>
     <p xml:lang="fr">Choqok est un client de micro-bloggage prenant en charge les services Twitter.com et Pump.io</p>
     <p xml:lang="gl">Choqok é un cliente de microbloque compatíbel cos servizos Twitter e Pump.io.</p>
@@ -183,7 +183,7 @@
       <li xml:lang="de">Direktes Senden und Empfangen von Nachrichten über DCC</li>
       <li xml:lang="el">Υποστηρίζει την άμεση αποστολή και λήψη μηνυμάτων</li>
       <li xml:lang="en-GB">Support for send and receive direct messages</li>
-      <li xml:lang="es">Soporta el envío y la recepción de mensajes directos</li>
+      <li xml:lang="es">Reconoce el envío y la recepción de mensajes directos</li>
       <li xml:lang="fi">Tukee suorien viestien lähettämistä ja vastaanottamista</li>
       <li xml:lang="fr">Envoi et réception de messages directs</li>
       <li xml:lang="gl">Permite enviar e recibir mensaxes directas.</li>
@@ -250,7 +250,7 @@
       <li xml:lang="de">Unterstützt Auch-APIs für alle Dienste</li>
       <li xml:lang="el">Υποστηρίζει API αναζήτησης για όλες τις υπηρεσίες</li>
       <li xml:lang="en-GB">Supporting search APIs for all services</li>
-      <li xml:lang="es">Soporta las APIs de búsqueda de todos los servicios</li>
+      <li xml:lang="es">Implementa las APIs de búsqueda de todos los servicios</li>
       <li xml:lang="fi">Tukee jokaisen tuntemansa palvelun haku-APIa</li>
       <li xml:lang="fr">Prise en charge des API de recherche pour tous les services</li>
       <li xml:lang="gl">Permite realizar buscas nos servizos.</li>
@@ -337,7 +337,7 @@
       <li xml:lang="de">Unterstützung für das Kürzen von Adressen (URLs) mit mehr als 30 Zeichen, Kürzen beim Einfügen</li>
       <li xml:lang="el">Υποστηρίζει τη συρρίκνωση URL που έχουν περισσότερους από 30 χαρακτήρες (συρρίκνωση σε επικόλληση)</li>
       <li xml:lang="en-GB">Support for shortening urls with more than 30 characters (shorten on paste)</li>
-      <li xml:lang="es">Soporte para abreviar URL que tengan más de 30 caracteres (abreviatura al pegar)</li>
+      <li xml:lang="es">Apoyo para abreviar URL que tengan más de 30 caracteres (abreviatura al pegar)</li>
       <li xml:lang="fi">Tukee verkko-osoitteitten lyhentämistä alle 30 merkkiin (leikepöydältä liitettäessä)</li>
       <li xml:lang="fr">Peut raccourcir les URL de plus de 30 caractères (raccourcissement au moment du collage de l'URL dans le texte)</li>
       <li xml:lang="gl">Permite acurtar automaticamente enderezos URL que superen os 30 caracteres ao pegalos.</li>
@@ -359,7 +359,7 @@
       <li xml:lang="de">Unterstützt die Einstellung des Erscheinungsbilds der Statusliste</li>
       <li xml:lang="el">Υποστηρίζει τη διαμόρφωση της εμφάνισης σε λίστες καταστάσεων</li>
       <li xml:lang="en-GB">Support for configuring status lists appearance</li>
-      <li xml:lang="es">Soporte para configurar la apariencia de las listas de estados</li>
+      <li xml:lang="es">Apoyo para configurar la apariencia de las listas de estados</li>
       <li xml:lang="fi">Tukee tilalistojen ulkoasun mukauttamista</li>
       <li xml:lang="fr">Prise en charge de l'apparition des listes d'état</li>
       <li xml:lang="gl">Permite configurar a aparencia das listas de chíos.</li>
