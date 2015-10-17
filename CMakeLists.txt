@@ -12,9 +12,6 @@ include(KDEFrameworkCompilerSettings)
 include(KDECMakeSettings)
 include(FeatureSummary)
 
-# QCA still uses slots/signals keywords
-remove_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS)
-
 find_package(Qt5 CONFIG REQUIRED
     Core
     Concurrent
