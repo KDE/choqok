@@ -26,6 +26,7 @@
 #include <QDBusConnectionInterface>
 #include <QDBusMessage>
 #include <QDBusReply>
+#include <QDebug>
 
 #if TELEPATHY_FOUND
 #include <TelepathyQt/Account>
