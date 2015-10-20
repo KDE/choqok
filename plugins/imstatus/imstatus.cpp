@@ -23,6 +23,8 @@
 
 #include "imstatus.h"
 
+#include <QTimer>
+
 #include <KPluginFactory>
 
 #include "choqokuiglobal.h"
