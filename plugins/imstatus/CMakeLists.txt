@@ -45,6 +45,7 @@ kcoreaddons_desktop_to_json(kcm_choqok_imstatus choqok_imstatus_config.desktop)
 target_link_libraries(kcm_choqok_imstatus
 PUBLIC
     Qt5::Core
+    Qt5::DBus
     KF5::ConfigWidgets
     KF5::CoreAddons
     KF5::I18n
