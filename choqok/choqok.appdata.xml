@@ -7,6 +7,7 @@
   <name xml:lang="ar">چغوك</name>
   <name xml:lang="bs">Choqok</name>
   <name xml:lang="ca">Choqok</name>
+  <name xml:lang="ca-valencia">Choqok</name>
   <name xml:lang="cs">Choqok</name>
   <name xml:lang="da">Choqok</name>
   <name xml:lang="de">Choqok</name>
@@ -35,6 +36,7 @@
     <p xml:lang="ar">چغوك هو عميل تدوين مصغّر يدعم خدمتيّ Twitter.com و Pump.io</p>
     <p xml:lang="bs">Choqok je mikro-blog klijent koji podržava Twitter.com i Pump.io  usluge</p>
     <p xml:lang="ca">El Choqok és un client de microblogs que implementa els serveis de Twitter.com i Pump.io</p>
+    <p xml:lang="ca-valencia">El Choqok és un client de microblogs que implementa els serveis de Twitter.com i Pump.io</p>
     <p xml:lang="de">Choqok ist ein Mikro-Blogging-Programm, das derzeit die Dienste Twitter.com und Pump.io unterstützt</p>
     <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com and Pump.io services</p>
     <p xml:lang="es">Choqok es un cliente de microblogueo que admite los servicios Twitter.com y Pump.io</p>
@@ -54,6 +56,7 @@
     <p xml:lang="ar">الميزات:</p>
     <p xml:lang="bs">Svojstva:</p>
     <p xml:lang="ca">Característiques:</p>
+    <p xml:lang="ca-valencia">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
     <p xml:lang="da">Funktioner:</p>
     <p xml:lang="de">Funktionen:</p>
@@ -80,6 +83,7 @@
       <li xml:lang="ar">دعم خدمة التّدوين المصغّر Twitter.com</li>
       <li xml:lang="bs">Podrška Twitter.com mikro-blog usluge</li>
       <li xml:lang="ca">Implementació del servei de microblog Twitter.com</li>
+      <li xml:lang="ca-valencia">Implementació del servei de microblog Twitter.com</li>
       <li xml:lang="de">Unterstützung für den Micro-Blogging-Dienst Twitter.com</li>
       <li xml:lang="el">Υποστηρίζει την υπηρεσία μικρο-ιστολογίου Twitter.com</li>
       <li xml:lang="en-GB">Supporting Twitter.com micro-blogging service</li>
@@ -102,6 +106,7 @@
       <li xml:lang="ar">دعم خدمة Pump.io المضافة ذاتيًّا</li>
       <li xml:lang="bs">Podrška za samodovoljnu Pump.io  uslugu</li>
       <li xml:lang="ca">Implementació per al servei Pump.io auto hostatjat</li>
+      <li xml:lang="ca-valencia">Implementació per al servei Pump.io auto hostatjat</li>
       <li xml:lang="en-GB">Supporting self hosted Pump.io service</li>
       <li xml:lang="es">Soporta el servicio auto hospedado Pump.io</li>
       <li xml:lang="fi">Tukee itse isännöityä Pump.io-palvelua</li>
@@ -120,6 +125,7 @@
       <li xml:lang="ar">دعم خدمة غنو الاجتماعيّة المضافة ذاتيًّا</li>
       <li xml:lang="bs">PoPodrška za samodovoljnu GNU social  uslugu</li>
       <li xml:lang="ca">Implementació per al servei social de la GNU auto hostatjat</li>
+      <li xml:lang="ca-valencia">Implementació per al servei social de la GNU auto hostatjat</li>
       <li xml:lang="en-GB">Supporting self hosted GNU social service</li>
       <li xml:lang="es">Soporta el servicio auto hospedado GNU social</li>
       <li xml:lang="fi">Tukee itse isännöityä GNU social -palvelu</li>
@@ -138,6 +144,7 @@
       <li xml:lang="ar">دعم الخطوط الزّمنيّة للمستخدم وأصدقائه</li>
       <li xml:lang="bs">Podrška korisniku + vremenske linije Njegovih/Njenih Prijatelja</li>
       <li xml:lang="ca">Implementació per a les línies de temps Usuari + Vós i els vostres amics</li>
+      <li xml:lang="ca-valencia">Implementació per a les línies de temps Usuari + Vós i els vostres amics</li>
       <li xml:lang="el">Υποστηρίζει χρονολόγια για χρήστη + φίλους</li>
       <li xml:lang="en-GB">Supporting User + His/Her Friends time-lines</li>
       <li xml:lang="es">Soporta las líneas temporales usuario + sus amigos</li>
@@ -159,6 +166,7 @@
       <li xml:lang="ar">دعم خطوط @الرّد الزّمنيّة</li>
       <li xml:lang="bs">Podrška @Odgovori vremenskim linijama</li>
       <li xml:lang="ca">Implementació per a les línies de temps @Resposta</li>
+      <li xml:lang="ca-valencia">Implementació per a les línies de temps @Resposta</li>
       <li xml:lang="el">Υποστηρίζει χρονολόγια @Reply</li>
       <li xml:lang="en-GB">Supporting @Reply time-lines</li>
       <li xml:lang="es">Soporta las líneas temporales de @respuesta</li>
@@ -180,6 +188,7 @@
       <li xml:lang="ar">دعم إرسال الرّسائل المباشرة واستقبالها</li>
       <li xml:lang="bs">Podrška za slanje i primanje izravnih poruka</li>
       <li xml:lang="ca">Implementació per enviar i rebre missatges directes</li>
+      <li xml:lang="ca-valencia">Implementació per enviar i rebre missatges directes</li>
       <li xml:lang="de">Direktes Senden und Empfangen von Nachrichten über DCC</li>
       <li xml:lang="el">Υποστηρίζει την άμεση αποστολή και λήψη μηνυμάτων</li>
       <li xml:lang="en-GB">Support for send and receive direct messages</li>
@@ -202,6 +211,7 @@
       <li xml:lang="ar">التّكامل مع Twitpic.com</li>
       <li xml:lang="bs">Twitpic.com integracija</li>
       <li xml:lang="ca">Integració amb Twitpic.com</li>
+      <li xml:lang="ca-valencia">Integració amb Twitpic.com</li>
       <li xml:lang="de">Integration von Twitpic.com</li>
       <li xml:lang="el">Ενσωμάτωση Twitpic.com</li>
       <li xml:lang="en-GB">Twitpic.com integration</li>
@@ -225,6 +235,7 @@
       <li xml:lang="ar">دعم عدّة حسابات في آن واحد</li>
       <li xml:lang="bs">Podrška za više računa istovremeno</li>
       <li xml:lang="ca">Implementació per a múltiples comptes simultanis</li>
+      <li xml:lang="ca-valencia">Implementació per a múltiples comptes simultanis</li>
       <li xml:lang="de">Unterstützung für mehrere gleichzeitige Zugänge</li>
       <li xml:lang="el">Υποστηρίζει πολλούς λογαριασμούς ταυτόχρονα</li>
       <li xml:lang="en-GB">Supporting Multiple Accounts simultaneously</li>
@@ -247,6 +258,7 @@
       <li xml:lang="ar">دعم البحث في كلّ الخدمات عبر واجهة برمجة التّطبيقات</li>
       <li xml:lang="bs">Podrška za pretraživački API za sve usluge</li>
       <li xml:lang="ca">Implementació per a les API de cerca per a tots els serveis</li>
+      <li xml:lang="ca-valencia">Implementació per a les API de cerca per a tots els serveis</li>
       <li xml:lang="de">Unterstützt Auch-APIs für alle Dienste</li>
       <li xml:lang="el">Υποστηρίζει API αναζήτησης για όλες τις υπηρεσίες</li>
       <li xml:lang="en-GB">Supporting search APIs for all services</li>
@@ -269,6 +281,7 @@
       <li xml:lang="ar">التّكامل مع «محفظتك»</li>
       <li xml:lang="bs">KWallet integracija</li>
       <li xml:lang="ca">Integració amb el KWallet</li>
+      <li xml:lang="ca-valencia">Integració amb el KWallet</li>
       <li xml:lang="de">Integration von KWallet</li>
       <li xml:lang="el">Ενσωμάτωση KWallet</li>
       <li xml:lang="en-GB">KWallet integration</li>
@@ -292,6 +305,7 @@
       <li xml:lang="ar">إمكانيّة التّغريد السّريع بالاختصارات العموميّة (Ctrl+Meta+T)</li>
       <li xml:lang="bs">Sposobnost da se napravi brzi tweet sa globalnim prečicama (Ctrl+Meta+T)</li>
       <li xml:lang="ca">La capacitat per fer un «tweet» ràpid amb dreceres globals (Ctrl+Meta+T)</li>
+      <li xml:lang="ca-valencia">La capacitat per fer un «tweet» ràpid amb dreceres globals (Ctrl+Meta+T)</li>
       <li xml:lang="el">Δυνατότητα για γρήγορα tweet με καθολικές συντομεύσεις (Ctrl+Meta+T)</li>
       <li xml:lang="en-GB">Ability to make a quick tweet with global shortcuts (Ctrl+Meta+T)</li>
       <li xml:lang="es">Capacidad para hacer un tuit rápido con accesos rápidos de teclado globales (Ctrl+Meta+T)</li>
@@ -313,6 +327,7 @@
       <li xml:lang="ar">إمكانيّة إخطار المستخدم عن نصوص الحالة الجديدة بِـ «مخطرك» أو Libnotify</li>
       <li xml:lang="bs">Sposobnost da se obavijesti korisnik o novim statusima, sa KNotification ili Libnotify</li>
       <li xml:lang="ca">La capacitat per a notificar a l'usuari sobre el nou estat del text, amb KNotification o Libnotify</li>
+      <li xml:lang="ca-valencia">La capacitat per a notificar a l'usuari sobre el nou estat del text, amb KNotification o Libnotify</li>
       <li xml:lang="el">Δυνατότητα ειδοποίησης του χρήστη σχετικά με κείμενο νέων καταστάσεων με το KNotification ή το Libnotify</li>
       <li xml:lang="en-GB">Ability to notify user about new statuses text, with KNotification or Libnotify</li>
       <li xml:lang="es">Capacidad para notificar al usuario sobre los nuevos textos de estado, con KNotification o Libnotify</li>
@@ -334,6 +349,7 @@
       <li xml:lang="ar">دعم تقصير العناوين الأكبر من 30 محرفًا (تُصغّر عند لصقها)</li>
       <li xml:lang="bs">Podrška za skraćenje url-ova sa više od 30 karaktera (skratiti prilikom mogućnosti lijepljenja)</li>
       <li xml:lang="ca">Implementació per escurçar els URL amb més de 30 caràcters (escurça en enganxar)</li>
+      <li xml:lang="ca-valencia">Implementació per escurçar els URL amb més de 30 caràcters (escurça en enganxar)</li>
       <li xml:lang="de">Unterstützung für das Kürzen von Adressen (URLs) mit mehr als 30 Zeichen, Kürzen beim Einfügen</li>
       <li xml:lang="el">Υποστηρίζει τη συρρίκνωση URL που έχουν περισσότερους από 30 χαρακτήρες (συρρίκνωση σε επικόλληση)</li>
       <li xml:lang="en-GB">Support for shortening urls with more than 30 characters (shorten on paste)</li>
@@ -356,6 +372,7 @@
       <li xml:lang="ar">دعم ضبط مظهر قوائم الحالة</li>
       <li xml:lang="bs">Podrška za konfiguraciju izgleda liste statusa</li>
       <li xml:lang="ca">Implementació per a configurar l'aparença de les llistes d'estat</li>
+      <li xml:lang="ca-valencia">Implementació per a configurar l'aparença de les llistes d'estat</li>
       <li xml:lang="de">Unterstützt die Einstellung des Erscheinungsbilds der Statusliste</li>
       <li xml:lang="el">Υποστηρίζει τη διαμόρφωση της εμφάνισης σε λίστες καταστάσεων</li>
       <li xml:lang="en-GB">Support for configuring status lists appearance</li>
