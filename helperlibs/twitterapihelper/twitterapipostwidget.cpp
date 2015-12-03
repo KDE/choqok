@@ -257,7 +257,7 @@ void TwitterApiPostWidget::checkAnchor(const QUrl &url)
             currentAccount()->microblog()->fetchPost(currentAccount(), ps);
         }
     } else if (scheme == QLatin1String("thread")) {
-        TwitterApiShowThread *wd = new TwitterApiShowThread(currentAccount(), currentPost(), NULL);
+        TwitterApiShowThread *wd = new TwitterApiShowThread(currentAccount(), currentPost(), nullptr);
         wd->resize(this->width(), wd->height());
         connect(wd, SIGNAL(forwardReply(QString,QString,QString)),
                 this, SIGNAL(reply(QString,QString,QString)));

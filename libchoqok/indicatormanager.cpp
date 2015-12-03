@@ -132,7 +132,7 @@ void MessageIndicatorManager::slotShowMainWindow()
     choqokMainWindow->activateChoqok();
 }
 
-MessageIndicatorManager *MessageIndicatorManager::mSelf = NULL;
+MessageIndicatorManager *MessageIndicatorManager::mSelf = nullptr;
 
 MessageIndicatorManager *MessageIndicatorManager::self()
 {
