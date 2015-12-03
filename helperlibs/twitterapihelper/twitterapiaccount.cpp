@@ -23,9 +23,9 @@
 
 #include "twitterapiaccount.h"
 
-#include <KIO/AccessManager>
-
 #include <QtOAuth/QtOAuth>
+
+#include <KIO/AccessManager>
 
 #include "passwordmanager.h"
 

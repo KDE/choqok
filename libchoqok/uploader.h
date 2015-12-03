@@ -43,7 +43,7 @@ public:
     virtual ~Uploader();
 
     /*virtual void upload( const QString &localUrl, const QByteArray &mediumType,
-                            const QString &optionalMessage = QString() )*/;
+                            const QString &optionalMessage = QString() );*/
     virtual void upload(const QUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType) = 0;
 
 Q_SIGNALS:

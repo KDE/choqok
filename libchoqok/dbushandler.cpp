@@ -113,8 +113,7 @@ void DbusHandler::postText(const QString &text)
     //  that DBusHandler is ready, but QuickPost widget not yet.
     if (Choqok::UI::Global::quickPostWidget() == 0) {
         m_textToPost = QString(text);
-        connect(Choqok::UI::Global::mainWindow(), SIGNAL(quickPostCreated()),
-                SLOT(slotcreatedQuickPost()));
+        connect(Choqok::UI::Global::mainWindow(), SIGNAL(quickPostCreated()), SLOT(slotcreatedQuickPost()));
         return;
     }
     if (Choqok::UI::Global::quickPostWidget()->isVisible()) {

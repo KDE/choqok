@@ -26,7 +26,7 @@
 #include <QString>
 
 #include <KConfigGroup>
-
+#include <memory>
 #include "choqok_export.h"
 
 namespace Choqok
@@ -110,7 +110,7 @@ Q_SIGNALS:
 
 private:
     class Private;
-    Private *const d;
+    std::unique_ptr<Private> d;
 };
 
 }

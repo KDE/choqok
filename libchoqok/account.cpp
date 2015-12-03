@@ -69,7 +69,6 @@ Account::~Account()
     qCDebug(CHOQOK) << alias();
 //     writeConfig();
     delete d->configGroup;
-    delete d;
 }
 
 void Account::writeConfig()

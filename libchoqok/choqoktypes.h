@@ -42,7 +42,12 @@ public:
     User()
         : isProtected(false)
     {}
+    User(const User& u) = default;
+    User(User&& u) = default;
     virtual ~User() {}
+    User& operator=(const User& u) = default;
+    User& operator=(User&& u) = default;
+
     QString userId;
     QString realName;
     QString userName;
@@ -61,7 +66,12 @@ public:
         : isFavorited(false), isPrivate(false), isError(false), isRead(false),
           mediaSizeWidth(0), mediaSizeHeight(0), owners(0)
     {}
+    Post(const Post& u) = default;
+    Post(Post&& u) = default;
     virtual ~Post() {}
+    Post& operator=(const Post& u) = default;
+    Post& operator=(Post&& u) = default;
+    
     QDateTime creationDateTime;
     QString postId;
     QString link;
@@ -95,21 +105,6 @@ public:
     QString description;
     QString icon;
 };
-/*
-enum FilterAction{
-    Delete = 0,
-    MoveTo = 1,
-    CopyTo = 2
-};
-
-struct Filter {
-public:
-    QStringList applyToAccounts;
-    QStringList applyToTimelines;
-    FilterAction action;
-    QString moveCopyTo;
-};
-*/
 
 }
 #endif
