@@ -117,7 +117,7 @@ public:
     *
     * @return A new @ref ChoqokEditAccountWidget to be shown in the account part of the configurations.
     *
-    * @param account is the Account to edit. If it's 0L, then we create a new account
+    * @param account is the Account to edit. If it's nullptr, then we create a new account
     * @param parent The parent of the 'to be returned' widget
     */
     virtual ChoqokEditAccountWidget *createEditAccountWidget(Choqok::Account *account, QWidget *parent) = 0;

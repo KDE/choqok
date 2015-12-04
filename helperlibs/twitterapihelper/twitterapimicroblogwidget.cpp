@@ -166,7 +166,7 @@ TwitterApiSearchTimelineWidget *TwitterApiMicroBlogWidget::addSearchTimelineWidg
         timelinesTabWidget()->setCurrentWidget(mbw);
     } else {
         qCDebug(CHOQOK) << "Cannot Create a new TimelineWidget for timeline " << name;
-        return 0L;
+        return nullptr;
     }
     if (timelinesTabWidget()->count() == 1) {
         timelinesTabWidget()->setTabBarHidden(true);

@@ -31,7 +31,7 @@
 
 #include "filter.h"
 
-FilterSettings *FilterSettings::_self = 0L;
+FilterSettings *FilterSettings::_self = nullptr;
 QMap<Filter::FilterField, QString> FilterSettings::_filterFieldName;
 QMap<Filter::FilterType, QString> FilterSettings::_filterTypeName;
 QMap<Filter::FilterAction, QString> FilterSettings::_filterActionName;

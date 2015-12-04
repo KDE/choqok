@@ -55,7 +55,7 @@ public:
     /**
     * Create a new account if we are in the 'add account wizard',
     * otherwise update the existing account.
-    * @Return new or modified account. OR 0L on failure.
+    * @Return new or modified account. OR nullptr on failure.
     */
     virtual Choqok::Account *apply();
 

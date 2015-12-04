@@ -40,7 +40,7 @@ class ChoqokEditAccountWidgetPrivate;
  * @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
  *
  * This class is used by the microblog plugins to add specific microblog fields in the add account wizard,
- * or in the account preferences. If the given account is 0L, then you will have to create a new account
+ * or in the account preferences. If the given account is nullptr, then you will have to create a new account
  * in @ref apply().
  *
  * Each microblog has to subclass this class.
@@ -65,7 +65,7 @@ public:
     /**
      * Constructor.
      *
-     * If 'account' is 0L we are in the 'add account wizard', otherwise
+     * If 'account' is nullptr we are in the 'add account wizard', otherwise
      * we are editing an existing account.
      */
     explicit ChoqokEditAccountWidget(Choqok::Account *account, QWidget *parent);

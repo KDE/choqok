@@ -160,7 +160,7 @@ void MicroBlogWidget::setComposerWidget(ComposerWidget *widget)
         d->composer->deleteLater();
     }
     if (!widget) {
-        d->composer = 0L;
+        d->composer = nullptr;
         return;
     }
     d->composer = widget;
@@ -250,7 +250,7 @@ TimelineWidget *MicroBlogWidget::addTimelineWidgetToUi(const QString &name)
         slotUpdateUnreadCount(mbw->unreadCount(), mbw);
     } else {
         qCDebug(CHOQOK) << "Cannot Create a new TimelineWidget for timeline " << name;
-        return 0L;
+        return nullptr;
     }
     if (d->timelinesTabWidget->count() == 1) {
         d->timelinesTabWidget->setTabBarHidden(true);
@@ -283,7 +283,7 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change, Choqok::UI::TimelineWidg
         }
     } else {
         d->btnMarkAllAsRead->deleteLater();
-        d->btnMarkAllAsRead = 0L;
+        d->btnMarkAllAsRead = nullptr;
     }
     TimelineWidget *wd = qobject_cast<TimelineWidget *>(sender());
     if (!wd) {
@@ -315,7 +315,7 @@ void MicroBlogWidget::markAllAsRead()
 {
     if (d->btnMarkAllAsRead) {
         d->btnMarkAllAsRead->deleteLater();
-        d->btnMarkAllAsRead = 0L;
+        d->btnMarkAllAsRead = nullptr;
     }
     for (TimelineWidget *wd: d->timelines) {
         wd->markAllAsRead();
@@ -433,7 +433,7 @@ void MicroBlogWidget::slotAccountModified(Account *theAccount)
     if (theAccount == currentAccount()) {
         if (theAccount->isReadOnly()) {
             if (composer()) {
-                setComposerWidget(0L);
+                setComposerWidget(nullptr);
             }
         } else if (!composer()) {
             setComposerWidget(theAccount->microblog()->createComposerWidget(theAccount, this));

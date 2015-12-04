@@ -103,7 +103,7 @@ PasswordManager::~PasswordManager()
     delete d;
 }
 
-PasswordManager *PasswordManager::mSelf = 0L;
+PasswordManager *PasswordManager::mSelf = nullptr;
 
 PasswordManager *PasswordManager::self()
 {

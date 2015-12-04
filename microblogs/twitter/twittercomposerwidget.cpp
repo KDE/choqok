@@ -85,7 +85,7 @@ void TwitterComposerWidget::submitPost(const QString &txt)
                 text.size() > (int)currentAccount()->postCharLimit()) {
             text = Choqok::ShortenManager::self()->parseText(text);
         }
-        setPostToSubmit(0L);
+        setPostToSubmit(nullptr);
         setPostToSubmit(new Choqok::Post);
         postToSubmit()->content = text;
         if (!replyToId.isEmpty()) {
@@ -123,7 +123,7 @@ void TwitterComposerWidget::slotPostMediaSubmitted(Choqok::Account *theAccount, 
         editor()->clear();
         replyToId.clear();
         editorContainer()->setEnabled(true);
-        setPostToSubmit(0L);
+        setPostToSubmit(nullptr);
         cancelAttachMedium();
         currentAccount()->microblog()->updateTimelines(currentAccount());
     }

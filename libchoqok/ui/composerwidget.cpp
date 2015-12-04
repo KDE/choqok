@@ -160,7 +160,7 @@ void ComposerWidget::slotPostSubmited(Choqok::Account *theAccount, Choqok::Post 
         editorCleared();
         editorContainer()->setEnabled(true);
         delete d->postToSubmit;
-        d->postToSubmit = 0L;
+        d->postToSubmit = nullptr;
         currentAccount()->microblog()->updateTimelines(currentAccount());
     }
 }

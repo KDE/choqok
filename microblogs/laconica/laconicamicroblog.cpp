@@ -89,7 +89,7 @@ ChoqokEditAccountWidget *LaconicaMicroBlog::createEditAccountWidget(Choqok::Acco
         return new LaconicaEditAccountWidget(this, acc, parent);
     } else {
         qCDebug(CHOQOK) << "Account passed here is not a LaconicaAccount!";
-        return 0L;
+        return nullptr;
     }
 }
 

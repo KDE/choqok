@@ -65,10 +65,10 @@ MediaManager::MediaManager()
 MediaManager::~MediaManager()
 {
     delete d;
-    mSelf = 0L;
+    mSelf = nullptr;
 }
 
-MediaManager *MediaManager::mSelf = 0L;
+MediaManager *MediaManager::mSelf = nullptr;
 
 MediaManager *MediaManager::self()
 {

@@ -194,7 +194,7 @@ void PluginManager::slotPluginReadyForUnload()
     qCDebug(CHOQOK) << plugin->pluginId() << "ready for unload";
     _kpmp->loadedPlugins.remove(_kpmp->loadedPlugins.key(plugin));
     plugin->deleteLater();
-    plugin = 0L;
+    plugin = nullptr;
     if (_kpmp->loadedPlugins.count() < 1) {
         slotShutdownDone();
     }
@@ -319,7 +319,7 @@ Plugin *PluginManager::loadPlugin(const QString &_pluginId, PluginLoadMode mode 
     } else {
         _kpmp->pluginsToLoad.push(pluginId);
         QTimer::singleShot(0, this, SLOT(slotLoadNextPlugin()));
-        return 0L;
+        return nullptr;
     }
 }
 
@@ -330,7 +330,7 @@ Plugin *PluginManager::loadPluginInternal(const QString &pluginId)
     KPluginInfo info = infoForPluginId(pluginId);
     if (!info.isValid()) {
         qCWarning(CHOQOK) << "Unable to find a plugin named '" << pluginId << "'!";
-        return 0L;
+        return nullptr;
     }
 
     if (_kpmp->loadedPlugins.contains(info)) {
@@ -412,13 +412,13 @@ Plugin *PluginManager::plugin(const QString &_pluginId) const
 
     KPluginInfo info = infoForPluginId(pluginId);
     if (!info.isValid()) {
-        return 0L;
+        return nullptr;
     }
 
     if (_kpmp->loadedPlugins.contains(info)) {
         return _kpmp->loadedPlugins[ info ];
     } else {
-        return 0L;
+        return nullptr;
     }
 }
 

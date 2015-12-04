@@ -142,7 +142,7 @@ void QuickPost::slotSubmitPost(Account *a, Post *post)
         d->txtPost->setEnabled(true);
         d->txtPost->clear();
         delete d->submittedPost;
-        d->submittedPost = 0L;
+        d->submittedPost = nullptr;
         d->isPostSubmitted = false;
     }
 }
@@ -158,7 +158,7 @@ void QuickPost::postError(Account *a, Choqok::Post *post,
     if (d->submittedAccounts.isEmpty()) {
         d->txtPost->setEnabled(true);
         delete d->submittedPost;
-        d->submittedPost = 0L;
+        d->submittedPost = nullptr;
     }
 }
 

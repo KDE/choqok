@@ -69,7 +69,7 @@ UI::Global::SessionManager::~SessionManager()
 
 }
 
-UI::Global::SessionManager *UI::Global::SessionManager::m_self = 0L;
+UI::Global::SessionManager *UI::Global::SessionManager::m_self = nullptr;
 
 UI::Global::SessionManager *UI::Global::SessionManager::self()
 {

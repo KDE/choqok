@@ -147,7 +147,7 @@ ChoqokEditAccountWidget *OCSMicroblog::createEditAccountWidget(Choqok::Account *
         return new OCSConfigureWidget(this, acc, parent);
     } else {
         qCDebug(CHOQOK) << "Account passed here was not a valid OCSAccount!";
-        return 0L;
+        return nullptr;
     }
 }
 

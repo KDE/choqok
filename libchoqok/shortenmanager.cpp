@@ -58,7 +58,7 @@ public:
             } else {
                 qCDebug(CHOQOK) << backend->pluginName();
                 PluginManager::self()->unloadPlugin(backend->pluginName());
-                backend = 0L;
+                backend = nullptr;
             }
         }
         if (pluginId.isEmpty()) {

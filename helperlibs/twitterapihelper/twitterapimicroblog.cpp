@@ -103,43 +103,43 @@ void TwitterApiMicroBlog::setTimelineInfos()
     t->name = i18nc("Timeline Name", "Home");
     t->description = i18nc("Timeline description", "You and your friends");
     t->icon = QLatin1String("user-home");
-    mTimelineInfos[QLatin1String("Home")] = t;
+    mTimelineInfos[QLatin1String("Home")] = std::move(t);
 
     t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "Reply");
     t->description = i18nc("Timeline description", "Replies to you");
     t->icon = QLatin1String("edit-undo");
-    mTimelineInfos[QLatin1String("Reply")] = t;
+    mTimelineInfos[QLatin1String("Reply")] = std::move(t);
 
     t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "Inbox");
     t->description = i18nc("Timeline description", "Your incoming private messages");
     t->icon = QLatin1String("mail-folder-inbox");
-    mTimelineInfos[QLatin1String("Inbox")] = t;
+    mTimelineInfos[QLatin1String("Inbox")] = std::move(t);
 
     t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "Outbox");
     t->description = i18nc("Timeline description", "Private messages you have sent");
     t->icon = QLatin1String("mail-folder-outbox");
-    mTimelineInfos[QLatin1String("Outbox")] = t;
+    mTimelineInfos[QLatin1String("Outbox")] = std::move(t);
 
     t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "Favorite");
     t->description = i18nc("Timeline description", "Your favorites");
     t->icon = QLatin1String("favorites");
-    mTimelineInfos[QLatin1String("Favorite")] = t;
+    mTimelineInfos[QLatin1String("Favorite")] = std::move(t);
 
     t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "Public");
     t->description = i18nc("Timeline description", "Public timeline");
     t->icon = QLatin1String("folder-green");
-    mTimelineInfos[QLatin1String("Public")] = t;
+    mTimelineInfos[QLatin1String("Public")] = std::move(t);
 
     t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "ReTweets");
     t->description = i18nc("Timeline description", "Your posts that were ReTweeted by others");
     t->icon = QLatin1String("folder-red");
-    mTimelineInfos[QLatin1String("ReTweets")] = t;
+    mTimelineInfos[QLatin1String("ReTweets")] = std::move(t);
 }
 
 TwitterApiMicroBlog::~TwitterApiMicroBlog()
@@ -1040,7 +1040,7 @@ Choqok::TimelineInfo *TwitterApiMicroBlog::timelineInfo(const QString &timelineN
     if (isValidTimeline(timelineName)) {
         return mTimelineInfos.value(timelineName);
     } else {
-        return 0;
+        return nullptr;
     }
 }
 
@@ -1374,7 +1374,7 @@ Choqok::Post *TwitterApiMicroBlog::readPost(Choqok::Account *theAccount,
 {
     if (!post) {
         qCCritical(CHOQOK) << "TwitterApiMicroBlog::readPost: post is NULL!";
-        return 0;
+        return nullptr;
     }
     post->content = var[QLatin1String("text")].toString();
     post->creationDateTime = dateFromString(var[QLatin1String("created_at")].toString());

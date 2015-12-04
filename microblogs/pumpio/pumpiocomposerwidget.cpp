@@ -81,7 +81,7 @@ void PumpIOComposerWidget::submitPost(const QString &text)
             txt.size() > (int) currentAccount()->postCharLimit()) {
         txt = Choqok::ShortenManager::self()->parseText(txt);
     }
-    setPostToSubmit(0L);
+    setPostToSubmit(nullptr);
     setPostToSubmit(new Choqok::Post);
     postToSubmit()->content = txt;
     if (!replyToId.isEmpty()) {
@@ -133,7 +133,7 @@ void PumpIOComposerWidget::slotPostSubmited(Choqok::Account *theAccount, Choqok:
         editor()->clear();
         editorCleared();
         editorContainer()->setEnabled(true);
-        setPostToSubmit(0L);
+        setPostToSubmit(nullptr);
         cancelAttach();
         currentAccount()->microblog()->updateTimelines(currentAccount());
     }

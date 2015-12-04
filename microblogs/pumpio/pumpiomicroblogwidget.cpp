@@ -63,7 +63,7 @@ Choqok::UI::TimelineWidget *PumpIOMicroBlogWidget::addTimelineWidgetToUi(const Q
         slotUpdateUnreadCount(mbw->unreadCount(), mbw);
     } else {
         qCDebug(CHOQOK) << "Cannot Create a new TimelineWidget for timeline " << name;
-        return 0L;
+        return nullptr;
     }
 
     if (timelinesTabWidget()->count() == 1) {

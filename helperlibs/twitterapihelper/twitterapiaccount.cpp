@@ -284,7 +284,7 @@ void TwitterApiAccount::setUsingOAuth(bool use)
         initQOAuthInterface();
     } else {
         delete d->qoauth;
-        d->qoauth = 0L;
+        d->qoauth = nullptr;
     }
     d->usingOauth = use;
 }

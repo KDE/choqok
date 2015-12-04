@@ -70,7 +70,7 @@ public:
      * This adds the account to the manager's account list.
      * It will check no accounts already exist with the same Alias, if any, the account is deleted. and not added
      *
-     * @return @p account, or 0L if the account was deleted because alias collision
+     * @return @p account, or nullptr if the account was deleted because alias collision
      */
     Account *registerAccount(Account *account);
 

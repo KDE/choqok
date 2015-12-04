@@ -85,12 +85,12 @@ AccountManager::AccountManager()
 AccountManager::~AccountManager()
 {
     qCDebug(CHOQOK);
-    mSelf = 0L;
+    mSelf = nullptr;
     d->conf->sync();
     delete d;
 }
 
-AccountManager *AccountManager::mSelf = 0L;
+AccountManager *AccountManager::mSelf = nullptr;
 
 AccountManager *AccountManager::self()
 {
@@ -115,7 +115,7 @@ Account *AccountManager::findAccount(const QString &alias)
     }
 
     d->lastError = i18n("There is no account with alias %1.", alias);
-    return 0L;
+    return nullptr;
 }
 
 bool AccountManager::removeAccount(const QString &alias)
@@ -161,7 +161,7 @@ Account *AccountManager::registerAccount(Account *account)
     qCDebug(CHOQOK) << "Adding:" << account->alias();
 
     if (!account || d->accounts.contains(account) || account->alias().isEmpty()) {
-        return 0L;
+        return nullptr;
     }
 
     // If this account already exists, do nothing
@@ -169,7 +169,7 @@ Account *AccountManager::registerAccount(Account *account)
         if (account->alias() == curracc->alias()) {
             d->lastError = i18n("An account with this alias already exists: a unique alias has to be specified.");
             qCDebug(CHOQOK) << "An account with this alias already exists: a unique alias has to be specified.";
-            return 0L;
+            return nullptr;
         }
     }
 
