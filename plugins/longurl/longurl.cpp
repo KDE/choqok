@@ -55,7 +55,7 @@ LongUrl::~LongUrl()
     suspendJobs();
     mData.clear();
     mShortUrls.clear();
-    Q_FOREACH (KJob *job, mParsingList.keys()) {
+    for (KJob *job: mParsingList.keys()) {
         job->kill();
     }
     mParsingList.clear();
@@ -77,7 +77,7 @@ void LongUrl::parse(QPointer< Choqok::UI::PostWidget > postToParse)
         }
         redirectList << pureList[i];
     }
-    Q_FOREACH (const QString &url, redirectList) {
+    for (const QString &url: redirectList) {
         KJob *job = sheduleParsing(url);
         if (job) {
             mParsingList.insert(job, postToParse);
@@ -211,7 +211,7 @@ void LongUrl::aboutToUnload()
 
 void LongUrl::suspendJobs()
 {
-    Q_FOREACH (KJob *job, mParsingList.keys()) {
+    for (KJob *job: mParsingList.keys()) {
         job->suspend();
     }
 }

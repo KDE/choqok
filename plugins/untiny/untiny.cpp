@@ -87,7 +87,7 @@ void UnTiny::parse(QPointer<Choqok::UI::PostWidget> postToParse)
         }
         redirectList << pureList[i];
     }
-        Q_FOREACH (const QString &url, redirectList) {
+        for (const QString &url, redirectList) {
             KIO::TransferJob *job = KIO::mimetype( url, KIO::HideProgressInfo );
             if ( !job ) {
                 qCritical() << "Cannot create a http header request!";

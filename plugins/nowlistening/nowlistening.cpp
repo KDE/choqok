@@ -223,7 +223,7 @@ void NowListening::slotPrepareNowListening()
     //trying to find not supported players that implamented the MPRIS-Dbus interface
     if (!isPlaying && !MPRIS::getRunningPlayers().isEmpty()) {
 
-        Q_FOREACH (const QString &playerName, MPRIS::getRunningPlayers()) {
+        for (const QString &playerName: MPRIS::getRunningPlayers()) {
             playerFound = true;
             MPRIS mprisPlayer(playerName);
             if (mprisPlayer.isValid() && mprisPlayer.isPlaying()) {

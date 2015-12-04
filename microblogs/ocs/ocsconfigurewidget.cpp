@@ -91,7 +91,7 @@ void OCSConfigureWidget::slotprovidersLoaded()
     providersLoaded = true;
     QList <Attica::Provider> providerList = mMicroblog->providerManager()->providers();
     int selectedIndex = 0;
-    Q_FOREACH (const Attica::Provider &p, providerList) {
+    for (const Attica::Provider &p: providerList) {
         qCDebug(CHOQOK) << p.baseUrl();
         cfg_provider->addItem(p.name(), p.baseUrl());
         if (mAccount && mAccount->providerUrl() == p.baseUrl()) {

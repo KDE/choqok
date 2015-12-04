@@ -133,7 +133,7 @@ void TextBrowser::contextMenuEvent(QContextMenuEvent *event)
     connect(selectAll, SIGNAL(triggered(bool)), SLOT(selectAll()));
     menu->addAction(selectAll);
     menu->addSeparator();
-    Q_FOREACH (QAction *act, d->actions) {
+    for (QAction *act: d->actions) {
         if (act) {
             act->setUserData(32, new PostWidgetUserData(d->parent));
             menu->addAction(act);

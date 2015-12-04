@@ -99,7 +99,7 @@ void AddEditFilter::slotFilterActionChanged(int index)
 void AddEditFilter::setupFilterFields()
 {
     const QMap<Filter::FilterField, QString> fields = FilterSettings::filterFieldsMap();
-    Q_FOREACH (const Filter::FilterField &field, fields.keys()) {
+    for (const Filter::FilterField &field: fields.keys()) {
         ui.filterField->addItem(fields.value(field), field);
     }
 }
@@ -107,7 +107,7 @@ void AddEditFilter::setupFilterFields()
 void AddEditFilter::setupFilterTypes()
 {
     const QMap<Filter::FilterType, QString> types = FilterSettings::filterTypesMap();
-    Q_FOREACH (const Filter::FilterType &type, types.keys()) {
+    for (const Filter::FilterType &type: types.keys()) {
         ui.filterType->addItem(types.value(type), type);
     }
 }
@@ -115,7 +115,7 @@ void AddEditFilter::setupFilterTypes()
 void AddEditFilter::setupFilterActions()
 {
     const QMap<Filter::FilterAction, QString> actions = FilterSettings::filterActionsMap();
-    Q_FOREACH (const Filter::FilterAction &action, actions.keys()) {
+    for (const Filter::FilterAction &action: actions.keys()) {
         ui.filterAction->addItem(actions.value(action), action);
     }
 }

@@ -200,7 +200,7 @@ void AccountsWidget::load()
     accountsTable->clearContents();
     accountsTable->setRowCount(0);
 
-    Q_FOREACH (Choqok::Account *ac, Choqok::AccountManager::self()->accounts()) {
+    for (Choqok::Account *ac: Choqok::AccountManager::self()->accounts()) {
        addAccountToTable(ac);
     }
     accountsTable->resizeColumnsToContents();
@@ -242,7 +242,7 @@ QMenu *AccountsWidget::createAddAccountMenu()
 {
     mBlogMenu = new QMenu(i18n("Select Micro-Blogging Service"), this);
     const QList<KPluginInfo> list = Choqok::PluginManager::self()->availablePlugins(QLatin1String("MicroBlogs"));
-    Q_FOREACH (const KPluginInfo &info, list) {
+    for (const KPluginInfo &info: list) {
         QAction *act = new QAction(mBlogMenu);
         act->setText(info.name());
         act->setIcon(QIcon::fromTheme(info.icon()));

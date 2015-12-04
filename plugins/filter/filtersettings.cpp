@@ -80,7 +80,7 @@ void FilterSettings::readConfig()
     //Filter group names are start with Filter_%Text%%Field%%Type%
     KSharedConfig::openConfig()->sync();
     QStringList groups = KSharedConfig::openConfig()->groupList();
-    Q_FOREACH (const QString &grp, groups) {
+    for (const QString &grp: groups) {
         if (grp.startsWith(QLatin1String("Filter_"))) {
             Filter *f = new Filter(KSharedConfig::openConfig()->group(grp), this);
             if (f->filterText().isEmpty()) {
@@ -104,7 +104,7 @@ void FilterSettings::setFilters(const QList< Filter * > &filters)
 void FilterSettings::writeConfig()
 {
     QStringList groups = KSharedConfig::openConfig()->groupList();
-    Q_FOREACH (const QString &grp, groups) {
+    for (const QString &grp: groups) {
         if (grp.startsWith(QLatin1String("Filter_"))) {
             KSharedConfig::openConfig()->deleteGroup(grp);
         }
@@ -113,7 +113,7 @@ void FilterSettings::writeConfig()
     conf->writeEntry("hideRepliesNotRelatedToMe", _hideRepliesNotRelatedToMe);
     KSharedConfig::openConfig()->sync();
 
-    Q_FOREACH (Filter *f, _filters) {
+    for (Filter *f: _filters) {
         f->writeConfig();
     }
 

@@ -398,7 +398,7 @@ void PostWidget::resizeEvent(QResizeEvent *event)
 
 void PostWidget::enterEvent(QEvent *event)
 {
-    Q_FOREACH (QPushButton *btn, buttons()) {
+    for (QPushButton *btn: buttons()) {
         if (btn) { //A crash happens here :/
             btn->show();
         }
@@ -408,7 +408,7 @@ void PostWidget::enterEvent(QEvent *event)
 
 void PostWidget::leaveEvent(QEvent *event)
 {
-    Q_FOREACH (QPushButton *btn, buttons()) {
+    for (QPushButton *btn: buttons()) {
         if (btn) {
             btn->hide();
         }
@@ -423,7 +423,7 @@ QString PostWidget::prepareStatus(const QString &txt)
     text = removeTags(text);
 
     d->detectedUrls = UrlUtils::detectUrls(text);
-    Q_FOREACH (const QString &url, d->detectedUrls) {
+    for (const QString &url: d->detectedUrls) {
         QString httpUrl(url);
         if (!httpUrl.startsWith(QLatin1String("http"), Qt::CaseInsensitive) &&
                 !httpUrl.startsWith(QLatin1String("ftp"), Qt::CaseInsensitive)) {

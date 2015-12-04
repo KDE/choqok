@@ -97,7 +97,7 @@ void TimelineWidget::loadTimeline()
     if (!BehaviorSettings::markAllAsReadOnExit()) {
         addNewPosts(list);
     } else {
-        Q_FOREACH (Choqok::Post *p, list) {
+        for (Choqok::Post *p: list) {
             PostWidget *pw = d->currentAccount->microblog()->createPostWidget(d->currentAccount, p, this);
             if (pw) {
                 pw->setRead();
@@ -218,7 +218,7 @@ void TimelineWidget::addNewPosts(QList< Choqok::Post * > &postList)
 {
     qCDebug(CHOQOK) << d->currentAccount->alias() << d->timelineName << postList.count();
     int unread = 0;
-    Q_FOREACH (Choqok::Post *p, postList) {
+    for (Choqok::Post *p: postList) {
         if (d->posts.keys().contains(p->postId)) {
             continue;
         }
@@ -294,7 +294,7 @@ void TimelineWidget::setUnreadCount(int unread)
 void TimelineWidget::markAllAsRead()
 {
     if (d->unreadCount > 0) {
-        Q_FOREACH (PostWidget *pw, d->sortedPostsList) {
+        for (PostWidget *pw: d->sortedPostsList) {
             pw->setRead();
         }
         int unread = -d->unreadCount;
@@ -317,7 +317,7 @@ Account *TimelineWidget::currentAccount()
 
 void TimelineWidget::settingsChanged()
 {
-    Q_FOREACH (PostWidget *pw, d->sortedPostsList) {
+    for (PostWidget *pw: d->sortedPostsList) {
         pw->setUiStyle();
     }
 }

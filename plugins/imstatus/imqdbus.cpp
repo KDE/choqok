@@ -198,7 +198,7 @@ void IMQDBus::useTelepathy(const QString &statusMessage)
 
         QList<Tp::AccountPtr> accountsList = validAccountsPtr->accounts();
 
-        Q_FOREACH (const Tp::AccountPtr &account, accountsList) {
+        for (const Tp::AccountPtr &account: accountsList) {
             if (account->isOnline() && account->isReady()) {
                 Tp::Presence currentPresence = account->currentPresence();
                 currentPresence.setStatusMessage(statusMessage);

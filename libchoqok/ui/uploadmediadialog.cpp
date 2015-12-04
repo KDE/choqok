@@ -104,7 +104,7 @@ void UploadMediaDialog::load()
     QList<KPluginInfo> plugins = Choqok::PluginManager::self()->availablePlugins(QLatin1String("Uploaders"));
     qCDebug(CHOQOK) << plugins.count();
 
-    Q_FOREACH (const KPluginInfo &plugin, plugins) {
+    for (const KPluginInfo &plugin: plugins) {
         d->ui.uploaderPlugin->addItem(QIcon::fromTheme(plugin.icon()), plugin.name(), plugin.pluginName());
         d->availablePlugins.insert(plugin.pluginName(), plugin);
     }
@@ -178,7 +178,7 @@ void Choqok::UI::UploadMediaDialog::slotConfigureClicked()
     // The first proxy is owned by the dialog itself
     QWidget *moduleProxyParentWidget = configDialog;
 
-    Q_FOREACH (const KService::Ptr &servicePtr, pluginInfo.kcmServices()) {
+    for (const KService::Ptr &servicePtr: pluginInfo.kcmServices()) {
         if (!servicePtr->noDisplay()) {
             KCModuleInfo moduleInfo(servicePtr);
             KCModuleProxy *currentModuleProxy = new KCModuleProxy(moduleInfo, moduleProxyParentWidget);
@@ -234,15 +234,12 @@ void Choqok::UI::UploadMediaDialog::slotConfigureClicked()
 //         connect(&configDialog, SIGNAL(defaultClicked()), this, SLOT(slotDefaultClicked()));
 
         if (configDialog->exec() == QDialog::Accepted) {
-            Q_FOREACH (KCModuleProxy *moduleProxy, d->moduleProxyList) {
+            for (KCModuleProxy *moduleProxy: d->moduleProxyList) {
                 QStringList parentComponents = moduleProxy->moduleInfo().service()->property(QLatin1String("X-KDE-ParentComponents")).toStringList();
                 moduleProxy->save();
-//                 foreach (const QString &parentComponent, parentComponents) {
-//                     emit configCommitted(parentComponent.toLatin1());
-//                 }
             }
         } else {
-            Q_FOREACH (KCModuleProxy *moduleProxy, d->moduleProxyList) {
+            for (KCModuleProxy *moduleProxy: d->moduleProxyList) {
                 moduleProxy->load();
             }
         }

@@ -65,11 +65,11 @@ void OCSMicroblog::saveTimeline(Choqok::Account *account, const QString &timelin
     KConfig postsBackup(fileName, KConfig::NoGlobals, QStandardPaths::DataLocation);
 
     ///Clear previous data:
-    Q_FOREACH (const QString &group, postsBackup.groupList()) {
+    for (const QString &group: postsBackup.groupList()) {
         postsBackup.deleteGroup(group);
     }
 
-    Q_FOREACH (Choqok::UI::PostWidget *wd, timeline) {
+    for (Choqok::UI::PostWidget *wd: timeline) {
         const Choqok::Post *post = wd->currentPost();
         KConfigGroup grp(&postsBackup, post->creationDateTime.toString());
         grp.writeEntry("creationDateTime", post->creationDateTime);
@@ -100,7 +100,7 @@ QList< Choqok::Post * > OCSMicroblog::loadTimeline(Choqok::Account *account, con
     QStringList tmpList = postsBackup.groupList();
 
     QList<QDateTime> groupList;
-    Q_FOREACH (const QString &str, tmpList) {
+    for (const QString &str: tmpList) {
         groupList.append(QDateTime::fromString(str));
     }
     qSort(groupList);
@@ -237,7 +237,7 @@ QList< Choqok::Post * > OCSMicroblog::parseActivityList(const Attica::Activity::
 {
     qCDebug(CHOQOK) << list.count();
     QList< Choqok::Post * > resultList;
-    Q_FOREACH (const Attica::Activity &act, list) {
+    for (const Attica::Activity &act: list) {
         Choqok::Post *pst = new Choqok::Post;
         pst->postId = act.id();
         pst->content = act.message();
@@ -282,7 +282,7 @@ void OCSMicroblog::slotDefaultProvidersLoaded()
     mIsOperational = true;
     Q_EMIT initialized();
 
-    Q_FOREACH (Choqok::Account *acc, scheduledTasks.keys()) {
+    for (Choqok::Account *acc: scheduledTasks.keys()) {
         switch (scheduledTasks.value(acc)) {
         case Update:
             updateTimelines(acc);

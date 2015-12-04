@@ -91,8 +91,7 @@ void TwitterApiPostWidget::initUi()
     }
 
     menu->setDefaultAction(actRep);
-#pragma message("FIXME: Not available in QPushButton, port to KF5")
-//    btnRe->setDelayedMenu(menu);
+    btnRe->setMenu(menu);
 
     if (!currentPost()->isPrivate) {
         d->btnFav = addButton(QLatin1String("btnFavorite"), i18nc("@info:tooltip", "Favorite"), QLatin1String("rating"));

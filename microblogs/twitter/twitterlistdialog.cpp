@@ -122,7 +122,7 @@ void TwitterListDialog::slotLoadUserlists(Choqok::Account *theAccount, QString u
 {
     if (theAccount == account && QString::compare(username, ui.username->text()) && !list.isEmpty()) {
         listWidget->clear();
-        Q_FOREACH (const Twitter::List &l, list) {
+        for (const Twitter::List &l: list) {
             QListWidgetItem *item = new QListWidgetItem(listWidget);
             QString iText;
             if (l.description.isEmpty()) {

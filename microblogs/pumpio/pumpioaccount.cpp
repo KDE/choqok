@@ -178,7 +178,7 @@ void PumpIOAccount::setLists(const QVariantList lists)
 void PumpIOAccount::setTimelineNames(const QStringList &list)
 {
     d->timelineNames.clear();
-    Q_FOREACH (const QString &name, list) {
+    for (const QString &name: list) {
         if (microblog()->timelineNames().contains(name)) {
             d->timelineNames.append(name);
         }

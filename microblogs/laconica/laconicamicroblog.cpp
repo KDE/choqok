@@ -260,7 +260,7 @@ QStringList LaconicaMicroBlog::readFriendsScreenName(Choqok::Account *theAccount
     QStringList list;
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
-        Q_FOREACH (const QJsonValue &u, json.array()) {
+        for (const QJsonValue &u: json.array()) {
             const QJsonObject user = u.toObject();
 
             if (user.contains(QStringLiteral("statusnet_profile_url"))) {

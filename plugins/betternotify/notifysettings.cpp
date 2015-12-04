@@ -71,7 +71,7 @@ void NotifySettings::load()
 {
     d->accounts.clear();
     d->accountsConf->sync();
-    Q_FOREACH (Choqok::Account *acc, Choqok::AccountManager::self()->accounts()) {
+    for (Choqok::Account *acc: Choqok::AccountManager::self()->accounts()) {
         d->accounts.insert(acc->alias(), d->accountsConf->readEntry(acc->alias(), QStringList()));
     }
     d->conf->sync();
@@ -90,7 +90,7 @@ void NotifySettings::load()
 
 void NotifySettings::save()
 {
-    Q_FOREACH (Choqok::Account *acc, Choqok::AccountManager::self()->accounts()) {
+    for (Choqok::Account *acc: Choqok::AccountManager::self()->accounts()) {
         d->accountsConf->writeEntry(acc->alias(), d->accounts.value(acc->alias()));
     }
     d->conf->writeEntry("Interval", d->interval);

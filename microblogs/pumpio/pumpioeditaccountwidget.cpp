@@ -156,7 +156,7 @@ bool PumpIOEditAccountWidget::isAuthenticated()
 
 void PumpIOEditAccountWidget::loadTimelinesTable()
 {
-    Q_FOREACH (const QString &timeline, m_account->microblog()->timelineNames()) {
+    for (const QString &timeline: m_account->microblog()->timelineNames()) {
         int newRow = timelinesTable->rowCount();
         timelinesTable->insertRow(newRow);
         timelinesTable->setItem(newRow, 0, new QTableWidgetItem(timeline));

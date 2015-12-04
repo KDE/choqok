@@ -60,7 +60,7 @@ PumpIOMessageDialog::PumpIOMessageDialog(Choqok::Account *theAccount, QWidget *p
 
     PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
-        Q_FOREACH (const QVariant &list, acc->lists()) {
+        for (const QVariant &list: acc->lists()) {
             QVariantMap l = list.toMap();
             QListWidgetItem *item = new QListWidgetItem;
             item->setText(l.value(QLatin1String("name")).toString());
@@ -72,7 +72,7 @@ PumpIOMessageDialog::PumpIOMessageDialog(Choqok::Account *theAccount, QWidget *p
         toList->sortItems();
         ccList->sortItems();
 
-        Q_FOREACH (const QString &username, acc->following()) {
+        for (const QString &username: acc->following()) {
             QListWidgetItem *item = new QListWidgetItem;
             item->setText(PumpIOMicroBlog::userNameFromAcct(username));
             item->setData(Qt::UserRole, username);
@@ -109,7 +109,7 @@ void PumpIOMessageDialog::slotFetchFollowing(Choqok::Account *theAccount)
     if (theAccount == d->account) {
         PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
         if (acc) {
-            Q_FOREACH (const QVariant &list, acc->lists()) {
+            for (const QVariant &list: acc->lists()) {
                 QVariantMap l = list.toMap();
                 QListWidgetItem *item = new QListWidgetItem;
                 item->setText(l.value(QLatin1String("name")).toString());
@@ -120,7 +120,7 @@ void PumpIOMessageDialog::slotFetchFollowing(Choqok::Account *theAccount)
             toList->sortItems();
             ccList->sortItems();
 
-            Q_FOREACH (const QString &username, acc->following()) {
+            for (const QString &username: acc->following()) {
                 QListWidgetItem *item = new QListWidgetItem;
                 item->setText(PumpIOMicroBlog::userNameFromAcct(username));
                 item->setData(Qt::UserRole, username);
@@ -147,7 +147,7 @@ void PumpIOMessageDialog::accept()
             post->content = txtMessage->toPlainText();
 
             QVariantList to;
-            Q_FOREACH (QListWidgetItem *item, toList->selectedItems()) {
+            for (QListWidgetItem *item: toList->selectedItems()) {
                 QVariantMap user;
                 QString id = item->data(Qt::UserRole).toString();
                 if (id.contains(QLatin1String("acct:"))) {
@@ -160,7 +160,7 @@ void PumpIOMessageDialog::accept()
             }
 
             QVariantList cc;
-            Q_FOREACH (QListWidgetItem *item, ccList->selectedItems()) {
+            for (QListWidgetItem *item: ccList->selectedItems()) {
                 QVariantMap user;
                 QString id = item->data(Qt::UserRole).toString();
                 if (id.contains(QLatin1String("acct:"))) {

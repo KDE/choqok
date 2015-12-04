@@ -106,7 +106,7 @@ void FilterManager::parse(Choqok::UI::PostWidget *postToParse)
         return;
     }
     //qDebug() << "Processing: "<<postToParse->content();
-    Q_FOREACH (Filter *filter, FilterSettings::self()->filters()) {
+    for (Filter *filter: FilterSettings::self()->filters()) {
         if (filter->filterText().isEmpty()) {
             return;
         }
@@ -249,7 +249,7 @@ void FilterManager::slotHidePost()
         Choqok::UI::TimelineWidget *tm = wd->timelineWidget();
         if (tm) {
 //            qDebug() << "Closing all posts";
-            Q_FOREACH (Choqok::UI::PostWidget *pw, tm->postWidgets()) {
+            for (Choqok::UI::PostWidget *pw: tm->postWidgets()) {
                 if (pw->currentPost()->author.userName == username) {
                     pw->close();
                 }

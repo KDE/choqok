@@ -222,7 +222,7 @@ QByteArray MediaManager::createMultipartFormData(const QMap< QString, QByteArray
         }
     }
 
-    Q_FOREACH (const QString &key, formdata.keys()) {
+    for (const QString &key: formdata.keys()) {
         data.append(newLine);
         data.append(header);
         data.append(formHeader.arg(key).toLatin1());

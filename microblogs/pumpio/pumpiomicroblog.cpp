@@ -83,7 +83,7 @@ PumpIOMicroBlog::~PumpIOMicroBlog()
 
 void PumpIOMicroBlog::abortAllJobs(Choqok::Account *theAccount)
 {
-    Q_FOREACH (KJob *job, m_accountJobs.keys(theAccount)) {
+    for (KJob *job: m_accountJobs.keys(theAccount)) {
         job->kill(KJob::EmitResult);
     }
 }
@@ -98,7 +98,7 @@ void PumpIOMicroBlog::abortCreatePost(Choqok::Account *theAccount, Choqok::Post 
         return;
     }
 
-    Q_FOREACH (KJob *job, m_createPostJobs.keys()) {
+    for (KJob *job: m_createPostJobs.keys()) {
         if (m_accountJobs[job] == theAccount) {
             job->kill(KJob::EmitResult);
         }
@@ -107,7 +107,7 @@ void PumpIOMicroBlog::abortCreatePost(Choqok::Account *theAccount, Choqok::Post 
 
 void PumpIOMicroBlog::aboutToUnload()
 {
-    Q_FOREACH (Choqok::Account *acc, Choqok::AccountManager::self()->accounts()) {
+    for (Choqok::Account *acc: Choqok::AccountManager::self()->accounts()) {
         if (acc->microblog() == this) {
             d->countOfTimelinesToSave += acc->timelineNames().count();
         }
@@ -388,12 +388,12 @@ QList< Choqok::Post * > PumpIOMicroBlog::loadTimeline(Choqok::Account *account,
     }
 
     QList<QDateTime> groupList;
-    Q_FOREACH (const QString &str, tmpList) {
+    for (const QString &str: tmpList) {
         groupList.append(QDateTime::fromString(str));
     }
     qSort(groupList);
     PumpIOPost *st;
-    Q_FOREACH (const QDateTime &datetime, groupList) {
+    for (const QDateTime &datetime: groupList) {
         st = new PumpIOPost;
         KConfigGroup grp(&postsBackup, datetime.toString());
         st->creationDateTime = grp.readEntry("creationDateTime", QDateTime::currentDateTime());
@@ -457,11 +457,11 @@ void PumpIOMicroBlog::saveTimeline(Choqok::Account *account, const QString &time
     KConfig postsBackup(fileName, KConfig::NoGlobals, QStandardPaths::DataLocation);
 
     ///Clear previous data:
-    Q_FOREACH (const QString &group, postsBackup.groupList()) {
+    for (const QString &group: postsBackup.groupList()) {
         postsBackup.deleteGroup(group);
     }
 
-    Q_FOREACH (Choqok::UI::PostWidget *wd, timeline) {
+    for (Choqok::UI::PostWidget *wd: timeline) {
         PumpIOPost *post = dynamic_cast<PumpIOPost * >(wd->currentPost());
         KConfigGroup grp(&postsBackup, post->creationDateTime.toString());
         grp.writeEntry("creationDateTime", post->creationDateTime);
@@ -510,7 +510,7 @@ void PumpIOMicroBlog::updateTimelines(Choqok::Account *theAccount)
 {
     PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
-        Q_FOREACH (const QString &timeline, acc->timelineNames()) {
+        for (const QString &timeline: acc->timelineNames()) {
             QUrl url(acc->host());
             url = url.adjusted(QUrl::StripTrailingSlash);
             url.setPath(url.path() + QLatin1Char('/') + (m_timelinesPaths[timeline].arg(acc->username())));
@@ -839,7 +839,7 @@ void PumpIOMicroBlog::slotFollowing(KJob *job)
         if (!json.isNull()) {
             const QVariantList items = json.toVariant().toMap().value(QLatin1String("items")).toList();
             QStringList following;
-            Q_FOREACH (const QVariant &element, items) {
+            for (const QVariant &element: items) {
                 following.append(element.toMap().value(QLatin1String("id")).toString());
             }
             acc->setFollowing(following);
@@ -885,7 +885,7 @@ void PumpIOMicroBlog::slotLists(KJob *job)
         if (!json.isNull()) {
             const QVariantList items = json.toVariant().toMap().value(QLatin1String("items")).toList();
             QVariantList lists;
-            Q_FOREACH (const QVariant &element, items) {
+            for (const QVariant &element: items) {
                 QVariantMap e = element.toMap();
                 QVariantMap list;
                 list.insert(QLatin1String("id"), e.value(QLatin1String("id")).toString());
@@ -1181,7 +1181,7 @@ Choqok::Post *PumpIOMicroBlog::readPost(const QVariantMap &var, Choqok::Post *po
         if (var.value(QLatin1String("verb")).toString() == QLatin1String("share")) {
             actor = object[QLatin1String("author")].toMap();
             const QVariantList shares = object[QLatin1String("shares")].toMap().value(QLatin1String("items")).toList();
-            Q_FOREACH (const QVariant &element, shares) {
+            for (const QVariant &element: shares) {
                 p->shares.append(element.toMap().value(QLatin1String("id")).toString());
             }
         } else {
@@ -1210,7 +1210,7 @@ Choqok::Post *PumpIOMicroBlog::readPost(const QVariantMap &var, Choqok::Post *po
         }
 
         const QVariantList to = var[QLatin1String("to")].toList();
-        Q_FOREACH (const QVariant &element, to) {
+        for (const QVariant &element: to) {
             QVariantMap toElementMap = element.toMap();
             QString toElementType = toElementMap.value(QLatin1String("objectType")).toString();
             if (toElementType == QLatin1String("person") || toElementType == QLatin1String("collection")) {
@@ -1223,7 +1223,7 @@ Choqok::Post *PumpIOMicroBlog::readPost(const QVariantMap &var, Choqok::Post *po
         }
 
         const QVariantList cc = var[QLatin1String("cc")].toList();
-        Q_FOREACH (const QVariant &element, cc) {
+        for (const QVariant &element: cc) {
             QVariantMap ccElementMap = element.toMap();
             QString ccElementType = ccElementMap.value(QLatin1String("objectType")).toString();
             if (ccElementType == QLatin1String("person") || ccElementType == QLatin1String("collection")) {
@@ -1255,7 +1255,7 @@ QList< Choqok::Post * > PumpIOMicroBlog::readTimeline(const QByteArray &buffer)
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
         const QVariantList list = json.toVariant().toMap().value(QLatin1String("items")).toList();
-        Q_FOREACH (const QVariant &element, list) {
+        for (const QVariant &element: list) {
             const QVariantMap elementMap = element.toMap();
             if (!elementMap[QLatin1String("object")].toMap().value(QLatin1String("deleted")).isNull()) {
                 // Skip deleted posts

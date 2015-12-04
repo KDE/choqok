@@ -188,7 +188,7 @@ void TwitterApiSearchTimelineWidget::loadPreviousPage()
 
 void TwitterApiSearchTimelineWidget::removeAllPosts()
 {
-    Q_FOREACH (Choqok::UI::PostWidget *wd, posts()) {
+    for (Choqok::UI::PostWidget *wd: posts()) {
         wd->close();
     }
     posts().clear();

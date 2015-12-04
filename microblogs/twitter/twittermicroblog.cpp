@@ -358,7 +358,7 @@ void TwitterMicroBlog::setListTimelines(TwitterAccount *theAccount, const QStrin
 {
     qCDebug(CHOQOK) << lists;
     QStringList tms = theAccount->timelineNames();
-    Q_FOREACH (const QString &name, lists) {
+    for (const QString &name: lists) {
         tms.append(name);
         addTimelineName(name);
         QString url = QLatin1String("/lists/statuses");
@@ -392,7 +392,7 @@ QList< Twitter::List > TwitterMicroBlog::readUserListsFromJson(Choqok::Account *
     if (!json.isNull()) {
         const QVariantMap map = json.toVariant().toMap();
         if (map.contains(QLatin1String("lists"))) {
-            Q_FOREACH (const QVariant &list, map[QLatin1String("lists")].toList()) {
+            for (const QVariant &list: map[QLatin1String("lists")].toList()) {
                 twitterList.append(readListFromJsonMap(theAccount, list.toMap()));
             }
         }

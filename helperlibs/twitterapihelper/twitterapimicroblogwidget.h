@@ -42,14 +42,12 @@ public:
     virtual void initUi();
 
 public Q_SLOTS:
-//     virtual void markAllAsRead();
     void slotContextMenu(QWidget *w, const QPoint &pt);
 
 protected Q_SLOTS:
     void closeAllSearches();
     void slotAccountModified(Choqok::Account *account);
     void slotCloseCurrentSearch();
-//     void slotCurrentTimelineChanged(int);
     virtual void saveSearchTimelinesState();
     virtual void loadSearchTimelinesState();
     virtual void slotSearchResultsReceived(const SearchInfo &info,

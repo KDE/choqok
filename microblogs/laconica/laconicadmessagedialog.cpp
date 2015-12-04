@@ -39,7 +39,7 @@ LaconicaDMessageDialog::LaconicaDMessageDialog(TwitterApiAccount *theAccount, QW
     } else {
         QStringList sameHost;
 
-        Q_FOREACH (const QString &user, list) {
+        for (const QString &user: list) {
             // QUrl::host() is needed to skip scheme check
             if (LaconicaMicroBlog::hostFromProfileUrl(user).compare(QUrl(theAccount->host()).host()) == 0) {
                 sameHost.append(LaconicaMicroBlog::usernameFromProfileUrl(user));

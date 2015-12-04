@@ -99,7 +99,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
         pos += mYFrogRegExp.matchedLength();
         yfrogRedirectList << mYFrogRegExp.cap(0);
     }
-    Q_FOREACH (const QString &url, yfrogRedirectList) {
+    for (const QString &url: yfrogRedirectList) {
 //         if( url.endsWith('j') || url.endsWith('p') || url.endsWith('g') ) //To check if it's Image or not!
         connect(Choqok::MediaManager::self(),
                 SIGNAL(imageFetched(QString,QPixmap)),
@@ -116,7 +116,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
         pos += mPlixiRegExp.matchedLength();
         PlixiRedirectList << mPlixiRegExp.cap(0);
     }
-    Q_FOREACH (const QString &url, PlixiRedirectList) {
+    for (const QString &url: PlixiRedirectList) {
         connect(Choqok::MediaManager::self(),
                 SIGNAL(imageFetched(QString,QPixmap)),
                 SLOT(slotImageFetched(QString,QPixmap)));
@@ -132,7 +132,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
         pos += mImgLyRegExp.matchedLength();
         ImgLyRedirectList << mImgLyRegExp.cap(0);
     }
-    Q_FOREACH (const QString &url, ImgLyRedirectList) {
+    for (const QString &url: ImgLyRedirectList) {
         connect(Choqok::MediaManager::self(),
                 SIGNAL(imageFetched(QString,QPixmap)),
                 SLOT(slotImageFetched(QString,QPixmap)));
@@ -148,7 +148,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
         pos += mTwitgooRegExp.matchedLength();
         TwitgooRedirectList << mTwitgooRegExp.cap(0);
     }
-    Q_FOREACH (const QString &url, TwitgooRedirectList) {
+    for (const QString &url: TwitgooRedirectList) {
         connect(Choqok::MediaManager::self(),
                 SIGNAL(imageFetched(QString,QPixmap)),
                 SLOT(slotImageFetched(QString,QPixmap)));
@@ -168,7 +168,7 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
         baseUrl = mPumpIORegExp.cap(1);
         imageExtension = mPumpIORegExp.cap(mPumpIORegExp.capturedTexts().length() - 1);
     }
-    Q_FOREACH (const QString &url, PumpIORedirectList) {
+    for (const QString &url: PumpIORedirectList) {
         connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
                 SLOT(slotImageFetched(QString,QPixmap)));
         const QString pumpIOUrl = baseUrl + QLatin1String("_thumb") + imageExtension;

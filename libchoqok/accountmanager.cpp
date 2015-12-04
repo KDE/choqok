@@ -46,7 +46,7 @@ static QList<Account *> sortAccountsByPriority(QList<Account *> &accounts)
 {
     qCDebug(CHOQOK) << accounts.count();
     QList<Account *> result;
-    Q_FOREACH (Account *ac, accounts) {
+    for (Account *ac: accounts) {
         bool inserted = false;
         int i = 0;
         while (i < result.count()) {
@@ -108,7 +108,7 @@ const QList< Account * > &AccountManager::accounts() const
 Account *AccountManager::findAccount(const QString &alias)
 {
     qCDebug(CHOQOK) << "Finding:" << alias;
-    Q_FOREACH (Account *ac, d->accounts) {
+    for (Account *ac: d->accounts) {
         if (ac->alias().compare(alias) == 0) {
             return ac;
         }
@@ -165,7 +165,7 @@ Account *AccountManager::registerAccount(Account *account)
     }
 
     // If this account already exists, do nothing
-    Q_FOREACH (Choqok::Account *curracc, d->accounts) {
+    for (Choqok::Account *curracc: d->accounts) {
         if (account->alias() == curracc->alias()) {
             d->lastError = i18n("An account with this alias already exists: a unique alias has to be specified.");
             qCDebug(CHOQOK) << "An account with this alias already exists: a unique alias has to be specified.";
@@ -183,13 +183,13 @@ Account *AccountManager::registerAccount(Account *account)
 void AccountManager::loadAllAccounts()
 {
     qCDebug(CHOQOK);
-    Q_FOREACH (Account *ac, d->accounts) {
+    for (Account *ac: d->accounts) {
         ac->deleteLater();
     }
     d->accounts.clear();
     const QStringList accountGroups = d->conf->groupList().filter(QRegExp(QLatin1String("^Account_")));
     qCDebug(CHOQOK) << accountGroups;
-    Q_FOREACH (const QString &grp, accountGroups) {
+    for (const QString &grp: accountGroups) {
         qCDebug(CHOQOK) << grp;
         KConfigGroup cg(d->conf, grp);
 //         KConfigGroup pluginConfig( d->conf, QLatin1String("Plugins") );

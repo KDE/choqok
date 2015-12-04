@@ -55,7 +55,7 @@ QIcon addNumToIcon(const QIcon &big , int number , const QSize &result_size , co
     QList<QIcon::Mode> mods;
     mods << QIcon::Active /*<< QIcon::Disabled << QIcon::Selected*/;
 
-    Q_FOREACH (const QIcon::Mode &m, mods) {
+    for (const QIcon::Mode &m: mods) {
         QPixmap pixmap = big.pixmap(result_size);
         QPainter painter(&pixmap);
         QFont font;
@@ -166,7 +166,7 @@ void MicroBlogWidget::setComposerWidget(ComposerWidget *widget)
     d->composer = widget;
     d->composer->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
     qobject_cast<QVBoxLayout *>(d->toolbar_widget->layout())->insertWidget(1, d->composer);
-    Q_FOREACH (TimelineWidget *mbw, d->timelines) {
+    for (TimelineWidget *mbw: d->timelines) {
         connect(mbw, SIGNAL(forwardResendPost(QString)), d->composer, SLOT(setText(QString)));
         connect(mbw, SIGNAL(forwardReply(QString,QString,QString)), d->composer, SLOT(setText(QString,QString,QString)));
     }
@@ -185,7 +185,7 @@ TimelineWidget *MicroBlogWidget::currentTimeline()
 
 void MicroBlogWidget::settingsChanged()
 {
-    Q_FOREACH (TimelineWidget *wd, d->timelines) {
+    for (TimelineWidget *wd: d->timelines) {
         wd->settingsChanged();
     }
 }
@@ -198,7 +198,7 @@ void MicroBlogWidget::updateTimelines()
 
 void MicroBlogWidget::removeOldPosts()
 {
-    Q_FOREACH (TimelineWidget *wd, d->timelines) {
+    for (TimelineWidget *wd: d->timelines) {
         wd->removeOldPosts();
     }
 }
@@ -224,7 +224,7 @@ void MicroBlogWidget::newTimelineDataRecieved(Choqok::Account *theAccount, const
 void MicroBlogWidget::initTimelines()
 {
     qCDebug(CHOQOK);
-    Q_FOREACH (const QString &timeline, d->account->timelineNames()) {
+    for (const QString &timeline: d->account->timelineNames()) {
         addTimelineWidgetToUi(timeline);
     }
 //     qCDebug(CHOQOK)<<"========== Emiting loaded()";
@@ -264,7 +264,7 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change, Choqok::UI::TimelineWidg
 {
     qCDebug(CHOQOK) << change;
     int sum = 0;
-    Q_FOREACH (TimelineWidget *mbw, d->timelines) {
+    for (TimelineWidget *mbw: d->timelines) {
         sum += mbw->unreadCount();
     }
     if (change != 0) {
@@ -317,7 +317,7 @@ void MicroBlogWidget::markAllAsRead()
         d->btnMarkAllAsRead->deleteLater();
         d->btnMarkAllAsRead = 0L;
     }
-    Q_FOREACH (TimelineWidget *wd, d->timelines) {
+    for (TimelineWidget *wd: d->timelines) {
         wd->markAllAsRead();
         int tabIndex = d->timelinesTabWidget->indexOf(wd);
         if (tabIndex == -1) {
@@ -439,7 +439,7 @@ void MicroBlogWidget::slotAccountModified(Account *theAccount)
             setComposerWidget(theAccount->microblog()->createComposerWidget(theAccount, this));
         }
         int sum = 0;
-        Q_FOREACH (TimelineWidget *mbw, d->timelines) {
+        for (TimelineWidget *mbw: d->timelines) {
             sum += mbw->unreadCount();
         }
         Q_EMIT updateUnreadCount(0, sum);

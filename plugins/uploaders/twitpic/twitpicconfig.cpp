@@ -58,7 +58,7 @@ void TwitpicConfig::load()
 {
     KCModule::load();
     QList<Choqok::Account *> list = Choqok::AccountManager::self()->accounts();
-    Q_FOREACH (Choqok::Account *acc, list) {
+    for (Choqok::Account *acc: list) {
         if (acc->inherits("TwitterAccount")) {
             ui.accountsList->addItem(acc->alias());
         }

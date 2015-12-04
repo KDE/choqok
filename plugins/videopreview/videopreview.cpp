@@ -145,7 +145,7 @@ void VideoPreview::parse(QPointer<Choqok::UI::PostWidget> postToParse)
         }
     }
 
-    Q_FOREACH (const QString &thumb_url, thumbList) {
+    for (const QString &thumb_url: thumbList) {
         connect(Choqok::MediaManager::self(),
                 SIGNAL(imageFetched(QString,QPixmap)),
                 SLOT(slotImageFetched(QString,QPixmap)));

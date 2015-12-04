@@ -102,7 +102,7 @@ QString PumpIOPostWidget::generateSign()
             ss += QLatin1String(" - ");
             ss += i18n("To:") + QLatin1Char(' ');
 
-            Q_FOREACH (const QString &id, post->to) {
+            for (const QString &id: post->to) {
                 if (id == PumpIOMicroBlog::PublicCollection) {
                     ss += i18n("Public") + QLatin1String(", ");
                 } else if (followers.indexIn(id) != -1) {
@@ -125,7 +125,7 @@ QString PumpIOPostWidget::generateSign()
             ss += QLatin1String(" - ");
             ss += i18n("CC:") + QLatin1Char(' ');
 
-            Q_FOREACH (const QString &id, post->cc) {
+            for (const QString &id: post->cc) {
                 if (id == PumpIOMicroBlog::PublicCollection) {
                     ss += i18n("Public") + QLatin1String(", ");
                 } else if (followers.indexIn(id) != -1) {
@@ -148,7 +148,7 @@ QString PumpIOPostWidget::generateSign()
             ss += QLatin1String(" - ");
             ss += i18n("Shared by:") + QLatin1Char(' ');
 
-            Q_FOREACH (const QString &id, post->shares) {
+            for (const QString &id: post->shares) {
                 if (id == QLatin1String("acct:") + account->webfingerID()) {
                     ss += i18n("You") + QLatin1String(", ");
                 } else {

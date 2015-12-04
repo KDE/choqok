@@ -186,7 +186,7 @@ void QuickPost::submitPost(const QString &txt)
         d->submittedPost = new Post;
         d->submittedPost->content = newPost;
         d->submittedPost->isPrivate = false;
-        Q_FOREACH (Account *acc, d->accountsList) {
+        for (Account *acc: d->accountsList) {
             acc->microblog()->createPost(acc, d->submittedPost);
             d->submittedAccounts << acc;
         }
@@ -210,7 +210,7 @@ void QuickPost::accept()
 void QuickPost::loadAccounts()
 {
     qCDebug(CHOQOK);
-    Q_FOREACH (Choqok::Account *ac, AccountManager::self()->accounts()) {
+    for (Choqok::Account *ac: AccountManager::self()->accounts()) {
         addAccount(ac);
     }
 }

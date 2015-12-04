@@ -66,7 +66,7 @@ void MessageIndicatorManager::slotCanWorkWithAccs()
 {
     QList<Choqok::UI::MicroBlogWidget *> lst = choqokMainWindow->microBlogsWidgetsList();
     if (lst.count() == Choqok::AccountManager::self()->accounts().count()) {
-        Q_FOREACH (Choqok::UI::MicroBlogWidget *microBlog, lst) {
+        for (Choqok::UI::MicroBlogWidget *microBlog, lst) {
             connect(microBlog, SIGNAL(updateUnreadCount(int,int)), SLOT(slotupdateUnreadCount(int,int)));
         }
     } else {

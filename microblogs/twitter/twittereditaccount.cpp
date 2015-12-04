@@ -188,7 +188,7 @@ void TwitterEditAccountWidget::setAuthenticated(bool authenticated)
 
 void TwitterEditAccountWidget::loadTimelinesTableState()
 {
-    Q_FOREACH (const QString &timeline, mAccount->microblog()->timelineNames()) {
+    for (const QString &timeline: mAccount->microblog()->timelineNames()) {
         int newRow = timelinesTable->rowCount();
         timelinesTable->insertRow(newRow);
         timelinesTable->setItem(newRow, 0, new QTableWidgetItem(timeline));

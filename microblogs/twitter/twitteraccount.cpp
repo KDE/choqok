@@ -42,7 +42,7 @@ TwitterAccount::TwitterAccount(TwitterMicroBlog *parent, const QString &alias)
     qCDebug(CHOQOK) << "Set API version to 1.1";
 //     d->lists = configGroup()->readEntry("lists", QStringList());
     QStringList lists;
-    Q_FOREACH (const QString &tm, timelineNames()) {
+    for (const QString &tm: timelineNames()) {
         if (tm.startsWith(QLatin1Char('@'))) {
             lists.append(tm);
         }

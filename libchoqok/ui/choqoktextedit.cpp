@@ -290,7 +290,7 @@ void TextEdit::setupSpeller()
         d->curLang = s.defaultLanguage();
     }
     qCDebug(CHOQOK) << "Current LANG:" << d->curLang;
-    Q_FOREACH (const QString &dict, s.availableDictionaries().keys()) {
+    for (const QString &dict: s.availableDictionaries().keys()) {
         const QString value = s.availableDictionaries().value(dict);
         QAction *act = new QAction(dict, d->langActions);
         act->setData(value);

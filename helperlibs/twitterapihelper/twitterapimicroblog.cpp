@@ -189,7 +189,7 @@ QList< Choqok::Post * > TwitterApiMicroBlog::loadTimeline(Choqok::Account *accou
 ///--------------
 
     QList<QDateTime> groupList;
-    Q_FOREACH (const QString &str, tmpList) {
+    for (const QString &str: tmpList) {
         groupList.append(QDateTime::fromString(str));
     }
     qSort(groupList);
@@ -242,11 +242,11 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
         KConfig postsBackup(fileName, KConfig::NoGlobals, QStandardPaths::DataLocation);
 
         ///Clear previous data:
-        Q_FOREACH (const QString &group, postsBackup.groupList()) {
+        for (const QString &group: postsBackup.groupList()) {
             postsBackup.deleteGroup(group);
         }
 
-        Q_FOREACH (Choqok::UI::PostWidget *wd, timeline) {
+        for (Choqok::UI::PostWidget *wd: timeline) {
             const Choqok::Post *post = (wd->currentPost());
             KConfigGroup grp(&postsBackup, post->creationDateTime.toString());
             grp.writeEntry("creationDateTime", post->creationDateTime);
@@ -447,7 +447,7 @@ void TwitterApiMicroBlog::slotCreatePost(KJob *job)
 
 void TwitterApiMicroBlog::abortAllJobs(Choqok::Account *theAccount)
 {
-    Q_FOREACH (KJob *job, mJobsAccount.keys(theAccount)) {
+    for (KJob *job: mJobsAccount.keys(theAccount)) {
         job->kill(KJob::EmitResult);
     }
 }
@@ -460,7 +460,7 @@ void TwitterApiMicroBlog::abortCreatePost(Choqok::Account *theAccount, Choqok::P
     if (post) {
         mCreatePostMap.key(post)->kill(KJob::EmitResult);
     } else {
-        Q_FOREACH (KJob *job, mCreatePostMap.keys()) {
+        for (KJob *job: mCreatePostMap.keys()) {
             if (mJobsAccount[job] == theAccount) {
                 job->kill(KJob::EmitResult);
             }
@@ -863,7 +863,7 @@ void TwitterApiMicroBlog::finishRequestFollowersScreenName(KJob* job, bool activ
 void TwitterApiMicroBlog::updateTimelines(Choqok::Account *theAccount)
 {
     qCDebug(CHOQOK);
-    Q_FOREACH (const QString &tm, theAccount->timelineNames()) {
+    for (const QString &tm: theAccount->timelineNames()) {
         requestTimeLine(theAccount, tm, mTimelineLatestId[theAccount][tm]);
     }
 }
@@ -1012,7 +1012,7 @@ QDateTime TwitterApiMicroBlog::dateFromString(const QString &date)
 void TwitterApiMicroBlog::aboutToUnload()
 {
     d->countOfTimelinesToSave = 0;
-    Q_FOREACH (Choqok::Account *acc, Choqok::AccountManager::self()->accounts()) {
+    for (Choqok::Account *acc: Choqok::AccountManager::self()->accounts()) {
         if (acc->microblog() == this) {
             d->countOfTimelinesToSave += acc->timelineNames().count();
         }
@@ -1319,7 +1319,7 @@ QString TwitterApiMicroBlog::checkForError(const QByteArray &buffer)
         const QVariantMap map = json.toVariant().toMap();
         if (map.contains(QLatin1String("errors"))) {
             QStringList errors;
-            Q_FOREACH (const QVariant &msg, map[QLatin1String("errors")].toList()) {
+            for (const QVariant &msg: map[QLatin1String("errors")].toList()) {
                 errors.append(msg.toMap()[QLatin1String("message")].toString());
                 qCCritical(CHOQOK) << "Error:" << errors.last();
             }
@@ -1336,7 +1336,7 @@ QList< Choqok::Post * > TwitterApiMicroBlog::readTimeline(Choqok::Account *theAc
     QList<Choqok::Post *> postList;
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
-        Q_FOREACH (const QVariant &list, json.toVariant().toList()) {
+        for (const QVariant &list: json.toVariant().toList()) {
             postList.prepend(readPost(theAccount, list.toMap(), new Choqok::Post));
         }
     } else {
@@ -1425,7 +1425,7 @@ QList< Choqok::Post * > TwitterApiMicroBlog::readDirectMessages(Choqok::Account 
     QList<Choqok::Post *> postList;
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
-        Q_FOREACH (const QVariant &list, json.toVariant().toList()) {
+        for (const QVariant &list: json.toVariant().toList()) {
             postList.prepend(readDirectMessage(theAccount, list.toMap()));
         }
     } else {
@@ -1527,7 +1527,7 @@ QStringList TwitterApiMicroBlog::readFriendsScreenName(Choqok::Account *theAccou
             nextCursor = QLatin1String("0"); // we probably ran the rate limit; stop bugging the server already
         }
 
-        Q_FOREACH (const QVariant &user, jsonList) {
+        for (const QVariant &user: jsonList) {
             list << user.toMap()[QLatin1String("screen_name")].toString();
         }
         d->friendsCursor = nextCursor;
@@ -1554,7 +1554,7 @@ QStringList TwitterApiMicroBlog::readFollowersScreenName(Choqok::Account *theAcc
             nextCursor = QLatin1String("0"); // we probably ran the rate limit; stop bugging the server already
         }
 
-        Q_FOREACH (const QVariant &user, jsonList) {
+        for (const QVariant &user: jsonList) {
             list << user.toMap()[QLatin1String("screen_name")].toString();
         }
 

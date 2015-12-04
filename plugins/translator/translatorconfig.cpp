@@ -62,7 +62,7 @@ void TranslatorConfig::load()
 {
     langs = SharedTools::self()->languageCodes();
     QStringList selected = TranslatorSettings::languages();
-    Q_FOREACH (const QString& ln, langs) {
+    for (const QString& ln, langs) {
         KIcon icon;
         icon.addPixmap(QPixmap(SharedTools::self()->languageFlag(ln)));
         QString langStr = KGlobal::locale()->languageCodeToName(ln.toLower());
