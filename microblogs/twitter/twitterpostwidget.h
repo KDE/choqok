@@ -34,13 +34,18 @@ public:
 
 protected Q_SLOTS:
     virtual void slotReplyToAll();
+    void quotedAvatarFetched(const QString &remoteUrl, const QPixmap &pixmap);
+    void quotedAvatarFetchError(const QString &remoteUrl, const QString &errMsg);
 
 protected:
     virtual QString prepareStatus(const QString &text);
     virtual void checkAnchor(const QUrl &url);
+    bool setupQuotedAvatar();
 
     static const QRegExp mTwitterUserRegExp;
     static const QRegExp mTwitterTagRegExp;
+    static const QString mQuotedTextBase;
+    static const QUrl    mQuotedAvatarResourceUrl;
 };
 
 #endif // TWITTERPOSTWIDGET_H

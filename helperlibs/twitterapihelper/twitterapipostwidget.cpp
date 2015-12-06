@@ -101,11 +101,6 @@ void TwitterApiPostWidget::initUi()
     }
 }
 
-QString TwitterApiPostWidget::prepareStatus(const QString &text)
-{
-    return Choqok::UI::PostWidget::prepareStatus(text);
-}
-
 QString TwitterApiPostWidget::generateSign()
 {
     QString sign;

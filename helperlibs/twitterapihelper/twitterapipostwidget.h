@@ -48,8 +48,6 @@ protected Q_SLOTS:
     virtual void slotReplyToAll();
 
 protected:
-//     virtual void updateUi();
-    virtual QString prepareStatus(const QString &text);
     virtual QString generateSign();
     void updateFavStat();
 

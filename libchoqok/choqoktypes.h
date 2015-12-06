@@ -59,6 +59,15 @@ public:
     uint followersCount;
 };
 
+class CHOQOK_EXPORT QuotedPost
+{
+public:
+    QString username;
+    QString profileImageUrl;
+    QString postId;
+    QString content;    
+};
+
 class CHOQOK_EXPORT Post
 {
 public:
@@ -93,6 +102,7 @@ public:
     QString media;          // first Image of Post, if available
     int mediaSizeWidth;
     int mediaSizeHeight;
+    QuotedPost quotedPost;
     unsigned int owners; // number of associated PostWidgets
 };
 /**

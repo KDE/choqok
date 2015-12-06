@@ -69,20 +69,25 @@ public:
     QString imageUrl;
     QString dir;
     QPixmap originalImage;
+    QString extraContents;
     //END UI contents;
 
     QStringList detectedUrls;
 
     TimelineWidget *timeline;
+    
+    static const QLatin1String resourceImageUrl;
 };
 
-const QString PostWidget::ownText(QLatin1String("<table width=\"100%\" ><tr><td width=\"90%\" dir=\"%4\">%2</td><td  rowspan=\"2\" align=\"right\">%1</td></tr><tr>%5</tr><tr><td colspan=\"2\"  style=\"font-size:small;\" dir=\"ltr\" align=\"right\" width=\"100%\" valign=\"bottom\">%3</td></tr></table>"));
+const QString mImageTemplate(QLatin1String("<div style=\"padding-top:5px;padding-bottom:3px;\"><img width=\"%1\" height=\"%2\" src=\"%3\"/></div>"));
 
-const QString PostWidget::otherText(QLatin1String("<table height=\"100%\" width=\"100%\"><tr><td rowspan=\"2\" width=\"48\">%1</td><td width=\"5\"><!-- EMPTY HAHA --></td><td colspan=\"2\" dir=\"%4\"><p>%2</p></td></tr><tr><td></td>%5</tr><tr><td ><!-- empty --></td><td></td><td colspan=\"2\" style=\"font-size:small;\" dir=\"ltr\" align=\"right\" width=\"100%\" valign=\"bottom\">%3</td></tr></table>"));
+const QLatin1String PostWidget::Private::resourceImageUrl("img://postImage");
+
+const QString PostWidget::baseTextTemplate(QLatin1String("<table height=\"100%\" width=\"100%\"><tr><td width=\"48\" style=\"padding-right: 5px;\">%1</td><td dir=\"%4\" style=\"padding-right:3px;\"><p>%2</p></td></tr>%6%5<tr><td></td><td style=\"font-size:small;\" dir=\"ltr\" align=\"right\" valign=\"bottom\">%3</td></tr></table>"));
 
 const QString PostWidget::baseStyle(QLatin1String("QTextBrowser {border: 1px solid rgb(150,150,150);\
 border-radius:5px; color:%1; background-color:%2; %3}\
-QPushButton{border:0px}"));
+QPushButton{border:0px} QPushButton::menu-indicator{image:none;}"));
 
 const QString PostWidget::hrefTemplate(QLatin1String("<a href='%1' title='%1' target='_blank'>%2</a>"));
 
@@ -145,12 +150,7 @@ Account *PostWidget::currentAccount()
 
 QString PostWidget::generateSign()
 {
-    QString ss;
-    ss = QLatin1String("<b><a href='") + d->mCurrentAccount->microblog()->profileUrl(d->mCurrentAccount,
-            d->mCurrentPost->author.userName)
-         + QLatin1String("' title=\"") +
-         d->mCurrentPost->author.description + QLatin1String("\">") + d->mCurrentPost->author.userName +
-         QLatin1String("</a> - </b>");
+    QString ss = QString(QLatin1String("<b>%1 - </b>")).arg(getUsernameHyperlink(d->mCurrentPost->author.userName, d->mCurrentPost->author.description));
 
     if (d->mCurrentPost->repeatedDateTime.isNull()) {
         ss += QLatin1String("<a href=\"") + d->mCurrentPost->link +
@@ -165,6 +165,13 @@ QString PostWidget::generateSign()
     }
 
     return ss;
+}
+QString PostWidget::getUsernameHyperlink(const QString& username, const QString& userDesc)
+{
+    return QLatin1String("<a href='") + d->mCurrentAccount->microblog()->profileUrl(d->mCurrentAccount, username)
+    + QLatin1String("' title=\"") +
+    (userDesc.isEmpty() ? username : userDesc) +
+    QLatin1String("\">") + username + QLatin1String("</a>");
 }
 
 void PostWidget::setupUi()
@@ -193,50 +200,30 @@ void PostWidget::initUi()
     _mainWidget->document()->addResource(QTextDocument::ImageResource, QUrl(QLatin1String("img://profileImage")),
                                          MediaManager::self()->defaultImage());
 
-    if (isOwnPost()) {
-        baseText = &ownText;
-    } else {
-        baseText = &otherText;
-    }
-
     if (isRemoveAvailable()) {
         QPushButton *btnRemove = addButton(QLatin1String("btnRemove"), i18nc("@info:tooltip", "Remove"), QLatin1String("edit-delete"));
         connect(btnRemove, SIGNAL(clicked(bool)), SLOT(removeCurrentPost()));
-        baseText = &ownText;
     }
 
     if (isResendAvailable()) {
         QPushButton *btnResend = addButton(QLatin1String("btnResend"), i18nc("@info:tooltip", "ReSend"), QLatin1String("retweet"));
         connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
-        baseText = &otherText;
     }
-
-    /*
-    if(d->mCurrentAccount->username().compare( d->mCurrentPost->author.userName, Qt::CaseInsensitive ) == 0
-        || currentPost()->isPrivate) {
-        QPushButton *btnRemove = addButton("btnRemove", i18nc( "@info:tooltip", "Remove" ), "edit-delete" );
-        connect(btnRemove, SIGNAL(clicked(bool)), SLOT(removeCurrentPost()));
-        baseText = &ownText;
-    } else {
-        QPushButton *btnResend = addButton("btnResend", i18nc( "@info:tooltip", "ReSend" ), "retweet" );
-        connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
-        baseText = &otherText;
-    }*/
 
     d->mProfileImage = QLatin1String("<img src=\"img://profileImage\" title=\"") + d->mCurrentPost->author.realName + QLatin1String("\" width=\"48\" height=\"48\" />");
     if (!d->imageUrl.isEmpty()) {
-        d->mImage = QStringLiteral("<td width=\"%1\" height=\"%2\" style=\"padding-left: 5px; padding-left: 5px;\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
+        d->mImage = mImageTemplate.arg(QString::number(d->mCurrentPost->mediaSizeWidth), QString::number(d->mCurrentPost->mediaSizeHeight), d->resourceImageUrl);
     }
     d->mContent = prepareStatus(d->mCurrentPost->content);
     d->mSign = generateSign();
     setupAvatar();
     fetchImage();
-    setDirection();
+    d->dir = getDirection(d->mCurrentPost->content);
     setUiStyle();
 
     d->mContent.replace(QLatin1String("<a href"), QLatin1String("<a style=\"text-decoration:none\" href"), Qt::CaseInsensitive);
     d->mContent.replace(QLatin1String("\n"), QLatin1String("<br/>"));
-
+    d->extraContents.replace(QLatin1String("<a href"), QLatin1String("<a style=\"text-decoration:none\" href"), Qt::CaseInsensitive);
     d->mSign.replace(QLatin1String("<a href"), QLatin1String("<a style=\"text-decoration:none\" href"), Qt::CaseInsensitive);
 
     updateUi();
@@ -251,11 +238,13 @@ void PostWidget::updateUi()
         time = d->mCurrentPost->repeatedDateTime;
     }
 
-    _mainWidget->setHtml(baseText->arg(d->mProfileImage, d->mContent,
-                                       d->mSign.arg(formatDateTime(time)),
-                                       d->dir,
-                                       d->mImage
-                                      ));
+    _mainWidget->setHtml(baseTextTemplate.arg( d->mProfileImage,                     /*1*/
+                                               d->mContent,                          /*2*/
+                                               d->mSign.arg(formatDateTime(time)),   /*3*/
+                                               d->dir,                               /*4*/
+                                               d->mImage,                            /*5*/
+                                               d->extraContents                      /*6*/
+                                               ));
 }
 
 void PostWidget::setStyle(const QColor &color, const QColor &back, const QColor &read, const QColor &readBack, const QColor &own, const QColor &ownBack, const QFont &font)
@@ -381,13 +370,13 @@ void PostWidget::resizeEvent(QResizeEvent *event)
         int newW = newPixmap.width();
         int newH = newPixmap.height();
 
-        const QUrl url(QLatin1String("img://postImage"));
+        const QUrl url(d->resourceImageUrl);
         // only use scaled image if it's smaller than the original one
         if (newW <= d->originalImage.width() && newH <= d->originalImage.height()) { // never scale up
-            d->mImage = QStringLiteral("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(newW, newH);
+            d->mImage = mImageTemplate.arg(QString::number(newW), QString::number(newH), d->resourceImageUrl);
             _mainWidget->document()->addResource(QTextDocument::ImageResource, url, newPixmap);
         } else {
-            d->mImage = QStringLiteral("<td width=\"%1\" height=\"%2\"><img src=\"img://postImage\"  /></td>").arg(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
+            d->mImage = mImageTemplate.arg(QString::number(d->mCurrentPost->mediaSizeWidth), QString::number(d->mCurrentPost->mediaSizeHeight), d->resourceImageUrl);
             _mainWidget->document()->addResource(QTextDocument::ImageResource, url, d->originalImage);
         }
     }
@@ -418,9 +407,7 @@ void PostWidget::leaveEvent(QEvent *event)
 
 QString PostWidget::prepareStatus(const QString &txt)
 {
-    QString text = txt;
-//     text.replace( "&amp;", "&amp;amp;" );
-    text = removeTags(text);
+    QString text = removeTags(txt);
 
     d->detectedUrls = UrlUtils::detectUrls(text);
     for (const QString &url: d->detectedUrls) {
@@ -452,13 +439,15 @@ QString PostWidget::removeTags(const QString &text) const
 
     return txt;
 }
-void PostWidget::setDirection()
+QLatin1String PostWidget::getDirection(QString txt)
 {
-    QString txt = d->mCurrentPost->content;
     txt.remove(dirRegExp);
     txt = txt.trimmed();
     if (txt.isRightToLeft()) {
-        d->dir = QLatin1String("rtl");
+        return QLatin1String("rtl");
+    }
+    else {
+        return QLatin1String("ltr");
     }
 }
 
@@ -595,7 +584,7 @@ void PostWidget::slotImageFetched(const QString &remoteUrl, const QPixmap &pixma
 {
 
     if (remoteUrl == d->imageUrl) {
-        const QUrl url(QLatin1String("img://postImage"));
+        const QUrl url(d->resourceImageUrl);
         QPixmap newPixmap = pixmap.scaled(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
         _mainWidget->document()->addResource(QTextDocument::ImageResource, url, newPixmap);
         d->originalImage = pixmap;
@@ -728,5 +717,15 @@ bool PostWidget::isRemoveAvailable()
 bool PostWidget::isResendAvailable()
 {
     return d->mCurrentAccount->username().compare(d->mCurrentPost->author.userName, Qt::CaseInsensitive) != 0;
+}
+
+void PostWidget::setExtraContents(const QString& text)
+{
+    d->extraContents = text;
+}
+
+QString PostWidget::extraContents() const
+{
+    return d->extraContents;
 }
 

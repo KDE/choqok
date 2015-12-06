@@ -199,7 +199,7 @@ protected:
     virtual void enterEvent(QEvent *event);
     virtual void leaveEvent(QEvent *event);
     virtual QString prepareStatus(const QString &text);
-    virtual void setDirection();
+    QLatin1String getDirection(QString text);
     virtual QString generateSign();
     virtual QString formatDateTime(const QDateTime &time);
     virtual bool isResendAvailable() ;
@@ -215,21 +215,23 @@ protected:
     QPushButton *addButton(const QString &objName, const QString &toolTip, const QIcon &icon);
     QMap<QString, QPushButton *> &buttons();
 
+    QString getUsernameHyperlink(const QString& username, const QString& userDesc);
+    
 protected:
     TextBrowser *_mainWidget;
-    const QString *baseText;
     static const QString baseStyle;
     static QString readStyle;
     static QString unreadStyle;
     static QString ownStyle;
     static const QString webIconText;
-    static const QString ownText;
     static const QString hrefTemplate;
-    static const QString otherText;
+    static const QString baseTextTemplate;
     static const QRegExp dirRegExp;
 
     void setAvatarText(const QString &text);
     QString avatarText() const;
+    void setExtraContents(const QString &text);
+    QString extraContents() const;
     virtual QString generateResendText();
 
 private:

@@ -223,7 +223,11 @@ QList< Choqok::Post * > TwitterApiMicroBlog::loadTimeline(Choqok::Account *accou
             st->conversationId = grp.readEntry("conversationId", QString());
             st->media = grp.readEntry("mediaUrl", QString());
             st->mediaSizeWidth = grp.readEntry("mediaWidth", 0);
-            st->mediaSizeHeight = grp.readEntry("mediaHeight", 0);
+            st->mediaSizeHeight = grp.readEntry("mediaHeight", 0);            
+            st->quotedPost.postId = grp.readEntry("quotedPostId", QString());
+            st->quotedPost.profileImageUrl = grp.readEntry("quotedProfileUrl", QString());
+            st->quotedPost.content = grp.readEntry("quotedContent", QString());
+            st->quotedPost.username = grp.readEntry("quotedUsername", QString());
 
             list.append(st);
         }
@@ -273,6 +277,10 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
             grp.writeEntry("mediaUrl", post->media);
             grp.writeEntry("mediaWidth", post->mediaSizeWidth);
             grp.writeEntry("mediaHeight", post->mediaSizeHeight);
+            grp.writeEntry("quotedPostId", post->quotedPost.postId);
+            grp.writeEntry("quotedProfileUrl", post->quotedPost.profileImageUrl);
+            grp.writeEntry("quotedContent", post->quotedPost.content);
+            grp.writeEntry("quotedUsername", post->quotedPost.username);
         }
         postsBackup.sync();
     }
@@ -935,7 +943,7 @@ void TwitterApiMicroBlog::requestTimeLine(Choqok::Account *theAccount, QString t
 
 void TwitterApiMicroBlog::slotRequestTimeline(KJob *job)
 {
-    qCDebug(CHOQOK);//TODO Add error detection for XML "checkXmlForError()" and JSON
+    qCDebug(CHOQOK);//TODO Add error detection
     if (!job) {
         qCDebug(CHOQOK) << "Job is null pointer";
         return;
@@ -994,6 +1002,13 @@ void TwitterApiMicroBlog::setRepeatedOfInfo(Choqok::Post *post, Choqok::Post *re
         post->repeatedFromUsername = post->author.userName;
         post->author = repeatedPost->author;
     }
+}
+void TwitterApiMicroBlog::setQuotedPost(Choqok::Post* post, Choqok::Post* quotedPost)
+{
+    post->quotedPost.profileImageUrl = quotedPost->author.profileImageUrl; 
+    post->quotedPost.username = quotedPost->author.userName;
+    post->quotedPost.postId = quotedPost->postId;
+    post->quotedPost.content = quotedPost->content;
 }
 
 QDateTime TwitterApiMicroBlog::dateFromString(const QString &date)
@@ -1407,12 +1422,17 @@ Choqok::Post *TwitterApiMicroBlog::readPost(Choqok::Account *theAccount,
         post->mediaSizeWidth = 0;
     }
 
-    Choqok::Post *repeatedPost = 0;
     QVariantMap retweetedMap = var[QLatin1String("retweeted_status")].toMap();
     if (!retweetedMap.isEmpty()) {
-        repeatedPost = readPost(theAccount, retweetedMap, new Choqok::Post);
-        setRepeatedOfInfo(post, repeatedPost);
-        delete repeatedPost;
+        Choqok::Post *retweetedPost = readPost(theAccount, retweetedMap, new Choqok::Post);
+        setRepeatedOfInfo(post, retweetedPost);
+        delete retweetedPost;
+    }
+    QVariantMap quotedMap = var[QLatin1String("quoted_status")].toMap();
+    if (!quotedMap.isEmpty()) {
+        Choqok::Post *quotedPost = readPost(theAccount, quotedMap, new Choqok::Post);
+        setQuotedPost(post, quotedPost);
+        delete quotedPost;
     }
     post->link = postUrl(theAccount, post->author.userName, post->postId);
     post->isRead = post->isFavorited || (post->repeatedFromUsername.compare(theAccount->username(), Qt::CaseInsensitive) == 0);

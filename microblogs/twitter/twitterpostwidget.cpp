@@ -31,6 +31,8 @@
 
 #include "choqokbehaviorsettings.h"
 #include "choqoktools.h"
+#include "mediamanager.h"
+#include "textbrowser.h"
 
 #include "twitterapiaccount.h"
 #include "twitterapimicroblog.h"
@@ -40,7 +42,8 @@
 
 const QRegExp TwitterPostWidget::mTwitterUserRegExp(QLatin1String("([\\s\\W]|^)@([a-z0-9_]+){1,20}"), Qt::CaseInsensitive);
 const QRegExp TwitterPostWidget::mTwitterTagRegExp(QLatin1String("([\\s]|^)#([\\w_\\.\\-]+)"), Qt::CaseInsensitive);
-
+const QString TwitterPostWidget::mQuotedTextBase(QLatin1String("<div style=\"padding-top:5px;padding-bottom:3px;\"><table style=\"border-style:double;\" border=\"1\"><tr><td><table> <tr><td width=\"40\" style=\"padding-right:5px;\"><img src=\"img://quotedProfileImage\" width=\"40\" height=\"40\" /></td><td dir=\"%2\"><p><b><a>%3:</b>&nbsp;%1</p></td></tr></table></td></tr></table></div>"));
+const QUrl TwitterPostWidget::mQuotedAvatarResourceUrl(QLatin1String("img://quotedProfileImage"));
 TwitterPostWidget::TwitterPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent): TwitterApiPostWidget(account, post, parent)
 {
 
@@ -48,6 +51,19 @@ TwitterPostWidget::TwitterPostWidget(Choqok::Account *account, Choqok::Post *pos
 
 void TwitterPostWidget::initUi()
 {
+    if ( ! currentPost()->quotedPost.content.isEmpty() ) {
+        if( !setupQuotedAvatar() ){
+            _mainWidget->document()->addResource(QTextDocument::ImageResource, mQuotedAvatarResourceUrl,
+                                                 Choqok::MediaManager::self()->defaultImage());
+        }
+        
+        auto dir = getDirection(currentPost()->quotedPost.content);
+        auto text = prepareStatus(currentPost()->quotedPost.content);
+        QString user = QString(QLatin1String("<a href='user://%1'>%1</a>")).arg(currentPost()->quotedPost.username);
+        QString quoteText = mQuotedTextBase.arg(text, dir, user);        
+        setExtraContents(quoteText);
+    }
+    
     TwitterApiPostWidget::initUi();
 
     QPushButton *btn = buttons().value(QLatin1String("btnResend"));
@@ -210,3 +226,39 @@ void TwitterPostWidget::checkAnchor(const QUrl &url)
     }
 }
 
+bool TwitterPostWidget::setupQuotedAvatar()
+{
+    QPixmap pix = Choqok::MediaManager::self()->fetchImage(currentPost()->quotedPost.profileImageUrl,
+                                                           Choqok::MediaManager::Async);
+    if (!pix.isNull()) {
+        quotedAvatarFetched(currentPost()->quotedPost.profileImageUrl, pix);
+        return true;
+    } else {
+        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
+                this, SLOT(quotedAvatarFetched(QString,QPixmap)));
+        connect(Choqok::MediaManager::self(), SIGNAL(fetchError(QString,QString)),
+                this, SLOT(quotedAvatarFetchError(QString,QString)));
+        return false;
+    }
+}
+
+void TwitterPostWidget::quotedAvatarFetched(const QString &remoteUrl, const QPixmap &pixmap)
+{
+    if (remoteUrl == currentPost()->quotedPost.profileImageUrl) {
+        _mainWidget->document()->addResource(QTextDocument::ImageResource, mQuotedAvatarResourceUrl, pixmap);
+        disconnect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
+                   this, SLOT(quotedAvatarFetched(QString,QPixmap)));
+        disconnect(Choqok::MediaManager::self(), SIGNAL(fetchError(QString,QString)),
+                   this, SLOT(quotedAvatarFetchError(QString,QString)));
+    }
+}
+
+void TwitterPostWidget::quotedAvatarFetchError(const QString &remoteUrl, const QString &errMsg)
+{
+    Q_UNUSED(errMsg);
+    if (remoteUrl == currentPost()->quotedPost.profileImageUrl) {
+        ///Avatar fetching is failed! but will not disconnect to get the img if it fetches later!
+        _mainWidget->document()->addResource(QTextDocument::ImageResource, mQuotedAvatarResourceUrl,
+                                             QIcon::fromTheme(QLatin1String("image-missing")).pixmap(40));
+    }
+}

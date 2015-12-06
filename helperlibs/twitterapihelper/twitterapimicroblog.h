@@ -233,6 +233,7 @@ protected:
     virtual QString checkForError(const QByteArray &buffer);
     void finishRequestFriendsScreenName(KJob *job, bool active);
     void finishRequestFollowersScreenName(KJob *job, bool active);
+    void setQuotedPost(Choqok::Post* post, Choqok::Post* quotedPost);
 
     ///==========================================
     QHash<QString, QString> timelineApiPath;//TimelineType, path
