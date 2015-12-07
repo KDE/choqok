@@ -38,8 +38,6 @@ class PostWidget;
 }
 }
 
-class QPointer<Choqok::UI::PostWidget *>;
-
 class ImagePreview : public Choqok::Plugin
 {
     Q_OBJECT
