@@ -233,6 +233,7 @@ protected:
     void setExtraContents(const QString &text);
     QString extraContents() const;
     virtual QString generateResendText();
+    void updatePostImage(int width);
 
 private:
     class Private;

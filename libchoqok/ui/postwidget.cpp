@@ -211,9 +211,6 @@ void PostWidget::initUi()
     }
 
     d->mProfileImage = QLatin1String("<img src=\"img://profileImage\" title=\"") + d->mCurrentPost->author.realName + QLatin1String("\" width=\"48\" height=\"48\" />");
-    if (!d->imageUrl.isEmpty()) {
-        d->mImage = mImageTemplate.arg(QString::number(d->mCurrentPost->mediaSizeWidth), QString::number(d->mCurrentPost->mediaSizeHeight), d->resourceImageUrl);
-    }
     d->mContent = prepareStatus(d->mCurrentPost->content);
     d->mSign = generateSign();
     setupAvatar();
@@ -360,26 +357,7 @@ void PostWidget::mousePressEvent(QMouseEvent *ev)
 
 void PostWidget::resizeEvent(QResizeEvent *event)
 {
-    // only scale if image is present
-    if (!d->originalImage.isNull()) {
-
-        // TODO: Find a way to calculate the difference we need to subtract.
-        int w = event->size().width() - 76;
-
-        QPixmap newPixmap = d->originalImage.scaledToWidth(w, Qt::SmoothTransformation);
-        int newW = newPixmap.width();
-        int newH = newPixmap.height();
-
-        const QUrl url(d->resourceImageUrl);
-        // only use scaled image if it's smaller than the original one
-        if (newW <= d->originalImage.width() && newH <= d->originalImage.height()) { // never scale up
-            d->mImage = mImageTemplate.arg(QString::number(newW), QString::number(newH), d->resourceImageUrl);
-            _mainWidget->document()->addResource(QTextDocument::ImageResource, url, newPixmap);
-        } else {
-            d->mImage = mImageTemplate.arg(QString::number(d->mCurrentPost->mediaSizeWidth), QString::number(d->mCurrentPost->mediaSizeHeight), d->resourceImageUrl);
-            _mainWidget->document()->addResource(QTextDocument::ImageResource, url, d->originalImage);
-        }
-    }
+    updatePostImage( event->size().width() );
     setHeight();
     updateUi();
     QWidget::resizeEvent(event);
@@ -403,6 +381,28 @@ void PostWidget::leaveEvent(QEvent *event)
         }
     }
     QWidget::enterEvent(event);
+}
+
+void PostWidget::updatePostImage(int width)
+{
+    if ( !d->originalImage.isNull() ) {
+        // TODO: Find a way to calculate the difference we need to subtract.
+        width -= 76;
+        
+        QPixmap newPixmap = d->originalImage.scaledToWidth(width, Qt::SmoothTransformation);
+        int newW = newPixmap.width();
+        int newH = newPixmap.height();
+        
+        const QUrl url(d->resourceImageUrl);
+        // only use scaled image if it's smaller than the original one
+        if (newW <= d->originalImage.width() && newH <= d->originalImage.height()) { // never scale up
+            d->mImage = mImageTemplate.arg(QString::number(newW), QString::number(newH), d->resourceImageUrl);
+            _mainWidget->document()->addResource(QTextDocument::ImageResource, url, newPixmap);
+        } else {
+            d->mImage = mImageTemplate.arg(QString::number(d->mCurrentPost->mediaSizeWidth), QString::number(d->mCurrentPost->mediaSizeHeight), d->resourceImageUrl);
+            _mainWidget->document()->addResource(QTextDocument::ImageResource, url, d->originalImage);
+        }
+    }
 }
 
 QString PostWidget::prepareStatus(const QString &txt)
@@ -541,6 +541,16 @@ void PostWidget::fetchImage()
     }
 }
 
+void PostWidget::slotImageFetched(const QString &remoteUrl, const QPixmap &pixmap)
+{
+    if (remoteUrl == d->imageUrl) {
+        disconnect(MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)), this, SLOT(slotImageFetched(QString,QPixmap)));
+        d->originalImage = pixmap;
+        updatePostImage( width() );
+        updateUi();
+    }
+}
+
 void PostWidget::setupAvatar()
 {
     QPixmap pix = MediaManager::self()->fetchImage(d->mCurrentPost->author.profileImageUrl,
@@ -577,19 +587,6 @@ void PostWidget::avatarFetchError(const QString &remoteUrl, const QString &errMs
         _mainWidget->document()->addResource(QTextDocument::ImageResource,
                                              url, QIcon::fromTheme(QLatin1String("image-missing")).pixmap(48));
         updateUi();
-    }
-}
-
-void PostWidget::slotImageFetched(const QString &remoteUrl, const QPixmap &pixmap)
-{
-
-    if (remoteUrl == d->imageUrl) {
-        const QUrl url(d->resourceImageUrl);
-        QPixmap newPixmap = pixmap.scaled(d->mCurrentPost->mediaSizeWidth, d->mCurrentPost->mediaSizeHeight);
-        _mainWidget->document()->addResource(QTextDocument::ImageResource, url, newPixmap);
-        d->originalImage = pixmap;
-        updateUi();
-        disconnect(MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)), this, SLOT(slotImageFetched(QString,QPixmap)));
     }
 }
 

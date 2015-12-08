@@ -28,6 +28,7 @@
 
 class TwitterPostWidget : public TwitterApiPostWidget
 {
+    Q_OBJECT
 public:
     TwitterPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
     virtual void initUi();
@@ -46,6 +47,8 @@ protected:
     static const QRegExp mTwitterTagRegExp;
     static const QString mQuotedTextBase;
     static const QUrl    mQuotedAvatarResourceUrl;
+private:
+    QString getBackgroundColor();
 };
 
 #endif // TWITTERPOSTWIDGET_H

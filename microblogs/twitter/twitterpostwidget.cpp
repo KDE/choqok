@@ -42,7 +42,7 @@
 
 const QRegExp TwitterPostWidget::mTwitterUserRegExp(QLatin1String("([\\s\\W]|^)@([a-z0-9_]+){1,20}"), Qt::CaseInsensitive);
 const QRegExp TwitterPostWidget::mTwitterTagRegExp(QLatin1String("([\\s]|^)#([\\w_\\.\\-]+)"), Qt::CaseInsensitive);
-const QString TwitterPostWidget::mQuotedTextBase(QLatin1String("<div style=\"padding-top:5px;padding-bottom:3px;\"><table style=\"border-style:double;\" border=\"1\"><tr><td><table> <tr><td width=\"40\" style=\"padding-right:5px;\"><img src=\"img://quotedProfileImage\" width=\"40\" height=\"40\" /></td><td dir=\"%2\"><p><b><a>%3:</b>&nbsp;%1</p></td></tr></table></td></tr></table></div>"));
+const QString TwitterPostWidget::mQuotedTextBase(QLatin1String("<div style=\"padding-top:5px;padding-bottom:3px;\"><table style=\"%4 border-style:groove;\" border=\"1\"><tr><td style=\"padding-top:4px;padding-bottom:4px;padding-left:3px;padding-right:3px;\"><table> <tr><td width=\"40\" style=\"padding-right:5px;\"><img src=\"img://quotedProfileImage\" width=\"40\" height=\"40\" /></td><td dir=\"%2\"><p><b><a>%3:</b>&nbsp;%1</p></td></tr></table></td></tr></table></div>"));
 const QUrl TwitterPostWidget::mQuotedAvatarResourceUrl(QLatin1String("img://quotedProfileImage"));
 TwitterPostWidget::TwitterPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent): TwitterApiPostWidget(account, post, parent)
 {
@@ -51,6 +51,8 @@ TwitterPostWidget::TwitterPostWidget(Choqok::Account *account, Choqok::Post *pos
 
 void TwitterPostWidget::initUi()
 {
+    TwitterApiPostWidget::initUi();
+    
     if ( ! currentPost()->quotedPost.content.isEmpty() ) {
         if( !setupQuotedAvatar() ){
             _mainWidget->document()->addResource(QTextDocument::ImageResource, mQuotedAvatarResourceUrl,
@@ -60,12 +62,11 @@ void TwitterPostWidget::initUi()
         auto dir = getDirection(currentPost()->quotedPost.content);
         auto text = prepareStatus(currentPost()->quotedPost.content);
         QString user = QString(QLatin1String("<a href='user://%1'>%1</a>")).arg(currentPost()->quotedPost.username);
-        QString quoteText = mQuotedTextBase.arg(text, dir, user);        
-        setExtraContents(quoteText);
+        QString quoteText = mQuotedTextBase.arg(text, dir, user, QLatin1String("background-color:%1;"));
+        setExtraContents(quoteText.arg(getBackgroundColor()));
+        updateUi();
     }
     
-    TwitterApiPostWidget::initUi();
-
     QPushButton *btn = buttons().value(QLatin1String("btnResend"));
 
     if (btn) {
@@ -261,4 +262,25 @@ void TwitterPostWidget::quotedAvatarFetchError(const QString &remoteUrl, const Q
         _mainWidget->document()->addResource(QTextDocument::ImageResource, mQuotedAvatarResourceUrl,
                                              QIcon::fromTheme(QLatin1String("image-missing")).pixmap(40));
     }
+}
+
+QString TwitterPostWidget::getBackgroundColor()
+{
+    QString style = styleSheet();
+    QLatin1String str{ "background-color:rgb(" };
+    int idx = style.indexOf(str);
+    if(idx != -1){
+        idx += str.size();
+        int endIdx = style.indexOf(QLatin1String(");"), idx);
+        if( endIdx != -1 ){
+            QStringList rgb = style.mid(idx, endIdx-idx).split(QLatin1Char(','));
+            if( rgb.size() == 3 ){
+                return QString(QLatin1String("#%1%2%3")).arg( rgb[0].toInt() - 20, 2, 16, QLatin1Char('0') )
+                                                        .arg( rgb[1].toInt() - 20, 2, 16, QLatin1Char('0') )
+                                                        .arg( rgb[2].toInt() - 20, 2, 16, QLatin1Char('0') );
+            }
+        }
+    }
+    
+    return QLatin1String("#ffffff");
 }
