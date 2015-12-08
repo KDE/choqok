@@ -31,7 +31,7 @@
 namespace Choqok
 {
 class Account;
-struct Post;
+class Post;
 
     namespace UI
     {

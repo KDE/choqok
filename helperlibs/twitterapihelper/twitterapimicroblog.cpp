@@ -1520,7 +1520,7 @@ Choqok::Post *TwitterApiMicroBlog::readDirectMessage(Choqok::Account *theAccount
 
 Choqok::User *TwitterApiMicroBlog::readUserInfo(const QByteArray &buffer)
 {
-    Choqok::User *user;
+    Choqok::User *user = nullptr;
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
         Choqok::User u(readUser(0, json.toVariant().toMap()));

@@ -51,7 +51,6 @@ Notify::Notify(QObject *parent, const QList< QVariant > &)
             SLOT(slotNewPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)));
     connect(&timer, SIGNAL(timeout()), this, SLOT(notifyNextPost()));
 
-    QRect screenRect(QDesktopWidget().screenGeometry());
     notifyPosition = set.position();
 }
 
