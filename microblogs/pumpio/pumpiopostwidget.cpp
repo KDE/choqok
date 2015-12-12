@@ -162,9 +162,9 @@ QString PumpIOPostWidget::generateSign()
             }
         }
 
-        ss += QLatin1String(" - ");
-        ss += i18n("View replies");
-        ss += QLatin1String(" <a href=\"thread://\"><img src=\"icon://thread\"/></a>");
+        ss += QLatin1String(" <a href=\"thread://\" title=\"");
+        ss += i18n("Show conversation");
+        ss += QLatin1String("\"><img src=\"icon://thread\"/></a>");
     } else {
         qCDebug(CHOQOK) << "post is not a PumpIOPost!";
     }
