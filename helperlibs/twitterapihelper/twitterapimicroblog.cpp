@@ -404,7 +404,7 @@ void TwitterApiMicroBlog::repeatPost(Choqok::Account *theAccount, const QString 
     post->postId = postId;
     mCreatePostMap[ job ] = post;
     mJobsAccount[job] = theAccount;
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCreatePost(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotCreatePost);
     job->start();
 }
 
@@ -424,7 +424,7 @@ void TwitterApiMicroBlog::slotCreatePost(KJob *job)
     if (job->error()) {
         qCDebug(CHOQOK) << "Job Error:" << job->errorString();
         Q_EMIT errorPost(theAccount, post, Choqok::MicroBlog::CommunicationError,
-                         i18n("Creating the new post failed. %1", job->errorString()), MicroBlog::Critical);
+                         i18n("Creating the new post failed: %1", job->errorString()), MicroBlog::Critical);
     } else {
         KIO::StoredTransferJob *stj = qobject_cast< KIO::StoredTransferJob * > (job);
         if (!post->isPrivate) {
@@ -432,14 +432,14 @@ void TwitterApiMicroBlog::slotCreatePost(KJob *job)
             if (post->isError) {
                 QString errorMsg;
                 errorMsg = checkForError(stj->data());
-                if (errorMsg.isEmpty()) {    // ???? If empty, why is there an error?
+                if (errorMsg.isEmpty()) {    // We get the error message by parsing the JSON output, if there was a parsing error, then we don't have an error message, while there were still an error because of the error flag
                     qCCritical(CHOQOK) << "Creating post: JSON parsing error:" << stj->data() ;
                     Q_EMIT errorPost(theAccount, post, Choqok::MicroBlog::ParsingError,
                                      i18n("Creating the new post failed. The result data could not be parsed."), MicroBlog::Critical);
                 } else {
                     qCCritical(CHOQOK) << "Server Error:" << errorMsg ;
                     Q_EMIT errorPost(theAccount, post, Choqok::MicroBlog::ServerError,
-                                     i18n("Creating the new post failed, with error:%1", errorMsg),
+                                     i18n("Creating the new post failed, with error: %1", errorMsg),
                                      MicroBlog::Critical);
                 }
             } else {
@@ -1436,6 +1436,10 @@ Choqok::Post *TwitterApiMicroBlog::readPost(Choqok::Account *theAccount,
     }
     post->link = postUrl(theAccount, post->author.userName, post->postId);
     post->isRead = post->isFavorited || (post->repeatedFromUsername.compare(theAccount->username(), Qt::CaseInsensitive) == 0);
+    
+    if(post->postId.isEmpty() || post->author.userName.isEmpty())
+        post->isError = true;
+    
     return post;
 }
 

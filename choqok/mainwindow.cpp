@@ -83,7 +83,7 @@ MainWindow::MainWindow(ChoqokApplication *application)
 
     timelineTimer = new QTimer(this);
     setWindowTitle(i18n("Choqok"));
-    connect(mainWidget, SIGNAL(currentChanged(int)), SLOT(slotCurrentBlogChanged(int)));
+    connect(mainWidget, &QTabWidget::currentChanged, this, &MainWindow::slotCurrentBlogChanged);
     setCentralWidget(mainWidget);
 
     setupActions();
@@ -97,23 +97,23 @@ MainWindow::MainWindow(ChoqokApplication *application)
         mPrevUpdateInterval = 10;
     }
 
-    connect(timelineTimer, SIGNAL(timeout()), this, SIGNAL(updateTimelines()));
-    connect(this, SIGNAL(markAllAsRead()), SLOT(slotMarkAllAsRead()));
+    connect(timelineTimer, &QTimer::timeout, this, &MainWindow::updateTimelines);
+    connect(this, &MainWindow::markAllAsRead, this, &MainWindow::slotMarkAllAsRead);
     connect(Choqok::AccountManager::self(), SIGNAL(accountAdded(Choqok::Account*)),
             this, SLOT(addBlog(Choqok::Account*)));
-    connect(Choqok::AccountManager::self(), SIGNAL(accountRemoved(QString)),
-            this, SLOT(removeBlog(QString)));
-    connect(Choqok::AccountManager::self(), SIGNAL(allAccountsLoaded()),
-            SLOT(loadAllAccounts()));
+    connect(Choqok::AccountManager::self(), &Choqok::AccountManager::accountRemoved,
+            this, &MainWindow::removeBlog);
+    connect(Choqok::AccountManager::self(), &Choqok::AccountManager::allAccountsLoaded,
+            this, &MainWindow::loadAllAccounts);
 
-    connect(Choqok::PluginManager::self(), SIGNAL(pluginLoaded(Choqok::Plugin*)),
-            this, SLOT(newPluginAvailable(Choqok::Plugin*)));
+    connect(Choqok::PluginManager::self(), &Choqok::PluginManager::pluginLoaded,
+            this, &MainWindow::newPluginAvailable);
 
-    QTimer::singleShot(0, Choqok::PluginManager::self(), SLOT(loadAllPlugins()));
+    QTimer::singleShot(0, Choqok::PluginManager::self(), &Choqok::PluginManager::loadAllPlugins);
 //     Choqok::AccountManager::self()->loadAllAccounts();
-    QTimer::singleShot(0, Choqok::AccountManager::self(), SLOT(loadAllAccounts()));
+    QTimer::singleShot(0, Choqok::AccountManager::self(), &Choqok::AccountManager::loadAllAccounts);
 
-    connect(this, SIGNAL(updateTimelines()), SLOT(slotUpdateTimelines()));
+    connect(this, &MainWindow::updateTimelines, this, &MainWindow::slotUpdateTimelines);
 
     QPoint pos = Choqok::BehaviorSettings::position();
     if (pos.x() != -1 && pos.y() != -1) {
@@ -150,7 +150,7 @@ void MainWindow::loadAllAccounts()
         }
         qCDebug(CHOQOK) << "All accounts loaded.";
         if (Choqok::BehaviorSettings::updateInterval() > 0) {
-            QTimer::singleShot(500, this, SIGNAL(updateTimelines()));
+            QTimer::singleShot(500, this, &MainWindow::updateTimelines);
         }
     } else {
         m_splash->finish(this);
@@ -210,18 +210,18 @@ void MainWindow::setupActions()
     actionCollection()->addAction(QLatin1String("update_timeline"), actUpdate);
     actionCollection()->setDefaultShortcut(actUpdate, QKeySequence(Qt::Key_F5));
     KGlobalAccel::setGlobalShortcut(actUpdate, QKeySequence(Qt::CTRL | Qt::META | Qt::Key_F5));
-    connect(actUpdate, SIGNAL(triggered(bool)), this, SIGNAL(updateTimelines()));
+    connect(actUpdate, &QAction::triggered, this, &MainWindow::updateTimelines);
 
     newTwit = new QAction(QIcon::fromTheme(QLatin1String("document-new")), i18n("Quick Post"), this);
     actionCollection()->addAction(QLatin1String("choqok_new_post"), newTwit);
     actionCollection()->setDefaultShortcut(newTwit, QKeySequence(Qt::CTRL | Qt::Key_T));
     KGlobalAccel::setGlobalShortcut(newTwit, QKeySequence(Qt::CTRL | Qt::META | Qt::Key_T));
-    connect(newTwit, SIGNAL(triggered(bool)), this, SLOT(triggerQuickPost()));
+    connect(newTwit, &QAction::triggered, this, &MainWindow::triggerQuickPost);
 
     QAction *markRead = new QAction(QIcon::fromTheme(QLatin1String("mail-mark-read")), i18n("Mark All As Read"), this);
     actionCollection()->addAction(QLatin1String("choqok_mark_as_read"), markRead);
     actionCollection()->setDefaultShortcut(markRead, QKeySequence(Qt::CTRL | Qt::Key_R));
-    connect(markRead, SIGNAL(triggered(bool)), this, SIGNAL(markAllAsRead()));
+    connect(markRead, &QAction::triggered, this, &MainWindow::markAllAsRead);
 
     showMain = new QAction(this);
     actionCollection()->addAction(QLatin1String("toggle_mainwin"), showMain);
@@ -231,7 +231,7 @@ void MainWindow::setupActions()
     } else {
         showMain->setText(i18nc("@action", "Restore"));
     }
-    connect(showMain, SIGNAL(triggered(bool)), this, SLOT(toggleMainWindow()));
+    connect(showMain, &QAction::triggered, this, &MainWindow::toggleMainWindow);
 
     QAction *act = KStandardAction::configureNotifications(this, SLOT(slotConfNotifications()),
                    actionCollection());
@@ -241,36 +241,35 @@ void MainWindow::setupActions()
     enableUpdates->setCheckable(true);
     actionCollection()->addAction(QLatin1String("choqok_enable_updates"), enableUpdates);
     actionCollection()->setDefaultShortcut(enableUpdates, QKeySequence(Qt::CTRL | Qt::Key_U));
-    connect(enableUpdates, SIGNAL(toggled(bool)), this, SLOT(setTimeLineUpdatesEnabled(bool)));
+    connect(enableUpdates, &QAction::toggled, this, &MainWindow::setTimeLineUpdatesEnabled);
 
     QAction *enableNotify = new QAction(i18n("Enable Notifications"), this);
     enableNotify->setCheckable(true);
     actionCollection()->addAction(QLatin1String("choqok_enable_notify"), enableNotify);
     actionCollection()->setDefaultShortcut(enableNotify, QKeySequence(Qt::CTRL | Qt::Key_N));
-    connect(enableNotify, SIGNAL(toggled(bool)), this, SLOT(setNotificationsEnabled(bool)));
+    connect(enableNotify, &QAction::toggled, this, &MainWindow::setNotificationsEnabled);
 
     QAction *hideMenuBar = new QAction(i18n("Hide Menubar"), this);
     hideMenuBar->setCheckable(true);
     actionCollection()->addAction(QLatin1String("choqok_hide_menubar"), hideMenuBar);
     actionCollection()->setDefaultShortcut(hideMenuBar, QKeySequence(Qt::ControlModifier | Qt::Key_M));
-    connect(hideMenuBar, SIGNAL(toggled(bool)), menuBar(), SLOT(setHidden(bool)));
-    connect(hideMenuBar, SIGNAL(toggled(bool)), this, SLOT(slotShowSpecialMenu(bool)));
+    connect(hideMenuBar, &QAction::toggled, menuBar(), &QMenuBar::setHidden);
+    connect(hideMenuBar, &QAction::toggled, this, &MainWindow::slotShowSpecialMenu);
 
     QAction *clearAvatarCache = new QAction(QIcon::fromTheme(QLatin1String("edit-clear")), i18n("Clear Avatar Cache"), this);
     actionCollection()->addAction(QLatin1String("choqok_clear_avatar_cache"), clearAvatarCache);
     QString tip = i18n("You have to restart Choqok to load avatars again");
     clearAvatarCache->setToolTip(tip);
     clearAvatarCache->setStatusTip(tip);
-    connect(clearAvatarCache, SIGNAL(triggered()),
-            Choqok::MediaManager::self(), SLOT(clearImageCache()));
+    connect(clearAvatarCache, &QAction::triggered, Choqok::MediaManager::self(), &Choqok::MediaManager::clearImageCache);
 
     QAction *uploadMedium = new QAction(QIcon::fromTheme(QLatin1String("arrow-up")), i18n("Upload Medium..."), this);
     actionCollection()->addAction(QLatin1String("choqok_upload_medium"), uploadMedium);
-    connect(uploadMedium, SIGNAL(triggered(bool)), this, SLOT(slotUploadMedium()));
+    connect(uploadMedium, &QAction::triggered, this, &MainWindow::slotUploadMedium);
 
     QAction *donate = new QAction(QIcon::fromTheme(QLatin1String("help-donate")), i18n("Donate"), this);
     actionCollection()->addAction(QLatin1String("choqok_donate"), donate);
-    connect(donate, SIGNAL(triggered(bool)), this, SLOT(slotDonate()));
+    connect(donate, &QAction::triggered, this, &MainWindow::slotDonate);
 }
 
 void MainWindow::slotConfNotifications()
@@ -284,10 +283,9 @@ void MainWindow::createQuickPostDialog()
     Choqok::UI::Global::setQuickPostWidget(quickWidget);
     quickWidget->setAttribute(Qt::WA_DeleteOnClose, false);
     if (sysIcon) {
-        connect(quickWidget, SIGNAL(newPostSubmitted(Choqok::JobResult)),
-                sysIcon, SLOT(slotJobDone(Choqok::JobResult)));
+        connect(quickWidget, &Choqok::UI::QuickPost::newPostSubmitted, sysIcon, &SysTrayIcon::slotJobDone);
     }
-    emit(quickPostCreated());
+    Q_EMIT quickPostCreated();
 }
 
 void MainWindow::triggerQuickPost()
@@ -312,10 +310,10 @@ void MainWindow::slotConfigChoqok()
         s_settingsDialog = new KSettings::Dialog(this);
     }
     s_settingsDialog->show();
-    connect(Choqok::BehaviorSettings::self(), SIGNAL(configChanged()),
-            SLOT(slotBehaviorConfigChanged()));
-    connect(Choqok::AppearanceSettings::self(), SIGNAL(configChanged()),
-            SLOT(slotAppearanceConfigChanged()));
+    connect(Choqok::BehaviorSettings::self(), &Choqok::BehaviorSettings::configChanged,
+            this, &MainWindow::slotBehaviorConfigChanged);
+    connect(Choqok::AppearanceSettings::self(), &Choqok::AppearanceSettings::configChanged,
+            this, &MainWindow::slotAppearanceConfigChanged);
 }
 
 void MainWindow::settingsChanged()
@@ -367,8 +365,7 @@ void MainWindow::updateSysTray()
 //            sysIcon->contextMenu()->addAction( uploadMedium );
             sysIcon->contextMenu()->addAction(actUpdate);
             sysIcon->contextMenu()->addSeparator();
-            connect(enableUpdates, SIGNAL(toggled(bool)), sysIcon,
-                    SLOT(setTimeLineUpdatesEnabled(bool)));
+            connect(enableUpdates, &QAction::toggled, sysIcon, &SysTrayIcon::setTimeLineUpdatesEnabled);
             sysIcon->contextMenu()->addAction(enableUpdates);
             sysIcon->setTimeLineUpdatesEnabled(enableUpdates->isChecked());
 //           sysIcon->contextMenu()->addAction( enableNotify );
@@ -378,8 +375,7 @@ void MainWindow::updateSysTray()
             sysIcon->contextMenu()->addAction(showMain);
             sysIcon->contextMenu()->addAction(actQuit);
 //            connect( sysIcon, SIGNAL(quitSelected()), this, SLOT(slotQuit()) );
-            connect(sysIcon, SIGNAL(scrollRequested(int,Qt::Orientation)),
-                    this, SLOT(nextTab(int,Qt::Orientation)));
+            connect(sysIcon, &SysTrayIcon::scrollRequested, this, &MainWindow::nextTab);
         }
     } else {
         if (sysIcon) {
@@ -452,23 +448,20 @@ void MainWindow::addBlog(Choqok::Account *account, bool isStartup)
     qCDebug(CHOQOK) << "Adding new Blog, Alias:" << account->alias() << "Blog:" << account->microblog()->serviceName();
 
     Choqok::UI::MicroBlogWidget *widget = account->microblog()->createMicroBlogWidget(account, this);
-    connect(widget, SIGNAL(loaded()), SLOT(oneMicroblogLoaded()));
-    connect(widget, SIGNAL(updateUnreadCount(int,int)), SLOT(slotUpdateUnreadCount(int,int)));
+    connect(widget, &Choqok::UI::MicroBlogWidget::loaded,            this, &MainWindow::oneMicroblogLoaded);
+    connect(widget, &Choqok::UI::MicroBlogWidget::updateUnreadCount, this, &MainWindow::slotUpdateUnreadCount);
     widget->initUi();
 
-//     connect( widget, SIGNAL(sigSetUnread(int)), sysIcon, SLOT(slotSetUnread(int)) );
-    /*connect( widget, SIGNAL(showStatusMessage(QString,bool)),
-             this, SLOT(showStatusMessage(QString,bool)) )*/;
-    connect(widget, SIGNAL(showMe()), this, SLOT(showBlog()));
+    connect(widget, &Choqok::UI::MicroBlogWidget::showMe, this, &MainWindow::showBlog);
 
-    connect(this, SIGNAL(updateTimelines()), widget, SLOT(updateTimelines()));
-    connect(this, SIGNAL(markAllAsRead()), widget, SLOT(markAllAsRead()));
-    connect(this, SIGNAL(removeOldPosts()), widget, SLOT(removeOldPosts()));
-//     qCDebug(CHOQOK)<<"Plugin Icon: "<<account->microblog()->pluginIcon();
+    connect(this, &MainWindow::updateTimelines, widget, &Choqok::UI::MicroBlogWidget::updateTimelines);
+    connect(this, &MainWindow::markAllAsRead,   widget, &Choqok::UI::MicroBlogWidget::markAllAsRead);
+    connect(this, &MainWindow::removeOldPosts,  widget, &Choqok::UI::MicroBlogWidget::removeOldPosts);
+
     mainWidget->addTab(widget, QIcon::fromTheme(account->microblog()->pluginIcon()), account->alias());
 
     if (!isStartup) {
-        QTimer::singleShot(1500, widget, SLOT(updateTimelines()));
+        QTimer::singleShot(1500, widget, &Choqok::UI::MicroBlogWidget::updateTimelines);
     }
     enableApp();
     updateTabbarHiddenState();

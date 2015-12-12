@@ -45,8 +45,8 @@ BehaviorConfig_Shorten::BehaviorConfig_Shorten(QWidget *parent)
     setupUi(this);
     Choqok::ShortenManager::self();
     connect(shortenPlugins, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
-    connect(aboutPlugin, SIGNAL(clicked(bool)), SLOT(slotAboutClicked()));
-    connect(configPlugin, SIGNAL(clicked(bool)), SLOT(slotConfigureClicked()));
+    connect(aboutPlugin,  &QPushButton::clicked, this, &BehaviorConfig_Shorten::slotAboutClicked);
+    connect(configPlugin, &QPushButton::clicked, this, &BehaviorConfig_Shorten::slotConfigureClicked);
 }
 
 BehaviorConfig_Shorten::~BehaviorConfig_Shorten()
@@ -189,8 +189,8 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
         QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
         okButton->setDefault(true);
         okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-        connect(buttonBox, SIGNAL(accepted()), configDialog, SLOT(accept()));
-        connect(buttonBox, SIGNAL(rejected()), configDialog, SLOT(reject()));
+        connect(buttonBox, &QDialogButtonBox::accepted, configDialog, &QDialog::accept);
+        connect(buttonBox, &QDialogButtonBox::rejected, configDialog, &QDialog::reject);
         layout->addWidget(buttonBox);
         showWidget->adjustSize();
 

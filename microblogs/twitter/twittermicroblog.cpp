@@ -165,7 +165,7 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Cho
                                i18n("Uploading medium failed: cannot read the medium file."));
             return;
         }
-        ///Documentation: http://identi.ca/notice/17779990
+
         TwitterAccount *account = qobject_cast<TwitterAccount *>(theAccount);
         QUrl url = account->uploadUrl();
         url.setPath(url.path() + QStringLiteral("/statuses/update_with_media.%1").arg(format));

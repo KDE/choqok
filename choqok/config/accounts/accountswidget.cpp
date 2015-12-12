@@ -49,21 +49,17 @@ AccountsWidget::AccountsWidget(QWidget *parent, const QVariantList &args)
     qCDebug(CHOQOK);
     setAttribute(Qt::WA_DeleteOnClose);
     setupUi(this);
-    connect(accountsTable, SIGNAL(cellDoubleClicked(int,int)),
-            this, SLOT(accountsTableCellDoubleClicked(int,int)));
-    connect(accountsTable, SIGNAL(cellClicked(int,int)), this, SLOT(accountsTableCellClicked(int,int)));
+    connect(accountsTable, &QTableWidget::cellDoubleClicked,this, &AccountsWidget::accountsTableCellDoubleClicked);
+    connect(accountsTable, &QTableWidget::cellClicked,      this, &AccountsWidget::accountsTableCellClicked);
     accountsTable->horizontalHeader()->setStretchLastSection(true);
-    connect(btnUp, SIGNAL(clicked(bool)), this, SLOT(moveCurrentRowUp()));
-    connect(btnDown, SIGNAL(clicked(bool)), this, SLOT(moveCurrentRowDown()));
+    connect(btnUp,     &QPushButton::clicked, this, &AccountsWidget::moveCurrentRowUp);
+    connect(btnDown,   &QPushButton::clicked, this, &AccountsWidget::moveCurrentRowDown);
     connect(btnEdit, SIGNAL(clicked()), this, SLOT(editAccount()));
     connect(btnRemove, SIGNAL(clicked()), this, SLOT(removeAccount()));
-    connect(accountsTable, SIGNAL(currentItemChanged(QTableWidgetItem*,QTableWidgetItem*)),
-            this, SLOT(accountsTablestateChanged()));
+    connect(accountsTable, &QTableWidget::currentItemChanged, this, &AccountsWidget::accountsTablestateChanged);
 
-    connect(Choqok::AccountManager::self(), SIGNAL(accountAdded(Choqok::Account*)),
-            SLOT(slotAccountAdded(Choqok::Account*)));
-    connect(Choqok::AccountManager::self(), SIGNAL(accountRemoved(QString)),
-            SLOT(slotAccountRemoved(QString)));
+    connect(Choqok::AccountManager::self(), &Choqok::AccountManager::accountAdded,   this, &AccountsWidget::slotAccountAdded);
+    connect(Choqok::AccountManager::self(), &Choqok::AccountManager::accountRemoved, this, &AccountsWidget::slotAccountRemoved);
 
     btnAdd->setMenu(createAddAccountMenu());
 //     load();
@@ -171,8 +167,8 @@ void AccountsWidget::addAccountToTable(Choqok::Account *account)
     QCheckBox *quick = new QCheckBox(accountsTable);
     quick->setChecked(account->showInQuickPost());
     accountsTable->setCellWidget(row, 3, quick);
-    connect(readOnly, SIGNAL(toggled(bool)), SLOT(emitChanged()));
-    connect(quick, SIGNAL(toggled(bool)), SLOT(emitChanged()));
+    connect(readOnly, &QCheckBox::toggled, this, &AccountsWidget::emitChanged);
+    connect(quick,    &QCheckBox::toggled, this, &AccountsWidget::emitChanged);
 }
 
 void AccountsWidget::accountsTablestateChanged()
@@ -247,7 +243,7 @@ QMenu *AccountsWidget::createAddAccountMenu()
         act->setText(info.name());
         act->setIcon(QIcon::fromTheme(info.icon()));
         act->setData(info.pluginName());
-        connect(act, SIGNAL(triggered(bool)), this, SLOT(addAccount()));
+        connect(act, &QAction::triggered, this, &AccountsWidget::addAccount);
         mBlogMenu->addAction(act);
     }
     return mBlogMenu;

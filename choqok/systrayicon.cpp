@@ -134,7 +134,7 @@ void SysTrayIcon::slotJobDone(Choqok::JobResult result)
     } else {
         setOverlayIconByName(QLatin1String("task-reject"));
     }
-    QTimer::singleShot(5000, this, SLOT(slotRestoreIcon()));
+    QTimer::singleShot(5000, this, &SysTrayIcon::slotRestoreIcon);
 }
 
 void SysTrayIcon::slotRestoreIcon()

@@ -47,8 +47,8 @@ ChoqokPluginConfig::ChoqokPluginConfig(QWidget *parent, const QVariantList &args
     mainLayout->addWidget(m_pluginSelector);
 
     connect(m_pluginSelector, SIGNAL(changed(bool)), this, SLOT(changed()));
-    connect(m_pluginSelector, SIGNAL(configCommitted(QByteArray)),
-            this, SLOT(reparseConfiguration(QByteArray)));
+    connect(m_pluginSelector, &KPluginSelector::configCommitted,
+            this, &ChoqokPluginConfig::reparseConfiguration);
 
     m_pluginSelector->addPlugins(Choqok::PluginManager::self()->availablePlugins(QLatin1String("Plugins")),
                                  KPluginSelector::ReadConfigFile, i18n("General Plugins"), QLatin1String("Plugins"));

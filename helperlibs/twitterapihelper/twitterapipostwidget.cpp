@@ -301,9 +301,10 @@ void TwitterApiPostWidget::repeatPost()
     } else {
         postId = currentPost()->repeatedPostId;
     }
-    if (KMessageBox::questionYesNo(Choqok::UI::Global::mainWindow(), d->mBlog->repeatQuestion(),
-                                   QString(), KStandardGuiItem::yes(), KStandardGuiItem::cancel(),
-                                   QLatin1String("dontAskRepeatConfirm")) == KMessageBox::Yes) {
+    auto q_answer = KMessageBox::questionYesNo(Choqok::UI::Global::mainWindow(), d->mBlog->repeatQuestion(),
+                                               QString(), KStandardGuiItem::yes(), KStandardGuiItem::cancel(),
+                                               QLatin1String("dontAskRepeatConfirm"));
+    if ( q_answer == KMessageBox::Yes) {
         d->mBlog->repeatPost(currentAccount(), postId);
     }
 }
