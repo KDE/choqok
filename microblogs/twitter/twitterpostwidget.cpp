@@ -93,6 +93,17 @@ QString TwitterPostWidget::prepareStatus(const QString &text)
     return res;
 }
 
+bool TwitterPostWidget::isRemoveAvailable()
+{
+    if (currentAccount()->username().compare(currentPost()->author.userName, Qt::CaseInsensitive) == 0) {
+        return true;
+    } else if (currentPost()->isPrivate) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 void TwitterPostWidget::slotReplyToAll()
 {
     QStringList nicks;
