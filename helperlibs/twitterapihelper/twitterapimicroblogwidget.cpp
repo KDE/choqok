@@ -209,7 +209,7 @@ void TwitterApiMicroBlogWidget::saveSearchTimelinesState()
         ++i;
     }
     i = 0;
-    for (TwitterApiSearchTimelineWidget *tm: mSearchTimelines) {
+    for (TwitterApiSearchTimelineWidget *tm: mSearchTimelines.values()) {
         currentAccount()->configGroup()->writeEntry(QLatin1String("Search") + QString::number(i), tm->searchInfo().toString());
         ++i;
     }
@@ -281,10 +281,10 @@ void TwitterApiMicroBlogWidget::closeSearch(Choqok::UI::TimelineWidget *searchWi
 
 void TwitterApiMicroBlogWidget::closeAllSearches()
 {
-    for (TwitterApiSearchTimelineWidget *searchWidget: mSearchTimelines) {
+    for (TwitterApiSearchTimelineWidget *searchWidget: mSearchTimelines.values()) {
         closeSearch(searchWidget);
     }
-    for (Choqok::UI::TimelineWidget *widget: timelines()) {
+    for (Choqok::UI::TimelineWidget *widget: timelines().values()) {
         if (widget->isClosable()) {
             closeSearch(widget);
         }
