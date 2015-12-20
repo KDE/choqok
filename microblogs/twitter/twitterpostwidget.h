@@ -41,6 +41,7 @@ protected Q_SLOTS:
 protected:
     virtual QString prepareStatus(const QString &text);
     virtual void checkAnchor(const QUrl &url);
+    virtual bool isRemoveAvailable();
     bool setupQuotedAvatar();
 
     static const QRegExp mTwitterUserRegExp;

@@ -83,8 +83,8 @@ QString PumpIOPostWidget::generateSign()
     PumpIOMicroBlog *microblog = qobject_cast<PumpIOMicroBlog * >(account->microblog());
     if (post) {
         if (post->author.userName != account->username()) {
-            ss += QLatin1String("<b><a href='") + microblog->profileUrl(account, post->author.homePageUrl)
-                  + QLatin1String("' title=\"") + post->author.realName + QLatin1String("\">") +
+            ss += QLatin1String("<b><a href=\"") + microblog->profileUrl(account, post->author.homePageUrl)
+                  + QLatin1String("\" title=\"") + post->author.realName + QLatin1String("\">") +
                   post->author.userName + QLatin1String("</a></b> - ");
         }
 
@@ -162,9 +162,7 @@ QString PumpIOPostWidget::generateSign()
             }
         }
 
-        ss += QLatin1String(" - ");
-        ss += i18n("View replies");
-        ss += QLatin1String(" <a href=\"thread://\"><img src=\"icon://thread\"/></a>");
+        ss += QLatin1String(" <a href=\"thread://\" title=\"") + i18n("Show conversation") + QLatin1String("\"><img src=\"icon://thread\"/></a>");
     } else {
         qCDebug(CHOQOK) << "post is not a PumpIOPost!";
     }
