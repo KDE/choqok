@@ -1527,8 +1527,7 @@ Choqok::User *TwitterApiMicroBlog::readUserInfo(const QByteArray &buffer)
     Choqok::User *user = nullptr;
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
-        Choqok::User u(readUser(0, json.toVariant().toMap()));
-        user = &u;
+        user = new Choqok::User(readUser(0, json.toVariant().toMap()));
     } else {
         QString err = i18n("Retrieving the friends list failed. The data returned from the server is corrupted.");
         qCDebug(CHOQOK) << "JSON parse error:the buffer is: \n" << buffer;
