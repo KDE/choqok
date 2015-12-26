@@ -72,8 +72,7 @@ class CHOQOK_EXPORT Post
 {
 public:
     Post()
-        : isFavorited(false), isPrivate(false), isError(false), isRead(false),
-          mediaSizeWidth(0), mediaSizeHeight(0), owners(0)
+        : isFavorited(false), isPrivate(false), isError(false), isRead(false), owners(0)
     {}
     Post(const Post& u) = default;
     Post(Post&& u) = default;
@@ -100,8 +99,6 @@ public:
     QDateTime repeatedDateTime;
     QString conversationId;
     QString media;          // first Image of Post, if available
-    int mediaSizeWidth;
-    int mediaSizeHeight;
     QuotedPost quotedPost;
     unsigned int owners; // number of associated PostWidgets
 };

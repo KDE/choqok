@@ -411,8 +411,6 @@ QList< Choqok::Post * > PumpIOMicroBlog::loadTimeline(Choqok::Account *account,
         st->author.homePageUrl = grp.readEntry("authorHomePageUrl", QString());
         st->type = grp.readEntry("type", QString());
         st->media = grp.readEntry("media"), QString();
-        st->mediaSizeHeight = grp.readEntry("mediaHeight", 0);
-        st->mediaSizeWidth = grp.readEntry("mediaWidth", 0);
         st->isRead = grp.readEntry("isRead", true);
         st->conversationId = grp.readEntry("conversationId", QString());
         st->to = grp.readEntry("to", QStringList());
@@ -479,8 +477,6 @@ void PumpIOMicroBlog::saveTimeline(Choqok::Account *account, const QString &time
         grp.writeEntry("authorHomePageUrl", post->author.homePageUrl);
         grp.writeEntry("type", post->type);
         grp.writeEntry("media", post->media);
-        grp.writeEntry("mediaHeight", post->mediaSizeHeight);
-        grp.writeEntry("mediaWidth", post->mediaSizeWidth);
         grp.writeEntry("isRead", post->isRead);
         grp.writeEntry("conversationId", post->conversationId);
         grp.writeEntry("to", post->to);
@@ -1155,8 +1151,6 @@ Choqok::Post *PumpIOMicroBlog::readPost(const QVariantMap &var, Choqok::Post *po
             const QVariantMap fullImage = object[QLatin1String("fullImage")].toMap();
             if (!fullImage.isEmpty()) {
                 p->media = fullImage[QLatin1String("url")].toString();
-                p->mediaSizeHeight = fullImage[QLatin1String("height")].toInt();
-                p->mediaSizeWidth = fullImage[QLatin1String("width")].toInt();
             }
         }
         p->creationDateTime = QDateTime::fromString(var[QLatin1String("published")].toString(),

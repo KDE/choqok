@@ -221,9 +221,7 @@ QList< Choqok::Post * > TwitterApiMicroBlog::loadTimeline(Choqok::Account *accou
             st->repeatedPostId = grp.readEntry("repeatedPostId", QString());
             st->repeatedDateTime = grp.readEntry("repeatedDateTime", QDateTime());
             st->conversationId = grp.readEntry("conversationId", QString());
-            st->media = grp.readEntry("mediaUrl", QString());
-            st->mediaSizeWidth = grp.readEntry("mediaWidth", 0);
-            st->mediaSizeHeight = grp.readEntry("mediaHeight", 0);            
+            st->media = grp.readEntry("mediaUrl", QString());          
             st->quotedPost.postId = grp.readEntry("quotedPostId", QString());
             st->quotedPost.profileImageUrl = grp.readEntry("quotedProfileUrl", QString());
             st->quotedPost.content = grp.readEntry("quotedContent", QString());
@@ -275,8 +273,6 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
             grp.writeEntry("repeatedDateTime", post->repeatedDateTime);
             grp.writeEntry("conversationId", post->conversationId);
             grp.writeEntry("mediaUrl", post->media);
-            grp.writeEntry("mediaWidth", post->mediaSizeWidth);
-            grp.writeEntry("mediaHeight", post->mediaSizeHeight);
             grp.writeEntry("quotedPostId", post->quotedPost.postId);
             grp.writeEntry("quotedProfileUrl", post->quotedPost.profileImageUrl);
             grp.writeEntry("quotedContent", post->quotedPost.content);
@@ -1002,6 +998,10 @@ void TwitterApiMicroBlog::setRepeatedOfInfo(Choqok::Post *post, Choqok::Post *re
         post->repeatedFromUsername = post->author.userName;
         post->author = repeatedPost->author;
     }
+    
+    if (!repeatedPost->quotedPost.content.isEmpty()) {
+        post->quotedPost = repeatedPost->quotedPost;        
+    }
 }
 void TwitterApiMicroBlog::setQuotedPost(Choqok::Post* post, Choqok::Post* quotedPost)
 {
@@ -1414,12 +1414,8 @@ Choqok::Post *TwitterApiMicroBlog::readPost(Choqok::Account *theAccount,
         post->media = mediaMap[QLatin1String("media_url")].toString() + QLatin1String(":small");
         QVariantMap sizes = mediaMap[QLatin1String("sizes")].toMap();
         QVariantMap w = sizes[QLatin1String("small")].toMap();
-        post->mediaSizeWidth = w[QLatin1String("w")].toInt() != 0 ? w[QLatin1String("w")].toInt() : 0;
-        post->mediaSizeHeight = w[QLatin1String("h")].toInt() != 0 ? w[QLatin1String("h")].toInt() : 0;
     } else {
         post->media = QString();
-        post->mediaSizeHeight = 0;
-        post->mediaSizeWidth = 0;
     }
 
     QVariantMap retweetedMap = var[QLatin1String("retweeted_status")].toMap();

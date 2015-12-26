@@ -390,16 +390,18 @@ void PostWidget::updatePostImage(int width)
         width -= 76;
         
         QPixmap newPixmap = d->originalImage.scaledToWidth(width, Qt::SmoothTransformation);
-        int newW = newPixmap.width();
-        int newH = newPixmap.height();
+        auto newW = newPixmap.width();
+        auto newH = newPixmap.height();
+        auto origW = d->originalImage.width();
+        auto origH = d->originalImage.height();
         
         const QUrl url(d->resourceImageUrl);
         // only use scaled image if it's smaller than the original one
-        if (newW <= d->originalImage.width() && newH <= d->originalImage.height()) { // never scale up
+        if (newW <= origW && newH <= origH) { // never scale up
             d->mImage = mImageTemplate.arg(QString::number(newW), QString::number(newH), d->resourceImageUrl);
             _mainWidget->document()->addResource(QTextDocument::ImageResource, url, newPixmap);
         } else {
-            d->mImage = mImageTemplate.arg(QString::number(d->mCurrentPost->mediaSizeWidth), QString::number(d->mCurrentPost->mediaSizeHeight), d->resourceImageUrl);
+            d->mImage = mImageTemplate.arg(QString::number(origW), QString::number(origH), d->resourceImageUrl);
             _mainWidget->document()->addResource(QTextDocument::ImageResource, url, d->originalImage);
         }
     }

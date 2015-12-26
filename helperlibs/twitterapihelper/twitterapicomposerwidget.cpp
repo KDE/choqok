@@ -68,10 +68,10 @@ TwitterApiComposerWidget::~TwitterApiComposerWidget()
 void TwitterApiComposerWidget::slotNewPostReady(Choqok::UI::PostWidget *widget, Choqok::Account *theAccount)
 {
     if (theAccount == currentAccount()) {
-        int row = d->model->rowCount();
-        d->model->insertRow(row);
         QString name = widget->currentPost()->author.userName;
         if (!name.isEmpty() && !d->model->stringList().contains(name)) {
+            int row = d->model->rowCount();
+            d->model->insertRow(row);
             d->model->setData(d->model->index(row), name);
         }
     }
