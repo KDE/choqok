@@ -34,14 +34,14 @@ public:
     virtual void initUi();
 
 protected Q_SLOTS:
-    virtual void slotReplyToAll();
+    void slotReplyToAll() override;
     void quotedAvatarFetched(const QString &remoteUrl, const QPixmap &pixmap);
     void quotedAvatarFetchError(const QString &remoteUrl, const QString &errMsg);
 
 protected:
-    virtual QString prepareStatus(const QString &text);
-    virtual void checkAnchor(const QUrl &url);
-    virtual bool isRemoveAvailable();
+    QString prepareStatus(const QString &text) override;
+    void checkAnchor(const QUrl &url) override;
+    bool isRemoveAvailable() override;
     bool setupQuotedAvatar();
 
     static const QRegExp mTwitterUserRegExp;

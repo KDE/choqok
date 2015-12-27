@@ -43,32 +43,30 @@ public:
     TwitterMicroBlog(QObject *parent, const QVariantList &args);
     ~TwitterMicroBlog();
 
-    virtual Choqok::Account *createNewAccount(const QString &alias);
-    virtual ChoqokEditAccountWidget *createEditAccountWidget(Choqok::Account *account, QWidget *parent);
-    virtual Choqok::UI::MicroBlogWidget *createMicroBlogWidget(Choqok::Account *account, QWidget *parent);
+    virtual Choqok::Account *createNewAccount(const QString &alias) override;
+    virtual ChoqokEditAccountWidget *createEditAccountWidget(Choqok::Account *account, QWidget *parent) override;
+    virtual Choqok::UI::MicroBlogWidget *createMicroBlogWidget(Choqok::Account *account, QWidget *parent) override;
     virtual Choqok::UI::TimelineWidget *createTimelineWidget(Choqok::Account *account,
-            const QString &timelineName, QWidget *parent);
+                                                     const QString &timelineName, QWidget *parent) override;
     virtual Choqok::UI::PostWidget *createPostWidget(Choqok::Account *account,
-            Choqok::Post *post, QWidget *parent);
-    virtual Choqok::UI::ComposerWidget *createComposerWidget(Choqok::Account *account, QWidget *parent);
+                                             Choqok::Post *post, QWidget *parent) override;
+    virtual Choqok::UI::ComposerWidget *createComposerWidget(Choqok::Account *account, QWidget *parent) override;
 
-    virtual QString postUrl(Choqok::Account *account, const QString &username, const QString &postId) const;
+    virtual QString postUrl(Choqok::Account *account, const QString &username, const QString &postId) const override;
 
-    virtual QString profileUrl(Choqok::Account *account, const QString &username) const;
+    virtual QString profileUrl(Choqok::Account *account, const QString &username) const override;
 
-    virtual TwitterApiSearch *searchBackend();
+    virtual TwitterApiSearch *searchBackend() override;
 
-    virtual QString generateRepeatedByUserTooltip(const QString &username);
-    virtual QString repeatQuestion();
-    virtual QMenu *createActionsMenu(Choqok::Account *theAccount,
-                                     QWidget *parent = Choqok::UI::Global::mainWindow());
+    virtual QString generateRepeatedByUserTooltip(const QString &username) override;
+    virtual QString repeatQuestion() override;
+    virtual QMenu *createActionsMenu(Choqok::Account *theAccount, QWidget *parent = Choqok::UI::Global::mainWindow()) override;
 
-    virtual void fetchUserLists(TwitterAccount *theAccount, const QString &username);
-    virtual void addListTimeline(TwitterAccount *theAccount, const QString &username,
-                                 const QString &listname);
-    virtual void setListTimelines(TwitterAccount *theAccount, const QStringList &lists);
+    void fetchUserLists(TwitterAccount *theAccount, const QString &username);
+    void addListTimeline(TwitterAccount *theAccount, const QString &username, const QString &listname);
+    void setListTimelines(TwitterAccount *theAccount, const QStringList &lists);
 
-    virtual Choqok::TimelineInfo *timelineInfo(const QString &timelineName);
+    virtual Choqok::TimelineInfo *timelineInfo(const QString &timelineName) override;
 
     void createPostWithAttachment(Choqok::Account *theAccount, Choqok::Post *post, const QString &mediumToAttach = QString());
 Q_SIGNALS:
@@ -76,7 +74,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     virtual void showDirectMessageDialog(TwitterApiAccount *theAccount = 0,
-                                         const QString &toUsername = QString());
+                                         const QString &toUsername = QString()) override;
 
 protected Q_SLOTS:
     void showListDialog(TwitterApiAccount *theAccount = 0);
@@ -84,10 +82,10 @@ protected Q_SLOTS:
 
 protected:
     using TwitterApiMicroBlog::readDirectMessage;
-    virtual Choqok::Post *readDirectMessage(Choqok::Account *theAccount, const QVariantMap &var);
+    virtual Choqok::Post *readDirectMessage(Choqok::Account *theAccount, const QVariantMap &var) override;
     using TwitterApiMicroBlog::readPost;
-    virtual Choqok::Post *readPost(Choqok::Account *account, const QVariantMap &var, Choqok::Post *post);
-    virtual void setTimelineInfos();
+    virtual Choqok::Post *readPost(Choqok::Account *account, const QVariantMap &var, Choqok::Post *post) override;
+    void setTimelineInfos() override;
 
     QList<Twitter::List> readUserListsFromJson(Choqok::Account *theAccount, QByteArray buffer);
     Twitter::List readListFromJsonMap(Choqok::Account *theAccount, QVariantMap map);

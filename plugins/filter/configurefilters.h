@@ -37,7 +37,7 @@ public:
     ~ConfigureFilters();
 
 protected Q_SLOTS:
-    virtual void accept();
+    virtual void accept() override;
     void slotAddFilter();
     void slotEditFilter();
     void slotRemoveFilter();

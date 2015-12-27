@@ -30,7 +30,7 @@ class TwitterTimelineWidget : public TwitterApiTimelineWidget
 
 public:
     TwitterTimelineWidget(Choqok::Account *account, const QString &timelineName, QWidget *parent = 0);
-    virtual ~TwitterTimelineWidget();
+    ~TwitterTimelineWidget();
 };
 
 #endif // TWITTERTIMELINEWIDGET_H

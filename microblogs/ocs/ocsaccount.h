@@ -34,14 +34,14 @@ class OCSAccount : public Choqok::Account
     Q_OBJECT
 public:
     OCSAccount(OCSMicroblog *parent, const QString &alias);
-    virtual ~OCSAccount();
+    ~OCSAccount();
 
     QUrl providerUrl() const;
     void setProviderUrl(const QUrl &url);
 
     Attica::Provider provider();
 
-    virtual void writeConfig();
+    virtual void writeConfig() override;
 
 protected Q_SLOTS:
     void slotDefaultProvidersLoaded();

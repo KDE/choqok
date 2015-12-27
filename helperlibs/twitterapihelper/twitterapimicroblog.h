@@ -44,43 +44,43 @@ public:
     ~TwitterApiMicroBlog();
 
     virtual QMenu *createActionsMenu(Choqok::Account *theAccount,
-                                     QWidget *parent = Choqok::UI::Global::mainWindow());
-    virtual QList< Choqok::Post * > loadTimeline(Choqok::Account *accountAlias, const QString &timelineName);
+                                     QWidget *parent = Choqok::UI::Global::mainWindow()) override;
+    virtual QList< Choqok::Post * > loadTimeline(Choqok::Account *accountAlias, const QString &timelineName) override;
     virtual void saveTimeline(Choqok::Account *account, const QString &timelineName,
-                              const QList< Choqok::UI::PostWidget * > &timeline);
+                              const QList< Choqok::UI::PostWidget * > &timeline) override;
 
-    virtual Choqok::UI::ComposerWidget *createComposerWidget(Choqok::Account *account, QWidget *parent);
+    virtual Choqok::UI::ComposerWidget *createComposerWidget(Choqok::Account *account, QWidget *parent) override;
     /**
     \brief Create a new post
 
     @see postCreated()
     @see abortCreatePost()
     */
-    virtual void createPost(Choqok::Account *theAccount, Choqok::Post *post);
+    virtual void createPost(Choqok::Account *theAccount, Choqok::Post *post) override;
 
     /**
     \brief Abort all requests!
     */
-    virtual void abortAllJobs(Choqok::Account *theAccount);
+    virtual void abortAllJobs(Choqok::Account *theAccount) override;
 
     /**
     \brief Abort all of createPost requests!
     */
-    virtual void abortCreatePost(Choqok::Account *theAccount, Choqok::Post *post = 0);
+    virtual void abortCreatePost(Choqok::Account *theAccount, Choqok::Post *post = 0) override;
 
     /**
     \brief Fetch a post
 
     @see postFetched()
     */
-    virtual void fetchPost(Choqok::Account *theAccount, Choqok::Post *post);
+    virtual void fetchPost(Choqok::Account *theAccount, Choqok::Post *post) override;
 
     /**
     \brief Remove a post
 
     @see postRemoved()
     */
-    virtual void removePost(Choqok::Account *theAccount, Choqok::Post *post);
+    virtual void removePost(Choqok::Account *theAccount, Choqok::Post *post) override;
 
     /**
     \brief Repeat/Retweet a post using the API
@@ -93,7 +93,7 @@ public:
 
     @see timelineDataReceived()
     */
-    virtual void updateTimelines(Choqok::Account *theAccount);
+    virtual void updateTimelines(Choqok::Account *theAccount) override;
 
     /**
      add post with Id @p postId to @p theAccount favorite list
@@ -127,13 +127,13 @@ public:
      */
     virtual void reportUserAsSpam(Choqok::Account *theAccount, const QString &username);
 
-    virtual void aboutToUnload();
+    virtual void aboutToUnload() override;
 
     virtual void listFriendsUsername(TwitterApiAccount *theAccount, bool active = false);
 
     virtual void listFollowersUsername(TwitterApiAccount *theAccount, bool active = false);
 
-    virtual Choqok::TimelineInfo *timelineInfo(const QString &timelineName);
+    virtual Choqok::TimelineInfo *timelineInfo(const QString &timelineName) override;
 
     /**
     Return search backend to use for search.

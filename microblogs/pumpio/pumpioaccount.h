@@ -35,11 +35,11 @@ class PumpIOAccount : public Choqok::Account
     Q_OBJECT
 public:
     explicit PumpIOAccount(PumpIOMicroBlog *parent, const QString &alias);
-    virtual ~PumpIOAccount();
+    ~PumpIOAccount();
 
-    virtual QStringList timelineNames() const;
+    virtual QStringList timelineNames() const override;
 
-    virtual void writeConfig();
+    virtual void writeConfig() override;
 
     QString host();
     void setHost(const QString &host);

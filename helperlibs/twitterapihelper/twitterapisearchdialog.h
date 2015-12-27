@@ -37,11 +37,11 @@ public:
     ~TwitterApiSearchDialog();
 
 protected:
-    virtual void createUi();
-    virtual void fillSearchTypes();
+    void createUi();
+    void fillSearchTypes();
 
 protected Q_SLOTS:
-    virtual void accept();
+    virtual void accept() override;
     void slotSearchTypeChanged(int);
 
 private:

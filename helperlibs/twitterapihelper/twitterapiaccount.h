@@ -45,7 +45,7 @@ class CHOQOK_HELPER_EXPORT TwitterApiAccount : public Choqok::Account
 public:
     TwitterApiAccount(TwitterApiMicroBlog *parent, const QString &alias);
     ~TwitterApiAccount();
-    virtual void writeConfig();
+    virtual void writeConfig() override;
 
     QString userId() const;
     void setUserId(const QString &id);
@@ -81,7 +81,7 @@ public:
 
     void setFollowersList(const QStringList &list);
 
-    virtual QStringList timelineNames() const;
+    virtual QStringList timelineNames() const override;
 
     virtual void setTimelineNames(const QStringList &list);
 

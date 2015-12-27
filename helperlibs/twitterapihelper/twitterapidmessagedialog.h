@@ -50,7 +50,7 @@ public:
     void setTo(const QString &username);
 
 protected Q_SLOTS:
-    virtual void accept();
+    virtual void accept() override;
 
     void followersUsernameListed(TwitterApiAccount *, QStringList);
     void submitPost(QString);
@@ -60,7 +60,7 @@ protected Q_SLOTS:
                    QString, Choqok::MicroBlog::ErrorLevel);
 
 protected:
-    virtual void setupUi(QWidget *mainWidget);
+    void setupUi(QWidget *mainWidget);
     void setFriends(const QStringList friends);
     Choqok::UI::TextEdit *editor();
 

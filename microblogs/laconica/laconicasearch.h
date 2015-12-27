@@ -43,18 +43,18 @@ public:
     ~LaconicaSearch();
     virtual void requestSearchResults(const SearchInfo &searchInfo,
                                       const QString &sinceStatusId = QString(),
-                                      uint count = 0, uint page = 1);
-    virtual QString optionCode(int option);
+                                      uint count = 0, uint page = 1) override;
+    virtual QString optionCode(int option) override;
 
 protected:
-    virtual QUrl buildUrl(const SearchInfo &searchInfo,
-                          QString sinceStatusId = QString(),
-                          uint count = 0, uint page = 1);
+    QUrl buildUrl(const SearchInfo &searchInfo,
+                  QString sinceStatusId = QString(),
+                  uint count = 0, uint page = 1);
     QList<Choqok::Post *> parseRss(const QByteArray &buffer);
     QList<Choqok::Post *> parseAtom(const QByteArray &buffer);
 
 protected Q_SLOTS:
-    virtual void searchResultsReturned(KJob *job);
+    void searchResultsReturned(KJob *job);
 
 private:
     QMap<int, QString> mSearchCode;

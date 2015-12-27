@@ -35,9 +35,9 @@ public:
     NowListeningConfig(QWidget *parent, const QVariantList &args);
     ~NowListeningConfig();
 
-    virtual void save();
-    virtual void load();
-    virtual void defaults();
+    virtual void save() override;
+    virtual void load() override;
+    virtual void defaults() override;
 
 protected Q_SLOTS:
     void emitChanged();

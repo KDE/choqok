@@ -38,26 +38,26 @@ class OCSMicroblog : public Choqok::MicroBlog
     Q_OBJECT
 public:
     OCSMicroblog(QObject *parent, const QVariantList &args);
-    virtual ~OCSMicroblog();
+    ~OCSMicroblog();
 
-    virtual ChoqokEditAccountWidget *createEditAccountWidget(Choqok::Account *account, QWidget *parent);
-    virtual void createPost(Choqok::Account *theAccount, Choqok::Post *post);
-    virtual void abortCreatePost(Choqok::Account *theAccount, Choqok::Post *post = 0);
-    virtual void fetchPost(Choqok::Account *theAccount, Choqok::Post *post);
-    virtual void removePost(Choqok::Account *theAccount, Choqok::Post *post);
+    virtual ChoqokEditAccountWidget *createEditAccountWidget(Choqok::Account *account, QWidget *parent) override;
+    virtual void createPost(Choqok::Account *theAccount, Choqok::Post *post) override;
+    virtual void abortCreatePost(Choqok::Account *theAccount, Choqok::Post *post = 0) override;
+    virtual void fetchPost(Choqok::Account *theAccount, Choqok::Post *post) override;
+    virtual void removePost(Choqok::Account *theAccount, Choqok::Post *post) override;
     virtual void saveTimeline(Choqok::Account *account, const QString &timelineName,
-                              const QList< Choqok::UI::PostWidget * > &timeline);
-    virtual QList< Choqok::Post * > loadTimeline(Choqok::Account *account, const QString &timelineName);
-    virtual Choqok::Account *createNewAccount(const QString &alias);
-    virtual void updateTimelines(Choqok::Account *theAccount);
-    virtual Choqok::TimelineInfo *timelineInfo(const QString &timelineName);
+                              const QList< Choqok::UI::PostWidget * > &timeline) override;
+    virtual QList< Choqok::Post * > loadTimeline(Choqok::Account *account, const QString &timelineName) override;
+    virtual Choqok::Account *createNewAccount(const QString &alias) override;
+    virtual void updateTimelines(Choqok::Account *theAccount) override;
+    virtual Choqok::TimelineInfo *timelineInfo(const QString &timelineName) override;
 
-    virtual QString profileUrl(Choqok::Account *account, const QString &username) const;
+    virtual QString profileUrl(Choqok::Account *account, const QString &username) const override;
 
     Attica::ProviderManager *providerManager();
 
     bool isOperational();
-    virtual void aboutToUnload();
+    virtual void aboutToUnload() override;
 
 Q_SIGNALS:
     void initialized();

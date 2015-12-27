@@ -45,10 +45,10 @@ class TwitterListDialog : public QDialog
     Q_OBJECT
 public:
     explicit TwitterListDialog(TwitterApiAccount *theAccount, QWidget *parent = 0);
-    virtual ~TwitterListDialog();
+    ~TwitterListDialog();
 
 protected Q_SLOTS:
-    virtual void accept();
+    virtual void accept() override;
     void slotUsernameChanged(const QString &name);
     void loadUserLists();
     void slotLoadUserlists(Choqok::Account *theAccount, QString username, QList<Twitter::List> list);

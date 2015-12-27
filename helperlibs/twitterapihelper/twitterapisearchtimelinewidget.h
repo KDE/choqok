@@ -34,7 +34,7 @@ public:
     TwitterApiSearchTimelineWidget(Choqok::Account *account, const QString &timelineName,
                                    const SearchInfo &info, QWidget *parent = 0);
     ~TwitterApiSearchTimelineWidget();
-    virtual void addNewPosts(QList< Choqok::Post * > &postList);
+    virtual void addNewPosts(QList< Choqok::Post * > &postList) override;
     void removeAllPosts();
     SearchInfo searchInfo() const;
 
@@ -42,8 +42,8 @@ Q_SIGNALS:
     void closeMe();
 
 protected Q_SLOTS:
-    virtual void saveTimeline();
-    virtual void loadTimeline();
+    virtual void saveTimeline() override;
+    virtual void loadTimeline() override;
     void slotUpdateSearchResults();
 
     void reloadList();

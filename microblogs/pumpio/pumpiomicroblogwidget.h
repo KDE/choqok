@@ -31,12 +31,12 @@ class PumpIOMicroBlogWidget : public Choqok::UI::MicroBlogWidget
     Q_OBJECT
 public:
     explicit PumpIOMicroBlogWidget(Choqok::Account *account, QWidget *parent = 0);
-    virtual ~PumpIOMicroBlogWidget();
+    ~PumpIOMicroBlogWidget();
 
-    virtual void initUi();
+    void initUi() override;
 
 protected:
-    virtual Choqok::UI::TimelineWidget *addTimelineWidgetToUi(const QString &name);
+    Choqok::UI::TimelineWidget *addTimelineWidgetToUi(const QString &name) override;
 
 };
 

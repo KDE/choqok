@@ -38,7 +38,7 @@ public:
     virtual void initUi();
 
 protected Q_SLOTS:
-    virtual void checkAnchor(const QUrl &url);
+    virtual void checkAnchor(const QUrl &url) override;
     virtual void setFavorite();
     virtual void slotSetFavorite(Choqok::Account *theAccount, const QString &postId);
     virtual void slotReply();

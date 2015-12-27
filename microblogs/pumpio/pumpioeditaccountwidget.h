@@ -40,11 +40,11 @@ class PumpIOEditAccountWidget : public ChoqokEditAccountWidget, Ui::PumpIOEditAc
 public:
     explicit PumpIOEditAccountWidget(PumpIOMicroBlog *microblog, PumpIOAccount *account,
                                      QWidget *parent);
-    virtual ~PumpIOEditAccountWidget();
+    ~PumpIOEditAccountWidget();
 
-    virtual Choqok::Account *apply();
+    virtual Choqok::Account *apply() override;
 
-    virtual bool validateData();
+    virtual bool validateData() override;
 
 private Q_SLOTS:
     void authorizeUser();

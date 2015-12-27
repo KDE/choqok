@@ -31,20 +31,20 @@ class LaconicaPostWidget : public TwitterApiPostWidget
 public:
     LaconicaPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
     ~LaconicaPostWidget();
-    virtual void initUi();
+    virtual void initUi() override;
 
 protected:
     static const QRegExp mGroupRegExp;
     static const QRegExp mLaconicaUserRegExp;
     static const QRegExp mLaconicaHashRegExp;
     static const QRegExp mStatusNetUserRegExp;
-    virtual QString prepareStatus(const QString &text);
-    virtual void checkAnchor(const QUrl &url);
-    virtual QString generateSign();
-    virtual void slotReplyToAll();
+    virtual QString prepareStatus(const QString &text) override;
+    virtual void checkAnchor(const QUrl &url) override;
+    virtual QString generateSign() override;
+    virtual void slotReplyToAll() override;
 
 protected Q_SLOTS:
-    virtual void slotResendPost();
+    virtual void slotResendPost() override;
 
 private:
     class Private;

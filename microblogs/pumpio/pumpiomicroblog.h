@@ -39,50 +39,47 @@ public:
     explicit PumpIOMicroBlog(QObject *parent, const QVariantList &args);
     virtual ~PumpIOMicroBlog();
 
-    virtual void abortAllJobs(Choqok::Account *theAccount);
+    virtual void abortAllJobs(Choqok::Account *theAccount) override;
 
-    virtual void abortCreatePost(Choqok::Account *theAccount, Choqok::Post *post = 0);
+    virtual void abortCreatePost(Choqok::Account *theAccount, Choqok::Post *post = 0) override;
 
-    virtual void aboutToUnload();
+    virtual void aboutToUnload() override;
 
     virtual QMenu *createActionsMenu(Choqok::Account *theAccount,
-                                     QWidget *parent = Choqok::UI::Global::mainWindow());
+                                     QWidget *parent = Choqok::UI::Global::mainWindow()) override;
 
-    virtual Choqok::UI::ComposerWidget *createComposerWidget(Choqok::Account *account,
-            QWidget *parent);
+    virtual Choqok::UI::ComposerWidget *createComposerWidget(Choqok::Account *account, QWidget *parent) override;
 
-    virtual ChoqokEditAccountWidget *createEditAccountWidget(Choqok::Account *account,
-            QWidget *parent);
+    virtual ChoqokEditAccountWidget *createEditAccountWidget(Choqok::Account *account, QWidget *parent) override;
 
-    virtual Choqok::UI::MicroBlogWidget *createMicroBlogWidget(Choqok::Account *account,
-            QWidget *parent);
+    virtual Choqok::UI::MicroBlogWidget *createMicroBlogWidget(Choqok::Account *account, QWidget *parent) override;
 
-    virtual Choqok::Account *createNewAccount(const QString &alias);
+    virtual Choqok::Account *createNewAccount(const QString &alias) override;
 
-    virtual void createPost(Choqok::Account *theAccount, Choqok::Post *post);
+    virtual void createPost(Choqok::Account *theAccount, Choqok::Post *post) override;
 
     virtual Choqok::UI::PostWidget *createPostWidget(Choqok::Account *account,
-            Choqok::Post *post,
-            QWidget *parent);
+                                                    Choqok::Post *post,
+                                                    QWidget *parent) override;
 
-    virtual void fetchPost(Choqok::Account *theAccount, Choqok::Post *post);
+    void fetchPost(Choqok::Account *theAccount, Choqok::Post *post);
 
     virtual QList<Choqok::Post * > loadTimeline(Choqok::Account *account,
-            const QString &timelineName);
+                                                const QString &timelineName) override;
 
-    virtual void removePost(Choqok::Account *theAccount, Choqok::Post *post);
+    virtual void removePost(Choqok::Account *theAccount, Choqok::Post *post) override;
 
     virtual QString postUrl(Choqok::Account *account, const QString &username,
-                            const QString &postId) const;
+                            const QString &postId) const override;
 
-    virtual QString profileUrl(Choqok::Account *account, const QString &username) const;
+    virtual QString profileUrl(Choqok::Account *account, const QString &username) const override;
 
     virtual void saveTimeline(Choqok::Account *account, const QString &timelineName,
-                              const QList< Choqok::UI::PostWidget * > &timeline);
+                              const QList< Choqok::UI::PostWidget * > &timeline) override;
 
-    virtual Choqok::TimelineInfo *timelineInfo(const QString &timelineName);
+    virtual Choqok::TimelineInfo *timelineInfo(const QString &timelineName) override;
 
-    virtual void updateTimelines(Choqok::Account *theAccount);
+    virtual void updateTimelines(Choqok::Account *theAccount) override;
 
     void createPost(Choqok::Account *theAccount, Choqok::Post *post,
                     const QVariantList &to, const QVariantList &cc = QVariantList());

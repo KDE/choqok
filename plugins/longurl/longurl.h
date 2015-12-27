@@ -56,7 +56,7 @@ protected Q_SLOTS:
     void startParsing();
     void dataReceived(KIO::Job *job, QByteArray data);
     void jobResult(KJob *job);
-    virtual void aboutToUnload();
+    virtual void aboutToUnload() override;
     void servicesDataReceived(KIO::Job *job, QByteArray data);
     void servicesJobResult(KJob *job);
 private:

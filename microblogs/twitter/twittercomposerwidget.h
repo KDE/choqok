@@ -34,11 +34,10 @@ public:
     ~TwitterComposerWidget();
 
 protected Q_SLOTS:
-    virtual void submitPost(const QString &text);
-    virtual void slotPostMediaSubmitted(Choqok::Account *theAccount, Choqok::Post *post);
-//     virtual void slotErrorPost(Choqok::Account* theAccount,Choqok::Post* post);
-    virtual void selectMediumToAttach();
-    virtual void cancelAttachMedium();
+    virtual void submitPost(const QString &text) override;
+    void slotPostMediaSubmitted(Choqok::Account *theAccount, Choqok::Post *post);
+    void selectMediumToAttach();
+    void cancelAttachMedium();
 
 private:
     class Private;

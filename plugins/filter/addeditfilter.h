@@ -34,7 +34,7 @@ class AddEditFilter : public QDialog
     Q_OBJECT
 public:
     explicit AddEditFilter(QWidget *parent, Filter *filter = 0);
-    virtual ~AddEditFilter();
+    ~AddEditFilter();
 
 Q_SIGNALS:
     void newFilterRegistered(Filter *filter);
@@ -42,7 +42,7 @@ Q_SIGNALS:
 
 protected Q_SLOTS:
     void slotFilterActionChanged(int);
-    virtual void accept();
+    virtual void accept() override;
 
 private:
     void setupFilterFields();

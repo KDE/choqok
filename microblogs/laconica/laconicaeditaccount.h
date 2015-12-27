@@ -50,16 +50,16 @@ public:
     /**
     * Destructor
     */
-    virtual ~LaconicaEditAccountWidget();
+    ~LaconicaEditAccountWidget();
 
-    virtual bool validateData();
+    virtual bool validateData() override;
 
     /**
     * Create a new account if we are in the 'add account wizard',
     * otherwise update the existing account.
     * @Return new or modified account. OR nullptr on failure.
     */
-    virtual Choqok::Account *apply();
+    virtual Choqok::Account *apply() override;
 
 protected Q_SLOTS:
 //     virtual void authorizeUser();

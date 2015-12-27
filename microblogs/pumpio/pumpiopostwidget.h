@@ -32,17 +32,17 @@ public:
     explicit PumpIOPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
     virtual ~PumpIOPostWidget();
 
-    virtual void checkAnchor(const QUrl &url);
+    virtual void checkAnchor(const QUrl &url) override;
 
-    virtual QString generateSign();
+    virtual QString generateSign() override;
 
-    virtual void initUi();
+    virtual void initUi() override;
 
 protected Q_SLOTS:
     virtual void slotPostError(Choqok::Account *theAccount, Choqok::Post *post,
-                               Choqok::MicroBlog::ErrorType error, const QString &errorMessage);
+                               Choqok::MicroBlog::ErrorType error, const QString &errorMessage) override;
 
-    virtual void slotResendPost();
+    virtual void slotResendPost() override;
 
     void slotReplyTo();
 
@@ -51,7 +51,7 @@ protected Q_SLOTS:
     void toggleFavorite();
 
 protected:
-    virtual bool isResendAvailable();
+    virtual bool isResendAvailable() override;
 
     static const QIcon unFavIcon;
 

@@ -39,10 +39,10 @@ class PumpIOMessageDialog : public QDialog, Ui::PumpIOMessageDialog
 public:
     explicit PumpIOMessageDialog(Choqok::Account *theAccount, QWidget *parent = 0,
                                  Qt::WindowFlags flags = 0);
-    virtual ~PumpIOMessageDialog();
+    ~PumpIOMessageDialog();
 
 protected Q_SLOTS:
-    virtual void accept();
+    virtual void accept() override;
     void attachMedia();
     void cancelAttach();
     void fetchFollowing();

@@ -45,7 +45,7 @@ public:
     QString changeExclamationMarkToText() const;
     void setChangeExclamationMarkToText(const QString &text);
 
-    virtual QUrl homepageUrl() const;
+    virtual QUrl homepageUrl() const override;
 
 private:
     class Private;

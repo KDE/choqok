@@ -44,30 +44,28 @@ public:
     LaconicaMicroBlog(QObject *parent, const QVariantList &args);
     ~LaconicaMicroBlog();
 
-    virtual Choqok::Account *createNewAccount(const QString &alias);
-    virtual ChoqokEditAccountWidget *createEditAccountWidget(Choqok::Account *account, QWidget *parent);
-    virtual Choqok::UI::MicroBlogWidget *createMicroBlogWidget(Choqok::Account *account, QWidget *parent);
+    virtual Choqok::Account *createNewAccount(const QString &alias) override;
+    virtual ChoqokEditAccountWidget *createEditAccountWidget(Choqok::Account *account, QWidget *parent) override;
+    virtual Choqok::UI::MicroBlogWidget *createMicroBlogWidget(Choqok::Account *account, QWidget *parent) override;
     virtual Choqok::UI::TimelineWidget *createTimelineWidget(Choqok::Account *account,
-            const QString &timelineName, QWidget *parent);
-    virtual Choqok::UI::PostWidget *createPostWidget(Choqok::Account *account,
-            Choqok::Post *post, QWidget *parent);
-    virtual Choqok::UI::ComposerWidget *createComposerWidget(Choqok::Account *account, QWidget *parent);
-    virtual QString profileUrl(Choqok::Account *account, const QString &username) const;
-    virtual QString postUrl(Choqok::Account *account, const QString &username,
-                            const QString &postId) const;
+                                                             const QString &timelineName, QWidget *parent) override;
+    virtual Choqok::UI::PostWidget *createPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent) override;
+    virtual Choqok::UI::ComposerWidget *createComposerWidget(Choqok::Account *account, QWidget *parent) override;
+    virtual QString profileUrl(Choqok::Account *account, const QString &username) const override;
+    virtual QString postUrl(Choqok::Account *account, const QString &username, const QString &postId) const override;
 
-    virtual TwitterApiSearch *searchBackend();
+    virtual TwitterApiSearch *searchBackend() override;
 
-    virtual void createPostWithAttachment(Choqok::Account *theAccount, Choqok::Post *post,
+    void createPostWithAttachment(Choqok::Account *theAccount, Choqok::Post *post,
                                           const QString &mediumToAttach = QString());
-    virtual QString generateRepeatedByUserTooltip(const QString &username);
-    virtual QString repeatQuestion();
+    virtual QString generateRepeatedByUserTooltip(const QString &username) override;
+    virtual QString repeatQuestion() override;
 
-    virtual void fetchConversation(Choqok::Account *theAccount, const QString &conversationId);
+    void fetchConversation(Choqok::Account *theAccount, const QString &conversationId);
 
-    virtual void requestFriendsScreenName(TwitterApiAccount *theAccount, bool active);
+    virtual void requestFriendsScreenName(TwitterApiAccount *theAccount, bool active) override;
 
-    virtual void showDirectMessageDialog(TwitterApiAccount *theAccount = 0, const QString &toUsername = QString());
+    virtual void showDirectMessageDialog(TwitterApiAccount *theAccount = 0, const QString &toUsername = QString()) override;
 
     static QString usernameFromProfileUrl(const QString &profileUrl);
     static QString hostFromProfileUrl(const QString &profileUrl);
@@ -78,12 +76,12 @@ Q_SIGNALS:
 
 protected:
     using TwitterApiMicroBlog::readPost;
-    virtual Choqok::Post *readPost(Choqok::Account *account, const QVariantMap &var, Choqok::Post *post);
-    virtual void listFriendsUsername(TwitterApiAccount *theAccount, bool active = false);
-    virtual QStringList readFriendsScreenName(Choqok::Account *theAccount, const QByteArray &buffer);
+    virtual Choqok::Post *readPost(Choqok::Account *account, const QVariantMap &var, Choqok::Post *post) override;
+    virtual void listFriendsUsername(TwitterApiAccount *theAccount, bool active = false) override;
+    virtual QStringList readFriendsScreenName(Choqok::Account *theAccount, const QByteArray &buffer) override;
 
 protected Q_SLOTS:
-    virtual void slotFetchConversation(KJob *job);
+    void slotFetchConversation(KJob *job);
     void slotRequestFriendsScreenName(KJob *job);
 
 private:

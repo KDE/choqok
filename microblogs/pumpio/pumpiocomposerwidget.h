@@ -30,11 +30,11 @@ class PumpIOComposerWidget : public Choqok::UI::ComposerWidget
     Q_OBJECT
 public:
     explicit PumpIOComposerWidget(Choqok::Account *account, QWidget *parent = 0);
-    virtual ~PumpIOComposerWidget();
+    ~PumpIOComposerWidget();
 
 protected Q_SLOTS:
-    virtual void submitPost(const QString &text);
-    virtual void slotPostSubmited(Choqok::Account *theAccount, Choqok::Post *post);
+    virtual void submitPost(const QString &text) override;
+    virtual void slotPostSubmited(Choqok::Account *theAccount, Choqok::Post *post) override;
     void slotSetReply(const QString replyToId, const QString replyToUsername, const QString replyToObjectType);
 
     void cancelAttach();

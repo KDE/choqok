@@ -72,8 +72,8 @@ public:
     virtual ~MainWindow();
 
 protected:
-    virtual void hideEvent(QHideEvent *event);
-    virtual void showEvent(QShowEvent *);
+    virtual void hideEvent(QHideEvent *event) override;
+    virtual void showEvent(QShowEvent *) override;
 
 private Q_SLOTS:
     void nextTab(int delta, Qt::Orientation orientation);
@@ -103,9 +103,6 @@ private Q_SLOTS:
     void oneMicroblogLoaded();
     void slotShowSpecialMenu(bool show);
     void slotDonate();
-
-Q_SIGNALS:
-    void quickPostCreated();
 
 private:
     void updateTabbarHiddenState();

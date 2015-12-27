@@ -44,7 +44,7 @@ public:
     QCompleter *completer() const;
 
 protected Q_SLOTS:
-    virtual void updateRemainingCharsCount();
+    virtual void updateRemainingCharsCount() override;
 
 protected:
     void keyPressEvent(QKeyEvent *e);

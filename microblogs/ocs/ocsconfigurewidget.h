@@ -33,9 +33,9 @@ class OCSConfigureWidget : public ChoqokEditAccountWidget, Ui::OCSConfigureBase
     Q_OBJECT
 public:
     explicit OCSConfigureWidget(OCSMicroblog *microblog, OCSAccount *account, QWidget *parent);
-    virtual ~OCSConfigureWidget();
-    virtual bool validateData();
-    virtual Choqok::Account *apply();
+    ~OCSConfigureWidget();
+    virtual bool validateData() override;
+    virtual Choqok::Account *apply() override;
 
 protected Q_SLOTS:
     void slotprovidersLoaded();

@@ -30,11 +30,11 @@ class LaconicaConversationTimelineWidget : public TwitterApiTimelineWidget
     Q_OBJECT
 public:
     LaconicaConversationTimelineWidget(Choqok::Account *currentAccount, const QString &conversationId, QWidget *parent = 0);
-    virtual ~LaconicaConversationTimelineWidget();
+    ~LaconicaConversationTimelineWidget();
 
 protected:
-    virtual void saveTimeline();
-    virtual void loadTimeline();
+    virtual void saveTimeline() override;
+    virtual void loadTimeline() override;
 
     QString conversationId;
 
