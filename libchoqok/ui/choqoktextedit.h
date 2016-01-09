@@ -54,9 +54,9 @@ public:
     void appendText(const QString &text);
 
 protected:
-    virtual void keyPressEvent(QKeyEvent *);
-    virtual void insertFromMimeData(const QMimeData *source);
-    virtual QSize minimumSizeHint() const;
+    virtual void keyPressEvent(QKeyEvent *) override;
+    virtual void insertFromMimeData(const QMimeData *source) override;
+    virtual QSize minimumSizeHint() const override;
 
 Q_SIGNALS:
     void returnPressed(const QString &txt);

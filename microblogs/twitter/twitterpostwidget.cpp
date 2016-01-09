@@ -46,7 +46,10 @@ const QString TwitterPostWidget::mQuotedTextBase(QLatin1String("<div style=\"pad
 const QUrl TwitterPostWidget::mQuotedAvatarResourceUrl(QLatin1String("img://quotedProfileImage"));
 TwitterPostWidget::TwitterPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent): TwitterApiPostWidget(account, post, parent)
 {
+}
 
+TwitterPostWidget::~TwitterPostWidget()
+{
 }
 
 void TwitterPostWidget::initUi()
