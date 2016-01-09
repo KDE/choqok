@@ -79,7 +79,7 @@ void SysTrayIcon::updateUnreadCount(int changeOfUnreadPosts)
         QFont f = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
         f.setBold(true);
 
-        float pointSize = f.pointSizeF();
+        auto pointSize = f.pointSizeF();
         QFontMetrics fm(f);
         int w = fm.width(countStr);
         if (w > (oldWidth - 2)) {

@@ -223,11 +223,11 @@ QString Flickr::base58encode(quint64 num)
     uint baseCount = alphabet.count();
     QString encoded;
     while (num >= baseCount) {
-        encoded.prepend(alphabet.at(num % baseCount));
+        encoded.prepend(alphabet.at(int(num % baseCount)));
         num /= baseCount;
     }
     if (num) {
-        encoded.prepend(alphabet.at(num));
+        encoded.prepend(alphabet.at(int(num)));
     }
     return encoded;
 }
