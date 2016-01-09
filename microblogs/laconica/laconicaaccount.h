@@ -37,7 +37,8 @@ class LaconicaAccount : public TwitterApiAccount
 public:
     LaconicaAccount(LaconicaMicroBlog *parent, const QString &alias);
     ~LaconicaAccount();
-    void writeConfig();
+
+    virtual void writeConfig() override;
 
     bool isChangeExclamationMark() const;
     void setChangeExclamationMark(bool isChange);
