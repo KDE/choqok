@@ -22,10 +22,12 @@
 */
 
 #include "choqoktools.h"
+#include "choqokuiglobal.h"
 
 #include <QDesktopServices>
 
 #include <KProcess>
+#include <KMessageBox>
 
 #include <QtOAuth/qoauth_namespace.h>
 
@@ -33,15 +35,26 @@
 
 void Choqok::openUrl(const QUrl &url)
 {
+    bool urlOpeningFailed = false;
+    QString failurMessage;
     if (Choqok::BehaviorSettings::useCustomBrowser()) {
         QStringList args = Choqok::BehaviorSettings::customBrowser().split(QLatin1Char(' '));
         args.append(url.toString());
         if (KProcess::startDetached(args) == 0) {
-            QDesktopServices::openUrl(url);
+            urlOpeningFailed = true;
+            failurMessage = i18n("Custom web browser \"%1\" is unable to open url \"%2\".\nPlease update the custom web browser in Configurations.",
+                                 Choqok::BehaviorSettings::customBrowser(), url.toDisplayString());
         }
     } else {
-        QDesktopServices::openUrl(url);
+        if( QDesktopServices::openUrl(url) == false ) {
+            urlOpeningFailed = true;
+            failurMessage = i18n("Unable to open url \"%1\".\nPlease check Qt installation or set a custom web browser in Configurations.",
+                                 url.toDisplayString());
+        }
     }
+    
+    if (urlOpeningFailed)
+        KMessageBox::error(Choqok::UI::Global::mainWindow(), failurMessage);
 }
 
 QString Choqok::qoauthErrorText(int code)
