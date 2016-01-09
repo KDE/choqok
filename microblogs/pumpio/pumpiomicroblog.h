@@ -62,7 +62,7 @@ public:
                                                     Choqok::Post *post,
                                                     QWidget *parent) override;
 
-    void fetchPost(Choqok::Account *theAccount, Choqok::Post *post);
+    virtual void fetchPost(Choqok::Account *theAccount, Choqok::Post *post) override;
 
     virtual QList<Choqok::Post * > loadTimeline(Choqok::Account *account,
                                                 const QString &timelineName) override;
