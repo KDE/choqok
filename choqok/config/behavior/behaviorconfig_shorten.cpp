@@ -189,8 +189,8 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
         QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
         okButton->setDefault(true);
         okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-        connect(buttonBox, &QDialogButtonBox::accepted, configDialog, &QDialog::accept);
-        connect(buttonBox, &QDialogButtonBox::rejected, configDialog, &QDialog::reject);
+        connect(buttonBox, &QDialogButtonBox::accepted, configDialog.data(), &QDialog::accept);
+        connect(buttonBox, &QDialogButtonBox::rejected, configDialog.data(), &QDialog::reject);
         layout->addWidget(buttonBox);
         showWidget->adjustSize();
 

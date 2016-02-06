@@ -1,7 +1,7 @@
 /*
-    T his file is part of Choqok, the KDE micro-blogging client
+    This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2011-2012 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    Copyright (C) 2008-2012 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -18,30 +18,39 @@
 
     You should have received a copy of the GNU General Public License
     along with this program; if not, see http://www.gnu.org/licenses/
+
 */
 
-#ifndef LACONICACONVERSATIONTIMELINEWIDGET_H
-#define LACONICACONVERSATIONTIMELINEWIDGET_H
+#ifndef GNUSOCIALAPIACCOUNT_H
+#define GNUSOCIALAPIACCOUNT_H
 
-#include "twitterapitimelinewidget.h"
+#include "twitterapiaccount.h"
 
-class LaconicaConversationTimelineWidget : public TwitterApiTimelineWidget
+class GNUSocialApiMicroBlog;
+/**
+
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
+*/
+class CHOQOK_HELPER_EXPORT GNUSocialApiAccount : public TwitterApiAccount
 {
     Q_OBJECT
 public:
-    LaconicaConversationTimelineWidget(Choqok::Account *currentAccount, const QString &conversationId, QWidget *parent = 0);
-    ~LaconicaConversationTimelineWidget();
+    GNUSocialApiAccount(GNUSocialApiMicroBlog *parent, const QString &alias);
+    ~GNUSocialApiAccount();
 
-protected:
-    virtual void saveTimeline() override;
-    virtual void loadTimeline() override;
+    virtual void writeConfig() override;
 
-    QString conversationId;
+    bool isChangeExclamationMark() const;
+    void setChangeExclamationMark(bool isChange);
 
-protected Q_SLOTS:
-    void slotConversationFetched(Choqok::Account *theAccount, const QString &conversationId,
-                                 QList<Choqok::Post *> posts);
-    void updateHeight();
+    QString changeExclamationMarkToText() const;
+    void setChangeExclamationMarkToText(const QString &text);
+
+    virtual QUrl homepageUrl() const override;
+
+private:
+    class Private;
+    Private *d;
 };
 
-#endif // LACONICACONVERSATIONTIMELINEWIDGET_H
+#endif

@@ -21,34 +21,28 @@
 
 */
 
-#ifndef LACONICAPOSTWIDGET_H
-#define LACONICAPOSTWIDGET_H
+#ifndef GNUSOCIALAPICOMPOSERWIDGET_H
+#define GNUSOCIALAPICOMPOSERWIDGET_H
 
-#include "twitterapipostwidget.h"
+#include "twitterapicomposerwidget.h"
 
-class LaconicaPostWidget : public TwitterApiPostWidget
+class CHOQOK_HELPER_EXPORT GNUSocialApiComposerWidget : public TwitterApiComposerWidget
 {
+    Q_OBJECT
 public:
-    LaconicaPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
-    ~LaconicaPostWidget();
-    virtual void initUi() override;
-
-protected:
-    static const QRegExp mGroupRegExp;
-    static const QRegExp mLaconicaUserRegExp;
-    static const QRegExp mLaconicaHashRegExp;
-    static const QRegExp mStatusNetUserRegExp;
-    virtual QString prepareStatus(const QString &text) override;
-    virtual void checkAnchor(const QUrl &url) override;
-    virtual QString generateSign() override;
-    virtual void slotReplyToAll() override;
+    explicit GNUSocialApiComposerWidget(Choqok::Account *account, QWidget *parent = 0);
+    ~GNUSocialApiComposerWidget();
 
 protected Q_SLOTS:
-    virtual void slotResendPost() override;
+    virtual void submitPost(const QString &text) override;
+    void slotPostMediaSubmitted(Choqok::Account *theAccount, Choqok::Post *post);
+    void selectMediumToAttach();
+    void cancelAttachMedium();
+    void slotRebuildEditor(Choqok::Account *theAccount);
 
 private:
     class Private;
     Private *d;
 };
 
-#endif // LACONICAPOSTWIDGET_H
+#endif // GNUSOCIALAPICOMPOSERWIDGET_H

@@ -20,7 +20,7 @@
     along with this program; if not, see http://www.gnu.org/licenses/
 */
 
-#include "laconicaconversationtimelinewidget.h"
+#include "gnusocialapiconversationtimelinewidget.h"
 
 #include <QTimer>
 
@@ -29,14 +29,14 @@
 #include "choqokappearancesettings.h"
 #include "postwidget.h"
 
-#include "laconicamicroblog.h"
+#include "gnusocialapimicroblog.h"
 
-LaconicaConversationTimelineWidget::LaconicaConversationTimelineWidget(Choqok::Account *curAccount,
+GNUSocialApiConversationTimelineWidget::GNUSocialApiConversationTimelineWidget(Choqok::Account *curAccount,
         const QString &convId, QWidget *parent)
     : TwitterApiTimelineWidget(curAccount, i18n("Conversation %1", convId), parent)
 {
     setWindowTitle(i18n("Please wait..."));
-    LaconicaMicroBlog *mBlog = qobject_cast<LaconicaMicroBlog *>(curAccount->microblog());
+    GNUSocialApiMicroBlog *mBlog = qobject_cast<GNUSocialApiMicroBlog *>(curAccount->microblog());
     resize(choqokMainWindow->width(), 500);
     move(choqokMainWindow->pos());
     conversationId = convId;
@@ -45,20 +45,20 @@ LaconicaConversationTimelineWidget::LaconicaConversationTimelineWidget(Choqok::A
     mBlog->fetchConversation(curAccount, convId);
 }
 
-LaconicaConversationTimelineWidget::~LaconicaConversationTimelineWidget()
+GNUSocialApiConversationTimelineWidget::~GNUSocialApiConversationTimelineWidget()
 {
 
 }
 
-void LaconicaConversationTimelineWidget::saveTimeline()
+void GNUSocialApiConversationTimelineWidget::saveTimeline()
 {
 }
 
-void LaconicaConversationTimelineWidget::loadTimeline()
+void GNUSocialApiConversationTimelineWidget::loadTimeline()
 {
 }
 
-void LaconicaConversationTimelineWidget::slotConversationFetched(Choqok::Account *theAccount,
+void GNUSocialApiConversationTimelineWidget::slotConversationFetched(Choqok::Account *theAccount,
         const QString &convId,
         QList< Choqok::Post * > posts)
 {
@@ -72,7 +72,7 @@ void LaconicaConversationTimelineWidget::slotConversationFetched(Choqok::Account
     }
 }
 
-void LaconicaConversationTimelineWidget::updateHeight()
+void GNUSocialApiConversationTimelineWidget::updateHeight()
 {
     int height = 25;
     for (Choqok::UI::PostWidget *wd: postWidgets()) {

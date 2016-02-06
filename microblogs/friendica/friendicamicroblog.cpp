@@ -1,7 +1,7 @@
 /*
 This file is part of Choqok, the KDE micro-blogging client
 
-Copyright (C) 2008-2012 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+Copyright (C) 2016 Andrea Scarpino <scarpino@kde.org>
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License as
@@ -20,42 +20,40 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see http://www.gnu.org/licenses/
 */
 
-#include "laconicamicroblog.h"
+#include "friendicamicroblog.h"
 
 #include <KPluginFactory>
 
 #include "gnusocialapiaccount.h"
 
-#include "laconicadebug.h"
-#include "laconicaeditaccount.h"
+#include "friendicadebug.h"
+#include "friendicaeditaccount.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(LaconicaFactory, "choqok_laconica.json",
-                           registerPlugin < LaconicaMicroBlog > ();)
+K_PLUGIN_FACTORY_WITH_JSON(FriendicaFactory, "choqok_friendica.json",
+                           registerPlugin < FriendicaMicroBlog > ();)
 
-LaconicaMicroBlog::LaconicaMicroBlog(QObject *parent, const QVariantList &)
-    : GNUSocialApiMicroBlog(QLatin1String("choqok_laconica"), parent)
+FriendicaMicroBlog::FriendicaMicroBlog(QObject *parent, const QVariantList &)
+    : GNUSocialApiMicroBlog(QLatin1String("choqok_friendica"), parent)
 {
     qCDebug(CHOQOK);
-    setServiceName(QLatin1String("GNU social"));
-    mTimelineInfos[QLatin1String("ReTweets")]->name = i18nc("Timeline name", "Repeated");
-    mTimelineInfos[QLatin1String("ReTweets")]->description = i18nc("Timeline description", "Your posts that were repeated by others");
+    setServiceName(QLatin1String("Friendica"));
 }
 
-LaconicaMicroBlog::~LaconicaMicroBlog()
+FriendicaMicroBlog::~FriendicaMicroBlog()
 {
     qCDebug(CHOQOK);
 }
 
-ChoqokEditAccountWidget *LaconicaMicroBlog::createEditAccountWidget(Choqok::Account *account, QWidget *parent)
+ChoqokEditAccountWidget *FriendicaMicroBlog::createEditAccountWidget(Choqok::Account *account, QWidget *parent)
 {
     qCDebug(CHOQOK);
     GNUSocialApiAccount *acc = qobject_cast<GNUSocialApiAccount *>(account);
     if (acc || !account) {
-        return new LaconicaEditAccountWidget(this, acc, parent);
+        return new FriendicaEditAccountWidget(this, acc, parent);
     } else {
         qCDebug(CHOQOK) << "Account passed here is not a GNUSocialApiAccount!";
         return nullptr;
     }
 }
 
-#include "laconicamicroblog.moc"
+#include "friendicamicroblog.moc"

@@ -1,7 +1,7 @@
 /*
 This file is part of Choqok, the KDE micro-blogging client
 
-Copyright (C) 2008-2012 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+Copyright (C) 2016 Andrea Scarpino <scarpino@kde.org>
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License as
@@ -20,14 +20,14 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see http://www.gnu.org/licenses/
 */
 
-#ifndef LACONICAEDITACCOUNT_H
-#define LACONICAEDITACCOUNT_H
+#ifndef FRIENDICAEDITACCOUNT_H
+#define FRIENDICAEDITACCOUNT_H
 
 #include <QByteArray>
 
 #include "editaccountwidget.h"
 
-#include "ui_laconicaeditaccount_base.h"
+#include "ui_friendicaeditaccount_base.h"
 
 namespace QOAuth
 {
@@ -36,21 +36,18 @@ class Interface;
 
 class QProgressBar;
 class GNUSocialApiAccount;
-class LaconicaMicroBlog;
-/**
+class FriendicaMicroBlog;
 
-@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
-*/
-class LaconicaEditAccountWidget : public ChoqokEditAccountWidget, public Ui::LaconicaEditAccountBase
+class FriendicaEditAccountWidget : public ChoqokEditAccountWidget, public Ui::FriendicaEditAccountBase
 {
     Q_OBJECT
 public:
-    LaconicaEditAccountWidget(LaconicaMicroBlog *microblog, GNUSocialApiAccount *account, QWidget *parent);
+    FriendicaEditAccountWidget(FriendicaMicroBlog *microblog, GNUSocialApiAccount *account, QWidget *parent);
 
     /**
     * Destructor
     */
-    ~LaconicaEditAccountWidget();
+    ~FriendicaEditAccountWidget();
 
     virtual bool validateData() override;
 
@@ -74,7 +71,7 @@ protected:
 //     void setAuthenticated(bool authenticated);
     void setTextLimit();
 
-    LaconicaMicroBlog *mBlog;
+    FriendicaMicroBlog *mBlog;
     GNUSocialApiAccount *mAccount;
     QProgressBar *progress;
 
@@ -87,4 +84,4 @@ protected:
     QOAuth::Interface *qoauth;
 };
 
-#endif // LACONICAEDITACCOUNT_H
+#endif // FRIENDICAEDITACCOUNT_H

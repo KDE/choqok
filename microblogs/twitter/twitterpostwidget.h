@@ -31,7 +31,9 @@ class TwitterPostWidget : public TwitterApiPostWidget
     Q_OBJECT
 public:
     TwitterPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
-    virtual void initUi();
+    ~TwitterPostWidget();
+
+    virtual void initUi() override;
 
 protected Q_SLOTS:
     void slotReplyToAll() override;

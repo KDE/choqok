@@ -21,7 +21,7 @@
 
 */
 
-#include "laconicacomposerwidget.h"
+#include "gnusocialapicomposerwidget.h"
 
 #include <QFileDialog>
 #include <QLabel>
@@ -39,10 +39,10 @@
 
 #include "twitterapitextedit.h"
 
-#include "laconicadebug.h"
-#include "laconicamicroblog.h"
+#include "gnusocialapidebug.h"
+#include "gnusocialapimicroblog.h"
 
-class LaconicaComposerWidget::Private
+class GNUSocialApiComposerWidget::Private
 {
 public:
     Private()
@@ -55,7 +55,7 @@ public:
     QGridLayout *editorLayout;
 };
 
-LaconicaComposerWidget::LaconicaComposerWidget(Choqok::Account *account, QWidget *parent)
+GNUSocialApiComposerWidget::GNUSocialApiComposerWidget(Choqok::Account *account, QWidget *parent)
     : TwitterApiComposerWidget(account, parent), d(new Private)
 {
     d->editorLayout = qobject_cast<QGridLayout *>(editorContainer()->layout());
@@ -72,12 +72,12 @@ LaconicaComposerWidget::LaconicaComposerWidget(Choqok::Account *account, QWidget
     connect(account, SIGNAL(modified(Choqok::Account*)), this, SLOT(slotRebuildEditor(Choqok::Account*)));
 }
 
-LaconicaComposerWidget::~LaconicaComposerWidget()
+GNUSocialApiComposerWidget::~GNUSocialApiComposerWidget()
 {
     delete d;
 }
 
-void LaconicaComposerWidget::submitPost(const QString &txt)
+void GNUSocialApiComposerWidget::submitPost(const QString &txt)
 {
     if (d->mediumToAttach.isEmpty()) {
         Choqok::UI::ComposerWidget::submitPost(txt);
@@ -104,12 +104,12 @@ void LaconicaComposerWidget::submitPost(const QString &txt)
         btnAbort = new QPushButton(QIcon::fromTheme(QLatin1String("dialog-cancel")), i18n("Abort"), this);
         layout()->addWidget(btnAbort);
         connect(btnAbort, SIGNAL(clicked(bool)), SLOT(abort()));
-        LaconicaMicroBlog *mBlog = qobject_cast<LaconicaMicroBlog *>(currentAccount()->microblog());
+        GNUSocialApiMicroBlog *mBlog = qobject_cast<GNUSocialApiMicroBlog *>(currentAccount()->microblog());
         mBlog->createPostWithAttachment(currentAccount(), postToSubmit(), d->mediumToAttach);
     }
 }
 
-void LaconicaComposerWidget::slotPostMediaSubmitted(Choqok::Account *theAccount, Choqok::Post *post)
+void GNUSocialApiComposerWidget::slotPostMediaSubmitted(Choqok::Account *theAccount, Choqok::Post *post)
 {
     qCDebug(CHOQOK);
     if (currentAccount() == theAccount && post == postToSubmit()) {
@@ -133,7 +133,7 @@ void LaconicaComposerWidget::slotPostMediaSubmitted(Choqok::Account *theAccount,
     }
 }
 
-void LaconicaComposerWidget::selectMediumToAttach()
+void GNUSocialApiComposerWidget::selectMediumToAttach()
 {
     qCDebug(CHOQOK);
     d->mediumToAttach = QFileDialog::getOpenFileName(this, i18n("Select Media to Upload"),
@@ -158,7 +158,7 @@ void LaconicaComposerWidget::selectMediumToAttach()
     editor()->setFocus();
 }
 
-void LaconicaComposerWidget::cancelAttachMedium()
+void GNUSocialApiComposerWidget::cancelAttachMedium()
 {
     qCDebug(CHOQOK);
     delete d->mediumName;
@@ -168,7 +168,7 @@ void LaconicaComposerWidget::cancelAttachMedium()
     d->mediumToAttach.clear();
 }
 
-void LaconicaComposerWidget::slotRebuildEditor(Choqok::Account *theAccount)
+void GNUSocialApiComposerWidget::slotRebuildEditor(Choqok::Account *theAccount)
 {
     setEditor(new TwitterApiTextEdit(theAccount, this));
 }

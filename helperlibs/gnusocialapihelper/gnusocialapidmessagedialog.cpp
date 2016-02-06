@@ -21,18 +21,36 @@
 
 */
 
-#ifndef LACONICADMESSAGEDIALOG_H
-#define LACONICADMESSAGEDIALOG_H
+#include "gnusocialapidmessagedialog.h"
 
-#include "twitterapidmessagedialog.h"
+#include <QStringList>
 
-class LaconicaDMessageDialog : public TwitterApiDMessageDialog
+#include "twitterapiaccount.h"
+
+#include "gnusocialapimicroblog.h"
+
+GNUSocialApiDMessageDialog::GNUSocialApiDMessageDialog(TwitterApiAccount *theAccount, QWidget *parent, Qt::WindowFlags flags)
+    : TwitterApiDMessageDialog(theAccount, parent, flags)
 {
-    Q_OBJECT
-public:
-    explicit LaconicaDMessageDialog(TwitterApiAccount *theAccount, QWidget *parent = 0, Qt::WindowFlags flags = 0);
-    ~LaconicaDMessageDialog();
+    const QStringList list = theAccount->friendsList();
 
-};
+    if (list.isEmpty()) {
+        reloadFriendslist();
+    } else {
+        QStringList sameHost;
 
-#endif // LACONICADMESSAGEDIALOG_H
+        for (const QString &user: list) {
+            // QUrl::host() is needed to skip scheme check
+            if (GNUSocialApiMicroBlog::hostFromProfileUrl(user).compare(QUrl(theAccount->host()).host()) == 0) {
+                sameHost.append(GNUSocialApiMicroBlog::usernameFromProfileUrl(user));
+            }
+        }
+
+        sameHost.sort();
+        setFriends(sameHost);
+    }
+}
+
+GNUSocialApiDMessageDialog::~GNUSocialApiDMessageDialog()
+{
+}

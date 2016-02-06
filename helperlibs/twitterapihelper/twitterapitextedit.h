@@ -47,8 +47,8 @@ protected Q_SLOTS:
     virtual void updateRemainingCharsCount() override;
 
 protected:
-    void keyPressEvent(QKeyEvent *e);
-    void focusInEvent(QFocusEvent *e);
+    void keyPressEvent(QKeyEvent *e) override;
+    void focusInEvent(QFocusEvent *e) override;
 
 private Q_SLOTS:
     void insertCompletion(const QString &completion);

@@ -21,60 +21,60 @@
 
 */
 
-#include "laconicaaccount.h"
+#include "gnusocialapiaccount.h"
 
 #include <KIO/Global>
 
-#include "laconicadebug.h"
-#include "laconicamicroblog.h"
+#include "gnusocialapidebug.h"
+#include "gnusocialapimicroblog.h"
 
-class LaconicaAccount::Private
+class GNUSocialApiAccount::Private
 {
 public:
     bool isChangeExclamationMark;
     QString changeExclamationMarkToText;
 };
 
-LaconicaAccount::LaconicaAccount(LaconicaMicroBlog *parent, const QString &alias)
+GNUSocialApiAccount::GNUSocialApiAccount(GNUSocialApiMicroBlog *parent, const QString &alias)
     : TwitterApiAccount(parent, alias), d(new Private)
 {
     d->changeExclamationMarkToText = configGroup()->readEntry(QLatin1String("changeExclamationMarkText"), QString::fromLatin1("#"));
     d->isChangeExclamationMark = configGroup()->readEntry("isChangeExclamationMark", false);
 }
 
-LaconicaAccount::~LaconicaAccount()
+GNUSocialApiAccount::~GNUSocialApiAccount()
 {
     delete d;
 }
 
-void LaconicaAccount::writeConfig()
+void GNUSocialApiAccount::writeConfig()
 {
     configGroup()->writeEntry("isChangeExclamationMark", d->isChangeExclamationMark);
     configGroup()->writeEntry("changeExclamationMarkText", d->changeExclamationMarkToText);
     TwitterApiAccount::writeConfig();
 }
 
-QString LaconicaAccount::changeExclamationMarkToText() const
+QString GNUSocialApiAccount::changeExclamationMarkToText() const
 {
     return d->changeExclamationMarkToText;
 }
 
-void LaconicaAccount::setChangeExclamationMarkToText(const QString &text)
+void GNUSocialApiAccount::setChangeExclamationMarkToText(const QString &text)
 {
     d->changeExclamationMarkToText = text;
 }
 
-bool LaconicaAccount::isChangeExclamationMark() const
+bool GNUSocialApiAccount::isChangeExclamationMark() const
 {
     return d->isChangeExclamationMark;
 }
 
-void LaconicaAccount::setChangeExclamationMark(bool isChange)
+void GNUSocialApiAccount::setChangeExclamationMark(bool isChange)
 {
     d->isChangeExclamationMark = isChange;
 }
 
-QUrl LaconicaAccount::homepageUrl() const
+QUrl GNUSocialApiAccount::homepageUrl() const
 {
     return KIO::upUrl(apiUrl());
 }

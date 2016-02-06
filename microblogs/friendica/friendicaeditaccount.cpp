@@ -1,7 +1,7 @@
 /*
 This file is part of Choqok, the KDE micro-blogging client
 
-Copyright (C) 2008-2012 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+Copyright (C) 2016 Andrea Scarpino <scarpino@kde.org>
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License as
@@ -20,7 +20,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see http://www.gnu.org/licenses/
 */
 
-#include "laconicaeditaccount.h"
+#include "friendicaeditaccount.h"
 
 #include <QJsonDocument>
 
@@ -35,10 +35,10 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "gnusocialapiaccount.h"
 
-#include "laconicadebug.h"
-#include "laconicamicroblog.h"
+#include "friendicadebug.h"
+#include "friendicamicroblog.h"
 
-LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblog,
+FriendicaEditAccountWidget::FriendicaEditAccountWidget(FriendicaMicroBlog *microblog,
         GNUSocialApiAccount *account, QWidget *parent)
     : ChoqokEditAccountWidget(account, parent), mAccount(account), progress(0), isAuthenticated(false)
 {
@@ -95,11 +95,11 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
     kcfg_alias->setFocus(Qt::OtherFocusReason);
 }
 
-LaconicaEditAccountWidget::~LaconicaEditAccountWidget()
+FriendicaEditAccountWidget::~FriendicaEditAccountWidget()
 {
 }
 
-bool LaconicaEditAccountWidget::validateData()
+bool FriendicaEditAccountWidget::validateData()
 {
 //     if( kcfg_authMethod->currentIndex()==0 ) {//OAuth
 //         if(kcfg_alias->text().isEmpty() || kcfg_oauthUsername->text().isEmpty() || !isAuthenticated)
@@ -113,7 +113,7 @@ bool LaconicaEditAccountWidget::validateData()
     return true;
 }
 
-Choqok::Account *LaconicaEditAccountWidget::apply()
+Choqok::Account *FriendicaEditAccountWidget::apply()
 {
     qCDebug(CHOQOK);
     /*if(kcfg_authMethod->currentIndex() == 0){
@@ -139,7 +139,7 @@ Choqok::Account *LaconicaEditAccountWidget::apply()
     return mAccount;
 }
 
-// void LaconicaEditAccountWidget::authorizeUser()
+// void FriendicaEditAccountWidget::authorizeUser()
 // {
 //     qCDebug(CHOQOK);
 //     slotCheckHostUrl();
@@ -182,7 +182,7 @@ Choqok::Account *LaconicaEditAccountWidget::apply()
 //     }
 // }
 //
-// void LaconicaEditAccountWidget::getPinCode()
+// void FriendicaEditAccountWidget::getPinCode()
 // {
 //     isAuthenticated = false;
 //     while(!isAuthenticated){
@@ -216,7 +216,7 @@ Choqok::Account *LaconicaEditAccountWidget::apply()
 //     }
 // }
 
-void LaconicaEditAccountWidget::setTextLimit()
+void FriendicaEditAccountWidget::setTextLimit()
 {
     QString url = mAccount->host() + QLatin1Char('/') + mAccount->api() + QLatin1String("/statusnet/config.json");
     KIO::StoredTransferJob *job = KIO::storedGet(QUrl(url), KIO::Reload, KIO::HideProgressInfo);
@@ -240,7 +240,7 @@ void LaconicaEditAccountWidget::setTextLimit()
     }
 }
 
-void LaconicaEditAccountWidget::loadTimelinesTableState()
+void FriendicaEditAccountWidget::loadTimelinesTableState()
 {
     for (const QString &timeline: mAccount->microblog()->timelineNames()) {
         int newRow = timelinesTable->rowCount();
@@ -257,7 +257,7 @@ void LaconicaEditAccountWidget::loadTimelinesTableState()
     }
 }
 
-void LaconicaEditAccountWidget::saveTimelinesTableState()
+void FriendicaEditAccountWidget::saveTimelinesTableState()
 {
     QStringList timelines;
     int rowCount = timelinesTable->rowCount();
@@ -271,7 +271,7 @@ void LaconicaEditAccountWidget::saveTimelinesTableState()
     mAccount->setTimelineNames(timelines);
 }
 
-// void LaconicaEditAccountWidget::slotAuthMethodChanged(int index)
+// void FriendicaEditAccountWidget::slotAuthMethodChanged(int index)
 // {
 //     if(index == 0){
 //         kcfg_BasicBox->hide();
@@ -282,7 +282,7 @@ void LaconicaEditAccountWidget::saveTimelinesTableState()
 //     }
 // }
 
-// void LaconicaEditAccountWidget::setAuthenticated(bool authenticated)
+// void FriendicaEditAccountWidget::setAuthenticated(bool authenticated)
 // {
 //     isAuthenticated = authenticated;
 //     if(authenticated){
@@ -296,7 +296,7 @@ void LaconicaEditAccountWidget::saveTimelinesTableState()
 //     }
 // }
 
-void LaconicaEditAccountWidget::slotCheckHostUrl()
+void FriendicaEditAccountWidget::slotCheckHostUrl()
 {
     if (!kcfg_host->text().isEmpty() && !kcfg_host->text().startsWith(QLatin1String("http"),
             Qt::CaseInsensitive) && !kcfg_host->text().startsWith(QLatin1String("https"))) {

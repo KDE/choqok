@@ -35,20 +35,23 @@ class CHOQOK_HELPER_EXPORT TwitterApiPostWidget : public Choqok::UI::PostWidget
 public:
     TwitterApiPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
     ~TwitterApiPostWidget();
-    virtual void initUi();
+
+    virtual void initUi() override;
 
 protected Q_SLOTS:
     virtual void checkAnchor(const QUrl &url) override;
     virtual void setFavorite();
     virtual void slotSetFavorite(Choqok::Account *theAccount, const QString &postId);
     virtual void slotReply();
-    void slotBasePostFetched(Choqok::Account *theAccount, Choqok::Post *post);
     virtual void repeatPost();
     virtual void slotWriteTo();
     virtual void slotReplyToAll();
 
+    void slotBasePostFetched(Choqok::Account *theAccount, Choqok::Post *post);
+
 protected:
-    virtual QString generateSign();
+    virtual QString generateSign() override;
+
     void updateFavStat();
 
     static const QIcon unFavIcon;

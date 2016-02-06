@@ -21,26 +21,26 @@
 
 */
 
-#ifndef LACONICASEARCH_H
-#define LACONICASEARCH_H
+#ifndef GNUSOCIALAPISEARCH_H
+#define GNUSOCIALAPISEARCH_H
 
 #include "twitterapisearch.h"
 
 class KJob;
 
 /**
-GNU social/StatatusNet/Laconica search API implementation.
+GNU social/StatatusNet/GNUSocialApi search API implementation.
 
 @author Stephen Henderson \<hendersonsk@gmail.com\>
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
-class LaconicaSearch : public TwitterApiSearch
+class CHOQOK_HELPER_EXPORT GNUSocialApiSearch : public TwitterApiSearch
 {
     Q_OBJECT
 public:
     enum SearchType { ReferenceHashtag = 0, ReferenceGroup, FromUser, ToUser };
-    LaconicaSearch(QObject *parent = 0);
-    ~LaconicaSearch();
+    GNUSocialApiSearch(QObject *parent = 0);
+    ~GNUSocialApiSearch();
     virtual void requestSearchResults(const SearchInfo &searchInfo,
                                       const QString &sinceStatusId = QString(),
                                       uint count = 0, uint page = 1) override;
@@ -63,4 +63,4 @@ private:
     static const QRegExp m_rId;
 };
 
-#endif // LACONICASEARCH_H
+#endif // GNUSOCIALAPISEARCH_H

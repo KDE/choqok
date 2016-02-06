@@ -1,7 +1,7 @@
 /*
 This file is part of Choqok, the KDE micro-blogging client
 
-Copyright (C) 2008-2012 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+Copyright (C) 2016 Andrea Scarpino <scarpino@kde.org>
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License as
@@ -19,26 +19,19 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see http://www.gnu.org/licenses/
 */
-#ifndef LACONICAMICROBLOGPLUGIN_H
-#define LACONICAMICROBLOGPLUGIN_H
+#ifndef FRIENDICAMICROBLOGPLUGIN_H
+#define FRIENDICAMICROBLOGPLUGIN_H
 
 #include "gnusocialapimicroblog.h"
 
 class ChoqokEditAccountWidget;
 
-/**
-This plugin is to GNU social service.
-
-@Note GNU social was called StatusNet and Laconcia previously, So I just renamed it on UI :D
-
-@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
-*/
-class LaconicaMicroBlog : public GNUSocialApiMicroBlog
+class FriendicaMicroBlog : public GNUSocialApiMicroBlog
 {
     Q_OBJECT
 public:
-    LaconicaMicroBlog(QObject *parent, const QVariantList &args);
-    ~LaconicaMicroBlog();
+    FriendicaMicroBlog(QObject *parent, const QVariantList &args);
+    ~FriendicaMicroBlog();
 
     virtual ChoqokEditAccountWidget *createEditAccountWidget(Choqok::Account *account, QWidget *parent) override;
 };
