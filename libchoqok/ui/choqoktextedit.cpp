@@ -89,6 +89,7 @@ TextEdit::TextEdit(uint charLimit /*= 0*/, QWidget *parent /*= 0*/)
 TextEdit::~TextEdit()
 {
     BehaviorSettings::setSpellerLanguage(d->curLang);
+    d->langActions->deleteLater();
     delete d;
 }
 

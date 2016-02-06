@@ -97,7 +97,8 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog *parent, const QString 
 
 TwitterApiAccount::~TwitterApiAccount()
 {
-    d->qoauth->deleteLater();
+    if(d->qoauth)
+        d->qoauth->deleteLater();
     delete d;
 }
 

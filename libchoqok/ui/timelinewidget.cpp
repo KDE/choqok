@@ -205,7 +205,7 @@ void TimelineWidget::removeOldPosts()
 
 void TimelineWidget::addPlaceholderMessage(const QString &msg)
 {
-    if (d->posts.keys().length() == 0) {
+    if ( d->posts.isEmpty() ) {
         if (!d->placeholderLabel) {
             d->placeholderLabel = new QLabel(this);
             d->mainLayout->insertWidget(d->order, d->placeholderLabel);

@@ -53,6 +53,11 @@ public:
     Private(Account *account, Choqok::Post *post)
         : mCurrentPost(post), mCurrentAccount(account), dir(QLatin1String("ltr")), timeline(0)
     {
+        mCurrentPost->owners++;
+
+        if (!mCurrentPost->media.isEmpty()) {
+            imageUrl = mCurrentPost->media;
+        }
     }
     QGridLayout *buttonsLayout;
     QMap<QString, QPushButton *> mUiButtons; //<Object name, Button>
@@ -112,11 +117,6 @@ PostWidget::PostWidget(Account *account, Choqok::Post *post, QWidget *parent/* =
     connect(_mainWidget, SIGNAL(anchorClicked(QUrl)), this, SLOT(checkAnchor(QUrl)));
 
     d->timeline = qobject_cast<TimelineWidget *>(parent);
-    d->mCurrentPost->owners++;
-
-    if (!d->mCurrentPost->media.isEmpty()) {
-        d->imageUrl = d->mCurrentPost->media;
-    }
 
     setHeight();
 }
