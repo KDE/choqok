@@ -21,7 +21,7 @@
 
 */
 
-#include "laconicapostwidget.h"
+#include "gnusocialapipostwidget.h"
 
 #include <QAction>
 #include <QMenu>
@@ -38,15 +38,15 @@
 #include "twitterapimicroblog.h"
 #include "twitterapiwhoiswidget.h"
 
-#include "laconicaaccount.h"
-#include "laconicaconversationtimelinewidget.h"
-#include "laconicadebug.h"
-#include "laconicamicroblog.h"
-#include "laconicasearch.h"
+#include "gnusocialapiaccount.h"
+#include "gnusocialapiconversationtimelinewidget.h"
+#include "gnusocialapidebug.h"
+#include "gnusocialapimicroblog.h"
+#include "gnusocialapisearch.h"
 
-const QRegExp LaconicaPostWidget::mGroupRegExp(QLatin1String("([\\s]|^)!([a-z0-9]+){1,64}"),  Qt::CaseInsensitive);
-const QRegExp LaconicaPostWidget::mLaconicaUserRegExp(QLatin1String("([\\s\\W]|^)@([a-z0-9_]+){1,64}(?!(@))"), Qt::CaseInsensitive);
-const QRegExp LaconicaPostWidget::mLaconicaHashRegExp(QLatin1String("([\\s]|^)#([\\w_\\.\\-]+)"), Qt::CaseInsensitive);
+const QRegExp GNUSocialApiPostWidget::mGroupRegExp(QLatin1String("([\\s]|^)!([a-z0-9]+){1,64}"),  Qt::CaseInsensitive);
+const QRegExp GNUSocialApiPostWidget::mGNUSocialApiUserRegExp(QLatin1String("([\\s\\W]|^)@([a-z0-9_]+){1,64}(?!(@))"), Qt::CaseInsensitive);
+const QRegExp GNUSocialApiPostWidget::mGNUSocialApiHashRegExp(QLatin1String("([\\s]|^)#([\\w_\\.\\-]+)"), Qt::CaseInsensitive);
 
 const QString subdomains = QLatin1String("(([a-z0-9-_]\\.)?)");
 const QString dname = QLatin1String("(([a-z0-9-\\x0080-\\xFFFF]){1,63}\\.)+");
@@ -56,28 +56,28 @@ const QString zone = QLatin1String("((a[cdefgilmnoqrstuwxz])|(b[abdefghijlmnorst
 (t[cdfghjkmnoprtvwz])|(u[agksyz])|(v[aceginu])|(w[fs])|(ye)|(z[amrw])\
 |(asia|com|info|net|org|biz|name|pro|aero|cat|coop|edu|jobs|mobi|museum|tel|travel|gov|int|mil|local)|(中国)|(公司)|(网络)|(صر)|(امارات)|(рф))");
 const QString domain = QLatin1Char('(') + subdomains + dname + zone + QLatin1Char(')');
-const QRegExp LaconicaPostWidget::mStatusNetUserRegExp(QLatin1String("([\\s\\W]|^)@(([a-z0-9]+){1,64}@") + domain + QLatin1Char(')'), Qt::CaseInsensitive);
+const QRegExp GNUSocialApiPostWidget::mStatusNetUserRegExp(QLatin1String("([\\s\\W]|^)@(([a-z0-9]+){1,64}@") + domain + QLatin1Char(')'), Qt::CaseInsensitive);
 
-class LaconicaPostWidget::Private
+class GNUSocialApiPostWidget::Private
 {
 public:
     Private(Choqok::Account *theAccount)
     {
-        account = qobject_cast<LaconicaAccount *>(theAccount);
-        mBlog = qobject_cast<LaconicaMicroBlog *>(account->microblog());
+        account = qobject_cast<GNUSocialApiAccount *>(theAccount);
+        mBlog = qobject_cast<GNUSocialApiMicroBlog *>(account->microblog());
     }
-    LaconicaAccount *account;
-    LaconicaMicroBlog *mBlog;
+    GNUSocialApiAccount *account;
+    GNUSocialApiMicroBlog *mBlog;
     QString tmpUsername;
 };
 
-LaconicaPostWidget::LaconicaPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent)
+GNUSocialApiPostWidget::GNUSocialApiPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent)
     : TwitterApiPostWidget(account, post, parent), d(new Private(account))
 {
 
 }
 
-void LaconicaPostWidget::initUi()
+void GNUSocialApiPostWidget::initUi()
 {
     TwitterApiPostWidget::initUi();
 
@@ -96,12 +96,12 @@ void LaconicaPostWidget::initUi()
     }
 }
 
-LaconicaPostWidget::~LaconicaPostWidget()
+GNUSocialApiPostWidget::~GNUSocialApiPostWidget()
 {
     delete d;
 }
 
-void LaconicaPostWidget::slotReplyToAll()
+void GNUSocialApiPostWidget::slotReplyToAll()
 {
     QStringList nicks;
     nicks.append(currentPost()->author.userName);
@@ -109,14 +109,14 @@ void LaconicaPostWidget::slotReplyToAll()
     QString txt = QStringLiteral("@%1 ").arg(currentPost()->author.userName);
 
     int pos = 0;
-    while ((pos = mLaconicaUserRegExp.indexIn(currentPost()->content, pos)) != -1) {
-        if (mLaconicaUserRegExp.cap(2).toLower() != currentAccount()->username() &&
-                mLaconicaUserRegExp.cap(2).toLower() != currentPost()->author.userName &&
-                !nicks.contains(mLaconicaUserRegExp.cap(2).toLower())) {
-            nicks.append(mLaconicaUserRegExp.cap(2));
-            txt += QStringLiteral("@%1 ").arg(mLaconicaUserRegExp.cap(2));
+    while ((pos = mGNUSocialApiUserRegExp.indexIn(currentPost()->content, pos)) != -1) {
+        if (mGNUSocialApiUserRegExp.cap(2).toLower() != currentAccount()->username() &&
+                mGNUSocialApiUserRegExp.cap(2).toLower() != currentPost()->author.userName &&
+                !nicks.contains(mGNUSocialApiUserRegExp.cap(2).toLower())) {
+            nicks.append(mGNUSocialApiUserRegExp.cap(2));
+            txt += QStringLiteral("@%1 ").arg(mGNUSocialApiUserRegExp.cap(2));
         }
-        pos += mLaconicaUserRegExp.matchedLength();
+        pos += mGNUSocialApiUserRegExp.matchedLength();
     }
 
     txt.chop(1);
@@ -124,23 +124,23 @@ void LaconicaPostWidget::slotReplyToAll()
     Q_EMIT reply(txt, currentPost()->postId, currentPost()->author.userName);
 }
 
-QString LaconicaPostWidget::prepareStatus(const QString &text)
+QString GNUSocialApiPostWidget::prepareStatus(const QString &text)
 {
     QString res = TwitterApiPostWidget::prepareStatus(text);
     res.replace(mStatusNetUserRegExp, QLatin1String("\\1@<a href='user://\\2'>\\2</a>"));
-    res.replace(mLaconicaUserRegExp, QLatin1String("\\1@<a href='user://\\2'>\\2</a>"));
+    res.replace(mGNUSocialApiUserRegExp, QLatin1String("\\1@<a href='user://\\2'>\\2</a>"));
     res.replace(mGroupRegExp, QLatin1String("\\1!<a href='group://\\2'>\\2</a>"));
-    res.replace(mLaconicaHashRegExp, QLatin1String("\\1#<a href='tag://\\2'>\\2</a>"));
+    res.replace(mGNUSocialApiHashRegExp, QLatin1String("\\1#<a href='tag://\\2'>\\2</a>"));
 
     return res;
 }
 
-QString LaconicaPostWidget::generateSign()
+QString GNUSocialApiPostWidget::generateSign()
 {
     return TwitterApiPostWidget::generateSign();
 }
 
-void LaconicaPostWidget::checkAnchor(const QUrl &url)
+void GNUSocialApiPostWidget::checkAnchor(const QUrl &url)
 {
     QString scheme = url.scheme();
     QAction *ret;
@@ -162,7 +162,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl &url)
         if (ret == search) {
             d->mBlog->searchBackend()->requestSearchResults(currentAccount(),
                     unpcode,
-                    LaconicaSearch::ReferenceHashtag);
+                    GNUSocialApiSearch::ReferenceHashtag);
         } else if (ret == openInBrowser) {
             Choqok::openUrl(QUrl(d->account->homepageUrl().toDisplayString() +
                                  QLatin1String("/tag/") + unpcode));
@@ -180,7 +180,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl &url)
         if (ret == search) {
             d->mBlog->searchBackend()->requestSearchResults(currentAccount(),
                     url.host(),
-                    LaconicaSearch::ReferenceGroup);
+                    GNUSocialApiSearch::ReferenceGroup);
         } else if (ret == openInBrowser) {
             Choqok::openUrl(QUrl(d->account->homepageUrl().toDisplayString() +
                                  QLatin1String("/group/") + url.host()));
@@ -202,8 +202,8 @@ void LaconicaPostWidget::checkAnchor(const QUrl &url)
         if (currentPost()->source != QLatin1String("ostatus")) {
             menu.addAction(from);
             menu.addAction(to);
-            from->setData(LaconicaSearch::FromUser);
-            to->setData(LaconicaSearch::ToUser);
+            from->setData(GNUSocialApiSearch::FromUser);
+            to->setData(GNUSocialApiSearch::ToUser);
         }
         menu.addAction(openInBrowser);
 
@@ -279,7 +279,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl &url)
                 url.host(),
                 type);
     } else if (scheme == QLatin1String("conversation")) {
-        LaconicaConversationTimelineWidget *tm = new LaconicaConversationTimelineWidget(currentAccount(),
+        GNUSocialApiConversationTimelineWidget *tm = new GNUSocialApiConversationTimelineWidget(currentAccount(),
                 url.host());
         connect(tm, SIGNAL(forwardReply(QString,QString,QString)), this, SIGNAL(reply(QString,QString,QString)));
         connect(tm, SIGNAL(forwardResendPost(QString)), this, SIGNAL(resendPost(QString)));
@@ -289,7 +289,7 @@ void LaconicaPostWidget::checkAnchor(const QUrl &url)
     }
 }
 
-void LaconicaPostWidget::slotResendPost()
+void GNUSocialApiPostWidget::slotResendPost()
 {
     QString text = generateResendText();
 

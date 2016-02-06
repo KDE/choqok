@@ -35,7 +35,7 @@ class Interface;
 }
 
 class QProgressBar;
-class LaconicaAccount;
+class GNUSocialApiAccount;
 class LaconicaMicroBlog;
 /**
 
@@ -45,7 +45,7 @@ class LaconicaEditAccountWidget : public ChoqokEditAccountWidget, public Ui::Lac
 {
     Q_OBJECT
 public:
-    LaconicaEditAccountWidget(LaconicaMicroBlog *microblog, LaconicaAccount *account, QWidget *parent);
+    LaconicaEditAccountWidget(LaconicaMicroBlog *microblog, GNUSocialApiAccount *account, QWidget *parent);
 
     /**
     * Destructor
@@ -75,7 +75,7 @@ protected:
     void setTextLimit();
 
     LaconicaMicroBlog *mBlog;
-    LaconicaAccount *mAccount;
+    GNUSocialApiAccount *mAccount;
     QProgressBar *progress;
 
     bool isAuthenticated;

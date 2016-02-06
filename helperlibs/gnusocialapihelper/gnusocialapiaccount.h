@@ -21,28 +21,36 @@
 
 */
 
-#ifndef LACONICACOMPOSERWIDGET_H
-#define LACONICACOMPOSERWIDGET_H
+#ifndef GNUSOCIALAPIACCOUNT_H
+#define GNUSOCIALAPIACCOUNT_H
 
-#include "twitterapicomposerwidget.h"
+#include "twitterapiaccount.h"
 
-class LaconicaComposerWidget : public TwitterApiComposerWidget
+class GNUSocialApiMicroBlog;
+/**
+
+@author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
+*/
+class CHOQOK_HELPER_EXPORT GNUSocialApiAccount : public TwitterApiAccount
 {
     Q_OBJECT
 public:
-    explicit LaconicaComposerWidget(Choqok::Account *account, QWidget *parent = 0);
-    ~LaconicaComposerWidget();
+    GNUSocialApiAccount(GNUSocialApiMicroBlog *parent, const QString &alias);
+    ~GNUSocialApiAccount();
 
-protected Q_SLOTS:
-    virtual void submitPost(const QString &text) override;
-    void slotPostMediaSubmitted(Choqok::Account *theAccount, Choqok::Post *post);
-    void selectMediumToAttach();
-    void cancelAttachMedium();
-    void slotRebuildEditor(Choqok::Account *theAccount);
+    virtual void writeConfig() override;
+
+    bool isChangeExclamationMark() const;
+    void setChangeExclamationMark(bool isChange);
+
+    QString changeExclamationMarkToText() const;
+    void setChangeExclamationMarkToText(const QString &text);
+
+    virtual QUrl homepageUrl() const override;
 
 private:
     class Private;
     Private *d;
 };
 
-#endif // LACONICACOMPOSERWIDGET_H
+#endif

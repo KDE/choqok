@@ -21,7 +21,7 @@
 
 */
 
-#include "laconicasearch.h"
+#include "gnusocialapisearch.h"
 
 #include <QDomElement>
 
@@ -30,12 +30,12 @@
 
 #include "twitterapiaccount.h"
 
-#include "laconicadebug.h"
+#include "gnusocialapidebug.h"
 
-const QRegExp LaconicaSearch::m_rId(QLatin1String("tag:.+,[\\d-]+:(\\d+)"));
-const QRegExp LaconicaSearch::mIdRegExp(QLatin1String("(?:user|(?:.*notice))/([0-9]+)"));
+const QRegExp GNUSocialApiSearch::m_rId(QLatin1String("tag:.+,[\\d-]+:(\\d+)"));
+const QRegExp GNUSocialApiSearch::mIdRegExp(QLatin1String("(?:user|(?:.*notice))/([0-9]+)"));
 
-LaconicaSearch::LaconicaSearch(QObject *parent): TwitterApiSearch(parent)
+GNUSocialApiSearch::GNUSocialApiSearch(QObject *parent): TwitterApiSearch(parent)
 {
     qCDebug(CHOQOK);
     mSearchCode[ReferenceGroup] = QLatin1Char('!');
@@ -57,12 +57,12 @@ LaconicaSearch::LaconicaSearch(QObject *parent): TwitterApiSearch(parent)
 
 }
 
-LaconicaSearch::~LaconicaSearch()
+GNUSocialApiSearch::~GNUSocialApiSearch()
 {
 
 }
 
-QUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
+QUrl GNUSocialApiSearch::buildUrl(const SearchInfo &searchInfo,
                               QString sinceStatusId, uint count, uint page)
 {
     qCDebug(CHOQOK);
@@ -117,7 +117,7 @@ QUrl LaconicaSearch::buildUrl(const SearchInfo &searchInfo,
     return url;
 }
 
-void LaconicaSearch::requestSearchResults(const SearchInfo &searchInfo,
+void GNUSocialApiSearch::requestSearchResults(const SearchInfo &searchInfo,
         const QString &sinceStatusId,
         uint count, uint page)
 {
@@ -134,7 +134,7 @@ void LaconicaSearch::requestSearchResults(const SearchInfo &searchInfo,
     job->start();
 }
 
-void LaconicaSearch::searchResultsReturned(KJob *job)
+void GNUSocialApiSearch::searchResultsReturned(KJob *job)
 {
     qCDebug(CHOQOK);
     if (job == 0) {
@@ -162,12 +162,12 @@ void LaconicaSearch::searchResultsReturned(KJob *job)
     Q_EMIT searchResultsReceived(info, postsList);
 }
 
-QString LaconicaSearch::optionCode(int option)
+QString GNUSocialApiSearch::optionCode(int option)
 {
     return mSearchCode[option];
 }
 
-QList< Choqok::Post * > LaconicaSearch::parseAtom(const QByteArray &buffer)
+QList< Choqok::Post * > GNUSocialApiSearch::parseAtom(const QByteArray &buffer)
 {
     QDomDocument document;
     QList<Choqok::Post *> statusList;
@@ -247,7 +247,7 @@ QList< Choqok::Post * > LaconicaSearch::parseAtom(const QByteArray &buffer)
     return statusList;
 }
 
-QList< Choqok::Post * > LaconicaSearch::parseRss(const QByteArray &buffer)
+QList< Choqok::Post * > GNUSocialApiSearch::parseRss(const QByteArray &buffer)
 {
     qCDebug(CHOQOK);
     QDomDocument document;

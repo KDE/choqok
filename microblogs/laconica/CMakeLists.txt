@@ -4,15 +4,9 @@ include_directories(
 )
 
 set(choqok_laconica_SRCS
-    laconicaaccount.cpp
     laconicadebug.cpp
-    laconicadmessagedialog.cpp
-    laconicamicroblog.cpp
-    laconicasearch.cpp
     laconicaeditaccount.cpp
-    laconicapostwidget.cpp
-    laconicacomposerwidget.cpp
-    laconicaconversationtimelinewidget.cpp
+    laconicamicroblog.cpp
 )
 
 ki18n_wrap_ui(choqok_laconica_SRCS laconicaeditaccount_base.ui)
@@ -24,15 +18,13 @@ kcoreaddons_desktop_to_json(choqok_laconica choqok_laconica.desktop)
 target_link_libraries(choqok_laconica
 PUBLIC
     Qt5::Core
-    Qt5::Xml
     Qt5::Widgets
     KF5::CoreAddons
     KF5::I18n
     KF5::KIOCore
     KF5::KIOWidgets
-    KF5::WidgetsAddons
     choqok
-    twitterapihelper
+    gnusocialapihelper
     ${QTOAUTH_LIBRARY}
 )
 

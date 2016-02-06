@@ -20,17 +20,17 @@
     along with this program; if not, see http://www.gnu.org/licenses/
 */
 
-#ifndef LACONICACONVERSATIONTIMELINEWIDGET_H
-#define LACONICACONVERSATIONTIMELINEWIDGET_H
+#ifndef GNUSOCIALAPICONVERSATIONTIMELINEWIDGET_H
+#define GNUSOCIALAPICONVERSATIONTIMELINEWIDGET_H
 
 #include "twitterapitimelinewidget.h"
 
-class LaconicaConversationTimelineWidget : public TwitterApiTimelineWidget
+class CHOQOK_HELPER_EXPORT GNUSocialApiConversationTimelineWidget : public TwitterApiTimelineWidget
 {
     Q_OBJECT
 public:
-    LaconicaConversationTimelineWidget(Choqok::Account *currentAccount, const QString &conversationId, QWidget *parent = 0);
-    ~LaconicaConversationTimelineWidget();
+    GNUSocialApiConversationTimelineWidget(Choqok::Account *currentAccount, const QString &conversationId, QWidget *parent = 0);
+    ~GNUSocialApiConversationTimelineWidget();
 
 protected:
     virtual void saveTimeline() override;
@@ -44,4 +44,4 @@ protected Q_SLOTS:
     void updateHeight();
 };
 
-#endif // LACONICACONVERSATIONTIMELINEWIDGET_H
+#endif // GNUSOCIALAPICONVERSATIONTIMELINEWIDGET_H

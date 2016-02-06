@@ -33,12 +33,13 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "accountmanager.h"
 #include "choqoktools.h"
 
-#include "laconicaaccount.h"
+#include "gnusocialapiaccount.h"
+
 #include "laconicadebug.h"
 #include "laconicamicroblog.h"
 
 LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblog,
-        LaconicaAccount *account, QWidget *parent)
+        GNUSocialApiAccount *account, QWidget *parent)
     : ChoqokEditAccountWidget(account, parent), mAccount(account), progress(0), isAuthenticated(false)
 {
     setupUi(this);
@@ -84,7 +85,7 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
             newAccountAlias = QStringLiteral("%1%2").arg(servName).arg(counter);
             counter++;
         }
-        setAccount(mAccount = new LaconicaAccount(microblog, newAccountAlias));
+        setAccount(mAccount = new GNUSocialApiAccount(microblog, newAccountAlias));
         kcfg_alias->setText(newAccountAlias);
         const QRegExp userRegExp(QLatin1String("([a-z0-9]){1,64}"), Qt::CaseInsensitive);
         QValidator *userVal = new QRegExpValidator(userRegExp, 0);

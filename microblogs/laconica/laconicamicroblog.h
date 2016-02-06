@@ -22,13 +22,9 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #ifndef LACONICAMICROBLOGPLUGIN_H
 #define LACONICAMICROBLOGPLUGIN_H
 
-#include <QPointer>
+#include "gnusocialapimicroblog.h"
 
-#include "twitterapimicroblog.h"
-
-class LaconicaSearch;
 class ChoqokEditAccountWidget;
-class KJob;
 
 /**
 This plugin is to GNU social service.
@@ -37,59 +33,14 @@ This plugin is to GNU social service.
 
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
-class LaconicaMicroBlog : public TwitterApiMicroBlog
+class LaconicaMicroBlog : public GNUSocialApiMicroBlog
 {
     Q_OBJECT
 public:
     LaconicaMicroBlog(QObject *parent, const QVariantList &args);
     ~LaconicaMicroBlog();
 
-    virtual Choqok::Account *createNewAccount(const QString &alias) override;
     virtual ChoqokEditAccountWidget *createEditAccountWidget(Choqok::Account *account, QWidget *parent) override;
-    virtual Choqok::UI::MicroBlogWidget *createMicroBlogWidget(Choqok::Account *account, QWidget *parent) override;
-    virtual Choqok::UI::TimelineWidget *createTimelineWidget(Choqok::Account *account,
-                                                             const QString &timelineName, QWidget *parent) override;
-    virtual Choqok::UI::PostWidget *createPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent) override;
-    virtual Choqok::UI::ComposerWidget *createComposerWidget(Choqok::Account *account, QWidget *parent) override;
-    virtual QString profileUrl(Choqok::Account *account, const QString &username) const override;
-    virtual QString postUrl(Choqok::Account *account, const QString &username, const QString &postId) const override;
-
-    virtual TwitterApiSearch *searchBackend() override;
-
-    void createPostWithAttachment(Choqok::Account *theAccount, Choqok::Post *post,
-                                          const QString &mediumToAttach = QString());
-    virtual QString generateRepeatedByUserTooltip(const QString &username) override;
-    virtual QString repeatQuestion() override;
-
-    void fetchConversation(Choqok::Account *theAccount, const QString &conversationId);
-
-    virtual void requestFriendsScreenName(TwitterApiAccount *theAccount, bool active) override;
-
-    virtual void showDirectMessageDialog(TwitterApiAccount *theAccount = 0, const QString &toUsername = QString()) override;
-
-    static QString usernameFromProfileUrl(const QString &profileUrl);
-    static QString hostFromProfileUrl(const QString &profileUrl);
-
-Q_SIGNALS:
-    void conversationFetched(Choqok::Account *theAccount, const QString &conversationId,
-                             QList<Choqok::Post *> posts);
-
-protected:
-    using TwitterApiMicroBlog::readPost;
-    virtual Choqok::Post *readPost(Choqok::Account *account, const QVariantMap &var, Choqok::Post *post) override;
-    virtual void listFriendsUsername(TwitterApiAccount *theAccount, bool active = false) override;
-    virtual QStringList readFriendsScreenName(Choqok::Account *theAccount, const QByteArray &buffer) override;
-
-protected Q_SLOTS:
-    void slotFetchConversation(KJob *job);
-    void slotRequestFriendsScreenName(KJob *job);
-
-private:
-    void doRequestFriendsScreenName(TwitterApiAccount *theAccount, int page);
-
-    QMap<KJob *, QString> mFetchConversationMap;
-    QPointer<LaconicaSearch> mSearchBackend;
-    int friendsPage;
 };
 
 #endif

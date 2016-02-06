@@ -21,22 +21,22 @@
 
 */
 
-#ifndef LACONICAPOSTWIDGET_H
-#define LACONICAPOSTWIDGET_H
+#ifndef GNUSOCIALAPIPOSTWIDGET_H
+#define GNUSOCIALAPIPOSTWIDGET_H
 
 #include "twitterapipostwidget.h"
 
-class LaconicaPostWidget : public TwitterApiPostWidget
+class CHOQOK_HELPER_EXPORT GNUSocialApiPostWidget : public TwitterApiPostWidget
 {
 public:
-    LaconicaPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
-    ~LaconicaPostWidget();
+    GNUSocialApiPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
+    ~GNUSocialApiPostWidget();
     virtual void initUi() override;
 
 protected:
     static const QRegExp mGroupRegExp;
-    static const QRegExp mLaconicaUserRegExp;
-    static const QRegExp mLaconicaHashRegExp;
+    static const QRegExp mGNUSocialApiUserRegExp;
+    static const QRegExp mGNUSocialApiHashRegExp;
     static const QRegExp mStatusNetUserRegExp;
     virtual QString prepareStatus(const QString &text) override;
     virtual void checkAnchor(const QUrl &url) override;
@@ -51,4 +51,4 @@ private:
     Private *d;
 };
 
-#endif // LACONICAPOSTWIDGET_H
+#endif // GNUSOCIALAPIPOSTWIDGET_H
