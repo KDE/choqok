@@ -2,6 +2,7 @@ find_package(KF5Attica)
 
 add_subdirectory(twitter)
 add_subdirectory(laconica)
+add_subdirectory(friendica)
 add_subdirectory(pumpio)
 
 IF(KF5Attica_FOUND)
