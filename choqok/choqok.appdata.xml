@@ -18,6 +18,7 @@
   <name xml:lang="fi">Choqok</name>
   <name xml:lang="fr">Choqok</name>
   <name xml:lang="gl">Choqok</name>
+  <name xml:lang="it">Choqok</name>
   <name xml:lang="nb">Choqok</name>
   <name xml:lang="nds">Choqok</name>
   <name xml:lang="nl">Choqok</name>
@@ -44,6 +45,7 @@
     <p xml:lang="fi">Choqok on mikroblogausasiakas, joka tukee Twitter.com- ja Pump.io-palveluja</p>
     <p xml:lang="fr">Choqok est un client de micro-bloggage prenant en charge les services Twitter.com et Pump.io</p>
     <p xml:lang="gl">Choqok é un cliente de microbloque compatíbel cos servizos Twitter e Pump.io.</p>
+    <p xml:lang="it">Choqok è un client per micro-blogging che supporta i servizi Twitter.com e Pump.io</p>
     <p xml:lang="nl">Choqok is een micro-blogging-client, die de services Twitter.com en Pump.io ondersteunt</p>
     <p xml:lang="pl">Choqok jest klientem mikro bloków, który obsługuje usługi Twitter.com oraz Pump.io</p>
     <p xml:lang="pt">O Choqok é um cliente de micro-blogs que suporta os serviços do Twitter.com e do Pump.io</p>
@@ -67,6 +69,7 @@
     <p xml:lang="fi">Ominaisuudet:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
+    <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="nb">Egenskaper:</p>
     <p xml:lang="nds">Markmalen:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
@@ -92,6 +95,7 @@
       <li xml:lang="fi">Tukee Twitter.com-mikroblogauspalvelua</li>
       <li xml:lang="fr">Prise en charge du service de micro-bloggage Twitter.com</li>
       <li xml:lang="gl">Compatibilidade co servizo de microblogue Twitter.</li>
+      <li xml:lang="it">Supporta il servizio per micro-blogging Twitter.com</li>
       <li xml:lang="nb">Støtter Twitter.com-tjeneste for mikroblogging</li>
       <li xml:lang="nds">Ünnerstütt den Lüttdaagbookdeenst Twitter.com</li>
       <li xml:lang="nl">Ondersteunt de microblogging-service Twitter.com</li>
@@ -113,6 +117,7 @@
       <li xml:lang="fi">Tukee itse isännöityä Pump.io-palvelua</li>
       <li xml:lang="fr">Prise en charge du service auto-hébergé Pump.io</li>
       <li xml:lang="gl">Compatíbel con servizos de microblogue baseados en Pump.io.</li>
+      <li xml:lang="it">Supporta il servizio Pump.io</li>
       <li xml:lang="nl">Ondersteuning voor zelf gehoste Pump.io service</li>
       <li xml:lang="pl">Obsługa samoutrzymywanej usługi Pump.io</li>
       <li xml:lang="pt">Suporte para o serviço auto-alojado do Pump.io</li>
@@ -132,6 +137,7 @@
       <li xml:lang="fi">Tukee itse isännöityä GNU social -palvelu</li>
       <li xml:lang="fr">Prise en charge du service social auto-hébergé GNU</li>
       <li xml:lang="gl">Compatíbel con servizos de microblogue baseados en GNU social.</li>
+      <li xml:lang="it">Supporta il servizio GNU social</li>
       <li xml:lang="nl">Ondersteuning voor zelf gehoste GNU sociaal service</li>
       <li xml:lang="pl">Obsługa samoutrzymywanej usługi społecznościowej GNU</li>
       <li xml:lang="pt">Suporte para o serviço auto-alojado do GNU social</li>
@@ -152,6 +158,7 @@
       <li xml:lang="fi">Tukee käyttäjän ja hänen kaveriensa aikajanoja</li>
       <li xml:lang="fr">Prise en charge des flux de l'utilisateur et de ses amis</li>
       <li xml:lang="gl">Acceso á súa liñas do tempo e maila dos seus contactos.</li>
+      <li xml:lang="it">Supporta linee temporali dell'utente e dei suoi amici</li>
       <li xml:lang="nb">Støtter User + His/Her Friends tidslinjer</li>
       <li xml:lang="nds">Ünnerstütt Teitregen för Brukers un ehr Frünnen</li>
       <li xml:lang="nl">Ondersteuning van User + His/Her Friends tijdlijnen</li>
@@ -174,6 +181,7 @@
       <li xml:lang="fi">Tukee @Reply-aikajanoja</li>
       <li xml:lang="fr">Prise en charge des balises de réponse (« @utilisateur »)</li>
       <li xml:lang="gl">Acceso a liñas do tempo de respostas.</li>
+      <li xml:lang="it">Supporta linee temporali @Reply</li>
       <li xml:lang="nb">Støtter @Reply  tidslinjer</li>
       <li xml:lang="nds">Ünnerstütt @Reply-Tietregen</li>
       <li xml:lang="nl">Ondersteuning van @Reply tijdlijnen</li>
@@ -197,6 +205,7 @@
       <li xml:lang="fi">Tukee suorien viestien lähettämistä ja vastaanottamista</li>
       <li xml:lang="fr">Envoi et réception de messages directs</li>
       <li xml:lang="gl">Permite enviar e recibir mensaxes directas.</li>
+      <li xml:lang="it">Supporta l'invio e la ricezione di messaggi diretti</li>
       <li xml:lang="nb">Støtte for å sende og motta direkte meldinger</li>
       <li xml:lang="nds">Ünnerstütt dat Kriegen un Loosstüern vun Direktnarichten</li>
       <li xml:lang="nl">Ondersteuning van direct bestanden verzenden en ontvangen</li>
@@ -220,6 +229,7 @@
       <li xml:lang="fi">Twitpic.com-integrointi</li>
       <li xml:lang="fr">Intégration avec Twitpic.com</li>
       <li xml:lang="gl">Integración con Twitpic.</li>
+      <li xml:lang="it">Integrazione con Twitpic.com</li>
       <li xml:lang="nb">Integrasjon med Twitpic.com</li>
       <li xml:lang="nds">Arbeidt mit Twitpic.com tosamen</li>
       <li xml:lang="nl">Integratie met Twitpic.com</li>
@@ -244,6 +254,7 @@
       <li xml:lang="fi">Tukee useampia tilejä samanaikaisesti</li>
       <li xml:lang="fr">Prise en charge simultanée de plusieurs comptes</li>
       <li xml:lang="gl">Permite usar varias contas de maneira simultánea.</li>
+      <li xml:lang="it">Supporta simultaneamente account multipli</li>
       <li xml:lang="nb">Støtter flere kontoer samtidig</li>
       <li xml:lang="nds">Ünnerstütt mehr Kontos op eenmaal</li>
       <li xml:lang="nl">Ondersteuning van meerdere accounts tegelijk</li>
@@ -267,6 +278,7 @@
       <li xml:lang="fi">Tukee jokaisen tuntemansa palvelun haku-APIa</li>
       <li xml:lang="fr">Prise en charge des API de recherche pour tous les services</li>
       <li xml:lang="gl">Permite realizar buscas nos servizos.</li>
+      <li xml:lang="it">Supporta API di ricerca per tutti i servizi</li>
       <li xml:lang="nb">Støtter søke-API-er for alle tjenester</li>
       <li xml:lang="nds">Ünnerstütt Söök-APIs för all Deensten</li>
       <li xml:lang="nl">Ondersteunen van API's voor zoeken voor alle services</li>
@@ -290,6 +302,7 @@
       <li xml:lang="fi">Käyttää KDE:n lompakkoa</li>
       <li xml:lang="fr">Intégration avec KWallet</li>
       <li xml:lang="gl">Integración con KWallet.</li>
+      <li xml:lang="it">Integrazione con KWallet</li>
       <li xml:lang="nb">Integrasjon med KWallet</li>
       <li xml:lang="nds">Arbeidt mit KWallet tosamen</li>
       <li xml:lang="nl">Integratie met KWallet</li>
@@ -313,6 +326,7 @@
       <li xml:lang="fi">Osaa lähettää pikaviestejä pikanäppäinyhdistelmällä (Ctrl+Meta+T)</li>
       <li xml:lang="fr">Possibilité de créer un « tweet » rapide avec les raccourcis globaux (Ctrl+Meta+T)</li>
       <li xml:lang="gl">Permite enviar chíos rápidos mediante atallos de teclado globais (Ctrl+Meta+T).</li>
+      <li xml:lang="it">Possibilità di fare un  tweet veloce mediante scorciatoie globali (Ctrl+ Meta+T)</li>
       <li xml:lang="nb">Kan gjøre en rask tvitring med globale snarveier (Ctrl+Meta+T)</li>
       <li xml:lang="nds">Jiepels gau mit en Tastkombinatschoon opstellen (Strg+Meta+T)</li>
       <li xml:lang="nl">Mogelijkheid om een snelle tweet te maken met globale sneltoetsen (Ctrl+Meta+T)</li>
@@ -335,6 +349,7 @@
       <li xml:lang="fi">Osaa tiedottaa käyttäjää uusista tilaviesteistä joko KNotificationin tai Libnotifyn avulla</li>
       <li xml:lang="fr">Possibilité d'avertir l'utilisateur des nouvelles publications, avec KNotification ou Libnotify</li>
       <li xml:lang="gl">Infórmao de novos chíos mediante notificacións do sistema, usando KNotification ou libnotify.</li>
+      <li xml:lang="it">Possibilità di notificare all'utente nuovi stati, con KNotification o Libnotify</li>
       <li xml:lang="nb">Kan varsle bruker om nye statustekster, men KNotification eller Libnotify</li>
       <li xml:lang="nds">Kann Brukers Bescheed över nieg Statussen geven, mit KNotification oder Libnotify</li>
       <li xml:lang="nl">De mogelijkheid om de gebruiker te informeren over nieuwe statusteksten, met KNotification of Libnotify</li>
@@ -358,6 +373,7 @@
       <li xml:lang="fi">Tukee verkko-osoitteitten lyhentämistä alle 30 merkkiin (leikepöydältä liitettäessä)</li>
       <li xml:lang="fr">Peut raccourcir les URL de plus de 30 caractères (raccourcissement au moment du collage de l'URL dans le texte)</li>
       <li xml:lang="gl">Permite acurtar automaticamente enderezos URL que superen os 30 caracteres ao pegalos.</li>
+      <li xml:lang="it">Supporto all'accorciamento di url con più di 30 caratteri (accorciati quando vengono incollati)</li>
       <li xml:lang="nb">Støtte for å forkorte URL-er med mer enn 30 tegn (korter inn ved innliming)</li>
       <li xml:lang="nds">Kann URLs mit mehr as 30 Tekens bi't Infögen kortmaken</li>
       <li xml:lang="nl">Ondersteuning voor ingekorte URL's met meer dan 30 tekens (ingekort bij plakken)</li>
@@ -381,6 +397,7 @@
       <li xml:lang="fi">Tukee tilalistojen ulkoasun mukauttamista</li>
       <li xml:lang="fr">Prise en charge de l'apparition des listes d'état</li>
       <li xml:lang="gl">Permite configurar a aparencia das listas de chíos.</li>
+      <li xml:lang="it">Supporto alla configurazione dell'aspetto della lista degli stati</li>
       <li xml:lang="nb">Støtte for å stille inn utseende på statuslister</li>
       <li xml:lang="nds">Ünnerstütt dat Instellen vun't Utsehn vun Statuslisten</li>
       <li xml:lang="nl">Ondersteuning voor instellen van het verschijnen van statuslijsten</li>
