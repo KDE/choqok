@@ -37,7 +37,7 @@
     </p>
     <p xml:lang="ar">چغوك هو عميل تدوين مصغّر يدعم خدمتيّ Twitter.com و Pump.io</p>
     <p xml:lang="bs">Choqok je mikro-blog klijent koji podržava Twitter.com i Pump.io  usluge</p>
-    <p xml:lang="ca">El Choqok és un client de microblogs que implementa els serveis de Twitter.com i Pump.io</p>
+    <p xml:lang="ca">El Choqok és un client de microblogs que admet els serveis de Twitter.com i Pump.io</p>
     <p xml:lang="ca-valencia">El Choqok és un client de microblogs que implementa els serveis de Twitter.com i Pump.io</p>
     <p xml:lang="de">Choqok ist ein Mikro-Blogging-Programm, das derzeit die Dienste Twitter.com und Pump.io unterstützt</p>
     <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com and Pump.io services</p>
@@ -87,7 +87,7 @@
       <li>Supporting Twitter.com micro-blogging service</li>
       <li xml:lang="ar">دعم خدمة التّدوين المصغّر Twitter.com</li>
       <li xml:lang="bs">Podrška Twitter.com mikro-blog usluge</li>
-      <li xml:lang="ca">Implementació del servei de microblog Twitter.com</li>
+      <li xml:lang="ca">Permet el servei de microblog Twitter.com</li>
       <li xml:lang="ca-valencia">Implementació del servei de microblog Twitter.com</li>
       <li xml:lang="de">Unterstützung für den Micro-Blogging-Dienst Twitter.com</li>
       <li xml:lang="el">Υποστηρίζει την υπηρεσία μικρο-ιστολογίου Twitter.com</li>
@@ -112,7 +112,7 @@
       <li>Supporting self hosted Pump.io service</li>
       <li xml:lang="ar">دعم خدمة Pump.io المضافة ذاتيًّا</li>
       <li xml:lang="bs">Podrška za samodovoljnu Pump.io  uslugu</li>
-      <li xml:lang="ca">Implementació per al servei Pump.io auto hostatjat</li>
+      <li xml:lang="ca">Permet el servei Pump.io auto hostatjat</li>
       <li xml:lang="ca-valencia">Implementació per al servei Pump.io auto hostatjat</li>
       <li xml:lang="de">Unterstützung für die eigene Pump.io-Instanz</li>
       <li xml:lang="en-GB">Supporting self hosted Pump.io service</li>
@@ -134,7 +134,7 @@
       <li>Supporting self hosted GNU social service</li>
       <li xml:lang="ar">دعم خدمة غنو الاجتماعيّة المضافة ذاتيًّا</li>
       <li xml:lang="bs">PoPodrška za samodovoljnu GNU social  uslugu</li>
-      <li xml:lang="ca">Implementació per al servei social de la GNU auto hostatjat</li>
+      <li xml:lang="ca">Permet el servei social de la GNU auto hostatjat</li>
       <li xml:lang="ca-valencia">Implementació per al servei social de la GNU auto hostatjat</li>
       <li xml:lang="en-GB">Supporting self hosted GNU social service</li>
       <li xml:lang="es">Soporta el servicio auto hospedado GNU social</li>
@@ -155,7 +155,7 @@
       <li>Supporting User + His/Her Friends time-lines</li>
       <li xml:lang="ar">دعم الخطوط الزّمنيّة للمستخدم وأصدقائه</li>
       <li xml:lang="bs">Podrška korisniku + vremenske linije Njegovih/Njenih Prijatelja</li>
-      <li xml:lang="ca">Implementació per a les línies de temps Usuari + Vós i els vostres amics</li>
+      <li xml:lang="ca">Permet les línies de temps Usuari + Vós i els vostres amics</li>
       <li xml:lang="ca-valencia">Implementació per a les línies de temps Usuari + Vós i els vostres amics</li>
       <li xml:lang="el">Υποστηρίζει χρονολόγια για χρήστη + φίλους</li>
       <li xml:lang="en-GB">Supporting User + His/Her Friends time-lines</li>
@@ -179,7 +179,7 @@
       <li>Supporting @Reply time-lines</li>
       <li xml:lang="ar">دعم خطوط @الرّد الزّمنيّة</li>
       <li xml:lang="bs">Podrška @Odgovori vremenskim linijama</li>
-      <li xml:lang="ca">Implementació per a les línies de temps @Resposta</li>
+      <li xml:lang="ca">Permet les línies de temps @Resposta</li>
       <li xml:lang="ca-valencia">Implementació per a les línies de temps @Resposta</li>
       <li xml:lang="el">Υποστηρίζει χρονολόγια @Reply</li>
       <li xml:lang="en-GB">Supporting @Reply time-lines</li>
@@ -203,7 +203,7 @@
       <li>Support for send and receive direct messages</li>
       <li xml:lang="ar">دعم إرسال الرّسائل المباشرة واستقبالها</li>
       <li xml:lang="bs">Podrška za slanje i primanje izravnih poruka</li>
-      <li xml:lang="ca">Implementació per enviar i rebre missatges directes</li>
+      <li xml:lang="ca">Permet enviar i rebre missatges directes</li>
       <li xml:lang="ca-valencia">Implementació per enviar i rebre missatges directes</li>
       <li xml:lang="de">Direktes Senden und Empfangen von Nachrichten über DCC</li>
       <li xml:lang="el">Υποστηρίζει την άμεση αποστολή και λήψη μηνυμάτων</li>
@@ -253,7 +253,7 @@
       <li>Supporting Multiple Accounts simultaneously</li>
       <li xml:lang="ar">دعم عدّة حسابات في آن واحد</li>
       <li xml:lang="bs">Podrška za više računa istovremeno</li>
-      <li xml:lang="ca">Implementació per a múltiples comptes simultanis</li>
+      <li xml:lang="ca">Permet múltiples comptes simultanis</li>
       <li xml:lang="ca-valencia">Implementació per a múltiples comptes simultanis</li>
       <li xml:lang="de">Unterstützung für mehrere gleichzeitige Zugänge</li>
       <li xml:lang="el">Υποστηρίζει πολλούς λογαριασμούς ταυτόχρονα</li>
@@ -278,7 +278,7 @@
       <li>Supporting search APIs for all services</li>
       <li xml:lang="ar">دعم البحث في كلّ الخدمات عبر واجهة برمجة التّطبيقات</li>
       <li xml:lang="bs">Podrška za pretraživački API za sve usluge</li>
-      <li xml:lang="ca">Implementació per a les API de cerca per a tots els serveis</li>
+      <li xml:lang="ca">Permet les API de cerca per a tots els serveis</li>
       <li xml:lang="ca-valencia">Implementació per a les API de cerca per a tots els serveis</li>
       <li xml:lang="de">Unterstützt Auch-APIs für alle Dienste</li>
       <li xml:lang="el">Υποστηρίζει API αναζήτησης για όλες τις υπηρεσίες</li>
@@ -376,7 +376,7 @@
       <li>Support for shortening urls with more than 30 characters (shorten on paste)</li>
       <li xml:lang="ar">دعم تقصير العناوين الأكبر من 30 محرفًا (تُصغّر عند لصقها)</li>
       <li xml:lang="bs">Podrška za skraćenje url-ova sa više od 30 karaktera (skratiti prilikom mogućnosti lijepljenja)</li>
-      <li xml:lang="ca">Implementació per escurçar els URL amb més de 30 caràcters (escurça en enganxar)</li>
+      <li xml:lang="ca">Permet escurçar els URL amb més de 30 caràcters (escurça en enganxar)</li>
       <li xml:lang="ca-valencia">Implementació per escurçar els URL amb més de 30 caràcters (escurça en enganxar)</li>
       <li xml:lang="de">Unterstützung für das Kürzen von Adressen (URLs) mit mehr als 30 Zeichen, Kürzen beim Einfügen</li>
       <li xml:lang="el">Υποστηρίζει τη συρρίκνωση URL που έχουν περισσότερους από 30 χαρακτήρες (συρρίκνωση σε επικόλληση)</li>
@@ -401,7 +401,7 @@
       <li>Support for configuring status lists appearance</li>
       <li xml:lang="ar">دعم ضبط مظهر قوائم الحالة</li>
       <li xml:lang="bs">Podrška za konfiguraciju izgleda liste statusa</li>
-      <li xml:lang="ca">Implementació per a configurar l'aparença de les llistes d'estat</li>
+      <li xml:lang="ca">Permet configurar l'aparença de les llistes d'estat</li>
       <li xml:lang="ca-valencia">Implementació per a configurar l'aparença de les llistes d'estat</li>
       <li xml:lang="de">Unterstützt die Einstellung des Erscheinungsbilds der Statusliste</li>
       <li xml:lang="el">Υποστηρίζει τη διαμόρφωση της εμφάνισης σε λίστες καταστάσεων</li>
