@@ -39,8 +39,8 @@
 
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2016-06-16</date>
-<releaseinfo>1.5.80</releaseinfo>
+<date>2015-01-25</date>
+<releaseinfo>1.5</releaseinfo>
 
 <abstract>
 <para>&choqok; is a micro-blogging client for KDE
@@ -54,7 +54,6 @@
 <keyword>Twitter</keyword>
 <keyword>Pump.io</keyword>
 <keyword>GNU social</keyword>
-<keyword>Friendica</keyword>
 </keywordset>
 
 </bookinfo>
