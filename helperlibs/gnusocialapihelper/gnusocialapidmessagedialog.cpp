@@ -46,7 +46,7 @@ GNUSocialApiDMessageDialog::GNUSocialApiDMessageDialog(TwitterApiAccount *theAcc
             }
         }
 
-        sameHost.sort();
+        sameHost.sort(Qt::CaseInsensitive);
         setFriends(sameHost);
     }
 }

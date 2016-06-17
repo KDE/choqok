@@ -66,7 +66,7 @@ TwitterApiDMessageDialog::TwitterApiDMessageDialog(TwitterApiAccount *theAccount
     if (list.isEmpty()) {
         reloadFriendslist();
     } else {
-        list.sort();
+        list.sort(Qt::CaseInsensitive);
         d->comboFriendsList->addItems(list);
     }
 }
@@ -167,7 +167,7 @@ void TwitterApiDMessageDialog::followersUsernameListed(TwitterApiAccount *theAcc
 {
     if (theAccount == d->account) {
         d->comboFriendsList->clear();
-        list.sort();
+        list.sort(Qt::CaseInsensitive);
         d->comboFriendsList->addItems(list);
     }
 }

@@ -153,7 +153,7 @@ QStringList PumpIOAccount::following()
 void PumpIOAccount::setFollowing(const QStringList following)
 {
     d->following = following;
-    d->following.sort();
+    d->following.sort(Qt::CaseInsensitive);
     writeConfig();
 }
 
