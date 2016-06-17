@@ -72,12 +72,11 @@ int main(int argc, char **argv)
     configFiles << QLatin1String("choqokrc");
     rcFiles << QLatin1String("choqokui.rc");
 
-    KAboutData::setApplicationData(about);
-
     ChoqokApplication app(argc, argv);
     app.setApplicationVersion(QLatin1String(version));
 
     QCommandLineParser parser;
+    KAboutData::setApplicationData(about);
     parser.addVersionOption();
     parser.addHelpOption();
     about.setupCommandLine(&parser);
