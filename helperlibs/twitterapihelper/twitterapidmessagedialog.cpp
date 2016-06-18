@@ -125,6 +125,11 @@ Choqok::UI::TextEdit *TwitterApiDMessageDialog::editor()
     return d->editor;
 }
 
+TwitterApiAccount *TwitterApiDMessageDialog::account()
+{
+    return d->account;
+}
+
 void TwitterApiDMessageDialog::reloadFriendslist()
 {
     d->comboFriendsList->clear();

@@ -22,15 +22,57 @@
 */
 #include "twitterdmessagedialog.h"
 
+#include <QJsonDocument>
+
+#include <KIO/Job>
+
 #include "choqoktextedit.h"
+
+#include "twitterapiaccount.h"
+#include "twitterapidebug.h"
+#include "twitterapimicroblog.h"
 
 TwitterDMessageDialog::TwitterDMessageDialog(TwitterApiAccount *theAccount, QWidget *parent,
         Qt::WindowFlags flags)
     : TwitterApiDMessageDialog(theAccount, parent, flags)
 {
-    editor()->setCharLimit(0);
+    fetchTextLimit();
 }
 
 TwitterDMessageDialog::~TwitterDMessageDialog()
 {
+}
+
+void TwitterDMessageDialog::fetchTextLimit()
+{
+    QUrl url = account()->apiUrl();
+    url.setPath(url.path() + QLatin1String("/help/configuration.json"));
+
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
+    if (!job) {
+        qCDebug(CHOQOK) << "Cannot create an http GET request!";
+        return;
+    }
+    TwitterApiMicroBlog *mBlog = qobject_cast<TwitterApiMicroBlog *>(account()->microblog());
+    job->addMetaData(QStringLiteral("customHTTPHeader"),
+                     QStringLiteral("Authorization: ") +
+                     QLatin1String(mBlog->authorizationHeader(account(), url, QOAuth::GET)));
+    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotTextLimit(KJob*)));
+    job->start();
+}
+
+void TwitterDMessageDialog::slotTextLimit(KJob *job)
+{
+    if (job->error()) {
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
+    } else {
+        KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
+        const QJsonDocument json = QJsonDocument::fromJson(j->data());
+        if (!json.isNull()) {
+            const int textLimit = json.toVariant().toMap().value(QLatin1String("dm_text_character_limit")).toInt();
+            editor()->setCharLimit(textLimit);
+        } else {
+            qCDebug(CHOQOK) << "Cannot parse JSON reply";
+        }
+    }
 }

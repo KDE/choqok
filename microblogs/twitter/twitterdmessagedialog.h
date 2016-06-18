@@ -26,12 +26,20 @@
 
 #include "twitterapidmessagedialog.h"
 
+class KJob;
+
 class TwitterDMessageDialog : public TwitterApiDMessageDialog
 {
     Q_OBJECT
 public:
     explicit TwitterDMessageDialog(TwitterApiAccount *theAccount, QWidget *parent = 0, Qt::WindowFlags flags = 0);
     ~TwitterDMessageDialog();
+
+private Q_SLOTS:
+    void slotTextLimit(KJob *job);
+
+private:
+    void fetchTextLimit();
 
 };
 

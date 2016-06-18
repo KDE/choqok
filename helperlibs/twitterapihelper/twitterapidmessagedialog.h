@@ -63,6 +63,7 @@ protected:
     void setupUi(QWidget *mainWidget);
     void setFriends(const QStringList friends);
     Choqok::UI::TextEdit *editor();
+    TwitterApiAccount *account();
 
 private:
     class Private;
