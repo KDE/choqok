@@ -14,7 +14,6 @@ include(FeatureSummary)
 
 find_package(Qt5 CONFIG REQUIRED
     Core
-    Concurrent
     DBus
     Network
     Widgets
