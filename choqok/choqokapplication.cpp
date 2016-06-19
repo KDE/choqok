@@ -31,25 +31,30 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 ChoqokApplication::ChoqokApplication(int &argc, char **argv)
     : Choqok::Application(argc, argv)
+    , m_mainWindow(0)
 {
     qCDebug(CHOQOK);
-    setApplicationName(QStringLiteral("choqok"));
-    setApplicationDisplayName(QStringLiteral("Choqok"));
-    setOrganizationDomain(QStringLiteral("kde.org"));
 
     setQuitOnLastWindowClosed(false);
 
     Choqok::ChoqokDbus();
-
-    m_mainWindow = new MainWindow(this);
-
-    Choqok::UI::Global::setMainWindow(m_mainWindow);
-
 }
 
 ChoqokApplication::~ChoqokApplication()
 {
     qCDebug(CHOQOK);
+}
+
+void ChoqokApplication::setupMainWindow()
+{
+    if (m_mainWindow) {
+        m_mainWindow->deleteLater();
+        m_mainWindow = 0;
+    }
+
+    m_mainWindow = new MainWindow(this);
+
+    Choqok::UI::Global::setMainWindow(m_mainWindow);
 }
 
 void ChoqokApplication::quitChoqok()

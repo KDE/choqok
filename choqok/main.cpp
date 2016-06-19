@@ -38,10 +38,16 @@ static const char version[] = "1.5.80";
 int main(int argc, char **argv)
 {
     qCDebug(CHOQOK) << "Choqok " << version;
+
+    ChoqokApplication app(argc, argv);
+
     KLocalizedString::setApplicationDomain("choqok");
     KAboutData about(QLatin1String("choqok"), QLatin1String("Choqok"), QLatin1String(version), i18n(description),
                      KAboutLicense::GPL_V3, i18n("(C) 2008-2010 Mehrdad Momeny\n(C) 2011-2015 Choqok Developers"),
                      QString(), QLatin1String("http://choqok.gnufolks.org/"));
+
+    about.setOrganizationDomain("kde.org");
+
     about.addAuthor(i18n("Mehrdad Momeny"), i18n("Author, Developer and Maintainer"),
                     QLatin1String("mehrdad.momeny@gmail.com"), QLatin1String("http://momeny.wordpress.com"));
     about.addAuthor(i18n("Andrey Esin"), i18n("Developer"),
@@ -74,8 +80,10 @@ int main(int argc, char **argv)
 
     KAboutData::setApplicationData(about);
 
-    ChoqokApplication app(argc, argv);
-    app.setApplicationVersion(QLatin1String(version));
+    app.setApplicationName(about.componentName());
+    app.setApplicationDisplayName(about.displayName());
+    app.setOrganizationDomain(about.organizationDomain());
+    app.setApplicationVersion(about.version());
 
     QCommandLineParser parser;
     parser.addVersionOption();
@@ -84,10 +92,12 @@ int main(int argc, char **argv)
     parser.process(app);
     about.processCommandLine(&parser);
 
-    Kdelibs4ConfigMigrator migrator(QLatin1String("choqok")); // the same name defined in the aboutData
+    Kdelibs4ConfigMigrator migrator(about.componentName());
     migrator.setConfigFiles(configFiles);
     migrator.setUiFiles(rcFiles);
     migrator.migrate();
+
+    app.setupMainWindow();
 
     return app.exec();
 }
