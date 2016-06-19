@@ -177,14 +177,6 @@ void TwitterApiDMessageDialog::followersUsernameListed(TwitterApiAccount *theAcc
     }
 }
 
-void TwitterApiDMessageDialog::postCreated(Choqok::Account *theAccount, Choqok::Post *thePost)
-{
-    if (theAccount == d->account && thePost == d->sentPost) {
-        qCDebug(CHOQOK);
-        accept();
-    }
-}
-
 void TwitterApiDMessageDialog::errorPost(Choqok::Account *theAccount, Choqok::Post *thePost,
         Choqok::MicroBlog::ErrorType , QString ,
         Choqok::MicroBlog::ErrorLevel)
