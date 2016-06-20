@@ -72,15 +72,16 @@ void TwitterApiPostWidget::initUi()
     Choqok::UI::PostWidget::initUi();
 
     QPushButton *btnRe = addButton(QLatin1String("btnReply"), i18nc("@info:tooltip", "Reply"), QLatin1String("edit-undo"));
+    connect(btnRe, SIGNAL(clicked(bool)), SLOT(slotReply()));
     QMenu *menu = new QMenu(btnRe);
+    btnRe->setMenu(menu);
 
     QAction *actRep = new QAction(QIcon::fromTheme(QLatin1String("edit-undo")), i18n("Reply to %1", currentPost()->author.userName), menu);
     menu->addAction(actRep);
+    menu->setDefaultAction(actRep);
     connect(actRep, SIGNAL(triggered(bool)), SLOT(slotReply()));
-    connect(btnRe, SIGNAL(clicked(bool)), SLOT(slotReply()));
 
-    QAction *actWrite = new QAction(QIcon::fromTheme(QLatin1String("document-edit")), i18n("Write to %1", currentPost()->author.userName),
-                                    menu);
+    QAction *actWrite = new QAction(QIcon::fromTheme(QLatin1String("document-edit")), i18n("Write to %1", currentPost()->author.userName), menu);
     menu->addAction(actWrite);
     connect(actWrite, SIGNAL(triggered(bool)), SLOT(slotWriteTo()));
 
@@ -88,12 +89,7 @@ void TwitterApiPostWidget::initUi()
         QAction *actReplytoAll = new QAction(i18n("Reply to all"), menu);
         menu->addAction(actReplytoAll);
         connect(actReplytoAll, SIGNAL(triggered(bool)), SLOT(slotReplyToAll()));
-    }
 
-    menu->setDefaultAction(actRep);
-    btnRe->setMenu(menu);
-
-    if (!currentPost()->isPrivate) {
         d->btnFav = addButton(QLatin1String("btnFavorite"), i18nc("@info:tooltip", "Favorite"), QLatin1String("rating"));
         d->btnFav->setCheckable(true);
         connect(d->btnFav, SIGNAL(clicked(bool)), SLOT(setFavorite()));
