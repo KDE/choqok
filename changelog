@@ -1,3 +1,9 @@
+=== Version 1.5.85 -- 02-Aug-2016 ===
+* Sort followers alphabeticaly using case insensitive
+* Fix empty About dialog [BUG:364408]
+* Twitter: read maximum direct message length from configuration
+* Twitter: fix bug that sends a direct message multiple times
+
 === Version 1.5.80 -- 16-Jul-2016 ===
 * Migrated to Qt and KDE Frameworks 5 (config files are migrated first time)
 * Add Friendica microblog based on GNU Social api
