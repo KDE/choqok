@@ -118,15 +118,20 @@ void MediaManager::slotImageFetched(KJob *job)
     KIO::StoredTransferJob *baseJob = qobject_cast<KIO::StoredTransferJob *>(job);
     QString remote = d->queue.value(job);
     d->queue.remove(job);
-    if (job->error()) {
+
+    int responseCode = 0;
+    if (baseJob->metaData().contains(QStringLiteral("responsecode"))) {
+        responseCode = baseJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+    }
+
+    if (job->error() || (responseCode > 399 && responseCode < 600)) {
         qCCritical(CHOQOK) << "Job error:" << job->error() << "\t" << job->errorString();
-        QString errMsg = i18n("Cannot download image from %1.",
-                              job->errorString());
+        qCCritical(CHOQOK) << "HTTP response code" << responseCode;
+        QString errMsg = i18n("Cannot download image from %1.", job->errorString());
         Q_EMIT fetchError(remote, errMsg);
     } else {
         QPixmap p;
-        if (!baseJob->data().startsWith(QByteArray("<?xml version=\"")) &&
-                p.loadFromData(baseJob->data())) {
+        if (p.loadFromData(baseJob->data())) {
             d->cache.insertPixmap(remote, p);
             Q_EMIT imageFetched(remote, p);
         } else {
