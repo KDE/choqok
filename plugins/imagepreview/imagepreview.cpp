@@ -36,7 +36,6 @@ K_PLUGIN_FACTORY_WITH_JSON(ImagePreviewFactory, "choqok_imagepreview.json",
                            registerPlugin < ImagePreview > ();)
 
 const QRegExp ImagePreview::mYFrogRegExp(QLatin1String("(http://yfrog.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])"));
-const QRegExp ImagePreview::mPlixiRegExp(QLatin1String("(http://plixi.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])"));
 const QRegExp ImagePreview::mImgLyRegExp(QLatin1String("(http://img.ly/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])"));
 const QRegExp ImagePreview::mTwitgooRegExp(QLatin1String("(http://(([a-zA-Z0-9]+\\.)?)twitgoo.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])"));
 const QRegExp ImagePreview::mPumpIORegExp(QLatin1String("(https://([a-zA-Z0-9]+\\.)?[a-zA-Z0-9]+\\.[a-zA-Z]+/uploads/\\w+/\\d{4}/\\d{1,2}/\\d{1,2}/\\w+)(\\.[a-zA-Z]{3,4})"));
@@ -86,7 +85,6 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
     }
     int pos = 0;
     QStringList yfrogRedirectList;
-    QStringList PlixiRedirectList;
     QStringList ImgLyRedirectList;
     QStringList TwitgooRedirectList;
     QStringList PumpIORedirectList;
@@ -108,22 +106,6 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
         mParsingList.insert(yfrogThumbnailUrl, postToParse);
         mBaseUrlMap.insert(yfrogThumbnailUrl, url);
         Choqok::MediaManager::self()->fetchImage(yfrogThumbnailUrl, Choqok::MediaManager::Async);
-    }
-
-    //Plixy; http://groups.google.com/group/plixi/web/fetch-photos-from-url
-    pos = 0;
-    while ((pos = mPlixiRegExp.indexIn(content, pos)) != -1) {
-        pos += mPlixiRegExp.matchedLength();
-        PlixiRedirectList << mPlixiRegExp.cap(0);
-    }
-    for (const QString &url: PlixiRedirectList) {
-        connect(Choqok::MediaManager::self(),
-                SIGNAL(imageFetched(QString,QPixmap)),
-                SLOT(slotImageFetched(QString,QPixmap)));
-        QString PlixiUrl = QLatin1String("http://api.plixi.com/api/tpapi.svc/json/imagefromurl?size=thumbnail&url=") + url;
-        mParsingList.insert(PlixiUrl, postToParse);
-        mBaseUrlMap.insert(PlixiUrl, url);
-        Choqok::MediaManager::self()->fetchImage(PlixiUrl, Choqok::MediaManager::Async);
     }
 
     //Img.ly; http://img.ly/api/docs
