@@ -27,9 +27,7 @@
 #include <QObject>
 #include <QString>
 
-#include "config-imstatus.h"
-
-#if TELEPATHY_FOUND
+#ifdef TELEPATHY_FOUND
 #include <TelepathyQt/Types>
 
 namespace Tp
@@ -58,7 +56,7 @@ private:
     void useSkype(const QString &statusMessage);
     void usePidgin(const QString &statusMessage);
 
-#if TELEPATHY_FOUND
+#ifdef TELEPATHY_FOUND
 private Q_SLOTS:
     void slotFinished(Tp::PendingOperation *po);
 
