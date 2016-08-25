@@ -25,8 +25,9 @@
 #ifndef UNTINY_H
 #define UNTINY_H
 
-#include <plugin.h>
-#include <qqueue.h>
+#include "plugin.h"
+
+#include <QQueue>
 #include <QUrl>
 #include <QPointer>
 
@@ -36,13 +37,10 @@ class Job;
 
 class KJob;
 namespace Choqok {
-    class ShortenManager;
 namespace UI {
     class PostWidget;
 }
 }
-
-class KConfigGroup;
 
 class UnTiny : public Choqok::Plugin
 {

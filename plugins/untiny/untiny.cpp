@@ -23,21 +23,24 @@
 */
 
 #include "untiny.h"
-#include <KGenericFactory>
-#include <choqokuiglobal.h>
-#include "postwidget.h"
-#include <kio/jobclasses.h>
-#include <KIO/Job>
-#include <shortenmanager.h>
-#include <untinysettings.h>
-#include <qmutex.h>
-#include <QDomDocument>
 
-K_PLUGIN_FACTORY( MyPluginFactory, registerPlugin < UnTiny > (); )
-K_EXPORT_PLUGIN( MyPluginFactory( "choqok_untiny" ) )
+#include <QTimer>
+
+#include <KIO/MimetypeJob>
+#include <KPluginFactory>
+
+#include "choqokuiglobal.h"
+#include "postwidget.h"
+#include "shortenmanager.h"
+
+#include "untinysettings.h"
+
+K_PLUGIN_FACTORY_WITH_JSON(UnTinyFactory, "choqok_untiny.json",
+                           registerPlugin < UnTiny > ();)
 
 UnTiny::UnTiny(QObject* parent, const QList< QVariant >& )
-    :Choqok::Plugin(MyPluginFactory::componentData(), parent), state(Stopped)
+    : Choqok::Plugin(QLatin1String("choqok_untiny"), parent)
+    , state(Stopped)
 {
     connect( Choqok::UI::Global::SessionManager::self(),
             SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
@@ -79,25 +82,25 @@ void UnTiny::parse(QPointer<Choqok::UI::PostWidget> postToParse)
         return;
     QStringList redirectList, pureList = postToParse->urls();
     QString content = postToParse->currentPost()->content;
-    for( int i=0; i < pureList.count(); ++i) {
+    for (int i=0; i < pureList.count(); ++i) {
         if(pureList[i].length()>30)
             continue;
-        if(!pureList[i].startsWith(QString("http"), Qt::CaseInsensitive)){
-            pureList[i].prepend("http://");
+        if(!pureList[i].startsWith(QLatin1String("http"), Qt::CaseInsensitive)){
+            pureList[i].prepend(QLatin1String("http://"));
         }
         redirectList << pureList[i];
     }
-        for (const QString &url, redirectList) {
-            KIO::TransferJob *job = KIO::mimetype( url, KIO::HideProgressInfo );
-            if ( !job ) {
-                qCritical() << "Cannot create a http header request!";
-                break;
-            }
-            connect( job, SIGNAL( permanentRedirection( KIO::Job*, QUrl, QUrl ) ),
-                    this, SLOT( slot301Redirected(KIO::Job*,QUrl,QUrl)) );
-            mParsingList.insert(job, postToParse);
-            job->start();
+    for (const QString &url: redirectList) {
+        KIO::MimetypeJob *job = KIO::mimetype( QUrl::fromUserInput(url), KIO::HideProgressInfo );
+        if ( !job ) {
+            qCritical() << "Cannot create a http header request!";
+            break;
         }
+        connect( job, SIGNAL( permanentRedirection( KIO::Job*, QUrl, QUrl ) ),
+                this, SLOT( slot301Redirected(KIO::Job*,QUrl,QUrl)) );
+        mParsingList.insert(job, postToParse);
+        job->start();
+    }
 }
 
 void UnTiny::slot301Redirected(KIO::Job* job, QUrl fromUrl, QUrl toUrl)
@@ -107,11 +110,11 @@ void UnTiny::slot301Redirected(KIO::Job* job, QUrl fromUrl, QUrl toUrl)
     if(postToParse){
         QString content = postToParse->content();
         QString fromUrlStr = fromUrl.url();
-        content.replace(QRegExp("title='" + fromUrlStr + '\''), "title='" + toUrl.url() + '\'');
-        content.replace(QRegExp("href='" + fromUrlStr + '\''), "href='" + toUrl.url() + '\'');
+        content.replace(QRegExp(QStringLiteral("title='%1\'").arg(fromUrlStr)), QStringLiteral("title='%1\'").arg(toUrl.url()));
+        content.replace(QRegExp(QStringLiteral("href='%1\'").arg(fromUrlStr)), QStringLiteral("href='%1\'").arg(toUrl.url()));
         postToParse->setContent(content);
         Choqok::ShortenManager::self()->emitNewUnshortenedUrl(postToParse, fromUrl, toUrl);
-        if(toUrl.url().length() < 30 && fromUrl.url().startsWith("http://t.co/")){
+        if (toUrl.url().length() < 30 && fromUrl.url().startsWith(QLatin1String("http://t.co/"))){
             KIO::TransferJob *job = KIO::mimetype( toUrl, KIO::HideProgressInfo );
             if ( !job ) {
                 qCritical() << "Cannot create a http header request!";
@@ -124,3 +127,5 @@ void UnTiny::slot301Redirected(KIO::Job* job, QUrl fromUrl, QUrl toUrl)
         }
     }
 }
+
+#include "untiny.moc"
