@@ -43,9 +43,9 @@ UnTiny::UnTiny(QObject* parent, const QList< QVariant >& )
     , state(Stopped)
 {
     connect( Choqok::UI::Global::SessionManager::self(),
-            SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
+             &Choqok::UI::Global::SessionManager::newPostWidgetAdded,
              this,
-            SLOT(slotAddNewPostWidget(Choqok::UI::PostWidget*)) );
+             &UnTiny::slotAddNewPostWidget );
 }
 
 UnTiny::~UnTiny()
@@ -83,8 +83,9 @@ void UnTiny::parse(QPointer<Choqok::UI::PostWidget> postToParse)
     QStringList redirectList, pureList = postToParse->urls();
     QString content = postToParse->currentPost()->content;
     for (int i=0; i < pureList.count(); ++i) {
-        if(pureList[i].length()>30)
+        if(pureList[i].length() > 30){
             continue;
+        }
         if(!pureList[i].startsWith(QLatin1String("http"), Qt::CaseInsensitive)){
             pureList[i].prepend(QLatin1String("http://"));
         }
@@ -96,8 +97,7 @@ void UnTiny::parse(QPointer<Choqok::UI::PostWidget> postToParse)
             qCritical() << "Cannot create a http header request!";
             break;
         }
-        connect( job, SIGNAL( permanentRedirection( KIO::Job*, QUrl, QUrl ) ),
-                this, SLOT( slot301Redirected(KIO::Job*,QUrl,QUrl)) );
+        connect( job, &KIO::MimetypeJob::permanentRedirection, this, &UnTiny::slot301Redirected );
         mParsingList.insert(job, postToParse);
         job->start();
     }
@@ -114,13 +114,10 @@ void UnTiny::slot301Redirected(KIO::Job* job, QUrl fromUrl, QUrl toUrl)
         content.replace(QRegExp(QStringLiteral("href='%1\'").arg(fromUrlStr)), QStringLiteral("href='%1\'").arg(toUrl.url()));
         postToParse->setContent(content);
         Choqok::ShortenManager::self()->emitNewUnshortenedUrl(postToParse, fromUrl, toUrl);
-        if (toUrl.url().length() < 30 && fromUrl.url().startsWith(QLatin1String("http://t.co/"))){
+        if (toUrl.url().length() < 30 && fromUrl.host() == QLatin1String("t.co")){
             KIO::TransferJob *job = KIO::mimetype( toUrl, KIO::HideProgressInfo );
-            if ( !job ) {
-                qCritical() << "Cannot create a http header request!";
-            } else {
-                connect( job, SIGNAL( permanentRedirection( KIO::Job*, QUrl, QUrl ) ),
-                        this, SLOT( slot301Redirected(KIO::Job*,QUrl,QUrl)) );
+            if ( job ) {
+                connect( job, &KIO::MimetypeJob::permanentRedirection, this, &UnTiny::slot301Redirected );
                 mParsingList.insert(job, postToParse);
                 job->start();
             }

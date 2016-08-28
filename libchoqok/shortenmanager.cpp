@@ -97,20 +97,11 @@ QString ShortenManager::shortenUrl(const QString &url)
     if (_smp->backend) {
         qCDebug(CHOQOK) << "Shortening:" << url;
         NotifyManager::shortening(url);
-// #ifndef QT_NO_CONCURRENT
-        ///Commented due KIO doesn't support running in another thread
-        ///We need another solution :)
-//         QFuture<QString> res = QtConcurrent::run<QString>( shorten, QString(url));
-//         while( res.isRunning() )
-//             QApplication::processEvents();
-//         return res.result();
-// #else
         QString shortUrl = shorten(url);
         if (BehaviorSettings::removeHttp() && url != shortUrl) {
             shortUrl.remove(_smp->removeUrlRegExp);
         }
         return shortUrl;
-// #endif
     } else {
         qCDebug(CHOQOK) << "There isn't any Shortener plugin.";
         return url;
