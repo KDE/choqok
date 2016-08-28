@@ -1,15 +1,36 @@
-=== Version x.y -- ??? ===
+=== Version 1.5.85 -- 02-Aug-2016 ===
+* Sort followers alphabeticaly using case insensitive
+* Fix empty About dialog [BUG:364408]
+* Twitter: read maximum direct message length from configuration
+* Twitter: fix bug that sends a direct message multiple times
+
+=== Version 1.5.80 -- 16-Jul-2016 ===
 * Migrated to Qt and KDE Frameworks 5 (config files are migrated first time)
+* Add Friendica microblog based on GNU Social api
+* Rename StatusNet microblog as GNU Social
 * Twitter: fix user lists loading [BUG:345641]
+* Twitter: allow to select any follower when sending a direct message
+* Twitter: fix searches by username
+* Twitter: fix searches by hashtag
+* Twitter: show original retweet time [BUG:343438]
+* Twitter: fix external URL to access direct messages and tweets
+* Twitter: send direct message without text limits
+* Twitter: support to send and view tweets with quoted text
+* Twitter: allow to delete direct messages
+* Twitter: always show 'Mark as read' button
 * GNU Social: fix medium attachment to post
+* GNU Social: allow to send direct messages
 * Pump.IO: do not show resend button for own posts
 * Pump.IO: display avatar image in own posts on the right
 * Pump.IO: do not create a post if there's no text
-* Rename StatusNet as GNU Social
-* Fixed a bug that remove the account with the same alias when adding a new one with the same alias
-* Do not create a quick post if there's no text
-* Use HTTPS when available
-* Dropped Twitpic plugin (service is dead)
+* Fix removal of accounts with spaces in their name
+* Add scalable versions of Choqok icon
+* Check the result of external URL opening to report any failure [BUG:347525]
+* Fixed a bug that overwrite an account with the same alias if you use the same alias
+* Do not allow to send quick posts with no text
+* Always use HTTPS when available
+* ImageView: dropped Twitpic and Tweetphoto support (service are dead)
+* A couple of segmentation fault fixes
 
 === Version 1.5 -- 25-Jan-2015 ===
 * Yourls plugin fixed. (by Benjamin Marwell) [BUG:265219]

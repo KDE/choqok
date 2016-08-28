@@ -41,6 +41,8 @@ public:
     ChoqokApplication(int &argc, char **argv);
     ~ChoqokApplication();
 
+    void setupMainWindow();
+
 public Q_SLOTS:
     /**
      * Quit Choqok, closing all the windows, which causes application shutdown

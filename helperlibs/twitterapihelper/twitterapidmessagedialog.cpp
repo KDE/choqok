@@ -66,7 +66,7 @@ TwitterApiDMessageDialog::TwitterApiDMessageDialog(TwitterApiAccount *theAccount
     if (list.isEmpty()) {
         reloadFriendslist();
     } else {
-        list.sort();
+        list.sort(Qt::CaseInsensitive);
         d->comboFriendsList->addItems(list);
     }
 }
@@ -125,6 +125,11 @@ Choqok::UI::TextEdit *TwitterApiDMessageDialog::editor()
     return d->editor;
 }
 
+TwitterApiAccount *TwitterApiDMessageDialog::account()
+{
+    return d->account;
+}
+
 void TwitterApiDMessageDialog::reloadFriendslist()
 {
     d->comboFriendsList->clear();
@@ -167,16 +172,8 @@ void TwitterApiDMessageDialog::followersUsernameListed(TwitterApiAccount *theAcc
 {
     if (theAccount == d->account) {
         d->comboFriendsList->clear();
-        list.sort();
+        list.sort(Qt::CaseInsensitive);
         d->comboFriendsList->addItems(list);
-    }
-}
-
-void TwitterApiDMessageDialog::postCreated(Choqok::Account *theAccount, Choqok::Post *thePost)
-{
-    if (theAccount == d->account && thePost == d->sentPost) {
-        qCDebug(CHOQOK);
-        accept();
     }
 }
 

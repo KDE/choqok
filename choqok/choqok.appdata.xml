@@ -18,6 +18,7 @@
   <name xml:lang="fi">Choqok</name>
   <name xml:lang="fr">Choqok</name>
   <name xml:lang="gl">Choqok</name>
+  <name xml:lang="it">Choqok</name>
   <name xml:lang="nb">Choqok</name>
   <name xml:lang="nds">Choqok</name>
   <name xml:lang="nl">Choqok</name>
@@ -36,14 +37,16 @@
     </p>
     <p xml:lang="ar">چغوك هو عميل تدوين مصغّر يدعم خدمتيّ Twitter.com و Pump.io</p>
     <p xml:lang="bs">Choqok je mikro-blog klijent koji podržava Twitter.com i Pump.io  usluge</p>
-    <p xml:lang="ca">El Choqok és un client de microblogs que implementa els serveis de Twitter.com i Pump.io</p>
-    <p xml:lang="ca-valencia">El Choqok és un client de microblogs que implementa els serveis de Twitter.com i Pump.io</p>
+    <p xml:lang="ca">El Choqok és un client de microblogs que admet els serveis de Twitter.com i Pump.io</p>
+    <p xml:lang="ca-valencia">El Choqok és un client de microblogs que admet els serveis de Twitter.com i Pump.io</p>
     <p xml:lang="de">Choqok ist ein Mikro-Blogging-Programm, das derzeit die Dienste Twitter.com und Pump.io unterstützt</p>
+    <p xml:lang="el">Το Choqok είναι μια εφαρμογή μικρο-ιστολογίου η οποία υποστηρίζει τις υπηρεσίες Twitter.com και Pump.io</p>
     <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com and Pump.io services</p>
     <p xml:lang="es">Choqok es un cliente de microblogueo que admite los servicios Twitter.com y Pump.io</p>
     <p xml:lang="fi">Choqok on mikroblogausasiakas, joka tukee Twitter.com- ja Pump.io-palveluja</p>
     <p xml:lang="fr">Choqok est un client de micro-bloggage prenant en charge les services Twitter.com et Pump.io</p>
     <p xml:lang="gl">Choqok é un cliente de microbloque compatíbel cos servizos Twitter e Pump.io.</p>
+    <p xml:lang="it">Choqok è un client per micro-blogging che supporta i servizi Twitter.com e Pump.io</p>
     <p xml:lang="nl">Choqok is een micro-blogging-client, die de services Twitter.com en Pump.io ondersteunt</p>
     <p xml:lang="pl">Choqok jest klientem mikro bloków, który obsługuje usługi Twitter.com oraz Pump.io</p>
     <p xml:lang="pt">O Choqok é um cliente de micro-blogs que suporta os serviços do Twitter.com e do Pump.io</p>
@@ -53,6 +56,7 @@
     <p xml:lang="sv">Choqok är en klient för mikrobloggar som stöder tjänsterna Twitter.com och Pump.io</p>
     <p xml:lang="uk">Choqok — клієнтська програма для роботи з мікроблогами, у якій передбачено підтримку служб Twitter.com та Pump.io.</p>
     <p xml:lang="x-test">xxChoqok is a micro-blogging client which supports Twitter.com and Pump.io servicesxx</p>
+    <p xml:lang="zh-CN">Choqok 是一个支持 Twitter.com 和 Pump.io 服务的微博客客户端</p>
     <p>Features:</p>
     <p xml:lang="ar">الميزات:</p>
     <p xml:lang="bs">Svojstva:</p>
@@ -67,6 +71,7 @@
     <p xml:lang="fi">Ominaisuudet:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
+    <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="nb">Egenskaper:</p>
     <p xml:lang="nds">Markmalen:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
@@ -83,8 +88,8 @@
       <li>Supporting Twitter.com micro-blogging service</li>
       <li xml:lang="ar">دعم خدمة التّدوين المصغّر Twitter.com</li>
       <li xml:lang="bs">Podrška Twitter.com mikro-blog usluge</li>
-      <li xml:lang="ca">Implementació del servei de microblog Twitter.com</li>
-      <li xml:lang="ca-valencia">Implementació del servei de microblog Twitter.com</li>
+      <li xml:lang="ca">Permet el servei de microblog Twitter.com</li>
+      <li xml:lang="ca-valencia">Permet el servei de microblog Twitter.com</li>
       <li xml:lang="de">Unterstützung für den Micro-Blogging-Dienst Twitter.com</li>
       <li xml:lang="el">Υποστηρίζει την υπηρεσία μικρο-ιστολογίου Twitter.com</li>
       <li xml:lang="en-GB">Supporting Twitter.com micro-blogging service</li>
@@ -92,6 +97,7 @@
       <li xml:lang="fi">Tukee Twitter.com-mikroblogauspalvelua</li>
       <li xml:lang="fr">Prise en charge du service de micro-bloggage Twitter.com</li>
       <li xml:lang="gl">Compatibilidade co servizo de microblogue Twitter.</li>
+      <li xml:lang="it">Supporta il servizio per micro-blogging Twitter.com</li>
       <li xml:lang="nb">Støtter Twitter.com-tjeneste for mikroblogging</li>
       <li xml:lang="nds">Ünnerstütt den Lüttdaagbookdeenst Twitter.com</li>
       <li xml:lang="nl">Ondersteunt de microblogging-service Twitter.com</li>
@@ -103,16 +109,20 @@
       <li xml:lang="sv">Stöder mikrobloggtjänsten Twitter.com</li>
       <li xml:lang="uk">підтримка служби мікроблогів Twitter.com;</li>
       <li xml:lang="x-test">xxSupporting Twitter.com micro-blogging servicexx</li>
+      <li xml:lang="zh-CN">支持 Twitter.com 微博客服务</li>
       <li>Supporting self hosted Pump.io service</li>
       <li xml:lang="ar">دعم خدمة Pump.io المضافة ذاتيًّا</li>
       <li xml:lang="bs">Podrška za samodovoljnu Pump.io  uslugu</li>
-      <li xml:lang="ca">Implementació per al servei Pump.io auto hostatjat</li>
-      <li xml:lang="ca-valencia">Implementació per al servei Pump.io auto hostatjat</li>
+      <li xml:lang="ca">Permet el servei Pump.io auto hostatjat</li>
+      <li xml:lang="ca-valencia">Permet el servei Pump.io auto hostatjat</li>
+      <li xml:lang="de">Unterstützung für die eigene Pump.io-Instanz</li>
+      <li xml:lang="el">Υποστηρίζει αυτο-φιλοξενούμενη υπηρεσία Pump.io</li>
       <li xml:lang="en-GB">Supporting self hosted Pump.io service</li>
       <li xml:lang="es">Soporta el servicio auto hospedado Pump.io</li>
       <li xml:lang="fi">Tukee itse isännöityä Pump.io-palvelua</li>
       <li xml:lang="fr">Prise en charge du service auto-hébergé Pump.io</li>
       <li xml:lang="gl">Compatíbel con servizos de microblogue baseados en Pump.io.</li>
+      <li xml:lang="it">Supporta il servizio Pump.io</li>
       <li xml:lang="nl">Ondersteuning voor zelf gehoste Pump.io service</li>
       <li xml:lang="pl">Obsługa samoutrzymywanej usługi Pump.io</li>
       <li xml:lang="pt">Suporte para o serviço auto-alojado do Pump.io</li>
@@ -122,16 +132,19 @@
       <li xml:lang="sv">Stöder tjänsten Pump.io på egen värddator</li>
       <li xml:lang="uk">підтримка автономної власної служби Pump.io;</li>
       <li xml:lang="x-test">xxSupporting self hosted Pump.io servicexx</li>
+      <li xml:lang="zh-CN">支持自己架设的 Pump.io 服务</li>
       <li>Supporting self hosted GNU social service</li>
       <li xml:lang="ar">دعم خدمة غنو الاجتماعيّة المضافة ذاتيًّا</li>
       <li xml:lang="bs">PoPodrška za samodovoljnu GNU social  uslugu</li>
-      <li xml:lang="ca">Implementació per al servei social de la GNU auto hostatjat</li>
-      <li xml:lang="ca-valencia">Implementació per al servei social de la GNU auto hostatjat</li>
+      <li xml:lang="ca">Permet el servei social de la GNU auto hostatjat</li>
+      <li xml:lang="ca-valencia">Permet el servei social de la GNU auto hostatjat</li>
+      <li xml:lang="el">Υποστηρίζει αυτο-φιλοξενούμενη υπηρεσία GNU social</li>
       <li xml:lang="en-GB">Supporting self hosted GNU social service</li>
       <li xml:lang="es">Soporta el servicio auto hospedado GNU social</li>
       <li xml:lang="fi">Tukee itse isännöityä GNU social -palvelu</li>
       <li xml:lang="fr">Prise en charge du service social auto-hébergé GNU</li>
       <li xml:lang="gl">Compatíbel con servizos de microblogue baseados en GNU social.</li>
+      <li xml:lang="it">Supporta il servizio GNU social</li>
       <li xml:lang="nl">Ondersteuning voor zelf gehoste GNU sociaal service</li>
       <li xml:lang="pl">Obsługa samoutrzymywanej usługi społecznościowej GNU</li>
       <li xml:lang="pt">Suporte para o serviço auto-alojado do GNU social</li>
@@ -141,17 +154,19 @@
       <li xml:lang="sv">Stöder tjänsten GNU social på egen värddator</li>
       <li xml:lang="uk">підтримка автономної власної служби GNU social;</li>
       <li xml:lang="x-test">xxSupporting self hosted GNU social servicexx</li>
+      <li xml:lang="zh-CN">支持自己架设的 GNU Social 服务</li>
       <li>Supporting User + His/Her Friends time-lines</li>
       <li xml:lang="ar">دعم الخطوط الزّمنيّة للمستخدم وأصدقائه</li>
       <li xml:lang="bs">Podrška korisniku + vremenske linije Njegovih/Njenih Prijatelja</li>
-      <li xml:lang="ca">Implementació per a les línies de temps Usuari + Vós i els vostres amics</li>
-      <li xml:lang="ca-valencia">Implementació per a les línies de temps Usuari + Vós i els vostres amics</li>
+      <li xml:lang="ca">Permet les línies de temps Usuari + Vós i els vostres amics</li>
+      <li xml:lang="ca-valencia">Permet les línies de temps Usuari + Vós i els vostres amics</li>
       <li xml:lang="el">Υποστηρίζει χρονολόγια για χρήστη + φίλους</li>
       <li xml:lang="en-GB">Supporting User + His/Her Friends time-lines</li>
       <li xml:lang="es">Soporta las líneas temporales usuario + sus amigos</li>
       <li xml:lang="fi">Tukee käyttäjän ja hänen kaveriensa aikajanoja</li>
       <li xml:lang="fr">Prise en charge des flux de l'utilisateur et de ses amis</li>
       <li xml:lang="gl">Acceso á súa liñas do tempo e maila dos seus contactos.</li>
+      <li xml:lang="it">Supporta linee temporali dell'utente e dei suoi amici</li>
       <li xml:lang="nb">Støtter User + His/Her Friends tidslinjer</li>
       <li xml:lang="nds">Ünnerstütt Teitregen för Brukers un ehr Frünnen</li>
       <li xml:lang="nl">Ondersteuning van User + His/Her Friends tijdlijnen</li>
@@ -163,17 +178,19 @@
       <li xml:lang="sv">Stöd för tidslinjer för användaren och hans eller hennes vänner</li>
       <li xml:lang="uk">підтримка показу розкладу повідомлень користувача та його друзів;</li>
       <li xml:lang="x-test">xxSupporting User + His/Her Friends time-linesxx</li>
+      <li xml:lang="zh-CN">支持用户及其好友的时间线</li>
       <li>Supporting @Reply time-lines</li>
       <li xml:lang="ar">دعم خطوط @الرّد الزّمنيّة</li>
       <li xml:lang="bs">Podrška @Odgovori vremenskim linijama</li>
-      <li xml:lang="ca">Implementació per a les línies de temps @Resposta</li>
-      <li xml:lang="ca-valencia">Implementació per a les línies de temps @Resposta</li>
+      <li xml:lang="ca">Permet les línies de temps @Resposta</li>
+      <li xml:lang="ca-valencia">Permet les línies de temps @Resposta</li>
       <li xml:lang="el">Υποστηρίζει χρονολόγια @Reply</li>
       <li xml:lang="en-GB">Supporting @Reply time-lines</li>
       <li xml:lang="es">Soporta las líneas temporales de @respuesta</li>
       <li xml:lang="fi">Tukee @Reply-aikajanoja</li>
       <li xml:lang="fr">Prise en charge des balises de réponse (« @utilisateur »)</li>
       <li xml:lang="gl">Acceso a liñas do tempo de respostas.</li>
+      <li xml:lang="it">Supporta linee temporali @Reply</li>
       <li xml:lang="nb">Støtter @Reply  tidslinjer</li>
       <li xml:lang="nds">Ünnerstütt @Reply-Tietregen</li>
       <li xml:lang="nl">Ondersteuning van @Reply tijdlijnen</li>
@@ -185,11 +202,12 @@
       <li xml:lang="sv">Stöd för tidslinjer för svar (@Reply)</li>
       <li xml:lang="uk">підтримка розкладів @Reply;</li>
       <li xml:lang="x-test">xxSupporting @Reply time-linesxx</li>
+      <li xml:lang="zh-CN">支持 @ 回复时间线</li>
       <li>Support for send and receive direct messages</li>
       <li xml:lang="ar">دعم إرسال الرّسائل المباشرة واستقبالها</li>
       <li xml:lang="bs">Podrška za slanje i primanje izravnih poruka</li>
-      <li xml:lang="ca">Implementació per enviar i rebre missatges directes</li>
-      <li xml:lang="ca-valencia">Implementació per enviar i rebre missatges directes</li>
+      <li xml:lang="ca">Permet enviar i rebre missatges directes</li>
+      <li xml:lang="ca-valencia">Permet enviar i rebre missatges directes</li>
       <li xml:lang="de">Direktes Senden und Empfangen von Nachrichten über DCC</li>
       <li xml:lang="el">Υποστηρίζει την άμεση αποστολή και λήψη μηνυμάτων</li>
       <li xml:lang="en-GB">Support for send and receive direct messages</li>
@@ -197,6 +215,7 @@
       <li xml:lang="fi">Tukee suorien viestien lähettämistä ja vastaanottamista</li>
       <li xml:lang="fr">Envoi et réception de messages directs</li>
       <li xml:lang="gl">Permite enviar e recibir mensaxes directas.</li>
+      <li xml:lang="it">Supporta l'invio e la ricezione di messaggi diretti</li>
       <li xml:lang="nb">Støtte for å sende og motta direkte meldinger</li>
       <li xml:lang="nds">Ünnerstütt dat Kriegen un Loosstüern vun Direktnarichten</li>
       <li xml:lang="nl">Ondersteuning van direct bestanden verzenden en ontvangen</li>
@@ -208,6 +227,7 @@
       <li xml:lang="sv">Stöd för att skicka och ta emot direktmeddelanden</li>
       <li xml:lang="uk">підтримка надсилання та отримання безпосередніх повідомлень;</li>
       <li xml:lang="x-test">xxSupport for send and receive direct messagesxx</li>
+      <li xml:lang="zh-CN">支持收发私信</li>
       <li>Twitpic.com integration</li>
       <li xml:lang="ar">التّكامل مع Twitpic.com</li>
       <li xml:lang="bs">Twitpic.com integracija</li>
@@ -220,6 +240,7 @@
       <li xml:lang="fi">Twitpic.com-integrointi</li>
       <li xml:lang="fr">Intégration avec Twitpic.com</li>
       <li xml:lang="gl">Integración con Twitpic.</li>
+      <li xml:lang="it">Integrazione con Twitpic.com</li>
       <li xml:lang="nb">Integrasjon med Twitpic.com</li>
       <li xml:lang="nds">Arbeidt mit Twitpic.com tosamen</li>
       <li xml:lang="nl">Integratie met Twitpic.com</li>
@@ -235,8 +256,8 @@
       <li>Supporting Multiple Accounts simultaneously</li>
       <li xml:lang="ar">دعم عدّة حسابات في آن واحد</li>
       <li xml:lang="bs">Podrška za više računa istovremeno</li>
-      <li xml:lang="ca">Implementació per a múltiples comptes simultanis</li>
-      <li xml:lang="ca-valencia">Implementació per a múltiples comptes simultanis</li>
+      <li xml:lang="ca">Permet múltiples comptes simultanis</li>
+      <li xml:lang="ca-valencia">Permet múltiples comptes simultanis</li>
       <li xml:lang="de">Unterstützung für mehrere gleichzeitige Zugänge</li>
       <li xml:lang="el">Υποστηρίζει πολλούς λογαριασμούς ταυτόχρονα</li>
       <li xml:lang="en-GB">Supporting Multiple Accounts simultaneously</li>
@@ -244,6 +265,7 @@
       <li xml:lang="fi">Tukee useampia tilejä samanaikaisesti</li>
       <li xml:lang="fr">Prise en charge simultanée de plusieurs comptes</li>
       <li xml:lang="gl">Permite usar varias contas de maneira simultánea.</li>
+      <li xml:lang="it">Supporta simultaneamente account multipli</li>
       <li xml:lang="nb">Støtter flere kontoer samtidig</li>
       <li xml:lang="nds">Ünnerstütt mehr Kontos op eenmaal</li>
       <li xml:lang="nl">Ondersteuning van meerdere accounts tegelijk</li>
@@ -255,11 +277,12 @@
       <li xml:lang="sv">Stöder flera samtidiga konton</li>
       <li xml:lang="uk">підтримка одночасної роботи з декількома обліковими записами;</li>
       <li xml:lang="x-test">xxSupporting Multiple Accounts simultaneouslyxx</li>
+      <li xml:lang="zh-CN">支持同时登录多账户</li>
       <li>Supporting search APIs for all services</li>
       <li xml:lang="ar">دعم البحث في كلّ الخدمات عبر واجهة برمجة التّطبيقات</li>
       <li xml:lang="bs">Podrška za pretraživački API za sve usluge</li>
-      <li xml:lang="ca">Implementació per a les API de cerca per a tots els serveis</li>
-      <li xml:lang="ca-valencia">Implementació per a les API de cerca per a tots els serveis</li>
+      <li xml:lang="ca">Permet les API de cerca per a tots els serveis</li>
+      <li xml:lang="ca-valencia">Permet les API de cerca per a tots els serveis</li>
       <li xml:lang="de">Unterstützt Auch-APIs für alle Dienste</li>
       <li xml:lang="el">Υποστηρίζει API αναζήτησης για όλες τις υπηρεσίες</li>
       <li xml:lang="en-GB">Supporting search APIs for all services</li>
@@ -267,6 +290,7 @@
       <li xml:lang="fi">Tukee jokaisen tuntemansa palvelun haku-APIa</li>
       <li xml:lang="fr">Prise en charge des API de recherche pour tous les services</li>
       <li xml:lang="gl">Permite realizar buscas nos servizos.</li>
+      <li xml:lang="it">Supporta API di ricerca per tutti i servizi</li>
       <li xml:lang="nb">Støtter søke-API-er for alle tjenester</li>
       <li xml:lang="nds">Ünnerstütt Söök-APIs för all Deensten</li>
       <li xml:lang="nl">Ondersteunen van API's voor zoeken voor alle services</li>
@@ -278,6 +302,7 @@
       <li xml:lang="sv">Stöder programmeringsgränssnitt för sökning med alla tjänster</li>
       <li xml:lang="uk">підтримка програмного інтерфейсу пошуку для усіх служб;</li>
       <li xml:lang="x-test">xxSupporting search APIs for all servicesxx</li>
+      <li xml:lang="zh-CN">支持全部服务的搜索 API</li>
       <li>KWallet integration</li>
       <li xml:lang="ar">التّكامل مع «محفظتك»</li>
       <li xml:lang="bs">KWallet integracija</li>
@@ -290,6 +315,7 @@
       <li xml:lang="fi">Käyttää KDE:n lompakkoa</li>
       <li xml:lang="fr">Intégration avec KWallet</li>
       <li xml:lang="gl">Integración con KWallet.</li>
+      <li xml:lang="it">Integrazione con KWallet</li>
       <li xml:lang="nb">Integrasjon med KWallet</li>
       <li xml:lang="nds">Arbeidt mit KWallet tosamen</li>
       <li xml:lang="nl">Integratie met KWallet</li>
@@ -313,6 +339,7 @@
       <li xml:lang="fi">Osaa lähettää pikaviestejä pikanäppäinyhdistelmällä (Ctrl+Meta+T)</li>
       <li xml:lang="fr">Possibilité de créer un « tweet » rapide avec les raccourcis globaux (Ctrl+Meta+T)</li>
       <li xml:lang="gl">Permite enviar chíos rápidos mediante atallos de teclado globais (Ctrl+Meta+T).</li>
+      <li xml:lang="it">Possibilità di fare un  tweet veloce mediante scorciatoie globali (Ctrl+ Meta+T)</li>
       <li xml:lang="nb">Kan gjøre en rask tvitring med globale snarveier (Ctrl+Meta+T)</li>
       <li xml:lang="nds">Jiepels gau mit en Tastkombinatschoon opstellen (Strg+Meta+T)</li>
       <li xml:lang="nl">Mogelijkheid om een snelle tweet te maken met globale sneltoetsen (Ctrl+Meta+T)</li>
@@ -324,6 +351,7 @@
       <li xml:lang="sv">Möjlighet att göra ett snabbt inlägg med globala snabbtangenter (Ctrl+Meta+T)</li>
       <li xml:lang="uk">можливість швидкого створення допису за допомогою загальних скорочень (Ctrl+Alt+T);</li>
       <li xml:lang="x-test">xxAbility to make a quick tweet with global shortcuts (Ctrl+Meta+T)xx</li>
+      <li xml:lang="zh-CN">支持通过全局快捷键 (Ctrl + Meta + T) 快速发布状态</li>
       <li>Ability to notify user about new statuses text, with KNotification or Libnotify</li>
       <li xml:lang="ar">إمكانيّة إخطار المستخدم عن نصوص الحالة الجديدة بِـ «مخطرك» أو Libnotify</li>
       <li xml:lang="bs">Sposobnost da se obavijesti korisnik o novim statusima, sa KNotification ili Libnotify</li>
@@ -335,6 +363,7 @@
       <li xml:lang="fi">Osaa tiedottaa käyttäjää uusista tilaviesteistä joko KNotificationin tai Libnotifyn avulla</li>
       <li xml:lang="fr">Possibilité d'avertir l'utilisateur des nouvelles publications, avec KNotification ou Libnotify</li>
       <li xml:lang="gl">Infórmao de novos chíos mediante notificacións do sistema, usando KNotification ou libnotify.</li>
+      <li xml:lang="it">Possibilità di notificare all'utente nuovi stati, con KNotification o Libnotify</li>
       <li xml:lang="nb">Kan varsle bruker om nye statustekster, men KNotification eller Libnotify</li>
       <li xml:lang="nds">Kann Brukers Bescheed över nieg Statussen geven, mit KNotification oder Libnotify</li>
       <li xml:lang="nl">De mogelijkheid om de gebruiker te informeren over nieuwe statusteksten, met KNotification of Libnotify</li>
@@ -346,11 +375,12 @@
       <li xml:lang="sv">Möjlighet att underrätta användaren om ny statustext, med KNotification eller Libnotify</li>
       <li xml:lang="uk">можливість сповіщення користувача щодо тексту нових станів за допомогою KNotification або Libnotify;</li>
       <li xml:lang="x-test">xxAbility to notify user about new statuses text, with KNotification or Libnotifyxx</li>
+      <li xml:lang="zh-CN">支持通过 KNotification 或 Libnotify 通知用户新状态</li>
       <li>Support for shortening urls with more than 30 characters (shorten on paste)</li>
       <li xml:lang="ar">دعم تقصير العناوين الأكبر من 30 محرفًا (تُصغّر عند لصقها)</li>
       <li xml:lang="bs">Podrška za skraćenje url-ova sa više od 30 karaktera (skratiti prilikom mogućnosti lijepljenja)</li>
-      <li xml:lang="ca">Implementació per escurçar els URL amb més de 30 caràcters (escurça en enganxar)</li>
-      <li xml:lang="ca-valencia">Implementació per escurçar els URL amb més de 30 caràcters (escurça en enganxar)</li>
+      <li xml:lang="ca">Permet escurçar els URL amb més de 30 caràcters (escurça en enganxar)</li>
+      <li xml:lang="ca-valencia">Permet escurçar els URL amb més de 30 caràcters (escurça en enganxar)</li>
       <li xml:lang="de">Unterstützung für das Kürzen von Adressen (URLs) mit mehr als 30 Zeichen, Kürzen beim Einfügen</li>
       <li xml:lang="el">Υποστηρίζει τη συρρίκνωση URL που έχουν περισσότερους από 30 χαρακτήρες (συρρίκνωση σε επικόλληση)</li>
       <li xml:lang="en-GB">Support for shortening urls with more than 30 characters (shorten on paste)</li>
@@ -358,6 +388,7 @@
       <li xml:lang="fi">Tukee verkko-osoitteitten lyhentämistä alle 30 merkkiin (leikepöydältä liitettäessä)</li>
       <li xml:lang="fr">Peut raccourcir les URL de plus de 30 caractères (raccourcissement au moment du collage de l'URL dans le texte)</li>
       <li xml:lang="gl">Permite acurtar automaticamente enderezos URL que superen os 30 caracteres ao pegalos.</li>
+      <li xml:lang="it">Supporto all'accorciamento di url con più di 30 caratteri (accorciati quando vengono incollati)</li>
       <li xml:lang="nb">Støtte for å forkorte URL-er med mer enn 30 tegn (korter inn ved innliming)</li>
       <li xml:lang="nds">Kann URLs mit mehr as 30 Tekens bi't Infögen kortmaken</li>
       <li xml:lang="nl">Ondersteuning voor ingekorte URL's met meer dan 30 tekens (ingekort bij plakken)</li>
@@ -369,11 +400,12 @@
       <li xml:lang="sv">Stöd för att avkorta webbadresser med mer än 30 tecken (avkorta vid inklistring)</li>
       <li xml:lang="uk">підтримка скорочення адрес, що складаються з понад 30 символів (скорочення під час вставлення);</li>
       <li xml:lang="x-test">xxSupport for shortening urls with more than 30 characters (shorten on paste)xx</li>
+      <li xml:lang="zh-CN">支持缩短大于 30 个字符的 URL (粘贴时缩短)</li>
       <li>Support for configuring status lists appearance</li>
       <li xml:lang="ar">دعم ضبط مظهر قوائم الحالة</li>
       <li xml:lang="bs">Podrška za konfiguraciju izgleda liste statusa</li>
-      <li xml:lang="ca">Implementació per a configurar l'aparença de les llistes d'estat</li>
-      <li xml:lang="ca-valencia">Implementació per a configurar l'aparença de les llistes d'estat</li>
+      <li xml:lang="ca">Permet configurar l'aparença de les llistes d'estat</li>
+      <li xml:lang="ca-valencia">Permet configurar l'aparença de les llistes d'estat</li>
       <li xml:lang="de">Unterstützt die Einstellung des Erscheinungsbilds der Statusliste</li>
       <li xml:lang="el">Υποστηρίζει τη διαμόρφωση της εμφάνισης σε λίστες καταστάσεων</li>
       <li xml:lang="en-GB">Support for configuring status lists appearance</li>
@@ -381,6 +413,7 @@
       <li xml:lang="fi">Tukee tilalistojen ulkoasun mukauttamista</li>
       <li xml:lang="fr">Prise en charge de l'apparition des listes d'état</li>
       <li xml:lang="gl">Permite configurar a aparencia das listas de chíos.</li>
+      <li xml:lang="it">Supporto alla configurazione dell'aspetto della lista degli stati</li>
       <li xml:lang="nb">Støtte for å stille inn utseende på statuslister</li>
       <li xml:lang="nds">Ünnerstütt dat Instellen vun't Utsehn vun Statuslisten</li>
       <li xml:lang="nl">Ondersteuning voor instellen van het verschijnen van statuslijsten</li>
@@ -392,6 +425,7 @@
       <li xml:lang="sv">Stöd för att anpassa statuslistornas utseende</li>
       <li xml:lang="uk">підтримка можливості зміни вигляду списків станів.</li>
       <li xml:lang="x-test">xxSupport for configuring status lists appearancexx</li>
+      <li xml:lang="zh-CN">支持配置状态列表外观</li>
     </ul>
   </description>
   <url type="homepage">http://choqok.gnufolks.org/</url>

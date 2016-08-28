@@ -55,7 +55,6 @@ protected Q_SLOTS:
     void followersUsernameListed(TwitterApiAccount *, QStringList);
     void submitPost(QString);
     void reloadFriendslist();
-    void postCreated(Choqok::Account *, Choqok::Post *);
     void errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
                    QString, Choqok::MicroBlog::ErrorLevel);
 
@@ -63,6 +62,7 @@ protected:
     void setupUi(QWidget *mainWidget);
     void setFriends(const QStringList friends);
     Choqok::UI::TextEdit *editor();
+    TwitterApiAccount *account();
 
 private:
     class Private;

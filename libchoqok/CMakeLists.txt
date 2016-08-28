@@ -53,7 +53,6 @@ add_library(choqok SHARED ${choqok_LIB_SRCS})
 target_link_libraries(choqok
 PUBLIC
     Qt5::Core
-    Qt5::Concurrent
     Qt5::DBus
     Qt5::Widgets
     KF5::ConfigCore

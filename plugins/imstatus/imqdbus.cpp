@@ -28,7 +28,7 @@
 #include <QDBusReply>
 #include <QDebug>
 
-#if TELEPATHY_FOUND
+#ifdef TELEPATHY_FOUND
 #include <TelepathyQt/Account>
 #include <TelepathyQt/AccountManager>
 #include <TelepathyQt/AccountSet>
@@ -49,7 +49,7 @@ IMQDBus::IMQDBus(QObject *parent) : QObject(parent)
     - qutIM (>0.3)
     - gajim ( doesn't want work :( )
     */
-#if TELEPATHY_FOUND
+#ifdef TELEPATHY_FOUND
     m_accountManager =  Tp::AccountManager::create(Tp::AccountFactory::create(QDBusConnection::sessionBus(), Tp::Account::FeatureCore));
     connect(m_accountManager->becomeReady(), SIGNAL(finished(Tp::PendingOperation*)), SLOT(slotFinished(Tp::PendingOperation*)));
 
@@ -71,7 +71,7 @@ void IMQDBus::updateStatusMessage(const QString &im, const QString &statusMessag
     if (im == IM_PIDGIN) {
         usePidgin(statusMessage);
     }
-#if TELEPATHY_FOUND
+#ifdef TELEPATHY_FOUND
     if (im == IM_TELEPATHY) {
         useTelepathy(statusMessage);
     }
@@ -190,7 +190,7 @@ void IMQDBus::usePidgin(const QString &statusMessage)
     }
 }
 
-#if TELEPATHY_FOUND
+#ifdef TELEPATHY_FOUND
 void IMQDBus::useTelepathy(const QString &statusMessage)
 {
     if (m_accountManager->isReady()) {
@@ -235,7 +235,7 @@ QStringList IMQDBus::scanForIMs()
     if (QDBusConnection::sessionBus().interface()->isServiceRegistered(QLatin1String("im.pidgin.purple.PurpleService")).value()) {
         ims << IM_PIDGIN;
     }
-#if TELEPATHY_FOUND
+#ifdef TELEPATHY_FOUND
     if (QDBusConnection::sessionBus().interface()->isServiceRegistered(QLatin1String("org.freedesktop.Telepathy.AccountManager")).value()) {
         ims << IM_TELEPATHY;
     }

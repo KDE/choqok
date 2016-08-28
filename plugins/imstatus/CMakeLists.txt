@@ -1,6 +1,8 @@
 find_package(TelepathyQt5)
 
-configure_file(config-imstatus.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-imstatus.h)
+if(TelepathyQt5_FOUND)
+    add_definitions( -DTELEPATHY_FOUND )
+endif()
 
 include_directories(
     ${CHOQOK_INCLUDES}
