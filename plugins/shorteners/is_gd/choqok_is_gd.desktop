@@ -15,6 +15,7 @@ X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=false
 Name=is.gd
+Name[ast]=is.gd
 Name[bg]=is.gd
 Name[bs]=is.gd
 Name[ca]=is.gd

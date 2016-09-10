@@ -15,6 +15,7 @@ X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=false
 Name=goo.gl
+Name[ast]=goo.gl
 Name[bg]=goo.gl
 Name[bs]=goo.gl
 Name[ca]=goo.gl
