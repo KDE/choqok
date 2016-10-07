@@ -1,3 +1,10 @@
+=== Version 1.6.0 -- 07-Oct-2016 ===
+* Enable Untiny plugin
+* Fix build without TelepathyQt
+* Remove LongUrl plugin
+* Remove Ur.ly shortner
+* Drop Plixi support from ImagePreview plugin
+
 === Version 1.5.85 -- 02-Aug-2016 ===
 * Sort followers alphabeticaly using case insensitive
 * Fix empty About dialog [BUG:364408]
