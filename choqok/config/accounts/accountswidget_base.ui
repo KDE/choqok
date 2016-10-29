@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>535</width>
-    <height>293</height>
+    <width>599</width>
+    <height>287</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -44,8 +44,7 @@
        </property>
        <property name="icon">
         <iconset theme="list-add">
-         <normaloff/>
-        </iconset>
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -62,8 +61,7 @@
        </property>
        <property name="icon">
         <iconset theme="edit-rename">
-         <normaloff/>
-        </iconset>
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -80,8 +78,7 @@
        </property>
        <property name="icon">
         <iconset theme="list-remove">
-         <normaloff/>
-        </iconset>
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -105,8 +102,7 @@
        </property>
        <property name="icon">
         <iconset theme="go-up">
-         <normaloff/>
-        </iconset>
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="flat">
         <bool>true</bool>
@@ -120,8 +116,7 @@
        </property>
        <property name="icon">
         <iconset theme="go-down">
-         <normaloff/>
-        </iconset>
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="flat">
         <bool>true</bool>
@@ -154,7 +149,7 @@
       <bool>false</bool>
      </property>
      <property name="columnCount">
-      <number>4</number>
+      <number>5</number>
      </property>
      <attribute name="horizontalHeaderVisible">
       <bool>true</bool>
@@ -166,10 +161,24 @@
       <property name="text">
        <string>Alias</string>
       </property>
+      <property name="toolTip">
+       <string>An alias for the account</string>
+      </property>
      </column>
      <column>
       <property name="text">
        <string>Micro-Blog</string>
+      </property>
+      <property name="toolTip">
+       <string>The type of the account</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Enabled</string>
+      </property>
+      <property name="toolTip">
+       <string>Whether the microblog is enabled or disabled</string>
       </property>
      </column>
      <column>
@@ -182,7 +191,7 @@
      </column>
      <column>
       <property name="text">
-       <string>Include in Quick Post</string>
+       <string>Quick Post</string>
       </property>
       <property name="toolTip">
        <string>Show in Quick Post</string>

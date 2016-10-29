@@ -219,7 +219,7 @@ void QuickPost::addAccount(Choqok::Account *account)
 {
     qCDebug(CHOQOK);
     connect(account, SIGNAL(modified(Choqok::Account*)), SLOT(accountModified(Choqok::Account*))); //Added for later changes
-    if (account->isReadOnly() || !account->showInQuickPost()) {
+    if (!account->isEnabled() || account->isReadOnly() || !account->showInQuickPost()) {
         return;
     }
     d->accountsList.insert(account->alias(), account);
@@ -272,7 +272,7 @@ void QuickPost::slotCurrentAccountChanged(int index)
 void QuickPost::accountModified(Account *theAccount)
 {
     qCDebug(CHOQOK);
-    if (!theAccount->isReadOnly() && theAccount->showInQuickPost()) {
+    if (theAccount->isEnabled() && !theAccount->isReadOnly() && theAccount->showInQuickPost()) {
         if (!d->accountsList.contains(theAccount->alias())) {
             addAccount(theAccount);
         }

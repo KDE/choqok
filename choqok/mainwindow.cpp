@@ -146,6 +146,7 @@ void MainWindow::loadAllAccounts()
     const int count = microblogCounter = accList.count();
     if (count > 0) {
         for (Choqok::Account *ac: accList) {
+            connect(ac, &Choqok::Account::status, this, &MainWindow::updateBlog);
             addBlog(ac, true);
         }
         qCDebug(CHOQOK) << "All accounts loaded.";
@@ -347,8 +348,8 @@ void MainWindow::slotAppearanceConfigChanged()
                                          p.color(QPalette::WindowText) , p.color(QPalette::Window),
                                          font());
     }
-    int count = mainWidget->count();
-    for (int i = 0; i < count; ++i) {
+
+    for (int i = 0; i < mainWidget->count(); ++i) {
         qobject_cast<Choqok::UI::MicroBlogWidget *>(mainWidget->widget(i))->settingsChanged();
     }
 }
@@ -447,6 +448,11 @@ void MainWindow::addBlog(Choqok::Account *account, bool isStartup)
 {
     qCDebug(CHOQOK) << "Adding new Blog, Alias:" << account->alias() << "Blog:" << account->microblog()->serviceName();
 
+    if (!account->isEnabled()) {
+        oneMicroblogLoaded();
+        return;
+    }
+
     Choqok::UI::MicroBlogWidget *widget = account->microblog()->createMicroBlogWidget(account, this);
     connect(widget, &Choqok::UI::MicroBlogWidget::loaded,            this, &MainWindow::oneMicroblogLoaded);
     connect(widget, &Choqok::UI::MicroBlogWidget::updateUnreadCount, this, &MainWindow::slotUpdateUnreadCount);
@@ -467,11 +473,19 @@ void MainWindow::addBlog(Choqok::Account *account, bool isStartup)
     updateTabbarHiddenState();
 }
 
+void MainWindow::updateBlog(Choqok::Account *account, bool enabled)
+{
+    if (!enabled) {
+        removeBlog(account->alias());
+    } else {
+        addBlog(account);
+    }
+}
+
 void MainWindow::removeBlog(const QString &alias)
 {
     qCDebug(CHOQOK);
-    int count = mainWidget->count();
-    for (int i = 0; i < count; ++i) {
+    for (int i = 0; i < mainWidget->count(); ++i) {
         Choqok::UI::MicroBlogWidget *tmp = qobject_cast<Choqok::UI::MicroBlogWidget *>(mainWidget->widget(i));
         if (tmp->currentAccount()->alias() == alias) {
             mainWidget->removeTab(i);
@@ -586,8 +600,7 @@ void MainWindow::slotMarkAllAsRead()
     if (sysIcon) {
         sysIcon->resetUnreadCount();
     }
-    int count = mainWidget->count();
-    for (int i = 0; i < count; ++i) {
+    for (int i = 0; i < mainWidget->count(); ++i) {
         Choqok::UI::MicroBlogWidget *wd = qobject_cast<Choqok::UI::MicroBlogWidget *>(mainWidget->widget(i));
         mainWidget->setTabText(i, wd->currentAccount()->alias());
     }
