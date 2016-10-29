@@ -106,6 +106,12 @@ QString TwitterApiPostWidget::generateSign()
     //<img src=\"icon://web\" />
     if (currentPost()->isPrivate) {
         sign += QLatin1String("%1");
+
+        if (currentPost()->replyToUserName.compare(currentAccount()->username(), Qt::CaseInsensitive) == 0) {
+            sign.prepend(QLatin1String("From "));
+        } else {
+            sign.prepend(QLatin1String("To "));
+        }
     } else {
         if (currentPost()->repeatedDateTime.isNull()) {
             sign += QLatin1String("<a href=\"") + currentPost()->link +
@@ -115,24 +121,20 @@ QString TwitterApiPostWidget::generateSign()
                     QLatin1String("\" title=\"") + currentPost()->repeatedDateTime.toString(Qt::DefaultLocaleLongDate) + QLatin1String("\">%1</a>");
         }
     }
-    if (currentPost()->isPrivate) {
-        if (currentPost()->replyToUserName.compare(currentAccount()->username(), Qt::CaseInsensitive) == 0) {
-            sign.prepend(QLatin1String("From "));
+
+    if (!currentPost()->source.isEmpty()) {
+        sign += QLatin1String(" - ");
+        if (currentPost()->source == QLatin1String("ostatus") && !currentPost()->author.homePageUrl.isEmpty()) {
+            QUrl srcUrl(currentPost()->author.homePageUrl);
+            sign += i18n("<a href='%1' title='Sent from %2 via OStatus'>%2</a>",
+                         currentPost()->author.homePageUrl,
+                         srcUrl.host());
         } else {
-            sign.prepend(QLatin1String("To "));
+            sign += currentPost()->source;
         }
-    } else {
-        if (!currentPost()->source.isNull()) {
-            sign += QLatin1String(" - ");
-            if (currentPost()->source == QLatin1String("ostatus") && !currentPost()->author.homePageUrl.isEmpty()) {
-                QUrl srcUrl(currentPost()->author.homePageUrl);
-                sign += i18n("<a href='%1' title='Sent from %2 via OStatus'>%2</a>",
-                             currentPost()->author.homePageUrl,
-                             srcUrl.host());
-            } else {
-                sign += currentPost()->source;
-            }
-        }
+    }
+
+    if (!currentPost()->isPrivate) {
         if (!currentPost()->replyToPostId.isEmpty()) {
             QString link = currentAccount()->microblog()->postUrl(currentAccount(), currentPost()->replyToUserName,
                            currentPost()->replyToPostId);
@@ -148,17 +150,20 @@ QString TwitterApiPostWidget::generateSign()
                          currentPost()->replyToPostId, link, webIconText, currentPost()->replyToUserName) + QLatin1Char(' ');
             sign += QLatin1String("<a title=\"") + showConMsg + QLatin1String("\" href=\"") + threadlink + QLatin1String("\"><img src=\"icon://thread\" /></a>");
         }
+
+        //ReTweet detection
+        if (!currentPost()->repeatedFromUsername.isEmpty()) {
+            const QString retweet = QLatin1String("<br/>") +
+                    d->mBlog->generateRepeatedByUserTooltip(QStringLiteral("<a href='user://%1'>%2</a>")
+                                                            .arg(currentPost()->repeatedFromUsername)
+                                                            .arg(currentPost()->repeatedFromUsername));
+            sign.append(retweet);
+        }
     }
 
-    //ReTweet detection:
-    if (!currentPost()->repeatedFromUsername.isEmpty()) {
-        QString retweet;
-        retweet += QLatin1String("<br/>")
-                   +  d->mBlog->generateRepeatedByUserTooltip(QStringLiteral("<a href='user://%1'>%2</a>").arg(currentPost()->repeatedFromUsername).arg(currentPost()->repeatedFromUsername));
-        sign.append(retweet);
-    }
     sign.prepend(QLatin1String("<p dir='ltr'>"));
     sign.append(QLatin1String("</p>"));
+
     return sign;
 }
 

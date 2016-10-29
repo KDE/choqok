@@ -160,7 +160,7 @@ QString PostWidget::generateSign()
             QLatin1String("\" title=\"") + d->mCurrentPost->repeatedDateTime.toString(Qt::DefaultLocaleLongDate) + QLatin1String("\">%1</a>");
     }
 
-    if (!d->mCurrentPost->source.isNull()) {
+    if (!d->mCurrentPost->source.isEmpty()) {
         ss += QLatin1String(" - ") + d->mCurrentPost->source;
     }
 
