@@ -108,7 +108,18 @@ Choqok::Post *GNUSocialApiMicroBlog::readPost(Choqok::Account *account, const QV
 
     post = TwitterApiMicroBlog::readPost(account, var, post);
 
-    post->link = var[QLatin1String("external_url")].toString();
+    if (var.contains(QLatin1String("external_url"))) {
+        post->link = var[QLatin1String("external_url")].toString();
+    } else {
+        QVariantMap userMap;
+        if (var[QLatin1String("repeated")].toBool()) {
+            userMap = var[QLatin1String("retweeted_status")].toMap()[QLatin1String("user")].toMap();
+        } else {
+            userMap = var[QLatin1String("user")].toMap();
+        }
+        const QUrl profileUrl = userMap[QLatin1String("statusnet_profile_url")].toUrl();
+        post->link = QStringLiteral("%1://%2/notice/%3").arg(profileUrl.scheme()).arg(profileUrl.host()).arg(post->postId);
+    }
 
     return post;
 }
