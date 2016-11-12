@@ -4,6 +4,9 @@
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
 http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+
+<include>QFontDatabase</include>
+
 <kcfgfile name="choqokrc"/>
 
 <group name="Appearance">
@@ -38,7 +41,7 @@ http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
         <default>false</default>
     </entry>
     <entry name="font" type="Font">
-        <default>QFont(QLatin1String("DejaVu Sans"), 9)</default>
+        <default code="true">QFontDatabase::systemFont(QFontDatabase::GeneralFont)</default>
     </entry>
 </group>
 <group name="TabBar">
