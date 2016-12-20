@@ -9,7 +9,6 @@ X-KDE-ParentApp=choqok_twitgoo
 X-KDE-ParentComponents=choqok_twitgoo
 
 Name=Twitgoo
-Name[ast]=Twitgoo
 Name[bg]=Twitgoo
 Name[bs]=Twitgoo
 Name[ca]=Twitgoo
@@ -45,7 +44,6 @@ Name[x-test]=xxTwitgooxx
 Name[zh_CN]=Twitgoo
 Name[zh_TW]=Twitgoo
 Comment=Upload image to twitgoo.com
-Comment[ast]=Xube la imaxe a twitgoo.com
 Comment[bg]=Качване на изображение в twitgoo.com
 Comment[bs]=Slanje slike na  twitgoo.com
 Comment[ca]=Puja imatges a twitgoo.com

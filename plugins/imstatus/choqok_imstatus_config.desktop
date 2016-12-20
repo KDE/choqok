@@ -7,7 +7,6 @@ X-KDE-FactoryName=kcm_choqok_imstatus
 X-KDE-ParentApp=choqok_imstatus
 X-KDE-ParentComponents=choqok_imstatus
 Name=IMStatus
-Name[ast]=IMStatus
 Name[bg]=Състояние от месинджър
 Name[bs]=IMStatus
 Name[ca]=IMStatus

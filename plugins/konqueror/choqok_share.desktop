@@ -5,7 +5,6 @@ ServiceTypes=KonqPopupMenu/Plugin,all/allfiles
 Actions=ShareLink;ShareLinkandTitle;
 X-KDE-Submenu=Choqok
 X-KDE-Submenu[ar]=چغوك
-X-KDE-Submenu[ast]=Choqok
 X-KDE-Submenu[bg]=Choqok
 X-KDE-Submenu[bs]=Choqok
 X-KDE-Submenu[ca]=Choqok

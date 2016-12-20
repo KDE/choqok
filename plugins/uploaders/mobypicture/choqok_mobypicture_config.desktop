@@ -9,7 +9,6 @@ X-KDE-ParentApp=choqok_mobypicture
 X-KDE-ParentComponents=choqok_mobypicture
 
 Name=Mobypicture
-Name[ast]=Mobypicture
 Name[bg]=Mobypicture
 Name[bs]=Mobypicture
 Name[ca]=Mobypicture
@@ -45,7 +44,6 @@ Name[x-test]=xxMobypicturexx
 Name[zh_CN]=Mobypicture
 Name[zh_TW]=Mobypicture
 Comment=Upload image to mobypicture.com
-Comment[ast]=Xube la imaxe a mobypicture.com
 Comment[bg]=Качване на изображение в mobypicture.com
 Comment[bs]=Slanje slike na  mobypicture.com
 Comment[ca]=Puja imatges a mobypicture.com
