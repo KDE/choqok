@@ -33,10 +33,20 @@
   <name xml:lang="zh-CN">Choqok</name>
   <name xml:lang="zh-TW">Choqok</name>
   <summary>Micro-blogging client</summary>
+  <summary xml:lang="ca">Client de microblogs</summary>
+  <summary xml:lang="nl">Micro-blogging-client</summary>
+  <summary xml:lang="sv">Mikrobloggprogram</summary>
+  <summary xml:lang="uk">Клієнт мікроблогів</summary>
+  <summary xml:lang="x-test">xxMicro-blogging clientxx</summary>
   <description>
     <p>
       Choqok is a micro-blogging client which supports Twitter.com, GNU Social, Pump.io and Friendica services.
     </p>
+    <p xml:lang="ca">El Choqok és un client de microblogs que admet els serveis de Twitter.com, GNU Social, Pump.io i Friendica.</p>
+    <p xml:lang="nl">Choqok is een micro-blogging-client, die de services Twitter.com, GNU Social, Pump.io en Friendica ondersteunt.</p>
+    <p xml:lang="sv">Choqok är en klient för mikrobloggar som stöder tjänsterna Twitter.com, GNU Social,  Pump.io och Friendica.</p>
+    <p xml:lang="uk">Choqok — клієнтська програма для роботи з мікроблогами, у якій передбачено підтримку служб Twitter.com GNU Social, Pump.io і Friendica.</p>
+    <p xml:lang="x-test">xxChoqok is a micro-blogging client which supports Twitter.com, GNU Social, Pump.io and Friendica services.xx</p>
     <p>Features:</p>
     <p xml:lang="ar">الميزات:</p>
     <p xml:lang="bs">Svojstva:</p>
@@ -93,6 +103,11 @@
       <li xml:lang="zh-CN">支持 Twitter.com 微博客服务</li>
       <li xml:lang="zh-TW">支援 Twitter.com 微部落格服務</li>
       <li>Supporting self hosted Pump.io services</li>
+      <li xml:lang="ca">Permet els serveis Pump.io auto hostatjats</li>
+      <li xml:lang="nl">Ondersteuning voor zelf gehoste Pump.io services</li>
+      <li xml:lang="sv">Stöder tjänsten Pump.io på egen värddator</li>
+      <li xml:lang="uk">підтримка автономної власної служби Pump.io;</li>
+      <li xml:lang="x-test">xxSupporting self hosted Pump.io servicesxx</li>
       <li>Supporting self hosted GNU social service</li>
       <li xml:lang="ar">دعم خدمة غنو الاجتماعيّة المضافة ذاتيًّا</li>
       <li xml:lang="bs">PoPodrška za samodovoljnu GNU social  uslugu</li>
@@ -117,6 +132,11 @@
       <li xml:lang="zh-CN">支持自己架设的 GNU Social 服务</li>
       <li xml:lang="zh-TW">支援自託管的 GNU social 服務</li>
       <li>Supporting self hosted Friendica services</li>
+      <li xml:lang="ca">Permet els serveis Friendica auto hostatjats</li>
+      <li xml:lang="nl">Ondersteuning voor zelf gehoste Friendica services</li>
+      <li xml:lang="sv">Stöder tjänsten Friendica på egen värddator</li>
+      <li xml:lang="uk">підтримка автономної власної служби Friendica;</li>
+      <li xml:lang="x-test">xxSupporting self hosted Friendica servicesxx</li>
       <li>Supporting User + His/Her Friends time-lines</li>
       <li xml:lang="ar">دعم الخطوط الزّمنيّة للمستخدم وأصدقائه</li>
       <li xml:lang="bs">Podrška korisniku + vremenske linije Njegovih/Njenih Prijatelja</li>
@@ -194,6 +214,11 @@
       <li xml:lang="zh-CN">支持收发私信</li>
       <li xml:lang="zh-TW">支援傳送與接收訊息</li>
       <li>Support medium upload using external services (Flickr, Imageshack,...)</li>
+      <li xml:lang="ca">Permet la pujada de medis usant serveis externs (Flickr, Imageshack,...)</li>
+      <li xml:lang="nl">Ondersteunt uploaden van media met externe services (Flickr, Imageshack,...)</li>
+      <li xml:lang="sv">Stöder uppladdning av media till extern tjänst (Flickr, Imageshack, ...)</li>
+      <li xml:lang="uk">підтримка вивантаження мультимедійних даних з використанням зовнішніх служб (Flickr, Imageshack…);</li>
+      <li xml:lang="x-test">xxSupport medium upload using external services (Flickr, Imageshack,...)xx</li>
       <li>Supporting Multiple Accounts simultaneously</li>
       <li xml:lang="ar">دعم عدّة حسابات في آن واحد</li>
       <li xml:lang="bs">Podrška za više računa istovremeno</li>
