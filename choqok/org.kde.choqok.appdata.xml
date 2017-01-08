@@ -34,8 +34,11 @@
   <name xml:lang="zh-TW">Choqok</name>
   <summary>Micro-blogging client</summary>
   <summary xml:lang="ca">Client de microblogs</summary>
+  <summary xml:lang="ca-valencia">Client de microblogs</summary>
+  <summary xml:lang="en-GB">Micro-blogging client</summary>
   <summary xml:lang="nl">Micro-blogging-client</summary>
   <summary xml:lang="pt">Cliente de micro-blogs</summary>
+  <summary xml:lang="sl">Odjemalec za mikrobloganje</summary>
   <summary xml:lang="sv">Mikrobloggprogram</summary>
   <summary xml:lang="uk">Клієнт мікроблогів</summary>
   <summary xml:lang="x-test">xxMicro-blogging clientxx</summary>
@@ -44,8 +47,11 @@
       Choqok is a micro-blogging client which supports Twitter.com, GNU Social, Pump.io and Friendica services.
     </p>
     <p xml:lang="ca">El Choqok és un client de microblogs que admet els serveis de Twitter.com, GNU Social, Pump.io i Friendica.</p>
+    <p xml:lang="ca-valencia">El Choqok és un client de microblogs que admet els serveis de Twitter.com, GNU Social, Pump.io i Friendica.</p>
+    <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com, GNU Social, Pump.io and Friendica services.</p>
     <p xml:lang="nl">Choqok is een micro-blogging-client, die de services Twitter.com, GNU Social, Pump.io en Friendica ondersteunt.</p>
     <p xml:lang="pt">O Choqok é um cliente de micro-blogs que suporta os serviços do Twitter.com, do Pump.io, GNU Social e Friendica.</p>
+    <p xml:lang="sl">Choqok je odjemalec za mikrobloganje, ki podpira storitve Twitter.com, GNU Social, Pump.io in Friendica.</p>
     <p xml:lang="sv">Choqok är en klient för mikrobloggar som stöder tjänsterna Twitter.com, GNU Social,  Pump.io och Friendica.</p>
     <p xml:lang="uk">Choqok — клієнтська програма для роботи з мікроблогами, у якій передбачено підтримку служб Twitter.com GNU Social, Pump.io і Friendica.</p>
     <p xml:lang="x-test">xxChoqok is a micro-blogging client which supports Twitter.com, GNU Social, Pump.io and Friendica services.xx</p>
@@ -106,8 +112,11 @@
       <li xml:lang="zh-TW">支援 Twitter.com 微部落格服務</li>
       <li>Supporting self hosted Pump.io services</li>
       <li xml:lang="ca">Permet els serveis Pump.io auto hostatjats</li>
+      <li xml:lang="ca-valencia">Permet els serveis Pump.io auto hostatjats</li>
+      <li xml:lang="en-GB">Supporting self hosted Pump.io services</li>
       <li xml:lang="nl">Ondersteuning voor zelf gehoste Pump.io services</li>
       <li xml:lang="pt">Suporte para o serviço auto-alojado do Pump.io</li>
+      <li xml:lang="sl">Podpora za lastno gostovane storitve Pump.io</li>
       <li xml:lang="sv">Stöder tjänsten Pump.io på egen värddator</li>
       <li xml:lang="uk">підтримка автономної власної служби Pump.io;</li>
       <li xml:lang="x-test">xxSupporting self hosted Pump.io servicesxx</li>
@@ -136,8 +145,11 @@
       <li xml:lang="zh-TW">支援自託管的 GNU social 服務</li>
       <li>Supporting self hosted Friendica services</li>
       <li xml:lang="ca">Permet els serveis Friendica auto hostatjats</li>
+      <li xml:lang="ca-valencia">Permet els serveis Friendica auto hostatjats</li>
+      <li xml:lang="en-GB">Supporting self hosted Friendica services</li>
       <li xml:lang="nl">Ondersteuning voor zelf gehoste Friendica services</li>
       <li xml:lang="pt">Suporte para o serviço auto-alojado do Friendica</li>
+      <li xml:lang="sl">Podpora za lastno gostovane storitve Friendica</li>
       <li xml:lang="sv">Stöder tjänsten Friendica på egen värddator</li>
       <li xml:lang="uk">підтримка автономної власної служби Friendica;</li>
       <li xml:lang="x-test">xxSupporting self hosted Friendica servicesxx</li>
@@ -219,8 +231,11 @@
       <li xml:lang="zh-TW">支援傳送與接收訊息</li>
       <li>Support medium upload using external services (Flickr, Imageshack,...)</li>
       <li xml:lang="ca">Permet la pujada de medis usant serveis externs (Flickr, Imageshack,...)</li>
+      <li xml:lang="ca-valencia">Permet la pujada de medis usant serveis externs (Flickr, Imageshack,...)</li>
+      <li xml:lang="en-GB">Support medium upload using external services (Flickr, Imageshack,...)</li>
       <li xml:lang="nl">Ondersteunt uploaden van media met externe services (Flickr, Imageshack,...)</li>
       <li xml:lang="pt">Suporte ao envio de conteúdos com serviços externos (Flickr, Imageshack,...)</li>
+      <li xml:lang="sl">Podpora pošiljanju večpredstavnosti s pomočjo zunanjih storitev  (Flickr, Imageshack, ...)</li>
       <li xml:lang="sv">Stöder uppladdning av media till extern tjänst (Flickr, Imageshack, ...)</li>
       <li xml:lang="uk">підтримка вивантаження мультимедійних даних з використанням зовнішніх служб (Flickr, Imageshack…);</li>
       <li xml:lang="x-test">xxSupport medium upload using external services (Flickr, Imageshack,...)xx</li>
