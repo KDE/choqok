@@ -35,6 +35,7 @@
   <summary>Micro-blogging client</summary>
   <summary xml:lang="ca">Client de microblogs</summary>
   <summary xml:lang="ca-valencia">Client de microblogs</summary>
+  <summary xml:lang="de">Micro-Blogging-Programm</summary>
   <summary xml:lang="en-GB">Micro-blogging client</summary>
   <summary xml:lang="nl">Micro-blogging-client</summary>
   <summary xml:lang="pt">Cliente de micro-blogs</summary>
@@ -48,6 +49,7 @@
     </p>
     <p xml:lang="ca">El Choqok és un client de microblogs que admet els serveis de Twitter.com, GNU Social, Pump.io i Friendica.</p>
     <p xml:lang="ca-valencia">El Choqok és un client de microblogs que admet els serveis de Twitter.com, GNU Social, Pump.io i Friendica.</p>
+    <p xml:lang="de">Choqok ist ein Mikro-Blogging-Programm, das derzeit die Dienste Twitter.com , GNU Social, Pump.io und Friendica unterstützt.</p>
     <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com, GNU Social, Pump.io and Friendica services.</p>
     <p xml:lang="nl">Choqok is een micro-blogging-client, die de services Twitter.com, GNU Social, Pump.io en Friendica ondersteunt.</p>
     <p xml:lang="pt">O Choqok é um cliente de micro-blogs que suporta os serviços do Twitter.com, do Pump.io, GNU Social e Friendica.</p>
@@ -113,6 +115,7 @@
       <li>Supporting self hosted Pump.io services</li>
       <li xml:lang="ca">Permet els serveis Pump.io auto hostatjats</li>
       <li xml:lang="ca-valencia">Permet els serveis Pump.io auto hostatjats</li>
+      <li xml:lang="de">Unterstützung für die eigene Pump.io-Instanzen</li>
       <li xml:lang="en-GB">Supporting self hosted Pump.io services</li>
       <li xml:lang="nl">Ondersteuning voor zelf gehoste Pump.io services</li>
       <li xml:lang="pt">Suporte para o serviço auto-alojado do Pump.io</li>
