@@ -37,6 +37,7 @@
   <summary xml:lang="ca-valencia">Client de microblogs</summary>
   <summary xml:lang="de">Micro-Blogging-Programm</summary>
   <summary xml:lang="en-GB">Micro-blogging client</summary>
+  <summary xml:lang="es">Cliente de microblogueo</summary>
   <summary xml:lang="nl">Micro-blogging-client</summary>
   <summary xml:lang="pt">Cliente de micro-blogs</summary>
   <summary xml:lang="sl">Odjemalec za mikrobloganje</summary>
@@ -51,6 +52,7 @@
     <p xml:lang="ca-valencia">El Choqok és un client de microblogs que admet els serveis de Twitter.com, GNU Social, Pump.io i Friendica.</p>
     <p xml:lang="de">Choqok ist ein Mikro-Blogging-Programm, das derzeit die Dienste Twitter.com , GNU Social, Pump.io und Friendica unterstützt.</p>
     <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com, GNU Social, Pump.io and Friendica services.</p>
+    <p xml:lang="es">Choqok es un cliente de microblogueo que admite los servicios Twitter.com, GNU Social, Pump.io y Friendica.</p>
     <p xml:lang="nl">Choqok is een micro-blogging-client, die de services Twitter.com, GNU Social, Pump.io en Friendica ondersteunt.</p>
     <p xml:lang="pt">O Choqok é um cliente de micro-blogs que suporta os serviços do Twitter.com, do Pump.io, GNU Social e Friendica.</p>
     <p xml:lang="sl">Choqok je odjemalec za mikrobloganje, ki podpira storitve Twitter.com, GNU Social, Pump.io in Friendica.</p>
@@ -94,7 +96,7 @@
       <li xml:lang="de">Unterstützung für den Micro-Blogging-Dienst Twitter.com</li>
       <li xml:lang="el">Υποστηρίζει την υπηρεσία μικρο-ιστολογίου Twitter.com</li>
       <li xml:lang="en-GB">Supporting Twitter.com micro-blogging service</li>
-      <li xml:lang="es">Soporta el servicio de microblogueo Twitter.com</li>
+      <li xml:lang="es">Admite el servicio de microblogueo Twitter.com</li>
       <li xml:lang="fi">Tukee Twitter.com-mikroblogauspalvelua</li>
       <li xml:lang="fr">Prise en charge du service de micro-bloggage Twitter.com</li>
       <li xml:lang="gl">Compatibilidade co servizo de microblogue Twitter.</li>
@@ -117,6 +119,7 @@
       <li xml:lang="ca-valencia">Permet els serveis Pump.io auto hostatjats</li>
       <li xml:lang="de">Unterstützung für die eigene Pump.io-Instanzen</li>
       <li xml:lang="en-GB">Supporting self hosted Pump.io services</li>
+      <li xml:lang="es">Admite los servicios autohospedado de Pump.io</li>
       <li xml:lang="nl">Ondersteuning voor zelf gehoste Pump.io services</li>
       <li xml:lang="pt">Suporte para o serviço auto-alojado do Pump.io</li>
       <li xml:lang="sl">Podpora za lastno gostovane storitve Pump.io</li>
@@ -130,7 +133,7 @@
       <li xml:lang="ca-valencia">Permet el servei social de la GNU auto hostatjat</li>
       <li xml:lang="el">Υποστηρίζει αυτο-φιλοξενούμενη υπηρεσία GNU social</li>
       <li xml:lang="en-GB">Supporting self hosted GNU social service</li>
-      <li xml:lang="es">Soporta el servicio auto hospedado GNU social</li>
+      <li xml:lang="es">Admite el servicio autohospedado de GNU social</li>
       <li xml:lang="fi">Tukee itse isännöityä GNU social -palvelu</li>
       <li xml:lang="fr">Prise en charge du service social auto-hébergé GNU</li>
       <li xml:lang="gl">Compatíbel con servizos de microblogue baseados en GNU social.</li>
@@ -150,6 +153,7 @@
       <li xml:lang="ca">Permet els serveis Friendica auto hostatjats</li>
       <li xml:lang="ca-valencia">Permet els serveis Friendica auto hostatjats</li>
       <li xml:lang="en-GB">Supporting self hosted Friendica services</li>
+      <li xml:lang="es">Admite el servicio autohospedado de Pump.io</li>
       <li xml:lang="nl">Ondersteuning voor zelf gehoste Friendica services</li>
       <li xml:lang="pt">Suporte para o serviço auto-alojado do Friendica</li>
       <li xml:lang="sl">Podpora za lastno gostovane storitve Friendica</li>
@@ -163,7 +167,7 @@
       <li xml:lang="ca-valencia">Permet les línies de temps Usuari + Vós i els vostres amics</li>
       <li xml:lang="el">Υποστηρίζει χρονολόγια για χρήστη + φίλους</li>
       <li xml:lang="en-GB">Supporting User + His/Her Friends time-lines</li>
-      <li xml:lang="es">Soporta las líneas temporales usuario + sus amigos</li>
+      <li xml:lang="es">Admite las líneas temporales usuario + sus amigos</li>
       <li xml:lang="fi">Tukee käyttäjän ja hänen kaveriensa aikajanoja</li>
       <li xml:lang="fr">Prise en charge des flux de l'utilisateur et de ses amis</li>
       <li xml:lang="gl">Acceso á súa liñas do tempo e maila dos seus contactos.</li>
@@ -188,7 +192,7 @@
       <li xml:lang="ca-valencia">Permet les línies de temps @Resposta</li>
       <li xml:lang="el">Υποστηρίζει χρονολόγια @Reply</li>
       <li xml:lang="en-GB">Supporting @Reply time-lines</li>
-      <li xml:lang="es">Soporta las líneas temporales de @respuesta</li>
+      <li xml:lang="es">Admite las líneas temporales de @respuesta</li>
       <li xml:lang="fi">Tukee @Reply-aikajanoja</li>
       <li xml:lang="fr">Prise en charge des balises de réponse (« @utilisateur »)</li>
       <li xml:lang="gl">Acceso a liñas do tempo de respostas.</li>
@@ -214,7 +218,7 @@
       <li xml:lang="de">Direktes Senden und Empfangen von Nachrichten über DCC</li>
       <li xml:lang="el">Υποστηρίζει την άμεση αποστολή και λήψη μηνυμάτων</li>
       <li xml:lang="en-GB">Support for send and receive direct messages</li>
-      <li xml:lang="es">Reconoce el envío y la recepción de mensajes directos</li>
+      <li xml:lang="es">Admite el envío y la recepción de mensajes directos</li>
       <li xml:lang="fi">Tukee suorien viestien lähettämistä ja vastaanottamista</li>
       <li xml:lang="fr">Envoi et réception de messages directs</li>
       <li xml:lang="gl">Permite enviar e recibir mensaxes directas.</li>
@@ -236,6 +240,7 @@
       <li xml:lang="ca">Permet la pujada de medis usant serveis externs (Flickr, Imageshack,...)</li>
       <li xml:lang="ca-valencia">Permet la pujada de medis usant serveis externs (Flickr, Imageshack,...)</li>
       <li xml:lang="en-GB">Support medium upload using external services (Flickr, Imageshack,...)</li>
+      <li xml:lang="es">Admite la carga de medios usando servicios externos  (Flickr, Imageshack,...)</li>
       <li xml:lang="nl">Ondersteunt uploaden van media met externe services (Flickr, Imageshack,...)</li>
       <li xml:lang="pt">Suporte ao envio de conteúdos com serviços externos (Flickr, Imageshack,...)</li>
       <li xml:lang="sl">Podpora pošiljanju večpredstavnosti s pomočjo zunanjih storitev  (Flickr, Imageshack, ...)</li>
@@ -250,7 +255,7 @@
       <li xml:lang="de">Unterstützung für mehrere gleichzeitige Zugänge</li>
       <li xml:lang="el">Υποστηρίζει πολλούς λογαριασμούς ταυτόχρονα</li>
       <li xml:lang="en-GB">Supporting Multiple Accounts simultaneously</li>
-      <li xml:lang="es">Soporta múltiples cuentas simultáneamente</li>
+      <li xml:lang="es">Admite múltiples cuentas simultáneamente</li>
       <li xml:lang="fi">Tukee useampia tilejä samanaikaisesti</li>
       <li xml:lang="fr">Prise en charge simultanée de plusieurs comptes</li>
       <li xml:lang="gl">Permite usar varias contas de maneira simultánea.</li>
