@@ -85,6 +85,9 @@ Choqok::Account *PumpIOEditAccountWidget::apply()
 void PumpIOEditAccountWidget::authorizeUser()
 {
     qCDebug(CHOQOK);
+    if (kcfg_webfingerid->text().isEmpty() || !kcfg_webfingerid->text().contains(QLatin1Char('@'))) {
+        return;
+    }
     m_qoauth = new QOAuth::Interface(new KIO::Integration::AccessManager(this), this);
     if (m_account->consumerKey().isEmpty() || m_account->consumerSecret().isEmpty()) {
         registerClient();
@@ -134,8 +137,9 @@ void PumpIOEditAccountWidget::authorizeUser()
 
 bool PumpIOEditAccountWidget::validateData()
 {
-    if (kcfg_webfingerid->text().isEmpty() || !kcfg_webfingerid->text().contains(QLatin1Char('@'))
-            || !isAuthenticated()) {
+    if (kcfg_alias->text().isEmpty() || kcfg_webfingerid->text().isEmpty() ||
+            !kcfg_webfingerid->text().contains(QLatin1Char('@')) ||
+            !isAuthenticated()) {
         return false;
     } else {
         return true;
