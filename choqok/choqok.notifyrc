@@ -206,7 +206,7 @@ Action=Popup
 
 [Event/job-error]
 Name=Job Error
-Name[ar]=خطأ مهمّة
+Name[ar]=خطأ في مهمّة
 Name[bg]=Грешка в задача
 Name[bs]=Greška u poslu
 Name[ca]=Error de tasca

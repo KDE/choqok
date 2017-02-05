@@ -9,6 +9,7 @@ X-KDE-ParentApp=choqok_tinyarro_ws
 X-KDE-ParentComponents=choqok_tinyarro_ws
 
 Name=tinyarro.ws
+Name[ar]=tinyarro.ws
 Name[bg]=tinyarro.ws
 Name[bs]=tinyarro.ws
 Name[ca]=tinyarro.ws
@@ -45,6 +46,7 @@ Name[x-test]=xxtinyarro.wsxx
 Name[zh_CN]=tinyarro.ws
 Name[zh_TW]=tinyarro.ws
 Comment=tinyarro.ws
+Comment[ar]=tinyarro.ws
 Comment[bg]=tinyarro.ws
 Comment[bs]=tinyarro.ws
 Comment[ca]=tinyarro.ws
