@@ -35,6 +35,7 @@
   <summary>Micro-blogging client</summary>
   <summary xml:lang="ca">Client de microblogs</summary>
   <summary xml:lang="ca-valencia">Client de microblogs</summary>
+  <summary xml:lang="cs">Klient pro mikroblogování</summary>
   <summary xml:lang="de">Micro-Blogging-Programm</summary>
   <summary xml:lang="en-GB">Micro-blogging client</summary>
   <summary xml:lang="es">Cliente de microblogueo</summary>
@@ -282,7 +283,8 @@
       <li xml:lang="ar">دعم البحث في كلّ الخدمات عبر واجهة برمجة التّطبيقات</li>
       <li xml:lang="bs">Podrška za pretraživački API za sve usluge</li>
       <li xml:lang="ca">Permet les API de cerca per a tots els serveis</li>
-      <li xml:lang="ca-valencia">Permet les API de cerca per a tots els serveis</li>
+      <li xml:lang="ca-valencia">Permet les API de busca per a tots els serveis</li>
+      <li xml:lang="cs">Podpora vyhledávacích API pro všechny služby</li>
       <li xml:lang="de">Unterstützt Auch-APIs für alle Dienste</li>
       <li xml:lang="el">Υποστηρίζει API αναζήτησης για όλες τις υπηρεσίες</li>
       <li xml:lang="en-GB">Supporting search APIs for all services</li>
@@ -309,6 +311,7 @@
       <li xml:lang="bs">KWallet integracija</li>
       <li xml:lang="ca">Integració amb el KWallet</li>
       <li xml:lang="ca-valencia">Integració amb el KWallet</li>
+      <li xml:lang="cs">Integrace Kwallet</li>
       <li xml:lang="de">Integration von KWallet</li>
       <li xml:lang="el">Ενσωμάτωση KWallet</li>
       <li xml:lang="en-GB">KWallet integration</li>
