@@ -39,6 +39,7 @@
   <summary xml:lang="de">Micro-Blogging-Programm</summary>
   <summary xml:lang="en-GB">Micro-blogging client</summary>
   <summary xml:lang="es">Cliente de microblogueo</summary>
+  <summary xml:lang="it">Client per micro-blogging</summary>
   <summary xml:lang="nl">Micro-blogging-client</summary>
   <summary xml:lang="pl">Klient mikroblogów</summary>
   <summary xml:lang="pt">Cliente de micro-blogs</summary>
@@ -55,6 +56,7 @@
     <p xml:lang="de">Choqok ist ein Mikro-Blogging-Programm, das derzeit die Dienste Twitter.com , GNU Social, Pump.io und Friendica unterstützt.</p>
     <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com, GNU Social, Pump.io and Friendica services.</p>
     <p xml:lang="es">Choqok es un cliente de microblogueo que admite los servicios Twitter.com, GNU Social, Pump.io y Friendica.</p>
+    <p xml:lang="it">Choqok è un client per micro-blogging che supporta i servizi Twitter.com, GNU Social, Pump.io e Friendica.</p>
     <p xml:lang="nl">Choqok is een micro-blogging-client, die de services Twitter.com, GNU Social, Pump.io en Friendica ondersteunt.</p>
     <p xml:lang="pl">Choqok jest klientem mikro bloków, który obsługuje usługi Twitter.com, GNU Social,Pump.io oraz Friendica.</p>
     <p xml:lang="pt">O Choqok é um cliente de micro-blogs que suporta os serviços do Twitter.com, do Pump.io, GNU Social e Friendica.</p>
@@ -123,6 +125,7 @@
       <li xml:lang="de">Unterstützung für die eigene Pump.io-Instanzen</li>
       <li xml:lang="en-GB">Supporting self hosted Pump.io services</li>
       <li xml:lang="es">Admite los servicios autohospedado de Pump.io</li>
+      <li xml:lang="it">Supporta i servizi Pump.io</li>
       <li xml:lang="nl">Ondersteuning voor zelf gehoste Pump.io services</li>
       <li xml:lang="pl">Obsługa samoutrzymywanej usługi Pump.io</li>
       <li xml:lang="pt">Suporte para o serviço auto-alojado do Pump.io</li>
@@ -158,6 +161,7 @@
       <li xml:lang="ca-valencia">Permet els serveis Friendica auto hostatjats</li>
       <li xml:lang="en-GB">Supporting self hosted Friendica services</li>
       <li xml:lang="es">Admite el servicio autohospedado de Pump.io</li>
+      <li xml:lang="it">Supporta i servizi Friendica</li>
       <li xml:lang="nl">Ondersteuning voor zelf gehoste Friendica services</li>
       <li xml:lang="pl">Obsługa samoutrzymywanej usługi Friendica</li>
       <li xml:lang="pt">Suporte para o serviço auto-alojado do Friendica</li>
@@ -246,6 +250,7 @@
       <li xml:lang="ca-valencia">Permet la pujada de medis usant serveis externs (Flickr, Imageshack,...)</li>
       <li xml:lang="en-GB">Support medium upload using external services (Flickr, Imageshack,...)</li>
       <li xml:lang="es">Admite la carga de medios usando servicios externos (Flickr, Imageshack,...)</li>
+      <li xml:lang="it">Supporta il caricamento di elementi multimediali tramite l'uso di servizi esterni (Flickr, Imageshack, ecc.)</li>
       <li xml:lang="nl">Ondersteunt uploaden van media met externe services (Flickr, Imageshack,...)</li>
       <li xml:lang="pl">Obsługa wysyłania multimediów przy użyciu zewnętrznych usług (Flickr, Imageshack,...)</li>
       <li xml:lang="pt">Suporte ao envio de conteúdos com serviços externos (Flickr, Imageshack,...)</li>
