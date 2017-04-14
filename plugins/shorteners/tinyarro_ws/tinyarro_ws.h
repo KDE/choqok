@@ -39,7 +39,7 @@ public:
     Tinyarro_ws(QObject *parent, const QVariantList &args);
     ~Tinyarro_ws();
 
-    virtual QString shorten(const QString &url);
+    virtual QString shorten(const QString &url) override;
 };
 
 #endif

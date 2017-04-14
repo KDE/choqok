@@ -42,10 +42,10 @@ public:
     ~ChoqokPluginConfig();
 
 public Q_SLOTS:
-    virtual void load();
-    virtual void save();
+    virtual void load() override;
+    virtual void save() override;
 
-    virtual void defaults();
+    virtual void defaults() override;
     void reparseConfiguration(const QByteArray &conf);
 private:
     KPluginSelector *m_pluginSelector;

@@ -35,8 +35,8 @@ public:
     TwitgooConfig(QWidget *parent, const QVariantList &);
     ~TwitgooConfig();
 
-    virtual void save();
-    virtual void load();
+    virtual void save() override;
+    virtual void load() override;
 
 protected Q_SLOTS:
     void emitChanged();

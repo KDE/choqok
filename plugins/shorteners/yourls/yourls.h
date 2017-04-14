@@ -40,7 +40,7 @@ public:
     Yourls(QObject *parent, const QVariantList &args);
     ~Yourls();
 
-    virtual QString shorten(const QString &url);
+    virtual QString shorten(const QString &url) override;
 
 private Q_SLOTS:
     void reloadConfigs();

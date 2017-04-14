@@ -187,17 +187,17 @@ protected Q_SLOTS:
     void avatarFetched(const QString &remoteUrl, const QPixmap &pixmap);
 
     void slotImageFetched(const QString &remoteUrl, const QPixmap &pixmap);
-    virtual void mousePressEvent(QMouseEvent *ev);
+    virtual void mousePressEvent(QMouseEvent *ev) override;
 
 protected:
     virtual void setupUi();
-    virtual void closeEvent(QCloseEvent *event);
+    virtual void closeEvent(QCloseEvent *event) override;
     virtual void setupAvatar();
     virtual void fetchImage();
-    virtual void wheelEvent(QWheelEvent *);
-    virtual void resizeEvent(QResizeEvent *event);
-    virtual void enterEvent(QEvent *event);
-    virtual void leaveEvent(QEvent *event);
+    virtual void wheelEvent(QWheelEvent *) override;
+    virtual void resizeEvent(QResizeEvent *event) override;
+    virtual void enterEvent(QEvent *event) override;
+    virtual void leaveEvent(QEvent *event) override;
     virtual QString prepareStatus(const QString &text);
     QLatin1String getDirection(QString text);
     virtual QString generateSign();

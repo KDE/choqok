@@ -35,8 +35,8 @@ public:
     Is_gd_Config(QWidget *parent, const QVariantList &);
     ~Is_gd_Config();
 
-    virtual void save();
-    virtual void load();
+    virtual void save() override;
+    virtual void load() override;
 
 protected Q_SLOTS:
     void emitChanged();

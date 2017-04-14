@@ -35,7 +35,7 @@ public:
     virtual ~Notification();
     void init();
 
-    virtual QSize sizeHint() const;
+    virtual QSize sizeHint() const override;
 
 Q_SIGNALS:
     void ignored();
@@ -48,7 +48,7 @@ protected Q_SLOTS:
     void slotClicked();
 
 protected:
-    virtual void mouseMoveEvent(QMouseEvent *);
+    virtual void mouseMoveEvent(QMouseEvent *) override;
 
 private:
     void setDirection();

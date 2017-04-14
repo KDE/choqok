@@ -147,8 +147,8 @@ Q_SIGNALS:
     void iconSizeChanged(const QSize &size);
 
 protected:
-    void resizeEvent(QResizeEvent *event);
-    void paintEvent(QPaintEvent *event);
+    virtual void resizeEvent(QResizeEvent *event) override;
+    virtual void paintEvent(QPaintEvent *event) override;
 
 private Q_SLOTS:
     void action_triggered(QAction *action);

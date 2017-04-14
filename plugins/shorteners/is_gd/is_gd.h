@@ -39,7 +39,7 @@ public:
     Is_gd(QObject *parent, const QVariantList &args);
     ~Is_gd();
 
-    virtual QString shorten(const QString &url);
+    virtual QString shorten(const QString &url) override;
 
 };
 

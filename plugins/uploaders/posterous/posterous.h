@@ -35,7 +35,7 @@ public:
     Posterous(QObject *parent, const QList< QVariant > &args);
     ~Posterous();
 
-    virtual void upload(const QUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType);
+    virtual void upload(const QUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType) override;
     QString getAuthToken(const QUrl &localUrl);
 protected Q_SLOTS:
     void slotUpload(KJob *job);

@@ -37,7 +37,7 @@ class Goo_gl : public Choqok::Shortener
 public:
     Goo_gl(QObject *parent, const QVariantList &args);
     ~Goo_gl();
-    QString shorten(const QString &url);
+    virtual QString shorten(const QString &url) override;
 };
 
 #endif //GOO_GL_H

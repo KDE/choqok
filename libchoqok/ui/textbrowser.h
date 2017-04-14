@@ -55,11 +55,11 @@ protected Q_SLOTS:
     void slotCopyPostContent();
 
 protected:
-    virtual void wheelEvent(QWheelEvent *event);
-    virtual void mousePressEvent(QMouseEvent *ev);
-    virtual void mouseMoveEvent(QMouseEvent *ev);
-    virtual void resizeEvent(QResizeEvent *e);
-    virtual void contextMenuEvent(QContextMenuEvent *event);
+    virtual void wheelEvent(QWheelEvent *event) override;
+    virtual void mousePressEvent(QMouseEvent *ev) override;
+    virtual void mouseMoveEvent(QMouseEvent *ev) override;
+    virtual void resizeEvent(QResizeEvent *e) override;
+    virtual void contextMenuEvent(QContextMenuEvent *event) override;
 
 private:
     class Private;

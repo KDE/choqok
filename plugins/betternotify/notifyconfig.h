@@ -41,8 +41,8 @@ public:
     NotifyConfig(QWidget *parent, const QVariantList &args);
     ~NotifyConfig();
 
-    virtual void save();
-    virtual void load();
+    virtual void save() override;
+    virtual void load() override;
 
 protected Q_SLOTS:
     void updateTimelinesList();

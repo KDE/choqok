@@ -37,9 +37,9 @@ Q_SIGNALS:
     void clicked();
 
 protected:
-    virtual void enterEvent(QEvent *e);
-    virtual void leaveEvent(QEvent *e);
-    virtual void mousePressEvent(QMouseEvent *ev);
+    virtual void enterEvent(QEvent *e) override;
+    virtual void leaveEvent(QEvent *e) override;
+    virtual void mousePressEvent(QMouseEvent *ev) override;
 };
 
 #endif // MYTEXTBROWSER_H

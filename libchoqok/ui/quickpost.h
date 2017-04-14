@@ -68,7 +68,7 @@ protected Q_SLOTS:
     void slotAttachMedium();
     void slotCurrentAccountChanged(int);
     void checkAll(bool isAll);
-    virtual void accept();
+    virtual void accept() override;
     void addAccount(Choqok::Account *account);
     void removeAccount(const QString &alias);
     void accountModified(Choqok::Account *theAccount);
