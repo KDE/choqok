@@ -28,6 +28,7 @@
 #include <QLabel>
 #include <QPointer>
 #include <QPushButton>
+#include <QStringListModel>
 #include <QVBoxLayout>
 
 #include <KLocalizedString>
@@ -37,8 +38,11 @@
 #include "notifymanager.h"
 #include "shortenmanager.h"
 
+#include "twitterapiaccount.h"
+
 #include "twitterdebug.h"
 #include "twittermicroblog.h"
+#include "twittertextedit.h"
 
 class TwitterComposerWidget::Private
 {
@@ -56,6 +60,13 @@ public:
 TwitterComposerWidget::TwitterComposerWidget(Choqok::Account *account, QWidget *parent)
     : TwitterApiComposerWidget(account, parent), d(new Private)
 {
+    TwitterTextEdit *edit = new TwitterTextEdit(account, this);
+    QStringListModel *model = new QStringListModel(qobject_cast<TwitterApiAccount *>(account)->friendsList(), this);
+    QCompleter *completer = new QCompleter(model, this);
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
+    edit->setCompleter(completer);
+    setEditor(edit);
+
     d->editorLayout = qobject_cast<QGridLayout *>(editorContainer()->layout());
     d->btnAttach = new QPushButton(editorContainer());
     d->btnAttach->setIcon(QIcon::fromTheme(QLatin1String("mail-attachment")));

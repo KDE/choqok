@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2010-2012 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    Copyright (C) 2017 Andrea Scarpino <scarpino@kde.org>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -21,40 +21,30 @@
 
 */
 
-#ifndef TWITTERAPITEXTEDIT_H
-#define TWITTERAPITEXTEDIT_H
+#ifndef TWITTERTEXTEDIT_H
+#define TWITTERTEXTEDIT_H
 
-#include <QCompleter>
+#include "twitterapitextedit.h"
 
-#include "account.h"
-#include "choqoktextedit.h"
-#include "choqok_export.h"
-
-class KJob;
-
-class CHOQOK_HELPER_EXPORT TwitterApiTextEdit : public Choqok::UI::TextEdit
+class TwitterTextEdit : public TwitterApiTextEdit
 {
     Q_OBJECT
 
 public:
-    explicit TwitterApiTextEdit(Choqok::Account *theAccount, QWidget *parent = 0);
-    ~TwitterApiTextEdit();
+    explicit TwitterTextEdit(Choqok::Account *theAccount, QWidget *parent = 0);
+    ~TwitterTextEdit();
 
-    void setCompleter(QCompleter *c);
-    QCompleter *completer() const;
-
-protected:
-    void keyPressEvent(QKeyEvent *e) override;
-    void focusInEvent(QFocusEvent *e) override;
+protected Q_SLOTS:
+    virtual void updateRemainingCharsCount() override;
 
 private Q_SLOTS:
-    void insertCompletion(const QString &completion);
+    void slotTCoMaximumLength(KJob *job);
 
 private:
-//     QString textUnderCursor() const;
+    void fetchTCoMaximumLength();
 
     class Private;
     Private *const d;
 };
 
-#endif // TWITTERAPITEXTEDIT_H
+#endif // TWITTERTEXTEDIT_H

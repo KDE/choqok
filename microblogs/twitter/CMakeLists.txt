@@ -10,6 +10,7 @@ set(choqok_twitter_SRCS
     twittermicroblog.cpp
     twitterpostwidget.cpp
     twittersearch.cpp
+    twittertextedit.cpp
     twittereditaccount.cpp
     twitterlistdialog.cpp
     twittertimelinewidget.cpp
