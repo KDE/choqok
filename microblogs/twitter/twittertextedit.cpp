@@ -57,7 +57,7 @@ TwitterTextEdit::~TwitterTextEdit()
     delete d;
 }
 
-void TwitterApiTextEdit::updateRemainingCharsCount()
+void TwitterTextEdit::updateRemainingCharsCount()
 {
     QString txt = this->toPlainText();
     int count = txt.count();
@@ -108,7 +108,7 @@ void TwitterApiTextEdit::updateRemainingCharsCount()
     }
 }
 
-void TwitterApiTextEdit::fetchTCoMaximumLength()
+void TwitterTextEdit::fetchTCoMaximumLength()
 {
     TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(d->acc);
     if (acc) {
@@ -131,7 +131,7 @@ void TwitterApiTextEdit::fetchTCoMaximumLength()
     }
 }
 
-void TwitterApiTextEdit::slotTCoMaximumLength(KJob *job)
+void TwitterTextEdit::slotTCoMaximumLength(KJob *job)
 {
     if (job->error()) {
         qCDebug(CHOQOK) << "Job Error:" << job->errorString();
