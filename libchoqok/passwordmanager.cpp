@@ -66,9 +66,9 @@ public:
         }
         wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), id);
         if (wallet) {
-            if (!wallet->setFolder(QLatin1String("choqok"))) {
-                wallet->createFolder(QLatin1String("choqok"));
-                wallet->setFolder(QLatin1String("choqok"));
+            if (!wallet->setFolder(QCoreApplication::applicationName())) {
+                wallet->createFolder(QCoreApplication::applicationName());
+                wallet->setFolder(QCoreApplication::applicationName());
             }
             qCDebug(CHOQOK) << "Wallet successfully opened.";
             return true;

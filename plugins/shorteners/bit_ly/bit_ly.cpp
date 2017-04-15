@@ -45,7 +45,7 @@ Bit_ly::~Bit_ly()
 
 QString Bit_ly::shorten(const QString &url)
 {
-    QString login = QLatin1String("choqok");
+    QString login = QCoreApplication::applicationName();
     QString apiKey = QLatin1String("R_bdd1ae8b6191dd36e13fc77ca1d4f27f");
     QUrl reqUrl(QLatin1String("http://api.bit.ly/v3/shorten"));
     QUrlQuery reqQuery;

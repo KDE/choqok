@@ -69,7 +69,7 @@ void Twitgoo::upload(const QUrl &localUrl, const QByteArray &medium, const QByte
     QUrl url(QLatin1String("http://twitgoo.com/api/upload"));
 
     QMap<QString, QByteArray> formdata;
-    formdata[QLatin1String("source")] = "Choqok";
+    formdata[QLatin1String("source")] = QCoreApplication::applicationName().toLatin1();
     formdata[QLatin1String("format")] = "json";
 
     QMap<QString, QByteArray> mediafile;

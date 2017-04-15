@@ -95,7 +95,7 @@ void Posterous::upload(const QUrl &localUrl, const QByteArray &medium, const QBy
             formdata[QLatin1String("post[title]")] = QByteArray();
             formdata[QLatin1String("post[body]")] = QByteArray();
             formdata[QLatin1String("autopost")] = "0";
-            formdata[QLatin1String("source")] = "Choqok";
+            formdata[QLatin1String("source")] = QCoreApplication::applicationName().toLatin1();
             formdata[QLatin1String("api_token")] = token.toUtf8();
 
             QMap<QString, QByteArray> mediafile;
@@ -127,7 +127,7 @@ void Posterous::upload(const QUrl &localUrl, const QByteArray &medium, const QBy
         QUrl url(QLatin1String("http://posterous.com/api2/upload.json"));
 
         QMap<QString, QByteArray> formdata;
-        formdata[QLatin1String("source")] = "Choqok";
+        formdata[QLatin1String("source")] = QCoreApplication::applicationName().toLatin1();
         formdata[QLatin1String("sourceLink")] = "http://choqok.gnufolks.org/";
 
         QMap<QString, QByteArray> mediafile;
