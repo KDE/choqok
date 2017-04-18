@@ -267,10 +267,6 @@ void MainWindow::setupActions()
     QAction *uploadMedium = new QAction(QIcon::fromTheme(QLatin1String("arrow-up")), i18n("Upload Medium..."), this);
     actionCollection()->addAction(QLatin1String("choqok_upload_medium"), uploadMedium);
     connect(uploadMedium, &QAction::triggered, this, &MainWindow::slotUploadMedium);
-
-    QAction *donate = new QAction(QIcon::fromTheme(QLatin1String("help-donate")), i18n("Donate"), this);
-    actionCollection()->addAction(QLatin1String("choqok_donate"), donate);
-    connect(donate, &QAction::triggered, this, &MainWindow::slotDonate);
 }
 
 void MainWindow::slotConfNotifications()
@@ -661,8 +657,6 @@ void MainWindow::slotShowSpecialMenu(bool show)
             menu->addAction(actionCollection()->action(QLatin1String("choqok_hide_menubar")));
             menu->addAction(prefs);
             menu->addSeparator();
-            menu->addAction(actionCollection()->action(QLatin1String("choqok_donate")));
-            menu->addSeparator();
             menu->addAction(showMain);
             menu->addAction(actQuit);
             choqokMainButton->setMenu(menu);
@@ -676,9 +670,3 @@ void MainWindow::slotShowSpecialMenu(bool show)
     }
     updateTabbarHiddenState();
 }
-
-void MainWindow::slotDonate()
-{
-    Choqok::openUrl(QUrl(QLatin1String("http://choqok.gnufolks.org/about/contribute/")));
-}
-
