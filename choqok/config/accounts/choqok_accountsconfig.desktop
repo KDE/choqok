@@ -8,6 +8,7 @@ X-KDE-FactoryName=kcm_choqok_accountsconfig
 X-KDE-ParentApp=choqok
 X-KDE-ParentComponents=choqok
 X-KDE-Weight=20
+X-DocPath=choqok/index.html
 
 Name=Accounts
 Name[ar]=الحسابات

@@ -8,6 +8,7 @@ X-KDE-FactoryName=kcm_choqok_pluginconfig
 X-KDE-ParentApp=choqok
 X-KDE-ParentComponents=choqok
 X-KDE-Weight=200
+X-DocPath=choqok/index.html
 
 Name=Plugins
 Name[ar]=الملحقات

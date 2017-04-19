@@ -7,6 +7,7 @@ X-KDE-Library=kcm_choqok_appearanceconfig
 X-KDE-FactoryName=kcm_choqok_appearanceconfig
 X-KDE-ParentApp=choqok
 X-KDE-ParentComponents=choqok
+X-DocPath=choqok/index.html
 
 Name=Appearance
 Name[ar]=المظهر

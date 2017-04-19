@@ -8,6 +8,7 @@ X-KDE-FactoryName=kcm_choqok_behaviorconfig
 X-KDE-ParentApp=choqok
 X-KDE-ParentComponents=choqok
 X-KDE-Weight=10
+X-DocPath=choqok/index.html
 
 Name=Behavior
 Name[ar]=السّلوك
