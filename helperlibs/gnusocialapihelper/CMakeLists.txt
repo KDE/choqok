@@ -19,6 +19,7 @@ add_library(gnusocialapihelper SHARED ${gnusocialapihelper_SRCS})
 target_link_libraries(gnusocialapihelper
 PUBLIC
     Qt5::Core
+    Qt5::NetworkAuth
     Qt5::Xml
     Qt5::Widgets
     KF5::CoreAddons
@@ -28,7 +29,6 @@ PUBLIC
     KF5::WidgetsAddons
     choqok
     twitterapihelper
-    ${QTOAUTH_LIBRARY}
 )
 
 set_target_properties(gnusocialapihelper PROPERTIES

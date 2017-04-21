@@ -28,8 +28,6 @@
 #include <KIO/StoredTransferJob>
 #include <KLocalizedString>
 
-#include <QtOAuth/QtOAuth>
-
 #include "twitterapimicroblog.h"
 
 #include "twitteraccount.h"
@@ -78,25 +76,25 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
     QUrl url = account->apiUrl();
 
     QUrlQuery urlQuery;
-    QOAuth::ParamMap param;
+    QVariantMap param;
 
     const QString query = searchInfo.query;
     if (searchInfo.option == TwitterSearch::FromUser) {
         url.setPath(url.path() + QLatin1String("/statuses/user_timeline.json"));
 
         urlQuery.addQueryItem(QLatin1String("screen_name"), query);
-        param.insert("screen_name", query.toLatin1());
+        param.insert(QLatin1String("screen_name"), query.toLocal8Bit());
     } else {
         url.setPath(url.path() + QLatin1String("/search/tweets.json"));
 
         const QByteArray formattedQuery(QUrl::toPercentEncoding(mSearchCode[searchInfo.option] + query));
         urlQuery.addQueryItem(QLatin1String("q"), QString::fromLatin1(formattedQuery));
-        param.insert("q", formattedQuery);
+        param.insert(QLatin1String("q"), formattedQuery);
     }
 
     if (!sinceStatusId.isEmpty()) {
         urlQuery.addQueryItem(QLatin1String("since_id"), sinceStatusId);
-        param.insert("since_id", sinceStatusId.toLatin1());
+        param.insert(QLatin1String("since_id"), sinceStatusId.toLocal8Bit());
     }
 
     int cntStr;
@@ -106,7 +104,7 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
         cntStr = 100;
     }
     urlQuery.addQueryItem(QLatin1String("count"), QString::number(cntStr));
-    param.insert("count", QString::number(cntStr).toLatin1());
+    param.insert(QLatin1String("count"), QString::number(cntStr).toLocal8Bit());
 
     const QUrl tmpUrl(url);
     url.setQuery(urlQuery);
@@ -122,7 +120,7 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
 
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     QLatin1String(microblog->authorizationHeader(account, tmpUrl, QOAuth::GET, param)));
+                     QLatin1String(microblog->authorizationHeader(account, tmpUrl, QNetworkAccessManager::GetOperation, param)));
 
     mSearchJobs[job] = searchInfo;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(searchResultsReturned(KJob*)));

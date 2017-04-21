@@ -29,8 +29,6 @@
 #include <KProcess>
 #include <KMessageBox>
 
-#include <QtOAuth/qoauth_namespace.h>
-
 #include "choqokbehaviorsettings.h"
 
 void Choqok::openUrl(const QUrl &url)
@@ -45,44 +43,14 @@ void Choqok::openUrl(const QUrl &url)
             failureMessage = i18n("Custom web browser \"%1\" is unable to open url \"%2\".\nPlease update the custom web browser in Configurations.",
                                  Choqok::BehaviorSettings::customBrowser(), url.toDisplayString());
         }
-    } else {
-        if( QDesktopServices::openUrl(url) == false ) {
-            urlOpeningFailed = true;
-            failureMessage = i18n("Unable to open url \"%1\".\nPlease check Qt installation or set a custom web browser in Configurations.",
-                                 url.toDisplayString());
-        }
+    } else if(!QDesktopServices::openUrl(url)) {
+        urlOpeningFailed = true;
+        failureMessage = i18n("Unable to open url \"%1\".\nPlease check Qt installation or set a custom web browser in Configurations.",
+                              url.toDisplayString());
     }
     
     if (urlOpeningFailed)
         KMessageBox::error(Choqok::UI::Global::mainWindow(), failureMessage);
-}
-
-QString Choqok::qoauthErrorText(int code)
-{
-    switch (code) {
-    case QOAuth::NoError:
-        return i18n("No Error");
-    case QOAuth::BadRequest:
-        return i18n("Bad request");
-    case QOAuth::ConsumerKeyEmpty:
-    case QOAuth::ConsumerSecretEmpty:
-        return i18n("Consumer Key or Secret has not been provided");
-    case QOAuth::Forbidden:
-        return i18n("Forbidden");
-    case QOAuth::Timeout:
-        return i18n("Timeout on server");
-    case QOAuth::Unauthorized:
-        return i18n("Authorization Error");
-    case QOAuth::UnsupportedHttpMethod:
-        return i18n("Internal Error");
-    case QOAuth::OtherError:
-    case QOAuth::RSADecodingError:
-    case QOAuth::RSAKeyFileError:
-    case QOAuth::RSAPrivateKeyEmpty:
-        return i18n("Unknown Error");
-    default:
-        return QString();
-    }
 }
 
 QString Choqok::getColorString(const QColor &color)

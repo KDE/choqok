@@ -23,9 +23,8 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #define TWITTERAPIMICROBLOG_H
 
 #include <QDateTime>
+#include <QNetworkAccessManager>
 #include <QUrlQuery>
-
-#include <QtOAuth/qoauth_namespace.h>
 
 #include "microblog.h"
 #include "twitterapisearch.h"
@@ -158,8 +157,8 @@ public:
     virtual QString repeatQuestion() = 0;
 
     virtual QByteArray authorizationHeader(TwitterApiAccount *theAccount,
-                                           const QUrl &requestUrl, QOAuth::HttpMethod method,
-                                           QOAuth::ParamMap params = QOAuth::ParamMap());
+                                           const QUrl &requestUrl, QNetworkAccessManager::Operation method,
+                                           const QVariantMap &params = QVariantMap());
 
 public Q_SLOTS:
     /**

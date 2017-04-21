@@ -56,7 +56,7 @@ void TwitterDMessageDialog::fetchTextLimit()
     TwitterApiMicroBlog *mBlog = qobject_cast<TwitterApiMicroBlog *>(account()->microblog());
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     QLatin1String(mBlog->authorizationHeader(account(), url, QOAuth::GET)));
+                     QLatin1String(mBlog->authorizationHeader(account(), url, QNetworkAccessManager::GetOperation)));
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotTextLimit(KJob*)));
     job->start();
 }

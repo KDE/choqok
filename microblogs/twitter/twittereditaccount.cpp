@@ -28,18 +28,13 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KIO/AccessManager>
 #include <KMessageBox>
 
-#include <QtOAuth/QtOAuth>
-#include <QtOAuth/qoauth_namespace.h>
-
 #include "accountmanager.h"
 #include "choqoktools.h"
 
 #include "twitteraccount.h"
 #include "twitterdebug.h"
 #include "twittermicroblog.h"
-
-const char *twitterConsumerKey = "VyXMf0O7CvciiUQjliYtYg";
-const char *twitterConsumerSecret = "uD2HvsOBjzt1Vs6SnouFtuxDeHmvOOVwmn3fBVyCw0";
+#include "twitterapioauth.h"
 
 TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
         TwitterAccount *account, QWidget *parent)
@@ -50,14 +45,7 @@ TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
     connect(kcfg_authorize, SIGNAL(clicked(bool)), SLOT(authorizeUser()));
     if (mAccount) {
         kcfg_alias->setText(mAccount->alias());
-        if (mAccount->oauthToken().isEmpty() || mAccount->oauthTokenSecret().isEmpty()) {
-            setAuthenticated(false);
-        } else {
-            setAuthenticated(true);
-            token = mAccount->oauthToken();
-            tokenSecret = mAccount->oauthTokenSecret();
-            username = mAccount->username();
-        }
+        setAuthenticated(!mAccount->oauthToken().isEmpty() && !mAccount->oauthTokenSecret().isEmpty());
     } else {
         setAuthenticated(false);
         QString newAccountAlias = microblog->serviceName();
@@ -92,12 +80,8 @@ Choqok::Account *TwitterEditAccountWidget::apply()
 {
     qCDebug(CHOQOK);
     mAccount->setAlias(kcfg_alias->text());
-    mAccount->setUsername(username);
-    mAccount->setOauthToken(token);
-    mAccount->setOauthTokenSecret(tokenSecret);
-    mAccount->setOauthConsumerKey(twitterConsumerKey);
-    mAccount->setOauthConsumerSecret(twitterConsumerSecret);
-    mAccount->setUsingOAuth(true);
+    mAccount->setOauthToken(mAccount->oauthInterface()->token().toLatin1());
+    mAccount->setOauthTokenSecret(mAccount->oauthInterface()->tokenSecret().toLatin1());
     saveTimelinesTableState();
     mAccount->writeConfig();
     return mAccount;
@@ -106,69 +90,29 @@ Choqok::Account *TwitterEditAccountWidget::apply()
 void TwitterEditAccountWidget::authorizeUser()
 {
     qCDebug(CHOQOK);
-    qoauth = new QOAuth::Interface(new KIO::Integration::AccessManager(this), this);
-    // set the consumer key and secret
-    qoauth->setConsumerKey(twitterConsumerKey);
-    qoauth->setConsumerSecret(twitterConsumerSecret);
-    // set a timeout for requests (in msecs)
-    qoauth->setRequestTimeout(20000);
-    qoauth->setIgnoreSslErrors(true);
 
-    QOAuth::ParamMap otherArgs;
+    mAccount->oauthInterface()->grant();
 
-    // send a request for an unauthorized token
-    QOAuth::ParamMap reply =
-        qoauth->requestToken(QLatin1String("https://twitter.com/oauth/request_token"),
-                             QOAuth::GET, QOAuth::HMAC_SHA1);
-
-    // if no error occurred, read the received token and token secret
-    if (qoauth->error() == QOAuth::NoError) {
-        token = reply.value(QOAuth::tokenParameterName());
-        tokenSecret = reply.value(QOAuth::tokenSecretParameterName());
-        qCDebug(CHOQOK) << "token:" << token;
-        QUrl url(QLatin1String("https://twitter.com/oauth/authorize"));
-        QUrlQuery urlQuery;
-        urlQuery.addQueryItem(QLatin1String("oauth_token"), QLatin1String(token));
-        urlQuery.addQueryItem(QLatin1String("oauth_callback"), QLatin1String("oob"));
-        url.setQuery(urlQuery);
-        Choqok::openUrl(url);
-        getPinCode();
-    } else {
-        qCDebug(CHOQOK) << "ERROR:" << qoauth->error() << Choqok::qoauthErrorText(qoauth->error());
-        KMessageBox::detailedError(this, i18n("Authorization Error"),
-                                   Choqok::qoauthErrorText(qoauth->error()));
-    }
+    connect(mAccount->oauthInterface(), &QAbstractOAuth::authorizeWithBrowser, &Choqok::openUrl);
+    connect(mAccount->oauthInterface(), &QAbstractOAuth::statusChanged, this, &TwitterEditAccountWidget::getPinCode);
 }
 
 void TwitterEditAccountWidget::getPinCode()
 {
     isAuthenticated = false;
-    while (!isAuthenticated) {
+    if (mAccount->oauthInterface()->status() == QAbstractOAuth::Status::TemporaryCredentialsReceived) {
         QString verifier = QInputDialog::getText(this, i18n("PIN"),
                            i18n("Enter the PIN received from Twitter:"));
         if (verifier.isEmpty()) {
             return;
         }
-        QOAuth::ParamMap otherArgs;
-        otherArgs.insert("oauth_verifier", verifier.toUtf8());
 
-        // send a request to exchange Request Token for an Access Token
-        QOAuth::ParamMap reply =
-            qoauth->accessToken(QLatin1String("https://twitter.com/oauth/access_token"), QOAuth::POST, token,
-                                tokenSecret, QOAuth::HMAC_SHA1, otherArgs);
-        // if no error occurred, read the Access Token (and other arguments, if applicable)
-        if (qoauth->error() == QOAuth::NoError) {
-            username = QLatin1String(reply.value("screen_name"));
-            token = reply.value(QOAuth::tokenParameterName());
-            tokenSecret = reply.value(QOAuth::tokenSecretParameterName());
-            setAuthenticated(true);
-            KMessageBox::information(this, i18n("Choqok is authorized successfully."),
-                                     i18n("Authorized"));
-        } else {
-            qCDebug(CHOQOK) << "ERROR:" << qoauth->error() << Choqok::qoauthErrorText(qoauth->error());
-            KMessageBox::detailedError(this, i18n("Authorization Error"),
-                                       Choqok::qoauthErrorText(qoauth->error()));
-        }
+        mAccount->oauthInterface()->continueGrantWithVerifier(verifier);
+    } else if (mAccount->oauthInterface()->status() == QAbstractOAuth::Status::Granted) {
+        setAuthenticated(true);
+        KMessageBox::information(this, i18n("Choqok is authorized successfully."), i18n("Authorized"));
+    } else {
+        KMessageBox::detailedError(this, i18n("Authorization Error"), i18n("OAuth authorization error"));
     }
 }
 

@@ -27,9 +27,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <KIO/StoredTransferJob>
 #include <KJobWidgets>
 
-#include <QtOAuth/QtOAuth>
-#include <QtOAuth/qoauth_namespace.h>
-
 #include "accountmanager.h"
 #include "choqoktools.h"
 
@@ -44,8 +41,8 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
 {
     setupUi(this);
 //     setAuthenticated(false);
-    oauthConsumerKey = "747d09d8e7b9417f5835f04510cb86ed";//Identi.ca tokens
-    oauthConsumerSecret = "57605f8507a041525a2d5c0abef15b20";
+//    oauthConsumerKey = "747d09d8e7b9417f5835f04510cb86ed";//Identi.ca tokens
+//    oauthConsumerSecret = "57605f8507a041525a2d5c0abef15b20";
 //     connect(kcfg_authorize, SIGNAL(clicked(bool)), SLOT(authorizeUser()));
 //     connect(kcfg_authMethod, SIGNAL(currentIndexChanged(int)), SLOT(slotAuthMethodChanged(int)));
 //     slotAuthMethodChanged(kcfg_authMethod->currentIndex());

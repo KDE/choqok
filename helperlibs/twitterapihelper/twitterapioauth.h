@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2013  Andrea Scarpino <scarpino@kde.org>
+    Copyright (C) 2017 Andrea Scarpino <scarpino@kde.org>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -18,44 +18,36 @@
 
     You should have received a copy of the GNU General Public License
     along with this program; if not, see http://www.gnu.org/licenses/
+
 */
 
-#ifndef PUMPIOEDITACCOUNTWIDGET_H
-#define PUMPIOEDITACCOUNTWIDGET_H
+#ifndef TWITTERAPIOAUTH_H
+#define TWITTERAPIOAUTH_H
 
-#include "editaccountwidget.h"
+#include <QOAuth1>
 
-#include <QUrlQuery>
+#include "choqok_export.h"
 
-#include "ui_pumpioeditaccountwidget.h"
+class TwitterApiAccount;
+class TwitterApiOAuthReplyHandler;
 
-class PumpIOAccount;
-class PumpIOMicroBlog;
+namespace KIO {
+class AccessManager;
+}
 
-class PumpIOEditAccountWidget : public ChoqokEditAccountWidget, Ui::PumpIOEditAccountWidget
+class CHOQOK_HELPER_EXPORT TwitterApiOAuth : public QOAuth1
 {
     Q_OBJECT
 public:
-    explicit PumpIOEditAccountWidget(PumpIOMicroBlog *microblog, PumpIOAccount *account,
-                                     QWidget *parent);
-    ~PumpIOEditAccountWidget();
+    explicit TwitterApiOAuth(TwitterApiAccount *account);
+    ~TwitterApiOAuth();
 
-    virtual Choqok::Account *apply() override;
-
-    virtual bool validateData() override;
-
-private Q_SLOTS:
-    void authorizeUser();
-    void getPinCode();
+    QByteArray authorizationHeader(const QUrl &requestUrl, QNetworkAccessManager::Operation method,
+                                   const QVariantMap &params = QVariantMap());
 
 private:
-    void setAuthenticated(bool authenticated);
-    void loadTimelinesTable();
-    void registerClient();
-    void saveTimelinesTable();
-
-    PumpIOAccount *m_account;
-    bool isAuthenticated;
+    TwitterApiOAuthReplyHandler *m_replyHandler;
+    KIO::AccessManager *m_networkAccessManager;
 };
 
-#endif // PUMPIOEDITACCOUNTWIDGET_H
+#endif // TWITTERAPIOAUTH_H

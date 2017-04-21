@@ -69,6 +69,9 @@ public:
     virtual Choqok::TimelineInfo *timelineInfo(const QString &timelineName) override;
 
     void createPostWithAttachment(Choqok::Account *theAccount, Choqok::Post *post, const QString &mediumToAttach = QString());
+
+    void verifyCredentials(TwitterAccount *theAccount);
+
 Q_SIGNALS:
     void userLists(Choqok::Account *theAccount, const QString &username, QList<Twitter::List> lists);
 
@@ -79,6 +82,7 @@ public Q_SLOTS:
 protected Q_SLOTS:
     void showListDialog(TwitterApiAccount *theAccount = 0);
     void slotFetchUserLists(KJob *job);
+    void slotFetchVerifyCredentials(KJob *job);
 
 protected:
     using TwitterApiMicroBlog::readDirectMessage;

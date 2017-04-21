@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2013  Andrea Scarpino <scarpino@kde.org>
+    Copyright (C) 2017 Andrea Scarpino <scarpino@kde.org>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -18,44 +18,24 @@
 
     You should have received a copy of the GNU General Public License
     along with this program; if not, see http://www.gnu.org/licenses/
+
 */
 
-#ifndef PUMPIOEDITACCOUNTWIDGET_H
-#define PUMPIOEDITACCOUNTWIDGET_H
+#ifndef TWITTERAPIOAUTHREPLYHANDLER_H
+#define TWITTERAPIOAUTHREPLYHANDLER_H
 
-#include "editaccountwidget.h"
+#include <QOAuthHttpServerReplyHandler>
 
-#include <QUrlQuery>
+#include "choqok_export.h"
 
-#include "ui_pumpioeditaccountwidget.h"
-
-class PumpIOAccount;
-class PumpIOMicroBlog;
-
-class PumpIOEditAccountWidget : public ChoqokEditAccountWidget, Ui::PumpIOEditAccountWidget
+class CHOQOK_HELPER_EXPORT TwitterApiOAuthReplyHandler : public QOAuthHttpServerReplyHandler
 {
     Q_OBJECT
 public:
-    explicit PumpIOEditAccountWidget(PumpIOMicroBlog *microblog, PumpIOAccount *account,
-                                     QWidget *parent);
-    ~PumpIOEditAccountWidget();
+    explicit TwitterApiOAuthReplyHandler(QObject *parent = nullptr);
+    ~TwitterApiOAuthReplyHandler();
 
-    virtual Choqok::Account *apply() override;
-
-    virtual bool validateData() override;
-
-private Q_SLOTS:
-    void authorizeUser();
-    void getPinCode();
-
-private:
-    void setAuthenticated(bool authenticated);
-    void loadTimelinesTable();
-    void registerClient();
-    void saveTimelinesTable();
-
-    PumpIOAccount *m_account;
-    bool isAuthenticated;
+    QString callback() const override;
 };
 
-#endif // PUMPIOEDITACCOUNTWIDGET_H
+#endif // TWITTERAPIOAUTHREPLYHANDLER_H

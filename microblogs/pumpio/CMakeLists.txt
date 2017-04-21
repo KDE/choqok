@@ -10,6 +10,8 @@ set(choqok_pumpio_SRCS
     pumpiomessagedialog.cpp
     pumpiomicroblog.cpp
     pumpiomicroblogwidget.cpp
+    pumpiooauth.cpp
+    pumpiooauthreplyhandler.cpp
     pumpiopost.cpp
     pumpiopostwidget.cpp
     pumpioshowthread.cpp
@@ -29,13 +31,13 @@ target_link_libraries(choqok_pumpio
 PUBLIC
     Qt5::Core
     Qt5::Gui
+    Qt5::NetworkAuth
     Qt5::Widgets
     KF5::I18n
     KF5::KIOCore
     KF5::KIOWidgets
     KF5::WidgetsAddons
     qca-qt5
-    ${QTOAUTH_LIBRARY}
     choqok
 )
 

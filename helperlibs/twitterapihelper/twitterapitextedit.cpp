@@ -29,8 +29,6 @@
 
 #include <KIO/Job>
 
-#include <QtOAuth/qoauth_namespace.h>
-
 #include "urlutils.h"
 
 #include "twitterapiaccount.h"

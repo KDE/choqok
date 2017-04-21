@@ -38,7 +38,7 @@ public:
     QString tokenSecret;
     QStringList following;
     QVariantList lists;
-    QOAuth::Interface *oAuth;
+    PumpIOOAuth *oAuth;
     QStringList timelineNames;
 };
 
@@ -50,9 +50,9 @@ PumpIOAccount::PumpIOAccount(PumpIOMicroBlog *parent, const QString &alias):
     d->consumerKey = configGroup()->readEntry("ConsumerKey", QString());
     d->consumerSecret = Choqok::PasswordManager::self()->readPassword(QStringLiteral("%1_consumerSecret").arg(alias));
     d->tokenSecret = Choqok::PasswordManager::self()->readPassword(QStringLiteral("%1_tokenSecret").arg(alias));
-    d->oAuth = new QOAuth::Interface(new KIO::AccessManager(this), this);
-    d->oAuth->setConsumerKey(d->consumerKey.toLocal8Bit());
-    d->oAuth->setConsumerSecret(d->consumerSecret.toLocal8Bit());
+    d->oAuth = new PumpIOOAuth(this);
+    d->oAuth->setToken(d->token);
+    d->oAuth->setTokenSecret(d->tokenSecret);
     d->following = configGroup()->readEntry("Following", QStringList());
     d->lists = QVariantList();
     d->timelineNames = configGroup()->readEntry("Timelines", QStringList());
@@ -111,7 +111,6 @@ QString PumpIOAccount::consumerKey()
 void PumpIOAccount::setConsumerKey(const QString &consumerKey)
 {
     d->consumerKey = consumerKey;
-    d->oAuth->setConsumerKey(consumerKey.toLocal8Bit());
 }
 
 QString PumpIOAccount::consumerSecret()
@@ -122,7 +121,6 @@ QString PumpIOAccount::consumerSecret()
 void PumpIOAccount::setConsumerSecret(const QString &consumerSecret)
 {
     d->consumerSecret = consumerSecret;
-    d->oAuth->setConsumerSecret(consumerSecret.toLocal8Bit());
 }
 
 QString PumpIOAccount::token()
@@ -190,7 +188,7 @@ QString PumpIOAccount::webfingerID()
     return username() + QLatin1Char('@') + QString(d->host).remove(QLatin1String("https://"));
 }
 
-QOAuth::Interface *PumpIOAccount::oAuth()
+PumpIOOAuth *PumpIOAccount::oAuth()
 {
     return d->oAuth;
 }

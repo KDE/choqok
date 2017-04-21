@@ -29,11 +29,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "ui_laconicaeditaccount_base.h"
 
-namespace QOAuth
-{
-class Interface;
-}
-
 class QProgressBar;
 class GNUSocialApiAccount;
 class LaconicaMicroBlog;
@@ -79,12 +74,6 @@ protected:
     QProgressBar *progress;
 
     bool isAuthenticated;
-
-    QByteArray token;
-    QByteArray tokenSecret;
-    QByteArray oauthConsumerKey;
-    QByteArray oauthConsumerSecret;
-    QOAuth::Interface *qoauth;
 };
 
 #endif // LACONICAEDITACCOUNT_H

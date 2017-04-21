@@ -27,13 +27,13 @@ kcoreaddons_desktop_to_json(choqok_twitter choqok_twitter.desktop)
 
 target_link_libraries(choqok_twitter
     Qt5::Core
+    Qt5::NetworkAuth
     Qt5::Widgets
     KF5::CoreAddons
     KF5::I18n
     KF5::KIOCore
     KF5::KIOWidgets
     KF5::WidgetsAddons
-    ${QTOAUTH_LIBRARY}
     qca-qt5
     choqok
     twitterapihelper

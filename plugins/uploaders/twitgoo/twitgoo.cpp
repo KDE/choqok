@@ -36,8 +36,6 @@
 #include "twitterapiaccount.h"
 #include "twitterapimicroblog.h"
 
-#include <QtOAuth/QtOAuth>
-
 #include "twitgoosettings.h"
 
 K_PLUGIN_FACTORY_WITH_JSON(TwitgooFactory, "choqok_twitgoo.json",
@@ -85,13 +83,8 @@ void Twitgoo::upload(const QUrl &localUrl, const QByteArray &medium, const QByte
     KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo) ;
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("X-Auth-Service-Provider: https://api.twitter.com/1/account/verify_credentials.json"));
-    QOAuth::ParamMap params;
-    QString requrl = QLatin1String("https://api.twitter.com/1/account/verify_credentials.json");
-    QByteArray credentials = acc->oauthInterface()->createParametersString(requrl,
-                             QOAuth::GET, acc->oauthToken(),
-                             acc->oauthTokenSecret(),
-                             QOAuth::HMAC_SHA1,
-                             params, QOAuth::ParseForHeaderArguments);
+    QUrl requrl(QLatin1String("https://api.twitter.com/1/account/verify_credentials.json"));
+    QByteArray credentials = acc->oauthInterface()->authorizationHeader(requrl, QNetworkAccessManager::GetOperation);
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("X-Verify-Credentials-Authorization: ") + QLatin1String(credentials));
     if (!job) {

@@ -208,7 +208,7 @@ void GNUSocialApiMicroBlog::createPostWithAttachment(Choqok::Account *theAccount
                          QStringLiteral("Content-Type: multipart/form-data; boundary=AaB03x"));
         job->addMetaData(QStringLiteral("customHTTPHeader"),
                          QStringLiteral("Authorization: ") +
-                         QLatin1String(authorizationHeader(account, url, QOAuth::POST)));
+                         QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::PostOperation)));
         mCreatePostMap[ job ] = post;
         mJobsAccount[job] = theAccount;
         connect(job, SIGNAL(result(KJob*)),
@@ -287,9 +287,9 @@ void GNUSocialApiMicroBlog::doRequestFriendsScreenName(TwitterApiAccount *theAcc
     QUrl url = account->apiUrl();
     url = url.adjusted(QUrl::StripTrailingSlash);
     url.setPath(url.path() + QStringLiteral("/statuses/friends.%1").arg(format));
-    QOAuth::ParamMap params;
+    QVariantMap params;
     if (page > 1) {
-        params.insert("page", QByteArray::number(page));
+        params.insert(QLatin1String("page"), QByteArray::number(page));
         QUrlQuery urlQuery;
         urlQuery.addQueryItem(QLatin1String("page"), QString::number(page));
         url.setQuery(urlQuery);
@@ -302,7 +302,7 @@ void GNUSocialApiMicroBlog::doRequestFriendsScreenName(TwitterApiAccount *theAcc
     }
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     QLatin1String(authorizationHeader(account, url, QOAuth::GET, params)));
+                     QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::GetOperation, params)));
     mJobsAccount[job] = theAccount;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRequestFriendsScreenName(KJob*)));
     job->start();
@@ -386,7 +386,7 @@ void GNUSocialApiMicroBlog::fetchConversation(Choqok::Account *theAccount, const
     }
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     QLatin1String(authorizationHeader(account, url, QOAuth::GET)));
+                     QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::GetOperation)));
     mFetchConversationMap[ job ] = conversationId;
     mJobsAccount[ job ] = theAccount;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchConversation(KJob*)));

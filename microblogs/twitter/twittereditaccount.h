@@ -27,11 +27,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include "ui_twittereditaccount_base.h"
 
-namespace QOAuth
-{
-class Interface;
-}
-
 class QProgressBar;
 class TwitterAccount;
 class TwitterMicroBlog;
@@ -71,10 +66,6 @@ protected:
     TwitterMicroBlog *mBlog;
     TwitterAccount *mAccount;
     QProgressBar *progress;
-    QString username;
-    QByteArray token;
-    QByteArray tokenSecret;
-    QOAuth::Interface *qoauth;
 
 };
 

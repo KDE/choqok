@@ -16,6 +16,7 @@ find_package(Qt5 CONFIG REQUIRED
     Core
     DBus
     Network
+    NetworkAuth
     Widgets
 )
 find_package(KF5 REQUIRED
@@ -40,7 +41,6 @@ find_package(KF5 REQUIRED
 #option(QTINDICATE_DISABLE "Disable support for notifications via indicator")
 
 find_package(Qca-qt5 REQUIRED)
-find_package(QtOAuth 2.0.1 REQUIRED)
 
 #if(NOT QTINDICATE_DISABLE)
 #    find_package(QtIndicate)

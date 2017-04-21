@@ -1,7 +1,7 @@
 /*
     This file is part of Choqok, the KDE micro-blogging client
 
-    Copyright (C) 2008-2012 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+    Copyright (C) 2017 Andrea Scarpino <scarpino@kde.org>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -21,21 +21,18 @@
 
 */
 
-#ifndef CHOQOK_CHOQOKTOOLS_H
-#define CHOQOK_CHOQOKTOOLS_H
+#include "twitterapioauthreplyhandler.h"
 
-#include <QColor>
-#include <QUrl>
-
-#include "choqok_export.h"
-
-namespace Choqok
+TwitterApiOAuthReplyHandler::TwitterApiOAuthReplyHandler(QObject *parent)
+    : QOAuthHttpServerReplyHandler(parent)
 {
-
-void CHOQOK_EXPORT openUrl(const QUrl &url);
-
-QString CHOQOK_EXPORT getColorString(const QColor &color);
-
 }
 
-#endif // CHOQOK_CHOQOKTOOLS_H
+TwitterApiOAuthReplyHandler::~TwitterApiOAuthReplyHandler()
+{
+}
+
+QString TwitterApiOAuthReplyHandler::callback() const
+{
+    return QLatin1String("oob");
+}

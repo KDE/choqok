@@ -23,7 +23,7 @@
 #ifndef PUMPIOMICROBLOG_H
 #define PUMPIOMICROBLOG_H
 
-#include "QtOAuth/qoauth_namespace.h"
+#include <QNetworkAccessManager>
 
 #include "microblog.h"
 
@@ -128,8 +128,8 @@ protected:
     static const QString outboxActivity;
 
     QString authorizationMetaData(PumpIOAccount *account, const QUrl &url,
-                                  const QOAuth::HttpMethod &method,
-                                  const QOAuth::ParamMap &map = QOAuth::ParamMap()) const;
+                                  QNetworkAccessManager::Operation method,
+                                  const QVariantMap &map = QVariantMap()) const;
 
     QString lastTimelineId(Choqok::Account *theAccount, const QString &timeline) const;
 

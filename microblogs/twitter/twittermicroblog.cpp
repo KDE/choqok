@@ -199,12 +199,52 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Cho
                          QStringLiteral("Content-Type: multipart/form-data; boundary=AaB03x"));
         job->addMetaData(QStringLiteral("customHTTPHeader"),
                          QStringLiteral("Authorization: ") +
-                         QLatin1String(authorizationHeader(account, url, QOAuth::POST)));
+                         QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::PostOperation)));
         mCreatePostMap[ job ] = post;
         mJobsAccount[job] = theAccount;
         connect(job, SIGNAL(result(KJob*)),
                 SLOT(slotCreatePost(KJob*)));
         job->start();
+    }
+}
+
+void TwitterMicroBlog::verifyCredentials(TwitterAccount *theAccount)
+{
+    qCDebug(CHOQOK);
+    QUrl url = theAccount->apiUrl();
+    url.setPath(url.path() + QStringLiteral("/account/verify_credentials.json"));
+
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
+    if (!job) {
+        qCDebug(CHOQOK) << "Cannot create an http GET request!";
+        return;
+    }
+    job->addMetaData(QStringLiteral("customHTTPHeader"),
+                     QStringLiteral("Authorization: ") +
+                     QLatin1String(authorizationHeader(theAccount, url, QNetworkAccessManager::GetOperation)));
+    mJobsAccount[ job ] = theAccount;
+    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchVerifyCredentials(KJob*)));
+    job->start();
+}
+
+void TwitterMicroBlog::slotFetchVerifyCredentials(KJob *job)
+{
+    if (!job) {
+        qCWarning(CHOQOK) << "NULL Job returned";
+        return;
+    }
+    TwitterAccount *theAccount = qobject_cast<TwitterAccount *>(mJobsAccount.take(job));
+    if (job->error()) {
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
+        Q_EMIT error(theAccount, Choqok::MicroBlog::CommunicationError,
+                     i18n("Verify credentials failed. %1", job->errorString()), Low);
+    } else {
+        KIO::StoredTransferJob *stj = qobject_cast<KIO::StoredTransferJob *> (job);
+        const QJsonDocument json = QJsonDocument::fromJson(stj->data());
+        if (!json.isNull()) {
+            theAccount->setUsername(json.object()[QLatin1String("screen_name")].toString());
+            theAccount->setUserId(json.object()[QLatin1String("id_str")].toString());
+        }
     }
 }
 
@@ -273,8 +313,8 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount *theAccount, const QString 
     QUrlQuery urlQuery;
     urlQuery.addQueryItem(QLatin1String("screen_name"), username);
     url.setQuery(urlQuery);
-    QOAuth::ParamMap params;
-    params.insert("screen_name", username.toLatin1());
+    QVariantMap params;
+    params.insert(QLatin1String("screen_name"), username.toLocal8Bit());
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
     if (!job) {
@@ -284,7 +324,7 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount *theAccount, const QString 
 
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     QLatin1String(authorizationHeader(theAccount, url_for_oauth, QOAuth::GET, params)));
+                     QLatin1String(authorizationHeader(theAccount, url_for_oauth, QNetworkAccessManager::GetOperation, params)));
     mFetchUsersListMap[ job ] = username;
     mJobsAccount[ job ] = theAccount;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchUserLists(KJob*)));

@@ -15,9 +15,9 @@ kcoreaddons_desktop_to_json(choqok_mobypicture choqok_mobypicture.desktop)
 target_link_libraries(choqok_mobypicture
 PUBLIC
     Qt5::Core
+    Qt5::NetworkAuth
     KF5::CoreAddons
     KF5::KIOCore
-    ${QTOAUTH_LIBRARY}
     choqok
     twitterapihelper
 )

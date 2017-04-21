@@ -123,7 +123,7 @@ void TwitterTextEdit::fetchTCoMaximumLength()
         TwitterApiMicroBlog *mBlog = qobject_cast<TwitterApiMicroBlog *>(acc->microblog());
         job->addMetaData(QStringLiteral("customHTTPHeader"),
                          QStringLiteral("Authorization: ") +
-                         QLatin1String(mBlog->authorizationHeader(acc, url, QOAuth::GET)));
+                         QLatin1String(mBlog->authorizationHeader(acc, url, QNetworkAccessManager::GetOperation)));
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotTCoMaximumLength(KJob*)));
         job->start();
     } else {

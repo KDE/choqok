@@ -138,7 +138,7 @@ void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount *theAccount, const QS
     if (d->currentPost.source != QLatin1String("ostatus")) {
         job->addMetaData(QStringLiteral("customHTTPHeader"),
                          QStringLiteral("Authorization: ") +
-                         QLatin1String(d->mBlog->authorizationHeader(theAccount, url, QOAuth::GET)));
+                         QLatin1String(d->mBlog->authorizationHeader(theAccount, url, QNetworkAccessManager::GetOperation)));
     }
     d->job = job;
     connect(job, SIGNAL(result(KJob*)), SLOT(userInfoReceived(KJob*)));

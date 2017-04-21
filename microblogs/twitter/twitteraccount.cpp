@@ -33,6 +33,9 @@ public:
 //     QStringList lists;
 };
 
+const char *twitterConsumerKey = "VyXMf0O7CvciiUQjliYtYg";
+const char *twitterConsumerSecret = "uD2HvsOBjzt1Vs6SnouFtuxDeHmvOOVwmn3fBVyCw0";
+
 TwitterAccount::TwitterAccount(TwitterMicroBlog *parent, const QString &alias)
     : TwitterApiAccount(parent, alias), d(new Private)
 {
@@ -40,6 +43,15 @@ TwitterAccount::TwitterAccount(TwitterMicroBlog *parent, const QString &alias)
     setUploadHost(QLatin1String("https://api.twitter.com"));
     setApi(QLatin1String("1.1"));
     qCDebug(CHOQOK) << "Set API version to 1.1";
+    setOauthConsumerKey(twitterConsumerKey);
+    setOauthConsumerSecret(twitterConsumerSecret);
+    setUsingOAuth(true);
+
+    if (!oauthToken().isEmpty() && !oauthTokenSecret().isEmpty()) {
+        // We trigger this to update the username
+        parent->verifyCredentials(this);
+    }
+
 //     d->lists = configGroup()->readEntry("lists", QStringList());
     QStringList lists;
     for (const QString &tm: timelineNames()) {
