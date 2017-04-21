@@ -1,8 +1,8 @@
-<!DOCTYPE kpartgui>
-<kpartgui name="konqchoqokplugin" library="konqchoqokplugin" version="4" >
+<!DOCTYPE gui SYSTEM "kpartgui.dtd">
+<gui name="konqchoqokplugin" library="konqchoqokplugin" version="4" >
 	<MenuBar>
 		<Menu name="tools"><text>&amp;Tools</text>
 			<Action name="action menu"/>
 		</Menu>
 	</MenuBar>
-</kpartgui>
+</gui>
