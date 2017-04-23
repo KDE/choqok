@@ -215,8 +215,8 @@ protected:
     QPushButton *addButton(const QString &objName, const QString &toolTip, const QIcon &icon);
     QMap<QString, QPushButton *> &buttons();
 
-    QString getUsernameHyperlink(const QString& username, const QString& userDesc);
-    
+    QString getUsernameHyperlink(const Choqok::User &user) const;
+
 protected:
     TextBrowser *_mainWidget;
     static const QString baseStyle;

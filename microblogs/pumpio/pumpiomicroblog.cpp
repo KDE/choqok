@@ -437,14 +437,10 @@ QString PumpIOMicroBlog::postUrl(Choqok::Account *account, const QString &userna
     return QString(postId).replace(QLatin1String("/api/"), QLatin1Char('/') + username + QLatin1Char('/'));
 }
 
-QString PumpIOMicroBlog::profileUrl(Choqok::Account *account, const QString &username) const
+QUrl PumpIOMicroBlog::profileUrl(Choqok::Account *account, const Choqok::User &user) const
 {
     Q_UNUSED(account)
-    if (username.contains(QLatin1String("acct:"))) {
-        return QStringLiteral("https://%1/%2").arg(hostFromAcct(username)).arg(userNameFromAcct(username));
-    } else {
-        return username;
-    }
+    return QUrl(user.homePageUrl);
 }
 
 void PumpIOMicroBlog::saveTimeline(Choqok::Account *account, const QString &timelineName,

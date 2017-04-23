@@ -123,9 +123,10 @@ Choqok::UI::ComposerWidget *TwitterMicroBlog::createComposerWidget(Choqok::Accou
     return new TwitterComposerWidget(account, parent);
 }
 
-QString TwitterMicroBlog::profileUrl(Choqok::Account *, const QString &username) const
+QUrl TwitterMicroBlog::profileUrl(Choqok::Account *account, const Choqok::User &user) const
 {
-    return QStringLiteral("https://twitter.com/#!/%1").arg(username);
+    Q_UNUSED(account)
+    return QUrl::fromUserInput(QStringLiteral("https://twitter.com/%1").arg(user.userName));
 }
 
 QString TwitterMicroBlog::postUrl(Choqok::Account *, const QString &username,

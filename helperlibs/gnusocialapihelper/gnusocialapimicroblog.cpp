@@ -108,6 +108,8 @@ Choqok::Post *GNUSocialApiMicroBlog::readPost(Choqok::Account *account, const QV
 
     post = TwitterApiMicroBlog::readPost(account, var, post);
 
+    post->author.homePageUrl = var[QLatin1String("user")].toMap()[QLatin1String("statusnet_profile_url")].toString();
+
     if (var.contains(QLatin1String("external_url"))) {
         post->link = var[QLatin1String("external_url")].toString();
     } else {
@@ -124,22 +126,10 @@ Choqok::Post *GNUSocialApiMicroBlog::readPost(Choqok::Account *account, const QV
     return post;
 }
 
-QString GNUSocialApiMicroBlog::profileUrl(Choqok::Account *account, const QString &username) const
+QUrl GNUSocialApiMicroBlog::profileUrl(Choqok::Account *account, const Choqok::User &user) const
 {
-    if (username.contains(QLatin1Char('@'))) {
-        const QStringList lst = username.split(QLatin1Char('@'), QString::SkipEmptyParts);
-
-        if (lst.count() == 2) {
-            return QStringLiteral("https://%1/%2").arg(lst[1]).arg(lst[0]);
-        }
-    }
-
-    TwitterApiAccount *acc = qobject_cast<TwitterApiAccount *>(account);
-    if (acc) {
-        return QString(acc->homepageUrl().toDisplayString() + QLatin1Char('/') + username) ;
-    } else {
-        return QString();
-    }
+    Q_UNUSED(account)
+    return QUrl(user.homePageUrl);
 }
 
 QString GNUSocialApiMicroBlog::postUrl(Choqok::Account *account,  const QString &username,

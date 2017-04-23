@@ -150,7 +150,7 @@ Account *PostWidget::currentAccount()
 
 QString PostWidget::generateSign()
 {
-    QString ss = QString(QLatin1String("<b>%1 - </b>")).arg(getUsernameHyperlink(d->mCurrentPost->author.userName, d->mCurrentPost->author.description));
+    QString ss = QString(QLatin1String("<b>%1 - </b>")).arg(getUsernameHyperlink(d->mCurrentPost->author));
 
     if (d->mCurrentPost->repeatedDateTime.isNull()) {
         ss += QLatin1String("<a href=\"") + d->mCurrentPost->link +
@@ -166,12 +166,12 @@ QString PostWidget::generateSign()
 
     return ss;
 }
-QString PostWidget::getUsernameHyperlink(const QString& username, const QString& userDesc)
+QString PostWidget::getUsernameHyperlink(const Choqok::User &user) const
 {
-    return QLatin1String("<a href='") + d->mCurrentAccount->microblog()->profileUrl(d->mCurrentAccount, username)
+    return QLatin1String("<a href='") + d->mCurrentAccount->microblog()->profileUrl(d->mCurrentAccount, user).toDisplayString()
     + QLatin1String("' title=\"") +
-    (userDesc.isEmpty() ? username : userDesc) +
-    QLatin1String("\">") + username + QLatin1String("</a>");
+    (user.description.isEmpty() ? user.userName : user.description) +
+    QLatin1String("\">") + user.userName + QLatin1String("</a>");
 }
 
 void PostWidget::setupUi()

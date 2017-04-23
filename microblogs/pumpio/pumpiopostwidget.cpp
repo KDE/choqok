@@ -83,7 +83,7 @@ QString PumpIOPostWidget::generateSign()
     PumpIOMicroBlog *microblog = qobject_cast<PumpIOMicroBlog * >(account->microblog());
     if (post) {
         if (post->author.userName != account->username()) {
-            ss += QLatin1String("<b><a href=\"") + microblog->profileUrl(account, post->author.homePageUrl)
+            ss += QLatin1String("<b><a href=\"") + microblog->profileUrl(account, post->author).toDisplayString()
                   + QLatin1String("\" title=\"") + post->author.realName + QLatin1String("\">") +
                   post->author.userName + QLatin1String("</a></b> - ");
         }
@@ -111,7 +111,7 @@ QString PumpIOPostWidget::generateSign()
                 } else if (id == QLatin1String("acct:") + account->webfingerID()) {
                     ss += i18n("You") + QLatin1String(", ");
                 } else {
-                    ss += QLatin1String("<a href=\"") + microblog->profileUrl(account, id)
+                    ss += QLatin1String("<a href=\"") + microblog->profileUrl(account, post->author).toDisplayString()
                           + QLatin1String("\">") + PumpIOMicroBlog::userNameFromAcct(id) + QLatin1String("</a>, ");
                 }
             }
@@ -134,7 +134,7 @@ QString PumpIOPostWidget::generateSign()
                 } else if (id == QLatin1String("acct:") + account->webfingerID()) {
                     ss += i18n("You") + QLatin1String(", ");
                 } else {
-                    ss += QLatin1String("<a href=\"") + microblog->profileUrl(account, id)
+                    ss += QLatin1String("<a href=\"") + microblog->profileUrl(account, post->author).toDisplayString()
                           + QLatin1String("\">") + PumpIOMicroBlog::userNameFromAcct(id) + QLatin1String("</a>, ");
                 }
             }
@@ -152,7 +152,7 @@ QString PumpIOPostWidget::generateSign()
                 if (id == QLatin1String("acct:") + account->webfingerID()) {
                     ss += i18n("You") + QLatin1String(", ");
                 } else {
-                    ss += QLatin1String("<a href=\"") + microblog->profileUrl(account, id)
+                    ss += QLatin1String("<a href=\"") + microblog->profileUrl(account, post->author).toDisplayString()
                           + QLatin1String("\">") + PumpIOMicroBlog::userNameFromAcct(id) + QLatin1String("</a>, ");
                 }
             }

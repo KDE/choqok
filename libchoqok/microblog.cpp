@@ -224,10 +224,10 @@ QString MicroBlog::postUrl(Account *, const QString &, const QString &) const
     return QString();
 }
 
-QString MicroBlog::profileUrl(Account *, const QString &) const
+QUrl MicroBlog::profileUrl(Account *, const Choqok::User &) const
 {
     qCWarning(CHOQOK) << "MicroBlog Plugin should implement this!";
-    return QString();
+    return QUrl();
 }
 
 }

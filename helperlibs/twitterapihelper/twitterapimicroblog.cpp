@@ -210,6 +210,7 @@ QList< Choqok::Post * > TwitterApiMicroBlog::loadTimeline(Choqok::Account *accou
             st->author.userId = grp.readEntry("authorId", QString());
             st->author.userName = grp.readEntry("authorUserName", QString());
             st->author.realName = grp.readEntry("authorRealName", QString());
+            st->author.homePageUrl = grp.readEntry("authorHomePageUrl", QString());
             st->author.profileImageUrl = grp.readEntry("authorProfileImageUrl", QString());
             st->author.description = grp.readEntry("authorDescription" , QString());
             st->author.isProtected = grp.readEntry("isProtected", false);
@@ -262,6 +263,7 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
             grp.writeEntry("authorId", post->author.userId);
             grp.writeEntry("authorUserName", post->author.userName);
             grp.writeEntry("authorRealName", post->author.realName);
+            grp.writeEntry("authorHomePageUrl", post->author.homePageUrl);
             grp.writeEntry("authorProfileImageUrl", post->author.profileImageUrl);
             grp.writeEntry("authorDescription" , post->author.description);
             grp.writeEntry("isPrivate" , post->isPrivate);

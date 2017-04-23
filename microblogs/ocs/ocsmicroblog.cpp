@@ -293,13 +293,13 @@ void OCSMicroblog::slotDefaultProvidersLoaded()
     }
 }
 
-QString OCSMicroblog::profileUrl(Choqok::Account *account, const QString &username) const
+QUrl OCSMicroblog::profileUrl(Choqok::Account *account, const Choqok::User &user) const
 {
     OCSAccount *acc = qobject_cast<OCSAccount *>(account);
     if (acc->providerUrl().host().contains(QLatin1String("opendesktop.org"))) {
-        return QStringLiteral("https://opendesktop.org/usermanager/search.php?username=%1").arg(username);
+        return QUrl::fromUserInput(QStringLiteral("https://opendesktop.org/usermanager/search.php?username=%1").arg(user.userName));
     }
-    return QString();
+    return QUrl();
 }
 
 void OCSMicroblog::aboutToUnload()

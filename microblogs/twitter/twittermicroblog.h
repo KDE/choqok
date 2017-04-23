@@ -54,7 +54,7 @@ public:
 
     virtual QString postUrl(Choqok::Account *account, const QString &username, const QString &postId) const override;
 
-    virtual QString profileUrl(Choqok::Account *account, const QString &username) const override;
+    virtual QUrl profileUrl(Choqok::Account *account, const Choqok::User &user) const override;
 
     virtual TwitterApiSearch *searchBackend() override;
 
