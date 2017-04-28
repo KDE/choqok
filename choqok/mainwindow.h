@@ -103,6 +103,7 @@ private Q_SLOTS:
     //Using this for splash screen
     void oneMicroblogLoaded();
     void slotShowSpecialMenu(bool show);
+    void slotDonate();
 
 private:
     void updateTabbarHiddenState();
