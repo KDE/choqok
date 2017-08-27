@@ -47,6 +47,7 @@ int main(int argc, char **argv)
                      QString(), QLatin1String("http://choqok.gnufolks.org/"));
 
     about.setOrganizationDomain("kde.org");
+    about.setDesktopFileName(QStringLiteral("org.kde.choqok"));
 
     about.addAuthor(i18n("Mehrdad Momeny"), i18n("Author, Developer and Maintainer"),
                     QLatin1String("mehrdad.momeny@gmail.com"), QLatin1String("http://momeny.wordpress.com"));
