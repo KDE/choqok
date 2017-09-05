@@ -154,9 +154,11 @@ void MainWindow::loadAllAccounts()
             QTimer::singleShot(500, this, &MainWindow::updateTimelines);
         }
     } else {
-        m_splash->finish(this);
-        delete m_splash;
-        m_splash = 0;
+        if (m_splash) {
+            m_splash->finish(this);
+            delete m_splash;
+            m_splash = 0;
+        }
     }
     ChoqokApplication::setStartingUp(false);
     createQuickPostDialog();
