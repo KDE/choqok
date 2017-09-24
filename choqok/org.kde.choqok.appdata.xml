@@ -194,7 +194,7 @@
       <li xml:lang="es">Admite las líneas temporales usuario + sus amigos</li>
       <li xml:lang="fi">Tukee käyttäjän ja hänen kaveriensa aikajanoja</li>
       <li xml:lang="fr">Prise en charge des flux de l'utilisateur et de ses amis</li>
-      <li xml:lang="gl">Acceso á súa liñas do tempo e a dos seus contactos.</li>
+      <li xml:lang="gl">Compatíbel coa súa liña do tempo e as dos seus contactos.</li>
       <li xml:lang="it">Supporta linee temporali dell'utente e dei suoi amici</li>
       <li xml:lang="nb">Støtter User + His/Her Friends tidslinjer</li>
       <li xml:lang="nds">Ünnerstütt Teitregen för Brukers un ehr Frünnen</li>
@@ -220,7 +220,7 @@
       <li xml:lang="es">Admite las líneas temporales de @respuesta</li>
       <li xml:lang="fi">Tukee @Reply-aikajanoja</li>
       <li xml:lang="fr">Prise en charge des balises de réponse (« @utilisateur »)</li>
-      <li xml:lang="gl">Acceso a liñas do tempo de respostas.</li>
+      <li xml:lang="gl">Compatibilidade coas liñas do tempo das respostas.</li>
       <li xml:lang="it">Supporta linee temporali @Reply</li>
       <li xml:lang="nb">Støtter @Reply  tidslinjer</li>
       <li xml:lang="nds">Ünnerstütt @Reply-Tietregen</li>
