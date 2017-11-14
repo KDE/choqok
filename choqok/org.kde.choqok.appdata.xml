@@ -26,6 +26,7 @@
   <name xml:lang="pl">Choqok</name>
   <name xml:lang="pt">Choqok</name>
   <name xml:lang="pt-BR">Choqok</name>
+  <name xml:lang="ru">Choqok</name>
   <name xml:lang="sk">Choqok</name>
   <name xml:lang="sl">Choqok</name>
   <name xml:lang="sv">Choqok</name>
@@ -47,6 +48,7 @@
   <summary xml:lang="nl">Micro-blogging-client</summary>
   <summary xml:lang="pl">Klient mikroblogów</summary>
   <summary xml:lang="pt">Cliente de micro-blogs</summary>
+  <summary xml:lang="ru">Клиент для ведения микроблогов</summary>
   <summary xml:lang="sl">Odjemalec za mikrobloganje</summary>
   <summary xml:lang="sv">Mikrobloggprogram</summary>
   <summary xml:lang="tr">Mini-günlük İstemcisi</summary>
@@ -95,6 +97,7 @@
     <p xml:lang="pl">Możliwości:</p>
     <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="pt-BR">Funcionalidades:</p>
+    <p xml:lang="ru">Возможности:</p>
     <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="sl">Zmožnosti:</p>
     <p xml:lang="sv">Funktioner:</p>
