@@ -91,7 +91,7 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog *parent, const QString 
         //Result will set on TwitterApiMicroBlog!
     }
 
-    setPostCharLimit(140);    //TODO: See if we can ask twitter for the char limit and make it dynamic
+    setPostCharLimit(280);    //TODO: See if we can ask twitter for the char limit and make it dynamic
 }
 
 TwitterApiAccount::~TwitterApiAccount()
