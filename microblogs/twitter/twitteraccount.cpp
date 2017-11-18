@@ -47,6 +47,8 @@ TwitterAccount::TwitterAccount(TwitterMicroBlog *parent, const QString &alias)
     setOauthConsumerSecret(twitterConsumerSecret);
     setUsingOAuth(true);
 
+    setPostCharLimit(280);    //TODO: See if we can ask twitter for the char limit and make it dynamic
+
     if (!oauthToken().isEmpty() && !oauthTokenSecret().isEmpty()) {
         // We trigger this to update the username
         parent->verifyCredentials(this);
