@@ -56,6 +56,8 @@ public:
 
     virtual QUrl profileUrl(Choqok::Account *account, const Choqok::User &user) const override;
 
+    virtual void fetchPost(Choqok::Account *theAccount, Choqok::Post *post) override;
+
     virtual TwitterApiSearch *searchBackend() override;
 
     virtual QString generateRepeatedByUserTooltip(const QString &username) override;
@@ -85,6 +87,8 @@ protected Q_SLOTS:
     void slotFetchVerifyCredentials(KJob *job);
 
 protected:
+    virtual void requestTimeLine(Choqok::Account *theAccount, QString timelineName,
+                                 QString sincePostId, int page = 1, QString maxId = QString()) override;
     using TwitterApiMicroBlog::readDirectMessage;
     virtual Choqok::Post *readDirectMessage(Choqok::Account *theAccount, const QVariantMap &var) override;
     using TwitterApiMicroBlog::readPost;

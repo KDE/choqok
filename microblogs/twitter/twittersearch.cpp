@@ -103,6 +103,9 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
     } else {
         cntStr = 100;
     }
+    urlQuery.addQueryItem(QLatin1String("tweet_mode"), QLatin1String("extended"));
+    param.insert(QLatin1String("tweet_mode"), QLatin1String("extended"));
+
     urlQuery.addQueryItem(QLatin1String("count"), QString::number(cntStr));
     param.insert(QLatin1String("count"), QString::number(cntStr).toLocal8Bit());
 
@@ -170,6 +173,12 @@ Choqok::Post *TwitterSearch::readStatusesFromJsonMap(const QVariantMap &var)
     Choqok::Post *post = new Choqok::Post;
 
     post->content = var[QLatin1String("text")].toString();
+
+    // Support for extended tweet_mode
+    if (var.contains(QLatin1String("full_text"))) {
+        post->content = var[QLatin1String("full_text")].toString();
+    }
+
     //%*s %s %d %d:%d:%d %d %d
     post->creationDateTime = dateFromString(var[QLatin1String("created_at")].toString());
     post->postId = var[QLatin1String("id")].toString();
