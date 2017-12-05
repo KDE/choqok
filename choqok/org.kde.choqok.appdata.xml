@@ -178,6 +178,7 @@
       <li>Supporting self hosted Friendica services</li>
       <li xml:lang="ca">Permet els serveis Friendica auto hostatjats</li>
       <li xml:lang="ca-valencia">Permet els serveis Friendica auto hostatjats</li>
+      <li xml:lang="de">Unterstützung für die eigene Friendica-Instanz</li>
       <li xml:lang="el">Υποστηρίζει αυτο-φιλοξενούμενες υπηρεσίες Friendica</li>
       <li xml:lang="en-GB">Supporting self hosted Friendica services</li>
       <li xml:lang="es">Admite el servicio autohospedado de Pump.io</li>
@@ -222,6 +223,7 @@
       <li xml:lang="bs">Podrška @Odgovori vremenskim linijama</li>
       <li xml:lang="ca">Permet les línies de temps @Resposta</li>
       <li xml:lang="ca-valencia">Permet les línies de temps @Resposta</li>
+      <li xml:lang="de">Unterstützung für @Reply time-lines</li>
       <li xml:lang="el">Υποστηρίζει χρονολόγια @Reply</li>
       <li xml:lang="en-GB">Supporting @Reply time-lines</li>
       <li xml:lang="es">Admite las líneas temporales de @respuesta</li>
@@ -273,6 +275,7 @@
       <li>Support medium upload using external services (Flickr, Imageshack,...)</li>
       <li xml:lang="ca">Permet la pujada de medis usant serveis externs (Flickr, Imageshack,...)</li>
       <li xml:lang="ca-valencia">Permet la pujada de medis usant serveis externs (Flickr, Imageshack,...)</li>
+      <li xml:lang="de">Unterstützung für das Hochladen von Medien mit externen Diensten (Flickr, Imageshack,...)</li>
       <li xml:lang="el">Υποστηρίζει αποστολή μέσου με χρήση εξωτερικών υπηρεσιών (Flickr, Imageshack,...)</li>
       <li xml:lang="en-GB">Support medium upload using external services (Flickr, Imageshack,...)</li>
       <li xml:lang="es">Admite la carga de medios usando servicios externos (Flickr, Imageshack,...)</li>
