@@ -26,6 +26,10 @@
 #include <QNetworkReply>
 #include <QUrlQuery>
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+#include <QOAuth1Signature>
+#endif
+
 #include <KIO/AccessManager>
 
 #include "pumpioaccount.h"
@@ -83,8 +87,16 @@ QByteArray PumpIOOAuth::authorizationHeader(const QUrl &requestUrl, QNetworkAcce
     // Add signature parameter
     {
         const auto parameters = QVariantMap(oauthParams).unite(signingParameters);
-        oauthParams.insert(QStringLiteral("oauth_signature"), signature(parameters, requestUrl,
-                                                                        operation, clientSharedSecret(), tokenSecret()));
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+        const QOAuth1Signature signature = QOAuth1Signature(requestUrl, clientSharedSecret(), tokenSecret(),
+                                                            static_cast<QOAuth1Signature::HttpRequestMethod>(operation),
+                                                            parameters);
+        const QByteArray sig = signature.hmacSha1().toBase64();
+#else
+        const QByteArray sig = signature(parameters, requestUrl,
+                                         operation, clientSharedSecret(), tokenSecret());
+#endif
+        oauthParams.insert(QStringLiteral("oauth_signature"), sig);
     }
 
     return generateAuthorizationHeader(oauthParams);
