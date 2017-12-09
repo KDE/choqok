@@ -25,10 +25,7 @@
 
 #include <QEventLoop>
 #include <QNetworkReply>
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
 #include <QOAuth1Signature>
-#endif
 
 #include <KIO/AccessManager>
 
@@ -70,7 +67,9 @@ QByteArray TwitterApiOAuth::authorizationHeader(const QUrl &requestUrl, QNetwork
     QVariantMap otherParams = signingParameters;
     // Adding parameters located in the query
     {
-        auto queryItems = QUrlQuery(requestUrl.query()).queryItems();
+        // replace '+' with spaces now before decoding so that '%2B' gets left as '+'
+        const QString query = requestUrl.query().replace(QLatin1Char('+'), QLatin1Char(' '));
+        const auto queryItems = QUrlQuery(query).queryItems(QUrl::FullyDecoded);
         for (auto it = queryItems.begin(), end = queryItems.end(); it != end; ++it)
             otherParams.insert(it->first, it->second);
     }
@@ -87,18 +86,10 @@ QByteArray TwitterApiOAuth::authorizationHeader(const QUrl &requestUrl, QNetwork
     // Add signature parameter
     {
         const auto parameters = QVariantMap(oauthParams).unite(signingParameters);
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
         const QOAuth1Signature signature = QOAuth1Signature(requestUrl, clientSharedSecret(), tokenSecret(),
                                                             static_cast<QOAuth1Signature::HttpRequestMethod>(operation),
                                                             parameters);
-        const QByteArray sig = signature.hmacSha1().toBase64();
-#else
-        const QByteArray sig = signature(parameters, requestUrl,
-                                         operation, clientSharedSecret(), tokenSecret());
-#endif
-
-        oauthParams.insert(QStringLiteral("oauth_signature"), sig);
+        oauthParams.insert(QStringLiteral("oauth_signature"), signature.hmacSha1().toBase64());
     }
 
     return generateAuthorizationHeader(oauthParams);
