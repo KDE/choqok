@@ -130,7 +130,7 @@ void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount *theAccount, const QS
     QUrl url(urlStr);
 
     url = url.adjusted(QUrl::StripTrailingSlash);
-    url.setPath(url.path() + (QStringLiteral("/users/show/%1.json").arg(user)));
+    url.setPath(url.path() + QStringLiteral("/users/show/%1.json").arg(user));
 
 //     qCDebug(CHOQOK) << url;
 

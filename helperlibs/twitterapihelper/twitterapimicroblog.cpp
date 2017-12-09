@@ -717,7 +717,7 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount *theAccount
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
     url = url.adjusted(QUrl::StripTrailingSlash);
-    url.setPath(url.path() + (QStringLiteral("/friends/list.%1").arg(format)));
+    url.setPath(url.path() + QStringLiteral("/friends/list.%1").arg(format));
     QUrl tmpUrl(url);
     QUrlQuery urlQuery;
     urlQuery.addQueryItem(QLatin1String("cursor"), d->friendsCursor);
@@ -798,7 +798,7 @@ void TwitterApiMicroBlog::requestFollowersScreenName(TwitterApiAccount* theAccou
     TwitterApiAccount* account = qobject_cast<TwitterApiAccount*>(theAccount);
     QUrl url = account->apiUrl();
     url = url.adjusted(QUrl::StripTrailingSlash);
-    url.setPath(url.path() + (QStringLiteral("/followers/list.%1").arg(format)));
+    url.setPath(url.path() + QStringLiteral("/followers/list.%1").arg(format));
     QUrl tmpUrl(url);
     QUrlQuery urlQuery;
     urlQuery.addQueryItem(QLatin1String("cursor"), d->followersCursor);

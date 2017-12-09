@@ -206,7 +206,7 @@ void PumpIOMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *post
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + QLatin1Char('/') + (outboxActivity.arg(acc->username())));
+        url.setPath(url.path() + outboxActivity.arg(acc->username()));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
         job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QNetworkAccessManager::PostOperation));
@@ -250,7 +250,7 @@ void PumpIOMicroBlog::createReply(Choqok::Account *theAccount, PumpIOPost *post)
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + QLatin1Char('/') + (outboxActivity.arg(acc->username())));
+        url.setPath(url.path() + outboxActivity.arg(acc->username()));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
         job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QNetworkAccessManager::PostOperation));
@@ -356,7 +356,7 @@ void PumpIOMicroBlog::removePost(Choqok::Account *theAccount, Choqok::Post *post
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + QLatin1Char('/') + (outboxActivity.arg(acc->username())));
+        url.setPath(url.path() + outboxActivity.arg(acc->username()));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
         job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QNetworkAccessManager::PostOperation));
@@ -505,7 +505,7 @@ void PumpIOMicroBlog::updateTimelines(Choqok::Account *theAccount)
         for (const QString &timeline: acc->timelineNames()) {
             QUrl url(acc->host());
             url = url.adjusted(QUrl::StripTrailingSlash);
-            url.setPath(url.path() + QLatin1Char('/') + (m_timelinesPaths[timeline].arg(acc->username())));
+            url.setPath(url.path() + m_timelinesPaths[timeline].arg(acc->username()));
             QUrlQuery query;
 
             QVariantMap oAuthParams;
@@ -617,7 +617,7 @@ void PumpIOMicroBlog::share(Choqok::Account *theAccount, Choqok::Post *post)
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + QLatin1Char('/') + (outboxActivity.arg(acc->username())));
+        url.setPath(url.path() + outboxActivity.arg(acc->username()));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
         job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QNetworkAccessManager::PostOperation));
@@ -650,7 +650,7 @@ void PumpIOMicroBlog::toggleFavorite(Choqok::Account *theAccount, Choqok::Post *
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + QLatin1Char('/') + (outboxActivity.arg(acc->username())));
+        url.setPath(url.path() + outboxActivity.arg(acc->username()));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
         job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QNetworkAccessManager::PostOperation));
@@ -1332,7 +1332,7 @@ void PumpIOMicroBlog::updatePost(Choqok::Account *theAccount, Choqok::Post *post
 
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + QLatin1Char('/') + (outboxActivity.arg(acc->username())));
+        url.setPath(url.path() + outboxActivity.arg(acc->username()));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
         job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QNetworkAccessManager::PostOperation));
