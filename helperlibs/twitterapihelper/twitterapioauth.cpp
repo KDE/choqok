@@ -25,7 +25,6 @@
 
 #include <QEventLoop>
 #include <QNetworkReply>
-#include <QOAuth1Signature>
 
 #include <KIO/AccessManager>
 
@@ -86,10 +85,8 @@ QByteArray TwitterApiOAuth::authorizationHeader(const QUrl &requestUrl, QNetwork
     // Add signature parameter
     {
         const auto parameters = QVariantMap(oauthParams).unite(signingParameters);
-        const QOAuth1Signature signature = QOAuth1Signature(requestUrl, clientSharedSecret(), tokenSecret(),
-                                                            static_cast<QOAuth1Signature::HttpRequestMethod>(operation),
-                                                            parameters);
-        oauthParams.insert(QStringLiteral("oauth_signature"), signature.hmacSha1().toBase64());
+        oauthParams.insert(QStringLiteral("oauth_signature"), signature(parameters, requestUrl,
+                                                                        operation, clientSharedSecret(), tokenSecret()));
     }
 
     return generateAuthorizationHeader(oauthParams);
