@@ -25,6 +25,7 @@
 
 #include <QEventLoop>
 #include <QNetworkReply>
+#include <QOAuth1Signature>
 
 #include <KIO/AccessManager>
 
@@ -63,15 +64,6 @@ QByteArray TwitterApiOAuth::authorizationHeader(const QUrl &requestUrl, QNetwork
                                               const QVariantMap &signingParameters)
 {
     QVariantMap oauthParams;
-    QVariantMap otherParams = signingParameters;
-    // Adding parameters located in the query
-    {
-        // replace '+' with spaces now before decoding so that '%2B' gets left as '+'
-        const QString query = requestUrl.query().replace(QLatin1Char('+'), QLatin1Char(' '));
-        const auto queryItems = QUrlQuery(query).queryItems(QUrl::FullyDecoded);
-        for (auto it = queryItems.begin(), end = queryItems.end(); it != end; ++it)
-            otherParams.insert(it->first, it->second);
-    }
 
     const auto currentDateTime = QDateTime::currentDateTimeUtc();
 
@@ -85,8 +77,12 @@ QByteArray TwitterApiOAuth::authorizationHeader(const QUrl &requestUrl, QNetwork
     // Add signature parameter
     {
         const auto parameters = QVariantMap(oauthParams).unite(signingParameters);
-        oauthParams.insert(QStringLiteral("oauth_signature"), signature(parameters, requestUrl,
-                                                                        operation, clientSharedSecret(), tokenSecret()));
+
+        const QOAuth1Signature signature(requestUrl, clientSharedSecret(), tokenSecret(),
+                                         static_cast<QOAuth1Signature::HttpRequestMethod>(operation),
+                                         parameters);
+
+        oauthParams.insert(QStringLiteral("oauth_signature"), signature.hmacSha1().toBase64());
     }
 
     return generateAuthorizationHeader(oauthParams);
