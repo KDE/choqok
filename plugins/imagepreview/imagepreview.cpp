@@ -35,7 +35,6 @@
 K_PLUGIN_FACTORY_WITH_JSON(ImagePreviewFactory, "choqok_imagepreview.json",
                            registerPlugin < ImagePreview > ();)
 
-const QRegExp ImagePreview::mYFrogRegExp(QLatin1String("(http://yfrog.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])"));
 const QRegExp ImagePreview::mImgLyRegExp(QLatin1String("(http://img.ly/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])"));
 const QRegExp ImagePreview::mTwitgooRegExp(QLatin1String("(http://(([a-zA-Z0-9]+\\.)?)twitgoo.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])"));
 const QRegExp ImagePreview::mPumpIORegExp(QLatin1String("(https://([a-zA-Z0-9]+\\.)?[a-zA-Z0-9]+\\.[a-zA-Z]+/uploads/\\w+/\\d{4}/\\d{1,2}/\\d{1,2}/\\w+)(\\.[a-zA-Z]{3,4})"));
@@ -84,29 +83,10 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
         return;
     }
     int pos = 0;
-    QStringList yfrogRedirectList;
     QStringList ImgLyRedirectList;
     QStringList TwitgooRedirectList;
     QStringList PumpIORedirectList;
     QString content = postToParse->currentPost()->content;
-
-    //YFrog: http://code.google.com/p/imageshackapi/wiki/YFROGurls
-    //       http://code.google.com/p/imageshackapi/wiki/YFROGthumbnails
-    pos = 0;
-    while ((pos = mYFrogRegExp.indexIn(content, pos)) != -1) {
-        pos += mYFrogRegExp.matchedLength();
-        yfrogRedirectList << mYFrogRegExp.cap(0);
-    }
-    for (const QString &url: yfrogRedirectList) {
-//         if( url.endsWith('j') || url.endsWith('p') || url.endsWith('g') ) //To check if it's Image or not!
-        connect(Choqok::MediaManager::self(),
-                SIGNAL(imageFetched(QString,QPixmap)),
-                SLOT(slotImageFetched(QString,QPixmap)));
-        QString yfrogThumbnailUrl = url + QLatin1String(".th.jpg");
-        mParsingList.insert(yfrogThumbnailUrl, postToParse);
-        mBaseUrlMap.insert(yfrogThumbnailUrl, url);
-        Choqok::MediaManager::self()->fetchImage(yfrogThumbnailUrl, Choqok::MediaManager::Async);
-    }
 
     //Img.ly; http://img.ly/api/docs
     pos = 0;
