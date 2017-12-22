@@ -49,7 +49,7 @@ public:
                                                              const QString &timelineName, QWidget *parent) override;
     virtual Choqok::UI::PostWidget *createPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent) override;
     virtual Choqok::UI::ComposerWidget *createComposerWidget(Choqok::Account *account, QWidget *parent) override;
-    virtual QUrl profileUrl(Choqok::Account *account, const Choqok::User &user) const override;
+    virtual QUrl profileUrl(Choqok::Account *account, const QString &username) const override;
     virtual QString postUrl(Choqok::Account *account, const QString &username, const QString &postId) const override;
 
     virtual TwitterApiSearch *searchBackend() override;

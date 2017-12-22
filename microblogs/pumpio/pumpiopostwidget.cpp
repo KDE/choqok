@@ -112,7 +112,7 @@ QString PumpIOPostWidget::generateSign()
                 } else if (id == QLatin1String("acct:") + account->webfingerID()) {
                     ss += i18n("You") + QLatin1String(", ");
                 } else {
-                    ss += QLatin1String("<a href=\"") + microblog->profileUrl(account, post->author).toDisplayString()
+                    ss += QLatin1String("<a href=\"") + microblog->profileUrl(account, post->author.userName).toDisplayString()
                           + QLatin1String("\">") + PumpIOMicroBlog::userNameFromAcct(id) + QLatin1String("</a>, ");
                 }
             }
@@ -135,7 +135,7 @@ QString PumpIOPostWidget::generateSign()
                 } else if (id == QLatin1String("acct:") + account->webfingerID()) {
                     ss += i18n("You") + QLatin1String(", ");
                 } else {
-                    ss += QLatin1String("<a href=\"") + microblog->profileUrl(account, post->author).toDisplayString()
+                    ss += QLatin1String("<a href=\"") + microblog->profileUrl(account, post->author.userName).toDisplayString()
                           + QLatin1String("\">") + PumpIOMicroBlog::userNameFromAcct(id) + QLatin1String("</a>, ");
                 }
             }
@@ -153,7 +153,7 @@ QString PumpIOPostWidget::generateSign()
                 if (id == QLatin1String("acct:") + account->webfingerID()) {
                     ss += i18n("You") + QLatin1String(", ");
                 } else {
-                    ss += QLatin1String("<a href=\"") + microblog->profileUrl(account, post->author).toDisplayString()
+                    ss += QLatin1String("<a href=\"") + microblog->profileUrl(account, post->author.userName).toDisplayString()
                           + QLatin1String("\">") + PumpIOMicroBlog::userNameFromAcct(id) + QLatin1String("</a>, ");
                 }
             }

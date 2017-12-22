@@ -172,7 +172,7 @@ QString PostWidget::generateSign()
 QString PostWidget::getUsernameHyperlink(const Choqok::User &user) const
 {
     return QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>")
-            .arg(d->mCurrentAccount->microblog()->profileUrl(d->mCurrentAccount, user).toDisplayString())
+            .arg(d->mCurrentAccount->microblog()->profileUrl(d->mCurrentAccount, user.userName).toDisplayString())
             .arg(user.description.isEmpty() ? user.realName : user.description)
             .arg(user.userName);
 }

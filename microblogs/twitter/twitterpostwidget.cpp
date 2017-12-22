@@ -224,7 +224,7 @@ void TwitterPostWidget::checkAnchor(const QUrl &url)
             blog->reportUserAsSpam(currentAccount(), url.host());
             return;
         } else if (ret == openInBrowser) {
-            Choqok::openUrl(QUrl(currentAccount()->microblog()->profileUrl(currentAccount(), currentPost()->author)));
+            Choqok::openUrl(currentAccount()->microblog()->profileUrl(currentAccount(), url.host()));
             return;
         } else if (ret == replyTo) {
             Q_EMIT reply(QStringLiteral("@%1").arg(url.host()), QString(), url.host());

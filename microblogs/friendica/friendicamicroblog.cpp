@@ -56,4 +56,18 @@ ChoqokEditAccountWidget *FriendicaMicroBlog::createEditAccountWidget(Choqok::Acc
     }
 }
 
+QUrl FriendicaMicroBlog::profileUrl(Choqok::Account *account, const QString &username) const
+{
+    GNUSocialApiAccount *acc = qobject_cast<GNUSocialApiAccount *>(account);
+    if (acc) {
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(QLatin1String("/profile/") + username);
+
+        return url;
+    } else {
+        return QUrl();
+    }
+}
+
 #include "friendicamicroblog.moc"

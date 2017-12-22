@@ -34,6 +34,8 @@ public:
     ~FriendicaMicroBlog();
 
     virtual ChoqokEditAccountWidget *createEditAccountWidget(Choqok::Account *account, QWidget *parent) override;
+    virtual QUrl profileUrl(Choqok::Account *account, const QString &username) const override;
+
 };
 
 #endif

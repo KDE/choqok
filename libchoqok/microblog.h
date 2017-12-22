@@ -227,7 +227,7 @@ public:
     /**
     return Url to account page on service (Some kind of blog homepage)
     */
-    virtual QUrl profileUrl(Choqok::Account *account, const Choqok::User &user) const;
+    virtual QUrl profileUrl(Choqok::Account *account, const QString &username) const;
 
     /**
     Provide a Web link for post with id @p postId

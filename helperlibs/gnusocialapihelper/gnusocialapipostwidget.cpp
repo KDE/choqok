@@ -260,7 +260,7 @@ void GNUSocialApiPostWidget::checkAnchor(const QUrl &url)
             d->mBlog->blockUser(d->account, username);
             return;
         } else if (ret == openInBrowser) {
-            Choqok::openUrl(QUrl(currentAccount()->microblog()->profileUrl(currentAccount(), currentPost()->author)));
+            Choqok::openUrl(currentAccount()->microblog()->profileUrl(currentAccount(), username));
             return;
         } else if (ret == replyTo) {
             Q_EMIT reply(QStringLiteral("@%1").arg(username), QString(), username);

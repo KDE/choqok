@@ -110,26 +110,51 @@ Choqok::Post *GNUSocialApiMicroBlog::readPost(Choqok::Account *account, const QV
 
     post->author.homePageUrl = var[QLatin1String("user")].toMap()[QLatin1String("statusnet_profile_url")].toString();
 
-    if (var.contains(QLatin1String("external_url"))) {
+    if (var.contains(QLatin1String("uri"))) {
+        post->link = var[QLatin1String("uri")].toString();
+    } else if (var.contains(QLatin1String("external_url"))) {
         post->link = var[QLatin1String("external_url")].toString();
     } else {
+        QVariantMap retweeted = var[QLatin1String("retweeted_status")].toMap();
+
         QVariantMap userMap;
-        if (var[QLatin1String("repeated")].toBool()) {
-            userMap = var[QLatin1String("retweeted_status")].toMap()[QLatin1String("user")].toMap();
+        if (!retweeted.isEmpty()) {
+            userMap = retweeted[QLatin1String("user")].toMap();
         } else {
             userMap = var[QLatin1String("user")].toMap();
         }
-        const QUrl profileUrl = userMap[QLatin1String("statusnet_profile_url")].toUrl();
-        post->link = QStringLiteral("%1://%2/notice/%3").arg(profileUrl.scheme()).arg(profileUrl.host()).arg(post->postId);
+
+        if (retweeted.contains(QLatin1String("uri"))) {
+            post->link = var[QLatin1String("uri")].toString();
+        } else {
+            // Last try, compone the url. However this only works for GNU Social instances.
+            const QUrl profileUrl = userMap[QLatin1String("statusnet_profile_url")].toUrl();
+            post->link = QStringLiteral("%1://%2/notice/%3").arg(profileUrl.scheme()).arg(profileUrl.host()).arg(post->postId);
+        }
     }
 
     return post;
 }
 
-QUrl GNUSocialApiMicroBlog::profileUrl(Choqok::Account *account, const Choqok::User &user) const
+QUrl GNUSocialApiMicroBlog::profileUrl(Choqok::Account *account, const QString &username) const
 {
-    Q_UNUSED(account)
-    return QUrl(user.homePageUrl);
+    if (username.contains(QLatin1Char('@'))) {
+        const QStringList lst = username.split(QLatin1Char('@'), QString::SkipEmptyParts);
+
+        if (lst.count() == 2) {
+            return QUrl::fromUserInput(QStringLiteral("https://%1/%2").arg(lst[1]).arg(lst[0]));
+        } else {
+            return QUrl();
+        }
+    } else {
+        GNUSocialApiAccount *acc = qobject_cast<GNUSocialApiAccount *>(account);
+
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(QLatin1Char('/') + username);
+
+        return url;
+    }
 }
 
 QString GNUSocialApiMicroBlog::postUrl(Choqok::Account *account,  const QString &username,
