@@ -150,15 +150,17 @@ Account *PostWidget::currentAccount()
 
 QString PostWidget::generateSign()
 {
-    QString ss = QString(QLatin1String("<b>%1 - </b>")).arg(getUsernameHyperlink(d->mCurrentPost->author));
+    QString ss = QStringLiteral("<b>%1 - </b>").arg(getUsernameHyperlink(d->mCurrentPost->author));
 
+    QDateTime time;
     if (d->mCurrentPost->repeatedDateTime.isNull()) {
-        ss += QLatin1String("<a href=\"") + d->mCurrentPost->link +
-            QLatin1String("\" title=\"") + d->mCurrentPost->creationDateTime.toString(Qt::DefaultLocaleLongDate) + QLatin1String("\">%1</a>");
+        time = d->mCurrentPost->creationDateTime;
     } else {
-        ss += QLatin1String("<a href=\"") + d->mCurrentPost->link +
-            QLatin1String("\" title=\"") + d->mCurrentPost->repeatedDateTime.toString(Qt::DefaultLocaleLongDate) + QLatin1String("\">%1</a>");
+        time = d->mCurrentPost->repeatedDateTime;
     }
+
+    ss += QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>").arg(d->mCurrentPost->link)
+            .arg(time.toString(Qt::DefaultLocaleLongDate)).arg(formatDateTime(time));
 
     if (!d->mCurrentPost->source.isEmpty()) {
         ss += QLatin1String(" - ") + d->mCurrentPost->source;
@@ -166,12 +168,13 @@ QString PostWidget::generateSign()
 
     return ss;
 }
+
 QString PostWidget::getUsernameHyperlink(const Choqok::User &user) const
 {
-    return QLatin1String("<a href='") + d->mCurrentAccount->microblog()->profileUrl(d->mCurrentAccount, user).toDisplayString()
-    + QLatin1String("' title=\"") +
-    (user.description.isEmpty() ? user.userName : user.description) +
-    QLatin1String("\">") + user.userName + QLatin1String("</a>");
+    return QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>")
+            .arg(d->mCurrentAccount->microblog()->profileUrl(d->mCurrentAccount, user).toDisplayString())
+            .arg(user.description.isEmpty() ? user.realName : user.description)
+            .arg(user.userName);
 }
 
 void PostWidget::setupUi()
@@ -228,16 +231,9 @@ void PostWidget::initUi()
 
 void PostWidget::updateUi()
 {
-    QDateTime time;
-    if (d->mCurrentPost->repeatedDateTime.isNull()) {
-        time = d->mCurrentPost->creationDateTime;
-    } else {
-        time = d->mCurrentPost->repeatedDateTime;
-    }
-
     _mainWidget->setHtml(baseTextTemplate.arg( d->mProfileImage,                     /*1*/
                                                d->mContent,                          /*2*/
-                                               d->mSign.arg(formatDateTime(time)),   /*3*/
+                                               d->mSign,                             /*3*/
                                                d->dir,                               /*4*/
                                                d->mImage,                            /*5*/
                                                d->extraContents                      /*6*/

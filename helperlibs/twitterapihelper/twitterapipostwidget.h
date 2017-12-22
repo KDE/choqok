@@ -51,6 +51,7 @@ protected Q_SLOTS:
 
 protected:
     virtual QString generateSign() override;
+    virtual QString getUsernameHyperlink(const Choqok::User &user) const;
 
     void updateFavStat();
 

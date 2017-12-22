@@ -82,16 +82,17 @@ QString PumpIOPostWidget::generateSign()
     PumpIOAccount *account = qobject_cast<PumpIOAccount * >(currentAccount());
     PumpIOMicroBlog *microblog = qobject_cast<PumpIOMicroBlog * >(account->microblog());
     if (post) {
-        if (post->author.userName != account->username()) {
-            ss += QLatin1String("<b><a href=\"") + microblog->profileUrl(account, post->author).toDisplayString()
-                  + QLatin1String("\" title=\"") + post->author.realName + QLatin1String("\">") +
-                  post->author.userName + QLatin1String("</a></b> - ");
+        ss += QStringLiteral("<b>%1 - </b>").arg(getUsernameHyperlink(currentPost()->author));
+
+        QDateTime time;
+        if (currentPost()->repeatedDateTime.isNull()) {
+            time = currentPost()->creationDateTime;
+        } else {
+            time = currentPost()->repeatedDateTime;
         }
 
-        ss += QLatin1String("<a href=\"") + microblog->postUrl(account, post->author.userName,
-                                                post->postId) + QLatin1String("\" title=\"") +
-              post->creationDateTime.toString(Qt::DefaultLocaleLongDate)
-              + QLatin1String("\">%1</a>");
+        ss += QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>").arg(currentPost()->link)
+                .arg(time.toString(Qt::DefaultLocaleLongDate)).arg(formatDateTime(time));
 
         if (!post->source.isEmpty()) {
             ss += QLatin1String(" - ") + post->source;
@@ -168,6 +169,14 @@ QString PumpIOPostWidget::generateSign()
     }
 
     return ss;
+}
+
+QString PumpIOPostWidget::getUsernameHyperlink(const Choqok::User &user) const
+{
+    return QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>")
+            .arg(user.homePageUrl)
+            .arg(user.description.isEmpty() ? user.realName : user.description)
+            .arg(user.userName);
 }
 
 void PumpIOPostWidget::initUi()

@@ -99,10 +99,8 @@ void TwitterApiPostWidget::initUi()
 
 QString TwitterApiPostWidget::generateSign()
 {
-    QString sign;
-    sign = QLatin1String("<b><a href='user://") + currentPost()->author.userName + QLatin1String("' title=\"") +
-           currentPost()->author.description.toHtmlEscaped() + QLatin1String("\">") + currentPost()->author.userName +
-           QLatin1String("</a> - </b>");
+    QString sign = QStringLiteral("<b>%1 - </b>").arg(getUsernameHyperlink(currentPost()->author));
+
     //<img src=\"icon://web\" />
     if (currentPost()->isPrivate) {
         sign += QLatin1String("%1");
@@ -113,13 +111,15 @@ QString TwitterApiPostWidget::generateSign()
             sign.prepend(QLatin1String("To "));
         }
     } else {
+        QDateTime time;
         if (currentPost()->repeatedDateTime.isNull()) {
-            sign += QLatin1String("<a href=\"") + currentPost()->link +
-                    QLatin1String("\" title=\"") + currentPost()->creationDateTime.toString(Qt::DefaultLocaleLongDate) + QLatin1String("\">%1</a>");
+            time = currentPost()->creationDateTime;
         } else {
-            sign += QLatin1String("<a href=\"") + currentPost()->link +
-                    QLatin1String("\" title=\"") + currentPost()->repeatedDateTime.toString(Qt::DefaultLocaleLongDate) + QLatin1String("\">%1</a>");
+            time = currentPost()->repeatedDateTime;
         }
+
+        sign += QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>").arg(currentPost()->link)
+                .arg(time.toString(Qt::DefaultLocaleLongDate)).arg(formatDateTime(time));
     }
 
     if (!currentPost()->source.isEmpty()) {
@@ -165,6 +165,12 @@ QString TwitterApiPostWidget::generateSign()
     sign.append(QLatin1String("</p>"));
 
     return sign;
+}
+
+QString TwitterApiPostWidget::getUsernameHyperlink(const Choqok::User &user) const
+{
+    return QStringLiteral("<a href=\"user://%1\" title=\"%2\">%3</a>")
+            .arg(user.userName).arg(user.description.toHtmlEscaped()).arg(user.userName);
 }
 
 void TwitterApiPostWidget::slotReply()

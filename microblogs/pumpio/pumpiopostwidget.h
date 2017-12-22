@@ -52,6 +52,7 @@ protected Q_SLOTS:
 
 protected:
     virtual bool isResendAvailable() override;
+    virtual QString getUsernameHyperlink(const Choqok::User &user) const;
 
     static const QIcon unFavIcon;
 
