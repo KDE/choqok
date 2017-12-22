@@ -175,7 +175,7 @@ QString PumpIOPostWidget::getUsernameHyperlink(const Choqok::User &user) const
 {
     return QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>")
             .arg(user.homePageUrl)
-            .arg(user.description.isEmpty() ? user.realName : user.description)
+            .arg(user.description.isEmpty() ? user.realName : user.description.toHtmlEscaped())
             .arg(user.userName);
 }
 

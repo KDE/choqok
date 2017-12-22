@@ -170,7 +170,9 @@ QString TwitterApiPostWidget::generateSign()
 QString TwitterApiPostWidget::getUsernameHyperlink(const Choqok::User &user) const
 {
     return QStringLiteral("<a href=\"user://%1\" title=\"%2\">%3</a>")
-            .arg(user.userName).arg(user.description.toHtmlEscaped()).arg(user.userName);
+            .arg(user.userName)
+            .arg(user.description.isEmpty() ? user.realName : user.description.toHtmlEscaped())
+            .arg(user.userName);
 }
 
 void TwitterApiPostWidget::slotReply()
