@@ -1350,7 +1350,11 @@ QList< Choqok::Post * > TwitterApiMicroBlog::readTimeline(Choqok::Account *theAc
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
         for (const QVariant &list: json.toVariant().toList()) {
-            postList.prepend(readPost(theAccount, list.toMap(), new Choqok::Post));
+            Choqok::Post *post = readPost(theAccount, list.toMap(), new Choqok::Post);
+
+            if (post) {
+                postList.prepend(post);
+            }
         }
     } else {
         const QString err = checkForError(buffer);

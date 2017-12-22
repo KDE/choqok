@@ -106,6 +106,11 @@ Choqok::Post *GNUSocialApiMicroBlog::readPost(Choqok::Account *account, const QV
         return 0;
     }
 
+    if (var[QLatin1String("source")].toString().compare(QLatin1String("linkback")) == 0) {
+        // Skip linkback statuses
+        return 0;
+    }
+
     post = TwitterApiMicroBlog::readPost(account, var, post);
 
     post->author.homePageUrl = var[QLatin1String("user")].toMap()[QLatin1String("statusnet_profile_url")].toString();
