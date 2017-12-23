@@ -183,6 +183,16 @@ TimelineWidget *MicroBlogWidget::currentTimeline()
     return qobject_cast<TimelineWidget *>(d->timelinesTabWidget->currentWidget());
 }
 
+uint MicroBlogWidget::unreadCount() const
+{
+    uint sum = 0;
+    for (TimelineWidget *wd: d->timelines) {
+        sum += wd->unreadCount();
+    }
+
+    return sum;
+}
+
 void MicroBlogWidget::settingsChanged()
 {
     for (TimelineWidget *wd: d->timelines) {

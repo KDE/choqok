@@ -519,22 +519,25 @@ void MainWindow::slotUpdateUnreadCount(int change, int sum)
         sysIcon->updateUnreadCount(change);
     }
 
-    if (sum > 0) {
-        setWindowTitle(i18n("Choqok (%1)", sum));
-    } else {
-        setWindowTitle(i18n("Choqok"));
+    int accountsSum = 0;
+    for (int i = 0; i < mainWidget->tabBar()->count(); ++i) {
+        Choqok::UI::MicroBlogWidget *tab = qobject_cast<Choqok::UI::MicroBlogWidget *>(mainWidget->widget(i));
+
+        accountsSum += tab->unreadCount();
+
+        if (wd == tab) {
+            if (sum > 0) {
+                mainWidget->setTabText(i, wd->currentAccount()->alias() + QStringLiteral(" (%1)").arg(sum));
+            } else {
+                mainWidget->setTabText(i, wd->currentAccount()->alias());
+            }
+        }
     }
 
-    if (wd) {
-        int tabIndex = mainWidget->indexOf(wd);
-        if (tabIndex == -1) {
-            return;
-        }
-        if (sum > 0) {
-            mainWidget->setTabText(tabIndex, wd->currentAccount()->alias() + QStringLiteral("(%1)").arg(sum));
-        } else {
-            mainWidget->setTabText(tabIndex, wd->currentAccount()->alias());
-        }
+    if (accountsSum > 0) {
+        setWindowTitle(i18n("Choqok (%1)", accountsSum));
+    } else {
+        setWindowTitle(i18n("Choqok"));
     }
 }
 

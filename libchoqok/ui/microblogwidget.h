@@ -65,6 +65,11 @@ public:
     */
     TimelineWidget *currentTimeline();
 
+    /**
+     * @return the number of unread posts between all timelines.
+     */
+    uint unreadCount() const;
+
 public Q_SLOTS:
     void removeOldPosts();
     /**
