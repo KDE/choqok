@@ -57,7 +57,6 @@ public:
     QUrl profileImageUrl;
     QUrl homePageUrl;
     bool isProtected;
-    uint followersCount;
 };
 
 class CHOQOK_EXPORT QuotedPost

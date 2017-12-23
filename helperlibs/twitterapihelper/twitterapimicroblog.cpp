@@ -1595,7 +1595,6 @@ Choqok::User TwitterApiMicroBlog::readUser(Choqok::Account *theAccount, const QV
     Q_UNUSED(theAccount);
     Choqok::User u;
     u.description = map[QLatin1String("description")].toString();
-    u.followersCount = map[QLatin1String("followers_count")].toUInt();
     u.homePageUrl = map[QLatin1String("url")].toUrl();
     u.isProtected = map[QLatin1String("protected")].toBool();
     u.location = map[QLatin1String("location")].toString();
