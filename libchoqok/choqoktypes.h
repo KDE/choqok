@@ -25,6 +25,7 @@
 #define CHOQOKTYPES_H
 
 #include <QDateTime>
+#include <QUrl>
 
 #include "choqok_export.h"
 
@@ -53,8 +54,8 @@ public:
     QString userName;
     QString location;
     QString description;
-    QString profileImageUrl;
-    QString homePageUrl;
+    QUrl profileImageUrl;
+    QUrl homePageUrl;
     bool isProtected;
     uint followersCount;
 };
@@ -63,9 +64,9 @@ class CHOQOK_EXPORT QuotedPost
 {
 public:
     QString username;
-    QString profileImageUrl;
+    QUrl profileImageUrl;
     QString postId;
-    QString content;    
+    QString content;
 };
 
 class CHOQOK_EXPORT Post
@@ -82,7 +83,7 @@ public:
     
     QDateTime creationDateTime;
     QString postId;
-    QString link;
+    QUrl link;
     QString content;
     QString source;
     QString replyToPostId;
@@ -98,7 +99,7 @@ public:
     QString repeatedPostId;
     QDateTime repeatedDateTime;
     QString conversationId;
-    QString media;          // first Image of Post, if available
+    QUrl media;          // first Image of Post, if available
     QuotedPost quotedPost;
     unsigned int owners; // number of associated PostWidgets
 };

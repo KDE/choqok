@@ -48,7 +48,7 @@ public:
 protected Q_SLOTS:
     void slotAddNewPostWidget(Choqok::UI::PostWidget *newWidget);
     void startParsing();
-    void slotImageFetched(const QString &remoteUrl, const QPixmap &pixmap);
+    void slotImageFetched(const QUrl &remoteUrl, const QPixmap &pixmap);
 
 private:
     enum ParserState { Running = 0, Stopped };
@@ -56,8 +56,8 @@ private:
 
     void parse(Choqok::UI::PostWidget *postToParse);
     QQueue< QPointer<Choqok::UI::PostWidget> > postsQueue;
-    QMap<QString, QPointer<Choqok::UI::PostWidget> > mParsingList;//remoteUrl, Post
-    QMap<QString, QString> mBaseUrlMap;//remoteUrl, BaseUrl
+    QMap<QUrl, QPointer<Choqok::UI::PostWidget> > mParsingList;//remoteUrl, Post
+    QMap<QUrl, QString> mBaseUrlMap;//remoteUrl, BaseUrl
 
     static const QRegExp mImgLyRegExp;
     static const QRegExp mTwitgooRegExp;

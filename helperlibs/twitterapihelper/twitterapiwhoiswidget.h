@@ -49,8 +49,8 @@ protected Q_SLOTS:
     void checkAnchor(const QUrl url);
     void userInfoReceived(KJob *job);
     void slotCancel();
-    void avatarFetchError(const QString &remoteUrl, const QString &errMsg);
-    void avatarFetched(const QString &remoteUrl, const QPixmap &pixmap);
+    void avatarFetchError(const QUrl &remoteUrl, const QString &errMsg);
+    void avatarFetched(const QUrl &remoteUrl, const QPixmap &pixmap);
 
     void slotFriendshipCreated(Choqok::Account *, const QString &);
     void slotFriendshipDestroyed(Choqok::Account *, const QString &);

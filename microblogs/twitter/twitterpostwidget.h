@@ -37,8 +37,8 @@ public:
 
 protected Q_SLOTS:
     void slotReplyToAll() override;
-    void quotedAvatarFetched(const QString &remoteUrl, const QPixmap &pixmap);
-    void quotedAvatarFetchError(const QString &remoteUrl, const QString &errMsg);
+    void quotedAvatarFetched(const QUrl &remoteUrl, const QPixmap &pixmap);
+    void quotedAvatarFetchError(const QUrl &remoteUrl, const QString &errMsg);
 
 protected:
     QString prepareStatus(const QString &text) override;

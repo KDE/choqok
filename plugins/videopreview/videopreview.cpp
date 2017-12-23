@@ -84,14 +84,14 @@ void VideoPreview::slotNewUnshortenedUrl(Choqok::UI::PostWidget *widget, const Q
     if (mYouTubeRegExp.indexIn(toUrl.toDisplayString()) != -1) {
         QUrl thisurl(mYouTubeRegExp.cap(0));
         QUrlQuery thisurlQuery(thisurl);
-        QString thumbUrl = parseYoutube(thisurlQuery.queryItemValue(QLatin1String("v")), widget);
-        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
-                SLOT(slotImageFetched(QString,QPixmap)));
+        QUrl thumbUrl = parseYoutube(thisurlQuery.queryItemValue(QLatin1String("v")), widget);
+        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
+                SLOT(slotImageFetched(QUrl,QPixmap)));
         Choqok::MediaManager::self()->fetchImage(thumbUrl, Choqok::MediaManager::Async);
     } else if (mVimeoRegExp.indexIn(toUrl.toDisplayString()) != -1) {
-        QString thumbUrl = parseVimeo(mVimeoRegExp.cap(3), widget);
-        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
-                SLOT(slotImageFetched(QString,QPixmap)));
+        QUrl thumbUrl = parseVimeo(mVimeoRegExp.cap(3), widget);
+        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
+                SLOT(slotImageFetched(QUrl,QPixmap)));
         Choqok::MediaManager::self()->fetchImage(thumbUrl, Choqok::MediaManager::Async);
     }
 
@@ -121,7 +121,7 @@ void VideoPreview::parse(QPointer<Choqok::UI::PostWidget> postToParse)
     int pos1 = 0;
     int pos2 = 0;
     int pos3 = 0;
-    QStringList thumbList;
+    QList<QUrl> thumbList;
 
     QString content = postToParse->currentPost()->content;
 
@@ -145,23 +145,24 @@ void VideoPreview::parse(QPointer<Choqok::UI::PostWidget> postToParse)
         }
     }
 
-    for (const QString &thumb_url: thumbList) {
+    for (const QUrl &thumb_url: thumbList) {
         connect(Choqok::MediaManager::self(),
-                SIGNAL(imageFetched(QString,QPixmap)),
-                SLOT(slotImageFetched(QString,QPixmap)));
+                SIGNAL(imageFetched(QUrl,QPixmap)),
+                SLOT(slotImageFetched(QUrl,QPixmap)));
 
         Choqok::MediaManager::self()->fetchImage(thumb_url, Choqok::MediaManager::Async);
     }
 
 }
 
-QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWidget > postToParse)
+QUrl VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWidget > postToParse)
 {
     QString youtubeUrl = QStringLiteral("https://gdata.youtube.com/feeds/api/videos/%1").arg(videoid);
     QUrl th_url(youtubeUrl);
     KIO::StoredTransferJob *job = KIO::storedGet(th_url, KIO::NoReload, KIO::HideProgressInfo);
     KJobWidgets::setWindow(job, Choqok::UI::Global::mainWindow());
-    QString title, description, thumb_url;
+    QString title, description;
+    QUrl thumb_url;
 
     job->exec();
     if (!job->error()) {
@@ -182,7 +183,7 @@ QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWi
 
             node = node.nextSiblingElement(QLatin1String("media:thumbnail"));
             if (!node.isNull()) {
-                thumb_url = QString(node.attributeNode(QLatin1String("url")).value());
+                thumb_url = QUrl::fromUserInput(node.attributeNode(QLatin1String("url")).value());
             }
         }
 
@@ -199,14 +200,15 @@ QString VideoPreview::parseYoutube(QString videoid, QPointer< Choqok::UI::PostWi
     return thumb_url;
 }
 
-QString VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidget > postToParse)
+QUrl VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidget > postToParse)
 {
     QString vimeoUrl = QStringLiteral("https://vimeo.com/api/v2/video/%1.xml").arg(videoid);
     QUrl th_url(vimeoUrl);
     QEventLoop loop;
     KIO::StoredTransferJob *job = KIO::storedGet(th_url, KIO::NoReload, KIO::HideProgressInfo);
     KJobWidgets::setWindow(job, Choqok::UI::Global::mainWindow());
-    QString title, description, thumb_url;
+    QString title, description;
+    QUrl thumb_url;
 
     job->exec();
     if (!job->error()) {
@@ -228,7 +230,7 @@ QString VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidg
                 }
                 node = videotag.firstChildElement(QLatin1String("thumbnail_small"));
                 if (!node.isNull()) {
-                    thumb_url = QString(node.text());
+                    thumb_url = QUrl::fromUserInput(node.text());
                 }
             }
         }
@@ -245,7 +247,7 @@ QString VideoPreview::parseVimeo(QString videoid, QPointer< Choqok::UI::PostWidg
     return thumb_url;
 }
 
-void VideoPreview::slotImageFetched(const QString &remoteUrl, const QPixmap &pixmap)
+void VideoPreview::slotImageFetched(const QUrl &remoteUrl, const QPixmap &pixmap)
 {
     Choqok::UI::PostWidget *postToParse = mParsingList.take(remoteUrl);
     QString baseUrl = mBaseUrlMap.take(remoteUrl);

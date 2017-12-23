@@ -183,10 +183,10 @@ protected Q_SLOTS:
     virtual void slotPostError(Choqok::Account *theAccount, Choqok::Post *post,
                                Choqok::MicroBlog::ErrorType error, const QString &errorMessage);
 
-    void avatarFetchError(const QString &remoteUrl, const QString &errMsg);
-    void avatarFetched(const QString &remoteUrl, const QPixmap &pixmap);
+    void avatarFetchError(const QUrl &remoteUrl, const QString &errMsg);
+    void avatarFetched(const QUrl &remoteUrl, const QPixmap &pixmap);
 
-    void slotImageFetched(const QString &remoteUrl, const QPixmap &pixmap);
+    void slotImageFetched(const QUrl &remoteUrl, const QPixmap &pixmap);
     virtual void mousePressEvent(QMouseEvent *ev) override;
 
 protected:

@@ -66,7 +66,7 @@ public:
      *
      * @return return @ref QPixmap of requested image if exists in cache, otherwise null pixmap
      */
-    QPixmap fetchImage(const QString &remoteUrl, ReturnMode mode = Sync);
+    QPixmap fetchImage(const QUrl &remoteUrl, ReturnMode mode = Sync);
 
     /**
      * @return KDE Default image
@@ -113,8 +113,8 @@ public Q_SLOTS:
     void clearImageCache();
 
 Q_SIGNALS:
-    void fetchError(const QString &remoteUrl, const QString &errMsg);
-    void imageFetched(const QString &remoteUrl, const QPixmap &pixmap);
+    void fetchError(const QUrl &remoteUrl, const QString &errMsg);
+    void imageFetched(const QUrl &remoteUrl, const QPixmap &pixmap);
 
     void mediumUploaded(const QUrl &localUrl, const QString &remoteUrl);
     void mediumUploadFailed(const QUrl &localUrl, const QString &errorMessage);

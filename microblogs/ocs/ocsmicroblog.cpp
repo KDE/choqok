@@ -116,11 +116,11 @@ QList< Choqok::Post * > OCSMicroblog::loadTimeline(Choqok::Account *account, con
             st->author.userId = grp.readEntry("authorId", QString());
             st->author.userName = grp.readEntry("authorUserName", QString());
             st->author.realName = grp.readEntry("authorRealName", QString());
-            st->author.profileImageUrl = grp.readEntry("authorProfileImageUrl", QString());
+            st->author.profileImageUrl = grp.readEntry("authorProfileImageUrl", QUrl());
             st->author.description = grp.readEntry("authorDescription" , QString());
             st->author.location = grp.readEntry("authorLocation", QString());
-            st->author.homePageUrl = grp.readEntry("authorUrl", QString());
-            st->link = grp.readEntry("link", QString());
+            st->author.homePageUrl = grp.readEntry("authorUrl", QUrl());
+            st->link = grp.readEntry("link", QUrl());
             st->isRead = grp.readEntry("isRead", true);
 
             list.append(st);
@@ -242,14 +242,14 @@ QList< Choqok::Post * > OCSMicroblog::parseActivityList(const Attica::Activity::
         pst->postId = act.id();
         pst->content = act.message();
         pst->creationDateTime = act.timestamp();
-        pst->link = act.link().toString();
+        pst->link = act.link();
         pst->isError = !act.isValid();
         pst->author.userId = act.associatedPerson().id();
         pst->author.userName = act.associatedPerson().id();
-        pst->author.homePageUrl = act.associatedPerson().homepage();
+        pst->author.homePageUrl = QUrl::fromUserInput(act.associatedPerson().homepage());
         pst->author.location = QStringLiteral("%1(%2)").arg(act.associatedPerson().country())
                                .arg(act.associatedPerson().city());
-        pst->author.profileImageUrl = act.associatedPerson().avatarUrl().toString();
+        pst->author.profileImageUrl = act.associatedPerson().avatarUrl();
         pst->author.realName = QStringLiteral("%1 %2").arg(act.associatedPerson().firstName())
                                .arg(act.associatedPerson().lastName());
         resultList.insert(0, pst);

@@ -116,7 +116,7 @@ void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount *theAccount, const QS
             user = lst[0];
         }
     } else if (d->currentPost.source == QLatin1String("ostatus") && !d->currentPost.author.homePageUrl.isEmpty()) {
-        urlStr = d->currentPost.author.homePageUrl;
+        urlStr = d->currentPost.author.homePageUrl.toDisplayString();
         if (urlStr.endsWith(user)) {
             int len = urlStr.length();
             int userLen = user.length();
@@ -177,8 +177,8 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob *job)
         post.author.userName = map[QLatin1String("screen_name")].toString();
         post.author.location = map[QLatin1String("location")].toString();
         post.author.description = map[QLatin1String("description")].toString();
-        post.author.profileImageUrl = map[QLatin1String("profile_image_url")].toString();
-        post.author.homePageUrl = map[QLatin1String("url")].toString();
+        post.author.profileImageUrl = map[QLatin1String("profile_image_url")].toUrl();
+        post.author.homePageUrl = map[QLatin1String("url")].toUrl();
         d->timeZone = map[QLatin1String("time_zone")].toString();
         d->followersCount = map[QLatin1String("followers_count")].toString();
         d->friendsCount = map[QLatin1String("friends_count")].toString();
@@ -205,28 +205,28 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob *job)
         d->wid->document()->addResource(QTextDocument::ImageResource, QUrl(QLatin1String("img://profileImage")),
                                         userAvatar);
     } else {
-        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
-                this, SLOT(avatarFetched(QString,QPixmap)));
+        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
+                this, SLOT(avatarFetched(QUrl,QPixmap)));
         connect(Choqok::MediaManager::self(), SIGNAL(fetchError(QString,QString)),
                 this, SLOT(avatarFetchError(QString,QString)));
     }
 }
 
-void TwitterApiWhoisWidget::avatarFetched(const QString &remoteUrl, const QPixmap &pixmap)
+void TwitterApiWhoisWidget::avatarFetched(const QUrl &remoteUrl, const QPixmap &pixmap)
 {
     qCDebug(CHOQOK);
     if (remoteUrl == d->currentPost.author.profileImageUrl) {
         const QUrl url(QLatin1String("img://profileImage"));
         d->wid->document()->addResource(QTextDocument::ImageResource, url, pixmap);
         updateHtml();
-        disconnect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
-                   this, SLOT(avatarFetched(QString,QPixmap)));
+        disconnect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
+                   this, SLOT(avatarFetched(QUrl,QPixmap)));
         disconnect(Choqok::MediaManager::self(), SIGNAL(fetchError(QString,QString)),
                    this, SLOT(avatarFetchError(QString,QString)));
     }
 }
 
-void TwitterApiWhoisWidget::avatarFetchError(const QString &remoteUrl, const QString &errMsg)
+void TwitterApiWhoisWidget::avatarFetchError(const QUrl &remoteUrl, const QString &errMsg)
 {
     qCDebug(CHOQOK);
     Q_UNUSED(errMsg);
@@ -244,7 +244,7 @@ void TwitterApiWhoisWidget::updateHtml()
     QString html;
     if (d->errorMessage.isEmpty()) {
         QString url = d->currentPost.author.homePageUrl.isEmpty() ? QString()
-                      : QStringLiteral("<a title='%1' href='%1'>%1</a>").arg(d->currentPost.author.homePageUrl);
+                      : QStringLiteral("<a title='%1' href='%1'>%1</a>").arg(d->currentPost.author.homePageUrl.toDisplayString());
 
         QString mainTable = QString(QLatin1String("<table width='100%'><tr>\
         <td width=49><img width=48 height=48 src='img://profileImage'/>\

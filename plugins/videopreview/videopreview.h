@@ -54,7 +54,7 @@ public:
 protected Q_SLOTS:
     void slotAddNewPostWidget(Choqok::UI::PostWidget *newWidget);
     void startParsing();
-    void slotImageFetched(const QString &remoteUrl, const QPixmap &pixmap);
+    void slotImageFetched(const QUrl &remoteUrl, const QPixmap &pixmap);
     void slotNewUnshortenedUrl(Choqok::UI::PostWidget *widget, const QUrl &fromUrl, const QUrl &toUrl);
 
 private:
@@ -62,14 +62,14 @@ private:
     ParserState state;
 
     void parse(QPointer< Choqok::UI::PostWidget > postToParse);
-    QString parseYoutube(QString videoid , QPointer< Choqok::UI::PostWidget > postToParse);
-    QString parseVimeo(QString videoid , QPointer< Choqok::UI::PostWidget > postToParse);
+    QUrl parseYoutube(QString videoid , QPointer< Choqok::UI::PostWidget > postToParse);
+    QUrl parseVimeo(QString videoid , QPointer< Choqok::UI::PostWidget > postToParse);
 
     QQueue< QPointer<Choqok::UI::PostWidget> > postsQueue;
-    QMap<QString, QPointer<Choqok::UI::PostWidget> > mParsingList;//remoteUrl, Post
-    QMap<QString, QString> mBaseUrlMap;//remoteUrl, BaseUrl
-    QMap<QString, QString> mTitleVideoMap;//remoteUrl, TitleVideo
-    QMap<QString, QString> mDescriptionVideoMap;//remoteUrl, DescriptionVideo
+    QMap<QUrl, QPointer<Choqok::UI::PostWidget> > mParsingList;//remoteUrl, Post
+    QMap<QUrl, QString> mBaseUrlMap;//remoteUrl, BaseUrl
+    QMap<QUrl, QString> mTitleVideoMap;//remoteUrl, TitleVideo
+    QMap<QUrl, QString> mDescriptionVideoMap;//remoteUrl, DescriptionVideo
 
     static const QRegExp mYouTubeRegExp;
     static const QRegExp mYouTuRegExp;

@@ -118,17 +118,16 @@ QString TwitterApiPostWidget::generateSign()
             time = currentPost()->repeatedDateTime;
         }
 
-        sign += QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>").arg(currentPost()->link)
+        sign += QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>").arg(currentPost()->link.toDisplayString())
                 .arg(time.toString(Qt::DefaultLocaleLongDate)).arg(formatDateTime(time));
     }
 
     if (!currentPost()->source.isEmpty()) {
         sign += QLatin1String(" - ");
         if (currentPost()->source == QLatin1String("ostatus") && !currentPost()->author.homePageUrl.isEmpty()) {
-            QUrl srcUrl(currentPost()->author.homePageUrl);
             sign += i18n("<a href='%1' title='Sent from %2 via OStatus'>%2</a>",
-                         currentPost()->author.homePageUrl,
-                         srcUrl.host());
+                         currentPost()->author.homePageUrl.toDisplayString(),
+                         currentPost()->author.homePageUrl.host());
         } else {
             sign += currentPost()->source;
         }
@@ -136,7 +135,7 @@ QString TwitterApiPostWidget::generateSign()
 
     if (!currentPost()->isPrivate) {
         if (!currentPost()->replyToPostId.isEmpty()) {
-            QString link = currentAccount()->microblog()->postUrl(currentAccount(), currentPost()->replyToUserName,
+            QUrl link = currentAccount()->microblog()->postUrl(currentAccount(), currentPost()->replyToUserName,
                            currentPost()->replyToPostId);
             QString showConMsg = i18n("Show Conversation");
             QString threadlink;
@@ -147,7 +146,7 @@ QString TwitterApiPostWidget::generateSign()
             }
             sign += QLatin1String(" - ") +
                     i18n("<a href='replyto://%1'>in reply to</a> @<a href='user://%4'>%4</a>&nbsp;<a href=\"%2\" title=\"%2\">%3</a>",
-                         currentPost()->replyToPostId, link, webIconText, currentPost()->replyToUserName) + QLatin1Char(' ');
+                         currentPost()->replyToPostId, link.toDisplayString(), webIconText, currentPost()->replyToUserName) + QLatin1Char(' ');
             sign += QLatin1String("<a title=\"") + showConMsg + QLatin1String("\" href=\"") + threadlink + QLatin1String("\"><img src=\"icon://thread\" /></a>");
         }
 

@@ -249,26 +249,26 @@ bool TwitterPostWidget::setupQuotedAvatar()
         quotedAvatarFetched(currentPost()->quotedPost.profileImageUrl, pix);
         return true;
     } else {
-        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
-                this, SLOT(quotedAvatarFetched(QString,QPixmap)));
+        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
+                this, SLOT(quotedAvatarFetched(QUrl,QPixmap)));
         connect(Choqok::MediaManager::self(), SIGNAL(fetchError(QString,QString)),
                 this, SLOT(quotedAvatarFetchError(QString,QString)));
         return false;
     }
 }
 
-void TwitterPostWidget::quotedAvatarFetched(const QString &remoteUrl, const QPixmap &pixmap)
+void TwitterPostWidget::quotedAvatarFetched(const QUrl &remoteUrl, const QPixmap &pixmap)
 {
     if (remoteUrl == currentPost()->quotedPost.profileImageUrl) {
         _mainWidget->document()->addResource(QTextDocument::ImageResource, mQuotedAvatarResourceUrl, pixmap);
-        disconnect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
-                   this, SLOT(quotedAvatarFetched(QString,QPixmap)));
+        disconnect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
+                   this, SLOT(quotedAvatarFetched(QUrl,QPixmap)));
         disconnect(Choqok::MediaManager::self(), SIGNAL(fetchError(QString,QString)),
                    this, SLOT(quotedAvatarFetchError(QString,QString)));
     }
 }
 
-void TwitterPostWidget::quotedAvatarFetchError(const QString &remoteUrl, const QString &errMsg)
+void TwitterPostWidget::quotedAvatarFetchError(const QUrl &remoteUrl, const QString &errMsg)
 {
     Q_UNUSED(errMsg);
     if (remoteUrl == currentPost()->quotedPost.profileImageUrl) {

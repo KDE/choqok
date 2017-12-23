@@ -208,8 +208,8 @@ QList< Choqok::Post * > TwitterApiMicroBlog::loadTimeline(Choqok::Account *accou
             st->author.userId = grp.readEntry("authorId", QString());
             st->author.userName = grp.readEntry("authorUserName", QString());
             st->author.realName = grp.readEntry("authorRealName", QString());
-            st->author.homePageUrl = grp.readEntry("authorHomePageUrl", QString());
-            st->author.profileImageUrl = grp.readEntry("authorProfileImageUrl", QString());
+            st->author.homePageUrl = grp.readEntry("authorHomePageUrl", QUrl());
+            st->author.profileImageUrl = grp.readEntry("authorProfileImageUrl", QUrl());
             st->author.description = grp.readEntry("authorDescription" , QString());
             st->author.isProtected = grp.readEntry("isProtected", false);
             st->isPrivate = grp.readEntry("isPrivate" , false);
@@ -220,9 +220,9 @@ QList< Choqok::Post * > TwitterApiMicroBlog::loadTimeline(Choqok::Account *accou
             st->repeatedPostId = grp.readEntry("repeatedPostId", QString());
             st->repeatedDateTime = grp.readEntry("repeatedDateTime", QDateTime());
             st->conversationId = grp.readEntry("conversationId", QString());
-            st->media = grp.readEntry("mediaUrl", QString());          
+            st->media = grp.readEntry("mediaUrl", QUrl());
             st->quotedPost.postId = grp.readEntry("quotedPostId", QString());
-            st->quotedPost.profileImageUrl = grp.readEntry("quotedProfileUrl", QString());
+            st->quotedPost.profileImageUrl = grp.readEntry("quotedProfileUrl", QUrl());
             st->quotedPost.content = grp.readEntry("quotedContent", QString());
             st->quotedPost.username = grp.readEntry("quotedUsername", QString());
 
@@ -1407,17 +1407,17 @@ Choqok::Post *TwitterApiMicroBlog::readPost(Choqok::Account *theAccount,
     post->author.realName = userMap[QLatin1String("name")].toString();
     post->author.userId = userMap[QLatin1String("id")].toString();
     post->author.userName = userMap[QLatin1String("screen_name")].toString();
-    post->author.profileImageUrl = userMap[QLatin1String("profile_image_url")].toString();
+    post->author.profileImageUrl = userMap[QLatin1String("profile_image_url")].toUrl();
     QVariantMap entities = var[QLatin1String("entities")].toMap();
     QVariantMap mediaMap;
     QVariantList media = entities[QLatin1String("media")].toList();
     if (media.size() > 0) {
         mediaMap = media.at(0).toMap();
-        post->media = mediaMap[QLatin1String("media_url")].toString() + QLatin1String(":small");
+        post->media = QUrl::fromUserInput(mediaMap[QLatin1String("media_url")].toString() + QLatin1String(":small"));
         QVariantMap sizes = mediaMap[QLatin1String("sizes")].toMap();
         QVariantMap w = sizes[QLatin1String("small")].toMap();
     } else {
-        post->media = QString();
+        post->media = QUrl();
     }
 
     QVariantMap retweetedMap = var[QLatin1String("retweeted_status")].toMap();
@@ -1481,8 +1481,9 @@ Choqok::Post *TwitterApiMicroBlog::readDirectMessage(Choqok::Account *theAccount
     Choqok::Post *msg = new Choqok::Post;
 
     msg->isPrivate = true;
-    QString senderId, recipientId, senderScreenName, recipientScreenName, senderProfileImageUrl,
-            senderName, senderDescription, recipientProfileImageUrl, recipientName, recipientDescription;
+    QString senderId, recipientId, senderScreenName, recipientScreenName, senderName,
+            senderDescription, recipientName, recipientDescription;
+    QUrl senderProfileImageUrl, recipientProfileImageUrl;
 
     msg->creationDateTime = dateFromString(var[QLatin1String("created_at")].toString());
     msg->content = var[QLatin1String("text")].toString();
@@ -1492,11 +1493,11 @@ Choqok::Post *TwitterApiMicroBlog::readDirectMessage(Choqok::Account *theAccount
     senderScreenName = var[QLatin1String("sender_screen_name")].toString();
     recipientScreenName = var[QLatin1String("recipient_screen_name")].toString();
     QVariantMap sender = var[QLatin1String("sender")].toMap();
-    senderProfileImageUrl = sender[QLatin1String("profile_image_url")].toString();
+    senderProfileImageUrl = sender[QLatin1String("profile_image_url")].toUrl();
     senderName = sender[QLatin1String("name")].toString();
     senderDescription = sender[QLatin1String("description")].toString();
     QVariantMap recipient = var[QLatin1String("recipient")].toMap();
-    recipientProfileImageUrl = recipient[QLatin1String("profile_image_url")].toString();
+    recipientProfileImageUrl = recipient[QLatin1String("profile_image_url")].toUrl();
     recipientName = recipient[QLatin1String("name")].toString();
     recipientDescription = recipient[QLatin1String("description")].toString();
     if (senderScreenName.compare(theAccount->username(), Qt::CaseInsensitive) == 0) {
@@ -1595,10 +1596,10 @@ Choqok::User TwitterApiMicroBlog::readUser(Choqok::Account *theAccount, const QV
     Choqok::User u;
     u.description = map[QLatin1String("description")].toString();
     u.followersCount = map[QLatin1String("followers_count")].toUInt();
-    u.homePageUrl = map[QLatin1String("url")].toString();
+    u.homePageUrl = map[QLatin1String("url")].toUrl();
     u.isProtected = map[QLatin1String("protected")].toBool();
     u.location = map[QLatin1String("location")].toString();
-    u.profileImageUrl = map[QLatin1String("profile_image_url")].toString();
+    u.profileImageUrl = map[QLatin1String("profile_image_url")].toUrl();
     u.realName = map[QLatin1String("name")].toString();
     u.userId = map[QLatin1String("id_str")].toString();
     u.userName = map[QLatin1String("screen_name")].toString();

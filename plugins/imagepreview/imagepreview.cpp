@@ -96,9 +96,9 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
     }
     for (const QString &url: ImgLyRedirectList) {
         connect(Choqok::MediaManager::self(),
-                SIGNAL(imageFetched(QString,QPixmap)),
-                SLOT(slotImageFetched(QString,QPixmap)));
-        QString ImgLyUrl = QStringLiteral("http://img.ly/show/thumb%1").arg(QString(url).remove(QLatin1String("http://img.ly")));
+                SIGNAL(imageFetched(QUrl,QPixmap)),
+                SLOT(slotImageFetched(QUrl,QPixmap)));
+        QUrl ImgLyUrl = QUrl::fromUserInput(QStringLiteral("http://img.ly/show/thumb%1").arg(QString(url).remove(QLatin1String("http://img.ly"))));
         mParsingList.insert(ImgLyUrl, postToParse);
         mBaseUrlMap.insert(ImgLyUrl, url);
         Choqok::MediaManager::self()->fetchImage(ImgLyUrl, Choqok::MediaManager::Async);
@@ -112,9 +112,9 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
     }
     for (const QString &url: TwitgooRedirectList) {
         connect(Choqok::MediaManager::self(),
-                SIGNAL(imageFetched(QString,QPixmap)),
-                SLOT(slotImageFetched(QString,QPixmap)));
-        QString TwitgooUrl = url + QLatin1String("/thumb");
+                SIGNAL(imageFetched(QUrl,QPixmap)),
+                SLOT(slotImageFetched(QUrl,QPixmap)));
+        QUrl TwitgooUrl = QUrl::fromUserInput(url + QLatin1String("/thumb"));
         mParsingList.insert(TwitgooUrl, postToParse);
         mBaseUrlMap.insert(TwitgooUrl, url);
         Choqok::MediaManager::self()->fetchImage(TwitgooUrl, Choqok::MediaManager::Async);
@@ -131,16 +131,16 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
         imageExtension = mPumpIORegExp.cap(mPumpIORegExp.capturedTexts().length() - 1);
     }
     for (const QString &url: PumpIORedirectList) {
-        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
-                SLOT(slotImageFetched(QString,QPixmap)));
-        const QString pumpIOUrl = baseUrl + QLatin1String("_thumb") + imageExtension;
+        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
+                SLOT(slotImageFetched(QUrl,QPixmap)));
+        const QUrl pumpIOUrl = QUrl::fromUserInput(baseUrl + QLatin1String("_thumb") + imageExtension);
         mParsingList.insert(pumpIOUrl, postToParse);
         mBaseUrlMap.insert(pumpIOUrl, url);
         Choqok::MediaManager::self()->fetchImage(pumpIOUrl, Choqok::MediaManager::Async);
     }
 }
 
-void ImagePreview::slotImageFetched(const QString &remoteUrl, const QPixmap &pixmap)
+void ImagePreview::slotImageFetched(const QUrl &remoteUrl, const QPixmap &pixmap)
 {
     Choqok::UI::PostWidget *postToParse = mParsingList.take(remoteUrl);
     QString baseUrl = mBaseUrlMap.take(remoteUrl);

@@ -91,7 +91,7 @@ QString PumpIOPostWidget::generateSign()
             time = currentPost()->repeatedDateTime;
         }
 
-        ss += QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>").arg(currentPost()->link)
+        ss += QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>").arg(currentPost()->link.toDisplayString())
                 .arg(time.toString(Qt::DefaultLocaleLongDate)).arg(formatDateTime(time));
 
         if (!post->source.isEmpty()) {
@@ -174,7 +174,7 @@ QString PumpIOPostWidget::generateSign()
 QString PumpIOPostWidget::getUsernameHyperlink(const Choqok::User &user) const
 {
     return QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>")
-            .arg(user.homePageUrl)
+            .arg(user.homePageUrl.toDisplayString())
             .arg(user.description.isEmpty() ? user.realName : user.description.toHtmlEscaped())
             .arg(user.userName);
 }

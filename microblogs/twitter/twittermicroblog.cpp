@@ -130,10 +130,10 @@ QUrl TwitterMicroBlog::profileUrl(Choqok::Account *account, const QString &usern
     return QUrl::fromUserInput(QStringLiteral("https://twitter.com/%1").arg(username));
 }
 
-QString TwitterMicroBlog::postUrl(Choqok::Account *, const QString &username,
+QUrl TwitterMicroBlog::postUrl(Choqok::Account *, const QString &username,
                                   const QString &postId) const
 {
-    return QStringLiteral("https://twitter.com/%1/status/%2").arg(username).arg(postId);
+    return QUrl::fromUserInput(QStringLiteral("https://twitter.com/%1/status/%2").arg(username).arg(postId));
 }
 
 TwitterApiSearch *TwitterMicroBlog::searchBackend()

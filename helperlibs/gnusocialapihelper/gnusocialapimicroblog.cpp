@@ -113,12 +113,12 @@ Choqok::Post *GNUSocialApiMicroBlog::readPost(Choqok::Account *account, const QV
 
     post = TwitterApiMicroBlog::readPost(account, var, post);
 
-    post->author.homePageUrl = var[QLatin1String("user")].toMap()[QLatin1String("statusnet_profile_url")].toString();
+    post->author.homePageUrl = var[QLatin1String("user")].toMap()[QLatin1String("statusnet_profile_url")].toUrl();
 
     if (var.contains(QLatin1String("uri"))) {
-        post->link = var[QLatin1String("uri")].toString();
+        post->link = var[QLatin1String("uri")].toUrl();
     } else if (var.contains(QLatin1String("external_url"))) {
-        post->link = var[QLatin1String("external_url")].toString();
+        post->link = var[QLatin1String("external_url")].toUrl();
     } else {
         QVariantMap retweeted = var[QLatin1String("retweeted_status")].toMap();
 
@@ -130,11 +130,12 @@ Choqok::Post *GNUSocialApiMicroBlog::readPost(Choqok::Account *account, const QV
         }
 
         if (retweeted.contains(QLatin1String("uri"))) {
-            post->link = var[QLatin1String("uri")].toString();
+            post->link = var[QLatin1String("uri")].toUrl();
         } else {
             // Last try, compone the url. However this only works for GNU Social instances.
             const QUrl profileUrl = userMap[QLatin1String("statusnet_profile_url")].toUrl();
-            post->link = QStringLiteral("%1://%2/notice/%3").arg(profileUrl.scheme()).arg(profileUrl.host()).arg(post->postId);
+            post->link = QUrl::fromUserInput(QStringLiteral("%1://%2/notice/%3")
+                                             .arg(profileUrl.scheme()).arg(profileUrl.host()).arg(post->postId));
         }
     }
 
@@ -162,7 +163,7 @@ QUrl GNUSocialApiMicroBlog::profileUrl(Choqok::Account *account, const QString &
     }
 }
 
-QString GNUSocialApiMicroBlog::postUrl(Choqok::Account *account,  const QString &username,
+QUrl GNUSocialApiMicroBlog::postUrl(Choqok::Account *account,  const QString &username,
                                    const QString &postId) const
 {
     Q_UNUSED(username)
@@ -170,9 +171,9 @@ QString GNUSocialApiMicroBlog::postUrl(Choqok::Account *account,  const QString 
     if (acc) {
         QUrl url(acc->homepageUrl());
         url.setPath(url.path() + QStringLiteral("/notice/%1").arg(postId));
-        return url.toDisplayString();
+        return url;
     } else {
-        return QString();
+        return QUrl();
     }
 }
 

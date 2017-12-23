@@ -69,7 +69,7 @@ public:
 
     virtual void removePost(Choqok::Account *theAccount, Choqok::Post *post) override;
 
-    virtual QString postUrl(Choqok::Account *account, const QString &username,
+    virtual QUrl postUrl(Choqok::Account *account, const QString &username,
                             const QString &postId) const override;
 
     virtual QUrl profileUrl(Choqok::Account *account, const QString &username) const override;

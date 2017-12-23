@@ -51,7 +51,7 @@ public:
     {}
     KEmoticonsTheme emoticons;
     KImageCache cache;
-    QHash<KJob *, QString> queue;
+    QHash<KJob *, QUrl> queue;
     QPixmap defaultImage;
     Uploader *uploader;
 };
@@ -88,18 +88,17 @@ QString MediaManager::parseEmoticons(const QString &text)
     return d->emoticons.parseEmoticons(text, KEmoticonsTheme::DefaultParse, QStringList() << QLatin1String("(e)"));
 }
 
-QPixmap MediaManager::fetchImage(const QString &remoteUrl, ReturnMode mode /*= Sync*/)
+QPixmap MediaManager::fetchImage(const QUrl &remoteUrl, ReturnMode mode /*= Sync*/)
 {
     QPixmap p;
-    if (d->cache.findPixmap(remoteUrl, &p)) {
+    if (d->cache.findPixmap(remoteUrl.toDisplayString(), &p)) {
         Q_EMIT imageFetched(remoteUrl, p);
     } else if (mode == Async) {
         if (d->queue.values().contains(remoteUrl)) {
             ///The file is on the way, wait to download complete.
             return p;
         }
-        QUrl srcUrl(remoteUrl);
-        KIO::StoredTransferJob *job = KIO::storedGet(srcUrl, KIO::NoReload, KIO::HideProgressInfo) ;
+        KIO::StoredTransferJob *job = KIO::storedGet(remoteUrl, KIO::NoReload, KIO::HideProgressInfo) ;
         if (!job) {
             qCCritical(CHOQOK) << "Cannot create a FileCopyJob!";
             QString errMsg = i18n("Cannot create a KDE Job. Please check your installation.");
@@ -116,7 +115,7 @@ QPixmap MediaManager::fetchImage(const QString &remoteUrl, ReturnMode mode /*= S
 void MediaManager::slotImageFetched(KJob *job)
 {
     KIO::StoredTransferJob *baseJob = qobject_cast<KIO::StoredTransferJob *>(job);
-    QString remote = d->queue.value(job);
+    QUrl remote = d->queue.value(job);
     d->queue.remove(job);
 
     int responseCode = 0;
@@ -132,7 +131,7 @@ void MediaManager::slotImageFetched(KJob *job)
     } else {
         QPixmap p;
         if (p.loadFromData(baseJob->data())) {
-            d->cache.insertPixmap(remote, p);
+            d->cache.insertPixmap(remote.toDisplayString(), p);
             Q_EMIT imageFetched(remote, p);
         } else {
             qCCritical(CHOQOK) << "Cannot parse reply from " << baseJob->url().toDisplayString();

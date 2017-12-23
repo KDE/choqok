@@ -218,10 +218,10 @@ void MicroBlog::saveTimeline(Account *, const QString &, const QList< UI::PostWi
     qCWarning(CHOQOK) << "MicroBlog Plugin should implement this!";
 }
 
-QString MicroBlog::postUrl(Account *, const QString &, const QString &) const
+QUrl MicroBlog::postUrl(Account *, const QString &, const QString &) const
 {
     qCWarning(CHOQOK) << "MicroBlog Plugin should implement this!";
-    return QString();
+    return QUrl();
 }
 
 QUrl MicroBlog::profileUrl(Account *, const QString &) const

@@ -71,7 +71,7 @@ public:
     QString mContent;
     QString mProfileImage;
     QString mImage;
-    QString imageUrl;
+    QUrl imageUrl;
     QString dir;
     QPixmap originalImage;
     QString extraContents;
@@ -159,7 +159,7 @@ QString PostWidget::generateSign()
         time = d->mCurrentPost->repeatedDateTime;
     }
 
-    ss += QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>").arg(d->mCurrentPost->link)
+    ss += QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>").arg(d->mCurrentPost->link.toDisplayString())
             .arg(time.toString(Qt::DefaultLocaleLongDate)).arg(formatDateTime(time));
 
     if (!d->mCurrentPost->source.isEmpty()) {
@@ -534,15 +534,15 @@ void PostWidget::fetchImage()
     if (!pix.isNull()) {
         slotImageFetched(d->imageUrl, pix);
     } else {
-        connect(MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
-                this, SLOT(slotImageFetched(QString,QPixmap)));
+        connect(MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
+                this, SLOT(slotImageFetched(QUrl,QPixmap)));
     }
 }
 
-void PostWidget::slotImageFetched(const QString &remoteUrl, const QPixmap &pixmap)
+void PostWidget::slotImageFetched(const QUrl &remoteUrl, const QPixmap &pixmap)
 {
     if (remoteUrl == d->imageUrl) {
-        disconnect(MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)), this, SLOT(slotImageFetched(QString,QPixmap)));
+        disconnect(MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)), this, SLOT(slotImageFetched(QUrl,QPixmap)));
         d->originalImage = pixmap;
         updatePostImage( width() );
         updateUi();
@@ -556,27 +556,27 @@ void PostWidget::setupAvatar()
     if (!pix.isNull()) {
         avatarFetched(d->mCurrentPost->author.profileImageUrl, pix);
     } else {
-        connect(MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
-                this, SLOT(avatarFetched(QString,QPixmap)));
+        connect(MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
+                this, SLOT(avatarFetched(QUrl,QPixmap)));
         connect(MediaManager::self(), SIGNAL(fetchError(QString,QString)),
                 this, SLOT(avatarFetchError(QString,QString)));
     }
 }
 
-void PostWidget::avatarFetched(const QString &remoteUrl, const QPixmap &pixmap)
+void PostWidget::avatarFetched(const QUrl &remoteUrl, const QPixmap &pixmap)
 {
     if (remoteUrl == d->mCurrentPost->author.profileImageUrl) {
         const QUrl url(QLatin1String("img://profileImage"));
         _mainWidget->document()->addResource(QTextDocument::ImageResource, url, pixmap);
         updateUi();
-        disconnect(MediaManager::self(), SIGNAL(imageFetched(QString,QPixmap)),
-                   this, SLOT(avatarFetched(QString,QPixmap)));
+        disconnect(MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
+                   this, SLOT(avatarFetched(QUrl,QPixmap)));
         disconnect(MediaManager::self(), SIGNAL(fetchError(QString,QString)),
                    this, SLOT(avatarFetchError(QString,QString)));
     }
 }
 
-void PostWidget::avatarFetchError(const QString &remoteUrl, const QString &errMsg)
+void PostWidget::avatarFetchError(const QUrl &remoteUrl, const QString &errMsg)
 {
     Q_UNUSED(errMsg);
     if (remoteUrl == d->mCurrentPost->author.profileImageUrl) {

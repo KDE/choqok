@@ -217,9 +217,9 @@ QList< Choqok::Post * > GNUSocialApiSearch::parseAtom(const QByteArray &buffer)
                 status->content = elm.text();
             } else if (elm.tagName() == QLatin1String("link")) {
                 if (elm.attribute(QLatin1String("rel")) == QLatin1String("related")) {
-                    status->author.profileImageUrl = elm.attribute(QLatin1String("href"));
+                    status->author.profileImageUrl = QUrl::fromUserInput(elm.attribute(QLatin1String("href")));
                 } else if (elm.attribute(QLatin1String("rel")) == QLatin1String("alternate")) {
-                    status->link = elm.attribute(QLatin1String("href"));
+                    status->link = QUrl::fromUserInput(elm.attribute(QLatin1String("href")));
                 }
             } else if (elm.tagName() == QLatin1String("author")) {
                 QDomNode userNode = entryNode.firstChild();
@@ -310,10 +310,10 @@ QList< Choqok::Post * > GNUSocialApiSearch::parseRss(const QByteArray &buffer)
                 status->replyToPostId = id;
             } else if (itemNode.toElement().tagName() == QLatin1String("statusnet:postIcon")) {
                 QDomAttr imageAttr = itemNode.toElement().attributeNode(QLatin1String("rdf:resource"));
-                status->author.profileImageUrl = imageAttr.value();
+                status->author.profileImageUrl = QUrl::fromUserInput(imageAttr.value());
             } else if (itemNode.toElement().tagName() == QLatin1String("link")) {
 //                 QDomAttr imageAttr = itemNode.toElement().attributeNode( "rdf:resource" );
-                status->link = itemNode.toElement().text();
+                status->link = QUrl::fromUserInput(itemNode.toElement().text());
             } else if (itemNode.toElement().tagName() == QLatin1String("sioc:has_discussion")) {
                 status->conversationId = itemNode.toElement().attributeNode(QLatin1String("rdf:resource")).value();
             }

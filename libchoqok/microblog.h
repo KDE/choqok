@@ -232,7 +232,7 @@ public:
     /**
     Provide a Web link for post with id @p postId
     */
-    virtual QString postUrl(Choqok::Account *account, const QString &username, const QString &postId) const;
+    virtual QUrl postUrl(Choqok::Account *account, const QString &username, const QString &postId) const;
 
     /**
     Return a list of timelines supported by this account!

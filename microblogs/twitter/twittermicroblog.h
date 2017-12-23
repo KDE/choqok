@@ -52,7 +52,7 @@ public:
                                              Choqok::Post *post, QWidget *parent) override;
     virtual Choqok::UI::ComposerWidget *createComposerWidget(Choqok::Account *account, QWidget *parent) override;
 
-    virtual QString postUrl(Choqok::Account *account, const QString &username, const QString &postId) const override;
+    virtual QUrl postUrl(Choqok::Account *account, const QString &username, const QString &postId) const override;
 
     virtual QUrl profileUrl(Choqok::Account *account, const QString &username) const override;
 

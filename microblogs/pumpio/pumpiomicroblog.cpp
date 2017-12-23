@@ -320,7 +320,7 @@ void PumpIOMicroBlog::fetchPost(Choqok::Account *theAccount, Choqok::Post *post)
 {
     PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
-        if (!post->link.startsWith(acc->host())) {
+        if (!post->link.toDisplayString().startsWith(acc->host())) {
             qCDebug(CHOQOK) << "You can only fetch posts from your host!";
             return;
         }
@@ -398,7 +398,7 @@ QList< Choqok::Post * > PumpIOMicroBlog::loadTimeline(Choqok::Account *account,
         KConfigGroup grp(&postsBackup, datetime.toString());
         st->creationDateTime = grp.readEntry("creationDateTime", QDateTime::currentDateTime());
         st->postId = grp.readEntry("postId", QString());
-        st->link = grp.readEntry("link", QString());
+        st->link = grp.readEntry("link", QUrl());
         st->content = grp.readEntry("content", QString());
         st->source = grp.readEntry("source", QString());
         st->isFavorited = grp.readEntry("favorited", false);
@@ -407,10 +407,10 @@ QList< Choqok::Post * > PumpIOMicroBlog::loadTimeline(Choqok::Account *account,
         st->author.realName = grp.readEntry("authorRealName", QString());
         st->author.location = grp.readEntry("authorLocation", QString());
         st->author.description = grp.readEntry("authorDescription" , QString());
-        st->author.profileImageUrl = grp.readEntry("authorProfileImageUrl", QString());
-        st->author.homePageUrl = grp.readEntry("authorHomePageUrl", QString());
+        st->author.profileImageUrl = grp.readEntry("authorProfileImageUrl", QUrl());
+        st->author.homePageUrl = grp.readEntry("authorHomePageUrl", QUrl());
         st->type = grp.readEntry("type", QString());
-        st->media = grp.readEntry("media"), QString();
+        st->media = grp.readEntry("media", QUrl());
         st->isRead = grp.readEntry("isRead", true);
         st->conversationId = grp.readEntry("conversationId", QString());
         st->to = grp.readEntry("to", QStringList());
@@ -430,11 +430,11 @@ QList< Choqok::Post * > PumpIOMicroBlog::loadTimeline(Choqok::Account *account,
     return list;
 }
 
-QString PumpIOMicroBlog::postUrl(Choqok::Account *account, const QString &username,
+QUrl PumpIOMicroBlog::postUrl(Choqok::Account *account, const QString &username,
                                  const QString &postId) const
 {
     Q_UNUSED(account);
-    return QString(postId).replace(QLatin1String("/api/"), QLatin1Char('/') + username + QLatin1Char('/'));
+    return QUrl::fromUserInput(QString(postId).replace(QLatin1String("/api/"), QLatin1Char('/') + username + QLatin1Char('/')));
 }
 
 QUrl PumpIOMicroBlog::profileUrl(Choqok::Account *account, const QString &username) const
@@ -1163,16 +1163,16 @@ Choqok::Post *PumpIOMicroBlog::readPost(const QVariantMap &var, Choqok::Post *po
         if (!object[QLatin1String("fullImage")].isNull()) {
             const QVariantMap fullImage = object[QLatin1String("fullImage")].toMap();
             if (!fullImage.isEmpty()) {
-                p->media = fullImage[QLatin1String("url")].toString();
+                p->media = fullImage[QLatin1String("url")].toUrl();
             }
         }
         p->creationDateTime = QDateTime::fromString(var[QLatin1String("published")].toString(),
                               Qt::ISODate);
         p->creationDateTime.setTimeSpec(Qt::UTC);
         if (object[QLatin1String("pump_io")].isNull()) {
-            p->link = object[QLatin1String("id")].toString();
+            p->link = object[QLatin1String("id")].toUrl();
         } else {
-            p->link = object[QLatin1String("pump_io")].toMap().value(QLatin1String("proxyURL")).toString();
+            p->link = object[QLatin1String("pump_io")].toMap().value(QLatin1String("proxyURL")).toUrl();
         }
         p->type = object[QLatin1String("objectType")].toString();
         p->isFavorited = object[QLatin1String("liked")].toBool();
@@ -1195,7 +1195,7 @@ Choqok::Post *PumpIOMicroBlog::readPost(const QVariantMap &var, Choqok::Post *po
             actor = var[author].toMap();
         }
         const QString userId = actor[QLatin1String("id")].toString();
-        const QString homePageUrl = actor[QLatin1String("url")].toString();
+        const QUrl homePageUrl = actor[QLatin1String("url")].toUrl();
         p->author.userId = userId;
         p->author.userName = actor[QLatin1String("preferredUsername")].toString();
         p->author.realName = actor[QLatin1String("displayName")].toString();
@@ -1203,13 +1203,13 @@ Choqok::Post *PumpIOMicroBlog::readPost(const QVariantMap &var, Choqok::Post *po
         p->author.location = actor[QLatin1String("location")].toMap().value(QLatin1String("displayName")).toString();
         p->author.description = actor[QLatin1String("summary")].toString();
 
-        const QString profileImageUrl = actor[QLatin1String("image")].toMap().value(QLatin1String("url")).toString();
+        const QUrl profileImageUrl = actor[QLatin1String("image")].toMap().value(QLatin1String("url")).toUrl();
         if (!profileImageUrl.isEmpty()) {
             p->author.profileImageUrl = profileImageUrl;
         } else if (actor[QLatin1String("objectType")].toString() == QLatin1String("service")) {
-            p->author.profileImageUrl = homePageUrl + QLatin1String("images/default.png");
+            p->author.profileImageUrl = QUrl::fromUserInput(homePageUrl.toDisplayString() + QLatin1String("images/default.png"));
         } else {
-            p->author.profileImageUrl = QStringLiteral("https://%1/images/default.png").arg(hostFromAcct(userId));
+            p->author.profileImageUrl = QUrl::fromUserInput(QStringLiteral("https://%1/images/default.png").arg(hostFromAcct(userId)));
         }
 
         if (!var[QLatin1String("generator")].isNull()) {
