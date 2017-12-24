@@ -40,8 +40,8 @@ public:
     explicit PumpIOOAuth(PumpIOAccount *account);
     ~PumpIOOAuth();
 
-    QByteArray authorizationHeader(const QUrl &requestUrl, QNetworkAccessManager::Operation method,
-                                   const QVariantMap &params = QVariantMap());
+    QString authorizationHeader(const QUrl &requestUrl, QNetworkAccessManager::Operation method,
+                                const QVariantMap &params = QVariantMap());
 
 private:
     PumpIOOAuthReplyHandler *m_replyHandler;

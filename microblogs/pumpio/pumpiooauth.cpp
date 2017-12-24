@@ -60,8 +60,8 @@ PumpIOOAuth::~PumpIOOAuth()
     m_networkAccessManager->deleteLater();
 }
 
-QByteArray PumpIOOAuth::authorizationHeader(const QUrl &requestUrl, QNetworkAccessManager::Operation operation,
-                                            const QVariantMap &signingParameters)
+QString PumpIOOAuth::authorizationHeader(const QUrl &requestUrl, QNetworkAccessManager::Operation operation,
+                                         const QVariantMap &signingParameters)
 {
     QVariantMap oauthParams;
 
@@ -85,5 +85,7 @@ QByteArray PumpIOOAuth::authorizationHeader(const QUrl &requestUrl, QNetworkAcce
         oauthParams.insert(QStringLiteral("oauth_signature"), signature.hmacSha1().toBase64());
     }
 
-    return generateAuthorizationHeader(oauthParams);
+    const QByteArray authorization = generateAuthorizationHeader(oauthParams);
+
+    return QStringLiteral("Authorization: ") + QLatin1String(authorization);
 }

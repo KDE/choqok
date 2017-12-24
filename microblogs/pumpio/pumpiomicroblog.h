@@ -97,7 +97,7 @@ public:
 
     void toggleFavorite(Choqok::Account *theAccount, Choqok::Post *post);
 
-    void fetchReplies(Choqok::Account *theAccount, const QString &url);
+    void fetchReplies(Choqok::Account *theAccount, const QUrl &url);
 
     static QString userNameFromAcct(const QString &acct);
     static QString hostFromAcct(const QString &acct);
@@ -126,10 +126,6 @@ protected Q_SLOTS:
 protected:
     static const QString inboxActivity;
     static const QString outboxActivity;
-
-    QString authorizationMetaData(PumpIOAccount *account, const QUrl &url,
-                                  QNetworkAccessManager::Operation method,
-                                  const QVariantMap &map = QVariantMap()) const;
 
     QString lastTimelineId(Choqok::Account *theAccount, const QString &timeline) const;
 

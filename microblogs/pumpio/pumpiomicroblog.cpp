@@ -209,7 +209,7 @@ void PumpIOMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *post
         url.setPath(url.path() + outboxActivity.arg(acc->username()));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
-        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QNetworkAccessManager::PostOperation));
+        job->addMetaData(QLatin1String("customHTTPHeader"), acc->oAuth()->authorizationHeader(url, QNetworkAccessManager::PostOperation));
         if (!job) {
             qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
@@ -253,7 +253,7 @@ void PumpIOMicroBlog::createReply(Choqok::Account *theAccount, PumpIOPost *post)
         url.setPath(url.path() + outboxActivity.arg(acc->username()));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
-        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QNetworkAccessManager::PostOperation));
+        job->addMetaData(QLatin1String("customHTTPHeader"), acc->oAuth()->authorizationHeader(url, QNetworkAccessManager::PostOperation));
         if (!job) {
             qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
@@ -295,7 +295,7 @@ void PumpIOMicroBlog::createPostWithMedia(Choqok::Account *theAccount, Choqok::P
         url.setPath(url.path() + QStringLiteral("/api/user/%1/uploads").arg(acc->username()));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: ") + mime);
-        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QNetworkAccessManager::PostOperation));
+        job->addMetaData(QLatin1String("customHTTPHeader"), acc->oAuth()->authorizationHeader(url, QNetworkAccessManager::PostOperation));
         if (!job) {
             qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
@@ -331,7 +331,7 @@ void PumpIOMicroBlog::fetchPost(Choqok::Account *theAccount, Choqok::Post *post)
             qCDebug(CHOQOK) << "Cannot create an http GET request!";
             return;
         }
-        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QNetworkAccessManager::GetOperation));
+        job->addMetaData(QLatin1String("customHTTPHeader"), acc->oAuth()->authorizationHeader(url, QNetworkAccessManager::GetOperation));
         m_accountJobs[job] = acc;
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchPost(KJob*)));
         job->start();
@@ -359,7 +359,7 @@ void PumpIOMicroBlog::removePost(Choqok::Account *theAccount, Choqok::Post *post
         url.setPath(url.path() + outboxActivity.arg(acc->username()));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
-        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QNetworkAccessManager::PostOperation));
+        job->addMetaData(QLatin1String("customHTTPHeader"), acc->oAuth()->authorizationHeader(url, QNetworkAccessManager::PostOperation));
         if (!job) {
             qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
@@ -416,7 +416,7 @@ QList< Choqok::Post * > PumpIOMicroBlog::loadTimeline(Choqok::Account *account,
         st->to = grp.readEntry("to", QStringList());
         st->cc = grp.readEntry("cc", QStringList());
         st->shares = grp.readEntry("shares", QStringList());
-        st->replies = grp.readEntry("replies", QString());
+        st->replies = grp.readEntry("replies", QUrl());
         st->replyToPostId = grp.readEntry("replyToPostId", QString());
         st->replyToUser.userName = grp.readEntry("replyToUserName", QString());
         st->replyToObjectType = grp.readEntry("replyToObjectType", QString());
@@ -516,15 +516,11 @@ void PumpIOMicroBlog::updateTimelines(Choqok::Account *theAccount)
             url.setPath(url.path() + m_timelinesPaths[timeline].arg(acc->username()));
             QUrlQuery query;
 
-            QVariantMap oAuthParams;
             const QString lastActivityId(lastTimelineId(theAccount, timeline));
             if (!lastActivityId.isEmpty()) {
-                oAuthParams.insert(QLatin1String("count"), QByteArray::number(200));
                 query.addQueryItem(QLatin1String("count"), QString::number(200));
-                oAuthParams.insert(QLatin1String("since"), QUrl::toPercentEncoding(lastActivityId));
                 query.addQueryItem(QLatin1String("since"), lastActivityId);
             } else {
-                oAuthParams.insert(QLatin1String("count"), QByteArray::number(Choqok::BehaviorSettings::countOfPosts()));
                 query.addQueryItem(QLatin1String("count"), QString::number(Choqok::BehaviorSettings::countOfPosts()));
             }
             url.setQuery(query);
@@ -534,8 +530,7 @@ void PumpIOMicroBlog::updateTimelines(Choqok::Account *theAccount)
                 qCDebug(CHOQOK) << "Cannot create an http GET request!";
                 continue;
             }
-            job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QNetworkAccessManager::GetOperation,
-                             oAuthParams));
+            job->addMetaData(QLatin1String("customHTTPHeader"), acc->oAuth()->authorizationHeader(url, QNetworkAccessManager::GetOperation));
             m_timelinesRequests[job] = timeline;
             m_accountJobs[job] = acc;
             connect(job, SIGNAL(result(KJob*)), this, SLOT(slotUpdateTimeline(KJob*)));
@@ -553,13 +548,11 @@ void PumpIOMicroBlog::fetchFollowing(Choqok::Account *theAccount)
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
         url.setPath(url.path() + QStringLiteral("/api/user/%1/following").arg(acc->username()));
-        QUrlQuery query;
 
-        QVariantMap oAuthParams;
-        oAuthParams.insert(QLatin1String("count"), QByteArray::number(200));
+        QUrlQuery query;
         query.addQueryItem(QLatin1String("count"), QString::number(200));
+
         if (!acc->following().isEmpty()) {
-            oAuthParams.insert(QLatin1String("since"), QUrl::toPercentEncoding(acc->following().last()));
             query.addQueryItem(QLatin1String("since"), acc->following().last());
         }
         url.setQuery(query);
@@ -569,8 +562,7 @@ void PumpIOMicroBlog::fetchFollowing(Choqok::Account *theAccount)
             qCDebug(CHOQOK) << "Cannot create an http GET request!";
             return;
         }
-        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QNetworkAccessManager::GetOperation,
-                         oAuthParams));
+        job->addMetaData(QLatin1String("customHTTPHeader"), acc->oAuth()->authorizationHeader(url, QNetworkAccessManager::GetOperation));
         m_accountJobs[job] = acc;
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFollowing(KJob*)));
         job->start();
@@ -586,12 +578,9 @@ void PumpIOMicroBlog::fetchLists(Choqok::Account *theAccount)
         QUrl url(acc->host());
         url = url.adjusted(QUrl::StripTrailingSlash);
         url.setPath(url.path() + QStringLiteral("/api/user/%1/lists/person").arg(acc->username()));
+
         QUrlQuery query;
-
-        QVariantMap oAuthParams;
-        oAuthParams.insert(QLatin1String("count"), QByteArray::number(200));
         query.addQueryItem(QLatin1String("count"), QString::number(200));
-
         url.setQuery(query);
 
         KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
@@ -599,8 +588,7 @@ void PumpIOMicroBlog::fetchLists(Choqok::Account *theAccount)
             qCDebug(CHOQOK) << "Cannot create an http GET request!";
             return;
         }
-        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QNetworkAccessManager::GetOperation,
-                         oAuthParams));
+        job->addMetaData(QLatin1String("customHTTPHeader"), acc->oAuth()->authorizationHeader(url, QNetworkAccessManager::GetOperation));
         m_accountJobs[job] = acc;
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotLists(KJob*)));
         job->start();
@@ -628,7 +616,7 @@ void PumpIOMicroBlog::share(Choqok::Account *theAccount, Choqok::Post *post)
         url.setPath(url.path() + outboxActivity.arg(acc->username()));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
-        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QNetworkAccessManager::PostOperation));
+        job->addMetaData(QLatin1String("customHTTPHeader"), acc->oAuth()->authorizationHeader(url, QNetworkAccessManager::PostOperation));
         if (!job) {
             qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
@@ -661,7 +649,7 @@ void PumpIOMicroBlog::toggleFavorite(Choqok::Account *theAccount, Choqok::Post *
         url.setPath(url.path() + outboxActivity.arg(acc->username()));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
-        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QNetworkAccessManager::PostOperation));
+        job->addMetaData(QLatin1String("customHTTPHeader"), acc->oAuth()->authorizationHeader(url, QNetworkAccessManager::PostOperation));
         if (!job) {
             qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;
@@ -1099,30 +1087,21 @@ void PumpIOMicroBlog::slotUpload(KJob *job)
     }
 }
 
-QString PumpIOMicroBlog::authorizationMetaData(PumpIOAccount *account, const QUrl &url,
-                                               QNetworkAccessManager::Operation method,
-                                               const QVariantMap &map) const
-{
-    const QByteArray authorization = account->oAuth()->authorizationHeader(url, method, map);
-    return QStringLiteral("Authorization: ") + QLatin1String(authorization);
-}
-
-void PumpIOMicroBlog::fetchReplies(Choqok::Account *theAccount, const QString &url)
+void PumpIOMicroBlog::fetchReplies(Choqok::Account *theAccount, const QUrl &url)
 {
     PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
-        if (!url.startsWith(acc->host())) {
+        if (!url.toDisplayString().startsWith(acc->host())) {
             qCDebug(CHOQOK) << "You can only fetch replies from your host!";
             return;
         }
-        QUrl u(url);
 
-        KIO::StoredTransferJob *job = KIO::storedGet(u, KIO::Reload, KIO::HideProgressInfo);
+        KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
         if (!job) {
             qCDebug(CHOQOK) << "Cannot create an http GET request!";
             return;
         }
-        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, u, QNetworkAccessManager::GetOperation));
+        job->addMetaData(QLatin1String("customHTTPHeader"), acc->oAuth()->authorizationHeader(url, QNetworkAccessManager::GetOperation));
         m_accountJobs[job] = acc;
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchReplies(KJob*)));
         job->start();
@@ -1244,9 +1223,9 @@ Choqok::Post *PumpIOMicroBlog::readPost(const QVariantMap &var, Choqok::Post *po
 
         const QVariantMap replies = object[QLatin1String("replies")].toMap();
         if (replies.value(QLatin1String("pump_io")).isNull()) {
-            p->replies = replies[QLatin1String("url")].toString();
+            p->replies = replies[QLatin1String("url")].toUrl();
         } else {
-            p->replies = replies[QLatin1String("pump_io")].toMap().value(QLatin1String("proxyURL")).toString();
+            p->replies = replies[QLatin1String("pump_io")].toMap().value(QLatin1String("proxyURL")).toUrl();
         }
 
         return p;
@@ -1343,7 +1322,7 @@ void PumpIOMicroBlog::updatePost(Choqok::Account *theAccount, Choqok::Post *post
         url.setPath(url.path() + outboxActivity.arg(acc->username()));
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
-        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc, url, QNetworkAccessManager::PostOperation));
+        job->addMetaData(QLatin1String("customHTTPHeader"), acc->oAuth()->authorizationHeader(url, QNetworkAccessManager::PostOperation));
         if (!job) {
             qCDebug(CHOQOK) << "Cannot create an http POST request!";
             return;

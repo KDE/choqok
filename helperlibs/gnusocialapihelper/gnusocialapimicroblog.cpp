@@ -318,9 +318,8 @@ void GNUSocialApiMicroBlog::doRequestFriendsScreenName(TwitterApiAccount *theAcc
     QUrl url = account->apiUrl();
     url = url.adjusted(QUrl::StripTrailingSlash);
     url.setPath(url.path() + QLatin1String("/statuses/friends.json"));
-    QVariantMap params;
+
     if (page > 1) {
-        params.insert(QLatin1String("page"), QByteArray::number(page));
         QUrlQuery urlQuery;
         urlQuery.addQueryItem(QLatin1String("page"), QString::number(page));
         url.setQuery(urlQuery);
@@ -333,7 +332,7 @@ void GNUSocialApiMicroBlog::doRequestFriendsScreenName(TwitterApiAccount *theAcc
     }
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::GetOperation, params)));
+                     QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::GetOperation)));
     mJobsAccount[job] = theAccount;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRequestFriendsScreenName(KJob*)));
     job->start();

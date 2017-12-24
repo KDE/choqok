@@ -310,12 +310,10 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount *theAccount, const QString 
     }
     QUrl url = theAccount->apiUrl();
     url.setPath(url.path() + QLatin1String("/lists/ownerships.json"));
-    QUrl url_for_oauth(url);//we need base URL (without params) to make OAuth signature with it!
+
     QUrlQuery urlQuery;
     urlQuery.addQueryItem(QLatin1String("screen_name"), username);
     url.setQuery(urlQuery);
-    QVariantMap params;
-    params.insert(QLatin1String("screen_name"), username.toLocal8Bit());
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
     if (!job) {
@@ -325,7 +323,7 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount *theAccount, const QString 
 
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
-                     QLatin1String(authorizationHeader(theAccount, url_for_oauth, QNetworkAccessManager::GetOperation, params)));
+                     QLatin1String(authorizationHeader(theAccount, url, QNetworkAccessManager::GetOperation)));
     mFetchUsersListMap[ job ] = username;
     mJobsAccount[ job ] = theAccount;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchUserLists(KJob*)));
@@ -523,10 +521,8 @@ void TwitterMicroBlog::requestTimeLine(Choqok::Account *theAccount, QString type
     TwitterAccount *account = qobject_cast<TwitterAccount *>(theAccount);
     QUrl url = account->apiUrl();
     url.setPath(url.path() + timelineApiPath[type]);
-    QUrl tmpUrl(url);
 
     QUrlQuery urlQuery;
-    QVariantMap params;
     // needed because lists have different parameter names but
     // returned timelines have the same JSON format
     if (timelineApiPath[type].contains(QLatin1String("lists/statuses"))) {
@@ -534,35 +530,28 @@ void TwitterMicroBlog::requestTimeLine(Choqok::Account *theAccount, QString type
         // type contains @username/timelinename
         const QString slug = type.mid(type.indexOf(QLatin1String("/")) + 1);
         urlQuery.addQueryItem(QLatin1String("slug"), slug);
-        params.insert(QLatin1String("slug"), slug.toLatin1());
 
         const QString owner = type.mid(1, type.indexOf(QLatin1String("/")) - 1);
         urlQuery.addQueryItem(QLatin1String("owner_screen_name"), owner);
-        params.insert(QLatin1String("owner_screen_name"), owner.toLatin1());
     } else {
         int countOfPost = Choqok::BehaviorSettings::countOfPosts();
         if (!latestStatusId.isEmpty()) {
             urlQuery.addQueryItem(QLatin1String("since_id"), latestStatusId);
-            params.insert(QLatin1String("since_id"), latestStatusId.toLatin1());
             countOfPost = 200;
         }
 
         urlQuery.addQueryItem(QLatin1String("count"), QString::number(countOfPost));
-        params.insert(QLatin1String("count"), QByteArray::number(countOfPost));
 
         if (!maxId.isEmpty()) {
             urlQuery.addQueryItem(QLatin1String("max_id"), maxId);
-            params.insert(QLatin1String("max_id"), maxId.toLatin1());
         }
 
         if (page) {
             urlQuery.addQueryItem(QLatin1String("page"), QString::number(page));
-            params.insert(QLatin1String("page"), QByteArray::number(page));
         }
     }
 
     urlQuery.addQueryItem(QLatin1String("tweet_mode"), QLatin1String("extended"));
-    params.insert(QLatin1String("tweet_mode"), QLatin1String("extended"));
 
     url.setQuery(urlQuery);
 
@@ -577,7 +566,7 @@ void TwitterMicroBlog::requestTimeLine(Choqok::Account *theAccount, QString type
     }
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ")
-                     + QLatin1String(authorizationHeader(account, tmpUrl, QNetworkAccessManager::GetOperation, params)));
+                     + QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::GetOperation)));
     mRequestTimelineMap[job] = type;
     mJobsAccount[job] = theAccount;
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRequestTimeline(KJob*)));

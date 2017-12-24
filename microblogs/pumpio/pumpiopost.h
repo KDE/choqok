@@ -33,7 +33,7 @@ public:
     explicit PumpIOPost();
     virtual ~PumpIOPost();
 
-    QString replies;
+    QUrl replies;
     QStringList shares;
     QStringList to;
     QStringList cc;
