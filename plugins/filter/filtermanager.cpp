@@ -111,7 +111,7 @@ void FilterManager::parse(Choqok::UI::PostWidget *postToParse)
             return;
         }
         if (filter->filterAction() == Filter::Remove && filter->dontHideReplies() &&
-                (postToParse->currentPost()->replyToUserName.compare(postToParse->currentAccount()->username(),
+                (postToParse->currentPost()->replyToUser.userName.compare(postToParse->currentAccount()->username(),
                         Qt::CaseInsensitive) == 0 ||
                  postToParse->currentPost()->content.contains(QStringLiteral("@%1").arg(postToParse->currentAccount()->username())))
            ) {
@@ -125,7 +125,7 @@ void FilterManager::parse(Choqok::UI::PostWidget *postToParse)
             doFiltering(postToParse, filterText(postToParse->currentPost()->author.userName, filter));
             break;
         case Filter::ReplyToUsername:
-            doFiltering(postToParse, filterText(postToParse->currentPost()->replyToUserName, filter));
+            doFiltering(postToParse, filterText(postToParse->currentPost()->replyToUser.userName, filter));
             break;
         case Filter::Source:
             doFiltering(postToParse, filterText(postToParse->currentPost()->source, filter));
@@ -203,8 +203,8 @@ void FilterManager::slotConfigureFilters()
 bool FilterManager::parseSpecialRules(Choqok::UI::PostWidget *postToParse)
 {
     if (FilterSettings::hideRepliesNotRelatedToMe()) {
-        if (!postToParse->currentPost()->replyToUserName.isEmpty() &&
-                postToParse->currentPost()->replyToUserName != postToParse->currentAccount()->username()) {
+        if (!postToParse->currentPost()->replyToUser.userName.isEmpty() &&
+                postToParse->currentPost()->replyToUser.userName != postToParse->currentAccount()->username()) {
             if (!postToParse->currentPost()->content.contains(postToParse->currentAccount()->username())) {
                 postToParse->close();
 //                qDebug() << "NOT RELATE TO ME FILTERING......";
@@ -218,8 +218,8 @@ bool FilterManager::parseSpecialRules(Choqok::UI::PostWidget *postToParse)
         if (!acc) {
             return false;
         }
-        if (!postToParse->currentPost()->replyToUserName.isEmpty() &&
-                !acc->friendsList().contains(postToParse->currentPost()->replyToUserName)) {
+        if (!postToParse->currentPost()->replyToUser.userName.isEmpty() &&
+                !acc->friendsList().contains(postToParse->currentPost()->replyToUser.userName)) {
             if (!postToParse->currentPost()->content.contains(postToParse->currentAccount()->username())) {
                 postToParse->close();
 //                qDebug() << "NONE FRIEND FILTERING......";

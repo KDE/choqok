@@ -190,7 +190,7 @@ Choqok::Post *TwitterSearch::readStatusesFromJsonMap(const QVariantMap &var)
     post->isPrivate = false;
     post->isFavorited = false;
     post->replyToPostId = var[QLatin1String("in_reply_to_status_id_str")].toString();
-    post->replyToUserName = var[QLatin1String("in_reply_to_screen_name")].toString();
+    post->replyToUser.userName = var[QLatin1String("in_reply_to_screen_name")].toString();
 
     post->link =  QUrl::fromUserInput(QStringLiteral("https://twitter.com/%1/status/%2").arg(post->author.userName).arg(post->postId));
 

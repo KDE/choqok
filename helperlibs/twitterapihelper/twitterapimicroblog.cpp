@@ -202,9 +202,9 @@ QList< Choqok::Post * > TwitterApiMicroBlog::loadTimeline(Choqok::Account *accou
             st->content = grp.readEntry("text", QString());
             st->source = grp.readEntry("source", QString());
             st->replyToPostId = grp.readEntry("inReplyToPostId", QString());
-            st->replyToUserId = grp.readEntry("inReplyToUserId", QString());
+            st->replyToUser.userId = grp.readEntry("inReplyToUserId", QString());
             st->isFavorited = grp.readEntry("favorited", false);
-            st->replyToUserName = grp.readEntry("inReplyToUserName", QString());
+            st->replyToUser.userName = grp.readEntry("inReplyToUserName", QString());
             st->author.userId = grp.readEntry("authorId", QString());
             st->author.userName = grp.readEntry("authorUserName", QString());
             st->author.realName = grp.readEntry("authorRealName", QString());
@@ -216,15 +216,15 @@ QList< Choqok::Post * > TwitterApiMicroBlog::loadTimeline(Choqok::Account *accou
             st->author.location = grp.readEntry("authorLocation", QString());
             st->link = postUrl(account, st->author.userName, st->postId);
             st->isRead = grp.readEntry("isRead", true);
-            st->repeatedFromUsername = grp.readEntry("repeatedFrom", QString());
+            st->repeatedFromUser.userName = grp.readEntry("repeatedFrom", QString());
             st->repeatedPostId = grp.readEntry("repeatedPostId", QString());
             st->repeatedDateTime = grp.readEntry("repeatedDateTime", QDateTime());
             st->conversationId = grp.readEntry("conversationId", QString());
             st->media = grp.readEntry("mediaUrl", QUrl());
             st->quotedPost.postId = grp.readEntry("quotedPostId", QString());
-            st->quotedPost.profileImageUrl = grp.readEntry("quotedProfileUrl", QUrl());
+            st->quotedPost.user.profileImageUrl = grp.readEntry("quotedProfileUrl", QUrl());
             st->quotedPost.content = grp.readEntry("quotedContent", QString());
-            st->quotedPost.username = grp.readEntry("quotedUsername", QString());
+            st->quotedPost.user.userName = grp.readEntry("quotedUsername", QString());
 
             list.append(st);
         }
@@ -255,9 +255,9 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
             grp.writeEntry("text", post->content);
             grp.writeEntry("source", post->source);
             grp.writeEntry("inReplyToPostId", post->replyToPostId);
-            grp.writeEntry("inReplyToUserId", post->replyToUserId);
+            grp.writeEntry("inReplyToUserId", post->replyToUser.userId);
             grp.writeEntry("favorited", post->isFavorited);
-            grp.writeEntry("inReplyToUserName", post->replyToUserName);
+            grp.writeEntry("inReplyToUserName", post->replyToUser.userName);
             grp.writeEntry("authorId", post->author.userId);
             grp.writeEntry("authorUserName", post->author.userName);
             grp.writeEntry("authorRealName", post->author.realName);
@@ -268,15 +268,15 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
             grp.writeEntry("authorLocation" , post->author.location);
             grp.writeEntry("isProtected" , post->author.isProtected);
             grp.writeEntry("isRead" , post->isRead);
-            grp.writeEntry("repeatedFrom", post->repeatedFromUsername);
+            grp.writeEntry("repeatedFrom", post->repeatedFromUser.userName);
             grp.writeEntry("repeatedPostId", post->repeatedPostId);
             grp.writeEntry("repeatedDateTime", post->repeatedDateTime);
             grp.writeEntry("conversationId", post->conversationId);
             grp.writeEntry("mediaUrl", post->media);
             grp.writeEntry("quotedPostId", post->quotedPost.postId);
-            grp.writeEntry("quotedProfileUrl", post->quotedPost.profileImageUrl);
+            grp.writeEntry("quotedProfileUrl", post->quotedPost.user.profileImageUrl);
             grp.writeEntry("quotedContent", post->quotedPost.content);
-            grp.writeEntry("quotedUsername", post->quotedPost.username);
+            grp.writeEntry("quotedUsername", post->quotedPost.user.userName);
         }
         postsBackup.sync();
     }
@@ -344,7 +344,7 @@ void TwitterApiMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCreatePost(KJob*)));
         job->start();
     } else {///Direct message
-        QString recipientScreenName = post->replyToUserName;
+        QString recipientScreenName = post->replyToUser.userName;
         QUrl url = account->apiUrl();
         url.setPath(url.path() + QStringLiteral("/direct_messages/new.%1").arg(format));
         params.insert(QLatin1String("user"), recipientScreenName.toLocal8Bit());
@@ -985,15 +985,15 @@ void TwitterApiMicroBlog::setRepeatedOfInfo(Choqok::Post *post, Choqok::Post *re
 {
     post->content = repeatedPost->content;
     post->replyToPostId = repeatedPost->replyToPostId;
-    post->replyToUserId = repeatedPost->replyToUserId;
-    post->replyToUserName = repeatedPost->replyToUserName;
+    post->replyToUser.userId = repeatedPost->replyToUser.userId;
+    post->replyToUser.userName = repeatedPost->replyToUser.userName;
     post->repeatedPostId = repeatedPost->postId;
     post->repeatedDateTime = repeatedPost->creationDateTime;
 
     if (Choqok::AppearanceSettings::showRetweetsInChoqokWay()) {
-        post->repeatedFromUsername = repeatedPost->author.userName;
+        post->repeatedFromUser.userName = repeatedPost->author.userName;
     } else {
-        post->repeatedFromUsername = post->author.userName;
+        post->repeatedFromUser.userName = post->author.userName;
         post->author = repeatedPost->author;
     }
     
@@ -1003,8 +1003,8 @@ void TwitterApiMicroBlog::setRepeatedOfInfo(Choqok::Post *post, Choqok::Post *re
 }
 void TwitterApiMicroBlog::setQuotedPost(Choqok::Post* post, Choqok::Post* quotedPost)
 {
-    post->quotedPost.profileImageUrl = quotedPost->author.profileImageUrl; 
-    post->quotedPost.username = quotedPost->author.userName;
+    post->quotedPost.user.profileImageUrl = quotedPost->author.profileImageUrl;
+    post->quotedPost.user.userName = quotedPost->author.userName;
     post->quotedPost.postId = quotedPost->postId;
     post->quotedPost.content = quotedPost->content;
 }
@@ -1398,8 +1398,8 @@ Choqok::Post *TwitterApiMicroBlog::readPost(Choqok::Account *theAccount,
     post->isFavorited = var[QLatin1String("favorited")].toBool();
     post->postId = var[QLatin1String("id")].toString();
     post->replyToPostId = var[QLatin1String("in_reply_to_status_id")].toString();
-    post->replyToUserId = var[QLatin1String("in_reply_to_user_id")].toString();
-    post->replyToUserName = var[QLatin1String("in_reply_to_screen_name")].toString();
+    post->replyToUser.userId = var[QLatin1String("in_reply_to_user_id")].toString();
+    post->replyToUser.userName = var[QLatin1String("in_reply_to_screen_name")].toString();
     post->source = var[QLatin1String("source")].toString();
     QVariantMap userMap = var[QLatin1String("user")].toMap();
     post->author.description = userMap[QLatin1String("description")].toString();
@@ -1433,7 +1433,7 @@ Choqok::Post *TwitterApiMicroBlog::readPost(Choqok::Account *theAccount,
         delete quotedPost;
     }
     post->link = postUrl(theAccount, post->author.userName, post->postId);
-    post->isRead = post->isFavorited || (post->repeatedFromUsername.compare(theAccount->username(), Qt::CaseInsensitive) == 0);
+    post->isRead = post->isFavorited || (post->repeatedFromUser.userName.compare(theAccount->username(), Qt::CaseInsensitive) == 0);
     
     if(post->postId.isEmpty() || post->author.userName.isEmpty())
         post->isError = true;
@@ -1506,8 +1506,8 @@ Choqok::Post *TwitterApiMicroBlog::readDirectMessage(Choqok::Account *theAccount
         msg->author.profileImageUrl = recipientProfileImageUrl;
         msg->author.realName = recipientName;
         msg->author.userId = recipientId;
-        msg->replyToUserId = recipientId;
-        msg->replyToUserName = recipientScreenName;
+        msg->replyToUser.userId = recipientId;
+        msg->replyToUser.userName = recipientScreenName;
         msg->isRead = true;
     } else {
         msg->author.description = senderDescription;
@@ -1515,8 +1515,8 @@ Choqok::Post *TwitterApiMicroBlog::readDirectMessage(Choqok::Account *theAccount
         msg->author.profileImageUrl = senderProfileImageUrl;
         msg->author.realName = senderName;
         msg->author.userId = senderId;
-        msg->replyToUserId = recipientId;
-        msg->replyToUserName = recipientScreenName;
+        msg->replyToUser.userId = recipientId;
+        msg->replyToUser.userName = recipientScreenName;
     }
     return msg;
 }

@@ -64,7 +64,7 @@ void TwitterPostWidget::initUi()
         
         auto dir = getDirection(currentPost()->quotedPost.content);
         auto text = prepareStatus(currentPost()->quotedPost.content);
-        QString user = QString(QLatin1String("<a href='user://%1'>%1</a>")).arg(currentPost()->quotedPost.username);
+        QString user = QStringLiteral("<a href='user://%1'>%1</a>").arg(currentPost()->quotedPost.user.userName);
         QString quoteText = mQuotedTextBase.arg(text, dir, user, QLatin1String("background-color:%1;"));
         setExtraContents(quoteText.arg(getBackgroundColor()));
         updateUi();
@@ -243,10 +243,10 @@ void TwitterPostWidget::checkAnchor(const QUrl &url)
 
 bool TwitterPostWidget::setupQuotedAvatar()
 {
-    QPixmap pix = Choqok::MediaManager::self()->fetchImage(currentPost()->quotedPost.profileImageUrl,
+    QPixmap pix = Choqok::MediaManager::self()->fetchImage(currentPost()->quotedPost.user.profileImageUrl,
                                                            Choqok::MediaManager::Async);
     if (!pix.isNull()) {
-        quotedAvatarFetched(currentPost()->quotedPost.profileImageUrl, pix);
+        quotedAvatarFetched(currentPost()->quotedPost.user.profileImageUrl, pix);
         return true;
     } else {
         connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
@@ -259,7 +259,7 @@ bool TwitterPostWidget::setupQuotedAvatar()
 
 void TwitterPostWidget::quotedAvatarFetched(const QUrl &remoteUrl, const QPixmap &pixmap)
 {
-    if (remoteUrl == currentPost()->quotedPost.profileImageUrl) {
+    if (remoteUrl == currentPost()->quotedPost.user.profileImageUrl) {
         _mainWidget->document()->addResource(QTextDocument::ImageResource, mQuotedAvatarResourceUrl, pixmap);
         disconnect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
                    this, SLOT(quotedAvatarFetched(QUrl,QPixmap)));
@@ -271,7 +271,7 @@ void TwitterPostWidget::quotedAvatarFetched(const QUrl &remoteUrl, const QPixmap
 void TwitterPostWidget::quotedAvatarFetchError(const QUrl &remoteUrl, const QString &errMsg)
 {
     Q_UNUSED(errMsg);
-    if (remoteUrl == currentPost()->quotedPost.profileImageUrl) {
+    if (remoteUrl == currentPost()->quotedPost.user.profileImageUrl) {
         ///Avatar fetching is failed! but will not disconnect to get the img if it fetches later!
         _mainWidget->document()->addResource(QTextDocument::ImageResource, mQuotedAvatarResourceUrl,
                                              QIcon::fromTheme(QLatin1String("image-missing")).pixmap(40));
@@ -289,9 +289,9 @@ QString TwitterPostWidget::getBackgroundColor()
         if( endIdx != -1 ){
             QStringList rgb = style.mid(idx, endIdx-idx).split(QLatin1Char(','));
             if( rgb.size() == 3 ){
-                return QString(QLatin1String("#%1%2%3")).arg( rgb[0].toInt() - 20, 2, 16, QLatin1Char('0') )
-                                                        .arg( rgb[1].toInt() - 20, 2, 16, QLatin1Char('0') )
-                                                        .arg( rgb[2].toInt() - 20, 2, 16, QLatin1Char('0') );
+                return QStringLiteral("#%1%2%3").arg( rgb[0].toInt() - 20, 2, 16, QLatin1Char('0') )
+                                                .arg( rgb[1].toInt() - 20, 2, 16, QLatin1Char('0') )
+                                                .arg( rgb[2].toInt() - 20, 2, 16, QLatin1Char('0') );
             }
         }
     }

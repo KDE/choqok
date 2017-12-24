@@ -105,7 +105,7 @@ QString TwitterApiPostWidget::generateSign()
     if (currentPost()->isPrivate) {
         sign += QLatin1String("%1");
 
-        if (currentPost()->replyToUserName.compare(currentAccount()->username(), Qt::CaseInsensitive) == 0) {
+        if (currentPost()->replyToUser.userName.compare(currentAccount()->username(), Qt::CaseInsensitive) == 0) {
             sign.prepend(QLatin1String("From "));
         } else {
             sign.prepend(QLatin1String("To "));
@@ -135,7 +135,7 @@ QString TwitterApiPostWidget::generateSign()
 
     if (!currentPost()->isPrivate) {
         if (!currentPost()->replyToPostId.isEmpty()) {
-            QUrl link = currentAccount()->microblog()->postUrl(currentAccount(), currentPost()->replyToUserName,
+            QUrl link = currentAccount()->microblog()->postUrl(currentAccount(), currentPost()->replyToUser.userName,
                            currentPost()->replyToPostId);
             QString showConMsg = i18n("Show Conversation");
             QString threadlink;
@@ -146,16 +146,16 @@ QString TwitterApiPostWidget::generateSign()
             }
             sign += QLatin1String(" - ") +
                     i18n("<a href='replyto://%1'>in reply to</a> @<a href='user://%4'>%4</a>&nbsp;<a href=\"%2\" title=\"%2\">%3</a>",
-                         currentPost()->replyToPostId, link.toDisplayString(), webIconText, currentPost()->replyToUserName) + QLatin1Char(' ');
+                         currentPost()->replyToPostId, link.toDisplayString(), webIconText, currentPost()->replyToUser.userName) + QLatin1Char(' ');
             sign += QLatin1String("<a title=\"") + showConMsg + QLatin1String("\" href=\"") + threadlink + QLatin1String("\"><img src=\"icon://thread\" /></a>");
         }
 
         //ReTweet detection
-        if (!currentPost()->repeatedFromUsername.isEmpty()) {
+        if (!currentPost()->repeatedFromUser.userName.isEmpty()) {
             const QString retweet = QLatin1String("<br/>") +
                     d->mBlog->generateRepeatedByUserTooltip(QStringLiteral("<a href='user://%1'>%2</a>")
-                                                            .arg(currentPost()->repeatedFromUsername)
-                                                            .arg(currentPost()->repeatedFromUsername));
+                                                            .arg(currentPost()->repeatedFromUser.userName)
+                                                            .arg(currentPost()->repeatedFromUser.userName));
             sign.append(retweet);
         }
     }
@@ -184,8 +184,8 @@ void TwitterApiPostWidget::slotReply()
         QString replyto = QStringLiteral("@%1").arg(currentPost()->author.userName);
         QString postId = currentPost()->postId;
         QString username = currentPost()->author.userName;
-        if (!currentPost()->repeatedFromUsername.isEmpty()) {
-            replyto.prepend(QStringLiteral("@%1 ").arg(currentPost()->repeatedFromUsername));
+        if (!currentPost()->repeatedFromUser.userName.isEmpty()) {
+            replyto.prepend(QStringLiteral("@%1 ").arg(currentPost()->repeatedFromUser.userName));
             postId = currentPost()->repeatedPostId;
         }
         Q_EMIT reply(replyto, postId,  username);

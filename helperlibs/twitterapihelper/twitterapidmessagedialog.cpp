@@ -163,7 +163,7 @@ void TwitterApiDMessageDialog::submitPost(QString text)
             this, SLOT(postCreated(Choqok::Account*,Choqok::Post*)));
     d->sentPost = new Choqok::Post;
     d->sentPost->isPrivate = true;
-    d->sentPost->replyToUserName = d->comboFriendsList->currentText();
+    d->sentPost->replyToUser.userName = d->comboFriendsList->currentText();
     d->sentPost->content = text;
     d->account->microblog()->createPost(d->account, d->sentPost);
 }

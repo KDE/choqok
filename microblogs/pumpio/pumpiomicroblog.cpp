@@ -418,7 +418,7 @@ QList< Choqok::Post * > PumpIOMicroBlog::loadTimeline(Choqok::Account *account,
         st->shares = grp.readEntry("shares", QStringList());
         st->replies = grp.readEntry("replies", QString());
         st->replyToPostId = grp.readEntry("replyToPostId", QString());
-        st->replyToUserName = grp.readEntry("replyToUserName", QString());
+        st->replyToUser.userName = grp.readEntry("replyToUserName", QString());
         st->replyToObjectType = grp.readEntry("replyToObjectType", QString());
         list.append(st);
     }
@@ -488,7 +488,7 @@ void PumpIOMicroBlog::saveTimeline(Choqok::Account *account, const QString &time
         grp.writeEntry("shares", post->shares);
         grp.writeEntry("replies", post->replies);
         grp.writeEntry("replyToPostId", post->replyToPostId);
-        grp.writeEntry("replyToUserName", post->replyToUserName);
+        grp.writeEntry("replyToUserName", post->replyToUser.userName);
         grp.writeEntry("replyToObjectType", post->replyToObjectType);
     }
     postsBackup.sync();

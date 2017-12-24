@@ -62,8 +62,7 @@ public:
 class CHOQOK_EXPORT QuotedPost
 {
 public:
-    QString username;
-    QUrl profileImageUrl;
+    User user;
     QString postId;
     QString content;
 };
@@ -86,15 +85,14 @@ public:
     QString content;
     QString source;
     QString replyToPostId;
-    QString replyToUserId;
+    User replyToUser;
     bool isFavorited;
-    QString replyToUserName;
     User author;
     QString type;
     bool isPrivate;
     bool isError;
     bool isRead;
-    QString repeatedFromUsername;
+    User repeatedFromUser;
     QString repeatedPostId;
     QDateTime repeatedDateTime;
     QString conversationId;

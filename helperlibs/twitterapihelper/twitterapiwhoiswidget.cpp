@@ -189,8 +189,8 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob *job)
         post.isFavorited = var[QLatin1String("favorited")].toBool();
         post.postId = var[QLatin1String("id")].toString();
         post.replyToPostId = var[QLatin1String("in_reply_to_status_id")].toString();
-        post.replyToUserId = var[QLatin1String("in_reply_to_user_id")].toString();
-        post.replyToUserName = var[QLatin1String("in_reply_to_screen_name")].toString();
+        post.replyToUser.userId = var[QLatin1String("in_reply_to_user_id")].toString();
+        post.replyToUser.userName = var[QLatin1String("in_reply_to_screen_name")].toString();
         post.source = var[QLatin1String("source")].toString();
         d->currentPost = post;
     }
@@ -250,7 +250,7 @@ void TwitterApiWhoisWidget::updateHtml()
         <td width=49><img width=48 height=48 src='img://profileImage'/>\
         <center><table width='100%' cellpadding='3'><tr>%1</tr></table></center></td>\
         <td><table width='100%'><tr><td><font size=5><b>%2</b></font></td>\
-        <td><a href='choqok://close'><img src='icon://close' title='") + i18n("Close") + QStringLiteral("' align='right' /></a></td></tr></table><br/>\
+        <td><a href='choqok://close'><img src='icon://close' title='") + i18n("Close") + QLatin1String("' align='right' /></a></td></tr></table><br/>\
         <b>@%3</b>&nbsp;<font size=3>%4</font><font size=2>%5</font><br/>\
         <i>%6</i><br/>\
         <font size=3>%7</font></td></tr></table>"))
@@ -273,7 +273,7 @@ void TwitterApiWhoisWidget::updateHtml()
         html = mainTable + countTable;
 
         if (!d->currentPost.content.isEmpty()) {
-            html.append(QString(i18n("<table><tr><b>Last Status:</b> %1</tr></table>")).arg(d->currentPost.content));
+            html.append(i18n("<table><tr><b>Last Status:</b> %1</tr></table>", d->currentPost.content));
         }
 
     } else {

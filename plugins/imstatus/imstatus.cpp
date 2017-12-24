@@ -76,10 +76,10 @@ void IMStatus::slotIMStatus(Choqok::JobResult res, Choqok::Post *newPost)
         statusMessage.replace(QLatin1String("%time%"), newPost->creationDateTime.toString(QLatin1String("hh:mm:ss")), Qt::CaseInsensitive);
         statusMessage.replace(QLatin1String("%url%"), newPost->link.toDisplayString(), Qt::CaseInsensitive);
         statusMessage.replace(QLatin1String("%client%"), QLatin1String("Choqok"), Qt::CaseInsensitive);
-        if (!IMStatusSettings::repeat() && !newPost->repeatedFromUsername.isEmpty()) {
+        if (!IMStatusSettings::repeat() && !newPost->repeatedFromUser.userName.isEmpty()) {
             return;
         }
-        if (!IMStatusSettings::reply() && !newPost->replyToUserName.isEmpty()) {
+        if (!IMStatusSettings::reply() && !newPost->replyToUser.userName.isEmpty()) {
             return;
         }
         d->im->updateStatusMessage(IMStatusSettings::imclient(), statusMessage);

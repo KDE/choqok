@@ -470,7 +470,7 @@ Choqok::Post *TwitterMicroBlog::readPost(Choqok::Account *account, const QVarian
 
     post->postId = var[QLatin1String("id_str")].toString();
     post->replyToPostId = var[QLatin1String("in_reply_to_status_id_str")].toString();
-    post->replyToUserId = var[QLatin1String("in_reply_to_user_id_str")].toString();
+    post->replyToUser.userId = var[QLatin1String("in_reply_to_user_id_str")].toString();
 
     // Support for extended tweet_mode
     if (var.contains(QLatin1String("full_text"))) {
