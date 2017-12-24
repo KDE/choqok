@@ -1,6 +1,6 @@
     Choqok
 KDE Micro-Blogging client,
-Currently supports Pump.io, GNU social and Twitter.com
+Currently supports Pump.io, GNU Social, Friendica and Twitter.com
 
 Authors:
     Mehrdad Momeny <mehrdad.momeny[AT]gmail.com>
@@ -12,9 +12,9 @@ License:
 
 Requirements to build:
      CMake 2.8.12
+     Qt 5.9
      KDE Frameworks libraries 5.6
-     QOAuth-Qt5 library (Development packages)
-     QCA2-Qt5 library (Development packages)
+     QCA2-Qt5 library
 
 How To Build The Project
 -=-=-=-=-=-=-=-=-=-=-=-=-=
