@@ -64,7 +64,7 @@ TwitterMicroBlog::TwitterMicroBlog(QObject *parent, const QVariantList &)
     qCDebug(CHOQOK);
     setServiceName(QLatin1String("Twitter"));
     setServiceHomepageUrl(QLatin1String("https://twitter.com/"));
-    timelineApiPath[QLatin1String("Reply")] = QLatin1String("/statuses/mentions_timeline.%1");
+    timelineApiPath[QLatin1String("Reply")] = QLatin1String("/statuses/mentions_timeline.json");
     setTimelineInfos();
 }
 void TwitterMicroBlog::setTimelineInfos()
@@ -170,7 +170,7 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Cho
 
         TwitterAccount *account = qobject_cast<TwitterAccount *>(theAccount);
         QUrl url = account->uploadUrl();
-        url.setPath(url.path() + QStringLiteral("/statuses/update_with_media.%1").arg(format));
+        url.setPath(url.path() + QLatin1String("/statuses/update_with_media.json"));
         const QMimeDatabase db;
         QByteArray fileContentType = db.mimeTypeForUrl(picUrl).name().toUtf8();
 
@@ -309,7 +309,7 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount *theAccount, const QString 
         return;
     }
     QUrl url = theAccount->apiUrl();
-    url.setPath(url.path() + QStringLiteral("/lists/ownerships.%1").arg(format));
+    url.setPath(url.path() + QLatin1String("/lists/ownerships.json"));
     QUrl url_for_oauth(url);//we need base URL (without params) to make OAuth signature with it!
     QUrlQuery urlQuery;
     urlQuery.addQueryItem(QLatin1String("screen_name"), username);
@@ -390,8 +390,7 @@ void TwitterMicroBlog::addListTimeline(TwitterAccount *theAccount, const QString
     addTimelineName(name);
     theAccount->setTimelineNames(tms);
     theAccount->writeConfig();
-    QString url = QLatin1String("/lists/statuses");
-    timelineApiPath[name] = url + QLatin1String(".%1");
+    timelineApiPath[name] = QLatin1String("/lists/statuses.json");
     updateTimelines(theAccount);
 }
 
@@ -403,8 +402,7 @@ void TwitterMicroBlog::setListTimelines(TwitterAccount *theAccount, const QStrin
     for (const QString &name: lists) {
         tms.append(name);
         addTimelineName(name);
-        QString url = QLatin1String("/lists/statuses");
-        timelineApiPath[name] = url + QLatin1String(".%1");
+        timelineApiPath[name] = QLatin1String("/lists/statuses.json");
     }
     tms.removeDuplicates();
     theAccount->setTimelineNames(tms);
@@ -494,7 +492,7 @@ void TwitterMicroBlog::fetchPost(Choqok::Account *theAccount, Choqok::Post *post
     }
     TwitterAccount *account = qobject_cast<TwitterAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(url.path() + QStringLiteral("/statuses/show/%1.%2").arg(post->postId).arg(format));
+    url.setPath(url.path() + QStringLiteral("/statuses/show/%1.json").arg(post->postId));
 
     QUrl tmpUrl(url);
     QUrlQuery urlQuery;
@@ -524,7 +522,7 @@ void TwitterMicroBlog::requestTimeLine(Choqok::Account *theAccount, QString type
     qCDebug(CHOQOK);
     TwitterAccount *account = qobject_cast<TwitterAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(url.path() + timelineApiPath[type].arg(format));
+    url.setPath(url.path() + timelineApiPath[type]);
     QUrl tmpUrl(url);
 
     QUrlQuery urlQuery;

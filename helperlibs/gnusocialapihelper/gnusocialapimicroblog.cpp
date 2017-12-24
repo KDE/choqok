@@ -211,7 +211,7 @@ void GNUSocialApiMicroBlog::createPostWithAttachment(Choqok::Account *theAccount
         ///Documentation: http://identi.ca/notice/17779990
         TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
         QUrl url = account->apiUrl();
-        url.setPath(url.path() + QStringLiteral("/statuses/update.%1").arg(format));
+        url.setPath(url.path() + QLatin1String("/statuses/update.json"));
         const QMimeDatabase db;
         QByteArray fileContentType = db.mimeTypeForUrl(picUrl).name().toUtf8();
 
@@ -317,7 +317,7 @@ void GNUSocialApiMicroBlog::doRequestFriendsScreenName(TwitterApiAccount *theAcc
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
     url = url.adjusted(QUrl::StripTrailingSlash);
-    url.setPath(url.path() + QStringLiteral("/statuses/friends.%1").arg(format));
+    url.setPath(url.path() + QLatin1String("/statuses/friends.json"));
     QVariantMap params;
     if (page > 1) {
         params.insert(QLatin1String("page"), QByteArray::number(page));
@@ -360,46 +360,6 @@ void GNUSocialApiMicroBlog::slotRequestFriendsScreenName(KJob *job)
     }
 }
 
-/*QStringList GNUSocialApiMicroBlog::readUsersScreenNameFromXml(Choqok::Account* theAccount, const QByteArray& buffer)
-{
-    qCDebug(CHOQOK);
-    QStringList list;
-    QDomDocument document;
-    document.setContent( buffer );
-    QDomElement root = document.documentElement();
-
-    if ( root.tagName() != "users" ) {
-        QString err = checkXmlForError(buffer);
-        if(!err.isEmpty()){
-            Q_EMIT error(theAccount, ServerError, err, Critical);
-        } else {
-            err = i18n( "Retrieving the friends list failed. The data returned from the server is corrupted." );
-            qCDebug(CHOQOK) << "there's no users tag in XML\t the XML is: \n" << buffer;
-            Q_EMIT error(theAccount, ParsingError, err, Critical);
-            list<<QString(' ');
-        }
-        return list;
-    }
-    QDomNode node = root.firstChild();
-    QString timeStr;
-    while ( !node.isNull() ) {
-        if ( node.toElement().tagName() != "user" ) {
-            qCDebug(CHOQOK) << "there's no user tag in XML!\n"<<buffer;
-            return list;
-        }
-        QDomNode node2 = node.firstChild();
-        while ( !node2.isNull() ) {
-            if ( node2.toElement().tagName() == "screen_name" ) {
-                list.append( node2.toElement().text() );
-                break;
-            }
-            node2 = node2.nextSibling();
-        }
-        node = node.nextSibling();
-    }
-    return list;
-}*/
-
 void GNUSocialApiMicroBlog::fetchConversation(Choqok::Account *theAccount, const QString &conversationId)
 {
     qCDebug(CHOQOK);
@@ -408,7 +368,7 @@ void GNUSocialApiMicroBlog::fetchConversation(Choqok::Account *theAccount, const
     }
     TwitterApiAccount *account = qobject_cast<TwitterApiAccount *>(theAccount);
     QUrl url = account->apiUrl();
-    url.setPath(QStringLiteral("/statusnet/conversation/%1.%2").arg(conversationId).arg(format));
+    url.setPath(QStringLiteral("/statusnet/conversation/%1.json").arg(conversationId));
 
     KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo) ;
     if (!job) {

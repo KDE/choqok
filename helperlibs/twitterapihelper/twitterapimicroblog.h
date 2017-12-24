@@ -246,7 +246,6 @@ protected:
     QHash< Choqok::Account *, QMap<QString, QString> > mTimelineLatestId; //TimelineType, LatestId
     QMap<KJob *, Choqok::Account *> mJobsAccount;
     QMap<KJob *, QString> mFriendshipMap;
-    QString format;
     QStringList friendsList;
     QStringList followersList;
 
