@@ -113,27 +113,25 @@ Choqok::Post *GNUSocialApiMicroBlog::readPost(Choqok::Account *account, const QV
 
     post = TwitterApiMicroBlog::readPost(account, var, post);
 
-    post->author.homePageUrl = var[QLatin1String("user")].toMap()[QLatin1String("statusnet_profile_url")].toUrl();
+    QUrl profileUrl = var[QLatin1String("user")].toMap()[QLatin1String("statusnet_profile_url")].toUrl();
+    post->author.homePageUrl = profileUrl;
+
+    const QVariantMap retweeted = var[QLatin1String("retweeted_status")].toMap();
+
+    if (!retweeted.isEmpty()) {
+        profileUrl = retweeted[QLatin1String("user")].toMap()[QLatin1String("statusnet_profile_url")].toUrl();
+        post->repeatedFromUser.homePageUrl = profileUrl;
+    }
 
     if (var.contains(QLatin1String("uri"))) {
         post->link = var[QLatin1String("uri")].toUrl();
     } else if (var.contains(QLatin1String("external_url"))) {
         post->link = var[QLatin1String("external_url")].toUrl();
     } else {
-        QVariantMap retweeted = var[QLatin1String("retweeted_status")].toMap();
-
-        QVariantMap userMap;
-        if (!retweeted.isEmpty()) {
-            userMap = retweeted[QLatin1String("user")].toMap();
-        } else {
-            userMap = var[QLatin1String("user")].toMap();
-        }
-
         if (retweeted.contains(QLatin1String("uri"))) {
             post->link = var[QLatin1String("uri")].toUrl();
         } else {
             // Last try, compone the url. However this only works for GNU Social instances.
-            const QUrl profileUrl = userMap[QLatin1String("statusnet_profile_url")].toUrl();
             post->link = QUrl::fromUserInput(QStringLiteral("%1://%2/notice/%3")
                                              .arg(profileUrl.scheme()).arg(profileUrl.host()).arg(post->postId));
         }

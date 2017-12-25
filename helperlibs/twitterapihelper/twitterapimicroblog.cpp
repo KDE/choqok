@@ -216,6 +216,7 @@ QList< Choqok::Post * > TwitterApiMicroBlog::loadTimeline(Choqok::Account *accou
             st->link = postUrl(account, st->author.userName, st->postId);
             st->isRead = grp.readEntry("isRead", true);
             st->repeatedFromUser.userName = grp.readEntry("repeatedFrom", QString());
+            st->repeatedFromUser.homePageUrl = grp.readEntry("repeatedFromUserHomePage", QUrl());
             st->repeatedPostId = grp.readEntry("repeatedPostId", QString());
             st->repeatedDateTime = grp.readEntry("repeatedDateTime", QDateTime());
             st->conversationId = grp.readEntry("conversationId", QString());
@@ -268,6 +269,7 @@ void TwitterApiMicroBlog::saveTimeline(Choqok::Account *account,
             grp.writeEntry("isProtected" , post->author.isProtected);
             grp.writeEntry("isRead" , post->isRead);
             grp.writeEntry("repeatedFrom", post->repeatedFromUser.userName);
+            grp.writeEntry("repeatedFromUserHomePage", post->repeatedFromUser.homePageUrl);
             grp.writeEntry("repeatedPostId", post->repeatedPostId);
             grp.writeEntry("repeatedDateTime", post->repeatedDateTime);
             grp.writeEntry("conversationId", post->conversationId);
@@ -969,8 +971,10 @@ void TwitterApiMicroBlog::setRepeatedOfInfo(Choqok::Post *post, Choqok::Post *re
 
     if (Choqok::AppearanceSettings::showRetweetsInChoqokWay()) {
         post->repeatedFromUser.userName = repeatedPost->author.userName;
+        post->repeatedFromUser.homePageUrl = repeatedPost->author.homePageUrl;
     } else {
         post->repeatedFromUser.userName = post->author.userName;
+        post->repeatedFromUser.homePageUrl = post->author.homePageUrl;
         post->author = repeatedPost->author;
     }
     
