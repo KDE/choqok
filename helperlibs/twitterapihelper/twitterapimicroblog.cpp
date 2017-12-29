@@ -317,7 +317,7 @@ void TwitterApiMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *
     if (!post->isPrivate) {  ///Status Update
         QUrl url = account->apiUrl();
         url.setPath(url.path() + QLatin1String("/statuses/update.json"));
-        params.insert(QLatin1String("status"), QUrl::toPercentEncoding(post->content));
+        params.insert(QLatin1String("status"), post->content);
         if (!post->replyToPostId.isEmpty()) {
             params.insert(QLatin1String("in_reply_to_status_id"), post->replyToPostId.toLatin1());
         }
@@ -348,10 +348,10 @@ void TwitterApiMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *
         QString recipientScreenName = post->replyToUser.userName;
         QUrl url = account->apiUrl();
         url.setPath(url.path() + QLatin1String("/direct_messages/new.json"));
-        params.insert(QLatin1String("user"), recipientScreenName.toLocal8Bit());
-        params.insert(QLatin1String("text"), QUrl::toPercentEncoding(post->content));
+        params.insert(QLatin1String("user"), recipientScreenName.toLatin1());
+        params.insert(QLatin1String("text"), post->content);
         data = "user=";
-        data += recipientScreenName.toLocal8Bit();
+        data += recipientScreenName.toLatin1();
         data += "&text=";
         data += QUrl::toPercentEncoding(post->content);
         if (!account->usingOAuth()) {
