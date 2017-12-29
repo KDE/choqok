@@ -59,7 +59,7 @@ TextEdit::TextEdit(uint charLimit /*= 0*/, QWidget *parent /*= 0*/)
     : KTextEdit(parent), d(new Private(charLimit))
 {
     qCDebug(CHOQOK) << charLimit;
-    connect(this, SIGNAL(textChanged()), this, SLOT(updateRemainingCharsCount()));
+    connect(this, &TextEdit::textChanged, this, &TextEdit::updateRemainingCharsCount);
     setAcceptRichText(false);
     this->setToolTip(i18n("<b>Note:</b><br/><i>Ctrl+S</i> to enable/disable auto spell checker."));
 
@@ -79,11 +79,12 @@ TextEdit::TextEdit(uint charLimit /*= 0*/, QWidget *parent /*= 0*/)
     this->setLayout(layout);
     setTabChangesFocus(true);
     settingsChanged();
-    connect(BehaviorSettings::self(), SIGNAL(configChanged()), SLOT(settingsChanged()));
+    connect(BehaviorSettings::self(), &BehaviorSettings::configChanged,
+            this, &TextEdit::settingsChanged);
 
     QTimer::singleShot(1000, this, SLOT(setupSpeller()));
-    connect(this, SIGNAL(aboutToShowContextMenu(QMenu*)),
-            SLOT(slotAboutToShowContextMenu(QMenu*)));
+    connect(this, &TextEdit::aboutToShowContextMenu, this,
+            &TextEdit::slotAboutToShowContextMenu);
 }
 
 TextEdit::~TextEdit()
@@ -191,7 +192,7 @@ void TextEdit::slotAboutToShowContextMenu(QMenu *menu)
         menu->addAction(act);
 
         QAction *shorten = new QAction(i18nc("Replace URLs by a shortened URL", "Shorten URLs"), menu);
-        connect(shorten, SIGNAL(triggered(bool)), SLOT(shortenUrls()));
+        connect(shorten, &QAction::triggered, this, &TextEdit::shortenUrls);
         menu->addAction(shorten);
     }
 }
@@ -299,7 +300,7 @@ void TextEdit::setupSpeller()
         if (d->curLang == value) {
             act->setChecked(true);
         }
-        connect(act, SIGNAL(triggered(bool)), SLOT(slotChangeSpellerLanguage()));
+        connect(act, &QAction::triggered, this, &TextEdit::slotChangeSpellerLanguage);
         d->langActions->addAction(act);
         d->langActionMap.insert(value, act);
     }

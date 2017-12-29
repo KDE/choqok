@@ -24,6 +24,7 @@
 #include "uploadmediadialog.h"
 #include "ui_uploadmedia_base.h"
 
+#include <QComboBox>
 #include <QPointer>
 #include <QProgressBar>
 #include <QTabWidget>
@@ -69,29 +70,30 @@ UploadMediaDialog::UploadMediaDialog(QWidget *parent, const QString &url)
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     okButton->setText(i18n("Upload"));
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &UploadMediaDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &UploadMediaDialog::reject);
     d->ui.verticalLayout->addWidget(buttonBox);
 
     adjustSize();
 
-    connect(d->ui.imageUrl, SIGNAL(textChanged(QString)),
-            this, SLOT(slotMediumChanged(QString)));
+    connect(d->ui.imageUrl, &KUrlRequester::textChanged,
+            this, &UploadMediaDialog::slotMediumChanged);
     load();
     if (url.isEmpty()) {
         d->ui.imageUrl->button()->click();
     } else {
         d->ui.imageUrl->setUrl(QUrl(url));
     }
-    connect(d->ui.uploaderPlugin, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
+    connect(d->ui.uploaderPlugin, (void (QComboBox::*)(int))&QComboBox::currentIndexChanged,
+            this, &UploadMediaDialog::currentPluginChanged);
     d->ui.aboutPlugin->setIcon(QIcon::fromTheme(QLatin1String("help-about")));
     d->ui.configPlugin->setIcon(QIcon::fromTheme(QLatin1String("configure")));
-    connect(d->ui.aboutPlugin, SIGNAL(clicked(bool)), SLOT(slotAboutClicked()));
-    connect(d->ui.configPlugin, SIGNAL(clicked(bool)), SLOT(slotConfigureClicked()));
-    connect(Choqok::MediaManager::self(), SIGNAL(mediumUploaded(QUrl,QString)),
-            SLOT(slotMediumUploaded(QUrl,QString)));
-    connect(Choqok::MediaManager::self(), SIGNAL(mediumUploadFailed(QUrl,QString)),
-            SLOT(slotMediumUploadFailed(QUrl,QString)));
+    connect(d->ui.aboutPlugin, &QPushButton::clicked, this, &UploadMediaDialog::slotAboutClicked);
+    connect(d->ui.configPlugin, &QPushButton::clicked, this, &UploadMediaDialog::slotConfigureClicked);
+    connect(Choqok::MediaManager::self(), &MediaManager::mediumUploaded,
+            this, &UploadMediaDialog::slotMediumUploaded);
+    connect(Choqok::MediaManager::self(), &MediaManager::mediumUploadFailed,
+            this, &UploadMediaDialog::slotMediumUploadFailed);
 }
 
 UploadMediaDialog::~UploadMediaDialog()
@@ -226,8 +228,8 @@ void Choqok::UI::UploadMediaDialog::slotConfigureClicked()
         QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
         okButton->setDefault(true);
         okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-        connect(buttonBox, SIGNAL(accepted()), configDialog, SLOT(accept()));
-        connect(buttonBox, SIGNAL(rejected()), configDialog, SLOT(reject()));
+        connect(buttonBox, &QDialogButtonBox::accepted, configDialog, &QDialog::accept);
+        connect(buttonBox, &QDialogButtonBox::rejected, configDialog, &QDialog::reject);
         layout->addWidget(buttonBox);
         showWidget->adjustSize();
 

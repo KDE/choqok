@@ -32,10 +32,12 @@ public:
     explicit PumpIOComposerWidget(Choqok::Account *account, QWidget *parent = 0);
     ~PumpIOComposerWidget();
 
+public Q_SLOTS:
+    void slotSetReply(const QString replyToId, const QString replyToUsername, const QString replyToObjectType);
+
 protected Q_SLOTS:
     virtual void submitPost(const QString &text) override;
     virtual void slotPostSubmited(Choqok::Account *theAccount, Choqok::Post *post) override;
-    void slotSetReply(const QString replyToId, const QString replyToUsername, const QString replyToObjectType);
 
     void cancelAttach();
     void attachMedia();

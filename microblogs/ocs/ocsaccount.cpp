@@ -66,7 +66,8 @@ void OCSAccount::setProviderUrl(const QUrl &url)
     if (d->mBlog->isOperational()) {
         slotDefaultProvidersLoaded();
     } else {
-        connect(d->mBlog, SIGNAL(initialized()), SLOT(slotDefaultProvidersLoaded()));
+        connect(d->mBlog, &OCSMicroblog::initialized, this,
+                &OCSAccount::slotDefaultProvidersLoaded);
     }
 }
 

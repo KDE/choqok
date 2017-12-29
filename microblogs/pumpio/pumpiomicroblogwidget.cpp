@@ -57,8 +57,8 @@ Choqok::UI::TimelineWidget *PumpIOMicroBlogWidget::addTimelineWidgetToUi(const Q
         if (pumpComposer) {
             connect(mbw, SIGNAL(forwardResendPost(QString)), pumpComposer,
                     SLOT(setText(QString)));
-            connect(mbw, SIGNAL(forwardReply(QString,QString,QString)),
-                    pumpComposer, SLOT(slotSetReply(QString,QString,QString)));
+            connect(mbw, &Choqok::UI::TimelineWidget::forwardReply,
+                    pumpComposer, &PumpIOComposerWidget::slotSetReply);
         }
         slotUpdateUnreadCount(mbw->unreadCount(), mbw);
     } else {

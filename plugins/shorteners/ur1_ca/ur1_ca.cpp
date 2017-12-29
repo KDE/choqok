@@ -54,7 +54,7 @@ QString Ur1_ca::shorten(const QString &url)
     QEventLoop loop;
     KIO::StoredTransferJob *job = KIO::storedHttpPost(parg, reqUrl, KIO::HideProgressInfo);
     job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/x-www-form-urlencoded"));
-    connect(job, SIGNAL(result(KJob*)), &loop, SLOT(quit()));
+    connect(job, &KIO::StoredTransferJob::result, &loop, &QEventLoop::quit);
     job->start();
     loop.exec();
 

@@ -40,8 +40,8 @@ K_PLUGIN_FACTORY_WITH_JSON(YourlsFactory, "choqok_yourls.json",
 Yourls::Yourls(QObject *parent, const QVariantList &)
     : Choqok::Shortener(QLatin1String("choqok_yourls"), parent)
 {
-    connect(YourlsSettings::self(), SIGNAL(configChanged()),
-            SLOT(reloadConfigs()));
+    connect(YourlsSettings::self(), &YourlsSettings::configChanged,
+            this, &Yourls::reloadConfigs);
 }
 
 Yourls::~Yourls()

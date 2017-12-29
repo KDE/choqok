@@ -65,7 +65,7 @@ Notification::Notification(Choqok::UI::PostWidget *postWidget)
     setStyleSheet(style);
 
     init();
-    connect(&mainWidget, SIGNAL(anchorClicked(QUrl)), SLOT(slotProcessAnchor(QUrl)));
+    connect(&mainWidget, &MyTextBrowser::anchorClicked, this, &Notification::slotProcessAnchor);
 }
 
 Notification::~Notification()
@@ -98,9 +98,9 @@ void Notification::init()
 
     setHeight();
 
-    connect(&mainWidget, SIGNAL(clicked()), SLOT(slotClicked()));
-    connect(&mainWidget, SIGNAL(mouseEntered()), SIGNAL(mouseEntered()));
-    connect(&mainWidget, SIGNAL(mouseLeaved()), SIGNAL(mouseLeaved()));
+    connect(&mainWidget, &MyTextBrowser::clicked, this, &Notification::slotClicked);
+    connect(&mainWidget, &MyTextBrowser::mouseEntered, this, &Notification::mouseEntered);
+    connect(&mainWidget, &MyTextBrowser::mouseLeaved, this, &Notification::mouseLeaved);
 
     //TODO Show remaining post count to notify
 }

@@ -130,7 +130,8 @@ void GNUSocialApiSearch::requestSearchResults(const SearchInfo &searchInfo,
         return;
     }
     mSearchJobs[job] = searchInfo;
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(searchResultsReturned(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this,
+            (void (GNUSocialApiSearch::*)(KJob*))&GNUSocialApiSearch::searchResultsReturned);
     job->start();
 }
 

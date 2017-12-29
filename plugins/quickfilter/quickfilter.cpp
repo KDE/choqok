@@ -55,7 +55,8 @@ QuickFilter::QuickFilter(QObject *parent, const QList< QVariant > &args)
     actionCollection()->addAction(QLatin1String("filterByContent"), m_textAction);
     setXMLFile(QLatin1String("quickfilterui.rc"));
     createUiInterface();
-    connect(Choqok::UI::Global::mainWindow(), SIGNAL(currentMicroBlogWidgetChanged(Choqok::UI::MicroBlogWidget*)), this, SLOT(showAllPosts()));
+    connect(Choqok::UI::Global::mainWindow(), &Choqok::UI::MainWindow::currentMicroBlogWidgetChanged,
+            this, &QuickFilter::showAllPosts);
 }
 
 QuickFilter::~QuickFilter()
@@ -75,9 +76,8 @@ void QuickFilter::filterByAuthor()
                 postwidget->show();
             }
         }
-        connect(Choqok::UI::Global::SessionManager::self(),
-                SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
-                this, SLOT(filterNewPost(Choqok::UI::PostWidget*,Choqok::Account*,QString)));
+        connect(Choqok::UI::Global::SessionManager::self(), &Choqok::UI::Global::SessionManager::newPostWidgetAdded,
+                this, &QuickFilter::filterNewPost);
     } else {
         showAllPosts();
     }
@@ -95,9 +95,8 @@ void QuickFilter::filterByContent()
                 postwidget->show();
             }
         }
-        connect(Choqok::UI::Global::SessionManager::self(),
-                SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
-                this, SLOT(filterNewPost(Choqok::UI::PostWidget*,Choqok::Account*,QString)));
+        connect(Choqok::UI::Global::SessionManager::self(), &Choqok::UI::Global::SessionManager::newPostWidgetAdded,
+                this, &QuickFilter::filterNewPost);
     } else {
         showAllPosts();
     }
@@ -109,10 +108,10 @@ void QuickFilter::createUiInterface()
     m_authorToolbar->setObjectName(QLatin1String("authorFilterToolbar"));
     m_textToolbar = new QToolBar(i18n("Filter out timeline by text"), Choqok::UI::Global::mainWindow());
     m_textToolbar->setObjectName(QLatin1String("textFilterToolbar"));
-    connect(m_authorAction, SIGNAL(toggled(bool)), m_authorToolbar, SLOT(setVisible(bool)));
-    connect(m_textAction, SIGNAL(toggled(bool)), m_textToolbar, SLOT(setVisible(bool)));
-    connect(m_authorToolbar, SIGNAL(visibilityChanged(bool)), SLOT(showAuthorFilterUiInterface(bool)));
-    connect(m_textToolbar, SIGNAL(visibilityChanged(bool)), SLOT(showContentFilterUiInterface(bool)));
+    connect(m_authorAction, &QAction::toggled, m_authorToolbar, &QToolBar::setVisible);
+    connect(m_textAction, &QAction::toggled, m_textToolbar, &QToolBar::setVisible);
+    connect(m_authorToolbar, &QToolBar::visibilityChanged, this, &QuickFilter::showAuthorFilterUiInterface);
+    connect(m_textToolbar, &QToolBar::visibilityChanged, this, &QuickFilter::showContentFilterUiInterface);
     m_aledit = new QLineEdit(m_authorToolbar);
     m_aledit->setClearButtonEnabled(true);
 
@@ -125,21 +124,21 @@ void QuickFilter::createUiInterface()
     m_authorToolbar->addWidget(m_aledit);
     QPushButton *authorCloseButton = new QPushButton(QIcon::fromTheme(QLatin1String("dialog-close")), QString() , m_authorToolbar);
     authorCloseButton->setMaximumWidth(authorCloseButton->height());
-    connect(authorCloseButton, SIGNAL(clicked(bool)), m_authorToolbar, SLOT(hide()));
+    connect(authorCloseButton, &QPushButton::clicked, m_authorToolbar, &QToolBar::hide);
     m_authorToolbar->addWidget(authorCloseButton);
 
     m_textToolbar->addWidget(tlabel);
     m_textToolbar->addWidget(m_tledit);
     QPushButton *textCloseButton = new QPushButton(QIcon::fromTheme(QLatin1String("dialog-close")), QString() , m_textToolbar);
     textCloseButton->setMaximumWidth(textCloseButton->height());
-    connect(textCloseButton, SIGNAL(clicked(bool)), m_textToolbar, SLOT(hide()));
+    connect(textCloseButton, &QPushButton::clicked, m_textToolbar, &QToolBar::hide);
     m_textToolbar->addWidget(textCloseButton);
 
-    connect(m_aledit, SIGNAL(editingFinished()), this , SLOT(filterByAuthor()));
-    connect(m_aledit, SIGNAL(textChanged(QString)), this, SLOT(updateUser(QString)));
+    connect(m_aledit, &QLineEdit::editingFinished, this, &QuickFilter::filterByAuthor);
+    connect(m_aledit, &QLineEdit::textChanged, this, &QuickFilter::updateUser);
 
-    connect(m_tledit, SIGNAL(editingFinished()), this, SLOT(filterByContent()));
-    connect(m_tledit, SIGNAL(textChanged(QString)), this, SLOT(updateContent(QString)));
+    connect(m_tledit, &QLineEdit::editingFinished, this, &QuickFilter::filterByContent);
+    connect(m_tledit, &QLineEdit::textChanged, this, &QuickFilter::updateContent);
 
     Choqok::UI::Global::mainWindow()->addToolBar(Qt::BottomToolBarArea, m_authorToolbar);
     Choqok::UI::Global::mainWindow()->addToolBar(Qt::BottomToolBarArea, m_textToolbar);

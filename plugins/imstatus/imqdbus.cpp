@@ -51,7 +51,8 @@ IMQDBus::IMQDBus(QObject *parent) : QObject(parent)
     */
 #ifdef TELEPATHY_FOUND
     m_accountManager =  Tp::AccountManager::create(Tp::AccountFactory::create(QDBusConnection::sessionBus(), Tp::Account::FeatureCore));
-    connect(m_accountManager->becomeReady(), SIGNAL(finished(Tp::PendingOperation*)), SLOT(slotFinished(Tp::PendingOperation*)));
+    connect(m_accountManager->becomeReady(), &Tp::PendingOperation::finished,
+            this, &IMQDBus::slotFinished);;
 
     Tp::registerTypes();
 #endif

@@ -46,7 +46,7 @@ DummyNotification::DummyNotification(const QFont &font, const QColor &color, con
     document()->addResource(QTextDocument::ImageResource, QUrl(QLatin1String("icon://close")),
                             QIcon::fromTheme(QLatin1String("dialog-ok")).pixmap(16));
     setText(baseText.arg(i18n("Choqok")).arg(i18n("KDE Rocks! :)")).arg(i18n("OK")));
-    connect(this, SIGNAL(anchorClicked(QUrl)), SLOT(slotProcessAnchor(QUrl)));
+    connect(this, &DummyNotification::anchorClicked, this, &DummyNotification::slotProcessAnchor);
 
     QString fntStr = QLatin1String("font-family:\"") + font.family() + QLatin1String("\"; font-size:") + QString::number(font.pointSize()) + QLatin1String("pt;");
     fntStr += (font.bold() ? QLatin1String(" font-weight:bold;") : QString()) + (font.italic() ? QLatin1String(" font-style:italic;") : QString());

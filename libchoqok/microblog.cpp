@@ -53,8 +53,9 @@ MicroBlog::MicroBlog(const QString &componentName, QObject *parent)
     qCDebug(CHOQOK);
     d->saveTimelinesTimer = new QTimer(this);
     d->saveTimelinesTimer->setInterval(BehaviorSettings::notifyInterval() * 60000);
-    connect(d->saveTimelinesTimer, SIGNAL(timeout()), SIGNAL(saveTimelines()));
-    connect(BehaviorSettings::self(), SIGNAL(configChanged()), this, SLOT(slotConfigChanged()));
+    connect(d->saveTimelinesTimer, &QTimer::timeout, this, &MicroBlog::saveTimelines);
+    connect(BehaviorSettings::self(), &BehaviorSettings::configChanged, this,
+            &MicroBlog::slotConfigChanged);
     d->saveTimelinesTimer->start();
 }
 

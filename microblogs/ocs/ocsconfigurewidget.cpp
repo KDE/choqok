@@ -41,7 +41,8 @@ OCSConfigureWidget::OCSConfigureWidget(OCSMicroblog *microblog, OCSAccount *acco
     if (microblog->isOperational()) {
         slotprovidersLoaded();
     } else {
-        connect(microblog, SIGNAL(initialized()), SLOT(slotprovidersLoaded()));
+        connect(microblog, &OCSMicroblog::initialized, this,
+                &OCSConfigureWidget::slotprovidersLoaded);
     }
     if (mAccount) {
         cfg_alias->setText(mAccount->alias());

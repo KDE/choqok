@@ -55,9 +55,8 @@ TwitterApiComposerWidget::TwitterApiComposerWidget(Choqok::Account *account, QWi
     completer->setCaseSensitivity(Qt::CaseInsensitive);
     edit->setCompleter(completer);
     setEditor(edit);
-    connect(Choqok::UI::Global::SessionManager::self(),
-            SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
-            SLOT(slotNewPostReady(Choqok::UI::PostWidget*,Choqok::Account*)));
+    connect(Choqok::UI::Global::SessionManager::self(), &Choqok::UI::Global::SessionManager::newPostWidgetAdded,
+            this, &TwitterApiComposerWidget::slotNewPostReady);
 }
 
 TwitterApiComposerWidget::~TwitterApiComposerWidget()

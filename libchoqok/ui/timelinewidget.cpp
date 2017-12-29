@@ -92,7 +92,7 @@ TimelineWidget::~TimelineWidget()
 void TimelineWidget::loadTimeline()
 {
     QList<Choqok::Post *> list = currentAccount()->microblog()->loadTimeline(currentAccount(), timelineName());
-    connect(currentAccount()->microblog(), SIGNAL(saveTimelines()), SLOT(saveTimeline()));
+    connect(currentAccount()->microblog(), &MicroBlog::saveTimelines, this, &TimelineWidget::saveTimeline);
 
     if (!BehaviorSettings::markAllAsReadOnExit()) {
         addNewPosts(list);
@@ -253,7 +253,7 @@ void TimelineWidget::showMarkAllAsReadButton()
     d->btnMarkAllAsRead->setToolTip(i18n("Mark timeline as read"));
     d->btnMarkAllAsRead->setMaximumSize(14, 14);
     d->btnMarkAllAsRead->setIconSize(QSize(12, 12));
-    connect(d->btnMarkAllAsRead, SIGNAL(clicked(bool)), SLOT(markAllAsRead()));
+    connect(d->btnMarkAllAsRead, &QPushButton::clicked, this, &TimelineWidget::markAllAsRead);
     d->titleBarLayout->addWidget(d->btnMarkAllAsRead);
 }
 
@@ -262,14 +262,10 @@ void TimelineWidget::addPostWidgetToUi(PostWidget *widget)
     widget->initUi();
     widget->setFocusProxy(this);
     widget->setObjectName(widget->currentPost()->postId);
-    connect(widget, SIGNAL(resendPost(QString)),
-            this, SIGNAL(forwardResendPost(QString)));
-    connect(widget, SIGNAL(reply(QString,QString,QString)),
-            this, SIGNAL(forwardReply(QString,QString,QString)));
-    connect(widget, SIGNAL(postReaded()),
-            this, SLOT(slotOnePostReaded()));
-    connect(widget, SIGNAL(aboutClosing(QString,PostWidget*)),
-            SLOT(postWidgetClosed(QString,PostWidget*)));
+    connect(widget, &PostWidget::resendPost, this, &TimelineWidget::forwardResendPost);
+    connect(widget, &PostWidget::reply, this, &TimelineWidget::forwardReply);
+    connect(widget, &PostWidget::postReaded, this, &TimelineWidget::slotOnePostReaded);
+    connect(widget, &PostWidget::aboutClosing, this, &TimelineWidget::postWidgetClosed);
     d->mainLayout->insertWidget(d->order, widget);
     d->posts.insert(widget->currentPost()->postId, widget);
     d->sortedPostsList.insert(widget->currentPost()->creationDateTime, widget);

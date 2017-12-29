@@ -23,6 +23,7 @@
 
 #include "yourlsconfig.h"
 
+#include <QLineEdit>
 #include <QVBoxLayout>
 
 #include <KAboutData>
@@ -44,8 +45,8 @@ YourlsConfig::YourlsConfig(QWidget *parent, const QVariantList &):
     ui.setupUi(wd);
     addConfig(YourlsSettings::self(), wd);
     layout->addWidget(wd);
-    connect(ui.kcfg_username, SIGNAL(textChanged(QString)), SLOT(emitChanged()));
-    connect(ui.cfg_password, SIGNAL(textChanged(QString)), SLOT(emitChanged()));
+    connect(ui.kcfg_username, &QLineEdit::textChanged, this, &YourlsConfig::emitChanged);
+    connect(ui.cfg_password, &QLineEdit::textChanged, this, &YourlsConfig::emitChanged);
 }
 
 YourlsConfig::~YourlsConfig()
@@ -70,8 +71,8 @@ void YourlsConfig::save()
 void YourlsConfig::emitChanged()
 {
     Q_EMIT changed(true);
-    disconnect(ui.kcfg_username, SIGNAL(textChanged(QString)), this, SLOT(emitChanged()));
-    disconnect(ui.cfg_password, SIGNAL(textChanged(QString)), this, SLOT(emitChanged()));
+    disconnect(ui.kcfg_username, &QLineEdit::textChanged, this, &YourlsConfig::emitChanged);
+    disconnect(ui.cfg_password, &QLineEdit::textChanged, this, &YourlsConfig::emitChanged);
 }
 
 #include "yourlsconfig.moc"

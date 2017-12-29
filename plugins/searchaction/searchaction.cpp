@@ -45,7 +45,7 @@ SearchAction::SearchAction(QObject *parent, const QList< QVariant > &)
     QAction *action = new QAction(QIcon::fromTheme(QLatin1String("edit-find")), i18n("Search..."), this);
     action->setShortcut(QKeySequence(Qt::ControlModifier | Qt::Key_F));
     actionCollection()->addAction(QLatin1String("search"), action);
-    connect(action, SIGNAL(triggered(bool)), SLOT(slotSearch()));
+    connect(action, &QAction::triggered, this, &SearchAction::slotSearch);
     setXMLFile(QLatin1String("searchactionui.rc"));
 }
 

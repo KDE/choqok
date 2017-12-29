@@ -24,6 +24,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <QCheckBox>
 #include <QInputDialog>
+#include <QPushButton>
 
 #include <KIO/AccessManager>
 #include <KMessageBox>
@@ -42,7 +43,7 @@ TwitterEditAccountWidget::TwitterEditAccountWidget(TwitterMicroBlog *microblog,
 {
     setupUi(this);
     kcfg_basicAuth->hide();
-    connect(kcfg_authorize, SIGNAL(clicked(bool)), SLOT(authorizeUser()));
+    connect(kcfg_authorize, &QPushButton::clicked, this, &TwitterEditAccountWidget::authorizeUser);
     if (mAccount) {
         kcfg_alias->setText(mAccount->alias());
         setAuthenticated(!mAccount->oauthToken().isEmpty() && !mAccount->oauthTokenSecret().isEmpty());

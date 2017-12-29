@@ -75,10 +75,10 @@ void TwitterPostWidget::initUi()
     if (btn) {
         QMenu *menu = new QMenu(btn);
         QAction *resend = new QAction(i18n("Manual ReSend"), menu);
-        connect(resend, SIGNAL(triggered(bool)), SLOT(slotResendPost()));
+        connect(resend, &QAction::triggered, this, &TwitterPostWidget::slotResendPost);
         QAction *repeat = new QAction(i18n("Retweet"), menu);
         repeat->setToolTip(i18n("Retweet post using API"));
-        connect(repeat, SIGNAL(triggered(bool)), SLOT(repeatPost()));
+        connect(repeat, &QAction::triggered, this, &TwitterPostWidget::repeatPost);
         // If person protects their acc, we will use simple adding RT before message
         if (!currentPost()->author.isProtected) {
             menu->addAction(repeat);
@@ -249,10 +249,10 @@ bool TwitterPostWidget::setupQuotedAvatar()
         quotedAvatarFetched(currentPost()->quotedPost.user.profileImageUrl, pix);
         return true;
     } else {
-        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
-                this, SLOT(quotedAvatarFetched(QUrl,QPixmap)));
-        connect(Choqok::MediaManager::self(), SIGNAL(fetchError(QString,QString)),
-                this, SLOT(quotedAvatarFetchError(QString,QString)));
+        connect(Choqok::MediaManager::self(), &Choqok::MediaManager::imageFetched,
+                this, &TwitterPostWidget::quotedAvatarFetched);
+        connect(Choqok::MediaManager::self(), &Choqok::MediaManager::fetchError,
+                this, &TwitterPostWidget::quotedAvatarFetchError);
         return false;
     }
 }
@@ -261,10 +261,10 @@ void TwitterPostWidget::quotedAvatarFetched(const QUrl &remoteUrl, const QPixmap
 {
     if (remoteUrl == currentPost()->quotedPost.user.profileImageUrl) {
         _mainWidget->document()->addResource(QTextDocument::ImageResource, mQuotedAvatarResourceUrl, pixmap);
-        disconnect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
-                   this, SLOT(quotedAvatarFetched(QUrl,QPixmap)));
-        disconnect(Choqok::MediaManager::self(), SIGNAL(fetchError(QString,QString)),
-                   this, SLOT(quotedAvatarFetchError(QString,QString)));
+        disconnect(Choqok::MediaManager::self(), &Choqok::MediaManager::imageFetched,
+                   this, &TwitterPostWidget::quotedAvatarFetched);
+        disconnect(Choqok::MediaManager::self(), &Choqok::MediaManager::fetchError,
+                   this, &TwitterPostWidget::quotedAvatarFetchError);
     }
 }
 

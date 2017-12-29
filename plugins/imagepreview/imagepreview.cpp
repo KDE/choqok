@@ -42,10 +42,8 @@ const QRegExp ImagePreview::mPumpIORegExp(QLatin1String("(https://([a-zA-Z0-9]+\
 ImagePreview::ImagePreview(QObject *parent, const QList< QVariant > &)
     : Choqok::Plugin(QLatin1String("choqok_imagepreview"), parent), state(Stopped)
 {
-    connect(Choqok::UI::Global::SessionManager::self(),
-            SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
-            this,
-            SLOT(slotAddNewPostWidget(Choqok::UI::PostWidget*)));
+    connect(Choqok::UI::Global::SessionManager::self(), &Choqok::UI::Global::SessionManager::newPostWidgetAdded,
+            this, &ImagePreview::slotAddNewPostWidget);
 }
 
 ImagePreview::~ImagePreview()
@@ -95,9 +93,8 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
         ImgLyRedirectList << mImgLyRegExp.cap(0);
     }
     for (const QString &url: ImgLyRedirectList) {
-        connect(Choqok::MediaManager::self(),
-                SIGNAL(imageFetched(QUrl,QPixmap)),
-                SLOT(slotImageFetched(QUrl,QPixmap)));
+        connect(Choqok::MediaManager::self(),&Choqok::MediaManager::imageFetched,
+                this, &ImagePreview::slotImageFetched);
         QUrl ImgLyUrl = QUrl::fromUserInput(QStringLiteral("http://img.ly/show/thumb%1").arg(QString(url).remove(QLatin1String("http://img.ly"))));
         mParsingList.insert(ImgLyUrl, postToParse);
         mBaseUrlMap.insert(ImgLyUrl, url);
@@ -111,9 +108,8 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
         TwitgooRedirectList << mTwitgooRegExp.cap(0);
     }
     for (const QString &url: TwitgooRedirectList) {
-        connect(Choqok::MediaManager::self(),
-                SIGNAL(imageFetched(QUrl,QPixmap)),
-                SLOT(slotImageFetched(QUrl,QPixmap)));
+        connect(Choqok::MediaManager::self(), &Choqok::MediaManager::imageFetched,
+                this, &ImagePreview::slotImageFetched);
         QUrl TwitgooUrl = QUrl::fromUserInput(url + QLatin1String("/thumb"));
         mParsingList.insert(TwitgooUrl, postToParse);
         mBaseUrlMap.insert(TwitgooUrl, url);
@@ -131,8 +127,8 @@ void ImagePreview::parse(Choqok::UI::PostWidget *postToParse)
         imageExtension = mPumpIORegExp.cap(mPumpIORegExp.capturedTexts().length() - 1);
     }
     for (const QString &url: PumpIORedirectList) {
-        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
-                SLOT(slotImageFetched(QUrl,QPixmap)));
+        connect(Choqok::MediaManager::self(), &Choqok::MediaManager::imageFetched,
+                this, &ImagePreview::slotImageFetched);
         const QUrl pumpIOUrl = QUrl::fromUserInput(baseUrl + QLatin1String("_thumb") + imageExtension);
         mParsingList.insert(pumpIOUrl, postToParse);
         mBaseUrlMap.insert(pumpIOUrl, url);

@@ -112,16 +112,9 @@ MicroBlogWidget::MicroBlogWidget(Account *account, QWidget *parent)
     : QWidget(parent), d(new Private(account))
 {
     qCDebug(CHOQOK);
-    connect(d->blog, SIGNAL(timelineDataReceived(Choqok::Account*,QString,QList<Choqok::Post*>)),
-            this, SLOT(newTimelineDataRecieved(Choqok::Account*,QString,QList<Choqok::Post*>)));
-    connect(d->blog, SIGNAL(error(Choqok::Account *, Choqok::MicroBlog::ErrorType,
-                                  QString, Choqok::MicroBlog::ErrorLevel)),
-            this, SLOT(error(Choqok::Account *, Choqok::MicroBlog::ErrorType,
-                             QString, Choqok::MicroBlog::ErrorLevel)));
-    connect(d->blog, SIGNAL(errorPost(Choqok::Account *, Choqok::Post *,
-                                      Choqok::MicroBlog::ErrorType, QString,  Choqok::MicroBlog::ErrorLevel)),
-            this, SLOT(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
-                                 QString, Choqok::MicroBlog::ErrorLevel)));
+    connect(d->blog, &MicroBlog::timelineDataReceived, this, &MicroBlogWidget::newTimelineDataRecieved);
+    connect(d->blog, &MicroBlog::error, this, &MicroBlogWidget::error);
+    connect(d->blog, &MicroBlog::errorPost, this, &MicroBlogWidget::errorPost);
 }
 
 Account *MicroBlogWidget::currentAccount() const
@@ -150,7 +143,7 @@ void MicroBlogWidget::initUi()
 
     layout->addWidget(d->timelinesTabWidget);
     this->layout()->setContentsMargins(0, 0, 0, 0);
-    connect(currentAccount(), SIGNAL(modified(Choqok::Account*)), SLOT(slotAccountModified(Choqok::Account*)));
+    connect(currentAccount(), &Account::modified, this, &MicroBlogWidget::slotAccountModified);
     initTimelines();
 }
 
@@ -168,7 +161,7 @@ void MicroBlogWidget::setComposerWidget(ComposerWidget *widget)
     qobject_cast<QVBoxLayout *>(d->toolbar_widget->layout())->insertWidget(1, d->composer);
     for (TimelineWidget *mbw: d->timelines) {
         connect(mbw, SIGNAL(forwardResendPost(QString)), d->composer, SLOT(setText(QString)));
-        connect(mbw, SIGNAL(forwardReply(QString,QString,QString)), d->composer, SLOT(setText(QString,QString,QString)));
+        connect(mbw, &TimelineWidget::forwardReply, d->composer, &ComposerWidget::setText);
     }
 }
 
@@ -249,13 +242,10 @@ TimelineWidget *MicroBlogWidget::addTimelineWidgetToUi(const QString &name)
         d->timelines.insert(name, mbw);
         d->timelinesTabWidget->addTab(mbw, info->name);
         d->timelinesTabWidget->setTabIcon(d->timelinesTabWidget->indexOf(mbw), QIcon::fromTheme(info->icon));
-        connect(mbw, SIGNAL(updateUnreadCount(int)),
-                this, SLOT(slotUpdateUnreadCount(int)));
+        connect(mbw, SIGNAL(updateUnreadCount(int)), this, SLOT(slotUpdateUnreadCount(int)));
         if (d->composer) {
-            connect(mbw, SIGNAL(forwardResendPost(QString)),
-                    d->composer, SLOT(setText(QString)));
-            connect(mbw, SIGNAL(forwardReply(QString,QString,QString)),
-                    d->composer, SLOT(setText(QString,QString,QString)));
+            connect(mbw, SIGNAL(forwardResendPost(QString)), d->composer, SLOT(setText(QString)));
+            connect(mbw, &TimelineWidget::forwardReply, d->composer, &ComposerWidget::setText);
         }
         slotUpdateUnreadCount(mbw->unreadCount(), mbw);
     } else {
@@ -288,7 +278,7 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change, Choqok::UI::TimelineWidg
             d->btnMarkAllAsRead->setIconSize(QSize(14, 14));
             d->btnMarkAllAsRead->setToolTip(i18n("Mark all timelines as read"));
             d->btnMarkAllAsRead->setMaximumWidth(d->btnMarkAllAsRead->height());
-            connect(d->btnMarkAllAsRead, SIGNAL(clicked(bool)), SLOT(markAllAsRead()));
+            connect(d->btnMarkAllAsRead, &QPushButton::clicked, this, &MicroBlogWidget::markAllAsRead);
             d->toolbar->insertWidget(1, d->btnMarkAllAsRead);
         }
     } else {

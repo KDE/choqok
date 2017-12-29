@@ -161,7 +161,7 @@ QMenu *TwitterApiMicroBlog::createActionsMenu(Choqok::Account *theAccount, QWidg
 
     QAction *updateFriendsList = new QAction(QIcon::fromTheme(QLatin1String("arrow-down")), i18n("Update Friends List"), menu);
     updateFriendsList->setData(theAccount->alias());
-    connect(updateFriendsList, SIGNAL(triggered(bool)), SLOT(slotUpdateFriendsList()));
+    connect(updateFriendsList, &QAction::triggered, this, &TwitterApiMicroBlog::slotUpdateFriendsList);
     menu->addAction(updateFriendsList);
 
     return menu;
@@ -342,7 +342,7 @@ void TwitterApiMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *
                          QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::PostOperation, params)));
         mCreatePostMap[ job ] = post;
         mJobsAccount[job] = theAccount;
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCreatePost(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotCreatePost);
         job->start();
     } else {///Direct message
         QString recipientScreenName = post->replyToUser.userName;
@@ -371,7 +371,7 @@ void TwitterApiMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *
                          + QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::PostOperation, params)));
         mCreatePostMap[ job ] = post;
         mJobsAccount[job] = theAccount;
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCreatePost(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotCreatePost);
         job->start();
     }
 }
@@ -496,7 +496,7 @@ void TwitterApiMicroBlog::fetchPost(Choqok::Account *theAccount, Choqok::Post *p
                      QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::GetOperation)));
     mFetchPostMap[ job ] = post;
     mJobsAccount[ job ] = theAccount;
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchPost(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotFetchPost);
     job->start();
 }
 
@@ -560,7 +560,7 @@ void TwitterApiMicroBlog::removePost(Choqok::Account *theAccount, Choqok::Post *
                          QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::PostOperation)));
         mRemovePostMap[job] = post;
         mJobsAccount[job] = theAccount;
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRemovePost(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotRemovePost);
         job->start();
     }
 }
@@ -615,7 +615,7 @@ void TwitterApiMicroBlog::createFavorite(Choqok::Account *theAccount, const QStr
                      QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::PostOperation)));
     mFavoriteMap[job] = postId;
     mJobsAccount[job] = theAccount;
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCreateFavorite(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotCreateFavorite);
     job->start();
 }
 
@@ -667,7 +667,7 @@ void TwitterApiMicroBlog::removeFavorite(Choqok::Account *theAccount, const QStr
                      QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::PostOperation)));
     mFavoriteMap[job] = postId;
     mJobsAccount[job] = theAccount;
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRemoveFavorite(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotRemoveFavorite);
     job->start();
 }
 
@@ -727,9 +727,9 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount *theAccount
                      QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::GetOperation)));
     mJobsAccount[job] = theAccount;
     if (active) {
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRequestFriendsScreenNameActive(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotRequestFriendsScreenNameActive);
     } else {
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRequestFriendsScreenNamePassive(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotRequestFriendsScreenNamePassive);
     }
     job->start();
     Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Updating friends list for account %1...", theAccount->username()));
@@ -805,9 +805,9 @@ void TwitterApiMicroBlog::requestFollowersScreenName(TwitterApiAccount* theAccou
                      QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::GetOperation)));
     mJobsAccount[job] = theAccount;
     if (active) {
-        connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFollowersScreenNameActive(KJob*) ) );
+        connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotRequestFollowersScreenNameActive);
     } else {
-        connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotRequestFollowersScreenNamePassive(KJob*) ) );
+        connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotRequestFollowersScreenNamePassive);
     }
     job->start();
     Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Updating followers list for account %1...", theAccount->username()));
@@ -912,7 +912,7 @@ void TwitterApiMicroBlog::requestTimeLine(Choqok::Account *theAccount, QString t
                      + QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::GetOperation)));
     mRequestTimelineMap[job] = type;
     mJobsAccount[job] = theAccount;
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRequestTimeline(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotRequestTimeline);
     job->start();
 }
 
@@ -1080,7 +1080,7 @@ void TwitterApiMicroBlog::createFriendship(Choqok::Account *theAccount, const QS
                      QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::PostOperation)));
     mJobsAccount[job] = theAccount;
     mFriendshipMap[ job ] = username;
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCreateFriendship(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotCreateFriendship);
     job->start();
 }
 
@@ -1143,7 +1143,7 @@ void TwitterApiMicroBlog::destroyFriendship(Choqok::Account *theAccount, const Q
                      QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::PostOperation)));
     mJobsAccount[job] = theAccount;
     mFriendshipMap[ job ] = username;
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotDestroyFriendship(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotDestroyFriendship);
     job->start();
 }
 
@@ -1206,7 +1206,7 @@ void TwitterApiMicroBlog::blockUser(Choqok::Account *theAccount, const QString &
                      QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::PostOperation)));
     mJobsAccount[job] = theAccount;
     mFriendshipMap[ job ] = username;
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotBlockUser(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotBlockUser);
     job->start();
 }
 
@@ -1232,7 +1232,7 @@ void TwitterApiMicroBlog::reportUserAsSpam(Choqok::Account *theAccount, const QS
                      QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::PostOperation)));
     mJobsAccount[job] = theAccount;
     mFriendshipMap[ job ] = username;
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotReportUser(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotReportUser);
     job->start();
 
 }

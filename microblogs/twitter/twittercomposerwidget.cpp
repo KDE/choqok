@@ -72,7 +72,7 @@ TwitterComposerWidget::TwitterComposerWidget(Choqok::Account *account, QWidget *
     d->btnAttach->setIcon(QIcon::fromTheme(QLatin1String("mail-attachment")));
     d->btnAttach->setToolTip(i18n("Attach a file"));
     d->btnAttach->setMaximumWidth(d->btnAttach->height());
-    connect(d->btnAttach, SIGNAL(clicked(bool)), this, SLOT(selectMediumToAttach()));
+    connect(d->btnAttach, &QPushButton::clicked, this, &TwitterComposerWidget::selectMediumToAttach);
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addWidget(d->btnAttach);
     vLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Preferred, QSizePolicy::MinimumExpanding));
@@ -102,15 +102,13 @@ void TwitterComposerWidget::submitPost(const QString &txt)
         if (!replyToId.isEmpty()) {
             postToSubmit()->replyToPostId = replyToId;
         }
-        connect(currentAccount()->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-                SLOT(slotPostMediaSubmitted(Choqok::Account*,Choqok::Post*)));
-        connect(currentAccount()->microblog(),
-                SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
-                                 QString, Choqok::MicroBlog::ErrorLevel)),
-                SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
+        connect(currentAccount()->microblog(), &Choqok::MicroBlog::postCreated, this,
+                &TwitterComposerWidget::slotPostMediaSubmitted);
+        connect(currentAccount()->microblog(), &Choqok::MicroBlog::errorPost, this,
+                &TwitterComposerWidget::slotErrorPost);
         btnAbort = new QPushButton(QIcon::fromTheme(QLatin1String("dialog-cancel")), i18n("Abort"), this);
         layout()->addWidget(btnAbort);
-        connect(btnAbort, SIGNAL(clicked(bool)), SLOT(abort()));
+        connect(btnAbort, &QPushButton::clicked, this, &TwitterComposerWidget::abort);
         TwitterMicroBlog *mBlog = qobject_cast<TwitterMicroBlog *>(currentAccount()->microblog());
         mBlog->createPostWithAttachment(currentAccount(), postToSubmit(), d->mediumToAttach);
     }
@@ -121,12 +119,10 @@ void TwitterComposerWidget::slotPostMediaSubmitted(Choqok::Account *theAccount, 
     qCDebug(CHOQOK);
     if (currentAccount() == theAccount && post == postToSubmit()) {
         qCDebug(CHOQOK) << "Accepted";
-        disconnect(currentAccount()->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-                   this, SLOT(slotPostMediaSubmitted(Choqok::Account*,Choqok::Post*)));
-        disconnect(currentAccount()->microblog(),
-                   SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
-                                    QString, Choqok::MicroBlog::ErrorLevel)),
-                   this, SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
+        disconnect(currentAccount()->microblog(), &Choqok::MicroBlog::postCreated,
+                   this, &TwitterComposerWidget::slotPostMediaSubmitted);
+        disconnect(currentAccount()->microblog(), &Choqok::MicroBlog::errorPost,
+                   this, &TwitterComposerWidget::slotErrorPost);
         if (btnAbort) {
             btnAbort->deleteLater();
         }
@@ -156,7 +152,7 @@ void TwitterComposerWidget::selectMediumToAttach()
         d->btnCancel->setIcon(QIcon::fromTheme(QLatin1String("list-remove")));
         d->btnCancel->setToolTip(i18n("Discard Attachment"));
         d->btnCancel->setMaximumWidth(d->btnCancel->height());
-        connect(d->btnCancel, SIGNAL(clicked(bool)), SLOT(cancelAttachMedium()));
+        connect(d->btnCancel, &QPushButton::clicked, this, &TwitterComposerWidget::cancelAttachMedium);
 
         d->editorLayout->addWidget(d->mediumName, 1, 0);
         d->editorLayout->addWidget(d->btnCancel, 1, 1);

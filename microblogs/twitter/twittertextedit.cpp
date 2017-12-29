@@ -124,7 +124,7 @@ void TwitterTextEdit::fetchTCoMaximumLength()
         job->addMetaData(QStringLiteral("customHTTPHeader"),
                          QStringLiteral("Authorization: ") +
                          QLatin1String(mBlog->authorizationHeader(acc, url, QNetworkAccessManager::GetOperation)));
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotTCoMaximumLength(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &TwitterTextEdit::slotTCoMaximumLength);
         job->start();
     } else {
         qCDebug(CHOQOK) << "the account is not a TwitterAPIAccount!";

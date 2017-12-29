@@ -119,18 +119,18 @@ void TextBrowser::contextMenuEvent(QContextMenuEvent *event)
     QMenu *menu = new QMenu(this);
     QAction *copy = new QAction(i18nc("Copy text", "Copy"), this);
 //     copy->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_C ) );
-    connect(copy, SIGNAL(triggered(bool)), SLOT(slotCopyPostContent()));
+    connect(copy, &QAction::triggered, this, &TextBrowser::slotCopyPostContent);
     menu->addAction(copy);
     QString anchor = document()->documentLayout()->anchorAt(event->pos());
     if (!anchor.isEmpty()) {
         QAction *copyLink = new QAction(i18n("Copy Link Location"), this);
         copyLink->setData(anchor);
-        connect(copyLink, SIGNAL(triggered(bool)), SLOT(slotCopyLink()));
+        connect(copyLink, &QAction::triggered, this, &TextBrowser::slotCopyLink);
         menu->addAction(copyLink);
     }
     QAction *selectAll = new QAction(i18nc("Select all text", "Select All"), this);
 //     selectAll->setShortcut( KShortcut( Qt::ControlModifier | Qt::Key_A ) );
-    connect(selectAll, SIGNAL(triggered(bool)), SLOT(selectAll()));
+    connect(selectAll, &QAction::triggered, this, &TextBrowser::selectAll);
     menu->addAction(selectAll);
     menu->addSeparator();
     for (QAction *act: d->actions) {

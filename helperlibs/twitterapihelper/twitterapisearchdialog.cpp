@@ -64,7 +64,8 @@ TwitterApiSearchDialog::TwitterApiSearchDialog(TwitterApiAccount *theAccount, QW
     setAttribute(Qt::WA_DeleteOnClose);
     createUi();
     d->searchQuery->setFocus();
-    connect(d->searchTypes, SIGNAL(currentIndexChanged(int)), SLOT(slotSearchTypeChanged(int)));
+    connect(d->searchTypes, (void (QComboBox::*)(int))&QComboBox::currentIndexChanged, this,
+            &TwitterApiSearchDialog::slotSearchTypeChanged);
 }
 
 TwitterApiSearchDialog::~TwitterApiSearchDialog()
@@ -100,8 +101,8 @@ void TwitterApiSearchDialog::createUi()
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     okButton->setText(i18nc("@action:button", "Search"));
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &TwitterApiSearchDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &TwitterApiSearchDialog::reject);
     layout->addWidget(buttonBox);
 
     adjustSize();

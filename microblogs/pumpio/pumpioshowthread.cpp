@@ -47,8 +47,8 @@ PumpIOShowThread::PumpIOShowThread(Choqok::Account *account, Choqok::Post *post,
 
     setWindowTitle(i18nc("Thread of specified user", "Choqok: %1's thread", post->author.userName));
 
-    connect(account->microblog(), SIGNAL(postFetched(Choqok::Account*,Choqok::Post*)),
-            this, SLOT(slotAddPost(Choqok::Account*,Choqok::Post*)));
+    connect(account->microblog(), &Choqok::MicroBlog::postFetched, this,
+            &PumpIOShowThread::slotAddPost);
 
     PumpIOPost *p = dynamic_cast<PumpIOPost *>(post);
     if (p) {
@@ -56,8 +56,7 @@ PumpIOShowThread::PumpIOShowThread(Choqok::Account *account, Choqok::Post *post,
         widget->initUi();
         widget->setRead();
         mainLayout->insertWidget(0, widget);
-        connect(widget, SIGNAL(reply(QString,QString,QString)),
-                this, SIGNAL(forwardReply(QString,QString,QString)));
+        connect(widget, &PumpIOPostWidget::reply, this, &PumpIOShowThread::forwardReply);
 
         PumpIOMicroBlog *microblog = qobject_cast<PumpIOMicroBlog * >(account->microblog());
         if (microblog) {
@@ -82,8 +81,7 @@ void PumpIOShowThread::slotAddPost(Choqok::Account *theAccount, Choqok::Post *po
         PumpIOPostWidget *widget = new PumpIOPostWidget(theAccount, post, this);
         widget->initUi();
         widget->setRead();
-        connect(widget, SIGNAL(reply(QString,QString,QString)),
-                this, SIGNAL(forwardReply(QString,QString,QString)));
+        connect(widget, &PumpIOPostWidget::reply, this, &PumpIOShowThread::forwardReply);
         mainLayout->insertWidget(mainLayout->count() - 1, widget);
     }
 }

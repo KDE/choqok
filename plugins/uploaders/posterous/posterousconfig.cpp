@@ -23,6 +23,9 @@
 
 #include "posterousconfig.h"
 
+#include <QComboBox>
+#include <QLineEdit>
+#include <QRadioButton>
 #include <QVBoxLayout>
 
 #include <KAboutData>
@@ -48,11 +51,12 @@ PosterousConfig::PosterousConfig(QWidget *parent, const QVariantList &) :
     addConfig(PosterousSettings::self(), wd);
     layout->addWidget(wd);
     ui.cfg_password->setEchoMode(QLineEdit::Password);
-    connect(ui.cfg_basic, SIGNAL(clicked(bool)), SLOT(emitChanged()));
-    connect(ui.cfg_login, SIGNAL(textChanged(QString)), SLOT(emitChanged()));
-    connect(ui.cfg_password, SIGNAL(textChanged(QString)), SLOT(emitChanged()));
-    connect(ui.cfg_oauth, SIGNAL(clicked(bool)), SLOT(emitChanged()));
-    connect(ui.cfg_accountsList, SIGNAL(currentIndexChanged(int)), SLOT(emitChanged()));
+    connect(ui.cfg_basic, &QRadioButton::clicked, this, &PosterousConfig::emitChanged);
+    connect(ui.cfg_login, &QLineEdit::textChanged, this, &PosterousConfig::emitChanged);
+    connect(ui.cfg_password, &QLineEdit::textChanged, this, &PosterousConfig::emitChanged);
+    connect(ui.cfg_oauth, &QRadioButton::clicked, this, &PosterousConfig::emitChanged);
+    connect(ui.cfg_accountsList, (void (QComboBox::*)(int))&QComboBox::currentIndexChanged,
+            this, &PosterousConfig::emitChanged);
 }
 
 PosterousConfig::~PosterousConfig()

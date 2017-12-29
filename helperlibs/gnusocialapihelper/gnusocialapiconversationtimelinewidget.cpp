@@ -40,8 +40,8 @@ GNUSocialApiConversationTimelineWidget::GNUSocialApiConversationTimelineWidget(C
     resize(choqokMainWindow->width(), 500);
     move(choqokMainWindow->pos());
     conversationId = convId;
-    connect(mBlog, SIGNAL(conversationFetched(Choqok::Account*,QString,QList<Choqok::Post*>)),
-            this, SLOT(slotConversationFetched(Choqok::Account*,QString,QList<Choqok::Post*>)));
+    connect(mBlog, &GNUSocialApiMicroBlog::conversationFetched,
+            this, &GNUSocialApiConversationTimelineWidget::slotConversationFetched);
     mBlog->fetchConversation(curAccount, convId);
 }
 

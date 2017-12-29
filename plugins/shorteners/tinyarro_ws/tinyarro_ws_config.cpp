@@ -22,6 +22,7 @@
 
 #include "tinyarro_ws_config.h"
 
+#include <QComboBox>
 #include <QVBoxLayout>
 
 #include <KAboutData>
@@ -66,7 +67,8 @@ Tinyarro_ws_Config::Tinyarro_ws_Config(QWidget *parent, const QVariantList &):
         ui.kcfg_tinyarro_ws_host->addItem(host);
     }
 
-    connect(ui.kcfg_tinyarro_ws_host, SIGNAL(currentIndexChanged(int)), SLOT(emitChanged()));
+    connect(ui.kcfg_tinyarro_ws_host, (void (QComboBox::*)(int))&QComboBox::currentIndexChanged,
+            this, &Tinyarro_ws_Config::emitChanged);
 }
 
 Tinyarro_ws_Config::~Tinyarro_ws_Config()

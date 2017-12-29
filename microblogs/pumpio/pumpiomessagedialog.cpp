@@ -54,8 +54,8 @@ PumpIOMessageDialog::PumpIOMessageDialog(Choqok::Account *theAccount, QWidget *p
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &PumpIOMessageDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &PumpIOMessageDialog::reject);
     verticalLayout->addWidget(buttonBox);
 
     PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
@@ -81,8 +81,8 @@ PumpIOMessageDialog::PumpIOMessageDialog(Choqok::Account *theAccount, QWidget *p
         }
     }
 
-    connect(btnReload, SIGNAL(clicked(bool)), this, SLOT(fetchFollowing()));
-    connect(btnAttach, SIGNAL(clicked(bool)), this, SLOT(attachMedia()));
+    connect(btnReload, &QPushButton::clicked, this, &PumpIOMessageDialog::fetchFollowing);
+    connect(btnAttach, &QPushButton::clicked, this, &PumpIOMessageDialog::attachMedia);
 }
 
 PumpIOMessageDialog::~PumpIOMessageDialog()
@@ -98,8 +98,8 @@ void PumpIOMessageDialog::fetchFollowing()
     PumpIOMicroBlog *microblog = qobject_cast<PumpIOMicroBlog *>(d->account->microblog());
     if (microblog) {
         microblog->fetchFollowing(d->account);
-        connect(microblog, SIGNAL(followingFetched(Choqok::Account*)), this,
-                SLOT(slotFetchFollowing(Choqok::Account*)));
+        connect(microblog, &PumpIOMicroBlog::followingFetched, this,
+                &PumpIOMessageDialog::slotFetchFollowing);
     }
 }
 
@@ -193,7 +193,7 @@ void PumpIOMessageDialog::attachMedia()
         d->btnCancel->setIcon(QIcon::fromTheme(QLatin1String("list-remove")));
         d->btnCancel->setToolTip(i18n("Discard Attachment"));
         d->btnCancel->setMaximumWidth(d->btnCancel->height());
-        connect(d->btnCancel, SIGNAL(clicked(bool)), SLOT(cancelAttach()));
+        connect(d->btnCancel, &QPushButton::clicked, this, &PumpIOMessageDialog::cancelAttach);
 
         horizontalLayout->insertWidget(1, d->mediumName);
         horizontalLayout->insertWidget(2, d->btnCancel);

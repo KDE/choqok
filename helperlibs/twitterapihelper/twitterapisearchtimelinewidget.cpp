@@ -67,8 +67,8 @@ TwitterApiSearchTimelineWidget::TwitterApiSearchTimelineWidget(Choqok::Account *
 {
     setAttribute(Qt::WA_DeleteOnClose);
     d->searchBackend = qobject_cast<TwitterApiMicroBlog *>(currentAccount()->microblog())->searchBackend();
-    connect(Choqok::UI::Global::mainWindow(), SIGNAL(updateTimelines()),
-            this, SLOT(slotUpdateSearchResults()));
+    connect(Choqok::UI::Global::mainWindow(), &Choqok::UI::MainWindow::updateTimelines,
+            this, &TwitterApiSearchTimelineWidget::slotUpdateSearchResults);
     addFooter();
     timelineDescription()->setText(i18nc("%1 is the name of a timeline", "Search results for %1", timelineName));
     setClosable();
@@ -123,13 +123,13 @@ void TwitterApiSearchTimelineWidget::addFooter()
         footer->addWidget(d->pageNumber);
         footer->addWidget(d->next);
         footer->addWidget(new KSeparator(Qt::Vertical, this));
-        connect(d->next, SIGNAL(clicked(bool)), SLOT(loadNextPage()));
-        connect(d->previous, SIGNAL(clicked(bool)), SLOT(loadPreviousPage()));
-        connect(d->pageNumber, SIGNAL(returnPressed()), SLOT(loadCustomPage()));
+        connect(d->next, &QPushButton::clicked, this, &TwitterApiSearchTimelineWidget::loadNextPage);
+        connect(d->previous, &QPushButton::clicked, this, &TwitterApiSearchTimelineWidget::loadPreviousPage);
+        connect(d->pageNumber, &QLineEdit::returnPressed, this,
+                (void (TwitterApiSearchTimelineWidget::*)())&TwitterApiSearchTimelineWidget::loadCustomPage);
     }
     footer->addWidget(d->close);
-    connect(d->close, SIGNAL(clicked(bool)), this, SIGNAL(closeMe()));
-
+    connect(d->close, &QPushButton::clicked, this, &TwitterApiSearchTimelineWidget::closeMe);
 }
 
 void TwitterApiSearchTimelineWidget::addNewPosts(QList< Choqok::Post * > &postList)

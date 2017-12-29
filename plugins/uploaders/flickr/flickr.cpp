@@ -121,8 +121,7 @@ void Flickr::upload(const QUrl &localUrl, const QByteArray &medium, const QByteA
     }
     job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: multipart/form-data; boundary=AaB03x"));
     mUrlMap[job] = localUrl;
-    connect(job, SIGNAL(result(KJob*)),
-            SLOT(slotUpload(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &Flickr::slotUpload);
     job->start();
 }
 

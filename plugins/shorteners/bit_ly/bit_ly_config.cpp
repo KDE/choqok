@@ -23,6 +23,9 @@
 
 #include "bit_ly_config.h"
 
+#include <QComboBox>
+#include <QLineEdit>
+#include <QPushButton>
 #include <QVBoxLayout>
 
 #include <KAboutData>
@@ -66,10 +69,11 @@ Bit_ly_Config::Bit_ly_Config(QWidget *parent, const QVariantList &):
     domains << QLatin1String("bit.ly") << QLatin1String("j.mp");
     ui.kcfg_domain->addItems(domains);
 
-    connect(ui.kcfg_login, SIGNAL(textChanged(QString)), SLOT(emitChanged()));
-    connect(ui.kcfg_api_key, SIGNAL(textChanged(QString)), SLOT(emitChanged()));
-    connect(ui.kcfg_domain, SIGNAL(currentIndexChanged(int)), SLOT(emitChanged()));
-    connect(ui.validate_button, SIGNAL(clicked(bool)), SLOT(slotValidate()));
+    connect(ui.kcfg_login, &QLineEdit::textChanged, this, &Bit_ly_Config::emitChanged);
+    connect(ui.kcfg_api_key, &QLineEdit::textChanged, this, &Bit_ly_Config::emitChanged);
+    connect(ui.kcfg_domain, (void (QComboBox::*)(int))&QComboBox::currentIndexChanged,
+            this, &Bit_ly_Config::emitChanged);
+    connect(ui.validate_button, &QPushButton::clicked, this, &Bit_ly_Config::slotValidate);
 }
 
 Bit_ly_Config::~Bit_ly_Config()

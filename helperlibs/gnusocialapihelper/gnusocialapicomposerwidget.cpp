@@ -63,13 +63,13 @@ GNUSocialApiComposerWidget::GNUSocialApiComposerWidget(Choqok::Account *account,
     d->btnAttach->setIcon(QIcon::fromTheme(QLatin1String("mail-attachment")));
     d->btnAttach->setToolTip(i18n("Attach a file"));
     d->btnAttach->setMaximumWidth(d->btnAttach->height());
-    connect(d->btnAttach, SIGNAL(clicked(bool)), this, SLOT(selectMediumToAttach()));
+    connect(d->btnAttach, &QPushButton::clicked, this, &GNUSocialApiComposerWidget::selectMediumToAttach);
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addWidget(d->btnAttach);
     vLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Preferred, QSizePolicy::MinimumExpanding));
     d->editorLayout->addItem(vLayout, 0, 1, 1, 1);
 
-    connect(account, SIGNAL(modified(Choqok::Account*)), this, SLOT(slotRebuildEditor(Choqok::Account*)));
+    connect(account, &Choqok::Account::modified, this, &GNUSocialApiComposerWidget::slotRebuildEditor);
 }
 
 GNUSocialApiComposerWidget::~GNUSocialApiComposerWidget()
@@ -95,15 +95,13 @@ void GNUSocialApiComposerWidget::submitPost(const QString &txt)
         if (!replyToId.isEmpty()) {
             postToSubmit()->replyToPostId = replyToId;
         }
-        connect(currentAccount()->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-                SLOT(slotPostMediaSubmitted(Choqok::Account*,Choqok::Post*)));
-        connect(currentAccount()->microblog(),
-                SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
-                                 QString, Choqok::MicroBlog::ErrorLevel)),
-                SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
+        connect(currentAccount()->microblog(), &Choqok::MicroBlog::postCreated,
+                this, &GNUSocialApiComposerWidget::slotPostMediaSubmitted);
+        connect(currentAccount()->microblog(), &Choqok::MicroBlog::errorPost,
+                this, &GNUSocialApiComposerWidget::slotErrorPost);
         btnAbort = new QPushButton(QIcon::fromTheme(QLatin1String("dialog-cancel")), i18n("Abort"), this);
         layout()->addWidget(btnAbort);
-        connect(btnAbort, SIGNAL(clicked(bool)), SLOT(abort()));
+        connect(btnAbort, &QPushButton::clicked, this, &Choqok::UI::ComposerWidget::abort);
         GNUSocialApiMicroBlog *mBlog = qobject_cast<GNUSocialApiMicroBlog *>(currentAccount()->microblog());
         mBlog->createPostWithAttachment(currentAccount(), postToSubmit(), d->mediumToAttach);
     }
@@ -114,12 +112,10 @@ void GNUSocialApiComposerWidget::slotPostMediaSubmitted(Choqok::Account *theAcco
     qCDebug(CHOQOK);
     if (currentAccount() == theAccount && post == postToSubmit()) {
         qCDebug(CHOQOK) << "Accepted";
-        disconnect(currentAccount()->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-                   this, SLOT(slotPostMediaSubmitted(Choqok::Account*,Choqok::Post*)));
-        disconnect(currentAccount()->microblog(),
-                   SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
-                                    QString, Choqok::MicroBlog::ErrorLevel)),
-                   this, SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
+        disconnect(currentAccount()->microblog(), &Choqok::MicroBlog::postCreated,
+                   this, &GNUSocialApiComposerWidget::slotPostMediaSubmitted);
+        disconnect(currentAccount()->microblog(), &Choqok::MicroBlog::errorPost,
+                   this, &GNUSocialApiComposerWidget::slotErrorPost);
         if (btnAbort) {
             btnAbort->deleteLater();
         }
@@ -149,7 +145,7 @@ void GNUSocialApiComposerWidget::selectMediumToAttach()
         d->btnCancel->setIcon(QIcon::fromTheme(QLatin1String("list-remove")));
         d->btnCancel->setToolTip(i18n("Discard Attachment"));
         d->btnCancel->setMaximumWidth(d->btnCancel->height());
-        connect(d->btnCancel, SIGNAL(clicked(bool)), SLOT(cancelAttachMedium()));
+        connect(d->btnCancel, &QPushButton::clicked, this, &GNUSocialApiComposerWidget::cancelAttachMedium);
 
         d->editorLayout->addWidget(d->mediumName, 1, 0);
         d->editorLayout->addWidget(d->btnCancel, 1, 1);

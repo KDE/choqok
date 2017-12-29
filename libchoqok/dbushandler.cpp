@@ -72,7 +72,7 @@ void DbusHandler::shareUrl(const QString &url, bool title)
         if (!job) {
             qCDebug(CHOQOK) << "Cannot create an http GET request!";
         } else {
-            connect(job, SIGNAL(result(KJob*)), this, SLOT(slotTitleUrl(KJob*)));
+            connect(job, &KIO::StoredTransferJob::result, this, &DbusHandler::slotTitleUrl);
             job->start();
         }
     }
@@ -113,7 +113,8 @@ void DbusHandler::postText(const QString &text)
     //  that DBusHandler is ready, but QuickPost widget not yet.
     if (Choqok::UI::Global::quickPostWidget() == 0) {
         m_textToPost = QString(text);
-        connect(Choqok::UI::Global::mainWindow(), SIGNAL(quickPostCreated()), SLOT(slotcreatedQuickPost()));
+        connect(Choqok::UI::Global::mainWindow(), &UI::MainWindow::quickPostCreated,
+                this, &DbusHandler::slotcreatedQuickPost);
         return;
     }
     if (Choqok::UI::Global::quickPostWidget()->isVisible()) {

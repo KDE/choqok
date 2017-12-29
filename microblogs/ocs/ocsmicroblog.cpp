@@ -46,8 +46,8 @@ OCSMicroblog::OCSMicroblog(QObject *parent, const QVariantList &)
     , mProviderManager(new Attica::ProviderManager)
     , mIsOperational(false)
 {
-    connect(mProviderManager, SIGNAL(defaultProvidersLoaded()),
-            this, SLOT(slotDefaultProvidersLoaded()));
+    connect(mProviderManager, &Attica::ProviderManager::defaultProvidersLoaded,
+            this, &OCSMicroblog::slotDefaultProvidersLoaded);
     mProviderManager->loadDefaultProviders();
     setServiceName(QLatin1String("Social Desktop Activities"));
 }
@@ -162,7 +162,8 @@ void OCSMicroblog::createPost(Choqok::Account *theAccount, Choqok::Post *post)
     Attica::PostJob *job = acc->provider().postActivity(post->content);
     mJobsAccount.insert(job, acc);
     mJobsPost.insert(job, post);
-    connect(job, SIGNAL(finished(Attica::BaseJob*)), SLOT(slotCreatePost(Attica::BaseJob*)));
+    connect(job, &Attica::PostJob::finished, this,
+            &OCSMicroblog::slotCreatePost);
     job->start();
 }
 
@@ -217,7 +218,7 @@ void OCSMicroblog::updateTimelines(Choqok::Account *theAccount)
     }
     Attica::ListJob <Attica::Activity> *job = acc->provider().requestActivities();
     mJobsAccount.insert(job, acc);
-    connect(job, SIGNAL(finished(Attica::BaseJob*)), SLOT(slotTimelineLoaded(Attica::BaseJob*)));
+    connect(job, &Attica::BaseJob::finished, this, &OCSMicroblog::slotTimelineLoaded);
     job->start();
 }
 

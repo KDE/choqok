@@ -94,8 +94,10 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args)
     d->proxyModule = new KCModuleProxy(proxyInfo, parent);
     d->mBehaviorTabCtl->addTab(d->proxyModule, proxyInfo.moduleName());
 
-    connect(d->mPrfsShorten, SIGNAL(changed(bool)), this, SIGNAL(changed(bool)));
-    connect(d->proxyModule,   SIGNAL(changed(bool)), this, SIGNAL(changed(bool)));
+    connect(d->mPrfsShorten, (void (BehaviorConfig_Shorten::*)(bool))&BehaviorConfig_Shorten::changed,
+            this, (void (KCModule::*)())&KCModule::changed);
+    connect(d->proxyModule, (void (KCModuleProxy::*)(KCModuleProxy*))&KCModuleProxy::changed,
+            this, (void (KCModule::*)())&KCModule::changed);
 
     load();
 

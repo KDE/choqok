@@ -72,27 +72,27 @@ void TwitterApiPostWidget::initUi()
     Choqok::UI::PostWidget::initUi();
 
     QPushButton *btnRe = addButton(QLatin1String("btnReply"), i18nc("@info:tooltip", "Reply"), QLatin1String("edit-undo"));
-    connect(btnRe, SIGNAL(clicked(bool)), SLOT(slotReply()));
+    connect(btnRe, &QPushButton::clicked, this, &TwitterApiPostWidget::slotReply);
     QMenu *menu = new QMenu(btnRe);
     btnRe->setMenu(menu);
 
     QAction *actRep = new QAction(QIcon::fromTheme(QLatin1String("edit-undo")), i18n("Reply to %1", currentPost()->author.userName), menu);
     menu->addAction(actRep);
     menu->setDefaultAction(actRep);
-    connect(actRep, SIGNAL(triggered(bool)), SLOT(slotReply()));
+    connect(actRep, &QAction::triggered, this, &TwitterApiPostWidget::slotReply);
 
     QAction *actWrite = new QAction(QIcon::fromTheme(QLatin1String("document-edit")), i18n("Write to %1", currentPost()->author.userName), menu);
     menu->addAction(actWrite);
-    connect(actWrite, SIGNAL(triggered(bool)), SLOT(slotWriteTo()));
+    connect(actWrite, &QAction::triggered, this, &TwitterApiPostWidget::slotWriteTo);
 
     if (!currentPost()->isPrivate) {
         QAction *actReplytoAll = new QAction(i18n("Reply to all"), menu);
         menu->addAction(actReplytoAll);
-        connect(actReplytoAll, SIGNAL(triggered(bool)), SLOT(slotReplyToAll()));
+        connect(actReplytoAll, &QAction::triggered, this, &TwitterApiPostWidget::slotReplyToAll);
 
         d->btnFav = addButton(QLatin1String("btnFavorite"), i18nc("@info:tooltip", "Favorite"), QLatin1String("rating"));
         d->btnFav->setCheckable(true);
-        connect(d->btnFav, SIGNAL(clicked(bool)), SLOT(setFavorite()));
+        connect(d->btnFav, &QPushButton::clicked, this, &TwitterApiPostWidget::setFavorite);
         updateFavStat();
     }
 }
@@ -208,12 +208,10 @@ void TwitterApiPostWidget::setFavorite()
     setReadWithSignal();
     TwitterApiMicroBlog *mic = d->mBlog;
     if (currentPost()->isFavorited) {
-        connect(mic, SIGNAL(favoriteRemoved(Choqok::Account*,QString)),
-                this, SLOT(slotSetFavorite(Choqok::Account*,QString)));
+        connect(mic, &TwitterApiMicroBlog::favoriteRemoved, this, &TwitterApiPostWidget::slotSetFavorite);
         mic->removeFavorite(currentAccount(), currentPost()->postId);
     } else {
-        connect(mic, SIGNAL(favoriteCreated(Choqok::Account*,QString)),
-                this, SLOT(slotSetFavorite(Choqok::Account*,QString)));
+        connect(mic, &TwitterApiMicroBlog::favoriteCreated, this, &TwitterApiPostWidget::slotSetFavorite);
         mic->createFavorite(currentAccount(), currentPost()->postId);
     }
 }
@@ -224,10 +222,8 @@ void TwitterApiPostWidget::slotSetFavorite(Choqok::Account *theAccount, const QS
         qCDebug(CHOQOK) << postId;
         currentPost()->isFavorited = !currentPost()->isFavorited;
         updateFavStat();
-        disconnect(d->mBlog, SIGNAL(favoriteRemoved(Choqok::Account*,QString)),
-                   this, SLOT(slotSetFavorite(Choqok::Account*,QString)));
-        disconnect(d->mBlog, SIGNAL(favoriteCreated(Choqok::Account*,QString)),
-                   this, SLOT(slotSetFavorite(Choqok::Account*,QString)));
+        disconnect(d->mBlog, &TwitterApiMicroBlog::favoriteRemoved, this, &TwitterApiPostWidget::slotSetFavorite);
+        disconnect(d->mBlog, &TwitterApiMicroBlog::favoriteCreated, this, &TwitterApiPostWidget::slotSetFavorite);
     }
 }
 
@@ -252,8 +248,8 @@ void TwitterApiPostWidget::checkAnchor(const QUrl &url)
             d->isBasePostShowed = false;
             return;
         } else {
-            connect(currentAccount()->microblog(), SIGNAL(postFetched(Choqok::Account*,Choqok::Post*)),
-                    this, SLOT(slotBasePostFetched(Choqok::Account*,Choqok::Post*)));
+            connect(currentAccount()->microblog(), &Choqok::MicroBlog::postFetched,
+                    this, &TwitterApiPostWidget::slotBasePostFetched);
             Choqok::Post *ps = new Choqok::Post;
             ps->postId = url.host();
             currentAccount()->microblog()->fetchPost(currentAccount(), ps);
@@ -261,10 +257,8 @@ void TwitterApiPostWidget::checkAnchor(const QUrl &url)
     } else if (scheme == QLatin1String("thread")) {
         TwitterApiShowThread *wd = new TwitterApiShowThread(currentAccount(), currentPost(), nullptr);
         wd->resize(this->width(), wd->height());
-        connect(wd, SIGNAL(forwardReply(QString,QString,QString)),
-                this, SIGNAL(reply(QString,QString,QString)));
-        connect(wd, SIGNAL(forwardResendPost(QString)),
-                this, SIGNAL(resendPost(QString)));
+        connect(wd, &TwitterApiShowThread::forwardReply, this, &TwitterApiPostWidget::reply);
+        connect(wd, &TwitterApiShowThread::forwardResendPost, this, &TwitterApiPostWidget::resendPost);
         wd->show();
     } else {
         Choqok::UI::PostWidget::checkAnchor(url);
@@ -276,8 +270,8 @@ void TwitterApiPostWidget::slotBasePostFetched(Choqok::Account *theAccount, Choq
 {
     if (theAccount == currentAccount() && post && post->postId == currentPost()->replyToPostId) {
         qCDebug(CHOQOK);
-        disconnect(currentAccount()->microblog(), SIGNAL(postFetched(Choqok::Account*,Choqok::Post*)),
-                   this, SLOT(slotBasePostFetched(Choqok::Account*,Choqok::Post*)));
+        disconnect(currentAccount()->microblog(), &Choqok::MicroBlog::postFetched,
+                   this, &TwitterApiPostWidget::slotBasePostFetched);
         if (d->isBasePostShowed) {
             return;
         }

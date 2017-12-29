@@ -23,7 +23,13 @@
 
 #include "notifyconfig.h"
 
+#include <QListWidget>
+#include <QPushButton>
+#include <QSpinBox>
+
 #include <KAboutData>
+#include <KColorButton>
+#include <KFontRequester>
 #include <KPluginFactory>
 
 #include "account.h"
@@ -43,13 +49,15 @@ NotifyConfig::NotifyConfig(QWidget *parent, const QVariantList &args)
     wd->setObjectName(QLatin1String("mNotifyCtl"));
     ui.setupUi(wd);
     layout->addWidget(wd);
-    connect(ui.accountsList, SIGNAL(currentRowChanged(int)), SLOT(updateTimelinesList()));
-    connect(ui.timelinesList, SIGNAL(itemSelectionChanged()), SLOT(timelineSelectionChanged()));
-    connect(ui.interval, SIGNAL(valueChanged(int)), this, SLOT(emitChanged()));
-    connect(ui.adjustPosition, SIGNAL(clicked()), this, SLOT(slotAdjustNotificationPosition()));
-    connect(ui.backgroundColor, SIGNAL(changed(QColor)), this, SLOT(emitChanged()));
-    connect(ui.foregroundColor, SIGNAL(changed(QColor)), this, SLOT(emitChanged()));
-    connect(ui.font, SIGNAL(fontSelected(QFont)), this, SLOT(emitChanged()));
+    connect(ui.accountsList, &QListWidget::currentRowChanged,
+            this, &NotifyConfig::updateTimelinesList);
+    connect(ui.timelinesList, &QListWidget::itemSelectionChanged,
+            this, &NotifyConfig::timelineSelectionChanged);
+    connect(ui.interval, (void (QSpinBox::*)(int))&QSpinBox::valueChanged, this, &NotifyConfig::emitChanged);
+    connect(ui.adjustPosition, &QPushButton::clicked, this, &NotifyConfig::slotAdjustNotificationPosition);
+    connect(ui.backgroundColor, &KColorButton::changed, this, &NotifyConfig::emitChanged);
+    connect(ui.foregroundColor, &KColorButton::changed, this, &NotifyConfig::emitChanged);
+    connect(ui.font, &KFontRequester::fontSelected, this, &NotifyConfig::emitChanged);
     settings = new NotifySettings(this);
     ui.lblArrow->setPixmap(QIcon::fromTheme(QLatin1String("arrow-right")).pixmap(48));
 }
@@ -126,7 +134,7 @@ void NotifyConfig::slotAdjustNotificationPosition()
                                       ui.backgroundColor->color(), this);
         dummy->setAttribute(Qt::WA_DeleteOnClose);
         dummy->resize(NOTIFICATION_WIDTH, NOTIFICATION_HEIGHT);
-        connect(dummy, SIGNAL(positionSelected(QPoint)), this, SLOT(slotNewPositionSelected(QPoint)));
+        connect(dummy, &DummyNotification::positionSelected, this, &NotifyConfig::slotNewPositionSelected);
     }
     dummy->move(settings->position());
     dummy->show();

@@ -60,7 +60,7 @@ PumpIOComposerWidget::PumpIOComposerWidget(Choqok::Account *account, QWidget *pa
     d->btnAttach->setIcon(QIcon::fromTheme(QLatin1String("mail-attachment")));
     d->btnAttach->setToolTip(i18n("Attach a file"));
     d->btnAttach->setMaximumWidth(d->btnAttach->height());
-    connect(d->btnAttach, SIGNAL(clicked(bool)), this, SLOT(attachMedia()));
+    connect(d->btnAttach, &QPushButton::clicked, this, &PumpIOComposerWidget::attachMedia);
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addWidget(d->btnAttach);
     vLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Preferred, QSizePolicy::MinimumExpanding));
@@ -87,15 +87,13 @@ void PumpIOComposerWidget::submitPost(const QString &text)
     if (!replyToId.isEmpty()) {
         postToSubmit()->replyToPostId = replyToId;
     }
-    connect(currentAccount()->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-            this, SLOT(slotPostSubmited(Choqok::Account*,Choqok::Post*)));
-    connect(currentAccount()->microblog(),
-            SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
-                             QString, Choqok::MicroBlog::ErrorLevel)), this,
-            SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
+    connect(currentAccount()->microblog(), &Choqok::MicroBlog::postCreated, this,
+            &PumpIOComposerWidget::slotPostSubmited);
+    connect(currentAccount()->microblog(), &Choqok::MicroBlog::errorPost, this,
+            &PumpIOComposerWidget::slotErrorPost);
     btnAbort = new QPushButton(QIcon::fromTheme(QLatin1String("dialog-cancel")), i18n("Abort"), this);
     layout()->addWidget(btnAbort);
-    connect(btnAbort, SIGNAL(clicked(bool)), SLOT(abort()));
+    connect(btnAbort, &QPushButton::clicked, this, &PumpIOComposerWidget::abort);
 
     PumpIOMicroBlog *mBlog = qobject_cast<PumpIOMicroBlog * >(currentAccount()->microblog());
     if (d->mediumToAttach.isEmpty()) {
@@ -121,12 +119,10 @@ void PumpIOComposerWidget::slotPostSubmited(Choqok::Account *theAccount, Choqok:
     qCDebug(CHOQOK);
     if (currentAccount() == theAccount && post == postToSubmit()) {
         qCDebug(CHOQOK) << "Accepted";
-        disconnect(currentAccount()->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-                   this, SLOT(slotPostSubmited(Choqok::Account*,Choqok::Post*)));
-        disconnect(currentAccount()->microblog(),
-                   SIGNAL(errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
-                                    QString, Choqok::MicroBlog::ErrorLevel)),
-                   this, SLOT(slotErrorPost(Choqok::Account*,Choqok::Post*)));
+        disconnect(currentAccount()->microblog(), &Choqok::MicroBlog::postCreated,
+                   this, &PumpIOComposerWidget::slotPostSubmited);
+        disconnect(currentAccount()->microblog(), &Choqok::MicroBlog::errorPost,
+                   this, &PumpIOComposerWidget::slotErrorPost);
         if (btnAbort) {
             btnAbort->deleteLater();
         }
@@ -155,7 +151,7 @@ void PumpIOComposerWidget::attachMedia()
         d->btnCancel->setIcon(QIcon::fromTheme(QLatin1String("list-remove")));
         d->btnCancel->setToolTip(i18n("Discard Attachment"));
         d->btnCancel->setMaximumWidth(d->btnCancel->height());
-        connect(d->btnCancel, SIGNAL(clicked(bool)), SLOT(cancelAttach()));
+        connect(d->btnCancel, &QPushButton::clicked, this, &PumpIOComposerWidget::cancelAttach);
 
         d->editorLayout->addWidget(d->mediumName, 1, 0);
         d->editorLayout->addWidget(d->btnCancel, 1, 1);

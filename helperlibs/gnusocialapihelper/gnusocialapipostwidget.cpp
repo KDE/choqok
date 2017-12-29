@@ -86,10 +86,10 @@ void GNUSocialApiPostWidget::initUi()
     if (btn) {
         QMenu *menu = new QMenu(btn);
         QAction *resend = new QAction(i18n("Manual ReSend"), menu);
-        connect(resend, SIGNAL(triggered(bool)), SLOT(slotResendPost()));
+        connect(resend, &QAction::triggered, this, &GNUSocialApiPostWidget::slotResendPost);
         QAction *repeat = new QAction(i18n("Repeat"), menu);
         repeat->setToolTip(i18n("Repeat post using API"));
-        connect(repeat, SIGNAL(triggered(bool)), SLOT(repeatPost()));
+        connect(repeat, &QAction::triggered, this, &GNUSocialApiPostWidget::repeatPost);
         menu->addAction(repeat);
         menu->addAction(resend);
         btn->setMenu(menu);
@@ -276,8 +276,8 @@ void GNUSocialApiPostWidget::checkAnchor(const QUrl &url)
     } else if (scheme == QLatin1String("conversation")) {
         GNUSocialApiConversationTimelineWidget *tm = new GNUSocialApiConversationTimelineWidget(currentAccount(),
                 url.host());
-        connect(tm, SIGNAL(forwardReply(QString,QString,QString)), this, SIGNAL(reply(QString,QString,QString)));
-        connect(tm, SIGNAL(forwardResendPost(QString)), this, SIGNAL(resendPost(QString)));
+        connect(tm, &GNUSocialApiConversationTimelineWidget::forwardReply, this, &GNUSocialApiPostWidget::reply);
+        connect(tm, &GNUSocialApiConversationTimelineWidget::forwardResendPost, this, &GNUSocialApiPostWidget::resendPost);
         tm->show();
     } else {
         TwitterApiPostWidget::checkAnchor(url);

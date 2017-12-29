@@ -50,15 +50,14 @@ FilterManager::FilterManager(QObject *parent, const QList<QVariant> &)
 {
     QAction *action = new QAction(i18n("Configure Filters..."), this);
     actionCollection()->addAction(QLatin1String("configureFilters"), action);
-    connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureFilters()));
+    connect(action, &QAction::triggered, this, &FilterManager::slotConfigureFilters);
     setXMLFile(QLatin1String("filterui.rc"));
-    connect(Choqok::UI::Global::SessionManager::self(),
-            SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
-            SLOT(slotAddNewPostWidget(Choqok::UI::PostWidget*)));
+    connect(Choqok::UI::Global::SessionManager::self(), &Choqok::UI::Global::SessionManager::newPostWidgetAdded,
+            this, &FilterManager::slotAddNewPostWidget);
 
     hidePost = new QAction(i18n("Hide Post"), this);
     Choqok::UI::PostWidget::addAction(hidePost);
-    connect(hidePost, SIGNAL(triggered(bool)), SLOT(slotHidePost()));
+    connect(hidePost, &QAction::triggered, this, &FilterManager::slotHidePost);
 }
 
 FilterManager::~FilterManager()

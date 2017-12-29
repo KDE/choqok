@@ -94,8 +94,7 @@ void Twitgoo::upload(const QUrl &localUrl, const QByteArray &medium, const QByte
     job->addMetaData(QStringLiteral("content-type"),
                      QStringLiteral("Content-Type: multipart/form-data; boundary=AaB03x"));
     mUrlMap[job] = localUrl;
-    connect(job, SIGNAL(result(KJob*)),
-            SLOT(slotUpload(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &Twitgoo::slotUpload);
     job->start();
 }
 

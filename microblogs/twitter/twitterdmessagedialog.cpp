@@ -57,7 +57,7 @@ void TwitterDMessageDialog::fetchTextLimit()
     job->addMetaData(QStringLiteral("customHTTPHeader"),
                      QStringLiteral("Authorization: ") +
                      QLatin1String(mBlog->authorizationHeader(account(), url, QNetworkAccessManager::GetOperation)));
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotTextLimit(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &TwitterDMessageDialog::slotTextLimit);
     job->start();
 }
 

@@ -118,7 +118,7 @@ void TwitterSearch::requestSearchResults(const SearchInfo &searchInfo,
                      QLatin1String(microblog->authorizationHeader(account, url, QNetworkAccessManager::GetOperation)));
 
     mSearchJobs[job] = searchInfo;
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(searchResultsReturned(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &TwitterSearch::searchResultsReturned);
     job->start();
 }
 

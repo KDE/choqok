@@ -31,8 +31,8 @@ TwitterApiTimelineWidget::TwitterApiTimelineWidget(Choqok::Account *account, con
 {
     if (timelineName == QLatin1String("Favorite")) {
         TwitterApiMicroBlog *mBlog = qobject_cast<TwitterApiMicroBlog *>(account->microblog());
-        connect(mBlog, SIGNAL(favoriteRemoved(Choqok::Account*,QString)),
-                this, SLOT(removeUnFavoritedPost(Choqok::Account*,QString)));
+        connect(mBlog, &TwitterApiMicroBlog::favoriteRemoved, this,
+                &TwitterApiTimelineWidget::removeUnFavoritedPost);
     }
 }
 

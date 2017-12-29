@@ -83,12 +83,11 @@ TwitterApiMicroBlogWidget::TwitterApiMicroBlogWidget(Choqok::Account *account, Q
     : MicroBlogWidget(account, parent), d(new Private(account))
 {
     qCDebug(CHOQOK);
-    connect(account, SIGNAL(modified(Choqok::Account*)),
-            this, SLOT(slotAccountModified(Choqok::Account*)));
-    connect(d->mBlog->searchBackend(),
-            SIGNAL(searchResultsReceived(SearchInfo,QList<Choqok::Post*>&)),
-            SLOT(slotSearchResultsReceived(SearchInfo,QList<Choqok::Post*>&)));
-    connect(d->mBlog, SIGNAL(saveTimelines()), SLOT(saveSearchTimelinesState()));
+    connect(account, &Choqok::Account::modified, this, &TwitterApiMicroBlogWidget::slotAccountModified);
+    connect(d->mBlog->searchBackend(), &TwitterApiSearch::searchResultsReceived,
+            this, &TwitterApiMicroBlogWidget::slotSearchResultsReceived);
+    connect(d->mBlog, &TwitterApiMicroBlog::saveTimelines, this,
+            &TwitterApiMicroBlogWidget::saveSearchTimelinesState);
     loadSearchTimelinesState();
 }
 
@@ -96,8 +95,8 @@ void TwitterApiMicroBlogWidget::initUi()
 {
     qCDebug(CHOQOK);
     Choqok::UI::MicroBlogWidget::initUi();
-    connect(timelinesTabWidget(), SIGNAL(contextMenu(QWidget*,QPoint)),
-            this, SLOT(slotContextMenu(QWidget*,QPoint)));
+    connect(timelinesTabWidget(), (void (Choqok::UI::ChoqokTabBar::*)(QWidget*,const QPoint&))&Choqok::UI::ChoqokTabBar::contextMenu,
+            this, &TwitterApiMicroBlogWidget::slotContextMenu);
 //     connect(timelinesTabWidget(), SIGNAL(currentChanged(int)), SLOT(slotCurrentTimelineChanged(int)) );
 //     d->btnCloseSearch->setIcon(QIcon::fromTheme("tab-close"));
 //     d->btnCloseSearch->setAutoRaise(true);
@@ -154,14 +153,11 @@ TwitterApiSearchTimelineWidget *TwitterApiMicroBlogWidget::addSearchTimelineWidg
         QIcon icon = addTextToIcon(QIcon::fromTheme(QLatin1String("edit-find")), textToAdd, QSize(40, 40), palette());
         mbw->setTimelineIcon(icon);
         timelinesTabWidget()->setTabIcon(timelinesTabWidget()->indexOf(mbw), icon);
-        connect(mbw, SIGNAL(updateUnreadCount(int)),
-                this, SLOT(slotUpdateUnreadCount(int)));
-        connect(mbw, SIGNAL(closeMe()), this, SLOT(slotCloseCurrentSearch()));
+        connect(mbw, SIGNAL(updateUnreadCount(int)), this, SLOT(slotUpdateUnreadCount(int)));
+        connect(mbw, &TwitterApiSearchTimelineWidget::closeMe, this, &TwitterApiMicroBlogWidget::slotCloseCurrentSearch);
         if (composer()) {
-            connect(mbw, SIGNAL(forwardResendPost(QString)),
-                    composer(), SLOT(setText(QString)));
-            connect(mbw, SIGNAL(forwardReply(QString,QString,QString)),
-                    composer(), SLOT(setText(QString,QString,QString)));
+            connect(mbw, SIGNAL(forwardResendPost(QString)), composer(), SLOT(setText(QString)));
+            connect(mbw, &TwitterApiSearchTimelineWidget::forwardReply, composer(), &Choqok::UI::ComposerWidget::setText);
         }
         timelinesTabWidget()->setCurrentWidget(mbw);
     } else {
@@ -244,7 +240,7 @@ void TwitterApiMicroBlogWidget::slotContextMenu(QWidget *w, const QPoint &pt)
     if (sWidget->isClosable()) {
         ac = new QAction(QIcon::fromTheme(QLatin1String("tab-close")), i18n("Close Timeline"), &menu);
         QAction *closeAll = new QAction(QIcon::fromTheme(QLatin1String("tab-close")), i18n("Close All"), &menu);
-        connect(closeAll, SIGNAL(triggered(bool)), this, SLOT(closeAllSearches()));
+        connect(closeAll, &QAction::triggered, this, &TwitterApiMicroBlogWidget::closeAllSearches);
         menu.addAction(ac);
         menu.addAction(closeAll);
     }

@@ -240,8 +240,7 @@ void GNUSocialApiMicroBlog::createPostWithAttachment(Choqok::Account *theAccount
                          QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::PostOperation)));
         mCreatePostMap[ job ] = post;
         mJobsAccount[job] = theAccount;
-        connect(job, SIGNAL(result(KJob*)),
-                SLOT(slotCreatePost(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &GNUSocialApiMicroBlog::slotCreatePost);
         job->start();
     }
 }
@@ -332,7 +331,7 @@ void GNUSocialApiMicroBlog::doRequestFriendsScreenName(TwitterApiAccount *theAcc
                      QStringLiteral("Authorization: ") +
                      QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::GetOperation)));
     mJobsAccount[job] = theAccount;
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRequestFriendsScreenName(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &GNUSocialApiMicroBlog::slotRequestFriendsScreenName);
     job->start();
 }
 
@@ -377,7 +376,7 @@ void GNUSocialApiMicroBlog::fetchConversation(Choqok::Account *theAccount, const
                      QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::GetOperation)));
     mFetchConversationMap[ job ] = conversationId;
     mJobsAccount[ job ] = theAccount;
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchConversation(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &GNUSocialApiMicroBlog::slotFetchConversation);
     job->start();
 }
 

@@ -42,10 +42,8 @@ UnTiny::UnTiny(QObject* parent, const QList< QVariant >& )
     : Choqok::Plugin(QLatin1String("choqok_untiny"), parent)
     , state(Stopped)
 {
-    connect( Choqok::UI::Global::SessionManager::self(),
-             &Choqok::UI::Global::SessionManager::newPostWidgetAdded,
-             this,
-             &UnTiny::slotAddNewPostWidget );
+    connect(Choqok::UI::Global::SessionManager::self(), &Choqok::UI::Global::SessionManager::newPostWidgetAdded,
+            this, &UnTiny::slotAddNewPostWidget);
 }
 
 UnTiny::~UnTiny()

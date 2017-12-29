@@ -23,6 +23,7 @@
 
 #include "configurefilters.h"
 
+#include <QCheckBox>
 #include <QDialogButtonBox>
 #include <QPointer>
 #include <QPushButton>
@@ -46,17 +47,17 @@ ConfigureFilters::ConfigureFilters(QWidget *parent):
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &ConfigureFilters::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &ConfigureFilters::reject);
     mainLayout->addWidget(buttonBox);
 
     resize(500, 300);
 
-    connect(ui.btnAdd, SIGNAL(clicked()), SLOT(slotAddFilter()));
-    connect(ui.btnEdit, SIGNAL(clicked()), SLOT(slotEditFilter()));
-    connect(ui.btnRemove, SIGNAL(clicked()), SLOT(slotRemoveFilter()));
-    connect(ui.cfg_hideRepliesNotRelatedToMe, SIGNAL(toggled(bool)),
-            this, SLOT(slotHideRepliesNotRelatedToMeToggled(bool)));
+    connect(ui.btnAdd, &QPushButton::clicked, this, &ConfigureFilters::slotAddFilter);
+    connect(ui.btnEdit, &QPushButton::clicked, this, &ConfigureFilters::slotEditFilter);
+    connect(ui.btnRemove, &QPushButton::clicked, this, &ConfigureFilters::slotRemoveFilter);
+    connect(ui.cfg_hideRepliesNotRelatedToMe, &QCheckBox::toggled, this,
+            &ConfigureFilters::slotHideRepliesNotRelatedToMeToggled);
     reloadFiltersTable();
 }
 
@@ -104,7 +105,7 @@ void ConfigureFilters::saveFiltersTable()
 void ConfigureFilters::slotAddFilter()
 {
     AddEditFilter *f = new AddEditFilter(this);
-    connect(f, SIGNAL(newFilterRegistered(Filter*)), SLOT(addNewFilter(Filter*)));
+    connect(f, &AddEditFilter::newFilterRegistered, this, &ConfigureFilters::addNewFilter);
     f->show();
 }
 
@@ -119,7 +120,7 @@ void ConfigureFilters::slotEditFilter()
         QString text = ui.filters->item(row, 2)->text();
         Filter *f = new Filter(text, field, type, action, dontHideReplies, this);
         QPointer<AddEditFilter> dialog = new AddEditFilter(this, f);
-        connect(dialog, SIGNAL(filterUpdated(Filter*)), SLOT(slotUpdateFilter(Filter*)));
+        connect(dialog, &AddEditFilter::filterUpdated, this, &ConfigureFilters::slotUpdateFilter);
         dialog->exec();
     }
 }

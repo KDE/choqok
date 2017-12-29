@@ -23,6 +23,9 @@
 
 #include "mobypictureconfig.h"
 
+#include <QComboBox>
+#include <QLineEdit>
+#include <QRadioButton>
 #include <QVBoxLayout>
 
 #include <KAboutData>
@@ -48,11 +51,12 @@ MobypictureConfig::MobypictureConfig(QWidget *parent, const QVariantList &)
     addConfig(MobypictureSettings::self(), wd);
     layout->addWidget(wd);
     ui.cfg_pin->setEchoMode(QLineEdit::Password);
-    connect(ui.cfg_basic, SIGNAL(clicked(bool)), SLOT(emitChanged()));
-    connect(ui.cfg_login, SIGNAL(textChanged(QString)), SLOT(emitChanged()));
-    connect(ui.cfg_pin, SIGNAL(textChanged(QString)), SLOT(emitChanged()));
-    connect(ui.cfg_oauth, SIGNAL(clicked(bool)), SLOT(emitChanged()));
-    connect(ui.cfg_accountsList, SIGNAL(currentIndexChanged(int)), SLOT(emitChanged()));
+    connect(ui.cfg_basic, &QRadioButton::clicked, this, &MobypictureConfig::emitChanged);
+    connect(ui.cfg_login, &QLineEdit::textChanged, this, &MobypictureConfig::emitChanged);
+    connect(ui.cfg_pin, &QLineEdit::textChanged, this, &MobypictureConfig::emitChanged);
+    connect(ui.cfg_oauth, &QRadioButton::clicked, this, &MobypictureConfig::emitChanged);
+    connect(ui.cfg_accountsList, (void (QComboBox::*)(int))&QComboBox::currentIndexChanged,
+            this, &MobypictureConfig::emitChanged);
 }
 
 MobypictureConfig::~MobypictureConfig()

@@ -22,6 +22,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 */
 #include "behaviorconfig_shorten.h"
 
+#include <QComboBox>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QLayout>
@@ -44,7 +45,8 @@ BehaviorConfig_Shorten::BehaviorConfig_Shorten(QWidget *parent)
     qCDebug(CHOQOK);
     setupUi(this);
     Choqok::ShortenManager::self();
-    connect(shortenPlugins, SIGNAL(currentIndexChanged(int)), SLOT(currentPluginChanged(int)));
+    connect(shortenPlugins, (void (QComboBox::*)(int))&QComboBox::currentIndexChanged,
+            this, &BehaviorConfig_Shorten::currentPluginChanged);
     connect(aboutPlugin,  &QPushButton::clicked, this, &BehaviorConfig_Shorten::slotAboutClicked);
     connect(configPlugin, &QPushButton::clicked, this, &BehaviorConfig_Shorten::slotConfigureClicked);
 }

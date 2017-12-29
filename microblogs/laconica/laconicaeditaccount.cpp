@@ -23,6 +23,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "laconicaeditaccount.h"
 
 #include <QJsonDocument>
+#include <QLineEdit>
 
 #include <KIO/StoredTransferJob>
 #include <KJobWidgets>
@@ -46,7 +47,8 @@ LaconicaEditAccountWidget::LaconicaEditAccountWidget(LaconicaMicroBlog *microblo
 //     connect(kcfg_authorize, SIGNAL(clicked(bool)), SLOT(authorizeUser()));
 //     connect(kcfg_authMethod, SIGNAL(currentIndexChanged(int)), SLOT(slotAuthMethodChanged(int)));
 //     slotAuthMethodChanged(kcfg_authMethod->currentIndex());
-    connect(kcfg_host, SIGNAL(editingFinished()), SLOT(slotCheckHostUrl()));
+    connect(kcfg_host, &QLineEdit::editingFinished, this,
+            &LaconicaEditAccountWidget::slotCheckHostUrl);
     if (mAccount) {
         kcfg_alias->setText(mAccount->alias());
         kcfg_host->setText(mAccount->host());

@@ -203,8 +203,7 @@ void TwitterMicroBlog::createPostWithAttachment(Choqok::Account *theAccount, Cho
                          QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::PostOperation)));
         mCreatePostMap[ job ] = post;
         mJobsAccount[job] = theAccount;
-        connect(job, SIGNAL(result(KJob*)),
-                SLOT(slotCreatePost(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &TwitterMicroBlog::slotCreatePost);
         job->start();
     }
 }
@@ -224,7 +223,7 @@ void TwitterMicroBlog::verifyCredentials(TwitterAccount *theAccount)
                      QStringLiteral("Authorization: ") +
                      QLatin1String(authorizationHeader(theAccount, url, QNetworkAccessManager::GetOperation)));
     mJobsAccount[ job ] = theAccount;
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchVerifyCredentials(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &TwitterMicroBlog::slotFetchVerifyCredentials);
     job->start();
 }
 
@@ -326,7 +325,7 @@ void TwitterMicroBlog::fetchUserLists(TwitterAccount *theAccount, const QString 
                      QLatin1String(authorizationHeader(theAccount, url, QNetworkAccessManager::GetOperation)));
     mFetchUsersListMap[ job ] = username;
     mJobsAccount[ job ] = theAccount;
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchUserLists(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &TwitterMicroBlog::slotFetchUserLists);
     job->start();
 }
 
@@ -510,7 +509,7 @@ void TwitterMicroBlog::fetchPost(Choqok::Account *theAccount, Choqok::Post *post
                      QLatin1String(authorizationHeader(account, tmpUrl, QNetworkAccessManager::GetOperation)));
     mFetchPostMap[ job ] = post;
     mJobsAccount[ job ] = theAccount;
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchPost(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &TwitterMicroBlog::slotFetchPost);
     job->start();
 }
 
@@ -569,7 +568,7 @@ void TwitterMicroBlog::requestTimeLine(Choqok::Account *theAccount, QString type
                      + QLatin1String(authorizationHeader(account, url, QNetworkAccessManager::GetOperation)));
     mRequestTimelineMap[job] = type;
     mJobsAccount[job] = theAccount;
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRequestTimeline(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &TwitterMicroBlog::slotRequestTimeline);
     job->start();
 }
 

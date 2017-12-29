@@ -26,6 +26,7 @@
 #include <QInputDialog>
 #include <QJsonDocument>
 #include <QEventLoop>
+#include <QPushButton>
 #include <QUrl>
 
 #include <KIO/AccessManager>
@@ -48,7 +49,7 @@ PumpIOEditAccountWidget::PumpIOEditAccountWidget(PumpIOMicroBlog *microblog,
 {
     setupUi(this);
 
-    connect(kcfg_authorize, SIGNAL(clicked(bool)), SLOT(authorizeUser()));
+    connect(kcfg_authorize, &QPushButton::clicked, this, &PumpIOEditAccountWidget::authorizeUser);
 
     if (m_account) {
         kcfg_alias->setText(m_account->alias());
@@ -181,7 +182,7 @@ void PumpIOEditAccountWidget::registerClient()
         }
         job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
         QEventLoop loop;
-        connect(job, SIGNAL(result(KJob*)), &loop, SLOT(quit()));
+        connect(job, &KIO::StoredTransferJob::result, &loop, &QEventLoop::quit);
         job->start();
         loop.exec();
 

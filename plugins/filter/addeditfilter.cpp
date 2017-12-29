@@ -23,6 +23,7 @@
 
 #include "addeditfilter.h"
 
+#include <QComboBox>
 #include <QDialogButtonBox>
 #include <QPushButton>
 
@@ -39,11 +40,12 @@ AddEditFilter::AddEditFilter(QWidget *parent, Filter *filter)
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &AddEditFilter::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &AddEditFilter::reject);
     ui.formLayout->addWidget(buttonBox);
 
-    connect(ui.filterAction, SIGNAL(currentIndexChanged(int)), this, SLOT(slotFilterActionChanged(int)));
+    connect(ui.filterAction, (void (QComboBox::*)(int))&QComboBox::currentIndexChanged,
+            this, &AddEditFilter::slotFilterActionChanged);
 
     setupFilterFields();
     setupFilterTypes();

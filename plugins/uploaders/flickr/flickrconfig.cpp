@@ -23,10 +23,12 @@
 
 #include "flickrconfig.h"
 
+#include <QCheckBox>
 #include <QCryptographicHash>
 #include <QDomDocument>
 #include <QDomElement>
 #include <QPushButton>
+#include <QRadioButton>
 #include <QVBoxLayout>
 
 #include <KAboutData>
@@ -59,16 +61,16 @@ FlickrConfig::FlickrConfig(QWidget *parent, const QVariantList &)
     addConfig(FlickrSettings::self(), wd);
     layout->addWidget(wd);
 
-    connect(ui.authButton, SIGNAL(clicked()), SLOT(slotAuthButton_clicked()));
-    connect(ui.cfg_shorturl, SIGNAL(stateChanged(int)), SLOT(emitChanged()));
-    connect(ui.cfg_forprivate, SIGNAL(clicked(bool)), SLOT(emitChanged()));
-    connect(ui.cfg_forfriends, SIGNAL(stateChanged(int)), SLOT(emitChanged()));
-    connect(ui.cfg_forfamily, SIGNAL(stateChanged(int)), SLOT(emitChanged()));
-    connect(ui.cfg_forpublic, SIGNAL(clicked(bool)), SLOT(emitChanged()));
-    connect(ui.cfg_safe, SIGNAL(clicked(bool)), SLOT(emitChanged()));
-    connect(ui.cfg_moderate, SIGNAL(clicked(bool)), SLOT(emitChanged()));
-    connect(ui.cfg_restricted, SIGNAL(clicked(bool)), SLOT(emitChanged()));
-    connect(ui.cfg_hidefromsearch, SIGNAL(stateChanged(int)), SLOT(emitChanged()));
+    connect(ui.authButton, &QPushButton::clicked, this, &FlickrConfig::slotAuthButton_clicked);
+    connect(ui.cfg_shorturl, &QCheckBox::stateChanged, this, &FlickrConfig::emitChanged);
+    connect(ui.cfg_forprivate, &QRadioButton::clicked, this, &FlickrConfig::emitChanged);
+    connect(ui.cfg_forfriends, &QCheckBox::stateChanged, this, &FlickrConfig::emitChanged);
+    connect(ui.cfg_forfamily, &QCheckBox::stateChanged, this, &FlickrConfig::emitChanged);
+    connect(ui.cfg_forpublic, &QRadioButton::clicked, this, &FlickrConfig::emitChanged);
+    connect(ui.cfg_safe, &QRadioButton::clicked, this, &FlickrConfig::emitChanged);
+    connect(ui.cfg_moderate, &QRadioButton::clicked, this, &FlickrConfig::emitChanged);
+    connect(ui.cfg_restricted, &QRadioButton::clicked, this, &FlickrConfig::emitChanged);
+    connect(ui.cfg_hidefromsearch, &QCheckBox::stateChanged, this, &FlickrConfig::emitChanged);
 }
 
 FlickrConfig::~FlickrConfig()
@@ -297,7 +299,7 @@ void FlickrConfig::slotAuthButton_clicked()
         Choqok::openUrl(oUrl);
 
         QPushButton *btn = new QPushButton(QIcon::fromTheme(QLatin1String("dialog-ok")), i18n("Click here when you authorized Choqok"), this);
-        connect(btn, SIGNAL(clicked(bool)), SLOT(getToken()));
+        connect(btn, &QPushButton::clicked, this, &FlickrConfig::getToken);
         btn->setWindowFlags(Qt::Dialog);
         ui.authTab->layout()->addWidget(btn);
         ui.authButton->setEnabled(false);

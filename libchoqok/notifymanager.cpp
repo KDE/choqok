@@ -40,8 +40,8 @@ public:
     {
         lastErrorClearance.setSingleShot(true);
         lastErrorClearance.setInterval(3000);
-        QObject::connect(&lastErrorClearance, SIGNAL(timeout()),
-                         Choqok::UI::Global::SessionManager::self(), SLOT(resetNotifyManager()));
+        QObject::connect(&lastErrorClearance, &QTimer::timeout,
+                         Choqok::UI::Global::SessionManager::self(), &Choqok::UI::Global::SessionManager::resetNotifyManager);
     }
     void triggerNotify(const QString &eventId, const QString &title,
                        const QString &message,
@@ -95,7 +95,8 @@ void NotifyManager::newPostArrived(const QString &message, const QString &title)
             KNotification *n = new KNotification(QLatin1String("new-post-arrived"), choqokMainWindow);
             n->setActions(QStringList(i18nc("Show Choqok MainWindow", "Show Choqok")));
             n->setText(fullMsg);
-            QObject::connect(n, SIGNAL(activated(uint)), choqokMainWindow, SLOT(activateChoqok()));
+            QObject::connect(n, (void (KNotification::*)())&KNotification::activated,
+                             choqokMainWindow, &Choqok::UI::MainWindow::activateChoqok);
             n->sendEvent();
         }
     }

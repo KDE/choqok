@@ -68,18 +68,13 @@ QuickPost::QuickPost(QWidget *parent)
     qCDebug(CHOQOK);
     setupUi();
     loadAccounts();
-    connect(d->comboAccounts, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(slotCurrentAccountChanged(int)));
-    connect(d->txtPost, SIGNAL(returnPressed(QString)),
-            this, SLOT(submitPost(QString)));
-    connect(d->all, SIGNAL(toggled(bool)),
-            this, SLOT(checkAll(bool)));
-    connect(AccountManager::self(), SIGNAL(accountAdded(Choqok::Account*)),
-            this, SLOT(addAccount(Choqok::Account*)));
-    connect(AccountManager::self(), SIGNAL(accountRemoved(QString)),
-            this, SLOT(removeAccount(QString)));
-    connect(d->attach, SIGNAL(clicked(bool)),
-            this, SLOT(slotAttachMedium()));
+    connect(d->comboAccounts, (void (QComboBox::*)(int))&QComboBox::currentIndexChanged,
+            this, &QuickPost::slotCurrentAccountChanged);
+    connect(d->txtPost, &TextEdit::returnPressed, this, &QuickPost::submitPost);
+    connect(d->all, &QCheckBox::toggled, this, &QuickPost::checkAll);
+    connect(AccountManager::self(), &AccountManager::accountAdded, this, &QuickPost::addAccount);
+    connect(AccountManager::self(), &AccountManager::accountRemoved, this, &QuickPost::removeAccount);
+    connect(d->attach, &QPushButton::clicked, this, &QuickPost::slotAttachMedium);
 
     d->all->setChecked(Choqok::BehaviorSettings::all());
     slotCurrentAccountChanged(d->comboAccounts->currentIndex());
@@ -108,8 +103,8 @@ void QuickPost::setupUi()
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     okButton->setText(i18nc("Submit post", "Submit"));
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &QuickPost::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &QuickPost::reject);
     mainLayout->addWidget(buttonBox);
 
     setLayout(mainLayout);
@@ -218,19 +213,14 @@ void QuickPost::loadAccounts()
 void QuickPost::addAccount(Choqok::Account *account)
 {
     qCDebug(CHOQOK);
-    connect(account, SIGNAL(modified(Choqok::Account*)), SLOT(accountModified(Choqok::Account*))); //Added for later changes
+    connect(account, &Account::modified, this, &QuickPost::accountModified); //Added for later changes
     if (!account->isEnabled() || account->isReadOnly() || !account->showInQuickPost()) {
         return;
     }
     d->accountsList.insert(account->alias(), account);
     d->comboAccounts->addItem(QIcon::fromTheme(account->microblog()->pluginIcon()), account->alias());
-    connect(account->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-            SLOT(slotSubmitPost(Choqok::Account*,Choqok::Post*)));
-    connect(account->microblog(),
-            SIGNAL(errorPost(Choqok::Account *, Choqok::Post *,
-                             Choqok::MicroBlog::ErrorType, QString)),
-            SLOT(postError(Choqok::Account *, Choqok::Post *,
-                           Choqok::MicroBlog::ErrorType, QString)));
+    connect(account->microblog(), &MicroBlog::postCreated, this, &QuickPost::slotSubmitPost);
+    connect(account->microblog(), &MicroBlog::errorPost, this, &QuickPost::postError);
 }
 
 void QuickPost::removeAccount(const QString &alias)

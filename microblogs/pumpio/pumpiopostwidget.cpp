@@ -65,8 +65,7 @@ void PumpIOPostWidget::checkAnchor(const QUrl &url)
 {
     if (url.scheme() == QLatin1String("thread")) {
         PumpIOShowThread *thread = new PumpIOShowThread(currentAccount(), currentPost());
-        connect(thread, SIGNAL(forwardReply(QString,QString,QString)),
-                this, SIGNAL(reply(QString,QString,QString)));
+        connect(thread, &PumpIOShowThread::forwardReply, this, &PumpIOPostWidget::reply);
         thread->resize(this->width(), thread->height() * 3);
         thread->show();
     } else {
@@ -194,13 +193,13 @@ void PumpIOPostWidget::initUi()
         QAction *replyToAct = new QAction(QIcon::fromTheme(QLatin1String("edit-undo")), i18n("Reply to %1",
                                           currentPost()->author.userName), replyMenu);
         replyMenu->addAction(replyToAct);
-        connect(replyToAct, SIGNAL(triggered(bool)), SLOT(slotReplyTo()));
-        connect(d->btnReply, SIGNAL(clicked(bool)), SLOT(slotReplyTo()));
+        connect(replyToAct, &QAction::triggered, this, &PumpIOPostWidget::slotReplyTo);
+        connect(d->btnReply, &QPushButton::clicked, this, &PumpIOPostWidget::slotReplyTo);
     }
 
     d->btnFavorite = addButton(QLatin1String("btnFavorite"), i18nc("@info:tooltip", "Like"), QLatin1String("rating"));
     d->btnFavorite->setCheckable(true);
-    connect(d->btnFavorite, SIGNAL(clicked(bool)), this, SLOT(toggleFavorite()));
+    connect(d->btnFavorite, &QPushButton::clicked, this, &PumpIOPostWidget::toggleFavorite);
     updateFavStat();
 }
 
@@ -209,8 +208,7 @@ void PumpIOPostWidget::toggleFavorite()
     qCDebug(CHOQOK);
     setReadWithSignal();
     PumpIOMicroBlog *microBlog = qobject_cast<PumpIOMicroBlog *>(currentAccount()->microblog());
-    connect(microBlog, SIGNAL(favorite(Choqok::Account*,Choqok::Post*)),
-            this, SLOT(slotToggleFavorite(Choqok::Account*,Choqok::Post*)));
+    connect(microBlog, &PumpIOMicroBlog::favorite, this, &PumpIOPostWidget::slotToggleFavorite);
     microBlog->toggleFavorite(currentAccount(), currentPost());
 }
 
@@ -229,11 +227,10 @@ void PumpIOPostWidget::slotPostError(Choqok::Account *theAccount, Choqok::Post *
     qCDebug(CHOQOK);
     if (theAccount == currentAccount() && post == currentPost()) {
         qCDebug(CHOQOK) << errorMessage;
-        disconnect(currentAccount()->microblog(), SIGNAL(postRemoved(Choqok::Account*,Choqok::Post*)),
-                   this, SLOT(slotCurrentPostRemoved(Choqok::Account*,Choqok::Post*)));
-        disconnect(currentAccount()->microblog(),
-                   SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,QString,Choqok::MicroBlog::ErrorLevel)),
-                   this, SLOT(slotPostError(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,QString)));
+        disconnect(currentAccount()->microblog(), &Choqok::MicroBlog::postRemoved,
+                   this, &PumpIOPostWidget::slotCurrentPostRemoved);
+        disconnect(currentAccount()->microblog(), &Choqok::MicroBlog::errorPost,
+                   this, &PumpIOPostWidget::slotPostError);
     }
 }
 

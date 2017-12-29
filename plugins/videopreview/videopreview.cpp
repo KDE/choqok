@@ -54,14 +54,10 @@ VideoPreview::VideoPreview(QObject *parent, const QList< QVariant > &)
     : Choqok::Plugin(QLatin1String("choqok_videopreview"), parent)
     , state(Stopped)
 {
-    connect(Choqok::UI::Global::SessionManager::self(),
-            SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
-            this,
-            SLOT(slotAddNewPostWidget(Choqok::UI::PostWidget*)));
-    connect(Choqok::ShortenManager::self(),
-            SIGNAL(newUnshortenedUrl(Choqok::UI::PostWidget*,QUrl,QUrl)),
-            this,
-            SLOT(slotNewUnshortenedUrl(Choqok::UI::PostWidget*,QUrl,QUrl)));
+    connect(Choqok::UI::Global::SessionManager::self(), &Choqok::UI::Global::SessionManager::newPostWidgetAdded,
+            this, &VideoPreview::slotAddNewPostWidget);
+    connect(Choqok::ShortenManager::self(), &Choqok::ShortenManager::newUnshortenedUrl,
+            this, &VideoPreview::slotNewUnshortenedUrl);
 }
 
 VideoPreview::~VideoPreview()
@@ -85,13 +81,13 @@ void VideoPreview::slotNewUnshortenedUrl(Choqok::UI::PostWidget *widget, const Q
         QUrl thisurl(mYouTubeRegExp.cap(0));
         QUrlQuery thisurlQuery(thisurl);
         QUrl thumbUrl = parseYoutube(thisurlQuery.queryItemValue(QLatin1String("v")), widget);
-        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
-                SLOT(slotImageFetched(QUrl,QPixmap)));
+        connect(Choqok::MediaManager::self(), &Choqok::MediaManager::imageFetched,
+                this, &VideoPreview::slotImageFetched);
         Choqok::MediaManager::self()->fetchImage(thumbUrl, Choqok::MediaManager::Async);
     } else if (mVimeoRegExp.indexIn(toUrl.toDisplayString()) != -1) {
         QUrl thumbUrl = parseVimeo(mVimeoRegExp.cap(3), widget);
-        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
-                SLOT(slotImageFetched(QUrl,QPixmap)));
+        connect(Choqok::MediaManager::self(), &Choqok::MediaManager::imageFetched,
+                this, &VideoPreview::slotImageFetched);
         Choqok::MediaManager::self()->fetchImage(thumbUrl, Choqok::MediaManager::Async);
     }
 
@@ -146,9 +142,8 @@ void VideoPreview::parse(QPointer<Choqok::UI::PostWidget> postToParse)
     }
 
     for (const QUrl &thumb_url: thumbList) {
-        connect(Choqok::MediaManager::self(),
-                SIGNAL(imageFetched(QUrl,QPixmap)),
-                SLOT(slotImageFetched(QUrl,QPixmap)));
+        connect(Choqok::MediaManager::self(), &Choqok::MediaManager::imageFetched,
+                this, &VideoPreview::slotImageFetched);
 
         Choqok::MediaManager::self()->fetchImage(thumb_url, Choqok::MediaManager::Async);
     }

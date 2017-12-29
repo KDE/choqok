@@ -23,6 +23,8 @@
 
 #include "twitgooconfig.h"
 
+#include <QCheckBox>
+#include <QComboBox>
 #include <QVBoxLayout>
 
 #include <KAboutData>
@@ -46,8 +48,9 @@ TwitgooConfig::TwitgooConfig(QWidget *parent, const QVariantList &)
     ui.setupUi(wd);
     addConfig(TwitgooSettings::self(), wd);
     layout->addWidget(wd);
-    connect(ui.cfg_accountsList, SIGNAL(currentIndexChanged(int)), SLOT(emitChanged()));
-    connect(ui.cfg_directLink, SIGNAL(stateChanged(int)), SLOT(emitChanged()));
+    connect(ui.cfg_accountsList, (void (QComboBox::*)(int))&QComboBox::currentIndexChanged,
+            this, &TwitgooConfig::emitChanged);
+    connect(ui.cfg_directLink, &QCheckBox::stateChanged, this, &TwitgooConfig::emitChanged);
 }
 
 TwitgooConfig::~TwitgooConfig()

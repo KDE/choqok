@@ -45,11 +45,9 @@ Notify::Notify(QObject *parent, const QList< QVariant > &)
     NotifySettings set;
     accountsList = set.accounts();
     timer.setInterval(set.notifyInterval() * 1000);
-    connect(Choqok::UI::Global::SessionManager::self(),
-            SIGNAL(newPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)),
-            this,
-            SLOT(slotNewPostWidgetAdded(Choqok::UI::PostWidget*,Choqok::Account*,QString)));
-    connect(&timer, SIGNAL(timeout()), this, SLOT(notifyNextPost()));
+    connect(Choqok::UI::Global::SessionManager::self(), &Choqok::UI::Global::SessionManager::newPostWidgetAdded,
+            this, &Notify::slotNewPostWidgetAdded);
+    connect(&timer, &QTimer::timeout, this, &Notify::notifyNextPost);
 
     notifyPosition = set.position();
 }
@@ -91,10 +89,10 @@ void Notify::notify(QPointer< Choqok::UI::PostWidget > post)
 {
     if (post) {
         Notification *notif = new Notification(post);
-        connect(notif, SIGNAL(ignored()), this, SLOT(stopNotifications()));
-        connect(notif, SIGNAL(postReaded()), SLOT(slotPostReaded()));
-        connect(notif, SIGNAL(mouseEntered()), &timer, SLOT(stop()));
-        connect(notif, SIGNAL(mouseLeaved()), &timer, SLOT(start()));
+        connect(notif, &Notification::ignored, this, &Notify::stopNotifications);
+        connect(notif, &Notification::postReaded, this, &Notify::slotPostReaded);
+        connect(notif, &Notification::mouseEntered, &timer, &QTimer::stop);
+        connect(notif, &Notification::mouseLeaved, &timer, (void (QTimer::*)())&QTimer::start);
         hideLastNotificationAndShowThis(notif);
     } else  {
         hideLastNotificationAndShowThis();

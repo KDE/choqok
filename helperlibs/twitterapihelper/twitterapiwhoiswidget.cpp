@@ -92,7 +92,7 @@ TwitterApiWhoisWidget::TwitterApiWhoisWidget(TwitterApiAccount *theAccount, cons
     this->setLayout(layout);
     this->setWindowFlags(Qt::Popup);// | Qt::FramelessWindowHint | Qt::Ta);
     d->wid->setOpenLinks(false);
-    connect(d->wid, SIGNAL(anchorClicked(QUrl)), this, SLOT(checkAnchor(QUrl)));
+    connect(d->wid, &QTextBrowser::anchorClicked, this, &TwitterApiWhoisWidget::checkAnchor);
     setupUi();
     setActionImages();
 }
@@ -141,7 +141,7 @@ void TwitterApiWhoisWidget::loadUserInfo(TwitterApiAccount *theAccount, const QS
                          QLatin1String(d->mBlog->authorizationHeader(theAccount, url, QNetworkAccessManager::GetOperation)));
     }
     d->job = job;
-    connect(job, SIGNAL(result(KJob*)), SLOT(userInfoReceived(KJob*)));
+    connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiWhoisWidget::userInfoReceived);
     job->start();
 }
 
@@ -205,10 +205,10 @@ void TwitterApiWhoisWidget::userInfoReceived(KJob *job)
         d->wid->document()->addResource(QTextDocument::ImageResource, QUrl(QLatin1String("img://profileImage")),
                                         userAvatar);
     } else {
-        connect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
-                this, SLOT(avatarFetched(QUrl,QPixmap)));
-        connect(Choqok::MediaManager::self(), SIGNAL(fetchError(QString,QString)),
-                this, SLOT(avatarFetchError(QString,QString)));
+        connect(Choqok::MediaManager::self(), &Choqok::MediaManager::imageFetched,
+                this, &TwitterApiWhoisWidget::avatarFetched);
+        connect(Choqok::MediaManager::self(), &Choqok::MediaManager::fetchError,
+                this, &TwitterApiWhoisWidget::avatarFetchError);
     }
 }
 
@@ -219,10 +219,10 @@ void TwitterApiWhoisWidget::avatarFetched(const QUrl &remoteUrl, const QPixmap &
         const QUrl url(QLatin1String("img://profileImage"));
         d->wid->document()->addResource(QTextDocument::ImageResource, url, pixmap);
         updateHtml();
-        disconnect(Choqok::MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
-                   this, SLOT(avatarFetched(QUrl,QPixmap)));
-        disconnect(Choqok::MediaManager::self(), SIGNAL(fetchError(QString,QString)),
-                   this, SLOT(avatarFetchError(QString,QString)));
+        disconnect(Choqok::MediaManager::self(), &Choqok::MediaManager::imageFetched,
+                   this, &TwitterApiWhoisWidget::avatarFetched);
+        disconnect(Choqok::MediaManager::self(), &Choqok::MediaManager::fetchError,
+                   this, &TwitterApiWhoisWidget::avatarFetchError);
     }
 }
 
@@ -314,7 +314,7 @@ void TwitterApiWhoisWidget::show(QPoint pos)
     d->waitFrame->setWindowFlags(Qt::Popup);
     KAnimatedButton *waitButton = new KAnimatedButton;
     waitButton->setToolTip(i18n("Please wait..."));
-    connect( waitButton, SIGNAL(clicked(bool)), SLOT(slotCancel()) );
+    connect(waitButton, &KAnimatedButton::clicked, this, &TwitterApiWhoisWidget::slotCancel);
     waitButton->setAnimationPath(QLatin1String("process-working-kde"));
     waitButton->start();
 
@@ -335,12 +335,12 @@ void TwitterApiWhoisWidget::checkAnchor(const QUrl url)
             this->close();
         } else if (url.host() == QLatin1String("subscribe")) {
             d->mBlog->createFriendship(d->currentAccount, d->username);
-            connect(d->mBlog, SIGNAL(friendshipCreated(Choqok::Account*,QString)),
-                    SLOT(slotFriendshipCreated(Choqok::Account*,QString)));
+            connect(d->mBlog, &TwitterApiMicroBlog::friendshipCreated,
+                    this, &TwitterApiWhoisWidget::slotFriendshipCreated);
         } else if (url.host() == QLatin1String("unsubscribe")) {
             d->mBlog->destroyFriendship(d->currentAccount, d->username);
-            connect(d->mBlog, SIGNAL(friendshipDestroyed(Choqok::Account*,QString)),
-                    SLOT(slotFriendshipDestroyed(Choqok::Account*,QString)));
+            connect(d->mBlog, &TwitterApiMicroBlog::friendshipDestroyed,
+                    this, &TwitterApiWhoisWidget::slotFriendshipDestroyed);
         } else if (url.host() == QLatin1String("block")) {
             d->mBlog->blockUser(d->currentAccount, d->username);
 //             connect(d->mBlog, SIGNAL(userBlocked(Choqok::Account*,QString)), SLOT(slotUserBlocked(Choqok::Account*,QString)));

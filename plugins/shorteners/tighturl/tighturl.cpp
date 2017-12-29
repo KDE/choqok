@@ -49,7 +49,7 @@ QString TightUrl::shorten(const QString &url)
 
     QEventLoop loop;
     KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
-    connect(job, SIGNAL(result(KJob*)), &loop, SLOT(quit()));
+    connect(job, &KIO::StoredTransferJob::result, &loop, &QEventLoop::quit);
     job->start();
     loop.exec();
 

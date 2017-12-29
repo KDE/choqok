@@ -48,7 +48,7 @@ NowListening::NowListening(QObject *parent, const QList<QVariant> &)
 {
     QAction *action = new QAction(QIcon::fromTheme(QLatin1String("media-playback-start")), i18n("Now Listening"), this);
     actionCollection()->addAction(QLatin1String("nowListening"), action);
-    connect(action, SIGNAL(triggered(bool)), SLOT(slotPrepareNowListening()));
+    connect(action, &QAction::triggered, this, &NowListening::slotPrepareNowListening);
     setXMLFile(QLatin1String("nowlisteningui.rc"));
 }
 

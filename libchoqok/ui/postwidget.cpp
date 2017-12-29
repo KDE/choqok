@@ -112,9 +112,9 @@ PostWidget::PostWidget(Account *account, Choqok::Post *post, QWidget *parent/* =
         d->mCurrentPost->isRead = true;
     }
     d->mTimer.start(_MINUTE);
-    connect(&d->mTimer, SIGNAL(timeout()), this, SLOT(updateUi()));
-    connect(_mainWidget, SIGNAL(clicked(QMouseEvent*)), SLOT(mousePressEvent(QMouseEvent*)));
-    connect(_mainWidget, SIGNAL(anchorClicked(QUrl)), this, SLOT(checkAnchor(QUrl)));
+    connect(&d->mTimer, &QTimer::timeout, this, &PostWidget::updateUi);
+    connect(_mainWidget, &TextBrowser::clicked, this, &PostWidget::mousePressEvent);
+    connect(_mainWidget, &TextBrowser::anchorClicked, this, &PostWidget::checkAnchor);
 
     d->timeline = qobject_cast<TimelineWidget *>(parent);
 
@@ -193,7 +193,7 @@ void PostWidget::setupUi()
     d->buttonsLayout->setSpacing(0);
 
     _mainWidget->setLayout(d->buttonsLayout);
-    connect(_mainWidget, SIGNAL(textChanged()), this, SLOT(setHeight()));
+    connect(_mainWidget, &TextBrowser::textChanged, this, &PostWidget::setHeight);
 
 }
 
@@ -205,12 +205,12 @@ void PostWidget::initUi()
 
     if (isRemoveAvailable()) {
         QPushButton *btnRemove = addButton(QLatin1String("btnRemove"), i18nc("@info:tooltip", "Remove"), QLatin1String("edit-delete"));
-        connect(btnRemove, SIGNAL(clicked(bool)), SLOT(removeCurrentPost()));
+        connect(btnRemove, &QPushButton::clicked, this, &PostWidget::removeCurrentPost);
     }
 
     if (isResendAvailable()) {
         QPushButton *btnResend = addButton(QLatin1String("btnResend"), i18nc("@info:tooltip", "ReSend"), QLatin1String("retweet"));
-        connect(btnResend, SIGNAL(clicked(bool)), SLOT(slotResendPost()));
+        connect(btnResend, &QPushButton::clicked, this, &PostWidget::slotResendPost);
     }
 
     d->mProfileImage = QLatin1String("<img src=\"img://profileImage\" title=\"") + d->mCurrentPost->author.realName + QLatin1String("\" width=\"48\" height=\"48\" />");
@@ -485,11 +485,9 @@ QString PostWidget::formatDateTime(const QDateTime &time)
 void PostWidget::removeCurrentPost()
 {
     if (KMessageBox::warningYesNo(this, i18n("Are you sure you want to remove this post from the server?")) == KMessageBox::Yes) {
-        connect(d->mCurrentAccount->microblog(), SIGNAL(postRemoved(Choqok::Account*,Choqok::Post*)),
-                SLOT(slotCurrentPostRemoved(Choqok::Account*,Choqok::Post*)));
-        connect(d->mCurrentAccount->microblog(),
-                SIGNAL(errorPost(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,QString)),
-                this, SLOT(slotPostError(Choqok::Account*,Choqok::Post*,Choqok::MicroBlog::ErrorType,QString)));
+        connect(d->mCurrentAccount->microblog(), &MicroBlog::postRemoved,
+                this, &PostWidget::slotCurrentPostRemoved);
+        connect(d->mCurrentAccount->microblog(), &MicroBlog::errorPost, this, &PostWidget::slotPostError);
         setReadWithSignal();
         d->mCurrentAccount->microblog()->removePost(d->mCurrentAccount, d->mCurrentPost);
     }
@@ -534,15 +532,15 @@ void PostWidget::fetchImage()
     if (!pix.isNull()) {
         slotImageFetched(d->imageUrl, pix);
     } else {
-        connect(MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
-                this, SLOT(slotImageFetched(QUrl,QPixmap)));
+        connect(MediaManager::self(), &MediaManager::imageFetched, this,
+                &PostWidget::slotImageFetched);
     }
 }
 
 void PostWidget::slotImageFetched(const QUrl &remoteUrl, const QPixmap &pixmap)
 {
     if (remoteUrl == d->imageUrl) {
-        disconnect(MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)), this, SLOT(slotImageFetched(QUrl,QPixmap)));
+        disconnect(MediaManager::self(), &MediaManager::imageFetched, this, &PostWidget::slotImageFetched);
         d->originalImage = pixmap;
         updatePostImage( width() );
         updateUi();
@@ -556,10 +554,8 @@ void PostWidget::setupAvatar()
     if (!pix.isNull()) {
         avatarFetched(d->mCurrentPost->author.profileImageUrl, pix);
     } else {
-        connect(MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
-                this, SLOT(avatarFetched(QUrl,QPixmap)));
-        connect(MediaManager::self(), SIGNAL(fetchError(QString,QString)),
-                this, SLOT(avatarFetchError(QString,QString)));
+        connect(MediaManager::self(), &MediaManager::imageFetched, this, &PostWidget::avatarFetched);
+        connect(MediaManager::self(), &MediaManager::fetchError, this, &PostWidget::avatarFetchError);
     }
 }
 
@@ -569,10 +565,8 @@ void PostWidget::avatarFetched(const QUrl &remoteUrl, const QPixmap &pixmap)
         const QUrl url(QLatin1String("img://profileImage"));
         _mainWidget->document()->addResource(QTextDocument::ImageResource, url, pixmap);
         updateUi();
-        disconnect(MediaManager::self(), SIGNAL(imageFetched(QUrl,QPixmap)),
-                   this, SLOT(avatarFetched(QUrl,QPixmap)));
-        disconnect(MediaManager::self(), SIGNAL(fetchError(QString,QString)),
-                   this, SLOT(avatarFetchError(QString,QString)));
+        disconnect(MediaManager::self(), &MediaManager::imageFetched, this, &PostWidget::avatarFetched);
+        disconnect(MediaManager::self(), &MediaManager::fetchError, this, &PostWidget::avatarFetchError);
     }
 }
 
@@ -598,11 +592,10 @@ void PostWidget::slotPostError(Account *theAccount, Choqok::Post *post,
 {
     if (theAccount == currentAccount() && post == d->mCurrentPost) {
         qCDebug(CHOQOK) << errorMessage;
-        disconnect(d->mCurrentAccount->microblog(), SIGNAL(postRemoved(Choqok::Account*,Choqok::Post*)),
-                   this, SLOT(slotCurrentPostRemoved(Choqok::Account*,Choqok::Post*)));
-        disconnect(d->mCurrentAccount->microblog(),
-                   SIGNAL(errorPost(Account*,Post*,Choqok::MicroBlog::ErrorType,QString)),
-                   this, SLOT(slotPostError(Account*,Post*,Choqok::MicroBlog::ErrorType,QString)));
+        disconnect(d->mCurrentAccount->microblog(), &MicroBlog::postRemoved,
+                   this, &PostWidget::slotCurrentPostRemoved);
+        disconnect(d->mCurrentAccount->microblog(), &MicroBlog::errorPost,
+                   this, &PostWidget::slotPostError);
     }
 }
 

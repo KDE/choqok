@@ -46,7 +46,8 @@ ChoqokPluginConfig::ChoqokPluginConfig(QWidget *parent, const QVariantList &args
     mainLayout->setMargin(0);
     mainLayout->addWidget(m_pluginSelector);
 
-    connect(m_pluginSelector, SIGNAL(changed(bool)), this, SLOT(changed()));
+    connect(m_pluginSelector, &KPluginSelector::changed, this,
+            (void (KCModule::*)())&KCModule::changed);
     connect(m_pluginSelector, &KPluginSelector::configCommitted,
             this, &ChoqokPluginConfig::reparseConfiguration);
 

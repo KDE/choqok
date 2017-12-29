@@ -50,8 +50,7 @@ TwitterApiShowThread::TwitterApiShowThread(Choqok::Account *account, Choqok::Pos
     qCDebug(CHOQOK);
     setupUi();
     setWindowTitle(i18n("Conversation"));
-    connect(account->microblog(), SIGNAL(postFetched(Choqok::Account*,Choqok::Post*)),
-            this, SLOT(slotAddNewPost(Choqok::Account*,Choqok::Post*)));
+    connect(account->microblog(), &Choqok::MicroBlog::postFetched, this, &TwitterApiShowThread::slotAddNewPost);
     Choqok::UI::PostWidget *widget = d->account->microblog()->createPostWidget(d->account, finalPost, this);
     if (widget) {
         addPostWidgetToUi(widget);
@@ -123,14 +122,10 @@ void TwitterApiShowThread::addPostWidgetToUi(Choqok::UI::PostWidget *widget)
     widget->setRead();
     widget->setFocusProxy(this);
     widget->setObjectName(widget->currentPost()->postId);
-    connect(widget, SIGNAL(resendPost(QString)),
-            this, SIGNAL(forwardResendPost(QString)));
-    connect(widget, SIGNAL(resendPost(QString)),
-            this, SLOT(raiseMainWindow()));
-    connect(widget, SIGNAL(reply(QString,QString)),
-            this, SLOT(raiseMainWindow()));
-    connect(widget, SIGNAL(reply(QString,QString,QString)),
-            this, SIGNAL(forwardReply(QString,QString,QString)));
+    connect(widget, &Choqok::UI::PostWidget::resendPost, this, &TwitterApiShowThread::forwardResendPost);
+    connect(widget, &Choqok::UI::PostWidget::resendPost, this, &TwitterApiShowThread::raiseMainWindow);
+    connect(widget, &Choqok::UI::PostWidget::reply, this, &TwitterApiShowThread::raiseMainWindow);
+    connect(widget, &Choqok::UI::PostWidget::reply, this, &TwitterApiShowThread::forwardReply);
 //         connect( widget, SIGNAL(aboutClosing(QString,PostWidget*)),
 //                 SLOT(postWidgetClosed(QString,PostWidget*)) );
     d->mainLayout->insertWidget(0, widget);

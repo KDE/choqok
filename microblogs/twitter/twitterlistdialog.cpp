@@ -24,7 +24,9 @@
 #include "twitterlistdialog.h"
 
 #include <QGridLayout>
+#include <QLineEdit>
 #include <QListWidget>
+#include <QPushButton>
 
 #include <KMessageBox>
 #include <KLocalizedString>
@@ -49,8 +51,8 @@ TwitterListDialog::TwitterListDialog(TwitterApiAccount *theAccount, QWidget *par
     blog = qobject_cast<TwitterMicroBlog *>(account->microblog());
     mainWidget = new QWidget(this);
     ui.setupUi(mainWidget);
-    connect(ui.username, SIGNAL(textChanged(QString)), SLOT(slotUsernameChanged(QString)));
-    connect(ui.loadUserLists, SIGNAL(clicked(bool)), SLOT(loadUserLists()));
+    connect(ui.username, &QLineEdit::textChanged, this, &TwitterListDialog::slotUsernameChanged);
+    connect(ui.loadUserLists, &QPushButton::clicked, this, &TwitterListDialog::loadUserLists);
     QRegExp rx(QLatin1String("([a-z0-9_]){1,20}(\\/)"), Qt::CaseInsensitive);
     QValidator *val = new QRegExpValidator(rx, 0);
     ui.username->setValidator(val);
@@ -71,8 +73,8 @@ TwitterListDialog::TwitterListDialog(TwitterApiAccount *theAccount, QWidget *par
     okButton->setText(i18n("Add"));
     QPushButton *cancelButton = buttonBox->button(QDialogButtonBox::Cancel);
     cancelButton->setIcon(KStandardGuiItem::close().icon());
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &TwitterListDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &TwitterListDialog::reject);
     layout->addWidget(buttonBox, 3, 3, 1, -1);
 
     mainWidget->setLayout(layout);
@@ -112,8 +114,7 @@ void TwitterListDialog::loadUserLists()
         KMessageBox::error(choqokMainWindow, i18n("No user."));
         return;
     }
-    connect(blog, SIGNAL(userLists(Choqok::Account*,QString,QList<Twitter::List>)),
-            SLOT(slotLoadUserlists(Choqok::Account*,QString,QList<Twitter::List>)));
+    connect(blog, &TwitterMicroBlog::userLists, this, &TwitterListDialog::slotLoadUserlists);
     blog->fetchUserLists(account, ui.username->text());
 }
 
@@ -134,8 +135,7 @@ void TwitterListDialog::slotLoadUserlists(Choqok::Account *theAccount, QString u
             item->setData(32, l.slug);
             listWidget->addItem(item);
         }
-        connect(listWidget, SIGNAL(itemClicked(QListWidgetItem*)),
-                SLOT(slotListItemChanged(QListWidgetItem*)));
+        connect(listWidget, &QListWidget::itemClicked, this, &TwitterListDialog::slotListItemChanged);
     }
 }
 

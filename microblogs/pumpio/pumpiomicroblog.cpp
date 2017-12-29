@@ -121,7 +121,7 @@ QMenu *PumpIOMicroBlog::createActionsMenu(Choqok::Account *theAccount, QWidget *
 
     QAction *directMessge = new QAction(QIcon::fromTheme(QLatin1String("mail-message-new")), i18n("Send Private Message..."), menu);
     directMessge->setData(theAccount->alias());
-    connect(directMessge, SIGNAL(triggered(bool)), this, SLOT(showDirectMessageDialog()));
+    connect(directMessge, &QAction::triggered, this, &PumpIOMicroBlog::showDirectMessageDialog);
     menu->addAction(directMessge);
 
     return menu;
@@ -216,7 +216,7 @@ void PumpIOMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *post
         }
         m_accountJobs[job] = acc;
         m_createPostJobs[job] = post;
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCreatePost(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &PumpIOMicroBlog::slotCreatePost);
         job->start();
     } else {
         qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
@@ -260,7 +260,7 @@ void PumpIOMicroBlog::createReply(Choqok::Account *theAccount, PumpIOPost *post)
         }
         m_accountJobs[job] = acc;
         m_createPostJobs[job] = post;
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCreatePost(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &PumpIOMicroBlog::slotCreatePost);
         job->start();
     } else {
         qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
@@ -302,7 +302,7 @@ void PumpIOMicroBlog::createPostWithMedia(Choqok::Account *theAccount, Choqok::P
         }
         m_accountJobs[job] = acc;
         m_uploadJobs[job] = post;
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotUpload(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &PumpIOMicroBlog::slotUpload);
         job->start();
     } else {
         qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
@@ -333,7 +333,7 @@ void PumpIOMicroBlog::fetchPost(Choqok::Account *theAccount, Choqok::Post *post)
         }
         job->addMetaData(QLatin1String("customHTTPHeader"), acc->oAuth()->authorizationHeader(url, QNetworkAccessManager::GetOperation));
         m_accountJobs[job] = acc;
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchPost(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &PumpIOMicroBlog::slotFetchPost);
         job->start();
     } else {
         qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
@@ -366,7 +366,7 @@ void PumpIOMicroBlog::removePost(Choqok::Account *theAccount, Choqok::Post *post
         }
         m_accountJobs[job] = acc;
         m_removePostJobs[job] = post;
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotRemovePost(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &PumpIOMicroBlog::slotRemovePost);
         job->start();
     } else {
         qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
@@ -533,7 +533,7 @@ void PumpIOMicroBlog::updateTimelines(Choqok::Account *theAccount)
             job->addMetaData(QLatin1String("customHTTPHeader"), acc->oAuth()->authorizationHeader(url, QNetworkAccessManager::GetOperation));
             m_timelinesRequests[job] = timeline;
             m_accountJobs[job] = acc;
-            connect(job, SIGNAL(result(KJob*)), this, SLOT(slotUpdateTimeline(KJob*)));
+            connect(job, &KIO::StoredTransferJob::result, this, &PumpIOMicroBlog::slotUpdateTimeline);
             job->start();
         }
     } else {
@@ -564,7 +564,7 @@ void PumpIOMicroBlog::fetchFollowing(Choqok::Account *theAccount)
         }
         job->addMetaData(QLatin1String("customHTTPHeader"), acc->oAuth()->authorizationHeader(url, QNetworkAccessManager::GetOperation));
         m_accountJobs[job] = acc;
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFollowing(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &PumpIOMicroBlog::slotFollowing);
         job->start();
     } else {
         qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
@@ -590,7 +590,7 @@ void PumpIOMicroBlog::fetchLists(Choqok::Account *theAccount)
         }
         job->addMetaData(QLatin1String("customHTTPHeader"), acc->oAuth()->authorizationHeader(url, QNetworkAccessManager::GetOperation));
         m_accountJobs[job] = acc;
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotLists(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &PumpIOMicroBlog::slotLists);
         job->start();
     } else {
         qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
@@ -623,7 +623,7 @@ void PumpIOMicroBlog::share(Choqok::Account *theAccount, Choqok::Post *post)
         }
         m_accountJobs[job] = acc;
         m_shareJobs[job] = post;
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotShare(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &PumpIOMicroBlog::slotShare);
         job->start();
     } else {
         qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
@@ -656,7 +656,7 @@ void PumpIOMicroBlog::toggleFavorite(Choqok::Account *theAccount, Choqok::Post *
         }
         m_accountJobs[job] = acc;
         m_favoriteJobs[job] = post;
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFavorite(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &PumpIOMicroBlog::slotFavorite);
         job->start();
     } else {
         qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
@@ -1103,7 +1103,7 @@ void PumpIOMicroBlog::fetchReplies(Choqok::Account *theAccount, const QUrl &url)
         }
         job->addMetaData(QLatin1String("customHTTPHeader"), acc->oAuth()->authorizationHeader(url, QNetworkAccessManager::GetOperation));
         m_accountJobs[job] = acc;
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotFetchReplies(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &PumpIOMicroBlog::slotFetchReplies);
         job->start();
     } else {
         qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";
@@ -1329,7 +1329,7 @@ void PumpIOMicroBlog::updatePost(Choqok::Account *theAccount, Choqok::Post *post
         }
         m_accountJobs[job] = acc;
         m_updateJobs[job] = post;
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotUpdatePost(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &PumpIOMicroBlog::slotUpdatePost);
         job->start();
     } else {
         qCDebug(CHOQOK) << "theAccount is not a PumpIOAccount!";

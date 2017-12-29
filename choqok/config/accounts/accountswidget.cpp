@@ -172,7 +172,7 @@ void AccountsWidget::addAccountToTable(Choqok::Account *account)
     accountsTable->setCellWidget(row, 4, quick);
     connect(enabled, &QCheckBox::toggled, this, &AccountsWidget::emitChanged);
     connect(readOnly, &QCheckBox::toggled, this, &AccountsWidget::emitChanged);
-    connect(quick,    &QCheckBox::toggled, this, &AccountsWidget::emitChanged);
+    connect(quick, &QCheckBox::toggled, this, &AccountsWidget::emitChanged);
 }
 
 void AccountsWidget::accountsTablestateChanged()

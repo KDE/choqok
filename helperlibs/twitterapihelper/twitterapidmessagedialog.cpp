@@ -89,7 +89,7 @@ void TwitterApiDMessageDialog::setupUi(QWidget *mainWidget)
     btnReload->setToolTip(i18n("Reload friends list"));
     btnReload->setIcon(QIcon::fromTheme(QLatin1String("view-refresh")));
     btnReload->setMaximumWidth(25);
-    connect(btnReload, SIGNAL(clicked(bool)), SLOT(reloadFriendslist()));
+    connect(btnReload, &QPushButton::clicked, this, &TwitterApiDMessageDialog::reloadFriendslist);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(mainWidget);
 
@@ -100,7 +100,7 @@ void TwitterApiDMessageDialog::setupUi(QWidget *mainWidget)
     mainLayout->addLayout(toLayout);
 
     d->editor = new Choqok::UI::TextEdit(d->account->postCharLimit());
-    connect(d->editor, SIGNAL(returnPressed(QString)), SLOT(submitPost(QString)));
+    connect(d->editor, &Choqok::UI::TextEdit::returnPressed, this, &TwitterApiDMessageDialog::submitPost);
     mainLayout->addWidget(d->editor);
     d->editor->setFocus();
 
@@ -109,8 +109,8 @@ void TwitterApiDMessageDialog::setupUi(QWidget *mainWidget)
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     okButton->setText(i18nc("Send private message", "Send"));
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &TwitterApiDMessageDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &TwitterApiDMessageDialog::reject);
     mainLayout->addWidget(buttonBox);
 }
 
@@ -135,8 +135,8 @@ void TwitterApiDMessageDialog::reloadFriendslist()
     d->comboFriendsList->clear();
     TwitterApiMicroBlog *blog = qobject_cast<TwitterApiMicroBlog *>(d->account->microblog());
     if (blog) {
-        connect(blog, SIGNAL(followersUsernameListed(TwitterApiAccount*,QStringList)),
-                this, SLOT(followersUsernameListed(TwitterApiAccount*,QStringList)));
+        connect(blog, &TwitterApiMicroBlog::followersUsernameListed, this,
+                &TwitterApiDMessageDialog::followersUsernameListed);
         blog->listFollowersUsername(d->account);
         d->comboFriendsList->setCurrentText(i18n("Please wait..."));
     }
@@ -153,14 +153,10 @@ void TwitterApiDMessageDialog::submitPost(QString text)
         return;
     }
     hide();
-    connect(d->account->microblog(),
-            SIGNAL(errorPost(Choqok::Account *, Choqok::Post *,
-                             Choqok::MicroBlog::ErrorType, QString, Choqok::MicroBlog::ErrorLevel)),
-            this,
-            SLOT(errorPost(Choqok::Account *, Choqok::Post *,
-                           Choqok::MicroBlog::ErrorType, QString, Choqok::MicroBlog::ErrorLevel)));
+    connect(d->account->microblog(), &Choqok::MicroBlog::errorPost, this,
+            &TwitterApiDMessageDialog::errorPost);
     connect(d->account->microblog(), SIGNAL(postCreated(Choqok::Account*,Choqok::Post*)),
-            this, SLOT(postCreated(Choqok::Account*,Choqok::Post*)));
+           this, SLOT(postCreated(Choqok::Account*,Choqok::Post*)));
     d->sentPost = new Choqok::Post;
     d->sentPost->isPrivate = true;
     d->sentPost->replyToUser.userName = d->comboFriendsList->currentText();

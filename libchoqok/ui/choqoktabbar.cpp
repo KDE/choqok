@@ -94,8 +94,8 @@ ChoqokTabBar::ChoqokTabBar(QWidget *parent) :
     p->main_layout->setContentsMargins(0 , 0 , 0 , 0);
     p->main_layout->addLayout(p->stack_wgt_layout , 1 , 1);
 
-    connect(p->toolbar , SIGNAL(actionTriggered(QAction*))          , SLOT(action_triggered(QAction*)));
-    connect(p->toolbar , SIGNAL(customContextMenuRequested(QPoint)) , SLOT(contextMenuRequest(QPoint)));
+    connect(p->toolbar, &QToolBar::actionTriggered, this, &ChoqokTabBar::action_triggered);
+    connect(p->toolbar, &QToolBar::customContextMenuRequested, this, &ChoqokTabBar::contextMenuRequest);
 
     setToolButtonStyle(Qt::ToolButtonIconOnly);
     int iconSize = Choqok::AppearanceSettings::tabBarSize();
@@ -334,7 +334,7 @@ int ChoqokTabBar::insertTab(int index , QWidget *widget , const QIcon &input_ico
     p->actions_list.insert(index , action);
     p->st_widget->insertWidget(index , widget);
 
-    connect(widget , SIGNAL(destroyed(QObject*)) , SLOT(widget_destroyed(QObject*)));
+    connect(widget, &QWidget::destroyed, this, &ChoqokTabBar::widget_destroyed);
 
     for (int i = 0 ; i < p->history_list.count() ; i++)
         if (p->history_list.at(i) >= index) {
@@ -388,7 +388,7 @@ void ChoqokTabBar::moveTab(int from , int to)
 
 void ChoqokTabBar::removeTab(int index)
 {
-    disconnect(p->st_widget->widget(index) , SIGNAL(destroyed(QObject*)) , this , SLOT(widget_destroyed(QObject*)));
+    disconnect(p->st_widget->widget(index), &QWidget::destroyed, this, &ChoqokTabBar::widget_destroyed);
 
     p->history_list.removeAll(index);
     p->actions_list.removeAt(index);

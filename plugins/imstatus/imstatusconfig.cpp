@@ -23,6 +23,9 @@
 
 #include "imstatusconfig.h"
 
+#include <QCheckBox>
+#include <QComboBox>
+#include <QPlainTextEdit>
 #include <QVBoxLayout>
 
 #include <KAboutData>
@@ -44,10 +47,11 @@ IMStatusConfig::IMStatusConfig(QWidget *parent, const QVariantList &args) :
     addConfig(IMStatusSettings::self(), wd);
     layout->addWidget(wd);
     setButtons(KCModule::Apply);
-    connect(ui.cfg_imclient, SIGNAL(currentIndexChanged(int)), SLOT(emitChanged()));
-    connect(ui.cfg_repeat, SIGNAL(stateChanged(int)), SLOT(emitChanged()));
-    connect(ui.cfg_reply, SIGNAL(stateChanged(int)), SLOT(emitChanged()));
-    connect(ui.cfg_templtate, SIGNAL(textChanged()), SLOT(emitChanged()));
+    connect(ui.cfg_imclient, (void (QComboBox::*)(int))&QComboBox::currentIndexChanged,
+            this, &IMStatusConfig::emitChanged);
+    connect(ui.cfg_repeat, &QCheckBox::stateChanged, this, &IMStatusConfig::emitChanged);
+    connect(ui.cfg_reply, &QCheckBox::stateChanged, this, &IMStatusConfig::emitChanged);
+    connect(ui.cfg_templtate, &QPlainTextEdit::textChanged, this, &IMStatusConfig::emitChanged);
     imList = IMQDBus::scanForIMs();
     ui.cfg_imclient->addItems(imList);
 }

@@ -58,8 +58,8 @@ IMStatus::~IMStatus()
 void IMStatus::update()
 {
     if (Choqok::UI::Global::quickPostWidget() != 0) {
-        connect(Choqok::UI::Global::quickPostWidget(), SIGNAL(newPostSubmitted(Choqok::JobResult,Choqok::Post*)),
-                this, SLOT(slotIMStatus(Choqok::JobResult,Choqok::Post*)));
+        connect(Choqok::UI::Global::quickPostWidget(), &Choqok::UI::QuickPost::newPostSubmitted,
+                this, &IMStatus::slotIMStatus);
     } else {
         QTimer::singleShot(500, this, SLOT(update()));
     }

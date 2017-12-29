@@ -106,7 +106,7 @@ QPixmap MediaManager::fetchImage(const QUrl &remoteUrl, ReturnMode mode /*= Sync
             return p;
         }
         d->queue.insert(job, remoteUrl);
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotImageFetched(KJob*)));
+        connect(job, &KIO::StoredTransferJob::result, this, &MediaManager::slotImageFetched);
         job->start();
     }
     return p;
@@ -195,10 +195,8 @@ void MediaManager::uploadMedium(const QUrl &localUrl, const QString &pluginId)
         KMessageBox::error(UI::Global::mainWindow(), i18n("Uploading medium failed: cannot read the medium file."));
         return;
     }
-    connect(d->uploader, SIGNAL(mediumUploaded(QUrl,QString)),
-            this, SIGNAL(mediumUploaded(QUrl,QString)));
-    connect(d->uploader, SIGNAL(uploadingFailed(QUrl,QString)),
-            this, SIGNAL(mediumUploadFailed(QUrl,QString)));
+    connect(d->uploader, &Uploader::mediumUploaded, this, &MediaManager::mediumUploaded);
+    connect(d->uploader, &Uploader::uploadingFailed, this, &MediaManager::mediumUploadFailed);
     const QMimeDatabase db;
     d->uploader->upload(localUrl, picData, db.mimeTypeForUrl(localUrl).name().toLocal8Bit());
 }

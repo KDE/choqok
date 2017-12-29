@@ -93,8 +93,8 @@ PluginManager *PluginManager::self()
 
 PluginManager::PluginManager() : QObject()
 {
-    connect(QCoreApplication::instance(), SIGNAL(aboutToQuit()),
-            this, SLOT(slotAboutToQuit()));
+    connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit,
+            this, &PluginManager::slotAboutToQuit);
 }
 
 PluginManager::~PluginManager()
@@ -344,8 +344,8 @@ Plugin *PluginManager::loadPluginInternal(const QString &pluginId)
         _kpmp->loadedPlugins.insert(info, plugin);
         info.setPluginEnabled(true);
 
-        connect(plugin, SIGNAL(destroyed(QObject*)), this, SLOT(slotPluginDestroyed(QObject*)));
-        connect(plugin, SIGNAL(readyForUnload()), this, SLOT(slotPluginReadyForUnload()));
+        connect(plugin, &Plugin::destroyed, this, &PluginManager::slotPluginDestroyed);
+        connect(plugin, &Plugin::readyForUnload, this, &PluginManager::slotPluginReadyForUnload);
 
         qCDebug(CHOQOK) << "Successfully loaded plugin '" << pluginId << "'";
 

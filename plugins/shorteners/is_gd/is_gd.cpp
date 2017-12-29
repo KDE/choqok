@@ -59,7 +59,7 @@ QString Is_gd::shorten(const QString &url)
     reqUrl.setQuery(reqQuery);
     QEventLoop loop;
     KIO::StoredTransferJob *job = KIO::storedGet(reqUrl, KIO::Reload, KIO::HideProgressInfo);
-    connect(job, SIGNAL(result(KJob*)), &loop, SLOT(quit()));
+    connect(job, &KIO::StoredTransferJob::result, &loop, &QEventLoop::quit);
     job->start();
     loop.exec();
 

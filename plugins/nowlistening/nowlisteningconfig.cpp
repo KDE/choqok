@@ -23,6 +23,7 @@
 
 #include "nowlisteningconfig.h"
 
+#include <QPlainTextEdit>
 #include <QVBoxLayout>
 
 #include <KAboutData>
@@ -43,7 +44,8 @@ NowListeningConfig::NowListeningConfig(QWidget *parent, const QVariantList &args
     addConfig(NowListeningSettings::self(), wd);
     layout->addWidget(wd);
     setButtons(KCModule::Apply | KCModule::Default);
-    connect(ui.kcfg_templateString, SIGNAL(textChanged()), SLOT(emitChanged()));
+    connect(ui.kcfg_templateString, &QPlainTextEdit::textChanged,
+            this, &NowListeningConfig::emitChanged);
 }
 
 NowListeningConfig::~NowListeningConfig()
@@ -69,7 +71,8 @@ void NowListeningConfig::save()
 void NowListeningConfig::emitChanged()
 {
     Q_EMIT changed(true);
-    disconnect(ui.kcfg_templateString, SIGNAL(textChanged()), this, SLOT(emitChanged()));
+    disconnect(ui.kcfg_templateString, &QPlainTextEdit::textChanged,
+               this, &NowListeningConfig::emitChanged);
 }
 
 #include "nowlisteningconfig.moc"

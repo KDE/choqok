@@ -71,8 +71,8 @@ void TwitterApiTextEdit::setCompleter(QCompleter *completer)
     d->c->setWidget(this);
     d->c->setCompletionMode(QCompleter::PopupCompletion);
     d->c->setCaseSensitivity(Qt::CaseInsensitive);
-    QObject::connect(d->c, SIGNAL(activated(QString)),
-                     this, SLOT(insertCompletion(QString)));
+    connect(d->c, (void (QCompleter::*)(const QString&))&QCompleter::activated,
+                     this, &TwitterApiTextEdit::insertCompletion);
 }
 
 QCompleter *TwitterApiTextEdit::completer() const
