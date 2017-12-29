@@ -194,7 +194,7 @@ void PumpIOMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *post
         object.insert(QLatin1String("objectType"), post->type);
         //Convert URLs to href form
         post->content.replace(QRegExp(QLatin1String("((?:https?|ftp)://\\S+)")), QLatin1String("<a href=\"\\1\">\\1</a>"));
-        object.insert(QLatin1String("content"), QUrl::toPercentEncoding(post->content));
+        object.insert(QLatin1String("content"), post->content);
 
         QVariantMap item;
         item.insert(QLatin1String("verb"), QLatin1String("post"));
