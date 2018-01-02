@@ -298,7 +298,7 @@ void MicroBlogWidget::slotUpdateUnreadCount(int change, Choqok::UI::TimelineWidg
         if (wd->unreadCount() > 0) {
             d->timelinesTabWidget->setTabIcon(tabIndex , addNumToIcon(timelinesTabWidget()->tabIcon(tabIndex) , wd->unreadCount() , QSize(40, 40) , palette()));
             d->timelinesTabWidget->setTabText(tabIndex, wd->timelineInfoName() +
-                                              QStringLiteral("(%1)").arg(wd->unreadCount()));
+                                              QStringLiteral(" (%1)").arg(wd->unreadCount()));
         } else {
             if (!wd->timelineIconName().isEmpty()) {
                 d->timelinesTabWidget->setTabIcon(tabIndex , QIcon::fromTheme(wd->timelineIconName()));

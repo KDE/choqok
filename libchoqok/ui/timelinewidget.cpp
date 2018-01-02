@@ -233,8 +233,8 @@ void TimelineWidget::addNewPosts(QList< Choqok::Post * > &postList)
     removeOldPosts();
     if (unread) {
         d->unreadCount += unread;
-        Choqok::NotifyManager::newPostArrived(i18np("1 new post in %2(%3)",
-                                              "%1 new posts in %2(%3)",
+        Choqok::NotifyManager::newPostArrived(i18np("1 new post in %2 (%3)",
+                                              "%1 new posts in %2 (%3)",
                                               unread, currentAccount()->alias(), d->timelineName));
 
         Q_EMIT updateUnreadCount(unread);

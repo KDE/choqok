@@ -126,7 +126,7 @@ void TwitterComposerWidget::slotPostMediaSubmitted(Choqok::Account *theAccount, 
         if (btnAbort) {
             btnAbort->deleteLater();
         }
-        Choqok::NotifyManager::success(i18n("New post submitted successfully"));
+        Choqok::NotifyManager::success(i18n("New post for account %1 submitted successfully", theAccount->alias()));
         editor()->clear();
         replyToId.clear();
         editorContainer()->setEnabled(true);

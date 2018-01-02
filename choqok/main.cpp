@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 
     KLocalizedString::setApplicationDomain("choqok");
     KAboutData about(QLatin1String("choqok"), QLatin1String("Choqok"), QLatin1String(version), i18n(description),
-                     KAboutLicense::GPL_V3, i18n("(C) 2008-2010 Mehrdad Momeny\n(C) 2011-2015 Choqok Developers"),
+                     KAboutLicense::GPL_V3, i18n("(C) 2008-2010 Mehrdad Momeny\n(C) 2011-2018 Choqok Developers"),
                      QString(), QLatin1String("http://choqok.gnufolks.org/"));
 
     about.setOrganizationDomain("kde.org");
@@ -54,7 +54,7 @@ int main(int argc, char **argv)
     about.addAuthor(i18n("Andrey Esin"), i18n("Developer"),
                     QLatin1String("gmlastik@gmail.com"), QLatin1String("https://twitter.com/la_stik"));
     about.addAuthor(i18n("Andrea Scarpino"), i18n("Developer"),
-                    QLatin1String("scarpino@kde.org"), QLatin1String("http://www.andreascarpino.it"));
+                    QLatin1String("scarpino@kde.org"), QLatin1String("https://andreascarpino.it"));
 
     about.addCredit(i18n("Roozbeh Shafiee"), i18n("Artworks"), QLatin1String("roozbeh@roozbehonline.com"));
     about.addCredit(i18n("Shahrzad Shojaei"), i18n("Artworks"), QLatin1String("shahrzadesign@gmail.com"));

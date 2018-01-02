@@ -695,7 +695,7 @@ void PumpIOMicroBlog::slotCreatePost(KJob *job)
         if (!json.isNull()) {
             const QVariantMap reply = json.toVariant().toMap();
             if (!reply[QLatin1String("object")].toMap().value(QLatin1String("id")).toString().isEmpty()) {
-                Choqok::NotifyManager::success(i18n("New post submitted successfully"));
+                Choqok::NotifyManager::success(i18n("New post for account %1 submitted successfully", theAccount->alias()));
                 ret = 0;
                 Q_EMIT postCreated(theAccount, post);
             }
@@ -831,9 +831,8 @@ void PumpIOMicroBlog::slotFollowing(KJob *job)
     bool ret = 1;
     PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
-        Choqok::UI::Global::mainWindow()->showStatusMessage(
-            i18n("Following list for account %1 has been updated.",
-                 acc->username()));
+        Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Following list for account %1 has been updated.",
+                                                                 theAccount->alias()));
         KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
 
         const QJsonDocument json = QJsonDocument::fromJson(j->data());
@@ -877,9 +876,8 @@ void PumpIOMicroBlog::slotLists(KJob *job)
     bool ret = 1;
     PumpIOAccount *acc = qobject_cast<PumpIOAccount *>(theAccount);
     if (acc) {
-        Choqok::UI::Global::mainWindow()->showStatusMessage(
-            i18n("Lists for account %1 has been updated.",
-                 acc->username()));
+        Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Lists for account %1 has been updated.",
+                                                                 theAccount->alias()));
         KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
 
         const QJsonDocument json = QJsonDocument::fromJson(j->data());
@@ -926,8 +924,7 @@ void PumpIOMicroBlog::slotShare(KJob *job)
     if (job->error()) {
         qCDebug(CHOQOK) << "Job Error:" << job->errorString();
     } else {
-        Choqok::UI::Global::mainWindow()->showStatusMessage(
-            i18n("The post has been shared."));
+        Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("The post has been shared."));
         KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
 
         const QJsonDocument json = QJsonDocument::fromJson(j->data());

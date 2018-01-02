@@ -440,7 +440,7 @@ void TwitterApiMicroBlog::slotCreatePost(KJob *job)
                                      MicroBlog::Critical);
                 }
             } else {
-                Choqok::NotifyManager::success(i18n("New post submitted successfully"));
+                Choqok::NotifyManager::success(i18n("New post for account %1 submitted successfully", theAccount->alias()));
                 Q_EMIT postCreated(theAccount, post);
             }
         } else {
@@ -732,7 +732,8 @@ void TwitterApiMicroBlog::requestFriendsScreenName(TwitterApiAccount *theAccount
         connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotRequestFriendsScreenNamePassive);
     }
     job->start();
-    Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Updating friends list for account %1...", theAccount->username()));
+    Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Updating friends list for account %1...",
+                                                             theAccount->alias()));
 }
 
 void TwitterApiMicroBlog::slotRequestFriendsScreenNameActive(KJob *job)
@@ -768,7 +769,7 @@ void TwitterApiMicroBlog::finishRequestFriendsScreenName(KJob *job, bool active)
         friendsList << newList;
         theAccount->setFriendsList(friendsList);
         Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Friends list for account %1 has been updated.",
-                theAccount->username()));
+                                                                 theAccount->alias()));
         Q_EMIT friendsUsernameListed(theAccount, friendsList);
     }
 }
@@ -810,7 +811,8 @@ void TwitterApiMicroBlog::requestFollowersScreenName(TwitterApiAccount* theAccou
         connect(job, &KIO::StoredTransferJob::result, this, &TwitterApiMicroBlog::slotRequestFollowersScreenNamePassive);
     }
     job->start();
-    Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Updating followers list for account %1...", theAccount->username()));
+    Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Updating followers list for account %1...",
+                                                             theAccount->alias()));
 }
 
 void TwitterApiMicroBlog::slotRequestFollowersScreenNameActive(KJob* job)
@@ -846,7 +848,7 @@ void TwitterApiMicroBlog::finishRequestFollowersScreenName(KJob* job, bool activ
         followersList << newList;
         theAccount->setFollowersList(followersList);
         Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Followers list for account %1 has been updated.",
-            theAccount->username()) );
+                                                                 theAccount->alias()));
         Q_EMIT followersUsernameListed(theAccount, followersList);
     }
 }
@@ -1283,7 +1285,7 @@ void TwitterApiMicroBlog::slotReportUser(KJob *job)
     }
     Choqok::User *user = readUserInfo(qobject_cast<KIO::StoredTransferJob *>(job)->data());
     if (user) {
-        Choqok::NotifyManager::success(i18n("Report sent successfully"));
+        Choqok::NotifyManager::success(i18n("Report sent successfully."));
     } else {
         qCDebug(CHOQOK) << "Parse Error:" << qobject_cast<KIO::StoredTransferJob *>(job)->data();
         Q_EMIT error(theAccount, ParsingError,
