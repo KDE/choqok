@@ -63,7 +63,7 @@ TwitterApiAccount::TwitterApiAccount(TwitterApiMicroBlog *parent, const QString 
     d->count = configGroup()->readEntry("CountOfPosts", 20);
     d->host = configGroup()->readEntry("Host", QString());
     d->friendsList = configGroup()->readEntry("Friends", QStringList());
-    d->friendsList = configGroup()->readEntry("Followers", QStringList());
+    d->followersList = configGroup()->readEntry("Followers", QStringList());
     d->timelineNames = configGroup()->readEntry("Timelines", QStringList());
     d->oauthToken = configGroup()->readEntry("OAuthToken", QByteArray());
     d->oauthConsumerKey = configGroup()->readEntry("OAuthConsumerKey", QByteArray());
