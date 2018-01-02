@@ -106,9 +106,8 @@ Choqok::Post *GNUSocialApiMicroBlog::readPost(Choqok::Account *account, const QV
         return 0;
     }
 
-    if (var[QLatin1String("source")].toString().compare(QLatin1String("linkback")) == 0 ||
-            (var.contains(QLatin1String("uri")) && !var[QLatin1String("uri")].toString().startsWith(QLatin1String("http")))) {
-        // Skip linkback statuses and tags
+    if (var[QLatin1String("source")].toString().compare(QLatin1String("linkback")) == 0) {
+        // Skip linkback statuses
         return 0;
     }
 
