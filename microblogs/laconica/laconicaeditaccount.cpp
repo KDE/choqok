@@ -186,7 +186,7 @@ Choqok::Account *LaconicaEditAccountWidget::apply()
 //     isAuthenticated = false;
 //     while(!isAuthenticated){
 //         QString verifier = KInputDialog::getText( i18n("Security code"),
-//                                                   i18nc("Security code recieved from StatusNet",
+//                                                   i18nc("Security code received from StatusNet",
 //                                                         "Enter security code:"));
 //         if(verifier.isEmpty())
 //             return;

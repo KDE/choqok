@@ -67,7 +67,7 @@ void TwitterTextEdit::updateRemainingCharsCount()
             int remain = charLimit() - count;
 
             for (const QString &url: UrlUtils::detectUrls(txt)) {
-                // Twitter does not wrapps urls with login informations
+                // Twitter does not wrapps urls with login information
                 if (!url.contains(QLatin1Char('@'))) {
                     int diff = -1;
                     if (url.startsWith(QLatin1String("http://"))) {

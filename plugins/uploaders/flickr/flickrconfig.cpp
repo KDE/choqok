@@ -166,7 +166,7 @@ void FlickrConfig::getFrob()
                             errMsg = i18n("The requested service is temporarily unavailable. Try again later");
                             break;
                         default:
-                            errMsg = i18n("Unknown Error:%1. Please try again later").arg(errCode);
+                            errMsg = i18n("Unknown Error:%1. Please try again later", errCode);
                             break;
                         }
                     }
@@ -240,7 +240,7 @@ void FlickrConfig::getToken()
                             errMsg = i18n("The requested service is temporarily unavailable. Try again later");
                             break;
                         default:
-                            errMsg = i18n("Something happens wrong. Error %1. Try again later").arg(errCode);
+                            errMsg = i18n("Something happens wrong. Error %1. Try again later", errCode);
                             break;
                         }
                     }
@@ -277,7 +277,7 @@ void FlickrConfig::setAuthenticated(bool authenticated)
     if (authenticated) {
         ui.authButton->setIcon(QIcon::fromTheme(QLatin1String("object-unlocked")));
         ui.authLed->on();
-        ui.authLabel->setText(i18n("Authorized as %1").arg(m_username));
+        ui.authLabel->setText(i18n("Authorized as %1", m_username));
         if (!m_fullname.isEmpty()) {
             ui.authLabel->setText(ui.authLabel->text() + QStringLiteral(" (%1)").arg(m_fullname.toHtmlEscaped()));
         }

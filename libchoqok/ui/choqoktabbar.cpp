@@ -778,7 +778,7 @@ void ChoqokTabBar::contextMenuRequest(const QPoint &)
     QAction size_b(i18n("Big")    , this);
     QAction styled(i18n("Styled Panel") , this);
 
-    /*! ------------- Setting Up Datas --------------- */
+    /*! ------------- Setting Up Data --------------- */
     north.setData(ChoqokTabBar::North);
     west.setData(ChoqokTabBar::West);
     east.setData(ChoqokTabBar::East);
