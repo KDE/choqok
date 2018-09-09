@@ -21,8 +21,8 @@
 
 */
 
-#ifndef CHOQOK_UI_MAINWINDOW_H
-#define CHOQOK_UI_MAINWINDOW_H
+#ifndef UI_CHOQOK_MAINWINDOW_H
+#define UI_CHOQOK_MAINWINDOW_H
 
 #include <QHideEvent>
 
@@ -76,4 +76,4 @@ protected:
 
 }
 
-#endif // CHOQOK_UI_MAINWINDOW_H
+#endif // UI_CHOQOK_MAINWINDOW_H

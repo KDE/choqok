@@ -21,8 +21,8 @@
 
 */
 
-#ifndef LACONICACOMPOSERWIDGET_H
-#define LACONICACOMPOSERWIDGET_H
+#ifndef TWITTERCOMPOSERWIDGET_H
+#define TWITTERCOMPOSERWIDGET_H
 
 #include "twitterapicomposerwidget.h"
 
@@ -44,4 +44,4 @@ private:
     Private *d;
 };
 
-#endif // LACONICACOMPOSERWIDGET_H
+#endif // TWITTERCOMPOSERWIDGET_H

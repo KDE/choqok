@@ -21,6 +21,9 @@
 
 */
 
+#ifndef PLUGINS_IMSTATUS_H
+#define PLUGINS_IMSTATUS_H
+
 #include "plugin.h"
 
 #include "choqoktypes.h"
@@ -45,3 +48,5 @@ public Q_SLOTS:
 private:
     IMStatusPrivate *const d;
 };
+
+#endif // PLUGINS_IMSTATUS_H
