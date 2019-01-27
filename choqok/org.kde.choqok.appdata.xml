@@ -53,6 +53,7 @@
   <summary xml:lang="pt">Cliente de micro-blogs</summary>
   <summary xml:lang="pt-BR">Cliente de microblogging</summary>
   <summary xml:lang="ru">Клиент для ведения микроблогов</summary>
+  <summary xml:lang="sk">Klient na mikro-blogovanie</summary>
   <summary xml:lang="sl">Odjemalec za mikrobloganje</summary>
   <summary xml:lang="sv">Mikrobloggprogram</summary>
   <summary xml:lang="tr">Mini-günlük İstemcisi</summary>
@@ -79,6 +80,7 @@
     <p xml:lang="pl">Choqok jest klientem mikro bloków, który obsługuje usługi Twitter.com, GNU Social,Pump.io oraz Friendica.</p>
     <p xml:lang="pt">O Choqok é um cliente de micro-blogs que suporta os serviços do Twitter.com, do Pump.io, GNU Social e Friendica.</p>
     <p xml:lang="pt-BR">Choqok é um cliente de microblogging com suporte aos serviços Twitter.com, GNU Social, Pump.io e Friendica.</p>
+    <p xml:lang="sk">Choqok je mikro blogovací klient, ktorý podporuje služby Twitter.com, GNU Social, Pump.io and Friendica</p>
     <p xml:lang="sl">Choqok je odjemalec za mikrobloganje, ki podpira storitve Twitter.com, GNU Social, Pump.io in Friendica.</p>
     <p xml:lang="sv">Choqok är en klient för mikrobloggar som stöder tjänsterna Twitter.com, GNU Social,  Pump.io och Friendica.</p>
     <p xml:lang="tr">Choqok, Twitter.com, GNU Social, Pump.ip ve Friendica servislerini destekleyen bir mini-günlük istemcisidir.</p>
@@ -163,6 +165,7 @@
       <li xml:lang="pl">Obsługa samoutrzymywanej usługi Pump.io</li>
       <li xml:lang="pt">Suporte para o serviço auto-alojado do Pump.io</li>
       <li xml:lang="pt-BR">Suporte aos serviços de hospedagem Pump.io</li>
+      <li xml:lang="sk">Podporuje samo hostovaciu službu Pump.io</li>
       <li xml:lang="sl">Podpora za lastno gostovane storitve Pump.io</li>
       <li xml:lang="sv">Stöder tjänsten Pump.io på egen värddator</li>
       <li xml:lang="tr">Kendi kendine barındırılabilir Pump.io servisini destekler</li>
@@ -211,6 +214,7 @@
       <li xml:lang="pl">Obsługa samoutrzymywanej usługi Friendica</li>
       <li xml:lang="pt">Suporte para o serviço auto-alojado do Friendica</li>
       <li xml:lang="pt-BR">Suporte aos serviços de hospedagem Friendica</li>
+      <li xml:lang="sk">Podporuje samo hostovacie služby Friendlica</li>
       <li xml:lang="sl">Podpora za lastno gostovane storitve Friendica</li>
       <li xml:lang="sv">Stöder tjänsten Friendica på egen värddator</li>
       <li xml:lang="tr">Kendi kendine barındırılabilir Friendica servisini destekler</li>
@@ -317,6 +321,7 @@
       <li xml:lang="pl">Obsługa wysyłania multimediów przy użyciu zewnętrznych usług (Flickr, Imageshack,...)</li>
       <li xml:lang="pt">Suporte ao envio de conteúdos com serviços externos (Flickr, Imageshack,...)</li>
       <li xml:lang="pt-BR">Suporte ao envio de conteúdos usando serviços externos (Flickr, Imageshack,...)</li>
+      <li xml:lang="sk">Podpora pre odosielanie médií pomocou externých služieb (Flickr, Imageshack,...)</li>
       <li xml:lang="sl">Podpora pošiljanju večpredstavnosti s pomočjo zunanjih storitev  (Flickr, Imageshack, ...)</li>
       <li xml:lang="sv">Stöder uppladdning av media till extern tjänst (Flickr, Imageshack, ...)</li>
       <li xml:lang="tr">Ortamların harici servislere (Flickr, Imageshack,...) yüklenmesini destekler</li>
