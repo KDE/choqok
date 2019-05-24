@@ -527,7 +527,7 @@
       <li xml:lang="zh-TW">支援設定狀態清單外觀</li>
     </ul>
   </description>
-  <url type="homepage">http://choqok.gnufolks.org/</url>
+  <url type="homepage">https://choqok.kde.org/</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=choqok</url>
   <url type="help">http://docs.kde.org/development/en/extragear-network/choqok/index.html</url>
   <screenshots>
