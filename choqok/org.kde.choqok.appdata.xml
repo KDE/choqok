@@ -529,10 +529,10 @@
   </description>
   <url type="homepage">https://choqok.kde.org/</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=choqok</url>
-  <url type="help">http://docs.kde.org/development/en/extragear-network/choqok/index.html</url>
+  <url type="help">https://docs.kde.org/?application=choqok</url>
   <screenshots>
     <screenshot type="default">
-      <image>http://kde.org/images/screenshots/choqok.png</image>
+      <image>https://kde.org/images/screenshots/choqok.png</image>
     </screenshot>
   </screenshots>
   <project_group>KDE</project_group>
