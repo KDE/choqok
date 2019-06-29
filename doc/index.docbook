@@ -42,7 +42,7 @@
 
 <abstract>
 <para>&choqok; is a micro-blogging client by KDE
-(<ulink url="http://choqok.gnufolks.org">http://choqok.gnufolks.org</ulink>).</para>
+(<ulink url="https://choqok.kde.org">https://choqok.kde.org</ulink>).</para>
 </abstract>
 
 <keywordset>
@@ -55,7 +55,7 @@
 </keywordset>
 
 </bookinfo>
-<!--FIXME http://choqok.gnufolks.org/2013/09/choqok-1-4-released/-->
+<!--FIXME https://choqok.kde.org/news/2013/09/01/choqok-1-4-released.html -->
 <chapter id="introduction">
 <title>Introduction</title>
 

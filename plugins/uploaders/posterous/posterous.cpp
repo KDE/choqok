@@ -126,7 +126,7 @@ void Posterous::upload(const QUrl &localUrl, const QByteArray &medium, const QBy
 
         QMap<QString, QByteArray> formdata;
         formdata[QLatin1String("source")] = QCoreApplication::applicationName().toLatin1();
-        formdata[QLatin1String("sourceLink")] = "http://choqok.gnufolks.org/";
+        formdata[QLatin1String("sourceLink")] = "https://choqok.kde.org/";
 
         QMap<QString, QByteArray> mediafile;
         mediafile[QLatin1String("name")] = "media";

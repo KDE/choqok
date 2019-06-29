@@ -684,6 +684,6 @@ void MainWindow::slotShowSpecialMenu(bool show)
 
 void MainWindow::slotDonate()
 {
-    Choqok::openUrl(QUrl(QLatin1String("http://choqok.gnufolks.org/about/contribute/")));
+    Choqok::openUrl(QUrl(QLatin1String("https://choqok.kde.org/contribute.html")));
 }
 
