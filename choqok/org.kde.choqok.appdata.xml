@@ -178,6 +178,7 @@
       <li xml:lang="bs">PoPodrška za samodovoljnu GNU social  uslugu</li>
       <li xml:lang="ca">Permet el servei social de la GNU auto hostatjat</li>
       <li xml:lang="ca-valencia">Permet el servei social de la GNU auto hostatjat</li>
+      <li xml:lang="de">Unterstützung für die eigene GNU-Social-Service-Instanzen</li>
       <li xml:lang="el">Υποστηρίζει αυτο-φιλοξενούμενη υπηρεσία GNU social</li>
       <li xml:lang="en-GB">Supporting self hosted GNU social service</li>
       <li xml:lang="es">Admite el servicio autohospedado de GNU social</li>
@@ -227,6 +228,7 @@
       <li xml:lang="bs">Podrška korisniku + vremenske linije Njegovih/Njenih Prijatelja</li>
       <li xml:lang="ca">Permet les línies de temps Usuari + Vós i els vostres amics</li>
       <li xml:lang="ca-valencia">Permet les línies de temps Usuari + Vós i els vostres amics</li>
+      <li xml:lang="de">Unterstützung für Benutzer- und Freunde-Zeitleisten</li>
       <li xml:lang="el">Υποστηρίζει χρονολόγια για χρήστη + φίλους</li>
       <li xml:lang="en-GB">Supporting User + His/Her Friends time-lines</li>
       <li xml:lang="es">Admite las líneas temporales usuario + sus amigos</li>
@@ -363,7 +365,7 @@
       <li xml:lang="ca">Permet les API de cerca per a tots els serveis</li>
       <li xml:lang="ca-valencia">Permet les API de cerca per a tots els serveis</li>
       <li xml:lang="cs">Podpora vyhledávacích API pro všechny služby</li>
-      <li xml:lang="de">Unterstützt Auch-APIs für alle Dienste</li>
+      <li xml:lang="de">Unterstützt Such-APIs für alle Dienste</li>
       <li xml:lang="el">Υποστηρίζει API αναζήτησης για όλες τις υπηρεσίες</li>
       <li xml:lang="en-GB">Supporting search APIs for all services</li>
       <li xml:lang="es">Implementa las API de búsqueda de todos los servicios</li>
@@ -420,6 +422,7 @@
       <li xml:lang="bs">Sposobnost da se napravi brzi tweet sa globalnim prečicama (Ctrl+Meta+T)</li>
       <li xml:lang="ca">La capacitat per fer un «tweet» ràpid amb dreceres globals (Ctrl+Meta+T)</li>
       <li xml:lang="ca-valencia">La capacitat per fer un «tweet» ràpid amb dreceres globals (Ctrl+Meta+T)</li>
+      <li xml:lang="de">Es ist möglich, Tweets schnell über globale Tastenkürzel abzusetzen (Strg+Meta+T)</li>
       <li xml:lang="el">Δυνατότητα για γρήγορα tweet με καθολικές συντομεύσεις (Ctrl+Meta+T)</li>
       <li xml:lang="en-GB">Ability to make a quick tweet with global shortcuts (Ctrl+Meta+T)</li>
       <li xml:lang="es">Capacidad para hacer un tuit rápido con accesos rápidos de teclado globales (Ctrl+Meta+T)</li>
