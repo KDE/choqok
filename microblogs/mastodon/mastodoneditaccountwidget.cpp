@@ -174,7 +174,7 @@ void MastodonEditAccountWidget::registerClient()
         data += "client_name=" + QCoreApplication::applicationName().toLatin1();
         data += "&redirect_uris=" + QUrl::toPercentEncoding(QLatin1String("urn:ietf:wg:oauth:2.0:oob"));
         data += "&scopes=" + QUrl::toPercentEncoding(QLatin1String("read write follow"));
-        data += "&website=" + QUrl::toPercentEncoding(QLatin1String("http://choqok.gnufolks.org/"));
+        data += "&website=" + QUrl::toPercentEncoding(QLatin1String("https://choqok.kde.org/"));
 
         KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
         if (!job) {
