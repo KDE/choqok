@@ -542,4 +542,8 @@
   <provides>
     <binary>choqok</binary>
   </provides>
+  <launchable type="desktop-id">org.kde.choqok.desktop</launchable>
+  <releases>
+    <release version="1.6.0" date="2016-10-08"/>
+  </releases>
 </component>
