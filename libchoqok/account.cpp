@@ -39,11 +39,11 @@ public:
     {
         configGroup = new KConfigGroup(KSharedConfig::openConfig(), QStringLiteral("Account_%1").arg(alias));
         username = configGroup->readEntry("Username", QString());
-        priority = configGroup->readEntry("Priority", (uint)0);
+        priority = configGroup->readEntry("Priority", static_cast<uint>(0));
         readonly = configGroup->readEntry("ReadOnly", false);
         showInQuickPost = configGroup->readEntry("ShowInQuickPost", true);
         enable = configGroup->readEntry("Enable", true);
-        postCharLimit = configGroup->readEntry("PostCharLimit", 140);
+        postCharLimit = configGroup->readEntry("PostCharLimit", static_cast<uint>(140));
         password = PasswordManager::self()->readPassword(alias);
     }
     QString username;

@@ -33,8 +33,8 @@ public:
 //     QStringList lists;
 };
 
-const char *twitterConsumerKey = "VyXMf0O7CvciiUQjliYtYg";
-const char *twitterConsumerSecret = "uD2HvsOBjzt1Vs6SnouFtuxDeHmvOOVwmn3fBVyCw0";
+static const char *twitterConsumerKey = "VyXMf0O7CvciiUQjliYtYg";
+static const char *twitterConsumerSecret = "uD2HvsOBjzt1Vs6SnouFtuxDeHmvOOVwmn3fBVyCw0";
 
 TwitterAccount::TwitterAccount(TwitterMicroBlog *parent, const QString &alias)
     : TwitterApiAccount(parent, alias), d(new Private)
