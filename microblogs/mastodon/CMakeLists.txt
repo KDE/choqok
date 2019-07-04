@@ -4,7 +4,9 @@ include_directories(
 
 set(choqok_mastodon_SRCS
     mastodonaccount.cpp
+    mastodoncomposerwidget.cpp
     mastodondebug.cpp
+    mastodondmessagedialog.cpp
     mastodoneditaccountwidget.cpp
     mastodonmicroblog.cpp
     mastodonoauth.cpp

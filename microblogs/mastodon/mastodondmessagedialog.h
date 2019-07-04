@@ -18,43 +18,55 @@
 
     You should have received a copy of the GNU General Public License
     along with this program; if not, see http://www.gnu.org/licenses/
+
 */
 
-#ifndef MASTODONPOSTWIDGET_H
-#define MASTODONPOSTWIDGET_H
+#ifndef MASTODONDMESSAGEDIALOG_H
+#define MASTODONDMESSAGEDIALOG_H
 
-#include "postwidget.h"
+#include <QDialog>
 
-class MastodonPostWidget : public Choqok::UI::PostWidget
+#include "microblog.h"
+
+namespace Choqok
+{
+class Account;
+class Post;
+
+    namespace UI
+    {
+        class TextEdit;
+    }
+}
+
+class MastodonAccount;
+
+class MastodonDMessageDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit MastodonPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
-    virtual ~MastodonPostWidget();
-
-    virtual QString generateSign() override;
-
-    virtual void initUi() override;
+    explicit MastodonDMessageDialog(MastodonAccount *theAccount, QWidget *parent = 0, Qt::WindowFlags flags = 0);
+    ~MastodonDMessageDialog();
+    void setTo(const QString &username);
 
 protected Q_SLOTS:
-    virtual void slotResendPost() override;
+    virtual void accept() override;
 
-    void slotToggleFavorite(Choqok::Account *, Choqok::Post *);
-    void slotReply();
-    void slotWriteTo();
-    void slotReplyToAll();
-    void toggleFavorite();
+    void followersUsernameListed(MastodonAccount *, QStringList);
+    void submitPost(QString);
+    void reloadFriendslist();
+    void errorPost(Choqok::Account *, Choqok::Post *, Choqok::MicroBlog::ErrorType,
+                   QString, Choqok::MicroBlog::ErrorLevel);
 
 protected:
-    virtual QString getUsernameHyperlink(const Choqok::User &user) const;
-
-    static const QIcon unFavIcon;
+    void setupUi(QWidget *mainWidget);
+    void setFriends(const QStringList friends);
+    Choqok::UI::TextEdit *editor();
+    MastodonAccount *account();
 
 private:
-    void updateFavStat();
-
     class Private;
     Private *const d;
 };
 
-#endif // MASTODONPOSTWIDGET_H
+#endif // MASTODONDMESSAGEDIALOG_H

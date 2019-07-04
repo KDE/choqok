@@ -43,6 +43,8 @@ public:
 
     virtual ChoqokEditAccountWidget *createEditAccountWidget(Choqok::Account *account, QWidget *parent) override;
 
+    virtual Choqok::UI::ComposerWidget *createComposerWidget(Choqok::Account *account, QWidget *parent) override;
+
     virtual void createPost(Choqok::Account *theAccount, Choqok::Post *post) override;
 
     virtual Choqok::Account *createNewAccount(const QString &alias) override;
@@ -69,15 +71,33 @@ public:
 
     virtual void updateTimelines(Choqok::Account *theAccount) override;
 
+    void createReply(Choqok::Account *theAccount, MastodonPost *post);
+
     void toggleReblog(Choqok::Account *theAccount, Choqok::Post *post);
 
     void toggleFavorite(Choqok::Account *theAccount, Choqok::Post *post);
+
+    void fetchFollowers(MastodonAccount *theAccount, bool active);
+
+    void fetchFollowing(MastodonAccount *theAccount, bool active);
 
     static QString userNameFromAcct(const QString &acct);
     static QString hostFromAcct(const QString &acct);
 
 Q_SIGNALS:
     void favorite(Choqok::Account *, Choqok::Post *);
+    void followersUsernameListed(MastodonAccount *theAccount, const QStringList &friendsList);
+    void followingUsernameListed(MastodonAccount *theAccount, const QStringList &friendsList);
+
+public Q_SLOTS:
+    virtual void showDirectMessageDialog(MastodonAccount *theAccount = 0,
+                                         const QString &toUsername = QString());
+
+    void slotRequestFollowersScreenNameActive(KJob *job);
+    void slotRequestFollowersScreenNamePassive(KJob *job);
+
+    void slotRequestFollowingScreenNameActive(KJob *job);
+    void slotRequestFollowingScreenNamePassive(KJob *job);
 
 protected Q_SLOTS:
     void slotCreatePost(KJob *job);
@@ -104,6 +124,10 @@ protected:
                            const QString &id);
     void setTimelinesInfo();
 
+    void finishRequestFollowersScreenName(KJob *job, bool active);
+
+    void finishRequestFollowingScreenName(KJob *job, bool active);
+
     QMap<KJob *, Choqok::Account * > m_accountJobs;
     QMap<KJob *, Choqok::Post * > m_createPostJobs;
     QMap<KJob *, Choqok::Post * > m_favoriteJobs;
@@ -111,6 +135,7 @@ protected:
     QMap<KJob *, Choqok::Post * > m_shareJobs;
     QMap<QString, Choqok::TimelineInfo * > m_timelinesInfos;
     QHash<Choqok::Account *, QMap<QString, QString> > m_timelinesLatestIds;
+    QMap<KJob *, Choqok::Account *> mJobsAccount;
     QHash<QString, QString> m_timelinesPaths;
     QMap<KJob *, QString> m_timelinesRequests;
 

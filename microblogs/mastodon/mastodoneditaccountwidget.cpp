@@ -54,7 +54,7 @@ MastodonEditAccountWidget::MastodonEditAccountWidget(MastodonMicroBlog *microblo
 
     if (m_account) {
         kcfg_alias->setText(m_account->alias());
-        kcfg_acct->setText(m_account->acct());
+        kcfg_acct->setText(m_account->username());
         setAuthenticated(!m_account->tokenSecret().isEmpty());
     } else {
         setAuthenticated(false);
@@ -80,7 +80,7 @@ MastodonEditAccountWidget::~MastodonEditAccountWidget()
 Choqok::Account *MastodonEditAccountWidget::apply()
 {
     m_account->setAlias(kcfg_alias->text());
-    m_account->setAcct(kcfg_acct->text());
+    m_account->setUsername(MastodonMicroBlog::userNameFromAcct(kcfg_acct->text()));
     m_account->setTokenSecret(m_account->oAuth()->token());
     m_account->writeConfig();
     saveTimelinesTable();
@@ -163,8 +163,8 @@ void MastodonEditAccountWidget::loadTimelinesTable()
 void MastodonEditAccountWidget::registerClient()
 {
     if (kcfg_acct->text().contains(QLatin1Char('@'))) {
-        m_account->setUsername(kcfg_acct->text().split(QLatin1Char('@'))[0]);
-        m_account->setHost(QLatin1String("https://") + kcfg_acct->text().split(QLatin1Char('@'))[1]);
+        m_account->setUsername(MastodonMicroBlog::userNameFromAcct(kcfg_acct->text()));
+        m_account->setHost(QLatin1String("https://") + MastodonMicroBlog::hostFromAcct(kcfg_acct->text()));
 
         m_account->oAuth()->setAccessTokenUrl(QUrl(m_account->host() + QLatin1String("/oauth/token")));
         m_account->oAuth()->setAuthorizationUrl(QUrl(m_account->host() + QLatin1String("/oauth/authorize")));

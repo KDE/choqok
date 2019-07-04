@@ -41,7 +41,9 @@
 #include "postwidget.h"
 
 #include "mastodonaccount.h"
+#include "mastodoncomposerwidget.h"
 #include "mastodondebug.h"
+#include "mastodondmessagedialog.h"
 #include "mastodoneditaccountwidget.h"
 #include "mastodonpost.h"
 #include "mastodonpostwidget.h"
@@ -99,6 +101,11 @@ ChoqokEditAccountWidget *MastodonMicroBlog::createEditAccountWidget(Choqok::Acco
         qCDebug(CHOQOK) << "Account passed here was not a valid MastodonAccount!";
         return 0;
     }
+}
+
+Choqok::UI::ComposerWidget *MastodonMicroBlog::createComposerWidget(Choqok::Account *account, QWidget *parent)
+{
+    return new MastodonComposerWidget(account, parent);
 }
 
 void MastodonMicroBlog::createPost(Choqok::Account *theAccount, Choqok::Post *post)
@@ -216,8 +223,8 @@ Choqok::Post *MastodonMicroBlog::readPost(const QVariantMap &var, Choqok::Post *
 
         QVariantMap account = status[QLatin1Literal("account")].toMap();
 
-        p->author.userId = account[QLatin1String("acct")].toString();
-        p->author.userName = account[QLatin1String("username")].toString();
+        p->author.userId = account[QLatin1String("id")].toString();
+        p->author.userName = account[QLatin1String("acct")].toString();
         p->author.realName = account[QLatin1String("display_name")].toString();
         p->author.homePageUrl = account[QLatin1String("url")].toUrl();
 
@@ -237,8 +244,8 @@ Choqok::Post *MastodonMicroBlog::readPost(const QVariantMap &var, Choqok::Post *
 
             p->repeatedPostId = var[QLatin1String("id")].toString();
             const QVariantMap repeatedFrom = var[QLatin1Literal("account")].toMap();
-            p->repeatedFromUser.userId = repeatedFrom[QLatin1String("acct")].toString();
-            p->repeatedFromUser.userName = repeatedFrom[QLatin1String("username")].toString();
+            p->repeatedFromUser.userId = repeatedFrom[QLatin1String("id")].toString();
+            p->repeatedFromUser.userName = repeatedFrom[QLatin1String("acct")].toString();
             p->repeatedFromUser.homePageUrl = repeatedFrom[QLatin1String("url")].toUrl();
         }
 
@@ -246,6 +253,38 @@ Choqok::Post *MastodonMicroBlog::readPost(const QVariantMap &var, Choqok::Post *
     } else {
         qCDebug(CHOQOK) << "post is not a MastodonPost!";
         return post;
+    }
+}
+
+void MastodonMicroBlog::createReply(Choqok::Account *theAccount, MastodonPost *post)
+{
+    MastodonAccount *acc = qobject_cast<MastodonAccount *>(theAccount);
+    if (acc) {
+        QVariantMap object;
+        object.insert(QLatin1String("status"), post->content);
+
+        if (!post->replyToPostId.isEmpty()) {
+            object.insert(QLatin1String("in_reply_to_id"), post->replyToPostId);
+        }
+
+        const QByteArray data = QJsonDocument::fromVariant(object).toJson();
+
+        QUrl url(acc->host());
+        url = url.adjusted(QUrl::StripTrailingSlash);
+        url.setPath(url.path() + QLatin1String("/api/v1/statuses"));
+        KIO::StoredTransferJob *job = KIO::storedHttpPost(data, url, KIO::HideProgressInfo);
+        job->addMetaData(QLatin1String("content-type"), QLatin1String("Content-Type: application/json"));
+        job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(acc));
+        if (!job) {
+            qCDebug(CHOQOK) << "Cannot create an http POST request!";
+            return;
+        }
+        m_accountJobs[job] = acc;
+        m_createPostJobs[job] = post;
+        connect(job, &KIO::StoredTransferJob::result, this, &MastodonMicroBlog::slotCreatePost);
+        job->start();
+    } else {
+        qCDebug(CHOQOK) << "theAccount is not a MastodonAccount!";
     }
 }
 
@@ -293,8 +332,7 @@ void MastodonMicroBlog::slotReblog(KJob *job)
     if (job->error()) {
         qCDebug(CHOQOK) << "Job Error:" << job->errorString();
     } else {
-        Choqok::UI::Global::mainWindow()->showStatusMessage(
-            i18n("The post has been shared."));
+        Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("The post has been shared."));
         KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
 
         const QJsonDocument json = QJsonDocument::fromJson(j->data());
@@ -502,6 +540,21 @@ QString MastodonMicroBlog::generateRepeatedByUserTooltip(const QString &username
     }
 }
 
+void MastodonMicroBlog::showDirectMessageDialog(MastodonAccount *theAccount, const QString &toUsername)
+{
+    qCDebug(CHOQOK);
+    if (!theAccount) {
+        QAction *act = qobject_cast<QAction *>(sender());
+        theAccount = qobject_cast<MastodonAccount *>(
+                         Choqok::AccountManager::self()->findAccount(act->data().toString()));
+    }
+    MastodonDMessageDialog *dmsg = new MastodonDMessageDialog(theAccount, Choqok::UI::Global::mainWindow());
+    if (!toUsername.isEmpty()) {
+        dmsg->setTo(toUsername);
+    }
+    dmsg->show();
+}
+
 QString MastodonMicroBlog::hostFromAcct(const QString &acct)
 {
     if (acct.contains(QLatin1Char('@'))) {
@@ -662,7 +715,8 @@ void MastodonMicroBlog::slotCreatePost(KJob *job)
         if (!json.isNull()) {
             const QVariantMap reply = json.toVariant().toMap();
             if (!reply[QLatin1String("id")].toString().isEmpty()) {
-                Choqok::NotifyManager::success(i18n("New post submitted successfully"));
+                Choqok::NotifyManager::success(i18n("New post for account %1 submitted successfully.",
+                                                    theAccount->alias()));
                 ret = 0;
                 Q_EMIT postCreated(theAccount, post);
             }
@@ -776,6 +830,160 @@ void MastodonMicroBlog::slotUpdateTimeline(KJob *job)
         }
 
         Q_EMIT timelineDataReceived(account, timeline, list);
+    }
+}
+
+void MastodonMicroBlog::fetchFollowers(MastodonAccount* theAccount, bool active)
+{
+    qCDebug(CHOQOK);
+    QUrl url(theAccount->host());
+    url = url.adjusted(QUrl::StripTrailingSlash);
+    url.setPath(url.path() + QStringLiteral("/api/v1/accounts/%1/followers").arg(theAccount->id()));
+
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem(QLatin1String("limit"), QLatin1String("80"));
+    url.setQuery(urlQuery);
+
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
+    if (!job) {
+        qCDebug(CHOQOK) << "Cannot create an http GET request!";
+        return;
+    }
+    job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(theAccount));
+    mJobsAccount[job] = theAccount;
+    if (active) {
+        connect(job, &KIO::StoredTransferJob::result, this, &MastodonMicroBlog::slotRequestFollowersScreenNameActive);
+    } else {
+        connect(job, &KIO::StoredTransferJob::result, this, &MastodonMicroBlog::slotRequestFollowersScreenNamePassive);
+    }
+    job->start();
+    Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Updating followers list for account %1...",
+                                                             theAccount->alias()));
+}
+
+void MastodonMicroBlog::slotRequestFollowersScreenNameActive(KJob* job)
+{
+    finishRequestFollowersScreenName(job, true);
+}
+
+void MastodonMicroBlog::slotRequestFollowersScreenNamePassive(KJob* job)
+{
+    finishRequestFollowersScreenName(job, false);
+}
+
+void MastodonMicroBlog::finishRequestFollowersScreenName(KJob *job, bool active)
+{
+    qCDebug(CHOQOK);
+    if (!job) {
+        qCDebug(CHOQOK) << "Job is null pointer";
+        return;
+    }
+    Choqok::MicroBlog::ErrorLevel level = active ? Critical : Low;
+    MastodonAccount *account = qobject_cast<MastodonAccount *>(mJobsAccount.take(job));
+    if (!account) {
+        qCDebug(CHOQOK) << "Account or Post is NULL pointer";
+        return;
+    }
+
+    if (job->error()) {
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
+        Q_EMIT error(account, ServerError, i18n("Followers list for account %1 could not be updated:\n%2",
+            account->username(), job->errorString()), level);
+        return;
+    } else {
+        KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
+
+        const QByteArray buffer = j->data();
+        const QJsonDocument json = QJsonDocument::fromJson(buffer);
+        if (!json.isNull()) {
+            QStringList followers;
+            for (const QVariant &user: json.array().toVariantList()) {
+                followers.append(user.toMap()[QLatin1String("acct")].toString());
+            }
+
+            account->setFollowers(followers);
+        } else {
+            QString err = i18n("Retrieving the followers list failed. The data returned from the server is corrupted.");
+            qCDebug(CHOQOK) << "JSON parse error:the buffer is: \n" << buffer;
+            Q_EMIT error(account, ParsingError, err, Critical);
+        }
+    }
+}
+
+void MastodonMicroBlog::fetchFollowing(MastodonAccount* theAccount, bool active)
+{
+    qCDebug(CHOQOK);
+    QUrl url(theAccount->host());
+    url = url.adjusted(QUrl::StripTrailingSlash);
+    url.setPath(url.path() + QStringLiteral("/api/v1/accounts/%1/following").arg(theAccount->id()));
+
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem(QLatin1String("limit"), QLatin1String("80"));
+    url.setQuery(urlQuery);
+
+    KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::Reload, KIO::HideProgressInfo);
+    if (!job) {
+        qCDebug(CHOQOK) << "Cannot create an http GET request!";
+        return;
+    }
+    job->addMetaData(QLatin1String("customHTTPHeader"), authorizationMetaData(theAccount));
+    mJobsAccount[job] = theAccount;
+    if (active) {
+        connect(job, &KIO::StoredTransferJob::result, this, &MastodonMicroBlog::slotRequestFollowingScreenNameActive);
+    } else {
+        connect(job, &KIO::StoredTransferJob::result, this, &MastodonMicroBlog::slotRequestFollowingScreenNamePassive);
+    }
+    job->start();
+    Choqok::UI::Global::mainWindow()->showStatusMessage(i18n("Updating following list for account %1...",
+                                                             theAccount->alias()));
+}
+
+void MastodonMicroBlog::slotRequestFollowingScreenNameActive(KJob* job)
+{
+    finishRequestFollowingScreenName(job, true);
+}
+
+void MastodonMicroBlog::slotRequestFollowingScreenNamePassive(KJob* job)
+{
+    finishRequestFollowingScreenName(job, false);
+}
+
+void MastodonMicroBlog::finishRequestFollowingScreenName(KJob *job, bool active)
+{
+    qCDebug(CHOQOK);
+    if (!job) {
+        qCDebug(CHOQOK) << "Job is null pointer";
+        return;
+    }
+    Choqok::MicroBlog::ErrorLevel level = active ? Critical : Low;
+    MastodonAccount *account = qobject_cast<MastodonAccount *>(mJobsAccount.take(job));
+    if (!account) {
+        qCDebug(CHOQOK) << "Account or Post is NULL pointer";
+        return;
+    }
+
+    if (job->error()) {
+        qCDebug(CHOQOK) << "Job Error:" << job->errorString();
+        Q_EMIT error(account, ServerError, i18n("Following list for account %1 could not be updated:\n%2",
+            account->username(), job->errorString()), level);
+        return;
+    } else {
+        KIO::StoredTransferJob *j = qobject_cast<KIO::StoredTransferJob * >(job);
+
+        const QByteArray buffer = j->data();
+        const QJsonDocument json = QJsonDocument::fromJson(buffer);
+        if (!json.isNull()) {
+            QStringList following;
+            for (const QVariant &user: json.array().toVariantList()) {
+                following.append(user.toMap()[QLatin1String("acct")].toString());
+            }
+
+            account->setFollowing(following);
+        } else {
+            QString err = i18n("Retrieving the following list failed. The data returned from the server is corrupted.");
+            qCDebug(CHOQOK) << "JSON parse error:the buffer is: \n" << buffer;
+            Q_EMIT error(account, ParsingError, err, Critical);
+        }
     }
 }
 

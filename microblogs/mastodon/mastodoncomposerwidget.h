@@ -20,41 +20,29 @@
     along with this program; if not, see http://www.gnu.org/licenses/
 */
 
-#ifndef MASTODONPOSTWIDGET_H
-#define MASTODONPOSTWIDGET_H
+#ifndef MASTODONCOMPOSERWIDGET_H
+#define MASTODONCOMPOSERWIDGET_H
 
-#include "postwidget.h"
+#include "composerwidget.h"
 
-class MastodonPostWidget : public Choqok::UI::PostWidget
+class MastodonComposerWidget : public Choqok::UI::ComposerWidget
 {
     Q_OBJECT
 public:
-    explicit MastodonPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
-    virtual ~MastodonPostWidget();
-
-    virtual QString generateSign() override;
-
-    virtual void initUi() override;
+    explicit MastodonComposerWidget(Choqok::Account *account, QWidget *parent = nullptr);
+    ~MastodonComposerWidget();
 
 protected Q_SLOTS:
-    virtual void slotResendPost() override;
+    virtual void submitPost(const QString &text) override;
+    virtual void slotPostSubmited(Choqok::Account *theAccount, Choqok::Post *post) override;
 
-    void slotToggleFavorite(Choqok::Account *, Choqok::Post *);
-    void slotReply();
-    void slotWriteTo();
-    void slotReplyToAll();
-    void toggleFavorite();
-
-protected:
-    virtual QString getUsernameHyperlink(const Choqok::User &user) const;
-
-    static const QIcon unFavIcon;
+    void cancelAttach();
+    void attachMedia();
 
 private:
-    void updateFavStat();
-
     class Private;
     Private *const d;
+
 };
 
-#endif // MASTODONPOSTWIDGET_H
+#endif // MASTODONCOMPOSERWIDGET_H

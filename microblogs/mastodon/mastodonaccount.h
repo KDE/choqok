@@ -42,8 +42,8 @@ public:
     QString host();
     void setHost(const QString &host);
 
-    QString acct();
-    void setAcct(const QString &acct);
+    uint id();
+    void setId(const uint id);
 
     QString consumerKey();
     void setConsumerKey(const QString &consumerKey);
@@ -55,6 +55,15 @@ public:
     void setTokenSecret(const QString &tokenSecret);
 
     MastodonOAuth *oAuth();
+
+    QStringList followers();
+    void setFollowers(const QStringList &followers);
+
+    QStringList following();
+    void setFollowing(const QStringList &following);
+
+    QVariantList lists();
+    void setLists(const QVariantList &lists);
 
 private:
     class Private;
