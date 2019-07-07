@@ -1,3 +1,24 @@
+=== Version 1.7.0 -- 07-Jul-2019 ===
+* Port to QtNetworkAuth and drop qoauth dependency
+* Plugin compability break: MicroBlog::profileUrl returns a QUrl instead
+* Plugin compability break: MicroBlog::postUrl returns a QUrl instead
+* Allow to disable accounts
+* Honour the default font [BUG:372291]
+* Make the sign footer consisent between all microplugins
+* Unread post count in the application title sums all unread posts' accounts
+* Twitter: update char limit to 280
+* Twitter: support extended tweets [BUG:370260]
+* Twitter: fix list browsing [BUG:382392]
+* Twitter: fix followers list
+* Twitter: show client source even for private messages
+* Twitter: show user' real name when no description is set
+* GNU Social: do not rely over qvitter to get the post url
+* GNU Social: hide linkback statuses
+* GNU Social: show user' real name when no description is set
+* Pump.io: escape the description
+* Pump.io: show user' real name when no description is set
+* Drop yFrog support from ImagePreview plugin
+
 === Version 1.6.0 -- 07-Oct-2016 ===
 * Enable Untiny plugin
 * Fix build without TelepathyQt
@@ -27,9 +48,9 @@
 * Twitter: always show 'Mark as read' button
 * GNU Social: fix medium attachment to post
 * GNU Social: allow to send direct messages
-* Pump.IO: do not show resend button for own posts
-* Pump.IO: display avatar image in own posts on the right
-* Pump.IO: do not create a post if there's no text
+* Pump.io: do not show resend button for own posts
+* Pump.io: display avatar image in own posts on the right
+* Pump.io: do not create a post if there's no text
 * Fix removal of accounts with spaces in their name
 * Add scalable versions of Choqok icon
 * Check the result of external URL opening to report any failure [BUG:347525]
