@@ -27,6 +27,7 @@
 
 #include "plugin.h"
 
+#include <QMap>
 #include <QQueue>
 #include <QUrl>
 #include <QPointer>
