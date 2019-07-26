@@ -153,7 +153,7 @@ void GNUSocialApiPostWidget::checkAnchor(const QUrl &url)
         QMenu menu;
         QAction *search = new QAction(QIcon::fromTheme(QLatin1String("system-search")),
                                       i18n("Search for %1", unpcode), &menu);
-        QAction *openInBrowser = new QAction(QIcon::fromTheme(QLatin1String("applications-internet")),
+        QAction *openInBrowser = new QAction(QIcon::fromTheme(QLatin1String("internet-services")),
                                              i18n("Open tag page in browser"), &menu);
         menu.addAction(search);
         menu.addAction(openInBrowser);

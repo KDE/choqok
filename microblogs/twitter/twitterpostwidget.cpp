@@ -151,7 +151,7 @@ void TwitterPostWidget::checkAnchor(const QUrl &url)
         QAction *cont = new QAction(QIcon::fromTheme(QLatin1String("user-properties")), i18nc("Including user name", "Including %1",
                                     url.host()),
                                     &menu);
-        QAction *openInBrowser = new QAction(QIcon::fromTheme(QLatin1String("applications-internet")),
+        QAction *openInBrowser = new QAction(QIcon::fromTheme(QLatin1String("internet-services")),
                                              i18nc("Open profile page in browser",
                                                      "Open profile in browser"), &menu);
         from->setData(TwitterSearch::FromUser);
