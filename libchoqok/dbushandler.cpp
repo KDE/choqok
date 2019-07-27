@@ -40,7 +40,7 @@
 namespace Choqok
 {
 
-DbusHandler *DbusHandler::m_self = 0;
+DbusHandler *DbusHandler::m_self = nullptr;
 
 DbusHandler::DbusHandler()
 {
@@ -102,7 +102,7 @@ void DbusHandler::slotTitleUrl(KJob *job)
 
 void DbusHandler::uploadFile(const QString &filename)
 {
-    QPointer<Choqok::UI::UploadMediaDialog> dlg = new Choqok::UI::UploadMediaDialog(0, filename);
+    QPointer<Choqok::UI::UploadMediaDialog> dlg = new Choqok::UI::UploadMediaDialog(nullptr, filename);
     dlg->show();
 }
 
@@ -111,7 +111,7 @@ void DbusHandler::postText(const QString &text)
     // Before posting text ensure QuickPost widget has been created otherwise wait for it.
     // This is necessary when choqok is launched by a D-Bus call, because it can happen
     //  that DBusHandler is ready, but QuickPost widget not yet.
-    if (Choqok::UI::Global::quickPostWidget() == 0) {
+    if (Choqok::UI::Global::quickPostWidget() == nullptr) {
         m_textToPost = QString(text);
         connect(Choqok::UI::Global::mainWindow(), &UI::MainWindow::quickPostCreated,
                 this, &DbusHandler::slotcreatedQuickPost);
@@ -150,7 +150,7 @@ bool DbusHandler::getShortening()
 
 DbusHandler *ChoqokDbus()
 {
-    if (DbusHandler::m_self == 0) {
+    if (DbusHandler::m_self == nullptr) {
         DbusHandler::m_self = new DbusHandler();
     }
     return DbusHandler::m_self;

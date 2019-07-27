@@ -44,7 +44,7 @@ class TwitterListDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit TwitterListDialog(TwitterApiAccount *theAccount, QWidget *parent = 0);
+    explicit TwitterListDialog(TwitterApiAccount *theAccount, QWidget *parent = nullptr);
     ~TwitterListDialog();
 
 protected Q_SLOTS:

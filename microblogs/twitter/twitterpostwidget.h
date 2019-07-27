@@ -30,7 +30,7 @@ class TwitterPostWidget : public TwitterApiPostWidget
 {
     Q_OBJECT
 public:
-    TwitterPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
+    TwitterPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = nullptr);
     ~TwitterPostWidget();
 
     virtual void initUi() override;

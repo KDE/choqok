@@ -51,7 +51,7 @@ class TwitterApiWhoisWidget::Private
 {
 public:
     Private(TwitterApiAccount *account, const QString &userN)
-        : currentAccount(account), waitFrame(0), job(0), username(userN)
+        : currentAccount(account), waitFrame(nullptr), job(nullptr), username(userN)
     {
         mBlog = qobject_cast<TwitterApiMicroBlog *>(account->microblog());
     }

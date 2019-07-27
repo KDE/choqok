@@ -201,7 +201,7 @@ public:
     \brief Abort all createPost jobs
     \see abortAllJobs()
     */
-    virtual void abortCreatePost(Choqok::Account *theAccount, Choqok::Post *post = 0);
+    virtual void abortCreatePost(Choqok::Account *theAccount, Choqok::Post *post = nullptr);
     /**
     \brief Fetch a post
 
@@ -309,7 +309,7 @@ Q_SIGNALS:
 
 protected:
 
-    MicroBlog(const QString &componentName, QObject *parent = 0);
+    MicroBlog(const QString &componentName, QObject *parent = nullptr);
 
     virtual void setTimelineNames(const QStringList &);
     void addTimelineName(const QString &);

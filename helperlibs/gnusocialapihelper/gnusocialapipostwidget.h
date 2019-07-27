@@ -29,7 +29,7 @@
 class CHOQOK_HELPER_EXPORT GNUSocialApiPostWidget : public TwitterApiPostWidget
 {
 public:
-    GNUSocialApiPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
+    GNUSocialApiPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = nullptr);
     ~GNUSocialApiPostWidget();
     virtual void initUi() override;
 

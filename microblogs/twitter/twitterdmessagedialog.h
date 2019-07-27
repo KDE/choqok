@@ -32,7 +32,7 @@ class TwitterDMessageDialog : public TwitterApiDMessageDialog
 {
     Q_OBJECT
 public:
-    explicit TwitterDMessageDialog(TwitterApiAccount *theAccount, QWidget *parent = 0, Qt::WindowFlags flags = 0);
+    explicit TwitterDMessageDialog(TwitterApiAccount *theAccount, QWidget *parent = nullptr, Qt::WindowFlags flags = nullptr);
     ~TwitterDMessageDialog();
 
 private Q_SLOTS:

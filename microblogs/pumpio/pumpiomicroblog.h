@@ -41,7 +41,7 @@ public:
 
     virtual void abortAllJobs(Choqok::Account *theAccount) override;
 
-    virtual void abortCreatePost(Choqok::Account *theAccount, Choqok::Post *post = 0) override;
+    virtual void abortCreatePost(Choqok::Account *theAccount, Choqok::Post *post = nullptr) override;
 
     virtual void aboutToUnload() override;
 

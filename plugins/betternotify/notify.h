@@ -56,7 +56,7 @@ protected Q_SLOTS:
 
 private:
     void notify(QPointer< Choqok::UI::PostWidget > post);
-    void hideLastNotificationAndShowThis(Notification *nextNotificationToShow = 0);
+    void hideLastNotificationAndShowThis(Notification *nextNotificationToShow = nullptr);
 
     QTimer timer;
     QMap<QString, QStringList> accountsList;

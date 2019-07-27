@@ -40,7 +40,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "shortenmanager.h"
 
 BehaviorConfig_Shorten::BehaviorConfig_Shorten(QWidget *parent)
-    : QWidget(parent), currentShortener(0)
+    : QWidget(parent), currentShortener(nullptr)
 {
     qCDebug(CHOQOK);
     setupUi(this);
@@ -135,10 +135,10 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
     QPointer<QDialog> configDialog = new QDialog(this);
     configDialog->setWindowTitle(pluginInfo.name());
     // The number of KCModuleProxies in use determines whether to use a tabwidget
-    QTabWidget *newTabWidget = 0;
+    QTabWidget *newTabWidget = nullptr;
     // Widget to use for the setting dialog's main widget,
     // either a QTabWidget or a KCModuleProxy
-    QWidget *mainWidget = 0;
+    QWidget *mainWidget = nullptr;
     // Widget to use as the KCModuleProxy's parent.
     // The first proxy is owned by the dialog itself
     QWidget *moduleProxyParentWidget = configDialog;
@@ -162,9 +162,9 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
                         mainWidget = newTabWidget;
                     } else {
                         delete newTabWidget;
-                        newTabWidget = 0;
+                        newTabWidget = nullptr;
                         moduleProxyParentWidget = configDialog;
-                        mainWidget->setParent(0);
+                        mainWidget->setParent(nullptr);
                     }
                 }
 

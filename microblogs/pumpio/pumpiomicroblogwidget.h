@@ -30,7 +30,7 @@ class PumpIOMicroBlogWidget : public Choqok::UI::MicroBlogWidget
 {
     Q_OBJECT
 public:
-    explicit PumpIOMicroBlogWidget(Choqok::Account *account, QWidget *parent = 0);
+    explicit PumpIOMicroBlogWidget(Choqok::Account *account, QWidget *parent = nullptr);
     ~PumpIOMicroBlogWidget();
 
     void initUi() override;

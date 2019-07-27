@@ -106,7 +106,7 @@ QList< Choqok::Post * > OCSMicroblog::loadTimeline(Choqok::Account *account, con
     qSort(groupList);
     int count = groupList.count();
     if (count) {
-        Choqok::Post *st = 0;
+        Choqok::Post *st = nullptr;
         for (int i = 0; i < count; ++i) {
             st = new Choqok::Post;
             KConfigGroup grp(&postsBackup, groupList[i].toString());
@@ -135,7 +135,7 @@ Choqok::Account *OCSMicroblog::createNewAccount(const QString &alias)
     if (!acc) {
         return new OCSAccount(this, alias);
     } else {
-        return 0;//If there's an account with this alias, So We can't create a new one
+        return nullptr;//If there's an account with this alias, So We can't create a new one
     }
 }
 
@@ -268,7 +268,7 @@ Choqok::TimelineInfo *OCSMicroblog::timelineInfo(const QString &timelineName)
         return info;
     } else {
         qCCritical(CHOQOK) << "timelineName is not valid!";
-        return 0;
+        return nullptr;
     }
 }
 

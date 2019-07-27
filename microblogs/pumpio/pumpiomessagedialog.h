@@ -37,8 +37,8 @@ class PumpIOMessageDialog : public QDialog, Ui::PumpIOMessageDialog
     Q_OBJECT
 
 public:
-    explicit PumpIOMessageDialog(Choqok::Account *theAccount, QWidget *parent = 0,
-                                 Qt::WindowFlags flags = 0);
+    explicit PumpIOMessageDialog(Choqok::Account *theAccount, QWidget *parent = nullptr,
+                                 Qt::WindowFlags flags = nullptr);
     ~PumpIOMessageDialog();
 
 protected Q_SLOTS:

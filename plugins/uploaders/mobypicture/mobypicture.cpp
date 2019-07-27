@@ -53,7 +53,7 @@ Mobypicture::~Mobypicture()
 void Mobypicture::upload(const QUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType)
 {
     MobypictureSettings::self()->load();
-    KIO::StoredTransferJob *job = 0;
+    KIO::StoredTransferJob *job = nullptr;
     QByteArray apiKey = "85LUKv3w6luUF6Pa";
     if (MobypictureSettings::oauth()) {
         QString alias = MobypictureSettings::alias();

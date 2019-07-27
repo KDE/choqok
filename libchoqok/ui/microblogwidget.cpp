@@ -94,7 +94,7 @@ class MicroBlogWidget::Private
 {
 public:
     Private(Account *acc)
-        : account(acc), blog(acc->microblog()), composer(0), btnMarkAllAsRead(0)
+        : account(acc), blog(acc->microblog()), composer(nullptr), btnMarkAllAsRead(nullptr)
     {
     }
     Account *account;

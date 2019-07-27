@@ -86,7 +86,7 @@ Choqok::Account *TwitterMicroBlog::createNewAccount(const QString &alias)
     if (!acc) {
         return new TwitterAccount(this, alias);
     } else {
-        return 0;
+        return nullptr;
     }
 }
 
@@ -369,7 +369,7 @@ Choqok::Post *TwitterMicroBlog::readDirectMessage(Choqok::Account *theAccount, c
 
     if (!post) {
         qCCritical(CHOQOK) << "post is NULL!";
-        return 0;
+        return nullptr;
     }
 
     post->postId = var[QLatin1String("id_str")].toString();
@@ -458,7 +458,7 @@ Choqok::Post *TwitterMicroBlog::readPost(Choqok::Account *account, const QVarian
 {
     if (!post) {
         qCCritical(CHOQOK) << "TwitterMicroBlog::readPost: post is NULL!";
-        return 0;
+        return nullptr;
     }
 
     post = TwitterApiMicroBlog::readPost(account, var, post);

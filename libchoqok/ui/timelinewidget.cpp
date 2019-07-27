@@ -48,7 +48,7 @@ class TimelineWidget::Private
 public:
     Private(Account *account, const QString &timelineName)
         : currentAccount(account), timelineName(timelineName),
-          btnMarkAllAsRead(0), unreadCount(0), placeholderLabel(0), info(0), isClosable(false)
+          btnMarkAllAsRead(nullptr), unreadCount(0), placeholderLabel(nullptr), info(nullptr), isClosable(false)
     {
         if (account->microblog()->isValidTimeline(timelineName)) {
             info = account->microblog()->timelineInfo(timelineName);
@@ -273,7 +273,7 @@ void TimelineWidget::addPostWidgetToUi(PostWidget *widget)
     if (d->placeholderLabel) {
         d->mainLayout->removeWidget(d->placeholderLabel);
         delete d->placeholderLabel;
-        d->placeholderLabel = 0;
+        d->placeholderLabel = nullptr;
     }
 }
 

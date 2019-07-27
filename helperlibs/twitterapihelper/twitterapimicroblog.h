@@ -65,7 +65,7 @@ public:
     /**
     \brief Abort all of createPost requests!
     */
-    virtual void abortCreatePost(Choqok::Account *theAccount, Choqok::Post *post = 0) override;
+    virtual void abortCreatePost(Choqok::Account *theAccount, Choqok::Post *post = nullptr) override;
 
     /**
     \brief Fetch a post
@@ -167,10 +167,10 @@ public Q_SLOTS:
         1. Calling with theAccount option
         2. Get called by a signal from a QAction (Microblog menu)
     */
-    virtual void showDirectMessageDialog(TwitterApiAccount *theAccount = 0,
+    virtual void showDirectMessageDialog(TwitterApiAccount *theAccount = nullptr,
                                          const QString &toUsername = QString());
 
-    void showSearchDialog(TwitterApiAccount *theAccount = 0);
+    void showSearchDialog(TwitterApiAccount *theAccount = nullptr);
 
 Q_SIGNALS:
     void favoriteCreated(Choqok::Account *theAccount, const QString &postId);
@@ -202,7 +202,7 @@ protected Q_SLOTS:
     virtual void slotUpdateFriendsList();
 
 protected:
-    TwitterApiMicroBlog(const QString &componentName, QObject *parent = 0);
+    TwitterApiMicroBlog(const QString &componentName, QObject *parent = nullptr);
     /**
      Request update for @p timelineName timeline.
      timelineName should be a valid, previously created timeline.

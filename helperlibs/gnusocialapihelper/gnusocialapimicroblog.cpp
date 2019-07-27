@@ -53,7 +53,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include "gnusocialapipostwidget.h"
 #include "gnusocialapisearch.h"
 
-GNUSocialApiMicroBlog::GNUSocialApiMicroBlog(const QString &componentName, QObject *parent = 0)
+GNUSocialApiMicroBlog::GNUSocialApiMicroBlog(const QString &componentName, QObject *parent = nullptr)
     : TwitterApiMicroBlog(componentName, parent), friendsPage(1)
 {
     qCDebug(CHOQOK);
@@ -73,7 +73,7 @@ Choqok::Account *GNUSocialApiMicroBlog::createNewAccount(const QString &alias)
     if (!acc) {
         return new GNUSocialApiAccount(this, alias);
     } else {
-        return 0;
+        return nullptr;
     }
 }
 
@@ -103,12 +103,12 @@ Choqok::Post *GNUSocialApiMicroBlog::readPost(Choqok::Account *account, const QV
 {
     if (!post) {
         qCCritical(CHOQOK) << "post is NULL!";
-        return 0;
+        return nullptr;
     }
 
     if (var[QLatin1String("source")].toString().compare(QLatin1String("linkback")) == 0) {
         // Skip linkback statuses
-        return 0;
+        return nullptr;
     }
 
     post = TwitterApiMicroBlog::readPost(account, var, post);

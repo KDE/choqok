@@ -34,7 +34,7 @@
 #include "pumpiooauthreplyhandler.h"
 
 PumpIOOAuth::PumpIOOAuth(PumpIOAccount *account)
-    : QOAuth1(account), m_replyHandler(0), m_networkAccessManager(0)
+    : QOAuth1(account), m_replyHandler(nullptr), m_networkAccessManager(nullptr)
 {
     qCDebug(CHOQOK);
 

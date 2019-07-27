@@ -38,7 +38,7 @@ class TwitterApiComposerWidget::Private
 {
 public:
     Private()
-        : model(0)
+        : model(nullptr)
     {}
     QStringListModel *model;
 };

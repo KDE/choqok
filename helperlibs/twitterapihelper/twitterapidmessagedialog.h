@@ -45,7 +45,7 @@ class CHOQOK_HELPER_EXPORT TwitterApiDMessageDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit TwitterApiDMessageDialog(TwitterApiAccount *theAccount, QWidget *parent = 0, Qt::WindowFlags flags = 0);
+    explicit TwitterApiDMessageDialog(TwitterApiAccount *theAccount, QWidget *parent = nullptr, Qt::WindowFlags flags = nullptr);
     ~TwitterApiDMessageDialog();
     void setTo(const QString &username);
 

@@ -44,7 +44,7 @@ public:
     \brief Constructor
     @param charLimit Character limit for current account. 0 means no limit
     */
-    explicit TextEdit(uint charLimit = 0, QWidget *parent = 0);
+    explicit TextEdit(uint charLimit = 0, QWidget *parent = nullptr);
     virtual ~TextEdit();
     void clear();
     void setCharLimit(uint charLimit = 0);

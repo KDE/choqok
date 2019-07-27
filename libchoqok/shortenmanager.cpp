@@ -43,7 +43,7 @@ public:
     QRegExp removeUrlRegExp;
 
     ShortenManagerPrivate()
-        : backend(0)
+        : backend(nullptr)
     {
         findUrlRegExp.setPattern(QLatin1String("(ftps?|https?)://"));
         removeUrlRegExp.setPattern(QLatin1String("^(https?)://"));

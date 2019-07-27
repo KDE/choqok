@@ -29,7 +29,7 @@ class CHOQOK_HELPER_EXPORT GNUSocialApiConversationTimelineWidget : public Twitt
 {
     Q_OBJECT
 public:
-    GNUSocialApiConversationTimelineWidget(Choqok::Account *currentAccount, const QString &conversationId, QWidget *parent = 0);
+    GNUSocialApiConversationTimelineWidget(Choqok::Account *currentAccount, const QString &conversationId, QWidget *parent = nullptr);
     ~GNUSocialApiConversationTimelineWidget();
 
 protected:

@@ -192,7 +192,7 @@ QList< Choqok::Post * > TwitterApiMicroBlog::loadTimeline(Choqok::Account *accou
     qSort(groupList);
     int count = groupList.count();
     if (count) {
-        Choqok::Post *st = 0;
+        Choqok::Post *st = nullptr;
         for (int i = 0; i < count; ++i) {
             st = new Choqok::Post;
             KConfigGroup grp(&postsBackup, groupList[i].toString());
@@ -1497,11 +1497,11 @@ Choqok::User *TwitterApiMicroBlog::readUserInfo(const QByteArray &buffer)
     Choqok::User *user = nullptr;
     const QJsonDocument json = QJsonDocument::fromJson(buffer);
     if (!json.isNull()) {
-        user = new Choqok::User(readUser(0, json.toVariant().toMap()));
+        user = new Choqok::User(readUser(nullptr, json.toVariant().toMap()));
     } else {
         QString err = i18n("Retrieving the friends list failed. The data returned from the server is corrupted.");
         qCDebug(CHOQOK) << "JSON parse error:the buffer is: \n" << buffer;
-        Q_EMIT error(0, ParsingError, err, Critical);
+        Q_EMIT error(nullptr, ParsingError, err, Critical);
     }
     return user;
 }

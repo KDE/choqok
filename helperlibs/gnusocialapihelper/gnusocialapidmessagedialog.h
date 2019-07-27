@@ -30,7 +30,7 @@ class CHOQOK_HELPER_EXPORT GNUSocialApiDMessageDialog : public TwitterApiDMessag
 {
     Q_OBJECT
 public:
-    explicit GNUSocialApiDMessageDialog(TwitterApiAccount *theAccount, QWidget *parent = 0, Qt::WindowFlags flags = 0);
+    explicit GNUSocialApiDMessageDialog(TwitterApiAccount *theAccount, QWidget *parent = nullptr, Qt::WindowFlags flags = nullptr);
     ~GNUSocialApiDMessageDialog();
 
 };

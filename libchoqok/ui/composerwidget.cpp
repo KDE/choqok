@@ -42,7 +42,7 @@ class ComposerWidget::Private
 {
 public:
     Private(Account *account)
-        : editor(0), currentAccount(account), postToSubmit(0)
+        : editor(nullptr), currentAccount(account), postToSubmit(nullptr)
     {}
     QPointer<TextEdit> editor;
     Account *currentAccount;
@@ -53,7 +53,7 @@ public:
 };
 
 ComposerWidget::ComposerWidget(Choqok::Account *account, QWidget *parent /*= 0*/)
-    : QWidget(parent), btnAbort(0), d(new Private(account))
+    : QWidget(parent), btnAbort(nullptr), d(new Private(account))
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);

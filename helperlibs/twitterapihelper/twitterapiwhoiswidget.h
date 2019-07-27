@@ -41,7 +41,7 @@ class CHOQOK_HELPER_EXPORT TwitterApiWhoisWidget : public QFrame
     Q_OBJECT
 public:
     TwitterApiWhoisWidget(TwitterApiAccount *theAccount, const QString &userName,
-                          const Choqok::Post &post, QWidget *parent = 0);
+                          const Choqok::Post &post, QWidget *parent = nullptr);
     ~TwitterApiWhoisWidget();
     void show(QPoint pos);
 

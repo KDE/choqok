@@ -41,7 +41,7 @@ class CHOQOK_EXPORT ChoqokTabBar : public QWidget
 {
     Q_OBJECT
 public:
-    ChoqokTabBar(QWidget *parent = 0);
+    ChoqokTabBar(QWidget *parent = nullptr);
     ~ChoqokTabBar();
 
     enum TabPosition {

@@ -167,7 +167,7 @@ void TwitterPostWidget::checkAnchor(const QUrl &url)
         bool isSubscribe = false;
         QString accountUsername = currentAccount()->username().toLower();
         QString postUsername = url.host().toLower();
-        QAction *subscribe = 0, *block = 0, *replyTo = 0, *dMessage = 0, *reportSpam = 0;
+        QAction *subscribe = nullptr, *block = nullptr, *replyTo = nullptr, *dMessage = nullptr, *reportSpam = nullptr;
         if (accountUsername != postUsername) {
             menu.addSeparator();
             QMenu *actionsMenu = menu.addMenu(QIcon::fromTheme(QLatin1String("applications-system")), i18n("Actions"));
@@ -203,7 +203,7 @@ void TwitterPostWidget::checkAnchor(const QUrl &url)
         }
 
         QAction *ret = menu.exec(QCursor::pos());
-        if (ret == 0) {
+        if (ret == nullptr) {
             return;
         }
         if (ret == info) {

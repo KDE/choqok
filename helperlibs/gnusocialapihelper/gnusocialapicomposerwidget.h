@@ -30,7 +30,7 @@ class CHOQOK_HELPER_EXPORT GNUSocialApiComposerWidget : public TwitterApiCompose
 {
     Q_OBJECT
 public:
-    explicit GNUSocialApiComposerWidget(Choqok::Account *account, QWidget *parent = 0);
+    explicit GNUSocialApiComposerWidget(Choqok::Account *account, QWidget *parent = nullptr);
     ~GNUSocialApiComposerWidget();
 
 protected Q_SLOTS:

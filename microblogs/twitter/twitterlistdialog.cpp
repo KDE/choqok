@@ -54,7 +54,7 @@ TwitterListDialog::TwitterListDialog(TwitterApiAccount *theAccount, QWidget *par
     connect(ui.username, &QLineEdit::textChanged, this, &TwitterListDialog::slotUsernameChanged);
     connect(ui.loadUserLists, &QPushButton::clicked, this, &TwitterListDialog::loadUserLists);
     QRegExp rx(QLatin1String("([a-z0-9_]){1,20}(\\/)"), Qt::CaseInsensitive);
-    QValidator *val = new QRegExpValidator(rx, 0);
+    QValidator *val = new QRegExpValidator(rx, nullptr);
     ui.username->setValidator(val);
     ui.username->setFocus();
     listWidget = new QListWidget(this);

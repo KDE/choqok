@@ -63,7 +63,7 @@ public:
 
     virtual void requestFriendsScreenName(TwitterApiAccount *theAccount, bool active) override;
 
-    virtual void showDirectMessageDialog(TwitterApiAccount *theAccount = 0, const QString &toUsername = QString()) override;
+    virtual void showDirectMessageDialog(TwitterApiAccount *theAccount = nullptr, const QString &toUsername = QString()) override;
 
     static QString usernameFromProfileUrl(const QString &profileUrl);
     static QString hostFromProfileUrl(const QString &profileUrl);

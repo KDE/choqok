@@ -79,7 +79,7 @@ void AccountsWidget::addAccount()
         Choqok::MicroBlog *blog = qobject_cast<Choqok::MicroBlog *>(Choqok::PluginManager::self()->loadPlugin(name));
         if (blog) {
             QPointer<AddAccountDialog> d = new AddAccountDialog(
-                blog->createEditAccountWidget(0, Choqok::UI::Global::mainWindow()),
+                blog->createEditAccountWidget(nullptr, Choqok::UI::Global::mainWindow()),
                 Choqok::UI::Global::mainWindow());
             d->setModal(true);
             d->exec();

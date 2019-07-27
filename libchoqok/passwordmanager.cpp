@@ -38,7 +38,7 @@ class PasswordManager::Private
 {
 public:
     Private()
-        : wallet(0), conf(0), cfg(0)
+        : wallet(nullptr), conf(nullptr), cfg(nullptr)
     {}
 
     ~Private()

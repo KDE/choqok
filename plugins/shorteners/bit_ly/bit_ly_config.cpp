@@ -55,10 +55,10 @@ Bit_ly_Config::Bit_ly_Config(QWidget *parent, const QVariantList &):
     layout->addWidget(wd);
 
     QRegExp rx(QLatin1String("([a-z0-9_]){4,32}"), Qt::CaseInsensitive);
-    QValidator *val0 = new QRegExpValidator(rx, 0);
+    QValidator *val0 = new QRegExpValidator(rx, nullptr);
     ui.kcfg_login->setValidator(val0);
     rx.setPattern(QLatin1String("([a-z0-9_]){1,40}"));
-    QValidator *val1 = new QRegExpValidator(rx, 0);
+    QValidator *val1 = new QRegExpValidator(rx, nullptr);
     ui.kcfg_api_key->setValidator(val1);
 
     ui.help_label->setTextFormat(Qt::RichText);

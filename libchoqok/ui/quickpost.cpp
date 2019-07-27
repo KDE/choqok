@@ -48,7 +48,7 @@ class QuickPost::Private
 {
 public:
     Private()
-        : submittedPost(0), isPostSubmitted(false)
+        : submittedPost(nullptr), isPostSubmitted(false)
     {}
     QCheckBox *all;
     QComboBox *comboAccounts;

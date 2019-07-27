@@ -50,7 +50,7 @@ class CHOQOK_EXPORT TimelineWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TimelineWidget(Account *account, const QString &timelineName, QWidget *parent = 0);
+    TimelineWidget(Account *account, const QString &timelineName, QWidget *parent = nullptr);
     virtual ~TimelineWidget();
     void setTimelineName(const QString &type);
 

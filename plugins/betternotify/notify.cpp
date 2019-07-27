@@ -40,7 +40,7 @@ K_PLUGIN_FACTORY_WITH_JSON(NotifyFactory, "choqok_notify.json",
                            registerPlugin < Notify > ();)
 
 Notify::Notify(QObject *parent, const QList< QVariant > &)
-    : Choqok::Plugin(QLatin1String("choqok_betternotify"), parent), notification(0)
+    : Choqok::Plugin(QLatin1String("choqok_betternotify"), parent), notification(nullptr)
 {
     NotifySettings set;
     accountsList = set.accounts();
@@ -117,7 +117,7 @@ void Notify::hideLastNotificationAndShowThis(Notification *nextNotificationToSho
 {
     //TODO: Add Animation
     notification->deleteLater();
-    notification = 0;
+    notification = nullptr;
     if (nextNotificationToShow) {
         notification = nextNotificationToShow;
         notification->move(notifyPosition);

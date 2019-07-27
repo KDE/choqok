@@ -66,7 +66,7 @@ class CHOQOK_HELPER_EXPORT TwitterApiSearch : public QObject
 {
     Q_OBJECT
 public:
-    TwitterApiSearch(QObject *parent = 0);
+    TwitterApiSearch(QObject *parent = nullptr);
     virtual ~TwitterApiSearch();
 
     /**

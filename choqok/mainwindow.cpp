@@ -73,8 +73,8 @@ background-color: qlineargradient(spread:reflect, x1:0.449382, y1:0, x2:0.448, y
     }";
 
 MainWindow::MainWindow(ChoqokApplication *application)
-    : Choqok::UI::MainWindow(), sysIcon(0), quickWidget(0), s_settingsDialog(0),
-      m_splash(0), choqokMainButton(0), app(application),
+    : Choqok::UI::MainWindow(), sysIcon(nullptr), quickWidget(nullptr), s_settingsDialog(nullptr),
+      m_splash(nullptr), choqokMainButton(nullptr), app(application),
       microblogCounter(0), choqokMainButtonVisible(false)
 {
     qCDebug(CHOQOK);
@@ -157,7 +157,7 @@ void MainWindow::loadAllAccounts()
         if (m_splash) {
             m_splash->finish(this);
             delete m_splash;
-            m_splash = 0;
+            m_splash = nullptr;
         }
     }
     ChoqokApplication::setStartingUp(false);
@@ -175,7 +175,7 @@ void MainWindow::nextTab(int delta, Qt::Orientation orientation)
     if (!isVisible()) {
         return;
     }
-    QTabWidget *widget = 0;
+    QTabWidget *widget = nullptr;
     switch (orientation) {
     case Qt::Vertical:
         widget = mainWidget;
@@ -383,7 +383,7 @@ void MainWindow::updateSysTray()
             }
 
             delete sysIcon;
-            sysIcon = 0;
+            sysIcon = nullptr;
         }
     }
 }
@@ -623,7 +623,7 @@ void MainWindow::oneMicroblogLoaded()
     if (microblogCounter < 1) {
         //Everything loaded, So splash screen should be deleted!
         delete m_splash;
-        m_splash = 0;
+        m_splash = nullptr;
         if (Choqok::BehaviorSettings::showMainWinOnStart()) {
             this->show();
         }
@@ -671,7 +671,7 @@ void MainWindow::slotShowSpecialMenu(bool show)
         choqokMainButtonVisible = true;
     } else {
         choqokMainButtonVisible = false;
-        mainWidget->setCornerWidget(0/*, Qt::TopLeftCorner*/);
+        mainWidget->setCornerWidget(nullptr/*, Qt::TopLeftCorner*/);
     }
     updateTabbarHiddenState();
 }

@@ -43,7 +43,7 @@ class CHOQOK_EXPORT QuickPost : public QDialog
 {
     Q_OBJECT
 public:
-    QuickPost(QWidget *parent = 0);
+    QuickPost(QWidget *parent = nullptr);
     virtual ~QuickPost();
 
 public Q_SLOTS:
@@ -59,7 +59,7 @@ Q_SIGNALS:
 
     @param result Result of posting, Could be Success or Fail
     */
-    void newPostSubmitted(Choqok::JobResult result, Choqok::Post *newPost = 0);
+    void newPostSubmitted(Choqok::JobResult result, Choqok::Post *newPost = nullptr);
 
 protected:
     void loadAccounts();

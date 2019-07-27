@@ -35,7 +35,7 @@ class TwitterApiAccount::Private
 {
 public:
     Private()
-        : api(QLatin1Char('/')), usingOauth(true), qoauth(0)
+        : api(QLatin1Char('/')), usingOauth(true), qoauth(nullptr)
     {}
     QString userId;
     int count;

@@ -28,7 +28,7 @@ class MyTextBrowser : public QTextBrowser
 {
     Q_OBJECT
 public:
-    MyTextBrowser(QWidget *parent = 0);
+    MyTextBrowser(QWidget *parent = nullptr);
     virtual ~MyTextBrowser();
 
 Q_SIGNALS:

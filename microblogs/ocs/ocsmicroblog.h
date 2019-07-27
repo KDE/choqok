@@ -42,7 +42,7 @@ public:
 
     virtual ChoqokEditAccountWidget *createEditAccountWidget(Choqok::Account *account, QWidget *parent) override;
     virtual void createPost(Choqok::Account *theAccount, Choqok::Post *post) override;
-    virtual void abortCreatePost(Choqok::Account *theAccount, Choqok::Post *post = 0) override;
+    virtual void abortCreatePost(Choqok::Account *theAccount, Choqok::Post *post = nullptr) override;
     virtual void fetchPost(Choqok::Account *theAccount, Choqok::Post *post) override;
     virtual void removePost(Choqok::Account *theAccount, Choqok::Post *post) override;
     virtual void saveTimeline(Choqok::Account *account, const QString &timelineName,

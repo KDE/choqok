@@ -39,7 +39,7 @@ class NotifySettings : public QObject
 {
 
 public:
-    NotifySettings(QObject *parent = 0);
+    NotifySettings(QObject *parent = nullptr);
     virtual ~NotifySettings();
 
     QMap<QString, QStringList> accounts();

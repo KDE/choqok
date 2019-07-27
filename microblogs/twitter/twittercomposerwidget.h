@@ -30,7 +30,7 @@ class TwitterComposerWidget : public TwitterApiComposerWidget
 {
     Q_OBJECT
 public:
-    explicit TwitterComposerWidget(Choqok::Account *account, QWidget *parent = 0);
+    explicit TwitterComposerWidget(Choqok::Account *account, QWidget *parent = nullptr);
     ~TwitterComposerWidget();
 
 protected Q_SLOTS:

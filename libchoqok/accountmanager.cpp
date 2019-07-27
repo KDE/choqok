@@ -68,7 +68,7 @@ class AccountManager::Private
 {
 public:
     Private()
-        : conf(0)
+        : conf(nullptr)
     {}
     QList<Account *> accounts;
     KSharedConfig::Ptr conf;
@@ -195,7 +195,7 @@ void AccountManager::loadAllAccounts()
 //         KConfigGroup pluginConfig( d->conf, QLatin1String("Plugins") );
 
         QString blog = cg.readEntry("MicroBlog", QString());
-        Choqok::MicroBlog *mBlog = 0;
+        Choqok::MicroBlog *mBlog = nullptr;
         if (!blog.isEmpty() && cg.readEntry("Enabled", true)) {
             mBlog = qobject_cast<MicroBlog *>(PluginManager::self()->loadPlugin(blog));
         }

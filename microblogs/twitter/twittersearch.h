@@ -41,7 +41,7 @@ class TwitterSearch : public TwitterApiSearch
 public:
     enum SearchType { CustomSearch = 0, ReferenceHashtag, FromUser, ToUser, ReferenceUser };
 
-    TwitterSearch(QObject *parent = 0);
+    TwitterSearch(QObject *parent = nullptr);
     ~TwitterSearch();
 
     virtual void requestSearchResults(const SearchInfo &searchInfo,

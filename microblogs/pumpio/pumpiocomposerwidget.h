@@ -29,7 +29,7 @@ class PumpIOComposerWidget : public Choqok::UI::ComposerWidget
 {
     Q_OBJECT
 public:
-    explicit PumpIOComposerWidget(Choqok::Account *account, QWidget *parent = 0);
+    explicit PumpIOComposerWidget(Choqok::Account *account, QWidget *parent = nullptr);
     ~PumpIOComposerWidget();
 
 public Q_SLOTS:

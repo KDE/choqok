@@ -40,7 +40,7 @@
 K_PLUGIN_FACTORY_WITH_JSON(KonqPluginChoqokFactory, "konqchoqok.json", registerPlugin<KonqPluginChoqok>();)
 
 KonqPluginChoqok::KonqPluginChoqok(QObject *parent, const QVariantList &)
-    : Plugin(parent) , m_interface(0)
+    : Plugin(parent) , m_interface(nullptr)
 {
     KActionMenu *menu = new KActionMenu(QIcon::fromTheme(QLatin1String("choqok")) , i18n("Choqok"),
                                         actionCollection());

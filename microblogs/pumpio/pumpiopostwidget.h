@@ -29,7 +29,7 @@ class PumpIOPostWidget : public Choqok::UI::PostWidget
 {
     Q_OBJECT
 public:
-    explicit PumpIOPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
+    explicit PumpIOPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = nullptr);
     virtual ~PumpIOPostWidget();
 
     virtual void checkAnchor(const QUrl &url) override;

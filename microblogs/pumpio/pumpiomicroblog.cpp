@@ -145,7 +145,7 @@ ChoqokEditAccountWidget *PumpIOMicroBlog::createEditAccountWidget(Choqok::Accoun
         return new PumpIOEditAccountWidget(this, acc, parent);
     } else {
         qCDebug(CHOQOK) << "Account passed here was not a valid PumpIOAccount!";
-        return 0;
+        return nullptr;
     }
 }
 
@@ -157,7 +157,7 @@ Choqok::Account *PumpIOMicroBlog::createNewAccount(const QString &alias)
         return new PumpIOAccount(this, alias);
     } else {
         qCDebug(CHOQOK) << "Cannot create a new PumpIOAccount!";
-        return 0;
+        return nullptr;
     }
 }
 

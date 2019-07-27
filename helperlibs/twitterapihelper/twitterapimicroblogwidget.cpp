@@ -45,7 +45,7 @@ class TwitterApiMicroBlogWidget::Private
 {
 public:
     Private(Choqok::Account *acc)
-        : btnCloseSearch(0)
+        : btnCloseSearch(nullptr)
     {
         qCDebug(CHOQOK);
         mBlog = qobject_cast<TwitterApiMicroBlog *>(acc->microblog());
@@ -231,8 +231,8 @@ void TwitterApiMicroBlogWidget::slotContextMenu(QWidget *w, const QPoint &pt)
     qCDebug(CHOQOK);
     Choqok::UI::TimelineWidget *sWidget = qobject_cast<Choqok::UI::TimelineWidget *>(w);
     QMenu menu;
-    QAction *mar = 0;
-    QAction *ac = 0;
+    QAction *mar = nullptr;
+    QAction *ac = nullptr;
     if (sWidget->unreadCount() > 0) {
         mar = new QAction(QIcon::fromTheme(QLatin1String("mail-mark-read")), i18n("Mark timeline as read"), &menu);
         menu.addAction(mar);

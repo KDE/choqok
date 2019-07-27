@@ -35,7 +35,7 @@ class PumpIOShowThread : public QWidget, Ui::PumpIOShowThread
     Q_OBJECT
 public:
     explicit PumpIOShowThread(Choqok::Account *account, Choqok::Post *post,
-                              QWidget *parent = 0);
+                              QWidget *parent = nullptr);
     virtual ~PumpIOShowThread();
 
 Q_SIGNALS:

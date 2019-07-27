@@ -39,7 +39,7 @@ class CHOQOK_EXPORT TextBrowser : public QTextBrowser
 {
     Q_OBJECT
 public:
-    TextBrowser(QWidget *parent = 0);
+    TextBrowser(QWidget *parent = nullptr);
     virtual ~TextBrowser();
     static void addAction(QAction *action);
 

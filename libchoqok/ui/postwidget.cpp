@@ -51,7 +51,7 @@ class PostWidget::Private
 {
 public:
     Private(Account *account, Choqok::Post *post)
-        : mCurrentPost(post), mCurrentAccount(account), dir(QLatin1String("ltr")), timeline(0)
+        : mCurrentPost(post), mCurrentAccount(account), dir(QLatin1String("ltr")), timeline(nullptr)
     {
         mCurrentPost->owners++;
 

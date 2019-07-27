@@ -45,7 +45,7 @@ class CHOQOK_EXPORT ComposerWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ComposerWidget(Account *account, QWidget *parent = 0);
+    explicit ComposerWidget(Account *account, QWidget *parent = nullptr);
     virtual ~ComposerWidget();
     TextEdit *editor();
 

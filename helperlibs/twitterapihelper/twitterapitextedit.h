@@ -37,7 +37,7 @@ class CHOQOK_HELPER_EXPORT TwitterApiTextEdit : public Choqok::UI::TextEdit
     Q_OBJECT
 
 public:
-    explicit TwitterApiTextEdit(Choqok::Account *theAccount, QWidget *parent = 0);
+    explicit TwitterApiTextEdit(Choqok::Account *theAccount, QWidget *parent = nullptr);
     ~TwitterApiTextEdit();
 
     void setCompleter(QCompleter *c);

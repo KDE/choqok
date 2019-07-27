@@ -33,7 +33,7 @@ class AddEditFilter : public QDialog
 {
     Q_OBJECT
 public:
-    explicit AddEditFilter(QWidget *parent, Filter *filter = 0);
+    explicit AddEditFilter(QWidget *parent, Filter *filter = nullptr);
     ~AddEditFilter();
 
 Q_SIGNALS:

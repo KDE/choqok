@@ -38,7 +38,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 FriendicaEditAccountWidget::FriendicaEditAccountWidget(FriendicaMicroBlog *microblog,
         GNUSocialApiAccount *account, QWidget *parent)
-    : ChoqokEditAccountWidget(account, parent), mAccount(account), progress(0), isAuthenticated(false)
+    : ChoqokEditAccountWidget(account, parent), mAccount(account), progress(nullptr), isAuthenticated(false)
 {
     setupUi(this);
 //     setAuthenticated(false);
@@ -85,7 +85,7 @@ FriendicaEditAccountWidget::FriendicaEditAccountWidget(FriendicaMicroBlog *micro
         setAccount(mAccount = new GNUSocialApiAccount(microblog, newAccountAlias));
         kcfg_alias->setText(newAccountAlias);
         const QRegExp userRegExp(QLatin1String("([a-z0-9]){1,64}"), Qt::CaseInsensitive);
-        QValidator *userVal = new QRegExpValidator(userRegExp, 0);
+        QValidator *userVal = new QRegExpValidator(userRegExp, nullptr);
         kcfg_basicUsername->setValidator(userVal);
     }
     loadTimelinesTableState();

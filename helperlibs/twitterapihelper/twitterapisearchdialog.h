@@ -33,7 +33,7 @@ class CHOQOK_HELPER_EXPORT TwitterApiSearchDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit TwitterApiSearchDialog(TwitterApiAccount *theAccount, QWidget *parent = 0);
+    explicit TwitterApiSearchDialog(TwitterApiAccount *theAccount, QWidget *parent = nullptr);
     ~TwitterApiSearchDialog();
 
 protected:

@@ -57,7 +57,7 @@ IMStatus::~IMStatus()
 
 void IMStatus::update()
 {
-    if (Choqok::UI::Global::quickPostWidget() != 0) {
+    if (Choqok::UI::Global::quickPostWidget() != nullptr) {
         connect(Choqok::UI::Global::quickPostWidget(), &Choqok::UI::QuickPost::newPostSubmitted,
                 this, &IMStatus::slotIMStatus);
     } else {

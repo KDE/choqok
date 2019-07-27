@@ -172,10 +172,10 @@ void Choqok::UI::UploadMediaDialog::slotConfigureClicked()
     QPointer<QDialog> configDialog = new QDialog(this);
     configDialog->setWindowTitle(pluginInfo.name());
     // The number of KCModuleProxies in use determines whether to use a tabwidget
-    QTabWidget *newTabWidget = 0;
+    QTabWidget *newTabWidget = nullptr;
     // Widget to use for the setting dialog's main widget,
     // either a QTabWidget or a KCModuleProxy
-    QWidget *mainWidget = 0;
+    QWidget *mainWidget = nullptr;
     // Widget to use as the KCModuleProxy's parent.
     // The first proxy is owned by the dialog itself
     QWidget *moduleProxyParentWidget = configDialog;
@@ -199,9 +199,9 @@ void Choqok::UI::UploadMediaDialog::slotConfigureClicked()
                         mainWidget = newTabWidget;
                     } else {
                         delete newTabWidget;
-                        newTabWidget = 0;
+                        newTabWidget = nullptr;
                         moduleProxyParentWidget = configDialog;
-                        mainWidget->setParent(0);
+                        mainWidget->setParent(nullptr);
                     }
                 }
 

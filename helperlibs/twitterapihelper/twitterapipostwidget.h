@@ -33,7 +33,7 @@ class CHOQOK_HELPER_EXPORT TwitterApiPostWidget : public Choqok::UI::PostWidget
 {
     Q_OBJECT
 public:
-    TwitterApiPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
+    TwitterApiPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = nullptr);
     ~TwitterApiPostWidget();
 
     virtual void initUi() override;

@@ -52,7 +52,7 @@ class CHOQOK_EXPORT MicroBlogWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MicroBlogWidget(Account *account, QWidget *parent = 0);
+    explicit MicroBlogWidget(Account *account, QWidget *parent = nullptr);
     virtual ~MicroBlogWidget();
     virtual void initUi();
     /**
@@ -127,7 +127,7 @@ protected Q_SLOTS:
     */
     virtual void newTimelineDataRecieved(Choqok::Account *theAccount, const QString &type,
                                          QList< Choqok::Post * > data);
-    void slotUpdateUnreadCount(int change, TimelineWidget *widget = 0);
+    void slotUpdateUnreadCount(int change, TimelineWidget *widget = nullptr);
     void error(Choqok::Account *theAccount, Choqok::MicroBlog::ErrorType errorType,
                const QString &errorMsg, Choqok::MicroBlog::ErrorLevel level);
     void errorPost(Choqok::Account *theAccount, Choqok::Post *, Choqok::MicroBlog::ErrorType errorType,

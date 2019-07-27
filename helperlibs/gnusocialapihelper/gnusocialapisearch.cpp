@@ -138,7 +138,7 @@ void GNUSocialApiSearch::requestSearchResults(const SearchInfo &searchInfo,
 void GNUSocialApiSearch::searchResultsReturned(KJob *job)
 {
     qCDebug(CHOQOK);
-    if (job == 0) {
+    if (job == nullptr) {
         qCDebug(CHOQOK) << "job is a null pointer";
         Q_EMIT error(i18n("Unable to fetch search results."));
         return;

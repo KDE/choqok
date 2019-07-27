@@ -38,7 +38,7 @@ class CHOQOK_HELPER_EXPORT TwitterApiComposerWidget : public Choqok::UI::Compose
 {
     Q_OBJECT
 public:
-    explicit TwitterApiComposerWidget(Choqok::Account *account, QWidget *parent = 0);
+    explicit TwitterApiComposerWidget(Choqok::Account *account, QWidget *parent = nullptr);
     ~TwitterApiComposerWidget();
 
 protected Q_SLOTS:

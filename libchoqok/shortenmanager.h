@@ -69,7 +69,7 @@ Q_SIGNALS:
     void newUnshortenedUrl(Choqok::UI::PostWidget *widget, const QUrl &fromUrl, const QUrl &toUrl);
 
 private:
-    ShortenManager(QObject *parent = 0);
+    ShortenManager(QObject *parent = nullptr);
     ~ShortenManager();
 };
 

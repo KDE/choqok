@@ -31,7 +31,7 @@ class TwitterTextEdit : public TwitterApiTextEdit
     Q_OBJECT
 
 public:
-    explicit TwitterTextEdit(Choqok::Account *theAccount, QWidget *parent = 0);
+    explicit TwitterTextEdit(Choqok::Account *theAccount, QWidget *parent = nullptr);
     ~TwitterTextEdit();
 
 protected Q_SLOTS:

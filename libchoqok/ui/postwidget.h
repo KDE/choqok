@@ -49,7 +49,7 @@ class CHOQOK_EXPORT PostWidget : public QWidget
     Q_OBJECT
     Q_PROPERTY(bool read READ isRead)
 public:
-    explicit PostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
+    explicit PostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = nullptr);
     virtual ~PostWidget();
     Post *currentPost() const;
     virtual void setRead(bool read = true);

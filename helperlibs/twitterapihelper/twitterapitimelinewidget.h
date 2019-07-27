@@ -29,7 +29,7 @@ class CHOQOK_HELPER_EXPORT TwitterApiTimelineWidget : public Choqok::UI::Timelin
 {
     Q_OBJECT
 public:
-    TwitterApiTimelineWidget(Choqok::Account *account, const QString &timelineName, QWidget *parent = 0);
+    TwitterApiTimelineWidget(Choqok::Account *account, const QString &timelineName, QWidget *parent = nullptr);
     virtual ~TwitterApiTimelineWidget();
 
 protected Q_SLOTS:

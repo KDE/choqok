@@ -82,7 +82,7 @@ QString Posterous::getAuthToken(const QUrl &localUrl)
 void Posterous::upload(const QUrl &localUrl, const QByteArray &medium, const QByteArray &mediumType)
 {
     PosterousSettings::self()->load();
-    KIO::StoredTransferJob *job = 0;
+    KIO::StoredTransferJob *job = nullptr;
     if (PosterousSettings::basic()) {
         QString login = PosterousSettings::login();
         QString pass = Choqok::PasswordManager::self()->readPassword(QStringLiteral("posterous_%1").arg(PosterousSettings::login()));

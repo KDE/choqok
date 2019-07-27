@@ -47,7 +47,7 @@ class MediaManager::Private
 {
 public:
     Private()
-        : emoticons(KEmoticons().theme()), cache(QLatin1String("choqok-userimages"), 30000000), uploader(0)
+        : emoticons(KEmoticons().theme()), cache(QLatin1String("choqok-userimages"), 30000000), uploader(nullptr)
     {}
     KEmoticonsTheme emoticons;
     KImageCache cache;

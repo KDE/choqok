@@ -32,7 +32,7 @@ class CHOQOK_HELPER_EXPORT TwitterApiSearchTimelineWidget : public Choqok::UI::T
     Q_OBJECT
 public:
     TwitterApiSearchTimelineWidget(Choqok::Account *account, const QString &timelineName,
-                                   const SearchInfo &info, QWidget *parent = 0);
+                                   const SearchInfo &info, QWidget *parent = nullptr);
     ~TwitterApiSearchTimelineWidget();
     virtual void addNewPosts(QList< Choqok::Post * > &postList) override;
     void removeAllPosts();

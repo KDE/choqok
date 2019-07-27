@@ -31,7 +31,7 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 ChoqokApplication::ChoqokApplication(int &argc, char **argv)
     : Choqok::Application(argc, argv)
-    , m_mainWindow(0)
+    , m_mainWindow(nullptr)
 {
     qCDebug(CHOQOK);
 
@@ -49,7 +49,7 @@ void ChoqokApplication::setupMainWindow()
 {
     if (m_mainWindow) {
         m_mainWindow->deleteLater();
-        m_mainWindow = 0;
+        m_mainWindow = nullptr;
     }
 
     m_mainWindow = new MainWindow(this);
@@ -66,7 +66,7 @@ void ChoqokApplication::quitChoqok()
     if (m_mainWindow) {
         Choqok::BehaviorSettings::setShowMainWinOnStart(m_mainWindow->isVisible());
         m_mainWindow->deleteLater();
-        m_mainWindow = 0;
+        m_mainWindow = nullptr;
     }
     this->quit();
 }

@@ -40,8 +40,8 @@ public:
     */
     explicit Filter(const QString &filterText, FilterField field = Content,
                     FilterType type = Contain, FilterAction action = Remove,
-                    bool dontHide = false, QObject *parent = 0);
-    explicit Filter(const KConfigGroup &config, QObject *parent = 0);
+                    bool dontHide = false, QObject *parent = nullptr);
+    explicit Filter(const KConfigGroup &config, QObject *parent = nullptr);
     virtual ~Filter();
 
     QString filterText() const;

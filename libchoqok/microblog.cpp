@@ -148,7 +148,7 @@ Account *MicroBlog::createNewAccount(const QString &alias)
     if (!acc) {
         return new Choqok::Account(this, alias);
     } else {
-        return 0;
+        return nullptr;
     }
 }
 
@@ -175,7 +175,7 @@ UI::PostWidget *MicroBlog::createPostWidget(Account *account, Choqok::Post *post
 TimelineInfo *MicroBlog::timelineInfo(const QString &)
 {
     qCWarning(CHOQOK) << "MicroBlog Plugin should implement this!";
-    return 0;
+    return nullptr;
 }
 
 void MicroBlog::abortAllJobs(Account *)

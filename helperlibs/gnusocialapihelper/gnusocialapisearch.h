@@ -39,7 +39,7 @@ class CHOQOK_HELPER_EXPORT GNUSocialApiSearch : public TwitterApiSearch
     Q_OBJECT
 public:
     enum SearchType { ReferenceHashtag = 0, ReferenceGroup, FromUser, ToUser };
-    GNUSocialApiSearch(QObject *parent = 0);
+    GNUSocialApiSearch(QObject *parent = nullptr);
     ~GNUSocialApiSearch();
     virtual void requestSearchResults(const SearchInfo &searchInfo,
                                       const QString &sinceStatusId = QString(),

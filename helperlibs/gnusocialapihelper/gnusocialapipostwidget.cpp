@@ -211,7 +211,7 @@ void GNUSocialApiPostWidget::checkAnchor(const QUrl &url)
         bool isSubscribe = false;
         QString accountUsername = d->account->username().toLower();
         QString postUsername = username.toLower();
-        QAction *subscribe = 0, *block = 0, *replyTo = 0, *dMessage = 0;
+        QAction *subscribe = nullptr, *block = nullptr, *replyTo = nullptr, *dMessage = nullptr;
         if (accountUsername != postUsername) {
             menu.addSeparator();
             QMenu *actionsMenu = menu.addMenu(QIcon::fromTheme(QLatin1String("applications-system")), i18n("Actions"));
@@ -242,7 +242,7 @@ void GNUSocialApiPostWidget::checkAnchor(const QUrl &url)
             }
         }
         ret = menu.exec(QCursor::pos());
-        if (ret == 0) {
+        if (ret == nullptr) {
             return;
         }
         if (ret == info) {

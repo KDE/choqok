@@ -38,7 +38,7 @@ class TwitterApiTextEdit::Private
 {
 public:
     Private(Choqok::Account *theAccount)
-        : acc(theAccount), c(0)
+        : acc(theAccount), c(nullptr)
     {}
     Choqok::Account *acc;
     QCompleter *c;
@@ -59,7 +59,7 @@ TwitterApiTextEdit::~TwitterApiTextEdit()
 void TwitterApiTextEdit::setCompleter(QCompleter *completer)
 {
     if (d->c) {
-        QObject::disconnect(d->c, 0, this, 0);
+        QObject::disconnect(d->c, nullptr, this, nullptr);
     }
 
     d->c = completer;

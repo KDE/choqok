@@ -46,7 +46,7 @@ class GNUSocialApiComposerWidget::Private
 {
 public:
     Private()
-        : btnAttach(0), mediumName(0), btnCancel(0)
+        : btnAttach(nullptr), mediumName(nullptr), btnCancel(nullptr)
     {}
     QString mediumToAttach;
     QPushButton *btnAttach;
@@ -159,9 +159,9 @@ void GNUSocialApiComposerWidget::cancelAttachMedium()
 {
     qCDebug(CHOQOK);
     delete d->mediumName;
-    d->mediumName = 0;
+    d->mediumName = nullptr;
     delete d->btnCancel;
-    d->btnCancel = 0;
+    d->btnCancel = nullptr;
     d->mediumToAttach.clear();
 }
 

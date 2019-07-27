@@ -37,7 +37,7 @@ class BehaviorConfig_Shorten: public QWidget, public Ui::BehaviorConfig_ShortenB
 {
     Q_OBJECT
 public:
-    BehaviorConfig_Shorten(QWidget *parent = 0);
+    BehaviorConfig_Shorten(QWidget *parent = nullptr);
     ~BehaviorConfig_Shorten();
     void load();
     void save();

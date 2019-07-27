@@ -44,7 +44,7 @@ class IMQDBus : public QObject
 {
     Q_OBJECT
 public:
-    IMQDBus(QObject *parent = 0);
+    IMQDBus(QObject *parent = nullptr);
     ~IMQDBus();
 
     void updateStatusMessage(const QString &im, const QString &statusMessage);
