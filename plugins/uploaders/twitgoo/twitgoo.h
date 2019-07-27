@@ -26,6 +26,8 @@
 
 #include "uploader.h"
 
+#include <QMap>
+
 class KJob;
 
 class Twitgoo : public Choqok::Uploader

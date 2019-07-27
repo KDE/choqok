@@ -26,6 +26,8 @@
 
 #include "uploader.h"
 
+#include <QMap>
+
 class KJob;
 
 class Mobypicture : public Choqok::Uploader
