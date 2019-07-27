@@ -26,6 +26,8 @@
 
 #include "uploader.h"
 
+#include <QMap>
+
 /**
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */

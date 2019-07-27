@@ -26,6 +26,8 @@
 
 #include "uploader.h"
 
+#include <QMap>
+
 /**
 @author Andrey Esin \<gmlastik@gmail.com\>
 */
