@@ -466,6 +466,7 @@
       <li xml:lang="bs">Sposobnost da se obavijesti korisnik o novim statusima, sa KNotification ili Libnotify</li>
       <li xml:lang="ca">La capacitat per a notificar a l'usuari sobre el nou estat del text, amb KNotification o Libnotify</li>
       <li xml:lang="ca-valencia">La capacitat per a notificar a l'usuari sobre el nou estat del text, amb KNotification o Libnotify</li>
+      <li xml:lang="de">Benutzer werden über neue Statustexte mit KNotification oder Libnotif benachrichtigt</li>
       <li xml:lang="el">Δυνατότητα ειδοποίησης του χρήστη σχετικά με κείμενο νέων καταστάσεων με το KNotification ή το Libnotify</li>
       <li xml:lang="en-GB">Ability to notify user about new statuses text, with KNotification or Libnotify</li>
       <li xml:lang="es">Capacidad para notificar al usuario sobre los nuevos textos de estado, con KNotification o Libnotify</li>
