@@ -85,7 +85,7 @@
     <p xml:lang="nl">Choqok is een micro-blogging-client, die de services Twitter.com, GNU Social, Pump.io en Friendica ondersteunt.</p>
     <p xml:lang="pl">Choqok jest klientem mikro bloków, który obsługuje usługi Twitter.com, GNU Social,Pump.io oraz Friendica.</p>
     <p xml:lang="pt">O Choqok é um cliente de micro-blogs que suporta os serviços do Twitter.com, do Pump.io, GNU Social e Friendica.</p>
-    <p xml:lang="pt-BR">Choqok é um cliente de microblogging com suporte aos serviços Twitter.com, GNU Social, Pump.io e Friendica.</p>
+    <p xml:lang="pt-BR">Choqok é um cliente de microblog com suporte aos serviços Twitter.com, GNU Social, Pump.io e Friendica.</p>
     <p xml:lang="sk">Choqok je mikro blogovací klient, ktorý podporuje služby Twitter.com, GNU Social, Pump.io and Friendica</p>
     <p xml:lang="sl">Choqok je odjemalec za mikrobloganje, ki podpira storitve Twitter.com, GNU Social, Pump.io in Friendica.</p>
     <p xml:lang="sv">Choqok är en klient för mikrobloggar som stöder tjänsterna Twitter.com, GNU Social,  Pump.io och Friendica.</p>
@@ -150,7 +150,7 @@
       <li xml:lang="nl">Ondersteunt de microblogging-service Twitter.com</li>
       <li xml:lang="pl">Obsługa usługi mikro blogów Twitter.com</li>
       <li xml:lang="pt">Suporte para o serviço de micro-blogs Twitter.com</li>
-      <li xml:lang="pt-BR">Suporte ao serviço de microblogging Twitter.com</li>
+      <li xml:lang="pt-BR">Suporte ao serviço de microblog Twitter.com</li>
       <li xml:lang="sk">Podporuje mikro blogovaciu službu Twitter.com</li>
       <li xml:lang="sl">Podpora storitvi mikrobloganja Twitter.com</li>
       <li xml:lang="sv">Stöder mikrobloggtjänsten Twitter.com</li>
