@@ -64,7 +64,7 @@
   <summary xml:lang="uk">Клієнт мікроблогів</summary>
   <summary xml:lang="x-test">xxMicro-blogging clientxx</summary>
   <summary xml:lang="zh-CN">微博客户端</summary>
-  <summary xml:lang="zh-TW">微部落格客戶端程式</summary>
+  <summary xml:lang="zh-TW">微部落格用戶端程式</summary>
   <description>
     <p>
       Choqok is a micro-blogging client which supports Twitter.com, GNU Social, Pump.io and Friendica services.
@@ -93,7 +93,7 @@
     <p xml:lang="uk">Choqok — клієнтська програма для роботи з мікроблогами, у якій передбачено підтримку служб Twitter.com GNU Social, Pump.io і Friendica.</p>
     <p xml:lang="x-test">xxChoqok is a micro-blogging client which supports Twitter.com, GNU Social, Pump.io and Friendica services.xx</p>
     <p xml:lang="zh-CN">Choqok 是一个支持 Twitter.com 和 Pump.io 服务的微博客客户端</p>
-    <p xml:lang="zh-TW">Choqok 是一個微部落格客戶端，其支援 Twitter.com、GNU Social、Pump.io 與 Friendica 服務。</p>
+    <p xml:lang="zh-TW">Choqok 是一個微部落格用戶端，其支援 Twitter.com、GNU Social、Pump.io 與 Friendica 服務。</p>
     <p>Features:</p>
     <p xml:lang="ar">الميزات:</p>
     <p xml:lang="bs">Svojstva:</p>
