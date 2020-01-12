@@ -92,7 +92,7 @@ void NotifyManager::newPostArrived(const QString &message, const QString &title)
         choqokMainWindow->showStatusMessage(message);
     } else {
         if (Choqok::BehaviorSettings::knotify()) {
-            KNotification *n = new KNotification(QLatin1String("new-post-arrived"), choqokMainWindow);
+            KNotification *n = new KNotification(QLatin1String("new-post-arrived"));
             n->setActions(QStringList(i18nc("Show Choqok MainWindow", "Show Choqok")));
             n->setText(fullMsg);
             QObject::connect(n, (void (KNotification::*)())&KNotification::activated,
