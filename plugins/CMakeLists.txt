@@ -21,3 +21,8 @@ IF(KF5WebKit_FOUND AND KF5Parts_FOUND)
 ELSEIF(KF5WebKit_FOUND AND KF5Parts_FOUND)
     message(WARNING "Optional dependency \"KF5::WebKit\" or \"KF5::Parts\" NOT FOUND, won't build \"Konqueror Choqok\" plugin")
 ENDIF(KF5WebKit_FOUND AND KF5Parts_FOUND)
+
+if(KF5Purpose_FOUND)
+    message(STATUS "Found KF5::Purpose: Will build Share plugin")
+    add_subdirectory(purpose)
+endif()

@@ -22,4 +22,4 @@ PUBLIC
 install(TARGETS konqchoqokplugin DESTINATION ${PLUGIN_INSTALL_DIR}/kf5/parts)
 install(FILES konqchoqok.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/konqchoqokplugin)
 install(FILES konqchoqok.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-install(FILES choqok_share.desktop choqok_upload.desktop DESTINATION ${SERVICES_INSTALL_DIR}/ServiceMenus)
+install(FILES choqok_share.desktop DESTINATION ${SERVICES_INSTALL_DIR}/ServiceMenus)

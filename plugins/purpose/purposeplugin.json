@@ -1,0 +1,24 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Nicolas Fella"
+            }
+        ],
+        "Category": "Utilities",
+        "Description": "Upload with Choqok",
+        "Icon": "choqok",
+        "License": "GPL",
+        "Name": "Upload with Choqok",
+        "X-Purpose-ActionDisplay": "Upload with Choqok..."
+    },
+    "X-Purpose-Configuration": [],
+    "X-Purpose-Constraints": [
+        [
+             "mimeType:image/*"
+        ]
+    ],
+    "X-Purpose-PluginTypes": [
+        "Export"
+    ]
+}
