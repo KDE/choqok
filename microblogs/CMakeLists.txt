@@ -1,6 +1,7 @@
 find_package(KF5Attica)
 
 add_subdirectory(twitter)
+add_subdirectory(mastodon)
 add_subdirectory(laconica)
 add_subdirectory(friendica)
 add_subdirectory(pumpio)

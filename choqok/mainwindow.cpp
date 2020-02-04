@@ -58,20 +58,6 @@
 #include "systrayicon.h"
 #include "uploadmediadialog.h"
 
-const char *mainButtonStyleSheet = "QPushButton{\
-background-color: qlineargradient(spread:reflect, x1:0.449382, y1:0, x2:0.448, y2:1, stop:0.15 rgba(255, 255, 255, 100), stop:1 rgba(61, 158, 0, 255));\
-    border: none;\
-    border-radius: 4px;\
-    width: 70px;\
-    height: 20px;\
-    }\
-    QPushButton:hover{\
-        border: 2px solid rgba(170,170,255,180);\
-    }\
-    QPushButton:pressed{\
-    background-color: qlineargradient(spread:reflect, x1:0.449382, y1:0, x2:0.448, y2:1, stop:0.3 rgba(255, 255, 255, 100), stop:1 rgba(61, 158, 0, 255));\
-    }";
-
 MainWindow::MainWindow(ChoqokApplication *application)
     : Choqok::UI::MainWindow(), sysIcon(nullptr), quickWidget(nullptr), s_settingsDialog(nullptr),
       m_splash(nullptr), choqokMainButton(nullptr), app(application),

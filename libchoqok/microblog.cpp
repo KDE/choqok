@@ -85,23 +85,17 @@ QString MicroBlog::errorString(ErrorType type)
     switch (type) {
     case ServerError:
         return i18n("The server returned an error");
-        break;
     case CommunicationError:
         return i18n("Error on communication with server");
-        break;
     case ParsingError:
         return i18n("Error on parsing results");
-        break;
     case AuthenticationError:
         return i18n("Authentication error");
-        break;
     case NotSupportedError:
         return i18n("The server does not support this feature");
-        break;
     case OtherError:
         return i18n("Unknown error");
-        break;
-    };
+    }
     return QString();
 }
 
