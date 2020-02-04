@@ -583,6 +583,6 @@
   </provides>
   <launchable type="desktop-id">org.kde.choqok.desktop</launchable>
   <releases>
-    <release version="1.6.0" date="2016-10-08"/>
+    <release version="1.7.0" date="2020-02-04"/>
   </releases>
 </component>
