@@ -1,4 +1,4 @@
-=== Version 1.7.0 -- 07-Jul-2019 ===
+=== Version 1.7.0 -- 04-Feb-2020 ===
 * Port to QtNetworkAuth and drop qoauth dependency
 * Plugin compability break: MicroBlog::profileUrl returns a QUrl instead
 * Plugin compability break: MicroBlog::postUrl returns a QUrl instead
