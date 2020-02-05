@@ -15,7 +15,7 @@
     "X-Purpose-Configuration": [],
     "X-Purpose-Constraints": [
         [
-             "mimeType:image/*"
+            "mimeType:image/*"
         ]
     ],
     "X-Purpose-PluginTypes": [
