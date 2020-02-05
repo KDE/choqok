@@ -426,7 +426,7 @@ void MastodonMicroBlog::setTimelinesInfo()
 
     t = new Choqok::TimelineInfo;
     t->name = i18nc("Timeline Name", "Federated");
-    t->description = i18nc("Timeline description", "Federated timelime");
+    t->description = i18nc("Timeline description", "Federated timeline");
     t->icon = QLatin1String("folder-remote");
     m_timelinesInfos[QLatin1String("Federated")] = t;
     m_timelinesPaths[QLatin1String("Federated")] = publicTimeline;

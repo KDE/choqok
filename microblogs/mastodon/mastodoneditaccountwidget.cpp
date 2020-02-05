@@ -102,7 +102,7 @@ void MastodonEditAccountWidget::authorizeUser()
 
     m_account->oAuth()->grant();
 
-    QString verifier = QInputDialog::getText(this, i18n("coe"),
+    QString verifier = QInputDialog::getText(this, i18n("Code"),
                        i18n("Enter the code received from %1", m_account->host()));
     if (verifier.isEmpty()) {
         return;
