@@ -417,5 +417,3 @@ void GNUSocialApiMicroBlog::slotFetchConversation(KJob *job)
         }
     }
 }
-
-#include "gnusocialapimicroblog.moc"
