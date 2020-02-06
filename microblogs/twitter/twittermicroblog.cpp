@@ -473,7 +473,11 @@ Choqok::Post *TwitterMicroBlog::readPost(Choqok::Account *account, const QVarian
     }
 
     //postId is changed, regenerate link url
-    post->link = postUrl(account, post->author.userName, post->postId);
+    if (!post->repeatedPostId.isEmpty()) {
+        post->link = postUrl(account, post->author.userName, post->repeatedPostId);
+    } else {
+        post->link = postUrl(account, post->author.userName, post->postId);
+    }
 
     QVariantMap userMap = var[QLatin1String("user")].toMap();
     post->author.userId = userMap[QLatin1String("id_str")].toString();
