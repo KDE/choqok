@@ -2,14 +2,29 @@
     "KPlugin": {
         "Authors": [
             {
-                "Name": "Nicolas Fella"
+                "Name": "Nicolas Fella",
+                "Name[ca]": "Nicolas Fella",
+                "Name[pt]": "Nicolas Fella",
+                "Name[sv]": "Nicolas Fella",
+                "Name[uk]": "Nicolas Fella",
+                "Name[x-test]": "xxNicolas Fellaxx"
             }
         ],
         "Category": "Utilities",
         "Description": "Upload with Choqok",
+        "Description[ca]": "Puja amb el Choqok",
+        "Description[pt]": "Enviar com o Choqok",
+        "Description[sv]": "Ladda upp med Choqok",
+        "Description[uk]": "Вивантажити за допомогою Choqok",
+        "Description[x-test]": "xxUpload with Choqokxx",
         "Icon": "choqok",
         "License": "GPL",
         "Name": "Upload with Choqok",
+        "Name[ca]": "Puja amb el Choqok",
+        "Name[pt]": "Enviar com o Choqok",
+        "Name[sv]": "Ladda upp med Choqok",
+        "Name[uk]": "Вивантажити за допомогою Choqok",
+        "Name[x-test]": "xxUpload with Choqokxx",
         "X-Purpose-ActionDisplay": "Upload with Choqok..."
     },
     "X-Purpose-Configuration": [],
