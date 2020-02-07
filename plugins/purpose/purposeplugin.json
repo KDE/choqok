@@ -4,6 +4,7 @@
             {
                 "Name": "Nicolas Fella",
                 "Name[ca]": "Nicolas Fella",
+                "Name[et]": "Nicolas Fella",
                 "Name[pt]": "Nicolas Fella",
                 "Name[sv]": "Nicolas Fella",
                 "Name[uk]": "Nicolas Fella",
@@ -13,6 +14,7 @@
         "Category": "Utilities",
         "Description": "Upload with Choqok",
         "Description[ca]": "Puja amb el Choqok",
+        "Description[et]": "Üleslaadimine Choqoki abil",
         "Description[pt]": "Enviar com o Choqok",
         "Description[sv]": "Ladda upp med Choqok",
         "Description[uk]": "Вивантажити за допомогою Choqok",
@@ -21,6 +23,7 @@
         "License": "GPL",
         "Name": "Upload with Choqok",
         "Name[ca]": "Puja amb el Choqok",
+        "Name[et]": "Üleslaadimine Choqoki abil",
         "Name[pt]": "Enviar com o Choqok",
         "Name[sv]": "Ladda upp med Choqok",
         "Name[uk]": "Вивантажити за допомогою Choqok",
