@@ -67,7 +67,7 @@ QIcon addTextToIcon(const QIcon &icon, const QString &text, const QSize &result_
     font.setBold(true);
     painter.setFont(font);
 
-    int textWidth = painter.fontMetrics().width(text);
+    int textWidth = painter.fontMetrics().horizontalAdvance(text);
     QRect rct(0 , 0 , textWidth , result_size.height() / 2);
 
     painter.setRenderHint(QPainter::Antialiasing);

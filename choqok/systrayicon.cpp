@@ -81,7 +81,7 @@ void SysTrayIcon::updateUnreadCount(int changeOfUnreadPosts)
 
         auto pointSize = f.pointSizeF();
         QFontMetrics fm(f);
-        int w = fm.width(countStr);
+        int w = fm.horizontalAdvance(countStr);
         if (w > (oldWidth - 2)) {
             pointSize *= float(oldWidth - 2) / float(w);
             f.setPointSizeF(pointSize);

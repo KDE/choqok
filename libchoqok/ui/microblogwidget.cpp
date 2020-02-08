@@ -65,7 +65,7 @@ QIcon addNumToIcon(const QIcon &big , int number , const QSize &result_size , co
         painter.setFont(font);
 
         QString numberStr = QString::number(number);
-        int textWidth = painter.fontMetrics().width(numberStr) + 6;
+        int textWidth = painter.fontMetrics().horizontalAdvance(numberStr) + 6;
 
         if (textWidth < result_size.width() / 2) {
             textWidth = result_size.width() / 2;
