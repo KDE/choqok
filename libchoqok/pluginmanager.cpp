@@ -241,7 +241,7 @@ void PluginManager::loadAllPlugins()
             }
         }
 
-        for (const KPluginInfo &p: availablePlugins(QString::null)) { //krazy:exclude=nullstrassign for old broken gcc
+        for (const KPluginInfo &p: availablePlugins(QString())) {
             if ((p.category().compare(QLatin1String("MicroBlogs")) == 0) ||
                     (p.category().compare(QLatin1String("Shorteners")) == 0))
             {
@@ -264,7 +264,7 @@ void PluginManager::loadAllPlugins()
         }
     } else {
         // we had no config, so we load any plugins that should be loaded by default.
-        for (const KPluginInfo &p: availablePlugins(QString::null)) { //krazy:exclude=nullstrassign for old broken gcc
+        for (const KPluginInfo &p: availablePlugins(QString())) {
             if ((p.category().compare(QLatin1String("MicroBlogs")) == 0) ||
                     (p.category().compare(QLatin1String("Shorteners")) == 0))
             {
