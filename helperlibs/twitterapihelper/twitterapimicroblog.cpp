@@ -189,7 +189,7 @@ QList< Choqok::Post * > TwitterApiMicroBlog::loadTimeline(Choqok::Account *accou
     for (const QString &str: tmpList) {
         groupList.append(QDateTime::fromString(str));
     }
-    qSort(groupList);
+    std::sort(groupList.begin(), groupList.end());
     int count = groupList.count();
     if (count) {
         Choqok::Post *st = nullptr;
@@ -979,9 +979,9 @@ void TwitterApiMicroBlog::setRepeatedOfInfo(Choqok::Post *post, Choqok::Post *re
         post->repeatedFromUser.homePageUrl = post->author.homePageUrl;
         post->author = repeatedPost->author;
     }
-    
+
     if (!repeatedPost->quotedPost.content.isEmpty()) {
-        post->quotedPost = repeatedPost->quotedPost;        
+        post->quotedPost = repeatedPost->quotedPost;
     }
 }
 void TwitterApiMicroBlog::setQuotedPost(Choqok::Post* post, Choqok::Post* quotedPost)
@@ -1405,10 +1405,10 @@ Choqok::Post *TwitterApiMicroBlog::readPost(Choqok::Account *theAccount,
     }
     post->link = postUrl(theAccount, post->author.userName, post->postId);
     post->isRead = post->isFavorited || (post->repeatedFromUser.userName.compare(theAccount->username(), Qt::CaseInsensitive) == 0);
-    
+
     if(post->postId.isEmpty() || post->author.userName.isEmpty())
         post->isError = true;
-    
+
     return post;
 }
 

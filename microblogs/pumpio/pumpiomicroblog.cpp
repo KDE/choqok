@@ -391,7 +391,7 @@ QList< Choqok::Post * > PumpIOMicroBlog::loadTimeline(Choqok::Account *account,
     for (const QString &str: tmpList) {
         groupList.append(QDateTime::fromString(str));
     }
-    qSort(groupList);
+    std::sort(groupList.begin(), groupList.end());
     PumpIOPost *st;
     for (const QDateTime &datetime: groupList) {
         st = new PumpIOPost;

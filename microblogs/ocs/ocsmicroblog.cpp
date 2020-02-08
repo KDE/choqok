@@ -103,7 +103,7 @@ QList< Choqok::Post * > OCSMicroblog::loadTimeline(Choqok::Account *account, con
     for (const QString &str: tmpList) {
         groupList.append(QDateTime::fromString(str));
     }
-    qSort(groupList);
+    std::sort(groupList.begin(), groupList.end());
     int count = groupList.count();
     if (count) {
         Choqok::Post *st = nullptr;
