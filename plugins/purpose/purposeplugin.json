@@ -6,6 +6,7 @@
                 "Name[ca]": "Nicolas Fella",
                 "Name[et]": "Nicolas Fella",
                 "Name[pt]": "Nicolas Fella",
+                "Name[pt_BR]": "Nicolas Fella",
                 "Name[sv]": "Nicolas Fella",
                 "Name[uk]": "Nicolas Fella",
                 "Name[x-test]": "xxNicolas Fellaxx"
@@ -16,6 +17,7 @@
         "Description[ca]": "Puja amb el Choqok",
         "Description[et]": "Üleslaadimine Choqoki abil",
         "Description[pt]": "Enviar com o Choqok",
+        "Description[pt_BR]": "Enviar com o Choqok",
         "Description[sv]": "Ladda upp med Choqok",
         "Description[uk]": "Вивантажити за допомогою Choqok",
         "Description[x-test]": "xxUpload with Choqokxx",
@@ -25,6 +27,7 @@
         "Name[ca]": "Puja amb el Choqok",
         "Name[et]": "Üleslaadimine Choqoki abil",
         "Name[pt]": "Enviar com o Choqok",
+        "Name[pt_BR]": "Enviar com o Choqok",
         "Name[sv]": "Ladda upp med Choqok",
         "Name[uk]": "Вивантажити за допомогою Choqok",
         "Name[x-test]": "xxUpload with Choqokxx",
