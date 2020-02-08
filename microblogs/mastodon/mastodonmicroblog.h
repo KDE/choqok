@@ -90,7 +90,7 @@ Q_SIGNALS:
     void followingUsernameListed(MastodonAccount *theAccount, const QStringList &friendsList);
 
 public Q_SLOTS:
-    virtual void showDirectMessageDialog(MastodonAccount *theAccount = 0,
+    virtual void showDirectMessageDialog(MastodonAccount *theAccount = nullptr,
                                          const QString &toUsername = QString());
 
     void slotRequestFollowersScreenNameActive(KJob *job);

@@ -34,7 +34,7 @@
 
 MastodonOAuth::MastodonOAuth(MastodonAccount *account)
     : QOAuth2AuthorizationCodeFlow(account),
-      m_replyHandler(0), m_networkAccessManager(0)
+      m_replyHandler(nullptr), m_networkAccessManager(nullptr)
 {
     qCDebug(CHOQOK);
 

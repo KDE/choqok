@@ -99,7 +99,7 @@ ChoqokEditAccountWidget *MastodonMicroBlog::createEditAccountWidget(Choqok::Acco
         return new MastodonEditAccountWidget(this, acc, parent);
     } else {
         qCDebug(CHOQOK) << "Account passed here was not a valid MastodonAccount!";
-        return 0;
+        return nullptr;
     }
 }
 
@@ -151,7 +151,7 @@ Choqok::Account *MastodonMicroBlog::createNewAccount(const QString &alias)
         return new MastodonAccount(this, alias);
     } else {
         qCDebug(CHOQOK) << "Cannot create a new MastodonAccount!";
-        return 0;
+        return nullptr;
     }
 }
 

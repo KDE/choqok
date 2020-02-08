@@ -29,7 +29,7 @@ class MastodonPostWidget : public Choqok::UI::PostWidget
 {
     Q_OBJECT
 public:
-    explicit MastodonPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = 0);
+    explicit MastodonPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = nullptr);
     virtual ~MastodonPostWidget();
 
     virtual QString generateSign() override;

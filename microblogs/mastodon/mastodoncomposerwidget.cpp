@@ -162,8 +162,8 @@ void MastodonComposerWidget::cancelAttach()
 {
     qCDebug(CHOQOK);
     delete d->mediumName;
-    d->mediumName = 0;
+    d->mediumName = nullptr;
     delete d->btnCancel;
-    d->btnCancel = 0;
+    d->btnCancel = nullptr;
     d->mediumToAttach.clear();
 }

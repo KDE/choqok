@@ -45,7 +45,7 @@ class MastodonDMessageDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit MastodonDMessageDialog(MastodonAccount *theAccount, QWidget *parent = 0, Qt::WindowFlags flags = 0);
+    explicit MastodonDMessageDialog(MastodonAccount *theAccount, QWidget *parent = nullptr, Qt::WindowFlags flags = nullptr);
     ~MastodonDMessageDialog();
     void setTo(const QString &username);
 
