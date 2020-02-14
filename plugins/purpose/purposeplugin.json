@@ -10,7 +10,8 @@
                 "Name[pt_BR]": "Nicolas Fella",
                 "Name[sv]": "Nicolas Fella",
                 "Name[uk]": "Nicolas Fella",
-                "Name[x-test]": "xxNicolas Fellaxx"
+                "Name[x-test]": "xxNicolas Fellaxx",
+                "Name[zh_TW]": "Nicolas Fella"
             }
         ],
         "Category": "Utilities",
@@ -23,6 +24,7 @@
         "Description[sv]": "Ladda upp med Choqok",
         "Description[uk]": "Вивантажити за допомогою Choqok",
         "Description[x-test]": "xxUpload with Choqokxx",
+        "Description[zh_TW]": "使用 Choqok 上傳",
         "Icon": "choqok",
         "License": "GPL",
         "Name": "Upload with Choqok",
@@ -34,6 +36,7 @@
         "Name[sv]": "Ladda upp med Choqok",
         "Name[uk]": "Вивантажити за допомогою Choqok",
         "Name[x-test]": "xxUpload with Choqokxx",
+        "Name[zh_TW]": "使用 Choqok 上傳",
         "X-Purpose-ActionDisplay": "Upload with Choqok..."
     },
     "X-Purpose-Configuration": [],
