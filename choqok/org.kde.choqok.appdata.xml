@@ -15,6 +15,7 @@
   <name xml:lang="en-GB">Choqok</name>
   <name xml:lang="es">Choqok</name>
   <name xml:lang="et">Choqok</name>
+  <name xml:lang="eu">Choqok</name>
   <name xml:lang="fi">Choqok</name>
   <name xml:lang="fr">Choqok</name>
   <name xml:lang="gl">Choqok</name>
@@ -46,6 +47,7 @@
   <summary xml:lang="en-GB">Micro-blogging client</summary>
   <summary xml:lang="es">Cliente de microblogueo</summary>
   <summary xml:lang="et">Mikroblogimise klient</summary>
+  <summary xml:lang="eu">Mikro-blog bezeroa</summary>
   <summary xml:lang="fi">Mikroblogausasiakas</summary>
   <summary xml:lang="fr">Client de microblogage</summary>
   <summary xml:lang="gl">Cliente para microblogues</summary>
@@ -76,6 +78,7 @@
     <p xml:lang="en-GB">Choqok is a micro-blogging client which supports Twitter.com, GNU Social, Pump.io and Friendica services.</p>
     <p xml:lang="es">Choqok es un cliente de microblogueo que admite los servicios Twitter.com, GNU Social, Pump.io y Friendica.</p>
     <p xml:lang="et">Choqok on mikroblogimise klient, mis toetab Twitter.com-i, GNU Sociali, Pump.io ja Friendica teenusi.</p>
+    <p xml:lang="eu">Choqok Mikro-blog bezeroa da Twitter.com, Mastodon, GNU Social, Pump.io eta Friendica zerbitzuen euskarria duena.</p>
     <p xml:lang="fi">Choqok on Twitter.com-, GNU Social-, Pump.io- ja Friendica-palveluja tukeva mikroblogausasiakas.</p>
     <p xml:lang="fr">Choqok est un client de microblogage qui prend en charge les services Twitter.com, GNU social, Pump.io et Friendica.</p>
     <p xml:lang="gl">Choqok é un cliente de microbloque compatíbel cos servizos Twitter.com, GNU Social, Pump.io e Friendica.</p>
@@ -106,6 +109,7 @@
     <p xml:lang="en-GB">Features:</p>
     <p xml:lang="es">Características:</p>
     <p xml:lang="et">Omadused:</p>
+    <p xml:lang="eu">Eginbideak:</p>
     <p xml:lang="fi">Ominaisuudet:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
@@ -139,6 +143,7 @@
       <li xml:lang="en-GB">Supporting Twitter.com micro-blogging service</li>
       <li xml:lang="es">Admite el servicio de microblogueo Twitter.com</li>
       <li xml:lang="et">Twitter.com-i mikroblogimise teenuse toetus</li>
+      <li xml:lang="eu">Twitter mikro-blog zerbitzu euskarria</li>
       <li xml:lang="fi">Tukee Twitter.com-mikroblogauspalvelua</li>
       <li xml:lang="fr">Prise en charge du service de micro-bloggage Twitter.com</li>
       <li xml:lang="gl">Compatibilidade co servizo de microblogue Twitter.</li>
@@ -167,6 +172,7 @@
       <li xml:lang="en-GB">Supporting self hosted Pump.io services</li>
       <li xml:lang="es">Admite los servicios autohospedado de Pump.io</li>
       <li xml:lang="et">Pump.io teenuste toetus</li>
+      <li xml:lang="eu">Norberak ostatutako Pump.io zerbitzuen euskarria</li>
       <li xml:lang="fi">Tukee itse isännöityä Pump.io-palvelua</li>
       <li xml:lang="fr">Prise en charge des services auto-hébergés Pump.io</li>
       <li xml:lang="gl">Compatíbel con servizos de microblogue baseados en Pump.io.</li>
@@ -195,6 +201,7 @@
       <li xml:lang="en-GB">Supporting self hosted GNU social service</li>
       <li xml:lang="es">Admite el servicio autohospedado de GNU social</li>
       <li xml:lang="et">GNU Sociali teenuse toetus</li>
+      <li xml:lang="eu">Norberak ostatutako GNU social zerbitzuen euskarria</li>
       <li xml:lang="fi">Tukee itse isännöityä GNU social -palvelu</li>
       <li xml:lang="fr">Prise en charge du service auto-hébergé GNU social</li>
       <li xml:lang="gl">Compatíbel con servizos de microblogue baseados en GNU social.</li>
@@ -221,6 +228,7 @@
       <li xml:lang="en-GB">Supporting self hosted Friendica services</li>
       <li xml:lang="es">Admite el servicio autohospedado de Pump.io</li>
       <li xml:lang="et">Friendica teenuste toetus</li>
+      <li xml:lang="eu">Norberak ostatutako Friendica zerbitzuen euskarria</li>
       <li xml:lang="fi">Tukee itse isännöityä Friendica-palvelua</li>
       <li xml:lang="fr">Prise en charge des services auto-hébergés Friendica</li>
       <li xml:lang="gl">Compatíbel con servizos de microblogue baseados en Friendica.</li>
@@ -249,6 +257,7 @@
       <li xml:lang="en-GB">Supporting User + His/Her Friends time-lines</li>
       <li xml:lang="es">Admite las líneas temporales usuario + sus amigos</li>
       <li xml:lang="et">Kasutaja + tema sõprade ajatelgede toetus</li>
+      <li xml:lang="eu">Erabiltzailea + bere lagunen denbora-lerroen euskarria</li>
       <li xml:lang="fi">Tukee käyttäjän ja hänen kaveriensa aikajanoja</li>
       <li xml:lang="fr">Prise en charge des flux de l'utilisateur et de ses amis</li>
       <li xml:lang="gl">Compatíbel coa súa liña do tempo e as dos seus contactos.</li>
@@ -279,6 +288,7 @@
       <li xml:lang="en-GB">Supporting @Reply time-lines</li>
       <li xml:lang="es">Admite las líneas temporales de @respuesta</li>
       <li xml:lang="et">@Reply ajatelgede toetus</li>
+      <li xml:lang="eu">@erantzun denbora-lerroen euskarria</li>
       <li xml:lang="fi">Tukee @Reply-aikajanoja</li>
       <li xml:lang="fr">Prise en charge des balises de réponse (« @utilisateur »)</li>
       <li xml:lang="gl">Compatibilidade coas liñas do tempo de @resposta.</li>
@@ -309,6 +319,7 @@
       <li xml:lang="en-GB">Support for send and receive direct messages</li>
       <li xml:lang="es">Admite el envío y la recepción de mensajes directos</li>
       <li xml:lang="et">Otsesõnumite saatmise ja vastuvõtmise toetus</li>
+      <li xml:lang="eu">Mezu zuzenak bidali eta jasotzeko euskarria</li>
       <li xml:lang="fi">Tukee suorien viestien lähettämistä ja vastaanottamista</li>
       <li xml:lang="fr">Envoi et réception de messages directs</li>
       <li xml:lang="gl">Permite enviar e recibir mensaxes directas.</li>
@@ -337,6 +348,7 @@
       <li xml:lang="en-GB">Support medium upload using external services (Flickr, Imageshack,...)</li>
       <li xml:lang="es">Admite la carga de medios usando servicios externos (Flickr, Imageshack,...)</li>
       <li xml:lang="et">Meediafailide üleslaadimise toetus väliste teenuste vahendusel (Flickr, Imageshack ...)</li>
+      <li xml:lang="eu">Multimedia kargatzeko euskarria kanpo zerbitzuak erabiliz (Flickr, Imageshack,...)</li>
       <li xml:lang="fi">Tue median lähetystä ulkoisella palvelulla (Flickr, Imageshack…)</li>
       <li xml:lang="fr">Envoi de médias à l'aide de services externes (Flickr, Imageshack, ...)</li>
       <li xml:lang="gl">Permitir o envío de son e vídeo mediante servizos externos (Flickr, Imageshack, …).</li>
@@ -365,6 +377,7 @@
       <li xml:lang="en-GB">Supporting Multiple Accounts simultaneously</li>
       <li xml:lang="es">Admite múltiples cuentas simultáneamente</li>
       <li xml:lang="et">Mitme konti üheaegse kasutamise toetus</li>
+      <li xml:lang="eu">Hainbat kontu batera erabiltzeko euskarria</li>
       <li xml:lang="fi">Tukee useampia tilejä samanaikaisesti</li>
       <li xml:lang="fr">Prise en charge simultanée de plusieurs comptes</li>
       <li xml:lang="gl">Permite usar varias contas de maneira simultánea.</li>
@@ -396,6 +409,7 @@
       <li xml:lang="en-GB">Supporting search APIs for all services</li>
       <li xml:lang="es">Implementa las API de búsqueda de todos los servicios</li>
       <li xml:lang="et">Otsingu API-de toetus kõigis teenustes</li>
+      <li xml:lang="eu">Zerbitzu guztien APIak erabiliz bilaketen euskarria</li>
       <li xml:lang="fi">Tukee jokaisen tuntemansa palvelun haku-APIa</li>
       <li xml:lang="fr">Prise en charge des API de recherche pour tous les services</li>
       <li xml:lang="gl">Permite realizar buscas nos servizos.</li>
@@ -427,6 +441,7 @@
       <li xml:lang="en-GB">KWallet integration</li>
       <li xml:lang="es">Integración con KWallet</li>
       <li xml:lang="et">Lõimimine KDE turvalaekasüsteemiga</li>
+      <li xml:lang="eu">KDE zorroaz bateratua</li>
       <li xml:lang="fi">Käyttää KDE:n lompakkoa</li>
       <li xml:lang="fr">Intégration avec KWallet</li>
       <li xml:lang="gl">Integración con KWallet.</li>
@@ -457,6 +472,7 @@
       <li xml:lang="en-GB">Ability to make a quick tweet with global shortcuts (Ctrl+Meta+T)</li>
       <li xml:lang="es">Capacidad para hacer un tuit rápido con accesos rápidos de teclado globales (Ctrl+Meta+T)</li>
       <li xml:lang="et">Kiirsäutsu tegemine globaalse kiirklahviga (Ctrl+Meta+T)</li>
+      <li xml:lang="eu">Txio azkarrak sortzeko gaitasuna lasterbide orokorra erabiliz (Ctrl+Meta+T)</li>
       <li xml:lang="fi">Osaa lähettää pikaviestejä pikanäppäinyhdistelmällä (Ctrl+Meta+T)</li>
       <li xml:lang="fr">Possibilité de créer un « tweet » rapide avec les raccourcis globaux (Ctrl+Meta+T)</li>
       <li xml:lang="gl">Permite enviar chíos rápidos mediante atallos de teclado globais (Ctrl+Meta+T).</li>
@@ -487,6 +503,7 @@
       <li xml:lang="en-GB">Ability to notify user about new statuses text, with KNotification or Libnotify</li>
       <li xml:lang="es">Capacidad para notificar al usuario sobre los nuevos textos de estado, con KNotification o Libnotify</li>
       <li xml:lang="et">Kasutaja teavitamine uutest olekutest KNotificationi või Libnotify vahendusel</li>
+      <li xml:lang="eu">Egoera berrien testuak jakinaraztea KNotification edo Libnotify erabilita</li>
       <li xml:lang="fi">Osaa tiedottaa käyttäjää uusista tilaviesteistä joko KNotificationin tai Libnotifyn avulla</li>
       <li xml:lang="fr">Possibilité d'avertir l'utilisateur des nouvelles publications, avec KNotification ou Libnotify</li>
       <li xml:lang="gl">Infórmao de novos chíos mediante notificacións do sistema, usando KNotification ou libnotify.</li>
@@ -517,6 +534,7 @@
       <li xml:lang="en-GB">Support for shortening urls with more than 30 characters (shorten on paste)</li>
       <li xml:lang="es">Apoyo para abreviar URL que tengan más de 30 caracteres (abreviatura al pegar)</li>
       <li xml:lang="et">Enam kui 30 märgiga URL-ide lühendamise toetus (lühendamine asetamisel)</li>
+      <li xml:lang="eu">URLak laburtzeko gaitasuna 30 karaktere gainditzean (laburtu itsastean)</li>
       <li xml:lang="fi">Tukee verkko-osoitteitten lyhentämistä alle 30 merkkiin (leikepöydältä liitettäessä)</li>
       <li xml:lang="fr">Peut raccourcir les URL de plus de 30 caractères (raccourcissement au moment du collage de l'URL dans le texte)</li>
       <li xml:lang="gl">Permite acurtar automaticamente enderezos URL que superen os 30 caracteres ao pegalos.</li>
@@ -547,6 +565,7 @@
       <li xml:lang="en-GB">Support for configuring status lists appearance</li>
       <li xml:lang="es">Apoyo para configurar la apariencia de las listas de estados</li>
       <li xml:lang="et">Olekuloendite välimuse seadistamise toetus</li>
+      <li xml:lang="eu">Egoera zerrendaren itxura konfiguratzeko gaitasuna</li>
       <li xml:lang="fi">Tukee tilalistojen ulkoasun mukauttamista</li>
       <li xml:lang="fr">Prise en charge de l'apparition des listes d'état</li>
       <li xml:lang="gl">Permite configurar a aparencia das listas de chíos.</li>
