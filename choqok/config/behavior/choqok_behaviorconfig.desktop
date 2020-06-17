@@ -54,7 +54,6 @@ Name[sv]=Beteende
 Name[tr]=Davranış
 Name[ug]=ھەرىكەت
 Name[uk]=Поведінка
-Name[x-test]=xxBehaviorxx
 Name[zh_CN]=行为
 Name[zh_TW]=行為
 Comment=Personalize Choqok's Behavior
@@ -92,7 +91,6 @@ Comment[sl]=Prilagodi obnašanje programa Choqok
 Comment[sv]=Anpassa Choqoks beteende
 Comment[tr]=Choqok Davranışlarını Kişiselleştir
 Comment[uk]=Налаштувати поведінку Choqok
-Comment[x-test]=xxPersonalize Choqok's Behaviorxx
 Comment[zh_CN]=个性化 Choqok 的行为
 Comment[zh_TW]=個人化 Choqok 的行為
 
