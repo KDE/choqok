@@ -19,6 +19,7 @@
                 "Name[sk]": "Nicolas Fella",
                 "Name[sv]": "Nicolas Fella",
                 "Name[uk]": "Nicolas Fella",
+                "Name[x-test]": "xxNicolas Fellaxx",
                 "Name[zh_TW]": "Nicolas Fella"
             }
         ],
@@ -40,6 +41,7 @@
         "Description[sk]": "Nahrať cez Choqok",
         "Description[sv]": "Ladda upp med Choqok",
         "Description[uk]": "Вивантажити за допомогою Choqok",
+        "Description[x-test]": "xxUpload with Choqokxx",
         "Description[zh_CN]": "用 Choqok 上传",
         "Description[zh_TW]": "使用 Choqok 上傳",
         "Icon": "choqok",
@@ -61,6 +63,7 @@
         "Name[sk]": "Nahrať cez Choqok",
         "Name[sv]": "Ladda upp med Choqok",
         "Name[uk]": "Вивантажити за допомогою Choqok",
+        "Name[x-test]": "xxUpload with Choqokxx",
         "Name[zh_CN]": "用 Choqok 上传",
         "Name[zh_TW]": "使用 Choqok 上傳",
         "X-Purpose-ActionDisplay": "Upload with Choqok..."
