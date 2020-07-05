@@ -1,5 +1,6 @@
 [Global]
 IconName=choqok
+DesktopEntry=org.kde.choqok
 Comment=Choqok
 Comment[ar]=چغوك
 Comment[bg]=Choqok
