@@ -88,7 +88,7 @@ const QString mImageTemplate(QLatin1String("<div style=\"padding-top:5px;padding
 
 const QLatin1String PostWidget::Private::resourceImageUrl("img://postImage");
 
-const QString PostWidget::baseTextTemplate(QLatin1String("<table height=\"100%\" width=\"100%\"><tr><td width=\"48\" style=\"padding-right: 5px;\">%1</td><td dir=\"%4\" style=\"padding-right:3px;\"><p>%2</p></td></tr>%6%5<tr><td></td><td style=\"font-size:small;\" dir=\"ltr\" align=\"right\" valign=\"bottom\">%3</td></tr></table>"));
+const QString PostWidget::baseTextTemplate(QLatin1String("<table height=\"100%\" width=\"100%\"><tr><td width=\"48\" style=\"padding-right: 5px;\">%1</td><td dir=\"%4\" style=\"padding-right:3px;\"><p>%2</p></td></tr>%5%6<tr><td></td><td style=\"font-size:small;\" dir=\"ltr\" align=\"right\" valign=\"bottom\">%3</td></tr></table>"));
 
 const QString PostWidget::baseStyle(QLatin1String("QTextBrowser {border: 1px solid rgb(150,150,150);\
 border-radius:5px; color:%1; background-color:%2; %3}\
