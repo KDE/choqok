@@ -119,7 +119,7 @@ QString TwitterApiPostWidget::generateSign()
         }
 
         sign += QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>").arg(currentPost()->link.toDisplayString())
-                .arg(time.toString(Qt::DefaultLocaleLongDate)).arg(formatDateTime(time));
+                .arg(time.toString(Qt::DefaultLocaleLongDate)).arg(QStringLiteral("%1"));
     }
 
     if (!currentPost()->source.isEmpty()) {

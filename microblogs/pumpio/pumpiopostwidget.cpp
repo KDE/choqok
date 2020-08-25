@@ -91,7 +91,7 @@ QString PumpIOPostWidget::generateSign()
         }
 
         ss += QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>").arg(currentPost()->link.toDisplayString())
-                .arg(time.toString(Qt::DefaultLocaleLongDate)).arg(formatDateTime(time));
+                .arg(time.toString(Qt::DefaultLocaleLongDate)).arg(QStringLiteral("%1"));
 
         if (!post->source.isEmpty()) {
             ss += QLatin1String(" - ") + post->source;

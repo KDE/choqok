@@ -74,7 +74,7 @@ QString MastodonPostWidget::generateSign()
 
         ss += QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>").arg(post->link.toDisplayString())
                 .arg(post->creationDateTime.toString(Qt::DefaultLocaleLongDate))
-                .arg(formatDateTime(time));
+                .arg(QStringLiteral("%1"));
 
         if (!post->source.isEmpty()) {
             ss += QLatin1String(" - ") + post->source;

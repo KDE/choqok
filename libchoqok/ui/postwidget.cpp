@@ -160,7 +160,7 @@ QString PostWidget::generateSign()
     }
 
     ss += QStringLiteral("<a href=\"%1\" title=\"%2\">%3</a>").arg(d->mCurrentPost->link.toDisplayString())
-            .arg(time.toString(Qt::DefaultLocaleLongDate)).arg(formatDateTime(time));
+            .arg(time.toString(Qt::DefaultLocaleLongDate)).arg(QStringLiteral("%1"));
 
     if (!d->mCurrentPost->source.isEmpty()) {
         ss += QLatin1String(" - ") + d->mCurrentPost->source;
@@ -231,9 +231,16 @@ void PostWidget::initUi()
 
 void PostWidget::updateUi()
 {
+    QDateTime time;
+    if (currentPost()->repeatedDateTime.isNull()) {
+        time = currentPost()->creationDateTime;
+    } else {
+        time = currentPost()->repeatedDateTime;
+    }
+
     _mainWidget->setHtml(baseTextTemplate.arg( d->mProfileImage,                     /*1*/
                                                d->mContent,                          /*2*/
-                                               d->mSign,                             /*3*/
+                                               d->mSign.arg(formatDateTime(time)),   /*3*/
                                                d->dir,                               /*4*/
                                                d->mImage,                            /*5*/
                                                d->extraContents                      /*6*/
