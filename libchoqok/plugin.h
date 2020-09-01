@@ -60,7 +60,6 @@ X-KDE-PluginInfo-Name=choqok_myplugin
 X-KDE-PluginInfo-Version=0.1
 X-KDE-PluginInfo-Website=http://yoursite.com
 X-KDE-PluginInfo-Category=Plugins
-X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=false
 Name=MyPlugin
