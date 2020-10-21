@@ -40,7 +40,7 @@ K_PLUGIN_FACTORY_WITH_JSON(TwitgooConfigFactory, "choqok_twitgoo_config.json",
                            registerPlugin < TwitgooConfig > ();)
 
 TwitgooConfig::TwitgooConfig(QWidget *parent, const QVariantList &)
-    : KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_twitgoo")), parent)
+    : KCModule(parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);

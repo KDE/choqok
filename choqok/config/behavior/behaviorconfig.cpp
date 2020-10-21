@@ -53,7 +53,7 @@ public:
 };
 
 BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args)
-    : KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_behaviorconfig")), parent, args)
+    : KCModule(parent, args)
     , d(new Private)
 {
     qCDebug(CHOQOK);

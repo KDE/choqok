@@ -38,7 +38,7 @@ K_PLUGIN_FACTORY_WITH_JSON(Tinyarro_ws_ConfigFactory, "choqok_tinyarro_ws_config
                            registerPlugin < Tinyarro_ws_Config > ();)
 
 Tinyarro_ws_Config::Tinyarro_ws_Config(QWidget *parent, const QVariantList &):
-    KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_tinyarro_ws")), parent)
+    KCModule(parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);

@@ -52,7 +52,7 @@ const QString apiSecret = QLatin1String("98c89dbe39ae3bea");
 const QString apiKeSec = apiSecret + QLatin1String("api_key") + apiKey;
 
 FlickrConfig::FlickrConfig(QWidget *parent, const QVariantList &)
-    : KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_flickr")), parent)
+    : KCModule(parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);

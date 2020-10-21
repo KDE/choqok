@@ -37,7 +37,7 @@ K_PLUGIN_FACTORY_WITH_JSON(YourlsConfigFactory, "choqok_yourls_config.json",
                            registerPlugin < YourlsConfig > ();)
 
 YourlsConfig::YourlsConfig(QWidget *parent, const QVariantList &):
-    KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_yourls")), parent)
+    KCModule(parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);

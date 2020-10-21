@@ -38,7 +38,7 @@ K_PLUGIN_FACTORY_WITH_JSON(TwitpicConfigFactory, "choqok_twitpic_config.json",
                            registerPlugin < TwitpicConfig > ();)
 
 TwitpicConfig::TwitpicConfig(QWidget *parent, const QVariantList &):
-    KCModule(KAboutData::pluginData("kcm_choqok_twitpic"), parent)
+    KCModule(parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);

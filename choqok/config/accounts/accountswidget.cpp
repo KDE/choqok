@@ -44,7 +44,7 @@ K_PLUGIN_FACTORY_WITH_JSON(ChoqokAccountsConfigFactory, "choqok_accountsconfig.j
                            registerPlugin<AccountsWidget>();)
 
 AccountsWidget::AccountsWidget(QWidget *parent, const QVariantList &args)
-    : KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_accountsconfig")) , parent, args)
+    : KCModule(parent, args)
 {
     qCDebug(CHOQOK);
     setAttribute(Qt::WA_DeleteOnClose);

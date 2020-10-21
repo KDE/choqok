@@ -42,7 +42,7 @@ K_PLUGIN_FACTORY_WITH_JSON(MobypictureConfigFactory, "choqok_mobypicture_config.
                            registerPlugin < MobypictureConfig > ();)
 
 MobypictureConfig::MobypictureConfig(QWidget *parent, const QVariantList &)
-    : KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_mobypicture")), parent)
+    : KCModule(parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);

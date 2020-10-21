@@ -42,7 +42,7 @@ K_PLUGIN_FACTORY_WITH_JSON(NotifyConfigFactory, "choqok_notify_config.json",
                            registerPlugin < NotifyConfig > ();)
 
 NotifyConfig::NotifyConfig(QWidget *parent, const QVariantList &args)
-    : KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_notify")), parent, args)
+    : KCModule(parent, args)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);

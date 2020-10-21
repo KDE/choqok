@@ -42,7 +42,7 @@ K_PLUGIN_FACTORY_WITH_JSON(PosterousConfigFactory, "choqok_posterous_config.json
                            registerPlugin < PosterousConfig > ();)
 
 PosterousConfig::PosterousConfig(QWidget *parent, const QVariantList &) :
-    KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_posterous")), parent)
+    KCModule(parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);

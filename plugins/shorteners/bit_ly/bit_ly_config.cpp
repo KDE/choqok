@@ -44,7 +44,7 @@ K_PLUGIN_FACTORY_WITH_JSON(Bit_ly_ConfigFactory, "choqok_bit_ly_config.json",
                            registerPlugin < Bit_ly_Config > ();)
 
 Bit_ly_Config::Bit_ly_Config(QWidget *parent, const QVariantList &):
-    KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_bit_ly")), parent)
+    KCModule(parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);

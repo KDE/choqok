@@ -35,7 +35,7 @@ K_PLUGIN_FACTORY_WITH_JSON(NowListeningConfigFactory, "choqok_nowlistening_confi
                            registerPlugin < NowListeningConfig > ();)
 
 NowListeningConfig::NowListeningConfig(QWidget *parent, const QVariantList &args)
-    : KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_nowlistening")), parent, args)
+    : KCModule(parent, args)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *wd = new QWidget(this);

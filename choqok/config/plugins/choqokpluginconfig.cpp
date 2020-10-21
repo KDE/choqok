@@ -38,7 +38,7 @@ K_PLUGIN_FACTORY_WITH_JSON(ChoqokPluginConfigFactory, "choqok_pluginconfig.json"
                            registerPlugin<ChoqokPluginConfig>();)
 
 ChoqokPluginConfig::ChoqokPluginConfig(QWidget *parent, const QVariantList &args)
-    : KCModule(KAboutData::pluginData(QLatin1String("kcm_choqok_pluginconfig")), parent, args)
+    : KCModule(parent, args)
 {
     m_pluginSelector = new KPluginSelector(this);
 
