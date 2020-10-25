@@ -38,7 +38,6 @@
 #include <choqokappearancesettings.h>
 #include <KPluginInfo>
 #include <KCModuleProxy>
-#include <KCModuleInfo>
 #include <QVBoxLayout>
 #include <KDialog>
 #include <KTabWidget>
@@ -163,8 +162,7 @@ void Translator::slotConfigureTranslator()
 
     for (const KService::Ptr &servicePtr, pluginInfo.kcmServices()) {
         if(!servicePtr->noDisplay()) {
-            KCModuleInfo moduleInfo(servicePtr);
-            KCModuleProxy *currentModuleProxy = new KCModuleProxy(moduleInfo, moduleProxyParentWidget);
+            KCModuleProxy *currentModuleProxy = new KCModuleProxy(servicePtr, moduleProxyParentWidget);
             if (currentModuleProxy->realModule()) {
                 moduleProxyList << currentModuleProxy;
                 if (mainWidget && !newTabWidget) {
@@ -176,7 +174,7 @@ void Translator::slotConfigureTranslator()
                     mainWidget->setParent( newTabWidget );
                     KCModuleProxy *moduleProxy = qobject_cast<KCModuleProxy*>(mainWidget);
                     if (moduleProxy) {
-                        newTabWidget->addTab(mainWidget, moduleProxy->moduleInfo().moduleName());
+                        newTabWidget->addTab(mainWidget, servicePtr->name());
                         mainWidget = newTabWidget;
                     } else {
                         delete newTabWidget;

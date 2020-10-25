@@ -30,7 +30,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 
 #include <KAboutData>
 #include <KAboutApplicationDialog>
-#include <KCModuleInfo>
 #include <KCModuleProxy>
 #include <KPluginInfo>
 
@@ -145,8 +144,7 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
 
     for (const KService::Ptr &servicePtr: pluginInfo.kcmServices()) {
         if (!servicePtr->noDisplay()) {
-            KCModuleInfo moduleInfo(servicePtr);
-            KCModuleProxy *currentModuleProxy = new KCModuleProxy(moduleInfo, moduleProxyParentWidget);
+            KCModuleProxy *currentModuleProxy = new KCModuleProxy(servicePtr, moduleProxyParentWidget);
             if (currentModuleProxy->realModule()) {
                 moduleProxyList << currentModuleProxy;
                 if (mainWidget && !newTabWidget) {
@@ -158,7 +156,7 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
                     mainWidget->setParent(newTabWidget);
                     KCModuleProxy *moduleProxy = qobject_cast<KCModuleProxy *>(mainWidget);
                     if (moduleProxy) {
-                        newTabWidget->addTab(mainWidget, moduleProxy->moduleInfo().moduleName());
+                        newTabWidget->addTab(mainWidget, servicePtr->name());
                         mainWidget = newTabWidget;
                     } else {
                         delete newTabWidget;
@@ -200,7 +198,6 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
 
         if (configDialog->exec() == QDialog::Accepted) {
             for (KCModuleProxy *moduleProxy: moduleProxyList) {
-                QStringList parentComponents = moduleProxy->moduleInfo().service()->property(QLatin1String("X-KDE-ParentComponents")).toStringList();
                 moduleProxy->save();
             }
         } else {

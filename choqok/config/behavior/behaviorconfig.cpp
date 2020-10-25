@@ -30,7 +30,6 @@ along with this program; if not, see http://www.gnu.org/licenses/
 #include <QVBoxLayout>
 
 #include <KAboutData>
-#include <KCModuleInfo>
 #include <KCModuleProxy>
 #include <KLocalizedString>
 #include <KPluginFactory>
@@ -90,9 +89,9 @@ BehaviorConfig::BehaviorConfig(QWidget *parent, const QVariantList &args)
     addConfig(Choqok::BehaviorSettings::self(), d->mPrfsShorten);
     d->mBehaviorTabCtl->addTab(d->mPrfsShorten, i18n("URL &Shortening"));
 
-    KCModuleInfo proxyInfo(QLatin1String("proxy.desktop"));
-    d->proxyModule = new KCModuleProxy(proxyInfo, parent);
-    d->mBehaviorTabCtl->addTab(d->proxyModule, proxyInfo.moduleName());
+    const KService::Ptr proxyKCMService = KService::serviceByDesktopName(QStringLiteral("proxy"));
+    d->proxyModule = new KCModuleProxy(proxyKCMService, parent);
+    d->mBehaviorTabCtl->addTab(d->proxyModule, proxyKCMService->name());
 
     connect(d->mPrfsShorten, (void (BehaviorConfig_Shorten::*)(bool))&BehaviorConfig_Shorten::changed,
             this, &BehaviorConfig::markAsChanged);
