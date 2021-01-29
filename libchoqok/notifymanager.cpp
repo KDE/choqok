@@ -72,7 +72,7 @@ void NotifyManager::error(const QString &message, const QString &title)
 
 void NotifyManager::newPostArrived(const QString &message, const QString &title)
 {
-    QString fullMsg = QStringLiteral("<b>%1:</b><br/>%2").arg(title).arg(message);
+    QString fullMsg = QStringLiteral("<b>%1:</b>\n%2").arg(title).arg(message);
     if (Choqok::UI::Global::mainWindow()->isActiveWindow()) {
         choqokMainWindow->showStatusMessage(message);
     } else {
