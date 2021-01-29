@@ -852,6 +852,11 @@ ChoqokTabBar::~ChoqokTabBar()
     Choqok::AppearanceSettings::setTabBarIsStyled(p->styled_tabbar);
     Choqok::AppearanceSettings::self()->save();
     setLinkedTabBar(false);
+
+    for (int i = 0 ; i < p->st_widget->count() ; i++) {
+        disconnect(p->st_widget->widget(i), &QWidget::destroyed, this, &ChoqokTabBar::widget_destroyed);
+    }
+
     delete p;
 }
 
