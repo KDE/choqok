@@ -85,9 +85,8 @@ int main(int argc, char **argv)
     app.setApplicationVersion(about.version());
 
     QCommandLineParser parser;
-    parser.addVersionOption();
-    parser.addHelpOption();
     about.setupCommandLine(&parser);
+
     parser.process(app);
     about.processCommandLine(&parser);
 
