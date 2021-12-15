@@ -2,11 +2,13 @@ find_package(TelepathyQt5)
 
 if(TelepathyQt5_FOUND)
     add_definitions( -DTELEPATHY_FOUND )
+    # TelepathyQt5 headers use Q_FOREACH
+    remove_definitions(-DQT_NO_FOREACH)
+    include_directories( SYSTEM ${TELEPATHY_QT5_INCLUDE_DIR})
 endif()
 
 include_directories(
     ${CHOQOK_INCLUDES}
-    ${TELEPATHY_QT5_INCLUDE_DIR}
 )
 
 set(choqok_imstatus_PART_SRCS

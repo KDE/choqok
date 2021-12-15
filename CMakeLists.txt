@@ -2,16 +2,18 @@ cmake_minimum_required(VERSION 3.16)
 
 project(choqok)
 
-set (QT_MIN_VERSION "5.9.0")
+set (QT_MIN_VERSION "5.15.0")
+set (KF_MIN_VERSION "5.85.0")
 
-find_package(ECM REQUIRED NO_MODULE)
+find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
 
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
 include(KDEInstallDirs)
-include(ECMInstallIcons)
-include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
+include(KDECompilerSettings NO_POLICY_SCOPE)
+
+include(ECMInstallIcons)
 include(FeatureSummary)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED
@@ -21,7 +23,7 @@ find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED
     NetworkAuth
     Widgets
 )
-find_package(KF5 REQUIRED
+find_package(KF5 ${KF_MIN_VERSION} REQUIRED
     ConfigWidgets
     CoreAddons
     DocTools
