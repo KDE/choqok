@@ -2,19 +2,17 @@
 #	add_definitions(-DQTINDICATE_BUILD)
 #endif(QtIndicate_FOUND)
 
-set(kcm_choqok_behaviorconfig_PART_SRCS
+add_library(kcm_choqok_behaviorconfig MODULE
    behaviorconfig.cpp
    behaviorconfig_shorten.cpp
    behaviordebug.cpp
 )
 
-ki18n_wrap_ui(kcm_choqok_behaviorconfig_PART_SRCS
+ki18n_wrap_ui(kcm_choqok_behaviorconfig
    behaviorconfig_general.ui
    behaviorconfig_notifications.ui
    behaviorconfig_shorten_base.ui
 )
-
-add_library(kcm_choqok_behaviorconfig MODULE ${kcm_choqok_behaviorconfig_PART_SRCS})
 
 kcoreaddons_desktop_to_json(kcm_choqok_behaviorconfig choqok_behaviorconfig.desktop)
 

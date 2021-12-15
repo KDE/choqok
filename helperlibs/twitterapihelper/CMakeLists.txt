@@ -1,4 +1,10 @@
-set(twitterhelper_LIB_SRCS
+add_library(twitterapihelper SHARED)
+set_target_properties(twitterapihelper PROPERTIES
+    VERSION 1.3.0
+    SOVERSION 1
+)
+
+target_sources(twitterapihelper PRIVATE
     twitterapiaccount.cpp
     twitterapicomposerwidget.cpp
     twitterapidebug.cpp
@@ -17,11 +23,9 @@ set(twitterhelper_LIB_SRCS
     twitterapiwhoiswidget.cpp
 )
 
-# kconfig_add_kcfg_files(twitterhelper_LIB_SRCS
+# kconfig_add_kcfg_files(twitterapihelper
 # twitterapisettings.kcfgc
 # )
-
-add_library(twitterapihelper SHARED ${twitterhelper_LIB_SRCS})
 
 target_link_libraries( twitterapihelper
 PUBLIC
@@ -36,11 +40,6 @@ PUBLIC
     KF5::WidgetsAddons
     qca-qt5
     choqok
-)
-
-set_target_properties(twitterapihelper PROPERTIES
-VERSION 1.3.0
-SOVERSION 1
 )
 
 install(TARGETS twitterapihelper ${INSTALL_TARGETS_DEFAULT_ARGS})

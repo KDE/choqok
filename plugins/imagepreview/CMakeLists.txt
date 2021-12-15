@@ -1,8 +1,6 @@
-set(choqok_imagepreview_PART_SRCS
+add_library(choqok_imagepreview MODULE
     imagepreview.cpp
 )
-
-add_library(choqok_imagepreview MODULE ${choqok_imagepreview_PART_SRCS})
 
 kcoreaddons_desktop_to_json(choqok_imagepreview choqok_imagepreview.desktop)
 

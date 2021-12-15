@@ -1,4 +1,19 @@
-set(choqok_LIB_SRCS
+add_library(choqok SHARED)
+
+set_target_properties(choqok PROPERTIES
+    VERSION 1.3.0
+    SOVERSION 1
+)
+
+if(MSVC)
+    set_target_properties(choqok PROPERTIES OUTPUT_NAME libchoqok)
+endif(MSVC)
+
+set(choqok_dbus_SRCS)
+qt5_add_dbus_adaptor(choqok_dbus_SRCS org.kde.choqok.xml dbushandler.h Choqok::DbusHandler ChoqokAdaptor)
+
+target_sources(choqok PRIVATE
+    ${choqok_dbus_SRCS}
     application.cpp
     libchoqokdebug.cpp
     plugin.cpp
@@ -35,16 +50,12 @@ set(choqok_LIB_SRCS
 #    add_definitions(-DQTINDICATE_BUILD)
 #endif(QtIndicate_FOUND)
 
-qt5_add_dbus_adaptor(choqok_LIB_SRCS org.kde.choqok.xml dbushandler.h Choqok::DbusHandler ChoqokAdaptor)
-
-kconfig_add_kcfg_files(choqok_LIB_SRCS
+kconfig_add_kcfg_files(choqok
     choqokbehaviorsettings.kcfgc
     choqokappearancesettings.kcfgc
 )
 
-ki18n_wrap_ui(choqok_LIB_SRCS ui/uploadmedia_base.ui)
-
-add_library(choqok SHARED ${choqok_LIB_SRCS})
+ki18n_wrap_ui(choqok ui/uploadmedia_base.ui)
 
 target_link_libraries(choqok
 PUBLIC
@@ -71,15 +82,6 @@ PUBLIC
 #       add_definitions(-DXDG_APPS_INSTALL_DIR=${XDG_APPS_INSTALL_DIR})
 #       target_link_libraries(choqok ${QTINDICATE_LIBRARY})
 #endif(QtIndicate_FOUND)
-
-set_target_properties(choqok PROPERTIES
-    VERSION 1.3.0
-    SOVERSION 1
-)
-
-if(MSVC)
-    set_target_properties(choqok PROPERTIES OUTPUT_NAME libchoqok)
-endif(MSVC)
 
 target_include_directories(choqok PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/ui>")
 

@@ -1,8 +1,6 @@
-set(choqok_videopreview_PART_SRCS
+add_library(choqok_videopreview MODULE
     videopreview.cpp
 )
-
-add_library(choqok_videopreview MODULE ${choqok_videopreview_PART_SRCS})
 
 kcoreaddons_desktop_to_json(choqok_videopreview choqok_videopreview.desktop)
 

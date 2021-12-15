@@ -1,8 +1,6 @@
-set(choqok_goo_gl_SRCS
+add_library(choqok_goo_gl MODULE
     goo_gl.cpp
 )
-
-add_library(choqok_goo_gl MODULE ${choqok_goo_gl_SRCS})
 
 kcoreaddons_desktop_to_json(choqok_goo_gl choqok_goo_gl.desktop)
 

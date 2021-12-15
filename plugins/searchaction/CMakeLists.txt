@@ -1,8 +1,6 @@
-set(choqok_searchaction_PART_SRCS
+add_library(choqok_searchaction MODULE
     searchaction.cpp
 )
-
-add_library(choqok_searchaction MODULE ${choqok_searchaction_PART_SRCS})
 
 kcoreaddons_desktop_to_json(choqok_searchaction choqok_searchaction.desktop)
 

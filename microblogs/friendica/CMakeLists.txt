@@ -1,13 +1,10 @@
-
-set(choqok_friendica_SRCS
+add_library(choqok_friendica MODULE
     friendicadebug.cpp
     friendicaeditaccount.cpp
     friendicamicroblog.cpp
 )
 
-ki18n_wrap_ui(choqok_friendica_SRCS friendicaeditaccount_base.ui)
-
-add_library(choqok_friendica MODULE ${choqok_friendica_SRCS})
+ki18n_wrap_ui(choqok_friendica friendicaeditaccount_base.ui)
 
 kcoreaddons_desktop_to_json(choqok_friendica choqok_friendica.desktop)
 

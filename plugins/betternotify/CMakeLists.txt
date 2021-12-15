@@ -1,13 +1,11 @@
-set(choqok_notify_PART_SRCS
+add_library(choqok_betternotify MODULE
     mytextbrowser.cpp
     notification.cpp
     notify.cpp
     notifysettings.cpp
 )
 
-# kconfig_add_kcfg_files(choqok_notify_PART_SRCS betternotify.kcfgc)
-
-add_library(choqok_betternotify MODULE ${choqok_notify_PART_SRCS})
+# kconfig_add_kcfg_files(choqok_betternotify betternotify.kcfgc)
 
 kcoreaddons_desktop_to_json(choqok_betternotify choqok_notify.desktop)
 
@@ -24,17 +22,15 @@ PUBLIC
 
 install(TARGETS choqok_betternotify DESTINATION ${PLUGIN_INSTALL_DIR})
 
-set(kcm_choqok_notify_PART_SRCS
+add_library(kcm_choqok_betternotify MODULE
     dummynotification.cpp
     notifyconfig.cpp
     notifysettings.cpp
 )
 
-ki18n_wrap_ui(kcm_choqok_notify_PART_SRCS notifyprefs.ui)
+ki18n_wrap_ui(kcm_choqok_betternotify notifyprefs.ui)
 
-# kconfig_add_kcfg_files(kcm_choqok_notify_PART_SRCS betternotify.kcfgc)
-
-add_library(kcm_choqok_betternotify MODULE ${kcm_choqok_notify_PART_SRCS})
+# kconfig_add_kcfg_files(kcm_choqok_betternotify betternotify.kcfgc)
 
 kcoreaddons_desktop_to_json(kcm_choqok_betternotify choqok_notify_config.desktop)
 

@@ -1,13 +1,11 @@
-set(kcm_choqok_accountsconfig_PART_SRCS
+add_library(kcm_choqok_accountsconfig MODULE
     accountsdebug.cpp
     accountswidget.cpp
     addaccountdialog.cpp
     editaccountdialog.cpp
 )
 
-ki18n_wrap_ui(kcm_choqok_accountsconfig_PART_SRCS accountswidget_base.ui)
-
-add_library(kcm_choqok_accountsconfig MODULE ${kcm_choqok_accountsconfig_PART_SRCS})
+ki18n_wrap_ui(kcm_choqok_accountsconfig accountswidget_base.ui)
 
 kcoreaddons_desktop_to_json(kcm_choqok_accountsconfig choqok_accountsconfig.desktop)
 

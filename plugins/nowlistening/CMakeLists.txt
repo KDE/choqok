@@ -1,11 +1,9 @@
-set(choqok_nowlistening_PART_SRCS
+add_library(choqok_nowlistening MODULE
     mpris.cpp
     nowlistening.cpp
 )
 
-kconfig_add_kcfg_files(choqok_nowlistening_PART_SRCS nowlisteningsettings.kcfgc)
-
-add_library(choqok_nowlistening MODULE ${choqok_nowlistening_PART_SRCS})
+kconfig_add_kcfg_files(choqok_nowlistening nowlisteningsettings.kcfgc)
 
 kcoreaddons_desktop_to_json(choqok_nowlistening choqok_nowlistening.desktop)
 
@@ -23,15 +21,13 @@ PUBLIC
 
 install(TARGETS choqok_nowlistening DESTINATION ${PLUGIN_INSTALL_DIR})
 
-set(kcm_choqok_nowlistening_PART_SRCS
+add_library(kcm_choqok_nowlistening MODULE
     nowlisteningconfig.cpp
 )
 
-ki18n_wrap_ui(kcm_choqok_nowlistening_PART_SRCS nowlisteningprefs.ui)
+ki18n_wrap_ui(kcm_choqok_nowlistening nowlisteningprefs.ui)
 
-kconfig_add_kcfg_files(kcm_choqok_nowlistening_PART_SRCS nowlisteningsettings.kcfgc)
-
-add_library(kcm_choqok_nowlistening MODULE ${kcm_choqok_nowlistening_PART_SRCS})
+kconfig_add_kcfg_files(kcm_choqok_nowlistening nowlisteningsettings.kcfgc)
 
 kcoreaddons_desktop_to_json(kcm_choqok_nowlistening choqok_nowlistening_config.desktop)
 

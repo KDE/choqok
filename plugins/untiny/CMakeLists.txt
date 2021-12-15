@@ -1,10 +1,8 @@
-set(choqok_untiny_PART_SRCS
+add_library(choqok_untiny MODULE
     untiny.cpp
 )
 
-kconfig_add_kcfg_files(choqok_untiny_PART_SRCS untinysettings.kcfgc)
-
-add_library(choqok_untiny MODULE ${choqok_untiny_PART_SRCS})
+kconfig_add_kcfg_files(choqok_untiny untinysettings.kcfgc)
 
 kcoreaddons_desktop_to_json(choqok_untiny choqok_untiny.desktop)
 

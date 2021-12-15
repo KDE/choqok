@@ -1,12 +1,10 @@
-set(choqok_twitpic_PART_SRCS
+add_library(choqok_twitpic MODULE
     twitpic.cpp
 )
 
-# ki18n_wrap_ui(choqok_twitpic_PART_SRCS twitpicuploadimage_base.ui)
+# ki18n_wrap_ui(choqok_twitpic twitpicuploadimage_base.ui)
 
-kconfig_add_kcfg_files(choqok_twitpic_PART_SRCS twitpicsettings.kcfgc)
-
-add_library(choqok_twitpic MODULE ${choqok_twitpic_PART_SRCS})
+kconfig_add_kcfg_files(choqok_twitpic twitpicsettings.kcfgc)
 
 kcoreaddons_desktop_to_json(choqok_twitpic choqok_twitpic.desktop)
 
@@ -24,14 +22,13 @@ PUBLIC
 install(TARGETS choqok_twitpic DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES choqok_twitpic.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
-set(kcm_choqok_twitpic_PART_SRCS
-twitpicconfig.cpp )
+add_library(kcm_choqok_twitpic MODULE
+    twitpicconfig.cpp
+)
 
-ki18n_wrap_ui(kcm_choqok_twitpic_PART_SRCS twitpicprefs.ui)
+ki18n_wrap_ui(kcm_choqok_twitpic twitpicprefs.ui)
 
-kconfig_add_kcfg_files(kcm_choqok_twitpic_PART_SRCS twitpicsettings.kcfgc )
-
-add_library(kcm_choqok_twitpic MODULE ${kcm_choqok_twitpic_PART_SRCS})
+kconfig_add_kcfg_files(kcm_choqok_twitpic twitpicsettings.kcfgc )
 
 kcoreaddons_desktop_to_json(kcm_choqok_twitpic choqok_twitpic_config.desktop)
 

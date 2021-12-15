@@ -1,8 +1,6 @@
-set(choqok_quickfilter_PART_SRCS
+add_library(choqok_quickfilter MODULE
     quickfilter.cpp
 )
-
-add_library(choqok_quickfilter MODULE ${choqok_quickfilter_PART_SRCS})
 
 kcoreaddons_desktop_to_json(choqok_quickfilter choqok_quickfilter.desktop)
 

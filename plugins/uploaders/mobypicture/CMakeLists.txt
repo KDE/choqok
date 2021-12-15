@@ -1,10 +1,8 @@
-set(choqok_mobypicture_PART_SRCS
+add_library(choqok_mobypicture MODULE
     mobypicture.cpp
 )
 
-kconfig_add_kcfg_files(choqok_mobypicture_PART_SRCS mobypicturesettings.kcfgc)
-
-add_library(choqok_mobypicture MODULE ${choqok_mobypicture_PART_SRCS})
+kconfig_add_kcfg_files(choqok_mobypicture mobypicturesettings.kcfgc)
 
 kcoreaddons_desktop_to_json(choqok_mobypicture choqok_mobypicture.desktop)
 
@@ -21,15 +19,13 @@ PUBLIC
 install(TARGETS choqok_mobypicture DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES choqok_mobypicture.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
-set(kcm_choqok_mobypicture_PART_SRCS
+add_library(kcm_choqok_mobypicture MODULE
     mobypictureconfig.cpp
 )
 
-ki18n_wrap_ui(kcm_choqok_mobypicture_PART_SRCS mobypictureprefs.ui)
+ki18n_wrap_ui(kcm_choqok_mobypicture mobypictureprefs.ui)
 
-kconfig_add_kcfg_files(kcm_choqok_mobypicture_PART_SRCS mobypicturesettings.kcfgc)
-
-add_library(kcm_choqok_mobypicture MODULE ${kcm_choqok_mobypicture_PART_SRCS})
+kconfig_add_kcfg_files(kcm_choqok_mobypicture mobypicturesettings.kcfgc)
 
 kcoreaddons_desktop_to_json(kcm_choqok_mobypicture choqok_mobypicture_config.desktop)
 

@@ -1,8 +1,6 @@
-set(choqok_imageshack_PART_SRCS
+add_library(choqok_imageshack MODULE
     imageshack.cpp
 )
-
-add_library(choqok_imageshack MODULE ${choqok_imageshack_PART_SRCS})
 
 kcoreaddons_desktop_to_json(choqok_imageshack choqok_imageshack.desktop)
 

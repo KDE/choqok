@@ -1,8 +1,6 @@
-set(choqok_ur_ly_SRCS
+add_library(choqok_ur_ly MODULE
     ur_ly.cpp
 )
-
-add_library(choqok_ur_ly MODULE ${choqok_ur_ly_SRCS})
 
 kcoreaddons_desktop_to_json(choqok_ur_ly choqok_ur_ly.desktop)
 

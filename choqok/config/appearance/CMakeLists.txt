@@ -1,12 +1,10 @@
-set(kcm_choqok_appearanceconfig_PART_SRCS
+add_library(kcm_choqok_appearanceconfig MODULE
     appearanceconfig.cpp
     appearancedebug.cpp
 )
 
-ki18n_wrap_ui(kcm_choqok_appearanceconfig_PART_SRCS
+ki18n_wrap_ui(kcm_choqok_appearanceconfig
     appearanceconfig_base.ui)
-
-add_library(kcm_choqok_appearanceconfig MODULE ${kcm_choqok_appearanceconfig_PART_SRCS})
 
 kcoreaddons_desktop_to_json(kcm_choqok_appearanceconfig choqok_appearanceconfig.desktop)
 

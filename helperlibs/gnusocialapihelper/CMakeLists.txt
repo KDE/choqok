@@ -1,5 +1,10 @@
+add_library(gnusocialapihelper SHARED)
+set_target_properties(gnusocialapihelper PROPERTIES
+    VERSION 1.3.0
+    SOVERSION 1
+)
 
-set(gnusocialapihelper_SRCS
+target_sources(gnusocialapihelper PRIVATE
     gnusocialapiaccount.cpp
     gnusocialapicomposerwidget.cpp
     gnusocialapiconversationtimelinewidget.cpp
@@ -9,8 +14,6 @@ set(gnusocialapihelper_SRCS
     gnusocialapipostwidget.cpp
     gnusocialapisearch.cpp
 )
-
-add_library(gnusocialapihelper SHARED ${gnusocialapihelper_SRCS})
 
 target_link_libraries(gnusocialapihelper
 PUBLIC
@@ -25,11 +28,6 @@ PUBLIC
     KF5::WidgetsAddons
     choqok
     twitterapihelper
-)
-
-set_target_properties(gnusocialapihelper PROPERTIES
-    VERSION 1.3.0
-    SOVERSION 1
 )
 
 install(TARGETS gnusocialapihelper ${INSTALL_TARGETS_DEFAULT_ARGS})

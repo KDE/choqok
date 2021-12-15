@@ -1,10 +1,8 @@
-set(choqok_yourls_SRCS
+add_library(choqok_yourls MODULE
     yourls.cpp
 )
 
-kconfig_add_kcfg_files(choqok_yourls_SRCS yourlssettings.kcfgc)
-
-add_library(choqok_yourls MODULE ${choqok_yourls_SRCS})
+kconfig_add_kcfg_files(choqok_yourls yourlssettings.kcfgc)
 
 kcoreaddons_desktop_to_json(choqok_yourls choqok_yourls.desktop)
 
@@ -20,15 +18,13 @@ PUBLIC
 install(TARGETS choqok_yourls DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES choqok_yourls.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
-set(kcm_choqok_yourls_PART_SRCS
+add_library(kcm_choqok_yourls MODULE
     yourlsconfig.cpp
 )
 
-ki18n_wrap_ui(kcm_choqok_yourls_PART_SRCS yourlsprefs.ui)
+ki18n_wrap_ui(kcm_choqok_yourls yourlsprefs.ui)
 
-kconfig_add_kcfg_files(kcm_choqok_yourls_PART_SRCS yourlssettings.kcfgc)
-
-add_library(kcm_choqok_yourls MODULE ${kcm_choqok_yourls_PART_SRCS})
+kconfig_add_kcfg_files(kcm_choqok_yourls yourlssettings.kcfgc)
 
 kcoreaddons_desktop_to_json(kcm_choqok_yourls choqok_yourls_config.desktop)
 

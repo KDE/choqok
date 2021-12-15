@@ -1,9 +1,7 @@
-set(kcm_choqok_pluginconfig_PART_SRCS
+add_library(kcm_choqok_pluginconfig MODULE
     choqokpluginconfig.cpp
     pluginsdebug.cpp
 )
-
-add_library(kcm_choqok_pluginconfig MODULE ${kcm_choqok_pluginconfig_PART_SRCS})
 
 kcoreaddons_desktop_to_json(kcm_choqok_pluginconfig choqok_pluginconfig.desktop)
 

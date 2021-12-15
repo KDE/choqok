@@ -1,8 +1,10 @@
-set(choqokplugin_SRCS purposeplugin.cpp)
+add_library(choqokplugin MODULE
+    purposeplugin.cpp
+)
 
-qt5_add_dbus_interface(choqokplugin_SRCS org.kde.choqok.xml choqokinterface)
-
-add_library(choqokplugin MODULE ${choqokplugin_SRCS})
+set(choqokplugin_dbus_SRCS)
+qt5_add_dbus_interface(choqokplugin_dbus_SRCS org.kde.choqok.xml choqokinterface)
+target_sources(choqokplugin PRIVATE ${choqokplugin_dbus_SRCS})
 
 target_link_libraries(choqokplugin Qt5::DBus KF5::Purpose)
 

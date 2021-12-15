@@ -1,8 +1,6 @@
-set(choqok_tighturl_SRCS
+add_library(choqok_tighturl MODULE
     tighturl.cpp
 )
-
-add_library(choqok_tighturl MODULE ${choqok_tighturl_SRCS})
 
 kcoreaddons_desktop_to_json(choqok_tighturl choqok_tighturl.desktop)
 

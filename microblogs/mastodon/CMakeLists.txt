@@ -1,4 +1,4 @@
-set(choqok_mastodon_SRCS
+add_library(choqok_mastodon MODULE
     mastodonaccount.cpp
     mastodoncomposerwidget.cpp
     mastodondebug.cpp
@@ -11,11 +11,9 @@ set(choqok_mastodon_SRCS
     mastodonpostwidget.cpp
 )
 
-ki18n_wrap_ui(choqok_mastodon_SRCS
+ki18n_wrap_ui(choqok_mastodon
     mastodoneditaccountwidget.ui
 )
-
-add_library(choqok_mastodon MODULE ${choqok_mastodon_SRCS})
 
 kcoreaddons_desktop_to_json(choqok_mastodon choqok_mastodon.desktop)
 

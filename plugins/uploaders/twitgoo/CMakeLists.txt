@@ -1,10 +1,8 @@
-set(choqok_twitgoo_PART_SRCS
+add_library(choqok_twitgoo MODULE
     twitgoo.cpp
 )
 
-kconfig_add_kcfg_files(choqok_twitgoo_PART_SRCS twitgoosettings.kcfgc)
-
-add_library(choqok_twitgoo MODULE ${choqok_twitgoo_PART_SRCS})
+kconfig_add_kcfg_files(choqok_twitgoo twitgoosettings.kcfgc)
 
 kcoreaddons_desktop_to_json(choqok_twitgoo choqok_twitgoo.desktop)
 
@@ -21,15 +19,13 @@ PUBLIC
 install(TARGETS choqok_twitgoo DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES choqok_twitgoo.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
-set(kcm_choqok_twitgoo_PART_SRCS
+add_library(kcm_choqok_twitgoo MODULE
     twitgooconfig.cpp
 )
 
-ki18n_wrap_ui(kcm_choqok_twitgoo_PART_SRCS twitgooprefs.ui)
+ki18n_wrap_ui(kcm_choqok_twitgoo twitgooprefs.ui)
 
-kconfig_add_kcfg_files(kcm_choqok_twitgoo_PART_SRCS twitgoosettings.kcfgc)
-
-add_library(kcm_choqok_twitgoo MODULE ${kcm_choqok_twitgoo_PART_SRCS})
+kconfig_add_kcfg_files(kcm_choqok_twitgoo twitgoosettings.kcfgc)
 
 kcoreaddons_desktop_to_json(kcm_choqok_twitgoo choqok_twitgoo_config.desktop)
 

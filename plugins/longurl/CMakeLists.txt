@@ -1,10 +1,8 @@
-set(choqok_longurl_PART_SRCS
+add_library(choqok_longurl MODULE
     longurl.cpp
 )
 
-# kconfig_add_kcfg_files(choqok_longurl_PART_SRCS longurlsettings.kcfgc)
-
-add_library(choqok_longurl MODULE ${choqok_longurl_PART_SRCS})
+# kconfig_add_kcfg_files(choqok_longurl longurlsettings.kcfgc)
 
 kcoreaddons_desktop_to_json(choqok_longurl choqok_longurl.desktop)
 

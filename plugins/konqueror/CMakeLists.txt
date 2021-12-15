@@ -1,8 +1,6 @@
-set(konqchoqokplugin_SRCS
+add_library(konqchoqokplugin MODULE
     konqchoqok.cpp
 )
-
-add_library(konqchoqokplugin MODULE ${konqchoqokplugin_SRCS})
 
 kcoreaddons_desktop_to_json(konqchoqokplugin konqchoqok.desktop)
 

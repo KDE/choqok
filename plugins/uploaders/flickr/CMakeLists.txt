@@ -1,10 +1,8 @@
-set(choqok_flickr_PART_SRCS
+add_library(choqok_flickr MODULE
     flickr.cpp
 )
 
-kconfig_add_kcfg_files(choqok_flickr_PART_SRCS flickrsettings.kcfgc)
-
-add_library(choqok_flickr MODULE ${choqok_flickr_PART_SRCS})
+kconfig_add_kcfg_files(choqok_flickr flickrsettings.kcfgc)
 
 kcoreaddons_desktop_to_json(choqok_flickr choqok_flickr.desktop)
 
@@ -21,15 +19,13 @@ PUBLIC
 install(TARGETS choqok_flickr DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES choqok_flickr.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
-set(kcm_choqok_flickr_PART_SRCS
+add_library(kcm_choqok_flickr MODULE
     flickrconfig.cpp
 )
 
-ki18n_wrap_ui(kcm_choqok_flickr_PART_SRCS flickrprefs.ui)
+ki18n_wrap_ui(kcm_choqok_flickr flickrprefs.ui)
 
-kconfig_add_kcfg_files(kcm_choqok_flickr_PART_SRCS flickrsettings.kcfgc)
-
-add_library(kcm_choqok_flickr MODULE ${kcm_choqok_flickr_PART_SRCS})
+kconfig_add_kcfg_files(kcm_choqok_flickr flickrsettings.kcfgc)
 
 kcoreaddons_desktop_to_json(kcm_choqok_flickr choqok_flickr_config.desktop)
 

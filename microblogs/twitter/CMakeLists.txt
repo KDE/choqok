@@ -1,4 +1,4 @@
-set(choqok_twitter_SRCS
+add_library(choqok_twitter MODULE
     twittercomposerwidget.cpp
     twitteraccount.cpp
     twitterdebug.cpp
@@ -12,12 +12,10 @@ set(choqok_twitter_SRCS
     twittertimelinewidget.cpp
 )
 
-ki18n_wrap_ui(choqok_twitter_SRCS
+ki18n_wrap_ui(choqok_twitter
     twittereditaccount_base.ui
     twitterlistdialog_base.ui
 )
-
-add_library(choqok_twitter MODULE ${choqok_twitter_SRCS})
 
 kcoreaddons_desktop_to_json(choqok_twitter choqok_twitter.desktop)
 

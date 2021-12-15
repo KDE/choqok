@@ -1,12 +1,10 @@
-set(choqok_laconica_SRCS
+add_library(choqok_laconica MODULE
     laconicadebug.cpp
     laconicaeditaccount.cpp
     laconicamicroblog.cpp
 )
 
-ki18n_wrap_ui(choqok_laconica_SRCS laconicaeditaccount_base.ui)
-
-add_library(choqok_laconica MODULE ${choqok_laconica_SRCS})
+ki18n_wrap_ui(choqok_laconica laconicaeditaccount_base.ui)
 
 kcoreaddons_desktop_to_json(choqok_laconica choqok_laconica.desktop)
 

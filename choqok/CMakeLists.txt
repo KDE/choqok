@@ -2,7 +2,10 @@ include(DBusMacros)
 
 add_subdirectory(config)
 
-set(choqok_SRCS
+add_executable(choqok_bin)
+set_target_properties(choqok_bin PROPERTIES OUTPUT_NAME choqok)
+
+target_sources(choqok_bin PRIVATE
    choqokapplication.cpp
    choqokdebug.cpp
    mainwindow.cpp
@@ -10,14 +13,8 @@ set(choqok_SRCS
    systrayicon.cpp
 )
 
-# ki18n_wrap_ui(choqok_SRCS accounts/accountswidget_base.ui)
-
-# kconfig_add_kcfg_files(choqok_SRCS settings.kcfgc)
+# kconfig_add_kcfg_files(choqok_bin settings.kcfgc)
 dbus_add_activation_service(org.kde.choqok.service.in)
-
-add_executable(choqok_bin ${choqok_SRCS})
-
-set_target_properties(choqok_bin PROPERTIES OUTPUT_NAME choqok)
 
 target_link_libraries(choqok_bin
 PUBLIC

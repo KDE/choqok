@@ -7,14 +7,12 @@ if(TelepathyQt5_FOUND)
     include_directories( SYSTEM ${TELEPATHY_QT5_INCLUDE_DIR})
 endif()
 
-set(choqok_imstatus_PART_SRCS
+add_library(choqok_imstatus MODULE
     imqdbus.cpp
     imstatus.cpp
 )
 
-kconfig_add_kcfg_files(choqok_imstatus_PART_SRCS imstatussettings.kcfgc)
-
-add_library(choqok_imstatus MODULE ${choqok_imstatus_PART_SRCS})
+kconfig_add_kcfg_files(choqok_imstatus imstatussettings.kcfgc)
 
 kcoreaddons_desktop_to_json(choqok_imstatus choqok_imstatus.desktop)
 
@@ -29,16 +27,14 @@ PUBLIC
 
 install(TARGETS choqok_imstatus DESTINATION ${PLUGIN_INSTALL_DIR})
 
-set(kcm_choqok_imstatus_PART_SRCS
+add_library(kcm_choqok_imstatus MODULE
     imqdbus.cpp
     imstatusconfig.cpp
 )
 
-ki18n_wrap_ui(kcm_choqok_imstatus_PART_SRCS imstatusprefs.ui)
+ki18n_wrap_ui(kcm_choqok_imstatus imstatusprefs.ui)
 
-kconfig_add_kcfg_files(kcm_choqok_imstatus_PART_SRCS imstatussettings.kcfgc)
-
-add_library(kcm_choqok_imstatus MODULE ${kcm_choqok_imstatus_PART_SRCS})
+kconfig_add_kcfg_files(kcm_choqok_imstatus imstatussettings.kcfgc)
 
 kcoreaddons_desktop_to_json(kcm_choqok_imstatus choqok_imstatus_config.desktop)
 

@@ -1,10 +1,8 @@
-set(choqok_posterous_PART_SRCS
+add_library(choqok_posterous MODULE
     posterous.cpp
 )
 
-kconfig_add_kcfg_files(choqok_posterous_PART_SRCS posteroussettings.kcfgc)
-
-add_library(choqok_posterous MODULE ${choqok_posterous_PART_SRCS})
+kconfig_add_kcfg_files(choqok_posterous posteroussettings.kcfgc)
 
 kcoreaddons_desktop_to_json(choqok_posterous choqok_posterous.desktop)
 
@@ -21,15 +19,13 @@ PUBLIC
 install(TARGETS choqok_posterous DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES choqok_posterous.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
-set(kcm_choqok_posterous_PART_SRCS
+add_library(kcm_choqok_posterous MODULE
     posterousconfig.cpp
 )
 
-ki18n_wrap_ui(kcm_choqok_posterous_PART_SRCS posterousprefs.ui)
+ki18n_wrap_ui(kcm_choqok_posterous posterousprefs.ui)
 
-kconfig_add_kcfg_files(kcm_choqok_posterous_PART_SRCS posteroussettings.kcfgc)
-
-add_library(kcm_choqok_posterous MODULE ${kcm_choqok_posterous_PART_SRCS})
+kconfig_add_kcfg_files(kcm_choqok_posterous posteroussettings.kcfgc)
 
 kcoreaddons_desktop_to_json(kcm_choqok_posterous choqok_posterous_config.desktop)
 

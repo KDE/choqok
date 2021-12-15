@@ -1,4 +1,4 @@
-set(choqok_filter_PART_SRCS
+add_library(choqok_filter MODULE
     addeditfilter.cpp
     configurefilters.cpp
     filter.cpp
@@ -6,9 +6,7 @@ set(choqok_filter_PART_SRCS
     filtersettings.cpp
 )
 
-ki18n_wrap_ui(choqok_filter_PART_SRCS addeditfilter_base.ui filterprefs.ui)
-
-add_library(choqok_filter MODULE ${choqok_filter_PART_SRCS})
+ki18n_wrap_ui(choqok_filter addeditfilter_base.ui filterprefs.ui)
 
 kcoreaddons_desktop_to_json(choqok_filter choqok_filter.desktop)
 

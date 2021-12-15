@@ -1,4 +1,4 @@
-set(choqok_pumpio_SRCS
+add_library(choqok_pumpio MODULE
     pumpioaccount.cpp
     pumpiocomposerwidget.cpp
     pumpiodebug.cpp
@@ -13,13 +13,11 @@ set(choqok_pumpio_SRCS
     pumpioshowthread.cpp
 )
 
-ki18n_wrap_ui(choqok_pumpio_SRCS
+ki18n_wrap_ui(choqok_pumpio
     pumpioeditaccountwidget.ui
     pumpiomessagedialog.ui
     pumpioshowthread.ui
 )
-
-add_library(choqok_pumpio MODULE ${choqok_pumpio_SRCS})
 
 kcoreaddons_desktop_to_json(choqok_pumpio choqok_pumpio.desktop)
 

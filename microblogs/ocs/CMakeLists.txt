@@ -1,15 +1,13 @@
-set(choqok_ocs_SRCS
+add_library(choqok_ocs MODULE
     ocsaccount.cpp
     ocsdebug.cpp
     ocsmicroblog.cpp
     ocsconfigurewidget.cpp
 )
 
-ki18n_wrap_ui(choqok_ocs_SRCS
+ki18n_wrap_ui(choqok_ocs
     ocsconfigurebase.ui
 )
-
-add_library(choqok_ocs MODULE ${choqok_ocs_SRCS})
 
 kcoreaddons_desktop_to_json(choqok_ocs choqok_ocs.desktop)
 
