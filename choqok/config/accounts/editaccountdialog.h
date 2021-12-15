@@ -32,7 +32,7 @@ class EditAccountDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit EditAccountDialog(ChoqokEditAccountWidget *editWidget, QWidget *parent = nullptr, Qt::WindowFlags flags = nullptr);
+    explicit EditAccountDialog(ChoqokEditAccountWidget *editWidget, QWidget *parent = nullptr, Qt::WindowFlags flags = {});
     ~EditAccountDialog();
 
 protected Q_SLOTS:
