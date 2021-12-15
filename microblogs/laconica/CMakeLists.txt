@@ -1,8 +1,3 @@
-
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(choqok_laconica_SRCS
     laconicadebug.cpp
     laconicaeditaccount.cpp

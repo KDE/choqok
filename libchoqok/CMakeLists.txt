@@ -1,7 +1,3 @@
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(choqok_LIB_SRCS
     application.cpp
     libchoqokdebug.cpp
@@ -84,6 +80,8 @@ set_target_properties(choqok PROPERTIES
 if(MSVC)
     set_target_properties(choqok PROPERTIES OUTPUT_NAME libchoqok)
 endif(MSVC)
+
+target_include_directories(choqok PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/ui>")
 
 install(FILES choqokbehaviorsettings.kcfg choqokappearancesettings.kcfg
         DESTINATION ${KCFG_INSTALL_DIR})

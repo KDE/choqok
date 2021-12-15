@@ -1,10 +1,3 @@
-
-include_directories(
-${CHOQOK_INCLUDES}
-)
-
-########### next target ###############
-
 set( choqok_translator_PART_SRCS
 sharedtools.cpp
 translator.cpp )

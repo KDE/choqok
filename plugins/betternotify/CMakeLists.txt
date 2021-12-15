@@ -1,7 +1,3 @@
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(choqok_notify_PART_SRCS
     mytextbrowser.cpp
     notification.cpp

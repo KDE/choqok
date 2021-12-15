@@ -1,7 +1,3 @@
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(choqok_filter_PART_SRCS
     addeditfilter.cpp
     configurefilters.cpp

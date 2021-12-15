@@ -1,7 +1,3 @@
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(choqok_posterous_PART_SRCS
     posterous.cpp
 )

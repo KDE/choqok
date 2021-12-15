@@ -7,10 +7,6 @@ if(TelepathyQt5_FOUND)
     include_directories( SYSTEM ${TELEPATHY_QT5_INCLUDE_DIR})
 endif()
 
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(choqok_imstatus_PART_SRCS
     imqdbus.cpp
     imstatus.cpp

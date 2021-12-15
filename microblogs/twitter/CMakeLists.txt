@@ -1,7 +1,3 @@
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(choqok_twitter_SRCS
     twittercomposerwidget.cpp
     twitteraccount.cpp

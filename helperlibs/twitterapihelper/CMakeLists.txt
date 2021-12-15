@@ -1,7 +1,3 @@
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(twitterhelper_LIB_SRCS
     twitterapiaccount.cpp
     twitterapicomposerwidget.cpp

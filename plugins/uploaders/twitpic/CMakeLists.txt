@@ -1,7 +1,3 @@
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(choqok_twitpic_PART_SRCS
     twitpic.cpp
 )

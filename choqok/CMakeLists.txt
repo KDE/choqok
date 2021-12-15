@@ -1,9 +1,5 @@
 include(DBusMacros)
 
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 add_subdirectory(config)
 
 set(choqok_SRCS

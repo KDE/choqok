@@ -1,7 +1,3 @@
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(choqok_mobypicture_PART_SRCS
     mobypicture.cpp
 )

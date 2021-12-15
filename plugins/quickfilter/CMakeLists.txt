@@ -1,7 +1,3 @@
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(choqok_quickfilter_PART_SRCS
     quickfilter.cpp
 )

@@ -1,7 +1,3 @@
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(choqok_mastodon_SRCS
     mastodonaccount.cpp
     mastodoncomposerwidget.cpp

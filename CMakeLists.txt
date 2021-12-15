@@ -61,11 +61,6 @@ find_package(Qca-qt5 REQUIRED)
 #    message(STATUS "Optional dependency libindicate-qt not found: Won't support notifications via indicator")
 #endif(QTINDICATE_BUILD)
 
-set(CHOQOK_INCLUDES
-${CMAKE_CURRENT_SOURCE_DIR}/libchoqok/
-${CMAKE_CURRENT_SOURCE_DIR}/libchoqok/ui
-)
-
 add_subdirectory( libchoqok )
 add_subdirectory( helperlibs )
 add_subdirectory( choqok )

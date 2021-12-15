@@ -1,7 +1,3 @@
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(choqok_untiny_PART_SRCS
     untiny.cpp
 )

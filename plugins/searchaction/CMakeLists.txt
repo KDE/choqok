@@ -1,7 +1,3 @@
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(choqok_searchaction_PART_SRCS
     searchaction.cpp
 )

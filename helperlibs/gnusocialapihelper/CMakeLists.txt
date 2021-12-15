@@ -1,8 +1,4 @@
 
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(gnusocialapihelper_SRCS
     gnusocialapiaccount.cpp
     gnusocialapicomposerwidget.cpp

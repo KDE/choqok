@@ -1,7 +1,3 @@
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(choqok_pumpio_SRCS
     pumpioaccount.cpp
     pumpiocomposerwidget.cpp

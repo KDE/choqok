@@ -1,8 +1,4 @@
 
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(choqok_friendica_SRCS
     friendicadebug.cpp
     friendicaeditaccount.cpp

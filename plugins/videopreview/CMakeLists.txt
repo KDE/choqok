@@ -1,7 +1,3 @@
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(choqok_videopreview_PART_SRCS
     videopreview.cpp
 )

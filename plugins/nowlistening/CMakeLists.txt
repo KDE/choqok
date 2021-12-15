@@ -1,7 +1,3 @@
-include_directories(
-    ${CHOQOK_INCLUDES}
-)
-
 set(choqok_nowlistening_PART_SRCS
     mpris.cpp
     nowlistening.cpp
