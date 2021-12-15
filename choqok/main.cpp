@@ -30,9 +30,6 @@
 #include "choqokapplication.h"
 #include "choqokdebug.h"
 
-static const char description[] =
-    I18N_NOOP("KDE Micro-Blogging Client.");
-
 static const char version[] = "1.7.0";
 
 int main(int argc, char **argv)
@@ -42,7 +39,8 @@ int main(int argc, char **argv)
     ChoqokApplication app(argc, argv);
 
     KLocalizedString::setApplicationDomain("choqok");
-    KAboutData about(QLatin1String("choqok"), QLatin1String("Choqok"), QLatin1String(version), i18n(description),
+    KAboutData about(QLatin1String("choqok"),
+                     QLatin1String("Choqok"), QLatin1String(version), i18n("KDE Micro-Blogging Client."),
                      KAboutLicense::GPL_V3, i18n("(C) 2008-2010 Mehrdad Momeny\n(C) 2011-2019 Choqok Developers"),
                      QString(), QLatin1String("https://choqok.kde.org/"));
 
