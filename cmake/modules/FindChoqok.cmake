@@ -5,10 +5,10 @@
 #  CHOQOK_INCLUDE_DIR - the choqok include directory
 #  CHOQOK_LIBRARIES - Link these to use choqok
 
-# Copyright (c) 2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+# SPDX-FileCopyrightText: 2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 # I've wrote this based on FindKopete.cmake
-# Redistribution and use is allowed according to the terms of the BSD license.
-# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+#
+# SPDX-License-Identifier: BSD-3-Clause
 
 if(CHOQOK_INCLUDE_DIR AND CHOQOK_LIBRARIES)
 

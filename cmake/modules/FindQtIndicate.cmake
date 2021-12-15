@@ -5,10 +5,9 @@
 #  QTINDICATE_INCLUDE_DIRS - the QtIndicate include directories
 #  QTINDICATE_LIBRARY - Link this to use the QtIndicate library
 #
-# Copyright (c) 2010, Mehrdad Momeny <mehrdad.momeny@gmail.com>
+# SPDX-FileCopyrightText: 2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
 #
-# Redistribution and use is allowed according to the terms of the BSD license.
-# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+# SPDX-License-Identifier: BSD-3-Clause
 
 if (NOT WIN32)
     find_package(PkgConfig)

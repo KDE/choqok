@@ -6,11 +6,10 @@
 #  QTOAUTH_LIBRARY - Link this to use the QtOAuth 
 #  QTOAUTH_DEFINITIONS - Compiler switches required for using QOAuth
 #
-# Copyright © 2010, Mehrdad Momeny <mehrdad.momeny@gmail.com>
-# Copyright © 2010, Harald Sitter <apachelogger@ubuntu.com>
+# SPDX-FileCopyrightText: 2010 Mehrdad Momeny <mehrdad.momeny@gmail.com>
+# SPDX-FileCopyrightText: 2010 Harald Sitter <apachelogger@ubuntu.com>
 #
-# Redistribution and use is allowed according to the terms of the BSD license.
-# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+# SPDX-License-Identifier: BSD-3-Clause
 
 if (QTOAUTH_INCLUDE_DIR AND QTOAUTH_LIBRARY)
   # in cache already
