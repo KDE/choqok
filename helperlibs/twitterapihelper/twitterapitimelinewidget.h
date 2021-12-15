@@ -9,9 +9,11 @@
 #ifndef TWITTERAPITIMELINEWIDGET_H
 #define TWITTERAPITIMELINEWIDGET_H
 
+#include "twitterapihelper_export.h"
+
 #include "timelinewidget.h"
 
-class CHOQOK_HELPER_EXPORT TwitterApiTimelineWidget : public Choqok::UI::TimelineWidget
+class TWITTERAPIHELPER_EXPORT TwitterApiTimelineWidget : public Choqok::UI::TimelineWidget
 {
     Q_OBJECT
 public:

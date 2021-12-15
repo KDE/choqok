@@ -4,6 +4,8 @@ set_target_properties(gnusocialapihelper PROPERTIES
     SOVERSION 1
 )
 
+generate_export_header(gnusocialapihelper)
+
 target_sources(gnusocialapihelper PRIVATE
     gnusocialapiaccount.cpp
     gnusocialapicomposerwidget.cpp
@@ -39,4 +41,5 @@ install(FILES
     gnusocialapimicroblog.h
     gnusocialapipostwidget.h
     gnusocialapisearch.h
+    ${CMAKE_CURRENT_BINARY_DIR}/gnusocialapihelper_export.h
 DESTINATION ${INCLUDE_INSTALL_DIR}/choqok/gnusocialapihelper COMPONENT Devel)

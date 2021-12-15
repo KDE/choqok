@@ -11,9 +11,9 @@
 
 #include <QOAuthHttpServerReplyHandler>
 
-#include "choqok_export.h"
+#include "twitterapihelper_export.h"
 
-class CHOQOK_HELPER_EXPORT TwitterApiOAuthReplyHandler : public QOAuthHttpServerReplyHandler
+class TWITTERAPIHELPER_EXPORT TwitterApiOAuthReplyHandler : public QOAuthHttpServerReplyHandler
 {
     Q_OBJECT
 public:

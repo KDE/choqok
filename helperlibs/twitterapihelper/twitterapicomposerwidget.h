@@ -9,6 +9,7 @@
 #ifndef TWITTERAPICOMPOSERWIDGET_H
 #define TWITTERAPICOMPOSERWIDGET_H
 
+#include "twitterapihelper_export.h"
 #include "composerwidget.h"
 
 namespace Choqok
@@ -19,7 +20,7 @@ class PostWidget;
 }
 }
 
-class CHOQOK_HELPER_EXPORT TwitterApiComposerWidget : public Choqok::UI::ComposerWidget
+class TWITTERAPIHELPER_EXPORT TwitterApiComposerWidget : public Choqok::UI::ComposerWidget
 {
     Q_OBJECT
 public:

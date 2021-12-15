@@ -12,7 +12,7 @@
 #include "timelinewidget.h"
 #include "twitterapisearch.h"
 
-class CHOQOK_HELPER_EXPORT TwitterApiSearchTimelineWidget : public Choqok::UI::TimelineWidget
+class TWITTERAPIHELPER_EXPORT TwitterApiSearchTimelineWidget : public Choqok::UI::TimelineWidget
 {
     Q_OBJECT
 public:

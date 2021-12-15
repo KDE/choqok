@@ -13,7 +13,7 @@
 #include <QFrame>
 
 #include "choqoktypes.h"
-#include "choqok_export.h"
+#include "twitterapihelper_export.h"
 
 namespace Choqok
 {
@@ -22,7 +22,7 @@ class Account;
 
 class TwitterApiAccount;
 class KJob;
-class CHOQOK_HELPER_EXPORT TwitterApiWhoisWidget : public QFrame
+class TWITTERAPIHELPER_EXPORT TwitterApiWhoisWidget : public QFrame
 {
     Q_OBJECT
 public:

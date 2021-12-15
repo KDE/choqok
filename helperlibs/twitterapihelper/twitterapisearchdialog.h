@@ -11,10 +11,10 @@
 
 #include <QDialog>
 
-#include "choqok_export.h"
+#include "twitterapihelper_export.h"
 
 class TwitterApiAccount;
-class CHOQOK_HELPER_EXPORT TwitterApiSearchDialog : public QDialog
+class TWITTERAPIHELPER_EXPORT TwitterApiSearchDialog : public QDialog
 {
     Q_OBJECT
 public:

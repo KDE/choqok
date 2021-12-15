@@ -12,13 +12,15 @@
 #include <QMap>
 #include <QPoint>
 
+#include "twitterapihelper_export.h"
+
 #include "microblogwidget.h"
 #include "timelinewidget.h"
 #include "twitterapisearch.h"
 
 class TwitterApiSearchTimelineWidget;
 
-class CHOQOK_HELPER_EXPORT TwitterApiMicroBlogWidget : public Choqok::UI::MicroBlogWidget
+class TWITTERAPIHELPER_EXPORT TwitterApiMicroBlogWidget : public Choqok::UI::MicroBlogWidget
 {
     Q_OBJECT
 public:

@@ -12,7 +12,7 @@
 #include <QUrl>
 
 #include "account.h"
-#include "choqok_export.h"
+#include "twitterapihelper_export.h"
 
 #include "twitterapimicroblog.h"
 #include "twitterapioauth.h"
@@ -20,7 +20,7 @@
 /**
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
-class CHOQOK_HELPER_EXPORT TwitterApiAccount : public Choqok::Account
+class TWITTERAPIHELPER_EXPORT TwitterApiAccount : public Choqok::Account
 {
     Q_OBJECT
 public:

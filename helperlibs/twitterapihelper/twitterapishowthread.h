@@ -11,6 +11,8 @@
 
 #include <QWidget>
 
+#include "twitterapihelper_export.h"
+
 #include "choqoktypes.h"
 
 namespace Choqok
@@ -22,7 +24,7 @@ class PostWidget;
 }
 }
 
-class CHOQOK_HELPER_EXPORT TwitterApiShowThread : public QWidget
+class TWITTERAPIHELPER_EXPORT TwitterApiShowThread : public QWidget
 {
     Q_OBJECT
 public:

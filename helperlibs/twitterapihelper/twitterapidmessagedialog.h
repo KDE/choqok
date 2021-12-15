@@ -11,6 +11,8 @@
 
 #include <QDialog>
 
+#include "twitterapihelper_export.h"
+
 #include "microblog.h"
 
 namespace Choqok
@@ -26,7 +28,7 @@ class Post;
 
 class TwitterApiAccount;
 
-class CHOQOK_HELPER_EXPORT TwitterApiDMessageDialog : public QDialog
+class TWITTERAPIHELPER_EXPORT TwitterApiDMessageDialog : public QDialog
 {
     Q_OBJECT
 public:

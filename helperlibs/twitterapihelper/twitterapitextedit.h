@@ -13,11 +13,11 @@
 
 #include "account.h"
 #include "choqoktextedit.h"
-#include "choqok_export.h"
+#include "twitterapihelper_export.h"
 
 class KJob;
 
-class CHOQOK_HELPER_EXPORT TwitterApiTextEdit : public Choqok::UI::TextEdit
+class TWITTERAPIHELPER_EXPORT TwitterApiTextEdit : public Choqok::UI::TextEdit
 {
     Q_OBJECT
 

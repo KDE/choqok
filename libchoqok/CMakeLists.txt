@@ -9,6 +9,8 @@ if(MSVC)
     set_target_properties(choqok PROPERTIES OUTPUT_NAME libchoqok)
 endif(MSVC)
 
+generate_export_header(choqok)
+
 set(choqok_dbus_SRCS)
 qt5_add_dbus_adaptor(choqok_dbus_SRCS org.kde.choqok.xml dbushandler.h Choqok::DbusHandler ChoqokAdaptor)
 
@@ -95,10 +97,10 @@ install(FILES choqokplugin.desktop choqokshortenerplugin.desktop
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/choqokbehaviorsettings.h
     ${CMAKE_CURRENT_BINARY_DIR}/choqokappearancesettings.h
+    ${CMAKE_CURRENT_BINARY_DIR}/choqok_export.h
     application.h
     account.h
     accountmanager.h
-    choqok_export.h
     choqoktypes.h
     choqokuiglobal.h
     mediamanager.h

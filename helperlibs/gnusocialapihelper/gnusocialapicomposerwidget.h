@@ -9,9 +9,11 @@
 #ifndef GNUSOCIALAPICOMPOSERWIDGET_H
 #define GNUSOCIALAPICOMPOSERWIDGET_H
 
+#include "gnusocialapihelper_export.h"
+
 #include "twitterapicomposerwidget.h"
 
-class CHOQOK_HELPER_EXPORT GNUSocialApiComposerWidget : public TwitterApiComposerWidget
+class GNUSOCIALAPIHELPER_EXPORT GNUSocialApiComposerWidget : public TwitterApiComposerWidget
 {
     Q_OBJECT
 public:

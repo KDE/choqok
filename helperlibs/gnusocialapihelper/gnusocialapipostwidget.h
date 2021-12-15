@@ -9,9 +9,11 @@
 #ifndef GNUSOCIALAPIPOSTWIDGET_H
 #define GNUSOCIALAPIPOSTWIDGET_H
 
+#include "gnusocialapihelper_export.h"
+
 #include "twitterapipostwidget.h"
 
-class CHOQOK_HELPER_EXPORT GNUSocialApiPostWidget : public TwitterApiPostWidget
+class GNUSOCIALAPIHELPER_EXPORT GNUSocialApiPostWidget : public TwitterApiPostWidget
 {
 public:
     GNUSocialApiPostWidget(Choqok::Account *account, Choqok::Post *post, QWidget *parent = nullptr);

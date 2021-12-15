@@ -11,6 +11,8 @@
 
 #include <QPointer>
 
+#include "gnusocialapihelper_export.h"
+
 #include "twitterapimicroblog.h"
 
 class GNUSocialApiSearch;
@@ -23,7 +25,7 @@ This plugin is to GNU social service.
 
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
-class CHOQOK_HELPER_EXPORT GNUSocialApiMicroBlog : public TwitterApiMicroBlog
+class GNUSOCIALAPIHELPER_EXPORT GNUSocialApiMicroBlog : public TwitterApiMicroBlog
 {
     Q_OBJECT
 public:

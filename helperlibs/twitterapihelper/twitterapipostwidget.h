@@ -9,12 +9,14 @@
 #ifndef TWITTERAPIPOSTWIDGET_H
 #define TWITTERAPIPOSTWIDGET_H
 
+#include "twitterapihelper_export.h"
+
 #include "postwidget.h"
 
 /**
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
-class CHOQOK_HELPER_EXPORT TwitterApiPostWidget : public Choqok::UI::PostWidget
+class TWITTERAPIHELPER_EXPORT TwitterApiPostWidget : public Choqok::UI::PostWidget
 {
     Q_OBJECT
 public:

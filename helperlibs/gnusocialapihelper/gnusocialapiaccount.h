@@ -9,6 +9,8 @@
 #ifndef GNUSOCIALAPIACCOUNT_H
 #define GNUSOCIALAPIACCOUNT_H
 
+#include "gnusocialapihelper_export.h"
+
 #include "twitterapiaccount.h"
 
 class GNUSocialApiMicroBlog;
@@ -16,7 +18,7 @@ class GNUSocialApiMicroBlog;
 
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
-class CHOQOK_HELPER_EXPORT GNUSocialApiAccount : public TwitterApiAccount
+class GNUSOCIALAPIHELPER_EXPORT GNUSocialApiAccount : public TwitterApiAccount
 {
     Q_OBJECT
 public:

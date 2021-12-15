@@ -9,9 +9,11 @@
 #ifndef GNUSOCIALAPICONVERSATIONTIMELINEWIDGET_H
 #define GNUSOCIALAPICONVERSATIONTIMELINEWIDGET_H
 
+#include "gnusocialapihelper_export.h"
+
 #include "twitterapitimelinewidget.h"
 
-class CHOQOK_HELPER_EXPORT GNUSocialApiConversationTimelineWidget : public TwitterApiTimelineWidget
+class GNUSOCIALAPIHELPER_EXPORT GNUSocialApiConversationTimelineWidget : public TwitterApiTimelineWidget
 {
     Q_OBJECT
 public:

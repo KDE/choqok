@@ -4,6 +4,8 @@ set_target_properties(twitterapihelper PROPERTIES
     SOVERSION 1
 )
 
+generate_export_header(twitterapihelper)
+
 target_sources(twitterapihelper PRIVATE
     twitterapiaccount.cpp
     twitterapicomposerwidget.cpp
@@ -59,4 +61,5 @@ install(FILES
     twitterapitextedit.h
     twitterapitimelinewidget.h
     twitterapiwhoiswidget.h
+    ${CMAKE_CURRENT_BINARY_DIR}/twitterapihelper_export.h
 DESTINATION ${INCLUDE_INSTALL_DIR}/choqok/twitterapihelper COMPONENT Devel)

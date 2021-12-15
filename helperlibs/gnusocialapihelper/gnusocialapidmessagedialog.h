@@ -9,9 +9,11 @@
 #ifndef GNUSOCIALAPIDMESSAGEDIALOG_H
 #define GNUSOCIALAPIDMESSAGEDIALOG_H
 
+#include "gnusocialapihelper_export.h"
+
 #include "twitterapidmessagedialog.h"
 
-class CHOQOK_HELPER_EXPORT GNUSocialApiDMessageDialog : public TwitterApiDMessageDialog
+class GNUSOCIALAPIHELPER_EXPORT GNUSocialApiDMessageDialog : public TwitterApiDMessageDialog
 {
     Q_OBJECT
 public:

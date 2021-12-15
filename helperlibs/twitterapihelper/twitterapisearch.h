@@ -13,10 +13,12 @@
 #include <QMap>
 #include <QPair>
 
+#include "twitterapihelper_export.h"
+
 #include "account.h"
 #include "choqoktypes.h"
 
-class CHOQOK_HELPER_EXPORT SearchInfo
+class TWITTERAPIHELPER_EXPORT SearchInfo
 {
 public:
     SearchInfo();
@@ -47,7 +49,7 @@ public:
     @author Stephen Henderson \<hendersonsk@gmail.com\>
     @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
-class CHOQOK_HELPER_EXPORT TwitterApiSearch : public QObject
+class TWITTERAPIHELPER_EXPORT TwitterApiSearch : public QObject
 {
     Q_OBJECT
 public:

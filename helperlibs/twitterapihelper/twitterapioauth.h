@@ -11,7 +11,7 @@
 
 #include <QOAuth1>
 
-#include "choqok_export.h"
+#include "twitterapihelper_export.h"
 
 class TwitterApiAccount;
 class TwitterApiOAuthReplyHandler;
@@ -20,7 +20,7 @@ namespace KIO {
 class AccessManager;
 }
 
-class CHOQOK_HELPER_EXPORT TwitterApiOAuth : public QOAuth1
+class TWITTERAPIHELPER_EXPORT TwitterApiOAuth : public QOAuth1
 {
     Q_OBJECT
 public:

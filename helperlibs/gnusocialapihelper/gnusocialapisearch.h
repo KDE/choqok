@@ -9,6 +9,8 @@
 #ifndef GNUSOCIALAPISEARCH_H
 #define GNUSOCIALAPISEARCH_H
 
+#include "gnusocialapihelper_export.h"
+
 #include "twitterapisearch.h"
 
 class KJob;
@@ -19,7 +21,7 @@ GNU social/StatatusNet/GNUSocialApi search API implementation.
 @author Stephen Henderson \<hendersonsk@gmail.com\>
 @author Mehrdad Momeny \<mehrdad.momeny@gmail.com\>
 */
-class CHOQOK_HELPER_EXPORT GNUSocialApiSearch : public TwitterApiSearch
+class GNUSOCIALAPIHELPER_EXPORT GNUSocialApiSearch : public TwitterApiSearch
 {
     Q_OBJECT
 public:
