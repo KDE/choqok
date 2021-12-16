@@ -19,7 +19,7 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_nowlistening DESTINATION ${PLUGIN_INSTALL_DIR})
+install(TARGETS choqok_nowlistening DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 add_library(kcm_choqok_nowlistening MODULE
     nowlisteningconfig.cpp
@@ -39,8 +39,8 @@ PUBLIC
     KF5::I18n
 )
 
-install(TARGETS kcm_choqok_nowlistening DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES nowlisteningsettings.kcfg DESTINATION ${KCFG_INSTALL_DIR})
+install(TARGETS kcm_choqok_nowlistening DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES nowlisteningsettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
 install(FILES choqok_nowlistening_config.desktop choqok_nowlistening.desktop
-        DESTINATION ${SERVICES_INSTALL_DIR})
-install(FILES nowlisteningui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/choqok_nowlistening)
+        DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES nowlisteningui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/choqok_nowlistening)

@@ -12,5 +12,5 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_imagepreview DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES choqok_imagepreview.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS choqok_imagepreview DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES choqok_imagepreview.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})

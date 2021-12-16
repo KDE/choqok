@@ -16,8 +16,8 @@ PUBLIC
     twitterapihelper
 )
 
-install(TARGETS choqok_twitgoo DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES choqok_twitgoo.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS choqok_twitgoo DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES choqok_twitgoo.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
 add_library(kcm_choqok_twitgoo MODULE
     twitgooconfig.cpp
@@ -38,8 +38,8 @@ PUBLIC
     choqok
 )
 
-install(TARGETS kcm_choqok_twitgoo DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES twitgoosettings.kcfg  DESTINATION ${KCFG_INSTALL_DIR})
-install(FILES choqok_twitgoo_config.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kcm_choqok_twitgoo DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES twitgoosettings.kcfg  DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(FILES choqok_twitgoo_config.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
 add_subdirectory(icons)

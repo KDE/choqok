@@ -28,7 +28,7 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_ocs DESTINATION ${PLUGIN_INSTALL_DIR})
-install( FILES choqok_ocs.desktop  DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS choqok_ocs DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install( FILES choqok_ocs.desktop  DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
 add_subdirectory(icons)

@@ -4,4 +4,4 @@ ecm_install_icons( ICONS
    32-apps-posterous_uploader.png
    48-apps-posterous_uploader.png
    64-apps-posterous_uploader.png
-   DESTINATION ${ICON_INSTALL_DIR} )
+   DESTINATION ${KDE_INSTALL_ICONDIR} )

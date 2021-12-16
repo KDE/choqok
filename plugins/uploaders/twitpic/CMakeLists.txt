@@ -19,8 +19,8 @@ PUBLIC
     twitterapihelper
 )
 
-install(TARGETS choqok_twitpic DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES choqok_twitpic.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS choqok_twitpic DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES choqok_twitpic.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
 add_library(kcm_choqok_twitpic MODULE
     twitpicconfig.cpp
@@ -34,10 +34,10 @@ kcoreaddons_desktop_to_json(kcm_choqok_twitpic choqok_twitpic_config.desktop)
 
 target_link_libraries(kcm_choqok_twitpic choqok)
 
-install(TARGETS kcm_choqok_twitpic DESTINATION ${PLUGIN_INSTALL_DIR})
+install(TARGETS kcm_choqok_twitpic DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
-install(FILES twitpicsettings.kcfg  DESTINATION ${KCFG_INSTALL_DIR})
-install(FILES choqok_twitpic_config.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-# install( FILES twitpicui.rc  DESTINATION  ${DATA_INSTALL_DIR}/choqok_twitpic )
+install(FILES twitpicsettings.kcfg  DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(FILES choqok_twitpic_config.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+# install( FILES twitpicui.rc  DESTINATION  ${KDE_INSTALL_DATADIR}/choqok_twitpic )
 
 add_subdirectory(icons)

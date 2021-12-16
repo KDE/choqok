@@ -51,7 +51,7 @@ PUBLIC
     choqok
 )
 
-install(TARGETS twitterapihelper ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS twitterapihelper ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES
     twitterapiaccount.h
     twitterapicomposerwidget.h
@@ -69,4 +69,4 @@ install(FILES
     twitterapitimelinewidget.h
     twitterapiwhoiswidget.h
     ${CMAKE_CURRENT_BINARY_DIR}/twitterapihelper_export.h
-DESTINATION ${INCLUDE_INSTALL_DIR}/choqok/twitterapihelper COMPONENT Devel)
+DESTINATION ${KDE_INSTALL_INCLUDEDIR}/choqok/twitterapihelper COMPONENT Devel)

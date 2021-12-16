@@ -7,8 +7,8 @@ kconfig_add_kcfg_files(choqok_translator translatorsettings.kcfgc)
 
 target_link_libraries(choqok_translator  KF5::KIOCore ${QJSON_LIBRARY} choqok)
 
-install(TARGETS choqok_translator DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES languagecodes DESTINATION ${DATA_INSTALL_DIR}/choqok)
+install(TARGETS choqok_translator DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES languagecodes DESTINATION ${KDE_INSTALL_DATADIR}/choqok)
 
 ########### next target ###############
 
@@ -23,11 +23,11 @@ kconfig_add_kcfg_files(kcm_choqok_translator translatorsettings.kcfgc )
 
 target_link_libraries(kcm_choqok_translator )
 
-install(TARGETS kcm_choqok_translator DESTINATION ${PLUGIN_INSTALL_DIR})
+install(TARGETS kcm_choqok_translator DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 ########### next target ###############
 
 
-install( FILES translatorsettings.kcfg  DESTINATION ${KCFG_INSTALL_DIR})
+install( FILES translatorsettings.kcfg  DESTINATION ${KDE_INSTALL_KCFGDIR})
 install( FILES choqok_translator.desktop choqok_translator_config.desktop
-         DESTINATION ${SERVICES_INSTALL_DIR})
+         DESTINATION ${KDE_INSTALL_KSERVICES5DIR})

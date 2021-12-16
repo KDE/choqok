@@ -15,8 +15,8 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_bit_ly DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES choqok_bit_ly.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS choqok_bit_ly DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES choqok_bit_ly.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
 add_library(kcm_choqok_bit_ly MODULE
     bit_ly_config.cpp
@@ -40,6 +40,6 @@ PUBLIC
     choqok
 )
 
-install(TARGETS kcm_choqok_bit_ly DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES bit_ly_settings.kcfg DESTINATION ${KCFG_INSTALL_DIR})
-install(FILES choqok_bit_ly_config.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kcm_choqok_bit_ly DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES bit_ly_settings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(FILES choqok_bit_ly_config.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})

@@ -15,8 +15,8 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_yourls DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES choqok_yourls.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS choqok_yourls DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES choqok_yourls.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
 add_library(kcm_choqok_yourls MODULE
     yourlsconfig.cpp
@@ -37,6 +37,6 @@ PUBLIC
     choqok
 )
 
-install(TARGETS kcm_choqok_yourls DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES yourlssettings.kcfg DESTINATION ${KCFG_INSTALL_DIR})
-install(FILES choqok_yourls_config.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kcm_choqok_yourls DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES yourlssettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(FILES choqok_yourls_config.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})

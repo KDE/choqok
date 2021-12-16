@@ -16,8 +16,8 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_flickr DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES choqok_flickr.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS choqok_flickr DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES choqok_flickr.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
 add_library(kcm_choqok_flickr MODULE
     flickrconfig.cpp
@@ -42,8 +42,8 @@ PUBLIC
     choqok
 )
 
-install(TARGETS kcm_choqok_flickr DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES flickrsettings.kcfg DESTINATION ${KCFG_INSTALL_DIR})
-install(FILES choqok_flickr_config.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kcm_choqok_flickr DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES flickrsettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(FILES choqok_flickr_config.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
 add_subdirectory(icons)

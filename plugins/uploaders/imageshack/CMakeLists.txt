@@ -14,7 +14,7 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_imageshack DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES choqok_imageshack.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS choqok_imageshack DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES choqok_imageshack.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
 add_subdirectory(icons)

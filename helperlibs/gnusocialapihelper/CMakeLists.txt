@@ -39,7 +39,7 @@ PUBLIC
     twitterapihelper
 )
 
-install(TARGETS gnusocialapihelper ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS gnusocialapihelper ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES
     gnusocialapiaccount.h
     gnusocialapicomposerwidget.h
@@ -49,4 +49,4 @@ install(FILES
     gnusocialapipostwidget.h
     gnusocialapisearch.h
     ${CMAKE_CURRENT_BINARY_DIR}/gnusocialapihelper_export.h
-DESTINATION ${INCLUDE_INSTALL_DIR}/choqok/gnusocialapihelper COMPONENT Devel)
+DESTINATION ${KDE_INSTALL_INCLUDEDIR}/choqok/gnusocialapihelper COMPONENT Devel)

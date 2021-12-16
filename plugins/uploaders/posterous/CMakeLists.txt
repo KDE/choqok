@@ -16,8 +16,8 @@ PUBLIC
     twitterapihelper
 )
 
-install(TARGETS choqok_posterous DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES choqok_posterous.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS choqok_posterous DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES choqok_posterous.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
 add_library(kcm_choqok_posterous MODULE
     posterousconfig.cpp
@@ -39,8 +39,8 @@ PUBLIC
     choqok
 )
 
-install(TARGETS kcm_choqok_posterous DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES posteroussettings.kcfg DESTINATION ${KCFG_INSTALL_DIR})
-install(FILES choqok_posterous_config.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kcm_choqok_posterous DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES posteroussettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(FILES choqok_posterous_config.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
 add_subdirectory(icons)

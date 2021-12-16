@@ -40,7 +40,7 @@ target_link_libraries(choqok_twitter
     twitterapihelper
 )
 
-install(TARGETS choqok_twitter DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES choqok_twitter.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS choqok_twitter DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES choqok_twitter.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
 add_subdirectory(icons)

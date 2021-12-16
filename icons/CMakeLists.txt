@@ -12,4 +12,4 @@ ecm_install_icons( ICONS
    64-apps-choqok.png
    sc-apps-choqok.svgz
    sc-apps-choqok_offline.svgz
-   DESTINATION ${ICON_INSTALL_DIR} )
+   DESTINATION ${KDE_INSTALL_ICONDIR} )

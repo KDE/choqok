@@ -16,6 +16,6 @@ PUBLIC
     twitterapihelper
 )
 
-install(TARGETS choqok_searchaction DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES choqok_searchaction.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-install(FILES searchactionui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/choqok_searchaction)
+install(TARGETS choqok_searchaction DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES choqok_searchaction.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES searchactionui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/choqok_searchaction)

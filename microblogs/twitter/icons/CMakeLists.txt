@@ -3,4 +3,4 @@ ecm_install_icons( ICONS
    22-apps-twitter_microblog.png
    32-apps-twitter_microblog.png
    48-apps-twitter_microblog.png
-   DESTINATION ${ICON_INSTALL_DIR} )
+   DESTINATION ${KDE_INSTALL_ICONDIR} )

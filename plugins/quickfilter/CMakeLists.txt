@@ -14,6 +14,6 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_quickfilter DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES choqok_quickfilter.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-install(FILES quickfilterui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/choqok_quickfilter)
+install(TARGETS choqok_quickfilter DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES choqok_quickfilter.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES quickfilterui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/choqok_quickfilter)

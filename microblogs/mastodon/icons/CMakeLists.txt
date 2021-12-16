@@ -5,4 +5,4 @@ ecm_install_icons( ICONS
    48-apps-mastodon_microblog.png
    64-apps-mastodon_microblog.png
    128-apps-mastodon_microblog.png
-   DESTINATION ${ICON_INSTALL_DIR} )
+   DESTINATION ${KDE_INSTALL_ICONDIR} )

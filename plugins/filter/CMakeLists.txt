@@ -24,6 +24,6 @@ PUBLIC
     twitterapihelper
 )
 
-install(TARGETS choqok_filter DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES choqok_filter.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-install(FILES filterui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/choqok_filter)
+install(TARGETS choqok_filter DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES choqok_filter.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES filterui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/choqok_filter)

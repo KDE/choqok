@@ -16,8 +16,8 @@ PUBLIC
     twitterapihelper
 )
 
-install(TARGETS choqok_mobypicture DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES choqok_mobypicture.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS choqok_mobypicture DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES choqok_mobypicture.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
 add_library(kcm_choqok_mobypicture MODULE
     mobypictureconfig.cpp
@@ -40,8 +40,8 @@ PUBLIC
     choqok
 )
 
-install(TARGETS kcm_choqok_mobypicture DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES mobypicturesettings.kcfg DESTINATION ${KCFG_INSTALL_DIR})
-install(FILES choqok_mobypicture_config.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kcm_choqok_mobypicture DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES mobypicturesettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(FILES choqok_mobypicture_config.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
 add_subdirectory(icons)

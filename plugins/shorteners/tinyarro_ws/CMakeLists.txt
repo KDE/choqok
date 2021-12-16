@@ -15,8 +15,8 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_tinyarro_ws DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES choqok_tinyarro_ws.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS choqok_tinyarro_ws DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES choqok_tinyarro_ws.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
 add_library(kcm_choqok_tinyarro_ws MODULE
     tinyarro_ws_config.cpp
@@ -38,6 +38,6 @@ PUBLIC
     choqok
 )
 
-install(TARGETS kcm_choqok_tinyarro_ws DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES tinyarro_ws_settings.kcfg DESTINATION ${KCFG_INSTALL_DIR})
-install(FILES choqok_tinyarro_ws_config.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kcm_choqok_tinyarro_ws DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES tinyarro_ws_settings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(FILES choqok_tinyarro_ws_config.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})

@@ -88,18 +88,18 @@ PUBLIC
 )
 
 #if(QtIndicate_FOUND)
-#       add_definitions(-DXDG_APPS_INSTALL_DIR=${XDG_APPS_INSTALL_DIR})
+#       add_definitions(-DXDG_APPS_INSTALL_DIR=${KDE_INSTALL_APPDIR})
 #       target_link_libraries(choqok ${QTINDICATE_LIBRARY})
 #endif(QtIndicate_FOUND)
 
 target_include_directories(choqok PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/ui>")
 
 install(FILES choqokbehaviorsettings.kcfg choqokappearancesettings.kcfg
-        DESTINATION ${KCFG_INSTALL_DIR})
+        DESTINATION ${KDE_INSTALL_KCFGDIR})
 
-install(TARGETS choqok ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS choqok ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES choqokplugin.desktop choqokshortenerplugin.desktop
-              choqokuploaderplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
+              choqokuploaderplugin.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPES5DIR})
 
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/choqokbehaviorsettings.h
@@ -132,4 +132,4 @@ install(FILES
     ui/uploadmediadialog.h
     ui/textbrowser.h
     ui/choqoktabbar.h
-DESTINATION ${INCLUDE_INSTALL_DIR}/choqok COMPONENT Devel)
+DESTINATION ${KDE_INSTALL_INCLUDEDIR}/choqok COMPONENT Devel)

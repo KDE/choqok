@@ -39,9 +39,9 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_bin ${INSTALL_TARGETS_DEFAULT_ARGS})
-install(PROGRAMS org.kde.choqok.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(TARGETS choqok_bin ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+install(PROGRAMS org.kde.choqok.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES org.kde.choqok.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
-# install(FILES choqok.kcfg DESTINATION ${KCFG_INSTALL_DIR})
-install(FILES choqokui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/choqok)
-install(FILES choqok.notifyrc DESTINATION ${KNOTIFYRC_INSTALL_DIR})
+# install(FILES choqok.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(FILES choqokui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/choqok)
+install(FILES choqok.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR})

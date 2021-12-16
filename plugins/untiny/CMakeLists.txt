@@ -14,7 +14,7 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_untiny DESTINATION ${PLUGIN_INSTALL_DIR})
+install(TARGETS choqok_untiny DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 
 ########### next target ###############
@@ -30,11 +30,11 @@ install(TARGETS choqok_untiny DESTINATION ${PLUGIN_INSTALL_DIR})
 #
 # target_link_libraries(kcm_choqok_untiny )
 #
-# install(TARGETS kcm_choqok_untiny DESTINATION ${PLUGIN_INSTALL_DIR})
+# install(TARGETS kcm_choqok_untiny DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 ########### next target ###############
 
 
-install( FILES untinysettings.kcfg  DESTINATION ${KCFG_INSTALL_DIR})
+install( FILES untinysettings.kcfg  DESTINATION ${KDE_INSTALL_KCFGDIR})
 install( FILES choqok_untiny.desktop #choqok_untiny_config.desktop
-         DESTINATION ${SERVICES_INSTALL_DIR})
+         DESTINATION ${KDE_INSTALL_KSERVICES5DIR})

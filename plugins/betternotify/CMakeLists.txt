@@ -20,7 +20,7 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_betternotify DESTINATION ${PLUGIN_INSTALL_DIR})
+install(TARGETS choqok_betternotify DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 add_library(kcm_choqok_betternotify MODULE
     dummynotification.cpp
@@ -45,6 +45,6 @@ PUBLIC
     choqok
 )
 
-install(TARGETS kcm_choqok_betternotify DESTINATION ${PLUGIN_INSTALL_DIR})
+install(TARGETS kcm_choqok_betternotify DESTINATION ${KDE_INSTALL_PLUGINDIR})
 install(FILES choqok_notify.desktop choqok_notify_config.desktop
-        DESTINATION ${SERVICES_INSTALL_DIR})
+        DESTINATION ${KDE_INSTALL_KSERVICES5DIR})

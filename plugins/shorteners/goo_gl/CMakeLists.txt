@@ -13,5 +13,5 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_goo_gl DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES choqok_goo_gl.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS choqok_goo_gl DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES choqok_goo_gl.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})

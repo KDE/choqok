@@ -13,5 +13,5 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_ur1_ca DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES choqok_ur1_ca.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS choqok_ur1_ca DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(FILES choqok_ur1_ca.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})

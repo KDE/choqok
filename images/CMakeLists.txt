@@ -4,5 +4,5 @@
 install(
         FILES
         splash_screen.png
-        DESTINATION ${DATA_INSTALL_DIR}/choqok/images
+        DESTINATION ${KDE_INSTALL_DATADIR}/choqok/images
 )
