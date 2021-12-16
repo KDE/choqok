@@ -6,11 +6,18 @@ set_target_properties(gnusocialapihelper PROPERTIES
 
 generate_export_header(gnusocialapihelper)
 
+ecm_qt_declare_logging_category(gnusocialapihelper
+    HEADER gnusocialapidebug.h
+    IDENTIFIER CHOQOK
+    CATEGORY_NAME org.kde.choqok.gnusocialapi
+    DESCRIPTION "choqok gnusocialapi library"
+    EXPORT CHOQOK
+)
+
 target_sources(gnusocialapihelper PRIVATE
     gnusocialapiaccount.cpp
     gnusocialapicomposerwidget.cpp
     gnusocialapiconversationtimelinewidget.cpp
-    gnusocialapidebug.cpp
     gnusocialapidmessagedialog.cpp
     gnusocialapimicroblog.cpp
     gnusocialapipostwidget.cpp

@@ -1,7 +1,6 @@
 add_library(choqok_twitter MODULE
     twittercomposerwidget.cpp
     twitteraccount.cpp
-    twitterdebug.cpp
     twitterdmessagedialog.cpp
     twittermicroblog.cpp
     twitterpostwidget.cpp
@@ -10,6 +9,14 @@ add_library(choqok_twitter MODULE
     twittereditaccount.cpp
     twitterlistdialog.cpp
     twittertimelinewidget.cpp
+)
+
+ecm_qt_declare_logging_category(choqok_twitter
+    HEADER twitterdebug.h
+    IDENTIFIER CHOQOK
+    CATEGORY_NAME org.kde.choqok.twitter
+    DESCRIPTION "choqok twitter support"
+    EXPORT CHOQOK
 )
 
 ki18n_wrap_ui(choqok_twitter

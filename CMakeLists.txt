@@ -14,6 +14,7 @@ include(KDECMakeSettings)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 
 include(ECMInstallIcons)
+include(ECMQtDeclareLoggingCategory)
 include(GenerateExportHeader)
 include(FeatureSummary)
 
@@ -73,5 +74,11 @@ add_subdirectory( cmake )
 
 include(ECMOptionalAddSubdirectory)
 ecm_optional_add_subdirectory( doc )
+
+ecm_qt_install_logging_categories(
+    EXPORT CHOQOK
+    FILE choqok.categories
+    DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR}
+)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

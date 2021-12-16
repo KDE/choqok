@@ -1,6 +1,13 @@
 add_library(kcm_choqok_appearanceconfig MODULE
     appearanceconfig.cpp
-    appearancedebug.cpp
+)
+
+ecm_qt_declare_logging_category(kcm_choqok_appearanceconfig
+    HEADER appearancedebug.h
+    IDENTIFIER CHOQOK
+    CATEGORY_NAME org.kde.choqok.config.appearance
+    DESCRIPTION "choqok appearance config"
+    EXPORT CHOQOK
 )
 
 ki18n_wrap_ui(kcm_choqok_appearanceconfig

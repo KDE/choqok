@@ -6,10 +6,17 @@ set_target_properties(twitterapihelper PROPERTIES
 
 generate_export_header(twitterapihelper)
 
+ecm_qt_declare_logging_category(twitterapihelper
+    HEADER twitterapidebug.h
+    IDENTIFIER CHOQOK
+    CATEGORY_NAME org.kde.choqok.twitterapi
+    DESCRIPTION "choqok twitterapi library"
+    EXPORT CHOQOK
+)
+
 target_sources(twitterapihelper PRIVATE
     twitterapiaccount.cpp
     twitterapicomposerwidget.cpp
-    twitterapidebug.cpp
     twitterapipostwidget.cpp
     twitterapidmessagedialog.cpp
     twitterapimicroblog.cpp

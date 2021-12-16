@@ -1,6 +1,13 @@
 add_library(kcm_choqok_pluginconfig MODULE
     choqokpluginconfig.cpp
-    pluginsdebug.cpp
+)
+
+ecm_qt_declare_logging_category(kcm_choqok_pluginconfig
+    HEADER pluginsdebug.h
+    IDENTIFIER CHOQOK
+    CATEGORY_NAME org.kde.choqok.config.plugins
+    DESCRIPTION "choqok plugins config"
+    EXPORT CHOQOK
 )
 
 kcoreaddons_desktop_to_json(kcm_choqok_pluginconfig choqok_pluginconfig.desktop)

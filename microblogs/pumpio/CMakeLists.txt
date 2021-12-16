@@ -1,7 +1,6 @@
 add_library(choqok_pumpio MODULE
     pumpioaccount.cpp
     pumpiocomposerwidget.cpp
-    pumpiodebug.cpp
     pumpioeditaccountwidget.cpp
     pumpiomessagedialog.cpp
     pumpiomicroblog.cpp
@@ -11,6 +10,14 @@ add_library(choqok_pumpio MODULE
     pumpiopost.cpp
     pumpiopostwidget.cpp
     pumpioshowthread.cpp
+)
+
+ecm_qt_declare_logging_category(choqok_pumpio
+    HEADER pumpiodebug.h
+    IDENTIFIER CHOQOK
+    CATEGORY_NAME org.kde.choqok.pumpio
+    DESCRIPTION "choqok pumpio support"
+    EXPORT CHOQOK
 )
 
 ki18n_wrap_ui(choqok_pumpio

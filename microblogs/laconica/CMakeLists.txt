@@ -1,7 +1,14 @@
 add_library(choqok_laconica MODULE
-    laconicadebug.cpp
     laconicaeditaccount.cpp
     laconicamicroblog.cpp
+)
+
+ecm_qt_declare_logging_category(choqok_laconica
+    HEADER laconicadebug.h
+    IDENTIFIER CHOQOK
+    CATEGORY_NAME org.kde.choqok.laconica
+    DESCRIPTION "choqok laconica support"
+    EXPORT CHOQOK
 )
 
 ki18n_wrap_ui(choqok_laconica laconicaeditaccount_base.ui)

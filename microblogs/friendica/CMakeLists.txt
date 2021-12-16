@@ -1,7 +1,14 @@
 add_library(choqok_friendica MODULE
-    friendicadebug.cpp
     friendicaeditaccount.cpp
     friendicamicroblog.cpp
+)
+
+ecm_qt_declare_logging_category(choqok_friendica
+    HEADER friendicadebug.h
+    IDENTIFIER CHOQOK
+    CATEGORY_NAME org.kde.choqok.friendica
+    DESCRIPTION "choqok friendica support"
+    EXPORT CHOQOK
 )
 
 ki18n_wrap_ui(choqok_friendica friendicaeditaccount_base.ui)

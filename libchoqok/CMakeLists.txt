@@ -11,13 +11,20 @@ endif(MSVC)
 
 generate_export_header(choqok)
 
+ecm_qt_declare_logging_category(choqok
+    HEADER libchoqokdebug.h
+    IDENTIFIER CHOQOK
+    CATEGORY_NAME org.kde.choqok.lib
+    DESCRIPTION "choqok library"
+    EXPORT CHOQOK
+)
+
 set(choqok_dbus_SRCS)
 qt5_add_dbus_adaptor(choqok_dbus_SRCS org.kde.choqok.xml dbushandler.h Choqok::DbusHandler ChoqokAdaptor)
 
 target_sources(choqok PRIVATE
     ${choqok_dbus_SRCS}
     application.cpp
-    libchoqokdebug.cpp
     plugin.cpp
     shortener.cpp
     uploader.cpp

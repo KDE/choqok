@@ -5,9 +5,16 @@ add_subdirectory(config)
 add_executable(choqok_bin)
 set_target_properties(choqok_bin PROPERTIES OUTPUT_NAME choqok)
 
+ecm_qt_declare_logging_category(choqok_bin
+    HEADER choqokdebug.h
+    IDENTIFIER CHOQOK
+    CATEGORY_NAME org.kde.choqok
+    DESCRIPTION "choqok"
+    EXPORT CHOQOK
+)
+
 target_sources(choqok_bin PRIVATE
    choqokapplication.cpp
-   choqokdebug.cpp
    mainwindow.cpp
    main.cpp
    systrayicon.cpp

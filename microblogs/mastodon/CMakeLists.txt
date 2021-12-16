@@ -1,7 +1,6 @@
 add_library(choqok_mastodon MODULE
     mastodonaccount.cpp
     mastodoncomposerwidget.cpp
-    mastodondebug.cpp
     mastodondmessagedialog.cpp
     mastodoneditaccountwidget.cpp
     mastodonmicroblog.cpp
@@ -9,6 +8,14 @@ add_library(choqok_mastodon MODULE
     mastodonoauthreplyhandler.cpp
     mastodonpost.cpp
     mastodonpostwidget.cpp
+)
+
+ecm_qt_declare_logging_category(choqok_mastodon
+    HEADER mastodondebug.h
+    IDENTIFIER CHOQOK
+    CATEGORY_NAME org.kde.choqok.mastodon
+    DESCRIPTION "choqok mastodon support"
+    EXPORT CHOQOK
 )
 
 ki18n_wrap_ui(choqok_mastodon

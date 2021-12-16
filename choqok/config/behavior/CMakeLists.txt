@@ -5,7 +5,14 @@
 add_library(kcm_choqok_behaviorconfig MODULE
    behaviorconfig.cpp
    behaviorconfig_shorten.cpp
-   behaviordebug.cpp
+)
+
+ecm_qt_declare_logging_category(kcm_choqok_behaviorconfig
+    HEADER behaviordebug.h
+    IDENTIFIER CHOQOK
+    CATEGORY_NAME org.kde.choqok.config.behavior
+    DESCRIPTION "choqok behavior config"
+    EXPORT CHOQOK
 )
 
 ki18n_wrap_ui(kcm_choqok_behaviorconfig

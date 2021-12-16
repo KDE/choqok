@@ -1,8 +1,15 @@
 add_library(kcm_choqok_accountsconfig MODULE
-    accountsdebug.cpp
     accountswidget.cpp
     addaccountdialog.cpp
     editaccountdialog.cpp
+)
+
+ecm_qt_declare_logging_category(kcm_choqok_accountsconfig
+    HEADER accountsdebug.h
+    IDENTIFIER CHOQOK
+    CATEGORY_NAME org.kde.choqok.config.accounts
+    DESCRIPTION "choqok accounts config"
+    EXPORT CHOQOK
 )
 
 ki18n_wrap_ui(kcm_choqok_accountsconfig accountswidget_base.ui)
