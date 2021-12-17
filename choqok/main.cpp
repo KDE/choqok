@@ -26,7 +26,7 @@ int main(int argc, char **argv)
     KLocalizedString::setApplicationDomain("choqok");
     KAboutData about(QLatin1String("choqok"),
                      QLatin1String("Choqok"), QLatin1String(version), i18n("KDE Micro-Blogging Client."),
-                     KAboutLicense::GPL_V3, i18n("(C) 2008-2010 Mehrdad Momeny\nSPDX-FileCopyrightText: 2011-2019 Choqok Developers "),
+                     KAboutLicense::GPL_V3, i18n("(C) 2008-2010 Mehrdad Momeny\n(C) 2011-2019 Choqok Developers"),
                      QString(), QLatin1String("https://choqok.kde.org/"));
 
     about.setOrganizationDomain("kde.org");
