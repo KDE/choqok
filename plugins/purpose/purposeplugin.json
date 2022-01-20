@@ -88,7 +88,12 @@
         "Name[x-test]": "xxUpload with Choqokxx",
         "Name[zh_CN]": "用 Choqok 上传",
         "Name[zh_TW]": "使用 Choqok 上傳",
-        "X-Purpose-ActionDisplay": "Upload with Choqok..."
+        "X-Purpose-ActionDisplay": "Upload with Choqok...",
+        "X-Purpose-ActionDisplay[ca]": "Puja amb el Choqok...",
+        "X-Purpose-ActionDisplay[nl]": "Met Choqok uploaden...",
+        "X-Purpose-ActionDisplay[sv]": "Ladda upp med Choqok...",
+        "X-Purpose-ActionDisplay[uk]": "Вивантажити за допомогою Choqok…",
+        "X-Purpose-ActionDisplay[x-test]": "xxUpload with Choqok...xx"
     },
     "X-Purpose-Configuration": [],
     "X-Purpose-Constraints": [
