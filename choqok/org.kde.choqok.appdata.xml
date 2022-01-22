@@ -4,7 +4,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0+</project_license>
   <name>Choqok</name>
-  <name xml:lang="ar">چغوك</name>
+  <name xml:lang="ar">عصفورك</name>
   <name xml:lang="bs">Choqok</name>
   <name xml:lang="ca">Choqok</name>
   <name xml:lang="ca-valencia">Choqok</name>
@@ -39,6 +39,7 @@
   <name xml:lang="zh-CN">Choqok</name>
   <name xml:lang="zh-TW">Choqok</name>
   <summary>Micro-blogging client</summary>
+  <summary xml:lang="ar">عميل تدوين مصغّر</summary>
   <summary xml:lang="ca">Client de microblogs</summary>
   <summary xml:lang="ca-valencia">Client de microblogs</summary>
   <summary xml:lang="cs">Klient pro mikroblogování</summary>
@@ -72,6 +73,7 @@
     <p>
       Choqok is a micro-blogging client which supports Twitter.com, GNU Social, Pump.io and Friendica services.
     </p>
+    <p xml:lang="ar">عصفورك هو عميل تدوين مصغّر يدعم خدمتيّ Twitter.com و Pump.io و GNU Social و Friendica</p>
     <p xml:lang="ca">El Choqok és un client de microblogs que admet els serveis de Twitter.com, GNU Social, Pump.io i Friendica.</p>
     <p xml:lang="ca-valencia">El Choqok és un client de microblogs que admet els serveis de Twitter.com, GNU Social, Pump.io i Friendica.</p>
     <p xml:lang="da">Choqok er en mikroblogging-klient som understøtter tjenesterne Twitter.com, GNU Social, Pump.io and Friendica.</p>
@@ -170,6 +172,7 @@
       <li xml:lang="zh-CN">支持 Twitter.com 微博客服务</li>
       <li xml:lang="zh-TW">支援 Twitter.com 微部落格服務</li>
       <li>Supporting self hosted Pump.io services</li>
+      <li xml:lang="ar">دعم خدمات Pump.io المضافة ذاتيًّا</li>
       <li xml:lang="ca">Permet els serveis Pump.io auto hostatjats</li>
       <li xml:lang="ca-valencia">Permet els serveis Pump.io auto hostatjats</li>
       <li xml:lang="da">Understøttede selv-hostede Pump.io-tjenester</li>
@@ -230,6 +233,7 @@
       <li xml:lang="zh-CN">支持自己架设的 GNU Social 服务</li>
       <li xml:lang="zh-TW">支援自託管的 GNU social 服務</li>
       <li>Supporting self hosted Friendica services</li>
+      <li xml:lang="ar">دعم خدمة Friendica المضافة ذاتيّا</li>
       <li xml:lang="ca">Permet els serveis Friendica auto hostatjats</li>
       <li xml:lang="ca-valencia">Permet els serveis Friendica auto hostatjats</li>
       <li xml:lang="da">Understøtter selv-hostede Friendica-tjenester</li>
@@ -358,6 +362,7 @@
       <li xml:lang="zh-CN">支持收发私信</li>
       <li xml:lang="zh-TW">支援傳送與接收訊息</li>
       <li>Support medium upload using external services (Flickr, Imageshack,...)</li>
+      <li xml:lang="ar">دعم التحميل الوسائط باستخدام الخدمات الخارجية (Flickr، Imageshack، ...)</li>
       <li xml:lang="ca">Permet la pujada de medis usant serveis externs (Flickr, Imageshack,...)</li>
       <li xml:lang="ca-valencia">Permet la pujada de medis usant serveis externs (Flickr, Imageshack,...)</li>
       <li xml:lang="da">Understøtter upload af medier med eksterne tjenester (Flickr, Imageshack,...)</li>
