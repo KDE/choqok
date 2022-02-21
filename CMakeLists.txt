@@ -44,7 +44,7 @@ find_package(KF5 ${KF_MIN_VERSION} REQUIRED
     XmlGui
 )
 
-find_package(KF5 COMPONENTS Purpose)
+find_package(KF5Purpose ${KF_MIN_VERSION})
 
 #option(QTINDICATE_DISABLE "Disable support for notifications via indicator")
 
