@@ -428,7 +428,7 @@
       <li xml:lang="ar">دعم البحث في كلّ الخدمات عبر واجهة برمجة التّطبيقات</li>
       <li xml:lang="bs">Podrška za pretraživački API za sve usluge</li>
       <li xml:lang="ca">Permet les API de cerca per a tots els serveis</li>
-      <li xml:lang="ca-valencia">Permet les API de cerca per a tots els serveis</li>
+      <li xml:lang="ca-valencia">Permet les API de busca per a tots els serveis</li>
       <li xml:lang="cs">Podpora vyhledávacích API pro všechny služby</li>
       <li xml:lang="da">Understøtter søge-API'er for alle tjenester</li>
       <li xml:lang="de">Unterstützt Such-APIs für alle Dienste</li>
@@ -562,7 +562,7 @@
       <li xml:lang="ar">دعم تقصير العناوين الأكبر من 30 محرفًا (تُصغّر عند لصقها)</li>
       <li xml:lang="bs">Podrška za skraćenje url-ova sa više od 30 karaktera (skratiti prilikom mogućnosti lijepljenja)</li>
       <li xml:lang="ca">Permet escurçar els URL amb més de 30 caràcters (escurça en enganxar)</li>
-      <li xml:lang="ca-valencia">Permet escurçar els URL amb més de 30 caràcters (escurça en enganxar)</li>
+      <li xml:lang="ca-valencia">Permet escurçar els URL amb més de 30 caràcters (escurça en apegar)</li>
       <li xml:lang="da">Understøtter afkortning af URL med mere end 30 tegn (afkort ved indsættelse)</li>
       <li xml:lang="de">Unterstützung für das Kürzen von Adressen (URLs) mit mehr als 30 Zeichen, Kürzen beim Einfügen</li>
       <li xml:lang="el">Υποστηρίζει τη συρρίκνωση URL που έχουν περισσότερους από 30 χαρακτήρες (συρρίκνωση σε επικόλληση)</li>
