@@ -17,8 +17,6 @@
 #include "accountmanager.h"
 #include "mediamanager.h"
 
-#include <QtOAuth/QtOAuth>
-
 #include "twitterapiaccount.h"
 #include "twitterapimicroblog.h"
 
