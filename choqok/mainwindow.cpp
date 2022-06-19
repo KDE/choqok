@@ -96,6 +96,11 @@ MainWindow::MainWindow(ChoqokApplication *application)
 MainWindow::~MainWindow()
 {
     qCDebug(CHOQOK);
+
+    disconnect(Choqok::BehaviorSettings::self(), &Choqok::BehaviorSettings::configChanged,
+               this, &MainWindow::slotBehaviorConfigChanged);
+    disconnect(Choqok::AppearanceSettings::self(), &Choqok::AppearanceSettings::configChanged,
+               this, &MainWindow::slotAppearanceConfigChanged);
 }
 
 void MainWindow::loadAllAccounts()
