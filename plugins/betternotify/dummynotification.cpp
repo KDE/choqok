@@ -43,6 +43,7 @@ DummyNotification::DummyNotification(const QFont &font, const QColor &color, con
 
 DummyNotification::~DummyNotification()
 {
+    disconnect(this, &DummyNotification::anchorClicked, this, &DummyNotification::slotProcessAnchor);
 }
 
 void DummyNotification::mouseMoveEvent(QMouseEvent *ev)

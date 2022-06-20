@@ -76,6 +76,10 @@ TextEdit::TextEdit(uint charLimit /*= 0*/, QWidget *parent /*= 0*/)
 
 TextEdit::~TextEdit()
 {
+    disconnect(this, &TextEdit::textChanged, this,
+            &TextEdit::updateRemainingCharsCount);
+    disconnect(this, &TextEdit::aboutToShowContextMenu, this,
+            &TextEdit::slotAboutToShowContextMenu);
     disconnect(BehaviorSettings::self(), &BehaviorSettings::configChanged,
                this, &TextEdit::settingsChanged);
 

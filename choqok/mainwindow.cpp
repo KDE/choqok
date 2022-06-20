@@ -97,6 +97,8 @@ MainWindow::~MainWindow()
 {
     qCDebug(CHOQOK);
 
+    disconnect(this, &MainWindow::markAllAsRead, this, &MainWindow::slotMarkAllAsRead);
+    disconnect(this, &MainWindow::updateTimelines, this, &MainWindow::slotUpdateTimelines);
     disconnect(Choqok::BehaviorSettings::self(), &Choqok::BehaviorSettings::configChanged,
                this, &MainWindow::slotBehaviorConfigChanged);
     disconnect(Choqok::AppearanceSettings::self(), &Choqok::AppearanceSettings::configChanged,
