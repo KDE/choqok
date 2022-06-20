@@ -210,7 +210,10 @@ void TextEdit::slotChangeSpellerLanguage()
     if (act) {
         QString lang = act->data().toString();
         setSpellCheckingLanguage(lang);
-        d->langActionMap.value(d->curLang)->setChecked(false);
+        QAction *actOld = d->langActionMap.value(d->curLang);
+        if (actOld) {
+            actOld->setChecked(false);
+        }
         d->curLang = lang;
     }
 }
