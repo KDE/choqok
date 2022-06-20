@@ -37,7 +37,7 @@ class ChoqokJob : public Purpose::Job
             OrgKdeChoqokInterface iface(QStringLiteral("org.kde.choqok"), QStringLiteral("/"), QDBusConnection::sessionBus(), this);
             const QStringList urls = arrayToList(data().value(QStringLiteral("urls")).toArray());
 
-            for (const QString url : urls) {
+            for (const QString &url : urls) {
                 iface.uploadFile(url);
             }
 

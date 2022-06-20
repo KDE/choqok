@@ -127,14 +127,14 @@ void TwitterSearch::searchResultsReturned(KJob *job)
 
         if (!json.isNull()) {
             if (info.option == TwitterSearch::FromUser) {
-                for (const QVariant elem: json.toVariant().toList()) {
+                for (const QVariant &elem: json.toVariant().toList()) {
                     postsList.prepend(readStatusesFromJsonMap(elem.toMap()));
                 }
             } else {
                 const QVariantMap map = json.toVariant().toMap();
 
                 if (map.contains(QLatin1String("statuses"))) {
-                    for (const QVariant elem: map[QLatin1String("statuses")].toList()) {
+                    for (const QVariant &elem: map[QLatin1String("statuses")].toList()) {
                         postsList.prepend(readStatusesFromJsonMap(elem.toMap()));
                     }
                 }
