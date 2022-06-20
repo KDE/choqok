@@ -347,8 +347,7 @@ void ChoqokTabBar::moveTab(int from , int to)
     if (from >  to) {
         low = to;
         high = from;
-    }
-    if (from <  to) {
+    } else {
         low = from;
         high = to;
     }
