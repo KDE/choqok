@@ -41,7 +41,7 @@ public:
         // static once this destructor has started.
         for (const KPluginInfo &p: loadedPlugins.keys()) {
             Plugin *plugin = loadedPlugins.value(p);
-            qCWarning(CHOQOK) << "Deleting stale plugin '" << plugin->objectName() << "'";
+            qCWarning(CHOQOK) << "Deleting stale plugin '" << plugin->pluginName() << "'";
             plugin->disconnect(&instance, SLOT(slotPluginDestroyed(QObject*)));
             plugin->deleteLater();;
             loadedPlugins.remove(p);
