@@ -8,7 +8,7 @@ kcoreaddons_desktop_to_json(choqok_untiny choqok_untiny.desktop)
 
 target_link_libraries(choqok_untiny
 PUBLIC
-    Qt5::Core
+    Qt::Core
     KF5::CoreAddons
     KF5::KIOCore
     choqok
@@ -37,4 +37,4 @@ install(TARGETS choqok_untiny DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 install( FILES untinysettings.kcfg  DESTINATION ${KDE_INSTALL_KCFGDIR})
 install( FILES choqok_untiny.desktop #choqok_untiny_config.desktop
-         DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+         DESTINATION ${KDE_INSTALL_KSERVICESDIR})

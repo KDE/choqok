@@ -30,19 +30,19 @@ kcoreaddons_desktop_to_json(choqok_pumpio choqok_pumpio.desktop)
 
 target_link_libraries(choqok_pumpio
 PUBLIC
-    Qt5::Core
-    Qt5::Gui
-    Qt5::NetworkAuth
-    Qt5::Widgets
+    Qt::Core
+    Qt::Gui
+    Qt::NetworkAuth
+    Qt::Widgets
     KF5::I18n
     KF5::KIOCore
     KF5::KIOWidgets
     KF5::WidgetsAddons
-    qca-qt5
+    qca-qt${QT_MAJOR_VERSION}
     choqok
 )
 
 install(TARGETS choqok_pumpio DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_pumpio.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES choqok_pumpio.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 
 add_subdirectory(icons)

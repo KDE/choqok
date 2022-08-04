@@ -8,7 +8,7 @@ kcoreaddons_desktop_to_json(choqok_longurl choqok_longurl.desktop)
 
 target_link_libraries(choqok_longurl
 PUBLIC
-    Qt5::Core
+    Qt::Core
     KF5::CoreAddons
     KF5::KIOCore
     KF5::KIOWidgets
@@ -16,4 +16,4 @@ PUBLIC
 )
 
 install(TARGETS choqok_longurl DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_longurl.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES choqok_longurl.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})

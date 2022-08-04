@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 project(choqok)
 
 set (QT_MIN_VERSION "5.15.0")
-set (KF_MIN_VERSION "5.85.0")
+set (KF_MIN_VERSION "5.90.0")
 
 find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
 
@@ -18,7 +18,7 @@ include(ECMQtDeclareLoggingCategory)
 include(GenerateExportHeader)
 include(FeatureSummary)
 
-find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED
+find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED
     Core
     DBus
     Network
@@ -48,7 +48,7 @@ find_package(KF5 COMPONENTS Purpose)
 
 #option(QTINDICATE_DISABLE "Disable support for notifications via indicator")
 
-find_package(Qca-qt5 REQUIRED)
+find_package(Qca-qt${QT_MAJOR_VERSION} REQUIRED)
 
 #if(NOT QTINDICATE_DISABLE)
 #    find_package(QtIndicate)

@@ -17,7 +17,7 @@ kcoreaddons_desktop_to_json(kcm_choqok_appearanceconfig choqok_appearanceconfig.
 
 target_link_libraries(kcm_choqok_appearanceconfig
 PUBLIC
-    Qt5::Widgets
+    Qt::Widgets
     KF5::CoreAddons
     KF5::ConfigWidgets
     KF5::I18n
@@ -25,4 +25,4 @@ PUBLIC
 )
 
 install(TARGETS kcm_choqok_appearanceconfig DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_appearanceconfig.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES choqok_appearanceconfig.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})

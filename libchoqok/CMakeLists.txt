@@ -20,7 +20,7 @@ ecm_qt_declare_logging_category(choqok
 )
 
 set(choqok_dbus_SRCS)
-qt5_add_dbus_adaptor(choqok_dbus_SRCS org.kde.choqok.xml dbushandler.h Choqok::DbusHandler ChoqokAdaptor)
+qt_add_dbus_adaptor(choqok_dbus_SRCS org.kde.choqok.xml dbushandler.h Choqok::DbusHandler ChoqokAdaptor)
 
 target_sources(choqok PRIVATE
     ${choqok_dbus_SRCS}
@@ -68,10 +68,10 @@ ki18n_wrap_ui(choqok ui/uploadmedia_base.ui)
 
 target_link_libraries(choqok
 PUBLIC
-    Qt5::Core
-    Qt5::DBus
-    Qt5::NetworkAuth
-    Qt5::Widgets
+    Qt::Core
+    Qt::DBus
+    Qt::NetworkAuth
+    Qt::Widgets
     KF5::ConfigCore
     KF5::Emoticons
     KF5::GuiAddons
@@ -99,7 +99,7 @@ install(FILES choqokbehaviorsettings.kcfg choqokappearancesettings.kcfg
 
 install(TARGETS choqok ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES choqokplugin.desktop choqokshortenerplugin.desktop
-              choqokuploaderplugin.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPES5DIR})
+              choqokuploaderplugin.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPESDIR})
 
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/choqokbehaviorsettings.h

@@ -6,7 +6,7 @@ kcoreaddons_desktop_to_json(choqok_ur_ly choqok_ur_ly.desktop)
 
 target_link_libraries(choqok_ur_ly
 PUBLIC
-    Qt5::Core
+    Qt::Core
     KF5::CoreAddons
     KF5::I18n
     KF5::KIOCore
@@ -14,4 +14,4 @@ PUBLIC
 )
 
 install(TARGETS choqok_ur_ly DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_ur_ly.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES choqok_ur_ly.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})

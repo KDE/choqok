@@ -18,8 +18,8 @@ kcoreaddons_desktop_to_json(kcm_choqok_accountsconfig choqok_accountsconfig.desk
 
 target_link_libraries(kcm_choqok_accountsconfig
 PUBLIC
-    Qt5::Core
-    Qt5::Widgets
+    Qt::Core
+    Qt::Widgets
     KF5::CoreAddons
     KF5::ConfigWidgets
     KF5::I18n
@@ -29,4 +29,4 @@ PUBLIC
 )
 
 install(TARGETS kcm_choqok_accountsconfig DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_accountsconfig.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES choqok_accountsconfig.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})

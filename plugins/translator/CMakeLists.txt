@@ -30,4 +30,4 @@ install(TARGETS kcm_choqok_translator DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 install( FILES translatorsettings.kcfg  DESTINATION ${KDE_INSTALL_KCFGDIR})
 install( FILES choqok_translator.desktop choqok_translator_config.desktop
-         DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+         DESTINATION ${KDE_INSTALL_KSERVICESDIR})

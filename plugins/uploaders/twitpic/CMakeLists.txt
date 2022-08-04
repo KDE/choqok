@@ -10,8 +10,8 @@ kcoreaddons_desktop_to_json(choqok_twitpic choqok_twitpic.desktop)
 
 target_link_libraries(choqok_twitpic
 PUBLIC
-    Qt5::Core
-    Qt5::NetworkAuth
+    Qt::Core
+    Qt::NetworkAuth
     KF5::CoreAddons
     KF5::I18n
     KF5::KIOCore
@@ -20,7 +20,7 @@ PUBLIC
 )
 
 install(TARGETS choqok_twitpic DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_twitpic.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES choqok_twitpic.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 
 add_library(kcm_choqok_twitpic MODULE
     twitpicconfig.cpp
@@ -37,7 +37,7 @@ target_link_libraries(kcm_choqok_twitpic choqok)
 install(TARGETS kcm_choqok_twitpic DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 install(FILES twitpicsettings.kcfg  DESTINATION ${KDE_INSTALL_KCFGDIR})
-install(FILES choqok_twitpic_config.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES choqok_twitpic_config.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 # install( FILES twitpicui.rc  DESTINATION  ${KDE_INSTALL_DATADIR}/choqok_twitpic )
 
 add_subdirectory(icons)

@@ -25,8 +25,8 @@ dbus_add_activation_service(org.kde.choqok.service.in)
 
 target_link_libraries(choqok_bin
 PUBLIC
-    Qt5::Core
-    Qt5::Widgets
+    Qt::Core
+    Qt::Widgets
     KF5::ConfigWidgets
     KF5::CoreAddons
     KF5::GlobalAccel
@@ -44,4 +44,4 @@ install(PROGRAMS org.kde.choqok.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES org.kde.choqok.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 # install(FILES choqok.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
 install(FILES choqokui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/choqok)
-install(FILES choqok.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR})
+install(FILES choqok.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})

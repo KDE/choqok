@@ -26,10 +26,10 @@ target_sources(gnusocialapihelper PRIVATE
 
 target_link_libraries(gnusocialapihelper
 PUBLIC
-    Qt5::Core
-    Qt5::NetworkAuth
-    Qt5::Xml
-    Qt5::Widgets
+    Qt::Core
+    Qt::NetworkAuth
+    Qt::Xml
+    Qt::Widgets
     KF5::CoreAddons
     KF5::I18n
     KF5::KIOCore

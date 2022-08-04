@@ -25,7 +25,7 @@ kcoreaddons_desktop_to_json(kcm_choqok_behaviorconfig choqok_behaviorconfig.desk
 
 target_link_libraries(kcm_choqok_behaviorconfig
 PUBLIC
-    Qt5::Widgets
+    Qt::Widgets
     KF5::CoreAddons
     KF5::ConfigWidgets
     KF5::I18n
@@ -35,4 +35,4 @@ PUBLIC
 )
 
 install(TARGETS kcm_choqok_behaviorconfig DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_behaviorconfig.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES choqok_behaviorconfig.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})

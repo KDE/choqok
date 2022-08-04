@@ -8,8 +8,8 @@ kcoreaddons_desktop_to_json(choqok_posterous choqok_posterous.desktop)
 
 target_link_libraries(choqok_posterous
 PUBLIC
-    Qt5::Core
-    Qt5::NetworkAuth
+    Qt::Core
+    Qt::NetworkAuth
     KF5::CoreAddons
     KF5::KIOCore
     choqok
@@ -17,7 +17,7 @@ PUBLIC
 )
 
 install(TARGETS choqok_posterous DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_posterous.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES choqok_posterous.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 
 add_library(kcm_choqok_posterous MODULE
     posterousconfig.cpp
@@ -31,7 +31,7 @@ kcoreaddons_desktop_to_json(kcm_choqok_posterous choqok_posterous_config.desktop
 
 target_link_libraries(kcm_choqok_posterous
 PUBLIC
-    Qt5::Widgets
+    Qt::Widgets
     KF5::ConfigWidgets
     KF5::CoreAddons
     KF5::I18n
@@ -41,6 +41,6 @@ PUBLIC
 
 install(TARGETS kcm_choqok_posterous DESTINATION ${KDE_INSTALL_PLUGINDIR})
 install(FILES posteroussettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
-install(FILES choqok_posterous_config.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES choqok_posterous_config.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 
 add_subdirectory(icons)

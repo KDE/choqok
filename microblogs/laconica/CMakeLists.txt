@@ -17,9 +17,9 @@ kcoreaddons_desktop_to_json(choqok_laconica choqok_laconica.desktop)
 
 target_link_libraries(choqok_laconica
 PUBLIC
-    Qt5::Core
-    Qt5::NetworkAuth
-    Qt5::Widgets
+    Qt::Core
+    Qt::NetworkAuth
+    Qt::Widgets
     KF5::CoreAddons
     KF5::I18n
     KF5::KIOCore
@@ -29,6 +29,6 @@ PUBLIC
 )
 
 install(TARGETS choqok_laconica DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_laconica.desktop  DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES choqok_laconica.desktop  DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 
 add_subdirectory(icons)

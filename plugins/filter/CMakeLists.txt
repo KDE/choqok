@@ -12,8 +12,8 @@ kcoreaddons_desktop_to_json(choqok_filter choqok_filter.desktop)
 
 target_link_libraries(choqok_filter
 PUBLIC
-    Qt5::Core
-    Qt5::Widgets
+    Qt::Core
+    Qt::Widgets
     KF5::ConfigCore
     KF5::CoreAddons
     KF5::I18n
@@ -25,5 +25,5 @@ PUBLIC
 )
 
 install(TARGETS choqok_filter DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_filter.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES choqok_filter.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 install(FILES filterui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/choqok_filter)

@@ -38,16 +38,16 @@ target_sources(twitterapihelper PRIVATE
 
 target_link_libraries( twitterapihelper
 PUBLIC
-    Qt5::Core
-    Qt5::Gui
-    Qt5::NetworkAuth
-    Qt5::Widgets
+    Qt::Core
+    Qt::Gui
+    Qt::NetworkAuth
+    Qt::Widgets
     KF5::ConfigCore
     KF5::KIOCore
     KF5::KIOWidgets
     KF5::I18n
     KF5::WidgetsAddons
-    qca-qt5
+    qca-qt${QT_MAJOR_VERSION}
     choqok
 )
 

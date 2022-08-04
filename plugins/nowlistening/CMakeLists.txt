@@ -9,9 +9,9 @@ kcoreaddons_desktop_to_json(choqok_nowlistening choqok_nowlistening.desktop)
 
 target_link_libraries(choqok_nowlistening
 PUBLIC
-    Qt5::Core
-    Qt5::DBus
-    Qt5::Widgets
+    Qt::Core
+    Qt::DBus
+    Qt::Widgets
     KF5::CoreAddons
     KF5::I18n
     KF5::WidgetsAddons
@@ -33,7 +33,7 @@ kcoreaddons_desktop_to_json(kcm_choqok_nowlistening choqok_nowlistening_config.d
 
 target_link_libraries(kcm_choqok_nowlistening
 PUBLIC
-    Qt5::Widgets
+    Qt::Widgets
     KF5::ConfigWidgets
     KF5::CoreAddons
     KF5::I18n
@@ -42,5 +42,5 @@ PUBLIC
 install(TARGETS kcm_choqok_nowlistening DESTINATION ${KDE_INSTALL_PLUGINDIR})
 install(FILES nowlisteningsettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
 install(FILES choqok_nowlistening_config.desktop choqok_nowlistening.desktop
-        DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+        DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 install(FILES nowlisteningui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/choqok_nowlistening)

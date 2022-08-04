@@ -8,8 +8,8 @@ kcoreaddons_desktop_to_json(choqok_twitgoo choqok_twitgoo.desktop)
 
 target_link_libraries(choqok_twitgoo
 PUBLIC
-    Qt5::Core
-    Qt5::NetworkAuth
+    Qt::Core
+    Qt::NetworkAuth
     KF5::CoreAddons
     KF5::KIOCore
     choqok
@@ -17,7 +17,7 @@ PUBLIC
 )
 
 install(TARGETS choqok_twitgoo DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_twitgoo.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES choqok_twitgoo.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 
 add_library(kcm_choqok_twitgoo MODULE
     twitgooconfig.cpp
@@ -31,7 +31,7 @@ kcoreaddons_desktop_to_json(kcm_choqok_twitgoo choqok_twitgoo_config.desktop)
 
 target_link_libraries(kcm_choqok_twitgoo
 PUBLIC
-    Qt5::Widgets
+    Qt::Widgets
     KF5::CoreAddons
     KF5::I18n
     KF5::WidgetsAddons
@@ -40,6 +40,6 @@ PUBLIC
 
 install(TARGETS kcm_choqok_twitgoo DESTINATION ${KDE_INSTALL_PLUGINDIR})
 install(FILES twitgoosettings.kcfg  DESTINATION ${KDE_INSTALL_KCFGDIR})
-install(FILES choqok_twitgoo_config.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES choqok_twitgoo_config.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 
 add_subdirectory(icons)

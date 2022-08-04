@@ -11,9 +11,9 @@ kcoreaddons_desktop_to_json(choqok_betternotify choqok_notify.desktop)
 
 target_link_libraries(choqok_betternotify
 PUBLIC
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Widgets
+    Qt::Core
+    Qt::Gui
+    Qt::Widgets
     KF5::ConfigCore
     KF5::CoreAddons
     KF5::I18n
@@ -36,9 +36,9 @@ kcoreaddons_desktop_to_json(kcm_choqok_betternotify choqok_notify_config.desktop
 
 target_link_libraries(kcm_choqok_betternotify
 PUBLIC
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Widgets
+    Qt::Core
+    Qt::Gui
+    Qt::Widgets
     KF5::ConfigCore
     KF5::ConfigWidgets
     KF5::I18n
@@ -47,4 +47,4 @@ PUBLIC
 
 install(TARGETS kcm_choqok_betternotify DESTINATION ${KDE_INSTALL_PLUGINDIR})
 install(FILES choqok_notify.desktop choqok_notify_config.desktop
-        DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+        DESTINATION ${KDE_INSTALL_KSERVICESDIR})
