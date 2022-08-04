@@ -70,7 +70,10 @@ void AccountsWidget::addAccount()
             d->setModal(true);
             d->exec();
         } else {
-            KMessageBox::sorry(this, i18n("Cannot load the %1 plugin. Please check your installation.", name));
+          KMessageBox::error(
+              this,
+              i18n("Cannot load the %1 plugin. Please check your installation.",
+                   name));
         }
     }
 }
@@ -85,9 +88,9 @@ void AccountsWidget::editAccount(QString alias)
 
     QPointer<Choqok::Account> currentAccount = Choqok::AccountManager::self()->findAccount(alias);
     if (!currentAccount) {
-        KMessageBox::detailedSorry(this, i18n("Cannot find the desired account."),
-                                   Choqok::AccountManager::self()->lastError());
-        return;
+      KMessageBox::detailedError(this, i18n("Cannot find the desired account."),
+                                 Choqok::AccountManager::self()->lastError());
+      return;
     } else {
         ChoqokEditAccountWidget *eaw = currentAccount->microblog()->createEditAccountWidget(currentAccount,
                                        this);
@@ -111,7 +114,9 @@ void AccountsWidget::removeAccount(QString alias)
             alias = accountsTable->item(accountsTable->currentRow(), 0)->text();
         }
         if (!Choqok::AccountManager::self()->removeAccount(alias)) {
-            KMessageBox::detailedSorry(this, i18n("Cannot remove the account."), Choqok::AccountManager::self()->lastError());
+          KMessageBox::detailedError(
+              this, i18n("Cannot remove the account."),
+              Choqok::AccountManager::self()->lastError());
         }
     }
 }

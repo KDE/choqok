@@ -55,7 +55,9 @@ void EditAccountDialog::accept()
             QDialog::accept();
         }
     } else {
-        KMessageBox::sorry(this, i18n("Cannot validate your input information.\nPlease check the fields' data.\nMaybe a required field is empty?"));
+      KMessageBox::error(
+          this, i18n("Cannot validate your input information.\nPlease check "
+                     "the fields' data.\nMaybe a required field is empty?"));
     }
 }
 

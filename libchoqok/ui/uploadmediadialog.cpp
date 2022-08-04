@@ -248,7 +248,9 @@ void Choqok::UI::UploadMediaDialog::slotMediumUploadFailed(const QUrl &localUrl,
 {
     if (d->localUrl == localUrl && showed) {
         showed = false;
-        KMessageBox::detailedSorry(Global::mainWindow(), i18n("Medium uploading failed."), errorMessage);
+        KMessageBox::detailedError(Global::mainWindow(),
+                                   i18n("Medium uploading failed."),
+                                   errorMessage);
         show();
         d->progress->deleteLater();
     }

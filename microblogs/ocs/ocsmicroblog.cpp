@@ -175,14 +175,14 @@ void OCSMicroblog::fetchPost(Choqok::Account *theAccount, Choqok::Post *post)
 {
     Q_UNUSED(theAccount);
     Q_UNUSED(post);
-    KMessageBox::sorry(choqokMainWindow, i18n("Not Supported"));
+    KMessageBox::error(choqokMainWindow, i18n("Not Supported"));
 }
 
 void OCSMicroblog::removePost(Choqok::Account *theAccount, Choqok::Post *post)
 {
     Q_UNUSED(theAccount);
     Q_UNUSED(post);
-    KMessageBox::sorry(choqokMainWindow, i18n("Not Supported"));
+    KMessageBox::error(choqokMainWindow, i18n("Not Supported"));
 }
 
 Attica::ProviderManager *OCSMicroblog::providerManager()

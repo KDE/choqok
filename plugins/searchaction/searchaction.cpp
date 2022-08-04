@@ -46,8 +46,9 @@ void SearchAction::slotSearch()
         TwitterApiMicroBlog *mBlog = qobject_cast<TwitterApiMicroBlog *>(curAccount->microblog());
         mBlog->showSearchDialog(curAccount);
     } else {
-        KMessageBox::sorry(Choqok::UI::Global::mainWindow(),
-                           i18n("The Search action plugin does not support the current microblog."));
+      KMessageBox::error(Choqok::UI::Global::mainWindow(),
+                         i18n("The Search action plugin does not support the "
+                              "current microblog."));
     }
 }
 

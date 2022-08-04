@@ -226,8 +226,8 @@ void NowListening::slotPrepareNowListening()
                                      i18nc("Player is running, But it's not playing.",
                                            "Play your desired music player."));
         else
-            KMessageBox::sorry(Choqok::UI::Global::mainWindow(),
-                               i18n("No supported player found."));
+          KMessageBox::error(Choqok::UI::Global::mainWindow(),
+                             i18n("No supported player found."));
         return;
     }
 

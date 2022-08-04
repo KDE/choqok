@@ -53,8 +53,10 @@ OCSConfigureWidget::~OCSConfigureWidget()
 bool OCSConfigureWidget::validateData()
 {
     if (!providersLoaded) {
-        KMessageBox::sorry(choqokMainWindow, i18n("You have to wait for providers list to be loaded."));
-        return false;
+      KMessageBox::error(
+          choqokMainWindow,
+          i18n("You have to wait for providers list to be loaded."));
+      return false;
     }
     if (!cfg_alias->text().isEmpty() && cfg_provider->currentIndex() >= 0) {
         return true;
