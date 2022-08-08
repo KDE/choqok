@@ -49,7 +49,6 @@ X-KDE-Submenu[uk]=Choqok
 X-KDE-Submenu[x-test]=xxChoqokxx
 X-KDE-Submenu[zh_CN]=Choqok
 X-KDE-Submenu[zh_TW]=Choqok
-X-KDE-ExcludeServiceTypes=kdedevice/*
 X-KDE-Protocol=!file
 X-KDE-Priority=TopLevel
 
