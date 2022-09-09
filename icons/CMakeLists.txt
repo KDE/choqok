@@ -10,6 +10,8 @@ ecm_install_icons( ICONS
    48-apps-choqok.png
    64-apps-choqok_offline.png
    64-apps-choqok.png
+   128-apps-choqok_offline.png
+   128-apps-choqok.png
    sc-apps-choqok.svgz
    sc-apps-choqok_offline.svgz
    DESTINATION ${KDE_INSTALL_ICONDIR} )
