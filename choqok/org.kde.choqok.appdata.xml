@@ -626,6 +626,9 @@
       <li xml:lang="zh-TW">支援設定狀態清單外觀</li>
     </ul>
   </description>
+  <content_rating type="oars-1.1">
+    <content_attribute id="social-chat">intense</content_attribute>
+  </content_rating>
   <url type="homepage">https://choqok.kde.org/</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=choqok</url>
   <url type="help">https://docs.kde.org/?application=choqok</url>
