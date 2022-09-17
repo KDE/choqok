@@ -17,8 +17,7 @@
 
 #include "bit_ly_settings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(Bit_lyFactory, "choqok_bit_ly.json",
-                           registerPlugin < Bit_ly > ();)
+K_PLUGIN_CLASS_WITH_JSON(Bit_ly, "choqok_bit_ly.json")
 
 Bit_ly::Bit_ly(QObject *parent, const QVariantList &)
     : Choqok::Shortener(QLatin1String("choqok_bit_ly"), parent)

@@ -22,8 +22,7 @@
 
 #include "twitgoosettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(TwitgooConfigFactory, "choqok_twitgoo_config.json",
-                           registerPlugin < TwitgooConfig > ();)
+K_PLUGIN_CLASS_WITH_JSON(TwitgooConfig, "choqok_twitgoo_config.json")
 
 TwitgooConfig::TwitgooConfig(QWidget *parent, const QVariantList &)
     : KCModule(parent)

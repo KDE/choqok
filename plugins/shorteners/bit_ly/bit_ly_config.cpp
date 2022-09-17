@@ -25,8 +25,7 @@
 
 #include "bit_ly_settings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(Bit_ly_ConfigFactory, "choqok_bit_ly_config.json",
-                           registerPlugin < Bit_ly_Config > ();)
+K_PLUGIN_CLASS_WITH_JSON(Bit_ly_Config, "choqok_bit_ly_config.json")
 
 Bit_ly_Config::Bit_ly_Config(QWidget *parent, const QVariantList &):
     KCModule(parent)

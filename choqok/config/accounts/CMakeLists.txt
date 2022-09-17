@@ -1,7 +1,8 @@
-add_library(kcm_choqok_accountsconfig MODULE
+kcoreaddons_add_plugin(kcm_choqok_accountsconfig SOURCES
     accountswidget.cpp
     addaccountdialog.cpp
     editaccountdialog.cpp
+    INSTALL_NAMESPACE "choqok_kcms"
 )
 
 ecm_qt_declare_logging_category(kcm_choqok_accountsconfig
@@ -14,8 +15,6 @@ ecm_qt_declare_logging_category(kcm_choqok_accountsconfig
 
 ki18n_wrap_ui(kcm_choqok_accountsconfig accountswidget_base.ui)
 
-kcoreaddons_desktop_to_json(kcm_choqok_accountsconfig choqok_accountsconfig.desktop)
-
 target_link_libraries(kcm_choqok_accountsconfig
 PUBLIC
     Qt::Core
@@ -27,6 +26,3 @@ PUBLIC
     KF5::WidgetsAddons
     choqok
 )
-
-install(TARGETS kcm_choqok_accountsconfig DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_accountsconfig.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})

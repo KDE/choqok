@@ -1,14 +1,13 @@
-add_library(choqok_filter MODULE
+kcoreaddons_add_plugin(choqok_filter SOURCES
     addeditfilter.cpp
     configurefilters.cpp
     filter.cpp
     filtermanager.cpp
     filtersettings.cpp
+    INSTALL_NAMESPACE "choqok_plugins"
 )
 
 ki18n_wrap_ui(choqok_filter addeditfilter_base.ui filterprefs.ui)
-
-kcoreaddons_desktop_to_json(choqok_filter choqok_filter.desktop)
 
 target_link_libraries(choqok_filter
 PUBLIC
@@ -24,6 +23,4 @@ PUBLIC
     twitterapihelper
 )
 
-install(TARGETS choqok_filter DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_filter.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 install(FILES filterui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/choqok_filter)

@@ -24,8 +24,7 @@
 
 #include "twitgoosettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(TwitgooFactory, "choqok_twitgoo.json",
-                           registerPlugin < Twitgoo > ();)
+K_PLUGIN_CLASS_WITH_JSON(Twitgoo, "choqok_twitgoo.json")
 
 Twitgoo::Twitgoo(QObject *parent, const QList<QVariant> &)
     : Choqok::Uploader(QLatin1String("choqok_twitgoo"), parent)

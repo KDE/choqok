@@ -1,10 +1,6 @@
-add_library(choqok_yourls MODULE
-    yourls.cpp
-)
+kcoreaddons_add_plugin(choqok_yourls SOURCES yourls.cpp INSTALL_NAMESPACE "choqok_plugins")
 
 kconfig_add_kcfg_files(choqok_yourls yourlssettings.kcfgc)
-
-kcoreaddons_desktop_to_json(choqok_yourls choqok_yourls.desktop)
 
 target_link_libraries(choqok_yourls
 PUBLIC
@@ -15,18 +11,11 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_yourls DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_yourls.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
-
-add_library(kcm_choqok_yourls MODULE
-    yourlsconfig.cpp
-)
+kcoreaddons_add_plugin(kcm_choqok_yourls SOURCES yourlsconfig.cpp INSTALL_NAMESPACE "choqok_plugins/kcms")
 
 ki18n_wrap_ui(kcm_choqok_yourls yourlsprefs.ui)
 
 kconfig_add_kcfg_files(kcm_choqok_yourls yourlssettings.kcfgc)
-
-kcoreaddons_desktop_to_json(kcm_choqok_yourls choqok_yourls_config.desktop)
 
 target_link_libraries(kcm_choqok_yourls
 PUBLIC
@@ -36,7 +25,3 @@ PUBLIC
     KF5::I18n
     choqok
 )
-
-install(TARGETS kcm_choqok_yourls DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES yourlssettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
-install(FILES choqok_yourls_config.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})

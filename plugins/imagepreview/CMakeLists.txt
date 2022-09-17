@@ -1,8 +1,4 @@
-add_library(choqok_imagepreview MODULE
-    imagepreview.cpp
-)
-
-kcoreaddons_desktop_to_json(choqok_imagepreview choqok_imagepreview.desktop)
+kcoreaddons_add_plugin(choqok_imagepreview SOURCES imagepreview.cpp INSTALL_NAMESPACE "choqok_plugins")
 
 target_link_libraries(choqok_imagepreview
 PUBLIC
@@ -11,6 +7,3 @@ PUBLIC
     KF5::CoreAddons
     choqok
 )
-
-install(TARGETS choqok_imagepreview DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_imagepreview.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})

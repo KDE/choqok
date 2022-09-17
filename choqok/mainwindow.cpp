@@ -24,7 +24,7 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KNotifyConfigWidget>
-#include <ksettings/Dialog>
+#include <KCMultiDialog>
 #include <KStandardAction>
 #include <KXMLGUIFactory>
 
@@ -284,7 +284,10 @@ void MainWindow::triggerQuickPost()
 void MainWindow::slotConfigChoqok()
 {
     if (!s_settingsDialog) {
-        s_settingsDialog = new KSettings::Dialog(this);
+        s_settingsDialog = new KCMultiDialog(this);
+        for (const auto& plugin : KPluginMetaData::findPlugins(QStringLiteral("choqok_kcms"))) {
+            s_settingsDialog->addModule(plugin);
+        }
     }
     s_settingsDialog->show();
     connect(Choqok::BehaviorSettings::self(), &Choqok::BehaviorSettings::configChanged,

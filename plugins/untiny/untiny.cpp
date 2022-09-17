@@ -19,8 +19,7 @@
 
 #include "untinysettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(UnTinyFactory, "choqok_untiny.json",
-                           registerPlugin < UnTiny > ();)
+K_PLUGIN_CLASS_WITH_JSON(UnTiny, "choqok_untiny.json")
 
 UnTiny::UnTiny(QObject* parent, const QList< QVariant >& )
     : Choqok::Plugin(QLatin1String("choqok_untiny"), parent)

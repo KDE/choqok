@@ -19,7 +19,7 @@
 
 #include "is_gd_settings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(Is_gdFactory, "choqok_is_gd.json", registerPlugin < Is_gd > ();)
+K_PLUGIN_CLASS_WITH_JSON(Is_gd, "choqok_is_gd.json")
 
 Is_gd::Is_gd(QObject *parent, const QVariantList &)
     : Choqok::Shortener(QLatin1String("choqok_is_gd"), parent)

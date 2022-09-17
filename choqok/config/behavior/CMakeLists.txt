@@ -1,11 +1,4 @@
-#if(QtIndicate_FOUND)
-#	add_definitions(-DQTINDICATE_BUILD)
-#endif(QtIndicate_FOUND)
-
-add_library(kcm_choqok_behaviorconfig MODULE
-   behaviorconfig.cpp
-   behaviorconfig_shorten.cpp
-)
+kcoreaddons_add_plugin(kcm_choqok_behaviorconfig SOURCES behaviorconfig.cpp behaviorconfig_shorten.cpp INSTALL_NAMESPACE "choqok_kcms")
 
 ecm_qt_declare_logging_category(kcm_choqok_behaviorconfig
     HEADER behaviordebug.h
@@ -21,8 +14,6 @@ ki18n_wrap_ui(kcm_choqok_behaviorconfig
    behaviorconfig_shorten_base.ui
 )
 
-kcoreaddons_desktop_to_json(kcm_choqok_behaviorconfig choqok_behaviorconfig.desktop)
-
 target_link_libraries(kcm_choqok_behaviorconfig
 PUBLIC
     Qt::Widgets
@@ -33,6 +24,3 @@ PUBLIC
     KF5::XmlGui
     choqok
 )
-
-install(TARGETS kcm_choqok_behaviorconfig DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_behaviorconfig.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})

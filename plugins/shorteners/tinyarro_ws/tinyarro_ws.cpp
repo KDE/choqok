@@ -16,8 +16,7 @@
 
 #include "tinyarro_ws_settings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(Tinyarro_wsFactory, "choqok_tinyarro_ws.json",
-                           registerPlugin < Tinyarro_ws > ();)
+K_PLUGIN_CLASS_WITH_JSON(Tinyarro_ws, "choqok_tinyarro_ws.json")
 
 Tinyarro_ws::Tinyarro_ws(QObject *parent, const QVariantList &)
     : Choqok::Shortener(QLatin1String("choqok_tinyarro_ws"), parent)

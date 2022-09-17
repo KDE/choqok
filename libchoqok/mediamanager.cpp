@@ -158,9 +158,9 @@ void MediaManager::uploadMedium(const QUrl &localUrl, const QString &pluginId)
     if (!d->uploader) {
         Plugin *plugin = PluginManager::self()->loadPlugin(pId);
         d->uploader = qobject_cast<Uploader *>(plugin);
-    } else if (d->uploader->pluginName() != pId) {
+    } else if (d->uploader->pluginId() != pId) {
 //         qCDebug(CHOQOK)<<"CREATING A NEW UPLOADER OBJECT";
-        PluginManager::self()->unloadPlugin(d->uploader->pluginName());
+        PluginManager::self()->unloadPlugin(d->uploader->pluginId());
         Plugin *plugin = PluginManager::self()->loadPlugin(pId);
         d->uploader = qobject_cast<Uploader *>(plugin);
     }

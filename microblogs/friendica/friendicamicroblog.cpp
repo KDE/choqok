@@ -15,8 +15,7 @@
 #include "friendicadebug.h"
 #include "friendicaeditaccount.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(FriendicaFactory, "choqok_friendica.json",
-                           registerPlugin < FriendicaMicroBlog > ();)
+K_PLUGIN_CLASS_WITH_JSON(FriendicaMicroBlog, "choqok_friendica.json")
 
 FriendicaMicroBlog::FriendicaMicroBlog(QObject *parent, const QVariantList &)
     : GNUSocialApiMicroBlog(QLatin1String("choqok_friendica"), parent)

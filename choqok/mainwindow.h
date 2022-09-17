@@ -28,10 +28,7 @@ namespace UI
 class QuickPost;
 }
 }
-namespace KSettings
-{
-class Dialog;
-}
+class KCMultiDialog;
 
 class SysTrayIcon;
 
@@ -101,7 +98,7 @@ private:
     int mPrevUpdateInterval;
     SysTrayIcon *sysIcon;
     Choqok::UI::QuickPost *quickWidget;
-    KSettings::Dialog *s_settingsDialog;
+    KCMultiDialog *s_settingsDialog;
     QPointer<QSplashScreen> m_splash;
     QAction *enableUpdates;
     QAction *newTwit;

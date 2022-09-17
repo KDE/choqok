@@ -39,11 +39,11 @@ public:
     {
         const QString pluginId = Choqok::BehaviorSettings::shortenerPlugin();
         if (backend) {
-            if (backend->pluginName() == pluginId) {
+            if (backend->pluginId() == pluginId) {
                 return;//Already loaded
             } else {
-                qCDebug(CHOQOK) << backend->pluginName();
-                PluginManager::self()->unloadPlugin(backend->pluginName());
+                qCDebug(CHOQOK) << backend->pluginId();
+                PluginManager::self()->unloadPlugin(backend->pluginId());
                 backend = nullptr;
             }
         }

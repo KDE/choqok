@@ -15,7 +15,6 @@
 #include <KAboutData>
 #include <KMessageBox>
 #include <KPluginFactory>
-#include <KPluginInfo>
 
 #include "accountmanager.h"
 #include "accountsdebug.h"
@@ -237,12 +236,11 @@ void AccountsWidget::save()
 QMenu *AccountsWidget::createAddAccountMenu()
 {
     mBlogMenu = new QMenu(i18n("Select Micro-Blogging Service"), this);
-    const QList<KPluginInfo> list = Choqok::PluginManager::self()->availablePlugins(QLatin1String("MicroBlogs"));
-    for (const KPluginInfo &info: list) {
+    for (const auto &metaData : Choqok::PluginManager::self()->availablePlugins(QLatin1String("MicroBlogs"))) {
         QAction *act = new QAction(mBlogMenu);
-        act->setText(info.name());
-        act->setIcon(QIcon::fromTheme(info.icon()));
-        act->setData(info.pluginName());
+        act->setText(metaData.name());
+        act->setIcon(QIcon::fromTheme(metaData.iconName()));
+        act->setData(metaData.pluginId());
         connect(act, &QAction::triggered, this, &AccountsWidget::addAccount);
         mBlogMenu->addAction(act);
     }

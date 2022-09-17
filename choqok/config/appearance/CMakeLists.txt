@@ -1,6 +1,4 @@
-add_library(kcm_choqok_appearanceconfig MODULE
-    appearanceconfig.cpp
-)
+kcoreaddons_add_plugin(kcm_choqok_appearanceconfig SOURCES appearanceconfig.cpp INSTALL_NAMESPACE "choqok_kcms")
 
 ecm_qt_declare_logging_category(kcm_choqok_appearanceconfig
     HEADER appearancedebug.h
@@ -13,8 +11,6 @@ ecm_qt_declare_logging_category(kcm_choqok_appearanceconfig
 ki18n_wrap_ui(kcm_choqok_appearanceconfig
     appearanceconfig_base.ui)
 
-kcoreaddons_desktop_to_json(kcm_choqok_appearanceconfig choqok_appearanceconfig.desktop)
-
 target_link_libraries(kcm_choqok_appearanceconfig
 PUBLIC
     Qt::Widgets
@@ -23,6 +19,3 @@ PUBLIC
     KF5::I18n
     choqok
 )
-
-install(TARGETS kcm_choqok_appearanceconfig DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_appearanceconfig.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})

@@ -20,8 +20,7 @@
 
 const static QString apiKey = QLatin1String("ZMWLXQBOfb570310607355f90c601148a3203f0f");
 
-K_PLUGIN_FACTORY_WITH_JSON(ImageShackFactory, "choqok_imageshack.json",
-                           registerPlugin < ImageShack > ();)
+K_PLUGIN_CLASS_WITH_JSON(ImageShack, "choqok_imageshack.json")
 
 ImageShack::ImageShack(QObject *parent, const QList<QVariant> &)
     : Choqok::Uploader(QLatin1String("choqok_imageshack"), parent)

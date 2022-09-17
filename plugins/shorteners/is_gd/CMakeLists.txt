@@ -1,10 +1,6 @@
-add_library(choqok_is_gd MODULE
-    is_gd.cpp
-)
+kcoreaddons_add_plugin(choqok_is_gd SOURCES is_gd.cpp INSTALL_NAMESPACE "choqok_plugins")
 
 kconfig_add_kcfg_files(choqok_is_gd is_gd_settings.kcfgc)
-
-kcoreaddons_desktop_to_json(choqok_is_gd choqok_is_gd.desktop)
 
 target_link_libraries(choqok_is_gd
 PUBLIC
@@ -14,19 +10,11 @@ PUBLIC
     KF5::KIOCore
     choqok
 )
-
-install(TARGETS choqok_is_gd DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_is_gd.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
-
-add_library(kcm_choqok_is_gd MODULE
-    is_gd_config.cpp
-)
-
-ki18n_wrap_ui(kcm_choqok_is_gd is_gd_prefs.ui)
+kcoreaddons_add_plugin(kcm_choqok_is_gd SOURCES is_gd_config.cpp INSTALL_NAMESPACE "choqok_plugins/kcms")
 
 kconfig_add_kcfg_files(kcm_choqok_is_gd is_gd_settings.kcfgc)
 
-kcoreaddons_desktop_to_json(kcm_choqok_is_gd choqok_is_gd_config.desktop)
+ki18n_wrap_ui(kcm_choqok_is_gd is_gd_prefs.ui)
 
 target_link_libraries(kcm_choqok_is_gd
 PUBLIC
@@ -36,7 +24,3 @@ PUBLIC
     KF5::I18n
     choqok
 )
-
-install(TARGETS kcm_choqok_is_gd DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES is_gd_settings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
-install(FILES choqok_is_gd_config.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})

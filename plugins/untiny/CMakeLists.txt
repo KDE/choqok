@@ -1,10 +1,6 @@
-add_library(choqok_untiny MODULE
-    untiny.cpp
-)
+kcoreaddons_add_plugin(choqok_untiny SOURCES untiny.cpp INSTALL_NAMESPACE "choqok_plugins")
 
 kconfig_add_kcfg_files(choqok_untiny untinysettings.kcfgc)
-
-kcoreaddons_desktop_to_json(choqok_untiny choqok_untiny.desktop)
 
 target_link_libraries(choqok_untiny
 PUBLIC
@@ -15,7 +11,6 @@ PUBLIC
 )
 
 install(TARGETS choqok_untiny DESTINATION ${KDE_INSTALL_PLUGINDIR})
-
 
 ########### next target ###############
 
@@ -33,8 +28,3 @@ install(TARGETS choqok_untiny DESTINATION ${KDE_INSTALL_PLUGINDIR})
 # install(TARGETS kcm_choqok_untiny DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 ########### next target ###############
-
-
-install( FILES untinysettings.kcfg  DESTINATION ${KDE_INSTALL_KCFGDIR})
-install( FILES choqok_untiny.desktop #choqok_untiny_config.desktop
-         DESTINATION ${KDE_INSTALL_KSERVICESDIR})

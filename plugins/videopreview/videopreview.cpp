@@ -27,8 +27,7 @@
 #include "textbrowser.h"
 #include "shortenmanager.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(VideoPreviewFactory, "choqok_videopreview.json",
-                           registerPlugin < VideoPreview > ();)
+K_PLUGIN_CLASS_WITH_JSON(VideoPreview, "choqok_videopreview.json")
 
 const QRegExp VideoPreview::mYouTuRegExp(QLatin1String("(https?://youtu.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])"));
 const QRegExp VideoPreview::mYouTubeRegExp(QLatin1String("(https?://www.youtube.[^\\s<>\"]+[^!,\\.\\s<>'\\\"\\]])"));

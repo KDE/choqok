@@ -65,7 +65,7 @@ void Account::writeConfig()
     d->configGroup->writeEntry("ReadOnly", d->readonly);
     d->configGroup->writeEntry("Enable", d->enable);
     d->configGroup->writeEntry("ShowInQuickPost", d->showInQuickPost);
-    d->configGroup->writeEntry("MicroBlog", microblog()->pluginName());
+    d->configGroup->writeEntry("MicroBlog", microblog()->pluginId());
     d->configGroup->writeEntry("PostCharLimit", d->postCharLimit);
     if (!password().isEmpty()) {
         PasswordManager::self()->writePassword(d->alias, password());

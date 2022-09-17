@@ -1,8 +1,4 @@
-add_library(konqchoqokplugin MODULE
-    konqchoqok.cpp
-)
-
-kcoreaddons_desktop_to_json(konqchoqokplugin konqchoqok.desktop)
+kcoreaddons_add_plugin(konqchoqokplugin konqchoqok.cpp INSTALL_NAMESPACE "kf5/parts")
 
 target_link_libraries(konqchoqokplugin
 PUBLIC
@@ -17,7 +13,4 @@ PUBLIC
     KF5::XmlGui
 )
 
-install(TARGETS konqchoqokplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/kf5/parts)
 install(FILES konqchoqok.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/konqchoqokplugin)
-install(FILES konqchoqok.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
-install(FILES choqok_share.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR}/ServiceMenus)

@@ -1,4 +1,4 @@
-add_library(choqok_twitter MODULE
+kcoreaddons_add_plugin(choqok_twitter SOURCES
     twittercomposerwidget.cpp
     twitteraccount.cpp
     twitterdmessagedialog.cpp
@@ -9,6 +9,7 @@ add_library(choqok_twitter MODULE
     twittereditaccount.cpp
     twitterlistdialog.cpp
     twittertimelinewidget.cpp
+    INSTALL_NAMESPACE "choqok_plugins"
 )
 
 ecm_qt_declare_logging_category(choqok_twitter
@@ -24,8 +25,6 @@ ki18n_wrap_ui(choqok_twitter
     twitterlistdialog_base.ui
 )
 
-kcoreaddons_desktop_to_json(choqok_twitter choqok_twitter.desktop)
-
 target_link_libraries(choqok_twitter
     Qt::Core
     Qt::NetworkAuth
@@ -39,8 +38,5 @@ target_link_libraries(choqok_twitter
     choqok
     twitterapihelper
 )
-
-install(TARGETS choqok_twitter DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_twitter.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 
 add_subdirectory(icons)

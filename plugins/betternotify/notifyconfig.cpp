@@ -23,8 +23,7 @@
 #include "dummynotification.h"
 #include "notifysettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(NotifyConfigFactory, "choqok_notify_config.json",
-                           registerPlugin < NotifyConfig > ();)
+K_PLUGIN_CLASS_WITH_JSON(NotifyConfig, "choqok_notify_config.json")
 
 NotifyConfig::NotifyConfig(QWidget *parent, const QVariantList &args)
     : KCModule(parent, args)

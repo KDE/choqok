@@ -13,10 +13,9 @@
 
 #include <QWidget>
 
-#include <KPluginInfo>
-
 #include "shortener.h"
 
+class KPluginMetaData;
 class KCModuleProxy;
 class BehaviorConfig_Shorten: public QWidget, public Ui::BehaviorConfig_ShortenBase
 {
@@ -38,10 +37,9 @@ protected Q_SLOTS:
     void slotConfigureClicked();
 
 private:
-    QMap<QString, KPluginInfo> availablePlugins;
+    QMap<QString, KPluginMetaData> availablePlugins;
     Choqok::Shortener *currentShortener;
     QString prevShortener;
-    QList<KCModuleProxy *> moduleProxyList;
 };
 
 #endif

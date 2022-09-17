@@ -27,8 +27,7 @@
 #include "filter.h"
 #include "filtersettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(FilterManagerFactory, "choqok_filter.json",
-                           registerPlugin < FilterManager > ();)
+K_PLUGIN_CLASS_WITH_JSON(FilterManager, "choqok_filter.json")
 
 FilterManager::FilterManager(QObject *parent, const QList<QVariant> &)
     : Choqok::Plugin(QLatin1String("choqok_filter"), parent), state(Stopped)

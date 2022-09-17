@@ -11,13 +11,12 @@
 #define CHOQOKPLUGINMANAGER_H
 
 #include <QList>
+#include <QEventLoopLocker>
 
-#include <KPluginInfo>
+#include <KPluginMetaData>
 
 #include "plugin.h"
 #include "choqok_export.h"
-
-class QEventLoopLocker;
 
 namespace Choqok
 {
@@ -48,10 +47,10 @@ public:
      *
      * If you pass an empty string you get the complete list of ALL plugins.
      *
-     * You can query all information on the plugins through the KPluginInfo
+     * You can query all information on the plugins through the KPluginMetaData
      * interface.
      */
-    QList<KPluginInfo> availablePlugins(const QString &category = QString()) const;
+    QVector<KPluginMetaData> availablePlugins(const QString &category = QString()) const;
 
     /**
      * Returns a list of all plugins that are actually loaded.
@@ -73,9 +72,9 @@ public:
     Plugin *plugin(const QString &pluginName) const;
 
     /**
-     * @return the KPluginInfo for the specified plugin
+     * @return the KPluginMetaData for the specified plugin
      */
-    KPluginInfo pluginInfo(const Choqok::Plugin *plugin) const;
+    KPluginMetaData pluginMetaData(const Choqok::Plugin *plugin) const;
 
     /**
      * Shuts down the plugin manager on Choqok shutdown, but first
@@ -223,11 +222,11 @@ private:
     /**
      * @internal
      *
-     * Find the KPluginInfo structure by key. Reduces some code duplication.
+     * Find the KPluginMetaData structure by key. Reduces some code duplication.
      *
      * Returns a null pointer when no plugin info is found.
      */
-    KPluginInfo infoForPluginId(const QString &pluginId) const;
+    KPluginMetaData metaDataForPluginId(const QString &pluginId) const;
 
     PluginManager();
     ~PluginManager();

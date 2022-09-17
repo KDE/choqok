@@ -17,7 +17,7 @@
 
 #include "notifymanager.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(Goo_glFactory, "choqok_goo_gl.json", registerPlugin < Goo_gl > ();)
+K_PLUGIN_CLASS_WITH_JSON(Goo_gl, "choqok_goo_gl.json")
 
 Goo_gl::Goo_gl(QObject *parent, const QVariantList &)
     : Choqok::Shortener(QLatin1String("choqok_goo_gl"), parent)

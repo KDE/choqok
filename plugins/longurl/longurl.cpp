@@ -19,8 +19,7 @@
 #include "postwidget.h"
 #include "shortenmanager.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(LongUrlFactory, "choqok_longurl.json",
-                           registerPlugin < LongUrl > ();)
+K_PLUGIN_CLASS_WITH_JSON(LongUrl, "choqok_longurl.json")
 
 const QString baseLongUrlDorComUrl = QLatin1String("http://api.longurl.org/v2/");
 

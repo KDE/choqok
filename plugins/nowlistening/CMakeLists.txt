@@ -1,11 +1,6 @@
-add_library(choqok_nowlistening MODULE
-    mpris.cpp
-    nowlistening.cpp
-)
+kcoreaddons_add_plugin(choqok_nowlistening SOURCES mpris.cpp nowlistening.cpp INSTALL_NAMESPACE "choqok_plugins")
 
 kconfig_add_kcfg_files(choqok_nowlistening nowlisteningsettings.kcfgc)
-
-kcoreaddons_desktop_to_json(choqok_nowlistening choqok_nowlistening.desktop)
 
 target_link_libraries(choqok_nowlistening
 PUBLIC
@@ -19,17 +14,11 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_nowlistening DESTINATION ${KDE_INSTALL_PLUGINDIR})
-
-add_library(kcm_choqok_nowlistening MODULE
-    nowlisteningconfig.cpp
-)
+kcoreaddons_add_plugin(kcm_choqok_nowlistening SOURCES nowlisteningconfig.cpp INSTALL_NAMESPACE "choqok_plugins/kcms")
 
 ki18n_wrap_ui(kcm_choqok_nowlistening nowlisteningprefs.ui)
 
 kconfig_add_kcfg_files(kcm_choqok_nowlistening nowlisteningsettings.kcfgc)
-
-kcoreaddons_desktop_to_json(kcm_choqok_nowlistening choqok_nowlistening_config.desktop)
 
 target_link_libraries(kcm_choqok_nowlistening
 PUBLIC
@@ -39,8 +28,4 @@ PUBLIC
     KF5::I18n
 )
 
-install(TARGETS kcm_choqok_nowlistening DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES nowlisteningsettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
-install(FILES choqok_nowlistening_config.desktop choqok_nowlistening.desktop
-        DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 install(FILES nowlisteningui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/choqok_nowlistening)

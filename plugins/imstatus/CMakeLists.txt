@@ -7,14 +7,9 @@ if(TelepathyQt${QT_MAJOR_VERSION}_FOUND)
     include_directories( SYSTEM ${TELEPATHY_QT${QT_MAJOR_VERSION}_INCLUDE_DIR})
 endif()
 
-add_library(choqok_imstatus MODULE
-    imqdbus.cpp
-    imstatus.cpp
-)
+kcoreaddons_add_plugin(choqok_imstatus SOURCES imqdbus.cpp imstatus.cpp INSTALL_NAMESPACE "choqok_plugins")
 
 kconfig_add_kcfg_files(choqok_imstatus imstatussettings.kcfgc)
-
-kcoreaddons_desktop_to_json(choqok_imstatus choqok_imstatus.desktop)
 
 target_link_libraries(choqok_imstatus
 PUBLIC
@@ -25,18 +20,11 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_imstatus DESTINATION ${KDE_INSTALL_PLUGINDIR})
-
-add_library(kcm_choqok_imstatus MODULE
-    imqdbus.cpp
-    imstatusconfig.cpp
-)
+kcoreaddons_add_plugin(kcm_choqok_imstatus SOURCES imqdbus.cpp imstatusconfig.cpp INSTALL_NAMESPACE "choqok_plugins/kcms")
 
 ki18n_wrap_ui(kcm_choqok_imstatus imstatusprefs.ui)
 
 kconfig_add_kcfg_files(kcm_choqok_imstatus imstatussettings.kcfgc)
-
-kcoreaddons_desktop_to_json(kcm_choqok_imstatus choqok_imstatus_config.desktop)
 
 target_link_libraries(kcm_choqok_imstatus
 PUBLIC
@@ -47,8 +35,3 @@ PUBLIC
     KF5::I18n
     ${TELEPATHY_QT5_LIBRARIES}
 )
-
-install(TARGETS kcm_choqok_imstatus DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES imstatussettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
-install(FILES choqok_imstatus_config.desktop choqok_imstatus.desktop
-        DESTINATION ${KDE_INSTALL_KSERVICESDIR})

@@ -11,10 +11,12 @@
 #include <QRegExp>
 #include <QTimer>
 #include <QStack>
+#include <QCoreApplication>
 
 #include <KConfigGroup>
-#include <KServiceTypeTrader>
 #include <KSharedConfig>
+#include <KPluginMetaData>
+#include <KPluginFactory>
 
 #include "accountmanager.h"
 #include "libchoqokdebug.h"
@@ -27,8 +29,7 @@ class PluginManagerPrivate
 public:
     PluginManagerPrivate() : shutdownMode(StartingUp), isAllPluginsLoaded(false)
     {
-        plugins = KPluginInfo::fromServices(KServiceTypeTrader::self()->query(QLatin1String("Choqok/Plugin"),
-                                            QStringLiteral("[X-Choqok-Version] == %1").arg(CHOQOK_PLUGIN_VERSION)));
+        plugins = KPluginMetaData::findPlugins(QStringLiteral("choqok_plugins"));
     }
 
     ~PluginManagerPrivate()
@@ -39,9 +40,9 @@ public:
 
         // Clean up loadedPlugins manually, because PluginManager can't access our global
         // static once this destructor has started.
-        for (const KPluginInfo &p: loadedPlugins.keys()) {
+        for (const KPluginMetaData &p: loadedPlugins.keys()) {
             Plugin *plugin = loadedPlugins.value(p);
-            qCWarning(CHOQOK) << "Deleting stale plugin '" << plugin->pluginName() << "'";
+            qCWarning(CHOQOK) << "Deleting stale plugin '" << plugin->pluginId() << "'";
             plugin->disconnect(&instance, SLOT(slotPluginDestroyed(QObject*)));
             plugin->deleteLater();;
             loadedPlugins.remove(p);
@@ -49,12 +50,12 @@ public:
     }
 
     // All available plugins, regardless of category, and loaded or not
-    QList<KPluginInfo> plugins;
+    QVector<KPluginMetaData> plugins;
 
-    // Dict of all currently loaded plugins, mapping the KPluginInfo to
+    // Dict of all currently loaded plugins, mapping the KPluginMetaData to
     // a plugin
-    typedef QMap<KPluginInfo, Plugin *> InfoToPluginMap;
-    InfoToPluginMap loadedPlugins;
+    typedef QHash<KPluginMetaData, Plugin *> MetaDataToPluginMap;
+    MetaDataToPluginMap loadedPlugins;
 
     // The plugin manager's mode. The mode is StartingUp until loadAllPlugins()
     // has finished loading the plugins, after which it is set to Running.
@@ -87,15 +88,15 @@ PluginManager::~PluginManager()
 {
 }
 
-QList<KPluginInfo> PluginManager::availablePlugins(const QString &category) const
+QVector<KPluginMetaData> PluginManager::availablePlugins(const QString &category) const
 {
     if (category.isEmpty()) {
         return _kpmp->plugins;
     }
 
-    QList<KPluginInfo> result;
-    for (const KPluginInfo &p: _kpmp->plugins) {
-        if ((p.category().compare(category) == 0) && !p.service()->noDisplay()) {
+    QVector<KPluginMetaData> result;
+    for (const KPluginMetaData &p: _kpmp->plugins) {
+        if (p.category().compare(category) == 0) {
             result.append(p);
         }
     }
@@ -107,7 +108,7 @@ PluginList PluginManager::loadedPlugins(const QString &category) const
 {
     PluginList result;
 
-    for (const KPluginInfo &p: _kpmp->loadedPlugins.keys()) {
+    for (const KPluginMetaData &p: _kpmp->loadedPlugins.keys()) {
         if (category.isEmpty() || p.category().compare(category) == 0) {
             result.append(_kpmp->loadedPlugins.value(p));
         }
@@ -116,15 +117,15 @@ PluginList PluginManager::loadedPlugins(const QString &category) const
     return result;
 }
 
-KPluginInfo PluginManager::pluginInfo(const Plugin *plugin) const
+KPluginMetaData PluginManager::pluginMetaData(const Plugin *plugin) const
 {
-    for (const KPluginInfo &p: _kpmp->loadedPlugins.keys()) {
+    for (const KPluginMetaData &p: _kpmp->loadedPlugins.keys()) {
         if (_kpmp->loadedPlugins.value(p) == plugin) {
             return p;
         }
     }
 
-    return KPluginInfo();
+    return KPluginMetaData();
 }
 
 void PluginManager::shutdown()
@@ -141,12 +142,12 @@ void PluginManager::shutdown()
     _kpmp->pluginsToLoad.clear();
 
     // Ask all plugins to unload
-    for (PluginManagerPrivate::InfoToPluginMap::ConstIterator it = _kpmp->loadedPlugins.constBegin();
+    for (PluginManagerPrivate::MetaDataToPluginMap::ConstIterator it = _kpmp->loadedPlugins.constBegin();
             it != _kpmp->loadedPlugins.constEnd(); /* EMPTY */) {
         // Plugins could emit their ready for unload signal directly in response to this,
         // which would invalidate the current iterator. Therefore, we copy the iterator
         // and increment it beforehand.
-        PluginManagerPrivate::InfoToPluginMap::ConstIterator current(it);
+        PluginManagerPrivate::MetaDataToPluginMap::ConstIterator current(it);
         ++it;
         // FIXME: a much cleaner approach would be to just delete the plugin now. if it needs
         //  to do some async processing, it can grab a reference to the app itself and create
@@ -227,15 +228,15 @@ void PluginManager::loadAllPlugins()
             }
         }
 
-        for (const KPluginInfo &p: availablePlugins(QString())) {
+        for (const KPluginMetaData &p: availablePlugins(QString())) {
             if ((p.category().compare(QLatin1String("MicroBlogs")) == 0) ||
                     (p.category().compare(QLatin1String("Shorteners")) == 0))
             {
                 continue;
             }
 
-            const QString pluginName = p.pluginName();
-            if (pluginsMap.value(pluginName, p.isPluginEnabledByDefault())) {
+            const QString pluginName = p.pluginId();
+            if (pluginsMap.value(pluginName, p.isEnabledByDefault())) {
                 if (!plugin(pluginName)) {
                     _kpmp->pluginsToLoad.push(pluginName);
                 }
@@ -250,15 +251,15 @@ void PluginManager::loadAllPlugins()
         }
     } else {
         // we had no config, so we load any plugins that should be loaded by default.
-        for (const KPluginInfo &p: availablePlugins(QString())) {
+        for (const KPluginMetaData &p: availablePlugins(QString())) {
             if ((p.category().compare(QLatin1String("MicroBlogs")) == 0) ||
                     (p.category().compare(QLatin1String("Shorteners")) == 0))
             {
                 continue;
             }
 
-            if (p.isPluginEnabledByDefault()) {
-                _kpmp->pluginsToLoad.push(p.pluginName());
+            if (p.isEnabledByDefault()) {
+                _kpmp->pluginsToLoad.push(p.pluginId());
             }
         }
     }
@@ -313,41 +314,35 @@ Plugin *PluginManager::loadPluginInternal(const QString &pluginId)
 {
     qCDebug(CHOQOK) << "Loading Plugin:" << pluginId;
 
-    KPluginInfo info = infoForPluginId(pluginId);
-    if (!info.isValid()) {
-        qCWarning(CHOQOK) << "Unable to find a plugin named '" << pluginId << "'!";
+    KPluginMetaData metaData = metaDataForPluginId(pluginId);
+
+    if (_kpmp->loadedPlugins.contains(metaData)) {
+        return _kpmp->loadedPlugins[ metaData ];
+    }
+
+    auto pluginMetaData = KPluginMetaData::findPluginById(QStringLiteral("choqok_plugins"), pluginId);
+    if (!pluginMetaData.isValid()) {
         return nullptr;
     }
 
-    if (_kpmp->loadedPlugins.contains(info)) {
-        return _kpmp->loadedPlugins[ info ];
-    }
-
-    QString error;
-    Plugin *plugin = KServiceTypeTrader::createInstanceFromQuery<Plugin>(QLatin1String("Choqok/Plugin"), QStringLiteral("[X-KDE-PluginInfo-Name]=='%1'").arg(pluginId), this, QVariantList(), &error);
-
-    if (plugin) {
-        _kpmp->loadedPlugins.insert(info, plugin);
-        info.setPluginEnabled(true);
+    auto pluginResult = KPluginFactory::instantiatePlugin<Plugin>(pluginMetaData);
+    if (auto plugin = pluginResult.plugin) {
+        _kpmp->loadedPlugins.insert(metaData, plugin);
 
         connect(plugin, &Plugin::destroyed, this, &PluginManager::slotPluginDestroyed);
         connect(plugin, &Plugin::readyForUnload, this, &PluginManager::slotPluginReadyForUnload);
 
         qCDebug(CHOQOK) << "Successfully loaded plugin '" << pluginId << "'";
 
-        if (plugin->pluginInfo().category() != QLatin1String("MicroBlogs") && plugin->pluginInfo().category() != QLatin1String("Shorteners")) {
+        if (plugin->pluginMetaData().category() != QLatin1String("MicroBlogs") && plugin->pluginMetaData().category() != QLatin1String("Shorteners")) {
             qCDebug(CHOQOK) << "Emitting pluginLoaded()";
             Q_EMIT pluginLoaded(plugin);
         }
-
-//         Protocol* protocol = dynamic_cast<Protocol*>( plugin );
-//         if ( protocol )
-//             emit protocolLoaded( protocol );
+        return plugin;
     } else {
-        qCDebug(CHOQOK) << "Loading plugin" << pluginId << "failed, KServiceTypeTrader reported error:" << error ;
+        qCDebug(CHOQOK) << "Loading plugin" << pluginId << "failed:" << pluginResult.errorString << pluginResult.errorText;
     }
-
-    return plugin;
+    return nullptr;
 }
 
 bool PluginManager::unloadPlugin(const QString &spec)
@@ -365,9 +360,9 @@ bool PluginManager::unloadPlugin(const QString &spec)
 void PluginManager::slotPluginDestroyed(QObject *plugin)
 {
     qCDebug(CHOQOK);
-    for (const KPluginInfo &p: _kpmp->loadedPlugins.keys()) {
+    for (const KPluginMetaData &p: _kpmp->loadedPlugins.keys()) {
         if (_kpmp->loadedPlugins.value(p) == plugin) {
-            const QString pluginName = p.pluginName();
+            const QString pluginName = p.name();
             _kpmp->loadedPlugins.remove(p);
             Q_EMIT pluginUnloaded(pluginName);
             break;
@@ -396,27 +391,27 @@ Plugin *PluginManager::plugin(const QString &_pluginId) const
     }
     // End hack
 
-    KPluginInfo info = infoForPluginId(pluginId);
-    if (!info.isValid()) {
+    KPluginMetaData metaData = metaDataForPluginId(pluginId);
+    if (!metaData.isValid()) {
         return nullptr;
     }
 
-    if (_kpmp->loadedPlugins.contains(info)) {
-        return _kpmp->loadedPlugins[ info ];
+    if (_kpmp->loadedPlugins.contains(metaData)) {
+        return _kpmp->loadedPlugins[ metaData ];
     } else {
         return nullptr;
     }
 }
 
-KPluginInfo PluginManager::infoForPluginId(const QString &pluginId) const
+KPluginMetaData PluginManager::metaDataForPluginId(const QString &pluginId) const
 {
-    for (const KPluginInfo &p: _kpmp->plugins) {
-        if (p.pluginName().compare(pluginId) == 0) {
+    for (const KPluginMetaData &p: _kpmp->plugins) {
+        if (p.pluginId().compare(pluginId) == 0) {
             return p;
         }
     }
 
-    return KPluginInfo();
+    return KPluginMetaData();
 }
 
 bool PluginManager::setPluginEnabled(const QString &_pluginId, bool enabled /* = true */)
@@ -430,7 +425,7 @@ bool PluginManager::setPluginEnabled(const QString &_pluginId, bool enabled /* =
         pluginId.prepend(QLatin1String("choqok_"));
     }
 
-    if (!infoForPluginId(pluginId).isValid()) {
+    if (!metaDataForPluginId(pluginId).isValid()) {
         return false;
     }
 

@@ -15,8 +15,7 @@
 #include "laconicadebug.h"
 #include "laconicaeditaccount.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(LaconicaFactory, "choqok_laconica.json",
-                           registerPlugin < LaconicaMicroBlog > ();)
+K_PLUGIN_CLASS_WITH_JSON(LaconicaMicroBlog, "choqok_laconica.json")
 
 LaconicaMicroBlog::LaconicaMicroBlog(QObject *parent, const QVariantList &)
     : GNUSocialApiMicroBlog(QLatin1String("choqok_laconica"), parent)

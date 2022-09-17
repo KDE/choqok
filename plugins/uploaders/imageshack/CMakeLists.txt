@@ -1,8 +1,4 @@
-add_library(choqok_imageshack MODULE
-    imageshack.cpp
-)
-
-kcoreaddons_desktop_to_json(choqok_imageshack choqok_imageshack.desktop)
+kcoreaddons_add_plugin(choqok_imageshack SOURCES imageshack.cpp INSTALL_NAMESPACE "choqok_plugins")
 
 target_link_libraries(choqok_imageshack
 PUBLIC
@@ -13,8 +9,5 @@ PUBLIC
     KF5::KIOCore
     choqok
 )
-
-install(TARGETS choqok_imageshack DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_imageshack.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 
 add_subdirectory(icons)

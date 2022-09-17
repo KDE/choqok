@@ -23,8 +23,7 @@
 
 #include "mobypicturesettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(MobypictureFactory, "choqok_mobypicture.json",
-                           registerPlugin < Mobypicture > ();)
+K_PLUGIN_CLASS_WITH_JSON(Mobypicture, "choqok_mobypicture.json")
 
 Mobypicture::Mobypicture(QObject *parent, const QList<QVariant> &)
     : Choqok::Uploader(QLatin1String("choqok_mobypicture"), parent)

@@ -1,10 +1,6 @@
-add_library(choqok_mobypicture MODULE
-    mobypicture.cpp
-)
+kcoreaddons_add_plugin(choqok_mobypicture SOURCES mobypicture.cpp INSTALL_NAMESPACE "choqok_plugins")
 
 kconfig_add_kcfg_files(choqok_mobypicture mobypicturesettings.kcfgc)
-
-kcoreaddons_desktop_to_json(choqok_mobypicture choqok_mobypicture.desktop)
 
 target_link_libraries(choqok_mobypicture
 PUBLIC
@@ -16,18 +12,11 @@ PUBLIC
     twitterapihelper
 )
 
-install(TARGETS choqok_mobypicture DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_mobypicture.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
-
-add_library(kcm_choqok_mobypicture MODULE
-    mobypictureconfig.cpp
-)
+kcoreaddons_add_plugin(kcm_choqok_mobypicture SOURCES mobypictureconfig.cpp INSTALL_NAMESPACE "choqok_plugins/kcms")
 
 ki18n_wrap_ui(kcm_choqok_mobypicture mobypictureprefs.ui)
 
 kconfig_add_kcfg_files(kcm_choqok_mobypicture mobypicturesettings.kcfgc)
-
-kcoreaddons_desktop_to_json(kcm_choqok_mobypicture choqok_mobypicture_config.desktop)
 
 target_link_libraries(kcm_choqok_mobypicture
 PUBLIC
@@ -39,9 +28,5 @@ PUBLIC
     KF5::WidgetsAddons
     choqok
 )
-
-install(TARGETS kcm_choqok_mobypicture DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES mobypicturesettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
-install(FILES choqok_mobypicture_config.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 
 add_subdirectory(icons)

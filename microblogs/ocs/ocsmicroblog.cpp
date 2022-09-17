@@ -24,8 +24,7 @@
 #include "ocsdebug.h"
 #include "ocsconfigurewidget.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(OCSMicroblogFactory, "choqok_ocs.json",
-                           registerPlugin < OCSMicroblog > ();)
+K_PLUGIN_CLASS_WITH_JSON(OCSMicroblog, "choqok_ocs.json")
 
 OCSMicroblog::OCSMicroblog(QObject *parent, const QVariantList &)
     : MicroBlog(QLatin1String("choqok_ocs"), parent)

@@ -1,6 +1,7 @@
-add_library(choqok_friendica MODULE
+kcoreaddons_add_plugin(choqok_friendica SOURCES
     friendicaeditaccount.cpp
     friendicamicroblog.cpp
+    INSTALL_NAMESPACE "choqok_plugins"
 )
 
 ecm_qt_declare_logging_category(choqok_friendica
@@ -12,8 +13,6 @@ ecm_qt_declare_logging_category(choqok_friendica
 )
 
 ki18n_wrap_ui(choqok_friendica friendicaeditaccount_base.ui)
-
-kcoreaddons_desktop_to_json(choqok_friendica choqok_friendica.desktop)
 
 target_link_libraries(choqok_friendica
 PUBLIC
@@ -27,8 +26,5 @@ PUBLIC
     choqok
     gnusocialapihelper
 )
-
-install(TARGETS choqok_friendica DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_friendica.desktop  DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 
 add_subdirectory(icons)

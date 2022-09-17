@@ -11,10 +11,10 @@
 
 #include <KCModule>
 
-class KPluginSelector;
+class KPluginWidget;
 
 /**
- * Plugin selector. See KPluginSelector in kdelibs for documentation.
+ * Plugin selector. See KPluginWidget for documentation.
  *
  * @author
  */
@@ -31,9 +31,8 @@ public Q_SLOTS:
     virtual void save() override;
 
     virtual void defaults() override;
-    void reparseConfiguration(const QByteArray &conf);
 private:
-    KPluginSelector *m_pluginSelector;
+    KPluginWidget *m_pluginWidget;
 };
 
 #endif

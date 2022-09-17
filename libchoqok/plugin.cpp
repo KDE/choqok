@@ -8,7 +8,7 @@
 
 #include "plugin.h"
 
-#include <KPluginInfo>
+#include <KPluginMetaData>
 #include <ksettings/Dispatcher>
 
 #include "pluginmanager.h"
@@ -35,29 +35,24 @@ Plugin::~Plugin()
     delete d;
 }
 
-QString Plugin::pluginId() const
-{
-    return QLatin1String(metaObject()->className());
-}
-
 QString Plugin::displayName() const
 {
-    return pluginInfo().isValid() ? pluginInfo().name() : QString();
+    return pluginMetaData().name();
 }
 
-QString Plugin::pluginName() const
+QString Plugin::pluginId() const
 {
-    return pluginInfo().isValid() ? pluginInfo().pluginName() : QString();
+    return pluginMetaData().pluginId();
 }
 
 QString Plugin::pluginIcon() const
 {
-    return pluginInfo().isValid() ? pluginInfo().icon() : QString();
+    return pluginMetaData().iconName();
 }
 
-KPluginInfo Plugin::pluginInfo() const
+KPluginMetaData Plugin::pluginMetaData() const
 {
-    return PluginManager::self()->pluginInfo(this);
+    return PluginManager::self()->pluginMetaData(this);
 }
 
 void Plugin::aboutToUnload()

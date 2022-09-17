@@ -18,8 +18,7 @@
 
 #include "yourlssettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(YourlsConfigFactory, "choqok_yourls_config.json",
-                           registerPlugin < YourlsConfig > ();)
+K_PLUGIN_CLASS_WITH_JSON(YourlsConfig, "choqok_yourls_config.json")
 
 YourlsConfig::YourlsConfig(QWidget *parent, const QVariantList &):
     KCModule(parent)

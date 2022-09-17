@@ -22,8 +22,7 @@
 
 #include "twitpicsettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(TwitpicFactory, "choqok_twitpic.json",
-                           registerPlugin < Twitpic > ();)
+K_PLUGIN_CLASS_WITH_JSON(Twitpic, "choqok_twitpic.json")
 
 Twitpic::Twitpic(QObject *parent, const QList<QVariant> &)
     : Choqok::Uploader("choqok_twitpic", parent)

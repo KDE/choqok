@@ -23,8 +23,7 @@
 
 #include "posteroussettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(PosterousFactory, "choqok_posterous.json",
-                           registerPlugin < Posterous > ();)
+K_PLUGIN_CLASS_WITH_JSON(Posterous, "choqok_posterous.json")
 
 Posterous::Posterous(QObject *parent, const QList<QVariant> &)
     : Choqok::Uploader(QLatin1String("choqok_posterous"), parent)

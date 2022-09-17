@@ -1,10 +1,6 @@
-add_library(choqok_flickr MODULE
-    flickr.cpp
-)
+kcoreaddons_add_plugin(choqok_flickr SOURCES flickr.cpp INSTALL_NAMESPACE "choqok_plugins")
 
 kconfig_add_kcfg_files(choqok_flickr flickrsettings.kcfgc)
-
-kcoreaddons_desktop_to_json(choqok_flickr choqok_flickr.desktop)
 
 target_link_libraries(choqok_flickr
 PUBLIC
@@ -16,18 +12,11 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_flickr DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_flickr.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
-
-add_library(kcm_choqok_flickr MODULE
-    flickrconfig.cpp
-)
+kcoreaddons_add_plugin(kcm_choqok_flickr SOURCES flickrconfig.cpp INSTALL_NAMESPACE "choqok_plugins/kcms")
 
 ki18n_wrap_ui(kcm_choqok_flickr flickrprefs.ui)
 
 kconfig_add_kcfg_files(kcm_choqok_flickr flickrsettings.kcfgc)
-
-kcoreaddons_desktop_to_json(kcm_choqok_flickr choqok_flickr_config.desktop)
 
 target_link_libraries(kcm_choqok_flickr
 PUBLIC
@@ -41,9 +30,5 @@ PUBLIC
     KF5::WidgetsAddons
     choqok
 )
-
-install(TARGETS kcm_choqok_flickr DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES flickrsettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
-install(FILES choqok_flickr_config.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 
 add_subdirectory(icons)

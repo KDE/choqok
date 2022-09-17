@@ -1,8 +1,4 @@
-add_library(choqok_ur_ly MODULE
-    ur_ly.cpp
-)
-
-kcoreaddons_desktop_to_json(choqok_ur_ly choqok_ur_ly.desktop)
+kcoreaddons_add_plugin(choqok_ur_ly SOURCES ur_ly.cpp INSTALL_NAMESPACE "choqok_plugins")
 
 target_link_libraries(choqok_ur_ly
 PUBLIC
@@ -12,6 +8,3 @@ PUBLIC
     KF5::KIOCore
     choqok
 )
-
-install(TARGETS choqok_ur_ly DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_ur_ly.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})

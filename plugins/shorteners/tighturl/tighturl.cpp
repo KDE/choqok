@@ -17,8 +17,7 @@
 
 #include "notifymanager.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(TightUrlFactory, "choqok_tighturl.json",
-                           registerPlugin < TightUrl > ();)
+K_PLUGIN_CLASS_WITH_JSON(TightUrl, "choqok_tighturl.json")
 
 TightUrl::TightUrl(QObject *parent, const QVariantList &)
     : Choqok::Shortener(QLatin1String("choqok_tighturl"), parent)

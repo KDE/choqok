@@ -16,7 +16,7 @@
 
 #include "choqok_export.h"
 
-class KPluginInfo;
+class KPluginMetaData;
 
 /**
 * Current Choqok plugin interface version. Interfaces declare plugin version
@@ -80,9 +80,9 @@ public:
     virtual ~Plugin();
 
     /**
-    * Returns the KPluginInfo object associated with this plugin
+    * Returns the KPluginMetaData object associated with this plugin
     */
-    KPluginInfo pluginInfo() const;
+    KPluginMetaData pluginMetaData() const;
 
     /**
     * Get the name of the icon for this plugin. The icon name is taken from the
@@ -103,16 +103,9 @@ public:
     QString displayName() const;
 
     /**
-    * @brief Get the plugin id
-    * @return the plugin's id which is gotten by calling QObject::metaObject()->className().
+    * @brief Returns the pluginId
     */
     QString pluginId() const;
-
-    /**
-    * @brief Returns the pluginName
-    * This is a convenience method that simply calls @ref pluginInfo()->pluginName().
-    */
-    QString pluginName() const;
 
     /**
     * @brief Prepare for unloading a plugin

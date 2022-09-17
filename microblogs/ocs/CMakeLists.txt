@@ -1,7 +1,8 @@
-add_library(choqok_ocs MODULE
+kcoreaddons_add_plugin(choqok_ocs SOURCES
     ocsaccount.cpp
     ocsmicroblog.cpp
     ocsconfigurewidget.cpp
+    INSTALL_NAMESPACE "choqok_plugins"
 )
 
 ecm_qt_declare_logging_category(choqok_ocs
@@ -16,8 +17,6 @@ ki18n_wrap_ui(choqok_ocs
     ocsconfigurebase.ui
 )
 
-kcoreaddons_desktop_to_json(choqok_ocs choqok_ocs.desktop)
-
 target_link_libraries(choqok_ocs
 PUBLIC
     KF5::Attica
@@ -27,8 +26,5 @@ PUBLIC
     KF5::WidgetsAddons
     choqok
 )
-
-install(TARGETS choqok_ocs DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install( FILES choqok_ocs.desktop  DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 
 add_subdirectory(icons)

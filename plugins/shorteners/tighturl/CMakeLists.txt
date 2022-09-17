@@ -1,8 +1,4 @@
-add_library(choqok_tighturl MODULE
-    tighturl.cpp
-)
-
-kcoreaddons_desktop_to_json(choqok_tighturl choqok_tighturl.desktop)
+kcoreaddons_add_plugin(choqok_tighturl SOURCES tighturl.cpp INSTALL_NAMESPACE "choqok_plugins")
 
 target_link_libraries(choqok_tighturl
 PUBLIC
@@ -12,6 +8,3 @@ PUBLIC
     KF5::KIOCore
     choqok
 )
-
-install(TARGETS choqok_tighturl DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install( FILES choqok_tighturl.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})

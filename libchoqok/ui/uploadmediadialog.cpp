@@ -13,13 +13,13 @@
 #include <QPointer>
 #include <QProgressBar>
 #include <QTabWidget>
+#include <KCMultiDialog>
 
 #include <KAboutData>
 #include <KAboutApplicationDialog>
 #include <KCModuleProxy>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KPluginInfo>
 
 #include "choqokbehaviorsettings.h"
 #include "choqokuiglobal.h"
@@ -35,7 +35,7 @@ class UploadMediaDialog::Private
 {
 public:
     Ui::UploadMediaBase ui;
-    QMap <QString, KPluginInfo> availablePlugins;
+    QMap <QString, KPluginMetaData> availablePlugins;
     QList<KCModuleProxy *> moduleProxyList;
     QUrl localUrl;
     QPointer<QProgressBar> progress;
@@ -87,12 +87,12 @@ UploadMediaDialog::~UploadMediaDialog()
 
 void UploadMediaDialog::load()
 {
-    QList<KPluginInfo> plugins = Choqok::PluginManager::self()->availablePlugins(QLatin1String("Uploaders"));
+    QVector<KPluginMetaData> plugins = Choqok::PluginManager::self()->availablePlugins(QLatin1String("Uploaders"));
     qCDebug(CHOQOK) << plugins.count();
 
-    for (const KPluginInfo &plugin: plugins) {
-        d->ui.uploaderPlugin->addItem(QIcon::fromTheme(plugin.icon()), plugin.name(), plugin.pluginName());
-        d->availablePlugins.insert(plugin.pluginName(), plugin);
+    for (const KPluginMetaData &plugin: plugins) {
+        d->ui.uploaderPlugin->addItem(QIcon::fromTheme(plugin.iconName()), plugin.name(), plugin.name());
+        d->availablePlugins.insert(plugin.pluginId(), plugin);
     }
     d->ui.uploaderPlugin->setCurrentIndex(d->ui.uploaderPlugin->findData(Choqok::BehaviorSettings::lastUsedUploaderPlugin()));
     if (d->ui.uploaderPlugin->currentIndex() == -1 && d->ui.uploaderPlugin->count() > 0) {
@@ -125,8 +125,7 @@ void UploadMediaDialog::accept()
 void Choqok::UI::UploadMediaDialog::currentPluginChanged(int index)
 {
     QString key = d->ui.uploaderPlugin->itemData(index).toString();
-//     qCDebug(CHOQOK)<<key;
-    d->ui.configPlugin->setEnabled(!key.isEmpty() && d->availablePlugins.value(key).kcmServices().count() > 0);
+    d->ui.configPlugin->setEnabled(!key.isEmpty() && d->availablePlugins.value(key).value(QStringLiteral("X-KDE-ConfigModule"), QString()) != QString());
 }
 
 void Choqok::UI::UploadMediaDialog::slotAboutClicked()
@@ -135,103 +134,26 @@ void Choqok::UI::UploadMediaDialog::slotAboutClicked()
     if (shorten.isEmpty()) {
         return;
     }
-    KPluginInfo info = d->availablePlugins.value(shorten);
+    auto info = d->availablePlugins.value(shorten);
 
-    KAboutData aboutData(info.name(), info.name(), info.version(), info.comment(),
+    KAboutData aboutData(info.name(), info.name(), info.version(), info.description(),
                          KAboutLicense::byKeyword(info.license()).key(), QString(),
                          QString(), info.website());
-    aboutData.addAuthor(info.author(), QString(), info.email());
+    aboutData.addAuthor(info.authors()[0].name(), info.authors()[0].task(), info.authors()[0].emailAddress());
 
     KAboutApplicationDialog aboutPlugin(aboutData, this);
-    aboutPlugin.setWindowIcon(QIcon::fromTheme(info.icon()));
+    aboutPlugin.setWindowIcon(QIcon::fromTheme(info.iconName()));
     aboutPlugin.exec();
 }
 
 void Choqok::UI::UploadMediaDialog::slotConfigureClicked()
 {
-    qCDebug(CHOQOK);
-    KPluginInfo pluginInfo = d->availablePlugins.value(d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString());
-    qCDebug(CHOQOK) << pluginInfo.name() << pluginInfo.kcmServices().count();
-
-    QPointer<QDialog> configDialog = new QDialog(this);
-    configDialog->setWindowTitle(pluginInfo.name());
-    // The number of KCModuleProxies in use determines whether to use a tabwidget
-    QTabWidget *newTabWidget = nullptr;
-    // Widget to use for the setting dialog's main widget,
-    // either a QTabWidget or a KCModuleProxy
-    QWidget *mainWidget = nullptr;
-    // Widget to use as the KCModuleProxy's parent.
-    // The first proxy is owned by the dialog itself
-    QWidget *moduleProxyParentWidget = configDialog;
-
-    for (const KService::Ptr &servicePtr: pluginInfo.kcmServices()) {
-        if (!servicePtr->noDisplay()) {
-            KCModuleProxy *currentModuleProxy = new KCModuleProxy(servicePtr, moduleProxyParentWidget);
-
-            if (currentModuleProxy->realModule()) {
-                d->moduleProxyList << currentModuleProxy;
-                if (mainWidget && !newTabWidget) {
-                    // we already created one KCModuleProxy, so we need a tab widget.
-                    // Move the first proxy into the tab widget and ensure this and subsequent
-                    // proxies are in the tab widget
-                    newTabWidget = new QTabWidget(configDialog);
-                    moduleProxyParentWidget = newTabWidget;
-                    mainWidget->setParent(newTabWidget);
-                    KCModuleProxy *moduleProxy = qobject_cast<KCModuleProxy *>(mainWidget);
-                    if (moduleProxy) {
-                        newTabWidget->addTab(mainWidget, servicePtr->name());
-                        mainWidget = newTabWidget;
-                    } else {
-                        delete newTabWidget;
-                        newTabWidget = nullptr;
-                        moduleProxyParentWidget = configDialog;
-                        mainWidget->setParent(nullptr);
-                    }
-                }
-
-                if (newTabWidget) {
-                    newTabWidget->addTab(currentModuleProxy, servicePtr->name());
-                } else {
-                    mainWidget = currentModuleProxy;
-                }
-            } else {
-                delete currentModuleProxy;
-            }
-        }
-    }
-
-    // it could happen that we had services to show, but none of them were real modules.
-    if (d->moduleProxyList.count()) {
-        QWidget *showWidget = new QWidget(configDialog);
-        QVBoxLayout *layout = new QVBoxLayout;
-        showWidget->setLayout(layout);
-        layout->addWidget(mainWidget);
-        layout->insertSpacing(-1, QApplication::style()->pixelMetric(QStyle::PM_DialogButtonsSeparator));
-
-        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-        QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
-        okButton->setDefault(true);
-        okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-        connect(buttonBox, &QDialogButtonBox::accepted, configDialog, &QDialog::accept);
-        connect(buttonBox, &QDialogButtonBox::rejected, configDialog, &QDialog::reject);
-        layout->addWidget(buttonBox);
-        showWidget->adjustSize();
-
-//         connect(&configDialog, SIGNAL(defaultClicked()), this, SLOT(slotDefaultClicked()));
-
-        if (configDialog->exec() == QDialog::Accepted) {
-            for (KCModuleProxy *moduleProxy: d->moduleProxyList) {
-                moduleProxy->save();
-            }
-        } else {
-            for (KCModuleProxy *moduleProxy: d->moduleProxyList) {
-                moduleProxy->load();
-            }
-        }
-
-        qDeleteAll(d->moduleProxyList);
-        d->moduleProxyList.clear();
-    }
+    auto dialog = new KCMultiDialog(this);
+    QString id = d->availablePlugins.value(d->ui.uploaderPlugin->itemData(d->ui.uploaderPlugin->currentIndex()).toString()).value(QStringLiteral("X-KDE-ConfigModule"), QString());
+    KPluginMetaData md(id);
+    dialog->addModule(md);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->show();
 }
 
 void Choqok::UI::UploadMediaDialog::slotMediumUploaded(const QUrl &localUrl, const QString &remoteUrl)

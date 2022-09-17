@@ -1,8 +1,4 @@
-add_library(choqok_quickfilter MODULE
-    quickfilter.cpp
-)
-
-kcoreaddons_desktop_to_json(choqok_quickfilter choqok_quickfilter.desktop)
+kcoreaddons_add_plugin(choqok_quickfilter SOURCES quickfilter.cpp INSTALL_NAMESPACE "choqok_plugins")
 
 target_link_libraries(choqok_quickfilter
 PUBLIC
@@ -14,6 +10,4 @@ PUBLIC
     choqok
 )
 
-install(TARGETS choqok_quickfilter DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_quickfilter.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 install(FILES quickfilterui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/choqok_quickfilter)

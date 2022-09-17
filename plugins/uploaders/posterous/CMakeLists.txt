@@ -1,10 +1,6 @@
-add_library(choqok_posterous MODULE
-    posterous.cpp
-)
+kcoreaddons_add_plugin(choqok_posterous SOURCES posterous.cpp INSTALL_NAMESPACE "choqok_plugins")
 
 kconfig_add_kcfg_files(choqok_posterous posteroussettings.kcfgc)
-
-kcoreaddons_desktop_to_json(choqok_posterous choqok_posterous.desktop)
 
 target_link_libraries(choqok_posterous
 PUBLIC
@@ -16,18 +12,11 @@ PUBLIC
     twitterapihelper
 )
 
-install(TARGETS choqok_posterous DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_posterous.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
-
-add_library(kcm_choqok_posterous MODULE
-    posterousconfig.cpp
-)
+kcoreaddons_add_plugin(kcm_choqok_posterous SOURCES posterousconfig.cpp INSTALL_NAMESPACE "choqok_plugins/kcms")
 
 ki18n_wrap_ui(kcm_choqok_posterous posterousprefs.ui)
 
 kconfig_add_kcfg_files(kcm_choqok_posterous posteroussettings.kcfgc)
-
-kcoreaddons_desktop_to_json(kcm_choqok_posterous choqok_posterous_config.desktop)
 
 target_link_libraries(kcm_choqok_posterous
 PUBLIC
@@ -38,9 +27,5 @@ PUBLIC
     KF5::WidgetsAddons
     choqok
 )
-
-install(TARGETS kcm_choqok_posterous DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES posteroussettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
-install(FILES choqok_posterous_config.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 
 add_subdirectory(icons)

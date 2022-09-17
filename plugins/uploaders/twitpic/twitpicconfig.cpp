@@ -19,8 +19,7 @@
 
 #include "twitpicsettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(TwitpicConfigFactory, "choqok_twitpic_config.json",
-                           registerPlugin < TwitpicConfig > ();)
+K_PLUGIN_CLASS_WITH_JSON(TwitpicConfig, "choqok_twitpic_config.json")
 
 TwitpicConfig::TwitpicConfig(QWidget *parent, const QVariantList &):
     KCModule(parent)

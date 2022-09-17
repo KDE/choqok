@@ -1,8 +1,4 @@
-add_library(choqok_videopreview MODULE
-    videopreview.cpp
-)
-
-kcoreaddons_desktop_to_json(choqok_videopreview choqok_videopreview.desktop)
+kcoreaddons_add_plugin(choqok_videopreview SOURCES videopreview.cpp INSTALL_NAMESPACE "choqok_plugins")
 
 target_link_libraries(choqok_videopreview
 PUBLIC
@@ -12,6 +8,3 @@ PUBLIC
     KF5::KIOWidgets
     choqok
 )
-
-install(TARGETS choqok_videopreview DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_videopreview.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})

@@ -21,8 +21,7 @@
 #include "twitterapiaccount.h"
 #include "twitterapimicroblog.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(SearchActionFactory, "choqok_searchaction.json",
-                           registerPlugin < SearchAction > ();)
+K_PLUGIN_CLASS_WITH_JSON(SearchAction, "choqok_searchaction.json")
 
 SearchAction::SearchAction(QObject *parent, const QList< QVariant > &)
     : Plugin(QLatin1String("choqok_searchaction"), parent)

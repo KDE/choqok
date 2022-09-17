@@ -23,8 +23,7 @@
 #include "accountmanager.h"
 #include "passwordmanager.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(MobypictureConfigFactory, "choqok_mobypicture_config.json",
-                           registerPlugin < MobypictureConfig > ();)
+K_PLUGIN_CLASS_WITH_JSON(MobypictureConfig, "choqok_mobypicture_config.json")
 
 MobypictureConfig::MobypictureConfig(QWidget *parent, const QVariantList &)
     : KCModule(parent)

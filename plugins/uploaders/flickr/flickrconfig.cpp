@@ -29,8 +29,7 @@
 
 #include "flickrsettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(FlickrConfigFactory, "choqok_flickr_config.json",
-                           registerPlugin < FlickrConfig > ();)
+K_PLUGIN_CLASS_WITH_JSON(FlickrConfig, "choqok_flickr_config.json")
 
 const QString apiKey = QLatin1String("13f602e6e705834d8cdd5dd2ccb19651");
 const QString apiSecret = QLatin1String("98c89dbe39ae3bea");

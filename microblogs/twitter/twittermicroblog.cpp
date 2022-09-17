@@ -41,8 +41,7 @@
 #include "twittersearch.h"
 #include "twittertimelinewidget.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(TwitterMicroBlogFactory, "choqok_twitter.json",
-                           registerPlugin < TwitterMicroBlog > ();)
+K_PLUGIN_CLASS_WITH_JSON(TwitterMicroBlog, "choqok_twitter.json")
 
 TwitterMicroBlog::TwitterMicroBlog(QObject *parent, const QVariantList &)
     : TwitterApiMicroBlog(QLatin1String("choqok_twitter"), parent)

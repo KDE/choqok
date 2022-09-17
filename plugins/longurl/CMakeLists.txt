@@ -1,10 +1,6 @@
-add_library(choqok_longurl MODULE
-    longurl.cpp
-)
+kcoreaddons_add_plugin(choqok_longurl SOURCES longurl.cpp INSTALL_NAMESPACE "choqok_plugins")
 
 # kconfig_add_kcfg_files(choqok_longurl longurlsettings.kcfgc)
-
-kcoreaddons_desktop_to_json(choqok_longurl choqok_longurl.desktop)
 
 target_link_libraries(choqok_longurl
 PUBLIC
@@ -14,6 +10,3 @@ PUBLIC
     KF5::KIOWidgets
     choqok
 )
-
-install(TARGETS choqok_longurl DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_longurl.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})

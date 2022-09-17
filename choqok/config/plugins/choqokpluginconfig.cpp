@@ -13,8 +13,9 @@
 #include <KAboutData>
 #include <KLocalizedString>
 #include <KPluginFactory>
-#include <KPluginSelector>
+#include <KPluginWidget>
 #include <ksettings/Dispatcher>
+#include <KConfigGroup>
 
 #include "pluginmanager.h"
 #include "pluginsdebug.h"
@@ -25,47 +26,36 @@ K_PLUGIN_FACTORY_WITH_JSON(ChoqokPluginConfigFactory, "choqok_pluginconfig.json"
 ChoqokPluginConfig::ChoqokPluginConfig(QWidget *parent, const QVariantList &args)
     : KCModule(parent, args)
 {
-    m_pluginSelector = new KPluginSelector(this);
+    m_pluginWidget = new KPluginWidget(this);
+    m_pluginWidget->setConfig(KSharedConfig::openConfig()->group("Plugins"));
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     mainLayout->setMargin(0);
-    mainLayout->addWidget(m_pluginSelector);
+    mainLayout->addWidget(m_pluginWidget);
 
-    connect(m_pluginSelector, &KPluginSelector::changed, this, &ChoqokPluginConfig::markAsChanged);
-    connect(m_pluginSelector, &KPluginSelector::configCommitted,
-            this, &ChoqokPluginConfig::reparseConfiguration);
+    connect(m_pluginWidget, &KPluginWidget::changed, this, &ChoqokPluginConfig::markAsChanged);
 
-    m_pluginSelector->addPlugins(Choqok::PluginManager::self()->availablePlugins(QLatin1String("Plugins")),
-                                 KPluginSelector::ReadConfigFile, i18n("General Plugins"), QLatin1String("Plugins"));
-//     m_pluginSelector->addPlugins( Choqok::PluginManager::self()->availablePlugins( "Shorteners" ),
-//                                   KPluginSelector::ReadConfigFile, i18n("Shortener Plugins"), "Shorteners");
-    m_pluginSelector->load();
+    m_pluginWidget->addPlugins(Choqok::PluginManager::self()->availablePlugins(QLatin1String("Plugins")),
+                                i18n("General Plugins"));
 }
 
 ChoqokPluginConfig::~ChoqokPluginConfig()
 {
 }
 
-void ChoqokPluginConfig::reparseConfiguration(const QByteArray &conf)
-{
-    KSettings::Dispatcher::reparseConfiguration(QLatin1String(conf));
-}
-
 void ChoqokPluginConfig::load()
 {
-    m_pluginSelector->load();
-
     KCModule::load();
 }
 
 void ChoqokPluginConfig::defaults()
 {
-    m_pluginSelector->defaults();
+    m_pluginWidget->defaults();
 }
 
 void ChoqokPluginConfig::save()
 {
-    m_pluginSelector->save();
+    m_pluginWidget->save();
     Choqok::PluginManager::self()->loadAllPlugins();
 
     KCModule::save();

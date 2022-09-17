@@ -1,6 +1,4 @@
-add_library(kcm_choqok_pluginconfig MODULE
-    choqokpluginconfig.cpp
-)
+kcoreaddons_add_plugin(kcm_choqok_pluginconfig SOURCES choqokpluginconfig.cpp INSTALL_NAMESPACE "choqok_kcms")
 
 ecm_qt_declare_logging_category(kcm_choqok_pluginconfig
     HEADER pluginsdebug.h
@@ -9,8 +7,6 @@ ecm_qt_declare_logging_category(kcm_choqok_pluginconfig
     DESCRIPTION "choqok plugins config"
     EXPORT CHOQOK
 )
-
-kcoreaddons_desktop_to_json(kcm_choqok_pluginconfig choqok_pluginconfig.desktop)
 
 target_link_libraries(kcm_choqok_pluginconfig
 PUBLIC
@@ -21,6 +17,3 @@ PUBLIC
     KF5::KCMUtils
     choqok
 )
-
-install(TARGETS kcm_choqok_pluginconfig DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_pluginconfig.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})

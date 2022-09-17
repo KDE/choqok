@@ -17,8 +17,7 @@
 #include "postwidget.h"
 #include "textbrowser.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(ImagePreviewFactory, "choqok_imagepreview.json",
-                           registerPlugin < ImagePreview > ();)
+K_PLUGIN_CLASS_WITH_JSON(ImagePreview, "choqok_imagepreview.json")
 
 const QRegExp ImagePreview::mImgLyRegExp(QLatin1String("(http://img.ly/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])"));
 const QRegExp ImagePreview::mTwitgooRegExp(QLatin1String("(http://(([a-zA-Z0-9]+\\.)?)twitgoo.com/[^\\s<>\"]+[^!,\\.\\s<>'\"\\]])"));

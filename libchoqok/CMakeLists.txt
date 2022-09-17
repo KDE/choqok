@@ -98,8 +98,6 @@ install(FILES choqokbehaviorsettings.kcfg choqokappearancesettings.kcfg
         DESTINATION ${KDE_INSTALL_KCFGDIR})
 
 install(TARGETS choqok ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
-install(FILES choqokplugin.desktop choqokshortenerplugin.desktop
-              choqokuploaderplugin.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPESDIR})
 
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/choqokbehaviorsettings.h

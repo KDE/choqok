@@ -16,8 +16,7 @@
 
 #include "nowlisteningsettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(NowListeningConfigFactory, "choqok_nowlistening_config.json",
-                           registerPlugin < NowListeningConfig > ();)
+K_PLUGIN_CLASS_WITH_JSON(NowListeningConfig, "choqok_nowlistening_config.json")
 
 NowListeningConfig::NowListeningConfig(QWidget *parent, const QVariantList &args)
     : KCModule(parent, args)

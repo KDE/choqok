@@ -17,8 +17,7 @@
 
 #include "notifymanager.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(Ur1_caFactory, "choqok_ur1_ca.json",
-                           registerPlugin < Ur1_ca> ();)
+K_PLUGIN_CLASS_WITH_JSON(Ur1_ca, "choqok_ur1_ca.json")
 
 Ur1_ca::Ur1_ca(QObject *parent, const QVariantList &)
     : Choqok::Shortener(QLatin1String("choqok_ur1_ca"), parent)

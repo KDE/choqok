@@ -21,8 +21,7 @@
 #include "notification.h"
 #include "notifysettings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(NotifyFactory, "choqok_notify.json",
-                           registerPlugin < Notify > ();)
+K_PLUGIN_CLASS_WITH_JSON(Notify, "choqok_notify.json")
 
 Notify::Notify(QObject *parent, const QList< QVariant > &)
     : Choqok::Plugin(QLatin1String("choqok_betternotify"), parent), notification(nullptr)

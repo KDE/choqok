@@ -1,4 +1,4 @@
-add_library(choqok_mastodon MODULE
+kcoreaddons_add_plugin(choqok_mastodon SOURCES
     mastodonaccount.cpp
     mastodoncomposerwidget.cpp
     mastodondmessagedialog.cpp
@@ -8,6 +8,7 @@ add_library(choqok_mastodon MODULE
     mastodonoauthreplyhandler.cpp
     mastodonpost.cpp
     mastodonpostwidget.cpp
+    INSTALL_NAMESPACE "choqok_plugins"
 )
 
 ecm_qt_declare_logging_category(choqok_mastodon
@@ -22,8 +23,6 @@ ki18n_wrap_ui(choqok_mastodon
     mastodoneditaccountwidget.ui
 )
 
-kcoreaddons_desktop_to_json(choqok_mastodon choqok_mastodon.desktop)
-
 target_link_libraries(choqok_mastodon
 PUBLIC
     Qt::Core
@@ -37,8 +36,5 @@ PUBLIC
     qca-qt${QT_MAJOR_VERSION}
     choqok
 )
-
-install(TARGETS choqok_mastodon DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES choqok_mastodon.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 
 add_subdirectory(icons)

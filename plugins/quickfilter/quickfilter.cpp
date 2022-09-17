@@ -26,8 +26,7 @@
 #include "quickpost.h"
 #include "timelinewidget.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(QuickFilterFactory, "choqok_quickfilter.json",
-                           registerPlugin < QuickFilter > ();)
+K_PLUGIN_CLASS_WITH_JSON(QuickFilter, "choqok_quickfilter.json")
 
 QuickFilter::QuickFilter(QObject *parent, const QList< QVariant > &args)
     : Choqok::Plugin(QLatin1String("choqok_quickfilter"), parent)

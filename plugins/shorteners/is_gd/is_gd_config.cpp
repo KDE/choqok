@@ -17,8 +17,7 @@
 
 #include "is_gd_settings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(Is_gd_ConfigFactory, "choqok_is_gd_config.json",
-                           registerPlugin < Is_gd_Config > ();)
+K_PLUGIN_CLASS_WITH_JSON(Is_gd_Config, "choqok_is_gd_config.json")
 
 Is_gd_Config::Is_gd_Config(QWidget *parent, const QVariantList &):
     KCModule(parent)

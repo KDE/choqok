@@ -25,8 +25,7 @@
 
 #include "mpris.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(NowListeningFactory, "choqok_nowlistening.json",
-                           registerPlugin < NowListening > ();)
+K_PLUGIN_CLASS_WITH_JSON(NowListening, "choqok_nowlistening.json")
 
 NowListening::NowListening(QObject *parent, const QList<QVariant> &)
     : Choqok::Plugin(QLatin1String("choqok_nowlistening"), parent)

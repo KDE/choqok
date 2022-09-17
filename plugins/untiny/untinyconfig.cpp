@@ -13,8 +13,7 @@
 #include <untinysettings.h>
 #include <QVBoxLayout>
 
-K_PLUGIN_FACTORY( UnTinyConfigFactory, registerPlugin < UnTinyConfig > (); )
-K_EXPORT_PLUGIN( UnTinyConfigFactory( "kcm_choqok_untiny" ) )
+K_PLUGIN_CLASS_WITH_JSON(UnTinyConfig, "choqok_untiny.json")
 
 UnTinyConfig::UnTinyConfig(QWidget* parent, const QVariantList& args):
         KCModule( UnTinyConfigFactory::componentData(), parent, args)

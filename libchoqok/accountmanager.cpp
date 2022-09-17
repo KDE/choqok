@@ -10,6 +10,7 @@
 
 #include <QUrl>
 #include <QStandardPaths>
+#include <QApplication>
 
 #include <KConfig>
 #include <KConfigGroup>

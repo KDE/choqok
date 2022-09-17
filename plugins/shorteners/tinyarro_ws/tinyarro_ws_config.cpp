@@ -20,8 +20,7 @@
 
 #include "tinyarro_ws_settings.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(Tinyarro_ws_ConfigFactory, "choqok_tinyarro_ws_config.json",
-                           registerPlugin < Tinyarro_ws_Config > ();)
+K_PLUGIN_CLASS_WITH_JSON(Tinyarro_ws_Config, "choqok_tinyarro_ws_config.json")
 
 Tinyarro_ws_Config::Tinyarro_ws_Config(QWidget *parent, const QVariantList &):
     KCModule(parent)

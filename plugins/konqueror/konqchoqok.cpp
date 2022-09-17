@@ -22,7 +22,7 @@
 #include <KToolInvocation>
 #include <KWebPage>
 
-K_PLUGIN_FACTORY_WITH_JSON(KonqPluginChoqokFactory, "konqchoqok.json", registerPlugin<KonqPluginChoqok>();)
+K_PLUGIN_CLASS_WITH_JSON(KonqPluginChoqok, "konqchoqok.json")
 
 KonqPluginChoqok::KonqPluginChoqok(QObject *parent, const QVariantList &)
     : Plugin(parent) , m_interface(nullptr)
