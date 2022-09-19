@@ -1,7 +1,21 @@
 {
     "KPlugin": {
         "Description": "Notify Important Posts",
+        "Description[ca@valencia]": "Notifica els missatges importants",
+        "Description[ca]": "Notifica els missatges importants",
+        "Description[en_GB]": "Notify Important Posts",
+        "Description[nl]": "Belangrijke geposte berichten melden",
+        "Description[pt]": "Notificar as Publicações Importantes",
+        "Description[uk]": "Сповіщення щодо важливих дописів",
+        "Description[x-test]": "xxNotify Important Postsxx",
         "Icon": "kaboodle",
-        "Name": "Better Notify"
+        "Name": "Better Notify",
+        "Name[ca@valencia]": "Millor notificació",
+        "Name[ca]": "Millor notificació",
+        "Name[en_GB]": "Better Notify",
+        "Name[nl]": "Beter melden",
+        "Name[pt]": "Better Notify",
+        "Name[uk]": "Кращі сповіщення",
+        "Name[x-test]": "xxBetter Notifyxx"
     }
 }

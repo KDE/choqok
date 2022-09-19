@@ -3,16 +3,37 @@
         "Authors": [
             {
                 "Email": "mehrdad.momeny@gmail.com",
-                "Name": "Mehrdad Momeny"
+                "Name": "Mehrdad Momeny",
+                "Name[ca@valencia]": "Mehrdad Momeny",
+                "Name[ca]": "Mehrdad Momeny",
+                "Name[en_GB]": "Mehrdad Momeny",
+                "Name[nl]": "Mehrdad Momeny",
+                "Name[pt]": "Mehrdad Momeny",
+                "Name[uk]": "Mehrdad Momeny",
+                "Name[x-test]": "xxMehrdad Momenyxx"
             }
         ],
         "Category": "Plugins",
         "Description": "Extract the full URL and show it as a tooltip",
+        "Description[ca@valencia]": "Extrau l'URL complet i el mostra com a un consell",
+        "Description[ca]": "Extreu l'URL complet i el mostra com a un consell",
+        "Description[en_GB]": "Extract the full URL and show it as a tooltip",
+        "Description[nl]": "Haal de volledige URL op en toon deze als een tekstballon",
+        "Description[pt]": "Extrair o URL completo e mostrá-lo como uma dica",
+        "Description[uk]": "Розгортає адреси URL і показує їх на панелі підказки",
+        "Description[x-test]": "xxExtract the full URL and show it as a tooltipxx",
         "EnabledByDefault": true,
         "Icon": "document-preview",
         "Id": "choqok_untiny",
         "License": "GPL",
         "Name": "UnTiny URLs",
+        "Name[ca@valencia]": "URL UnTiny",
+        "Name[ca]": "URL UnTiny",
+        "Name[en_GB]": "UnTiny URLs",
+        "Name[nl]": "UnTiny URL's",
+        "Name[pt]": "UnTiny URLs",
+        "Name[uk]": "Адреси UnTiny",
+        "Name[x-test]": "xxUnTiny URLsxx",
         "Version": "0.3",
         "Website": "https://choqok.kde.org"
     },

@@ -1,7 +1,21 @@
 {
     "KPlugin": {
         "Description": "Personalize Choqok Look and Feel",
+        "Description[ca@valencia]": "Personalitzeu l'aspecte i el comportament de Choqok",
+        "Description[ca]": "Personalitzeu l'aspecte i comportament del Choqok",
+        "Description[en_GB]": "Personalise Choqok Look and Feel",
+        "Description[nl]": "Maak de look-and-feel van Choqok persoonlijk",
+        "Description[pt]": "Personalizar a Aparência e Comportamento do Choqok",
+        "Description[uk]": "Налаштувати вигляд і поведінку Choqok",
+        "Description[x-test]": "xxPersonalize Choqok Look and Feelxx",
         "Icon": "preferences-desktop-theme",
-        "Name": "Appearance"
+        "Name": "Appearance",
+        "Name[ca@valencia]": "Aparença",
+        "Name[ca]": "Aparença",
+        "Name[en_GB]": "Appearance",
+        "Name[nl]": "Uiterlijk",
+        "Name[pt]": "Aparência",
+        "Name[uk]": "Вигляд",
+        "Name[x-test]": "xxAppearancexx"
     }
 }

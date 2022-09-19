@@ -1,7 +1,21 @@
 {
     "KPlugin": {
         "Description": "Manage Your Accounts",
+        "Description[ca@valencia]": "Gestioneu els vostres comptes",
+        "Description[ca]": "Gestioneu els vostres comptes",
+        "Description[en_GB]": "Manage Your Accounts",
+        "Description[nl]": "Uw accounts beheren",
+        "Description[pt]": "Gerir as suas Contas",
+        "Description[uk]": "Керування вашими обліковими записами",
+        "Description[x-test]": "xxManage Your Accountsxx",
         "Icon": "preferences-desktop-user",
-        "Name": "Accounts"
+        "Name": "Accounts",
+        "Name[ca@valencia]": "Comptes",
+        "Name[ca]": "Comptes",
+        "Name[en_GB]": "Accounts",
+        "Name[nl]": "Accounts",
+        "Name[pt]": "Contas",
+        "Name[uk]": "Облікові записи",
+        "Name[x-test]": "xxAccountsxx"
     }
 }

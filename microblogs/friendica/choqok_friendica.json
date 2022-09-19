@@ -3,16 +3,37 @@
         "Authors": [
             {
                 "Email": "scarpino@kde.org",
-                "Name": "Andrea Scarpino"
+                "Name": "Andrea Scarpino",
+                "Name[ca@valencia]": "Andrea Scarpino",
+                "Name[ca]": "Andrea Scarpino",
+                "Name[en_GB]": "Andrea Scarpino",
+                "Name[nl]": "Andrea Scarpino",
+                "Name[pt]": "Andrea Scarpino",
+                "Name[uk]": "Andrea Scarpino",
+                "Name[x-test]": "xxAndrea Scarpinoxx"
             }
         ],
         "Category": "MicroBlogs",
         "Description": "Friendica",
+        "Description[ca@valencia]": "Friendica",
+        "Description[ca]": "Friendica",
+        "Description[en_GB]": "Friendica",
+        "Description[nl]": "Friendica",
+        "Description[pt]": "Friendica",
+        "Description[uk]": "Friendica",
+        "Description[x-test]": "xxFriendicaxx",
         "EnabledByDefault": false,
         "Icon": "friendica_microblog",
         "Id": "choqok_friendica",
         "License": "GPL",
         "Name": "Friendica",
+        "Name[ca@valencia]": "Friendica",
+        "Name[ca]": "Friendica",
+        "Name[en_GB]": "Friendica",
+        "Name[nl]": "Friendica",
+        "Name[pt]": "Friendica",
+        "Name[uk]": "Friendica",
+        "Name[x-test]": "xxFriendicaxx",
         "Version": "0.8",
         "Website": "https://choqok.kde.org"
     }

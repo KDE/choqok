@@ -3,16 +3,37 @@
         "Authors": [
             {
                 "Email": "mehrdad.momeny@gmail.com",
-                "Name": "Mehrdad Momeny"
+                "Name": "Mehrdad Momeny",
+                "Name[ca@valencia]": "Mehrdad Momeny",
+                "Name[ca]": "Mehrdad Momeny",
+                "Name[en_GB]": "Mehrdad Momeny",
+                "Name[nl]": "Mehrdad Momeny",
+                "Name[pt]": "Mehrdad Momeny",
+                "Name[uk]": "Mehrdad Momeny",
+                "Name[x-test]": "xxMehrdad Momenyxx"
             }
         ],
         "Category": "Plugins",
         "Description": "Filtering unwanted posts",
+        "Description[ca@valencia]": "S'estan filtrant els missatges no desitjats",
+        "Description[ca]": "S'estan filtrant els missatges no desitjats",
+        "Description[en_GB]": "Filtering unwanted posts",
+        "Description[nl]": "Ongewenst geposte berichten filteren",
+        "Description[pt]": "A filtrar as publicações indesejadas",
+        "Description[uk]": "Вилучення небажаних дописів",
+        "Description[x-test]": "xxFiltering unwanted postsxx",
         "EnabledByDefault": true,
         "Icon": "view-filter",
         "Id": "choqok_filter",
         "License": "GPL",
         "Name": "Filter posts",
+        "Name[ca@valencia]": "Filtra els missatges",
+        "Name[ca]": "Filtra els missatges",
+        "Name[en_GB]": "Filter posts",
+        "Name[nl]": "Geposte berichten filteren",
+        "Name[pt]": "Filtrar as publicações",
+        "Name[uk]": "Фільтрування дописів",
+        "Name[x-test]": "xxFilter postsxx",
         "Version": "0.5",
         "Website": "https://choqok.kde.org"
     }

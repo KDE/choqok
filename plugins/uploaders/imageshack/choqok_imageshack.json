@@ -3,16 +3,37 @@
         "Authors": [
             {
                 "Email": "mehrdad.momeny@gmail.com",
-                "Name": "Mehrdad Momeny"
+                "Name": "Mehrdad Momeny",
+                "Name[ca@valencia]": "Mehrdad Momeny",
+                "Name[ca]": "Mehrdad Momeny",
+                "Name[en_GB]": "Mehrdad Momeny",
+                "Name[nl]": "Mehrdad Momeny",
+                "Name[pt]": "Mehrdad Momeny",
+                "Name[uk]": "Mehrdad Momeny",
+                "Name[x-test]": "xxMehrdad Momenyxx"
             }
         ],
         "Category": "Uploaders",
         "Description": "Upload image to imageshack.us",
+        "Description[ca@valencia]": "Puja imatges a imageshack.vos",
+        "Description[ca]": "Puja imatges a imageshack.us",
+        "Description[en_GB]": "Upload image to imageshack.us",
+        "Description[nl]": "Afbeelding uploaden naar imageshack.us",
+        "Description[pt]": "Enviar a imagem para o imageshack.us",
+        "Description[uk]": "Вивантаження зображення на imageshack.us",
+        "Description[x-test]": "xxUpload image to imageshack.usxx",
         "EnabledByDefault": false,
         "Icon": "imageshack_uploader",
         "Id": "choqok_imageshack",
         "License": "GPL",
         "Name": "ImageShack",
+        "Name[ca@valencia]": "ImageShack",
+        "Name[ca]": "ImageShack",
+        "Name[en_GB]": "ImageShack",
+        "Name[nl]": "ImageShack",
+        "Name[pt]": "ImageShack",
+        "Name[uk]": "ImageShack",
+        "Name[x-test]": "xxImageShackxx",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     }

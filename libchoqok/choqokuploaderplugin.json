@@ -1,5 +1,12 @@
 {
     "KPlugin": {
-        "Description": "Choqok Uploader Plugin"
+        "Description": "Choqok Uploader Plugin",
+        "Description[ca@valencia]": "Connector de pujades de Choqok",
+        "Description[ca]": "Connector de pujades del Choqok",
+        "Description[en_GB]": "Choqok Uploader Plugin",
+        "Description[nl]": "Choqok uploader-plugin",
+        "Description[pt]": "'Plugin' de Envios para o Chokoq",
+        "Description[uk]": "Додаток вивантаження для Choqok",
+        "Description[x-test]": "xxChoqok Uploader Pluginxx"
     }
 }

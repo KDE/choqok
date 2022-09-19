@@ -1,7 +1,21 @@
 {
     "KPlugin": {
         "Description": "Personalize Choqok's Behavior",
+        "Description[ca@valencia]": "Personalitzeu el comportament de Choqok",
+        "Description[ca]": "Personalitzeu el comportament del Choqok",
+        "Description[en_GB]": "Personalise Choqok's Behaviour",
+        "Description[nl]": "Maak het gedrag van Choqok persoonlijk",
+        "Description[pt]": "Personalizar o Comportamento do Choqok",
+        "Description[uk]": "Налаштувати поведінку Choqok",
+        "Description[x-test]": "xxPersonalize Choqok's Behaviorxx",
         "Icon": "choqok",
-        "Name": "Behavior"
+        "Name": "Behavior",
+        "Name[ca@valencia]": "Comportament",
+        "Name[ca]": "Comportament",
+        "Name[en_GB]": "Behaviour",
+        "Name[nl]": "Gedrag",
+        "Name[pt]": "Comportamento",
+        "Name[uk]": "Поведінка",
+        "Name[x-test]": "xxBehaviorxx"
     }
 }

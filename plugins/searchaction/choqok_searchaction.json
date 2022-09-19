@@ -3,16 +3,37 @@
         "Authors": [
             {
                 "Email": "mehrdad.momeny@gmail.com",
-                "Name": "Mehrdad Momeny"
+                "Name": "Mehrdad Momeny",
+                "Name[ca@valencia]": "Mehrdad Momeny",
+                "Name[ca]": "Mehrdad Momeny",
+                "Name[en_GB]": "Mehrdad Momeny",
+                "Name[nl]": "Mehrdad Momeny",
+                "Name[pt]": "Mehrdad Momeny",
+                "Name[uk]": "Mehrdad Momeny",
+                "Name[x-test]": "xxMehrdad Momenyxx"
             }
         ],
         "Category": "Plugins",
         "Description": "Add a Search action to the UI for Twitter API microblogs like Twitter and GNU social",
+        "Description[ca@valencia]": "Afig una acció de busca a la IU per a la API de microblogs com ara Twitter i social de GNU",
+        "Description[ca]": "Afegeix una acció de cerca a la IU per a l'API de microblogs com ara Twitter i social de GNU",
+        "Description[en_GB]": "Add a Search action to the UI for Twitter API microblogs like Twitter and GNU social",
+        "Description[nl]": "Voeg een zoekactie toe aan de GI voor Twitter-API-microblogs. zoals Twitter en GNU sociaal",
+        "Description[pt]": "Adiciona uma acção de Pesquisa na interface para os 'microblogs' com a API do Twitter, como o Twitter e o social da GNU",
+        "Description[uk]": "Додає дію з пошуку до інтерфейсу користувача мікроблогів з API Twitter, зокрема Twitter і GNU social",
+        "Description[x-test]": "xxAdd a Search action to the UI for Twitter API microblogs like Twitter and GNU socialxx",
         "EnabledByDefault": true,
         "Icon": "edit-find",
         "Id": "choqok_searchaction",
         "License": "GPL",
         "Name": "Search Action",
+        "Name[ca@valencia]": "Acció de busca",
+        "Name[ca]": "Acció de cerca",
+        "Name[en_GB]": "Search Action",
+        "Name[nl]": "Zoekactie",
+        "Name[pt]": "Procurar uma Acção",
+        "Name[uk]": "Шукати дію",
+        "Name[x-test]": "xxSearch Actionxx",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     }

@@ -1,7 +1,21 @@
 {
     "KPlugin": {
         "Description": "Select and Configure Plugins",
+        "Description[ca@valencia]": "Selecció i configuració dels connectors",
+        "Description[ca]": "Selecció i configuració dels connectors",
+        "Description[en_GB]": "Select and Configure Plugins",
+        "Description[nl]": "Plug-ins selecteren en instellen",
+        "Description[pt]": "Seleccionar e Configurar os 'Plugins'",
+        "Description[uk]": "Виберіть і налаштуйте додатки",
+        "Description[x-test]": "xxSelect and Configure Pluginsxx",
         "Icon": "preferences-plugin",
-        "Name": "Plugins"
+        "Name": "Plugins",
+        "Name[ca@valencia]": "Connectors",
+        "Name[ca]": "Connectors",
+        "Name[en_GB]": "Plugins",
+        "Name[nl]": "Plug-ins",
+        "Name[pt]": "'Plugins'",
+        "Name[uk]": "Додатки",
+        "Name[x-test]": "xxPluginsxx"
     }
 }

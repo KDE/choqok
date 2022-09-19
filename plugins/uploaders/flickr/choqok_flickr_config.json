@@ -1,7 +1,21 @@
 {
     "KPlugin": {
         "Description": "Upload image to flickr.com",
+        "Description[ca@valencia]": "Puja imatges a flickr.com",
+        "Description[ca]": "Puja imatges a flickr.com",
+        "Description[en_GB]": "Upload image to flickr.com",
+        "Description[nl]": "Afbeelding uploaden naar flickr.com",
+        "Description[pt]": "Enviar a imagem para o flickr.com",
+        "Description[uk]": "Вивантаження зображення на flickr.com",
+        "Description[x-test]": "xxUpload image to flickr.comxx",
         "Icon": "kaboodle",
-        "Name": "Flickr"
+        "Name": "Flickr",
+        "Name[ca@valencia]": "Flickr",
+        "Name[ca]": "Flickr",
+        "Name[en_GB]": "Flickr",
+        "Name[nl]": "Flickr",
+        "Name[pt]": "Flickr",
+        "Name[uk]": "Flickr",
+        "Name[x-test]": "xxFlickrxx"
     }
 }

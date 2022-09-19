@@ -1,7 +1,21 @@
 {
     "KPlugin": {
         "Description": "Upload image to mobypicture.com",
+        "Description[ca@valencia]": "Puja imatges a mobypicture.com",
+        "Description[ca]": "Puja imatges a mobypicture.com",
+        "Description[en_GB]": "Upload image to mobypicture.com",
+        "Description[nl]": "Afbeelding uploaden naar mobypicture.com",
+        "Description[pt]": "Enviar a imagem para o mobypicture.com",
+        "Description[uk]": "Вивантаження зображення на mobypicture.com",
+        "Description[x-test]": "xxUpload image to mobypicture.comxx",
         "Icon": "kaboodle",
-        "Name": "Mobypicture"
+        "Name": "Mobypicture",
+        "Name[ca@valencia]": "Mobypicture",
+        "Name[ca]": "Mobypicture",
+        "Name[en_GB]": "Mobypicture",
+        "Name[nl]": "Mobypicture",
+        "Name[pt]": "Mobypicture",
+        "Name[uk]": "Mobypicture",
+        "Name[x-test]": "xxMobypicturexx"
     }
 }

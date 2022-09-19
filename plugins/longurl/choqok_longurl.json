@@ -3,16 +3,37 @@
         "Authors": [
             {
                 "Email": "eugene.shalygin@gmail.com",
-                "Name": "Eugene Shalygin"
+                "Name": "Eugene Shalygin",
+                "Name[ca@valencia]": "Eugene Shalygin",
+                "Name[ca]": "Eugene Shalygin",
+                "Name[en_GB]": "Eugene Shalygin",
+                "Name[nl]": "Eugene Shalygin",
+                "Name[pt]": "Eugene Shalygin",
+                "Name[uk]": "Eugene Shalygin",
+                "Name[x-test]": "xxEugene Shalyginxx"
             }
         ],
         "Category": "Plugins",
         "Description": "Extract the full URL using longurl.org service and show it as a tooltip",
+        "Description[ca@valencia]": "Extrau l'URL complet utilitzant el servei longurl.org i el mostra com a un consell",
+        "Description[ca]": "Extreu l'URL complet usant el servei longurl.org i el mostra com a un consell",
+        "Description[en_GB]": "Extract the full URL using longurl.org service and show it as a tooltip",
+        "Description[nl]": "Extraheer de volledige URL met de service longurl.org en toon deze als een tekstballon",
+        "Description[pt]": "Extrai o URL completo com o serviço longurl.org e mostra-o como uma dica",
+        "Description[uk]": "Визначає повну форму запису адреси за допомогою longurl.org і показує її на панелі підказки",
+        "Description[x-test]": "xxExtract the full URL using longurl.org service and show it as a tooltipxx",
         "EnabledByDefault": true,
         "Icon": "document-preview",
         "Id": "choqok_longurl",
         "License": "GPL",
         "Name": "Expand URLs via longurl.org",
+        "Name[ca@valencia]": "Expandix els URL via longurl.org",
+        "Name[ca]": "Expandeix els URL via longurl.org",
+        "Name[en_GB]": "Expand URLs via longurl.org",
+        "Name[nl]": "Expandeer URL's via longurl.org",
+        "Name[pt]": "Expansão de URL's com o longurl.org",
+        "Name[uk]": "Розгортання адрес за допомогою longurl.org",
+        "Name[x-test]": "xxExpand URLs via longurl.orgxx",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     }

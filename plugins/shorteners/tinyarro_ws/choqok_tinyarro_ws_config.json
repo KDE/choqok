@@ -1,7 +1,21 @@
 {
     "KPlugin": {
         "Description": "tinyarro.ws",
+        "Description[ca@valencia]": "tinyarro.ws",
+        "Description[ca]": "tinyarro.ws",
+        "Description[en_GB]": "tinyarro.ws",
+        "Description[nl]": "tinyarro.ws",
+        "Description[pt]": "tinyarro.ws",
+        "Description[uk]": "tinyarro.ws",
+        "Description[x-test]": "xxtinyarro.wsxx",
         "Icon": "kaboodle",
-        "Name": "tinyarro.ws"
+        "Name": "tinyarro.ws",
+        "Name[ca@valencia]": "tinyarro.ws",
+        "Name[ca]": "tinyarro.ws",
+        "Name[en_GB]": "tinyarro.ws",
+        "Name[nl]": "tinyarro.ws",
+        "Name[pt]": "tinyarro.ws",
+        "Name[uk]": "tinyarro.ws",
+        "Name[x-test]": "xxtinyarro.wsxx"
     }
 }

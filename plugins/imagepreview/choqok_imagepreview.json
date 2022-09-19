@@ -3,16 +3,37 @@
         "Authors": [
             {
                 "Email": "mehrdad.momeny@gmail.com",
-                "Name": "Mehrdad Momeny"
+                "Name": "Mehrdad Momeny",
+                "Name[ca@valencia]": "Mehrdad Momeny",
+                "Name[ca]": "Mehrdad Momeny",
+                "Name[en_GB]": "Mehrdad Momeny",
+                "Name[nl]": "Mehrdad Momeny",
+                "Name[pt]": "Mehrdad Momeny",
+                "Name[uk]": "Mehrdad Momeny",
+                "Name[x-test]": "xxMehrdad Momenyxx"
             }
         ],
         "Category": "Plugins",
         "Description": "Load a thumbnail of images to have a preview of it",
+        "Description[ca@valencia]": "Carrega una miniatura de les imatges per a tindre'n una vista prèvia",
+        "Description[ca]": "Carrega una miniatura de les imatges per a tenir-ne una vista prèvia",
+        "Description[en_GB]": "Load a thumbnail of images to have a preview of it",
+        "Description[nl]": "Een miniatuur van afbeeldingen laden om er voorbeeld van te bekijken",
+        "Description[pt]": "Carregar uma miniatura das imagens para ter uma antevisão das mesmas",
+        "Description[uk]": "Завантаження мініатюр зображень для попереднього перегляду",
+        "Description[x-test]": "xxLoad a thumbnail of images to have a preview of itxx",
         "EnabledByDefault": true,
         "Icon": "view-preview",
         "Id": "choqok_imagepreview",
         "License": "GPL",
         "Name": "Preview Images",
+        "Name[ca@valencia]": "Vista prèvia d'imatges",
+        "Name[ca]": "Vista prèvia d'imatges",
+        "Name[en_GB]": "Preview Images",
+        "Name[nl]": "Afbeeldingen vooraf tonen",
+        "Name[pt]": "Antevisão das Imagens",
+        "Name[uk]": "Ескізи зображень",
+        "Name[x-test]": "xxPreview Imagesxx",
         "Version": "0.3",
         "Website": "https://choqok.kde.org"
     }

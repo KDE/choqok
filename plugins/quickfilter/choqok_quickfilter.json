@@ -3,16 +3,37 @@
         "Authors": [
             {
                 "Email": "hf.farhad@gmail.com",
-                "Name": "Farhad Hedayati Fard"
+                "Name": "Farhad Hedayati Fard",
+                "Name[ca@valencia]": "Farhad Hedayati Fard",
+                "Name[ca]": "Farhad Hedayati Fard",
+                "Name[en_GB]": "Farhad Hedayati Fard",
+                "Name[nl]": "Farhad Hedayati Fard",
+                "Name[pt]": "Farhad Hedayati Fard",
+                "Name[uk]": "Farhad Hedayati Fard",
+                "Name[x-test]": "xxFarhad Hedayati Fardxx"
             }
         ],
         "Category": "Plugins",
         "Description": "Filter posts by author name or content text",
+        "Description[ca@valencia]": "Filtra els missatges per nom d'autor o contingut del text",
+        "Description[ca]": "Filtra els missatges per nom d'autor o contingut del text",
+        "Description[en_GB]": "Filter posts by author name or content text",
+        "Description[nl]": "Geposte berichten filteren op auteursnaam of tekstinhoud",
+        "Description[pt]": "Filtrar as publicações pelo nome do autor ou pelo texto do conteúdo",
+        "Description[uk]": "Фільтрування дописів за іменем автора або текстом вмісту",
+        "Description[x-test]": "xxFilter posts by author name or content textxx",
         "EnabledByDefault": true,
         "Icon": "document-preview",
         "Id": "choqok_quickfilter",
         "License": "GPL",
         "Name": "Quickly Filter posts",
+        "Name[ca@valencia]": "Filtra els missatges ràpidament",
+        "Name[ca]": "Filtra els missatges ràpidament",
+        "Name[en_GB]": "Quickly Filter posts",
+        "Name[nl]": "Geposte berichten snel filteren",
+        "Name[pt]": "Filtragem rápida das publicações",
+        "Name[uk]": "Швидке фільтрування дописів",
+        "Name[x-test]": "xxQuickly Filter postsxx",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     }

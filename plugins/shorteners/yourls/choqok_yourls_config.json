@@ -1,7 +1,21 @@
 {
     "KPlugin": {
         "Description": "Yourls",
+        "Description[ca@valencia]": "Yourls",
+        "Description[ca]": "Yourls",
+        "Description[en_GB]": "Yourls",
+        "Description[nl]": "Yourls",
+        "Description[pt]": "Yourls",
+        "Description[uk]": "Yourls",
+        "Description[x-test]": "xxYourlsxx",
         "Icon": "kaboodle",
-        "Name": "Yourls"
+        "Name": "Yourls",
+        "Name[ca@valencia]": "Yourls",
+        "Name[ca]": "Yourls",
+        "Name[en_GB]": "Yourls",
+        "Name[nl]": "Yourls",
+        "Name[pt]": "Yourls",
+        "Name[uk]": "Yourls",
+        "Name[x-test]": "xxYourlsxx"
     }
 }

@@ -1,5 +1,12 @@
 {
     "KPlugin": {
-        "Description": "Choqok MicroBlog Plugin"
+        "Description": "Choqok MicroBlog Plugin",
+        "Description[ca@valencia]": "Connector de microblogs de Choqok",
+        "Description[ca]": "Connector de microblogs del Choqok",
+        "Description[en_GB]": "Choqok MicroBlog Plugin",
+        "Description[nl]": "Choqok MicroBlog Plugin",
+        "Description[pt]": "'Plugin' de MicroBlog para o Chokoq",
+        "Description[uk]": "Додаток мікроблогів до Choqok",
+        "Description[x-test]": "xxChoqok MicroBlog Pluginxx"
     }
 }

@@ -1,7 +1,21 @@
 {
     "KPlugin": {
         "Description": "Tells your friends what you are listening to.",
+        "Description[ca@valencia]": "Diu als vostres amics el què esteu escoltant.",
+        "Description[ca]": "Diu als vostres amics el què esteu escoltant.",
+        "Description[en_GB]": "Tells your friends what you are listening to.",
+        "Description[nl]": "Vertelt uw vrienden waarnaar u naar luistert.",
+        "Description[pt]": "Diz aos seus amigos o que está a ouvir de momento.",
+        "Description[uk]": "Повідомляє вашим друзям про музику, яку ви слухаєте.",
+        "Description[x-test]": "xxTells your friends what you are listening to.xx",
         "Icon": "kaboodle",
-        "Name": "Now Listening"
+        "Name": "Now Listening",
+        "Name[ca@valencia]": "Ara s'escolta",
+        "Name[ca]": "Ara s'escolta",
+        "Name[en_GB]": "Now Listening",
+        "Name[nl]": "Luistert nu naar",
+        "Name[pt]": "Agora a Ouvir",
+        "Name[uk]": "Зараз слухаю",
+        "Name[x-test]": "xxNow Listeningxx"
     }
 }

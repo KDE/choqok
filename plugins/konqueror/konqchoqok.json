@@ -3,15 +3,36 @@
         "Authors": [
             {
                 "Email": "pulmro@gmail.com",
-                "Name": "Emanuele Bigiarini"
+                "Name": "Emanuele Bigiarini",
+                "Name[ca@valencia]": "Emanuele Bigiarini",
+                "Name[ca]": "Emanuele Bigiarini",
+                "Name[en_GB]": "Emanuele Bigiarini",
+                "Name[nl]": "Emanuele Bigiarini",
+                "Name[pt]": "Emanuele Bigiarini",
+                "Name[uk]": "Emanuele Bigiarini",
+                "Name[x-test]": "xxEmanuele Bigiarinixx"
             }
         ],
         "Description": "Post to Choqok the selected text in Konqueror, and other features",
+        "Description[ca@valencia]": "Publica a Choqok el text seleccionat a Konqueror i altres funcionalitats",
+        "Description[ca]": "Publica al Choqok el text seleccionat al Konqueror i altres funcionalitats",
+        "Description[en_GB]": "Post to Choqok the selected text in Konqueror, and other features",
+        "Description[nl]": "Post geselecteerde tekst in Konqueror naar Choqok en overige mogelijkheden",
+        "Description[pt]": "Publicar no Choqok o texto seleccionado no Konqueror, entre outras funcionalidades",
+        "Description[uk]": "Передавання до Choqok позначеного фрагмента тексту у Konqueror та інші можливості",
+        "Description[x-test]": "xxPost to Choqok the selected text in Konqueror, and other featuresxx",
         "EnabledByDefault": true,
         "Icon": "choqok",
         "Id": "konqchoqokplugin",
         "License": "GPL",
         "Name": "Konqueror Choqok Plugin",
+        "Name[ca@valencia]": "Connector Choqok de Konqueror",
+        "Name[ca]": "Connector Choqok del Konqueror",
+        "Name[en_GB]": "Konqueror Choqok Plugin",
+        "Name[nl]": "Choqok-plugin voor Konqueror",
+        "Name[pt]": "'Plugin' do Choqok para o Konqueror",
+        "Name[uk]": "Додаток Choqok до Konqueror",
+        "Name[x-test]": "xxKonqueror Choqok Pluginxx",
         "Version": "0.1"
     }
 }

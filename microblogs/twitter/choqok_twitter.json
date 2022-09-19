@@ -3,16 +3,37 @@
         "Authors": [
             {
                 "Email": "mehrdad.momeny@gmail.com",
-                "Name": "Mehrdad Momeny"
+                "Name": "Mehrdad Momeny",
+                "Name[ca@valencia]": "Mehrdad Momeny",
+                "Name[ca]": "Mehrdad Momeny",
+                "Name[en_GB]": "Mehrdad Momeny",
+                "Name[nl]": "Mehrdad Momeny",
+                "Name[pt]": "Mehrdad Momeny",
+                "Name[uk]": "Mehrdad Momeny",
+                "Name[x-test]": "xxMehrdad Momenyxx"
             }
         ],
         "Category": "MicroBlogs",
         "Description": "Twitter.com Service",
+        "Description[ca@valencia]": "Servei Twitter.com",
+        "Description[ca]": "Servei Twitter.com",
+        "Description[en_GB]": "Twitter.com Service",
+        "Description[nl]": "Twitter.com-service",
+        "Description[pt]": "Serviço Twitter.com",
+        "Description[uk]": "Служба Twitter.com",
+        "Description[x-test]": "xxTwitter.com Servicexx",
         "EnabledByDefault": false,
         "Icon": "twitter_microblog",
         "Id": "choqok_twitter",
         "License": "GPL",
         "Name": "Twitter",
+        "Name[ca@valencia]": "Twitter",
+        "Name[ca]": "Twitter",
+        "Name[en_GB]": "Twitter",
+        "Name[nl]": "Twitter",
+        "Name[pt]": "Twitter",
+        "Name[uk]": "Twitter",
+        "Name[x-test]": "xxTwitterxx",
         "Version": "0.7",
         "Website": "https://choqok.kde.org"
     }

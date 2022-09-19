@@ -3,16 +3,37 @@
         "Authors": [
             {
                 "Email": "mehrdad.momeny@gmail.com",
-                "Name": "Mehrdad Momeny"
+                "Name": "Mehrdad Momeny",
+                "Name[ca@valencia]": "Mehrdad Momeny",
+                "Name[ca]": "Mehrdad Momeny",
+                "Name[en_GB]": "Mehrdad Momeny",
+                "Name[nl]": "Mehrdad Momeny",
+                "Name[pt]": "Mehrdad Momeny",
+                "Name[uk]": "Mehrdad Momeny",
+                "Name[x-test]": "xxMehrdad Momenyxx"
             }
         ],
         "Category": "Shorteners",
         "Description": "A plugin to shorten URLs via the TightURL service.",
+        "Description[ca@valencia]": "Un connector per a escurçar l'URL a través del servei TightURL.",
+        "Description[ca]": "Un connector per a escurçar l'URL a través del servei TightURL.",
+        "Description[en_GB]": "A plugin to shorten URLs via the TightURL service.",
+        "Description[nl]": "Een plugin voor het inkorten van URL's via de TightUrl-service.",
+        "Description[pt]": "Um 'plugin' para reduzir os URL's com o serviço TightURL.",
+        "Description[uk]": "Додаток для скорочення адрес за допомогою служб TightURL.",
+        "Description[x-test]": "xxA plugin to shorten URLs via the TightURL service.xx",
         "EnabledByDefault": false,
         "Icon": "choqok",
         "Id": "choqok_tighturl",
         "License": "GPL",
         "Name": "TightUrl",
+        "Name[ca@valencia]": "TightUrl",
+        "Name[ca]": "TightUrl",
+        "Name[en_GB]": "TightUrl",
+        "Name[nl]": "TightUrl",
+        "Name[pt]": "TightUrl",
+        "Name[uk]": "TightUrl",
+        "Name[x-test]": "xxTightUrlxx",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     }

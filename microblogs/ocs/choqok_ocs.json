@@ -3,16 +3,37 @@
         "Authors": [
             {
                 "Email": "mehrdad.momeny@gmail.com",
-                "Name": "Mehrdad Momeny"
+                "Name": "Mehrdad Momeny",
+                "Name[ca@valencia]": "Mehrdad Momeny",
+                "Name[ca]": "Mehrdad Momeny",
+                "Name[en_GB]": "Mehrdad Momeny",
+                "Name[nl]": "Mehrdad Momeny",
+                "Name[pt]": "Mehrdad Momeny",
+                "Name[uk]": "Mehrdad Momeny",
+                "Name[x-test]": "xxMehrdad Momenyxx"
             }
         ],
         "Category": "MicroBlogs",
         "Description": "Open Collaboration Services",
+        "Description[ca@valencia]": "Serveis de col·laboració oberta",
+        "Description[ca]": "Serveis de col·laboració oberta",
+        "Description[en_GB]": "Open Collaboration Services",
+        "Description[nl]": "Open Collaboration Services",
+        "Description[pt]": "Serviços Colaborativos Abertos",
+        "Description[uk]": "Служби Open Collaboration",
+        "Description[x-test]": "xxOpen Collaboration Servicesxx",
         "EnabledByDefault": false,
         "Icon": "ocs_microblog",
         "Id": "choqok_ocs",
         "License": "GPL",
         "Name": "Open Collaboration Services",
+        "Name[ca@valencia]": "Serveis «Open Collaboration»",
+        "Name[ca]": "Serveis «Open Collaboration»",
+        "Name[en_GB]": "Open Collaboration Services",
+        "Name[nl]": "Open Collaboration Services",
+        "Name[pt]": "Serviços Colaborativos Abertos",
+        "Name[uk]": "Служби Open Collaboration",
+        "Name[x-test]": "xxOpen Collaboration Servicesxx",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     }

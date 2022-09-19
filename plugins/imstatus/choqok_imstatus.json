@@ -3,16 +3,37 @@
         "Authors": [
             {
                 "Email": "gmlastik@gmail.com",
-                "Name": "Andrey Esin"
+                "Name": "Andrey Esin",
+                "Name[ca@valencia]": "Andrey Esin",
+                "Name[ca]": "Andrey Esin",
+                "Name[en_GB]": "Andrey Esin",
+                "Name[nl]": "Andrey Esin",
+                "Name[pt]": "Andrey Esin",
+                "Name[uk]": "Andrey Esin",
+                "Name[x-test]": "xxAndrey Esinxx"
             }
         ],
         "Category": "Plugins",
         "Description": "Sets status of your instant messenger as your status in micro-blog",
+        "Description[ca@valencia]": "Establix l'estat del vostre missatger instantani com a estat en el vostre microblog",
+        "Description[ca]": "Estableix l'estat del vostre missatger instantani com a estat en el vostre microblog",
+        "Description[en_GB]": "Sets status of your instant messenger as your status in micro-blog",
+        "Description[nl]": "De status van uw instant-messenger instellen als uw status in de micro-blog",
+        "Description[pt]": "Define o estado das suas mensagens instantâneas como o seu estado no micro-blog",
+        "Description[uk]": "Встановлювати у вашому мікроблозі стану, тотожного до стану у кур’єрі миттєвого обміну повідомленнями",
+        "Description[x-test]": "xxSets status of your instant messenger as your status in micro-blogxx",
         "EnabledByDefault": false,
         "Icon": "kopete",
         "Id": "choqok_imstatus",
         "License": "GPL",
         "Name": "IMStatus",
+        "Name[ca@valencia]": "IMStatus",
+        "Name[ca]": "IMStatus",
+        "Name[en_GB]": "IMStatus",
+        "Name[nl]": "IMStatus",
+        "Name[pt]": "Estado das MI's",
+        "Name[uk]": "Стан у мережі МП",
+        "Name[x-test]": "xxIMStatusxx",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     },

@@ -1,7 +1,21 @@
 {
     "KPlugin": {
         "Description": "bit.ly",
+        "Description[ca@valencia]": "bit.ly",
+        "Description[ca]": "bit.ly",
+        "Description[en_GB]": "bit.ly",
+        "Description[nl]": "bit.ly",
+        "Description[pt]": "bit.ly",
+        "Description[uk]": "bit.ly",
+        "Description[x-test]": "xxbit.lyxx",
         "Icon": "kaboodle",
-        "Name": "bit.ly"
+        "Name": "bit.ly",
+        "Name[ca@valencia]": "bit.ly",
+        "Name[ca]": "bit.ly",
+        "Name[en_GB]": "bit.ly",
+        "Name[nl]": "bit.ly",
+        "Name[pt]": "bit.ly",
+        "Name[uk]": "bit.ly",
+        "Name[x-test]": "xxbit.lyxx"
     }
 }
