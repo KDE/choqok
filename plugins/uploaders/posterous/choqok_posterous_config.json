@@ -4,8 +4,11 @@
         "Description[ca@valencia]": "Puja imatges a posterous.com",
         "Description[ca]": "Puja imatges a posterous.com",
         "Description[en_GB]": "Upload image to posterous.com",
+        "Description[it]": "Carica immagine su posterous.com",
         "Description[nl]": "Afbeelding uploaden naar posterous.com",
         "Description[pt]": "Enviar a imagem para o posterous.com",
+        "Description[sl]": "Prenesi sliko v posterous.com",
+        "Description[tr]": "posterous.com'a görsel yükle",
         "Description[uk]": "Вивантаження зображення на posterous.com",
         "Description[x-test]": "xxUpload image to posterous.comxx",
         "Icon": "kaboodle",
@@ -13,8 +16,11 @@
         "Name[ca@valencia]": "Posterous",
         "Name[ca]": "Posterous",
         "Name[en_GB]": "Posterous",
+        "Name[it]": "Posterous",
         "Name[nl]": "Posterous",
         "Name[pt]": "Posterous",
+        "Name[sl]": "Posterous",
+        "Name[tr]": "Posterous",
         "Name[uk]": "Posterous",
         "Name[x-test]": "xxPosterousxx"
     }

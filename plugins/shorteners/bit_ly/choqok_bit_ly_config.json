@@ -4,8 +4,11 @@
         "Description[ca@valencia]": "bit.ly",
         "Description[ca]": "bit.ly",
         "Description[en_GB]": "bit.ly",
+        "Description[it]": "bit.ly",
         "Description[nl]": "bit.ly",
         "Description[pt]": "bit.ly",
+        "Description[sl]": "bit.ly",
+        "Description[tr]": "bit.ly",
         "Description[uk]": "bit.ly",
         "Description[x-test]": "xxbit.lyxx",
         "Icon": "kaboodle",
@@ -13,8 +16,11 @@
         "Name[ca@valencia]": "bit.ly",
         "Name[ca]": "bit.ly",
         "Name[en_GB]": "bit.ly",
+        "Name[it]": "bit.ly",
         "Name[nl]": "bit.ly",
         "Name[pt]": "bit.ly",
+        "Name[sl]": "bit.ly",
+        "Name[tr]": "bit.ly",
         "Name[uk]": "bit.ly",
         "Name[x-test]": "xxbit.lyxx"
     }

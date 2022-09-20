@@ -4,8 +4,11 @@
         "Description[ca@valencia]": "tinyarro.ws",
         "Description[ca]": "tinyarro.ws",
         "Description[en_GB]": "tinyarro.ws",
+        "Description[it]": "tinyarro.ws",
         "Description[nl]": "tinyarro.ws",
         "Description[pt]": "tinyarro.ws",
+        "Description[sl]": "tinyarro.ws",
+        "Description[tr]": "tinyarro.ws",
         "Description[uk]": "tinyarro.ws",
         "Description[x-test]": "xxtinyarro.wsxx",
         "Icon": "kaboodle",
@@ -13,8 +16,11 @@
         "Name[ca@valencia]": "tinyarro.ws",
         "Name[ca]": "tinyarro.ws",
         "Name[en_GB]": "tinyarro.ws",
+        "Name[it]": "tinyarro.ws",
         "Name[nl]": "tinyarro.ws",
         "Name[pt]": "tinyarro.ws",
+        "Name[sl]": "tinyarro.ws",
+        "Name[tr]": "tinyarro.ws",
         "Name[uk]": "tinyarro.ws",
         "Name[x-test]": "xxtinyarro.wsxx"
     }

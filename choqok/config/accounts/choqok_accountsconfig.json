@@ -4,8 +4,11 @@
         "Description[ca@valencia]": "Gestioneu els vostres comptes",
         "Description[ca]": "Gestioneu els vostres comptes",
         "Description[en_GB]": "Manage Your Accounts",
+        "Description[it]": "Gestisci i tuoi account",
         "Description[nl]": "Uw accounts beheren",
         "Description[pt]": "Gerir as suas Contas",
+        "Description[sl]": "Upravljaj vaš račun",
+        "Description[tr]": "Hesaplarınızı Yönetin",
         "Description[uk]": "Керування вашими обліковими записами",
         "Description[x-test]": "xxManage Your Accountsxx",
         "Icon": "preferences-desktop-user",
@@ -13,8 +16,11 @@
         "Name[ca@valencia]": "Comptes",
         "Name[ca]": "Comptes",
         "Name[en_GB]": "Accounts",
+        "Name[it]": "Account",
         "Name[nl]": "Accounts",
         "Name[pt]": "Contas",
+        "Name[sl]": "Računi",
+        "Name[tr]": "Hesaplar",
         "Name[uk]": "Облікові записи",
         "Name[x-test]": "xxAccountsxx"
     }

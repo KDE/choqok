@@ -4,8 +4,11 @@
         "Description[ca@valencia]": "Puja imatges a twitgoo.com",
         "Description[ca]": "Puja imatges a twitgoo.com",
         "Description[en_GB]": "Upload image to twitgoo.com",
+        "Description[it]": "Carica immagine su twitgoo.com",
         "Description[nl]": "Afbeelding uploaden naar twitgoo.com",
         "Description[pt]": "Enviar a imagem para o twitgoo.com",
+        "Description[sl]": "Prenesi sliko v twitgoo.com",
+        "Description[tr]": "twitgoo.com'a görsel yükle",
         "Description[uk]": "Вивантаження зображення на twitgoo.com",
         "Description[x-test]": "xxUpload image to twitgoo.comxx",
         "Icon": "kaboodle",
@@ -13,8 +16,11 @@
         "Name[ca@valencia]": "Twitgoo",
         "Name[ca]": "Twitgoo",
         "Name[en_GB]": "Twitgoo",
+        "Name[it]": "Twitgoo",
         "Name[nl]": "Twitgoo",
         "Name[pt]": "Twitgoo",
+        "Name[sl]": "Twitgoo",
+        "Name[tr]": "Twitgoo",
         "Name[uk]": "Twitgoo",
         "Name[x-test]": "xxTwitgooxx"
     }

@@ -4,8 +4,11 @@
         "Description[ca@valencia]": "Personalitzeu el comportament de Choqok",
         "Description[ca]": "Personalitzeu el comportament del Choqok",
         "Description[en_GB]": "Personalise Choqok's Behaviour",
+        "Description[it]": "Personalizza il comportamento di Choqok",
         "Description[nl]": "Maak het gedrag van Choqok persoonlijk",
         "Description[pt]": "Personalizar o Comportamento do Choqok",
+        "Description[sl]": "Prilagodi obnašanje  Choqoka",
+        "Description[tr]": "Choqok'un Davranışını Kişiselleştir",
         "Description[uk]": "Налаштувати поведінку Choqok",
         "Description[x-test]": "xxPersonalize Choqok's Behaviorxx",
         "Icon": "choqok",
@@ -13,8 +16,11 @@
         "Name[ca@valencia]": "Comportament",
         "Name[ca]": "Comportament",
         "Name[en_GB]": "Behaviour",
+        "Name[it]": "Comportamento",
         "Name[nl]": "Gedrag",
         "Name[pt]": "Comportamento",
+        "Name[sl]": "Obnašanje",
+        "Name[tr]": "Davranış",
         "Name[uk]": "Поведінка",
         "Name[x-test]": "xxBehaviorxx"
     }

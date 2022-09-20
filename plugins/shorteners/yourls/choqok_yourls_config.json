@@ -4,8 +4,11 @@
         "Description[ca@valencia]": "Yourls",
         "Description[ca]": "Yourls",
         "Description[en_GB]": "Yourls",
+        "Description[it]": "Yourls",
         "Description[nl]": "Yourls",
         "Description[pt]": "Yourls",
+        "Description[sl]": "Yourls",
+        "Description[tr]": "Yourls",
         "Description[uk]": "Yourls",
         "Description[x-test]": "xxYourlsxx",
         "Icon": "kaboodle",
@@ -13,8 +16,11 @@
         "Name[ca@valencia]": "Yourls",
         "Name[ca]": "Yourls",
         "Name[en_GB]": "Yourls",
+        "Name[it]": "Yourls",
         "Name[nl]": "Yourls",
         "Name[pt]": "Yourls",
+        "Name[sl]": "Yourls",
+        "Name[tr]": "Yourls",
         "Name[uk]": "Yourls",
         "Name[x-test]": "xxYourlsxx"
     }
