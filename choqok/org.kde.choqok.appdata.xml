@@ -22,6 +22,7 @@
   <name xml:lang="ia">Choqok</name>
   <name xml:lang="id">Choqok</name>
   <name xml:lang="it">Choqok</name>
+  <name xml:lang="ka">Choqok</name>
   <name xml:lang="ko">Choqok</name>
   <name xml:lang="nb">Choqok</name>
   <name xml:lang="nds">Choqok</name>
@@ -121,6 +122,7 @@
     <p xml:lang="ia">Characteristicas:</p>
     <p xml:lang="id">Fitur:</p>
     <p xml:lang="it">Funzionalità:</p>
+    <p xml:lang="ka">თვისებები:</p>
     <p xml:lang="ko">기능:</p>
     <p xml:lang="nb">Egenskaper:</p>
     <p xml:lang="nds">Markmalen:</p>
@@ -442,6 +444,7 @@
       <li xml:lang="gl">Permite realizar buscas nos servizos.</li>
       <li xml:lang="id">Mendukung pencarian API-API untuk semua layanan</li>
       <li xml:lang="it">Supporta API di ricerca per tutti i servizi</li>
+      <li xml:lang="ka">ყველა სერვისისთვის ძებნის API-ის მხარდაჭერა</li>
       <li xml:lang="ko">모든 서비스의 검색 API 지원</li>
       <li xml:lang="nb">Støtter søke-API-er for alle tjenester</li>
       <li xml:lang="nds">Ünnerstütt Söök-APIs för all Deensten</li>
@@ -476,6 +479,7 @@
       <li xml:lang="gl">Integración con KWallet.</li>
       <li xml:lang="id">Integrasi KWallet</li>
       <li xml:lang="it">Integrazione con KWallet</li>
+      <li xml:lang="ka">KWallet -თან ინტეგრაცია</li>
       <li xml:lang="ko">KWallet 통합</li>
       <li xml:lang="nb">Integrasjon med KWallet</li>
       <li xml:lang="nds">Arbeidt mit KWallet tosamen</li>
