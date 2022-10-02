@@ -1,0 +1,588 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Dutch "INCLUDE">
+]>
+
+<book id="choqok" lang="&language;">
+
+<bookinfo>
+<title
+>Het handboek van &choqok;</title>
+
+<authorgroup>
+<author
+><firstname
+>Mehrdad</firstname
+> <surname
+>Momeny</surname
+> <affiliation
+> <address
+>mehrdad.momeny@gmail.com</address>
+</affiliation>
+</author>
+<author
+><firstname
+>Anne-Marie</firstname
+> <surname
+>Mahfouf</surname
+> <affiliation
+> <address
+>&Anne-Marie.Mahfouf.mail;</address>
+</affiliation>
+</author>
+<author
+><firstname
+>Andrea</firstname
+> <surname
+>Scarpino</surname
+> <affiliation
+> <address
+>scarpino@kde.org</address>
+</affiliation>
+</author>
+&Freek.de.Kruijf; 
+</authorgroup>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>2015-01-25</date>
+<releaseinfo
+>1.5</releaseinfo>
+
+<abstract>
+<para
+>&choqok; is een micro-blogging-client door KDE (<ulink url="https://choqok.kde.org"
+>https://choqok.kde.org</ulink
+>).</para>
+</abstract>
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>micro-blogging</keyword>
+<keyword
+>client</keyword>
+<keyword
+>Twitter</keyword>
+<keyword
+>Pump.io</keyword>
+<keyword
+>GNU sociaal</keyword>
+</keywordset>
+
+</bookinfo>
+<!--FIXME https://choqok.kde.org/news/2013/09/01/choqok-1-4-released.html -->
+<chapter id="introduction">
+<title
+>Inleiding</title>
+
+<para
+>&choqok; is een micro-blogging-client, die nu de services Pump.io, GNU social en Twitter.com ondersteunt.</para>
+<para
+>Micro-blogging is een vorm van multimedia-blogging die gebruikers in staat stellen om beknopte een tekst bij te werken of micromedia zoals foto's of geluidsclips op te sturen en te publiceren. Deze kunnen door iedereen of een beperkte groep, naar keuze van de gebruiker, worden bekeken. Deze berichten kunnen worden opgestuurd op een aantal manieren, inclusief smsen, instant messaging, e-mail, digitaal geluid of het web.</para>
+</chapter>
+
+<chapter id="using">
+<title
+>&choqok; gebruiken</title>
+
+<sect1 id="getting-started">
+<title
+>Grondbeginselen</title>
+
+<para
+>In het hoofdvenster van  &choqok; zijn enige tijdlijnen waarmee u kunt zien wat uw vrienden hebben gepost, antwoorden aan hen en direct verzonden of ontvangen berichten van vrienden. U kunt ook een nieuw bericht posten.</para>
+
+<para
+>Dit is allemaal beschikbaar wanneer u minstens één account instelt in &choqok;.</para>
+
+<screenshot>
+<screeninfo
+>Hier is een schermafdruk van het hoofdvenster van &choqok;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Hoofdvenster van &choqok;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>U hebt één tabblad per account, op de schermafdruk kunt u een tabblad zien met de alias <guilabel
+>Pump.io</guilabel
+> en een ander met de alias <guilabel
+>twitter</guilabel
+>.</para>
+
+<para
+>Bovenaan het tabblad kunt u kiezen om een direct bericht naar iemand te verzenden die op uw account is ingeschreven. U kunt directe berichten naar andere gebruikers van dezelfde service verzenden, zolang u beiden bij elkaar bent ingeschreven. Als u <guilabel
+>Direct bericht naar</guilabel
+> niet activeert dan zal uw bericht publiekelijk worden gepost en zullen al uw vrienden het lezen. Als u het activeert, dan zult u een naam uit de lijst moeten kiezen en zal het privébericht alleen naar deze persoon worden gepost.</para>
+
+<para
+>Het tekstvak stelt u in staat uw bericht te posten wat minder dan 140 tekens mag hebben. Het aantal overblijvende tekens wordt in groen weergegeven helemaal onderaan het het tekstvak. De kleur wijzigt naar oranje wanneer u de limiet van 30 tekens bereikt daarna naar rood bij het bereiken van 0. Als uw bericht langer is dan 140 tekens, dan zult u worden gevraagd of u het toch wilt posten. Als u toestemt dan zal het tot 140 tekens worden gepost.</para>
+
+<para
+>Het tabblad <guilabel
+>Start</guilabel
+> geeft de tijdlijn weer die bestaat uit alle berichten die u en uw vrienden hebben geschreven. Een bericht dat Pump.io gebruikt wordt een 'post' genoemd terwijl een bericht met Twitter een tweet wordt genoemd.</para>
+
+<para
+>Het tabblad <guilabel
+>Antwoord</guilabel
+> geeft berichten weer die antwoorden aan u zijn.</para>
+
+<para
+>Alle privéberichten die hebt verzonden zullen worden weergegeven in het tabblad <guilabel
+>Postvak uit</guilabel
+> terwijl de ontvangen berichten weergegeven zullen worden in het tabblad <guilabel
+>Postvak in</guilabel
+>.</para>
+
+</sect1>
+
+<sect1 id="search">
+<title
+>Zoeken</title>
+
+<para
+>U kunt in services naar iets zoeken (alles wat de service-zoek-API aan een client biedt).</para>
+
+<para
+>Deze functie is beschikbaar via het menu <menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+> <guimenuitem
+>Zoeken</guimenuitem
+> </menuchoice
+> (sneltoets: <keycombo action="simul"
+>&Ctrl; <keycap
+>F</keycap
+></keycombo
+>) Bijvoorbeeld: u kunt zoeken naar een speciaal woord in alle berichten van gebruikers:</para>
+
+<screenshot>
+<screeninfo
+>&choqok; zoekfunctie</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_search.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>&choqok; zoekfunctie</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="configuring-account">
+<title
+>Een account instellen</title>
+
+<para
+>Open het configuratievenster van &choqok; via <menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>&choqok; instellen...</guimenuitem
+> </menuchoice
+> ga daarna naar het tabblad <guilabel
+>Accounts</guilabel
+> en klik op de knop <guibutton
+>Toevoegen</guibutton
+>, het venster <guilabel
+>Voeg een nieuw account toe</guilabel
+> zal verschijnen. </para>
+
+<screenshot>
+<screeninfo
+>Een account toevoegen</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="add_account.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Een account toevoegen</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Voer eenvoudig de gewenste unieke alias in, de gebruikersnaam en wachtwoord en klik op de knop <guibutton
+>OK</guibutton
+>. Dit zal uw credentials controleren en, als alles in orde is, dan is uw account klaar om te worden gebruikt.</para>
+<para
+>U kunt vervolgens andere accounts instellen.</para>
+</sect1>
+
+<sect1 id="special-features">
+<title
+>Speciale functies</title>
+
+<itemizedlist>
+<listitem
+><para
+>U kunt het bijwerken van de tijdlijn van &choqok; uitschakelen (de tijdlijn is de lijst met berichten van u en uw vrienden). </para
+></listitem>
+<listitem
+><para
+>Een andere speciale functie is de mogelijkheid om de gebruiker te informeren over nieuw ontvangen post. </para
+></listitem>
+<listitem
+><para
+>U kunt snel iets posten door <keycombo action="simul"
+>&Ctrl; <keycap
+>T</keycap
+></keycombo
+> in te drukken om het venster voor snelle micro-blog te openen en uw bericht te schrijven: <screenshot>
+<screeninfo
+>Dialoog voor snelposten</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_quick.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Dialoog voor snelposten</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+<note
+><para
+>U kunt dezelfde tekst naar alle accounts in eens posten.</para
+></note>
+</para
+></listitem>
+<listitem
+><para
+>Wanneer er nieuwe berichten worden ontvangen, zal &choqok; deze markeren als ongelezen en toont het aantal ongelezen berichten in het pictogrammen in het systeemvak. Wanneer het hoofdvenster wordt getoond en dan geminimaliseerd naar het systeemvak dan markeert het alle nieuwe berichten als gelezen. </para
+></listitem>
+</itemizedlist>
+</sect1>
+
+</chapter>
+
+<chapter id="commands">
+
+<title
+>Overzicht van de opdrachten</title>
+
+<sect1 id="menu">
+<title
+>De menuopties</title>
+
+<variablelist>
+<title
+>Het menu <guimenu
+>Bestand</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>T</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Snelpost</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Het venster voor snelpost openen.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo
+><keycap
+>F5</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Tijdlijnen bijwerken</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Tijdlijnen bijwerken</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Alles als gelezen markeren</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Alle berichten als gelezen markeren.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Minimaliseren</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>&choqok; minimaliseren naar het systeemvak.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Afsluiten</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>&choqok; <action
+>afsluiten</action
+>.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<title
+>Het menu <guimenu
+>Hulpmiddelen</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Hulpmiddelen</guimenu
+> <guimenuitem
+>Zoeken</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Zoekvenster voor het huidige account.</action>
+</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<title
+>Het menu <guimenu
+>Instellingen</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>U</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>Bijwerktimer inschakelen</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Bijwerkinterval van tijdlijn bijwerken <action
+>aan/uit</action
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>Meldingen instellen</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Meldingen <action
+>aan/uit</action
+></para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>Statusbalk tonen</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>De statusbalk <action
+>aan/uit</action
+></para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>Sneltoetsen instellen...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>De door &choqok; gebruikte sneltoetsen <action
+>instellen</action
+>. </action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>Werkbalken instellen...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Stel</action
+> de werkbalk in door items toe te voegen, te verplaatsen of te verwijderen. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Instellingen</guimenu
+><guimenuitem
+>&choqok; instellen...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Toon</action
+> de dialoog voor instellingen van &choqok;. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>Bovendien heeft &choqok; de welbekende menu-items in <guimenu
+>Help</guimenu
+>. </para>
+</sect1>
+
+</chapter>
+
+
+<chapter id="credits-and-license">
+<title
+>Dankbetuigingen en licentie</title>
+
+<para
+>&choqok; copyright 2008-2015 Mehrdad Momeny <email
+>mehrdad.momeny@gmail.com</email
+> </para>
+<para
+>Documentatie copyright 2009 Mehrdad Momeny (<email
+>mehrdad.momeny@gmail.com</email
+>) </para>
+
+&meld.fouten;&vertaling.freek; &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes: nil
+sgml-general-insert-case: lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->

@@ -1,0 +1,4118 @@
+# translation of choqok.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2009, 2010.
+# Morn Met, 2009.
+# Seng Sutha <sutha@khmeros.info>, 2010.
+# Chan Sambathratanak <ratanak@khmeros.info>, 2011.
+# sutha <sutha@khmeros.info>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: choqok\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-18 00:44+0000\n"
+"PO-Revision-Date: 2012-06-15 11:06+0700\n"
+"Last-Translator: sutha <sutha@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros>\n"
+"Language: km\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: WordForge 0.8 RC1\n"
+"X-Language: km-KH\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា, ចាន់ សម្បត្តិរតនៈ, សុខ សុភា"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+"khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info,"
+"ratanak@khmeros.info,sophea@khmeros.info"
+
+#. i18n: ectx: Menu (file)
+#: choqok/choqokui.rc:4
+#, kde-format
+msgid "File"
+msgstr "ឯកសារ"
+
+#. i18n: ectx: Menu (tools)
+#: choqok/choqokui.rc:11 plugins/filter/filterui.rc:4
+#: plugins/nowlistening/nowlisteningui.rc:4
+#: plugins/quickfilter/quickfilterui.rc:4
+#: plugins/searchaction/searchactionui.rc:4
+#, kde-format
+msgid "Tools"
+msgstr "ឧបករណ៍"
+
+#. i18n: ectx: Menu (settings)
+#. i18n: ectx: attribute (title), widget (QWidget, settingsTab)
+#: choqok/choqokui.rc:15 plugins/uploaders/flickr/flickrprefs.ui:82
+#, kde-format
+msgid "Settings"
+msgstr "ការ​កំណត់"
+
+#. i18n: ectx: Menu (help)
+#: choqok/choqokui.rc:20
+#, kde-format
+msgid "Help"
+msgstr "ជំនួយ"
+
+#: choqok/config/accounts/accountswidget.cpp:74
+#, kde-format
+msgid "Cannot load the %1 plugin. Please check your installation."
+msgstr "មិន​អាច​ផ្ទុក​កម្ម​វិធី​ជំនួយ​ %1 ​បាន​ទេ ។ សូម​ពិនិត្យ​មើល​ការ​ដំឡើង​របស់​អ្នក​ ។"
+
+#: choqok/config/accounts/accountswidget.cpp:90
+#, kde-format
+msgid "Cannot find the desired account."
+msgstr "រក​មិន​ឃើញ​គណនី​ដែល​ចង់​បាន​ទេ ។"
+
+#: choqok/config/accounts/accountswidget.cpp:110
+#, kde-format
+msgid "Are you sure you want to remove the selected account?"
+msgstr "តើ​អ្នក​ប្រាកដ​ជា​ចង់​យក​គណនី​ដែល​បាន​ជ្រើស​ចេញ​ឬ​ ?"
+
+#: choqok/config/accounts/accountswidget.cpp:117
+#, kde-format
+msgid "Cannot remove the account."
+msgstr "មិន​អាច​យក​គណនី​ចេញ​បាន​ទេ​ ។"
+
+#: choqok/config/accounts/accountswidget.cpp:238
+#, kde-format
+msgid "Select Micro-Blogging Service"
+msgstr "ជ្រើស​សេវា​ Micro-Blogging "
+
+#: choqok/config/accounts/accountswidget.cpp:298
+#, kde-format
+msgid ""
+"You need to restart Choqok for the accounts priority changes to take effect."
+msgstr "អ្នក​ត្រូវ​ការ​ចាប់ផ្ដើម​ Choqok ​ឡើង​វិញ ដើម្បី​ឲ្យ​ការ​ផ្លាស់ប្ដូរ​អាទិ​ភាព​គណនី​មាន​ប្រសិទ្ធភាព ។"
+
+#. i18n: ectx: property (windowTitle), widget (QWidget, AccountsWidgetBase)
+#: choqok/config/accounts/accountswidget_base.ui:14
+#: choqok/config/accounts/addaccountdialog.cpp:29
+#, kde-format
+msgid "Add New Account"
+msgstr "បន្ថែម​គណនី​ថ្មី"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnAdd)
+#: choqok/config/accounts/accountswidget_base.ui:40
+#, kde-format
+msgid "Add a new account"
+msgstr "បន្ថែម​គណនី​ថ្មី"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnAdd)
+#: choqok/config/accounts/accountswidget_base.ui:43
+#, kde-format
+msgid "&Add..."
+msgstr "បន្ថែម..."
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnEdit)
+#: choqok/config/accounts/accountswidget_base.ui:57
+#, kde-format
+msgid "Modify the selected account"
+msgstr "កែប្រែ​គណនី​ដែល​បាន​ជ្រើស"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnEdit)
+#: choqok/config/accounts/accountswidget_base.ui:60
+#, kde-format
+msgid "&Modify..."
+msgstr "កែប្រែ..."
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnRemove)
+#: choqok/config/accounts/accountswidget_base.ui:74
+#, kde-format
+msgid "Remove the selected account"
+msgstr "យក​គណនី​ដែល​បាន​ជ្រើស​ចេញ"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnRemove)
+#: choqok/config/accounts/accountswidget_base.ui:77
+#, kde-format
+msgid "&Remove"
+msgstr "យកចេញ"
+
+#. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:162
+#, kde-format
+msgid "Alias"
+msgstr "ឈ្មោះ​ក្លែងក្លាយ"
+
+#. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:165
+#, fuzzy, kde-format
+#| msgid "Add a new account"
+msgid "An alias for the account"
+msgstr "បន្ថែម​គណនី​ថ្មី"
+
+#. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:170
+#, kde-format
+msgid "Micro-Blog"
+msgstr "Micro-Blog"
+
+#. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:173
+#, fuzzy, kde-format
+#| msgid "Twitter account"
+msgid "The type of the account"
+msgstr "គណនី Twitter"
+
+#. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:178
+#, fuzzy, kde-format
+#| msgid "Enable"
+msgid "Enabled"
+msgstr "បើក​"
+
+#. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:181
+#, kde-format
+msgid "Whether the microblog is enabled or disabled"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:186
+#, kde-format
+msgid "Read Only"
+msgstr "បាន​តែ​អាន"
+
+#. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:189
+#, kde-format
+msgid "Read Only account"
+msgstr "គណនី​ដែល​បាន​តែ​អាន"
+
+#. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:194 choqok/mainwindow.cpp:196
+#: libchoqok/ui/quickpost.cpp:98
+#, kde-format
+msgid "Quick Post"
+msgstr "ការ​ប្រកាស​រហ័ស​"
+
+#. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:197
+#, kde-format
+msgid "Show in Quick Post"
+msgstr "បង្ហាញ​នៅ​ក្នុង​ការប្រកាស​រហ័ស"
+
+#: choqok/config/accounts/addaccountdialog.cpp:54
+#, kde-format
+msgid "The Account registration failed."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ចុះឈ្មោះ​គណនី ។"
+
+#: choqok/config/accounts/addaccountdialog.cpp:62
+#: choqok/config/accounts/editaccountdialog.cpp:59
+#, kde-format
+msgid ""
+"Cannot validate your input information.\n"
+"Please check the fields' data.\n"
+"Maybe a required field is empty?"
+msgstr ""
+"មិន​អាច​ធ្វើ​ឲ្យ​ព័ត៌មាន​បញ្ចូល​របស់​អ្នក​មាន​សុពល​ភាព​ទេ ។\n"
+"សូម​ពិនិត្យមើល​ទិន្នន័យ​របស់​វាល​ ។\n"
+" ​ប្រហែល​ជា​វាល​ដែល​បាន​ទាម​ទារ​ទទេ​ឬ ?"
+
+#: choqok/config/accounts/editaccountdialog.cpp:31
+#, kde-format
+msgid "Edit Account"
+msgstr "កែសម្រួល​គណនី​"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_isEmoticonsEnabled)
+#: choqok/config/appearance/appearanceconfig_base.ui:17
+#, kde-format
+msgid "Enable emoticons"
+msgstr "បើក​សញ្ញា​អារម្មណ៍"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useReverseOrder)
+#: choqok/config/appearance/appearanceconfig_base.ui:24
+#, kde-format
+msgid "Show posts in reverse order (Needs restart to take effect)"
+msgstr "បង្ហាញ​ប្រកាស​ក្នុង​លំដាប់​បញ្ច្រាស (ទាមទារ​ការ​ចាប់ផ្ដើម​ឡើងវិញ ដើម្បី​ឲ្យ​មាន​ប្រសិទ្ធភាព)"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showRetweetsInChoqokWay)
+#: choqok/config/appearance/appearanceconfig_base.ui:31
+#, fuzzy, kde-format
+#| msgid ""
+#| "You'll see post with retweeter name as author, plus Retweeted from "
+#| "original author note."
+msgid ""
+"You will see post with retweeter name as author, plus Retweeted from "
+"original author note."
+msgstr ""
+"អ្នក​នឹង​មើល​ឃើញ​ការ​ប្រកាស ជាមួយ​នឹង​ឈ្មោះ​អ្នក​ដែល​ធ្វើ​ការ​ប្រកាស​ឡើងវិញ​ជា​អ្នក​និពន្ធ រួម​ទាំង​ការ​ប្រកាស​"
+"ដែល​បាន​ធ្វើ​ឡើងវិញ​ពី​កំណត់​ចំណាំ​របស់​អ្នក​និពន្ធ​ដើម ។"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_showRetweetsInChoqokWay)
+#: choqok/config/appearance/appearanceconfig_base.ui:34
+#, kde-format
+msgid "Show Retweeted/Repeated posts in Choqok way"
+msgstr "បង្ហាញ​ការ​ប្រកាស​ដែល​បាន​ធ្វើ​ឡើងវិញ​ក្នុង​វិធី​របស់ Choqok"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_isCustomUi)
+#: choqok/config/appearance/appearanceconfig_base.ui:44
+#, kde-format
+msgid "Use custom appearance"
+msgstr "ប្រើ​រូបរាង​ផ្ទាល់ខ្លួន"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: choqok/config/appearance/appearanceconfig_base.ui:76
+#, fuzzy, kde-format
+#| msgid "Post Font:"
+msgid "Post font:"
+msgstr "ប្រកាស​ពុម្ពអក្សរ ៖"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: choqok/config/appearance/appearanceconfig_base.ui:95
+#, kde-format
+msgid "Post Color Preferences"
+msgstr "ប្រកាស​ចំណូលចិត្ត​ពណ៌"
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: choqok/config/appearance/appearanceconfig_base.ui:103
+#, kde-format
+msgid "Background"
+msgstr "ផ្ទៃ​ខាងក្រោយ"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: choqok/config/appearance/appearanceconfig_base.ui:113
+#, kde-format
+msgid "Default color:"
+msgstr "ពណ៌លំនាំដើម​ ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: choqok/config/appearance/appearanceconfig_base.ui:150
+#, kde-format
+msgid "Unread post color:"
+msgstr "ពណ៌​ប្រកាស​ដែល​មិន​បាន​អាន ​៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: choqok/config/appearance/appearanceconfig_base.ui:194
+#, kde-format
+msgid "Foreground"
+msgstr "ផ្ទៃ​ខាង​មុខ"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: choqok/config/appearance/appearanceconfig_base.ui:204
+#, kde-format
+msgid "Own post color:"
+msgstr "ពណ៌​ប្រកាស​ដោយ​ខ្លួនឯង ៖"
+
+#: choqok/config/behavior/behaviorconfig.cpp:57
+#, kde-format
+msgid "&General"
+msgstr "ទូទៅ"
+
+#: choqok/config/behavior/behaviorconfig.cpp:64
+#, kde-format
+msgid "&Notifications"
+msgstr "ការ​ជូនដំណឹង"
+
+#: choqok/config/behavior/behaviorconfig.cpp:75
+#, kde-format
+msgid "URL &Shortening"
+msgstr "ការ​កាត់​ URL ឲ្យ​ខ្លី "
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: choqok/config/behavior/behaviorconfig_general.ui:17
+#, kde-format
+msgid "General Options"
+msgstr "ជម្រើស​ទូទៅ"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_showSplashScreen)
+#: choqok/config/behavior/behaviorconfig_general.ui:23
+#, kde-format
+msgid "Show splash-screen on startup"
+msgstr "បង្ហាញ​អេក្រង់​ស្វាគមន៍​ពេល​ចាប់ផ្ដើម​"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_markAllAsReadOnExit)
+#: choqok/config/behavior/behaviorconfig_general.ui:33
+#, kde-format
+msgid "Mark all posts as read on exit"
+msgstr "សម្គាល់​ការ​ប្រកាស​ទាំងអស់​ថា​បាន​អាន​ពេល​ចាកចេញ"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_enableSpellChecker)
+#: choqok/config/behavior/behaviorconfig_general.ui:43
+#, kde-format
+msgid "Enable automatic spellchecking in the message editor"
+msgstr "បើក​ការ​ពិនិត្យ​អក្ខរា​វិរុទ្ធ​ស្វ័យ​ប្រវត្តិ​នៅ​ក្នុង​កម្ម​វិធី​កែសម្រួល​សារ"
+
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_enableSysTray)
+#: choqok/config/behavior/behaviorconfig_general.ui:50
+#, fuzzy, kde-format
+#| msgid "Enable Update Timer"
+msgid "Enable System &Tray"
+msgstr "អនុញ្ញាត​ឧបករណ៍​កំណត់​ពេលបច្ចុប្បន្នមភាព"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_markAllAsReadOnHideToSystray)
+#: choqok/config/behavior/behaviorconfig_general.ui:62
+#, kde-format
+msgid "Mark all unread posts as read, when hiding to system tray"
+msgstr "សម្គាល់​ការ​ប្រកាស​ដែល​មិន​បាន​អាន​ទាំងអស់​ថា​បាន​អាន​រួច នៅ​ពេល​លាក់​ទៅ​ថាស​ប្រព័ន្ធ"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useCustomBrowser)
+#: choqok/config/behavior/behaviorconfig_general.ui:83
+#, kde-format
+msgid "Use &custom web browser:"
+msgstr "ប្រើ​កម្មវិធី​រុករក​បណ្ដាញ​ផ្ទាល់ខ្លួន ៖"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useCustomRT)
+#: choqok/config/behavior/behaviorconfig_general.ui:101
+#, kde-format
+msgid "Use custom prefix for ReSend [ReTweet]:"
+msgstr "ប្រើ​បុព្វបទ​ផ្ទាល់​ខ្លួន​សម្រាប់​​ផ្ញើ​ឡើងវិញ​ [ReTweet] ៖"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: choqok/config/behavior/behaviorconfig_general.ui:120
+#, kde-format
+msgid "Timelines Options"
+msgstr "ជម្រើស​បន្ទាត់​ពេលវេលា"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: choqok/config/behavior/behaviorconfig_general.ui:130
+#, kde-format
+msgid "&Update interval:"
+msgstr "ចន្លោះ​ពេល​ធ្វើ​បច្ចុប្បន្នភាព ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: choqok/config/behavior/behaviorconfig_general.ui:149
+#, kde-format
+msgid "&Number of posts to show in timelines:"
+msgstr "ចំនួន​ការប្រកាស​ដែល​ត្រូវ​បង្ហាញ​នៅ​ក្នុង​បន្ទាត់​ពេលវេលា ៖"
+
+#. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_updateInterval)
+#: choqok/config/behavior/behaviorconfig_general.ui:166
+#, kde-format
+msgid "Disabled"
+msgstr "បាន​បិទ"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_updateInterval)
+#: choqok/config/behavior/behaviorconfig_general.ui:169
+#, fuzzy, kde-format
+#| msgid " Minute"
+#| msgid_plural " Minutes"
+msgid " minutes"
+msgstr "នាទី"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_showAllNotifiesInOne)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:17
+#, kde-format
+msgid "&Show all new posts in one notification"
+msgstr "បង្ហាញ​ការប្រកាស​ថ្មី​ៗ​ទាំងអស់​នៅ​ក្នុង​ការ​ជូន​ដំណឹង​មួយ"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:26
+#, kde-format
+msgid "&Notification duration:"
+msgstr "ថិរវេលា​ជូន​ដំណឹង ៖"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_notifyInterval)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:39
+#, fuzzy, kde-format
+#| msgid "seconds"
+msgid " seconds"
+msgstr "វិនាទី"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:57
+#, kde-format
+msgid "New post notifications"
+msgstr "ការ​ជូន​ដំណឹង​ពី​ប្រកាស​ថ្មី"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_knotify)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:63
+#, kde-format
+msgid "Show notification using KNotify"
+msgstr "បង្ហាញ​ការ​ជូន​ដំណឹង​ដោយ​ប្រើ KNotify"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_libindicate)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:70
+#, kde-format
+msgid "Show notification using Message Indicator"
+msgstr "បង្ហាញ​ការ​ជូន​ដំណឹង​ដោយ​ប្រើ​កម្មវិធី​បង្ហាញ​សារ"
+
+#: choqok/config/behavior/behaviorconfig_shorten.cpp:71
+#, fuzzy, kde-format
+#| msgid "None"
+msgctxt "No shortener service"
+msgid "None"
+msgstr "គ្មាន"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_shortenOnPaste)
+#: choqok/config/behavior/behaviorconfig_shorten_base.ui:17
+#, kde-format
+msgid "Shorten &URLs on paste"
+msgstr "កាត់​ URLs ​ឲ្យ​ខ្លី​នៅ​ពេល​បិទ​ភ្ជាប់"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_removeHttp)
+#: choqok/config/behavior/behaviorconfig_shorten_base.ui:24
+#, kde-format
+msgid "Remove \"http://\" from shortened URLs"
+msgstr "យក \"http://\" ចេញពី URLs ដែល​បាន​កាត់​ឲ្យ​ខ្លី"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: choqok/config/behavior/behaviorconfig_shorten_base.ui:33
+#, fuzzy, kde-format
+#| msgid "Shortening &service:"
+msgid "Shortening ser&vice:"
+msgstr "សេវា​កាត់​ឲ្យ​ខ្លី ៖"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, configPlugin)
+#: choqok/config/behavior/behaviorconfig_shorten_base.ui:56
+#: libchoqok/ui/uploadmedia_base.ui:71
+#, kde-format
+msgid "Configure plugin"
+msgstr "កំណត់​រចនាសម្ព័ន្ធ​កម្មវិធី​ជំនួយ"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, aboutPlugin)
+#: choqok/config/behavior/behaviorconfig_shorten_base.ui:72
+#: libchoqok/ui/uploadmedia_base.ui:90
+#, kde-format
+msgid "About plugin"
+msgstr "អំពី​កម្មវិធី​ជំនួយ"
+
+#: choqok/config/plugins/choqokpluginconfig.cpp:39
+#, kde-format
+msgid "General Plugins"
+msgstr "កម្ម​វិធី​ជំនួយ​ទូ​ទៅ"
+
+#: choqok/main.cpp:28
+#, kde-format
+msgid "KDE Micro-Blogging Client."
+msgstr "ម៉ាស៊ីន​ភ្ញៀវ KDE Micro-Blogging ។"
+
+#: choqok/main.cpp:29
+#, fuzzy, kde-format
+#| msgid ""
+#| "(C) 2008-2010 Mehrdad Momeny\n"
+#| "(C) 2011-2012 Choqok Developers"
+msgid ""
+"(C) 2008-2010 Mehrdad Momeny\n"
+"(C) 2011-2019 Choqok Developers"
+msgstr ""
+"រក្សាសិទ្ធិ​ឆ្នាំ ២០០៨-២០១០ ដោយ Mehrdad Momeny\n"
+"រក្សាសិទ្ធិ​ឆ្នាំ ២០១១-២០១២ អ្នក​អភិវឌ្ឍន៍ Choqok"
+
+#: choqok/main.cpp:35
+#, kde-format
+msgid "Mehrdad Momeny"
+msgstr "Mehrdad Momeny"
+
+#: choqok/main.cpp:35
+#, kde-format
+msgid "Author, Developer and Maintainer"
+msgstr ""
+
+#: choqok/main.cpp:37
+#, fuzzy, kde-format
+#| msgid "Andrey Esin"
+msgid "Andrea Scarpino"
+msgstr "Andrey Esin"
+
+#: choqok/main.cpp:37
+#, kde-format
+msgid "Developer and Maintainer"
+msgstr ""
+
+#: choqok/main.cpp:39
+#, kde-format
+msgid "Andrey Esin"
+msgstr "Andrey Esin"
+
+#: choqok/main.cpp:39 choqok/main.cpp:46
+#, kde-format
+msgid "Developer"
+msgstr "អ្នក​​អភិវឌ្ឍន៍"
+
+#: choqok/main.cpp:42
+#, kde-format
+msgid "Roozbeh Shafiee"
+msgstr "Roozbeh Shafiee"
+
+#: choqok/main.cpp:42 choqok/main.cpp:43
+#, kde-format
+msgid "Artworks"
+msgstr "ការងារ​សិល្បៈ"
+
+#: choqok/main.cpp:43
+#, kde-format
+msgid "Shahrzad Shojaei"
+msgstr "Shahrzad Shojaei"
+
+#: choqok/main.cpp:44
+#, kde-format
+msgid "Daniel Schaal"
+msgstr "Daniel Schaal"
+
+#: choqok/main.cpp:44 choqok/main.cpp:51
+#, kde-format
+msgid "UI improvements"
+msgstr "ធ្វើ​ឲ្យ​ចំណុច​ប្រទាក់​អ្នក​ប្រើ​កាន់​តែ​ប្រសើរ​ឡើង"
+
+#: choqok/main.cpp:45
+#, kde-format
+msgid "Stephen Henderson"
+msgstr "Stephen Henderson"
+
+#: choqok/main.cpp:45
+#, kde-format
+msgid "Search API implementation"
+msgstr "ស្វែងរក​ការ​ប្រតិបត្តិ​​ API "
+
+#: choqok/main.cpp:46
+#, kde-format
+msgid "Tejas Dinkar"
+msgstr "Tejas Dinkar"
+
+#: choqok/main.cpp:48
+#, kde-format
+msgid "Emanuele Bigiarini"
+msgstr "Emanuele Bigiarini"
+
+#: choqok/main.cpp:48
+#, fuzzy, kde-format
+#| msgid "DBus and konqueror plugin"
+msgid "D-Bus and Konqueror plugin"
+msgstr "កម្មវិធី​ជំនួយ DBus និង konqueror"
+
+#: choqok/main.cpp:49
+#, kde-format
+msgid "Alex Infantes"
+msgstr "Alex Infantes"
+
+#: choqok/main.cpp:49
+#, kde-format
+msgid "Improvements on Image preview plugin"
+msgstr "ការ​ធ្វើ​ឲ្យ​ប្រសើរ​​នៅ​ពេល​មើល​កម្មវិធី​ជំនួយ​​រូបភាព​ជាមុន"
+
+#: choqok/main.cpp:51
+#, kde-format
+msgid "Bardia Daneshvar"
+msgstr "Bardia Daneshvar"
+
+#: choqok/main.cpp:52
+#, kde-format
+msgid "Atanas Gospodinov"
+msgstr "Atanas Gospodinov"
+
+#: choqok/main.cpp:52
+#, kde-format
+msgid "Twitter photo upload"
+msgstr "ផ្ទុក​រូបថត​ Twitter"
+
+#: choqok/main.cpp:53
+#, kde-format
+msgid "Daniel Kreuter"
+msgstr ""
+
+#: choqok/main.cpp:53
+#, kde-format
+msgid "Twitter microblog developer"
+msgstr ""
+
+#: choqok/main.cpp:54
+#, kde-format
+msgid "Lim Yuen Hoe"
+msgstr ""
+
+#: choqok/main.cpp:54
+#, fuzzy, kde-format
+#| msgid "UI improvements"
+msgid "Bug fixes and improvements"
+msgstr "ធ្វើ​ឲ្យ​ចំណុច​ប្រទាក់​អ្នក​ប្រើ​កាន់​តែ​ប្រសើរ​ឡើង"
+
+#: choqok/main.cpp:55
+#, kde-format
+msgid "Ahmed I. Khalil"
+msgstr ""
+
+#: choqok/main.cpp:55
+#, fuzzy, kde-format
+#| msgid "UI improvements"
+msgid "Various improvements"
+msgstr "ធ្វើ​ឲ្យ​ចំណុច​ប្រទាក់​អ្នក​ប្រើ​កាន់​តែ​ប្រសើរ​ឡើង"
+
+#: choqok/mainwindow.cpp:56 choqok/mainwindow.cpp:517 choqok/mainwindow.cpp:581
+#: choqok/mainwindow.cpp:636 choqok/systrayicon.cpp:99
+#: choqok/systrayicon.cpp:105 plugins/betternotify/dummynotification.cpp:34
+#: plugins/konqueror/konqchoqok.cpp:30
+#, kde-format
+msgid "Choqok"
+msgstr "Choqok"
+
+#: choqok/mainwindow.cpp:190
+#, kde-format
+msgid "Update Timelines"
+msgstr "ធ្វើបច្ចុប្បន្នភាព​​បន្ទាត់​ពេល​វេលា​"
+
+#: choqok/mainwindow.cpp:202
+#, kde-format
+msgid "Mark All As Read"
+msgstr "សម្គាល់​ថា​អាន​រួច​ទាំង​អស់"
+
+#: choqok/mainwindow.cpp:211
+#, fuzzy, kde-format
+#| msgid "Minimize"
+msgctxt "@action"
+msgid "Minimize"
+msgstr "បង្រួម​អប្បបរមា "
+
+#: choqok/mainwindow.cpp:213
+#, fuzzy, kde-format
+#| msgid "Restore"
+msgctxt "@action"
+msgid "Restore"
+msgstr "ស្ដារ"
+
+#: choqok/mainwindow.cpp:221
+#, kde-format
+msgid "Enable Update Timer"
+msgstr "អនុញ្ញាត​ឧបករណ៍​កំណត់​ពេលបច្ចុប្បន្នមភាព"
+
+#: choqok/mainwindow.cpp:227
+#, kde-format
+msgid "Enable Notifications"
+msgstr "បើក​ការ​ជូនដំណឹង"
+
+#: choqok/mainwindow.cpp:233
+#, kde-format
+msgid "Hide Menubar"
+msgstr "លាក់​របារ​ម៉ឺនុយ"
+
+#: choqok/mainwindow.cpp:240
+#, kde-format
+msgid "Clear Avatar Cache"
+msgstr "សម្អាត​ឃ្លាំង​​អវតារ"
+
+#: choqok/mainwindow.cpp:242
+#, kde-format
+msgid "You have to restart Choqok to load avatars again"
+msgstr "អ្នក​ត្រូវ​តែ​ចាប់ផ្ដើម​ Choqok ឡើង​វិញ ដើម្បី​ផ្ទុក​អវតារ​ម្ដងទៀត"
+
+#: choqok/mainwindow.cpp:247
+#, kde-format
+msgid "Upload Medium..."
+msgstr "ផ្ទុក​ឧបករណ៍​ឡើង..."
+
+#: choqok/mainwindow.cpp:271
+#, kde-format
+msgid ""
+"No account created. You have to create an account before being able to make "
+"posts."
+msgstr "គ្មាន​គណនី​ត្រូវ​បាន​បង្កើត​ទេ ។ អ្នក​ត្រូវតែ​បង្កើត​គណនី​សិន មុន​ពេល​ដែល​អាច​ធ្វើ​ការ​ប្រកាស​បាន​ ។"
+
+#: choqok/mainwindow.cpp:303
+#, kde-format
+msgid ""
+"In order to use Choqok you need an account at one of the supported micro-"
+"blogging services.\n"
+"Would you like to add your account now?"
+msgstr ""
+"ដើម្បី​ប្រើ​ Choqok អ្នក​ត្រូវ​តែ​មាន​គណនី​មួយ​ក្នុង​ចំណោម​សេវា​ micro-blogging ​ដែល​គាំ​ទ្រ​ ។\n"
+"តើ​អ្នក​ចង់​បន្ថែម​គណនី​របស់​អ្នក​ឥឡូវនេះ​ឬ ?"
+
+#: choqok/mainwindow.cpp:515
+#, kde-format
+msgid "Choqok (%1)"
+msgstr "Choqok (%1)"
+
+#: choqok/mainwindow.cpp:570
+#, kde-format
+msgid "Restore"
+msgstr "ស្ដារ"
+
+#: choqok/mainwindow.cpp:576
+#, kde-format
+msgid "Minimize"
+msgstr "បង្រួម​អប្បបរមា "
+
+#: choqok/mainwindow.cpp:621
+#, kde-format
+msgid "Loading timelines..."
+msgstr "កំពុង​ផ្ទុក​បន្ទាត់​ពេល​វេលា​..."
+
+#: choqok/systrayicon.cpp:99
+#, kde-format
+msgid "1 unread post"
+msgid_plural "%1 unread posts"
+msgstr[0] "%1 ការប្រកាស​ដែល​មិន​បាន​អាន "
+
+#: choqok/systrayicon.cpp:108
+#, kde-format
+msgid "Choqok - Disabled"
+msgstr "Choqok - បាន​បិទ"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnAttach)
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:49
+#: libchoqok/ui/quickpost.cpp:75
+#: microblogs/mastodon/mastodoncomposerwidget.cpp:45
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:47
+#: microblogs/pumpio/pumpiomessagedialog.ui:90
+#: microblogs/twitter/twittercomposerwidget.cpp:58
+#, kde-format
+msgid "Attach a file"
+msgstr "ភ្ជាប់​​ជាមួយ​ឯកសារ​"
+
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:87
+#: libchoqok/ui/composerwidget.cpp:124
+#: microblogs/mastodon/mastodoncomposerwidget.cpp:78
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:80
+#: microblogs/twitter/twittercomposerwidget.cpp:94
+#, kde-format
+msgid "Abort"
+msgstr "បោះ​បង់"
+
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:107
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:429
+#: microblogs/pumpio/pumpiomicroblog.cpp:683
+#: microblogs/twitter/twittercomposerwidget.cpp:114
+#, fuzzy, kde-format
+#| msgid "New post submitted successfully"
+msgid "New post for account %1 submitted successfully"
+msgstr "ការ​ប្រកាស​ថ្មី​បាន​ដាក់​ស្នើ​ដោយ​ជោគ​ជ័យ"
+
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:121
+#: microblogs/mastodon/mastodoncomposerwidget.cpp:125
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:127
+#: microblogs/pumpio/pumpiomessagedialog.cpp:169
+#: microblogs/twitter/twittercomposerwidget.cpp:127
+#, kde-format
+msgid "Select Media to Upload"
+msgstr "ជ្រើស​មេឌៀ​ដើម្បី​ផ្ទុក​ឡើង"
+
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:132
+#: microblogs/mastodon/mastodoncomposerwidget.cpp:136
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:138
+#: microblogs/pumpio/pumpiomessagedialog.cpp:180
+#: microblogs/twitter/twittercomposerwidget.cpp:138
+#, kde-format
+msgid "Discard Attachment"
+msgstr "បោះចោល​ឯកសារ​ភ្ជាប់"
+
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:139
+#: microblogs/mastodon/mastodoncomposerwidget.cpp:143
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:145
+#: microblogs/pumpio/pumpiomessagedialog.cpp:187
+#: microblogs/twitter/twittercomposerwidget.cpp:145
+#, kde-format
+msgid "Attaching <b>%1</b>"
+msgstr "ភ្ជាប់ <b>%1</b>"
+
+#: helperlibs/gnusocialapihelper/gnusocialapiconversationtimelinewidget.cpp:22
+#, kde-format
+msgid "Conversation %1"
+msgstr "ការ​សន្ទនា %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapiconversationtimelinewidget.cpp:24
+#: helperlibs/twitterapihelper/twitterapidmessagedialog.cpp:126
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:302
+#: microblogs/mastodon/mastodondmessagedialog.cpp:126
+#, kde-format
+msgid "Please wait..."
+msgstr "សូម​មេត្តា​រង់​ចាំ​..."
+
+#: helperlibs/gnusocialapihelper/gnusocialapiconversationtimelinewidget.cpp:52
+#: helperlibs/twitterapihelper/twitterapishowthread.cpp:37
+#, kde-format
+msgid "Conversation"
+msgstr "ការ​សន្ទនា​"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:47
+#: microblogs/laconica/laconicamicroblog.cpp:25
+#, kde-format
+msgctxt "Timeline name"
+msgid "Repeated"
+msgstr "បាន​ធ្វើ​ម្ដងទៀត"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:48
+#: microblogs/laconica/laconicamicroblog.cpp:26
+#, kde-format
+msgctxt "Timeline description"
+msgid "Your posts that were repeated by others"
+msgstr "ការ​ប្រកាស​របស់​អ្នក​ដែល​ត្រូវ​បាន​ប្រកាស​ម្ដងទៀត​ដោយ​អ្នក​ដទៃ"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:184
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:192
+#: libchoqok/mediamanager.cpp:174 libchoqok/mediamanager.cpp:181
+#: microblogs/twitter/twittermicroblog.cpp:144
+#: microblogs/twitter/twittermicroblog.cpp:152
+#, kde-format
+msgid "Uploading medium failed: cannot read the medium file."
+msgstr "បាន​បរាជ័យ​ការ​ផ្ទុក​ឡើង​ឧបករណ៍​ផ្ទុក ៖ មិន​អាច​អាន​ឯកសារ​ឧបករណ៍​ផ្ទុក​បាន​ឡើយ ។"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:237
+#, kde-format
+msgid "Repeat of %1"
+msgstr "ការ​ធ្វើ​ម្ដងទៀត​នៃ %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:239
+#, kde-format
+msgid "Repeated by %1"
+msgstr "បាន​ធ្វើ​ម្ដងទៀត​ដោយ %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:245
+#, kde-format
+msgid "Repeat this notice?"
+msgstr "ធ្វើ​កំណត់​ចំណាំ​នេះ​ម្ដងទៀត​ឬ ?"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:270
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1488
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1514
+#, kde-format
+msgid ""
+"Retrieving the friends list failed. The data returned from the server is "
+"corrupted."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ទៅ​​យក​បញ្ជី​មិត្តភ័ក្ដិ ។ ទិន្នន័យ​ដែល​ត្រឡប់​ពី​ម៉ាស៊ីន​បម្រើ​គឺ​ខូច ។"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:329
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:742
+#, kde-format
+msgid ""
+"Friends list for account %1 could not be updated:\n"
+"%2"
+msgstr ""
+"មិន​អាច​ធ្វើ​បច្ចុប្បន្នភាព​បញ្ជី​មិត្តភ័ក្ដិ​សម្រាប់​គណនី %1 បាន​ទេ ៖\n"
+"%2"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:393
+#, kde-format
+msgid "Fetching conversation failed. %1"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ទៅ​ប្រមូល​យក​ការ​ប្រកាស​​ថ្មី ។ %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:73
+#: microblogs/twitter/twitterpostwidget.cpp:62
+#, kde-format
+msgid "Manual ReSend"
+msgstr "ផ្ញើ​ឡើងវិញ​ដោយ​ដៃ"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:75
+#, kde-format
+msgid "Repeat"
+msgstr "ធ្វើ​ម្ដងទៀត"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:76
+#, kde-format
+msgid "Repeat post using API"
+msgstr "ប្រកាស​ម្ដងទៀត​ដោយ​ប្រើ API"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:140
+#, kde-format
+msgid "Search for %1"
+msgstr "ស្វែងរក %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:142
+#, kde-format
+msgid "Open tag page in browser"
+msgstr "បើក​ទំព័រ​ស្លាក​ក្នុង​កម្មវិធី​រុករក"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:158
+#, kde-format
+msgid "Show latest group posts"
+msgstr "បង្ហាញ​ការ​ប្រកាស​ជា​ក្រុម​ចុងក្រោយ​បង្អស់"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:160
+#, kde-format
+msgid "Open group page in browser"
+msgstr "បើក​ទំព័រ​ក្រុម​ក្នុង​កម្មវិធី​រុករក"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:177
+#: microblogs/twitter/twitterpostwidget.cpp:129
+#, kde-format
+msgctxt "Who is user"
+msgid "Who is %1"
+msgstr "នរណា​ជា​ %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:179
+#: microblogs/twitter/twitterpostwidget.cpp:131
+#, kde-format
+msgctxt "Posts from user"
+msgid "Posts from %1"
+msgstr "ប្រកាស​ពី​ %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:181
+#: microblogs/twitter/twitterpostwidget.cpp:133
+#, kde-format
+msgctxt "Replies to user"
+msgid "Replies to %1"
+msgstr "ឆ្លើយ​តប​ទៅ​ %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:185
+#: microblogs/twitter/twitterpostwidget.cpp:141
+#, kde-format
+msgctxt "Open profile page in browser"
+msgid "Open profile in browser"
+msgstr "បើក​ជីវប្រវត្តិ​សង្ខេប​ក្នុង​កម្មវិធី​រុករក"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:202
+#: microblogs/twitter/twitterpostwidget.cpp:158
+#, kde-format
+msgid "Actions"
+msgstr "អំពើ"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:203
+#: microblogs/twitter/twitterpostwidget.cpp:159
+#, kde-format
+msgctxt "Write a message to user attention"
+msgid "Write to %1"
+msgstr "សរសេរ​ទៅកាន់ %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:208
+#: microblogs/twitter/twitterpostwidget.cpp:165
+#, kde-format
+msgctxt "Send direct message to user"
+msgid "Send private message to %1"
+msgstr "ផ្ញើ​សារ​ផ្ទាល់ខ្លួន​ទៅកាន់ %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:214
+#, kde-format
+msgctxt "Unsubscribe from user"
+msgid "Unsubscribe from %1"
+msgstr "ឈប់​ជាវ​ពី %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:219
+#, kde-format
+msgctxt "Subscribe to user"
+msgid "Subscribe to %1"
+msgstr "ជាវ​​​ទៅ %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:223
+#: microblogs/twitter/twitterpostwidget.cpp:180
+#, kde-format
+msgctxt "Block user"
+msgid "Block %1"
+msgstr "ទប់ស្កាត់ %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:31
+#, kde-format
+msgctxt "Dents are Identica posts"
+msgid "Dents Including This Hashtag"
+msgstr "Dents រួមបញ្ចូល​ Hashtag​ នេះ"
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:34
+#, kde-format
+msgctxt "Dents are Identica posts"
+msgid "Dents Including This Group"
+msgstr "Dents រួមបញ្ចូល​ក្រុម​នេះ"
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:37
+#, kde-format
+msgctxt "Dents are Identica posts"
+msgid "Dents From This User"
+msgstr "Dents ពី​អ្នក​ប្រើ​នេះ"
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:40
+#, kde-format
+msgctxt "Dents are Identica posts"
+msgid "Dents To This User"
+msgstr "Dents ទៅ​អ្នក​ប្រើ​នេះ"
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:128
+#: microblogs/twitter/twittersearch.cpp:115
+#, kde-format
+msgid "Unable to fetch search results."
+msgstr "មិន​អាច​ទៅ​ប្រមូល​យក​លទ្ធផល​ស្វែង​រក​បាន​ទេ​ ។"
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:136
+#: microblogs/twitter/twittersearch.cpp:123
+#, kde-format
+msgid "Unable to fetch search results: %1"
+msgstr "មិន​អាច​ទៅ​ប្រមូល​យក​​លទ្ធផល​ស្វែង​រក​បាន​ទេ​ ៖ %1"
+
+#: helperlibs/twitterapihelper/twitterapidmessagedialog.cpp:45
+#: microblogs/mastodon/mastodondmessagedialog.cpp:45
+#, kde-format
+msgid "Send Private Message"
+msgstr "ផ្ញើ​សារ​ផ្ទាល់ខ្លួន​"
+
+#: helperlibs/twitterapihelper/twitterapidmessagedialog.cpp:69
+#: microblogs/mastodon/mastodondmessagedialog.cpp:69
+#, kde-format
+msgctxt "Send message to"
+msgid "To:"
+msgstr "ទៅ៖"
+
+#: helperlibs/twitterapihelper/twitterapidmessagedialog.cpp:74
+#: microblogs/mastodon/mastodondmessagedialog.cpp:74
+#, kde-format
+msgid "Reload friends list"
+msgstr "ផ្ទុក​បញ្ជី​មិត្តភ័ក្ដិ​ឡើង​វិញ"
+
+#: helperlibs/twitterapihelper/twitterapidmessagedialog.cpp:96
+#: microblogs/mastodon/mastodondmessagedialog.cpp:96
+#, kde-format
+msgctxt "Send private message"
+msgid "Send"
+msgstr "ផ្ញើ"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:86
+#: microblogs/mastodon/mastodonmicroblog.cpp:399
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Home"
+msgstr "ផ្ទះ"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:87
+#, kde-format
+msgctxt "Timeline description"
+msgid "You and your friends"
+msgstr "អ្នក​ និង​មិត្ត​របស់អ្នក"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:92
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Reply"
+msgstr "ឆ្លើយតប"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:93
+#, kde-format
+msgctxt "Timeline description"
+msgid "Replies to you"
+msgstr "ឆ្លើយ​តប​ទៅ​អ្នក"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:98
+#: microblogs/pumpio/pumpiomicroblog.cpp:1265
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Inbox"
+msgstr "ប្រអប់​ទទួល"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:99
+#, kde-format
+msgctxt "Timeline description"
+msgid "Your incoming private messages"
+msgstr "សារ​ផ្ទាល់​ខ្លួន​ដែល​ទទួល​បាន​របស់​អ្នក"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:104
+#: microblogs/pumpio/pumpiomicroblog.cpp:1272
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Outbox"
+msgstr "ប្រអប់​ចេញ"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:105
+#, kde-format
+msgctxt "Timeline description"
+msgid "Private messages you have sent"
+msgstr "សារ​ផ្ទាល់​ខ្លួន​ដែល​អ្នក​បាន​ផ្ញើ"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:110
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Favorite"
+msgstr "សំណព្វ"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:111
+#, kde-format
+msgctxt "Timeline description"
+msgid "Your favorites"
+msgstr "សំណព្វ​របស់​អ្នក​"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:116
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Public"
+msgstr "សាធារណៈ"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:117
+#, kde-format
+msgctxt "Timeline description"
+msgid "Public timeline"
+msgstr "បន្ទាត់​ពេលវេលា​សាធារណៈ"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:122
+#, kde-format
+msgctxt "Timeline Name"
+msgid "ReTweets"
+msgstr "ReTweets"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:123
+#, kde-format
+msgctxt "Timeline description"
+msgid "Your posts that were ReTweeted by others"
+msgstr "ប្រកាស​របស់​អ្នក​ដែល​ត្រូវ​បាន ReTweeted ដោយ​អ្នក​ដទៃ"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:138
+#: microblogs/pumpio/pumpiomicroblog.cpp:107
+#, kde-format
+msgid "Send Private Message..."
+msgstr "ផ្ញើ​សារ​ផ្ទាល់​ខ្លួន..."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:143
+#: plugins/searchaction/searchaction.cpp:29
+#, kde-format
+msgid "Search..."
+msgstr "ស្វែង​រក..."
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnReload)
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:148
+#: microblogs/pumpio/pumpiomessagedialog.ui:31
+#, kde-format
+msgid "Update Friends List"
+msgstr "ធ្វើបច្ចុប្បន្នភាព​បញ្ជី​មិត្តភក្ដិ"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:300
+#: microblogs/mastodon/mastodonmicroblog.cpp:101
+#: microblogs/pumpio/pumpiomicroblog.cpp:166
+#, kde-format
+msgid "Creating the new post failed. Text is empty."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​ប្រកាស​​ថ្មី ។ អត្ថបទ​ទ​ទេ​ ។"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:410
+#, fuzzy, kde-format
+#| msgid "Creating the new post failed. %1"
+msgid "Creating the new post failed: %1"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​ការ​ប្រកាស​ថ្មី ។ %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:421
+#, kde-format
+msgid "Creating the new post failed. The result data could not be parsed."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​ការ​ប្រកាស​ថ្មី ។ មិន​អាច​ញែក​ទិន្នន័យ​លទ្ធ​ផល​បាន​ទេ ។"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:425
+#, fuzzy, kde-format
+#| msgid "Creating the new post failed, with error: %1"
+msgid "Creating the new post failed, with error: %1"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​ប្រកាស​​​ថ្មី ជាមួយ​កំហុស​ ៖ %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:433
+#, kde-format
+msgid "Private message sent successfully"
+msgstr "សារ​ផ្ទាល់ខ្លួន​បាន​ផ្ញើ​ដោយ​ជោគ​ជ័យ"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:501
+#, kde-format
+msgid "Fetching the new post failed. %1"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ទៅ​ប្រមូល​យក​ការ​ប្រកាស​​ថ្មី ។ %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:511
+#, kde-format
+msgid "Fetching new post failed. The result data could not be parsed."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ទៅ​ប្រមូល​យក​ការ​ប្រកាស​ថ្មី​ ។ មិន​អាច​ញែក​ទិន្នន័យ​លទ្ធ​ផល​បាន​ទេ​ ។"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:516
+#, fuzzy, kde-format
+#| msgid "Fetching new post failed, with error: %1"
+msgid "Fetching new post failed, with error:%1"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ទៅ​ប្រមូល​យក​ការ​​ប្រកាស​​ថ្មី  ជាមួយ​កំហុស​ ៖ %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:566
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:575
+#: microblogs/mastodon/mastodonmicroblog.cpp:788
+#: microblogs/pumpio/pumpiomicroblog.cpp:964
+#, kde-format
+msgid "Removing the post failed. %1"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​យក​ការ​​ប្រកាស​ចេញ ។ %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:619
+#, kde-format
+msgid "Favorite creation failed. %1"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​សំណព្វ​ ។ %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:671
+#, kde-format
+msgid "Removing the favorite failed. %1"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​យក​សំណព្វ​ចេញ​ ។ %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:721
+#, fuzzy, kde-format
+#| msgid "Updating friends list for account %1 ..."
+msgid "Updating friends list for account %1..."
+msgstr "កំពុង​ធ្វើ​បច្ចុប្បន្នភាព​បញ្ជី​មិត្តភ័ក្ដិ​សម្រាប់​គណនី %1 ..."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:757
+#, kde-format
+msgid "Friends list for account %1 has been updated."
+msgstr "បញ្ជី​មិត្តភ័ក្ដិ​សម្រាប់​គណនី %1 ត្រូវ​បាន​ធ្វើ​បច្ចុប្បន្នភាព ។"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:800
+#: microblogs/mastodon/mastodonmicroblog.cpp:845
+#, fuzzy, kde-format
+#| msgid "Updating friends list for account %1 ..."
+msgid "Updating followers list for account %1..."
+msgstr "កំពុង​ធ្វើ​បច្ចុប្បន្នភាព​បញ្ជី​មិត្តភ័ក្ដិ​សម្រាប់​គណនី %1 ..."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:821
+#: microblogs/mastodon/mastodonmicroblog.cpp:875
+#, fuzzy, kde-format
+#| msgid ""
+#| "Friends list for account %1 could not be updated:\n"
+#| "%2"
+msgid ""
+"Followers list for account %1 could not be updated:\n"
+"%2"
+msgstr ""
+"មិន​អាច​ធ្វើ​បច្ចុប្បន្នភាព​បញ្ជី​មិត្តភ័ក្ដិ​សម្រាប់​គណនី %1 បាន​ទេ ៖\n"
+"%2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:836
+#, fuzzy, kde-format
+#| msgid "Friends list for account %1 has been updated."
+msgid "Followers list for account %1 has been updated."
+msgstr "បញ្ជី​មិត្តភ័ក្ដិ​សម្រាប់​គណនី %1 ត្រូវ​បាន​ធ្វើ​បច្ចុប្បន្នភាព ។"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:918
+#, fuzzy, kde-format
+#| msgid "Timeline update failed, %1"
+msgid "Timeline update failed: %1"
+msgstr "បាន​បរាជ័យ​ក្នុងការ​ធ្វើ​បច្ចុប្បន្នភាព​បន្ទាត់​ពេលវេលា %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1087
+#, kde-format
+msgid "Creating friendship with %1 failed. %2"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​មិត្ត​ភាព​ជាមួយ​ %1 ។ %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1094
+#, kde-format
+msgid "You are now listening to %1's posts."
+msgstr "ឥឡូវនេះ​អ្នក​​កំពុង​ស្ដាប់​ការ​ប្រកាស​របស់ %1 ។"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1102
+#, kde-format
+msgid "Creating friendship with %1 failed: the server returned invalid data."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​មិត្ត​ភាព​ជា​មួយ​​ %1 ៖ ម៉ាស៊ីន​បម្រើ​បាន​ត្រឡប់​ទិន្នន័យ​ដែល​​មិន​ត្រឹម​ត្រូវ​ ។"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1107
+#, kde-format
+msgid "Creating friendship with %1 failed: %2"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​មិត្តភាព​ជាមួយ​ %1 ៖ %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1150
+#, kde-format
+msgid "Destroying friendship with %1 failed. %2"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បំផ្លាញ​មិត្ត​ភាព​ជា​មួយ​ %1 ​។ %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1157
+#, kde-format
+msgid "You will not receive %1's updates."
+msgstr "អ្នក​នឹង​មិន​ទទួល​បានបច្ចុប្បន្នភាព​​ %1 ​ឡើយ​ ។"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1165
+#, kde-format
+msgid "Destroying friendship with %1 failed: the server returned invalid data."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បំផ្លាញមិត្ត​ភាព​ជា​មួយ​ %1 ៖ ម៉ាស៊ីន​បម្រើ​បាន​ត្រឡប់​ទិន្ន​ន័យ​ដែល​មិន​ត្រឹម​ត្រូវ​ ។"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1170
+#, kde-format
+msgid "Destroying friendship with %1 failed: %2"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បំផ្លាញ​មិត្តភាព​ជាមួយ %1 ៖ %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1240
+#, kde-format
+msgid "Blocking %1 failed. %2"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ទប់​ស្កាត់%1 ​។ %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1246
+#, kde-format
+msgid "You will no longer be disturbed by %1."
+msgstr "អ្នក​នឹង​មិន​ត្រូវ​បាន​រំខាន​ដោយ %1 ទៀតឡើយ​ ។"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1250
+#, kde-format
+msgid "Blocking %1 failed: the server returned invalid data."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ទប់​ស្កាត់​​ %1 ៖ ​ម៉ាស៊ីន​បម្រើ​បាន​ត្រឡប់​ទិន្នន័យ​ដែល​មិន​ត្រឹម​ត្រូវ​ ។"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1269
+#, fuzzy, kde-format
+#| msgid "Blocking %1 failed. %2"
+msgid "Reporting %1 failed. %2"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ទប់​ស្កាត់%1 ​។ %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1274
+#, fuzzy, kde-format
+#| msgid "New post submitted successfully"
+msgid "Report sent successfully."
+msgstr "ការ​ប្រកាស​ថ្មី​បាន​ដាក់​ស្នើ​ដោយ​ជោគ​ជ័យ"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1278
+#, fuzzy, kde-format
+#| msgid "Blocking %1 failed: the server returned invalid data."
+msgid "Reporting %1 failed: the server returned invalid data."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ទប់​ស្កាត់​​ %1 ៖ ​ម៉ាស៊ីន​បម្រើ​បាន​ត្រឡប់​ទិន្នន័យ​ដែល​មិន​ត្រឹម​ត្រូវ​ ។"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1320
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1339
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1414
+#, kde-format
+msgid "Could not parse the data that has been received from the server."
+msgstr "មិន​អាច​ញែក​ទិន្នន័យ​ដែល​បាន​ទទួល​ពី​ម៉ាស៊ីន​បម្រើ​ឡើយ​ ។"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1542
+#: microblogs/mastodon/mastodonmicroblog.cpp:891
+#, fuzzy, kde-format
+#| msgid ""
+#| "Retrieving the friends list failed. The data returned from the server is "
+#| "corrupted."
+msgid ""
+"Retrieving the followers list failed. The data returned from the server is "
+"corrupted."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ទៅ​​យក​បញ្ជី​មិត្តភ័ក្ដិ ។ ទិន្នន័យ​ដែល​ត្រឡប់​ពី​ម៉ាស៊ីន​បម្រើ​គឺ​ខូច ។"
+
+#: helperlibs/twitterapihelper/twitterapimicroblogwidget.cpp:112
+#, fuzzy, kde-format
+#| msgid "The search result is empty."
+msgid "(The search result is empty.)"
+msgstr "លទ្ធ​ផល​ស្វែងរក​គឺ​ទទេ ។"
+
+#: helperlibs/twitterapihelper/twitterapimicroblogwidget.cpp:222
+#: libchoqok/ui/timelinewidget.cpp:240
+#, fuzzy, kde-format
+#| msgid "Mark all as read"
+msgid "Mark timeline as read"
+msgstr "សម្គាល់​ថា​បាន​អាន​រួច​ទាំង​អស់"
+
+#: helperlibs/twitterapihelper/twitterapimicroblogwidget.cpp:226
+#, kde-format
+msgid "Close Timeline"
+msgstr "បិទ​បន្ទាត់​ពេលវេលា"
+
+#: helperlibs/twitterapihelper/twitterapimicroblogwidget.cpp:227
+#, kde-format
+msgid "Close All"
+msgstr "បិទ​ទាំងអស់"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:59
+#: microblogs/mastodon/mastodonpostwidget.cpp:100
+#: microblogs/pumpio/pumpiopostwidget.cpp:176
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Reply"
+msgstr "ឆ្លើយតប"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:64
+#: microblogs/mastodon/mastodonpostwidget.cpp:105
+#: microblogs/pumpio/pumpiopostwidget.cpp:179
+#, kde-format
+msgid "Reply to %1"
+msgstr "ឆ្លើយ​តប​ទៅ​ %1"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:69
+#: microblogs/mastodon/mastodonpostwidget.cpp:110
+#, kde-format
+msgid "Write to %1"
+msgstr "សរសេរ​ទៅ %1"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:74
+#: microblogs/mastodon/mastodonpostwidget.cpp:115
+#, kde-format
+msgid "Reply to all"
+msgstr "ឆ្លើយតប​ទៅ​ទាំងអស់"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:78
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Favorite"
+msgstr "សំណព្វ"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:113
+#, kde-format
+msgid "<a href='%1' title='Sent from %2 via OStatus'>%2</a>"
+msgstr "<a href='%1' title='Sent from %2 via OStatus'>%2</a>"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:125
+#, kde-format
+msgid "Show Conversation"
+msgstr "បង្ហាញ​ការ​សន្ទនា"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:133
+#, kde-format
+msgid ""
+"<a href='replyto://%1'>in reply to</a> @<a href='user://%4'>%4</a>&nbsp;<a "
+"href=\"%2\" title=\"%2\">%3</a>"
+msgstr ""
+"<a href='replyto://%1'>ឆ្លើយ​តប​ទៅកាន់</a> @<a href='user://%4'>%4</a>&nbsp;<a "
+"href=\"%2\" title=\"%2\">%3</a>"
+
+#: helperlibs/twitterapihelper/twitterapisearchdialog.cpp:48
+#, fuzzy, kde-format
+#| msgid "Search"
+msgctxt "@title:window"
+msgid "Search"
+msgstr "ស្វែង​រក"
+
+#: helperlibs/twitterapihelper/twitterapisearchdialog.cpp:77
+#, kde-format
+msgctxt "Search query"
+msgid "Query:"
+msgstr "សំណួរ​៖"
+
+#: helperlibs/twitterapihelper/twitterapisearchdialog.cpp:88
+#, fuzzy, kde-format
+#| msgid "Search"
+msgctxt "@action:button"
+msgid "Search"
+msgstr "ស្វែង​រក"
+
+#: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:58
+#: libchoqok/ui/timelinewidget.cpp:45
+#, fuzzy, kde-format
+#| msgid "Search results for %1"
+msgctxt "%1 is the name of a timeline"
+msgid "Search results for %1"
+msgstr "លទ្ធផល​ស្វែង​រក​សម្រាប់​ %1​​"
+
+#: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:87
+#, kde-format
+msgid "Close Search"
+msgstr "បិទ​ការ​ស្វែង​រក"
+
+#: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:93
+#, kde-format
+msgid "Previous"
+msgstr "មុន"
+
+#: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:98
+#, kde-format
+msgid "Next"
+msgstr "បន្ទាប់"
+
+#: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:105
+#, kde-format
+msgid "Page Number"
+msgstr "លេខ​ទំព័រ"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:150
+#, kde-format
+msgid "Cannot load user information."
+msgstr "មិន​អាច​ផ្ទុក​ព័ត៌មាន​អ្នក​ប្រើ​បាន​ទេ ។"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:239
+#, kde-format
+msgid "Close"
+msgstr "បិទ"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:251
+#, kde-format
+msgctxt "User posts"
+msgid "Posts"
+msgstr "ប្រកាស"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:252
+#, kde-format
+msgctxt "User friends"
+msgid "Friends"
+msgstr "មិត្តភ័ក្ដិ"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:253
+#, kde-format
+msgctxt "User followers"
+msgid "Followers"
+msgstr "អ្នក​គាំទ្រ"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:262
+#, kde-format
+msgid "<table><tr><b>Last Status:</b> %1</tr></table>"
+msgstr "<table><tr><b>ស្ថានភាព​ចុងក្រោយ ៖</b> %1</tr></table>"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:266
+#, kde-format
+msgid "<h3>%1</h3>"
+msgstr "<h3>%1</h3>"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:376
+#, kde-format
+msgid "Unsubscribe"
+msgstr "ឈប់​ជាវ"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:381
+#, kde-format
+msgid "Subscribe"
+msgstr "ជាវ​ប្រចាំ"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:386
+#, kde-format
+msgid "Block"
+msgstr "ប្លុក"
+
+#: libchoqok/accountmanager.cpp:104 libchoqok/accountmanager.cpp:142
+#, kde-format
+msgid "There is no account with alias %1."
+msgstr "មិន​មាន​គណនី​ដែល​មាន​ឈ្មោះ​ក្លែង​ក្លាយ %1​ ឡើយ ។"
+
+#: libchoqok/accountmanager.cpp:157
+#, kde-format
+msgid ""
+"An account with this alias already exists: a unique alias has to be "
+"specified."
+msgstr ""
+"គណនី​ដែល​មាន​ឈ្មោះ​ក្លែង​ក្លាយ​នេះ​មាន​រួច​ហើយ ​៖ ​ឈ្មោះ​ក្លែង​ក្លាយ​ដែល​ប្លែក​ពី​គេ ត្រូវតែ​បាន​បញ្ជាក់ ។"
+
+#: libchoqok/choqoktools.cpp:28
+#, kde-format
+msgid ""
+"Custom web browser \"%1\" is unable to open url \"%2\".\n"
+"Please update the custom web browser in Configurations."
+msgstr ""
+
+#: libchoqok/choqoktools.cpp:33
+#, kde-format
+msgid ""
+"Unable to open url \"%1\".\n"
+"Please check Qt installation or set a custom web browser in Configurations."
+msgstr ""
+
+#: libchoqok/mediamanager.cpp:90
+#, kde-format
+msgid "Cannot create a KDE Job. Please check your installation."
+msgstr "មិន​អាច​បង្កើត​ការ​ងារ​​ KDE  ​​បាន​ទេ​ ។ សូម​ពិនិត្យ​មើល​ការ​ដំឡើង​របស់​អ្នក​ ។"
+
+#: libchoqok/mediamanager.cpp:115
+#, kde-format
+msgid "Cannot download image from %1."
+msgstr "មិន​អាច​ទាញ​យក​រូប​ភាព​ពី %1​ បាន​ឡើយ​ ។"
+
+#: libchoqok/mediamanager.cpp:124
+#, kde-format
+msgid "The request failed. Cannot get image file."
+msgstr ""
+
+#: libchoqok/mediamanager.cpp:155
+#, kde-format
+msgid "No pluginId specified, And last used plugin is null."
+msgstr "មិន​បាន​បញ្ជាក់​លេខ​សម្គាល់​កម្មវិធី​ជំនួយ​ឡើយ ហើយ​កម្មវិធី​ជំនួយ​ដែល​បាន​ប្រើ​ចុងក្រោយ​គឺ​គ្មាន​សោះ ។"
+
+#: libchoqok/microblog.cpp:73
+#, kde-format
+msgid "The server returned an error"
+msgstr "ម៉ាស៊ីន​បម្រើ​បាន​ត្រឡប់​កំហុស"
+
+#: libchoqok/microblog.cpp:75
+#, kde-format
+msgid "Error on communication with server"
+msgstr "កំហុស​នៅ​ពេល​ទំនាក់​ទំនង​ជា​មួយ​ម៉ាស៊ីន​បម្រើ"
+
+#: libchoqok/microblog.cpp:77
+#, kde-format
+msgid "Error on parsing results"
+msgstr "កំហុស​នៅ​ពេល​ញែក​លទ្ធផល"
+
+#: libchoqok/microblog.cpp:79
+#, kde-format
+msgid "Authentication error"
+msgstr "កំហុស​ក្នុង​ការ​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ"
+
+#: libchoqok/microblog.cpp:81
+#, kde-format
+msgid "The server does not support this feature"
+msgstr "ម៉ាស៊ីន​បម្រើ​មិន​គាំ​ទ្រ​លក្ខណៈ​ពិសេស​នេះ​ទេ"
+
+#: libchoqok/microblog.cpp:83
+#, kde-format
+msgid "Unknown error"
+msgstr "មិន​ស្គាល់​កំហុស"
+
+#: libchoqok/notifymanager.cpp:81
+#, kde-format
+msgctxt "Show Choqok MainWindow"
+msgid "Show Choqok"
+msgstr "បង្ហាញ Choqok"
+
+#: libchoqok/notifymanager.h:24
+#, kde-format
+msgid "Error"
+msgstr "កំហុស"
+
+#: libchoqok/notifymanager.h:25
+#, kde-format
+msgid "Success"
+msgstr "ជោគ​ជ័យ"
+
+#: libchoqok/notifymanager.h:27
+#, kde-format
+msgid "New posts"
+msgstr "ការ​ប្រកាសថ្មី"
+
+#: libchoqok/notifymanager.h:28
+#, kde-format
+msgid "Shortening a URL"
+msgstr "ការ​កាត់​ URL​ ឲ្យ​ខ្លី"
+
+#: libchoqok/passwordmanager.cpp:64
+#, fuzzy, kde-format
+#| msgid ""
+#| "Cannot open KDE Wallet manager, your secrets will be stored as plain "
+#| "text, install KWallet to fix this."
+msgid ""
+"Cannot open KDE Wallet manager, your secrets will be stored as plain text. "
+"You can install KWallet to fix this."
+msgstr ""
+"មិន​អាច​បើក​កម្មវិធី​គ្រប់គ្រង KDE Wallet បាន​ទេ ការ​សម្ងាត់​របស់​អ្នក​នឹង​ត្រូវ​បាន​ស្ដុក​ទុក​ជា​អត្ថបទ​ធម្មតា "
+"សូម​ដំឡើង KWallet ដើម្បី​ជួសជុល​បញ្ហា​នេះ ។"
+
+#: libchoqok/ui/choqoktabbar.cpp:757
+#, fuzzy, kde-format
+#| msgctxt "Send message to"
+#| msgid "To:"
+msgid "Top"
+msgstr "ទៅ៖"
+
+#: libchoqok/ui/choqoktabbar.cpp:758
+#, kde-format
+msgid "Left"
+msgstr ""
+
+#: libchoqok/ui/choqoktabbar.cpp:759
+#, kde-format
+msgid "Right"
+msgstr ""
+
+#: libchoqok/ui/choqoktabbar.cpp:760
+#, kde-format
+msgid "Bottom"
+msgstr ""
+
+#: libchoqok/ui/choqoktabbar.cpp:761
+#, kde-format
+msgid "Small"
+msgstr ""
+
+#: libchoqok/ui/choqoktabbar.cpp:762
+#, fuzzy, kde-format
+#| msgid "Upload Medium"
+msgid "Medium"
+msgstr "ផ្ទុក​ឡើង​ឧបករណ៍​ផ្ទុក"
+
+#: libchoqok/ui/choqoktabbar.cpp:763
+#, kde-format
+msgid "Big"
+msgstr ""
+
+#: libchoqok/ui/choqoktabbar.cpp:764
+#, kde-format
+msgid "Styled Panel"
+msgstr ""
+
+#: libchoqok/ui/choqoktextedit.cpp:51
+#, fuzzy, kde-format
+#| msgid ""
+#| "<strong>Note:</strong><br/><em>Ctrl+S</em> to enable/disable auto spell "
+#| "checker."
+msgid "<b>Note:</b><br/><i>Ctrl+S</i> to enable/disable auto spell checker."
+msgstr ""
+"<strong>សម្គាល់​ ៖</strong><br/><em>បញ្ជា(Ctrl)+S</em> ដើម្បី​បិទ/បើក​ការ​ពិនិត្យ​អក្ខរាវិរុទ្ធ​"
+"ស្វ័យ​ប្រវត្តិ ។"
+
+#: libchoqok/ui/choqoktextedit.cpp:184
+#, kde-format
+msgid "Set spell check language"
+msgstr "កំណត់​ភាសា​ពិនិត្យ​អក្ខរាវិរុទ្ធ"
+
+#: libchoqok/ui/choqoktextedit.cpp:188
+#, kde-format
+msgctxt "Replace URLs by a shortened URL"
+msgid "Shorten URLs"
+msgstr "URLs ដែល​បាន​កាត់​ឲ្យ​ខ្លី"
+
+#: libchoqok/ui/composerwidget.cpp:57
+#, kde-format
+msgid "Discard Reply"
+msgstr "បោះបង់​ការ​ឆ្លើយតប"
+
+#: libchoqok/ui/composerwidget.cpp:98
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:167
+#, kde-format
+msgid "Replying to <b>%1</b>"
+msgstr "ឆ្លើយ​តប​​ចំពោះ <b>%1</b>"
+
+#: libchoqok/ui/microblogwidget.cpp:265
+#, fuzzy, kde-format
+#| msgid "Mark all as read"
+msgid "Mark all timelines as read"
+msgstr "សម្គាល់​ថា​បាន​អាន​រួច​ទាំង​អស់"
+
+#: libchoqok/ui/microblogwidget.cpp:375
+#, kde-format
+msgid "More"
+msgstr "ច្រើន​ទៀត"
+
+#: libchoqok/ui/microblogwidget.cpp:377
+#, kde-format
+msgid "Latest update:"
+msgstr "ការ​ធ្វើ​បច្ចុប្បន្នភាព​ចុងក្រោយ ៖"
+
+#: libchoqok/ui/postwidget.cpp:194
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Remove"
+msgstr "យកចេញ"
+
+#: libchoqok/ui/postwidget.cpp:199
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "ReSend"
+msgstr "ផ្ញើ​ឡើង​វិញ"
+
+#: libchoqok/ui/postwidget.cpp:454
+#, kde-format
+msgid "Just now"
+msgstr "ឥឡូវ"
+
+#: libchoqok/ui/postwidget.cpp:459
+#, kde-format
+msgid "1 sec ago"
+msgid_plural "%1 secs ago"
+msgstr[0] "%1 វិនាទី​កន្លង​ទៅ"
+
+#: libchoqok/ui/postwidget.cpp:465
+#, kde-format
+msgid "1 min ago"
+msgid_plural "%1 mins ago"
+msgstr[0] "%1 នាទី​កន្លង​ទៅ"
+
+#: libchoqok/ui/postwidget.cpp:471
+#, kde-format
+msgid "1 hour ago"
+msgid_plural "%1 hours ago"
+msgstr[0] "%1 ម៉ោង​កន្លង​ទៅ"
+
+#: libchoqok/ui/postwidget.cpp:476
+#, kde-format
+msgid "1 day ago"
+msgid_plural "%1 days ago"
+msgstr[0] "%1 ថ្ងៃ​កន្លង​ទៅ"
+
+#: libchoqok/ui/postwidget.cpp:481
+#, kde-format
+msgid "Are you sure you want to remove this post from the server?"
+msgstr "តើ​អ្នក​ប្រាកដ​ជា​ចង់​យក​ការ​ប្រកាស​នេះ​ចេញ​ពី​ម៉ាស៊ីន​បម្រើ​ឬ​ ?"
+
+#: libchoqok/ui/quickpost.cpp:71
+#, fuzzy, kde-format
+#| msgid "All"
+msgctxt "All accounts"
+msgid "All"
+msgstr "ទាំង​អស់"
+
+#: libchoqok/ui/quickpost.cpp:90
+#, kde-format
+msgctxt "Submit post"
+msgid "Submit"
+msgstr "ដាក់​ស្នើ"
+
+#: libchoqok/ui/quickpost.cpp:149
+#, fuzzy, kde-format
+#| msgid ""
+#| "Cannot create a short url.\n"
+#| "%1"
+msgid "Cannot create a post without any text."
+msgstr ""
+"មិន​អាច​បង្កើត url ខ្លី​បាន​ទេ​ ។\n"
+"%1"
+
+#: libchoqok/ui/quickpost.cpp:154
+#, kde-format
+msgid ""
+"Please configure at least one account to be included in \"Quick Post\".\n"
+"Settings -> Configure Choqok... -> Accounts"
+msgstr ""
+"សូម​កំណត់​រចនាសម្ព័ន្ធ​គណនី​យ៉ាងហោចណាស់​មួយ ដើម្បី​ត្រូវ​បាន​រួមបញ្ចូល​ក្នុង \"ការ​ប្រកាស​រហ័ស\" ។\n"
+"ការ​កំណត់ -> កំណត់​រចនាសម្ព័ន្ធ Choqok... -> គណនី"
+
+#: libchoqok/ui/quickpost.cpp:261
+#, kde-format
+msgid ""
+"Link to uploaded medium will be added here after uploading process succeed."
+msgstr ""
+"តំណ​ទៅកាន់​ឧបករណ៍​ផ្ទុក​ដែល​បាន​ផ្ទុក​ឡើង នឹង​ត្រូវ​បាន​បន្ថែម​នៅ​ទីនេះ បន្ទាប់ពី​ដំណើរការ​ផ្ទុក​ឡើង​បាន​ជោគជ័យ ។"
+
+#: libchoqok/ui/textbrowser.cpp:105
+#, fuzzy, kde-format
+#| msgid "Copy"
+msgctxt "Copy text"
+msgid "Copy"
+msgstr "ចម្លង"
+
+#: libchoqok/ui/textbrowser.cpp:111
+#, kde-format
+msgid "Copy Link Location"
+msgstr "ចម្លង​ទី​តាំង​តំណ"
+
+#: libchoqok/ui/textbrowser.cpp:116
+#, fuzzy, kde-format
+#| msgid "Select All"
+msgctxt "Select all text"
+msgid "Select All"
+msgstr "ជ្រើស​ទាំង​អស់"
+
+#: libchoqok/ui/timelinewidget.cpp:223
+#, fuzzy, kde-format
+#| msgid "1 new post in %2(%3)"
+#| msgid_plural "%1 new posts in %2(%3)"
+msgid "1 new post in %2 (%3)"
+msgid_plural "%1 new posts in %2 (%3)"
+msgstr[0] "%1 ប្រកាសថ្មី​ក្នុង​ %2(%3)"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: libchoqok/ui/uploadmedia_base.ui:22
+#, kde-format
+msgid "Medium to upload:"
+msgstr "ឧបករណ៍​ផ្ទុក​ដែល​ត្រូវ​ផ្ទុក​ឡើង ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: libchoqok/ui/uploadmedia_base.ui:39
+#, kde-format
+msgid "Upload via:"
+msgstr "ផ្ទុក​ឡើង​តាមរយៈ ៖"
+
+#: libchoqok/ui/uploadmediadialog.cpp:48
+#, kde-format
+msgid "Upload Medium"
+msgstr "ផ្ទុក​ឡើង​ឧបករណ៍​ផ្ទុក"
+
+#: libchoqok/ui/uploadmediadialog.cpp:56
+#, kde-format
+msgid "Upload"
+msgstr "ផ្ទុក"
+
+#: libchoqok/ui/uploadmediadialog.cpp:115
+#, kde-format
+msgid "Uploading..."
+msgstr "កំពុងផ្ទុក..."
+
+#: libchoqok/ui/uploadmediadialog.cpp:174
+#, kde-format
+msgid "Medium uploading failed."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ផ្ទុក​ឡើង​ឧបករណ៍​ផ្ទុក ។"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabAccount)
+#: microblogs/friendica/friendicaeditaccount_base.ui:21
+#, fuzzy, kde-format
+#| msgid "Edit Account"
+msgid "Friendica Account"
+msgstr "កែសម្រួល​គណនី​"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: microblogs/friendica/friendicaeditaccount_base.ui:29
+#: microblogs/laconica/laconicaeditaccount_base.ui:29
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:27
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:27
+#: microblogs/twitter/twittereditaccount_base.ui:27
+#, fuzzy, kde-format
+#| msgid "&Alias:"
+msgid "A&lias:"
+msgstr "ឈ្មោះ​ក្លែងក្លាយ ៖"
+
+#. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_alias)
+#. i18n: ectx: property (toolTip), widget (QLineEdit, cfg_alias)
+#: microblogs/friendica/friendicaeditaccount_base.ui:42
+#: microblogs/laconica/laconicaeditaccount_base.ui:42
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:40
+#: microblogs/ocs/ocsconfigurebase.ui:32
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:40
+#: microblogs/twitter/twittereditaccount_base.ui:40
+#, kde-format
+msgid "The account alias"
+msgstr "ឈ្មោះ​ក្លែងក្លាយ​របស់​គណនី"
+
+#. i18n: ectx: property (whatsThis), widget (QLineEdit, kcfg_alias)
+#. i18n: ectx: property (whatsThis), widget (QLineEdit, cfg_alias)
+#: microblogs/friendica/friendicaeditaccount_base.ui:45
+#: microblogs/laconica/laconicaeditaccount_base.ui:45
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:43
+#: microblogs/ocs/ocsconfigurebase.ui:35
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:43
+#: microblogs/twitter/twittereditaccount_base.ui:43
+#, kde-format
+msgid ""
+"The alias is the name you want to give to your account. It should be unique. "
+"You can have several connections to the same service so the alias lets you "
+"give them names."
+msgstr ""
+"ឈ្មោះក្លែងក្លាយ គឺជា​ឈ្មោះ​ដែល​អ្នក​ចង់​ផ្ដល់ឲ្យ​គណនី​របស់​អ្នក ។ វា​គួរតែ​ជា​ឈ្មោះ​ដែល​ប្លែក​ពី​គែ ។ អ្នក​អាច​"
+"មាន​ការ​តភ្ជាប់​​ច្រើន​ទៅ​កាន់​សេវា​ដូចគ្នា ដើម្បីឲ្យ​ឈ្មោះ​ក្លែងក្លាយ​អនុញ្ញាត​ឲ្យ​អ្នក​ផ្ដល់​ឈ្មោះ​ដល់​ការ​"
+"តភ្ជាប់ទាំងនោះ ។"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: microblogs/friendica/friendicaeditaccount_base.ui:62
+#: microblogs/laconica/laconicaeditaccount_base.ui:62
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:60
+#: microblogs/ocs/ocsconfigurebase.ui:52
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:60
+#: microblogs/twitter/twittereditaccount_base.ui:60
+#, kde-format
+msgid ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">Note:</span><span style=\" font-size:8pt;\"> "
+"The alias must be unique.</span></p></body></html>"
+msgstr ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">ចំណាំ ៖</span><span style=\" font-size:8pt;\"> "
+"ឈ្មោះ​ក្លែងក្លាយ​ត្រូវតែ​ប្លែក​ពី​គេ ។</span></p></body></html>"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: microblogs/friendica/friendicaeditaccount_base.ui:77
+#: microblogs/laconica/laconicaeditaccount_base.ui:77
+#, kde-format
+msgid "Server"
+msgstr "ម៉ាស៊ីន​បម្រើ"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: microblogs/friendica/friendicaeditaccount_base.ui:83
+#: microblogs/laconica/laconicaeditaccount_base.ui:83
+#, kde-format
+msgid "API path:"
+msgstr "ផ្លូវ API ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/friendica/friendicaeditaccount_base.ui:103
+#, kde-format
+msgid "&Friendica server:"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_BasicBox)
+#: microblogs/friendica/friendicaeditaccount_base.ui:122
+#: microblogs/laconica/laconicaeditaccount_base.ui:122
+#, kde-format
+msgid "Basic Authentication"
+msgstr "ការ​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ​មូលដ្ឋាន"
+
+#. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_basicUsername)
+#. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_basicPassword)
+#: microblogs/friendica/friendicaeditaccount_base.ui:128
+#: microblogs/friendica/friendicaeditaccount_base.ui:145
+#: microblogs/laconica/laconicaeditaccount_base.ui:128
+#: microblogs/laconica/laconicaeditaccount_base.ui:145
+#, kde-format
+msgid "The name you use to connect to the service"
+msgstr "ឈ្មោះ​ដែល​អ្នក​ប្រើ​ដើម្បី​តភ្ជាប់​ទៅ​សេវា"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: microblogs/friendica/friendicaeditaccount_base.ui:135
+#: microblogs/laconica/laconicaeditaccount_base.ui:135
+#: microblogs/twitter/twittereditaccount_base.ui:92
+#: plugins/shorteners/yourls/yourlsprefs.ui:47
+#: plugins/uploaders/posterous/posterousprefs.ui:74
+#, kde-format
+msgid "Password:"
+msgstr "ពាក្យ​សម្ងាត់ ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/friendica/friendicaeditaccount_base.ui:155
+#: microblogs/laconica/laconicaeditaccount_base.ui:155
+#: microblogs/twitter/twittereditaccount_base.ui:79
+#: plugins/shorteners/yourls/yourlsprefs.ui:34
+#, kde-format
+msgid "Username:"
+msgstr "ឈ្មោះ​អ្នក​ប្រើ ៖"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tab)
+#. i18n: ectx: attribute (title), widget (QWidget, tabTimelines)
+#: microblogs/friendica/friendicaeditaccount_base.ui:182
+#: microblogs/laconica/laconicaeditaccount_base.ui:182
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:174
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:175
+#: microblogs/twitter/twittereditaccount_base.ui:183
+#, kde-format
+msgid "Timelines Configuration"
+msgstr "ការ​កំណត់​រចនាសម្ព័ន្ធ​បន្ទាត់​ពេលវេលា"
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: microblogs/friendica/friendicaeditaccount_base.ui:194
+#: microblogs/laconica/laconicaeditaccount_base.ui:194
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:186
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:187
+#: microblogs/twitter/twittereditaccount_base.ui:195
+#, kde-format
+msgid "Which timelines do you like to be enabled?"
+msgstr "តើ​បន្ទាត់​ពេលវេលា​ណាមួយ ដែល​អ្នក​ចង់​ធ្វើ​ការ​បើក ?"
+
+#. i18n: ectx: property (text), widget (QTableWidget, timelinesTable)
+#: microblogs/friendica/friendicaeditaccount_base.ui:202
+#: microblogs/laconica/laconicaeditaccount_base.ui:202
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:194
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:195
+#: microblogs/twitter/twittereditaccount_base.ui:203
+#, kde-format
+msgid "Name"
+msgstr "ឈ្មោះ​"
+
+#. i18n: ectx: property (text), widget (QTableWidget, timelinesTable)
+#: microblogs/friendica/friendicaeditaccount_base.ui:207
+#: microblogs/laconica/laconicaeditaccount_base.ui:207
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:199
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:200
+#: microblogs/twitter/twittereditaccount_base.ui:208
+#, kde-format
+msgid "Enable"
+msgstr "បើក​"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabConf)
+#: microblogs/friendica/friendicaeditaccount_base.ui:216
+#: microblogs/laconica/laconicaeditaccount_base.ui:216
+#, kde-format
+msgid "Configuration"
+msgstr "ការ​កំណត់​រចនា​សម្ព័ន្ធ"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_changeExclamationMark)
+#: microblogs/friendica/friendicaeditaccount_base.ui:224
+#: microblogs/laconica/laconicaeditaccount_base.ui:224
+#, kde-format
+msgid ""
+"To prevent spamming on some groups, you can set here to change the "
+"exclamation point (that used to refer to a group), to something else (e.g. "
+"nothing.)"
+msgstr ""
+"ដើម្បី​ការពារ​សារ​ឥត​បាន​ការ​លើ​ក្រុម​មួយ​ចំនួន​ អ្នក​អាច​កំណត់​នៅ​ទីនេះ ដើម្បី​ប្ដូរ​សញ្ញា​ឧទាន (ដែល​​​បាន​ប្រើ​"
+"ដើម្បី​យោង​ទៅ​លើ​ក្រុម​មួយ) ទៅ​អ្វី​ផ្សេង​ទៀត​ (​ឧ.ទា ​គ្មាន​អ្វី​សោះ​)​ ។"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_changeExclamationMark)
+#: microblogs/friendica/friendicaeditaccount_base.ui:227
+#: microblogs/laconica/laconicaeditaccount_base.ui:227
+#, kde-format
+msgid "On re-dent, change exclamation mark to:"
+msgstr "ពេល re-dent  ប្ដូរ​សញ្ញា​ឧទាន​ទៅ​ជា ​៖"
+
+#. i18n: ectx: property (text), widget (QLineEdit, kcfg_changeToString)
+#: microblogs/friendica/friendicaeditaccount_base.ui:237
+#: microblogs/laconica/laconicaeditaccount_base.ui:237
+#, kde-format
+msgid "#"
+msgstr "#"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabAccount)
+#: microblogs/laconica/laconicaeditaccount_base.ui:21
+#, fuzzy, kde-format
+#| msgid "Edit Account"
+msgid "GNU social Account"
+msgstr "កែសម្រួល​គណនី​"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/laconica/laconicaeditaccount_base.ui:103
+#, kde-format
+msgid "&GNU social server:"
+msgstr ""
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:91
+#, kde-format
+msgid "Code"
+msgstr ""
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:92
+#, fuzzy, kde-format
+#| msgid "Enter the PIN received from Twitter:"
+msgid "Enter the code received from %1"
+msgstr "បញ្ចូល PIN ដែល​ទទួល​​បាន​ពី Twitter ៖"
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:105
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:105
+#: microblogs/twitter/twittereditaccount.cpp:100
+#, kde-format
+msgid "Choqok is authorized successfully."
+msgstr "Choqok ត្រូវ​បាន​ផ្ដល់​សេចក្ដី​អនុញ្ញាត​ដោយ​ជោគជ័យ ។"
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:105
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:105
+#: microblogs/twitter/twittereditaccount.cpp:100
+#, kde-format
+msgid "Authorized"
+msgstr "ដែល​មាន​សេចក្ដី​អនុញ្ញាត"
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:107
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:107
+#: microblogs/twitter/twittereditaccount.cpp:102
+#, kde-format
+msgid "Authorization Error"
+msgstr "កំហុស​ក្នុង​ការ​ផ្ដល់​សេចក្ដី​អនុញ្ញាត"
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:107
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:107
+#: microblogs/twitter/twittereditaccount.cpp:102
+#, fuzzy, kde-format
+#| msgid "Authorization Error"
+msgid "OAuth authorization error"
+msgstr "កំហុស​ក្នុង​ការ​ផ្ដល់​សេចក្ដី​អនុញ្ញាត"
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:128
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:128
+#: microblogs/twitter/twittereditaccount.cpp:112
+#, kde-format
+msgid "Authenticated"
+msgstr "ដែល​បាន​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ"
+
+#. i18n: ectx: property (text), widget (QLabel, kcfg_authenticateStatus)
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:132
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:136
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:132
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:136
+#: microblogs/twitter/twittereditaccount.cpp:116
+#, kde-format
+msgid "Not Authenticated"
+msgstr "ដែល​មិន​បាន​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabAccount)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:21
+#, fuzzy, kde-format
+#| msgid "StatusNet Account"
+msgid "Mastodon Account"
+msgstr "គណនី​ StatusNet "
+
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_basicAuth)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:73
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:73
+#: microblogs/twitter/twittereditaccount_base.ui:73
+#, kde-format
+msgid "Credentials"
+msgstr "លិខិត​សម្គាល់"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:82
+#, fuzzy, kde-format
+#| msgid "Username:"
+msgid "username@domain:"
+msgstr "ឈ្មោះ​អ្នក​ប្រើ ៖"
+
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_credentialsBox)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:98
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:98
+#: microblogs/twitter/twittereditaccount_base.ui:112
+#, kde-format
+msgid "OAuth Authentication"
+msgstr "ការ​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ OAuth"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:110
+#, fuzzy, kde-format
+#| msgid ""
+#| "Click the below button, If everything goes well, you'll pointed to Identi."
+#| "ca website to allow access to Choqok."
+msgid ""
+"Click the below button; if everything goes well, you will pointed to "
+"Mastodon website to allow access to Choqok."
+msgstr ""
+"ចុច​ប៊ូតុង​ខាងក្រោម ប្រសិនបើ​អ្វីៗ​ដំណើរការ​ល្អ អ្នក​នឹង​ត្រូវ​បាន​ចង្អុល​បង្ហាញ​ទៅ​តំបន់​បណ្ដាញ Identi.ca ដើម្បី​"
+"អនុញ្ញាត​ការ​ចូល​ដំណើរការ Choqok ។"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, kcfg_authorize)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:143
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:143
+#: microblogs/twitter/twittereditaccount_base.ui:151
+#, fuzzy, kde-format
+#| msgid "Verify Credentials"
+msgid "Verify credentials"
+msgstr "ផ្ទៀងផ្ទាត់​លិខិត​សម្គាល់"
+
+#. i18n: ectx: property (text), widget (QPushButton, kcfg_authorize)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:146
+#, fuzzy, kde-format
+#| msgid "&Authenticate with StatusNet service"
+msgid "&Authenticate with Mastodon Service"
+msgstr "ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ​ជាមួយ​សេវា StatusNet"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:320
+#: microblogs/pumpio/pumpiomicroblog.cpp:912
+#, kde-format
+msgid "The post has been shared."
+msgstr ""
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:333
+#: microblogs/pumpio/pumpiomicroblog.cpp:926
+#, fuzzy, kde-format
+#| msgid "Cannot remove the account."
+msgid "Cannot share the post. %1"
+msgstr "មិន​អាច​យក​គណនី​ចេញ​បាន​ទេ​ ។"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:382
+#: microblogs/pumpio/pumpiomicroblog.cpp:715
+#, fuzzy, kde-format
+#| msgid "Cannot remove the account."
+msgid "Cannot set/unset the post as favorite. %1"
+msgstr "មិន​អាច​យក​គណនី​ចេញ​បាន​ទេ​ ។"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:400
+#: microblogs/pumpio/pumpiomicroblog.cpp:1252
+#, kde-format
+msgctxt "Timeline description"
+msgid "You and people you follow"
+msgstr ""
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:406
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Local"
+msgstr ""
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:407
+#, fuzzy, kde-format
+#| msgid "Loading timelines..."
+msgctxt "Timeline description"
+msgid "Local timeline"
+msgstr "កំពុង​ផ្ទុក​បន្ទាត់​ពេល​វេលា​..."
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:413
+#, fuzzy, kde-format
+#| msgid "Moderate"
+msgctxt "Timeline Name"
+msgid "Federated"
+msgstr "មធ្យម"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:414
+#, fuzzy, kde-format
+#| msgid "Update Timelines"
+msgctxt "Timeline description"
+msgid "Federated timeline"
+msgstr "ធ្វើបច្ចុប្បន្នភាព​​បន្ទាត់​ពេល​វេលា​"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:420
+#, fuzzy, kde-format
+#| msgctxt "Timeline Name"
+#| msgid "Favorite"
+msgctxt "Timeline Name"
+msgid "Favourites"
+msgstr "សំណព្វ"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:421
+#, fuzzy, kde-format
+#| msgctxt "Timeline Name"
+#| msgid "Favorite"
+msgctxt "Timeline description"
+msgid "Favourites"
+msgstr "សំណព្វ"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:522
+#, fuzzy, kde-format
+#| msgid "Repeat of %1"
+msgid "Boost of %1"
+msgstr "ការ​ធ្វើ​ម្ដងទៀត​នៃ %1"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:524
+#, fuzzy, kde-format
+#| msgid "Repeated by %1"
+msgid "Boosted by %1"
+msgstr "បាន​ធ្វើ​ម្ដងទៀត​ដោយ %1"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:703
+#, fuzzy, kde-format
+#| msgid "New post submitted successfully"
+msgid "New post for account %1 submitted successfully."
+msgstr "ការ​ប្រកាស​ថ្មី​បាន​ដាក់​ស្នើ​ដោយ​ជោគ​ជ័យ"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:715
+#: microblogs/pumpio/pumpiomicroblog.cpp:694
+#, kde-format
+msgid "Creating the new post failed. %1"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​ការ​ប្រកាស​ថ្មី ។ %1"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:752
+#: microblogs/pumpio/pumpiomicroblog.cpp:754
+#, fuzzy, kde-format
+#| msgid ""
+#| "Cannot create a short url.\n"
+#| "%1"
+msgid "Cannot fetch post. %1"
+msgstr ""
+"មិន​អាច​បង្កើត url ខ្លី​បាន​ទេ​ ។\n"
+"%1"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:808
+#: microblogs/pumpio/pumpiomicroblog.cpp:1018
+#, kde-format
+msgid "An error occurred when fetching the timeline"
+msgstr ""
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:922
+#, fuzzy, kde-format
+#| msgid "Updating friends list for account %1 ..."
+msgid "Updating following list for account %1..."
+msgstr "កំពុង​ធ្វើ​បច្ចុប្បន្នភាព​បញ្ជី​មិត្តភ័ក្ដិ​សម្រាប់​គណនី %1 ..."
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:952
+#, fuzzy, kde-format
+#| msgid ""
+#| "Friends list for account %1 could not be updated:\n"
+#| "%2"
+msgid ""
+"Following list for account %1 could not be updated:\n"
+"%2"
+msgstr ""
+"មិន​អាច​ធ្វើ​បច្ចុប្បន្នភាព​បញ្ជី​មិត្តភ័ក្ដិ​សម្រាប់​គណនី %1 បាន​ទេ ៖\n"
+"%2"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:968
+#, fuzzy, kde-format
+#| msgid ""
+#| "Retrieving the friends list failed. The data returned from the server is "
+#| "corrupted."
+msgid ""
+"Retrieving the following list failed. The data returned from the server is "
+"corrupted."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ទៅ​​យក​បញ្ជី​មិត្តភ័ក្ដិ ។ ទិន្នន័យ​ដែល​ត្រឡប់​ពី​ម៉ាស៊ីន​បម្រើ​គឺ​ខូច ។"
+
+#: microblogs/mastodon/mastodonpostwidget.cpp:97
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Boost"
+msgstr ""
+
+#: microblogs/mastodon/mastodonpostwidget.cpp:120
+#, fuzzy, kde-format
+#| msgctxt "@info:tooltip"
+#| msgid "Favorite"
+msgctxt "@info:tooltip"
+msgid "Favourite"
+msgstr "សំណព្វ"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: microblogs/ocs/ocsconfigurebase.ui:19
+#, kde-format
+msgid "&Alias:"
+msgstr "ឈ្មោះ​ក្លែងក្លាយ ៖"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: microblogs/ocs/ocsconfigurebase.ui:67
+#, kde-format
+msgid "Provider"
+msgstr "ក្រុមហ៊ុន​ផ្ដល់"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: microblogs/ocs/ocsconfigurebase.ui:73
+#, kde-format
+msgid "Select a social desktop provider to use:"
+msgstr "ជ្រើស​ក្រុមហ៊ុន​ផ្ដល់​ផ្ទៃតុ​សង្គម​ដែល​ត្រូវ​ប្រើ ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/ocs/ocsconfigurebase.ui:83
+#, fuzzy, kde-format
+#| msgid ""
+#| "You can manage Social Desktop providers in KDE Social Desktop "
+#| "configurations."
+msgid ""
+"You can manage Social Desktop providers in the KDE Social Desktop "
+"configuration."
+msgstr "អ្នក​អាច​គ្រប់គ្រង​ក្រុមហ៊ុន​ផ្ដល់​ផ្ទៃតុ​ ក្នុង​ការ​កំណត់​រចនាសម្ព័ន្ធ​ផ្ទៃតុ​សង្គម KDE ។"
+
+#: microblogs/ocs/ocsconfigurewidget.cpp:26
+#, kde-format
+msgid "Loading..."
+msgstr "កំពុង​ផ្ទុក​ឡើង​..."
+
+#: microblogs/ocs/ocsconfigurewidget.cpp:58
+#, kde-format
+msgid "You have to wait for providers list to be loaded."
+msgstr "អ្នក​ត្រូវតែ​រង់ចាំ​រហូត​បញ្ជី​អ្នក​ផ្ដល់​ត្រូវ​បាន​ផ្ទុក ។"
+
+#: microblogs/ocs/ocsmicroblog.cpp:142
+#, kde-format
+msgid "OCS plugin is not initialized yet. Try again later."
+msgstr "កម្មវិធី​ជំនួយ OCS មិន​ទាន់​ត្រូវ​បាន​ចាប់ផ្ដើម​ទេ ។ ព្យាយាម​ម្ដងទៀត​នៅ​ពេល​ក្រោយ ។"
+
+#: microblogs/ocs/ocsmicroblog.cpp:177 microblogs/ocs/ocsmicroblog.cpp:184
+#, kde-format
+msgid "Not Supported"
+msgstr "ដែល​មិន​បាន​គាំទ្រ"
+
+#: microblogs/ocs/ocsmicroblog.cpp:250
+#: microblogs/pumpio/pumpiomicroblog.cpp:1251
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Activity"
+msgstr "សកម្មភាព"
+
+#: microblogs/ocs/ocsmicroblog.cpp:251
+#, kde-format
+msgid "Social activities"
+msgstr "សកម្មភាព​សង្គម"
+
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:96
+#: microblogs/twitter/twittereditaccount.cpp:91
+#, kde-format
+msgid "PIN"
+msgstr "PIN"
+
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:97
+#, fuzzy, kde-format
+#| msgid "Enter the PIN received from Twitter:"
+msgid "Enter the verifier code received from %1"
+msgstr "បញ្ចូល PIN ដែល​ទទួល​​បាន​ពី Twitter ៖"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabAccount)
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:21
+#, fuzzy, kde-format
+#| msgid "Accounts"
+msgid "PumpIO Account"
+msgstr "គណនី"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:82
+#, kde-format
+msgid "Webfinger ID:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:110
+#, fuzzy, kde-format
+#| msgid ""
+#| "Click the below button, If everything goes well, you'll pointed to "
+#| "Twitter website to allow access to Choqok."
+msgid ""
+"Click the below button; if everything goes well, you will pointed to Pump.io "
+"website to allow access to Choqok."
+msgstr ""
+"ចុច​ប៊ូតុង​ខាងក្រោម ប្រសិនបើ​អ្វីៗ​ដំណើរការ​ល្អ អ្នក​នឹង​ត្រូវ​បាន​ចង្អុល​ទៅ​តំបន់​បណ្ដាញ Twitter ដើម្បី​អនុញ្ញាត​"
+"ការ​ចូល​ដំណើរការ Choqok ។"
+
+#. i18n: ectx: property (text), widget (QPushButton, kcfg_authorize)
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:146
+#, fuzzy, kde-format
+#| msgid "&Authenticate with Twitter service"
+msgid "&Authenticate with Pump.io Service"
+msgstr "ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ​ជាមួយ​សេវា Twitter"
+
+#. i18n: ectx: property (windowTitle), widget (QDialog, PumpIOMessageDialog)
+#: microblogs/pumpio/pumpiomessagedialog.ui:14
+#, kde-format
+msgid "Dialog"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/pumpio/pumpiomessagedialog.ui:46
+#: microblogs/pumpio/pumpiopostwidget.cpp:112
+#, kde-format
+msgid "CC:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: microblogs/pumpio/pumpiomessagedialog.ui:70
+#: microblogs/pumpio/pumpiopostwidget.cpp:89
+#, fuzzy, kde-format
+#| msgctxt "Send message to"
+#| msgid "To:"
+msgid "To:"
+msgstr "ទៅ៖"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:796
+#, kde-format
+msgid "Cannot fetch replies. %1"
+msgstr ""
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:819
+#, fuzzy, kde-format
+#| msgid "Friends list for account %1 has been updated."
+msgid "Following list for account %1 has been updated."
+msgstr "បញ្ជី​មិត្តភ័ក្ដិ​សម្រាប់​គណនី %1 ត្រូវ​បាន​ធ្វើ​បច្ចុប្បន្នភាព ។"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:842
+#, fuzzy, kde-format
+#| msgid "Cannot remove the account."
+msgid "Cannot retrieve the following list. %1"
+msgstr "មិន​អាច​យក​គណនី​ចេញ​បាន​ទេ​ ។"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:864
+#, fuzzy, kde-format
+#| msgid "Friends list for account %1 has been updated."
+msgid "Lists for account %1 has been updated."
+msgstr "បញ្ជី​មិត្តភ័ក្ដិ​សម្រាប់​គណនី %1 ត្រូវ​បាន​ធ្វើ​បច្ចុប្បន្នភាព ។"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:891
+#, fuzzy, kde-format
+#| msgid "Cannot remove the account."
+msgid "Cannot retrieve the lists. %1"
+msgstr "មិន​អាច​យក​គណនី​ចេញ​បាន​ទេ​ ។"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:953
+#, fuzzy, kde-format
+#| msgid "New post submitted successfully"
+msgid "Post removed successfully"
+msgstr "ការ​ប្រកាស​ថ្មី​បាន​ដាក់​ស្នើ​ដោយ​ជោគ​ជ័យ"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:999
+#, kde-format
+msgid "An error occurred when updating the post"
+msgstr ""
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:1068
+#, kde-format
+msgid "An error occurred when uploading the media"
+msgstr ""
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:1258
+#, fuzzy, kde-format
+#| msgctxt "Timeline Name"
+#| msgid "Favorite"
+msgctxt "Timeline Name"
+msgid "Favorites"
+msgstr "សំណព្វ"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:1259
+#, fuzzy, kde-format
+#| msgctxt "Timeline description"
+#| msgid "Your favorites"
+msgctxt "Timeline description"
+msgid "Posts you favorited"
+msgstr "សំណព្វ​របស់​អ្នក​"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:1266
+#, kde-format
+msgctxt "Timeline description"
+msgid "Posts sent to you"
+msgstr ""
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:1273
+#, fuzzy, kde-format
+#| msgid "Post Font:"
+msgctxt "Timeline description"
+msgid "Posts you sent"
+msgstr "ប្រកាស​ពុម្ពអក្សរ ៖"
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_forpublic)
+#: microblogs/pumpio/pumpiopostwidget.cpp:93
+#: microblogs/pumpio/pumpiopostwidget.cpp:116
+#: plugins/uploaders/flickr/flickrprefs.ui:121
+#, kde-format
+msgid "Public"
+msgstr "សាធារណៈ"
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:96
+#: microblogs/pumpio/pumpiopostwidget.cpp:119
+#, fuzzy, kde-format
+#| msgctxt "User followers"
+#| msgid "Followers"
+msgid "Followers"
+msgstr "អ្នក​គាំទ្រ"
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:98
+#: microblogs/pumpio/pumpiopostwidget.cpp:121
+#: microblogs/pumpio/pumpiopostwidget.cpp:139
+#, kde-format
+msgid "You"
+msgstr ""
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:135
+#, kde-format
+msgid "Shared by:"
+msgstr ""
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:151
+#, fuzzy, kde-format
+#| msgid "Show Conversation"
+msgid "Show conversation"
+msgstr "បង្ហាញ​ការ​សន្ទនា"
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:172
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Share"
+msgstr ""
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:186
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Like"
+msgstr ""
+
+#: microblogs/pumpio/pumpioshowthread.cpp:34
+#, fuzzy, kde-format
+#| msgid "Choqok (%1)"
+msgctxt "Thread of specified user"
+msgid "Choqok: %1's thread"
+msgstr "Choqok (%1)"
+
+#: microblogs/twitter/twittereditaccount.cpp:92
+#, kde-format
+msgid "Enter the PIN received from Twitter:"
+msgstr "បញ្ចូល PIN ដែល​ទទួល​​បាន​ពី Twitter ៖"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabAccount)
+#: microblogs/twitter/twittereditaccount_base.ui:21
+#, kde-format
+msgid "Twitter Account"
+msgstr "គណនី Twitter"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/twitter/twittereditaccount_base.ui:124
+#, fuzzy, kde-format
+#| msgid ""
+#| "Click the below button, If everything goes well, you'll pointed to "
+#| "Twitter website to allow access to Choqok."
+msgid ""
+"Click the below button; if everything goes well, you will pointed to Twitter "
+"website to allow access to Choqok."
+msgstr ""
+"ចុច​ប៊ូតុង​ខាងក្រោម ប្រសិនបើ​អ្វីៗ​ដំណើរការ​ល្អ អ្នក​នឹង​ត្រូវ​បាន​ចង្អុល​ទៅ​តំបន់​បណ្ដាញ Twitter ដើម្បី​អនុញ្ញាត​"
+"ការ​ចូល​ដំណើរការ Choqok ។"
+
+#. i18n: ectx: property (text), widget (QPushButton, kcfg_authorize)
+#: microblogs/twitter/twittereditaccount_base.ui:154
+#, fuzzy, kde-format
+#| msgid "&Authenticate with Twitter service"
+msgid "&Authenticate with Twitter Service"
+msgstr "ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ​ជាមួយ​សេវា Twitter"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnAdd)
+#: microblogs/twitter/twitterlistdialog.cpp:58 plugins/filter/filterprefs.ui:81
+#, kde-format
+msgid "Add"
+msgstr "បន្ថែម"
+
+#: microblogs/twitter/twitterlistdialog.cpp:77
+#, kde-format
+msgid "You should provide both list author username and list name."
+msgstr "អ្នក​គួរតែ​ផ្ដល់​ឲ្យ​ទាំង​ឈ្មោះ​អ្នក​និពន្ធ​បញ្ជី និង​ឈ្មោះ​បញ្ជី ។"
+
+#: microblogs/twitter/twitterlistdialog.cpp:99
+#, kde-format
+msgid "No user."
+msgstr ""
+
+#. i18n: ectx: property (windowTitle), widget (QWidget, TwitterListDialogBase)
+#: microblogs/twitter/twitterlistdialog_base.ui:14
+#, kde-format
+msgid "Add List"
+msgstr "បន្ថែម​បញ្ជី"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/twitter/twitterlistdialog_base.ui:26
+#, kde-format
+msgid "List name:"
+msgstr "ឈ្មោះ​បញ្ជី ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: microblogs/twitter/twitterlistdialog_base.ui:52
+#, kde-format
+msgid "User name:"
+msgstr "ឈ្មោះ​អ្នក​ប្រើ ៖"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, loadUserLists)
+#: microblogs/twitter/twitterlistdialog_base.ui:78
+#, fuzzy, kde-format
+#| msgid "Load User Lists"
+msgid "Load user lists"
+msgstr "ផ្ទុក​បញ្ជី​អ្នកប្រើ"
+
+#. i18n: ectx: property (text), widget (QPushButton, loadUserLists)
+#: microblogs/twitter/twitterlistdialog_base.ui:81
+#, fuzzy, kde-format
+#| msgid "Load lists"
+msgid "Load Lists"
+msgstr "ផ្ទុក​បញ្ជី"
+
+#: microblogs/twitter/twittermicroblog.cpp:59
+#, fuzzy, kde-format
+#| msgid "Actions"
+msgctxt "Timeline Name"
+msgid "Mentions"
+msgstr "អំពើ"
+
+#: microblogs/twitter/twittermicroblog.cpp:60
+#, fuzzy, kde-format
+#| msgctxt "Timeline description"
+#| msgid "Replies to you"
+msgctxt "Timeline description"
+msgid "Mentions of you"
+msgstr "ឆ្លើយ​តប​ទៅ​អ្នក"
+
+#: microblogs/twitter/twittermicroblog.cpp:225
+#, fuzzy, kde-format
+#| msgid "Verify Credentials"
+msgid "Verify credentials failed. %1"
+msgstr "ផ្ទៀងផ្ទាត់​លិខិត​សម្គាល់"
+
+#: microblogs/twitter/twittermicroblog.cpp:254
+#, kde-format
+msgid "Retweet of %1"
+msgstr "ការ​ប្រកាស​ឡើងវិញ​នៃ %1"
+
+#: microblogs/twitter/twittermicroblog.cpp:256
+#, kde-format
+msgid "Retweeted by %1"
+msgstr "ប្រកាស​ឡើងវិញ​ដោយ %1"
+
+#: microblogs/twitter/twittermicroblog.cpp:262
+#, kde-format
+msgid "Retweet to your followers?"
+msgstr "ប្រកាស​ឡើងវិញ​ទៅ​អ្នក​តាម​អ្នក ?"
+
+#: microblogs/twitter/twittermicroblog.cpp:269
+#, kde-format
+msgid "Add User List..."
+msgstr "បន្ថែម​បញ្ជី​អ្នក​ប្រើ..."
+
+#: microblogs/twitter/twittermicroblog.cpp:329
+#, kde-format
+msgid "Fetching %1's lists failed. %2"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ប្រមូល​យក​បញ្ជី​របស់ %1 ។ %2"
+
+#: microblogs/twitter/twittermicroblog.cpp:339
+#, fuzzy, kde-format
+#| msgid "There's no list record for user %1"
+msgid "There is no list record for user %1"
+msgstr "មិន​មាន​កំណត់ត្រា​បញ្ជី​សម្រាប់​អ្នក​ប្រើ %1 ឡើយ"
+
+#: microblogs/twitter/twitterpostwidget.cpp:64
+#, kde-format
+msgid "Retweet"
+msgstr "ប្រកាស​ឡើងវិញ"
+
+#: microblogs/twitter/twitterpostwidget.cpp:65
+#, kde-format
+msgid "Retweet post using API"
+msgstr "ប្រកាស​ឡើងវិញ​ដោយ​ប្រើ API"
+
+#: microblogs/twitter/twitterpostwidget.cpp:136
+#, kde-format
+msgctxt "Including user name"
+msgid "Including %1"
+msgstr "រួមបញ្ចូល​ %1"
+
+#: microblogs/twitter/twitterpostwidget.cpp:171
+#, kde-format
+msgctxt "Unfollow user"
+msgid "Unfollow %1"
+msgstr "មិន​តាម %1"
+
+#: microblogs/twitter/twitterpostwidget.cpp:176
+#, kde-format
+msgctxt "Follow user"
+msgid "Follow %1"
+msgstr "តាម​ %1"
+
+#: microblogs/twitter/twitterpostwidget.cpp:183
+#, kde-format
+msgctxt "Report user"
+msgid "Report %1 as spam"
+msgstr ""
+
+#: microblogs/twitter/twittersearch.cpp:35
+#, kde-format
+msgctxt "Posts sent to user"
+msgid "To:"
+msgstr "ទៅ ៖"
+
+#: microblogs/twitter/twittersearch.cpp:36
+#, kde-format
+msgctxt "Posts from user, Sent by user"
+msgid "From:"
+msgstr "ពី ៖"
+
+#: microblogs/twitter/twittersearch.cpp:38
+#, kde-format
+msgid "Custom Search"
+msgstr "ស្វែង​រក​ផ្ទាល់​ខ្លួន​"
+
+#: microblogs/twitter/twittersearch.cpp:41
+#, kde-format
+msgctxt "Tweets are Twitter posts"
+msgid "Tweets To This User"
+msgstr "ប្រកាស​ទៅ​អ្នក​ប្រើ​នេះ"
+
+#: microblogs/twitter/twittersearch.cpp:44
+#, kde-format
+msgctxt "Tweets are Twitter posts"
+msgid "Tweets From This User"
+msgstr "ប្រកាស​ពី​អ្នកប្រើ​នេះ"
+
+#: microblogs/twitter/twittersearch.cpp:47
+#, kde-format
+msgctxt "Tweets are Twitter posts"
+msgid "Tweets Including This Username"
+msgstr "ការប្រកាស​រួមបញ្ចូល​ឈ្មោះ​អ្នកប្រើ​នេះ"
+
+#: microblogs/twitter/twittersearch.cpp:50
+#, kde-format
+msgctxt "Tweets are Twitter posts"
+msgid "Tweets Including This Hashtag"
+msgstr "ការ​ប្រកាស​រួមបញ្ចូល Hashtag នេះ"
+
+#: plugins/betternotify/dummynotification.cpp:34
+#, kde-format
+msgid "KDE Rocks! :)"
+msgstr "KDE Rocks! :)"
+
+#: plugins/betternotify/dummynotification.cpp:34
+#, kde-format
+msgid "OK"
+msgstr ""
+
+#: plugins/betternotify/notification.cpp:78
+#, kde-format
+msgid "Ignore"
+msgstr "មិន​អើពើ"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tab)
+#: plugins/betternotify/notifyprefs.ui:21
+#, kde-format
+msgid "Appearance"
+msgstr "រូបរាង"
+
+#. i18n: ectx: property (text), widget (QLabel, label_7)
+#: plugins/betternotify/notifyprefs.ui:29
+#, kde-format
+msgid "Foreground Color:"
+msgstr "ពណ៌​ផ្ទៃ​ខាងមុខ ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: plugins/betternotify/notifyprefs.ui:39
+#, kde-format
+msgid "Background Color:"
+msgstr "ពណ៌​ផ្ទៃ​ខាងក្រោយ ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_9)
+#: plugins/betternotify/notifyprefs.ui:49
+#, kde-format
+msgid "Font:"
+msgstr "ពុម្ព​អក្សរ ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: plugins/betternotify/notifyprefs.ui:59
+#, kde-format
+msgid "Notify Interval:"
+msgstr "ចន្លោះ​ពេល​ជូនដំណឹង ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: plugins/betternotify/notifyprefs.ui:78
+#, kde-format
+msgid "seconds"
+msgstr "វិនាទី"
+
+#. i18n: ectx: property (text), widget (QPushButton, adjustPosition)
+#: plugins/betternotify/notifyprefs.ui:123
+#, fuzzy, kde-format
+#| msgid "Adjust notification's position"
+msgid "Adjust Notification's Position"
+msgstr "លៃ​តម្រូវ​ទីតាំង​ការជូនដំណឹង"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tab_2)
+#: plugins/betternotify/notifyprefs.ui:159
+#, kde-format
+msgid "Timeline Selection"
+msgstr "ជម្រើស​បន្ទាត់​ពេលវេលា"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: plugins/betternotify/notifyprefs.ui:171
+#, kde-format
+msgid "Select Timelines"
+msgstr "ជ្រើស​បន្ទាត់​ពេលវេលា"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/betternotify/notifyprefs.ui:181
+#, kde-format
+msgid "Accounts"
+msgstr "គណនី"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: plugins/betternotify/notifyprefs.ui:197
+#, kde-format
+msgid "Select timelines you wish to see notifications for their new posts:"
+msgstr "ជ្រើស​បន្ទាត់​ពេលវេលា​ដែល​អ្នក​ចង់​ឃើញ​ការ​ជូន​ដំណឹង​សម្រាប់​ប្រកាស​ថ្មីៗ​របស់​ពួកគេ ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: plugins/betternotify/notifyprefs.ui:249
+#, kde-format
+msgid ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Note:</span> Any "
+"change, needs plugin re-load (disable/enable) to take effect.</p></body></"
+"html>"
+msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\">ចំណាំ ៖</span> ការ​"
+"ផ្លាស់ប្ដូរ​មួយ​ចំនួន ត្រូវ​ការ​កម្មវិធី​ជំនួយ​ដើម្បី​ផ្ទុក​ឡើង​វិញ (បិទ/​បើក) ដើម្បី​មាន​ប្រសិទ្ធភាព ។</p></"
+"body></html>"
+
+#: plugins/filter/addeditfilter.cpp:47
+#, kde-format
+msgid "Modify filter rules"
+msgstr "កែប្រែ​ច្បាប់​ត្រង"
+
+#. i18n: ectx: property (windowTitle), widget (QWidget, AddEditFilterBase)
+#: plugins/filter/addeditfilter_base.ui:14
+#, kde-format
+msgid "Define new filter rules"
+msgstr "កំណត់​ច្បាប់​ត្រង​ថ្មី"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: plugins/filter/addeditfilter_base.ui:22
+#, fuzzy, kde-format
+#| msgid "Filter &Field:"
+msgid "Fi&lter field:"
+msgstr "វាល​តម្រង ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/filter/addeditfilter_base.ui:52
+#, fuzzy, kde-format
+#| msgid "Filter &Type:"
+msgid "Fi&lter type:"
+msgstr "ប្រភេទ​តម្រង ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: plugins/filter/addeditfilter_base.ui:82
+#, kde-format
+msgid "Te&xt:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: plugins/filter/addeditfilter_base.ui:102
+#, fuzzy, kde-format
+#| msgid "Filter Action:"
+msgid "Filter action:"
+msgstr "សកម្មភាព​តម្រង ៖"
+
+#. i18n: ectx: property (text), widget (QCheckBox, dontHideReplies)
+#: plugins/filter/addeditfilter_base.ui:133
+#, kde-format
+msgid "Do not hide replies to me"
+msgstr "កុំ​លាក់​ការ​ឆ្លើយតប​មក​កាន់​ខ្ញុំ"
+
+#: plugins/filter/filtermanager.cpp:35
+#, kde-format
+msgid "Configure Filters..."
+msgstr "កំណត់​រចនាសម្ព័ន្ធ​តម្រង..."
+
+#: plugins/filter/filtermanager.cpp:42
+#, kde-format
+msgid "Hide Post"
+msgstr "លាក់​ការ​ប្រកាស"
+
+#: plugins/filter/filtermanager.cpp:222
+#, fuzzy, kde-format
+#| msgid "Hide all posts from <b>@%1</b>"
+msgid "Hide all posts from <b>@%1</b>?"
+msgstr "លាក់​ការ​ប្រកាស​ទាំងអស់​ពី <b>@%1</b>"
+
+#. i18n: ectx: property (windowTitle), widget (QWidget, mFilteringCtl)
+#: plugins/filter/filterprefs.ui:14
+#, kde-format
+msgid "Configure Filters"
+msgstr "កំណត់​រចនាសម្ព័ន្ធ​តម្រង"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tab)
+#: plugins/filter/filterprefs.ui:24
+#, kde-format
+msgid "Rules"
+msgstr "ក្បួន"
+
+#. i18n: ectx: property (text), widget (QTableWidget, filters)
+#: plugins/filter/filterprefs.ui:43
+#, kde-format
+msgid "Field"
+msgstr "វាល"
+
+#. i18n: ectx: property (text), widget (QTableWidget, filters)
+#: plugins/filter/filterprefs.ui:48
+#, kde-format
+msgid "Type"
+msgstr "ប្រភេទ"
+
+#. i18n: ectx: property (text), widget (QTableWidget, filters)
+#: plugins/filter/filterprefs.ui:53
+#, kde-format
+msgid "Filter"
+msgstr "តម្រង"
+
+#. i18n: ectx: property (text), widget (QTableWidget, filters)
+#: plugins/filter/filterprefs.ui:58
+#, kde-format
+msgid "Action"
+msgstr "អំពើ"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnEdit)
+#: plugins/filter/filterprefs.ui:91
+#, kde-format
+msgid "Modify"
+msgstr "កែប្រែ"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnRemove)
+#: plugins/filter/filterprefs.ui:114
+#, kde-format
+msgid "Remove"
+msgstr "យកចេញ"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabSpecial)
+#: plugins/filter/filterprefs.ui:127
+#, kde-format
+msgid "Special Rules"
+msgstr "ច្បាប់​ពិសេស"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, cfg_hideRepliesNotRelatedToMe)
+#: plugins/filter/filterprefs.ui:133
+#, fuzzy, kde-format
+#| msgid "You'll see just replies came to you, or mentions you."
+msgid "You will see just replies came to you, or mentions you."
+msgstr "អ្នក​នឹង​ឃើញ​តែ​ចម្លើយ​តប​ដែល​មក​កាន់​អ្នក ឬ​និយាយ​ពី​អ្នក​តែប៉ុណ្ណោះ ។"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_hideRepliesNotRelatedToMe)
+#: plugins/filter/filterprefs.ui:136
+#, fuzzy, kde-format
+#| msgid "Just show replies to me."
+msgid "Just show replies to me"
+msgstr "បង្ហាញ​តែ​ចម្លើយ​តប​មក​ខ្ញុំ​ប៉ុណ្ណោះ ។"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, cfg_hideNoneFriendsReplies)
+#: plugins/filter/filterprefs.ui:143
+#, fuzzy, kde-format
+#| msgid "You'll see just replies between your friends."
+msgid "You will see just replies between your friends."
+msgstr "អ្នក​នឹង​ឃើញ​ចម្លើយ​តប​តែ​រវាង​មិត្តភ័ក្ដិ​របស់​អ្នក​ប៉ុណ្ណោះ ។"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_hideNoneFriendsReplies)
+#: plugins/filter/filterprefs.ui:146
+#, fuzzy, kde-format
+#| msgid "Just show replies to me and my friends."
+msgid "Just show replies to me and my friends"
+msgstr "បង្ហាញ​ចម្លើយ​តប​តែ​មក​កាន់​ខ្ញុំ និង​មិត្តភ័ក្ដិ​របស់​ខ្មុំ​ប៉ុណ្ណោះ ។"
+
+#: plugins/filter/filtersettings.cpp:30
+#, kde-format
+msgid "Author Username"
+msgstr "ឈ្មោះ​អ្នក​និពន្ធ"
+
+#: plugins/filter/filtersettings.cpp:31
+#, kde-format
+msgid "Post Text"
+msgstr "ប្រកាស​អត្ថបទ"
+
+#: plugins/filter/filtersettings.cpp:32
+#, kde-format
+msgid "Author Client"
+msgstr "ម៉ាស៊ីន​ភ្ញៀវ​អ្នក​និពន្ធ"
+
+#: plugins/filter/filtersettings.cpp:33
+#, kde-format
+msgid "Reply to User"
+msgstr "ឆ្លើយតប​ទៅ​អ្នកប្រើ"
+
+#: plugins/filter/filtersettings.cpp:35
+#, kde-format
+msgid "Contain"
+msgstr "មាន"
+
+#: plugins/filter/filtersettings.cpp:36
+#, kde-format
+msgid "Does Not Contain"
+msgstr "មិន​មាន"
+
+#: plugins/filter/filtersettings.cpp:37
+#, kde-format
+msgid "Exact Match"
+msgstr "ដូចគ្នា​បេះបិទ"
+
+#: plugins/filter/filtersettings.cpp:38
+#, kde-format
+msgid "Regular Expression"
+msgstr "កន្សោម​ធម្មតា"
+
+#: plugins/filter/filtersettings.cpp:40
+#, fuzzy, kde-format
+#| msgid "Hide Posts"
+msgctxt "@action"
+msgid "Hide Posts"
+msgstr "លាក់​ការ​ប្រកាស"
+
+#: plugins/filter/filtersettings.cpp:41
+#, fuzzy, kde-format
+#| msgid "Highlight Posts"
+msgctxt "@action"
+msgid "Highlight Posts"
+msgstr "ការ​ប្រកាស​ផ្នែក​សំខាន់"
+
+#. i18n: ectx: property (text), widget (QLabel, label_im)
+#: plugins/imstatus/imstatusprefs.ui:19
+#, kde-format
+msgid "Instant Messenger:"
+msgstr "កម្មវិធី​ផ្ញើ​សារ​រហ័ស ៖"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_reply)
+#: plugins/imstatus/imstatusprefs.ui:31
+#, kde-format
+msgid "Add replies to status"
+msgstr "បន្ថែម​ចម្លើយ​តប​ទៅ​ស្ថានភាព"
+
+#. i18n: ectx: property (text), widget (QLabel, label_status_templ)
+#: plugins/imstatus/imstatusprefs.ui:38
+#, kde-format
+msgid "Status template"
+msgstr "ពុម្ព​ស្ថានភាព"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/imstatus/imstatusprefs.ui:64
+#, no-c-format, kde-format
+msgid ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<table border=\"0\" style=\"-qt-table-type: root; margin-top:4px; margin-"
+"bottom:4px; margin-left:4px; margin-right:4px;\">\n"
+"<tr>\n"
+"<td style=\"border: none;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt;\">Available markup:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%status%</span><span style=\" font-size:8pt;\"> "
+"- new status</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%time%</span><span style=\" font-size:8pt;\"> - "
+"time of adding new status</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%url%</span><span style=\" font-size:8pt;\"> - "
+"URL of new status</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%username%</span><span style=\" font-size:8pt;"
+"\"> - your username</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%fullname%</span><span style=\" font-size:8pt;"
+"\"> - your full name</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%client%</span><span style=\" font-size:8pt;\"> "
+"- add </span><span style=\" font-size:8pt; font-style:italic;\">Choqok</"
+"span><span style=\" font-size:8pt;\"> to status</span></p></td></tr></"
+"table></body></html>"
+msgstr ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<table border=\"0\" style=\"-qt-table-type: root; margin-top:4px; margin-"
+"bottom:4px; margin-left:4px; margin-right:4px;\">\n"
+"<tr>\n"
+"<td style=\"border: none;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt;\">ការ​បង្កើត​ដែល​អាច​ប្រើ​បាន ៖</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%status%</span><span style=\" font-size:8pt;\"> "
+"- ស្ថានភាព​ថ្មី</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%time%</span><span style=\" font-size:8pt;\"> - "
+"ពេលវេលា​នៃ​ការ​បន្ថែម​ស្ថានភាព​ថ្មី</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%url%</span><span style=\" font-size:8pt;\"> - "
+"URL នៃ​ស្ថានភាព​ថ្មី</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%username%</span><span style=\" font-size:8pt;"
+"\"> - ឈ្មោះ​អ្នកប្រើ​របស់​អ្នក</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%fullname%</span><span style=\" font-size:8pt;"
+"\"> - ឈ្មោះ​ពេញ​របស់​អ្នក</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%client%</span><span style=\" font-size:8pt;\"> "
+"- បន្ថែម </span><span style=\" font-size:8pt; font-style:italic;\">Choqok</"
+"span><span style=\" font-size:8pt;\"> ទៅ​ស្ថានភាព</span></p></td></tr></"
+"table></body></html>"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_repeat)
+#: plugins/imstatus/imstatusprefs.ui:87
+#, kde-format
+msgid "Add repeats to status"
+msgstr "បន្ថែម​ការ​ធ្វើ​ម្ដងទៀត​ទៅ​ស្ថានភាព"
+
+#: plugins/konqueror/konqchoqok.cpp:36 plugins/konqueror/konqchoqok.cpp:91
+#, kde-format
+msgid "Post Text with Choqok"
+msgstr "ប្រកាស​អត្ថបទ​ជាមួយ Choqok"
+
+#: plugins/konqueror/konqchoqok.cpp:41
+#, fuzzy, kde-format
+#| msgid "Shorten &URLs on paste"
+msgid "Shorten URL on Paste"
+msgstr "កាត់​ URLs ​ឲ្យ​ខ្លី​នៅ​ពេល​បិទ​ភ្ជាប់"
+
+#: plugins/konqueror/konqchoqok.cpp:90
+#, kde-format
+msgid "You need to select text to post."
+msgstr "អ្នក​ត្រូវតែ​ជ្រើស​អត្ថបទ​ដើម្បី​ប្រកាស ។"
+
+#. i18n: ectx: Menu (tools)
+#: plugins/konqueror/konqchoqok.rc:4
+#, kde-format
+msgid "&Tools"
+msgstr "ឧបករណ៍"
+
+#: plugins/nowlistening/nowlistening.cpp:33
+#, kde-format
+msgid "Now Listening"
+msgstr "ឥឡូវ​នេះ​ស្ដាប់"
+
+#: plugins/nowlistening/nowlistening.cpp:226
+#, kde-format
+msgctxt "Player is running, But it's not playing."
+msgid "Play your desired music player."
+msgstr "ចាក់​​កម្មវិធី​​តន្ត្រី​ដែល​អ្នក​ចូលចិត្ត ។"
+
+#: plugins/nowlistening/nowlistening.cpp:229
+#, kde-format
+msgid "No supported player found."
+msgstr "រក​មិន​ឃើញ​កម្មវិធី​ចាក់​តន្ត្រី​ដែល​បាន​គាំទ្រ​ឡើយ ។"
+
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: plugins/nowlistening/nowlisteningprefs.ui:17
+#, kde-format
+msgid "Valid metadata:"
+msgstr "ទិន្នន័យ​មេតា​ត្រឹមត្រូវ ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/nowlistening/nowlisteningprefs.ui:51
+#, kde-format
+msgid "Template:"
+msgstr "ពុម្ព​ ៖"
+
+#: plugins/quickfilter/quickfilter.cpp:35
+#, kde-format
+msgid "Filter by author"
+msgstr "ត្រង​តាម​អ្នក​និពន្ធ"
+
+#: plugins/quickfilter/quickfilter.cpp:37
+#, kde-format
+msgid "Filter by content"
+msgstr "ត្រង​តាម​មាតិកា"
+
+#: plugins/quickfilter/quickfilter.cpp:92
+#, kde-format
+msgid "Filter out timeline by author"
+msgstr "ត្រង​បន្ទាត់​ពេលវេលា​តាម​អ្នក​និពន្ធ"
+
+#: plugins/quickfilter/quickfilter.cpp:94
+#, kde-format
+msgid "Filter out timeline by text"
+msgstr "ត្រង​បន្ទាត់​ពេលវេលា​តាម​អត្ថបទ"
+
+#: plugins/quickfilter/quickfilter.cpp:106
+#, kde-format
+msgid "Author"
+msgstr "អ្នក​និពន្ធ"
+
+#: plugins/quickfilter/quickfilter.cpp:107
+#, kde-format
+msgid "Text"
+msgstr "អត្ថបទ"
+
+#: plugins/searchaction/searchaction.cpp:49
+#, kde-format
+msgid "The Search action plugin does not support the current microblog."
+msgstr "កម្ម​វិធី​ជំនួយ​សកម្ម​ភាព​​ស្វែង​រក​មិន​គាំ​ទ្រ​ microblog ​បច្ចុប្បន្ន​ទេ ។"
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:70
+#, kde-format
+msgid "API key is invalid"
+msgstr "សោ API មិន​ត្រឹមត្រូវ"
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:73
+#, kde-format
+msgid "Login is invalid"
+msgstr "ការ​ចូល​មិន​ត្រឹមត្រូវ"
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:76
+#, kde-format
+msgid "Rate limit exceeded. Try another shortener."
+msgstr "បាន​លើស​ដែន​កំណត់​អត្រា ។ សាកល្បង​កម្មវិធី​កាត់​មួយ​ផ្សេងទៀត ។"
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:79
+#: plugins/shorteners/goo_gl/goo_gl.cpp:55
+#: plugins/shorteners/is_gd/is_gd.cpp:67 plugins/shorteners/ur_ly/ur_ly.cpp:56
+#: plugins/uploaders/flickr/flickr.cpp:191
+#: plugins/uploaders/flickr/flickr.cpp:197
+#: plugins/uploaders/flickr/flickrconfig.cpp:158
+#: plugins/uploaders/flickr/flickrconfig.cpp:163
+#: plugins/uploaders/flickr/flickrconfig.cpp:232
+#: plugins/uploaders/flickr/flickrconfig.cpp:237
+#: plugins/uploaders/imageshack/imageshack.cpp:110
+#: plugins/uploaders/mobypicture/mobypicture.cpp:144
+#: plugins/uploaders/posterous/posterous.cpp:168
+#: plugins/uploaders/twitgoo/twitgoo.cpp:108
+#: plugins/uploaders/twitpic/twitpic.cpp:113
+#, kde-format
+msgid "Malformed response"
+msgstr "ចម្លើយតប​មិន​ត្រឹមត្រូវ"
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:79
+#: plugins/shorteners/bit_ly/bit_ly.cpp:82
+#, fuzzy, kde-format
+#| msgid "bit.ly error"
+msgid "Bit.ly error"
+msgstr "កំហុស bit.ly"
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:81
+#: plugins/shorteners/goo_gl/goo_gl.cpp:57
+#: plugins/shorteners/is_gd/is_gd.cpp:70
+#: plugins/shorteners/tighturl/tighturl.cpp:54
+#: plugins/shorteners/tinyarro_ws/tinyarro_ws.cpp:58
+#: plugins/shorteners/ur1_ca/ur1_ca.cpp:60
+#: plugins/shorteners/ur_ly/ur_ly.cpp:60
+#: plugins/shorteners/yourls/yourls.cpp:74
+#, fuzzy, kde-format
+#| msgid ""
+#| "Cannot create a short url.\n"
+#| "%1"
+msgid ""
+"Cannot create a short URL.\n"
+"%1"
+msgstr ""
+"មិន​អាច​បង្កើត url ខ្លី​បាន​ទេ​ ។\n"
+"%1"
+
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:51
+#, fuzzy, kde-format
+#| msgid ""
+#| "You can find your API key <a href=\"http://bit.ly/a/your_api_key\">here</"
+#| "a>"
+msgctxt ""
+"The your_api_key part of the URL is a fixed part of the URL and should "
+"probably not be changed in localization."
+msgid ""
+"You can find your API key <a href=\"http://bit.ly/a/your_api_key\">here</a>"
+msgstr ""
+"អ្នក​អាច​ស្វែងរក​សោ API របស់​អ្នក <a href=\"http://bit.ly/a/your_api_key\">នៅ​ទីនេះ</a>"
+
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:95
+#, kde-format
+msgid "Checking..."
+msgstr "កំពុង​ពិនិត្យ..."
+
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:121
+#, fuzzy, kde-format
+#| msgid ""
+#| "Provided data is invalid. Try another login or API key.\n"
+#| "You can find it on http://bit.ly/a/your_api_key"
+msgctxt ""
+"The your_api_key part of the URL is a fixed part of the URL and should "
+"probably not be changed in localization."
+msgid ""
+"Provided data is invalid. Try another login or API key.\n"
+"You can find it on http://bit.ly/a/your_api_key"
+msgstr ""
+"ទិន្នន័យ​ដែល​បាន​ផ្ដល់​គឺ​មិន​ត្រឹមត្រូវ ។ សាកល្បង​ការ​ចូល ឬ​សោ API ផ្សេងទៀត ។\n"
+"អ្នក​អាច​រក​វា​បាន​នៅ​ឯ http://bit.ly/a/your_api_key"
+
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:124
+#, fuzzy, kde-format
+#| msgid "You entered valid information!"
+msgid "You entered valid information."
+msgstr "អ្នក​បាន​បញ្ចូល​ព័ត៌មាន​ដែល​ត្រឹមត្រូវ !"
+
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:127
+#, fuzzy, kde-format
+#| msgid "bit.ly config error"
+msgid "bit.ly Config Error"
+msgstr "កំហុស bit.ly config"
+
+#. i18n: ectx: property (text), widget (QPushButton, validate_button)
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:131
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:49
+#, kde-format
+msgid "Validate"
+msgstr "ធ្វើ​ឲ្យ​មាន​សុពលភាព"
+
+#. i18n: ectx: property (text), widget (QLabel, login)
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:19
+#, fuzzy, kde-format
+#| msgid "Bit.ly Login:"
+msgid "Bit.ly login:"
+msgstr "ចូល Bit.ly ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, api_key)
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:32
+#, fuzzy, kde-format
+#| msgid "Bit.ly API Key:"
+msgid "Bit.ly API key:"
+msgstr "សោ Bit.ly API ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, help_label)
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:58
+#, kde-format
+msgid "You can find your API key here"
+msgstr "អ្នក​អាច​ស្វែងរក​សោ API របស់​អ្នក​នៅ​ទីនេះ"
+
+#. i18n: ectx: property (text), widget (QLabel, domain)
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:73
+#, kde-format
+msgid "Domain:"
+msgstr "ដែន ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:86
+#, kde-format
+msgid "(No matter for Bit.ly Pro accounts)"
+msgstr "(មិន​មាន​បញ្ហា​សម្រាប់​គណនី Bit.ly Pro)"
+
+#: plugins/shorteners/goo_gl/goo_gl.cpp:38
+#, kde-format
+msgid "Error when creating job"
+msgstr "កំហុស​នៅ​ពេល​បង្កើត​ការងារ"
+
+#: plugins/shorteners/goo_gl/goo_gl.cpp:38
+#: plugins/shorteners/goo_gl/goo_gl.cpp:50
+#: plugins/shorteners/goo_gl/goo_gl.cpp:55
+#: plugins/shorteners/goo_gl/goo_gl.cpp:57
+#, fuzzy, kde-format
+#| msgid "Goo.gl error"
+msgid "Goo.gl Error"
+msgstr "កំហុស Goo.gl"
+
+#: plugins/shorteners/is_gd/is_gd.cpp:59 plugins/shorteners/is_gd/is_gd.cpp:67
+#: plugins/shorteners/is_gd/is_gd.cpp:70
+#, fuzzy, kde-format
+#| msgid "is.gd error"
+msgid "is.gd Error"
+msgstr "កំហុស is.gd"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_logstats)
+#: plugins/shorteners/is_gd/is_gd_prefs.ui:19
+#, kde-format
+msgid "Generate Statistics"
+msgstr "ធ្វើ​ស្ថិតិ"
+
+#: plugins/shorteners/tighturl/tighturl.cpp:55
+#, fuzzy, kde-format
+#| msgid "bit.ly error"
+msgid "TightUrl Error"
+msgstr "កំហុស bit.ly"
+
+#: plugins/shorteners/tinyarro_ws/tinyarro_ws.cpp:56
+#, kde-format
+msgid "Tinyarro.ws error"
+msgstr "កំហុស Tinyarro.ws"
+
+#: plugins/shorteners/tinyarro_ws/tinyarro_ws_config.cpp:49
+#, kde-format
+msgid "Random host"
+msgstr "ម៉ាស៊ីន​ចៃដន្យ"
+
+#. i18n: ectx: property (text), widget (QLabel, urlHostLabel)
+#: plugins/shorteners/tinyarro_ws/tinyarro_ws_prefs.ui:40
+#, kde-format
+msgid "Shortener URL host:"
+msgstr "ម៉ាស៊ីន URL កម្មវិធី​កាត់​ឲ្យ​ខ្លី ៖"
+
+#: plugins/shorteners/ur1_ca/ur1_ca.cpp:60
+#, fuzzy, kde-format
+#| msgid "Yourls Error"
+msgid "ur1.ca Error"
+msgstr "កំហុស Yourls"
+
+#: plugins/shorteners/ur_ly/ur_ly.cpp:56 plugins/shorteners/ur_ly/ur_ly.cpp:61
+#, fuzzy, kde-format
+#| msgid "3.ly error"
+msgid "Ur.ly Error"
+msgstr "កំហុស 3.ly"
+
+#: plugins/shorteners/yourls/yourls.cpp:71
+#, kde-format
+msgid "Yourls Error"
+msgstr "កំហុស Yourls"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: plugins/shorteners/yourls/yourlsprefs.ui:17
+#, kde-format
+msgid "Yourls API URL:"
+msgstr "Yourls API URL ៖"
+
+#. i18n: ectx: property (clickMessage), widget (QLineEdit, kcfg_yourlsHost)
+#: plugins/shorteners/yourls/yourlsprefs.ui:27
+#, kde-format
+msgid "http://SomeDomain.com/yourls/yourls-api.php"
+msgstr "http://SomeDomain.com/yourls/yourls-api.php"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useUntinyDotCom)
+#: plugins/untiny/untinyprefs.ui:17
+#, kde-format
+msgid "Use untiny.com service"
+msgstr "ប្រើ​សេវា untiny.com"
+
+#: plugins/uploaders/flickr/flickr.cpp:155
+#, kde-format
+msgid "The photo required argument was missing"
+msgstr "បាន​បាត់​រូបភាព​ដែល​បាន​ទាមទារ​អាគុយម៉ង់"
+
+#: plugins/uploaders/flickr/flickr.cpp:158
+#, kde-format
+msgid "The file was not correctly uploaded"
+msgstr "ឯកសារ​មិន​ត្រូវ​បាន​ផ្ទុក​ឡើង​ដោយ​ត្រឹមត្រូវ​ឡើយ"
+
+#: plugins/uploaders/flickr/flickr.cpp:161
+#, kde-format
+msgid "The file was zero bytes in length"
+msgstr "ឯកសារ​គឺ​សូន្យ​បៃ​គិតជា​ប្រវែង"
+
+#: plugins/uploaders/flickr/flickr.cpp:164
+#, kde-format
+msgid "Filetype was not recognised"
+msgstr "មិន​ស្គាល់​ប្រភេទ​ឯកសារ"
+
+#: plugins/uploaders/flickr/flickr.cpp:167
+#, kde-format
+msgid "The calling user has reached their monthly bandwidth limit"
+msgstr "អ្នក​ប្រើ​ដែល​ធ្វើ​ការ​ហៅ បាន​ឈាន​ដល់​ដែន​កំណត់​កម្រិត​បញ្ជូន​ប្រចាំ​ខែ​របស់​ពួកគេ​ហើយ"
+
+#: plugins/uploaders/flickr/flickr.cpp:171
+#: plugins/uploaders/flickr/flickrconfig.cpp:147
+#, kde-format
+msgid "Signature problem. Please try again later"
+msgstr "បញ្ហា​ហត្ថលេខា ។ សូម​ព្យាយាម​ម្ដងទៀត​នៅ​ពេល​ក្រោយ"
+
+#: plugins/uploaders/flickr/flickr.cpp:178
+#, kde-format
+msgid "Login failed. Please re-authenticate Choqok"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ចូល ។ សូម​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ Choqok ម្ដងទៀត"
+
+#: plugins/uploaders/flickr/flickr.cpp:181
+#: plugins/uploaders/flickr/flickrconfig.cpp:150
+#: plugins/uploaders/flickr/flickrconfig.cpp:224
+#, kde-format
+msgid "The requested service is temporarily unavailable. Try again later"
+msgstr "មិន​អាច​ប្រើ​សេវា​ដែល​បាន​ទាមទារ​ជា​បណ្ដោះអាសន្ន ។ ព្យាយាម​ម្ដងទៀត​នៅ​ពេល​ក្រោយ"
+
+#: plugins/uploaders/flickr/flickr.cpp:184
+#: plugins/uploaders/flickr/flickrconfig.cpp:153
+#, fuzzy, kde-format
+#| msgid "Unknown Error: %1. Please try again later"
+msgid "Unknown Error:%1. Please try again later"
+msgstr "កំហុស​ដែល​មិន​ស្គាល់ ៖ %1 ។ សូម​ព្យាយាម​ម្ដងទៀត​នៅ​ពេល​ក្រោយ"
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:169
+#: plugins/uploaders/flickr/flickrconfig.cpp:244
+#, kde-format
+msgid "Flickr authorization"
+msgstr "សេចក្ដី​អនុញ្ញាត Flickr"
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:221
+#, kde-format
+msgid "Something happens with signature. Please retry"
+msgstr "មាន​អ្វី​កើតឡើង​លើ​ហត្ថលេខា ។ សូម​ព្យាយាម​ម្ដងទៀត"
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:227
+#, kde-format
+msgid "Something happens wrong. Error %1. Try again later"
+msgstr "មាន​អ្វី​ដំណើរការ​មិន​ត្រឹមត្រូវ ។ កំហុស %1 ។ ព្យាយាម​ម្ដងទៀត​នៅ​ពេល​ក្រោយ"
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:264
+#, kde-format
+msgid "Authorized as %1"
+msgstr "ដែល​មាន​សេចក្ដី​អនុញ្ញាត​ជា %1"
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:271
+#, kde-format
+msgid "Not authorized"
+msgstr "មិន​មាន​សេចក្ដី​អនុញ្ញាត"
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:285
+#, kde-format
+msgid "Click here when you authorized Choqok"
+msgstr "ចុច​នៅ​ទីនេះ នៅ​ពេល​អ្នក​បាន​ផ្ដល់​សេចក្ដី​អនុញ្ញាត​ឲ្យ Choqok"
+
+#. i18n: ectx: attribute (title), widget (QWidget, authTab)
+#: plugins/uploaders/flickr/flickrprefs.ui:24
+#, kde-format
+msgid "Authorization"
+msgstr "សេចក្ដី​អនុញ្ញាត"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: plugins/uploaders/flickr/flickrprefs.ui:51
+#, fuzzy, kde-format
+#| msgid ""
+#| "Click the below button, If everything goes well, you'll pointed to Flickr."
+#| "com website to allow access to Choqok."
+msgid ""
+"Click the below button; if everything goes well, you will pointed to Flickr."
+"com website to allow access to Choqok."
+msgstr ""
+"ចុច​ប៊ូតុង​ខាងក្រោម ប្រសិនបើ​អ្វីៗ​ដំណើរការ​ល្អ អ្នក​នឹង​ត្រូវ​បាន​ចង្អុល​ទៅ​តំបន់​បណ្ដាញ Flickr.com ដើម្បី​"
+"អនុញ្ញាត​ការ​ចូល​ដំណើរការ Choqok ។"
+
+#. i18n: ectx: property (text), widget (QPushButton, authButton)
+#: plugins/uploaders/flickr/flickrprefs.ui:61
+#, kde-format
+msgid "Click here to authorize Choqok on Flickr.com"
+msgstr "ចុច​ទីនេះ ដើម្បី​ផ្ដល់​សេចក្ដី​អនុញ្ញាត​ឲ្យ Choqok លើ Flickr.com"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: plugins/uploaders/flickr/flickrprefs.ui:90
+#, kde-format
+msgid "Who can view photo"
+msgstr "អ្នក​ដែល​អាច​មើល​រូបថត"
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_forprivate)
+#: plugins/uploaders/flickr/flickrprefs.ui:96
+#, kde-format
+msgid "Private"
+msgstr "ផ្ទាល់ខ្លួន"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_forfriends)
+#: plugins/uploaders/flickr/flickrprefs.ui:105
+#, kde-format
+msgid "Visible for friends"
+msgstr "ដែល​អាច​មើល​ឃើញ​សម្រាប់​មិត្តភ័ក្ដិ"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_forfamily)
+#: plugins/uploaders/flickr/flickrprefs.ui:112
+#, kde-format
+msgid "Visible for family"
+msgstr "ដែល​អាច​មើល​ឃើញ​សម្រាប់​ក្រុម​គ្រួសារ"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: plugins/uploaders/flickr/flickrprefs.ui:134
+#, kde-format
+msgid "Set safety level"
+msgstr "កំណត់​កម្រិត​សុវត្ថិភាព"
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_safe)
+#: plugins/uploaders/flickr/flickrprefs.ui:140
+#, kde-format
+msgid "Safe"
+msgstr "សុវត្ថិភាព"
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_moderate)
+#: plugins/uploaders/flickr/flickrprefs.ui:150
+#, kde-format
+msgid "Moderate"
+msgstr "មធ្យម"
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_restricted)
+#: plugins/uploaders/flickr/flickrprefs.ui:157
+#, kde-format
+msgid "Restricted"
+msgstr "ដែល​ត្រូវ​បាន​កម្រិត"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_hidefromsearch)
+#: plugins/uploaders/flickr/flickrprefs.ui:169
+#, kde-format
+msgid "Hide picture from public search"
+msgstr "លាក់​រូបភាព​ពី​ការ​ស្វែងរក​ជា​សាធារណៈ"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_shorturl)
+#: plugins/uploaders/flickr/flickrprefs.ui:176
+#, kde-format
+msgid "Use Flic.kr to short URLs"
+msgstr "ប្រើ Flic.kr ដើម្បី​កាត់ URLs ឲ្យ​ខ្លី"
+
+#: plugins/uploaders/imageshack/imageshack.cpp:37
+#, kde-format
+msgid "Just supporting image uploading"
+msgstr "ការ​គាំទ្រ​ការ​ផ្ទុក​រូបភាព​ឡើង"
+
+#: plugins/uploaders/mobypicture/mobypicture.cpp:46
+#: plugins/uploaders/posterous/posterous.cpp:101
+#: plugins/uploaders/twitgoo/twitgoo.cpp:44
+#: plugins/uploaders/twitpic/twitpic.cpp:42
+#, fuzzy, kde-format
+#| msgid "There's no Twitter account configured to use."
+msgid "There is no Twitter account configured to use."
+msgstr "មិន​មាន​គណនី Twitter ដែល​បាន​កំណត់​រចនាសម្ព័ន្ធ​ដើម្បី​ប្រើ​ឡើយ ។"
+
+#: plugins/uploaders/mobypicture/mobypictureconfig.cpp:76
+#: plugins/uploaders/posterous/posterousconfig.cpp:77
+#: plugins/uploaders/twitgoo/twitgooconfig.cpp:66
+#: plugins/uploaders/twitpic/twitpicconfig.cpp:62
+#, fuzzy, kde-format
+#| msgid ""
+#| "You have to configure at least one twitter account to use this plugin."
+msgid "You have to configure at least one Twitter account to use this plugin."
+msgstr "អ្នក​ត្រូវតែ​កំណត់​រចនាសម្ព័ន្ធ​គណនី twitter យ៉ាងហោចណាស់​មួយ ដើម្បី​ប្រើ​កម្មវិធី​ជំនួយ​នេះ​បាន ។"
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_oauth)
+#: plugins/uploaders/mobypicture/mobypictureprefs.ui:40
+#: plugins/uploaders/posterous/posterousprefs.ui:40
+#, fuzzy, kde-format
+#| msgid "Twitter account"
+msgid "&Twitter account"
+msgstr "គណនី Twitter"
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_basic)
+#: plugins/uploaders/mobypicture/mobypictureprefs.ui:47
+#, fuzzy, kde-format
+#| msgid "Mobypicture login and password:"
+msgid "Mobypicture &login and password:"
+msgstr "ការ​ចូល និង​ពាក្យ​សម្ងាត់​របស់ Mobypicture ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: plugins/uploaders/mobypicture/mobypictureprefs.ui:57
+#: plugins/uploaders/posterous/posterousprefs.ui:57
+#, kde-format
+msgid "Upload files using:"
+msgstr "ផ្ទុក​ឯកសារ​ឡើង​ដោយ​ប្រើ ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/uploaders/mobypicture/mobypictureprefs.ui:64
+#, kde-format
+msgid "Login:"
+msgstr "ចូល ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: plugins/uploaders/mobypicture/mobypictureprefs.ui:74
+#, kde-format
+msgid "Password (PIN):"
+msgstr "ពាក្យ​សម្ងាត់ (PIN) ៖"
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_basic)
+#: plugins/uploaders/posterous/posterousprefs.ui:47
+#, fuzzy, kde-format
+#| msgid "Posterous login and password:"
+msgid "Posterous &login and password:"
+msgstr "ការ​ចូល និង​ពាក្យ​សម្ងាត់​របស់ Posterous ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/uploaders/posterous/posterousprefs.ui:64
+#, kde-format
+msgid "E-mail:"
+msgstr "អ៊ីមែល ៖"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/uploaders/twitgoo/twitgooprefs.ui:17
+#: plugins/uploaders/twitpic/twitpicprefs.ui:17
+#, kde-format
+msgid "Twitter account:"
+msgstr "គណនី Twitter ៖"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_directLink)
+#: plugins/uploaders/twitgoo/twitgooprefs.ui:50
+#, kde-format
+msgid "Get direct link to file"
+msgstr "យក​តំណ​ផ្ទាល់​ទៅ​ឯកសារ"
+
+#~ msgctxt "Translation Language"
+#~ msgid "Chinese Simplified"
+#~ msgstr "អក្សរ​ចិនកាត់"
+
+#~ msgctxt "Translation Language"
+#~ msgid "Chinese Traditional"
+#~ msgstr "អក្សរ​ចិន​ពេញ"
+
+#~ msgctxt "Translation Language"
+#~ msgid "Filipino"
+#~ msgstr "ហ្វីលីពីន"
+
+#~ msgctxt "Translation Language"
+#~ msgid "Haitian Creole"
+#~ msgstr "ក្រេអូល​ហៃទី"
+
+#~ msgctxt "Translation Language"
+#~ msgid "Hebrew"
+#~ msgstr "ហេប្រូ"
+
+#~ msgctxt "Translation Language"
+#~ msgid "Norwegian"
+#~ msgstr "ន័រវែស"
+
+#, fuzzy
+#~| msgid "Translate to ..."
+#~ msgid "Translate to..."
+#~ msgstr "បកប្រែទៅ ..."
+
+#, fuzzy
+#~| msgid ""
+#~| "<span style=\"color:%2; font-size:small;\">Translated from %1: (<a "
+#~| "href='choqok://showoriginalpost' style=\"text-decoration:none\" "
+#~| ">original post</a>)</span>"
+#~ msgctxt "%1 is the name of the source language in localized form"
+#~ msgid ""
+#~ "<span style=\"color:%2; font-size:small;\">Translated from %1: (<a "
+#~ "href='choqok://showoriginalpost' style=\"text-decoration:none\" >original "
+#~ "post</a>)</span>"
+#~ msgstr ""
+#~ "<span style=\"color:%2; font-size:small;\">បាន​បកប្រែ​ពី %1 ៖ (<a "
+#~ "href='choqok://showoriginalpost' style=\"text-decoration:none\" >ប្រកាស​"
+#~ "ដើម</a>)</span>"
+
+#~ msgid "Translation failed: %1"
+#~ msgstr "ការ​បកប្រែ​បាន​បរាជ័យ ៖ %1"
+
+#~ msgid "Configure Translator"
+#~ msgstr "កំណត់​រចនាសម្ព័ន្ធ​កម្មវិធី​បកប្រែ"
+
+#~ msgid "Select languages to be shown in translate menu"
+#~ msgstr "ជ្រើស​ភាសា​ដែល​ត្រូវ​បាន​បង្ហាញ​ក្នុង​ម៉ឺនុយ​បកប្រែ"
+
+#~ msgid "Donate"
+#~ msgstr "បរិច្ចាគ"
+
+#~ msgid "No Error"
+#~ msgstr "គ្មាន​កំហុស"
+
+#~ msgid "Bad request"
+#~ msgstr "សំណើ​មិន​ត្រឹមត្រូវ"
+
+#~ msgid "Consumer Key or Secret has not been provided"
+#~ msgstr "ការ​សម្ងាត់ ឬ​សោ​របស់​អ្នក​ប្រើប្រាស់ មិន​ត្រូវ​បាន​ផ្ដល់​ឲ្យ​ឡើយ"
+
+#~ msgid "Forbidden"
+#~ msgstr "ហាម​ឃាត់"
+
+#~ msgid "Timeout on server"
+#~ msgstr "អស់​ពេល​លើ​ម៉ាស៊ីន​បម្រើ"
+
+#~ msgid "Internal Error"
+#~ msgstr "កំហុស​ខាង​ក្នុង"
+
+#~ msgid "Unknown Error"
+#~ msgstr "មិន​​ស្គាល់កំហុស"
+
+#~ msgid "Include in Quick Post"
+#~ msgstr "រួមបញ្ចូល​នៅ​ក្នុង​ការប្រកាស​រហ័ស"
+
+#~ msgid "&Text:"
+#~ msgstr "អត្ថបទ ៖"
+
+#~ msgid " Second"
+#~ msgid_plural " Seconds"
+#~ msgstr[0] "វិនាទី"
+
+#~ msgid "The download failed. The returned file is corrupted."
+#~ msgstr "ការ​ទាញ​យក​បាន​បរាជ័យ ។ ឯកសារ​ដែល​បាន​ត្រឡប់​បាន​ខូច​ ។"
+
+#~ msgid "StatusNet server:"
+#~ msgstr "ម៉ាស៊ីន​បម្រើ StatusNet ៖"
+
+#~ msgid "Author and Core Developer"
+#~ msgstr "អ្នកនិពន្ធ និង​អ្នក​អភិវឌ្ឍ​សំខាន់"
+
+#~ msgid "Malformed response\n"
+#~ msgstr "ចម្លើយ​តប​ដែល​មិន​សមស្រប\n"
+
+#, fuzzy
+#~| msgid ""
+#~| "Sorry! OAuth Method just works with Identi.ca server. You have to use "
+#~| "basic authentication for other StatusNet servers."
+#~ msgid ""
+#~ "Sorry, OAuth Method just works with Identi.ca server. You have to use "
+#~ "basic authentication for other StatusNet servers."
+#~ msgstr ""
+#~ "សូមអភ័យទោស ! វិធីសាស្ត្រ OAuth ដំណើរការ​ជាមួយ​តែ​ម៉ាស៊ីន​បម្រើ Identi.ca ប៉ុណ្ណោះ ។ អ្នក​ត្រូវតែ​"
+#~ "ប្រើ​ការ​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ​មូលដ្ឋាន សម្រាប់​ម៉ាស៊ីន​បម្រើ StatusNet ផ្សេងៗ​ទៀត ។"
+
+#~ msgid "Authentication Error"
+#~ msgstr "កំហុស​នៅ​ក្នុង​ការ​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹម​ត្រូវ"
+
+#~ msgid "Security code"
+#~ msgstr "លេខ​កូដ​សុវត្ថិភាព"
+
+#~ msgctxt "Security code recieved from StatusNet"
+#~ msgid "Enter security code:"
+#~ msgstr "បញ្ចូល​លេខ​កូដ​សុវត្ថិភាព ៖"
+
+#~ msgid "Authentication Type:"
+#~ msgstr "ប្រភេទ​នៃ​ការ​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ ៖"
+
+#~ msgid "&Username:"
+#~ msgstr "ឈ្មោះ​អ្នក​ប្រើ ៖"
+
+#~ msgid "&Password:"
+#~ msgstr "ពាក្យ​សម្ងាត់ ៖"
+
+#~ msgid "Ok"
+#~ msgstr "យល់ព្រម"
+
+#~ msgid "No User!"
+#~ msgstr "គ្មាន​អ្នក​ប្រើ !"
+
+#~ msgid "Shorten Url on Paste"
+#~ msgstr "កាត់​ URL ​ឲ្យ​ខ្លី​នៅ​ពេល​បិទ​ភ្ជាប់"
+
+#~ msgid "OAuth Authentication "
+#~ msgstr "ការ​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ OAuth"
+
+#~ msgid "Ignore notifications"
+#~ msgstr "មិន​អើពើ​ការ​ជូន​ដំណឹង"
+
+#~ msgctxt "Close a timeline"
+#~ msgid "Close Timeline"
+#~ msgstr "បិទ​បន្ទាត់​ពេលវេលា"
+
+#~ msgid "<a href='%1'>in context</a>"
+#~ msgstr "<a href='%1'>ក្នុង​បរិបទ</a>"
+
+#~ msgid "PIN number"
+#~ msgstr "លេខ PIN"
+
+#, fuzzy
+#~ msgid "Graphic designer"
+#~ msgstr "កម្មវិធី​រចនា​រូបតំណាង"
+
+#, fuzzy
+#~ msgctxt "Close a search timeline"
+#~ msgid "Close Search"
+#~ msgstr "បិទ​ការ​ស្វែង​រក"
+
+#, fuzzy
+#~ msgid "Close All Search Tabs"
+#~ msgstr "បិទផ្ទាំង​​ស្វែង​រកទាំង​អស់"
+
+#, fuzzy
+#~ msgid "Unrecognized result."
+#~ msgstr "លទ្ធផល​ដែល​មិន​ទទួល​ស្គាល់​ ។"
+
+#, fuzzy
+#~ msgid "Twitter password:"
+#~ msgstr "ពាក្យ​សម្ងាត់​របស់​ Twitter ៖"
+
+#, fuzzy
+#~ msgid "Twitter username:"
+#~ msgstr "ឈ្មោះ​អ្នក​ប្រើ​របស់​ Twitter ៖"
+
+#, fuzzy
+#~ msgid ""
+#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+#~ "REC-html40/strict.dtd\">\n"
+#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~ "css\">\n"
+#~ "p, li { white-space: pre-wrap; }\n"
+#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; "
+#~ "font-weight:400; font-style:normal;\">\n"
+#~ "<p align=\"justify\" style=\" margin-top:0px; margin-bottom:0px; margin-"
+#~ "left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Click "
+#~ "on \"<span style=\" font-style:italic;\">Authorize Choqok</span>\" "
+#~ "button, If everything goes well, you'll pointed to Twitter website to "
+#~ "allow access to Choqok.</p></body></html>"
+#~ msgstr ""
+#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+#~ "REC-html40/strict.dtd\">\n"
+#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~ "css\">\n"
+#~ "p, li { white-space: pre-wrap; }\n"
+#~ "</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; "
+#~ "font-weight:400; font-style:normal;\">\n"
+#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+#~ "size:8pt; font-weight:600;\">ចំណាំ៖</span><span style=\" font-size:8pt;\"> "
+#~ "ឈ្មោះ​ក្លែងក្លាយ​ត្រូវតែ​ជា​ឈ្មោះ​តែមួយ​ ។</span></p></body></html>"
+
+#, fuzzy
+#~ msgid ""
+#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+#~ "REC-html40/strict.dtd\">\n"
+#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~ "css\">\n"
+#~ "p, li { white-space: pre-wrap; }\n"
+#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; "
+#~ "font-weight:400; font-style:normal;\">\n"
+#~ "<p align=\"justify\" style=\" margin-top:0px; margin-bottom:0px; margin-"
+#~ "left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Click "
+#~ "on \"<span style=\" font-style:italic;\">Authorize Choqok</span>\" "
+#~ "button, If everything goes well, you'll pointed to Identi.ca website to "
+#~ "allow access to Choqok.</p></body></html>"
+#~ msgstr ""
+#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+#~ "REC-html40/strict.dtd\">\n"
+#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~ "css\">\n"
+#~ "p, li { white-space: pre-wrap; }\n"
+#~ "</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; "
+#~ "font-weight:400; font-style:normal;\">\n"
+#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+#~ "size:8pt; font-weight:600;\">ចំណាំ៖</span><span style=\" font-size:8pt;\"> "
+#~ "ឈ្មោះ​ក្លែងក្លាយ​ត្រូវតែ​ជា​ឈ្មោះ​តែមួយ​ ។</span></p></body></html>"
+
+#, fuzzy
+#~ msgid "The password associated to your username for the service"
+#~ msgstr "ពាក្យ​សម្ងាត់ដែល​ទាក់ទង​នឹង​ឈ្មោះ​អ្នកប្រើ​របស់អ្នក​សម្រាប់សេវា"
+
+#, fuzzy
+#~ msgid "Use secure connection (HTTPS)"
+#~ msgstr "ប្រើ​ការតភ្ជាប់​ដែល​មានសុវត្ថិភាព​ (HTTPS)"
+
+#~ msgid "Registration"
+#~ msgstr "ការ​ចុះ​ឈ្មោះ"
+
+#, fuzzy
+#~ msgid ""
+#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+#~ "REC-html40/strict.dtd\">\n"
+#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~ "css\">\n"
+#~ "p, li { white-space: pre-wrap; }\n"
+#~ "</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; "
+#~ "font-weight:400; font-style:normal;\">\n"
+#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">To connect to the "
+#~ "Twitter network, you will need a Twitter account.<br /><br />If you do "
+#~ "not currently have an account, please click the button to create one.</"
+#~ "p></body></html>"
+#~ msgstr ""
+#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+#~ "REC-html40/strict.dtd\">\n"
+#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~ "css\">\n"
+#~ "p, li { white-space: pre-wrap; }\n"
+#~ "</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; "
+#~ "font-weight:400; font-style:normal;\">\n"
+#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">ដើម្បី​តភ្ជាប់ទៅកាន់​បណ្តាញ "
+#~ "Twitter អ្នក​​ចាំបាច់​ត្រូវតែ​មាន​គណនី ​Twitter ​។<br /><br />បើ​បច្ចុប្បន្ននេះ​​អ្នក​មិនមានគណនី​"
+#~ "ទេ  សូម​ចុចលើ​ប៊ូតុងដើម្បីបង្កើត​គណនី​ ។</p></body></html>"
+
+#, fuzzy
+#~ msgid "Register a new account on this network."
+#~ msgstr "ចុះ​ឈ្មោះ​គណនី​ថ្មី​លើ​បណ្តាញ​នេះ​ ។"
+
+#, fuzzy
+#~ msgid "Register &New Account"
+#~ msgstr "ចុះ​ឈ្មោះ​គណនី​ថ្មី"
+
+#, fuzzy
+#~ msgid ""
+#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+#~ "REC-html40/strict.dtd\">\n"
+#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~ "css\">\n"
+#~ "p, li { white-space: pre-wrap; }\n"
+#~ "</style></head><body style=\" font-family:'Liberation Sans'; font-"
+#~ "size:9pt; font-weight:400; font-style:normal;\">\n"
+#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+#~ "family:'DejaVu Sans'; font-weight:600;\">Note:</span></p>\n"
+#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+#~ "family:'DejaVu Sans';\">If you only have an OpenID login, you cannot use "
+#~ "the API directly. You first have to add a password to your account using "
+#~ "the control panel on </span><a href=\"https://identi.ca/\"><span style=\" "
+#~ "text-decoration: underline; color:#0000ff;\">identi.ca</span></a><span "
+#~ "style=\" font-family:'DejaVu Sans';\">.</span></p></body></html>"
+#~ msgstr ""
+#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+#~ "REC-html40/strict.dtd\">\n"
+#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~ "css\">\n"
+#~ "p, li { white-space: pre-wrap; }\n"
+#~ "</style></head><body style=\" font-family:'Liberation Sans'; font-"
+#~ "size:9pt; font-weight:400; font-style:normal;\">\n"
+#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+#~ "family:'DejaVu Sans'; font-weight:600;\">ចំណាំ៖</span></p>\n"
+#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+#~ "family:'DejaVu Sans';\">បើ​អ្នក​មាន​ត្រឹមតែ​ការចូល​ OpenID ​អ្នក​មិន​អាច​ប្រើ​ ​API ​ដោយ​ផ្ទាល់​"
+#~ "បានទេ​ ។ អ្នក​ត្រូវតែ​បន្ថែម​ពាក្យ​សម្ងាត់​ទៅ​គណនី​របស់អ្នក​ជាមុន​សិន​ដោយ​ប្រើ​ បន្ទះ​បញ្ជា​នៅ​លើ​</"
+#~ "span><a href=\"https://identi.ca/\"><span style=\" text-decoration: "
+#~ "underline; color:#0000ff;\">identi.ca</span></a><span style=\" font-"
+#~ "family:'DejaVu Sans';\">.</span></p></body></html>"

@@ -1,0 +1,4095 @@
+# Translation of choqok to Croatian
+#
+# Andrej Dundović <adundovi@gmail.com>, 2009.
+# Marko Dimjasevic <marko@dimjasevic.net>, 2009, 2010, 2011.
+# Andrej Dundovic <andrej@dundovic.com.hr>, 2009, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-18 00:44+0000\n"
+"PO-Revision-Date: 2011-08-19 17:04+0200\n"
+"Last-Translator: Andrej Dundovic <andrej@dundovic.com.hr>\n"
+"Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
+"Language: hr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 1.2\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marko Dimjašević, Andrej Dundović"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "marko@dimjasevic.net, adundovi@gmail.com"
+
+#. i18n: ectx: Menu (file)
+#: choqok/choqokui.rc:4
+#, kde-format
+msgid "File"
+msgstr "Datoteka"
+
+#. i18n: ectx: Menu (tools)
+#: choqok/choqokui.rc:11 plugins/filter/filterui.rc:4
+#: plugins/nowlistening/nowlisteningui.rc:4
+#: plugins/quickfilter/quickfilterui.rc:4
+#: plugins/searchaction/searchactionui.rc:4
+#, kde-format
+msgid "Tools"
+msgstr "Alati"
+
+#. i18n: ectx: Menu (settings)
+#. i18n: ectx: attribute (title), widget (QWidget, settingsTab)
+#: choqok/choqokui.rc:15 plugins/uploaders/flickr/flickrprefs.ui:82
+#, kde-format
+msgid "Settings"
+msgstr "Postavke"
+
+#. i18n: ectx: Menu (help)
+#: choqok/choqokui.rc:20
+#, kde-format
+msgid "Help"
+msgstr ""
+
+#: choqok/config/accounts/accountswidget.cpp:74
+#, kde-format
+msgid "Cannot load the %1 plugin. Please check your installation."
+msgstr "Nije moguće učitati priključak %1. Provjerite vašu instalaciju."
+
+#: choqok/config/accounts/accountswidget.cpp:90
+#, kde-format
+msgid "Cannot find the desired account."
+msgstr "Nije moguće pronaći željeni račun."
+
+#: choqok/config/accounts/accountswidget.cpp:110
+#, kde-format
+msgid "Are you sure you want to remove the selected account?"
+msgstr "Jeste li sigurni da želite ukloniti označeni račun?"
+
+#: choqok/config/accounts/accountswidget.cpp:117
+#, kde-format
+msgid "Cannot remove the account."
+msgstr "Nije moguće ukloniti račun."
+
+#: choqok/config/accounts/accountswidget.cpp:238
+#, kde-format
+msgid "Select Micro-Blogging Service"
+msgstr "Označi servis mikroblogginga"
+
+#: choqok/config/accounts/accountswidget.cpp:298
+#, kde-format
+msgid ""
+"You need to restart Choqok for the accounts priority changes to take effect."
+msgstr ""
+"Potrebno je ponovno pokrenuti Choqok kako bi promjene pri prioritetu računa "
+"postale važeće."
+
+#. i18n: ectx: property (windowTitle), widget (QWidget, AccountsWidgetBase)
+#: choqok/config/accounts/accountswidget_base.ui:14
+#: choqok/config/accounts/addaccountdialog.cpp:29
+#, kde-format
+msgid "Add New Account"
+msgstr "Dodaj novi račun"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnAdd)
+#: choqok/config/accounts/accountswidget_base.ui:40
+#, kde-format
+msgid "Add a new account"
+msgstr "Dodaj novi račun"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnAdd)
+#: choqok/config/accounts/accountswidget_base.ui:43
+#, kde-format
+msgid "&Add..."
+msgstr "Dod&aj…"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnEdit)
+#: choqok/config/accounts/accountswidget_base.ui:57
+#, kde-format
+msgid "Modify the selected account"
+msgstr "Izmijeni označeni račun"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnEdit)
+#: choqok/config/accounts/accountswidget_base.ui:60
+#, kde-format
+msgid "&Modify..."
+msgstr "Iz&mijeni…"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnRemove)
+#: choqok/config/accounts/accountswidget_base.ui:74
+#, kde-format
+msgid "Remove the selected account"
+msgstr "Ukloni označeni račun"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnRemove)
+#: choqok/config/accounts/accountswidget_base.ui:77
+#, kde-format
+msgid "&Remove"
+msgstr "&Ukloni"
+
+#. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:162
+#, kde-format
+msgid "Alias"
+msgstr "Alias"
+
+#. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:165
+#, fuzzy, kde-format
+#| msgid "Add a new account"
+msgid "An alias for the account"
+msgstr "Dodaj novi račun"
+
+#. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:170
+#, kde-format
+msgid "Micro-Blog"
+msgstr "Mikroblog"
+
+#. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:173
+#, fuzzy, kde-format
+#| msgid "Twitter Account"
+msgid "The type of the account"
+msgstr "Račun na Twitteru"
+
+#. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:178
+#, fuzzy, kde-format
+#| msgid "Disabled"
+msgid "Enabled"
+msgstr "Onemogućeno"
+
+#. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:181
+#, kde-format
+msgid "Whether the microblog is enabled or disabled"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:186
+#, kde-format
+msgid "Read Only"
+msgstr "Samo za čitanje"
+
+#. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:189
+#, kde-format
+msgid "Read Only account"
+msgstr "Račun samo za čitanje"
+
+#. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:194 choqok/mainwindow.cpp:196
+#: libchoqok/ui/quickpost.cpp:98
+#, kde-format
+msgid "Quick Post"
+msgstr "Brza objava"
+
+#. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:197
+#, kde-format
+msgid "Show in Quick Post"
+msgstr "Prikaži u brzoj objavi"
+
+#: choqok/config/accounts/addaccountdialog.cpp:54
+#, kde-format
+msgid "The Account registration failed."
+msgstr "Neuspjela registracija računa."
+
+#: choqok/config/accounts/addaccountdialog.cpp:62
+#: choqok/config/accounts/editaccountdialog.cpp:59
+#, kde-format
+msgid ""
+"Cannot validate your input information.\n"
+"Please check the fields' data.\n"
+"Maybe a required field is empty?"
+msgstr ""
+"Nije moguće potvrditi unesene podatke.\n"
+"Molim provjerite polja za unos.\n"
+"Možda je traženo polje prazno?"
+
+#: choqok/config/accounts/editaccountdialog.cpp:31
+#, kde-format
+msgid "Edit Account"
+msgstr "Izmijeni račun"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_isEmoticonsEnabled)
+#: choqok/config/appearance/appearanceconfig_base.ui:17
+#, kde-format
+msgid "Enable emoticons"
+msgstr "Omogući emotikante"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useReverseOrder)
+#: choqok/config/appearance/appearanceconfig_base.ui:24
+#, kde-format
+msgid "Show posts in reverse order (Needs restart to take effect)"
+msgstr ""
+"Prikaži objave u obrnutom redosljedu (Potrebno je ponovno pokrenuti "
+"aplikaciju kako bi ova izmjena imala učinka)"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showRetweetsInChoqokWay)
+#: choqok/config/appearance/appearanceconfig_base.ui:31
+#, kde-format
+msgid ""
+"You will see post with retweeter name as author, plus Retweeted from "
+"original author note."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_showRetweetsInChoqokWay)
+#: choqok/config/appearance/appearanceconfig_base.ui:34
+#, kde-format
+msgid "Show Retweeted/Repeated posts in Choqok way"
+msgstr "Prikaži retweetane/ponovljene objave na Choqokov način."
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_isCustomUi)
+#: choqok/config/appearance/appearanceconfig_base.ui:44
+#, fuzzy, kde-format
+#| msgid "Use custom colors"
+msgid "Use custom appearance"
+msgstr "Koristi prilagođene boje"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: choqok/config/appearance/appearanceconfig_base.ui:76
+#, fuzzy, kde-format
+#| msgctxt "Posts from user"
+#| msgid "Posts from %1"
+msgid "Post font:"
+msgstr "Objave od %1"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: choqok/config/appearance/appearanceconfig_base.ui:95
+#, kde-format
+msgid "Post Color Preferences"
+msgstr "Podešavanje boje objave"
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: choqok/config/appearance/appearanceconfig_base.ui:103
+#, kde-format
+msgid "Background"
+msgstr "Pozadina"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: choqok/config/appearance/appearanceconfig_base.ui:113
+#, kde-format
+msgid "Default color:"
+msgstr "Zadana boja:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: choqok/config/appearance/appearanceconfig_base.ui:150
+#, kde-format
+msgid "Unread post color:"
+msgstr "Boja nepročitane objave:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: choqok/config/appearance/appearanceconfig_base.ui:194
+#, kde-format
+msgid "Foreground"
+msgstr "Istaknuto"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: choqok/config/appearance/appearanceconfig_base.ui:204
+#, fuzzy, kde-format
+#| msgid "Unread post color:"
+msgid "Own post color:"
+msgstr "Boja nepročitane objave:"
+
+#: choqok/config/behavior/behaviorconfig.cpp:57
+#, kde-format
+msgid "&General"
+msgstr "&Općenito"
+
+#: choqok/config/behavior/behaviorconfig.cpp:64
+#, kde-format
+msgid "&Notifications"
+msgstr "&Obavijesti"
+
+#: choqok/config/behavior/behaviorconfig.cpp:75
+#, kde-format
+msgid "URL &Shortening"
+msgstr "Kr&aćenje URL-a"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: choqok/config/behavior/behaviorconfig_general.ui:17
+#, kde-format
+msgid "General Options"
+msgstr "Općenite opcije"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_showSplashScreen)
+#: choqok/config/behavior/behaviorconfig_general.ui:23
+#, kde-format
+msgid "Show splash-screen on startup"
+msgstr "Prikaži uvodnu sliku pri pokretanju"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_markAllAsReadOnExit)
+#: choqok/config/behavior/behaviorconfig_general.ui:33
+#, fuzzy, kde-format
+#| msgid "Mark all as read"
+msgid "Mark all posts as read on exit"
+msgstr "Označi sve kao pročitano"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_enableSpellChecker)
+#: choqok/config/behavior/behaviorconfig_general.ui:43
+#, kde-format
+msgid "Enable automatic spellchecking in the message editor"
+msgstr "Omogući automatsku provjeru pravopisa u uređivaču poruka"
+
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_enableSysTray)
+#: choqok/config/behavior/behaviorconfig_general.ui:50
+#, fuzzy, kde-format
+#| msgid "Enable Update Timer"
+msgid "Enable System &Tray"
+msgstr "Omogući sat ažuriranja"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_markAllAsReadOnHideToSystray)
+#: choqok/config/behavior/behaviorconfig_general.ui:62
+#, kde-format
+msgid "Mark all unread posts as read, when hiding to system tray"
+msgstr ""
+"Označi sve nepročitane objave kao pročitane pri sakrivanju u sistemski blok"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useCustomBrowser)
+#: choqok/config/behavior/behaviorconfig_general.ui:83
+#, kde-format
+msgid "Use &custom web browser:"
+msgstr "&Koristi prilagođeni web-preglednik:"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useCustomRT)
+#: choqok/config/behavior/behaviorconfig_general.ui:101
+#, kde-format
+msgid "Use custom prefix for ReSend [ReTweet]:"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: choqok/config/behavior/behaviorconfig_general.ui:120
+#, kde-format
+msgid "Timelines Options"
+msgstr "Opcije vremenske linije"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: choqok/config/behavior/behaviorconfig_general.ui:130
+#, kde-format
+msgid "&Update interval:"
+msgstr "Interval až&uriranja:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: choqok/config/behavior/behaviorconfig_general.ui:149
+#, kde-format
+msgid "&Number of posts to show in timelines:"
+msgstr "Broj objava prikaza&nih u vremenskim linijama:"
+
+#. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_updateInterval)
+#: choqok/config/behavior/behaviorconfig_general.ui:166
+#, kde-format
+msgid "Disabled"
+msgstr "Onemogućeno"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_updateInterval)
+#: choqok/config/behavior/behaviorconfig_general.ui:169
+#, fuzzy, kde-format
+#| msgid " Minute"
+#| msgid_plural " Minutes"
+msgid " minutes"
+msgstr " minuta"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_showAllNotifiesInOne)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:17
+#, kde-format
+msgid "&Show all new posts in one notification"
+msgstr "Prikaži &sve nove objave u jednoj obavijesti"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:26
+#, kde-format
+msgid "&Notification duration:"
+msgstr "&Trajanje obavijesti:"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_notifyInterval)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:39
+#, fuzzy, kde-format
+#| msgid " Second"
+#| msgid_plural " Seconds"
+msgid " seconds"
+msgstr " sekunda"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:57
+#, kde-format
+msgid "New post notifications"
+msgstr "Obavijesti o novim objavama"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_knotify)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:63
+#, kde-format
+msgid "Show notification using KNotify"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_libindicate)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:70
+#, kde-format
+msgid "Show notification using Message Indicator"
+msgstr ""
+
+#: choqok/config/behavior/behaviorconfig_shorten.cpp:71
+#, fuzzy, kde-format
+#| msgid "None"
+msgctxt "No shortener service"
+msgid "None"
+msgstr "Ništa"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_shortenOnPaste)
+#: choqok/config/behavior/behaviorconfig_shorten_base.ui:17
+#, kde-format
+msgid "Shorten &URLs on paste"
+msgstr "Skrati &URL-ove kada zalijepiš"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_removeHttp)
+#: choqok/config/behavior/behaviorconfig_shorten_base.ui:24
+#, kde-format
+msgid "Remove \"http://\" from shortened URLs"
+msgstr "Ukloni \"http://\" iz skraćenih URL-ova"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: choqok/config/behavior/behaviorconfig_shorten_base.ui:33
+#, fuzzy, kde-format
+#| msgid "Shortening &service:"
+msgid "Shortening ser&vice:"
+msgstr "&Servis kraćenja:"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, configPlugin)
+#: choqok/config/behavior/behaviorconfig_shorten_base.ui:56
+#: libchoqok/ui/uploadmedia_base.ui:71
+#, fuzzy, kde-format
+#| msgid "Configuration"
+msgid "Configure plugin"
+msgstr "Konfiguracija"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, aboutPlugin)
+#: choqok/config/behavior/behaviorconfig_shorten_base.ui:72
+#: libchoqok/ui/uploadmedia_base.ui:90
+#, kde-format
+msgid "About plugin"
+msgstr "O priključku"
+
+#: choqok/config/plugins/choqokpluginconfig.cpp:39
+#, kde-format
+msgid "General Plugins"
+msgstr "Općeniti priključci"
+
+#: choqok/main.cpp:28
+#, kde-format
+msgid "KDE Micro-Blogging Client."
+msgstr "KDE-ov klijent za mikroblogging"
+
+#: choqok/main.cpp:29
+#, fuzzy, kde-format
+#| msgid "(C) 2008-2010 Mehrdad Momeny"
+msgid ""
+"(C) 2008-2010 Mehrdad Momeny\n"
+"(C) 2011-2019 Choqok Developers"
+msgstr "© 2008–2010 Mehrdad Momeny"
+
+#: choqok/main.cpp:35
+#, kde-format
+msgid "Mehrdad Momeny"
+msgstr "Mehrdad Momeny"
+
+#: choqok/main.cpp:35
+#, kde-format
+msgid "Author, Developer and Maintainer"
+msgstr ""
+
+#: choqok/main.cpp:37
+#, fuzzy, kde-format
+#| msgid "Andrey Esin"
+msgid "Andrea Scarpino"
+msgstr "Andrey Esin"
+
+#: choqok/main.cpp:37
+#, kde-format
+msgid "Developer and Maintainer"
+msgstr ""
+
+#: choqok/main.cpp:39
+#, kde-format
+msgid "Andrey Esin"
+msgstr "Andrey Esin"
+
+#: choqok/main.cpp:39 choqok/main.cpp:46
+#, kde-format
+msgid "Developer"
+msgstr "Razvijatelj"
+
+#: choqok/main.cpp:42
+#, kde-format
+msgid "Roozbeh Shafiee"
+msgstr "Roozbeh Shafiee"
+
+#: choqok/main.cpp:42 choqok/main.cpp:43
+#, kde-format
+msgid "Artworks"
+msgstr ""
+
+#: choqok/main.cpp:43
+#, kde-format
+msgid "Shahrzad Shojaei"
+msgstr ""
+
+#: choqok/main.cpp:44
+#, kde-format
+msgid "Daniel Schaal"
+msgstr "Daniel Schaal"
+
+#: choqok/main.cpp:44 choqok/main.cpp:51
+#, kde-format
+msgid "UI improvements"
+msgstr "Poboljšanja UI-a"
+
+#: choqok/main.cpp:45
+#, kde-format
+msgid "Stephen Henderson"
+msgstr "Stephen Henderson"
+
+#: choqok/main.cpp:45
+#, kde-format
+msgid "Search API implementation"
+msgstr "Implementacija API-ja za pretraživanje"
+
+#: choqok/main.cpp:46
+#, kde-format
+msgid "Tejas Dinkar"
+msgstr "Tejas Dinkar"
+
+#: choqok/main.cpp:48
+#, kde-format
+msgid "Emanuele Bigiarini"
+msgstr ""
+
+#: choqok/main.cpp:48
+#, fuzzy, kde-format
+#| msgid "DBus and konqueror plugin"
+msgid "D-Bus and Konqueror plugin"
+msgstr "Priključci DBusa i Konquerora"
+
+#: choqok/main.cpp:49
+#, kde-format
+msgid "Alex Infantes"
+msgstr ""
+
+#: choqok/main.cpp:49
+#, kde-format
+msgid "Improvements on Image preview plugin"
+msgstr ""
+
+#: choqok/main.cpp:51
+#, kde-format
+msgid "Bardia Daneshvar"
+msgstr ""
+
+#: choqok/main.cpp:52
+#, kde-format
+msgid "Atanas Gospodinov"
+msgstr ""
+
+#: choqok/main.cpp:52
+#, kde-format
+msgid "Twitter photo upload"
+msgstr ""
+
+#: choqok/main.cpp:53
+#, kde-format
+msgid "Daniel Kreuter"
+msgstr ""
+
+#: choqok/main.cpp:53
+#, kde-format
+msgid "Twitter microblog developer"
+msgstr ""
+
+#: choqok/main.cpp:54
+#, kde-format
+msgid "Lim Yuen Hoe"
+msgstr ""
+
+#: choqok/main.cpp:54
+#, fuzzy, kde-format
+#| msgid "UI improvements"
+msgid "Bug fixes and improvements"
+msgstr "Poboljšanja UI-a"
+
+#: choqok/main.cpp:55
+#, kde-format
+msgid "Ahmed I. Khalil"
+msgstr ""
+
+#: choqok/main.cpp:55
+#, fuzzy, kde-format
+#| msgid "UI improvements"
+msgid "Various improvements"
+msgstr "Poboljšanja UI-a"
+
+# pmap: =/nom=Choqok/gen=Choqoka/dat=Choqoku/
+# pmap: =/aku=Choqok/lok=Choqoku/ins=Choqokom/_r=m/_b=j/
+#: choqok/mainwindow.cpp:56 choqok/mainwindow.cpp:517 choqok/mainwindow.cpp:581
+#: choqok/mainwindow.cpp:636 choqok/systrayicon.cpp:99
+#: choqok/systrayicon.cpp:105 plugins/betternotify/dummynotification.cpp:34
+#: plugins/konqueror/konqchoqok.cpp:30
+#, kde-format
+msgid "Choqok"
+msgstr "Choqok"
+
+#: choqok/mainwindow.cpp:190
+#, kde-format
+msgid "Update Timelines"
+msgstr "Ažuriraj vremenske linije"
+
+#: choqok/mainwindow.cpp:202
+#, kde-format
+msgid "Mark All As Read"
+msgstr "Označi sve kao pročitane"
+
+#: choqok/mainwindow.cpp:211
+#, fuzzy, kde-format
+#| msgid "Minimize"
+msgctxt "@action"
+msgid "Minimize"
+msgstr "Spusti"
+
+#: choqok/mainwindow.cpp:213
+#, fuzzy, kde-format
+#| msgid "Restore"
+msgctxt "@action"
+msgid "Restore"
+msgstr "Vrati"
+
+#: choqok/mainwindow.cpp:221
+#, kde-format
+msgid "Enable Update Timer"
+msgstr "Omogući sat ažuriranja"
+
+#: choqok/mainwindow.cpp:227
+#, kde-format
+msgid "Enable Notifications"
+msgstr "Omogući obavijesti"
+
+#: choqok/mainwindow.cpp:233
+#, kde-format
+msgid "Hide Menubar"
+msgstr ""
+
+#: choqok/mainwindow.cpp:240
+#, kde-format
+msgid "Clear Avatar Cache"
+msgstr "Isprazni privremenu memoriju avatara"
+
+#: choqok/mainwindow.cpp:242
+#, kde-format
+msgid "You have to restart Choqok to load avatars again"
+msgstr "Potrebno je ponovno pokrenuti Choqok kak bi ponovno učitali avatare"
+
+#: choqok/mainwindow.cpp:247
+#, fuzzy, kde-format
+#| msgid "Upload Medium"
+msgid "Upload Medium..."
+msgstr "Postavljanje medija"
+
+#: choqok/mainwindow.cpp:271
+#, kde-format
+msgid ""
+"No account created. You have to create an account before being able to make "
+"posts."
+msgstr ""
+"Nije stvoren ni jedan račun. Morate stvoriti račun da biste mogli slati "
+"objave."
+
+#: choqok/mainwindow.cpp:303
+#, kde-format
+msgid ""
+"In order to use Choqok you need an account at one of the supported micro-"
+"blogging services.\n"
+"Would you like to add your account now?"
+msgstr ""
+"Kako biste koristili Choqok, potrebno je imati barem jedan račun pri nekom "
+"podržanom servisu mikroblogginga.\n"
+"Želite li sada dodati vaš račun?"
+
+#: choqok/mainwindow.cpp:515
+#, kde-format
+msgid "Choqok (%1)"
+msgstr "Choqok (%1)"
+
+#: choqok/mainwindow.cpp:570
+#, kde-format
+msgid "Restore"
+msgstr "Vrati"
+
+#: choqok/mainwindow.cpp:576
+#, kde-format
+msgid "Minimize"
+msgstr "Spusti"
+
+#: choqok/mainwindow.cpp:621
+#, kde-format
+msgid "Loading timelines..."
+msgstr "Učitavanje vremenskih linija"
+
+#: choqok/systrayicon.cpp:99
+#, kde-format
+msgid "1 unread post"
+msgid_plural "%1 unread posts"
+msgstr[0] "%1 nepročitana objava"
+msgstr[1] "%1 nepročitane objave"
+msgstr[2] "%1 nepročitanih objava"
+
+#: choqok/systrayicon.cpp:108
+#, kde-format
+msgid "Choqok - Disabled"
+msgstr "Choqok – onemogućen"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnAttach)
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:49
+#: libchoqok/ui/quickpost.cpp:75
+#: microblogs/mastodon/mastodoncomposerwidget.cpp:45
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:47
+#: microblogs/pumpio/pumpiomessagedialog.ui:90
+#: microblogs/twitter/twittercomposerwidget.cpp:58
+#, kde-format
+msgid "Attach a file"
+msgstr ""
+
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:87
+#: libchoqok/ui/composerwidget.cpp:124
+#: microblogs/mastodon/mastodoncomposerwidget.cpp:78
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:80
+#: microblogs/twitter/twittercomposerwidget.cpp:94
+#, kde-format
+msgid "Abort"
+msgstr "Prekid"
+
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:107
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:429
+#: microblogs/pumpio/pumpiomicroblog.cpp:683
+#: microblogs/twitter/twittercomposerwidget.cpp:114
+#, fuzzy, kde-format
+#| msgid "New post submitted successfully"
+msgid "New post for account %1 submitted successfully"
+msgstr "Nova objava je uspješno poslana"
+
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:121
+#: microblogs/mastodon/mastodoncomposerwidget.cpp:125
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:127
+#: microblogs/pumpio/pumpiomessagedialog.cpp:169
+#: microblogs/twitter/twittercomposerwidget.cpp:127
+#, kde-format
+msgid "Select Media to Upload"
+msgstr ""
+
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:132
+#: microblogs/mastodon/mastodoncomposerwidget.cpp:136
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:138
+#: microblogs/pumpio/pumpiomessagedialog.cpp:180
+#: microblogs/twitter/twittercomposerwidget.cpp:138
+#, kde-format
+msgid "Discard Attachment"
+msgstr ""
+
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:139
+#: microblogs/mastodon/mastodoncomposerwidget.cpp:143
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:145
+#: microblogs/pumpio/pumpiomessagedialog.cpp:187
+#: microblogs/twitter/twittercomposerwidget.cpp:145
+#, kde-format
+msgid "Attaching <b>%1</b>"
+msgstr ""
+
+#: helperlibs/gnusocialapihelper/gnusocialapiconversationtimelinewidget.cpp:22
+#, fuzzy, kde-format
+#| msgid "Configuration"
+msgid "Conversation %1"
+msgstr "Konfiguracija"
+
+#: helperlibs/gnusocialapihelper/gnusocialapiconversationtimelinewidget.cpp:24
+#: helperlibs/twitterapihelper/twitterapidmessagedialog.cpp:126
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:302
+#: microblogs/mastodon/mastodondmessagedialog.cpp:126
+#, kde-format
+msgid "Please wait..."
+msgstr "Molim pričekajte …"
+
+#: helperlibs/gnusocialapihelper/gnusocialapiconversationtimelinewidget.cpp:52
+#: helperlibs/twitterapihelper/twitterapishowthread.cpp:37
+#, fuzzy, kde-format
+#| msgid "Configuration"
+msgid "Conversation"
+msgstr "Konfiguracija"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:47
+#: microblogs/laconica/laconicamicroblog.cpp:25
+#, kde-format
+msgctxt "Timeline name"
+msgid "Repeated"
+msgstr ""
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:48
+#: microblogs/laconica/laconicamicroblog.cpp:26
+#, kde-format
+msgctxt "Timeline description"
+msgid "Your posts that were repeated by others"
+msgstr ""
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:184
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:192
+#: libchoqok/mediamanager.cpp:174 libchoqok/mediamanager.cpp:181
+#: microblogs/twitter/twittermicroblog.cpp:144
+#: microblogs/twitter/twittermicroblog.cpp:152
+#, kde-format
+msgid "Uploading medium failed: cannot read the medium file."
+msgstr ""
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:237
+#, fuzzy, kde-format
+#| msgctxt "Posts from user"
+#| msgid "Posts from %1"
+msgid "Repeat of %1"
+msgstr "Objave od %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:239
+#, fuzzy, kde-format
+#| msgctxt "Posts from user"
+#| msgid "Posts from %1"
+msgid "Repeated by %1"
+msgstr "Objave od %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:245
+#, kde-format
+msgid "Repeat this notice?"
+msgstr ""
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:270
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1488
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1514
+#, kde-format
+msgid ""
+"Retrieving the friends list failed. The data returned from the server is "
+"corrupted."
+msgstr ""
+"Neuspješno dohvaćanje liste prijatelja. Dobiveni podaci s poslužitelja su "
+"pokvareni."
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:329
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:742
+#, kde-format
+msgid ""
+"Friends list for account %1 could not be updated:\n"
+"%2"
+msgstr ""
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:393
+#, fuzzy, kde-format
+#| msgid "Fetching the new post failed. %1"
+msgid "Fetching conversation failed. %1"
+msgstr "Neuspješno dohvaćanje nove objave. %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:73
+#: microblogs/twitter/twitterpostwidget.cpp:62
+#, fuzzy, kde-format
+#| msgctxt "@info:tooltip"
+#| msgid "ReSend"
+msgid "Manual ReSend"
+msgstr "Ponovno pošalji"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:75
+#, kde-format
+msgid "Repeat"
+msgstr ""
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:76
+#, kde-format
+msgid "Repeat post using API"
+msgstr "Ponovi objavu koristeći API"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:140
+#, fuzzy, kde-format
+#| msgid "Search results for %1"
+msgid "Search for %1"
+msgstr "Rezultati pretraživanja za %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:142
+#, kde-format
+msgid "Open tag page in browser"
+msgstr ""
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:158
+#, kde-format
+msgid "Show latest group posts"
+msgstr ""
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:160
+#, kde-format
+msgid "Open group page in browser"
+msgstr ""
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:177
+#: microblogs/twitter/twitterpostwidget.cpp:129
+#, kde-format
+msgctxt "Who is user"
+msgid "Who is %1"
+msgstr "Tko je %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:179
+#: microblogs/twitter/twitterpostwidget.cpp:131
+#, kde-format
+msgctxt "Posts from user"
+msgid "Posts from %1"
+msgstr "Objave od %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:181
+#: microblogs/twitter/twitterpostwidget.cpp:133
+#, kde-format
+msgctxt "Replies to user"
+msgid "Replies to %1"
+msgstr "Odgovori za %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:185
+#: microblogs/twitter/twitterpostwidget.cpp:141
+#, kde-format
+msgctxt "Open profile page in browser"
+msgid "Open profile in browser"
+msgstr ""
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:202
+#: microblogs/twitter/twitterpostwidget.cpp:158
+#, kde-format
+msgid "Actions"
+msgstr "Aktivnosti"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:203
+#: microblogs/twitter/twitterpostwidget.cpp:159
+#, fuzzy, kde-format
+#| msgid "Subscribe"
+msgctxt "Write a message to user attention"
+msgid "Write to %1"
+msgstr "Pretplati se"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:208
+#: microblogs/twitter/twitterpostwidget.cpp:165
+#, fuzzy, kde-format
+#| msgid "Send Private Message"
+msgctxt "Send direct message to user"
+msgid "Send private message to %1"
+msgstr "Pošalji privatnu poruku"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:214
+#, fuzzy, kde-format
+#| msgid "Unsubscribe"
+msgctxt "Unsubscribe from user"
+msgid "Unsubscribe from %1"
+msgstr "Otkaži pretplatu"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:219
+#, fuzzy, kde-format
+#| msgid "Subscribe"
+msgctxt "Subscribe to user"
+msgid "Subscribe to %1"
+msgstr "Pretplati se"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:223
+#: microblogs/twitter/twitterpostwidget.cpp:180
+#, fuzzy, kde-format
+#| msgid "Block"
+msgctxt "Block user"
+msgid "Block %1"
+msgstr "Blokiraj"
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:31
+#, kde-format
+msgctxt "Dents are Identica posts"
+msgid "Dents Including This Hashtag"
+msgstr "Dentovi koji uključuju ovu hash-oznaku"
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:34
+#, kde-format
+msgctxt "Dents are Identica posts"
+msgid "Dents Including This Group"
+msgstr "Dentovi koji uključuju ovu grupu"
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:37
+#, kde-format
+msgctxt "Dents are Identica posts"
+msgid "Dents From This User"
+msgstr "Dentovi od ovog korisnika"
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:40
+#, kde-format
+msgctxt "Dents are Identica posts"
+msgid "Dents To This User"
+msgstr "Dentovi za ovog korisnika"
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:128
+#: microblogs/twitter/twittersearch.cpp:115
+#, kde-format
+msgid "Unable to fetch search results."
+msgstr "Nije moguće dohvatiti rezultate pretrage."
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:136
+#: microblogs/twitter/twittersearch.cpp:123
+#, kde-format
+msgid "Unable to fetch search results: %1"
+msgstr "Nije moguće dohvatiti rezultate pretrage: %1"
+
+#: helperlibs/twitterapihelper/twitterapidmessagedialog.cpp:45
+#: microblogs/mastodon/mastodondmessagedialog.cpp:45
+#, kde-format
+msgid "Send Private Message"
+msgstr "Pošalji privatnu poruku"
+
+#: helperlibs/twitterapihelper/twitterapidmessagedialog.cpp:69
+#: microblogs/mastodon/mastodondmessagedialog.cpp:69
+#, kde-format
+msgctxt "Send message to"
+msgid "To:"
+msgstr "Za:"
+
+#: helperlibs/twitterapihelper/twitterapidmessagedialog.cpp:74
+#: microblogs/mastodon/mastodondmessagedialog.cpp:74
+#, kde-format
+msgid "Reload friends list"
+msgstr "Ponovno učitaj listu prijatelja"
+
+#: helperlibs/twitterapihelper/twitterapidmessagedialog.cpp:96
+#: microblogs/mastodon/mastodondmessagedialog.cpp:96
+#, kde-format
+msgctxt "Send private message"
+msgid "Send"
+msgstr "Pošalji"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:86
+#: microblogs/mastodon/mastodonmicroblog.cpp:399
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Home"
+msgstr "Početak"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:87
+#, kde-format
+msgctxt "Timeline description"
+msgid "You and your friends"
+msgstr "Ti i tvoji prijatelji"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:92
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Reply"
+msgstr "Odgovor"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:93
+#, kde-format
+msgctxt "Timeline description"
+msgid "Replies to you"
+msgstr "Odgovori za tebe"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:98
+#: microblogs/pumpio/pumpiomicroblog.cpp:1265
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Inbox"
+msgstr "Dolazno"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:99
+#, kde-format
+msgctxt "Timeline description"
+msgid "Your incoming private messages"
+msgstr "Tvoje dolazne privatne poruke"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:104
+#: microblogs/pumpio/pumpiomicroblog.cpp:1272
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Outbox"
+msgstr "Odlazno"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:105
+#, kde-format
+msgctxt "Timeline description"
+msgid "Private messages you have sent"
+msgstr "Privatne poruke koje si poslao/la"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:110
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Favorite"
+msgstr "Favorit"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:111
+#, kde-format
+msgctxt "Timeline description"
+msgid "Your favorites"
+msgstr "Vaši favoriti"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:116
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Public"
+msgstr "Javno"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:117
+#, kde-format
+msgctxt "Timeline description"
+msgid "Public timeline"
+msgstr "Javna vremenska linija"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:122
+#, kde-format
+msgctxt "Timeline Name"
+msgid "ReTweets"
+msgstr "Retweetovi"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:123
+#, kde-format
+msgctxt "Timeline description"
+msgid "Your posts that were ReTweeted by others"
+msgstr ""
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:138
+#: microblogs/pumpio/pumpiomicroblog.cpp:107
+#, kde-format
+msgid "Send Private Message..."
+msgstr "Pošalji privatnu poruku …"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:143
+#: plugins/searchaction/searchaction.cpp:29
+#, kde-format
+msgid "Search..."
+msgstr "Traži …"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnReload)
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:148
+#: microblogs/pumpio/pumpiomessagedialog.ui:31
+#, fuzzy, kde-format
+#| msgid "Reload friends list"
+msgid "Update Friends List"
+msgstr "Ponovno učitaj listu prijatelja"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:300
+#: microblogs/mastodon/mastodonmicroblog.cpp:101
+#: microblogs/pumpio/pumpiomicroblog.cpp:166
+#, kde-format
+msgid "Creating the new post failed. Text is empty."
+msgstr "Neuspješno stvaranje nove objave. Nema teksta."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:410
+#, fuzzy, kde-format
+#| msgid "Creating the new post failed. %1"
+msgid "Creating the new post failed: %1"
+msgstr "Neuspješno stvaranje nove objave. %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:421
+#, kde-format
+msgid "Creating the new post failed. The result data could not be parsed."
+msgstr ""
+"Neuspješno stvaranje nove objave. Nije moguće analizirati rezultantne "
+"podatke."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:425
+#, fuzzy, kde-format
+#| msgid "Creating the new post failed, with error: %1"
+msgid "Creating the new post failed, with error: %1"
+msgstr "Neuspješno stvaranje nove objave uz pogrešku: %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:433
+#, kde-format
+msgid "Private message sent successfully"
+msgstr "Privatna poruka je uspješno poslana"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:501
+#, kde-format
+msgid "Fetching the new post failed. %1"
+msgstr "Neuspješno dohvaćanje nove objave. %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:511
+#, kde-format
+msgid "Fetching new post failed. The result data could not be parsed."
+msgstr ""
+"Neuspješno dohvaćanje nove objave. Nije moguće analizirati rezultantne "
+"podatke."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:516
+#, fuzzy, kde-format
+#| msgid "Fetching new post failed, with error: %1"
+msgid "Fetching new post failed, with error:%1"
+msgstr "Neuspješno dohvaćanje novih objava uz pogrešku: %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:566
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:575
+#: microblogs/mastodon/mastodonmicroblog.cpp:788
+#: microblogs/pumpio/pumpiomicroblog.cpp:964
+#, kde-format
+msgid "Removing the post failed. %1"
+msgstr "Neuspješno uklanjanje objave. %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:619
+#, kde-format
+msgid "Favorite creation failed. %1"
+msgstr "Neuspješno stvaranje favorita. %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:671
+#, kde-format
+msgid "Removing the favorite failed. %1"
+msgstr "Neuspješno uklanjanje favorita. %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:721
+#, kde-format
+msgid "Updating friends list for account %1..."
+msgstr ""
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:757
+#, kde-format
+msgid "Friends list for account %1 has been updated."
+msgstr ""
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:800
+#: microblogs/mastodon/mastodonmicroblog.cpp:845
+#, kde-format
+msgid "Updating followers list for account %1..."
+msgstr ""
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:821
+#: microblogs/mastodon/mastodonmicroblog.cpp:875
+#, kde-format
+msgid ""
+"Followers list for account %1 could not be updated:\n"
+"%2"
+msgstr ""
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:836
+#, kde-format
+msgid "Followers list for account %1 has been updated."
+msgstr ""
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:918
+#, fuzzy, kde-format
+#| msgid "Timeline update failed, %1"
+msgid "Timeline update failed: %1"
+msgstr "Neuspješno ažuriranje vremenske linije, %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1087
+#, kde-format
+msgid "Creating friendship with %1 failed. %2"
+msgstr "Neuspjelo stvaranje prijateljstva s %1. %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1094
+#, kde-format
+msgid "You are now listening to %1's posts."
+msgstr "Trenutno osluškujete objave od %1."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1102
+#, kde-format
+msgid "Creating friendship with %1 failed: the server returned invalid data."
+msgstr ""
+"Neuspjelo stvaranje prijateljstva s %1: poslužitelj je vratio neispravne "
+"podatke."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1107
+#, fuzzy, kde-format
+#| msgid "Creating friendship with %1 failed. %2"
+msgid "Creating friendship with %1 failed: %2"
+msgstr "Neuspjelo stvaranje prijateljstva s %1. %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1150
+#, kde-format
+msgid "Destroying friendship with %1 failed. %2"
+msgstr "Neuspjelo dokidanje prijateljstva s %1. %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1157
+#, kde-format
+msgid "You will not receive %1's updates."
+msgstr "Nećete primati dopune od %1."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1165
+#, kde-format
+msgid "Destroying friendship with %1 failed: the server returned invalid data."
+msgstr ""
+"Neuspjelo dokidanje prijateljstva s %1: poslužitelj je vratio neispravne "
+"podatke."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1170
+#, fuzzy, kde-format
+#| msgid "Destroying friendship with %1 failed. %2"
+msgid "Destroying friendship with %1 failed: %2"
+msgstr "Neuspjelo dokidanje prijateljstva s %1. %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1240
+#, kde-format
+msgid "Blocking %1 failed. %2"
+msgstr "Neuspjelo blokiranje %1. %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1246
+#, kde-format
+msgid "You will no longer be disturbed by %1."
+msgstr ""
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1250
+#, kde-format
+msgid "Blocking %1 failed: the server returned invalid data."
+msgstr "Neuspjelo blokiranje %1: poslužitelj je vratio neispravne podatke."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1269
+#, fuzzy, kde-format
+#| msgid "Blocking %1 failed. %2"
+msgid "Reporting %1 failed. %2"
+msgstr "Neuspjelo blokiranje %1. %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1274
+#, fuzzy, kde-format
+#| msgid "New post submitted successfully"
+msgid "Report sent successfully."
+msgstr "Nova objava je uspješno poslana"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1278
+#, fuzzy, kde-format
+#| msgid "Blocking %1 failed: the server returned invalid data."
+msgid "Reporting %1 failed: the server returned invalid data."
+msgstr "Neuspjelo blokiranje %1: poslužitelj je vratio neispravne podatke."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1320
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1339
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1414
+#, kde-format
+msgid "Could not parse the data that has been received from the server."
+msgstr ""
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1542
+#: microblogs/mastodon/mastodonmicroblog.cpp:891
+#, fuzzy, kde-format
+#| msgid ""
+#| "Retrieving the friends list failed. The data returned from the server is "
+#| "corrupted."
+msgid ""
+"Retrieving the followers list failed. The data returned from the server is "
+"corrupted."
+msgstr ""
+"Neuspješno dohvaćanje liste prijatelja. Dobiveni podaci s poslužitelja su "
+"pokvareni."
+
+#: helperlibs/twitterapihelper/twitterapimicroblogwidget.cpp:112
+#, fuzzy, kde-format
+#| msgid "The search result is empty."
+msgid "(The search result is empty.)"
+msgstr "Rezultat pretraživanja je prazan."
+
+#: helperlibs/twitterapihelper/twitterapimicroblogwidget.cpp:222
+#: libchoqok/ui/timelinewidget.cpp:240
+#, fuzzy, kde-format
+#| msgid "Mark all as read"
+msgid "Mark timeline as read"
+msgstr "Označi sve kao pročitano"
+
+#: helperlibs/twitterapihelper/twitterapimicroblogwidget.cpp:226
+#, fuzzy, kde-format
+#| msgid "Timelines"
+msgid "Close Timeline"
+msgstr "Vremenske linije"
+
+#: helperlibs/twitterapihelper/twitterapimicroblogwidget.cpp:227
+#, fuzzy, kde-format
+#| msgid "Select All"
+msgid "Close All"
+msgstr "Označi sve"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:59
+#: microblogs/mastodon/mastodonpostwidget.cpp:100
+#: microblogs/pumpio/pumpiopostwidget.cpp:176
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Reply"
+msgstr "Odgovor"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:64
+#: microblogs/mastodon/mastodonpostwidget.cpp:105
+#: microblogs/pumpio/pumpiopostwidget.cpp:179
+#, fuzzy, kde-format
+#| msgctxt "Replies to user"
+#| msgid "Replies to %1"
+msgid "Reply to %1"
+msgstr "Odgovori za %1"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:69
+#: microblogs/mastodon/mastodonpostwidget.cpp:110
+#, fuzzy, kde-format
+#| msgid "Subscribe"
+msgid "Write to %1"
+msgstr "Pretplati se"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:74
+#: microblogs/mastodon/mastodonpostwidget.cpp:115
+#, fuzzy, kde-format
+#| msgctxt "Replies to user"
+#| msgid "Replies to %1"
+msgid "Reply to all"
+msgstr "Odgovori za %1"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:78
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Favorite"
+msgstr "Favorit"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:113
+#, kde-format
+msgid "<a href='%1' title='Sent from %2 via OStatus'>%2</a>"
+msgstr ""
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:125
+#, kde-format
+msgid "Show Conversation"
+msgstr "Prikaži razgovor"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:133
+#, fuzzy, kde-format
+#| msgid ""
+#| "<a href='replyto://%1'>in reply to</a>&nbsp;<a href=\"%2\" title=\"%2\">"
+#| "%3</a>"
+msgid ""
+"<a href='replyto://%1'>in reply to</a> @<a href='user://%4'>%4</a>&nbsp;<a "
+"href=\"%2\" title=\"%2\">%3</a>"
+msgstr ""
+"<a href='replyto://%1'>u odgovoru na</a>&nbsp;<a href=\"%2\" title=\"%2\">"
+"%3</a>"
+
+#: helperlibs/twitterapihelper/twitterapisearchdialog.cpp:48
+#, fuzzy, kde-format
+#| msgid "Search"
+msgctxt "@title:window"
+msgid "Search"
+msgstr "Traži"
+
+#: helperlibs/twitterapihelper/twitterapisearchdialog.cpp:77
+#, kde-format
+msgctxt "Search query"
+msgid "Query:"
+msgstr "Upit:"
+
+#: helperlibs/twitterapihelper/twitterapisearchdialog.cpp:88
+#, fuzzy, kde-format
+#| msgid "Search"
+msgctxt "@action:button"
+msgid "Search"
+msgstr "Traži"
+
+#: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:58
+#: libchoqok/ui/timelinewidget.cpp:45
+#, fuzzy, kde-format
+#| msgid "Search results for %1"
+msgctxt "%1 is the name of a timeline"
+msgid "Search results for %1"
+msgstr "Rezultati pretraživanja za %1"
+
+#: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:87
+#, fuzzy, kde-format
+#| msgctxt "Close a search timeline"
+#| msgid "Close Search"
+msgid "Close Search"
+msgstr "Zatvori pretraživanje"
+
+#: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:93
+#, kde-format
+msgid "Previous"
+msgstr "Prethodni"
+
+#: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:98
+#, kde-format
+msgid "Next"
+msgstr "Sljedeći"
+
+#: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:105
+#, kde-format
+msgid "Page Number"
+msgstr "Broj stranice"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:150
+#, kde-format
+msgid "Cannot load user information."
+msgstr "Nije moguće učitati informacije o korisniku."
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:239
+#, kde-format
+msgid "Close"
+msgstr ""
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:251
+#, kde-format
+msgctxt "User posts"
+msgid "Posts"
+msgstr ""
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:252
+#, fuzzy, kde-format
+#| msgid "File"
+msgctxt "User friends"
+msgid "Friends"
+msgstr "Datoteka"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:253
+#, kde-format
+msgctxt "User followers"
+msgid "Followers"
+msgstr ""
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:262
+#, kde-format
+msgid "<table><tr><b>Last Status:</b> %1</tr></table>"
+msgstr ""
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:266
+#, kde-format
+msgid "<h3>%1</h3>"
+msgstr ""
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:376
+#, kde-format
+msgid "Unsubscribe"
+msgstr "Otkaži pretplatu"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:381
+#, kde-format
+msgid "Subscribe"
+msgstr "Pretplati se"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:386
+#, kde-format
+msgid "Block"
+msgstr "Blokiraj"
+
+#: libchoqok/accountmanager.cpp:104 libchoqok/accountmanager.cpp:142
+#, kde-format
+msgid "There is no account with alias %1."
+msgstr "Ne postoji račun s aliasom %1."
+
+#: libchoqok/accountmanager.cpp:157
+#, kde-format
+msgid ""
+"An account with this alias already exists: a unique alias has to be "
+"specified."
+msgstr ""
+"Račun s ovim aliasom već postoji: potrebno je navesti jedinstven alias."
+
+#: libchoqok/choqoktools.cpp:28
+#, kde-format
+msgid ""
+"Custom web browser \"%1\" is unable to open url \"%2\".\n"
+"Please update the custom web browser in Configurations."
+msgstr ""
+
+#: libchoqok/choqoktools.cpp:33
+#, kde-format
+msgid ""
+"Unable to open url \"%1\".\n"
+"Please check Qt installation or set a custom web browser in Configurations."
+msgstr ""
+
+#: libchoqok/mediamanager.cpp:90
+#, kde-format
+msgid "Cannot create a KDE Job. Please check your installation."
+msgstr "Nije moguće stvoriti posao u KDE-u. Molim provjerite vašu instalaciju."
+
+#: libchoqok/mediamanager.cpp:115
+#, kde-format
+msgid "Cannot download image from %1."
+msgstr "Nije moguće preuzeti sliku s %1."
+
+#: libchoqok/mediamanager.cpp:124
+#, kde-format
+msgid "The request failed. Cannot get image file."
+msgstr ""
+
+#: libchoqok/mediamanager.cpp:155
+#, kde-format
+msgid "No pluginId specified, And last used plugin is null."
+msgstr ""
+
+#: libchoqok/microblog.cpp:73
+#, fuzzy, kde-format
+#| msgid "The server returned an error."
+msgid "The server returned an error"
+msgstr "Poslužitelj je vratio grešku."
+
+#: libchoqok/microblog.cpp:75
+#, fuzzy, kde-format
+#| msgid "Error on communication with server."
+msgid "Error on communication with server"
+msgstr "Greška pri komunikaciji s poslužiteljem."
+
+#: libchoqok/microblog.cpp:77
+#, kde-format
+msgid "Error on parsing results"
+msgstr "Greška pri analizi rezultata"
+
+#: libchoqok/microblog.cpp:79
+#, fuzzy, kde-format
+#| msgid "Authentication error."
+msgid "Authentication error"
+msgstr "Autentifikacijska greška."
+
+#: libchoqok/microblog.cpp:81
+#, fuzzy, kde-format
+#| msgid "The server does not support this feature."
+msgid "The server does not support this feature"
+msgstr "Poslužitelj ne podržava ovu mogućnost."
+
+#: libchoqok/microblog.cpp:83
+#, fuzzy, kde-format
+#| msgid "Unknown error."
+msgid "Unknown error"
+msgstr "Nepoznata greška."
+
+# pmap: =/nom=Choqok/gen=Choqoka/dat=Choqoku/
+# pmap: =/aku=Choqok/lok=Choqoku/ins=Choqokom/_r=m/_b=j/
+#: libchoqok/notifymanager.cpp:81
+#, kde-format
+msgctxt "Show Choqok MainWindow"
+msgid "Show Choqok"
+msgstr "Prikaži Choqok"
+
+#: libchoqok/notifymanager.h:24
+#, kde-format
+msgid "Error"
+msgstr "Greška"
+
+#: libchoqok/notifymanager.h:25
+#, kde-format
+msgid "Success"
+msgstr "Uspjeh"
+
+#: libchoqok/notifymanager.h:27
+#, kde-format
+msgid "New posts"
+msgstr "Nove objave"
+
+#: libchoqok/notifymanager.h:28
+#, kde-format
+msgid "Shortening a URL"
+msgstr "Kraćanje URL-a"
+
+#: libchoqok/passwordmanager.cpp:64
+#, fuzzy, kde-format
+#| msgid ""
+#| "Cannot open KDE Wallet manager, your secrets will be stored as plain "
+#| "text, install KWallet to fix this."
+msgid ""
+"Cannot open KDE Wallet manager, your secrets will be stored as plain text. "
+"You can install KWallet to fix this."
+msgstr ""
+"Nije moguće otvoriti KDE-ovog upravitelja novčanika pa će vaše tajne biti "
+"pohranjene kao jasni tekst. Instalirajte KWallet kako biste popravili "
+"situaciju."
+
+#: libchoqok/ui/choqoktabbar.cpp:757
+#, fuzzy, kde-format
+#| msgctxt "Send message to"
+#| msgid "To:"
+msgid "Top"
+msgstr "Za:"
+
+#: libchoqok/ui/choqoktabbar.cpp:758
+#, kde-format
+msgid "Left"
+msgstr ""
+
+#: libchoqok/ui/choqoktabbar.cpp:759
+#, kde-format
+msgid "Right"
+msgstr ""
+
+#: libchoqok/ui/choqoktabbar.cpp:760
+#, kde-format
+msgid "Bottom"
+msgstr ""
+
+#: libchoqok/ui/choqoktabbar.cpp:761
+#, kde-format
+msgid "Small"
+msgstr ""
+
+#: libchoqok/ui/choqoktabbar.cpp:762
+#, fuzzy, kde-format
+#| msgid "Upload Medium"
+msgid "Medium"
+msgstr "Postavljanje medija"
+
+#: libchoqok/ui/choqoktabbar.cpp:763
+#, kde-format
+msgid "Big"
+msgstr ""
+
+#: libchoqok/ui/choqoktabbar.cpp:764
+#, kde-format
+msgid "Styled Panel"
+msgstr ""
+
+#: libchoqok/ui/choqoktextedit.cpp:51
+#, fuzzy, kde-format
+#| msgid ""
+#| "<strong>Note:</strong><br/><em>Ctrl+P</em> to have the previous submitted "
+#| "text.<br/>    <em>Ctrl+S</em> to enable/disable auto spell checker."
+msgid "<b>Note:</b><br/><i>Ctrl+S</i> to enable/disable auto spell checker."
+msgstr ""
+"<strong>Napomena:</strong><br/><em>Ctrl+P</em> kako biste prešli na "
+"prethodno poslani tekst.<br/>    <em>Ctrl+S</em> kako biste omogućili/"
+"onemogućili automatsku provjeru pravopisa."
+
+#: libchoqok/ui/choqoktextedit.cpp:184
+#, kde-format
+msgid "Set spell check language"
+msgstr ""
+
+#: libchoqok/ui/choqoktextedit.cpp:188
+#, fuzzy, kde-format
+#| msgid "Shortening a URL"
+msgctxt "Replace URLs by a shortened URL"
+msgid "Shorten URLs"
+msgstr "Kraćanje URL-a"
+
+#: libchoqok/ui/composerwidget.cpp:57
+#, fuzzy, kde-format
+#| msgid "Disabled"
+msgid "Discard Reply"
+msgstr "Onemogućeno"
+
+#: libchoqok/ui/composerwidget.cpp:98
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:167
+#, fuzzy, kde-format
+#| msgctxt "Replies to user"
+#| msgid "Replies to %1"
+msgid "Replying to <b>%1</b>"
+msgstr "Odgovori za %1"
+
+#: libchoqok/ui/microblogwidget.cpp:265
+#, fuzzy, kde-format
+#| msgid "Mark all as read"
+msgid "Mark all timelines as read"
+msgstr "Označi sve kao pročitano"
+
+#: libchoqok/ui/microblogwidget.cpp:375
+#, kde-format
+msgid "More"
+msgstr ""
+
+#: libchoqok/ui/microblogwidget.cpp:377
+#, kde-format
+msgid "Latest update:"
+msgstr "Zadnje ažuriranje:"
+
+#: libchoqok/ui/postwidget.cpp:194
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Remove"
+msgstr "Ukloni"
+
+#: libchoqok/ui/postwidget.cpp:199
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "ReSend"
+msgstr "Ponovno pošalji"
+
+#: libchoqok/ui/postwidget.cpp:454
+#, kde-format
+msgid "Just now"
+msgstr "Upravo sada"
+
+#: libchoqok/ui/postwidget.cpp:459
+#, kde-format
+msgid "1 sec ago"
+msgid_plural "%1 secs ago"
+msgstr[0] "prije %1 sec"
+msgstr[1] "prije %1 sec"
+msgstr[2] "prije %1 sec"
+
+#: libchoqok/ui/postwidget.cpp:465
+#, kde-format
+msgid "1 min ago"
+msgid_plural "%1 mins ago"
+msgstr[0] "prije %1 min"
+msgstr[1] "prije %1 min"
+msgstr[2] "prije %1 min"
+
+#: libchoqok/ui/postwidget.cpp:471
+#, kde-format
+msgid "1 hour ago"
+msgid_plural "%1 hours ago"
+msgstr[0] "prije %1 sat"
+msgstr[1] "prije %1 sata"
+msgstr[2] "prije %1 sati"
+
+#: libchoqok/ui/postwidget.cpp:476
+#, kde-format
+msgid "1 day ago"
+msgid_plural "%1 days ago"
+msgstr[0] "prije %1 dan"
+msgstr[1] "prije %1 dana"
+msgstr[2] "prije %1 dana"
+
+#: libchoqok/ui/postwidget.cpp:481
+#, kde-format
+msgid "Are you sure you want to remove this post from the server?"
+msgstr "Jeste li sigurni da želite ukloniti ovu objavu s poslužitelja?"
+
+#: libchoqok/ui/quickpost.cpp:71
+#, fuzzy, kde-format
+#| msgid "All"
+msgctxt "All accounts"
+msgid "All"
+msgstr "Sve"
+
+#: libchoqok/ui/quickpost.cpp:90
+#, kde-format
+msgctxt "Submit post"
+msgid "Submit"
+msgstr "Pošalji"
+
+#: libchoqok/ui/quickpost.cpp:149
+#, kde-format
+msgid "Cannot create a post without any text."
+msgstr ""
+
+#: libchoqok/ui/quickpost.cpp:154
+#, kde-format
+msgid ""
+"Please configure at least one account to be included in \"Quick Post\".\n"
+"Settings -> Configure Choqok... -> Accounts"
+msgstr ""
+
+#: libchoqok/ui/quickpost.cpp:261
+#, kde-format
+msgid ""
+"Link to uploaded medium will be added here after uploading process succeed."
+msgstr ""
+
+#: libchoqok/ui/textbrowser.cpp:105
+#, fuzzy, kde-format
+#| msgid "Copy"
+msgctxt "Copy text"
+msgid "Copy"
+msgstr "Kopiraj"
+
+#: libchoqok/ui/textbrowser.cpp:111
+#, kde-format
+msgid "Copy Link Location"
+msgstr "Kopiraj lokaciju linka"
+
+#: libchoqok/ui/textbrowser.cpp:116
+#, fuzzy, kde-format
+#| msgid "Select All"
+msgctxt "Select all text"
+msgid "Select All"
+msgstr "Označi sve"
+
+#: libchoqok/ui/timelinewidget.cpp:223
+#, fuzzy, kde-format
+#| msgid "1 new post in %2(%3)"
+#| msgid_plural "%1 new posts in %2(%3)"
+msgid "1 new post in %2 (%3)"
+msgid_plural "%1 new posts in %2 (%3)"
+msgstr[0] "%1 nova objava u %2(%3)"
+msgstr[1] "%1 nove objave u %2(%3)"
+msgstr[2] "%1 novih objava u %2(%3)"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: libchoqok/ui/uploadmedia_base.ui:22
+#, kde-format
+msgid "Medium to upload:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: libchoqok/ui/uploadmedia_base.ui:39
+#, kde-format
+msgid "Upload via:"
+msgstr ""
+
+#: libchoqok/ui/uploadmediadialog.cpp:48
+#, kde-format
+msgid "Upload Medium"
+msgstr "Postavljanje medija"
+
+#: libchoqok/ui/uploadmediadialog.cpp:56
+#, kde-format
+msgid "Upload"
+msgstr ""
+
+#: libchoqok/ui/uploadmediadialog.cpp:115
+#, kde-format
+msgid "Uploading..."
+msgstr ""
+
+#: libchoqok/ui/uploadmediadialog.cpp:174
+#, kde-format
+msgid "Medium uploading failed."
+msgstr ""
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabAccount)
+#: microblogs/friendica/friendicaeditaccount_base.ui:21
+#, fuzzy, kde-format
+#| msgid "Edit Account"
+msgid "Friendica Account"
+msgstr "Izmijeni račun"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: microblogs/friendica/friendicaeditaccount_base.ui:29
+#: microblogs/laconica/laconicaeditaccount_base.ui:29
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:27
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:27
+#: microblogs/twitter/twittereditaccount_base.ui:27
+#, fuzzy, kde-format
+#| msgid "&Alias:"
+msgid "A&lias:"
+msgstr "&Alias:"
+
+#. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_alias)
+#. i18n: ectx: property (toolTip), widget (QLineEdit, cfg_alias)
+#: microblogs/friendica/friendicaeditaccount_base.ui:42
+#: microblogs/laconica/laconicaeditaccount_base.ui:42
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:40
+#: microblogs/ocs/ocsconfigurebase.ui:32
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:40
+#: microblogs/twitter/twittereditaccount_base.ui:40
+#, kde-format
+msgid "The account alias"
+msgstr "Alias računa"
+
+#. i18n: ectx: property (whatsThis), widget (QLineEdit, kcfg_alias)
+#. i18n: ectx: property (whatsThis), widget (QLineEdit, cfg_alias)
+#: microblogs/friendica/friendicaeditaccount_base.ui:45
+#: microblogs/laconica/laconicaeditaccount_base.ui:45
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:43
+#: microblogs/ocs/ocsconfigurebase.ui:35
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:43
+#: microblogs/twitter/twittereditaccount_base.ui:43
+#, kde-format
+msgid ""
+"The alias is the name you want to give to your account. It should be unique. "
+"You can have several connections to the same service so the alias lets you "
+"give them names."
+msgstr ""
+"Alias je ime koje želite dati svom računu. Treba biti jedinstven. Možete "
+"imati više veza prema istom servisu pa vam aliasi omogućuju njihovo "
+"imenovanje."
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: microblogs/friendica/friendicaeditaccount_base.ui:62
+#: microblogs/laconica/laconicaeditaccount_base.ui:62
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:60
+#: microblogs/ocs/ocsconfigurebase.ui:52
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:60
+#: microblogs/twitter/twittereditaccount_base.ui:60
+#, kde-format
+msgid ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">Note:</span><span style=\" font-size:8pt;\"> "
+"The alias must be unique.</span></p></body></html>"
+msgstr ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">Napomena:</span><span style=\" font-size:8pt;"
+"\"> Alias mora biti jedinstven.</span></p></body></html>"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: microblogs/friendica/friendicaeditaccount_base.ui:77
+#: microblogs/laconica/laconicaeditaccount_base.ui:77
+#, kde-format
+msgid "Server"
+msgstr "Poslužitelj"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: microblogs/friendica/friendicaeditaccount_base.ui:83
+#: microblogs/laconica/laconicaeditaccount_base.ui:83
+#, kde-format
+msgid "API path:"
+msgstr "Putanja API-ja:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/friendica/friendicaeditaccount_base.ui:103
+#, kde-format
+msgid "&Friendica server:"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_BasicBox)
+#: microblogs/friendica/friendicaeditaccount_base.ui:122
+#: microblogs/laconica/laconicaeditaccount_base.ui:122
+#, fuzzy, kde-format
+#| msgid "Authentication failed"
+msgid "Basic Authentication"
+msgstr "Neuspjela autentifikacija"
+
+#. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_basicUsername)
+#. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_basicPassword)
+#: microblogs/friendica/friendicaeditaccount_base.ui:128
+#: microblogs/friendica/friendicaeditaccount_base.ui:145
+#: microblogs/laconica/laconicaeditaccount_base.ui:128
+#: microblogs/laconica/laconicaeditaccount_base.ui:145
+#, kde-format
+msgid "The name you use to connect to the service"
+msgstr "Ime koje koristite za spajanje na servis"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: microblogs/friendica/friendicaeditaccount_base.ui:135
+#: microblogs/laconica/laconicaeditaccount_base.ui:135
+#: microblogs/twitter/twittereditaccount_base.ui:92
+#: plugins/shorteners/yourls/yourlsprefs.ui:47
+#: plugins/uploaders/posterous/posterousprefs.ui:74
+#, fuzzy, kde-format
+#| msgid "&Password:"
+msgid "Password:"
+msgstr "Za&porka:"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/friendica/friendicaeditaccount_base.ui:155
+#: microblogs/laconica/laconicaeditaccount_base.ui:155
+#: microblogs/twitter/twittereditaccount_base.ui:79
+#: plugins/shorteners/yourls/yourlsprefs.ui:34
+#, fuzzy, kde-format
+#| msgid "&Username:"
+msgid "Username:"
+msgstr "&Korisničko ime:"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tab)
+#. i18n: ectx: attribute (title), widget (QWidget, tabTimelines)
+#: microblogs/friendica/friendicaeditaccount_base.ui:182
+#: microblogs/laconica/laconicaeditaccount_base.ui:182
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:174
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:175
+#: microblogs/twitter/twittereditaccount_base.ui:183
+#, fuzzy, kde-format
+#| msgid "Configuration"
+msgid "Timelines Configuration"
+msgstr "Konfiguracija"
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: microblogs/friendica/friendicaeditaccount_base.ui:194
+#: microblogs/laconica/laconicaeditaccount_base.ui:194
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:186
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:187
+#: microblogs/twitter/twittereditaccount_base.ui:195
+#, kde-format
+msgid "Which timelines do you like to be enabled?"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QTableWidget, timelinesTable)
+#: microblogs/friendica/friendicaeditaccount_base.ui:202
+#: microblogs/laconica/laconicaeditaccount_base.ui:202
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:194
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:195
+#: microblogs/twitter/twittereditaccount_base.ui:203
+#, kde-format
+msgid "Name"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QTableWidget, timelinesTable)
+#: microblogs/friendica/friendicaeditaccount_base.ui:207
+#: microblogs/laconica/laconicaeditaccount_base.ui:207
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:199
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:200
+#: microblogs/twitter/twittereditaccount_base.ui:208
+#, kde-format
+msgid "Enable"
+msgstr ""
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabConf)
+#: microblogs/friendica/friendicaeditaccount_base.ui:216
+#: microblogs/laconica/laconicaeditaccount_base.ui:216
+#, kde-format
+msgid "Configuration"
+msgstr "Konfiguracija"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_changeExclamationMark)
+#: microblogs/friendica/friendicaeditaccount_base.ui:224
+#: microblogs/laconica/laconicaeditaccount_base.ui:224
+#, kde-format
+msgid ""
+"To prevent spamming on some groups, you can set here to change the "
+"exclamation point (that used to refer to a group), to something else (e.g. "
+"nothing.)"
+msgstr ""
+"Kako biste spriječili spam na nekim grupama, ovdje možete promijeniti znak "
+"uskličnika (koji se odnosi na grupe) u nešto drugo (npr. ništa)."
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_changeExclamationMark)
+#: microblogs/friendica/friendicaeditaccount_base.ui:227
+#: microblogs/laconica/laconicaeditaccount_base.ui:227
+#, kde-format
+msgid "On re-dent, change exclamation mark to:"
+msgstr "Pri re-dentu, promijeni znak uskličnika u:"
+
+#. i18n: ectx: property (text), widget (QLineEdit, kcfg_changeToString)
+#: microblogs/friendica/friendicaeditaccount_base.ui:237
+#: microblogs/laconica/laconicaeditaccount_base.ui:237
+#, kde-format
+msgid "#"
+msgstr ""
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabAccount)
+#: microblogs/laconica/laconicaeditaccount_base.ui:21
+#, fuzzy, kde-format
+#| msgid "Edit Account"
+msgid "GNU social Account"
+msgstr "Izmijeni račun"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/laconica/laconicaeditaccount_base.ui:103
+#, kde-format
+msgid "&GNU social server:"
+msgstr ""
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:91
+#, kde-format
+msgid "Code"
+msgstr ""
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:92
+#, kde-format
+msgid "Enter the code received from %1"
+msgstr ""
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:105
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:105
+#: microblogs/twitter/twittereditaccount.cpp:100
+#, fuzzy, kde-format
+#| msgid "New post submitted successfully"
+msgid "Choqok is authorized successfully."
+msgstr "Nova objava je uspješno poslana"
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:105
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:105
+#: microblogs/twitter/twittereditaccount.cpp:100
+#, fuzzy, kde-format
+#| msgid "Authentication failed"
+msgid "Authorized"
+msgstr "Neuspjela autentifikacija"
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:107
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:107
+#: microblogs/twitter/twittereditaccount.cpp:102
+#, fuzzy, kde-format
+#| msgid "Authentication error."
+msgid "Authorization Error"
+msgstr "Autentifikacijska greška."
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:107
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:107
+#: microblogs/twitter/twittereditaccount.cpp:102
+#, fuzzy, kde-format
+#| msgid "Authentication error."
+msgid "OAuth authorization error"
+msgstr "Autentifikacijska greška."
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:128
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:128
+#: microblogs/twitter/twittereditaccount.cpp:112
+#, fuzzy, kde-format
+#| msgid "Authentication failed"
+msgid "Authenticated"
+msgstr "Neuspjela autentifikacija"
+
+#. i18n: ectx: property (text), widget (QLabel, kcfg_authenticateStatus)
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:132
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:136
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:132
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:136
+#: microblogs/twitter/twittereditaccount.cpp:116
+#, fuzzy, kde-format
+#| msgid "Authentication failed"
+msgid "Not Authenticated"
+msgstr "Neuspjela autentifikacija"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabAccount)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:21
+#, fuzzy, kde-format
+#| msgid "StatusNet Account"
+msgid "Mastodon Account"
+msgstr "StatusNet-račun"
+
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_basicAuth)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:73
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:73
+#: microblogs/twitter/twittereditaccount_base.ui:73
+#, kde-format
+msgid "Credentials"
+msgstr "Vjerodajnice"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:82
+#, fuzzy, kde-format
+#| msgid "&Username:"
+msgid "username@domain:"
+msgstr "&Korisničko ime:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_credentialsBox)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:98
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:98
+#: microblogs/twitter/twittereditaccount_base.ui:112
+#, fuzzy, kde-format
+#| msgid "Authentication failed"
+msgid "OAuth Authentication"
+msgstr "Neuspjela autentifikacija"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:110
+#, kde-format
+msgid ""
+"Click the below button; if everything goes well, you will pointed to "
+"Mastodon website to allow access to Choqok."
+msgstr ""
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, kcfg_authorize)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:143
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:143
+#: microblogs/twitter/twittereditaccount_base.ui:151
+#, fuzzy, kde-format
+#| msgid "Verify Credentials"
+msgid "Verify credentials"
+msgstr "Provjeri vjerodajnice"
+
+#. i18n: ectx: property (text), widget (QPushButton, kcfg_authorize)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:146
+#, fuzzy, kde-format
+#| msgid "Authentication error."
+msgid "&Authenticate with Mastodon Service"
+msgstr "Autentifikacijska greška."
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:320
+#: microblogs/pumpio/pumpiomicroblog.cpp:912
+#, kde-format
+msgid "The post has been shared."
+msgstr ""
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:333
+#: microblogs/pumpio/pumpiomicroblog.cpp:926
+#, fuzzy, kde-format
+#| msgid "Cannot remove the account."
+msgid "Cannot share the post. %1"
+msgstr "Nije moguće ukloniti račun."
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:382
+#: microblogs/pumpio/pumpiomicroblog.cpp:715
+#, fuzzy, kde-format
+#| msgid "Creating the new post failed. %1"
+msgid "Cannot set/unset the post as favorite. %1"
+msgstr "Neuspješno stvaranje nove objave. %1"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:400
+#: microblogs/pumpio/pumpiomicroblog.cpp:1252
+#, kde-format
+msgctxt "Timeline description"
+msgid "You and people you follow"
+msgstr ""
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:406
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Local"
+msgstr ""
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:407
+#, fuzzy, kde-format
+#| msgid "Loading timelines..."
+msgctxt "Timeline description"
+msgid "Local timeline"
+msgstr "Učitavanje vremenskih linija"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:413
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Federated"
+msgstr ""
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:414
+#, fuzzy, kde-format
+#| msgid "Update Timelines"
+msgctxt "Timeline description"
+msgid "Federated timeline"
+msgstr "Ažuriraj vremenske linije"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:420
+#, fuzzy, kde-format
+#| msgctxt "Timeline Name"
+#| msgid "Favorite"
+msgctxt "Timeline Name"
+msgid "Favourites"
+msgstr "Favorit"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:421
+#, fuzzy, kde-format
+#| msgctxt "Timeline Name"
+#| msgid "Favorite"
+msgctxt "Timeline description"
+msgid "Favourites"
+msgstr "Favorit"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:522
+#, fuzzy, kde-format
+#| msgctxt "Posts from user"
+#| msgid "Posts from %1"
+msgid "Boost of %1"
+msgstr "Objave od %1"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:524
+#, fuzzy, kde-format
+#| msgctxt "Posts from user"
+#| msgid "Posts from %1"
+msgid "Boosted by %1"
+msgstr "Objave od %1"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:703
+#, fuzzy, kde-format
+#| msgid "New post submitted successfully"
+msgid "New post for account %1 submitted successfully."
+msgstr "Nova objava je uspješno poslana"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:715
+#: microblogs/pumpio/pumpiomicroblog.cpp:694
+#, kde-format
+msgid "Creating the new post failed. %1"
+msgstr "Neuspješno stvaranje nove objave. %1"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:752
+#: microblogs/pumpio/pumpiomicroblog.cpp:754
+#, kde-format
+msgid "Cannot fetch post. %1"
+msgstr ""
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:808
+#: microblogs/pumpio/pumpiomicroblog.cpp:1018
+#, kde-format
+msgid "An error occurred when fetching the timeline"
+msgstr ""
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:922
+#, kde-format
+msgid "Updating following list for account %1..."
+msgstr ""
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:952
+#, kde-format
+msgid ""
+"Following list for account %1 could not be updated:\n"
+"%2"
+msgstr ""
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:968
+#, fuzzy, kde-format
+#| msgid ""
+#| "Retrieving the friends list failed. The data returned from the server is "
+#| "corrupted."
+msgid ""
+"Retrieving the following list failed. The data returned from the server is "
+"corrupted."
+msgstr ""
+"Neuspješno dohvaćanje liste prijatelja. Dobiveni podaci s poslužitelja su "
+"pokvareni."
+
+#: microblogs/mastodon/mastodonpostwidget.cpp:97
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Boost"
+msgstr ""
+
+#: microblogs/mastodon/mastodonpostwidget.cpp:120
+#, fuzzy, kde-format
+#| msgctxt "@info:tooltip"
+#| msgid "Favorite"
+msgctxt "@info:tooltip"
+msgid "Favourite"
+msgstr "Favorit"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: microblogs/ocs/ocsconfigurebase.ui:19
+#, kde-format
+msgid "&Alias:"
+msgstr "&Alias:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: microblogs/ocs/ocsconfigurebase.ui:67
+#, kde-format
+msgid "Provider"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: microblogs/ocs/ocsconfigurebase.ui:73
+#, kde-format
+msgid "Select a social desktop provider to use:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/ocs/ocsconfigurebase.ui:83
+#, kde-format
+msgid ""
+"You can manage Social Desktop providers in the KDE Social Desktop "
+"configuration."
+msgstr ""
+
+#: microblogs/ocs/ocsconfigurewidget.cpp:26
+#, fuzzy, kde-format
+#| msgid "Loading timelines..."
+msgid "Loading..."
+msgstr "Učitavanje vremenskih linija"
+
+#: microblogs/ocs/ocsconfigurewidget.cpp:58
+#, kde-format
+msgid "You have to wait for providers list to be loaded."
+msgstr ""
+
+#: microblogs/ocs/ocsmicroblog.cpp:142
+#, kde-format
+msgid "OCS plugin is not initialized yet. Try again later."
+msgstr ""
+
+#: microblogs/ocs/ocsmicroblog.cpp:177 microblogs/ocs/ocsmicroblog.cpp:184
+#, fuzzy, kde-format
+#| msgid "Authentication failed"
+msgid "Not Supported"
+msgstr "Neuspjela autentifikacija"
+
+#: microblogs/ocs/ocsmicroblog.cpp:250
+#: microblogs/pumpio/pumpiomicroblog.cpp:1251
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Activity"
+msgstr ""
+
+#: microblogs/ocs/ocsmicroblog.cpp:251
+#, kde-format
+msgid "Social activities"
+msgstr ""
+
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:96
+#: microblogs/twitter/twittereditaccount.cpp:91
+#, kde-format
+msgid "PIN"
+msgstr ""
+
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:97
+#, kde-format
+msgid "Enter the verifier code received from %1"
+msgstr ""
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabAccount)
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:21
+#, fuzzy, kde-format
+#| msgid "Edit Account"
+msgid "PumpIO Account"
+msgstr "Izmijeni račun"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:82
+#, kde-format
+msgid "Webfinger ID:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:110
+#, kde-format
+msgid ""
+"Click the below button; if everything goes well, you will pointed to Pump.io "
+"website to allow access to Choqok."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, kcfg_authorize)
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:146
+#, kde-format
+msgid "&Authenticate with Pump.io Service"
+msgstr ""
+
+#. i18n: ectx: property (windowTitle), widget (QDialog, PumpIOMessageDialog)
+#: microblogs/pumpio/pumpiomessagedialog.ui:14
+#, kde-format
+msgid "Dialog"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/pumpio/pumpiomessagedialog.ui:46
+#: microblogs/pumpio/pumpiopostwidget.cpp:112
+#, kde-format
+msgid "CC:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: microblogs/pumpio/pumpiomessagedialog.ui:70
+#: microblogs/pumpio/pumpiopostwidget.cpp:89
+#, fuzzy, kde-format
+#| msgctxt "Send message to"
+#| msgid "To:"
+msgid "To:"
+msgstr "Za:"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:796
+#, kde-format
+msgid "Cannot fetch replies. %1"
+msgstr ""
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:819
+#, kde-format
+msgid "Following list for account %1 has been updated."
+msgstr ""
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:842
+#, fuzzy, kde-format
+#| msgid "Cannot remove the account."
+msgid "Cannot retrieve the following list. %1"
+msgstr "Nije moguće ukloniti račun."
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:864
+#, kde-format
+msgid "Lists for account %1 has been updated."
+msgstr ""
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:891
+#, fuzzy, kde-format
+#| msgid "Cannot remove the account."
+msgid "Cannot retrieve the lists. %1"
+msgstr "Nije moguće ukloniti račun."
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:953
+#, fuzzy, kde-format
+#| msgid "New post submitted successfully"
+msgid "Post removed successfully"
+msgstr "Nova objava je uspješno poslana"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:999
+#, kde-format
+msgid "An error occurred when updating the post"
+msgstr ""
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:1068
+#, kde-format
+msgid "An error occurred when uploading the media"
+msgstr ""
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:1258
+#, fuzzy, kde-format
+#| msgctxt "Timeline Name"
+#| msgid "Favorite"
+msgctxt "Timeline Name"
+msgid "Favorites"
+msgstr "Favorit"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:1259
+#, fuzzy, kde-format
+#| msgctxt "Timeline description"
+#| msgid "Your favorites"
+msgctxt "Timeline description"
+msgid "Posts you favorited"
+msgstr "Vaši favoriti"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:1266
+#, kde-format
+msgctxt "Timeline description"
+msgid "Posts sent to you"
+msgstr ""
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:1273
+#, kde-format
+msgctxt "Timeline description"
+msgid "Posts you sent"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_forpublic)
+#: microblogs/pumpio/pumpiopostwidget.cpp:93
+#: microblogs/pumpio/pumpiopostwidget.cpp:116
+#: plugins/uploaders/flickr/flickrprefs.ui:121
+#, fuzzy, kde-format
+#| msgctxt "Timeline Name"
+#| msgid "Public"
+msgid "Public"
+msgstr "Javno"
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:96
+#: microblogs/pumpio/pumpiopostwidget.cpp:119
+#, kde-format
+msgid "Followers"
+msgstr ""
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:98
+#: microblogs/pumpio/pumpiopostwidget.cpp:121
+#: microblogs/pumpio/pumpiopostwidget.cpp:139
+#, kde-format
+msgid "You"
+msgstr ""
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:135
+#, kde-format
+msgid "Shared by:"
+msgstr ""
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:151
+#, fuzzy, kde-format
+#| msgid "Show Conversation"
+msgid "Show conversation"
+msgstr "Prikaži razgovor"
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:172
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Share"
+msgstr ""
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:186
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Like"
+msgstr ""
+
+#: microblogs/pumpio/pumpioshowthread.cpp:34
+#, fuzzy, kde-format
+#| msgid "Choqok (%1)"
+msgctxt "Thread of specified user"
+msgid "Choqok: %1's thread"
+msgstr "Choqok (%1)"
+
+#: microblogs/twitter/twittereditaccount.cpp:92
+#, kde-format
+msgid "Enter the PIN received from Twitter:"
+msgstr ""
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabAccount)
+#: microblogs/twitter/twittereditaccount_base.ui:21
+#, kde-format
+msgid "Twitter Account"
+msgstr "Račun na Twitteru"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/twitter/twittereditaccount_base.ui:124
+#, kde-format
+msgid ""
+"Click the below button; if everything goes well, you will pointed to Twitter "
+"website to allow access to Choqok."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, kcfg_authorize)
+#: microblogs/twitter/twittereditaccount_base.ui:154
+#, kde-format
+msgid "&Authenticate with Twitter Service"
+msgstr ""
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnAdd)
+#: microblogs/twitter/twitterlistdialog.cpp:58 plugins/filter/filterprefs.ui:81
+#, fuzzy, kde-format
+#| msgid "&Add..."
+msgid "Add"
+msgstr "Dod&aj …"
+
+#: microblogs/twitter/twitterlistdialog.cpp:77
+#, kde-format
+msgid "You should provide both list author username and list name."
+msgstr ""
+
+#: microblogs/twitter/twitterlistdialog.cpp:99
+#, kde-format
+msgid "No user."
+msgstr ""
+
+#. i18n: ectx: property (windowTitle), widget (QWidget, TwitterListDialogBase)
+#: microblogs/twitter/twitterlistdialog_base.ui:14
+#, kde-format
+msgid "Add List"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/twitter/twitterlistdialog_base.ui:26
+#, fuzzy, kde-format
+#| msgid "&Username:"
+msgid "List name:"
+msgstr "&Korisničko ime:"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: microblogs/twitter/twitterlistdialog_base.ui:52
+#, fuzzy, kde-format
+#| msgid "&Username:"
+msgid "User name:"
+msgstr "&Korisničko ime:"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, loadUserLists)
+#: microblogs/twitter/twitterlistdialog_base.ui:78
+#, kde-format
+msgid "Load user lists"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, loadUserLists)
+#: microblogs/twitter/twitterlistdialog_base.ui:81
+#, kde-format
+msgid "Load Lists"
+msgstr ""
+
+#: microblogs/twitter/twittermicroblog.cpp:59
+#, fuzzy, kde-format
+#| msgid "Actions"
+msgctxt "Timeline Name"
+msgid "Mentions"
+msgstr "Aktivnosti"
+
+#: microblogs/twitter/twittermicroblog.cpp:60
+#, fuzzy, kde-format
+#| msgctxt "Timeline description"
+#| msgid "Replies to you"
+msgctxt "Timeline description"
+msgid "Mentions of you"
+msgstr "Odgovori za tebe"
+
+#: microblogs/twitter/twittermicroblog.cpp:225
+#, fuzzy, kde-format
+#| msgid "Verify Credentials"
+msgid "Verify credentials failed. %1"
+msgstr "Provjeri vjerodajnice"
+
+#: microblogs/twitter/twittermicroblog.cpp:254
+#, fuzzy, kde-format
+#| msgctxt "Posts from user"
+#| msgid "Posts from %1"
+msgid "Retweet of %1"
+msgstr "Objave od %1"
+
+#: microblogs/twitter/twittermicroblog.cpp:256
+#, fuzzy, kde-format
+#| msgctxt "Posts from user"
+#| msgid "Posts from %1"
+msgid "Retweeted by %1"
+msgstr "Objave od %1"
+
+#: microblogs/twitter/twittermicroblog.cpp:262
+#, kde-format
+msgid "Retweet to your followers?"
+msgstr ""
+
+#: microblogs/twitter/twittermicroblog.cpp:269
+#, kde-format
+msgid "Add User List..."
+msgstr ""
+
+#: microblogs/twitter/twittermicroblog.cpp:329
+#, fuzzy, kde-format
+#| msgid "Fetching the new post failed. %1"
+msgid "Fetching %1's lists failed. %2"
+msgstr "Neuspješno dohvaćanje nove objave. %1"
+
+#: microblogs/twitter/twittermicroblog.cpp:339
+#, kde-format
+msgid "There is no list record for user %1"
+msgstr ""
+
+#: microblogs/twitter/twitterpostwidget.cpp:64
+#, kde-format
+msgid "Retweet"
+msgstr ""
+
+#: microblogs/twitter/twitterpostwidget.cpp:65
+#, kde-format
+msgid "Retweet post using API"
+msgstr ""
+
+#: microblogs/twitter/twitterpostwidget.cpp:136
+#, kde-format
+msgctxt "Including user name"
+msgid "Including %1"
+msgstr "Uključujući %1"
+
+#: microblogs/twitter/twitterpostwidget.cpp:171
+#, kde-format
+msgctxt "Unfollow user"
+msgid "Unfollow %1"
+msgstr ""
+
+#: microblogs/twitter/twitterpostwidget.cpp:176
+#, kde-format
+msgctxt "Follow user"
+msgid "Follow %1"
+msgstr ""
+
+#: microblogs/twitter/twitterpostwidget.cpp:183
+#, kde-format
+msgctxt "Report user"
+msgid "Report %1 as spam"
+msgstr ""
+
+#: microblogs/twitter/twittersearch.cpp:35
+#, fuzzy, kde-format
+#| msgctxt "Send message to"
+#| msgid "To:"
+msgctxt "Posts sent to user"
+msgid "To:"
+msgstr "Za:"
+
+#: microblogs/twitter/twittersearch.cpp:36
+#, kde-format
+msgctxt "Posts from user, Sent by user"
+msgid "From:"
+msgstr ""
+
+#: microblogs/twitter/twittersearch.cpp:38
+#, kde-format
+msgid "Custom Search"
+msgstr "Prilagođeno pretraživanje"
+
+#: microblogs/twitter/twittersearch.cpp:41
+#, kde-format
+msgctxt "Tweets are Twitter posts"
+msgid "Tweets To This User"
+msgstr "Tweetovi za ovog korisnika"
+
+#: microblogs/twitter/twittersearch.cpp:44
+#, kde-format
+msgctxt "Tweets are Twitter posts"
+msgid "Tweets From This User"
+msgstr "Tweetovi od ovog korisnika"
+
+#: microblogs/twitter/twittersearch.cpp:47
+#, kde-format
+msgctxt "Tweets are Twitter posts"
+msgid "Tweets Including This Username"
+msgstr "Tweetovi koji uključuju ovo korisničko ime"
+
+#: microblogs/twitter/twittersearch.cpp:50
+#, kde-format
+msgctxt "Tweets are Twitter posts"
+msgid "Tweets Including This Hashtag"
+msgstr "Tweetovi koji uključuju ovu hash-oznaku"
+
+#: plugins/betternotify/dummynotification.cpp:34
+#, kde-format
+msgid "KDE Rocks! :)"
+msgstr ""
+
+#: plugins/betternotify/dummynotification.cpp:34
+#, kde-format
+msgid "OK"
+msgstr ""
+
+#: plugins/betternotify/notification.cpp:78
+#, kde-format
+msgid "Ignore"
+msgstr ""
+
+#. i18n: ectx: attribute (title), widget (QWidget, tab)
+#: plugins/betternotify/notifyprefs.ui:21
+#, kde-format
+msgid "Appearance"
+msgstr "Izgled"
+
+#. i18n: ectx: property (text), widget (QLabel, label_7)
+#: plugins/betternotify/notifyprefs.ui:29
+#, fuzzy, kde-format
+#| msgid "Foreground"
+msgid "Foreground Color:"
+msgstr "Istaknuto"
+
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: plugins/betternotify/notifyprefs.ui:39
+#, fuzzy, kde-format
+#| msgid "Background"
+msgid "Background Color:"
+msgstr "Pozadina"
+
+#. i18n: ectx: property (text), widget (QLabel, label_9)
+#: plugins/betternotify/notifyprefs.ui:49
+#, kde-format
+msgid "Font:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: plugins/betternotify/notifyprefs.ui:59
+#, fuzzy, kde-format
+#| msgid "&Update interval:"
+msgid "Notify Interval:"
+msgstr "Interval až&uriranja:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: plugins/betternotify/notifyprefs.ui:78
+#, fuzzy, kde-format
+#| msgid " Second"
+#| msgid_plural " Seconds"
+msgid "seconds"
+msgstr " sekunda"
+
+#. i18n: ectx: property (text), widget (QPushButton, adjustPosition)
+#: plugins/betternotify/notifyprefs.ui:123
+#, fuzzy, kde-format
+#| msgid "&Notification duration:"
+msgid "Adjust Notification's Position"
+msgstr "&Trajanje obavijesti:"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tab_2)
+#: plugins/betternotify/notifyprefs.ui:159
+#, fuzzy, kde-format
+#| msgid "Timelines Options"
+msgid "Timeline Selection"
+msgstr "Opcije vremenske linije"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: plugins/betternotify/notifyprefs.ui:171
+#, fuzzy, kde-format
+#| msgid "Timelines"
+msgid "Select Timelines"
+msgstr "Vremenske linije"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/betternotify/notifyprefs.ui:181
+#, fuzzy, kde-format
+#| msgid "Edit Account"
+msgid "Accounts"
+msgstr "Izmijeni račun"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: plugins/betternotify/notifyprefs.ui:197
+#, kde-format
+msgid "Select timelines you wish to see notifications for their new posts:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: plugins/betternotify/notifyprefs.ui:249
+#, kde-format
+msgid ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Note:</span> Any "
+"change, needs plugin re-load (disable/enable) to take effect.</p></body></"
+"html>"
+msgstr ""
+
+#: plugins/filter/addeditfilter.cpp:47
+#, kde-format
+msgid "Modify filter rules"
+msgstr ""
+
+#. i18n: ectx: property (windowTitle), widget (QWidget, AddEditFilterBase)
+#: plugins/filter/addeditfilter_base.ui:14
+#, kde-format
+msgid "Define new filter rules"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: plugins/filter/addeditfilter_base.ui:22
+#, fuzzy, kde-format
+#| msgid "File"
+msgid "Fi&lter field:"
+msgstr "Datoteka"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/filter/addeditfilter_base.ui:52
+#, fuzzy, kde-format
+#| msgid "File"
+msgid "Fi&lter type:"
+msgstr "Datoteka"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: plugins/filter/addeditfilter_base.ui:82
+#, kde-format
+msgid "Te&xt:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: plugins/filter/addeditfilter_base.ui:102
+#, fuzzy, kde-format
+#| msgid "Twitter Account"
+msgid "Filter action:"
+msgstr "Račun na Twitteru"
+
+#. i18n: ectx: property (text), widget (QCheckBox, dontHideReplies)
+#: plugins/filter/addeditfilter_base.ui:133
+#, fuzzy, kde-format
+#| msgid "Do not show replies to me on the Home tab"
+msgid "Do not hide replies to me"
+msgstr "Ne prikazuj odgovore za mene na kartici Početak."
+
+#: plugins/filter/filtermanager.cpp:35
+#, fuzzy, kde-format
+#| msgid "Configuration"
+msgid "Configure Filters..."
+msgstr "Konfiguracija"
+
+#: plugins/filter/filtermanager.cpp:42
+#, fuzzy, kde-format
+#| msgid "Quick Post"
+msgid "Hide Post"
+msgstr "Brza objava"
+
+#: plugins/filter/filtermanager.cpp:222
+#, kde-format
+msgid "Hide all posts from <b>@%1</b>?"
+msgstr ""
+
+#. i18n: ectx: property (windowTitle), widget (QWidget, mFilteringCtl)
+#: plugins/filter/filterprefs.ui:14
+#, fuzzy, kde-format
+#| msgid "Configuration"
+msgid "Configure Filters"
+msgstr "Konfiguracija"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tab)
+#: plugins/filter/filterprefs.ui:24
+#, kde-format
+msgid "Rules"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QTableWidget, filters)
+#: plugins/filter/filterprefs.ui:43
+#, fuzzy, kde-format
+#| msgid "File"
+msgid "Field"
+msgstr "Datoteka"
+
+#. i18n: ectx: property (text), widget (QTableWidget, filters)
+#: plugins/filter/filterprefs.ui:48
+#, kde-format
+msgid "Type"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QTableWidget, filters)
+#: plugins/filter/filterprefs.ui:53
+#, fuzzy, kde-format
+#| msgid "File"
+msgid "Filter"
+msgstr "Datoteka"
+
+#. i18n: ectx: property (text), widget (QTableWidget, filters)
+#: plugins/filter/filterprefs.ui:58
+#, fuzzy, kde-format
+#| msgid "Actions"
+msgid "Action"
+msgstr "Aktivnosti"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnEdit)
+#: plugins/filter/filterprefs.ui:91
+#, fuzzy, kde-format
+#| msgid "&Modify..."
+msgid "Modify"
+msgstr "Iz&mijeni …"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnRemove)
+#: plugins/filter/filterprefs.ui:114
+#, fuzzy, kde-format
+#| msgctxt "@info:tooltip"
+#| msgid "Remove"
+msgid "Remove"
+msgstr "Ukloni"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabSpecial)
+#: plugins/filter/filterprefs.ui:127
+#, kde-format
+msgid "Special Rules"
+msgstr ""
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, cfg_hideRepliesNotRelatedToMe)
+#: plugins/filter/filterprefs.ui:133
+#, kde-format
+msgid "You will see just replies came to you, or mentions you."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_hideRepliesNotRelatedToMe)
+#: plugins/filter/filterprefs.ui:136
+#, fuzzy, kde-format
+#| msgid "Do not show replies to me on the Home tab"
+msgid "Just show replies to me"
+msgstr "Ne prikazuj odgovore za mene na kartici Početak."
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, cfg_hideNoneFriendsReplies)
+#: plugins/filter/filterprefs.ui:143
+#, fuzzy, kde-format
+#| msgid "Do not show replies to me on the Home tab"
+msgid "You will see just replies between your friends."
+msgstr "Ne prikazuj odgovore za mene na kartici Početak."
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_hideNoneFriendsReplies)
+#: plugins/filter/filterprefs.ui:146
+#, fuzzy, kde-format
+#| msgid "Do not show replies to me on the Home tab"
+msgid "Just show replies to me and my friends"
+msgstr "Ne prikazuj odgovore za mene na kartici Početak."
+
+#: plugins/filter/filtersettings.cpp:30
+#, fuzzy, kde-format
+#| msgid "&Username:"
+msgid "Author Username"
+msgstr "&Korisničko ime:"
+
+#: plugins/filter/filtersettings.cpp:31
+#, kde-format
+msgid "Post Text"
+msgstr ""
+
+#: plugins/filter/filtersettings.cpp:32
+#, kde-format
+msgid "Author Client"
+msgstr ""
+
+#: plugins/filter/filtersettings.cpp:33
+#, fuzzy, kde-format
+#| msgctxt "Replies to user"
+#| msgid "Replies to %1"
+msgid "Reply to User"
+msgstr "Odgovori za %1"
+
+#: plugins/filter/filtersettings.cpp:35
+#, fuzzy, kde-format
+#| msgid "Configuration"
+msgid "Contain"
+msgstr "Konfiguracija"
+
+#: plugins/filter/filtersettings.cpp:36
+#, kde-format
+msgid "Does Not Contain"
+msgstr ""
+
+#: plugins/filter/filtersettings.cpp:37
+#, kde-format
+msgid "Exact Match"
+msgstr ""
+
+#: plugins/filter/filtersettings.cpp:38
+#, kde-format
+msgid "Regular Expression"
+msgstr ""
+
+#: plugins/filter/filtersettings.cpp:40
+#, fuzzy, kde-format
+#| msgid "Quick Post"
+msgctxt "@action"
+msgid "Hide Posts"
+msgstr "Brza objava"
+
+#: plugins/filter/filtersettings.cpp:41
+#, kde-format
+msgctxt "@action"
+msgid "Highlight Posts"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_im)
+#: plugins/imstatus/imstatusprefs.ui:19
+#, kde-format
+msgid "Instant Messenger:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_reply)
+#: plugins/imstatus/imstatusprefs.ui:31
+#, fuzzy, kde-format
+#| msgctxt "Timeline description"
+#| msgid "Replies to you"
+msgid "Add replies to status"
+msgstr "Odgovori za tebe"
+
+#. i18n: ectx: property (text), widget (QLabel, label_status_templ)
+#: plugins/imstatus/imstatusprefs.ui:38
+#, kde-format
+msgid "Status template"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/imstatus/imstatusprefs.ui:64
+#, no-c-format, kde-format
+msgid ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<table border=\"0\" style=\"-qt-table-type: root; margin-top:4px; margin-"
+"bottom:4px; margin-left:4px; margin-right:4px;\">\n"
+"<tr>\n"
+"<td style=\"border: none;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt;\">Available markup:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%status%</span><span style=\" font-size:8pt;\"> "
+"- new status</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%time%</span><span style=\" font-size:8pt;\"> - "
+"time of adding new status</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%url%</span><span style=\" font-size:8pt;\"> - "
+"URL of new status</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%username%</span><span style=\" font-size:8pt;"
+"\"> - your username</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%fullname%</span><span style=\" font-size:8pt;"
+"\"> - your full name</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%client%</span><span style=\" font-size:8pt;\"> "
+"- add </span><span style=\" font-size:8pt; font-style:italic;\">Choqok</"
+"span><span style=\" font-size:8pt;\"> to status</span></p></td></tr></"
+"table></body></html>"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_repeat)
+#: plugins/imstatus/imstatusprefs.ui:87
+#, kde-format
+msgid "Add repeats to status"
+msgstr ""
+
+#: plugins/konqueror/konqchoqok.cpp:36 plugins/konqueror/konqchoqok.cpp:91
+#, kde-format
+msgid "Post Text with Choqok"
+msgstr ""
+
+#: plugins/konqueror/konqchoqok.cpp:41
+#, fuzzy, kde-format
+#| msgid "Shorten &URLs on paste"
+msgid "Shorten URL on Paste"
+msgstr "Skrati &URL-ove kada zalijepiš"
+
+#: plugins/konqueror/konqchoqok.cpp:90
+#, kde-format
+msgid "You need to select text to post."
+msgstr ""
+
+#. i18n: ectx: Menu (tools)
+#: plugins/konqueror/konqchoqok.rc:4
+#, kde-format
+msgid "&Tools"
+msgstr "&Alati"
+
+#: plugins/nowlistening/nowlistening.cpp:33
+#, kde-format
+msgid "Now Listening"
+msgstr "Sada svira"
+
+#: plugins/nowlistening/nowlistening.cpp:226
+#, kde-format
+msgctxt "Player is running, But it's not playing."
+msgid "Play your desired music player."
+msgstr ""
+
+#: plugins/nowlistening/nowlistening.cpp:229
+#, kde-format
+msgid "No supported player found."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: plugins/nowlistening/nowlisteningprefs.ui:17
+#, kde-format
+msgid "Valid metadata:"
+msgstr "Važeći metapodaci:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/nowlistening/nowlisteningprefs.ui:51
+#, kde-format
+msgid "Template:"
+msgstr "Predložak:"
+
+#: plugins/quickfilter/quickfilter.cpp:35
+#, kde-format
+msgid "Filter by author"
+msgstr ""
+
+#: plugins/quickfilter/quickfilter.cpp:37
+#, kde-format
+msgid "Filter by content"
+msgstr ""
+
+#: plugins/quickfilter/quickfilter.cpp:92
+#, kde-format
+msgid "Filter out timeline by author"
+msgstr ""
+
+#: plugins/quickfilter/quickfilter.cpp:94
+#, kde-format
+msgid "Filter out timeline by text"
+msgstr ""
+
+#: plugins/quickfilter/quickfilter.cpp:106
+#, fuzzy, kde-format
+#| msgid "Authentication failed"
+msgid "Author"
+msgstr "Neuspjela autentifikacija"
+
+#: plugins/quickfilter/quickfilter.cpp:107
+#, fuzzy, kde-format
+#| msgid "Next"
+msgid "Text"
+msgstr "Sljedeći"
+
+#: plugins/searchaction/searchaction.cpp:49
+#, kde-format
+msgid "The Search action plugin does not support the current microblog."
+msgstr "Priključak za radnju pretraživanja ne podržava trenutni mikroblog."
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:70
+#, kde-format
+msgid "API key is invalid"
+msgstr ""
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:73
+#, kde-format
+msgid "Login is invalid"
+msgstr ""
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:76
+#, kde-format
+msgid "Rate limit exceeded. Try another shortener."
+msgstr ""
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:79
+#: plugins/shorteners/goo_gl/goo_gl.cpp:55
+#: plugins/shorteners/is_gd/is_gd.cpp:67 plugins/shorteners/ur_ly/ur_ly.cpp:56
+#: plugins/uploaders/flickr/flickr.cpp:191
+#: plugins/uploaders/flickr/flickr.cpp:197
+#: plugins/uploaders/flickr/flickrconfig.cpp:158
+#: plugins/uploaders/flickr/flickrconfig.cpp:163
+#: plugins/uploaders/flickr/flickrconfig.cpp:232
+#: plugins/uploaders/flickr/flickrconfig.cpp:237
+#: plugins/uploaders/imageshack/imageshack.cpp:110
+#: plugins/uploaders/mobypicture/mobypicture.cpp:144
+#: plugins/uploaders/posterous/posterous.cpp:168
+#: plugins/uploaders/twitgoo/twitgoo.cpp:108
+#: plugins/uploaders/twitpic/twitpic.cpp:113
+#, kde-format
+msgid "Malformed response"
+msgstr "Izobličen odgovor"
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:79
+#: plugins/shorteners/bit_ly/bit_ly.cpp:82
+#, fuzzy, kde-format
+#| msgid "Error"
+msgid "Bit.ly error"
+msgstr "Greška"
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:81
+#: plugins/shorteners/goo_gl/goo_gl.cpp:57
+#: plugins/shorteners/is_gd/is_gd.cpp:70
+#: plugins/shorteners/tighturl/tighturl.cpp:54
+#: plugins/shorteners/tinyarro_ws/tinyarro_ws.cpp:58
+#: plugins/shorteners/ur1_ca/ur1_ca.cpp:60
+#: plugins/shorteners/ur_ly/ur_ly.cpp:60
+#: plugins/shorteners/yourls/yourls.cpp:74
+#, kde-format
+msgid ""
+"Cannot create a short URL.\n"
+"%1"
+msgstr ""
+
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:51
+#, kde-format
+msgctxt ""
+"The your_api_key part of the URL is a fixed part of the URL and should "
+"probably not be changed in localization."
+msgid ""
+"You can find your API key <a href=\"http://bit.ly/a/your_api_key\">here</a>"
+msgstr ""
+
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:95
+#, kde-format
+msgid "Checking..."
+msgstr ""
+
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:121
+#, kde-format
+msgctxt ""
+"The your_api_key part of the URL is a fixed part of the URL and should "
+"probably not be changed in localization."
+msgid ""
+"Provided data is invalid. Try another login or API key.\n"
+"You can find it on http://bit.ly/a/your_api_key"
+msgstr ""
+
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:124
+#, fuzzy, kde-format
+#| msgid "Cannot load user information."
+msgid "You entered valid information."
+msgstr "Nije moguće učitati informacije o korisniku."
+
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:127
+#, fuzzy, kde-format
+#| msgid "Error"
+msgid "bit.ly Config Error"
+msgstr "Greška"
+
+#. i18n: ectx: property (text), widget (QPushButton, validate_button)
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:131
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:49
+#, kde-format
+msgid "Validate"
+msgstr "Provjeri valjanost"
+
+#. i18n: ectx: property (text), widget (QLabel, login)
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:19
+#, fuzzy, kde-format
+#| msgid "Bit.ly Login:"
+msgid "Bit.ly login:"
+msgstr "Bit.ly prijava:"
+
+#. i18n: ectx: property (text), widget (QLabel, api_key)
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:32
+#, fuzzy, kde-format
+#| msgid "Bit.ly API Key:"
+msgid "Bit.ly API key:"
+msgstr "Bit.ly API Key:"
+
+#. i18n: ectx: property (text), widget (QLabel, help_label)
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:58
+#, kde-format
+msgid "You can find your API key here"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, domain)
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:73
+#, kde-format
+msgid "Domain:"
+msgstr "Domena:"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:86
+#, kde-format
+msgid "(No matter for Bit.ly Pro accounts)"
+msgstr ""
+
+#: plugins/shorteners/goo_gl/goo_gl.cpp:38
+#, kde-format
+msgid "Error when creating job"
+msgstr ""
+
+#: plugins/shorteners/goo_gl/goo_gl.cpp:38
+#: plugins/shorteners/goo_gl/goo_gl.cpp:50
+#: plugins/shorteners/goo_gl/goo_gl.cpp:55
+#: plugins/shorteners/goo_gl/goo_gl.cpp:57
+#, fuzzy, kde-format
+#| msgid "Error"
+msgid "Goo.gl Error"
+msgstr "Greška"
+
+#: plugins/shorteners/is_gd/is_gd.cpp:59 plugins/shorteners/is_gd/is_gd.cpp:67
+#: plugins/shorteners/is_gd/is_gd.cpp:70
+#, fuzzy, kde-format
+#| msgid "Error"
+msgid "is.gd Error"
+msgstr "Greška"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_logstats)
+#: plugins/shorteners/is_gd/is_gd_prefs.ui:19
+#, kde-format
+msgid "Generate Statistics"
+msgstr ""
+
+#: plugins/shorteners/tighturl/tighturl.cpp:55
+#, fuzzy, kde-format
+#| msgid "Error"
+msgid "TightUrl Error"
+msgstr "Greška"
+
+#: plugins/shorteners/tinyarro_ws/tinyarro_ws.cpp:56
+#, kde-format
+msgid "Tinyarro.ws error"
+msgstr ""
+
+#: plugins/shorteners/tinyarro_ws/tinyarro_ws_config.cpp:49
+#, kde-format
+msgid "Random host"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, urlHostLabel)
+#: plugins/shorteners/tinyarro_ws/tinyarro_ws_prefs.ui:40
+#, fuzzy, kde-format
+#| msgid "Shorten &URLs on paste"
+msgid "Shortener URL host:"
+msgstr "Skrati &URL-ove kada zalijepiš"
+
+#: plugins/shorteners/ur1_ca/ur1_ca.cpp:60
+#, fuzzy, kde-format
+#| msgid "Error"
+msgid "ur1.ca Error"
+msgstr "Greška"
+
+#: plugins/shorteners/ur_ly/ur_ly.cpp:56 plugins/shorteners/ur_ly/ur_ly.cpp:61
+#, fuzzy, kde-format
+#| msgid "Error"
+msgid "Ur.ly Error"
+msgstr "Greška"
+
+#: plugins/shorteners/yourls/yourls.cpp:71
+#, kde-format
+msgid "Yourls Error"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: plugins/shorteners/yourls/yourlsprefs.ui:17
+#, kde-format
+msgid "Yourls API URL:"
+msgstr "Yourls API URL:"
+
+#. i18n: ectx: property (clickMessage), widget (QLineEdit, kcfg_yourlsHost)
+#: plugins/shorteners/yourls/yourlsprefs.ui:27
+#, kde-format
+msgid "http://SomeDomain.com/yourls/yourls-api.php"
+msgstr "http://SomeDomain.com/yourls/yourls-api.php"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useUntinyDotCom)
+#: plugins/untiny/untinyprefs.ui:17
+#, kde-format
+msgid "Use untiny.com service"
+msgstr ""
+
+#: plugins/uploaders/flickr/flickr.cpp:155
+#, kde-format
+msgid "The photo required argument was missing"
+msgstr ""
+
+#: plugins/uploaders/flickr/flickr.cpp:158
+#, kde-format
+msgid "The file was not correctly uploaded"
+msgstr ""
+
+#: plugins/uploaders/flickr/flickr.cpp:161
+#, kde-format
+msgid "The file was zero bytes in length"
+msgstr ""
+
+#: plugins/uploaders/flickr/flickr.cpp:164
+#, kde-format
+msgid "Filetype was not recognised"
+msgstr ""
+
+#: plugins/uploaders/flickr/flickr.cpp:167
+#, kde-format
+msgid "The calling user has reached their monthly bandwidth limit"
+msgstr ""
+
+#: plugins/uploaders/flickr/flickr.cpp:171
+#: plugins/uploaders/flickr/flickrconfig.cpp:147
+#, kde-format
+msgid "Signature problem. Please try again later"
+msgstr ""
+
+#: plugins/uploaders/flickr/flickr.cpp:178
+#, kde-format
+msgid "Login failed. Please re-authenticate Choqok"
+msgstr ""
+
+#: plugins/uploaders/flickr/flickr.cpp:181
+#: plugins/uploaders/flickr/flickrconfig.cpp:150
+#: plugins/uploaders/flickr/flickrconfig.cpp:224
+#, kde-format
+msgid "The requested service is temporarily unavailable. Try again later"
+msgstr ""
+
+#: plugins/uploaders/flickr/flickr.cpp:184
+#: plugins/uploaders/flickr/flickrconfig.cpp:153
+#, kde-format
+msgid "Unknown Error:%1. Please try again later"
+msgstr ""
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:169
+#: plugins/uploaders/flickr/flickrconfig.cpp:244
+#, fuzzy, kde-format
+#| msgid "Authentication error."
+msgid "Flickr authorization"
+msgstr "Autentifikacijska greška."
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:221
+#, kde-format
+msgid "Something happens with signature. Please retry"
+msgstr ""
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:227
+#, kde-format
+msgid "Something happens wrong. Error %1. Try again later"
+msgstr ""
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:264
+#, fuzzy, kde-format
+#| msgid "Authentication failed"
+msgid "Authorized as %1"
+msgstr "Neuspjela autentifikacija"
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:271
+#, fuzzy, kde-format
+#| msgid "Authentication failed"
+msgid "Not authorized"
+msgstr "Neuspjela autentifikacija"
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:285
+#, kde-format
+msgid "Click here when you authorized Choqok"
+msgstr ""
+
+#. i18n: ectx: attribute (title), widget (QWidget, authTab)
+#: plugins/uploaders/flickr/flickrprefs.ui:24
+#, fuzzy, kde-format
+#| msgid "Authentication error."
+msgid "Authorization"
+msgstr "Autentifikacijska greška."
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: plugins/uploaders/flickr/flickrprefs.ui:51
+#, kde-format
+msgid ""
+"Click the below button; if everything goes well, you will pointed to Flickr."
+"com website to allow access to Choqok."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, authButton)
+#: plugins/uploaders/flickr/flickrprefs.ui:61
+#, kde-format
+msgid "Click here to authorize Choqok on Flickr.com"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: plugins/uploaders/flickr/flickrprefs.ui:90
+#, kde-format
+msgid "Who can view photo"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_forprivate)
+#: plugins/uploaders/flickr/flickrprefs.ui:96
+#, kde-format
+msgid "Private"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_forfriends)
+#: plugins/uploaders/flickr/flickrprefs.ui:105
+#, kde-format
+msgid "Visible for friends"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_forfamily)
+#: plugins/uploaders/flickr/flickrprefs.ui:112
+#, kde-format
+msgid "Visible for family"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: plugins/uploaders/flickr/flickrprefs.ui:134
+#, kde-format
+msgid "Set safety level"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_safe)
+#: plugins/uploaders/flickr/flickrprefs.ui:140
+#, kde-format
+msgid "Safe"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_moderate)
+#: plugins/uploaders/flickr/flickrprefs.ui:150
+#, kde-format
+msgid "Moderate"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_restricted)
+#: plugins/uploaders/flickr/flickrprefs.ui:157
+#, fuzzy, kde-format
+#| msgid "Restore"
+msgid "Restricted"
+msgstr "Vrati"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_hidefromsearch)
+#: plugins/uploaders/flickr/flickrprefs.ui:169
+#, kde-format
+msgid "Hide picture from public search"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_shorturl)
+#: plugins/uploaders/flickr/flickrprefs.ui:176
+#, kde-format
+msgid "Use Flic.kr to short URLs"
+msgstr ""
+
+#: plugins/uploaders/imageshack/imageshack.cpp:37
+#, kde-format
+msgid "Just supporting image uploading"
+msgstr ""
+
+#: plugins/uploaders/mobypicture/mobypicture.cpp:46
+#: plugins/uploaders/posterous/posterous.cpp:101
+#: plugins/uploaders/twitgoo/twitgoo.cpp:44
+#: plugins/uploaders/twitpic/twitpic.cpp:42
+#, fuzzy, kde-format
+#| msgid "There is no account with alias %1."
+msgid "There is no Twitter account configured to use."
+msgstr "Ne postoji račun s aliasom %1."
+
+#: plugins/uploaders/mobypicture/mobypictureconfig.cpp:76
+#: plugins/uploaders/posterous/posterousconfig.cpp:77
+#: plugins/uploaders/twitgoo/twitgooconfig.cpp:66
+#: plugins/uploaders/twitpic/twitpicconfig.cpp:62
+#, kde-format
+msgid "You have to configure at least one Twitter account to use this plugin."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_oauth)
+#: plugins/uploaders/mobypicture/mobypictureprefs.ui:40
+#: plugins/uploaders/posterous/posterousprefs.ui:40
+#, fuzzy, kde-format
+#| msgid "Twitter Account"
+msgid "&Twitter account"
+msgstr "Račun na Twitteru"
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_basic)
+#: plugins/uploaders/mobypicture/mobypictureprefs.ui:47
+#, kde-format
+msgid "Mobypicture &login and password:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: plugins/uploaders/mobypicture/mobypictureprefs.ui:57
+#: plugins/uploaders/posterous/posterousprefs.ui:57
+#, kde-format
+msgid "Upload files using:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/uploaders/mobypicture/mobypictureprefs.ui:64
+#, fuzzy, kde-format
+#| msgid "Bit.ly Login:"
+msgid "Login:"
+msgstr "Bit.ly prijava:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: plugins/uploaders/mobypicture/mobypictureprefs.ui:74
+#, fuzzy, kde-format
+#| msgid "&Password:"
+msgid "Password (PIN):"
+msgstr "Za&porka:"
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_basic)
+#: plugins/uploaders/posterous/posterousprefs.ui:47
+#, kde-format
+msgid "Posterous &login and password:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/uploaders/posterous/posterousprefs.ui:64
+#, kde-format
+msgid "E-mail:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/uploaders/twitgoo/twitgooprefs.ui:17
+#: plugins/uploaders/twitpic/twitpicprefs.ui:17
+#, fuzzy, kde-format
+#| msgid "Twitter Account"
+msgid "Twitter account:"
+msgstr "Račun na Twitteru"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_directLink)
+#: plugins/uploaders/twitgoo/twitgooprefs.ui:50
+#, kde-format
+msgid "Get direct link to file"
+msgstr ""
+
+#, fuzzy
+#~| msgid "Favorite creation failed. %1"
+#~ msgid "Translation failed: %1"
+#~ msgstr "Neuspješno stvaranje favorita. %1"
+
+#, fuzzy
+#~| msgid "Configuration"
+#~ msgid "Configure Translator"
+#~ msgstr "Konfiguracija"
+
+#, fuzzy
+#~| msgid "Error"
+#~ msgid "No Error"
+#~ msgstr "Greška"
+
+#, fuzzy
+#~| msgid "Unknown error."
+#~ msgid "Unknown Error"
+#~ msgstr "Nepoznata greška."
+
+#~ msgid "Include in Quick Post"
+#~ msgstr "Uključi u brzoj objavi"
+
+#, fuzzy
+#~| msgid "Next"
+#~ msgid "&Text:"
+#~ msgstr "Sljedeći"
+
+#~ msgid "Author and Core Developer"
+#~ msgstr "Autor i glavni razvijatelj"
+
+#, fuzzy
+#~| msgid "Timelines"
+#~ msgctxt "Close a timeline"
+#~ msgid "Close Timeline"
+#~ msgstr "Vremenske linije"
+
+#~ msgid "The download failed. The returned file is corrupted."
+#~ msgstr "Neuspješno preuzimanje. Vraćena datoteka je pokvarena."
+
+#, fuzzy
+#~| msgid "Authentication error."
+#~ msgid "Authentication Error"
+#~ msgstr "Autentifikacijska greška."
+
+#, fuzzy
+#~| msgid "Shorten &URLs on paste"
+#~ msgid "Shorten Url on Paste"
+#~ msgstr "Skrati &URL-ove kada zalijepiš"
+
+#, fuzzy
+#~| msgid "Malformed response"
+#~ msgid "Malformed response\n"
+#~ msgstr "Izobličen odgovor"
+
+#, fuzzy
+#~| msgid "Enable Notifications"
+#~ msgid "Ignore notifications"
+#~ msgstr "Omogući obavijesti"
+
+#~ msgid "StatusNet server:"
+#~ msgstr "Poslužitelj StatusNeta:"
+
+#, fuzzy
+#~| msgid "Authentication failed"
+#~ msgid "Authentication Type:"
+#~ msgstr "Neuspjela autentifikacija"
+
+#~ msgid "&Username:"
+#~ msgstr "&Korisničko ime:"
+
+#~ msgid "&Password:"
+#~ msgstr "Za&porka:"
+
+#, fuzzy
+#~| msgid "Authentication failed"
+#~ msgid "OAuth Authentication "
+#~ msgstr "Neuspjela autentifikacija"
+
+#, fuzzy
+#~| msgid "Page Number"
+#~ msgid "PIN number"
+#~ msgstr "Broj stranice"
+
+#, fuzzy
+#~| msgid "Icon designer"
+#~ msgid "Graphic designer"
+#~ msgstr "Dizajner ikona"
+
+#~ msgctxt "Close a search timeline"
+#~ msgid "Close Search"
+#~ msgstr "Zatvori pretraživanje"
+
+#, fuzzy
+#~| msgctxt "Close a search timeline"
+#~| msgid "Close Search"
+#~ msgid "Close All Search Tabs"
+#~ msgstr "Zatvori pretraživanje"
+
+#~ msgid "Unrecognized result."
+#~ msgstr "Neprepoznan rezultat."
+
+#, fuzzy
+#~| msgid "Twitter Account"
+#~ msgid "Twitter username:"
+#~ msgstr "Račun na Twitteru"
+
+#, fuzzy
+#~| msgid ""
+#~| "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/"
+#~| "TR/REC-html40/strict.dtd\">\n"
+#~| "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~| "css\">\n"
+#~| "p, li { white-space: pre-wrap; }\n"
+#~| "</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; "
+#~| "font-weight:400; font-style:normal;\">\n"
+#~| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+#~| "size:8pt; font-weight:600;\">Note:</span><span style=\" font-size:8pt;"
+#~| "\"> The alias must be unique.</span></p></body></html>"
+#~ msgid ""
+#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+#~ "REC-html40/strict.dtd\">\n"
+#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~ "css\">\n"
+#~ "p, li { white-space: pre-wrap; }\n"
+#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; "
+#~ "font-weight:400; font-style:normal;\">\n"
+#~ "<p align=\"justify\" style=\" margin-top:0px; margin-bottom:0px; margin-"
+#~ "left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Click "
+#~ "on \"<span style=\" font-style:italic;\">Authorize Choqok</span>\" "
+#~ "button, If everything goes well, you'll pointed to Twitter website to "
+#~ "allow access to Choqok.</p></body></html>"
+#~ msgstr ""
+#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+#~ "REC-html40/strict.dtd\">\n"
+#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~ "css\">\n"
+#~ "p, li { white-space: pre-wrap; }\n"
+#~ "</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; "
+#~ "font-weight:400; font-style:normal;\">\n"
+#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+#~ "size:8pt; font-weight:600;\">Napomena:</span><span style=\" font-size:8pt;"
+#~ "\"> Alias mora biti jedinstven.</span></p></body></html>"
+
+#, fuzzy
+#~| msgid ""
+#~| "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/"
+#~| "TR/REC-html40/strict.dtd\">\n"
+#~| "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~| "css\">\n"
+#~| "p, li { white-space: pre-wrap; }\n"
+#~| "</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; "
+#~| "font-weight:400; font-style:normal;\">\n"
+#~| "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+#~| "size:8pt; font-weight:600;\">Note:</span><span style=\" font-size:8pt;"
+#~| "\"> The alias must be unique.</span></p></body></html>"
+#~ msgid ""
+#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+#~ "REC-html40/strict.dtd\">\n"
+#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~ "css\">\n"
+#~ "p, li { white-space: pre-wrap; }\n"
+#~ "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; "
+#~ "font-weight:400; font-style:normal;\">\n"
+#~ "<p align=\"justify\" style=\" margin-top:0px; margin-bottom:0px; margin-"
+#~ "left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Click "
+#~ "on \"<span style=\" font-style:italic;\">Authorize Choqok</span>\" "
+#~ "button, If everything goes well, you'll pointed to Identi.ca website to "
+#~ "allow access to Choqok.</p></body></html>"
+#~ msgstr ""
+#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+#~ "REC-html40/strict.dtd\">\n"
+#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~ "css\">\n"
+#~ "p, li { white-space: pre-wrap; }\n"
+#~ "</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; "
+#~ "font-weight:400; font-style:normal;\">\n"
+#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+#~ "size:8pt; font-weight:600;\">Napomena:</span><span style=\" font-size:8pt;"
+#~ "\"> Alias mora biti jedinstven.</span></p></body></html>"
+
+#~ msgid "The password associated to your username for the service"
+#~ msgstr "Zaporka vezana uz vaše korisničko ime za servis"
+
+#~ msgid "Use secure connection (HTTPS)"
+#~ msgstr "Koristi sigurnu vezu (HTTPS)"
+
+#~ msgid "Registration"
+#~ msgstr "Registracija"
+
+#~ msgid ""
+#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+#~ "REC-html40/strict.dtd\">\n"
+#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~ "css\">\n"
+#~ "p, li { white-space: pre-wrap; }\n"
+#~ "</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; "
+#~ "font-weight:400; font-style:normal;\">\n"
+#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">To connect to the "
+#~ "Twitter network, you will need a Twitter account.<br /><br />If you do "
+#~ "not currently have an account, please click the button to create one.</"
+#~ "p></body></html>"
+#~ msgstr ""
+#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+#~ "REC-html40/strict.dtd\">\n"
+#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~ "css\">\n"
+#~ "p, li { white-space: pre-wrap; }\n"
+#~ "</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; "
+#~ "font-weight:400; font-style:normal;\">\n"
+#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\">Potreban vam je "
+#~ "korisnički račun na Twitteru kako bi se spojili na Twitterovu mrežu.<br /"
+#~ "><br />Ukoliko trenutno nemate račun, kliknite na gumb kako biste ga "
+#~ "otvorili.</p></body></html>"
+
+#~ msgid "Register a new account on this network."
+#~ msgstr "Registriraj novi račun na ovoj mreži."
+
+#~ msgid "Register &New Account"
+#~ msgstr "Registriraj &novi račun"
+
+#~ msgid ""
+#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+#~ "REC-html40/strict.dtd\">\n"
+#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~ "css\">\n"
+#~ "p, li { white-space: pre-wrap; }\n"
+#~ "</style></head><body style=\" font-family:'Liberation Sans'; font-"
+#~ "size:9pt; font-weight:400; font-style:normal;\">\n"
+#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+#~ "family:'DejaVu Sans'; font-weight:600;\">Note:</span></p>\n"
+#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+#~ "family:'DejaVu Sans';\">If you only have an OpenID login, you cannot use "
+#~ "the API directly. You first have to add a password to your account using "
+#~ "the control panel on </span><a href=\"https://identi.ca/\"><span style=\" "
+#~ "text-decoration: underline; color:#0000ff;\">identi.ca</span></a><span "
+#~ "style=\" font-family:'DejaVu Sans';\">.</span></p></body></html>"
+#~ msgstr ""
+#~ "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+#~ "REC-html40/strict.dtd\">\n"
+#~ "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+#~ "css\">\n"
+#~ "p, li { white-space: pre-wrap; }\n"
+#~ "</style></head><body style=\" font-family:'Liberation Sans'; font-"
+#~ "size:9pt; font-weight:400; font-style:normal;\">\n"
+#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+#~ "family:'DejaVu Sans'; font-weight:600;\">Napomena:</span></p>\n"
+#~ "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#~ "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+#~ "family:'DejaVu Sans';\">Ukoliko imate samo OpenID, ne možete izravno "
+#~ "koristiti API. Prvo trebate dodati zaporku na vašem računu koristeći "
+#~ "kontrolni panel na </span><a href=\"https://identi.ca/\"><span style=\" "
+#~ "text-decoration: underline; color:#0000ff;\">identi.ca</span></a><span "
+#~ "style=\" font-family:'DejaVu Sans';\">.</span></p></body></html>"
+
+#~ msgid "Your posts are blocked for %1."
+#~ msgstr "Vaše objave su blokirane za %1."
+
+#~ msgid "in reply to"
+#~ msgstr "U odgovoru za"
+
+#, fuzzy
+#~| msgid "Unrecognized result."
+#~ msgid "Unrecognised result."
+#~ msgstr "Neprepoznan rezultat."
+
+#~ msgid "Favorite removing failed, %1"
+#~ msgstr "Neuspješno uklanjanje favorita, %1"
+
+#~ msgid ""
+#~ "Changing accounts priority here, will cause effect after Choqok restart."
+#~ msgstr ""
+#~ "Ukoliko ovdje mijenjate prioritet računa, promjene će važiti nakon "
+#~ "ponovnog pokretanja Choqoka."
+
+#~ msgid "Load Twitpic images"
+#~ msgstr "Učitaj Twitpic-slike"

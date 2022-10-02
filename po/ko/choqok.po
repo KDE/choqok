@@ -1,0 +1,3670 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the choqok package.
+# Shinjo Park <kde@peremen.name>, 2020, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: choqok\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-18 00:44+0000\n"
+"PO-Revision-Date: 2022-05-07 02:00+0200\n"
+"Last-Translator: Shinjo Park <kde@peremen.name>\n"
+"Language-Team: Korean <kde-kr@kde.org>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 21.12.3\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "박신조"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde@peremen.name"
+
+#. i18n: ectx: Menu (file)
+#: choqok/choqokui.rc:4
+#, kde-format
+msgid "File"
+msgstr "파일"
+
+#. i18n: ectx: Menu (tools)
+#: choqok/choqokui.rc:11 plugins/filter/filterui.rc:4
+#: plugins/nowlistening/nowlisteningui.rc:4
+#: plugins/quickfilter/quickfilterui.rc:4
+#: plugins/searchaction/searchactionui.rc:4
+#, kde-format
+msgid "Tools"
+msgstr "도구"
+
+#. i18n: ectx: Menu (settings)
+#. i18n: ectx: attribute (title), widget (QWidget, settingsTab)
+#: choqok/choqokui.rc:15 plugins/uploaders/flickr/flickrprefs.ui:82
+#, kde-format
+msgid "Settings"
+msgstr "설정"
+
+#. i18n: ectx: Menu (help)
+#: choqok/choqokui.rc:20
+#, kde-format
+msgid "Help"
+msgstr "도움말"
+
+#: choqok/config/accounts/accountswidget.cpp:74
+#, kde-format
+msgid "Cannot load the %1 plugin. Please check your installation."
+msgstr "%1 플러그인을 불러올 수 없습니다. 설치 상태를 확인하십시오."
+
+#: choqok/config/accounts/accountswidget.cpp:90
+#, kde-format
+msgid "Cannot find the desired account."
+msgstr "계정을 찾을 수 없습니다."
+
+#: choqok/config/accounts/accountswidget.cpp:110
+#, kde-format
+msgid "Are you sure you want to remove the selected account?"
+msgstr "선택한 계정을 삭제하시겠습니까?"
+
+#: choqok/config/accounts/accountswidget.cpp:117
+#, kde-format
+msgid "Cannot remove the account."
+msgstr "계정을 삭제할 수 없습니다."
+
+#: choqok/config/accounts/accountswidget.cpp:238
+#, kde-format
+msgid "Select Micro-Blogging Service"
+msgstr "마이크로블로그 서비스 선택"
+
+#: choqok/config/accounts/accountswidget.cpp:298
+#, kde-format
+msgid ""
+"You need to restart Choqok for the accounts priority changes to take effect."
+msgstr "계정 우선 순위 변경 사항을 적용하려면 Choqok을 다시 시작해야 합니다."
+
+#. i18n: ectx: property (windowTitle), widget (QWidget, AccountsWidgetBase)
+#: choqok/config/accounts/accountswidget_base.ui:14
+#: choqok/config/accounts/addaccountdialog.cpp:29
+#, kde-format
+msgid "Add New Account"
+msgstr "새 계정 추가"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnAdd)
+#: choqok/config/accounts/accountswidget_base.ui:40
+#, kde-format
+msgid "Add a new account"
+msgstr "새 계정 추가"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnAdd)
+#: choqok/config/accounts/accountswidget_base.ui:43
+#, kde-format
+msgid "&Add..."
+msgstr "추가(&A)..."
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnEdit)
+#: choqok/config/accounts/accountswidget_base.ui:57
+#, kde-format
+msgid "Modify the selected account"
+msgstr "선택한 계정 수정"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnEdit)
+#: choqok/config/accounts/accountswidget_base.ui:60
+#, kde-format
+msgid "&Modify..."
+msgstr "수정(&M)..."
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnRemove)
+#: choqok/config/accounts/accountswidget_base.ui:74
+#, kde-format
+msgid "Remove the selected account"
+msgstr "선택한 계정 삭제"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnRemove)
+#: choqok/config/accounts/accountswidget_base.ui:77
+#, kde-format
+msgid "&Remove"
+msgstr "삭제(&R)"
+
+#. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:162
+#, kde-format
+msgid "Alias"
+msgstr "별명"
+
+#. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:165
+#, kde-format
+msgid "An alias for the account"
+msgstr "계정의 별명"
+
+#. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:170
+#, kde-format
+msgid "Micro-Blog"
+msgstr "마이크로블로그"
+
+#. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:173
+#, kde-format
+msgid "The type of the account"
+msgstr "계정 형식"
+
+#. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:178
+#, kde-format
+msgid "Enabled"
+msgstr "사용함"
+
+#. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:181
+#, kde-format
+msgid "Whether the microblog is enabled or disabled"
+msgstr "마이크로블로그 사용 여부"
+
+#. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:186
+#, kde-format
+msgid "Read Only"
+msgstr "읽기 전용"
+
+#. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:189
+#, kde-format
+msgid "Read Only account"
+msgstr "읽기 전용 계정"
+
+#. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:194 choqok/mainwindow.cpp:196
+#: libchoqok/ui/quickpost.cpp:98
+#, kde-format
+msgid "Quick Post"
+msgstr "빠른 글쓰기"
+
+#. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
+#: choqok/config/accounts/accountswidget_base.ui:197
+#, kde-format
+msgid "Show in Quick Post"
+msgstr "빠른 글쓰기에 표시"
+
+#: choqok/config/accounts/addaccountdialog.cpp:54
+#, kde-format
+msgid "The Account registration failed."
+msgstr "계정 등록에 실패했습니다."
+
+#: choqok/config/accounts/addaccountdialog.cpp:62
+#: choqok/config/accounts/editaccountdialog.cpp:59
+#, kde-format
+msgid ""
+"Cannot validate your input information.\n"
+"Please check the fields' data.\n"
+"Maybe a required field is empty?"
+msgstr ""
+"입력 정보를 검증할 수 없습니다.\n"
+"필드 데이터를 확인하십시오.\n"
+"필수 필드가 비어 있을 수도 있습니다."
+
+#: choqok/config/accounts/editaccountdialog.cpp:31
+#, kde-format
+msgid "Edit Account"
+msgstr "계정 편집"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_isEmoticonsEnabled)
+#: choqok/config/appearance/appearanceconfig_base.ui:17
+#, kde-format
+msgid "Enable emoticons"
+msgstr "이모티콘 활성화"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useReverseOrder)
+#: choqok/config/appearance/appearanceconfig_base.ui:24
+#, kde-format
+msgid "Show posts in reverse order (Needs restart to take effect)"
+msgstr "글을 역순으로 표시(다시 시작해야 함)"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showRetweetsInChoqokWay)
+#: choqok/config/appearance/appearanceconfig_base.ui:31
+#, kde-format
+msgid ""
+"You will see post with retweeter name as author, plus Retweeted from "
+"original author note."
+msgstr ""
+"리트윗한 계정 이름을 작성자 이름으로 표시하고, 원본 트윗의 리트윗임을 표시합"
+"니다."
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_showRetweetsInChoqokWay)
+#: choqok/config/appearance/appearanceconfig_base.ui:34
+#, kde-format
+msgid "Show Retweeted/Repeated posts in Choqok way"
+msgstr "리트윗/반복된 글을 Choqok 형식으로 표시"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_isCustomUi)
+#: choqok/config/appearance/appearanceconfig_base.ui:44
+#, kde-format
+msgid "Use custom appearance"
+msgstr "사용자 정의 모양 사용"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: choqok/config/appearance/appearanceconfig_base.ui:76
+#, kde-format
+msgid "Post font:"
+msgstr "글 글꼴:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: choqok/config/appearance/appearanceconfig_base.ui:95
+#, kde-format
+msgid "Post Color Preferences"
+msgstr "글 색상 설정"
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: choqok/config/appearance/appearanceconfig_base.ui:103
+#, kde-format
+msgid "Background"
+msgstr "배경색"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: choqok/config/appearance/appearanceconfig_base.ui:113
+#, kde-format
+msgid "Default color:"
+msgstr "기본 색:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: choqok/config/appearance/appearanceconfig_base.ui:150
+#, kde-format
+msgid "Unread post color:"
+msgstr "읽지 않은 글 색:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: choqok/config/appearance/appearanceconfig_base.ui:194
+#, kde-format
+msgid "Foreground"
+msgstr "글자색"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: choqok/config/appearance/appearanceconfig_base.ui:204
+#, kde-format
+msgid "Own post color:"
+msgstr "내 글 색상:"
+
+#: choqok/config/behavior/behaviorconfig.cpp:57
+#, kde-format
+msgid "&General"
+msgstr "일반(&G)"
+
+#: choqok/config/behavior/behaviorconfig.cpp:64
+#, kde-format
+msgid "&Notifications"
+msgstr "알림(&N)"
+
+#: choqok/config/behavior/behaviorconfig.cpp:75
+#, kde-format
+msgid "URL &Shortening"
+msgstr "URL 단축(&S)"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: choqok/config/behavior/behaviorconfig_general.ui:17
+#, kde-format
+msgid "General Options"
+msgstr "일반 옵션"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_showSplashScreen)
+#: choqok/config/behavior/behaviorconfig_general.ui:23
+#, kde-format
+msgid "Show splash-screen on startup"
+msgstr "시작할 때 시작 화면 표시"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_markAllAsReadOnExit)
+#: choqok/config/behavior/behaviorconfig_general.ui:33
+#, kde-format
+msgid "Mark all posts as read on exit"
+msgstr "끝낼 때 모든 글을 읽은 것으로 표시"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_enableSpellChecker)
+#: choqok/config/behavior/behaviorconfig_general.ui:43
+#, kde-format
+msgid "Enable automatic spellchecking in the message editor"
+msgstr "메시지 편집기에서 자동 맞춤법 검사 사용"
+
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_enableSysTray)
+#: choqok/config/behavior/behaviorconfig_general.ui:50
+#, kde-format
+msgid "Enable System &Tray"
+msgstr "시스템 트레이 사용(&T)"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_markAllAsReadOnHideToSystray)
+#: choqok/config/behavior/behaviorconfig_general.ui:62
+#, kde-format
+msgid "Mark all unread posts as read, when hiding to system tray"
+msgstr "시스템 트레이에 숨길 때 읽지 않은 모든 글을 읽은 것으로 표시"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useCustomBrowser)
+#: choqok/config/behavior/behaviorconfig_general.ui:83
+#, kde-format
+msgid "Use &custom web browser:"
+msgstr "사용자 정의 웹 브라우저 사용(&B):"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useCustomRT)
+#: choqok/config/behavior/behaviorconfig_general.ui:101
+#, kde-format
+msgid "Use custom prefix for ReSend [ReTweet]:"
+msgstr "재전송 시 사용자 정의 접두사 사용 [리트윗]:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: choqok/config/behavior/behaviorconfig_general.ui:120
+#, kde-format
+msgid "Timelines Options"
+msgstr "타임라인 옵션"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: choqok/config/behavior/behaviorconfig_general.ui:130
+#, kde-format
+msgid "&Update interval:"
+msgstr "업데이트 주기(&U):"
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: choqok/config/behavior/behaviorconfig_general.ui:149
+#, kde-format
+msgid "&Number of posts to show in timelines:"
+msgstr "타임라인에 표시할 글 개수(&N):"
+
+#. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_updateInterval)
+#: choqok/config/behavior/behaviorconfig_general.ui:166
+#, kde-format
+msgid "Disabled"
+msgstr "사용 안 함"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_updateInterval)
+#: choqok/config/behavior/behaviorconfig_general.ui:169
+#, kde-format
+msgid " minutes"
+msgstr "분"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_showAllNotifiesInOne)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:17
+#, kde-format
+msgid "&Show all new posts in one notification"
+msgstr "알림 하나에 모든 새 글 표시(&C)"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:26
+#, kde-format
+msgid "&Notification duration:"
+msgstr "알림 시간(&N):"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_notifyInterval)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:39
+#, kde-format
+msgid " seconds"
+msgstr "초"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:57
+#, kde-format
+msgid "New post notifications"
+msgstr "새로운 글 알림"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_knotify)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:63
+#, kde-format
+msgid "Show notification using KNotify"
+msgstr "KNotify를 사용하여 알림 표시"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_libindicate)
+#: choqok/config/behavior/behaviorconfig_notifications.ui:70
+#, kde-format
+msgid "Show notification using Message Indicator"
+msgstr "메시지 표시기를 사용하여 알림 표시"
+
+#: choqok/config/behavior/behaviorconfig_shorten.cpp:71
+#, kde-format
+msgctxt "No shortener service"
+msgid "None"
+msgstr "없음"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_shortenOnPaste)
+#: choqok/config/behavior/behaviorconfig_shorten_base.ui:17
+#, kde-format
+msgid "Shorten &URLs on paste"
+msgstr "붙여넣을 때 URL 단축(&U)"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_removeHttp)
+#: choqok/config/behavior/behaviorconfig_shorten_base.ui:24
+#, kde-format
+msgid "Remove \"http://\" from shortened URLs"
+msgstr "단축 URL에서 \"http://\" 삭제"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: choqok/config/behavior/behaviorconfig_shorten_base.ui:33
+#, kde-format
+msgid "Shortening ser&vice:"
+msgstr "단축 서비스(&V):"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, configPlugin)
+#: choqok/config/behavior/behaviorconfig_shorten_base.ui:56
+#: libchoqok/ui/uploadmedia_base.ui:71
+#, kde-format
+msgid "Configure plugin"
+msgstr "플러그인 설정(&P)"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, aboutPlugin)
+#: choqok/config/behavior/behaviorconfig_shorten_base.ui:72
+#: libchoqok/ui/uploadmedia_base.ui:90
+#, kde-format
+msgid "About plugin"
+msgstr "플러그인 정보"
+
+#: choqok/config/plugins/choqokpluginconfig.cpp:39
+#, kde-format
+msgid "General Plugins"
+msgstr "일반 플러그인"
+
+#: choqok/main.cpp:28
+#, kde-format
+msgid "KDE Micro-Blogging Client."
+msgstr "KDE 마이크로블로그 클라이언트."
+
+#: choqok/main.cpp:29
+#, kde-format
+msgid ""
+"(C) 2008-2010 Mehrdad Momeny\n"
+"(C) 2011-2019 Choqok Developers"
+msgstr ""
+"(C) 2008-2010 Mehrdad Momeny\n"
+"(C) 2011-2019 Choqok Developers"
+
+#: choqok/main.cpp:35
+#, kde-format
+msgid "Mehrdad Momeny"
+msgstr "Mehrdad Momeny"
+
+#: choqok/main.cpp:35
+#, kde-format
+msgid "Author, Developer and Maintainer"
+msgstr "작성자, 개발자 및 관리자"
+
+#: choqok/main.cpp:37
+#, kde-format
+msgid "Andrea Scarpino"
+msgstr "Andrea Scarpino"
+
+#: choqok/main.cpp:37
+#, kde-format
+msgid "Developer and Maintainer"
+msgstr "개발자, 관리자"
+
+#: choqok/main.cpp:39
+#, kde-format
+msgid "Andrey Esin"
+msgstr "Andrey Esin"
+
+#: choqok/main.cpp:39 choqok/main.cpp:46
+#, kde-format
+msgid "Developer"
+msgstr "개발자"
+
+#: choqok/main.cpp:42
+#, kde-format
+msgid "Roozbeh Shafiee"
+msgstr "Roozbeh Shafiee"
+
+#: choqok/main.cpp:42 choqok/main.cpp:43
+#, kde-format
+msgid "Artworks"
+msgstr "아트워크"
+
+#: choqok/main.cpp:43
+#, kde-format
+msgid "Shahrzad Shojaei"
+msgstr "Shahrzad Shojaei"
+
+#: choqok/main.cpp:44
+#, kde-format
+msgid "Daniel Schaal"
+msgstr "Daniel Schaal"
+
+#: choqok/main.cpp:44 choqok/main.cpp:51
+#, kde-format
+msgid "UI improvements"
+msgstr "UI 개선"
+
+#: choqok/main.cpp:45
+#, kde-format
+msgid "Stephen Henderson"
+msgstr "Stephen Henderson"
+
+#: choqok/main.cpp:45
+#, kde-format
+msgid "Search API implementation"
+msgstr "검색 API 구현"
+
+#: choqok/main.cpp:46
+#, kde-format
+msgid "Tejas Dinkar"
+msgstr "Tejas Dinkar"
+
+#: choqok/main.cpp:48
+#, kde-format
+msgid "Emanuele Bigiarini"
+msgstr "Emanuele Bigiarini"
+
+#: choqok/main.cpp:48
+#, kde-format
+msgid "D-Bus and Konqueror plugin"
+msgstr "D-Bus 및 Konqueror 플러그인"
+
+#: choqok/main.cpp:49
+#, kde-format
+msgid "Alex Infantes"
+msgstr "Alex Infantes"
+
+#: choqok/main.cpp:49
+#, kde-format
+msgid "Improvements on Image preview plugin"
+msgstr "이미지 미리 보기 플러그인 개선"
+
+#: choqok/main.cpp:51
+#, kde-format
+msgid "Bardia Daneshvar"
+msgstr "Bardia Daneshvar"
+
+#: choqok/main.cpp:52
+#, kde-format
+msgid "Atanas Gospodinov"
+msgstr "Atanas Gospodinov"
+
+#: choqok/main.cpp:52
+#, kde-format
+msgid "Twitter photo upload"
+msgstr "트위터 사진 업로드"
+
+#: choqok/main.cpp:53
+#, kde-format
+msgid "Daniel Kreuter"
+msgstr "Daniel Kreuter"
+
+#: choqok/main.cpp:53
+#, kde-format
+msgid "Twitter microblog developer"
+msgstr "트위터 마이크로블로그 개발자"
+
+#: choqok/main.cpp:54
+#, kde-format
+msgid "Lim Yuen Hoe"
+msgstr "Lim Yuen Hoe"
+
+#: choqok/main.cpp:54
+#, kde-format
+msgid "Bug fixes and improvements"
+msgstr "버그 수정과 개선"
+
+#: choqok/main.cpp:55
+#, kde-format
+msgid "Ahmed I. Khalil"
+msgstr "Ahmed I. Khalil"
+
+#: choqok/main.cpp:55
+#, kde-format
+msgid "Various improvements"
+msgstr "다양한 개선"
+
+#: choqok/mainwindow.cpp:56 choqok/mainwindow.cpp:517 choqok/mainwindow.cpp:581
+#: choqok/mainwindow.cpp:636 choqok/systrayicon.cpp:99
+#: choqok/systrayicon.cpp:105 plugins/betternotify/dummynotification.cpp:34
+#: plugins/konqueror/konqchoqok.cpp:30
+#, kde-format
+msgid "Choqok"
+msgstr "Choqok"
+
+#: choqok/mainwindow.cpp:190
+#, kde-format
+msgid "Update Timelines"
+msgstr "타임라인 업데이트"
+
+#: choqok/mainwindow.cpp:202
+#, kde-format
+msgid "Mark All As Read"
+msgstr "모두 읽은 것으로 표시"
+
+#: choqok/mainwindow.cpp:211
+#, kde-format
+msgctxt "@action"
+msgid "Minimize"
+msgstr "최소화"
+
+#: choqok/mainwindow.cpp:213
+#, kde-format
+msgctxt "@action"
+msgid "Restore"
+msgstr "복원"
+
+#: choqok/mainwindow.cpp:221
+#, kde-format
+msgid "Enable Update Timer"
+msgstr "업데이트 타이머 사용"
+
+#: choqok/mainwindow.cpp:227
+#, kde-format
+msgid "Enable Notifications"
+msgstr "알림 사용"
+
+#: choqok/mainwindow.cpp:233
+#, kde-format
+msgid "Hide Menubar"
+msgstr "메뉴 표시줄 숨기기"
+
+#: choqok/mainwindow.cpp:240
+#, kde-format
+msgid "Clear Avatar Cache"
+msgstr "아바타 캐시 지우기"
+
+#: choqok/mainwindow.cpp:242
+#, kde-format
+msgid "You have to restart Choqok to load avatars again"
+msgstr "아바타를 다시 불러오려면 Choqok을 다시 시작해야 합니다"
+
+#: choqok/mainwindow.cpp:247
+#, kde-format
+msgid "Upload Medium..."
+msgstr "미디어 업로드..."
+
+#: choqok/mainwindow.cpp:271
+#, kde-format
+msgid ""
+"No account created. You have to create an account before being able to make "
+"posts."
+msgstr ""
+"계정을 생성하지 않았습니다. 글을 작성하려면 먼저 계정을 만들어야 합니다."
+
+#: choqok/mainwindow.cpp:303
+#, kde-format
+msgid ""
+"In order to use Choqok you need an account at one of the supported micro-"
+"blogging services.\n"
+"Would you like to add your account now?"
+msgstr ""
+"Choqok을 사용하려면 지원하는 마이크로블로그 서비스 계정이 필요합니다.\n"
+"지금 계정을 추가하시겠습니까?"
+
+#: choqok/mainwindow.cpp:515
+#, kde-format
+msgid "Choqok (%1)"
+msgstr "Choqok(%1)"
+
+#: choqok/mainwindow.cpp:570
+#, kde-format
+msgid "Restore"
+msgstr "복원"
+
+#: choqok/mainwindow.cpp:576
+#, kde-format
+msgid "Minimize"
+msgstr "최소화"
+
+#: choqok/mainwindow.cpp:621
+#, kde-format
+msgid "Loading timelines..."
+msgstr "타임라인 불러오는 중..."
+
+#: choqok/systrayicon.cpp:99
+#, kde-format
+msgid "1 unread post"
+msgid_plural "%1 unread posts"
+msgstr[0] "읽지 않은 글 %1개"
+
+#: choqok/systrayicon.cpp:108
+#, kde-format
+msgid "Choqok - Disabled"
+msgstr "Choqok - 비활성화됨"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnAttach)
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:49
+#: libchoqok/ui/quickpost.cpp:75
+#: microblogs/mastodon/mastodoncomposerwidget.cpp:45
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:47
+#: microblogs/pumpio/pumpiomessagedialog.ui:90
+#: microblogs/twitter/twittercomposerwidget.cpp:58
+#, kde-format
+msgid "Attach a file"
+msgstr "파일 첨부"
+
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:87
+#: libchoqok/ui/composerwidget.cpp:124
+#: microblogs/mastodon/mastodoncomposerwidget.cpp:78
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:80
+#: microblogs/twitter/twittercomposerwidget.cpp:94
+#, kde-format
+msgid "Abort"
+msgstr "중지"
+
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:107
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:429
+#: microblogs/pumpio/pumpiomicroblog.cpp:683
+#: microblogs/twitter/twittercomposerwidget.cpp:114
+#, kde-format
+msgid "New post for account %1 submitted successfully"
+msgstr "%1 계정에 새 글을 올림"
+
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:121
+#: microblogs/mastodon/mastodoncomposerwidget.cpp:125
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:127
+#: microblogs/pumpio/pumpiomessagedialog.cpp:169
+#: microblogs/twitter/twittercomposerwidget.cpp:127
+#, kde-format
+msgid "Select Media to Upload"
+msgstr "업로드할 미디어 선택"
+
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:132
+#: microblogs/mastodon/mastodoncomposerwidget.cpp:136
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:138
+#: microblogs/pumpio/pumpiomessagedialog.cpp:180
+#: microblogs/twitter/twittercomposerwidget.cpp:138
+#, kde-format
+msgid "Discard Attachment"
+msgstr "첨부 파일 삭제"
+
+#: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:139
+#: microblogs/mastodon/mastodoncomposerwidget.cpp:143
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:145
+#: microblogs/pumpio/pumpiomessagedialog.cpp:187
+#: microblogs/twitter/twittercomposerwidget.cpp:145
+#, kde-format
+msgid "Attaching <b>%1</b>"
+msgstr "<b>%1</b> 첨부 중"
+
+#: helperlibs/gnusocialapihelper/gnusocialapiconversationtimelinewidget.cpp:22
+#, kde-format
+msgid "Conversation %1"
+msgstr "대화 %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapiconversationtimelinewidget.cpp:24
+#: helperlibs/twitterapihelper/twitterapidmessagedialog.cpp:126
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:302
+#: microblogs/mastodon/mastodondmessagedialog.cpp:126
+#, kde-format
+msgid "Please wait..."
+msgstr "기다려 주십시오..."
+
+#: helperlibs/gnusocialapihelper/gnusocialapiconversationtimelinewidget.cpp:52
+#: helperlibs/twitterapihelper/twitterapishowthread.cpp:37
+#, kde-format
+msgid "Conversation"
+msgstr "대화"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:47
+#: microblogs/laconica/laconicamicroblog.cpp:25
+#, kde-format
+msgctxt "Timeline name"
+msgid "Repeated"
+msgstr "반복됨"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:48
+#: microblogs/laconica/laconicamicroblog.cpp:26
+#, kde-format
+msgctxt "Timeline description"
+msgid "Your posts that were repeated by others"
+msgstr "다른 사람이 반복한 글"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:184
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:192
+#: libchoqok/mediamanager.cpp:174 libchoqok/mediamanager.cpp:181
+#: microblogs/twitter/twittermicroblog.cpp:144
+#: microblogs/twitter/twittermicroblog.cpp:152
+#, kde-format
+msgid "Uploading medium failed: cannot read the medium file."
+msgstr "미디어 업로드 실패: 미디어 파일을 읽을 수 없습니다."
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:237
+#, kde-format
+msgid "Repeat of %1"
+msgstr "%1의 반복"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:239
+#, kde-format
+msgid "Repeated by %1"
+msgstr "%1 님이 반복함"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:245
+#, kde-format
+msgid "Repeat this notice?"
+msgstr "이 알림을 반복하시겠습니까?"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:270
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1488
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1514
+#, kde-format
+msgid ""
+"Retrieving the friends list failed. The data returned from the server is "
+"corrupted."
+msgstr ""
+"친구 목록을 검색할 수 없습니다. 서버에서 반환된 데이터가 손상되었습니다."
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:329
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:742
+#, kde-format
+msgid ""
+"Friends list for account %1 could not be updated:\n"
+"%2"
+msgstr ""
+"%1 계정의 친구 목록을 업데이트할 수 없음:\n"
+"%2"
+
+#: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:393
+#, kde-format
+msgid "Fetching conversation failed. %1"
+msgstr "대화를 가져올 수 없습니다. %1"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:73
+#: microblogs/twitter/twitterpostwidget.cpp:62
+#, kde-format
+msgid "Manual ReSend"
+msgstr "수동 재전송"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:75
+#, kde-format
+msgid "Repeat"
+msgstr "반복"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:76
+#, kde-format
+msgid "Repeat post using API"
+msgstr "API를 사용하여 글 반복"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:140
+#, kde-format
+msgid "Search for %1"
+msgstr "%1 검색"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:142
+#, kde-format
+msgid "Open tag page in browser"
+msgstr "브라우저에서 태그 페이지 열기"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:158
+#, kde-format
+msgid "Show latest group posts"
+msgstr "최신 그룹 글 표시"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:160
+#, kde-format
+msgid "Open group page in browser"
+msgstr "브라우저에서 그룹 페이지 열기"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:177
+#: microblogs/twitter/twitterpostwidget.cpp:129
+#, kde-format
+msgctxt "Who is user"
+msgid "Who is %1"
+msgstr "%1 님의 정보"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:179
+#: microblogs/twitter/twitterpostwidget.cpp:131
+#, kde-format
+msgctxt "Posts from user"
+msgid "Posts from %1"
+msgstr "%1 님의 글"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:181
+#: microblogs/twitter/twitterpostwidget.cpp:133
+#, kde-format
+msgctxt "Replies to user"
+msgid "Replies to %1"
+msgstr "%1 님에게 보낸 답글"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:185
+#: microblogs/twitter/twitterpostwidget.cpp:141
+#, kde-format
+msgctxt "Open profile page in browser"
+msgid "Open profile in browser"
+msgstr "브라우저에서 프로필 열기"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:202
+#: microblogs/twitter/twitterpostwidget.cpp:158
+#, kde-format
+msgid "Actions"
+msgstr "동작"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:203
+#: microblogs/twitter/twitterpostwidget.cpp:159
+#, kde-format
+msgctxt "Write a message to user attention"
+msgid "Write to %1"
+msgstr "%1 님에게 쓰기"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:208
+#: microblogs/twitter/twitterpostwidget.cpp:165
+#, kde-format
+msgctxt "Send direct message to user"
+msgid "Send private message to %1"
+msgstr "%1 님에게 개인 메시지 보내기"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:214
+#, kde-format
+msgctxt "Unsubscribe from user"
+msgid "Unsubscribe from %1"
+msgstr "%1 님 구독 해제"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:219
+#, kde-format
+msgctxt "Subscribe to user"
+msgid "Subscribe to %1"
+msgstr "%1 님 구독"
+
+#: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:223
+#: microblogs/twitter/twitterpostwidget.cpp:180
+#, kde-format
+msgctxt "Block user"
+msgid "Block %1"
+msgstr "%1 님 차단"
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:31
+#, kde-format
+msgctxt "Dents are Identica posts"
+msgid "Dents Including This Hashtag"
+msgstr "이 해시태그가 있는 덴트"
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:34
+#, kde-format
+msgctxt "Dents are Identica posts"
+msgid "Dents Including This Group"
+msgstr "이 그룹이 있는 덴트"
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:37
+#, kde-format
+msgctxt "Dents are Identica posts"
+msgid "Dents From This User"
+msgstr "이 사용자의 덴트"
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:40
+#, kde-format
+msgctxt "Dents are Identica posts"
+msgid "Dents To This User"
+msgstr "이 사용자에게 보낸 덴트"
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:128
+#: microblogs/twitter/twittersearch.cpp:115
+#, kde-format
+msgid "Unable to fetch search results."
+msgstr "검색 결과를 가져올 수 없습니다."
+
+#: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:136
+#: microblogs/twitter/twittersearch.cpp:123
+#, kde-format
+msgid "Unable to fetch search results: %1"
+msgstr "검색 결과를 가져올 수 없습니다: %1"
+
+#: helperlibs/twitterapihelper/twitterapidmessagedialog.cpp:45
+#: microblogs/mastodon/mastodondmessagedialog.cpp:45
+#, kde-format
+msgid "Send Private Message"
+msgstr "개인 메시지 보내기"
+
+#: helperlibs/twitterapihelper/twitterapidmessagedialog.cpp:69
+#: microblogs/mastodon/mastodondmessagedialog.cpp:69
+#, kde-format
+msgctxt "Send message to"
+msgid "To:"
+msgstr "받는 사람:"
+
+#: helperlibs/twitterapihelper/twitterapidmessagedialog.cpp:74
+#: microblogs/mastodon/mastodondmessagedialog.cpp:74
+#, kde-format
+msgid "Reload friends list"
+msgstr "친구 목록 새로 고침"
+
+#: helperlibs/twitterapihelper/twitterapidmessagedialog.cpp:96
+#: microblogs/mastodon/mastodondmessagedialog.cpp:96
+#, kde-format
+msgctxt "Send private message"
+msgid "Send"
+msgstr "보내기"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:86
+#: microblogs/mastodon/mastodonmicroblog.cpp:399
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Home"
+msgstr "홈"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:87
+#, kde-format
+msgctxt "Timeline description"
+msgid "You and your friends"
+msgstr "나와 내 친구"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:92
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Reply"
+msgstr "답글"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:93
+#, kde-format
+msgctxt "Timeline description"
+msgid "Replies to you"
+msgstr "내가 받은 답글"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:98
+#: microblogs/pumpio/pumpiomicroblog.cpp:1265
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Inbox"
+msgstr "받은 편지함"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:99
+#, kde-format
+msgctxt "Timeline description"
+msgid "Your incoming private messages"
+msgstr "내가 받은 개인 메시지"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:104
+#: microblogs/pumpio/pumpiomicroblog.cpp:1272
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Outbox"
+msgstr "보낸 편지함"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:105
+#, kde-format
+msgctxt "Timeline description"
+msgid "Private messages you have sent"
+msgstr "내가 보낸 개인 메시지"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:110
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Favorite"
+msgstr "책갈피"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:111
+#, kde-format
+msgctxt "Timeline description"
+msgid "Your favorites"
+msgstr "내 책갈피 목록"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:116
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Public"
+msgstr "공개"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:117
+#, kde-format
+msgctxt "Timeline description"
+msgid "Public timeline"
+msgstr "공개 타임라인"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:122
+#, kde-format
+msgctxt "Timeline Name"
+msgid "ReTweets"
+msgstr "리트윗"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:123
+#, kde-format
+msgctxt "Timeline description"
+msgid "Your posts that were ReTweeted by others"
+msgstr "다른 사람이 리트윗한 내 글"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:138
+#: microblogs/pumpio/pumpiomicroblog.cpp:107
+#, kde-format
+msgid "Send Private Message..."
+msgstr "개인 메시지 보내기..."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:143
+#: plugins/searchaction/searchaction.cpp:29
+#, kde-format
+msgid "Search..."
+msgstr "검색..."
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnReload)
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:148
+#: microblogs/pumpio/pumpiomessagedialog.ui:31
+#, kde-format
+msgid "Update Friends List"
+msgstr "친구 목록 업데이트"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:300
+#: microblogs/mastodon/mastodonmicroblog.cpp:101
+#: microblogs/pumpio/pumpiomicroblog.cpp:166
+#, kde-format
+msgid "Creating the new post failed. Text is empty."
+msgstr "새 글을 만들지 못했습니다. 텍스트가 비어 있습니다."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:410
+#, kde-format
+msgid "Creating the new post failed: %1"
+msgstr "새 글을 만들 수 없음: %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:421
+#, kde-format
+msgid "Creating the new post failed. The result data could not be parsed."
+msgstr "새 글을 만들지 못했습니다. 결과 데이터를 해석할 수 없습니다."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:425
+#, kde-format
+msgid "Creating the new post failed, with error: %1"
+msgstr "새 글을 만들지 못했습니다. 오류: %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:433
+#, kde-format
+msgid "Private message sent successfully"
+msgstr "개인 메시지를 전송함"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:501
+#, kde-format
+msgid "Fetching the new post failed. %1"
+msgstr "새 글을 가져올 수 없습니다. %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:511
+#, kde-format
+msgid "Fetching new post failed. The result data could not be parsed."
+msgstr "새 글을 가져올 수 없습니다. 결과 데이터를 해석할 수 없습니다."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:516
+#, kde-format
+msgid "Fetching new post failed, with error:%1"
+msgstr "새 글을 가져오지 못했습니다. 오류: %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:566
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:575
+#: microblogs/mastodon/mastodonmicroblog.cpp:788
+#: microblogs/pumpio/pumpiomicroblog.cpp:964
+#, kde-format
+msgid "Removing the post failed. %1"
+msgstr "글을 삭제하지 못했습니다. %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:619
+#, kde-format
+msgid "Favorite creation failed. %1"
+msgstr "책갈피에 추가할 수 없습니다. %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:671
+#, kde-format
+msgid "Removing the favorite failed. %1"
+msgstr "책갈피에서 삭제할 수 없습니다. %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:721
+#, kde-format
+msgid "Updating friends list for account %1..."
+msgstr "%1 계정의 친구 목록 업데이트 중..."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:757
+#, kde-format
+msgid "Friends list for account %1 has been updated."
+msgstr "%1 계정의 친구 목록을 업데이트했습니다."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:800
+#: microblogs/mastodon/mastodonmicroblog.cpp:845
+#, kde-format
+msgid "Updating followers list for account %1..."
+msgstr "%1 계정의 팔로워 목록 업데이트 중..."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:821
+#: microblogs/mastodon/mastodonmicroblog.cpp:875
+#, kde-format
+msgid ""
+"Followers list for account %1 could not be updated:\n"
+"%2"
+msgstr ""
+"%1 계정의 팔로워 목록을 업데이트할 수 없습니다:\n"
+"%2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:836
+#, kde-format
+msgid "Followers list for account %1 has been updated."
+msgstr "%1 계정의 팔로워 목록을 업데이트했습니다."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:918
+#, kde-format
+msgid "Timeline update failed: %1"
+msgstr "타임라인 업데이트 실패: %1"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1087
+#, kde-format
+msgid "Creating friendship with %1 failed. %2"
+msgstr "%1 님을 친구로 등록할 수 없습니다. %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1094
+#, kde-format
+msgid "You are now listening to %1's posts."
+msgstr "%1 님의 소식을 구독합니다."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1102
+#, kde-format
+msgid "Creating friendship with %1 failed: the server returned invalid data."
+msgstr "%1 님을 친구로 등록할 수 없음: 서버에서 잘못된 데이터를 반환했습니다."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1107
+#, kde-format
+msgid "Creating friendship with %1 failed: %2"
+msgstr "%1 님을 친구로 등록할 수 없음: %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1150
+#, kde-format
+msgid "Destroying friendship with %1 failed. %2"
+msgstr "%1 님의 친구 등록을 해제할 수 없습니다. %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1157
+#, kde-format
+msgid "You will not receive %1's updates."
+msgstr "%1 님의 업데이트를 받지 않습니다."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1165
+#, kde-format
+msgid "Destroying friendship with %1 failed: the server returned invalid data."
+msgstr ""
+"%1 님의 친구 등록을 해제할 수 없음: 서버에서 잘못된 데이터를 반환했습니다."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1170
+#, kde-format
+msgid "Destroying friendship with %1 failed: %2"
+msgstr "%1 님의 친구 등록을 해제할 수 없음: %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1240
+#, kde-format
+msgid "Blocking %1 failed. %2"
+msgstr "%1 님을 차단할 수 없습니다. %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1246
+#, kde-format
+msgid "You will no longer be disturbed by %1."
+msgstr "더 이상 %1 님의 메시지를 받지 않습니다."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1250
+#, kde-format
+msgid "Blocking %1 failed: the server returned invalid data."
+msgstr "%1 님을 차단할 수 없음: 서버에서 잘못된 데이터를 반환했습니다."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1269
+#, kde-format
+msgid "Reporting %1 failed. %2"
+msgstr "%1 님을 신고할 수 없습니다. %2"
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1274
+#, kde-format
+msgid "Report sent successfully."
+msgstr "신고했습니다."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1278
+#, kde-format
+msgid "Reporting %1 failed: the server returned invalid data."
+msgstr "%1 님을 신고할 수 없음: 서버에서 잘못된 데이터를 반환했습니다."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1320
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1339
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1414
+#, kde-format
+msgid "Could not parse the data that has been received from the server."
+msgstr "서버에서 받은 데이터를 해석할 수 없습니다."
+
+#: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1542
+#: microblogs/mastodon/mastodonmicroblog.cpp:891
+#, kde-format
+msgid ""
+"Retrieving the followers list failed. The data returned from the server is "
+"corrupted."
+msgstr ""
+"팔로워 목록을 가져올 수 없습니다. 서버에서 반환된 데이터가 손상되었습니다."
+
+#: helperlibs/twitterapihelper/twitterapimicroblogwidget.cpp:112
+#, kde-format
+msgid "(The search result is empty.)"
+msgstr "(검색 결과가 비어 있습니다.)"
+
+#: helperlibs/twitterapihelper/twitterapimicroblogwidget.cpp:222
+#: libchoqok/ui/timelinewidget.cpp:240
+#, kde-format
+msgid "Mark timeline as read"
+msgstr "타임라인을 읽은 것으로 표시"
+
+#: helperlibs/twitterapihelper/twitterapimicroblogwidget.cpp:226
+#, kde-format
+msgid "Close Timeline"
+msgstr "타임라인 닫기"
+
+#: helperlibs/twitterapihelper/twitterapimicroblogwidget.cpp:227
+#, kde-format
+msgid "Close All"
+msgstr "모두 닫기"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:59
+#: microblogs/mastodon/mastodonpostwidget.cpp:100
+#: microblogs/pumpio/pumpiopostwidget.cpp:176
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Reply"
+msgstr "답장"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:64
+#: microblogs/mastodon/mastodonpostwidget.cpp:105
+#: microblogs/pumpio/pumpiopostwidget.cpp:179
+#, kde-format
+msgid "Reply to %1"
+msgstr "%1 님에게 답장"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:69
+#: microblogs/mastodon/mastodonpostwidget.cpp:110
+#, kde-format
+msgid "Write to %1"
+msgstr "%1 님에게 쓰기"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:74
+#: microblogs/mastodon/mastodonpostwidget.cpp:115
+#, kde-format
+msgid "Reply to all"
+msgstr "전체 답장"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:78
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Favorite"
+msgstr "책갈피"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:113
+#, kde-format
+msgid "<a href='%1' title='Sent from %2 via OStatus'>%2</a>"
+msgstr "<a href='%1' title='OStatus로 %2에서 보냄'>%2</a>"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:125
+#, kde-format
+msgid "Show Conversation"
+msgstr "대화 표시"
+
+#: helperlibs/twitterapihelper/twitterapipostwidget.cpp:133
+#, kde-format
+msgid ""
+"<a href='replyto://%1'>in reply to</a> @<a href='user://%4'>%4</a>&nbsp;<a "
+"href=\"%2\" title=\"%2\">%3</a>"
+msgstr ""
+"@<a href='user://%4'>%4</a> 님의 <a href='replyto://%1'>글에 대한 답글</a> "
+"&nbsp;<a href=\"%2\" title=\"%2\">%3</a>"
+
+#: helperlibs/twitterapihelper/twitterapisearchdialog.cpp:48
+#, kde-format
+msgctxt "@title:window"
+msgid "Search"
+msgstr "검색"
+
+#: helperlibs/twitterapihelper/twitterapisearchdialog.cpp:77
+#, kde-format
+msgctxt "Search query"
+msgid "Query:"
+msgstr "질의:"
+
+#: helperlibs/twitterapihelper/twitterapisearchdialog.cpp:88
+#, kde-format
+msgctxt "@action:button"
+msgid "Search"
+msgstr "검색 "
+
+#: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:58
+#: libchoqok/ui/timelinewidget.cpp:45
+#, kde-format
+msgctxt "%1 is the name of a timeline"
+msgid "Search results for %1"
+msgstr "%1 검색 결과"
+
+#: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:87
+#, kde-format
+msgid "Close Search"
+msgstr "검색 닫기"
+
+#: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:93
+#, kde-format
+msgid "Previous"
+msgstr "이전"
+
+#: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:98
+#, kde-format
+msgid "Next"
+msgstr "다음"
+
+#: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:105
+#, kde-format
+msgid "Page Number"
+msgstr "쪽 번호"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:150
+#, kde-format
+msgid "Cannot load user information."
+msgstr "사용자 정보를 불러올 수 없습니다."
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:239
+#, kde-format
+msgid "Close"
+msgstr "닫기"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:251
+#, kde-format
+msgctxt "User posts"
+msgid "Posts"
+msgstr "글"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:252
+#, kde-format
+msgctxt "User friends"
+msgid "Friends"
+msgstr "친구"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:253
+#, kde-format
+msgctxt "User followers"
+msgid "Followers"
+msgstr "팔로워"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:262
+#, kde-format
+msgid "<table><tr><b>Last Status:</b> %1</tr></table>"
+msgstr "<table><tr><b>마지막 상태:</b> %1</tr></table>"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:266
+#, kde-format
+msgid "<h3>%1</h3>"
+msgstr "<h3>%1</h3>"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:376
+#, kde-format
+msgid "Unsubscribe"
+msgstr "구독 해제"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:381
+#, kde-format
+msgid "Subscribe"
+msgstr "구독"
+
+#: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:386
+#, kde-format
+msgid "Block"
+msgstr "차단"
+
+#: libchoqok/accountmanager.cpp:104 libchoqok/accountmanager.cpp:142
+#, kde-format
+msgid "There is no account with alias %1."
+msgstr "별명이 %1인 계정이 없습니다."
+
+#: libchoqok/accountmanager.cpp:157
+#, kde-format
+msgid ""
+"An account with this alias already exists: a unique alias has to be "
+"specified."
+msgstr "같은 별명을 가진 계정이 이미 존재합니다. 별명은 유일해야 합니다."
+
+#: libchoqok/choqoktools.cpp:28
+#, kde-format
+msgid ""
+"Custom web browser \"%1\" is unable to open url \"%2\".\n"
+"Please update the custom web browser in Configurations."
+msgstr ""
+"사용자 정의 웹 브라우저 \"%1\"에서 \"%2\" URL을 열 수 없습니다.\n"
+"설정에서 사용자 정의 웹 브라우저를 변경하십시오."
+
+#: libchoqok/choqoktools.cpp:33
+#, kde-format
+msgid ""
+"Unable to open url \"%1\".\n"
+"Please check Qt installation or set a custom web browser in Configurations."
+msgstr ""
+"\"%1\" URL을 열 수 없습니다.\n"
+"Qt 설치를 확인하거나 사용자 정의 웹 브라우저를 설정하십시오."
+
+#: libchoqok/mediamanager.cpp:90
+#, kde-format
+msgid "Cannot create a KDE Job. Please check your installation."
+msgstr "KDE 작업을 생성할 수 없습니다. 설치 상태를 확인하십시오."
+
+#: libchoqok/mediamanager.cpp:115
+#, kde-format
+msgid "Cannot download image from %1."
+msgstr "%1에서 그림을 다운로드할 수 없습니다."
+
+#: libchoqok/mediamanager.cpp:124
+#, kde-format
+msgid "The request failed. Cannot get image file."
+msgstr "요청이 실패했습니다. 그림 파일을 가져올 수 없습니다."
+
+#: libchoqok/mediamanager.cpp:155
+#, kde-format
+msgid "No pluginId specified, And last used plugin is null."
+msgstr ""
+"pluginId를 지정하지 않았으며 마지막으로 사용한 플러그인이 비어 있습니다."
+
+#: libchoqok/microblog.cpp:73
+#, kde-format
+msgid "The server returned an error"
+msgstr "서버에서 오류를 반환함"
+
+#: libchoqok/microblog.cpp:75
+#, kde-format
+msgid "Error on communication with server"
+msgstr "서버와 통신 오류"
+
+#: libchoqok/microblog.cpp:77
+#, kde-format
+msgid "Error on parsing results"
+msgstr "결과 처리 오류"
+
+#: libchoqok/microblog.cpp:79
+#, kde-format
+msgid "Authentication error"
+msgstr "인증 오류"
+
+#: libchoqok/microblog.cpp:81
+#, kde-format
+msgid "The server does not support this feature"
+msgstr "서버에서 이 기능을 지원하지 않음"
+
+#: libchoqok/microblog.cpp:83
+#, kde-format
+msgid "Unknown error"
+msgstr "알 수 없는 오류"
+
+#: libchoqok/notifymanager.cpp:81
+#, kde-format
+msgctxt "Show Choqok MainWindow"
+msgid "Show Choqok"
+msgstr "Choqok 표시"
+
+#: libchoqok/notifymanager.h:24
+#, kde-format
+msgid "Error"
+msgstr "오류"
+
+#: libchoqok/notifymanager.h:25
+#, kde-format
+msgid "Success"
+msgstr "성공"
+
+#: libchoqok/notifymanager.h:27
+#, kde-format
+msgid "New posts"
+msgstr "새 글"
+
+#: libchoqok/notifymanager.h:28
+#, kde-format
+msgid "Shortening a URL"
+msgstr "URL 단축"
+
+#: libchoqok/passwordmanager.cpp:64
+#, kde-format
+msgid ""
+"Cannot open KDE Wallet manager, your secrets will be stored as plain text. "
+"You can install KWallet to fix this."
+msgstr ""
+"KDE 지갑 관리자를 열 수 없습니다. 암호를 일반 텍스트로 저장합니다. 이 문제를 "
+"해결하려면 KWallet을 설치하십시오."
+
+#: libchoqok/ui/choqoktabbar.cpp:757
+#, kde-format
+msgid "Top"
+msgstr "위"
+
+#: libchoqok/ui/choqoktabbar.cpp:758
+#, kde-format
+msgid "Left"
+msgstr "왼쪽"
+
+#: libchoqok/ui/choqoktabbar.cpp:759
+#, kde-format
+msgid "Right"
+msgstr "오른쪽"
+
+#: libchoqok/ui/choqoktabbar.cpp:760
+#, kde-format
+msgid "Bottom"
+msgstr "아래"
+
+#: libchoqok/ui/choqoktabbar.cpp:761
+#, kde-format
+msgid "Small"
+msgstr "작게"
+
+#: libchoqok/ui/choqoktabbar.cpp:762
+#, kde-format
+msgid "Medium"
+msgstr "중간"
+
+#: libchoqok/ui/choqoktabbar.cpp:763
+#, kde-format
+msgid "Big"
+msgstr "크게"
+
+#: libchoqok/ui/choqoktabbar.cpp:764
+#, kde-format
+msgid "Styled Panel"
+msgstr "스타일 적용된 패널"
+
+#: libchoqok/ui/choqoktextedit.cpp:51
+#, kde-format
+msgid "<b>Note:</b><br/><i>Ctrl+S</i> to enable/disable auto spell checker."
+msgstr ""
+"<b>메모:</b><br/><i>Ctrl+S</i>를 눌러서 자동 맞춤법 검사기를 전환할 수 있습니"
+"다.."
+
+#: libchoqok/ui/choqoktextedit.cpp:184
+#, kde-format
+msgid "Set spell check language"
+msgstr "맞춤법 검사 언어 설정"
+
+#: libchoqok/ui/choqoktextedit.cpp:188
+#, kde-format
+msgctxt "Replace URLs by a shortened URL"
+msgid "Shorten URLs"
+msgstr "URL 단축"
+
+#: libchoqok/ui/composerwidget.cpp:57
+#, kde-format
+msgid "Discard Reply"
+msgstr "답장 삭제"
+
+#: libchoqok/ui/composerwidget.cpp:98
+#: microblogs/pumpio/pumpiocomposerwidget.cpp:167
+#, kde-format
+msgid "Replying to <b>%1</b>"
+msgstr "<b>%1</b> 님에게 답장"
+
+#: libchoqok/ui/microblogwidget.cpp:265
+#, kde-format
+msgid "Mark all timelines as read"
+msgstr "모든 타임라인을 읽은 것으로 표시"
+
+#: libchoqok/ui/microblogwidget.cpp:375
+#, kde-format
+msgid "More"
+msgstr "더 보기"
+
+#: libchoqok/ui/microblogwidget.cpp:377
+#, kde-format
+msgid "Latest update:"
+msgstr "마지막 업데이트:"
+
+#: libchoqok/ui/postwidget.cpp:194
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Remove"
+msgstr "삭제"
+
+#: libchoqok/ui/postwidget.cpp:199
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "ReSend"
+msgstr "재전송"
+
+#: libchoqok/ui/postwidget.cpp:454
+#, kde-format
+msgid "Just now"
+msgstr "지금"
+
+#: libchoqok/ui/postwidget.cpp:459
+#, kde-format
+msgid "1 sec ago"
+msgid_plural "%1 secs ago"
+msgstr[0] "%1초 전"
+
+#: libchoqok/ui/postwidget.cpp:465
+#, kde-format
+msgid "1 min ago"
+msgid_plural "%1 mins ago"
+msgstr[0] "%1분 전"
+
+#: libchoqok/ui/postwidget.cpp:471
+#, kde-format
+msgid "1 hour ago"
+msgid_plural "%1 hours ago"
+msgstr[0] "%1시간 전"
+
+#: libchoqok/ui/postwidget.cpp:476
+#, kde-format
+msgid "1 day ago"
+msgid_plural "%1 days ago"
+msgstr[0] "%1일 전"
+
+#: libchoqok/ui/postwidget.cpp:481
+#, kde-format
+msgid "Are you sure you want to remove this post from the server?"
+msgstr "이 글을 서버에서 삭제하시겠습니까?"
+
+#: libchoqok/ui/quickpost.cpp:71
+#, kde-format
+msgctxt "All accounts"
+msgid "All"
+msgstr "모두"
+
+#: libchoqok/ui/quickpost.cpp:90
+#, kde-format
+msgctxt "Submit post"
+msgid "Submit"
+msgstr "보내기"
+
+#: libchoqok/ui/quickpost.cpp:149
+#, kde-format
+msgid "Cannot create a post without any text."
+msgstr "텍스트가 없는 글을 만들 수 없습니다."
+
+#: libchoqok/ui/quickpost.cpp:154
+#, kde-format
+msgid ""
+"Please configure at least one account to be included in \"Quick Post\".\n"
+"Settings -> Configure Choqok... -> Accounts"
+msgstr ""
+"\"빠른 글쓰기\"에 사용할 계정을 최소한 하나는 설정하십시오.\n"
+"설정 -> Choqok 설정... -> 계정"
+
+#: libchoqok/ui/quickpost.cpp:261
+#, kde-format
+msgid ""
+"Link to uploaded medium will be added here after uploading process succeed."
+msgstr "업로드가 완료되면 업로드된 미디어로 향한 링크를 여기에 추가합니다."
+
+#: libchoqok/ui/textbrowser.cpp:105
+#, kde-format
+msgctxt "Copy text"
+msgid "Copy"
+msgstr "복사"
+
+#: libchoqok/ui/textbrowser.cpp:111
+#, kde-format
+msgid "Copy Link Location"
+msgstr "링크 주소 복사"
+
+#: libchoqok/ui/textbrowser.cpp:116
+#, kde-format
+msgctxt "Select all text"
+msgid "Select All"
+msgstr "모두 선택"
+
+#: libchoqok/ui/timelinewidget.cpp:223
+#, kde-format
+msgid "1 new post in %2 (%3)"
+msgid_plural "%1 new posts in %2 (%3)"
+msgstr[0] "%2(%3)에 새로운 글 %1개"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: libchoqok/ui/uploadmedia_base.ui:22
+#, kde-format
+msgid "Medium to upload:"
+msgstr "업로드할 미디어:"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: libchoqok/ui/uploadmedia_base.ui:39
+#, kde-format
+msgid "Upload via:"
+msgstr "다음으로 업로드:"
+
+#: libchoqok/ui/uploadmediadialog.cpp:48
+#, kde-format
+msgid "Upload Medium"
+msgstr "미디어 업로드"
+
+#: libchoqok/ui/uploadmediadialog.cpp:56
+#, kde-format
+msgid "Upload"
+msgstr "업로드"
+
+#: libchoqok/ui/uploadmediadialog.cpp:115
+#, kde-format
+msgid "Uploading..."
+msgstr "업로드 중..."
+
+#: libchoqok/ui/uploadmediadialog.cpp:174
+#, kde-format
+msgid "Medium uploading failed."
+msgstr "미디어를 업로드할 수 없습니다."
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabAccount)
+#: microblogs/friendica/friendicaeditaccount_base.ui:21
+#, kde-format
+msgid "Friendica Account"
+msgstr "Friendica 계정"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: microblogs/friendica/friendicaeditaccount_base.ui:29
+#: microblogs/laconica/laconicaeditaccount_base.ui:29
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:27
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:27
+#: microblogs/twitter/twittereditaccount_base.ui:27
+#, kde-format
+msgid "A&lias:"
+msgstr "별명(&L):"
+
+#. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_alias)
+#. i18n: ectx: property (toolTip), widget (QLineEdit, cfg_alias)
+#: microblogs/friendica/friendicaeditaccount_base.ui:42
+#: microblogs/laconica/laconicaeditaccount_base.ui:42
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:40
+#: microblogs/ocs/ocsconfigurebase.ui:32
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:40
+#: microblogs/twitter/twittereditaccount_base.ui:40
+#, kde-format
+msgid "The account alias"
+msgstr "계정 별명"
+
+#. i18n: ectx: property (whatsThis), widget (QLineEdit, kcfg_alias)
+#. i18n: ectx: property (whatsThis), widget (QLineEdit, cfg_alias)
+#: microblogs/friendica/friendicaeditaccount_base.ui:45
+#: microblogs/laconica/laconicaeditaccount_base.ui:45
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:43
+#: microblogs/ocs/ocsconfigurebase.ui:35
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:43
+#: microblogs/twitter/twittereditaccount_base.ui:43
+#, kde-format
+msgid ""
+"The alias is the name you want to give to your account. It should be unique. "
+"You can have several connections to the same service so the alias lets you "
+"give them names."
+msgstr ""
+"계정 별명은 계정에 부여할 이름입니다. 중복되지 않아야 합니다. 같은 서비스에 "
+"여러 개의 계정을 사용할 수 있으므로 별명을 통해서 계정을 구분할 수 있습니다."
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: microblogs/friendica/friendicaeditaccount_base.ui:62
+#: microblogs/laconica/laconicaeditaccount_base.ui:62
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:60
+#: microblogs/ocs/ocsconfigurebase.ui:52
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:60
+#: microblogs/twitter/twittereditaccount_base.ui:60
+#, kde-format
+msgid ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">Note:</span><span style=\" font-size:8pt;\"> "
+"The alias must be unique.</span></p></body></html>"
+msgstr ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">메모:</span><span style=\" font-size:8pt;\">별명"
+"은 중복되면 안 됩니다.</span></p></body></html>"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: microblogs/friendica/friendicaeditaccount_base.ui:77
+#: microblogs/laconica/laconicaeditaccount_base.ui:77
+#, kde-format
+msgid "Server"
+msgstr "서버"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: microblogs/friendica/friendicaeditaccount_base.ui:83
+#: microblogs/laconica/laconicaeditaccount_base.ui:83
+#, kde-format
+msgid "API path:"
+msgstr "API 경로:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/friendica/friendicaeditaccount_base.ui:103
+#, kde-format
+msgid "&Friendica server:"
+msgstr "Friendica 서버(&F):"
+
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_BasicBox)
+#: microblogs/friendica/friendicaeditaccount_base.ui:122
+#: microblogs/laconica/laconicaeditaccount_base.ui:122
+#, kde-format
+msgid "Basic Authentication"
+msgstr "기본 인증"
+
+#. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_basicUsername)
+#. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_basicPassword)
+#: microblogs/friendica/friendicaeditaccount_base.ui:128
+#: microblogs/friendica/friendicaeditaccount_base.ui:145
+#: microblogs/laconica/laconicaeditaccount_base.ui:128
+#: microblogs/laconica/laconicaeditaccount_base.ui:145
+#, kde-format
+msgid "The name you use to connect to the service"
+msgstr "서비스에 연결할 때 사용할 이름"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: microblogs/friendica/friendicaeditaccount_base.ui:135
+#: microblogs/laconica/laconicaeditaccount_base.ui:135
+#: microblogs/twitter/twittereditaccount_base.ui:92
+#: plugins/shorteners/yourls/yourlsprefs.ui:47
+#: plugins/uploaders/posterous/posterousprefs.ui:74
+#, kde-format
+msgid "Password:"
+msgstr "암호:"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/friendica/friendicaeditaccount_base.ui:155
+#: microblogs/laconica/laconicaeditaccount_base.ui:155
+#: microblogs/twitter/twittereditaccount_base.ui:79
+#: plugins/shorteners/yourls/yourlsprefs.ui:34
+#, kde-format
+msgid "Username:"
+msgstr "사용자 이름:"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tab)
+#. i18n: ectx: attribute (title), widget (QWidget, tabTimelines)
+#: microblogs/friendica/friendicaeditaccount_base.ui:182
+#: microblogs/laconica/laconicaeditaccount_base.ui:182
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:174
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:175
+#: microblogs/twitter/twittereditaccount_base.ui:183
+#, kde-format
+msgid "Timelines Configuration"
+msgstr "타임라인 설정"
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: microblogs/friendica/friendicaeditaccount_base.ui:194
+#: microblogs/laconica/laconicaeditaccount_base.ui:194
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:186
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:187
+#: microblogs/twitter/twittereditaccount_base.ui:195
+#, kde-format
+msgid "Which timelines do you like to be enabled?"
+msgstr "어떤 타임라인을 사용하시겠습니까?"
+
+#. i18n: ectx: property (text), widget (QTableWidget, timelinesTable)
+#: microblogs/friendica/friendicaeditaccount_base.ui:202
+#: microblogs/laconica/laconicaeditaccount_base.ui:202
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:194
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:195
+#: microblogs/twitter/twittereditaccount_base.ui:203
+#, kde-format
+msgid "Name"
+msgstr "이름"
+
+#. i18n: ectx: property (text), widget (QTableWidget, timelinesTable)
+#: microblogs/friendica/friendicaeditaccount_base.ui:207
+#: microblogs/laconica/laconicaeditaccount_base.ui:207
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:199
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:200
+#: microblogs/twitter/twittereditaccount_base.ui:208
+#, kde-format
+msgid "Enable"
+msgstr "활성화"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabConf)
+#: microblogs/friendica/friendicaeditaccount_base.ui:216
+#: microblogs/laconica/laconicaeditaccount_base.ui:216
+#, kde-format
+msgid "Configuration"
+msgstr "설정"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_changeExclamationMark)
+#: microblogs/friendica/friendicaeditaccount_base.ui:224
+#: microblogs/laconica/laconicaeditaccount_base.ui:224
+#, kde-format
+msgid ""
+"To prevent spamming on some groups, you can set here to change the "
+"exclamation point (that used to refer to a group), to something else (e.g. "
+"nothing.)"
+msgstr ""
+"일부 그룹에 대량으로 메시지를 보내지 않도록 그룹을 지정할 때 사용하는 느낌표"
+"를 다른 것으로(예: 빈 문자열) 변경할 수 있습니다."
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_changeExclamationMark)
+#: microblogs/friendica/friendicaeditaccount_base.ui:227
+#: microblogs/laconica/laconicaeditaccount_base.ui:227
+#, kde-format
+msgid "On re-dent, change exclamation mark to:"
+msgstr "리덴트 시 느낌표를 다음으로 변경:"
+
+#. i18n: ectx: property (text), widget (QLineEdit, kcfg_changeToString)
+#: microblogs/friendica/friendicaeditaccount_base.ui:237
+#: microblogs/laconica/laconicaeditaccount_base.ui:237
+#, kde-format
+msgid "#"
+msgstr "#"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabAccount)
+#: microblogs/laconica/laconicaeditaccount_base.ui:21
+#, kde-format
+msgid "GNU social Account"
+msgstr "GNU 소셜 계정"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/laconica/laconicaeditaccount_base.ui:103
+#, kde-format
+msgid "&GNU social server:"
+msgstr "GNU 소셜 서버(&G):"
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:91
+#, kde-format
+msgid "Code"
+msgstr "코드"
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:92
+#, kde-format
+msgid "Enter the code received from %1"
+msgstr "%1에서 받은 코드를 입력하십시오"
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:105
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:105
+#: microblogs/twitter/twittereditaccount.cpp:100
+#, kde-format
+msgid "Choqok is authorized successfully."
+msgstr "Choqok이 인증되었습니다."
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:105
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:105
+#: microblogs/twitter/twittereditaccount.cpp:100
+#, kde-format
+msgid "Authorized"
+msgstr "인증됨"
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:107
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:107
+#: microblogs/twitter/twittereditaccount.cpp:102
+#, kde-format
+msgid "Authorization Error"
+msgstr "인증 오류"
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:107
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:107
+#: microblogs/twitter/twittereditaccount.cpp:102
+#, kde-format
+msgid "OAuth authorization error"
+msgstr "OAuth 인증 오류"
+
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:128
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:128
+#: microblogs/twitter/twittereditaccount.cpp:112
+#, kde-format
+msgid "Authenticated"
+msgstr "인증됨"
+
+#. i18n: ectx: property (text), widget (QLabel, kcfg_authenticateStatus)
+#: microblogs/mastodon/mastodoneditaccountwidget.cpp:132
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:136
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:132
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:136
+#: microblogs/twitter/twittereditaccount.cpp:116
+#, kde-format
+msgid "Not Authenticated"
+msgstr "인증되지 않음"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabAccount)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:21
+#, kde-format
+msgid "Mastodon Account"
+msgstr "마스토돈 계정"
+
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_basicAuth)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:73
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:73
+#: microblogs/twitter/twittereditaccount_base.ui:73
+#, kde-format
+msgid "Credentials"
+msgstr "인증 정보"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:82
+#, kde-format
+msgid "username@domain:"
+msgstr "username@domain:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_credentialsBox)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:98
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:98
+#: microblogs/twitter/twittereditaccount_base.ui:112
+#, kde-format
+msgid "OAuth Authentication"
+msgstr "OAuth 인증"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:110
+#, kde-format
+msgid ""
+"Click the below button; if everything goes well, you will pointed to "
+"Mastodon website to allow access to Choqok."
+msgstr ""
+"아래 단추를 클릭하십시오. 오류가 발생하지 않았다면 마스토돈 인스턴스 웹사이트"
+"가 열려서 Choqok 접근 허용 여부를 물어봅니다."
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, kcfg_authorize)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:143
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:143
+#: microblogs/twitter/twittereditaccount_base.ui:151
+#, kde-format
+msgid "Verify credentials"
+msgstr "인증 정보 확인"
+
+#. i18n: ectx: property (text), widget (QPushButton, kcfg_authorize)
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:146
+#, kde-format
+msgid "&Authenticate with Mastodon Service"
+msgstr "마스토돈 서비스 인증(&A)"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:320
+#: microblogs/pumpio/pumpiomicroblog.cpp:912
+#, kde-format
+msgid "The post has been shared."
+msgstr "글을 공유했습니다."
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:333
+#: microblogs/pumpio/pumpiomicroblog.cpp:926
+#, kde-format
+msgid "Cannot share the post. %1"
+msgstr "글을 공유할 수 없습니다. %1"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:382
+#: microblogs/pumpio/pumpiomicroblog.cpp:715
+#, kde-format
+msgid "Cannot set/unset the post as favorite. %1"
+msgstr "글을 책갈피에 추가/삭제할 수 없습니다. %1"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:400
+#: microblogs/pumpio/pumpiomicroblog.cpp:1252
+#, kde-format
+msgctxt "Timeline description"
+msgid "You and people you follow"
+msgstr "나와 내가 팔로우하는 사람"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:406
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Local"
+msgstr "로컬"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:407
+#, kde-format
+msgctxt "Timeline description"
+msgid "Local timeline"
+msgstr "로컬 타임라인"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:413
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Federated"
+msgstr "연합"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:414
+#, kde-format
+msgctxt "Timeline description"
+msgid "Federated timeline"
+msgstr "연합 타임라인"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:420
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Favourites"
+msgstr "책갈피"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:421
+#, kde-format
+msgctxt "Timeline description"
+msgid "Favourites"
+msgstr "책갈피"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:522
+#, kde-format
+msgid "Boost of %1"
+msgstr "%1 님의 부스트"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:524
+#, kde-format
+msgid "Boosted by %1"
+msgstr "%1 님이 부스트함"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:703
+#, kde-format
+msgid "New post for account %1 submitted successfully."
+msgstr "%1 계정에 새 글을 올렸습니다."
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:715
+#: microblogs/pumpio/pumpiomicroblog.cpp:694
+#, kde-format
+msgid "Creating the new post failed. %1"
+msgstr "새 글을 만들 수 없습니다. %1"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:752
+#: microblogs/pumpio/pumpiomicroblog.cpp:754
+#, kde-format
+msgid "Cannot fetch post. %1"
+msgstr "글을 가져올 수 없습니다. %1"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:808
+#: microblogs/pumpio/pumpiomicroblog.cpp:1018
+#, kde-format
+msgid "An error occurred when fetching the timeline"
+msgstr "타임라인을 가져오는 중 오류 발생"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:922
+#, kde-format
+msgid "Updating following list for account %1..."
+msgstr "%1 계정의 팔로잉 목록 업데이트 중..."
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:952
+#, kde-format
+msgid ""
+"Following list for account %1 could not be updated:\n"
+"%2"
+msgstr ""
+"%1 계정의 팔로잉 목록을 업데이트할 수 없음:\n"
+"%2"
+
+#: microblogs/mastodon/mastodonmicroblog.cpp:968
+#, kde-format
+msgid ""
+"Retrieving the following list failed. The data returned from the server is "
+"corrupted."
+msgstr ""
+"팔로잉 목록을 검색할 수 없습니다. 서버에서 반환된 데이터가 손상되었습니다."
+
+#: microblogs/mastodon/mastodonpostwidget.cpp:97
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Boost"
+msgstr "부스트"
+
+#: microblogs/mastodon/mastodonpostwidget.cpp:120
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Favourite"
+msgstr "책갈피"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: microblogs/ocs/ocsconfigurebase.ui:19
+#, kde-format
+msgid "&Alias:"
+msgstr "별명(&A):"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: microblogs/ocs/ocsconfigurebase.ui:67
+#, kde-format
+msgid "Provider"
+msgstr "공급자"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: microblogs/ocs/ocsconfigurebase.ui:73
+#, kde-format
+msgid "Select a social desktop provider to use:"
+msgstr "소셜 데스크톱 공급자 선택:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/ocs/ocsconfigurebase.ui:83
+#, kde-format
+msgid ""
+"You can manage Social Desktop providers in the KDE Social Desktop "
+"configuration."
+msgstr "KDE 소셜 데스크톱 설정에서 소셜 데스크톱 제공자를 관리할 수 있습니다."
+
+#: microblogs/ocs/ocsconfigurewidget.cpp:26
+#, kde-format
+msgid "Loading..."
+msgstr "불러오는 중..."
+
+#: microblogs/ocs/ocsconfigurewidget.cpp:58
+#, kde-format
+msgid "You have to wait for providers list to be loaded."
+msgstr "제공자 목록을 불러오는 동안 기다려 주십시오."
+
+#: microblogs/ocs/ocsmicroblog.cpp:142
+#, kde-format
+msgid "OCS plugin is not initialized yet. Try again later."
+msgstr "OCS 플러그인이 아직 초기화되지 않았습니다. 나중에 다시 시도하십시오."
+
+#: microblogs/ocs/ocsmicroblog.cpp:177 microblogs/ocs/ocsmicroblog.cpp:184
+#, kde-format
+msgid "Not Supported"
+msgstr "지원하지 않음"
+
+#: microblogs/ocs/ocsmicroblog.cpp:250
+#: microblogs/pumpio/pumpiomicroblog.cpp:1251
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Activity"
+msgstr "활동"
+
+#: microblogs/ocs/ocsmicroblog.cpp:251
+#, kde-format
+msgid "Social activities"
+msgstr "소셜 활동"
+
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:96
+#: microblogs/twitter/twittereditaccount.cpp:91
+#, kde-format
+msgid "PIN"
+msgstr "PIN"
+
+#: microblogs/pumpio/pumpioeditaccountwidget.cpp:97
+#, kde-format
+msgid "Enter the verifier code received from %1"
+msgstr "%1 에서 받은 검증 코드를 입력하십시오."
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabAccount)
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:21
+#, kde-format
+msgid "PumpIO Account"
+msgstr "PumpIO 계정"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:82
+#, kde-format
+msgid "Webfinger ID:"
+msgstr "Webfinger ID:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:110
+#, kde-format
+msgid ""
+"Click the below button; if everything goes well, you will pointed to Pump.io "
+"website to allow access to Choqok."
+msgstr ""
+"아래 단추를 클릭하십시오. 오류가 발생하지 않았다면 Pump.io 웹사이트가 열려서 "
+"Choqok 접근 허용 여부를 물어봅니다."
+
+#. i18n: ectx: property (text), widget (QPushButton, kcfg_authorize)
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:146
+#, kde-format
+msgid "&Authenticate with Pump.io Service"
+msgstr "Pump.io 서비스 인증(&A)"
+
+#. i18n: ectx: property (windowTitle), widget (QDialog, PumpIOMessageDialog)
+#: microblogs/pumpio/pumpiomessagedialog.ui:14
+#, kde-format
+msgid "Dialog"
+msgstr "대화 상자"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/pumpio/pumpiomessagedialog.ui:46
+#: microblogs/pumpio/pumpiopostwidget.cpp:112
+#, kde-format
+msgid "CC:"
+msgstr "참조:"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: microblogs/pumpio/pumpiomessagedialog.ui:70
+#: microblogs/pumpio/pumpiopostwidget.cpp:89
+#, kde-format
+msgid "To:"
+msgstr "받는 사람:"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:796
+#, kde-format
+msgid "Cannot fetch replies. %1"
+msgstr "답장을 가져올 수 없습니다. %1"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:819
+#, kde-format
+msgid "Following list for account %1 has been updated."
+msgstr "%1 계정의 팔로잉 목록을 업데이트했습니다."
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:842
+#, kde-format
+msgid "Cannot retrieve the following list. %1"
+msgstr "팔로잉 목록을 가져올 수 없습니다. %1"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:864
+#, kde-format
+msgid "Lists for account %1 has been updated."
+msgstr "%1 계정의 목록을 업데이트했습니다."
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:891
+#, kde-format
+msgid "Cannot retrieve the lists. %1"
+msgstr "목록을 가져올 수 없습니다. %1"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:953
+#, kde-format
+msgid "Post removed successfully"
+msgstr "글을 삭제함"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:999
+#, kde-format
+msgid "An error occurred when updating the post"
+msgstr "글을 업데이트하는 중 오류가 발생함"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:1068
+#, kde-format
+msgid "An error occurred when uploading the media"
+msgstr "미디어를 업로드하는 중 오류가 발생함"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:1258
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Favorites"
+msgstr "책갈피"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:1259
+#, kde-format
+msgctxt "Timeline description"
+msgid "Posts you favorited"
+msgstr "책갈피에 등록한 글"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:1266
+#, kde-format
+msgctxt "Timeline description"
+msgid "Posts sent to you"
+msgstr "내게 보낸 글"
+
+#: microblogs/pumpio/pumpiomicroblog.cpp:1273
+#, kde-format
+msgctxt "Timeline description"
+msgid "Posts you sent"
+msgstr "내가 보낸 글"
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_forpublic)
+#: microblogs/pumpio/pumpiopostwidget.cpp:93
+#: microblogs/pumpio/pumpiopostwidget.cpp:116
+#: plugins/uploaders/flickr/flickrprefs.ui:121
+#, kde-format
+msgid "Public"
+msgstr "공개"
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:96
+#: microblogs/pumpio/pumpiopostwidget.cpp:119
+#, kde-format
+msgid "Followers"
+msgstr "팔로워"
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:98
+#: microblogs/pumpio/pumpiopostwidget.cpp:121
+#: microblogs/pumpio/pumpiopostwidget.cpp:139
+#, kde-format
+msgid "You"
+msgstr "나"
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:135
+#, kde-format
+msgid "Shared by:"
+msgstr "공유한 사람:"
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:151
+#, kde-format
+msgid "Show conversation"
+msgstr "대화 표시"
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:172
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Share"
+msgstr "공유"
+
+#: microblogs/pumpio/pumpiopostwidget.cpp:186
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Like"
+msgstr "좋아요"
+
+#: microblogs/pumpio/pumpioshowthread.cpp:34
+#, kde-format
+msgctxt "Thread of specified user"
+msgid "Choqok: %1's thread"
+msgstr "Choqok: %1 님의 스레드"
+
+#: microblogs/twitter/twittereditaccount.cpp:92
+#, kde-format
+msgid "Enter the PIN received from Twitter:"
+msgstr "트위터에서 받은 PIN을 입력하십시오:"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabAccount)
+#: microblogs/twitter/twittereditaccount_base.ui:21
+#, kde-format
+msgid "Twitter Account"
+msgstr "트위터 계정"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/twitter/twittereditaccount_base.ui:124
+#, kde-format
+msgid ""
+"Click the below button; if everything goes well, you will pointed to Twitter "
+"website to allow access to Choqok."
+msgstr ""
+"아래 단추를 클릭하십시오. 오류가 발생하지 않았다면 트위터 웹사이트가 열려서 "
+"Choqok 접근 허용 여부를 물어봅니다."
+
+#. i18n: ectx: property (text), widget (QPushButton, kcfg_authorize)
+#: microblogs/twitter/twittereditaccount_base.ui:154
+#, kde-format
+msgid "&Authenticate with Twitter Service"
+msgstr "트위터 서비스 인증(&A)"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnAdd)
+#: microblogs/twitter/twitterlistdialog.cpp:58 plugins/filter/filterprefs.ui:81
+#, kde-format
+msgid "Add"
+msgstr "추가"
+
+# 트위터 사용자 인터페이스를 따름
+#: microblogs/twitter/twitterlistdialog.cpp:77
+#, kde-format
+msgid "You should provide both list author username and list name."
+msgstr "리스트 작성자 사용자 이름과 리스트 이름을 모두 입력해야 합니다."
+
+#: microblogs/twitter/twitterlistdialog.cpp:99
+#, kde-format
+msgid "No user."
+msgstr "사용자가 없습니다."
+
+#. i18n: ectx: property (windowTitle), widget (QWidget, TwitterListDialogBase)
+#: microblogs/twitter/twitterlistdialog_base.ui:14
+#, kde-format
+msgid "Add List"
+msgstr "리스트 추가"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: microblogs/twitter/twitterlistdialog_base.ui:26
+#, kde-format
+msgid "List name:"
+msgstr "리스트 이름:"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: microblogs/twitter/twitterlistdialog_base.ui:52
+#, kde-format
+msgid "User name:"
+msgstr "사용자 이름:"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, loadUserLists)
+#: microblogs/twitter/twitterlistdialog_base.ui:78
+#, kde-format
+msgid "Load user lists"
+msgstr "사용자 리스트 불러오기"
+
+#. i18n: ectx: property (text), widget (QPushButton, loadUserLists)
+#: microblogs/twitter/twitterlistdialog_base.ui:81
+#, kde-format
+msgid "Load Lists"
+msgstr "리스트 불러오기"
+
+#: microblogs/twitter/twittermicroblog.cpp:59
+#, kde-format
+msgctxt "Timeline Name"
+msgid "Mentions"
+msgstr "멘션"
+
+#: microblogs/twitter/twittermicroblog.cpp:60
+#, kde-format
+msgctxt "Timeline description"
+msgid "Mentions of you"
+msgstr "내가 받은 멘션"
+
+#: microblogs/twitter/twittermicroblog.cpp:225
+#, kde-format
+msgid "Verify credentials failed. %1"
+msgstr "인증 정보를 확인할 수 없습니다. %1"
+
+#: microblogs/twitter/twittermicroblog.cpp:254
+#, kde-format
+msgid "Retweet of %1"
+msgstr "%1 님의 리트윗"
+
+#: microblogs/twitter/twittermicroblog.cpp:256
+#, kde-format
+msgid "Retweeted by %1"
+msgstr "%1 님이 리트윗함"
+
+#: microblogs/twitter/twittermicroblog.cpp:262
+#, kde-format
+msgid "Retweet to your followers?"
+msgstr "팔로워에게 리트윗하시겠습니까?"
+
+#: microblogs/twitter/twittermicroblog.cpp:269
+#, kde-format
+msgid "Add User List..."
+msgstr "사용자 목록 추가..."
+
+#: microblogs/twitter/twittermicroblog.cpp:329
+#, kde-format
+msgid "Fetching %1's lists failed. %2"
+msgstr "%1 님의 리스트를 가져올 수 없습니다. %2"
+
+#: microblogs/twitter/twittermicroblog.cpp:339
+#, kde-format
+msgid "There is no list record for user %1"
+msgstr "%1 사용자의 리스트 기록이 없음"
+
+#: microblogs/twitter/twitterpostwidget.cpp:64
+#, kde-format
+msgid "Retweet"
+msgstr "리트윗"
+
+#: microblogs/twitter/twitterpostwidget.cpp:65
+#, kde-format
+msgid "Retweet post using API"
+msgstr "API로 리트윗"
+
+#: microblogs/twitter/twitterpostwidget.cpp:136
+#, kde-format
+msgctxt "Including user name"
+msgid "Including %1"
+msgstr "%1 님 포함"
+
+# 트위터 사용자 인터페이스를 따름
+#: microblogs/twitter/twitterpostwidget.cpp:171
+#, kde-format
+msgctxt "Unfollow user"
+msgid "Unfollow %1"
+msgstr "%1 님 팔로우 해제"
+
+#: microblogs/twitter/twitterpostwidget.cpp:176
+#, kde-format
+msgctxt "Follow user"
+msgid "Follow %1"
+msgstr "%1 님 팔로우"
+
+#: microblogs/twitter/twitterpostwidget.cpp:183
+#, kde-format
+msgctxt "Report user"
+msgid "Report %1 as spam"
+msgstr "%1 님을 스팸 신고"
+
+#: microblogs/twitter/twittersearch.cpp:35
+#, kde-format
+msgctxt "Posts sent to user"
+msgid "To:"
+msgstr "받는 사람:"
+
+#: microblogs/twitter/twittersearch.cpp:36
+#, kde-format
+msgctxt "Posts from user, Sent by user"
+msgid "From:"
+msgstr "보낸 사람:"
+
+#: microblogs/twitter/twittersearch.cpp:38
+#, kde-format
+msgid "Custom Search"
+msgstr "사용자 정의 검색"
+
+#: microblogs/twitter/twittersearch.cpp:41
+#, kde-format
+msgctxt "Tweets are Twitter posts"
+msgid "Tweets To This User"
+msgstr "이 사용자에게 트윗"
+
+#: microblogs/twitter/twittersearch.cpp:44
+#, kde-format
+msgctxt "Tweets are Twitter posts"
+msgid "Tweets From This User"
+msgstr "이 사용자의 트윗"
+
+#: microblogs/twitter/twittersearch.cpp:47
+#, kde-format
+msgctxt "Tweets are Twitter posts"
+msgid "Tweets Including This Username"
+msgstr "이 사용자 이름을 포함한 트윗"
+
+#: microblogs/twitter/twittersearch.cpp:50
+#, kde-format
+msgctxt "Tweets are Twitter posts"
+msgid "Tweets Including This Hashtag"
+msgstr "이 해시태그를 포함한 트윗"
+
+#: plugins/betternotify/dummynotification.cpp:34
+#, kde-format
+msgid "KDE Rocks! :)"
+msgstr "KDE 킹왕짱! :)"
+
+#: plugins/betternotify/dummynotification.cpp:34
+#, kde-format
+msgid "OK"
+msgstr "확인"
+
+#: plugins/betternotify/notification.cpp:78
+#, kde-format
+msgid "Ignore"
+msgstr "무시"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tab)
+#: plugins/betternotify/notifyprefs.ui:21
+#, kde-format
+msgid "Appearance"
+msgstr "모양"
+
+#. i18n: ectx: property (text), widget (QLabel, label_7)
+#: plugins/betternotify/notifyprefs.ui:29
+#, kde-format
+msgid "Foreground Color:"
+msgstr "글자색:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: plugins/betternotify/notifyprefs.ui:39
+#, kde-format
+msgid "Background Color:"
+msgstr "배경색:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_9)
+#: plugins/betternotify/notifyprefs.ui:49
+#, kde-format
+msgid "Font:"
+msgstr "글꼴:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: plugins/betternotify/notifyprefs.ui:59
+#, kde-format
+msgid "Notify Interval:"
+msgstr "알림 간격:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: plugins/betternotify/notifyprefs.ui:78
+#, kde-format
+msgid "seconds"
+msgstr "초"
+
+#. i18n: ectx: property (text), widget (QPushButton, adjustPosition)
+#: plugins/betternotify/notifyprefs.ui:123
+#, kde-format
+msgid "Adjust Notification's Position"
+msgstr "알림 위치 조정"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tab_2)
+#: plugins/betternotify/notifyprefs.ui:159
+#, kde-format
+msgid "Timeline Selection"
+msgstr "타임라인 선택"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: plugins/betternotify/notifyprefs.ui:171
+#, kde-format
+msgid "Select Timelines"
+msgstr "타임라인 선택"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/betternotify/notifyprefs.ui:181
+#, kde-format
+msgid "Accounts"
+msgstr "계정"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: plugins/betternotify/notifyprefs.ui:197
+#, kde-format
+msgid "Select timelines you wish to see notifications for their new posts:"
+msgstr "새 글 알림을 볼 타임라인 선택:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: plugins/betternotify/notifyprefs.ui:249
+#, kde-format
+msgid ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Note:</span> Any "
+"change, needs plugin re-load (disable/enable) to take effect.</p></body></"
+"html>"
+msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\">메모:</span> 변경 사"
+"항을 적용하려면 플러그인을 다시 불러와야(비활성화/활성화) 합니다.</p></"
+"body></html>"
+
+#: plugins/filter/addeditfilter.cpp:47
+#, kde-format
+msgid "Modify filter rules"
+msgstr "필터 규칙 수정"
+
+#. i18n: ectx: property (windowTitle), widget (QWidget, AddEditFilterBase)
+#: plugins/filter/addeditfilter_base.ui:14
+#, kde-format
+msgid "Define new filter rules"
+msgstr "새 필터 규칙 정의"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: plugins/filter/addeditfilter_base.ui:22
+#, kde-format
+msgid "Fi&lter field:"
+msgstr "필터 필드(&L):"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/filter/addeditfilter_base.ui:52
+#, kde-format
+msgid "Fi&lter type:"
+msgstr "필터 종류(&L):"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: plugins/filter/addeditfilter_base.ui:82
+#, kde-format
+msgid "Te&xt:"
+msgstr "텍스트(&X):"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: plugins/filter/addeditfilter_base.ui:102
+#, kde-format
+msgid "Filter action:"
+msgstr "필터 동작:"
+
+#. i18n: ectx: property (text), widget (QCheckBox, dontHideReplies)
+#: plugins/filter/addeditfilter_base.ui:133
+#, kde-format
+msgid "Do not hide replies to me"
+msgstr "내게 보낸 답장 숨기지 않기"
+
+#: plugins/filter/filtermanager.cpp:35
+#, kde-format
+msgid "Configure Filters..."
+msgstr "필터 설정..."
+
+#: plugins/filter/filtermanager.cpp:42
+#, kde-format
+msgid "Hide Post"
+msgstr "글 숨기기"
+
+#: plugins/filter/filtermanager.cpp:222
+#, kde-format
+msgid "Hide all posts from <b>@%1</b>?"
+msgstr "<b>@%1</b> 님의 모든 글을 숨기시겠습니까?"
+
+#. i18n: ectx: property (windowTitle), widget (QWidget, mFilteringCtl)
+#: plugins/filter/filterprefs.ui:14
+#, kde-format
+msgid "Configure Filters"
+msgstr "필터 설정"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tab)
+#: plugins/filter/filterprefs.ui:24
+#, kde-format
+msgid "Rules"
+msgstr "규칙"
+
+#. i18n: ectx: property (text), widget (QTableWidget, filters)
+#: plugins/filter/filterprefs.ui:43
+#, kde-format
+msgid "Field"
+msgstr "필드"
+
+#. i18n: ectx: property (text), widget (QTableWidget, filters)
+#: plugins/filter/filterprefs.ui:48
+#, kde-format
+msgid "Type"
+msgstr "종류"
+
+#. i18n: ectx: property (text), widget (QTableWidget, filters)
+#: plugins/filter/filterprefs.ui:53
+#, kde-format
+msgid "Filter"
+msgstr "필터"
+
+#. i18n: ectx: property (text), widget (QTableWidget, filters)
+#: plugins/filter/filterprefs.ui:58
+#, kde-format
+msgid "Action"
+msgstr "동작"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnEdit)
+#: plugins/filter/filterprefs.ui:91
+#, kde-format
+msgid "Modify"
+msgstr "수정"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnRemove)
+#: plugins/filter/filterprefs.ui:114
+#, kde-format
+msgid "Remove"
+msgstr "삭제"
+
+#. i18n: ectx: attribute (title), widget (QWidget, tabSpecial)
+#: plugins/filter/filterprefs.ui:127
+#, kde-format
+msgid "Special Rules"
+msgstr "특별 규칙"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, cfg_hideRepliesNotRelatedToMe)
+#: plugins/filter/filterprefs.ui:133
+#, kde-format
+msgid "You will see just replies came to you, or mentions you."
+msgstr "내가 받은 답장이나 나를 멘션한 글만 볼 것입니다."
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_hideRepliesNotRelatedToMe)
+#: plugins/filter/filterprefs.ui:136
+#, kde-format
+msgid "Just show replies to me"
+msgstr "내가 받은 답장만 표시"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, cfg_hideNoneFriendsReplies)
+#: plugins/filter/filterprefs.ui:143
+#, kde-format
+msgid "You will see just replies between your friends."
+msgstr "내 친구끼리 주고받은 답장만 볼 수 있습니다."
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_hideNoneFriendsReplies)
+#: plugins/filter/filterprefs.ui:146
+#, kde-format
+msgid "Just show replies to me and my friends"
+msgstr "나와 친구가 받은 답장만 표시"
+
+#: plugins/filter/filtersettings.cpp:30
+#, kde-format
+msgid "Author Username"
+msgstr "작성자 사용자 이름"
+
+#: plugins/filter/filtersettings.cpp:31
+#, kde-format
+msgid "Post Text"
+msgstr "글 텍스트"
+
+#: plugins/filter/filtersettings.cpp:32
+#, kde-format
+msgid "Author Client"
+msgstr "작성자 클라이언트"
+
+#: plugins/filter/filtersettings.cpp:33
+#, kde-format
+msgid "Reply to User"
+msgstr "사용자에게 답장"
+
+#: plugins/filter/filtersettings.cpp:35
+#, kde-format
+msgid "Contain"
+msgstr "포함함"
+
+#: plugins/filter/filtersettings.cpp:36
+#, kde-format
+msgid "Does Not Contain"
+msgstr "포함하지 않음"
+
+#: plugins/filter/filtersettings.cpp:37
+#, kde-format
+msgid "Exact Match"
+msgstr "정확한 일치"
+
+#: plugins/filter/filtersettings.cpp:38
+#, kde-format
+msgid "Regular Expression"
+msgstr "정규 표현식"
+
+#: plugins/filter/filtersettings.cpp:40
+#, kde-format
+msgctxt "@action"
+msgid "Hide Posts"
+msgstr "글 숨기기"
+
+#: plugins/filter/filtersettings.cpp:41
+#, kde-format
+msgctxt "@action"
+msgid "Highlight Posts"
+msgstr "글 강조"
+
+#. i18n: ectx: property (text), widget (QLabel, label_im)
+#: plugins/imstatus/imstatusprefs.ui:19
+#, kde-format
+msgid "Instant Messenger:"
+msgstr "인스턴트 메신저:"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_reply)
+#: plugins/imstatus/imstatusprefs.ui:31
+#, kde-format
+msgid "Add replies to status"
+msgstr "상태에 답글 추가"
+
+#. i18n: ectx: property (text), widget (QLabel, label_status_templ)
+#: plugins/imstatus/imstatusprefs.ui:38
+#, kde-format
+msgid "Status template"
+msgstr "상태 템플릿"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/imstatus/imstatusprefs.ui:64
+#, no-c-format, kde-format
+msgid ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<table border=\"0\" style=\"-qt-table-type: root; margin-top:4px; margin-"
+"bottom:4px; margin-left:4px; margin-right:4px;\">\n"
+"<tr>\n"
+"<td style=\"border: none;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt;\">Available markup:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%status%</span><span style=\" font-size:8pt;\"> "
+"- new status</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%time%</span><span style=\" font-size:8pt;\"> - "
+"time of adding new status</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%url%</span><span style=\" font-size:8pt;\"> - "
+"URL of new status</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%username%</span><span style=\" font-size:8pt;"
+"\"> - your username</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%fullname%</span><span style=\" font-size:8pt;"
+"\"> - your full name</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%client%</span><span style=\" font-size:8pt;\"> "
+"- add </span><span style=\" font-size:8pt; font-style:italic;\">Choqok</"
+"span><span style=\" font-size:8pt;\"> to status</span></p></td></tr></"
+"table></body></html>"
+msgstr ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<table border=\"0\" style=\"-qt-table-type: root; margin-top:4px; margin-"
+"bottom:4px; margin-left:4px; margin-right:4px;\">\n"
+"<tr>\n"
+"<td style=\"border: none;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt;\">사용 가능한 마크업:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%status%</span><span style=\" font-size:8pt;\"> "
+"- 새 상태</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%time%</span><span style=\" font-size:8pt;\"> - "
+"새 상태를 추가한 시간</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%url%</span><span style=\" font-size:8pt;\"> - "
+"새 상태 URL</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%username%</span><span style=\" font-size:8pt;"
+"\"> - 내 사용자 이름</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%fullname%</span><span style=\" font-size:8pt;"
+"\"> - 내 전체 이름</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"size:8pt; font-weight:600;\">%client%</span><span style=\" font-size:8pt;\"> "
+"- 상태 메시지에 </span><span style=\" font-size:8pt; font-style:italic;"
+"\">Choqok</span><span style=\" font-size:8pt;\"> 추가</span></p></td></tr></"
+"table></body></html>"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_repeat)
+#: plugins/imstatus/imstatusprefs.ui:87
+#, kde-format
+msgid "Add repeats to status"
+msgstr "상태에 반복 추가"
+
+#: plugins/konqueror/konqchoqok.cpp:36 plugins/konqueror/konqchoqok.cpp:91
+#, kde-format
+msgid "Post Text with Choqok"
+msgstr "Choqok으로 텍스트 게시"
+
+#: plugins/konqueror/konqchoqok.cpp:41
+#, kde-format
+msgid "Shorten URL on Paste"
+msgstr "붙여넣을 때 URL 단축"
+
+#: plugins/konqueror/konqchoqok.cpp:90
+#, kde-format
+msgid "You need to select text to post."
+msgstr "게시할 텍스트를 선택해야 합니다."
+
+#. i18n: ectx: Menu (tools)
+#: plugins/konqueror/konqchoqok.rc:4
+#, kde-format
+msgid "&Tools"
+msgstr "도구(&T)"
+
+#: plugins/nowlistening/nowlistening.cpp:33
+#, kde-format
+msgid "Now Listening"
+msgstr "지금 재생 중"
+
+#: plugins/nowlistening/nowlistening.cpp:226
+#, kde-format
+msgctxt "Player is running, But it's not playing."
+msgid "Play your desired music player."
+msgstr "음악 재생기에 재생 중인 곡이 없습니다."
+
+#: plugins/nowlistening/nowlistening.cpp:229
+#, kde-format
+msgid "No supported player found."
+msgstr "지원하는 재생기가 없습니다."
+
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: plugins/nowlistening/nowlisteningprefs.ui:17
+#, kde-format
+msgid "Valid metadata:"
+msgstr "올바른 메타데이터:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/nowlistening/nowlisteningprefs.ui:51
+#, kde-format
+msgid "Template:"
+msgstr "템플릿:"
+
+#: plugins/quickfilter/quickfilter.cpp:35
+#, kde-format
+msgid "Filter by author"
+msgstr "작성자로 필터"
+
+#: plugins/quickfilter/quickfilter.cpp:37
+#, kde-format
+msgid "Filter by content"
+msgstr "내용으로 필터"
+
+#: plugins/quickfilter/quickfilter.cpp:92
+#, kde-format
+msgid "Filter out timeline by author"
+msgstr "작성자로 타임라인 필터"
+
+#: plugins/quickfilter/quickfilter.cpp:94
+#, kde-format
+msgid "Filter out timeline by text"
+msgstr "텍스트로 타임라인 필터"
+
+#: plugins/quickfilter/quickfilter.cpp:106
+#, kde-format
+msgid "Author"
+msgstr "작성자"
+
+#: plugins/quickfilter/quickfilter.cpp:107
+#, kde-format
+msgid "Text"
+msgstr "텍스트"
+
+#: plugins/searchaction/searchaction.cpp:49
+#, kde-format
+msgid "The Search action plugin does not support the current microblog."
+msgstr "검색 동작 플러그인에서 현재 마이크로블로그를 지원하지 않습니다."
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:70
+#, kde-format
+msgid "API key is invalid"
+msgstr "API 키가 잘못됨"
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:73
+#, kde-format
+msgid "Login is invalid"
+msgstr "로그인이 잘못됨"
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:76
+#, kde-format
+msgid "Rate limit exceeded. Try another shortener."
+msgstr "속도 제한을 초과했습니다. 다른 단축기를 사용하십시오."
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:79
+#: plugins/shorteners/goo_gl/goo_gl.cpp:55
+#: plugins/shorteners/is_gd/is_gd.cpp:67 plugins/shorteners/ur_ly/ur_ly.cpp:56
+#: plugins/uploaders/flickr/flickr.cpp:191
+#: plugins/uploaders/flickr/flickr.cpp:197
+#: plugins/uploaders/flickr/flickrconfig.cpp:158
+#: plugins/uploaders/flickr/flickrconfig.cpp:163
+#: plugins/uploaders/flickr/flickrconfig.cpp:232
+#: plugins/uploaders/flickr/flickrconfig.cpp:237
+#: plugins/uploaders/imageshack/imageshack.cpp:110
+#: plugins/uploaders/mobypicture/mobypicture.cpp:144
+#: plugins/uploaders/posterous/posterous.cpp:168
+#: plugins/uploaders/twitgoo/twitgoo.cpp:108
+#: plugins/uploaders/twitpic/twitpic.cpp:113
+#, kde-format
+msgid "Malformed response"
+msgstr "잘못된 응답"
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:79
+#: plugins/shorteners/bit_ly/bit_ly.cpp:82
+#, kde-format
+msgid "Bit.ly error"
+msgstr "Bit.ly 오류"
+
+#: plugins/shorteners/bit_ly/bit_ly.cpp:81
+#: plugins/shorteners/goo_gl/goo_gl.cpp:57
+#: plugins/shorteners/is_gd/is_gd.cpp:70
+#: plugins/shorteners/tighturl/tighturl.cpp:54
+#: plugins/shorteners/tinyarro_ws/tinyarro_ws.cpp:58
+#: plugins/shorteners/ur1_ca/ur1_ca.cpp:60
+#: plugins/shorteners/ur_ly/ur_ly.cpp:60
+#: plugins/shorteners/yourls/yourls.cpp:74
+#, kde-format
+msgid ""
+"Cannot create a short URL.\n"
+"%1"
+msgstr ""
+"단축 URL을 만들 수 없습니다.\n"
+"%1"
+
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:51
+#, kde-format
+msgctxt ""
+"The your_api_key part of the URL is a fixed part of the URL and should "
+"probably not be changed in localization."
+msgid ""
+"You can find your API key <a href=\"http://bit.ly/a/your_api_key\">here</a>"
+msgstr ""
+"<a href=\"http://bit.ly/a/your_api_key\">여기</a>에서 API 키를 확인할 수 있음"
+
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:95
+#, kde-format
+msgid "Checking..."
+msgstr "검사 중..."
+
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:121
+#, kde-format
+msgctxt ""
+"The your_api_key part of the URL is a fixed part of the URL and should "
+"probably not be changed in localization."
+msgid ""
+"Provided data is invalid. Try another login or API key.\n"
+"You can find it on http://bit.ly/a/your_api_key"
+msgstr ""
+"지정한 데이터가 잘못되었습니다. 다른 로그인이나 API 키를 사용해 보십시오.\n"
+"http://bit.ly/a/your_api_key 페이지에서 확인할 수 있습니다"
+
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:124
+#, kde-format
+msgid "You entered valid information."
+msgstr "올바른 정보를 입력했습니다."
+
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:127
+#, kde-format
+msgid "bit.ly Config Error"
+msgstr "bit.ly 설정 오류"
+
+#. i18n: ectx: property (text), widget (QPushButton, validate_button)
+#: plugins/shorteners/bit_ly/bit_ly_config.cpp:131
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:49
+#, kde-format
+msgid "Validate"
+msgstr "검사"
+
+#. i18n: ectx: property (text), widget (QLabel, login)
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:19
+#, kde-format
+msgid "Bit.ly login:"
+msgstr "Bit.ly 로그인:"
+
+#. i18n: ectx: property (text), widget (QLabel, api_key)
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:32
+#, kde-format
+msgid "Bit.ly API key:"
+msgstr "Bit.ly API 키:"
+
+#. i18n: ectx: property (text), widget (QLabel, help_label)
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:58
+#, kde-format
+msgid "You can find your API key here"
+msgstr "여기에서 API 키를 확인할 수 있음"
+
+#. i18n: ectx: property (text), widget (QLabel, domain)
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:73
+#, kde-format
+msgid "Domain:"
+msgstr "도메인:"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: plugins/shorteners/bit_ly/bit_ly_prefs.ui:86
+#, kde-format
+msgid "(No matter for Bit.ly Pro accounts)"
+msgstr "(Bit.ly Pro 계정과 무관함)"
+
+#: plugins/shorteners/goo_gl/goo_gl.cpp:38
+#, kde-format
+msgid "Error when creating job"
+msgstr "작업 생성 오류"
+
+#: plugins/shorteners/goo_gl/goo_gl.cpp:38
+#: plugins/shorteners/goo_gl/goo_gl.cpp:50
+#: plugins/shorteners/goo_gl/goo_gl.cpp:55
+#: plugins/shorteners/goo_gl/goo_gl.cpp:57
+#, kde-format
+msgid "Goo.gl Error"
+msgstr "Goo.gl 오류"
+
+#: plugins/shorteners/is_gd/is_gd.cpp:59 plugins/shorteners/is_gd/is_gd.cpp:67
+#: plugins/shorteners/is_gd/is_gd.cpp:70
+#, kde-format
+msgid "is.gd Error"
+msgstr "is.gd 오류"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_logstats)
+#: plugins/shorteners/is_gd/is_gd_prefs.ui:19
+#, kde-format
+msgid "Generate Statistics"
+msgstr "통계 생성"
+
+#: plugins/shorteners/tighturl/tighturl.cpp:55
+#, kde-format
+msgid "TightUrl Error"
+msgstr "TightUrl 오류"
+
+#: plugins/shorteners/tinyarro_ws/tinyarro_ws.cpp:56
+#, kde-format
+msgid "Tinyarro.ws error"
+msgstr "Tinyarro.ws 오류"
+
+#: plugins/shorteners/tinyarro_ws/tinyarro_ws_config.cpp:49
+#, kde-format
+msgid "Random host"
+msgstr "무작위 호스트"
+
+#. i18n: ectx: property (text), widget (QLabel, urlHostLabel)
+#: plugins/shorteners/tinyarro_ws/tinyarro_ws_prefs.ui:40
+#, kde-format
+msgid "Shortener URL host:"
+msgstr "URL 단축 서비스 호스트:"
+
+#: plugins/shorteners/ur1_ca/ur1_ca.cpp:60
+#, kde-format
+msgid "ur1.ca Error"
+msgstr "ur1.ca 오류"
+
+#: plugins/shorteners/ur_ly/ur_ly.cpp:56 plugins/shorteners/ur_ly/ur_ly.cpp:61
+#, kde-format
+msgid "Ur.ly Error"
+msgstr "Ur.ly 오류"
+
+#: plugins/shorteners/yourls/yourls.cpp:71
+#, kde-format
+msgid "Yourls Error"
+msgstr "Yourls 오류"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: plugins/shorteners/yourls/yourlsprefs.ui:17
+#, kde-format
+msgid "Yourls API URL:"
+msgstr "Yourls API URL:"
+
+#. i18n: ectx: property (clickMessage), widget (QLineEdit, kcfg_yourlsHost)
+#: plugins/shorteners/yourls/yourlsprefs.ui:27
+#, kde-format
+msgid "http://SomeDomain.com/yourls/yourls-api.php"
+msgstr "http://SomeDomain.com/yourls/yourls-api.php"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useUntinyDotCom)
+#: plugins/untiny/untinyprefs.ui:17
+#, kde-format
+msgid "Use untiny.com service"
+msgstr "untiny.com 서비스 사용"
+
+#: plugins/uploaders/flickr/flickr.cpp:155
+#, kde-format
+msgid "The photo required argument was missing"
+msgstr "photo 인자(필수)가 없음"
+
+#: plugins/uploaders/flickr/flickr.cpp:158
+#, kde-format
+msgid "The file was not correctly uploaded"
+msgstr "파일이 올바르게 업로드되지 않았음"
+
+#: plugins/uploaders/flickr/flickr.cpp:161
+#, kde-format
+msgid "The file was zero bytes in length"
+msgstr "파일 길이가 0바이트임"
+
+#: plugins/uploaders/flickr/flickr.cpp:164
+#, kde-format
+msgid "Filetype was not recognised"
+msgstr "파일 형식이 인식되지 않았음"
+
+#: plugins/uploaders/flickr/flickr.cpp:167
+#, kde-format
+msgid "The calling user has reached their monthly bandwidth limit"
+msgstr "호출 사용자의 월간 대역폭 제한에 도달함"
+
+#: plugins/uploaders/flickr/flickr.cpp:171
+#: plugins/uploaders/flickr/flickrconfig.cpp:147
+#, kde-format
+msgid "Signature problem. Please try again later"
+msgstr "서명 문제. 나중에 다시 시도하십시오"
+
+#: plugins/uploaders/flickr/flickr.cpp:178
+#, kde-format
+msgid "Login failed. Please re-authenticate Choqok"
+msgstr "로그인 실패. Choqok을 다시 인증하십시오"
+
+#: plugins/uploaders/flickr/flickr.cpp:181
+#: plugins/uploaders/flickr/flickrconfig.cpp:150
+#: plugins/uploaders/flickr/flickrconfig.cpp:224
+#, kde-format
+msgid "The requested service is temporarily unavailable. Try again later"
+msgstr "요청한 서비스를 임시로 사용할 수 없습니다. 나중에 다시 시도하십시오"
+
+#: plugins/uploaders/flickr/flickr.cpp:184
+#: plugins/uploaders/flickr/flickrconfig.cpp:153
+#, kde-format
+msgid "Unknown Error:%1. Please try again later"
+msgstr "알 수 없는 오류: %1. 나중에 다시 시도하십시오"
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:169
+#: plugins/uploaders/flickr/flickrconfig.cpp:244
+#, kde-format
+msgid "Flickr authorization"
+msgstr "Flickr 인증"
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:221
+#, kde-format
+msgid "Something happens with signature. Please retry"
+msgstr "서명 문제. 다시 시도하십시오"
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:227
+#, kde-format
+msgid "Something happens wrong. Error %1. Try again later"
+msgstr "문제가 발생했습니다. 오류 %1. 나중에 다시 시도하십시오"
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:264
+#, kde-format
+msgid "Authorized as %1"
+msgstr "%1(으)로 승인됨"
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:271
+#, kde-format
+msgid "Not authorized"
+msgstr "인증되지 않음"
+
+#: plugins/uploaders/flickr/flickrconfig.cpp:285
+#, kde-format
+msgid "Click here when you authorized Choqok"
+msgstr "Choqok을 인증한 다음 여기를 클릭하십시오"
+
+#. i18n: ectx: attribute (title), widget (QWidget, authTab)
+#: plugins/uploaders/flickr/flickrprefs.ui:24
+#, kde-format
+msgid "Authorization"
+msgstr "인증"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: plugins/uploaders/flickr/flickrprefs.ui:51
+#, kde-format
+msgid ""
+"Click the below button; if everything goes well, you will pointed to Flickr."
+"com website to allow access to Choqok."
+msgstr ""
+"아래 단추를 클릭하십시오. 오류가 발생하지 않았다면 Flickr.com 웹사이트가 열려"
+"서 Choqok 접근 허용 여부를 물어봅니다."
+
+#. i18n: ectx: property (text), widget (QPushButton, authButton)
+#: plugins/uploaders/flickr/flickrprefs.ui:61
+#, kde-format
+msgid "Click here to authorize Choqok on Flickr.com"
+msgstr "Flickr.com에서 Choqok을 인증하려면 여기를 클릭하십시오"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: plugins/uploaders/flickr/flickrprefs.ui:90
+#, kde-format
+msgid "Who can view photo"
+msgstr "사진을 볼 수 있는 사람"
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_forprivate)
+#: plugins/uploaders/flickr/flickrprefs.ui:96
+#, kde-format
+msgid "Private"
+msgstr "개인"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_forfriends)
+#: plugins/uploaders/flickr/flickrprefs.ui:105
+#, kde-format
+msgid "Visible for friends"
+msgstr "친구 공개"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_forfamily)
+#: plugins/uploaders/flickr/flickrprefs.ui:112
+#, kde-format
+msgid "Visible for family"
+msgstr "가족 공개"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: plugins/uploaders/flickr/flickrprefs.ui:134
+#, kde-format
+msgid "Set safety level"
+msgstr "안전 수준 설정"
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_safe)
+#: plugins/uploaders/flickr/flickrprefs.ui:140
+#, kde-format
+msgid "Safe"
+msgstr "안전"
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_moderate)
+#: plugins/uploaders/flickr/flickrprefs.ui:150
+#, kde-format
+msgid "Moderate"
+msgstr "보통"
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_restricted)
+#: plugins/uploaders/flickr/flickrprefs.ui:157
+#, kde-format
+msgid "Restricted"
+msgstr "제한"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_hidefromsearch)
+#: plugins/uploaders/flickr/flickrprefs.ui:169
+#, kde-format
+msgid "Hide picture from public search"
+msgstr "공개 검색에서 사진 숨기기"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_shorturl)
+#: plugins/uploaders/flickr/flickrprefs.ui:176
+#, kde-format
+msgid "Use Flic.kr to short URLs"
+msgstr "Flic.kr로 URL 단축"
+
+#: plugins/uploaders/imageshack/imageshack.cpp:37
+#, kde-format
+msgid "Just supporting image uploading"
+msgstr "그림 업로드만 지원함"
+
+#: plugins/uploaders/mobypicture/mobypicture.cpp:46
+#: plugins/uploaders/posterous/posterous.cpp:101
+#: plugins/uploaders/twitgoo/twitgoo.cpp:44
+#: plugins/uploaders/twitpic/twitpic.cpp:42
+#, kde-format
+msgid "There is no Twitter account configured to use."
+msgstr "설정한 트위터 계정이 없습니다."
+
+#: plugins/uploaders/mobypicture/mobypictureconfig.cpp:76
+#: plugins/uploaders/posterous/posterousconfig.cpp:77
+#: plugins/uploaders/twitgoo/twitgooconfig.cpp:66
+#: plugins/uploaders/twitpic/twitpicconfig.cpp:62
+#, kde-format
+msgid "You have to configure at least one Twitter account to use this plugin."
+msgstr "이 플러그인을 사용하려면 트위터 계정을 하나 이상 설정해야 합니다."
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_oauth)
+#: plugins/uploaders/mobypicture/mobypictureprefs.ui:40
+#: plugins/uploaders/posterous/posterousprefs.ui:40
+#, kde-format
+msgid "&Twitter account"
+msgstr "트위터 계정(&T)"
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_basic)
+#: plugins/uploaders/mobypicture/mobypictureprefs.ui:47
+#, kde-format
+msgid "Mobypicture &login and password:"
+msgstr "Mobypicture 로그인 및 암호(&L):"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: plugins/uploaders/mobypicture/mobypictureprefs.ui:57
+#: plugins/uploaders/posterous/posterousprefs.ui:57
+#, kde-format
+msgid "Upload files using:"
+msgstr "다음으로 파일 업로드:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/uploaders/mobypicture/mobypictureprefs.ui:64
+#, kde-format
+msgid "Login:"
+msgstr "로그인:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: plugins/uploaders/mobypicture/mobypictureprefs.ui:74
+#, kde-format
+msgid "Password (PIN):"
+msgstr "암호(PIN):"
+
+#. i18n: ectx: property (text), widget (QRadioButton, cfg_basic)
+#: plugins/uploaders/posterous/posterousprefs.ui:47
+#, kde-format
+msgid "Posterous &login and password:"
+msgstr "Posterous 로그인 및 암호(&L):"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/uploaders/posterous/posterousprefs.ui:64
+#, kde-format
+msgid "E-mail:"
+msgstr "이메일:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: plugins/uploaders/twitgoo/twitgooprefs.ui:17
+#: plugins/uploaders/twitpic/twitpicprefs.ui:17
+#, kde-format
+msgid "Twitter account:"
+msgstr "트위터 계정:"
+
+#. i18n: ectx: property (text), widget (QCheckBox, cfg_directLink)
+#: plugins/uploaders/twitgoo/twitgooprefs.ui:50
+#, kde-format
+msgid "Get direct link to file"
+msgstr "파일 직접 링크 주소 가져오기"
+
+#~ msgctxt "Translation Language"
+#~ msgid "Chinese Simplified"
+#~ msgstr "중국어 간체"
+
+#~ msgctxt "Translation Language"
+#~ msgid "Chinese Traditional"
+#~ msgstr "중국어 번체"
+
+#~ msgctxt "Translation Language"
+#~ msgid "Filipino"
+#~ msgstr "타갈로그어"
+
+#~ msgctxt "Translation Language"
+#~ msgid "Haitian Creole"
+#~ msgstr "아이티 크리올어"
+
+#~ msgctxt "Translation Language"
+#~ msgid "Hebrew"
+#~ msgstr "히브리어"
+
+#~ msgctxt "Translation Language"
+#~ msgid "Norwegian"
+#~ msgstr "노르웨이어"
+
+#~ msgid "Translate to..."
+#~ msgstr "다음으로 번역..."
+
+#~ msgctxt "%1 is the name of the source language in localized form"
+#~ msgid ""
+#~ "<span style=\"color:%2; font-size:small;\">Translated from %1: (<a "
+#~ "href='choqok://showoriginalpost' style=\"text-decoration:none\" >original "
+#~ "post</a>)</span>"
+#~ msgstr ""
+#~ "<span style=\"color:%2; font-size:small;\">%1에서 번역함: (<a "
+#~ "href='choqok://showoriginalpost' style=\"text-decoration:none\" >원래 글</"
+#~ "a>)</span>"
+
+#~ msgid "Translation failed: %1"
+#~ msgstr "번역 실패: %1"
+
+#~ msgid "Configure Translator"
+#~ msgstr "번역기 설정"
+
+#~ msgid "Select languages to be shown in translate menu"
+#~ msgstr "번역 메뉴에 표시할 언어 선택"

@@ -1,0 +1,606 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Swedish "INCLUDE">
+]>
+
+<book id="choqok" lang="&language;">
+
+<bookinfo>
+<title
+>Handbok &choqok;</title>
+
+<authorgroup>
+<author
+><firstname
+>Mehrdad</firstname
+> <surname
+>Momeny</surname
+> <affiliation
+> <address
+>mehrdad.momeny@gmail.com</address>
+</affiliation>
+</author>
+<author
+><firstname
+>Anne-Marie</firstname
+> <surname
+>Mahfouf</surname
+> <affiliation
+> <address
+>&Anne-Marie.Mahfouf.mail;</address>
+</affiliation>
+</author>
+<author
+><firstname
+>Andrea</firstname
+> <surname
+>Scarpino</surname
+> <affiliation
+> <address
+>scarpino@kde.org</address>
+</affiliation>
+</author>
+<othercredit role="translator"
+> <firstname
+>Stefan</firstname
+> <surname
+>Asserhäll</surname
+> <affiliation
+><address
+><email
+>stefan.asserhall@bredband.net</email
+></address
+></affiliation
+> <contrib
+>Översättare</contrib
+></othercredit
+> 
+</authorgroup>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>2015-01-25</date>
+<releaseinfo
+>1.5</releaseinfo>
+
+<abstract>
+<para
+>&choqok; är en klient för mikrobloggar av KDE (<ulink url="https://choqok.kde.org"
+>https://choqok.kde.org</ulink
+>).</para>
+</abstract>
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>microblogg</keyword>
+<keyword
+>klient</keyword>
+<keyword
+>Twitter</keyword>
+<keyword
+>Pump.io</keyword>
+<keyword
+>GNU social</keyword>
+</keywordset>
+
+</bookinfo>
+<!--FIXME https://choqok.kde.org/news/2013/09/01/choqok-1-4-released.html -->
+<chapter id="introduction">
+<title
+>Inledning</title>
+
+<para
+>&choqok; är en klient för mikrobloggar som för närvarande stöder tjänsterna Pump.io, GNU social och Twitter.com.</para>
+<para
+>En mikroblogg är en form av multimedia-blogg som låter användare skicka korta textuppdateringar eller mikromedia som foton eller ljudklipp och publicera dem. De kan antingen ses av alla eller av en begränsad grupp, som kan bestämmas av användaren. Meddelanden kan skickas in på en mängd olika sätt, inklusive SMS, direktmeddelanden, e-post, digitalljud och webben.</para>
+</chapter>
+
+<chapter id="using">
+<title
+>Använda &choqok;</title>
+
+<sect1 id="getting-started">
+<title
+>Komma igång</title>
+
+<para
+>Det finns ett antal tidslinjer i &choqok;s huvudfönster som låter dig se vad dina vänner har skickat, svar till dem och direktmeddelanden som har skickats till och tagits emot av vänner. Du kan också skicka ett nytt meddelande.</para>
+
+<para
+>Allt detta blir tillgängligt när du har ställt in minst ett konto i &choqok;.</para>
+
+<screenshot>
+<screeninfo
+>Här är en skärmbild av huvudfönstret i &choqok;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Huvudfönstret i &choqok;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Du har en flik per konto, på skärmbilden kan du se en flik med alias <guilabel
+>Pump.io</guilabel
+> och en annan med alias <guilabel
+>twitter</guilabel
+>.</para>
+
+<para
+>Längst upp under fliken kan du välja att skicka ett direktmeddelande till någon som prenumererar på ditt konto. Du kan skicka direktmeddelanden till andra användare av samma tjänst, under förutsättning att båda prenumererar på varandra. Om du inte markerar <guilabel
+>Direktmeddelande till</guilabel
+> kommer meddelandet att publiceras öppet, och alla dina vänner kommer att kunna läsa det. Om du markerar det, väljer du därefter ett namn i listan, så skickas det privata meddelandet bara till den personen.</para>
+
+<para
+>Textområdet låter dig skicka ditt meddelande, som måste ha mindre än 140 tecken. Antal kvarvarande tecken visas i grönt längst ner till höger under textområdet. Färgen ändras till orange när du når gränsen 30 tecken kvar, och därefter till röd när du når 0. Om ditt meddelande är längre än 140 tecken, blir du tillfrågad om du vill skicka det ändå. Om du accepterar, skickas de första 140 tecknen.</para>
+
+<para
+>Fliken <guilabel
+>Hem</guilabel
+> visar tidslinjen som består av alla inlägg som du och dina vänner har skrivit. Ett inlägg som använder Pump.io kallas post på engelska, medan ett inlägg som använder Twitter kallas tweet på engelska.</para>
+
+<para
+>Fliken <guilabel
+>Svar</guilabel
+> visar meddelanden som är svar till dig.</para>
+
+<para
+>Alla privata meddelanden som du skickar visas under fliken <guilabel
+>Utkorg</guilabel
+> medan de mottagna visas under fliken <guilabel
+>Inkorg</guilabel
+>.</para>
+
+</sect1>
+
+<sect1 id="search">
+<title
+>Sökning</title>
+
+<para
+>Du kan söka igenom tjänster efter någonting (allt som tjänstens programmeringsgränssnitt för sökning erbjuder en klient).</para>
+
+<para
+>Funktionen är tillgänglig via menyalternativet <menuchoice
+><guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Sök</guimenuitem
+></menuchoice
+> (snabbtangent <keycombo action="simul"
+>&Ctrl; <keycap
+>F</keycap
+></keycombo
+>). Du kan till exempel söka efter ett speciellt ord i alla användares inlägg:</para>
+
+<screenshot>
+<screeninfo
+>Sökfunktionen i &choqok;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_search.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Sökfunktionen i &choqok;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="configuring-account">
+<title
+>Ställa in ett konto</title>
+
+<para
+>Öppna &choqok;s inställningsfönster med <menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Anpassa &choqok;...</guimenuitem
+></menuchoice
+>, gå därefter till fliken <guilabel
+>Konton</guilabel
+> och klicka på knappen <guibutton
+>Lägg till</guibutton
+>. Då visas fönstret <guilabel
+>Lägg till nytt konto</guilabel
+>. </para>
+
+<screenshot>
+<screeninfo
+>Lägga till ett konto</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="add_account.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Lägga till ett konto</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Skriv helt enkelt in önskat unikt alias, användarnamn och lösenord, och klicka på knappen <guibutton
+>Ok</guibutton
+>. Det kontrollerar din behörighet, och om allting gick bra, är kontot klart att använda.</para>
+<para
+>Därefter kan du ställa in andra konton.</para>
+</sect1>
+
+<sect1 id="special-features">
+<title
+>Specialfunktioner</title>
+
+<itemizedlist>
+<listitem
+><para
+>Du kan inaktivera uppdatering av &choqok;s tidslinje (tidslinjen är listan med inlägg som du och dina vänner har gjort). </para
+></listitem>
+<listitem
+><para
+>En annan specialfunktion är möjligheten att underrätta användaren om mottagna nya inlägg. </para
+></listitem>
+<listitem
+><para
+>Du kan skicka ett snabbmeddelande genom att trycka på <keycombo action="simul"
+>&Ctrl; <keycap
+>T</keycap
+></keycombo
+> för att öppna snabbmeddelandefönstret och skriva in ditt inlägg: <screenshot>
+<screeninfo
+>Dialogrutan för snabbmeddelanden</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_quick.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Dialogrutan för snabbmeddelanden</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+<note
+><para
+>Du kan skicka samma text till alla konton på en gång.</para
+></note>
+</para
+></listitem>
+<listitem
+><para
+>När nya inlägg tas emot, markerar &choqok; dem som olästa och visar antalet olästa inlägg i systembrickans ikon. När huvudfönstret visas och därefter minimeras i systembrickan, markeras alla nya meddelanden som lästa. </para
+></listitem>
+</itemizedlist>
+</sect1>
+
+</chapter>
+
+<chapter id="commands">
+
+<title
+>Kommandoreferens</title>
+
+<sect1 id="menu">
+<title
+>Menyalternativen</title>
+
+<variablelist>
+<title
+>Menyn <guimenu
+>Arkiv</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>T</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Snabbmeddelande</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Öppna fönstret för snabbmeddelanden.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo
+><keycap
+>F5</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Uppdatera tidslinjer</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Uppdatera tidslinjer.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Markera alla som lästa</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Markera alla meddelanden som lästa.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Minimera</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Minimera &choqok;s fönster till systembrickan.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Avsluta</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avsluta</action
+> &choqok;.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<title
+>Menyn <guimenu
+>Verktyg</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Sök</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Visar ett sökfönster för nuvarande konto.</action>
+</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<title
+>Menyn <guimenu
+>Inställningar</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>U</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Aktivera uppdateringstimer</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Växla</action
+> uppdateringstimer för tidslinjer.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Ínställningar</guimenu
+> <guimenuitem
+>Aktivera underrättelser</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Växla</action
+> underrättelser.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Visa statusrad</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Visa eller dölj</action
+> statusraden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Anpassa genvägar...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+><action
+>Anpassa</action
+> snabbtangenterna som används av &choqok;. </action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Anpassa verktygsrader...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Anpassa</action
+> objekt som du vill placera i verktygsraden. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Anpassa &choqok;...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Visa</action
+> &choqok;s inställningsdialogruta. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>Dessutom har &choqok; de välkända alternativen i menyn <guimenu
+>Hjälp</guimenu
+>. </para>
+</sect1>
+
+</chapter>
+
+
+<chapter id="credits-and-license">
+<title
+>Tack till och licens</title>
+
+<para
+>&choqok; copyright 2008-2015 Mehrdad Momeny <email
+>mehrdad.momeny@gmail.com</email
+> </para>
+<para
+>Dokumentation copyright 2009 Mehrdad Momeny <email
+>mehrdad.momeny@gmail.com</email
+> </para>
+
+<para
+>Översättning Stefan Asserhäll <email
+>stefan.asserhall@bredband.net</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes: nil
+sgml-general-insert-case: lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->

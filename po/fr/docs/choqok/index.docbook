@@ -1,0 +1,594 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % French "INCLUDE">
+]>
+
+<book id="choqok" lang="&language;">
+
+<bookinfo>
+<title
+>Le manuel de &choqok;</title>
+
+<authorgroup>
+<author
+><firstname
+>Mehrdad</firstname
+> <surname
+>Momeny</surname
+> <affiliation
+> <address
+>mehrdad.momeny@gmail.com</address>
+</affiliation>
+</author>
+<author
+><firstname
+>Anne-Marie</firstname
+> <surname
+>Mahfouf</surname
+> <affiliation
+> <address
+>&Anne-Marie.Mahfouf.mail;</address>
+</affiliation>
+</author>
+<author
+><firstname
+>Andrea</firstname
+> <surname
+>Scarpino</surname
+> <affiliation
+> <address
+>scarpino@kde.org</address>
+</affiliation>
+</author>
+&traducteurFrederickAngelique;&relecteurLudovicGrossard; 
+</authorgroup>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>25-01-2015</date>
+<releaseinfo
+>1.5</releaseinfo>
+
+<abstract>
+<para
+>&choqok; est un client de microblogage pour KDE (<ulink url="https://choqok.kde.org"
+>https://choqok.kde.org</ulink
+>).</para>
+</abstract>
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>microblogage</keyword>
+<keyword
+>client</keyword>
+<keyword
+>Twitter</keyword>
+<keyword
+>Pump.io</keyword>
+<keyword
+>GNU social</keyword>
+</keywordset>
+
+</bookinfo>
+<!--FIXME https://choqok.kde.org/news/2013/09/01/choqok-1-4-released.html -->
+<chapter id="introduction">
+<title
+>Introduction</title>
+
+<para
+>&choqok; est un client de microblogage prenant actuellement en charge les services « Pump.io », « GNU social » et « Twitter.com ».</para>
+<para
+>Le microblogage est une forme de blogage multimédia qui permet aux utilisateurs d'envoyer de courts messages texte ou multimédia comme des photos ou des clips audio et de les publier. Ils peuvent être vus par tout le monde ou par un groupe restreint de personnes selon la configuration souhaitée par l'utilisateur. Ces messages peuvent être envoyés par divers moyens, dont la messagerie textuelle, la messagerie instantanée, la messagerie électronique, un support audio numérique ou le web. </para>
+</chapter>
+
+<chapter id="using">
+<title
+>Utilisation de &choqok;</title>
+
+<sect1 id="getting-started">
+<title
+>Mise en route</title>
+
+<para
+>Dans la fenêtre principale de &choqok; il y a quelques frises chronologiques vous permettant de voir ce que vos amis ont publié, de leur répondre et les messages envoyés et reçus de vos amis Vous pouvez aussi publier un nouveau message.</para>
+
+<para
+>Tout cela sera disponible lors de la configuration du premier compte dans &choqok;.</para>
+
+<screenshot>
+<screeninfo
+>Voici une capture d'écran de la fenêtre principale de &choqok;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Fenêtre principale de &choqok;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Vous avez un onglet par compte, sur la capture d'écran vous pouvez voir un onglet avec l'alias <guilabel
+>Pump.io</guilabel
+> et un autre avec l'alias <guilabel
+>twitter</guilabel
+>.</para>
+
+<para
+>Au-dessus de l'onglet, vous pouvez choisir d'envoyer un message à quelqu'un abonné à votre compte. Vous pouvez envoyer des messages directs à d'autres utilisateurs du même service, tant que vous et les autres utilisateurs êtes abonnés mutuellement à vous suivre. Si vous laissez <guilabel
+>Message direct pour</guilabel
+> décoché, alors votre message sera publié publiquement et tous vos amis pourront le lire. Si vous cochez cette case, vous devrez choisir un nom dans la liste et le message privé ne sera publié que pour la personne choisie.</para>
+
+<para
+>Le champ textuel vous permet de publier votre message d'une longueur qui doit être inférieure à 140 caractères. Le nombre de caractères restant est affiché en vert en bas à gauche dans le champ textuel. La couleur devient orange quand vous atteignez la limite de 30 caractères, puis rouge lorsqu'il ne reste plus de caractère. Si votre message est plus long que 140 caractères, il vous sera demandé si vous voulez quand même le publier. Si vous êtes d'accord, il sera publié mais tronqué à 140 caractères.</para>
+
+<para
+>L'onglet <guilabel
+>Page d'accueil</guilabel
+> affiche la frise chronologique constituée de tous les billets que vous et vos amis avez publiés. Un billet utilisant « Pump.io » est appelé un <quote
+>dent</quote
+> alors qu'un billet utilisant « Twitter » est un <quote
+>tweet</quote
+>.</para>
+
+<para
+>L'onglet <guilabel
+>Mentions</guilabel
+> affiche les billets vous mentionnant.</para>
+
+<para
+>Tous les messages privés que vous publiez seront affichés dans l'onglet <guilabel
+>Boîte d'envoi</guilabel
+> alors que ceux que vous recevez seront dans l'onglet <guilabel
+>Boîte de réception</guilabel
+>.</para>
+
+</sect1>
+
+<sect1 id="search">
+<title
+>Rechercher</title>
+
+<para
+>Vous pouvez effectuer des recherches quelconques (tout ce que l'API de recherche du service concerné peut offrir au client).</para>
+
+<para
+>Cette fonction est disponible depuis le menu <menuchoice
+><guimenu
+>Outils</guimenu
+> <guimenuitem
+>Rechercher...</guimenuitem
+> </menuchoice
+> (raccourci clavier : <keycombo action="simul"
+>&Ctrl; <keycap
+>F</keycap
+></keycombo
+>) Par exemple, vous pouvez rechercher un mot en particulier dans tous les billets :</para>
+
+<screenshot>
+<screeninfo
+>Fonction de recherche de &choqok;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_search.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Fonction de recherche de &choqok;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="configuring-account">
+<title
+>Configurer un compte</title>
+
+<para
+>Ouvrez la fenêtre de configuration de &choqok; grâce au menu <menuchoice
+><guimenu
+>Configuration</guimenu
+> <guimenuitem
+>Configurer &choqok;...</guimenuitem
+> </menuchoice
+>, puis allez dans l'onglet <guilabel
+>Comptes</guilabel
+> et appuyez sur le bouton <guibutton
+>Ajouter...</guibutton
+>. La fenêtre <guilabel
+>Ajouter un nouveau compte</guilabel
+> s'affichera. </para>
+
+<screenshot>
+<screeninfo
+>Ajouter un compte</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="add_account.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Ajouter un compte</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Saisissez simplement l'alias unique de votre choix, votre nom d'utilisateur et votre mot de passe. Appuyez ensuite sur le bouton <guibutton
+>Ok</guibutton
+>. cela entraînera la vérification de vos identifiants et, si tout se passe bien, votre compte sera prêt à être utilisé.</para>
+<para
+>Vous pouvez configurer d'autres comptes ainsi.</para>
+</sect1>
+
+<sect1 id="special-features">
+<title
+>Fonctionnalités particulières</title>
+
+<itemizedlist>
+<listitem
+><para
+>Vous pouvez désactiver la mise à jour de la frise chronologique de &choqok; (la frise chronologique est la liste des billets que vous et vos amis ont publiés). </para
+></listitem>
+<listitem
+><para
+>Une autre fonctionnalité particulière est la capacité d'indiquer à l'utilisateur les nouveaux billets reçus. </para
+></listitem>
+<listitem
+><para
+>Vous pouvez faire une publication rapide en appuyant sur les touches <keycombo action="simul"
+>&Ctrl; <keycap
+>T</keycap
+></keycombo
+> pour ouvrir la fenêtre de publication rapide et écrire votre billet : <screenshot>
+<screeninfo
+>Fenêtre de dialogue de publication rapide</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_quick.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Fenêtre de dialogue de publication rapide</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+<note
+><para
+>Vous pouvez publier le même message sur tous vos comptes en une seule fois.</para
+></note>
+</para
+></listitem>
+<listitem
+><para
+>Lorsque de nouveaux billets sont reçus, &choqok; les marque comme non lus et affiche le nombre de billets non lus dans l'icône située dans la boîte à miniatures. Quand la fenêtre principale est affichée puis réduite dans la boîte à miniatures, il marque alors tous les nouveaux billets comme lus. </para
+></listitem>
+</itemizedlist>
+</sect1>
+
+</chapter>
+
+<chapter id="commands">
+
+<title
+>Référence des commandes</title>
+
+<sect1 id="menu">
+<title
+>Éléments des menus</title>
+
+<variablelist>
+<title
+>Le menu <guimenu
+>Fichier</guimenu
+> </title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>T</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fichier</guimenu
+> <guimenuitem
+>Billet rapide</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Ouvre la fenêtre de publication rapide.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo
+><keycap
+>F5</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fichier</guimenu
+> <guimenuitem
+>Mettre à jour les frises chronologiques</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Met à jour les frises chronologiques.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fichier</guimenu
+> <guimenuitem
+>Tout marquer comme lu</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Marque tous les messages comme lus.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Fichier</guimenu
+> <guimenuitem
+>Réduire</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Réduit la fenêtre de &choqok; dans la boîte à miniatures.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fichier</guimenu
+> <guimenuitem
+>Quitter</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Quitte</action
+> &choqok;.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<title
+>Le menu <guimenu
+>Outils</guimenu
+> </title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Outils</guimenu
+> <guimenuitem
+>Rechercher...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Ouvre la fenêtre de recherche pour le compte courant.</action>
+</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<title
+>Le menu <guimenu
+>Configuration</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>U</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Configuration</guimenu
+> <guimenuitem
+>Activer l'horloge de mise à jour</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>(Dés)active</action
+> l'horloge de mise à jour.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Configuration</guimenu
+> <guimenuitem
+>Activer les notifications</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>(Dés)active</action
+> les notifications.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Configuration</guimenu
+> <guimenuitem
+>Afficher la barre d'état</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>(Dés)active</action
+> la barre d'état.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Configuration</guimenu
+> <guimenuitem
+>Configurer les raccourcis clavier...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+><action
+>Configure</action
+> les raccourcis clavier utilisés par &choqok;. </action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Configuration</guimenu
+> <guimenuitem
+>Configurer les barres d'outils...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Configure</action
+> les éléments que vous voulez mettre dans la barre d'outils. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Configuration</guimenu
+> <guimenuitem
+>Configurer &choqok;...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Affiche</action
+> la fenêtre de configuration de &choqok;. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>De plus, &choqok; possède les éléments du fameux menu d'<guimenu
+>Aide</guimenu
+> de KDE. </para>
+</sect1>
+
+</chapter>
+
+
+<chapter id="credits-and-license">
+<title
+>Remerciements et licence</title>
+
+<para
+>&choqok; copyright 2008-2015 Mehrdad Momeny <email
+>mehrdad.momeny@gmail.com</email
+> </para>
+<para
+>Documentation copyright 2009 Mehrdad Momeny <email
+>mehrdad.momeny@gmail.com</email
+> </para>
+
+<para
+>Traduction française par &traducteurFrederickAngelique;. Relecture par &LudovicGrossard;</para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes: nil
+sgml-general-insert-case: lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->

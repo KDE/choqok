@@ -1,0 +1,590 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Catalan  "INCLUDE">
+]>
+
+<book id="choqok" lang="&language;">
+
+<bookinfo>
+<title
+>El manual del &choqok;</title>
+
+<authorgroup>
+<author
+><firstname
+>Mehrdad</firstname
+> <surname
+>Momeny</surname
+> <affiliation
+> <address
+>mehrdad.momeny@gmail.com</address>
+</affiliation>
+</author>
+<author
+><firstname
+>Anne-Marie</firstname
+> <surname
+>Mahfouf</surname
+> <affiliation
+> <address
+>&Anne-Marie.Mahfouf.mail;</address>
+</affiliation>
+</author>
+<author
+><firstname
+>Andrea</firstname
+> <surname
+>Scarpino</surname
+> <affiliation
+> <address
+>scarpino@kde.org</address>
+</affiliation>
+</author>
+&traductor.Antoni.Bella; 
+</authorgroup>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>25 de gener de 2015</date>
+<releaseinfo
+>1.5</releaseinfo>
+
+<abstract>
+<para
+>El &choqok; és un client de microblogs creat per la comunitat KDE (<ulink url="https://choqok.kde.org"
+>https://choqok.kde.org</ulink
+>).</para>
+</abstract>
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>microblogs</keyword>
+<keyword
+>client</keyword>
+<keyword
+>Twitter</keyword>
+<keyword
+>Pump.io</keyword>
+<keyword
+>GNU social</keyword>
+</keywordset>
+
+</bookinfo>
+<!--FIXME https://choqok.kde.org/news/2013/09/01/choqok-1-4-released.html -->
+<chapter id="introduction">
+<title
+>Introducció</title>
+
+<para
+>El &choqok; és un client de microblogs que actualment suporta els serveis Pump.io, GNU social i Twitter.com.</para>
+<para
+>El microblog és una forma de blogs multimèdia que permet als usuaris enviar breus actualitzacions de text o microsuports, com fotografies o clips d'àudio i publicar-los. Aquests els poden veure qualsevol persona o un grup restringit, el qual pot decidir l'usuari. Aquests missatges es poden entregar en una varietat de mètodes, inclosos els missatges de text, missatgeria instantània, correu electrònic, àudio digital o el web.</para>
+</chapter>
+
+<chapter id="using">
+<title
+>Ús del &choqok;</title>
+
+<sect1 id="getting-started">
+<title
+>Com començar</title>
+
+<para
+>A la finestra principal del &choqok; hi ha algunes línies de temps que us permeten veure el que han publicat els vostres amics, les respostes i els missatges directes enviats i rebuts dels amics. També podeu publicar un missatge nou.</para>
+
+<para
+>Tot això estarà disponible després de configurar com a mínim un compte al &choqok;.</para>
+
+<screenshot>
+<screeninfo
+>Aquesta és una captura de pantalla de la finestra principal del &choqok;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Finestra principal del &choqok;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Disposeu d'una pestanya per a cada compte, a la captura de pantalla es pot veure una pestanya amb l'àlies <guilabel
+>Pump.io</guilabel
+> i una altra amb l'àlies <guilabel
+>twitter</guilabel
+>.</para>
+
+<para
+>A la part superior de la pestanya podeu optar per enviar un missatge directe a algú que estigui subscrit al vostre compte. Podeu enviar missatges directes a altres usuaris del mateix servei, sempre que els dos esteu subscrits a l'altra. Si deixeu <guilabel
+>Missatge directe a</guilabel
+> sense marcar, el vostre missatge serà enviat públicament i el llegiran tots els vostres amics. Si la marqueu, a continuació, haureu d'escollir un nom de la llista i el missatge privat només serà enviat a aquesta persona.</para>
+
+<para
+>L'àrea de text us permet publicar el vostre missatge, el qual ha de tenir menys de 140 caràcters. El nombre de caràcters es mostra en verd a la part inferior dreta sota l'àrea de text. El color canvia a taronja quan s'abasten el límit de 30 caràcters i després a vermell quan s'arriba a 0. Si el vostre missatge és més llarg de 140 caràcters, us preguntarà si el voleu publicar de totes maneres. Si esteu d'acord, s'enviaran fins a 140 caràcters.</para>
+
+<para
+>La pestanya <guilabel
+>Inici</guilabel
+> mostra la línia de temps que consisteix en tots els missatges que heu escrit vosaltres i els vostres amics. Un missatge utilitzant Pump.io serà anomenat un article, mentre que un missatge utilitzant Twitter s'anomenarà un tweet.</para>
+
+<para
+>La pestanya <guilabel
+>Resposta</guilabel
+> mostra els missatges que són respostes a vós.</para>
+
+<para
+>Tots els missatges que heu enviat es mostraran a la pestanya <guilabel
+>Safata de sortida</guilabel
+>, mentre que els rebuts es mostraran a la pestanya <guilabel
+>Safata d'entrada</guilabel
+>.</para>
+
+</sect1>
+
+<sect1 id="search">
+<title
+>Cercar</title>
+
+<para
+>Podeu cercar a través dels serveis per quelcom (qualsevol cosa que l'API del servei de cerca pugui oferir a un client).</para>
+
+<para
+>Aquesta característica està disponible a través del menú <menuchoice
+><guimenu
+>Eines</guimenu
+> <guimenuitem
+>Cerca</guimenuitem
+></menuchoice
+> (drecera: <keycombo action="simul"
+>&Ctrl; <keycap
+>F</keycap
+></keycombo
+>). Per exemple, podeu cercar una paraula especial en els missatges de tots els usuaris:</para>
+
+<screenshot>
+<screeninfo
+>Característica de cerca del &choqok;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_search.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Característica de cerca del &choqok;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="configuring-account">
+<title
+>Configurar un compte</title>
+
+<para
+>Obriu la finestra de configuració del &choqok; mitjançant <menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Configura el &choqok;...</guimenuitem
+> </menuchoice
+>, després aneu a la pestanya <guilabel
+>Comptes</guilabel
+> i feu clic al botó <guibutton
+>Afegeix</guibutton
+>, apareixerà una finestra <guilabel
+>Afegeix un compte nou</guilabel
+>. </para>
+
+<screenshot>
+<screeninfo
+>Afegint un compte</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="add_account.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Afegint un compte</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Simplement introduïu el vostre àlies únic, nom d'usuari i la contrasenya que vulgueu i feu clic al botó <guibutton
+>D'acord</guibutton
+>. Això comprovarà les vostres credencials i, si tot està bé, el vostre compte estarà a punt per emprar.</para>
+<para
+>Podeu configurar altres comptes posteriorment.</para>
+</sect1>
+
+<sect1 id="special-features">
+<title
+>Característiques especials</title>
+
+<itemizedlist>
+<listitem
+><para
+>Podeu inhabilitar l'actualització de la línia de temps del &choqok; (la línia de temps és la llista dels vostres missatges i dels vostres amics). </para
+></listitem>
+<listitem
+><para
+>Una altra característica especial és la possibilitat de notificar a l'usuari sobre els nous missatges rebuts. </para
+></listitem>
+<listitem
+><para
+>Podeu fer un missatge ràpid prement <keycombo action="simul"
+>&Ctrl; <keycap
+>T</keycap
+></keycombo
+> per obrir la finestra de microblog ràpida i escriviu el missatge: <screenshot>
+<screeninfo
+>El diàleg de missatge ràpid</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_quick.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>El diàleg de missatge ràpid</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+<note
+><para
+>Podeu publicar el mateix text alhora per a tots els comptes.</para
+></note>
+</para
+></listitem>
+<listitem
+><para
+>Quan es reben missatges nous, el &choqok; els marca com a sense llegir i mostra el nombre de missatges sense llegir a la icona de la safata del sistema. Quan es mostra la finestra principal i després es minimitza a la safata del sistema, a continuació, es marcaran tots els missatges nous com a llegits. </para
+></listitem>
+</itemizedlist>
+</sect1>
+
+</chapter>
+
+<chapter id="commands">
+
+<title
+>Referència d'ordres</title>
+
+<sect1 id="menu">
+<title
+>Els elements del menú</title>
+
+<variablelist>
+<title
+>El menú <guimenu
+>Fitxer</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>T</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Missatge ràpid</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Obre la finestra de missatge ràpid.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo
+><keycap
+>F5</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Actualitza les línies de temps</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Actualitza les línies de temps.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Marca-ho tot com a llegit</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Marca tots els missatges com a llegits.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Minimitza</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Minimitza la finestra del &choqok; a la safata.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Surt</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Surt</action
+> del &choqok;.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<title
+>El menú <guimenu
+>Eines</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Eines</guimenu
+><guimenuitem
+>Cerca</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Obre la finestra de cerca pel compte actual.</action>
+</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<title
+>El menú <guimenu
+>Arranjament</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>U</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Habilita l'actualització del temporitzador</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Alterna</action
+> l'actualització del temporitzador per a la línia de temps.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Habilita les notificacions</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Mostra o oculta</action
+> les notificacions.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Mostra la barra d'estat</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Mostra o oculta</action
+> la barra d'estat.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Configura les dreceres...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+><action
+>Configura</action
+> les dreceres de teclat utilitzades pel &choqok;. </action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Configura les barres d'eines...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Configura</action
+> els elements que voleu posar a la barra d'eines. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Configura el &choqok;...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Mostra</action
+> el diàleg de preferències del &choqok;. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>A més a més, el &choqok; té els elements coneguts del menú <guimenu
+>Ajuda</guimenu
+>. </para>
+</sect1>
+
+</chapter>
+
+
+<chapter id="credits-and-license">
+<title
+>Crèdits i llicència</title>
+
+<para
+>Copyright del &choqok; 2008-2015 Mehrdad Momeny <email
+>mehrdad.momeny@gmail.com</email
+> </para>
+<para
+>Copyright de la documentació 2009 Mehrdad Momeny <email
+>mehrdad.momeny@gmail.com</email
+> </para>
+
+<para
+>Traductor de la documentació: &credits.Antoni.Bella;</para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes: nil
+sgml-general-insert-case: lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->

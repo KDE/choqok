@@ -1,0 +1,606 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % German "INCLUDE">
+]>
+
+<book id="choqok" lang="&language;">
+
+<bookinfo>
+<title
+>Das Handbuch zu &choqok;</title>
+
+<authorgroup>
+<author
+><firstname
+>Mehrdad</firstname
+> <surname
+>Momeny</surname
+> <affiliation
+> <address
+>mehrdad.momeny@gmail.com</address>
+</affiliation>
+</author>
+<author
+><firstname
+>Anne-Marie</firstname
+> <surname
+>Mahfouf</surname
+> <affiliation
+> <address
+>&Anne-Marie.Mahfouf.mail;</address>
+</affiliation>
+</author>
+<author
+><firstname
+>Andrea</firstname
+> <surname
+>Scarpino</surname
+> <affiliation
+> <address
+>scarpino@kde.org</address>
+</affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>Torbjörn</firstname
+><surname
+>Klatt</surname
+><affiliation
+><address
+><email
+>torbjoern.k@googlemail.com</email
+></address
+></affiliation
+><contrib
+>Übersetzung</contrib
+></othercredit
+> 
+</authorgroup>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>2015-01-25</date>
+<releaseinfo
+>1.5</releaseinfo>
+
+<abstract>
+<para
+>&choqok; ist ein Mikro-Blogging-Programm von KDE (<ulink url="https://choqok.gnufolks.org"
+>https://choqok.gnufolks.org</ulink
+>).</para>
+</abstract>
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>micro-blogging</keyword>
+<keyword
+>Programm</keyword>
+<keyword
+>Twitter</keyword>
+<keyword
+>Pump.io</keyword>
+<keyword
+>GNU social</keyword>
+</keywordset>
+
+</bookinfo>
+<!--FIXME https://choqok.kde.org/news/2013/09/01/choqok-1-4-released.html -->
+<chapter id="introduction">
+<title
+>Einführung</title>
+
+<para
+>&choqok; ist ein Mikro-Blogging-Programm für KDE, das derzeit Pump.io/GNU social und Twitter unterstützt.</para>
+<para
+>Mikro-Blogging ist eine Art des multimedialen Bloggens, bei dem die Benutzer kurze Text- oder kleine Medien wie Fotos oder Audioschnippsel veröffentlichen. Diese können dann entweder von jedermann oder einer ausgewählten Gruppe, die der Benutzer selbst festlegt, betrachtet werden. Die Art und Weise, wie diese Nachrichten veröffentlicht werden ist vielfältig und kann Textnachrichten, Instant-Messaging, E-Mail, digitale Audionachrichten oder die Weboberfläche umfassen.</para>
+</chapter>
+
+<chapter id="using">
+<title
+>&choqok; verwenden</title>
+
+<sect1 id="getting-started">
+<title
+>Erste Schritte</title>
+
+<para
+>Im &choqok;-Hauptfenster gibt es verschiedene Zeitleisten, die Ihnen anzeigen, was Ihre Freunde geschrieben haben, Antworten auf diese und an Sie gesendete und versendete private Nachrichten. Sie können ebenfalls eine neue Nachricht schreiben.</para>
+
+<para
+>Alle diese Funktionen sind verfügbar, wenn mindestens ein Zugang in &choqok; eingerichtet wurde.</para>
+
+<screenshot>
+<screeninfo
+>Hier sehen Sie ein Bildschirmfoto vom &choqok;-Hauptfenster.</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>&choqok;-Hauptfenster</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Pro Zugang haben Sie eine Registerkarte. Im Bildschirmfoto können Sie eine Registerkarte mit der Bezeichnung <guilabel
+>Pump.io</guilabel
+> und eine weitere mit der Bezeichnung <guilabel
+>twitter</guilabel
+> sehen.</para>
+
+<para
+>Oberhalb der Registerkarte können Sie auswählen, ob sie jemandem, der Ihnen folgt, eine private Nachricht senden möchten. Sie können anderen Benutzern des gleichen Dienstes private Nachrichten schicken, sofern beide dem jeweils anderen folgen. Wählen Sie <guilabel
+>Private Nachricht senden ...</guilabel
+> nicht aus, wird Ihre Nachricht öffentlich gesendet und alle Ihre Freunde können Sie lesen. Anderenfalls müssen Sie einen Namen aus der angezeigten Liste auswählen und die private Nachricht wird nur an diese Person gesendet.</para>
+
+<para
+>Das Textfeld erlaubt es Ihnen Nachrichten zu schreiben, die nicht mehr als 140 Zeichen lang sein dürfen. Die Anzahl an verbleibenden Zeichen wird rechts unten in grün angezeigt. Verbleiben weniger als 30 Zeichen, wechselt die Farbe nach orange und wird schließlich rot, wenn die maximale Zeichenanzahl erreicht ist. Enthält Ihre Nachricht mehr als 140 Zeichen werden Sie vor dem Versenden danach gefragt, ob die Nachricht dennoch versendet werden soll. Stimmen Sie dem zu, werden nur die ersten 140 Zeichen gesendet.</para>
+
+<para
+>Die Registerkarte <guilabel
+>Start</guilabel
+> zeigt alle Beiträge an, die Sie und Ihre Freunde geschrieben haben. Ein Beitrag bei Pump.io wird als Post bezeichnet, wohingegen ein Beitrag bei Twitter als Tweet bezeichnet wird.</para>
+
+<para
+>Die Registerkarte <guilabel
+>Antworten</guilabel
+> zeigt alle Beiträge an, die als Antworten auf Ihre eigenen Nachrichten geschrieben wurden.</para>
+
+<para
+>Alle privaten Nachrichten, die Sie verfasst haben, werden in der Registerkarte <guilabel
+>Ausgang</guilabel
+> angezeigt. Analog zeigt die Registerkarte <guilabel
+>Eingang</guilabel
+> alle privaten Nachrichten an, die an Sie gesendet wurden.</para>
+
+</sect1>
+
+<sect1 id="search">
+<title
+>Suchen</title>
+
+<para
+>Sie können nach all den Dingen suchen, die von der Suchfunktion des verwendeten Mikro-Blogging-Dienstes abgedeckt werden.</para>
+
+<para
+>Diese Funktion finden Sie im Menü <menuchoice
+><guimenu
+>Extras</guimenu
+> <guimenuitem
+>Suchen</guimenuitem
+> </menuchoice
+> (Kurzbefehl <keycombo action="simul"
+>&Ctrl; <keycap
+>F</keycap
+></keycombo
+>). Sie können zum Beispiel nach einem bestimmten Begriffen in allen Nachrichten eines Benutzers suchen:</para>
+
+<screenshot>
+<screeninfo
+>&choqok;s Suchfunktion</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_search.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>&choqok;s Suchfunktion</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="configuring-account">
+<title
+>Einrichten eines Zugangs</title>
+
+<para
+>Öffnen Sie das Einrichtungsfenster von &choqok; über <menuchoice
+><guimenu
+>Einstellungen</guimenu
+><guimenuitem
+>&choqok; einrichten ...</guimenuitem
+></menuchoice
+> und navigieren Sie zur Registerkarte <guilabel
+>Zugänge</guilabel
+>. Dann betätigen Sie den Knopf <guibutton
+>Hinzufügen ...</guibutton
+>, um das Fenster <guilabel
+>Neuen Zugang hinzufügen</guilabel
+> zu öffnen. </para>
+
+<screenshot>
+<screeninfo
+>Hinzufügen eines Zugangs</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="add_account.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Hinzufügen eines Zugangs</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Geben Sie einfach die gewünschte eindeutige Bezeichnung, Benutzername und Passwort ein und betätigen Sie den Knopf <guibutton
+>OK</guibutton
+>. Ihre Zugangsdaten werden daraufhin überprüft und, sofern alles in Ordnung ist, wird Ihr Zugang zur Verwendung bereit stehen.</para>
+<para
+>Anschließend können Sie weitere Zugänge einrichten.</para>
+</sect1>
+
+<sect1 id="special-features">
+<title
+>Besondere Funktionen</title>
+
+<itemizedlist>
+<listitem
+><para
+>Das Aktualisieren der Zeitleiste (die Zeitleiste ist die Liste der Beträge von Ihnen und Ihren Freunden) von &choqok; können Sie ausschalten. </para
+></listitem>
+<listitem
+><para
+>Eine weitere besondere Funktion ist die Möglichkeit den Benutzer über neu empfangene Beiträge zu informieren. </para
+></listitem>
+<listitem
+><para
+>Eine Schnellnachricht können Sie durch die Tastenkombination <keycombo action="simul"
+>&Ctrl;<keycap
+>T</keycap
+></keycombo
+> schreiben, die das  entsprechende Schnellnachricht-Fenster öffnet: <screenshot>
+<screeninfo
+>Dialog „Schnellnachricht“</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_quick.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Dialog „Schnellnachricht</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+<note
+><para
+>Sie können den gleichen Text an alle eingerichteten Zugänge gleichzeitig senden.</para
+></note>
+</para
+></listitem>
+<listitem
+><para
+>Sobald neue Beiträge empfangen wurden, markiert &choqok; diese als ungelesen und zeigt die Anzahl ungelesener Beiträge im Symbol im Systemabschnitt der Kontrollleiste. Ist das Hauptfenster geöffnet und wird dann in den Systemabschnitt der Kontrollleiste minimiert, werden alle neuen Nachrichten als gelesen markiert. </para
+></listitem>
+</itemizedlist>
+</sect1>
+
+</chapter>
+
+<chapter id="commands">
+
+<title
+>Befehlsreferenz</title>
+
+<sect1 id="menu">
+<title
+>Die Menüeinträge</title>
+
+<variablelist>
+<title
+>Das Menü <guimenu
+>Datei</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>T</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Datei</guimenu
+> <guimenuitem
+>Schnellnachricht</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Öffnet das Fenster „Schnellnachricht“.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo
+><keycap
+>F5</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Datei</guimenu
+> <guimenuitem
+>Zeitleisten aktualisieren</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Aktualisiert die Zeitleisten.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Datei</guimenu
+> <guimenuitem
+>Alle Nachrichten als gelesen markieren</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Markiert alle Nachrichten als gelesen.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Datei</guimenu
+> <guimenuitem
+>Minimieren</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Minimiert &choqok; im Systemabschnitt der Kontrollleiste.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Datei</guimenu
+> <guimenuitem
+>Beenden</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Beendet</action
+> &choqok;.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<title
+>Das Menü <guimenu
+>Extras</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Extras</guimenu
+> <guimenuitem
+>Suchen</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Öffnet das Fenster für die Suche des aktuellen Zugangs.</action>
+</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<title
+>Das Menü <guimenu
+>Einstellungen</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>U</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Einstellungen</guimenu
+> <guimenuitem
+>Aktualisierungszähler aktivieren</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Aktivieren / Deaktivieren</action
+> der automatischen Aktualisierung der Zeitleiste.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Einstellungen</guimenu
+> <guimenuitem
+>Benachrichtigungen aktivieren</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Benachrichtigung <action
+>aktivieren / deaktivieren</action
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Einstellungen</guimenu
+> <guimenuitem
+>Statusleiste anzeigen</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Zeigt</action
+> die Statusleiste an bzw. blendet sie aus.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Einstellungen</guimenu
+><guimenuitem
+>Kurzbefehle festlegen ...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Öffnet den &kde;-Standarddialog zur <action
+>Änderung</action
+> der Tastenkürzel für &choqok;. </action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Einstellungen</guimenu
+> <guimenuitem
+>Werkzeugleisten einrichten ...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Richtet</action
+> die Einträge ein, die Sie in der Werkzeugleiste haben möchten. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Einstellungen</guimenu
+> <guimenuitem
+>&choqok; einrichten ...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Öffnet</action
+> den Einrichtungsdialog für &choqok;. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>Schließlich bietet &choqok; das bekannte <guimenu
+>Hilfe</guimenu
+>-Menü an. </para>
+</sect1>
+
+</chapter>
+
+
+<chapter id="credits-and-license">
+<title
+>Danksagungen und Lizenz</title>
+
+<para
+>&choqok; Copyright 2008-2015 Mehrdad Momeny <email
+>mehrdad.momeny@gmail.com</email
+> </para>
+<para
+>Copyright der Dokumentation 2009 Mehrdad Momeny <email
+>mehrdad.momeny@gmail.com</email
+> </para>
+
+<para
+>Übersetzung Torbjörn Klatt <email
+>torbjoern.k@googlemail.com</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes: nil
+sgml-general-insert-case: lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->

@@ -1,0 +1,607 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Ukrainian "INCLUDE">
+]>
+
+<book id="choqok" lang="&language;">
+
+<bookinfo>
+<title
+>Підручник з &choqok;</title>
+
+<authorgroup>
+<author
+><firstname
+>Mehrdad</firstname
+> <surname
+>Momeny</surname
+> <affiliation
+> <address
+>mehrdad.momeny@gmail.com</address>
+</affiliation>
+</author>
+<author
+><firstname
+>Anne-Marie</firstname
+> <surname
+>Mahfouf</surname
+> <affiliation
+> <address
+>&Anne-Marie.Mahfouf.mail;</address>
+</affiliation>
+</author>
+<author
+><firstname
+>Andrea</firstname
+> <surname
+>Scarpino</surname
+> <affiliation
+> <address
+>scarpino@kde.org</address>
+</affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>Юрій</firstname
+><surname
+>Чорноіван</surname
+><affiliation
+><address
+><email
+>yurchor@ukr.net</email
+></address
+></affiliation
+><contrib
+>Переклад українською</contrib
+></othercredit
+> 
+</authorgroup>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>25 січня 2015 року</date>
+<releaseinfo
+>1.5</releaseinfo>
+
+<abstract>
+<para
+>&choqok; — це клієнтська програма для ведення мікроблогів, яку створено програмістами KDE (<ulink url="https://choqok.kde.org"
+>https://choqok.kde.org</ulink
+>).</para>
+</abstract>
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>ведення мікроблогів</keyword>
+<keyword
+>клієнт</keyword>
+<keyword
+>Twitter</keyword>
+<keyword
+>Pump.io</keyword>
+<keyword
+>GNU social</keyword>
+</keywordset>
+
+</bookinfo>
+<!--FIXME https://choqok.kde.org/news/2013/09/01/choqok-1-4-released.html -->
+<chapter id="introduction">
+<title
+>Вступ</title>
+
+<para
+>&choqok; — клієнтська програма для роботи з мікроблогами, поточна версія якої підтримує роботу зі службами Pump.io, GNU social і Twitter.com.</para>
+<para
+>Ведення мікроблогів — це форма ведення мультимедійних мережевих журналів (блогів), яка надає користувачам змогу надсилати короткі текстові дописи або невеличкі мультимедійні файли (фотографії або звукові файли) для їх оприлюднення у мережі. Створені дописи може бути переглянуто або всіма користувачами, або лише обмеженою групою користувачів, — правила перегляду визначає сам користувач. Дописи можна надсилати багатьма способами, зокрема за допомогою служб обміну текстовими повідомленнями, служб обміну миттєвими повідомленнями, електронної пошти, служб обміну цифровим звуком або мережі Інтернет.</para>
+</chapter>
+
+<chapter id="using">
+<title
+>Користування &choqok;</title>
+
+<sect1 id="getting-started">
+<title
+>Початок роботи</title>
+
+<para
+>У головному вікні &choqok; буде показано декілька панелей розкладу, за допомогою яких ви зможете бачити дописи ваших друзів, відповіді на них та особисті повідомлення надіслані вами і отримані від ваших друзів. Крім того, за допомогою цього вікна ви зможете створювати повідомлення.</para>
+
+<para
+>Всі ці можливості стануть доступними, якщо ви налаштуєте принаймні один обліковий запис у &choqok;.</para>
+
+<screenshot>
+<screeninfo
+>Ось знімок головного вікна &choqok;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Головне вікно &choqok;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Для кожного облікового запису передбачено окрему вкладку, на знімку вікна ви можете бачити вкладку з псевдонімом <guilabel
+>Pump.io</guilabel
+> і ще одну з псевдонімом <guilabel
+>twitter</guilabel
+>.</para>
+
+<para
+>За допомогою верхньої частини вкладки ви зможете надіслати повідомлення комусь з тих, хто підписався на ваш обліковий запис. Ви можете надсилати повідомлення іншим користувачам служби, до якої належить ваш обліковий запис, якщо ви підписалися на запис вашого адресата, а він чи вона підписалися на ваш. Якщо ви не позначатимете пункту <guilabel
+>Пряме повідомлення до</guilabel
+> ваше повідомлення буде оформлено як допис, його зможуть прочитати всі ваші друзі. Якщо ви позначите цей пункт, вам слід буде обрати назву облікового запису користувача, якому буде надіслано це особисте повідомлення.</para>
+
+<para
+>У області для введення тексту ви зможете ввести ваше повідомлення, обсяг якого не повинен перевищувати 140 символів. Кількість символів, які ще можна ввести, буде показано зеленим кольором внизу праворуч під областю введення тексту. Колір лічильника буде змінено на жовтогарячий, коли залишиться 30 вільних позицій, і стане червоним, коли ви введете всі 140 символів. Якщо обсяг вашого повідомлення перевищуватиме 140 символів, програма запитає у вас, чи бажаєте ви його надіслати. Якщо ви погодитеся, буде надіслано перші 140 символів повідомлення.</para>
+
+<para
+>На вкладці <guilabel
+>Домівка</guilabel
+> буде показано розклад, який складатиметься з усіх дописів, написаних вами або вашими друзями. Допис, створений з використанням Pump.io, називатиметься дописом, а допис, створений за допомогою Twitter, — твітом.</para>
+
+<para
+>На вкладці <guilabel
+>Відповіді</guilabel
+> буде показано дописи, які є відповідями на ваші.</para>
+
+<para
+>Всі особисті повідомлення, які ви надішлете буде показано на вкладці <guilabel
+>Вихідні</guilabel
+>, отримані вами повідомлення буде показано на вкладці <guilabel
+>Вхідні</guilabel
+>.</para>
+
+</sect1>
+
+<sect1 id="search">
+<title
+>Пошук</title>
+
+<para
+>Ви можете виконати пошук певних даних на службі (реалізувати всі можливості, які надає клієнтам програмний інтерфейс пошуку на службі).</para>
+
+<para
+>Доступ до цієї функціональної можливості можна отримати за допомогою пункту меню <menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Пошук</guimenuitem
+> </menuchoice
+> (клавіатурне скорочення: <keycombo action="simul"
+>&Ctrl; <keycap
+>F</keycap
+></keycombo
+>) Ви, наприклад, можете виконати пошук певного слова у всіх дописах користувачів:</para>
+
+<screenshot>
+<screeninfo
+>Функціональна можливість пошуку у &choqok;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_search.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Функціональна можливість пошуку у &choqok;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="configuring-account">
+<title
+>Налаштування облікового запису</title>
+
+<para
+>Відкрийте діалогове вікно налаштування &choqok; за допомогою пункту меню <menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштувати &choqok;...</guimenuitem
+> </menuchoice
+>, а потім перейдіть до вкладки <guilabel
+>Облікові записи</guilabel
+> і натисніть кнопку <guibutton
+>Додати</guibutton
+>. У відповідь програма відкриє діалогове вікно <guilabel
+>Додати новий обліковий запис</guilabel
+>. </para>
+
+<screenshot>
+<screeninfo
+>Додавання облікового запису</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="add_account.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Додавання облікового запису</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Вам достатньо ввести бажаний ще не використаний псевдонім, ім’я користувача і пароль, а потім натиснути кнопку <guibutton
+>Гаразд</guibutton
+>. Програма перевірить ваші реєстраційні дані і, у разі їх підтвердження, ви зможете почати користуватися вашим обліковим записом за допомогою програми.</para>
+<para
+>Ви можете налаштувати ваші інші облікові записи послідовно.</para>
+</sect1>
+
+<sect1 id="special-features">
+<title
+>Особливі можливості</title>
+
+<itemizedlist>
+<listitem
+><para
+>У &choqok; ви можете вимкнути оновлення розкладу (розклад — це список дописів, створених вами і вашими друзями). </para
+></listitem>
+<listitem
+><para
+>Іншою особливою можливістю є здатність програми сповіщати користувача про надходження нових дописів. </para
+></listitem>
+<listitem
+><para
+>Ви можете пришвидшити створення допису, якщо натиснете комбінацію клавіш <keycombo action="simul"
+>&Ctrl; <keycap
+>T</keycap
+></keycombo
+>, за допомогою якої можна відкрити діалогове вікно мікроблогу, у якому можна ввести допис: <screenshot>
+<screeninfo
+>Діалогове вікно швидкого надсилання дописів</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_quick.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Діалогове вікно швидкого надсилання дописів</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+<note
+><para
+>Ви можете надіслати один і той самий допис до всіх облікових записів одночасно.</para
+></note>
+</para
+></listitem>
+<listitem
+><para
+>Після отримання нових дописів &choqok; позначає ці дописи як непрочитані і показує кількість непрочитаних дописів за допомогою піктограми системного лотка. Якщо ви відкриєте головне вікно програми, а потім знову згорнете його до системного лотка, програма позначить всі нові повідомлення як прочитані. </para
+></listitem>
+</itemizedlist>
+</sect1>
+
+</chapter>
+
+<chapter id="commands">
+
+<title
+>Довідник з команд</title>
+
+<sect1 id="menu">
+<title
+>Пункти меню</title>
+
+<variablelist>
+<title
+>Меню <guimenu
+>Файл</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>T</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Швидкий допис</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Відкрити вікно швидкого надсилання допису.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo
+><keycap
+>F5</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Оновлення розкладу</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Оновлення розкладу</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Позначити всі як прочитані</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Позначити всі повідомлення як прочитані.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Мінімізувати</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Мінімізувати вікно &choqok; у лоток.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Вийти</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Завершити роботу</action
+> &choqok;.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<title
+>Меню <guimenu
+>Інструменти</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Пошук</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Відкрити вікно пошуку для поточного облікового запису.</action>
+</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<title
+>Меню <guimenu
+>Параметри</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>U</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Увімкнути таймер оновлення</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Увімкнути або вимкнути</action
+> таймер оновлення розкладу.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Увімкнути сповіщення</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Увімкнути або вимкнути</action
+> показ сповіщень.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Показувати смужку стану</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Перемкнути</action
+> видимість смужки стану.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштувати скорочення...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+><action
+>Налаштувати</action
+> клавіатурні скорочення, які використовуватимуться у &choqok;. </action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Налаштування</guimenu
+> <guimenuitem
+>Налаштувати пенали...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Налаштувати</action
+> елементи панелі інструментів. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштувати &choqok;...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Показати</action
+> діалогове вікно параметрів &choqok;. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>Крім того, у &choqok; ви зможете скористатися звичайними пунктами меню <guimenu
+>Довідка</guimenu
+>. </para>
+</sect1>
+
+</chapter>
+
+
+<chapter id="credits-and-license">
+<title
+>Подяки і ліцензування</title>
+
+<para
+>Авторські права на програму &choqok; належать Mehrdad Momeny (<email
+>mehrdad.momeny@gmail.com</email
+>), 2008–2015. </para>
+<para
+>Авторські права на документацію до програми належать Mehrdad Momeny (<email
+>mehrdad.momeny@gmail.com</email
+>), 2009. </para>
+
+<para
+>Переклад українською: Юрій Чорноіван <email
+>yurchor@ukr.net</email
+></para
+> 
+&underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes: nil
+sgml-general-insert-case: lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->

@@ -1,0 +1,624 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Russian "INCLUDE">
+]>
+
+<book id="choqok" lang="&language;">
+
+<bookinfo>
+<title
+>Руководство пользователя &choqok;</title>
+
+<authorgroup>
+<author
+><firstname
+>Mehrdad</firstname
+> <surname
+>Momeny</surname
+> <affiliation
+> <address
+>mehrdad.momeny@gmail.com</address>
+</affiliation>
+</author>
+<author
+><firstname
+>Anne-Marie</firstname
+> <surname
+>Mahfouf</surname
+> <affiliation
+> <address
+>&Anne-Marie.Mahfouf.mail;</address>
+</affiliation>
+</author>
+<author
+><firstname
+>Andrea</firstname
+> <surname
+>Scarpino</surname
+> <affiliation
+> <address
+>scarpino@kde.org</address>
+</affiliation>
+</author>
+<othercredit role="translator"
+> <firstname
+>Александр</firstname
+> <surname
+>Поташев</surname
+> <affiliation
+><address
+><email
+>aspotashev@gmail.com</email
+></address
+></affiliation
+> <contrib
+>Перевод на русский</contrib
+></othercredit
+><othercredit role="translator"
+><firstname
+>Мария</firstname
+><surname
+>Шикунова</surname
+><affiliation
+><address
+><email
+>translation-team@basealt.ru</email
+></address
+></affiliation
+><contrib
+>Обновление перевода на русский язык</contrib
+></othercredit
+> 
+</authorgroup>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>25 января 2015 г.</date>
+<releaseinfo
+>1.5</releaseinfo>
+
+<abstract>
+<para
+>&choqok; — это клиент для ведения микроблогов для KDE (<ulink url="https://choqok.kde.org"
+>https://choqok.kde.org</ulink
+>).</para>
+</abstract>
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>микроблог</keyword>
+<keyword
+>клиент</keyword>
+<keyword
+>Twitter</keyword>
+<keyword
+>Pump.io</keyword>
+<keyword
+>GNU social</keyword>
+</keywordset>
+
+</bookinfo>
+<!--FIXME https://choqok.kde.org/news/2013/09/01/choqok-1-4-released.html -->
+<chapter id="introduction">
+<title
+>Введение</title>
+
+<para
+>&choqok; — это клиент для ведения микроблогов, поддерживающий службы Pump.io, GNU social и Twitter.com.</para>
+<para
+>Микроблоги — формат мультимедийных блогов, где возможно публиковать текстовые сообщения, фотографии, аудио и видео. Сообщения могут видеть либо все, либо ограниченная группа пользователей, на усмотрение автора. Публикации возможно отправлять посредством различных технологий: через веб-интерфейс, через SMS, мгновенные сообщения (например, Jabber), по электронной почте и так далее.</para>
+</chapter>
+
+<chapter id="using">
+<title
+>Использование &choqok;</title>
+
+<sect1 id="getting-started">
+<title
+>Начало работы</title>
+
+<para
+>В главном окне &choqok; отображается несколько лент, в которых содержатся публикации друзей и ответы на них, а также личные сообщения, отправленные пользователем и полученные им от друзей. Из этого же окна возможно отправлять новые сообщения и публикации.</para>
+
+<para
+>Всё перечисленное становится доступно после того, как пользователь настроит хотя бы одну учётную запись в &choqok;.</para>
+
+<screenshot>
+<screeninfo
+>Так выглядит главное окно &choqok;.</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Главное окно &choqok;.</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Для каждой учётной записи есть отдельная вкладка. На снимке экрана представлена вкладка под названием <guilabel
+>Pump.io</guilabel
+> и другая вкладка под названием <guilabel
+>twitter</guilabel
+>.</para>
+
+<para
+>В верхней части вкладки доступен параметр для отправки личного сообщения тому, кто подписан на используемую учётную запись. Личные сообщения другим пользователям той же службы возможно отправлять при наличии взаимной подписки. Если флажок <guilabel
+>Личное сообщение</guilabel
+> снят, сообщение будет опубликовано для всех друзей. Если флажок установлен, потребуется указать имя из списка, и сообщение отправится лично указанному человеку.</para>
+
+<para
+>В текстовой области возможно создать сообщение, длина которого не должна превышать 140 символов. Количество оставшихся символов отображается зелёным цветом под областью ввода текста (снизу справа). Цвет меняется на оранжевый, когда остаётся 30 символов, а затем на красный, когда достигается значение 0. Если длина сообщения превышает 140 символов, пользователю будет предложено подтвердить его публикацию. После получения подтверждения будут опубликованы первые 140 символов сообщения.</para>
+
+<para
+>Вкладка <guilabel
+>Главная</guilabel
+> отображает ленту, которая состоит из всех публикаций, созданных пользователем и его друзьями. Публикация в службе Pump.io называется «пост», а публикация в службе Twitter называется «твит».</para>
+
+<para
+>Вкладка <guilabel
+>Ответы</guilabel
+> отображает публикации, являющиеся ответом на публикации пользователя.</para>
+
+<para
+>Все отправленные пользователем личные сообщения будут отображаться на вкладке <guilabel
+>Исходящие</guilabel
+>, а полученные — на вкладке <guilabel
+>Входящие</guilabel
+>.</para>
+
+</sect1>
+
+<sect1 id="search">
+<title
+>Поиск</title>
+
+<para
+>В службах возможно производить поиск данных (используя функционал, который предоставляет клиентам программный интерфейс поиска).</para>
+
+<para
+>Чтобы воспользоваться этой функцией, откройте меню <menuchoice
+><guimenu
+>Сервис</guimenu
+> <guimenuitem
+>Поиск...</guimenuitem
+> </menuchoice
+> (комбинация клавиш: <keycombo action="simul"
+>&Ctrl; <keycap
+>F</keycap
+></keycombo
+>). Например, возможно выполнить поиск по определённому слову во всех публикациях пользователей:</para>
+
+<screenshot>
+<screeninfo
+>Функция поиска &choqok;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_search.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Функция поиска &choqok;</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="configuring-account">
+<title
+>Настройка учётной записи</title>
+
+<para
+>Откройте окно настройки &choqok; с помощью меню <menuchoice
+><guimenu
+>Настройка</guimenu
+> <guimenuitem
+>Настроить &choqok;...</guimenuitem
+> </menuchoice
+>, перейдите на вкладку <guilabel
+>Учётные записи</guilabel
+> и нажмите кнопку <guibutton
+>Добавить</guibutton
+>; откроется окно <guilabel
+>Добавление учётной записи</guilabel
+>. </para>
+
+<screenshot>
+<screeninfo
+>Добавление учётной записи</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="add_account.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Добавление учётной записи</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Введите свой псевдоним, имя пользователя и пароль, а затем нажмите кнопку <guibutton
+>OK</guibutton
+>. Будет произведена проверка данных учётной записи: если данные указаны правильно, учётной записью можно будет воспользоваться.</para>
+<para
+>Таким же образом возможно настроить другие учётные записи.</para>
+</sect1>
+
+<sect1 id="special-features">
+<title
+>Особые возможности</title>
+
+<itemizedlist>
+<listitem
+><para
+>Возможно отключить обновление ленты &choqok; (лента — это список публикаций, созданных пользователем и его друзьями). </para
+></listitem>
+<listitem
+><para
+>Возможно уведомлять пользователя о новых полученных публикациях. </para
+></listitem>
+<listitem
+><para
+>Чтобы создать быструю публикацию, нажмите комбинацию клавиш <keycombo action="simul"
+>&Ctrl; <keycap
+>T</keycap
+></keycombo
+>; откроется окно для быстрого создания публикации в микроблоге: <screenshot>
+<screeninfo
+>Диалог быстрой публикации</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_quick.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Диалог быстрой публикации</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+<note
+><para
+>Один и тот же текст возможно опубликовать сразу во всех учётных записях.</para
+></note>
+</para
+></listitem>
+<listitem
+><para
+>При получении новых записей &choqok; отмечает их как непрочитанные и отображает количество непрочитанных публикаций на значке в системном лотке. Если вызвать главное окно и затем свернуть его в лоток, все новые сообщения будут отмечены как прочитанные. </para
+></listitem>
+</itemizedlist>
+</sect1>
+
+</chapter>
+
+<chapter id="commands">
+
+<title
+>Список команд</title>
+
+<sect1 id="menu">
+<title
+>Пункты меню</title>
+
+<variablelist>
+<title
+>Меню <guimenu
+>Файл</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>T</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Быстрая публикация</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Открывает окно для создания быстрой публикации.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo
+><keycap
+>F5</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Обновить ленты</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Обновляет ленты.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Отметить все как прочитанные</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Отмечает все сообщения как прочитанные.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Свернуть</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Сворачивает окно &choqok; в системный лоток.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Выход</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Закрывает</action
+> &choqok;.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<title
+>Меню <guimenu
+>Сервис</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Сервис</guimenu
+> <guimenuitem
+>Поиск...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Открывает окно поиска для текущей учётной записи.</action>
+</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<title
+>Меню <guimenu
+>Настройка</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>U</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Настройка</guimenu
+> <guimenuitem
+>Включить таймер обновления</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Включает или отключает</action
+> таймер обновления ленты.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Настройка</guimenu
+> <guimenuitem
+>Включить уведомления</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Включает или отключает</action
+> отображение уведомлений.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Настройка</guimenu
+> <guimenuitem
+>Показать строку состояния</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Включает или отключает</action
+> отображение строки состояния.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Настройка</guimenu
+> <guimenuitem
+>Комбинации клавиш...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Позволяет <action
+>настроить</action
+> комбинации клавиш, используемые в &choqok;. </action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Настройка</guimenu
+> <guimenuitem
+>Панели инструментов...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Позволяет <action
+>указать</action
+> список элементов, которые требуется поместить на панель инструментов. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Настройка</guimenu
+> <guimenuitem
+>Настроить &choqok;...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Отображает</action
+> диалог настройки &choqok;. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>Кроме того, в &choqok; доступны обычные пункты меню <guimenu
+>Справка</guimenu
+>. </para>
+</sect1>
+
+</chapter>
+
+
+<chapter id="credits-and-license">
+<title
+>Авторские права и лицензия</title>
+
+<para
+>&choqok; &copy; Mehrdad Momeny <email
+>mehrdad.momeny@gmail.com</email
+>, 2008—2015 </para>
+<para
+>Документация &copy; Mehrdad Momeny <email
+>mehrdad.momeny@gmail.com</email
+>, 2009 </para>
+
+<para
+>Перевод на русский язык — Александр Поташев <email
+>aspotashev@gmail.com</email
+>, Мария Шикунова <email
+>translation-team@basealt.ru</email
+>, Олеся Герасименко <email
+>translation-team@basealt.ru</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes: nil
+sgml-general-insert-case: lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->
