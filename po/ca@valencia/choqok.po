@@ -110,7 +110,7 @@ msgstr "Afig un compte nou"
 #: choqok/config/accounts/accountswidget_base.ui:43
 #, kde-format
 msgid "&Add..."
-msgstr "&Afig..."
+msgstr "Afi&g..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnEdit)
 #: choqok/config/accounts/accountswidget_base.ui:57
@@ -372,7 +372,7 @@ msgstr "Opcions de les línies de temps"
 #: choqok/config/behavior/behaviorconfig_general.ui:130
 #, kde-format
 msgid "&Update interval:"
-msgstr "Interval d'act&ualisació:"
+msgstr "Interval d'act&ualització:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: choqok/config/behavior/behaviorconfig_general.ui:149
