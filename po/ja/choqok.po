@@ -3771,13 +3771,3 @@ msgstr "Twitter のアカウント"
 #, kde-format
 msgid "Get direct link to file"
 msgstr ""
-
-#, fuzzy
-#~| msgid "Favorite creation failed. %1"
-#~ msgid "Translation failed: %1"
-#~ msgstr "お気に入りの作成に失敗しました。%1"
-
-#, fuzzy
-#~| msgid "Configure Filters"
-#~ msgid "Configure Translator"
-#~ msgstr "フィルタを設定"
