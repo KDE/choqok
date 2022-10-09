@@ -673,7 +673,7 @@ msgstr "Neteja la cau d'avatars"
 #: choqok/mainwindow.cpp:242
 #, kde-format
 msgid "You have to restart Choqok to load avatars again"
-msgstr "Heu de reiniciar Choqok per tornar a carregar els avatars"
+msgstr "Heu de reiniciar Choqok per a tornar a carregar els avatars"
 
 #: choqok/mainwindow.cpp:247
 #, kde-format
