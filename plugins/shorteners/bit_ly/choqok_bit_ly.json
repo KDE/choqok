@@ -26,6 +26,7 @@
         "Description[ca]": "Un connector per a escurçar l'URL a través del servei bit.ly.",
         "Description[en_GB]": "A plugin to shorten URLs via the bit.ly service.",
         "Description[es]": "Un complemento para acortar URLs a través del servicio bit.ly.",
+        "Description[fr]": "Un module externe pour raccourcir les URL grâce au service « bit.ly ».",
         "Description[it]": "Un'estensione per abbreviare gli URL con il servizio bit.ly.",
         "Description[ka]": "დამატება URL-ის bit.ly-ის სერვისით შემოკლებისთვის.",
         "Description[nl]": "Een plugin voor het inkorten van URL's via de bit.ly-service.",

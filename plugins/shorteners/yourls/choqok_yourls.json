@@ -26,6 +26,7 @@
         "Description[ca]": "Un connector per a escurçar l'URL a través del servei Yourls.",
         "Description[en_GB]": "A plugin to shorten URLs via the Yourls service.",
         "Description[es]": "Un complemento para acortar URLs a través del servicio Yourls.",
+        "Description[fr]": "Un module externe pour raccourcir des URL grâce au service « Yourls ».",
         "Description[it]": "Un'estensione per abbreviare gli URL con il servizio Yourls.",
         "Description[ka]": "დამატება URL-ის Yourls -ის სერვისით შემოკლებისთვის.",
         "Description[nl]": "Een plugin voor het inkorten van URL's via de Yourls-service.",

@@ -26,6 +26,7 @@
         "Description[ca]": "Un connector per a escurçar l'URL a través del servei goo.gl.",
         "Description[en_GB]": "A plugin to shorten URLs via the goo.gl service.",
         "Description[es]": "Un complemento para acortar URLs a través del servicio goo.gl.",
+        "Description[fr]": "Un module externe pour raccourcir les URL grâce au service « goo.gl ».",
         "Description[it]": "Un'estensione per abbreviare gli URL con il servizio goo.gl.",
         "Description[ka]": "დამატება URL-ის goo.gl-ის სერვისით შემოკლებისთვის.",
         "Description[nl]": "Een plugin voor het inkorten van URL's via de goo.gl-service.",

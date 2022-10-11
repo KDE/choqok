@@ -26,6 +26,7 @@
         "Description[ca]": "Un connector per a escurçar l'URL a través del servei TightURL.",
         "Description[en_GB]": "A plugin to shorten URLs via the TightURL service.",
         "Description[es]": "Un complemento para acortar URLs a través del servicio TightURL.",
+        "Description[fr]": "Un module externe pour raccourcir les URL grâce au service « TightUrl ».",
         "Description[it]": "Un'estensione per abbreviare gli URL con il servizio TightURL.",
         "Description[ka]": "დამატება URL-ის TightURL -ის სერვისით შემოკლებისთვის.",
         "Description[nl]": "Een plugin voor het inkorten van URL's via de TightUrl-service.",

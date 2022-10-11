@@ -26,6 +26,7 @@
         "Description[ca]": "Un connector per a escurçar l'URL a través del servei tinyarro.ws.",
         "Description[en_GB]": "A plugin to shorten URLs via the tinyarro.ws service.",
         "Description[es]": "Un complemento para acortar URLs a través del servicio tinyarro.ws.",
+        "Description[fr]": "Un module externe pour raccourcir les URL grâce au service « tinyarro.ws ».",
         "Description[it]": "Un'estensione per abbreviare gli URL con il servizio tinyarro.ws.",
         "Description[ka]": "დამატება URL-ის tinyarro.ws-ის სერვისით შემოკლებისთვის.",
         "Description[nl]": "Een plugin voor het inkorten van URL's via de tinyarro.ws-service.",

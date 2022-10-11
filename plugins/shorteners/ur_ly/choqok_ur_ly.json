@@ -26,6 +26,7 @@
         "Description[ca]": "Un connector per a escurçar l'URL a través del servei ur.ly.",
         "Description[en_GB]": "A plugin to shorten URLs via the ur.ly service.",
         "Description[es]": "Un complemento para acortar URLs a través del servicio ur.ly.",
+        "Description[fr]": "Un module externe pour raccourcir les URL grâce au service « ur.ly ».",
         "Description[it]": "Un'estensione per abbreviare gli URL con il servizio ur.ly.",
         "Description[ka]": "დამატება URL-ის ur.ly-ის სერვისით შემოკლებისთვის.",
         "Description[nl]": "Een plugin voor het inkorten van URL's via de ur.ly-service.",

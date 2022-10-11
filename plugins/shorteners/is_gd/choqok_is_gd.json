@@ -26,6 +26,7 @@
         "Description[ca]": "Un connector per a escurçar l'URL a través del servei is.gd.",
         "Description[en_GB]": "A plugin to shorten URLs via the is.gd service.",
         "Description[es]": "Un complemento para acortar URLs a través del servicio is.gd.",
+        "Description[fr]": "Un module externe pour raccourcir les URL grâce au service « is.gd ».",
         "Description[it]": "Un'estensione per abbreviare gli URL con il servizio is.gd.",
         "Description[ka]": "დამატება URL-ის is.gd-ის სერვისით შემოკლებისთვის.",
         "Description[nl]": "Een plugin voor het inkorten van URL's via de is.gd-service.",
