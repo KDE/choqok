@@ -378,7 +378,7 @@ msgstr "Interval d'act&ualització:"
 #: choqok/config/behavior/behaviorconfig_general.ui:149
 #, kde-format
 msgid "&Number of posts to show in timelines:"
-msgstr "&Nombre de missatges a mostrar en les línies de temps:"
+msgstr "&Nombre de missatges que s'han de mostrar en les línies de temps:"
 
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_updateInterval)
 #: choqok/config/behavior/behaviorconfig_general.ui:166
@@ -767,7 +767,7 @@ msgstr "El missatge nou del compte %1 s'ha enviat correctament"
 #: microblogs/twitter/twittercomposerwidget.cpp:127
 #, kde-format
 msgid "Select Media to Upload"
-msgstr "Seleccioneu el suport que s'haja de pujar"
+msgstr "Seleccioneu el suport que s'ha de pujar"
 
 #: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:132
 #: microblogs/mastodon/mastodoncomposerwidget.cpp:136
@@ -2326,7 +2326,7 @@ msgstr "Proveïdor"
 #: microblogs/ocs/ocsconfigurebase.ui:73
 #, kde-format
 msgid "Select a social desktop provider to use:"
-msgstr "Seleccioneu un proveïdor d'escriptori social que s'utilitzarà:"
+msgstr "Seleccioneu un proveïdor d'escriptori social que s'haja d'utilitzar:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: microblogs/ocs/ocsconfigurebase.ui:83
@@ -3143,7 +3143,7 @@ msgstr "Escurça els URL en apegar"
 #: plugins/konqueror/konqchoqok.cpp:90
 #, kde-format
 msgid "You need to select text to post."
-msgstr "Cal que seleccioneu el text que s'ha de publicar."
+msgstr "Cal que seleccioneu el text que es publicarà."
 
 #. i18n: ectx: Menu (tools)
 #: plugins/konqueror/konqchoqok.rc:4

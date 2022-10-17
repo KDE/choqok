@@ -3577,31 +3577,3 @@ msgstr "Сметка в Twitter:"
 #, kde-format
 msgid "Get direct link to file"
 msgstr ""
-
-#~ msgctxt "Translation Language"
-#~ msgid "Chinese Simplified"
-#~ msgstr "Китайски опростен"
-
-#~ msgctxt "Translation Language"
-#~ msgid "Chinese Traditional"
-#~ msgstr "Китайски традиционен"
-
-#~ msgctxt "Translation Language"
-#~ msgid "Filipino"
-#~ msgstr "Филипински"
-
-#~ msgctxt "Translation Language"
-#~ msgid "Hebrew"
-#~ msgstr "Иврит"
-
-#~ msgctxt "Translation Language"
-#~ msgid "Norwegian"
-#~ msgstr "Норвежки"
-
-#, fuzzy
-#~ msgid "Translation failed: %1"
-#~ msgstr "Неуспех при добавянето в \"любими\". %1"
-
-#, fuzzy
-#~ msgid "Configure Translator"
-#~ msgstr "Настройка на приставката"
