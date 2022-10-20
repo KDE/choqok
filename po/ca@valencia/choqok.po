@@ -195,7 +195,7 @@ msgstr "Missatge ràpid"
 #: choqok/config/accounts/accountswidget_base.ui:197
 #, kde-format
 msgid "Show in Quick Post"
-msgstr "Mostra a missatge ràpid"
+msgstr "Mostra en Missatge ràpid"
 
 #: choqok/config/accounts/addaccountdialog.cpp:54
 #, kde-format
@@ -1524,7 +1524,7 @@ msgid ""
 "Please update the custom web browser in Configurations."
 msgstr ""
 "El navegador web personalitzat «%1» no pot obrir l'URL «%2».\n"
-"Actualitzeu el navegador web personalitzat a Configuracions."
+"Actualitzeu el navegador web personalitzat en Configuracions."
 
 #: libchoqok/choqoktools.cpp:33
 #, kde-format
@@ -1533,7 +1533,7 @@ msgid ""
 "Please check Qt installation or set a custom web browser in Configurations."
 msgstr ""
 "No s'ha pogut obrir l'URL «%1».\n"
-"Actualitzeu el navegador web personalitzat a Configuracions."
+"Actualitzeu el navegador web personalitzat en Configuracions."
 
 #: libchoqok/mediamanager.cpp:90
 #, kde-format
