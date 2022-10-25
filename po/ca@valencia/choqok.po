@@ -2164,7 +2164,7 @@ msgid ""
 "Click the below button; if everything goes well, you will pointed to "
 "Mastodon website to allow access to Choqok."
 msgstr ""
-"Cliqueu el botó de davall. Si tot va bé, se vos redirigirà a la web de "
+"Cliqueu en el botó de davall. Si tot va bé, se vos redirigirà a la web de "
 "Mastodon per a permetre l'accés de Choqok."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, kcfg_authorize)
@@ -2400,8 +2400,8 @@ msgid ""
 "Click the below button; if everything goes well, you will pointed to Pump.io "
 "website to allow access to Choqok."
 msgstr ""
-"Cliqueu el botó de davall. Si tot va bé, sereu redirigits a la web de Pump."
-"io per a permetre l'accés de Choqok."
+"Cliqueu en el botó de davall. Si tot va bé, sereu redirigits a la web de "
+"Pump.io per a permetre l'accés de Choqok."
 
 #. i18n: ectx: property (text), widget (QPushButton, kcfg_authorize)
 #: microblogs/pumpio/pumpioeditaccountwidget.ui:146
@@ -2560,7 +2560,7 @@ msgid ""
 "Click the below button; if everything goes well, you will pointed to Twitter "
 "website to allow access to Choqok."
 msgstr ""
-"Cliqueu el botó de davall. Si tot va bé, sereu redirigits a la web de "
+"Cliqueu en el botó de davall. Si tot va bé, sereu redirigits a la web de "
 "Twitter per a permetre l'accés de Choqok."
 
 #. i18n: ectx: property (text), widget (QPushButton, kcfg_authorize)
@@ -3519,8 +3519,8 @@ msgid ""
 "Click the below button; if everything goes well, you will pointed to Flickr."
 "com website to allow access to Choqok."
 msgstr ""
-"Cliqueu el botó de davall. Si tot va bé, sereu redirigits a la web de Flickr."
-"com per a permetre l'accés de Choqok."
+"Cliqueu en el botó de davall. Si tot va bé, sereu redirigits a la web de "
+"Flickr.com per a permetre l'accés de Choqok."
 
 #. i18n: ectx: property (text), widget (QPushButton, authButton)
 #: plugins/uploaders/flickr/flickrprefs.ui:61
