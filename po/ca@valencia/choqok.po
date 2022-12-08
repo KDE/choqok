@@ -3580,7 +3580,7 @@ msgstr "Restringit"
 #: plugins/uploaders/flickr/flickrprefs.ui:169
 #, kde-format
 msgid "Hide picture from public search"
-msgstr "Oculta la imatge a les busques públiques"
+msgstr "Oculta la imatge en les busques públiques"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cfg_shorturl)
 #: plugins/uploaders/flickr/flickrprefs.ui:176
