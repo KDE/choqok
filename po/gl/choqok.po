@@ -479,10 +479,7 @@ msgid "KDE Micro-Blogging Client."
 msgstr "Cliente de microblogging para KDE."
 
 #: choqok/main.cpp:29
-#, fuzzy, kde-format
-#| msgid ""
-#| "(C) 2008-2010 Mehrdad Momeny\n"
-#| "(C) 2011-2019 Choqok Developers"
+#, kde-format
 msgid ""
 "(C) 2008-2010 Mehrdad Momeny\n"
 "(C) 2011-2019 Choqok Developers"
