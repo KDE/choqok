@@ -29,6 +29,7 @@
         "Description[es]": "Extraer la URL completa usando el servicio longurl.org y mostrarlo como descripción emergente",
         "Description[fr]": "Extraire l'URL complète à l'aide du service « longurl.org » et l'afficher comme infobulle",
         "Description[it]": "Estrai l'URL completo con il servizio longurl.org e mostralo come suggerimento",
+        "Description[ka]": "სრული ბმულის გამოღება longurl.org-ით და მისი მინიშნებად ჩვენება",
         "Description[nl]": "Extraheer de volledige URL met de service longurl.org en toon deze als een tekstballon",
         "Description[pt]": "Extrai o URL completo com o serviço longurl.org e mostra-o como uma dica",
         "Description[sl]": "Izvleci celoten URL s storitvijo longurl.org in ga pokaži kot orodni namig",
