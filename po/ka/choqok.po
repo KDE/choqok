@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: choqok\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-18 00:44+0000\n"
-"PO-Revision-Date: 2022-09-20 09:10+0200\n"
+"PO-Revision-Date: 2023-01-06 07:51+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -246,7 +246,7 @@ msgstr ""
 #: choqok/config/appearance/appearanceconfig_base.ui:76
 #, kde-format
 msgid "Post font:"
-msgstr ""
+msgstr "პოსტის ფერი:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: choqok/config/appearance/appearanceconfig_base.ui:95
@@ -264,13 +264,13 @@ msgstr "ფონი"
 #: choqok/config/appearance/appearanceconfig_base.ui:113
 #, kde-format
 msgid "Default color:"
-msgstr ""
+msgstr "ნაგულისხმები ფერი:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: choqok/config/appearance/appearanceconfig_base.ui:150
 #, kde-format
 msgid "Unread post color:"
-msgstr ""
+msgstr "წაუკითხავი პოსტის ფერი:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: choqok/config/appearance/appearanceconfig_base.ui:194
@@ -292,12 +292,12 @@ msgstr "&ზოგადი"
 #: choqok/config/behavior/behaviorconfig.cpp:64
 #, kde-format
 msgid "&Notifications"
-msgstr ""
+msgstr "&შეტყობინებები"
 
 #: choqok/config/behavior/behaviorconfig.cpp:75
 #, kde-format
 msgid "URL &Shortening"
-msgstr ""
+msgstr "URL-ის &შემოკლება"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: choqok/config/behavior/behaviorconfig_general.ui:17
@@ -454,7 +454,7 @@ msgstr ""
 #: choqok/config/plugins/choqokpluginconfig.cpp:39
 #, kde-format
 msgid "General Plugins"
-msgstr ""
+msgstr "ზოგადი დამატებები"
 
 #: choqok/main.cpp:28
 #, kde-format
@@ -536,7 +536,7 @@ msgstr ""
 #: choqok/main.cpp:46
 #, kde-format
 msgid "Tejas Dinkar"
-msgstr ""
+msgstr "Tejas Dinkar"
 
 #: choqok/main.cpp:48
 #, kde-format
@@ -596,7 +596,7 @@ msgstr ""
 #: choqok/main.cpp:55
 #, kde-format
 msgid "Ahmed I. Khalil"
-msgstr ""
+msgstr "Ahmed I. Khalil"
 
 #: choqok/main.cpp:55
 #, kde-format
@@ -646,7 +646,7 @@ msgstr "გაფრთხილებების ჩართვა"
 #: choqok/mainwindow.cpp:233
 #, kde-format
 msgid "Hide Menubar"
-msgstr ""
+msgstr "მენიუს ზოლის დამალვა"
 
 #: choqok/mainwindow.cpp:240
 #, kde-format
@@ -1272,7 +1272,7 @@ msgstr ""
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1274
 #, kde-format
 msgid "Report sent successfully."
-msgstr ""
+msgstr "ანგარიში წარმატებით გაიგზავნა."
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1278
 #, kde-format
@@ -1696,8 +1696,8 @@ msgstr[1] ""
 #, kde-format
 msgid "1 day ago"
 msgid_plural "%1 days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 დღის წინ"
+msgstr[1] "%1 დღის წინ"
 
 #: libchoqok/ui/postwidget.cpp:481
 #, kde-format
@@ -2031,7 +2031,7 @@ msgstr "ავტორიზებული"
 #: microblogs/twitter/twittereditaccount.cpp:102
 #, kde-format
 msgid "Authorization Error"
-msgstr ""
+msgstr "ავტორიზაციის შეცდომა"
 
 #: microblogs/mastodon/mastodoneditaccountwidget.cpp:107
 #: microblogs/pumpio/pumpioeditaccountwidget.cpp:107
@@ -2160,13 +2160,13 @@ msgstr ""
 #, kde-format
 msgctxt "Timeline Name"
 msgid "Favourites"
-msgstr ""
+msgstr "რჩეულები"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:421
 #, kde-format
 msgctxt "Timeline description"
 msgid "Favourites"
-msgstr ""
+msgstr "რჩეულები"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:522
 #, kde-format
@@ -2684,7 +2684,7 @@ msgstr ""
 #: plugins/betternotify/notifyprefs.ui:39
 #, kde-format
 msgid "Background Color:"
-msgstr ""
+msgstr "ფონის ფერი:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: plugins/betternotify/notifyprefs.ui:49
@@ -2910,7 +2910,7 @@ msgstr "არ შეიცავს"
 #: plugins/filter/filtersettings.cpp:37
 #, kde-format
 msgid "Exact Match"
-msgstr ""
+msgstr "ზუსტი დამთხვევა"
 
 #: plugins/filter/filtersettings.cpp:38
 #, kde-format
@@ -3370,7 +3370,7 @@ msgstr ""
 #: plugins/uploaders/flickr/flickrprefs.ui:24
 #, kde-format
 msgid "Authorization"
-msgstr ""
+msgstr "ავტორიზაცია"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/uploaders/flickr/flickrprefs.ui:51
@@ -3491,7 +3491,7 @@ msgstr ""
 #: plugins/uploaders/mobypicture/mobypictureprefs.ui:64
 #, kde-format
 msgid "Login:"
-msgstr ""
+msgstr "მომხმარებელი:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/uploaders/mobypicture/mobypictureprefs.ui:74
