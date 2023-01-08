@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: choqok\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-18 00:44+0000\n"
-"PO-Revision-Date: 2023-01-06 07:51+0100\n"
+"PO-Revision-Date: 2023-01-07 08:44+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -140,7 +140,7 @@ msgstr "სინონიმი"
 #: choqok/config/accounts/accountswidget_base.ui:165
 #, kde-format
 msgid "An alias for the account"
-msgstr ""
+msgstr "ანგარიშის მეტსახელი"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
 #: choqok/config/accounts/accountswidget_base.ui:170
@@ -152,7 +152,7 @@ msgstr "მიკრობლოგი"
 #: choqok/config/accounts/accountswidget_base.ui:173
 #, kde-format
 msgid "The type of the account"
-msgstr ""
+msgstr "ანგარიშის ტპი"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
 #: choqok/config/accounts/accountswidget_base.ui:178
@@ -176,7 +176,7 @@ msgstr "მხოლოდ კითხვისთვის"
 #: choqok/config/accounts/accountswidget_base.ui:189
 #, kde-format
 msgid "Read Only account"
-msgstr ""
+msgstr "მხოლოდ-კითხვადი ანგარიში"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
 #: choqok/config/accounts/accountswidget_base.ui:194 choqok/mainwindow.cpp:196
@@ -189,12 +189,12 @@ msgstr "სწრაფი პოსტი"
 #: choqok/config/accounts/accountswidget_base.ui:197
 #, kde-format
 msgid "Show in Quick Post"
-msgstr ""
+msgstr "სწრაფ პოსტში ჩვენება"
 
 #: choqok/config/accounts/addaccountdialog.cpp:54
 #, kde-format
 msgid "The Account registration failed."
-msgstr ""
+msgstr "ანგარიშის რეგისტრაციის შეცდომა."
 
 #: choqok/config/accounts/addaccountdialog.cpp:62
 #: choqok/config/accounts/editaccountdialog.cpp:59
@@ -282,7 +282,7 @@ msgstr "წინა პლანი"
 #: choqok/config/appearance/appearanceconfig_base.ui:204
 #, kde-format
 msgid "Own post color:"
-msgstr ""
+msgstr "საკუთარი პოსტის ფერი:"
 
 #: choqok/config/behavior/behaviorconfig.cpp:57
 #, kde-format
@@ -327,7 +327,7 @@ msgstr ""
 #: choqok/config/behavior/behaviorconfig_general.ui:50
 #, kde-format
 msgid "Enable System &Tray"
-msgstr ""
+msgstr "სისტემის კუთხეში ხატულის &ჩართვა"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_markAllAsReadOnHideToSystray)
 #: choqok/config/behavior/behaviorconfig_general.ui:62
@@ -357,7 +357,7 @@ msgstr ""
 #: choqok/config/behavior/behaviorconfig_general.ui:130
 #, kde-format
 msgid "&Update interval:"
-msgstr ""
+msgstr "&განახლების ინტერვალი:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: choqok/config/behavior/behaviorconfig_general.ui:149
@@ -435,21 +435,21 @@ msgstr ""
 #: choqok/config/behavior/behaviorconfig_shorten_base.ui:33
 #, kde-format
 msgid "Shortening ser&vice:"
-msgstr ""
+msgstr "შემოკლების &სერვისი:"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, configPlugin)
 #: choqok/config/behavior/behaviorconfig_shorten_base.ui:56
 #: libchoqok/ui/uploadmedia_base.ui:71
 #, kde-format
 msgid "Configure plugin"
-msgstr ""
+msgstr "დამატების მორგება"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, aboutPlugin)
 #: choqok/config/behavior/behaviorconfig_shorten_base.ui:72
 #: libchoqok/ui/uploadmedia_base.ui:90
 #, kde-format
 msgid "About plugin"
-msgstr ""
+msgstr "დამატების შესახებ"
 
 #: choqok/config/plugins/choqokpluginconfig.cpp:39
 #, kde-format
@@ -501,7 +501,7 @@ msgstr "პროგრამისტი"
 #: choqok/main.cpp:42
 #, kde-format
 msgid "Roozbeh Shafiee"
-msgstr ""
+msgstr "Roozbeh Shafiee"
 
 #: choqok/main.cpp:42 choqok/main.cpp:43
 #, kde-format
@@ -511,22 +511,22 @@ msgstr ""
 #: choqok/main.cpp:43
 #, kde-format
 msgid "Shahrzad Shojaei"
-msgstr ""
+msgstr "Shahrzad Shojaei"
 
 #: choqok/main.cpp:44
 #, kde-format
 msgid "Daniel Schaal"
-msgstr ""
+msgstr "Daniel Schaal"
 
 #: choqok/main.cpp:44 choqok/main.cpp:51
 #, kde-format
 msgid "UI improvements"
-msgstr ""
+msgstr "ინტერფეისის გაუმჯობესება"
 
 #: choqok/main.cpp:45
 #, kde-format
 msgid "Stephen Henderson"
-msgstr ""
+msgstr "Stephen Henderson"
 
 #: choqok/main.cpp:45
 #, kde-format
@@ -551,7 +551,7 @@ msgstr ""
 #: choqok/main.cpp:49
 #, kde-format
 msgid "Alex Infantes"
-msgstr ""
+msgstr "Alex Infantes"
 
 #: choqok/main.cpp:49
 #, kde-format
@@ -561,12 +561,12 @@ msgstr ""
 #: choqok/main.cpp:51
 #, kde-format
 msgid "Bardia Daneshvar"
-msgstr ""
+msgstr "Bardia Daneshvar"
 
 #: choqok/main.cpp:52
 #, kde-format
 msgid "Atanas Gospodinov"
-msgstr ""
+msgstr "Atanas Gospodinov"
 
 #: choqok/main.cpp:52
 #, kde-format
@@ -576,7 +576,7 @@ msgstr ""
 #: choqok/main.cpp:53
 #, kde-format
 msgid "Daniel Kreuter"
-msgstr ""
+msgstr "Daniel Kreuter"
 
 #: choqok/main.cpp:53
 #, kde-format
@@ -681,7 +681,7 @@ msgstr ""
 #: choqok/mainwindow.cpp:515
 #, kde-format
 msgid "Choqok (%1)"
-msgstr ""
+msgstr "Choqok (%1)"
 
 #: choqok/mainwindow.cpp:570
 #, kde-format
@@ -708,7 +708,7 @@ msgstr[1] ""
 #: choqok/systrayicon.cpp:108
 #, kde-format
 msgid "Choqok - Disabled"
-msgstr ""
+msgstr "Choqok - გათიშულია"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnAttach)
 #: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:49
@@ -754,7 +754,7 @@ msgstr ""
 #: microblogs/twitter/twittercomposerwidget.cpp:138
 #, kde-format
 msgid "Discard Attachment"
-msgstr ""
+msgstr "მიბმული ფაილის მოცილება"
 
 #: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:139
 #: microblogs/mastodon/mastodoncomposerwidget.cpp:143
@@ -763,12 +763,12 @@ msgstr ""
 #: microblogs/twitter/twittercomposerwidget.cpp:145
 #, kde-format
 msgid "Attaching <b>%1</b>"
-msgstr ""
+msgstr "<b>%1</b>-ის მიმაგრება"
 
 #: helperlibs/gnusocialapihelper/gnusocialapiconversationtimelinewidget.cpp:22
 #, kde-format
 msgid "Conversation %1"
-msgstr ""
+msgstr "საუბარი %1"
 
 #: helperlibs/gnusocialapihelper/gnusocialapiconversationtimelinewidget.cpp:24
 #: helperlibs/twitterapihelper/twitterapidmessagedialog.cpp:126
@@ -885,28 +885,28 @@ msgstr ""
 #, kde-format
 msgctxt "Who is user"
 msgid "Who is %1"
-msgstr ""
+msgstr "ვინაა %1"
 
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:179
 #: microblogs/twitter/twitterpostwidget.cpp:131
 #, kde-format
 msgctxt "Posts from user"
 msgid "Posts from %1"
-msgstr ""
+msgstr "პოსტები %1-დან"
 
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:181
 #: microblogs/twitter/twitterpostwidget.cpp:133
 #, kde-format
 msgctxt "Replies to user"
 msgid "Replies to %1"
-msgstr ""
+msgstr "%1-ის პასუხები"
 
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:185
 #: microblogs/twitter/twitterpostwidget.cpp:141
 #, kde-format
 msgctxt "Open profile page in browser"
 msgid "Open profile in browser"
-msgstr ""
+msgstr "პროფილის ბრაუზერში გახსნა"
 
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:202
 #: microblogs/twitter/twitterpostwidget.cpp:158
@@ -919,33 +919,33 @@ msgstr "ქმედებები"
 #, kde-format
 msgctxt "Write a message to user attention"
 msgid "Write to %1"
-msgstr ""
+msgstr "%1-თვის მიწერა"
 
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:208
 #: microblogs/twitter/twitterpostwidget.cpp:165
 #, kde-format
 msgctxt "Send direct message to user"
 msgid "Send private message to %1"
-msgstr ""
+msgstr "%1-თვის პირადი შეტყობინების მიწერა"
 
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:214
 #, kde-format
 msgctxt "Unsubscribe from user"
 msgid "Unsubscribe from %1"
-msgstr ""
+msgstr "%1-ის გამოწერის გაუქმება"
 
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:219
 #, kde-format
 msgctxt "Subscribe to user"
 msgid "Subscribe to %1"
-msgstr ""
+msgstr "%1-ის გამოწერა"
 
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:223
 #: microblogs/twitter/twitterpostwidget.cpp:180
 #, kde-format
 msgctxt "Block user"
 msgid "Block %1"
-msgstr ""
+msgstr "%1-ის დაბლოკვა"
 
 #: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:31
 #, kde-format
@@ -1334,7 +1334,7 @@ msgstr ""
 #: microblogs/mastodon/mastodonpostwidget.cpp:110
 #, kde-format
 msgid "Write to %1"
-msgstr ""
+msgstr "%1-თვის მიწერა"
 
 #: helperlibs/twitterapihelper/twitterapipostwidget.cpp:74
 #: microblogs/mastodon/mastodonpostwidget.cpp:115
@@ -1369,19 +1369,19 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Search"
-msgstr ""
+msgstr "ძებნა"
 
 #: helperlibs/twitterapihelper/twitterapisearchdialog.cpp:77
 #, kde-format
 msgctxt "Search query"
 msgid "Query:"
-msgstr ""
+msgstr "მოთხოვნა:"
 
 #: helperlibs/twitterapihelper/twitterapisearchdialog.cpp:88
 #, kde-format
 msgctxt "@action:button"
 msgid "Search"
-msgstr ""
+msgstr "ძებნა"
 
 #: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:58
 #: libchoqok/ui/timelinewidget.cpp:45
@@ -1393,7 +1393,7 @@ msgstr ""
 #: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:87
 #, kde-format
 msgid "Close Search"
-msgstr ""
+msgstr "ძებნის დახურვა"
 
 #: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:93
 #, kde-format
@@ -1413,7 +1413,7 @@ msgstr "გვერდის ნომერი"
 #: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:150
 #, kde-format
 msgid "Cannot load user information."
-msgstr ""
+msgstr "მომხმარებლის ინფორმაციის ჩატვირთვის შეცდომა."
 
 #: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:239
 #, kde-format
@@ -1436,7 +1436,7 @@ msgstr "მეგობრები"
 #, kde-format
 msgctxt "User followers"
 msgid "Followers"
-msgstr ""
+msgstr "მიმდევრები"
 
 #: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:262
 #, kde-format
