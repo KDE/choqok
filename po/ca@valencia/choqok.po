@@ -1995,7 +1995,7 @@ msgstr "Nom d'usuari:"
 #: microblogs/twitter/twittereditaccount_base.ui:183
 #, kde-format
 msgid "Timelines Configuration"
-msgstr "Configuració de les línies de temps"
+msgstr "Configureu les línies de temps"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #. i18n: ectx: property (text), widget (QLabel, label_6)
