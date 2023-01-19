@@ -7,13 +7,13 @@
 # H. İbrahim Güngör <ibrahim@pardus.org.tr>, 2010-2011.
 # obsoleteman <tulliana@gmail.com>, 2009,2012.
 # Volkan Gezer <volkangezer@gmail.com>, 2013-2014.
-# Emir SARI <emir_sari@icloud.com>, 2022.
+# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-18 00:44+0000\n"
-"PO-Revision-Date: 2022-07-16 13:50+0300\n"
+"PO-Revision-Date: 2023-01-18 22:29+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.04.2\n"
+"X-Generator: Lokalize 22.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2938,19 +2938,19 @@ msgstr "Yalnızca size gelen yanıtları veya sizden bahsedenleri göreceksiniz.
 #: plugins/filter/filterprefs.ui:136
 #, kde-format
 msgid "Just show replies to me"
-msgstr "Sadece bana gelen yanıtları göster"
+msgstr "Yalnızca bana gelen yanıtları göster"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, cfg_hideNoneFriendsReplies)
 #: plugins/filter/filterprefs.ui:143
 #, kde-format
 msgid "You will see just replies between your friends."
-msgstr "Sadece arkadaşlarınız arasında geçen yanıtları göreceksiniz."
+msgstr "Yalnızca arkadaşlarınız arasında geçen yanıtları göreceksiniz."
 
 #. i18n: ectx: property (text), widget (QCheckBox, cfg_hideNoneFriendsReplies)
 #: plugins/filter/filterprefs.ui:146
 #, kde-format
 msgid "Just show replies to me and my friends"
-msgstr "Sadece bana ve arkadaşlarıma gelen yanıtları göster"
+msgstr "Yalnızca bana ve arkadaşlarıma gelen yanıtları göster"
 
 #: plugins/filter/filtersettings.cpp:30
 #, kde-format
