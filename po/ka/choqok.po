@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: choqok\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-18 00:44+0000\n"
-"PO-Revision-Date: 2023-02-02 13:24+0100\n"
+"PO-Revision-Date: 2023-02-03 07:01+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2563,17 +2563,17 @@ msgstr "ავტორიზაციის დეტალების გა�
 #: microblogs/twitter/twittermicroblog.cpp:254
 #, kde-format
 msgid "Retweet of %1"
-msgstr ""
+msgstr "%1-ის რეტვიტი"
 
 #: microblogs/twitter/twittermicroblog.cpp:256
 #, kde-format
 msgid "Retweeted by %1"
-msgstr ""
+msgstr "%1-მა რეტვიტი უქნა"
 
 #: microblogs/twitter/twittermicroblog.cpp:262
 #, kde-format
 msgid "Retweet to your followers?"
-msgstr ""
+msgstr "ვქნა რეტვიტი თქვენი მიმდევრებისთვის?"
 
 #: microblogs/twitter/twittermicroblog.cpp:269
 #, kde-format
@@ -2583,22 +2583,22 @@ msgstr "მომხმარებლების სიის დამატ�
 #: microblogs/twitter/twittermicroblog.cpp:329
 #, kde-format
 msgid "Fetching %1's lists failed. %2"
-msgstr ""
+msgstr "%1-ის სიების გამოთხოვის შეცდომა. %2"
 
 #: microblogs/twitter/twittermicroblog.cpp:339
 #, kde-format
 msgid "There is no list record for user %1"
-msgstr ""
+msgstr "სიის ჩანაწერი მომხმარებლისთვის %1 არ არსებობს"
 
 #: microblogs/twitter/twitterpostwidget.cpp:64
 #, kde-format
 msgid "Retweet"
-msgstr ""
+msgstr "რეტვიტი"
 
 #: microblogs/twitter/twitterpostwidget.cpp:65
 #, kde-format
 msgid "Retweet post using API"
-msgstr ""
+msgstr "პოსტი API-ით რეტვტი"
 
 #: microblogs/twitter/twitterpostwidget.cpp:136
 #, kde-format
@@ -2720,7 +2720,7 @@ msgstr "წამები"
 #: plugins/betternotify/notifyprefs.ui:123
 #, kde-format
 msgid "Adjust Notification's Position"
-msgstr ""
+msgstr "გაფრთხილებების მდებარეობის მორგება"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
 #: plugins/betternotify/notifyprefs.ui:159
