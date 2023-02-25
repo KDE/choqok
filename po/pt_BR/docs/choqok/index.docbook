@@ -1,8 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
 "dtd/kdedbx45.dtd" [
-  <!ENTITY kappname "&choqok;">
-  <!ENTITY package "extragear">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % Brazilian-Portuguese "INCLUDE">
 ]>
@@ -85,8 +83,8 @@
 
 <abstract>
 <para
->&choqok; é um cliente de microblogging para o KDE (<ulink url="http://choqok.gnufolks.org"
->http://choqok.gnufolks.org</ulink
+>&choqok; é um cliente de microblog do KDE (<ulink url="https://choqok.kde.org"
+>https://choqok.kde.org</ulink
 >).</para>
 </abstract>
 
@@ -94,7 +92,7 @@
 <keyword
 >KDE</keyword>
 <keyword
->microblogging</keyword>
+>microblog</keyword>
 <keyword
 >cliente</keyword>
 <keyword
@@ -106,13 +104,13 @@
 </keywordset>
 
 </bookinfo>
-
+<!--FIXME https://choqok.kde.org/news/2013/09/01/choqok-1-4-released.html -->
 <chapter id="introduction">
 <title
 >Introdução</title>
 
 <para
->&choqok; é um cliente de microblogging que no momento tem suporte aos serviços Pump.io, GNU social e Twitter.com.</para>
+>&choqok; é um cliente de microblog que no momento tem suporte aos serviços Pump.io, GNU social e Twitter.com.</para>
 <para
 >Microblogging é uma forma de blog multimídia, que permite aos usuários enviar breves atualizações de texto ou publicar pequenos arquivos multimídia, como fotos ou clipes de áudio. Eles poderão ser vistos por qualquer pessoa ou por um grupo restrito, conforme definido pelo usuário. Estas mensagens podem ser enviadas de várias formas, incluindo mensagens de texto, mensagens instantâneas, e-mails, áudio digital ou pela Web.</para>
 </chapter>
@@ -609,23 +607,7 @@
 >Revisão de André Marcelo Alvarenga <email
 >alvarenga@kde.org</email
 ></para
-> 
-&underFDL; &underGPL; </chapter>
-
-<appendix id="installation">
-<title
->Instalação</title>
-
-<sect1 id="getting-chokoq">
-<title
->Como obter o &choqok;</title>
-&install.intro.documentation; </sect1>
-
-<sect1 id="compilation">
-<title
->Compilação e instalação</title>
-&install.compile.documentation; </sect1>
-</appendix>
+> &underFDL; &underGPL; </chapter>
 
 &documentation.index;
 </book>
