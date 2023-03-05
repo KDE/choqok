@@ -463,7 +463,7 @@ msgstr "الملحقات العامّة"
 #: choqok/main.cpp:28
 #, kde-format
 msgid "KDE Micro-Blogging Client."
-msgstr "عميل تدوين مصغّر لكدي."
+msgstr "عميل تدوين مصغّر لكِيدِي."
 
 #: choqok/main.cpp:29
 #, kde-format
@@ -1518,7 +1518,7 @@ msgstr ""
 #: libchoqok/mediamanager.cpp:90
 #, kde-format
 msgid "Cannot create a KDE Job. Please check your installation."
-msgstr "تعذّر إنشاء مهمّة كدي. فضلًا تأكّد من تثبيتك."
+msgstr "تعذّر إنشاء مهمّة كِيدِي. فضلًا تأكّد من تثبيتك."
 
 #: libchoqok/mediamanager.cpp:115
 #, kde-format
@@ -1597,7 +1597,7 @@ msgid ""
 "Cannot open KDE Wallet manager, your secrets will be stored as plain text. "
 "You can install KWallet to fix this."
 msgstr ""
-"تعذّر فتح مدير محفظة كدي، ستُخزّن أسرارك كنصّ صرف. عليك تثبيت «محفظتك» لإصلاح "
+"تعذّر فتح مدير محفظة كِيدِي، ستُخزّن أسرارك كنصّ صرف. عليك تثبيت «محفظتك» لإصلاح "
 "هذا."
 
 #: libchoqok/ui/choqoktabbar.cpp:757
@@ -2334,7 +2334,7 @@ msgstr "اختر موفّر سطح المكتب الاجتماعيّ لاستخ�
 msgid ""
 "You can manage Social Desktop providers in the KDE Social Desktop "
 "configuration."
-msgstr "يمكنك إدارة موفّري سطح المكتب الاجتماعيّ في ضبط سطح مكتب كدي الاجتماعيّ."
+msgstr "يمكنك إدارة موفّري سطح المكتب الاجتماعيّ في ضبط سطح مكتب كِيدِي الاجتماعيّ."
 
 #: microblogs/ocs/ocsconfigurewidget.cpp:26
 #, kde-format
