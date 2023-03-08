@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-18 00:44+0000\n"
-"PO-Revision-Date: 2023-02-08 13:53+0300\n"
+"PO-Revision-Date: 2023-03-07 20:16+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.2\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3092,7 +3092,7 @@ msgstr ""
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "size:8pt; font-weight:600;\">%url%</span><span style=\" font-size:8pt;\"> - "
-"yeni durumun adresi</span></p>\n"
+"yeni durumun URL'si</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "size:8pt; font-weight:600;\">%username%</span><span style=\" font-size:8pt;"
@@ -3122,7 +3122,7 @@ msgstr "Choqok ile Metin Gönder"
 #: plugins/konqueror/konqchoqok.cpp:41
 #, kde-format
 msgid "Shorten URL on Paste"
-msgstr "Adresleri Yapıştırırken Kısalt"
+msgstr "URL'leri Yapıştırırken Kısalt"
 
 #: plugins/konqueror/konqchoqok.cpp:90
 #, kde-format
@@ -3400,7 +3400,7 @@ msgstr "Yourls API URL:"
 #: plugins/shorteners/yourls/yourlsprefs.ui:27
 #, kde-format
 msgid "http://SomeDomain.com/yourls/yourls-api.php"
-msgstr "http://BirAdres.com/yourls/yourls-api.php"
+msgstr "http://BirAlanAdı.com/yourls/yourls-api.php"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useUntinyDotCom)
 #: plugins/untiny/untinyprefs.ui:17
@@ -3569,7 +3569,7 @@ msgstr "Resmi genel aramalarda gizle"
 #: plugins/uploaders/flickr/flickrprefs.ui:176
 #, kde-format
 msgid "Use Flic.kr to short URLs"
-msgstr "Adresleri kısaltmak için Flic.kr kullan"
+msgstr "URL'leri kısaltmak için Flic.kr kullan"
 
 #: plugins/uploaders/imageshack/imageshack.cpp:37
 #, kde-format
