@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: choqok\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-18 00:44+0000\n"
-"PO-Revision-Date: 2022-07-29 12:02+0300\n"
+"PO-Revision-Date: 2022-11-05 09:46+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-POT-Import-Date: 2012-12-01 22:21:01+0000\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 21.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2216,19 +2216,18 @@ msgctxt "Timeline description"
 msgid "Local timeline"
 msgstr "Paikallinen aikajana"
 
+# Menköön toistaiseksi, kunnes jokin parempi vakiintuu?
 #: microblogs/mastodon/mastodonmicroblog.cpp:413
-#, fuzzy, kde-format
-#| msgid "Moderate"
+#, kde-format
 msgctxt "Timeline Name"
 msgid "Federated"
-msgstr "Kohtalainen"
+msgstr "Federoitu"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:414
-#, fuzzy, kde-format
-#| msgid "Update Timelines"
+#, kde-format
 msgctxt "Timeline description"
 msgid "Federated timeline"
-msgstr "Päivitä aikajanat"
+msgstr "Federoitu aikajana"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:420
 #, kde-format
@@ -2243,16 +2242,14 @@ msgid "Favourites"
 msgstr "Suosikit"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:522
-#, fuzzy, kde-format
-#| msgid "Repeat of %1"
+#, kde-format
 msgid "Boost of %1"
-msgstr "Toisto viestistä %1"
+msgstr "Buustaus viestistä %1"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:524
-#, fuzzy, kde-format
-#| msgid "Repeated by %1"
+#, kde-format
 msgid "Boosted by %1"
-msgstr "Toistanut %1"
+msgstr "Buustannut %1"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:703
 #, kde-format
@@ -2304,7 +2301,7 @@ msgstr ""
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Boost"
-msgstr ""
+msgstr "Buustaa"
 
 #: microblogs/mastodon/mastodonpostwidget.cpp:120
 #, kde-format
@@ -2663,7 +2660,7 @@ msgstr "Saapuvien viestien noutaminen epäonnistui. %1"
 #: microblogs/twitter/twittermicroblog.cpp:339
 #, kde-format
 msgid "There is no list record for user %1"
-msgstr ""
+msgstr "Käyttäjälle %1 ei ole luettelotietuetta"
 
 #: microblogs/twitter/twitterpostwidget.cpp:64
 #, kde-format
@@ -2673,7 +2670,7 @@ msgstr "Uudelleentviittaa"
 #: microblogs/twitter/twitterpostwidget.cpp:65
 #, kde-format
 msgid "Retweet post using API"
-msgstr ""
+msgstr "Twiittaa viesti uudelleen APIlla"
 
 #: microblogs/twitter/twitterpostwidget.cpp:136
 #, kde-format
