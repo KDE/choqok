@@ -548,7 +548,7 @@ msgstr "Stephen Henderson"
 #: choqok/main.cpp:45
 #, kde-format
 msgid "Search API implementation"
-msgstr "Implementació de la API de busca"
+msgstr "Implementació de l'API de busca"
 
 #: choqok/main.cpp:46
 #, kde-format
@@ -885,7 +885,7 @@ msgstr "Repetix"
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:76
 #, kde-format
 msgid "Repeat post using API"
-msgstr "Repetix el missatge utilitzant la API"
+msgstr "Repetix el missatge utilitzant l'API"
 
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:140
 #, kde-format
@@ -1937,7 +1937,7 @@ msgstr "Servidor"
 #: microblogs/laconica/laconicaeditaccount_base.ui:83
 #, kde-format
 msgid "API path:"
-msgstr "Camí de la API:"
+msgstr "Camí de l'API:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: microblogs/friendica/friendicaeditaccount_base.ui:103
@@ -2672,7 +2672,7 @@ msgstr "«ReTweeteja»"
 #: microblogs/twitter/twitterpostwidget.cpp:65
 #, kde-format
 msgid "Retweet post using API"
-msgstr "«ReTweeteja» el missatge utilitzant la API"
+msgstr "«ReTweeteja» el missatge utilitzant l'API"
 
 #: microblogs/twitter/twitterpostwidget.cpp:136
 #, kde-format
@@ -3217,7 +3217,7 @@ msgstr "El connector de l'acció Busca no accepta el microblog actual."
 #: plugins/shorteners/bit_ly/bit_ly.cpp:70
 #, kde-format
 msgid "API key is invalid"
-msgstr "La clau de la API no és vàlida"
+msgstr "La clau de l'API no és vàlida"
 
 #: plugins/shorteners/bit_ly/bit_ly.cpp:73
 #, kde-format
@@ -3277,7 +3277,7 @@ msgctxt ""
 msgid ""
 "You can find your API key <a href=\"http://bit.ly/a/your_api_key\">here</a>"
 msgstr ""
-"Trobareu la vostra clau de la API <a href=\"http://bit.ly/a/your_api_key"
+"Trobareu la vostra clau de l'API <a href=\"http://bit.ly/a/your_api_key"
 "\">ací</a>"
 
 #: plugins/shorteners/bit_ly/bit_ly_config.cpp:95
@@ -3295,7 +3295,7 @@ msgid ""
 "You can find it on http://bit.ly/a/your_api_key"
 msgstr ""
 "Les dades proporcionades no són vàlides. Proveu un altre identificador de "
-"sessió o clau de la API.\n"
+"sessió o clau de l'API.\n"
 "La trobareu a http://bit.ly/a/your_api_key"
 
 #: plugins/shorteners/bit_ly/bit_ly_config.cpp:124
@@ -3325,13 +3325,13 @@ msgstr "Usuari de Bit.ly:"
 #: plugins/shorteners/bit_ly/bit_ly_prefs.ui:32
 #, kde-format
 msgid "Bit.ly API key:"
-msgstr "Clau de la API de Bit.ly:"
+msgstr "Clau de l'API de Bit.ly:"
 
 #. i18n: ectx: property (text), widget (QLabel, help_label)
 #: plugins/shorteners/bit_ly/bit_ly_prefs.ui:58
 #, kde-format
 msgid "You can find your API key here"
-msgstr "Trobareu la vostra clau de la API ací"
+msgstr "Trobareu la vostra clau de l'API ací"
 
 #. i18n: ectx: property (text), widget (QLabel, domain)
 #: plugins/shorteners/bit_ly/bit_ly_prefs.ui:73
