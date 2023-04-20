@@ -567,7 +567,7 @@ msgstr "Alex Infantes"
 #: choqok/main.cpp:49
 #, kde-format
 msgid "Improvements on Image preview plugin"
-msgstr "Melioramentos sur vista preliminari de Imagine"
+msgstr "Melioramentos sur vista preliminar de Imagine"
 
 #: choqok/main.cpp:51
 #, kde-format
