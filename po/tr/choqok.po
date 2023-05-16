@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-18 00:44+0000\n"
-"PO-Revision-Date: 2023-03-07 20:16+0300\n"
+"PO-Revision-Date: 2023-05-15 21:50+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.03.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -743,7 +743,7 @@ msgstr "Choqok - Devre Dışı"
 #: microblogs/twitter/twittercomposerwidget.cpp:58
 #, kde-format
 msgid "Attach a file"
-msgstr "Dosya ekle"
+msgstr "Dosya iliştir"
 
 #: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:87
 #: libchoqok/ui/composerwidget.cpp:124
@@ -778,7 +778,7 @@ msgstr "Yüklenecek Ortam Seç"
 #: microblogs/twitter/twittercomposerwidget.cpp:138
 #, kde-format
 msgid "Discard Attachment"
-msgstr "Eklentiyi At"
+msgstr "Eki At"
 
 #: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:139
 #: microblogs/mastodon/mastodoncomposerwidget.cpp:143
