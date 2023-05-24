@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-18 00:44+0000\n"
-"PO-Revision-Date: 2023-05-15 21:50+0300\n"
+"PO-Revision-Date: 2023-05-24 00:52+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.03.70\n"
+"X-Generator: Lokalize 23.07.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -87,7 +87,7 @@ msgstr "Hesap silinemedi."
 #: choqok/config/accounts/accountswidget.cpp:238
 #, kde-format
 msgid "Select Micro-Blogging Service"
-msgstr "Mikro Günlük Servisi Seç"
+msgstr "Mikro Günlük Hizmeti Seç"
 
 #: choqok/config/accounts/accountswidget.cpp:298
 #, kde-format
@@ -452,7 +452,7 @@ msgstr "Kısaltılmış URL'lerden \"http://\" kısmını kaldır"
 #: choqok/config/behavior/behaviorconfig_shorten_base.ui:33
 #, kde-format
 msgid "Shortening ser&vice:"
-msgstr "Kısaltma ser&visi:"
+msgstr "Kısaltma &hizmeti:"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, configPlugin)
 #: choqok/config/behavior/behaviorconfig_shorten_base.ui:56
@@ -1878,7 +1878,7 @@ msgid ""
 "give them names."
 msgstr ""
 "Arma, hesabınıza vermek istediğiniz adı belirtir. Özgün olmalıdır. Aynı "
-"servise ait birden çok bağlantılarınız olabilir; bu yüzden kısaltma bu "
+"hizmete ait birden çok bağlantılarınız olabilir; bu yüzden kısaltma bu "
 "bağlantıları birbirinden ayırmak için kullanılmaktadır."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -1950,7 +1950,7 @@ msgstr "Temel Kimlik Denetimi"
 #: microblogs/laconica/laconicaeditaccount_base.ui:145
 #, kde-format
 msgid "The name you use to connect to the service"
-msgstr "Bu servise bağlanılırken kullanılan ad"
+msgstr "Bu hizmete bağlanılırken kullanılan ad"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
 #. i18n: ectx: property (text), widget (QLabel, label_5)
@@ -2394,7 +2394,7 @@ msgstr ""
 #: microblogs/pumpio/pumpioeditaccountwidget.ui:146
 #, kde-format
 msgid "&Authenticate with Pump.io Service"
-msgstr "&Pump.io servisi ile doğrulayın"
+msgstr "&Pump.io hizmeti ile doğrulayın"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, PumpIOMessageDialog)
 #: microblogs/pumpio/pumpiomessagedialog.ui:14
@@ -3211,7 +3211,7 @@ msgstr "Oturum açma başarısız"
 #: plugins/shorteners/bit_ly/bit_ly.cpp:76
 #, kde-format
 msgid "Rate limit exceeded. Try another shortener."
-msgstr "Kullanım sınırı aşıldı. Başka bir kısaltma servisi deneyin."
+msgstr "Kullanım sınırı aşıldı. Başka bir kısaltma hizmeti deneyin."
 
 #: plugins/shorteners/bit_ly/bit_ly.cpp:79
 #: plugins/shorteners/goo_gl/goo_gl.cpp:55
@@ -3373,7 +3373,7 @@ msgstr "Rastgele sunucu"
 #: plugins/shorteners/tinyarro_ws/tinyarro_ws_prefs.ui:40
 #, kde-format
 msgid "Shortener URL host:"
-msgstr "URL kısaltma servisi:"
+msgstr "URL kısaltma hizmeti:"
 
 #: plugins/shorteners/ur1_ca/ur1_ca.cpp:60
 #, kde-format
@@ -3450,7 +3450,7 @@ msgstr "Oturum açma başarısız. Lütfen Choqok'u yeniden yetkilendirin"
 #, kde-format
 msgid "The requested service is temporarily unavailable. Try again later"
 msgstr ""
-"İstediğiniz servis geçici olarak kullanılamıyor. Daha sonra tekrar deneyin"
+"İstediğiniz hizmet geçici olarak kullanılamıyor. Daha sonra yeniden deneyin"
 
 #: plugins/uploaders/flickr/flickr.cpp:184
 #: plugins/uploaders/flickr/flickrconfig.cpp:153
