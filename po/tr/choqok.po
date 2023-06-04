@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-18 00:44+0000\n"
-"PO-Revision-Date: 2023-05-24 00:52+0300\n"
+"PO-Revision-Date: 2023-06-04 01:21+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1654,8 +1654,8 @@ msgstr "Biçemlendirilmiş Panel"
 #, kde-format
 msgid "<b>Note:</b><br/><i>Ctrl+S</i> to enable/disable auto spell checker."
 msgstr ""
-"<b>Not:</b><br/>Otomatik yazım denetimini açmak/kapatmak için <i>Ctrl+S</i> "
-"kısayolunu kullanın."
+"<b>Not:</b><br/>Otomatik yazım denetimini açmak/kapatmak için <i>Kontrol+S</"
+"i> kısayolunu kullanın."
 
 #: libchoqok/ui/choqoktextedit.cpp:184
 #, kde-format
