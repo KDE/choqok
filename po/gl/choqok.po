@@ -1,7 +1,6 @@
 # translation of choqok.po to galician
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-#
 # mvillarino <mvillarino@users.sourceforge.net>, 2008, 2009.
 # Marce Villarino <mvillarino@users.sourceforge.net>, 2008, 2009.
 # marce villarino <mvillarino@users.sourceforge.net>, 2009.
@@ -9,20 +8,22 @@
 # Xosé <xosecalvo@edu.xunta.es>, 2009.
 # Marce Villarino <mvillarino@kde-espana.es>, 2012, 2013.
 # Adrian Chaves Fernandez <adriyetichaves@gmail.com>, 2012, 2013, 2015, 2016, 2017.
-# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019.
+# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2023.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: choqok\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-18 00:44+0000\n"
-"PO-Revision-Date: 2019-07-13 12:45+0200\n"
+"PO-Revision-Date: 2023-06-18 09:27+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
-"Language-Team: Galician <kde-i18n-doc@kde.org>\n"
+"Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 23.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2080,13 +2081,12 @@ msgstr "Servidor de &GNU social:"
 #: microblogs/mastodon/mastodoneditaccountwidget.cpp:91
 #, kde-format
 msgid "Code"
-msgstr ""
+msgstr "Código"
 
 #: microblogs/mastodon/mastodoneditaccountwidget.cpp:92
-#, fuzzy, kde-format
-#| msgid "Enter the verifier code received from %1"
+#, kde-format
 msgid "Enter the code received from %1"
-msgstr "Insira o código de verificación recibido de %1."
+msgstr "Insira o código recibido de %1."
 
 #: microblogs/mastodon/mastodoneditaccountwidget.cpp:105
 #: microblogs/pumpio/pumpioeditaccountwidget.cpp:105
@@ -2135,10 +2135,9 @@ msgstr "Non autenticado"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tabAccount)
 #: microblogs/mastodon/mastodoneditaccountwidget.ui:21
-#, fuzzy, kde-format
-#| msgid "StatusNet Account"
+#, kde-format
 msgid "Mastodon Account"
-msgstr "Conta de StatusNet"
+msgstr "Conta de Mastodon"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_basicAuth)
 #: microblogs/mastodon/mastodoneditaccountwidget.ui:73
@@ -2150,10 +2149,9 @@ msgstr "Credenciais"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: microblogs/mastodon/mastodoneditaccountwidget.ui:82
-#, fuzzy, kde-format
-#| msgid "Username:"
+#, kde-format
 msgid "username@domain:"
-msgstr "Nome de usuario:"
+msgstr "usuaria@dominio.example:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_credentialsBox)
 #: microblogs/mastodon/mastodoneditaccountwidget.ui:98
@@ -2165,16 +2163,13 @@ msgstr "Autenticación OAuth"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: microblogs/mastodon/mastodoneditaccountwidget.ui:110
-#, fuzzy, kde-format
-#| msgid ""
-#| "Click the below button; if everything goes well, you will pointed to "
-#| "Identi.ca website to allow access to Choqok."
+#, kde-format
 msgid ""
 "Click the below button; if everything goes well, you will pointed to "
 "Mastodon website to allow access to Choqok."
 msgstr ""
-"Prema o botón de embaixo. Se todo vai ben, abrirase un navegador en Identi."
-"ca para que permita o acceso a Choqok."
+"Prema o botón de embaixo; se todo vai ben, dirixirase ao sitio web de "
+"Mastodon para que permita o acceso a Choqok."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, kcfg_authorize)
 #: microblogs/mastodon/mastodoneditaccountwidget.ui:143
@@ -2186,10 +2181,9 @@ msgstr "Verificar as credenciais"
 
 #. i18n: ectx: property (text), widget (QPushButton, kcfg_authorize)
 #: microblogs/mastodon/mastodoneditaccountwidget.ui:146
-#, fuzzy, kde-format
-#| msgid "&Authenticate with StatusNet service"
+#, kde-format
 msgid "&Authenticate with Mastodon Service"
-msgstr "&Autenticarse co servizo StatusNet"
+msgstr "&Autenticarse co servizo de Mastodon"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:320
 #: microblogs/pumpio/pumpiomicroblog.cpp:912
@@ -2220,60 +2214,50 @@ msgstr "Vostede e a xente que segue"
 #, kde-format
 msgctxt "Timeline Name"
 msgid "Local"
-msgstr ""
+msgstr "Local"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:407
-#, fuzzy, kde-format
-#| msgid "Loading timelines..."
+#, kde-format
 msgctxt "Timeline description"
 msgid "Local timeline"
-msgstr "Cargando as liñas de tempo…"
+msgstr "Cronoloxía local"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:413
-#, fuzzy, kde-format
-#| msgid "Moderate"
+#, kde-format
 msgctxt "Timeline Name"
 msgid "Federated"
-msgstr "Moderada"
+msgstr "Federada"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:414
-#, fuzzy, kde-format
-#| msgid "Update Timelines"
+#, kde-format
 msgctxt "Timeline description"
 msgid "Federated timeline"
-msgstr "Actualizar as liñas de tempo"
+msgstr "Cronoloxía federada"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:420
-#, fuzzy, kde-format
-#| msgctxt "Timeline Name"
-#| msgid "Favorites"
+#, kde-format
 msgctxt "Timeline Name"
 msgid "Favourites"
-msgstr "Favoritos"
+msgstr "Favoritas"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:421
-#, fuzzy, kde-format
-#| msgctxt "Timeline Name"
-#| msgid "Favorites"
+#, kde-format
 msgctxt "Timeline description"
 msgid "Favourites"
-msgstr "Favoritos"
+msgstr "Favoritas"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:522
-#, fuzzy, kde-format
-#| msgid "Repeat of %1"
+#, kde-format
 msgid "Boost of %1"
-msgstr "Repetición de %1"
+msgstr "Promoción de %1"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:524
-#, fuzzy, kde-format
-#| msgid "Repeated by %1"
+#, kde-format
 msgid "Boosted by %1"
-msgstr "Repetido por %1"
+msgstr "Promovido por %1"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:703
-#, fuzzy, kde-format
-#| msgid "New post for account %1 submitted successfully"
+#, kde-format
 msgid "New post for account %1 submitted successfully."
 msgstr "A nova mensaxe da conta %1 publicouse correctamente."
 
@@ -2296,48 +2280,39 @@ msgid "An error occurred when fetching the timeline"
 msgstr "Produciuse un erro ao obter a liña do tempo."
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:922
-#, fuzzy, kde-format
-#| msgid "Updating followers list for account %1..."
+#, kde-format
 msgid "Updating following list for account %1..."
-msgstr "Actualizando a lista de seguidores da conta %1…"
+msgstr "Actualizando a lista de seguimentos da conta %1…"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:952
-#, fuzzy, kde-format
-#| msgid ""
-#| "Followers list for account %1 could not be updated:\n"
-#| "%2"
+#, kde-format
 msgid ""
 "Following list for account %1 could not be updated:\n"
 "%2"
 msgstr ""
-"Non se puido actualizar a lista de seguidores da conta %1:\n"
+"Non se puido actualizar a lista de seguimentos da conta %1:\n"
 "%2"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:968
-#, fuzzy, kde-format
-#| msgid ""
-#| "Retrieving the followers list failed. The data returned from the server "
-#| "is corrupted."
+#, kde-format
 msgid ""
 "Retrieving the following list failed. The data returned from the server is "
 "corrupted."
 msgstr ""
-"Fallou a obtención da lista de seguidores. Os datos devoltos polo servidor "
+"Fallou a obtención da lista de seguimentos. Os datos devoltos polo servidor "
 "están corrompidos."
 
 #: microblogs/mastodon/mastodonpostwidget.cpp:97
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Boost"
-msgstr ""
+msgstr "Promover"
 
 #: microblogs/mastodon/mastodonpostwidget.cpp:120
-#, fuzzy, kde-format
-#| msgctxt "@info:tooltip"
-#| msgid "Favorite"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Favourite"
-msgstr "Favorito"
+msgstr "Favorito."
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: microblogs/ocs/ocsconfigurebase.ui:19
