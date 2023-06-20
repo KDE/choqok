@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: choqok\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-18 00:44+0000\n"
-"PO-Revision-Date: 2023-06-18 09:27+0200\n"
+"PO-Revision-Date: 2023-06-19 14:40+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -87,7 +87,7 @@ msgstr "Non se pode retirar esta conta."
 #: choqok/config/accounts/accountswidget.cpp:238
 #, kde-format
 msgid "Select Micro-Blogging Service"
-msgstr "Seleccionar o servizo de MicroBlog"
+msgstr "Seleccione un servizo de microbitácora"
 
 #: choqok/config/accounts/accountswidget.cpp:298
 #, kde-format
@@ -156,7 +156,7 @@ msgstr "Un alcume para a conta."
 #: choqok/config/accounts/accountswidget_base.ui:170
 #, kde-format
 msgid "Micro-Blog"
-msgstr "MicroBlogue"
+msgstr "Microbitácora"
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
 #: choqok/config/accounts/accountswidget_base.ui:173
@@ -174,7 +174,7 @@ msgstr "Activado"
 #: choqok/config/accounts/accountswidget_base.ui:181
 #, kde-format
 msgid "Whether the microblog is enabled or disabled"
-msgstr "Se o microblogue está activado ou desactivado."
+msgstr "Se a microbitácora está activada ou desactivada."
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
 #: choqok/config/accounts/accountswidget_base.ui:186
@@ -193,13 +193,13 @@ msgstr "A conta só é para ler"
 #: libchoqok/ui/quickpost.cpp:98
 #, kde-format
 msgid "Quick Post"
-msgstr "Mensaxe rápida"
+msgstr "Publicación rápida"
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
 #: choqok/config/accounts/accountswidget_base.ui:197
 #, kde-format
 msgid "Show in Quick Post"
-msgstr "Mostrar en «Mensaxe rápida»"
+msgstr "Amosar en «Publicación rápida»"
 
 #: choqok/config/accounts/addaccountdialog.cpp:54
 #, kde-format
@@ -234,7 +234,7 @@ msgstr "Activar as emoticonas"
 #, kde-format
 msgid "Show posts in reverse order (Needs restart to take effect)"
 msgstr ""
-"Mostrar as mensaxes en orde invertida (hai que reiniciar para que se faga "
+"Amosar as publicacións en orde invertida (hai que reiniciar para que se faga "
 "efectivo)."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_showRetweetsInChoqokWay)
@@ -244,14 +244,14 @@ msgid ""
 "You will see post with retweeter name as author, plus Retweeted from "
 "original author note."
 msgstr ""
-"Verá as mensaxes co nome de quen as reenviou como autor, máis unha de que se "
-"reenviou, con mención do autor orixinal."
+"Verá as publicacións co nome de quen as reenviou como autor, máis unha de "
+"que se reenviou, con mención do autor orixinal."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showRetweetsInChoqokWay)
 #: choqok/config/appearance/appearanceconfig_base.ui:34
 #, kde-format
 msgid "Show Retweeted/Repeated posts in Choqok way"
-msgstr "Mostrar as mensaxes reenviadas ou repetidas ao xeito de Choqok."
+msgstr "Amosar as publicacións reenviadas ou repetidas ao xeito de Choqok."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_isCustomUi)
 #: choqok/config/appearance/appearanceconfig_base.ui:44
@@ -263,7 +263,7 @@ msgstr "Usar unha aparencia personalizada."
 #: choqok/config/appearance/appearanceconfig_base.ui:76
 #, kde-format
 msgid "Post font:"
-msgstr "Tipo de letra das mensaxes:"
+msgstr "Tipo de letra das publicacións:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: choqok/config/appearance/appearanceconfig_base.ui:95
@@ -287,7 +287,7 @@ msgstr "Cor predeterminada:"
 #: choqok/config/appearance/appearanceconfig_base.ui:150
 #, kde-format
 msgid "Unread post color:"
-msgstr "Cor das mensaxes sen ler:"
+msgstr "Cor das publicacións sen ler:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: choqok/config/appearance/appearanceconfig_base.ui:194
@@ -299,7 +299,7 @@ msgstr "Primeiro plano"
 #: choqok/config/appearance/appearanceconfig_base.ui:204
 #, kde-format
 msgid "Own post color:"
-msgstr "Cor das mensaxes sen ler:"
+msgstr "Cor das publicacións propias:"
 
 #: choqok/config/behavior/behaviorconfig.cpp:57
 #, kde-format
@@ -326,13 +326,13 @@ msgstr "Opcións xerais"
 #: choqok/config/behavior/behaviorconfig_general.ui:23
 #, kde-format
 msgid "Show splash-screen on startup"
-msgstr "Mostrar a xanela de presentación no inicio"
+msgstr "Amosar a pantalla de benvida no inicio"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_markAllAsReadOnExit)
 #: choqok/config/behavior/behaviorconfig_general.ui:33
 #, kde-format
 msgid "Mark all posts as read on exit"
-msgstr "Marcar todas as mensaxes como lidas ao saír."
+msgstr "Marcar todas as publicacións como lidas ao saír."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_enableSpellChecker)
 #: choqok/config/behavior/behaviorconfig_general.ui:43
@@ -351,7 +351,8 @@ msgstr "Activar a área de notificacións"
 #, kde-format
 msgid "Mark all unread posts as read, when hiding to system tray"
 msgstr ""
-"Marcar todas as mensaxes sen ler como lidas ao agochar na bandexa do sistema."
+"Marcar todas as publicacións sen ler como lidas ao agochar na bandexa do "
+"sistema."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useCustomBrowser)
 #: choqok/config/behavior/behaviorconfig_general.ui:83
@@ -381,7 +382,7 @@ msgstr "Inter&valo de actualización:"
 #: choqok/config/behavior/behaviorconfig_general.ui:149
 #, kde-format
 msgid "&Number of posts to show in timelines:"
-msgstr "Ca&ntidade de mensaxes que se mostran nas liñas de tempo:"
+msgstr "Ca&ntidade de publicacións que se amosan nas liñas de tempo:"
 
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_updateInterval)
 #: choqok/config/behavior/behaviorconfig_general.ui:166
@@ -399,7 +400,7 @@ msgstr " minutos"
 #: choqok/config/behavior/behaviorconfig_notifications.ui:17
 #, kde-format
 msgid "&Show all new posts in one notification"
-msgstr "Mo&strar todas as mensaxes novas nunha notificación."
+msgstr "Amo&sar todas as publicacións novas nunha notificación."
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: choqok/config/behavior/behaviorconfig_notifications.ui:26
@@ -417,19 +418,19 @@ msgstr " segundos"
 #: choqok/config/behavior/behaviorconfig_notifications.ui:57
 #, kde-format
 msgid "New post notifications"
-msgstr "Notificacións das mensaxes novas"
+msgstr "Notificacións das publicacións novas"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_knotify)
 #: choqok/config/behavior/behaviorconfig_notifications.ui:63
 #, kde-format
 msgid "Show notification using KNotify"
-msgstr "Mostrar as notificacións mediante o KNotify"
+msgstr "Amosar as notificacións mediante o KNotify"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_libindicate)
 #: choqok/config/behavior/behaviorconfig_notifications.ui:70
 #, kde-format
 msgid "Show notification using Message Indicator"
-msgstr "Mostrar as notificacións mediante o Indicador de Mensaxe"
+msgstr "Amosar as notificacións mediante o Indicador de Mensaxe"
 
 #: choqok/config/behavior/behaviorconfig_shorten.cpp:71
 #, kde-format
@@ -601,7 +602,7 @@ msgstr "Daniel Kreuter"
 #: choqok/main.cpp:53
 #, kde-format
 msgid "Twitter microblog developer"
-msgstr "Desenvolvedor da compatibilidade co servizo Twitter."
+msgstr "Persoa desenvolvedora da microbitácora de Twitter."
 
 #: choqok/main.cpp:54
 #, kde-format
@@ -699,7 +700,7 @@ msgid ""
 "blogging services.\n"
 "Would you like to add your account now?"
 msgstr ""
-"Para empregar o Choqok precísase cando menos dunha conta nun dos servizos de "
+"Para usar o Choqok precísase cando menos dunha conta nun dos servizos de "
 "microblogging admitidos.\n"
 "Desexa engadir a súa conta agora?"
 
@@ -727,8 +728,8 @@ msgstr "Cargando as liñas de tempo…"
 #, kde-format
 msgid "1 unread post"
 msgid_plural "%1 unread posts"
-msgstr[0] "1 mensaxe sen ler"
-msgstr[1] "%1 mensaxes sen ler"
+msgstr[0] "1 publicación sen ler"
+msgstr[1] "%1 publicacións sen ler"
 
 #: choqok/systrayicon.cpp:108
 #, kde-format
@@ -821,7 +822,7 @@ msgstr "Repetido"
 #, kde-format
 msgctxt "Timeline description"
 msgid "Your posts that were repeated by others"
-msgstr "Mensaxes súas que outros repetiron."
+msgstr "Publicacións súas que outras persoas repetiron."
 
 #: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:184
 #: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:192
@@ -887,7 +888,7 @@ msgstr "Repetir"
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:76
 #, kde-format
 msgid "Repeat post using API"
-msgstr "Repetir a mensaxe empregando a API"
+msgstr "Repetir a publicación usando a API"
 
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:140
 #, kde-format
@@ -902,7 +903,7 @@ msgstr "Abrir a páxina de etiquetas no navegador"
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:158
 #, kde-format
 msgid "Show latest group posts"
-msgstr "Mostrar as últimas mensaxes do grupo"
+msgstr "Amosar as últimas publicacións do grupo"
 
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:160
 #, kde-format
@@ -921,7 +922,7 @@ msgstr "Quen é %1"
 #, kde-format
 msgctxt "Posts from user"
 msgid "Posts from %1"
-msgstr "Mensaxes de %1"
+msgstr "Publicacións de %1"
 
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:181
 #: microblogs/twitter/twitterpostwidget.cpp:133
@@ -1049,7 +1050,7 @@ msgstr "Inicio"
 #, kde-format
 msgctxt "Timeline description"
 msgid "You and your friends"
-msgstr "As súas amizades e vostede"
+msgstr "As súas amizades e vostede."
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:92
 #, kde-format
@@ -1061,7 +1062,7 @@ msgstr "Resposta"
 #, kde-format
 msgctxt "Timeline description"
 msgid "Replies to you"
-msgstr "O que lle responderon"
+msgstr "O que lle responderon."
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:98
 #: microblogs/pumpio/pumpiomicroblog.cpp:1265
@@ -1074,7 +1075,7 @@ msgstr "Entrada"
 #, kde-format
 msgctxt "Timeline description"
 msgid "Your incoming private messages"
-msgstr "As mensaxes privadas recibidas"
+msgstr "As mensaxes privadas recibidas."
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:104
 #: microblogs/pumpio/pumpiomicroblog.cpp:1272
@@ -1087,7 +1088,7 @@ msgstr "Saída"
 #, kde-format
 msgctxt "Timeline description"
 msgid "Private messages you have sent"
-msgstr "As mensaxes privadas que enviou"
+msgstr "As mensaxes privadas que enviou."
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:110
 #, kde-format
@@ -1099,7 +1100,7 @@ msgstr "Favorito"
 #, kde-format
 msgctxt "Timeline description"
 msgid "Your favorites"
-msgstr "Os seus favoritos"
+msgstr "As súas favoritas."
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:116
 #, kde-format
@@ -1111,7 +1112,7 @@ msgstr "Público"
 #, kde-format
 msgctxt "Timeline description"
 msgid "Public timeline"
-msgstr "Liña temporal pública"
+msgstr "Liña temporal pública."
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:122
 #, kde-format
@@ -1123,7 +1124,7 @@ msgstr "ReTweets"
 #, kde-format
 msgctxt "Timeline description"
 msgid "Your posts that were ReTweeted by others"
-msgstr "As súas mensaxes que outros repetiron"
+msgstr "As súas publicacións que outros promoveron."
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:138
 #: microblogs/pumpio/pumpiomicroblog.cpp:107
@@ -1149,24 +1150,24 @@ msgstr "Actualizar a lista de amizades"
 #: microblogs/pumpio/pumpiomicroblog.cpp:166
 #, kde-format
 msgid "Creating the new post failed. Text is empty."
-msgstr "A creación da nova mensaxe fallou. O texto está baleiro."
+msgstr "A creación da nova publicación fallou. O texto está baleiro."
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:410
 #, kde-format
 msgid "Creating the new post failed: %1"
-msgstr "Fallou a creación da nova mensaxe: %1"
+msgstr "Fallou a creación da nova publicación: %1"
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:421
 #, kde-format
 msgid "Creating the new post failed. The result data could not be parsed."
 msgstr ""
-"Fallou a creación da nova mensaxe. Non se puideron analizar os datos "
+"Fallou a creación da nova publicación. Non se puideron analizar os datos "
 "resultantes."
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:425
 #, kde-format
 msgid "Creating the new post failed, with error: %1"
-msgstr "Fallou a creación da nova mensaxe co erro: %1"
+msgstr "Fallou a creación da nova publicación co erro: %1"
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:433
 #, kde-format
@@ -1176,19 +1177,19 @@ msgstr "A mensaxe privada enviouse correctamente."
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:501
 #, kde-format
 msgid "Fetching the new post failed. %1"
-msgstr "Fallou a obtención da nova mensaxe. %1"
+msgstr "Fallou a obtención da nova publicación. %1"
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:511
 #, kde-format
 msgid "Fetching new post failed. The result data could not be parsed."
 msgstr ""
-"Fallou a obtención da nova mensaxe. Non se puideron analizar os datos "
+"Fallou a obtención da nova publicación. Non se puideron analizar os datos "
 "resultantes."
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:516
 #, kde-format
 msgid "Fetching new post failed, with error:%1"
-msgstr "Fallou a obtención da nova mensaxe co erro:%1"
+msgstr "Non se puido obter a nova publicación, o erro foi:%1"
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:566
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:575
@@ -1196,7 +1197,7 @@ msgstr "Fallou a obtención da nova mensaxe co erro:%1"
 #: microblogs/pumpio/pumpiomicroblog.cpp:964
 #, kde-format
 msgid "Removing the post failed. %1"
-msgstr "Fallou a retiración da mensaxe. %1"
+msgstr "Non se puido retirar a publicación. %1"
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:619
 #, kde-format
@@ -1252,7 +1253,7 @@ msgstr "Fallou a creación de amizade con %1. %2"
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1094
 #, kde-format
 msgid "You are now listening to %1's posts."
-msgstr "Está a seguir as mensaxes de %1."
+msgstr "Está a seguir as publicacións de %1."
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1102
 #, kde-format
@@ -1364,7 +1365,7 @@ msgstr "Pechalo todo"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Reply"
-msgstr "Resposta"
+msgstr "Resposta."
 
 #: helperlibs/twitterapihelper/twitterapipostwidget.cpp:64
 #: microblogs/mastodon/mastodonpostwidget.cpp:105
@@ -1389,7 +1390,7 @@ msgstr "Responder a todos"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Favorite"
-msgstr "Favorito"
+msgstr "Favorita."
 
 #: helperlibs/twitterapihelper/twitterapipostwidget.cpp:113
 #, kde-format
@@ -1399,7 +1400,7 @@ msgstr "<a href='%1' title='Sent from %2 via OStatus'>%2</a>"
 #: helperlibs/twitterapihelper/twitterapipostwidget.cpp:125
 #, kde-format
 msgid "Show Conversation"
-msgstr "Mostrar a conversa"
+msgstr "Amosar a conversa"
 
 #: helperlibs/twitterapihelper/twitterapipostwidget.cpp:133
 #, kde-format
@@ -1469,7 +1470,7 @@ msgstr "Pechar"
 #, kde-format
 msgctxt "User posts"
 msgid "Posts"
-msgstr "Mensaxes"
+msgstr "Publicacións"
 
 #: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:252
 #, kde-format
@@ -1558,8 +1559,8 @@ msgstr "A solicitude fallou. Non se pode obter o ficheiro de imaxe."
 #, kde-format
 msgid "No pluginId specified, And last used plugin is null."
 msgstr ""
-"Non se indicou o identificador do complemento. E o último complemento "
-"empregado foi «null»."
+"Non se indicou o identificador do complemento. E o último complemento usado "
+"foi «null»."
 
 #: libchoqok/microblog.cpp:73
 #, kde-format
@@ -1595,7 +1596,7 @@ msgstr "Produciuse un erro descoñecido"
 #, kde-format
 msgctxt "Show Choqok MainWindow"
 msgid "Show Choqok"
-msgstr "Mostrar o ChoqoK"
+msgstr "Amosar o ChoqoK"
 
 #: libchoqok/notifymanager.h:24
 #, kde-format
@@ -1610,7 +1611,7 @@ msgstr "Listo!"
 #: libchoqok/notifymanager.h:27
 #, kde-format
 msgid "New posts"
-msgstr "Mensaxes novas"
+msgstr "Novas publicacións"
 
 #: libchoqok/notifymanager.h:28
 #, kde-format
@@ -1676,7 +1677,7 @@ msgstr ""
 #: libchoqok/ui/choqoktextedit.cpp:184
 #, kde-format
 msgid "Set spell check language"
-msgstr "Configuración do idioma para a corrección ortográfica"
+msgstr "Definir o idioma para a corrección ortográfica"
 
 #: libchoqok/ui/choqoktextedit.cpp:188
 #, kde-format
@@ -1714,13 +1715,13 @@ msgstr "Última actualización:"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove"
-msgstr "Retirar"
+msgstr "Retirar."
 
 #: libchoqok/ui/postwidget.cpp:199
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "ReSend"
-msgstr "Reenviar"
+msgstr "Reenviar."
 
 #: libchoqok/ui/postwidget.cpp:454
 #, kde-format
@@ -1758,7 +1759,7 @@ msgstr[1] "hai %1 días"
 #: libchoqok/ui/postwidget.cpp:481
 #, kde-format
 msgid "Are you sure you want to remove this post from the server?"
-msgstr "Seguro que quere retirar esta mensaxe do servidor?"
+msgstr "Seguro que quere retirar esta publicación do servidor?"
 
 #: libchoqok/ui/quickpost.cpp:71
 #, kde-format
@@ -1775,7 +1776,7 @@ msgstr "Enviar"
 #: libchoqok/ui/quickpost.cpp:149
 #, kde-format
 msgid "Cannot create a post without any text."
-msgstr "Non se pode crear unha mensaxe sen texto."
+msgstr "Non se pode crear unha publicación sen texto."
 
 #: libchoqok/ui/quickpost.cpp:154
 #, kde-format
@@ -1783,7 +1784,7 @@ msgid ""
 "Please configure at least one account to be included in \"Quick Post\".\n"
 "Settings -> Configure Choqok... -> Accounts"
 msgstr ""
-"Configure polo menos unha conta para incluír en «Mensaxe rápida».\n"
+"Configure polo menos unha conta para incluír en «Publicación rápida».\n"
 "Pode facelo desde «Configuración → Configurar Choqok… → Contas»."
 
 #: libchoqok/ui/quickpost.cpp:261
@@ -1814,8 +1815,8 @@ msgstr "Seleccionar todo"
 #, kde-format
 msgid "1 new post in %2 (%3)"
 msgid_plural "%1 new posts in %2 (%3)"
-msgstr[0] "1 mensaxe nova en %2 (%3)"
-msgstr[1] "%1 mensaxes novas en %2 (%3)"
+msgstr[0] "1 publicación nova en %2 (%3)"
+msgstr[1] "%1 publicacións novas en %2 (%3)"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: libchoqok/ui/uploadmedia_base.ui:22
@@ -1964,7 +1965,7 @@ msgstr "Autenticación básica"
 #: microblogs/laconica/laconicaeditaccount_base.ui:145
 #, kde-format
 msgid "The name you use to connect to the service"
-msgstr "O nome que emprega para se conectar a este servizo"
+msgstr "O nome que usa para se conectar a este servizo"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
 #. i18n: ectx: property (text), widget (QLabel, label_5)
@@ -2189,26 +2190,27 @@ msgstr "&Autenticarse co servizo de Mastodon"
 #: microblogs/pumpio/pumpiomicroblog.cpp:912
 #, kde-format
 msgid "The post has been shared."
-msgstr "Compartiuse a mensaxe."
+msgstr "Compartiuse a publicación."
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:333
 #: microblogs/pumpio/pumpiomicroblog.cpp:926
 #, kde-format
 msgid "Cannot share the post. %1"
-msgstr "Non se pode compartir a mensaxe. %1"
+msgstr "Non se pode compartir a publicación. %1"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:382
 #: microblogs/pumpio/pumpiomicroblog.cpp:715
 #, kde-format
 msgid "Cannot set/unset the post as favorite. %1"
-msgstr "Non se pode definir ou deixar de definir a mensaxe como favorita. %1"
+msgstr ""
+"Non se pode definir ou deixar de definir a publicación como favorita. %1"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:400
 #: microblogs/pumpio/pumpiomicroblog.cpp:1252
 #, kde-format
 msgctxt "Timeline description"
 msgid "You and people you follow"
-msgstr "Vostede e a xente que segue"
+msgstr "Vostede e a xente que segue."
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:406
 #, kde-format
@@ -2220,7 +2222,7 @@ msgstr "Local"
 #, kde-format
 msgctxt "Timeline description"
 msgid "Local timeline"
-msgstr "Cronoloxía local"
+msgstr "Cronoloxía local."
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:413
 #, kde-format
@@ -2232,7 +2234,7 @@ msgstr "Federada"
 #, kde-format
 msgctxt "Timeline description"
 msgid "Federated timeline"
-msgstr "Cronoloxía federada"
+msgstr "Cronoloxía federada."
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:420
 #, kde-format
@@ -2244,7 +2246,7 @@ msgstr "Favoritas"
 #, kde-format
 msgctxt "Timeline description"
 msgid "Favourites"
-msgstr "Favoritas"
+msgstr "Favoritas."
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:522
 #, kde-format
@@ -2265,13 +2267,13 @@ msgstr "A nova mensaxe da conta %1 publicouse correctamente."
 #: microblogs/pumpio/pumpiomicroblog.cpp:694
 #, kde-format
 msgid "Creating the new post failed. %1"
-msgstr "Fallou a creación da nova mensaxe. %1"
+msgstr "Fallou a creación da nova publicación. %1"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:752
 #: microblogs/pumpio/pumpiomicroblog.cpp:754
 #, kde-format
 msgid "Cannot fetch post. %1"
-msgstr "Non se pode obter a mensaxe. %1"
+msgstr "Non se pode obter a publicación. %1"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:808
 #: microblogs/pumpio/pumpiomicroblog.cpp:1018
@@ -2462,12 +2464,12 @@ msgstr "Non se poden obter as listas. %1"
 #: microblogs/pumpio/pumpiomicroblog.cpp:953
 #, kde-format
 msgid "Post removed successfully"
-msgstr "Retirouse a mensaxe."
+msgstr "Retirouse a publicación"
 
 #: microblogs/pumpio/pumpiomicroblog.cpp:999
 #, kde-format
 msgid "An error occurred when updating the post"
-msgstr "Produciuse un erro ao actualizar a mensaxe."
+msgstr "Produciuse un erro ao actualizar a publicación."
 
 #: microblogs/pumpio/pumpiomicroblog.cpp:1068
 #, kde-format
@@ -2484,19 +2486,19 @@ msgstr "Favoritos"
 #, kde-format
 msgctxt "Timeline description"
 msgid "Posts you favorited"
-msgstr "Mensaxes favoritas"
+msgstr "Publicacións favoritas."
 
 #: microblogs/pumpio/pumpiomicroblog.cpp:1266
 #, kde-format
 msgctxt "Timeline description"
 msgid "Posts sent to you"
-msgstr "Mensaxes recibidas"
+msgstr "Publicacións recibidas."
 
 #: microblogs/pumpio/pumpiomicroblog.cpp:1273
 #, kde-format
 msgctxt "Timeline description"
 msgid "Posts you sent"
-msgstr "Mensaxes enviadas"
+msgstr "Publicacións enviadas."
 
 #. i18n: ectx: property (text), widget (QRadioButton, cfg_forpublic)
 #: microblogs/pumpio/pumpiopostwidget.cpp:93
@@ -2527,19 +2529,19 @@ msgstr "Compartido por:"
 #: microblogs/pumpio/pumpiopostwidget.cpp:151
 #, kde-format
 msgid "Show conversation"
-msgstr "Mostrar a conversa"
+msgstr "Amosar a conversa"
 
 #: microblogs/pumpio/pumpiopostwidget.cpp:172
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Share"
-msgstr "Compartir"
+msgstr "Compartir."
 
 #: microblogs/pumpio/pumpiopostwidget.cpp:186
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Like"
-msgstr "Gústame"
+msgstr "Gústame."
 
 #: microblogs/pumpio/pumpioshowthread.cpp:34
 #, kde-format
@@ -2632,7 +2634,7 @@ msgstr "Mencións"
 #, kde-format
 msgctxt "Timeline description"
 msgid "Mentions of you"
-msgstr "Mencións a vostede"
+msgstr "Mencións a vostede."
 
 #: microblogs/twitter/twittermicroblog.cpp:225
 #, kde-format
@@ -2677,7 +2679,7 @@ msgstr "ReTweet"
 #: microblogs/twitter/twitterpostwidget.cpp:65
 #, kde-format
 msgid "Retweet post using API"
-msgstr "Repetir a mensaxe empregando a API"
+msgstr "Promover a publicación usando a API"
 
 #: microblogs/twitter/twitterpostwidget.cpp:136
 #, kde-format
@@ -2825,7 +2827,7 @@ msgstr "Contas"
 msgid "Select timelines you wish to see notifications for their new posts:"
 msgstr ""
 "Seleccione as liñas de tempo das que quere recibir notificacións de novas "
-"mensaxes:"
+"publicacións:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: plugins/betternotify/notifyprefs.ui:249
@@ -2888,12 +2890,12 @@ msgstr "Configurar os filtros…"
 #: plugins/filter/filtermanager.cpp:42
 #, kde-format
 msgid "Hide Post"
-msgstr "Agochar a mensaxe"
+msgstr "Agochar a publicación"
 
 #: plugins/filter/filtermanager.cpp:222
 #, kde-format
 msgid "Hide all posts from <b>@%1</b>?"
-msgstr "Desexa agochar todas a mensaxes de <b>@%1</b>?"
+msgstr "Quere agochar as publicacións de <b>@%1</b>?"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, mFilteringCtl)
 #: plugins/filter/filterprefs.ui:14
@@ -2959,7 +2961,7 @@ msgstr "Só verá respostas dirixidas a vostede ou que o mencionen."
 #: plugins/filter/filterprefs.ui:136
 #, kde-format
 msgid "Just show replies to me"
-msgstr "Só mostrar as respostas a min."
+msgstr "Só amosar as respostas a min."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, cfg_hideNoneFriendsReplies)
 #: plugins/filter/filterprefs.ui:143
@@ -2971,7 +2973,7 @@ msgstr "Só verá respostas entre as súas amizades."
 #: plugins/filter/filterprefs.ui:146
 #, kde-format
 msgid "Just show replies to me and my friends"
-msgstr "Só mostrar respostas a min e ás miñas amizades."
+msgstr "Só amosar respostas a min e ás miñas amizades."
 
 #: plugins/filter/filtersettings.cpp:30
 #, kde-format
@@ -2981,7 +2983,7 @@ msgstr "Nome de usuario do autor"
 #: plugins/filter/filtersettings.cpp:31
 #, kde-format
 msgid "Post Text"
-msgstr "Texto da mensaxe"
+msgstr "Texto da publicación"
 
 #: plugins/filter/filtersettings.cpp:32
 #, kde-format
@@ -3017,13 +3019,13 @@ msgstr "Expresión regular"
 #, kde-format
 msgctxt "@action"
 msgid "Hide Posts"
-msgstr "Agochar as mensaxes"
+msgstr "Agochar as publicacións"
 
 #: plugins/filter/filtersettings.cpp:41
 #, kde-format
 msgctxt "@action"
 msgid "Highlight Posts"
-msgstr "Realzar as mensaxes"
+msgstr "Realzar as publicacións"
 
 #. i18n: ectx: property (text), widget (QLabel, label_im)
 #: plugins/imstatus/imstatusprefs.ui:19
@@ -3217,7 +3219,7 @@ msgstr "Texto"
 #: plugins/searchaction/searchaction.cpp:49
 #, kde-format
 msgid "The Search action plugin does not support the current microblog."
-msgstr "O complemento de buscas non admite este microblogue."
+msgstr "O complemento de buscas non admite esta microbitácora."
 
 #: plugins/shorteners/bit_ly/bit_ly.cpp:70
 #, kde-format
@@ -3426,7 +3428,7 @@ msgstr "http://UnDominioCalquera.com/yourls/yourls-api.php"
 #: plugins/untiny/untinyprefs.ui:17
 #, kde-format
 msgid "Use untiny.com service"
-msgstr "Empregar o servizo untiny.com"
+msgstr "Usar o servizo untiny.com"
 
 #: plugins/uploaders/flickr/flickr.cpp:155
 #, kde-format
@@ -3560,7 +3562,7 @@ msgstr "Visíbel para a familia"
 #: plugins/uploaders/flickr/flickrprefs.ui:134
 #, kde-format
 msgid "Set safety level"
-msgstr "Axustar o nivel de seguranza"
+msgstr "Definir o nivel de seguridade"
 
 #. i18n: ectx: property (text), widget (QRadioButton, cfg_safe)
 #: plugins/uploaders/flickr/flickrprefs.ui:140
@@ -3590,7 +3592,7 @@ msgstr "Agochar a imaxe das buscas públicas."
 #: plugins/uploaders/flickr/flickrprefs.ui:176
 #, kde-format
 msgid "Use Flic.kr to short URLs"
-msgstr "Empregar Flick.kr para abreviar os URL"
+msgstr "Usar Flick.kr para abreviar os URL"
 
 #: plugins/uploaders/imageshack/imageshack.cpp:37
 #, kde-format
@@ -3612,7 +3614,7 @@ msgstr "Non se configurou ningunha conta de Twitter para usar."
 #, kde-format
 msgid "You have to configure at least one Twitter account to use this plugin."
 msgstr ""
-"Ten que configurar polo menos unha conta de Twitter para empregar este "
+"Ten que configurar polo menos unha conta de Twitter para usar este "
 "complemento."
 
 #. i18n: ectx: property (text), widget (QRadioButton, cfg_oauth)
