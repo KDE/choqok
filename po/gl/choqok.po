@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: choqok\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-18 00:44+0000\n"
-"PO-Revision-Date: 2023-06-19 14:40+0200\n"
+"PO-Revision-Date: 2023-06-24 11:28+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -108,7 +108,7 @@ msgstr "Engadir unha nova conta"
 #: choqok/config/accounts/accountswidget_base.ui:40
 #, kde-format
 msgid "Add a new account"
-msgstr "Engadir unha nova conta"
+msgstr "Engadir unha nova conta."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnAdd)
 #: choqok/config/accounts/accountswidget_base.ui:43
@@ -120,7 +120,7 @@ msgstr "Eng&adir…"
 #: choqok/config/accounts/accountswidget_base.ui:57
 #, kde-format
 msgid "Modify the selected account"
-msgstr "Modificar a conta seleccionada"
+msgstr "Modificar a conta seleccionada."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnEdit)
 #: choqok/config/accounts/accountswidget_base.ui:60
@@ -132,7 +132,7 @@ msgstr "&Modificar…"
 #: choqok/config/accounts/accountswidget_base.ui:74
 #, kde-format
 msgid "Remove the selected account"
-msgstr "Retirar a conta seleccionada"
+msgstr "Retirar a conta seleccionada."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
 #: choqok/config/accounts/accountswidget_base.ui:77
@@ -186,7 +186,7 @@ msgstr "Só para ler"
 #: choqok/config/accounts/accountswidget_base.ui:189
 #, kde-format
 msgid "Read Only account"
-msgstr "A conta só é para ler"
+msgstr "A conta só é para ler."
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
 #: choqok/config/accounts/accountswidget_base.ui:194 choqok/mainwindow.cpp:196
@@ -199,7 +199,7 @@ msgstr "Publicación rápida"
 #: choqok/config/accounts/accountswidget_base.ui:197
 #, kde-format
 msgid "Show in Quick Post"
-msgstr "Amosar en «Publicación rápida»"
+msgstr "Amosar en «Publicación rápida»."
 
 #: choqok/config/accounts/addaccountdialog.cpp:54
 #, kde-format
@@ -244,14 +244,14 @@ msgid ""
 "You will see post with retweeter name as author, plus Retweeted from "
 "original author note."
 msgstr ""
-"Verá as publicacións co nome de quen as reenviou como autor, máis unha de "
-"que se reenviou, con mención do autor orixinal."
+"Verá as publicacións co nome de quen as promoveu como persoa autora, máis "
+"unha nota de que se promoveu, con mención da persoa autora orixinal."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showRetweetsInChoqokWay)
 #: choqok/config/appearance/appearanceconfig_base.ui:34
 #, kde-format
 msgid "Show Retweeted/Repeated posts in Choqok way"
-msgstr "Amosar as publicacións reenviadas ou repetidas ao xeito de Choqok."
+msgstr "Amosar as publicacións promovidas ao estilo de Choqok."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_isCustomUi)
 #: choqok/config/appearance/appearanceconfig_base.ui:44
@@ -364,7 +364,7 @@ msgstr "Usar un &navegador web personalizado:"
 #: choqok/config/behavior/behaviorconfig_general.ui:101
 #, kde-format
 msgid "Use custom prefix for ReSend [ReTweet]:"
-msgstr "Usar un prefixo personalizado para reenviar [ReTweet]:"
+msgstr "Usar un prefixo personalizado para promover:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: choqok/config/behavior/behaviorconfig_general.ui:120
@@ -461,14 +461,14 @@ msgstr "Ser&vizo de abreviación:"
 #: libchoqok/ui/uploadmedia_base.ui:71
 #, kde-format
 msgid "Configure plugin"
-msgstr "Configurar o complemento"
+msgstr "Configurar o complemento."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, aboutPlugin)
 #: choqok/config/behavior/behaviorconfig_shorten_base.ui:72
 #: libchoqok/ui/uploadmedia_base.ui:90
 #, kde-format
 msgid "About plugin"
-msgstr "Sobre o complemento"
+msgstr "Sobre o complemento."
 
 #: choqok/config/plugins/choqokpluginconfig.cpp:39
 #, kde-format
@@ -701,8 +701,8 @@ msgid ""
 "Would you like to add your account now?"
 msgstr ""
 "Para usar o Choqok precísase cando menos dunha conta nun dos servizos de "
-"microblogging admitidos.\n"
-"Desexa engadir a súa conta agora?"
+"microbitácoras admitidos.\n"
+"Quere engadir a súa conta agora?"
 
 #: choqok/mainwindow.cpp:515
 #, kde-format
@@ -745,7 +745,7 @@ msgstr "ChoqoK - Desactivado"
 #: microblogs/twitter/twittercomposerwidget.cpp:58
 #, kde-format
 msgid "Attach a file"
-msgstr "Anexar un ficheiro"
+msgstr "Anexar un ficheiro."
 
 #: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:87
 #: libchoqok/ui/composerwidget.cpp:124
@@ -1118,7 +1118,7 @@ msgstr "Liña temporal pública."
 #, kde-format
 msgctxt "Timeline Name"
 msgid "ReTweets"
-msgstr "ReTweets"
+msgstr "Promocións"
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:123
 #, kde-format
@@ -1143,7 +1143,7 @@ msgstr "Buscar…"
 #: microblogs/pumpio/pumpiomessagedialog.ui:31
 #, kde-format
 msgid "Update Friends List"
-msgstr "Actualizar a lista de amizades"
+msgstr "Actualizar a lista de amizades."
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:300
 #: microblogs/mastodon/mastodonmicroblog.cpp:101
@@ -1876,7 +1876,7 @@ msgstr "&Alcume:"
 #: microblogs/twitter/twittereditaccount_base.ui:40
 #, kde-format
 msgid "The account alias"
-msgstr "O alcume da conta"
+msgstr "O alcume da conta."
 
 #. i18n: ectx: property (whatsThis), widget (QLineEdit, kcfg_alias)
 #. i18n: ectx: property (whatsThis), widget (QLineEdit, cfg_alias)
@@ -1965,7 +1965,7 @@ msgstr "Autenticación básica"
 #: microblogs/laconica/laconicaeditaccount_base.ui:145
 #, kde-format
 msgid "The name you use to connect to the service"
-msgstr "O nome que usa para se conectar a este servizo"
+msgstr "O nome que usa para se conectar a este servizo."
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
 #. i18n: ectx: property (text), widget (QLabel, label_5)
@@ -2011,7 +2011,7 @@ msgstr "Configuración das liñas de tempo"
 #: microblogs/twitter/twittereditaccount_base.ui:195
 #, kde-format
 msgid "Which timelines do you like to be enabled?"
-msgstr "Que liñas de tempo desexa activar?"
+msgstr "Que liñas de tempo quere activar?"
 
 #. i18n: ectx: property (text), widget (QTableWidget, timelinesTable)
 #: microblogs/friendica/friendicaeditaccount_base.ui:202
@@ -2051,7 +2051,7 @@ msgid ""
 msgstr ""
 "Para evitar o correo lixo nalgúns grupos, aquí pódese configurar que o signo "
 "de exclamación (que adoitaba referirse a un grupo) cambie para outra cousa "
-"(p.ex. a nada)"
+"(p.ex. a nada)."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_changeExclamationMark)
 #: microblogs/friendica/friendicaeditaccount_base.ui:227
@@ -2178,7 +2178,7 @@ msgstr ""
 #: microblogs/twitter/twittereditaccount_base.ui:151
 #, kde-format
 msgid "Verify credentials"
-msgstr "Verificar as credenciais"
+msgstr "Verificar as credenciais."
 
 #. i18n: ectx: property (text), widget (QPushButton, kcfg_authorize)
 #: microblogs/mastodon/mastodoneditaccountwidget.ui:146
@@ -2308,7 +2308,7 @@ msgstr ""
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Boost"
-msgstr "Promover"
+msgstr "Promover."
 
 #: microblogs/mastodon/mastodonpostwidget.cpp:120
 #, kde-format
@@ -2580,7 +2580,7 @@ msgstr "&Autenticarse co servizo Twitter"
 #: microblogs/twitter/twitterlistdialog.cpp:58 plugins/filter/filterprefs.ui:81
 #, kde-format
 msgid "Add"
-msgstr "Engadir"
+msgstr "Engadir."
 
 #: microblogs/twitter/twitterlistdialog.cpp:77
 #, kde-format
@@ -2616,7 +2616,7 @@ msgstr "Nome de usuario:"
 #: microblogs/twitter/twitterlistdialog_base.ui:78
 #, kde-format
 msgid "Load user lists"
-msgstr "Cargar as listas de usuarios"
+msgstr "Cargar as listas de usuarias."
 
 #. i18n: ectx: property (text), widget (QPushButton, loadUserLists)
 #: microblogs/twitter/twitterlistdialog_base.ui:81
@@ -2644,17 +2644,17 @@ msgstr "Fallou a verificación das credenciais. %1"
 #: microblogs/twitter/twittermicroblog.cpp:254
 #, kde-format
 msgid "Retweet of %1"
-msgstr "ReTweet de %1"
+msgstr "Promoción de %1"
 
 #: microblogs/twitter/twittermicroblog.cpp:256
 #, kde-format
 msgid "Retweeted by %1"
-msgstr "ReTweet por %1"
+msgstr "Promovido por %1"
 
 #: microblogs/twitter/twittermicroblog.cpp:262
 #, kde-format
 msgid "Retweet to your followers?"
-msgstr "Retweet aos seus seguidores?"
+msgstr "Promover entre quen lle segue?"
 
 #: microblogs/twitter/twittermicroblog.cpp:269
 #, kde-format
@@ -2674,7 +2674,7 @@ msgstr "Non hai ningún rexistro de listas do usuario %1"
 #: microblogs/twitter/twitterpostwidget.cpp:64
 #, kde-format
 msgid "Retweet"
-msgstr "ReTweet"
+msgstr "Promover"
 
 #: microblogs/twitter/twitterpostwidget.cpp:65
 #, kde-format
@@ -2937,13 +2937,13 @@ msgstr "Acción"
 #: plugins/filter/filterprefs.ui:91
 #, kde-format
 msgid "Modify"
-msgstr "Modificar"
+msgstr "Modificar."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnRemove)
 #: plugins/filter/filterprefs.ui:114
 #, kde-format
 msgid "Remove"
-msgstr "Retirar"
+msgstr "Retirar."
 
 #. i18n: ectx: attribute (title), widget (QWidget, tabSpecial)
 #: plugins/filter/filterprefs.ui:127
@@ -3150,7 +3150,7 @@ msgstr "Abreviar os URL ao pegalos."
 #: plugins/konqueror/konqchoqok.cpp:90
 #, kde-format
 msgid "You need to select text to post."
-msgstr "Ten que seleccionar o texto que desexe publicar."
+msgstr "Ten que seleccionar o texto que quere publicar."
 
 #. i18n: ectx: Menu (tools)
 #: plugins/konqueror/konqchoqok.rc:4
