@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Lokalize 1.5\n"
 
 #, kde-format
@@ -723,10 +723,11 @@ msgid "Loading timelines..."
 msgstr "بارگیری خط زمانها..."
 
 #: choqok/systrayicon.cpp:99
-#, kde-format
+#, fuzzy, kde-format
 msgid "1 unread post"
 msgid_plural "%1 unread posts"
 msgstr[0] "%1 مطلب خوانده‌نشده"
+msgstr[1] ""
 
 #: choqok/systrayicon.cpp:108
 #, kde-format
@@ -1703,28 +1704,32 @@ msgid "Just now"
 msgstr "همین حالا"
 
 #: libchoqok/ui/postwidget.cpp:459
-#, kde-format
+#, fuzzy, kde-format
 msgid "1 sec ago"
 msgid_plural "%1 secs ago"
 msgstr[0] "%1 ثانیه پیش"
+msgstr[1] ""
 
 #: libchoqok/ui/postwidget.cpp:465
-#, kde-format
+#, fuzzy, kde-format
 msgid "1 min ago"
 msgid_plural "%1 mins ago"
 msgstr[0] "%1 دقیقه پیش"
+msgstr[1] ""
 
 #: libchoqok/ui/postwidget.cpp:471
-#, kde-format
+#, fuzzy, kde-format
 msgid "1 hour ago"
 msgid_plural "%1 hours ago"
 msgstr[0] "%1 ساعت پیش"
+msgstr[1] ""
 
 #: libchoqok/ui/postwidget.cpp:476
-#, kde-format
+#, fuzzy, kde-format
 msgid "1 day ago"
 msgid_plural "%1 days ago"
 msgstr[0] "%1 روز قبل"
+msgstr[1] ""
 
 #: libchoqok/ui/postwidget.cpp:481
 #, kde-format
@@ -1788,6 +1793,7 @@ msgstr "برگزیدن همه"
 msgid "1 new post in %2 (%3)"
 msgid_plural "%1 new posts in %2 (%3)"
 msgstr[0] "%1 پیام جدید در %2(%3)"
+msgstr[1] ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: libchoqok/ui/uploadmedia_base.ui:22
