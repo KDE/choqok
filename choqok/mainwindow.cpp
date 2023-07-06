@@ -8,6 +8,8 @@
 
 #include "mainwindow.h"
 
+#include "config-choqok.h"
+
 #include <QAction>
 #include <QMenu>
 #include <QMenuBar>
@@ -19,8 +21,10 @@
 #include <QTabWidget>
 #include <QTimer>
 
-#include <KActionCollection>
+#if HAVE_KGLOBALACCEL
 #include <KGlobalAccel>
+#endif
+#include <KActionCollection>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KNotifyConfigWidget>
@@ -190,13 +194,17 @@ void MainWindow::setupActions()
     actUpdate = new QAction(QIcon::fromTheme(QLatin1String("view-refresh")), i18n("Update Timelines"), this);
     actionCollection()->addAction(QLatin1String("update_timeline"), actUpdate);
     actionCollection()->setDefaultShortcut(actUpdate, QKeySequence(Qt::Key_F5));
+#if HAVE_KGLOBALACCEL
     KGlobalAccel::setGlobalShortcut(actUpdate, QKeySequence(Qt::CTRL | Qt::META | Qt::Key_F5));
+#endif
     connect(actUpdate, &QAction::triggered, this, &MainWindow::updateTimelines);
 
     newTwit = new QAction(QIcon::fromTheme(QLatin1String("document-new")), i18n("Quick Post"), this);
     actionCollection()->addAction(QLatin1String("choqok_new_post"), newTwit);
     actionCollection()->setDefaultShortcut(newTwit, QKeySequence(Qt::CTRL | Qt::Key_T));
+#if HAVE_KGLOBALACCEL
     KGlobalAccel::setGlobalShortcut(newTwit, QKeySequence(Qt::CTRL | Qt::META | Qt::Key_T));
+#endif
     connect(newTwit, &QAction::triggered, this, &MainWindow::triggerQuickPost);
 
     QAction *markRead = new QAction(QIcon::fromTheme(QLatin1String("mail-mark-read")), i18n("Mark All As Read"), this);
@@ -206,7 +214,9 @@ void MainWindow::setupActions()
 
     showMain = new QAction(this);
     actionCollection()->addAction(QLatin1String("toggle_mainwin"), showMain);
+#if HAVE_KGLOBALACCEL
     KGlobalAccel::setGlobalShortcut(showMain, QKeySequence(Qt::CTRL | Qt::META | Qt::Key_C));
+#endif
     if (this->isVisible()) {
         showMain->setText(i18nc("@action", "Minimize"));
     } else {

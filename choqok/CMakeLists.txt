@@ -2,6 +2,8 @@ include(DBusMacros)
 
 add_subdirectory(config)
 
+configure_file(config-choqok.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-choqok.h)
+
 add_executable(choqok_bin)
 set_target_properties(choqok_bin PROPERTIES OUTPUT_NAME choqok)
 
@@ -29,7 +31,6 @@ PUBLIC
     Qt::Widgets
     KF5::ConfigWidgets
     KF5::CoreAddons
-    KF5::GlobalAccel
     KF5::I18n
     KF5::KCMUtils
     KF5::Notifications
@@ -38,6 +39,9 @@ PUBLIC
     KF5::XmlGui
     choqok
 )
+if(HAVE_KGLOBALACCEL)
+    target_link_libraries(choqok_bin PUBLIC KF5::GlobalAccel)
+endif()
 
 install(TARGETS choqok_bin ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS org.kde.choqok.desktop DESTINATION ${KDE_INSTALL_APPDIR})

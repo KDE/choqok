@@ -31,7 +31,6 @@ find_package(KF5 ${KF_MIN_VERSION} REQUIRED
     DocTools
     I18n
     Emoticons
-    GlobalAccel
     GuiAddons
     KCMUtils
     KIO
@@ -43,6 +42,10 @@ find_package(KF5 ${KF_MIN_VERSION} REQUIRED
     WidgetsAddons
     XmlGui
 )
+if(NOT WIN32)
+    find_package(KF5 ${KF_MIN_VERSION} REQUIRED GlobalAccel)
+endif()
+set(HAVE_KGLOBALACCEL ${KF5GlobalAccel_FOUND})
 
 find_package(KF5 COMPONENTS Purpose)
 

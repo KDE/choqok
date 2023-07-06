@@ -14,10 +14,13 @@ Dependencies:
     'frameworks/kdoctools': '@stable'
     'frameworks/kemoticons': '@stable'
     'frameworks/kcoreaddons': '@stable'
-    'frameworks/kglobalaccel': '@stable'
     'frameworks/ktextwidgets': '@stable'
     'frameworks/knotifyconfig': '@stable'
     'frameworks/kwidgetsaddons': '@stable'
     'frameworks/kconfigwidgets': '@stable'
     'frameworks/knotifications': '@stable'
     'frameworks/extra-cmake-modules': '@stable'
+
+- 'on': ['Linux', 'FreeBSD']
+  'require':
+    'frameworks/kglobalaccel': '@stable'
