@@ -61,4 +61,5 @@ TightUrl::~TightUrl()
 {
 }
 
+#include "moc_tighturl.cpp"
 #include "tighturl.moc"

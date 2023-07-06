@@ -59,4 +59,5 @@ void NowListeningConfig::emitChanged()
                this, &NowListeningConfig::emitChanged);
 }
 
+#include "moc_nowlisteningconfig.cpp"
 #include "nowlisteningconfig.moc"

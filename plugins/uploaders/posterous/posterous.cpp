@@ -171,4 +171,5 @@ void Posterous::slotUpload(KJob *job)
     }
 }
 
+#include "moc_posterous.cpp"
 #include "posterous.moc"

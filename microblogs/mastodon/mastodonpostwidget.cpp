@@ -185,3 +185,5 @@ void MastodonPostWidget::updateFavStat()
         d->btnFavorite->setIcon(unFavIcon);
     }
 }
+
+#include "moc_mastodonpostwidget.cpp"

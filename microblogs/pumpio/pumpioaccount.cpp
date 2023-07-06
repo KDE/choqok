@@ -178,3 +178,5 @@ PumpIOOAuth *PumpIOAccount::oAuth()
 {
     return d->oAuth;
 }
+
+#include "moc_pumpioaccount.cpp"

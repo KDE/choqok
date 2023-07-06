@@ -99,3 +99,5 @@ QString SearchInfo::toString()
 {
     return account->alias() + QLatin1String(",,,") + QString::number(option) + QLatin1String(",,,") + query + QLatin1String(",,,") + QString::number(isBrowsable);
 }
+
+#include "moc_twitterapisearch.cpp"

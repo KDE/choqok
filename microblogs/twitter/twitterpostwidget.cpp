@@ -283,3 +283,5 @@ QString TwitterPostWidget::getBackgroundColor()
     
     return QLatin1String("#ffffff");
 }
+
+#include "moc_twitterpostwidget.cpp"

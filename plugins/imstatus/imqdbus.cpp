@@ -230,3 +230,5 @@ QStringList IMQDBus::scanForIMs()
     ims.sort();
     return ims;
 }
+
+#include "moc_imqdbus.cpp"

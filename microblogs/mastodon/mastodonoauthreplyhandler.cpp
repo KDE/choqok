@@ -21,3 +21,5 @@ QString MastodonOAuthReplyHandler::callback() const
 {
     return QLatin1String("urn:ietf:wg:oauth:2.0:oob");
 }
+
+#include "moc_mastodonoauthreplyhandler.cpp"

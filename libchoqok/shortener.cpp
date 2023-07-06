@@ -24,3 +24,5 @@ QString Shortener::shorten(const QString &url)
     return url;
 }
 }
+
+#include "moc_shortener.cpp"

@@ -147,3 +147,5 @@ bool PasswordManager::removePassword(const QString &alias)
 }
 
 }
+
+#include "moc_passwordmanager.cpp"

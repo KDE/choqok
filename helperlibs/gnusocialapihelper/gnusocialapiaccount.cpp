@@ -64,3 +64,4 @@ QUrl GNUSocialApiAccount::homepageUrl() const
     return KIO::upUrl(apiUrl());
 }
 
+#include "moc_gnusocialapiaccount.cpp"

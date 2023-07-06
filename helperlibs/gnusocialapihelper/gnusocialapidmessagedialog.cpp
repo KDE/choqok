@@ -39,3 +39,5 @@ GNUSocialApiDMessageDialog::GNUSocialApiDMessageDialog(TwitterApiAccount *theAcc
 GNUSocialApiDMessageDialog::~GNUSocialApiDMessageDialog()
 {
 }
+
+#include "moc_gnusocialapidmessagedialog.cpp"

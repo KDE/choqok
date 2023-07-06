@@ -289,3 +289,4 @@ void LaconicaEditAccountWidget::slotCheckHostUrl()
     }
 }
 
+#include "moc_laconicaeditaccount.cpp"

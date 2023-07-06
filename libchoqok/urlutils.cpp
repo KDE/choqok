@@ -84,3 +84,4 @@ QString UrlUtils::detectEmails(const QString &text)
     return mailtoText;
 }
 
+#include "moc_urlutils.cpp"

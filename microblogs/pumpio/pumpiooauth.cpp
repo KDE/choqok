@@ -74,3 +74,5 @@ QString PumpIOOAuth::authorizationHeader(const QUrl &requestUrl, QNetworkAccessM
 
     return QStringLiteral("Authorization: ") + QLatin1String(authorization);
 }
+
+#include "moc_pumpiooauth.cpp"

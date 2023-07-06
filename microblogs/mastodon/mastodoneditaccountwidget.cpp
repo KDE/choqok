@@ -206,3 +206,5 @@ void MastodonEditAccountWidget::saveTimelinesTable()
     }
     //m_account->setTimelineNames(timelines);
 }
+
+#include "moc_mastodoneditaccountwidget.cpp"

@@ -144,3 +144,4 @@ void TwitterEditAccountWidget::saveTimelinesTableState()
     mAccount->setTimelineNames(timelines);
 }
 
+#include "moc_twittereditaccount.cpp"

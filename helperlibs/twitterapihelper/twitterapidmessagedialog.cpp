@@ -173,3 +173,4 @@ void TwitterApiDMessageDialog::setTo(const QString &username)
     d->comboFriendsList->setCurrentText(username);
 }
 
+#include "moc_twitterapidmessagedialog.cpp"

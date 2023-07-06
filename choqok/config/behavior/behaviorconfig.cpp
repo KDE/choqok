@@ -112,3 +112,4 @@ void BehaviorConfig::load()
 }
 
 #include "behaviorconfig.moc"
+#include "moc_behaviorconfig.cpp"

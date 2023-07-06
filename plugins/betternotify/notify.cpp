@@ -109,4 +109,5 @@ void Notify::hideLastNotificationAndShowThis(Notification *nextNotificationToSho
     }
 }
 
+#include "moc_notify.cpp"
 #include "notify.moc"

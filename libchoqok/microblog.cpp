@@ -212,3 +212,5 @@ QUrl MicroBlog::profileUrl(Account *, const QString &) const
 }
 
 }
+
+#include "moc_microblog.cpp"

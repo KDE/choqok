@@ -123,3 +123,4 @@ void TwitterApiShowThread::raiseMainWindow()
     Choqok::UI::Global::mainWindow()->activateWindow();
 }
 
+#include "moc_twitterapishowthread.cpp"

@@ -163,3 +163,4 @@ void ConfigureFilters::slotHideRepliesNotRelatedToMeToggled(bool enabled)
     }
 }
 
+#include "moc_configurefilters.cpp"

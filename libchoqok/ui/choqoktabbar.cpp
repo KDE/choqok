@@ -862,3 +862,5 @@ ChoqokTabBar::~ChoqokTabBar()
 
 }
 }
+
+#include "moc_choqoktabbar.cpp"

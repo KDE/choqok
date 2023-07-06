@@ -63,3 +63,4 @@ void Plugin::aboutToUnload()
 
 }
 
+#include "moc_plugin.cpp"

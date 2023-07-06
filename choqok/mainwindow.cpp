@@ -666,3 +666,5 @@ void MainWindow::slotShowSpecialMenu(bool show)
     }
     updateTabbarHiddenState();
 }
+
+#include "moc_mainwindow.cpp"

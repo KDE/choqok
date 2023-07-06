@@ -115,4 +115,5 @@ void Twitpic::slotUpload(KJob *job)
     }
 }
 
+#include "moc_twitpic.cpp"
 #include "twitpic.moc"

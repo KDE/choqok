@@ -106,3 +106,5 @@ void AddEditFilter::setupFilterActions()
         ui.filterAction->addItem(actions.value(action), action);
     }
 }
+
+#include "moc_addeditfilter.cpp"

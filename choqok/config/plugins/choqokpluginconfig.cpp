@@ -62,4 +62,4 @@ void ChoqokPluginConfig::save()
 }
 
 #include "choqokpluginconfig.moc"
-
+#include "moc_choqokpluginconfig.cpp"

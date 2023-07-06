@@ -94,4 +94,5 @@ void PosterousConfig::emitChanged()
     Q_EMIT changed(true);
 }
 
+#include "moc_posterousconfig.cpp"
 #include "posterousconfig.moc"

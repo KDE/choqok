@@ -52,4 +52,5 @@ void UnTinyConfig::emitChanged()
     Q_EMIT changed(true);
 }
 
+#include "moc_untinyconfig.cpp"
 #include "untinyconfig.moc"

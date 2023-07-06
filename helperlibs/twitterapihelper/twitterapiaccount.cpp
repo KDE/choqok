@@ -287,3 +287,4 @@ void TwitterApiAccount::initQOAuthInterface()
     d->qoauth->setTokenSecret(QLatin1String(d->oauthTokenSecret));
 }
 
+#include "moc_twitterapiaccount.cpp"

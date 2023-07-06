@@ -128,3 +128,5 @@ MessageIndicatorManager *MessageIndicatorManager::self()
 }
 
 }
+
+#include "moc_indicatormanager.cpp"

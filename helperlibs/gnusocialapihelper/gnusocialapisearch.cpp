@@ -316,3 +316,4 @@ QList< Choqok::Post * > GNUSocialApiSearch::parseRss(const QByteArray &buffer)
     return statusList;
 }
 
+#include "moc_gnusocialapisearch.cpp"

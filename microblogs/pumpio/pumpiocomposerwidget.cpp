@@ -170,3 +170,5 @@ void PumpIOComposerWidget::slotSetReply(const QString replyToId, const QString r
     }
     editor()->setFocus();
 }
+
+#include "moc_pumpiocomposerwidget.cpp"

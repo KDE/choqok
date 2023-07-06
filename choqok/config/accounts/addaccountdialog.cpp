@@ -63,3 +63,5 @@ void AddAccountDialog::accept()
                      "the fields' data.\nMaybe a required field is empty?"));
     }
 }
+
+#include "moc_addaccountdialog.cpp"

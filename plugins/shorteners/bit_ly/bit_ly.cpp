@@ -85,3 +85,4 @@ QString Bit_ly::shorten(const QString &url)
 }
 
 #include "bit_ly.moc"
+#include "moc_bit_ly.cpp"

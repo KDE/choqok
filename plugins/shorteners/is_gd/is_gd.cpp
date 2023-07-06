@@ -73,3 +73,4 @@ QString Is_gd::shorten(const QString &url)
 }
 
 #include "is_gd.moc"
+#include "moc_is_gd.cpp"

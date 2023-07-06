@@ -132,3 +132,4 @@ void Bit_ly_Config::slotValidate()
 }
 
 #include "bit_ly_config.moc"
+#include "moc_bit_ly_config.cpp"

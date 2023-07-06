@@ -60,3 +60,5 @@ Choqok::UI::TimelineWidget *PumpIOMicroBlogWidget::addTimelineWidgetToUi(const Q
 
     return mbw;
 }
+
+#include "moc_pumpiomicroblogwidget.cpp"

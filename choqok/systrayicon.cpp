@@ -134,3 +134,4 @@ int SysTrayIcon::unreadCount() const
     return unread;
 }
 
+#include "moc_systrayicon.cpp"

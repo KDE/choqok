@@ -70,4 +70,5 @@ void TwitpicConfig::emitChanged()
     Q_EMIT changed(true);
 }
 
+#include "moc_twitpicconfig.cpp"
 #include "twitpicconfig.moc"

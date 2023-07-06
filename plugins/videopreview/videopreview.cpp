@@ -251,4 +251,5 @@ void VideoPreview::slotImageFetched(const QUrl &remoteUrl, const QPixmap &pixmap
     postToParse->setContent(content);
 }
 
+#include "moc_videopreview.cpp"
 #include "videopreview.moc"

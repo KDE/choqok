@@ -246,3 +246,4 @@ void FilterManager::slotHidePost()
 }
 
 #include "filtermanager.moc"
+#include "moc_filtermanager.cpp"

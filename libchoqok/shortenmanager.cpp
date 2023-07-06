@@ -133,3 +133,4 @@ void ShortenManager::emitNewUnshortenedUrl(Choqok::UI::PostWidget *widget, const
 
 }
 
+#include "moc_shortenmanager.cpp"

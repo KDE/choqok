@@ -195,3 +195,4 @@ SearchInfo TwitterApiSearchTimelineWidget::searchInfo() const
     return d->searchInfo;
 }
 
+#include "moc_twitterapisearchtimelinewidget.cpp"

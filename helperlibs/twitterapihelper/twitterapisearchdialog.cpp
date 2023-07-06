@@ -116,3 +116,4 @@ void TwitterApiSearchDialog::slotSearchTypeChanged(int)
     d->searchQuery->setFocus();
 }
 
+#include "moc_twitterapisearchdialog.cpp"

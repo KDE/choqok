@@ -51,3 +51,4 @@ void Is_gd_Config::emitChanged()
 }
 
 #include "is_gd_config.moc"
+#include "moc_is_gd_config.cpp"

@@ -115,3 +115,4 @@ void BehaviorConfig_Shorten::slotConfigureClicked()
     dialog->show();
 }
 
+#include "moc_behaviorconfig_shorten.cpp"

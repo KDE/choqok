@@ -287,3 +287,4 @@ void FriendicaEditAccountWidget::slotCheckHostUrl()
     }
 }
 
+#include "moc_friendicaeditaccount.cpp"

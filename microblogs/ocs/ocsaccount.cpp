@@ -67,3 +67,4 @@ void OCSAccount::slotDefaultProvidersLoaded()
     d->provider = d->mBlog->providerManager()->providerByUrl(d->providerUrl);
 }
 
+#include "moc_ocsaccount.cpp"

@@ -62,3 +62,5 @@ void TwitterDMessageDialog::slotTextLimit(KJob *job)
         }
     }
 }
+
+#include "moc_twitterdmessagedialog.cpp"

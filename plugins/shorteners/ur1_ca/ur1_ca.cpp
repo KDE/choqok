@@ -62,4 +62,5 @@ QString Ur1_ca::shorten(const QString &url)
     return url;
 }
 
+#include "moc_ur1_ca.cpp"
 #include "ur1_ca.moc"

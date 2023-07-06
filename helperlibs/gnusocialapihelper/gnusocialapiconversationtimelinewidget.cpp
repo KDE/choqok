@@ -73,3 +73,4 @@ void GNUSocialApiConversationTimelineWidget::updateHeight()
     }
 }
 
+#include "moc_gnusocialapiconversationtimelinewidget.cpp"

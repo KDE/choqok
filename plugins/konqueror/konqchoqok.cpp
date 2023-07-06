@@ -114,3 +114,4 @@ void KonqPluginChoqok::toggleShortening(bool value)
 }
 
 #include "konqchoqok.moc"
+#include "moc_konqchoqok.cpp"

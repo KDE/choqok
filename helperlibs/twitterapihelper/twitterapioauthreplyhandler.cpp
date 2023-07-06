@@ -21,3 +21,5 @@ QString TwitterApiOAuthReplyHandler::callback() const
 {
     return QLatin1String("oob");
 }
+
+#include "moc_twitterapioauthreplyhandler.cpp"

@@ -34,3 +34,4 @@ AppearanceConfig::~AppearanceConfig()
 }
 
 #include "appearanceconfig.moc"
+#include "moc_appearanceconfig.cpp"

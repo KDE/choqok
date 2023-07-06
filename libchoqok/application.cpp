@@ -50,3 +50,4 @@ void Application::setStartingUp(bool startingUp)
     Private::isStartingUp = startingUp;
 }
 
+#include "moc_application.cpp"

@@ -337,3 +337,4 @@ void AccountsWidget::accountsTableCellClicked(int row, int column)
 }
 
 #include "accountswidget.moc"
+#include "moc_accountswidget.cpp"

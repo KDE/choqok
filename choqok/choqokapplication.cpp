@@ -56,3 +56,4 @@ void ChoqokApplication::quitChoqok()
     this->quit();
 }
 
+#include "moc_choqokapplication.cpp"

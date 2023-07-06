@@ -206,4 +206,5 @@ void QuickFilter::filterNewPost(Choqok::UI::PostWidget *np, Choqok::Account *acc
     }
 }
 
+#include "moc_quickfilter.cpp"
 #include "quickfilter.moc"

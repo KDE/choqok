@@ -447,3 +447,4 @@ void PluginManager::slotAboutToQuit()
 
 } //END namespace Choqok
 
+#include "moc_pluginmanager.cpp"

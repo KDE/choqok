@@ -133,3 +133,5 @@ void TwitterTextEdit::slotTCoMaximumLength(KJob *job)
         }
     }
 }
+
+#include "moc_twittertextedit.cpp"

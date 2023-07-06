@@ -80,4 +80,5 @@ void Tinyarro_ws_Config::emitChanged()
     Q_EMIT changed(true);
 }
 
+#include "moc_tinyarro_ws_config.cpp"
 #include "tinyarro_ws_config.moc"

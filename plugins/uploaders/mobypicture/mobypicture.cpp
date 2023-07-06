@@ -148,3 +148,4 @@ void Mobypicture::slotUpload(KJob *job)
 }
 
 #include "mobypicture.moc"
+#include "moc_mobypicture.cpp"

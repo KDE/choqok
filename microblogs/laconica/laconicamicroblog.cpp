@@ -44,3 +44,4 @@ ChoqokEditAccountWidget *LaconicaMicroBlog::createEditAccountWidget(Choqok::Acco
 }
 
 #include "laconicamicroblog.moc"
+#include "moc_laconicamicroblog.cpp"

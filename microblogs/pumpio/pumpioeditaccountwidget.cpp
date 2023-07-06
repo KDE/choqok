@@ -205,3 +205,5 @@ void PumpIOEditAccountWidget::saveTimelinesTable()
     }
     m_account->setTimelineNames(timelines);
 }
+
+#include "moc_pumpioeditaccountwidget.cpp"

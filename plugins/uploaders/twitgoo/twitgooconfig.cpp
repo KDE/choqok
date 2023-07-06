@@ -75,4 +75,5 @@ void TwitgooConfig::emitChanged()
     Q_EMIT changed(true);
 }
 
+#include "moc_twitgooconfig.cpp"
 #include "twitgooconfig.moc"

@@ -51,4 +51,5 @@ void SearchAction::slotSearch()
     }
 }
 
+#include "moc_searchaction.cpp"
 #include "searchaction.moc"

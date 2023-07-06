@@ -106,4 +106,5 @@ void UnTiny::slot301Redirected(KIO::Job* job, QUrl fromUrl, QUrl toUrl)
     }
 }
 
+#include "moc_untiny.cpp"
 #include "untiny.moc"

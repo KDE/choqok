@@ -711,3 +711,4 @@ QString PostWidget::extraContents() const
     return d->extraContents;
 }
 
+#include "moc_postwidget.cpp"

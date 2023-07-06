@@ -83,4 +83,5 @@ void Yourls::reloadConfigs()
                    QStringLiteral("yourls_%1").arg(YourlsSettings::username())).toUtf8());
 }
 
+#include "moc_yourls.cpp"
 #include "yourls.moc"

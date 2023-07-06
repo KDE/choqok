@@ -403,3 +403,5 @@ void GNUSocialApiMicroBlog::slotFetchConversation(KJob *job)
         }
     }
 }
+
+#include "moc_gnusocialapimicroblog.cpp"

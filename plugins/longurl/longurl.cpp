@@ -201,3 +201,4 @@ void LongUrl::suspendJobs()
 }
 
 #include "longurl.moc"
+#include "moc_longurl.cpp"

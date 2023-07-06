@@ -39,3 +39,4 @@ void MyTextBrowser::mousePressEvent(QMouseEvent *ev)
     QTextBrowser::mousePressEvent(ev);
 }
 
+#include "moc_mytextbrowser.cpp"

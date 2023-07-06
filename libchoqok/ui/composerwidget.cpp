@@ -234,3 +234,5 @@ void ComposerWidget::abort()
 
 }
 }
+
+#include "moc_composerwidget.cpp"

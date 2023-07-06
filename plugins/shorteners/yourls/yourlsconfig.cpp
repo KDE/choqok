@@ -59,4 +59,5 @@ void YourlsConfig::emitChanged()
     disconnect(ui.cfg_password, &QLineEdit::textChanged, this, &YourlsConfig::emitChanged);
 }
 
+#include "moc_yourlsconfig.cpp"
 #include "yourlsconfig.moc"

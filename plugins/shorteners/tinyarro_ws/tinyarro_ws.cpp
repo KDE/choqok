@@ -60,4 +60,5 @@ QString Tinyarro_ws::shorten(const QString &url)
     return url;
 }
 
+#include "moc_tinyarro_ws.cpp"
 #include "tinyarro_ws.moc"

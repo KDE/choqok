@@ -224,3 +224,5 @@ QByteArray MediaManager::createMultipartFormData(const QMap< QString, QByteArray
 }
 
 }
+
+#include "moc_mediamanager.cpp"

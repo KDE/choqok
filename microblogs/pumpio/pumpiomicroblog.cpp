@@ -1336,4 +1336,5 @@ QString PumpIOMicroBlog::userNameFromAcct(const QString &acct)
     return acct;
 }
 
+#include "moc_pumpiomicroblog.cpp"
 #include "pumpiomicroblog.moc"

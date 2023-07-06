@@ -170,3 +170,4 @@ void FilterSettings::setHideRepliesNotRelatedToMe(bool enable)
     _hideRepliesNotRelatedToMe = enable;
 }
 
+#include "moc_filtersettings.cpp"

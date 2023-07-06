@@ -144,3 +144,4 @@ void ImagePreview::slotImageFetched(const QUrl &remoteUrl, const QPixmap &pixmap
 }
 
 #include "imagepreview.moc"
+#include "moc_imagepreview.cpp"

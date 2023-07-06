@@ -21,3 +21,5 @@ QString PumpIOOAuthReplyHandler::callback() const
 {
     return QLatin1String("oob");
 }
+
+#include "moc_pumpiooauthreplyhandler.cpp"

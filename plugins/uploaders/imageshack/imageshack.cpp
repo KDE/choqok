@@ -113,3 +113,4 @@ void ImageShack::slotUpload(KJob *job)
 }
 
 #include "imageshack.moc"
+#include "moc_imageshack.cpp"

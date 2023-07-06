@@ -259,3 +259,5 @@ void PumpIOPostWidget::updateFavStat()
         d->btnFavorite->setIcon(unFavIcon);
     }
 }
+
+#include "moc_pumpiopostwidget.cpp"

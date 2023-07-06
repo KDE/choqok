@@ -36,3 +36,4 @@ void TwitterApiTimelineWidget::removeUnFavoritedPost(Choqok::Account *theAccount
     }
 }
 
+#include "moc_twitterapitimelinewidget.cpp"

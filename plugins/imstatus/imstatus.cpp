@@ -71,3 +71,4 @@ void IMStatus::slotIMStatus(Choqok::JobResult res, Choqok::Post *newPost)
 }
 
 #include "imstatus.moc"
+#include "moc_imstatus.cpp"

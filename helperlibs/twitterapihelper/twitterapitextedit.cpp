@@ -166,3 +166,5 @@ void TwitterApiTextEdit::keyPressEvent(QKeyEvent *e)
         d->c->complete(cr); // popup it up!
     }
 }
+
+#include "moc_twitterapitextedit.cpp"

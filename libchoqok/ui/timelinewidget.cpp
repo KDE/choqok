@@ -369,3 +369,5 @@ void TimelineWidget::setClosable(bool isClosable)
 
 }
 }
+
+#include "moc_timelinewidget.cpp"

@@ -560,4 +560,5 @@ void TwitterMicroBlog::requestTimeLine(Choqok::Account *theAccount, QString type
     job->start();
 }
 
+#include "moc_twittermicroblog.cpp"
 #include "twittermicroblog.moc"

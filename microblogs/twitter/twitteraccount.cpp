@@ -112,3 +112,4 @@ void TwitterAccount::removeList(const QString& name)
     d->lists.removeOne(name);
 }*/
 
+#include "moc_twitteraccount.cpp"

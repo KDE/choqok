@@ -118,3 +118,4 @@ void Filter::writeConfig()
     d->config->sync();
 }
 
+#include "moc_filter.cpp"

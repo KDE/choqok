@@ -184,3 +184,4 @@ void Choqok::UI::UploadMediaDialog::slotMediumChanged(const QString &url)
     d->ui.previewer->showPreview(QUrl::fromLocalFile(url));
 }
 
+#include "moc_uploadmediadialog.cpp"

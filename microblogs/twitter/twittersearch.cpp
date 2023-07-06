@@ -183,3 +183,4 @@ TwitterSearch::~TwitterSearch()
 {
 }
 
+#include "moc_twittersearch.cpp"

@@ -161,3 +161,4 @@ void Choqok::UI::TextBrowser::addAction(QAction *action)
     }
 }
 
+#include "moc_textbrowser.cpp"

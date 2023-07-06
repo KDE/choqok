@@ -197,3 +197,5 @@ void PumpIOMessageDialog::cancelAttach()
     d->btnCancel = nullptr;
     d->mediumToAttach.clear();
 }
+
+#include "moc_pumpiomessagedialog.cpp"

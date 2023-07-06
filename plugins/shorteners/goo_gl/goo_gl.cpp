@@ -60,3 +60,4 @@ QString Goo_gl::shorten(const QString &url)
 }
 
 #include "goo_gl.moc"
+#include "moc_goo_gl.cpp"

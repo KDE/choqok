@@ -152,3 +152,5 @@ void MastodonAccount::setLists(const QVariantList &lists) {
     d->lists = lists;
     writeConfig();
 }
+
+#include "moc_mastodonaccount.cpp"

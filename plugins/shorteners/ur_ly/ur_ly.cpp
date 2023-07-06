@@ -63,4 +63,5 @@ QString Ur_ly::shorten(const QString &url)
     return url;
 }
 
+#include "moc_ur_ly.cpp"
 #include "ur_ly.moc"

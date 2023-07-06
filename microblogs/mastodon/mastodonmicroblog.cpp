@@ -973,3 +973,4 @@ void MastodonMicroBlog::finishRequestFollowingScreenName(KJob *job, bool active)
 }
 
 #include "mastodonmicroblog.moc"
+#include "moc_mastodonmicroblog.cpp"

@@ -78,3 +78,5 @@ void DummyNotification::slotProcessAnchor(const QUrl &url)
         }
     }
 }
+
+#include "moc_dummynotification.cpp"

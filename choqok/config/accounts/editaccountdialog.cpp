@@ -61,3 +61,4 @@ void EditAccountDialog::accept()
     }
 }
 
+#include "moc_editaccountdialog.cpp"

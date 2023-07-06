@@ -264,3 +264,4 @@ void QuickPost::slotAttachMedium()
     dlg->show();
 }
 
+#include "moc_quickpost.cpp"

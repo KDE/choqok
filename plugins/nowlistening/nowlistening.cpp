@@ -245,4 +245,5 @@ void NowListening::slotPrepareNowListening()
     }
 }
 
+#include "moc_nowlistening.cpp"
 #include "nowlistening.moc"

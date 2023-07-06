@@ -41,3 +41,4 @@ void ChoqokEditAccountWidget::setAccount(Choqok::Account *account)
     d->account = account;
 }
 
+#include "moc_editaccountwidget.cpp"

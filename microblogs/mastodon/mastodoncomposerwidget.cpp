@@ -153,3 +153,5 @@ void MastodonComposerWidget::cancelAttach()
     d->btnCancel = nullptr;
     d->mediumToAttach.clear();
 }
+
+#include "moc_mastodoncomposerwidget.cpp"

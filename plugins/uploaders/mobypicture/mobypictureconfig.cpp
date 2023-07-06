@@ -94,3 +94,4 @@ void MobypictureConfig::emitChanged()
 }
 
 #include "mobypictureconfig.moc"
+#include "moc_mobypictureconfig.cpp"

@@ -293,4 +293,5 @@ void OCSMicroblog::aboutToUnload()
     Q_EMIT saveTimelines();
 }
 
+#include "moc_ocsmicroblog.cpp"
 #include "ocsmicroblog.moc"

@@ -94,3 +94,4 @@ void Choqok::UI::MainWindow::activateTab(int k)
     }
 }
 
+#include "moc_choqokmainwindow.cpp"

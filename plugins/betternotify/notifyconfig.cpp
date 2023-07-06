@@ -132,4 +132,5 @@ void NotifyConfig::slotNewPositionSelected(QPoint pos)
     emitChanged();
 }
 
+#include "moc_notifyconfig.cpp"
 #include "notifyconfig.moc"

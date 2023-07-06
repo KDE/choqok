@@ -111,4 +111,5 @@ void Twitgoo::slotUpload(KJob *job)
     }
 }
 
+#include "moc_twitgoo.cpp"
 #include "twitgoo.moc"

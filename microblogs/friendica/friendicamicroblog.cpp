@@ -56,3 +56,4 @@ QUrl FriendicaMicroBlog::profileUrl(Choqok::Account *account, const QString &use
 }
 
 #include "friendicamicroblog.moc"
+#include "moc_friendicamicroblog.cpp"

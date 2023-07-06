@@ -71,3 +71,5 @@ void PumpIOShowThread::slotAddPost(Choqok::Account *theAccount, Choqok::Post *po
         mainLayout->insertWidget(mainLayout->count() - 1, widget);
     }
 }
+
+#include "moc_pumpioshowthread.cpp"

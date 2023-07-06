@@ -72,3 +72,4 @@ void IMStatusConfig::emitChanged()
 }
 
 #include "imstatusconfig.moc"
+#include "moc_imstatusconfig.cpp"

@@ -48,3 +48,5 @@ void MastodonOAuth::getToken(const QString &code)
 {
     requestAccessToken(code);
 }
+
+#include "moc_mastodonoauth.cpp"

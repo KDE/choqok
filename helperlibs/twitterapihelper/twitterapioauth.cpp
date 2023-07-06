@@ -72,3 +72,5 @@ QByteArray TwitterApiOAuth::authorizationHeader(const QUrl &requestUrl, QNetwork
 
     return generateAuthorizationHeader(oauthParams);
 }
+
+#include "moc_twitterapioauth.cpp"

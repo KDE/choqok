@@ -22,3 +22,4 @@ Choqok::Uploader::~Uploader()
 
 }
 
+#include "moc_uploader.cpp"

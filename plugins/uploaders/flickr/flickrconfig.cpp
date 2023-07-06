@@ -298,3 +298,4 @@ QByteArray FlickrConfig::createSign(QByteArray req)
 }
 
 #include "flickrconfig.moc"
+#include "moc_flickrconfig.cpp"
