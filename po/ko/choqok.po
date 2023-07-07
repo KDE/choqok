@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: choqok\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-18 00:44+0000\n"
+"POT-Creation-Date: 2023-07-07 00:50+0000\n"
 "PO-Revision-Date: 2022-05-07 02:00+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -178,7 +178,7 @@ msgid "Read Only account"
 msgstr "읽기 전용 계정"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:194 choqok/mainwindow.cpp:196
+#: choqok/config/accounts/accountswidget_base.ui:194 choqok/mainwindow.cpp:202
 #: libchoqok/ui/quickpost.cpp:98
 #, kde-format
 msgid "Quick Post"
@@ -609,67 +609,67 @@ msgstr "Ahmed I. Khalil"
 msgid "Various improvements"
 msgstr "다양한 개선"
 
-#: choqok/mainwindow.cpp:56 choqok/mainwindow.cpp:517 choqok/mainwindow.cpp:581
-#: choqok/mainwindow.cpp:636 choqok/systrayicon.cpp:99
+#: choqok/mainwindow.cpp:60 choqok/mainwindow.cpp:527 choqok/mainwindow.cpp:591
+#: choqok/mainwindow.cpp:646 choqok/systrayicon.cpp:99
 #: choqok/systrayicon.cpp:105 plugins/betternotify/dummynotification.cpp:34
 #: plugins/konqueror/konqchoqok.cpp:30
 #, kde-format
 msgid "Choqok"
 msgstr "Choqok"
 
-#: choqok/mainwindow.cpp:190
+#: choqok/mainwindow.cpp:194
 #, kde-format
 msgid "Update Timelines"
 msgstr "타임라인 업데이트"
 
-#: choqok/mainwindow.cpp:202
+#: choqok/mainwindow.cpp:210
 #, kde-format
 msgid "Mark All As Read"
 msgstr "모두 읽은 것으로 표시"
 
-#: choqok/mainwindow.cpp:211
+#: choqok/mainwindow.cpp:221
 #, kde-format
 msgctxt "@action"
 msgid "Minimize"
 msgstr "최소화"
 
-#: choqok/mainwindow.cpp:213
+#: choqok/mainwindow.cpp:223
 #, kde-format
 msgctxt "@action"
 msgid "Restore"
 msgstr "복원"
 
-#: choqok/mainwindow.cpp:221
+#: choqok/mainwindow.cpp:231
 #, kde-format
 msgid "Enable Update Timer"
 msgstr "업데이트 타이머 사용"
 
-#: choqok/mainwindow.cpp:227
+#: choqok/mainwindow.cpp:237
 #, kde-format
 msgid "Enable Notifications"
 msgstr "알림 사용"
 
-#: choqok/mainwindow.cpp:233
+#: choqok/mainwindow.cpp:243
 #, kde-format
 msgid "Hide Menubar"
 msgstr "메뉴 표시줄 숨기기"
 
-#: choqok/mainwindow.cpp:240
+#: choqok/mainwindow.cpp:250
 #, kde-format
 msgid "Clear Avatar Cache"
 msgstr "아바타 캐시 지우기"
 
-#: choqok/mainwindow.cpp:242
+#: choqok/mainwindow.cpp:252
 #, kde-format
 msgid "You have to restart Choqok to load avatars again"
 msgstr "아바타를 다시 불러오려면 Choqok을 다시 시작해야 합니다"
 
-#: choqok/mainwindow.cpp:247
+#: choqok/mainwindow.cpp:257
 #, kde-format
 msgid "Upload Medium..."
 msgstr "미디어 업로드..."
 
-#: choqok/mainwindow.cpp:271
+#: choqok/mainwindow.cpp:281
 #, kde-format
 msgid ""
 "No account created. You have to create an account before being able to make "
@@ -677,7 +677,7 @@ msgid ""
 msgstr ""
 "계정을 생성하지 않았습니다. 글을 작성하려면 먼저 계정을 만들어야 합니다."
 
-#: choqok/mainwindow.cpp:303
+#: choqok/mainwindow.cpp:313
 #, kde-format
 msgid ""
 "In order to use Choqok you need an account at one of the supported micro-"
@@ -687,22 +687,22 @@ msgstr ""
 "Choqok을 사용하려면 지원하는 마이크로블로그 서비스 계정이 필요합니다.\n"
 "지금 계정을 추가하시겠습니까?"
 
-#: choqok/mainwindow.cpp:515
+#: choqok/mainwindow.cpp:525
 #, kde-format
 msgid "Choqok (%1)"
 msgstr "Choqok(%1)"
 
-#: choqok/mainwindow.cpp:570
+#: choqok/mainwindow.cpp:580
 #, kde-format
 msgid "Restore"
 msgstr "복원"
 
-#: choqok/mainwindow.cpp:576
+#: choqok/mainwindow.cpp:586
 #, kde-format
 msgid "Minimize"
 msgstr "최소화"
 
-#: choqok/mainwindow.cpp:621
+#: choqok/mainwindow.cpp:631
 #, kde-format
 msgid "Loading timelines..."
 msgstr "타임라인 불러오는 중..."

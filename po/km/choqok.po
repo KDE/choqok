@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: choqok\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-18 00:44+0000\n"
+"POT-Creation-Date: 2023-07-07 00:50+0000\n"
 "PO-Revision-Date: 2012-06-15 11:06+0700\n"
 "Last-Translator: sutha <sutha@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros>\n"
@@ -188,7 +188,7 @@ msgid "Read Only account"
 msgstr "គណនី​ដែល​បាន​តែ​អាន"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:194 choqok/mainwindow.cpp:196
+#: choqok/config/accounts/accountswidget_base.ui:194 choqok/mainwindow.cpp:202
 #: libchoqok/ui/quickpost.cpp:98
 #, kde-format
 msgid "Quick Post"
@@ -636,76 +636,76 @@ msgstr ""
 msgid "Various improvements"
 msgstr "ធ្វើ​ឲ្យ​ចំណុច​ប្រទាក់​អ្នក​ប្រើ​កាន់​តែ​ប្រសើរ​ឡើង"
 
-#: choqok/mainwindow.cpp:56 choqok/mainwindow.cpp:517 choqok/mainwindow.cpp:581
-#: choqok/mainwindow.cpp:636 choqok/systrayicon.cpp:99
+#: choqok/mainwindow.cpp:60 choqok/mainwindow.cpp:527 choqok/mainwindow.cpp:591
+#: choqok/mainwindow.cpp:646 choqok/systrayicon.cpp:99
 #: choqok/systrayicon.cpp:105 plugins/betternotify/dummynotification.cpp:34
 #: plugins/konqueror/konqchoqok.cpp:30
 #, kde-format
 msgid "Choqok"
 msgstr "Choqok"
 
-#: choqok/mainwindow.cpp:190
+#: choqok/mainwindow.cpp:194
 #, kde-format
 msgid "Update Timelines"
 msgstr "ធ្វើបច្ចុប្បន្នភាព​​បន្ទាត់​ពេល​វេលា​"
 
-#: choqok/mainwindow.cpp:202
+#: choqok/mainwindow.cpp:210
 #, kde-format
 msgid "Mark All As Read"
 msgstr "សម្គាល់​ថា​អាន​រួច​ទាំង​អស់"
 
-#: choqok/mainwindow.cpp:211
+#: choqok/mainwindow.cpp:221
 #, fuzzy, kde-format
 #| msgid "Minimize"
 msgctxt "@action"
 msgid "Minimize"
 msgstr "បង្រួម​អប្បបរមា "
 
-#: choqok/mainwindow.cpp:213
+#: choqok/mainwindow.cpp:223
 #, fuzzy, kde-format
 #| msgid "Restore"
 msgctxt "@action"
 msgid "Restore"
 msgstr "ស្ដារ"
 
-#: choqok/mainwindow.cpp:221
+#: choqok/mainwindow.cpp:231
 #, kde-format
 msgid "Enable Update Timer"
 msgstr "អនុញ្ញាត​ឧបករណ៍​កំណត់​ពេលបច្ចុប្បន្នមភាព"
 
-#: choqok/mainwindow.cpp:227
+#: choqok/mainwindow.cpp:237
 #, kde-format
 msgid "Enable Notifications"
 msgstr "បើក​ការ​ជូនដំណឹង"
 
-#: choqok/mainwindow.cpp:233
+#: choqok/mainwindow.cpp:243
 #, kde-format
 msgid "Hide Menubar"
 msgstr "លាក់​របារ​ម៉ឺនុយ"
 
-#: choqok/mainwindow.cpp:240
+#: choqok/mainwindow.cpp:250
 #, kde-format
 msgid "Clear Avatar Cache"
 msgstr "សម្អាត​ឃ្លាំង​​អវតារ"
 
-#: choqok/mainwindow.cpp:242
+#: choqok/mainwindow.cpp:252
 #, kde-format
 msgid "You have to restart Choqok to load avatars again"
 msgstr "អ្នក​ត្រូវ​តែ​ចាប់ផ្ដើម​ Choqok ឡើង​វិញ ដើម្បី​ផ្ទុក​អវតារ​ម្ដងទៀត"
 
-#: choqok/mainwindow.cpp:247
+#: choqok/mainwindow.cpp:257
 #, kde-format
 msgid "Upload Medium..."
 msgstr "ផ្ទុក​ឧបករណ៍​ឡើង..."
 
-#: choqok/mainwindow.cpp:271
+#: choqok/mainwindow.cpp:281
 #, kde-format
 msgid ""
 "No account created. You have to create an account before being able to make "
 "posts."
 msgstr "គ្មាន​គណនី​ត្រូវ​បាន​បង្កើត​ទេ ។ អ្នក​ត្រូវតែ​បង្កើត​គណនី​សិន មុន​ពេល​ដែល​អាច​ធ្វើ​ការ​ប្រកាស​បាន​ ។"
 
-#: choqok/mainwindow.cpp:303
+#: choqok/mainwindow.cpp:313
 #, kde-format
 msgid ""
 "In order to use Choqok you need an account at one of the supported micro-"
@@ -715,22 +715,22 @@ msgstr ""
 "ដើម្បី​ប្រើ​ Choqok អ្នក​ត្រូវ​តែ​មាន​គណនី​មួយ​ក្នុង​ចំណោម​សេវា​ micro-blogging ​ដែល​គាំ​ទ្រ​ ។\n"
 "តើ​អ្នក​ចង់​បន្ថែម​គណនី​របស់​អ្នក​ឥឡូវនេះ​ឬ ?"
 
-#: choqok/mainwindow.cpp:515
+#: choqok/mainwindow.cpp:525
 #, kde-format
 msgid "Choqok (%1)"
 msgstr "Choqok (%1)"
 
-#: choqok/mainwindow.cpp:570
+#: choqok/mainwindow.cpp:580
 #, kde-format
 msgid "Restore"
 msgstr "ស្ដារ"
 
-#: choqok/mainwindow.cpp:576
+#: choqok/mainwindow.cpp:586
 #, kde-format
 msgid "Minimize"
 msgstr "បង្រួម​អប្បបរមា "
 
-#: choqok/mainwindow.cpp:621
+#: choqok/mainwindow.cpp:631
 #, kde-format
 msgid "Loading timelines..."
 msgstr "កំពុង​ផ្ទុក​បន្ទាត់​ពេល​វេលា​..."

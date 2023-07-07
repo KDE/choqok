@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-18 00:44+0000\n"
+"POT-Creation-Date: 2023-07-07 00:50+0000\n"
 "PO-Revision-Date: 2021-12-19 12:29+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -182,7 +182,7 @@ msgid "Read Only account"
 msgstr "Konto tylko do odczytu"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:194 choqok/mainwindow.cpp:196
+#: choqok/config/accounts/accountswidget_base.ui:194 choqok/mainwindow.cpp:202
 #: libchoqok/ui/quickpost.cpp:98
 #, kde-format
 msgid "Quick Post"
@@ -616,74 +616,74 @@ msgstr "Ahmed I. Khalil"
 msgid "Various improvements"
 msgstr "Różne usprawnienia"
 
-#: choqok/mainwindow.cpp:56 choqok/mainwindow.cpp:517 choqok/mainwindow.cpp:581
-#: choqok/mainwindow.cpp:636 choqok/systrayicon.cpp:99
+#: choqok/mainwindow.cpp:60 choqok/mainwindow.cpp:527 choqok/mainwindow.cpp:591
+#: choqok/mainwindow.cpp:646 choqok/systrayicon.cpp:99
 #: choqok/systrayicon.cpp:105 plugins/betternotify/dummynotification.cpp:34
 #: plugins/konqueror/konqchoqok.cpp:30
 #, kde-format
 msgid "Choqok"
 msgstr "Choqok"
 
-#: choqok/mainwindow.cpp:190
+#: choqok/mainwindow.cpp:194
 #, kde-format
 msgid "Update Timelines"
 msgstr "Uaktualnij oś czasu"
 
-#: choqok/mainwindow.cpp:202
+#: choqok/mainwindow.cpp:210
 #, kde-format
 msgid "Mark All As Read"
 msgstr "Oznacz wszystkie jako przeczytane"
 
-#: choqok/mainwindow.cpp:211
+#: choqok/mainwindow.cpp:221
 #, kde-format
 msgctxt "@action"
 msgid "Minimize"
 msgstr "Minimalizuj"
 
-#: choqok/mainwindow.cpp:213
+#: choqok/mainwindow.cpp:223
 #, kde-format
 msgctxt "@action"
 msgid "Restore"
 msgstr "Przywróć"
 
-#: choqok/mainwindow.cpp:221
+#: choqok/mainwindow.cpp:231
 #, kde-format
 msgid "Enable Update Timer"
 msgstr "Włącz czasomierz uaktualnienia"
 
-#: choqok/mainwindow.cpp:227
+#: choqok/mainwindow.cpp:237
 #, kde-format
 msgid "Enable Notifications"
 msgstr "Włącz powiadomienia"
 
-#: choqok/mainwindow.cpp:233
+#: choqok/mainwindow.cpp:243
 #, kde-format
 msgid "Hide Menubar"
 msgstr "Ukryj pasek menu"
 
-#: choqok/mainwindow.cpp:240
+#: choqok/mainwindow.cpp:250
 #, kde-format
 msgid "Clear Avatar Cache"
 msgstr "Wyczyść bufor avatarów"
 
-#: choqok/mainwindow.cpp:242
+#: choqok/mainwindow.cpp:252
 #, kde-format
 msgid "You have to restart Choqok to load avatars again"
 msgstr "W celu wczytania avatarów należy ponownie uruchomić Choqok"
 
-#: choqok/mainwindow.cpp:247
+#: choqok/mainwindow.cpp:257
 #, kde-format
 msgid "Upload Medium..."
 msgstr "Wyślij plik mediów..."
 
-#: choqok/mainwindow.cpp:271
+#: choqok/mainwindow.cpp:281
 #, kde-format
 msgid ""
 "No account created. You have to create an account before being able to make "
 "posts."
 msgstr "Nie utworzono konta. Wiadomości można wysyłać po utworzeniu konta."
 
-#: choqok/mainwindow.cpp:303
+#: choqok/mainwindow.cpp:313
 #, kde-format
 msgid ""
 "In order to use Choqok you need an account at one of the supported micro-"
@@ -694,22 +694,22 @@ msgstr ""
 "mikroblogów.\n"
 "Chcesz teraz utworzyć konto?"
 
-#: choqok/mainwindow.cpp:515
+#: choqok/mainwindow.cpp:525
 #, kde-format
 msgid "Choqok (%1)"
 msgstr "Choqok (%1)"
 
-#: choqok/mainwindow.cpp:570
+#: choqok/mainwindow.cpp:580
 #, kde-format
 msgid "Restore"
 msgstr "Przywróć"
 
-#: choqok/mainwindow.cpp:576
+#: choqok/mainwindow.cpp:586
 #, kde-format
 msgid "Minimize"
 msgstr "Minimalizuj"
 
-#: choqok/mainwindow.cpp:621
+#: choqok/mainwindow.cpp:631
 #, kde-format
 msgid "Loading timelines..."
 msgstr "Wczytywanie osi czasu..."
