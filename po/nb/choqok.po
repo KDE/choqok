@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-18 00:44+0000\n"
+"POT-Creation-Date: 2023-07-07 00:50+0000\n"
 "PO-Revision-Date: 2014-09-26 20:48+0200\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -183,7 +183,7 @@ msgid "Read Only account"
 msgstr "Skrivebeskyttet konto"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:194 choqok/mainwindow.cpp:196
+#: choqok/config/accounts/accountswidget_base.ui:194 choqok/mainwindow.cpp:202
 #: libchoqok/ui/quickpost.cpp:98
 #, kde-format
 msgid "Quick Post"
@@ -612,67 +612,67 @@ msgstr ""
 msgid "Various improvements"
 msgstr ""
 
-#: choqok/mainwindow.cpp:56 choqok/mainwindow.cpp:517 choqok/mainwindow.cpp:581
-#: choqok/mainwindow.cpp:636 choqok/systrayicon.cpp:99
+#: choqok/mainwindow.cpp:60 choqok/mainwindow.cpp:527 choqok/mainwindow.cpp:591
+#: choqok/mainwindow.cpp:646 choqok/systrayicon.cpp:99
 #: choqok/systrayicon.cpp:105 plugins/betternotify/dummynotification.cpp:34
 #: plugins/konqueror/konqchoqok.cpp:30
 #, kde-format
 msgid "Choqok"
 msgstr "Choqok"
 
-#: choqok/mainwindow.cpp:190
+#: choqok/mainwindow.cpp:194
 #, kde-format
 msgid "Update Timelines"
 msgstr "Oppdater tidslinjer"
 
-#: choqok/mainwindow.cpp:202
+#: choqok/mainwindow.cpp:210
 #, kde-format
 msgid "Mark All As Read"
 msgstr "Merk alt som lest"
 
-#: choqok/mainwindow.cpp:211
+#: choqok/mainwindow.cpp:221
 #, kde-format
 msgctxt "@action"
 msgid "Minimize"
 msgstr "Minimer"
 
-#: choqok/mainwindow.cpp:213
+#: choqok/mainwindow.cpp:223
 #, kde-format
 msgctxt "@action"
 msgid "Restore"
 msgstr "Gjenopprett"
 
-#: choqok/mainwindow.cpp:221
+#: choqok/mainwindow.cpp:231
 #, kde-format
 msgid "Enable Update Timer"
 msgstr "Slå på tidtaker for oppdatering"
 
-#: choqok/mainwindow.cpp:227
+#: choqok/mainwindow.cpp:237
 #, kde-format
 msgid "Enable Notifications"
 msgstr "Slå på beskjeder"
 
-#: choqok/mainwindow.cpp:233
+#: choqok/mainwindow.cpp:243
 #, kde-format
 msgid "Hide Menubar"
 msgstr "Gjem menylinja"
 
-#: choqok/mainwindow.cpp:240
+#: choqok/mainwindow.cpp:250
 #, kde-format
 msgid "Clear Avatar Cache"
 msgstr "Tøm avatar-mellomlageret"
 
-#: choqok/mainwindow.cpp:242
+#: choqok/mainwindow.cpp:252
 #, kde-format
 msgid "You have to restart Choqok to load avatars again"
 msgstr "Du må starte Choqok på nytt for å laste inn avatarer igjen"
 
-#: choqok/mainwindow.cpp:247
+#: choqok/mainwindow.cpp:257
 #, kde-format
 msgid "Upload Medium..."
 msgstr "Last opp medium …"
 
-#: choqok/mainwindow.cpp:271
+#: choqok/mainwindow.cpp:281
 #, kde-format
 msgid ""
 "No account created. You have to create an account before being able to make "
@@ -680,7 +680,7 @@ msgid ""
 msgstr ""
 "Ingen konto opprettet. Du må opprette en konto før du kan lage en post."
 
-#: choqok/mainwindow.cpp:303
+#: choqok/mainwindow.cpp:313
 #, kde-format
 msgid ""
 "In order to use Choqok you need an account at one of the supported micro-"
@@ -691,22 +691,22 @@ msgstr ""
 "mikroblogg-tjenestene.\n"
 "Vil du legge til kontoen din nå?"
 
-#: choqok/mainwindow.cpp:515
+#: choqok/mainwindow.cpp:525
 #, kde-format
 msgid "Choqok (%1)"
 msgstr "Choqok (%1)"
 
-#: choqok/mainwindow.cpp:570
+#: choqok/mainwindow.cpp:580
 #, kde-format
 msgid "Restore"
 msgstr "Gjenopprett"
 
-#: choqok/mainwindow.cpp:576
+#: choqok/mainwindow.cpp:586
 #, kde-format
 msgid "Minimize"
 msgstr "Minimer"
 
-#: choqok/mainwindow.cpp:621
+#: choqok/mainwindow.cpp:631
 #, kde-format
 msgid "Loading timelines..."
 msgstr "Laster inn tidslinjer …"
