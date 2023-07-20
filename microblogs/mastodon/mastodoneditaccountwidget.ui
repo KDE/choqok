@@ -146,8 +146,7 @@ p, li { white-space: pre-wrap; }
              <string>&amp;Authenticate with Mastodon Service</string>
             </property>
             <property name="icon">
-             <iconset theme="object-locked">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset theme="object-locked"/>
             </property>
            </widget>
           </item>

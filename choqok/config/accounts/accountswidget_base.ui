@@ -43,8 +43,7 @@
         <string>&amp;Add...</string>
        </property>
        <property name="icon">
-        <iconset theme="list-add">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset theme="list-add"/>
        </property>
       </widget>
      </item>
@@ -60,8 +59,7 @@
         <string>&amp;Modify...</string>
        </property>
        <property name="icon">
-        <iconset theme="edit-rename">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset theme="edit-rename"/>
        </property>
       </widget>
      </item>
@@ -77,8 +75,7 @@
         <string>&amp;Remove</string>
        </property>
        <property name="icon">
-        <iconset theme="list-remove">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset theme="list-remove"/>
        </property>
       </widget>
      </item>
@@ -101,8 +98,7 @@
         <bool>false</bool>
        </property>
        <property name="icon">
-        <iconset theme="go-up">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset theme="go-up"/>
        </property>
        <property name="flat">
         <bool>true</bool>
@@ -115,8 +111,7 @@
         <bool>false</bool>
        </property>
        <property name="icon">
-        <iconset theme="go-down">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset theme="go-down"/>
        </property>
        <property name="flat">
         <bool>true</bool>
