@@ -146,9 +146,7 @@ p, li { white-space: pre-wrap; }
              <string>&amp;Authenticate with Pump.io Service</string>
             </property>
             <property name="icon">
-             <iconset theme="object-locked">
-              <normaloff/>
-             </iconset>
+             <iconset theme="object-locked"/>
             </property>
            </widget>
           </item>
