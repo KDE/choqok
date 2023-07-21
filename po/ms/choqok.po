@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: choqok\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-07 00:50+0000\n"
+"POT-Creation-Date: 2023-07-21 00:49+0000\n"
 "PO-Revision-Date: 2009-09-27 23:23+0800\n"
 "Last-Translator: Sharuzzaman Ahmat Raslan <sharuzzaman@myrealbox.com>\n"
 "Language-Team: Malay <kedidiemas@yahoogroups.com>\n"
@@ -107,86 +107,86 @@ msgid "&Add..."
 msgstr "&Tambah..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnEdit)
-#: choqok/config/accounts/accountswidget_base.ui:57
+#: choqok/config/accounts/accountswidget_base.ui:56
 #, kde-format
 msgid "Modify the selected account"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, btnEdit)
-#: choqok/config/accounts/accountswidget_base.ui:60
+#: choqok/config/accounts/accountswidget_base.ui:59
 #, fuzzy, kde-format
 msgid "&Modify..."
 msgstr "&Ubah suai..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnRemove)
-#: choqok/config/accounts/accountswidget_base.ui:74
+#: choqok/config/accounts/accountswidget_base.ui:72
 #, kde-format
 msgid "Remove the selected account"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
-#: choqok/config/accounts/accountswidget_base.ui:77
+#: choqok/config/accounts/accountswidget_base.ui:75
 #, fuzzy, kde-format
 msgid "&Remove"
 msgstr "&Buang"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:162
+#: choqok/config/accounts/accountswidget_base.ui:157
 #, fuzzy, kde-format
 msgid "Alias"
 msgstr "Alias"
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:165
+#: choqok/config/accounts/accountswidget_base.ui:160
 #, fuzzy, kde-format
 msgid "An alias for the account"
 msgstr "Akaun"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:170
+#: choqok/config/accounts/accountswidget_base.ui:165
 #, kde-format
 msgid "Micro-Blog"
 msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:173
+#: choqok/config/accounts/accountswidget_base.ui:168
 #, fuzzy, kde-format
 msgid "The type of the account"
 msgstr "Akaun"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:178
+#: choqok/config/accounts/accountswidget_base.ui:173
 #, fuzzy, kde-format
 msgid "Enabled"
 msgstr "Dimatikan"
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:181
+#: choqok/config/accounts/accountswidget_base.ui:176
 #, kde-format
 msgid "Whether the microblog is enabled or disabled"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:186
+#: choqok/config/accounts/accountswidget_base.ui:181
 #, fuzzy, kde-format
 msgid "Read Only"
 msgstr "Akaun"
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:189
+#: choqok/config/accounts/accountswidget_base.ui:184
 #, fuzzy, kde-format
 msgid "Read Only account"
 msgstr "Akaun"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:194 choqok/mainwindow.cpp:202
+#: choqok/config/accounts/accountswidget_base.ui:189 choqok/mainwindow.cpp:202
 #: libchoqok/ui/quickpost.cpp:98
 #, kde-format
 msgid "Quick Post"
 msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:197
+#: choqok/config/accounts/accountswidget_base.ui:192
 #, kde-format
 msgid "Show in Quick Post"
 msgstr ""
@@ -716,7 +716,7 @@ msgstr ""
 #: libchoqok/ui/quickpost.cpp:75
 #: microblogs/mastodon/mastodoncomposerwidget.cpp:45
 #: microblogs/pumpio/pumpiocomposerwidget.cpp:47
-#: microblogs/pumpio/pumpiomessagedialog.ui:90
+#: microblogs/pumpio/pumpiomessagedialog.ui:88
 #: microblogs/twitter/twittercomposerwidget.cpp:58
 #, kde-format
 msgid "Attach a file"
@@ -1927,9 +1927,9 @@ msgstr "&Nama pengguna:"
 #. i18n: ectx: attribute (title), widget (QWidget, tabTimelines)
 #: microblogs/friendica/friendicaeditaccount_base.ui:182
 #: microblogs/laconica/laconicaeditaccount_base.ui:182
-#: microblogs/mastodon/mastodoneditaccountwidget.ui:174
-#: microblogs/pumpio/pumpioeditaccountwidget.ui:175
-#: microblogs/twitter/twittereditaccount_base.ui:183
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:173
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:173
+#: microblogs/twitter/twittereditaccount_base.ui:181
 #, fuzzy, kde-format
 msgid "Timelines Configuration"
 msgstr "Tetapan"
@@ -1938,9 +1938,9 @@ msgstr "Tetapan"
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: microblogs/friendica/friendicaeditaccount_base.ui:194
 #: microblogs/laconica/laconicaeditaccount_base.ui:194
-#: microblogs/mastodon/mastodoneditaccountwidget.ui:186
-#: microblogs/pumpio/pumpioeditaccountwidget.ui:187
-#: microblogs/twitter/twittereditaccount_base.ui:195
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:185
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:185
+#: microblogs/twitter/twittereditaccount_base.ui:193
 #, kde-format
 msgid "Which timelines do you like to be enabled?"
 msgstr ""
@@ -1948,9 +1948,9 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QTableWidget, timelinesTable)
 #: microblogs/friendica/friendicaeditaccount_base.ui:202
 #: microblogs/laconica/laconicaeditaccount_base.ui:202
-#: microblogs/mastodon/mastodoneditaccountwidget.ui:194
-#: microblogs/pumpio/pumpioeditaccountwidget.ui:195
-#: microblogs/twitter/twittereditaccount_base.ui:203
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:193
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:193
+#: microblogs/twitter/twittereditaccount_base.ui:201
 #, kde-format
 msgid "Name"
 msgstr ""
@@ -1958,9 +1958,9 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QTableWidget, timelinesTable)
 #: microblogs/friendica/friendicaeditaccount_base.ui:207
 #: microblogs/laconica/laconicaeditaccount_base.ui:207
-#: microblogs/mastodon/mastodoneditaccountwidget.ui:199
-#: microblogs/pumpio/pumpioeditaccountwidget.ui:200
-#: microblogs/twitter/twittereditaccount_base.ui:208
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:198
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:198
+#: microblogs/twitter/twittereditaccount_base.ui:206
 #, kde-format
 msgid "Enable"
 msgstr ""
@@ -2340,14 +2340,14 @@ msgid "Dialog"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: microblogs/pumpio/pumpiomessagedialog.ui:46
+#: microblogs/pumpio/pumpiomessagedialog.ui:44
 #: microblogs/pumpio/pumpiopostwidget.cpp:112
 #, kde-format
 msgid "CC:"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: microblogs/pumpio/pumpiomessagedialog.ui:70
+#: microblogs/pumpio/pumpiomessagedialog.ui:68
 #: microblogs/pumpio/pumpiopostwidget.cpp:89
 #, fuzzy, kde-format
 msgid "To:"

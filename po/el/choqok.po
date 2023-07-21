@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: choqok\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-07 00:50+0000\n"
+"POT-Creation-Date: 2023-07-21 00:49+0000\n"
 "PO-Revision-Date: 2020-09-05 16:10+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -111,86 +111,86 @@ msgid "&Add..."
 msgstr "&Προσθήκη..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnEdit)
-#: choqok/config/accounts/accountswidget_base.ui:57
+#: choqok/config/accounts/accountswidget_base.ui:56
 #, kde-format
 msgid "Modify the selected account"
 msgstr "Τροποποίηση επιλεγμένου λογαριασμού"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnEdit)
-#: choqok/config/accounts/accountswidget_base.ui:60
+#: choqok/config/accounts/accountswidget_base.ui:59
 #, kde-format
 msgid "&Modify..."
 msgstr "&Τροποποίηση..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnRemove)
-#: choqok/config/accounts/accountswidget_base.ui:74
+#: choqok/config/accounts/accountswidget_base.ui:72
 #, kde-format
 msgid "Remove the selected account"
 msgstr "Αφαίρεση επιλεγμένου λογαριασμού"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
-#: choqok/config/accounts/accountswidget_base.ui:77
+#: choqok/config/accounts/accountswidget_base.ui:75
 #, kde-format
 msgid "&Remove"
 msgstr "Αφαί&ρεση"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:162
+#: choqok/config/accounts/accountswidget_base.ui:157
 #, kde-format
 msgid "Alias"
 msgstr "Ψευδώνυμο"
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:165
+#: choqok/config/accounts/accountswidget_base.ui:160
 #, kde-format
 msgid "An alias for the account"
 msgstr "Ένα ψευδώνυμο για το λογαριασμό"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:170
+#: choqok/config/accounts/accountswidget_base.ui:165
 #, kde-format
 msgid "Micro-Blog"
 msgstr "Μικρο-ιστολόγιο"
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:173
+#: choqok/config/accounts/accountswidget_base.ui:168
 #, kde-format
 msgid "The type of the account"
 msgstr "Ο τύπος του λογαριασμού"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:178
+#: choqok/config/accounts/accountswidget_base.ui:173
 #, kde-format
 msgid "Enabled"
 msgstr "Ενεργό"
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:181
+#: choqok/config/accounts/accountswidget_base.ui:176
 #, kde-format
 msgid "Whether the microblog is enabled or disabled"
 msgstr "Αν το μικρο-ιστολόγιο είναι ενεργό ή όχι"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:186
+#: choqok/config/accounts/accountswidget_base.ui:181
 #, kde-format
 msgid "Read Only"
 msgstr "Για ανάγνωση μόνο"
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:189
+#: choqok/config/accounts/accountswidget_base.ui:184
 #, kde-format
 msgid "Read Only account"
 msgstr "Λογαριασμός για ανάγνωση μόνο"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:194 choqok/mainwindow.cpp:202
+#: choqok/config/accounts/accountswidget_base.ui:189 choqok/mainwindow.cpp:202
 #: libchoqok/ui/quickpost.cpp:98
 #, kde-format
 msgid "Quick Post"
 msgstr "Γρήγορη δημοσίευση"
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:197
+#: choqok/config/accounts/accountswidget_base.ui:192
 #, kde-format
 msgid "Show in Quick Post"
 msgstr "Εμφάνιση σε γρήγορη δημοσίευση"
@@ -736,7 +736,7 @@ msgstr "Choqok - ανενεργό"
 #: libchoqok/ui/quickpost.cpp:75
 #: microblogs/mastodon/mastodoncomposerwidget.cpp:45
 #: microblogs/pumpio/pumpiocomposerwidget.cpp:47
-#: microblogs/pumpio/pumpiomessagedialog.ui:90
+#: microblogs/pumpio/pumpiomessagedialog.ui:88
 #: microblogs/twitter/twittercomposerwidget.cpp:58
 #, kde-format
 msgid "Attach a file"
@@ -1994,9 +1994,9 @@ msgstr "Όνομα χρήστη:"
 #. i18n: ectx: attribute (title), widget (QWidget, tabTimelines)
 #: microblogs/friendica/friendicaeditaccount_base.ui:182
 #: microblogs/laconica/laconicaeditaccount_base.ui:182
-#: microblogs/mastodon/mastodoneditaccountwidget.ui:174
-#: microblogs/pumpio/pumpioeditaccountwidget.ui:175
-#: microblogs/twitter/twittereditaccount_base.ui:183
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:173
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:173
+#: microblogs/twitter/twittereditaccount_base.ui:181
 #, kde-format
 msgid "Timelines Configuration"
 msgstr "Διαμόρφωση χρονολογίων"
@@ -2005,9 +2005,9 @@ msgstr "Διαμόρφωση χρονολογίων"
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: microblogs/friendica/friendicaeditaccount_base.ui:194
 #: microblogs/laconica/laconicaeditaccount_base.ui:194
-#: microblogs/mastodon/mastodoneditaccountwidget.ui:186
-#: microblogs/pumpio/pumpioeditaccountwidget.ui:187
-#: microblogs/twitter/twittereditaccount_base.ui:195
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:185
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:185
+#: microblogs/twitter/twittereditaccount_base.ui:193
 #, kde-format
 msgid "Which timelines do you like to be enabled?"
 msgstr "Ποια χρονολόγια θέλετε να ενεργοποιηθούν;"
@@ -2015,9 +2015,9 @@ msgstr "Ποια χρονολόγια θέλετε να ενεργοποιηθο
 #. i18n: ectx: property (text), widget (QTableWidget, timelinesTable)
 #: microblogs/friendica/friendicaeditaccount_base.ui:202
 #: microblogs/laconica/laconicaeditaccount_base.ui:202
-#: microblogs/mastodon/mastodoneditaccountwidget.ui:194
-#: microblogs/pumpio/pumpioeditaccountwidget.ui:195
-#: microblogs/twitter/twittereditaccount_base.ui:203
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:193
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:193
+#: microblogs/twitter/twittereditaccount_base.ui:201
 #, kde-format
 msgid "Name"
 msgstr "Όνομα"
@@ -2025,9 +2025,9 @@ msgstr "Όνομα"
 #. i18n: ectx: property (text), widget (QTableWidget, timelinesTable)
 #: microblogs/friendica/friendicaeditaccount_base.ui:207
 #: microblogs/laconica/laconicaeditaccount_base.ui:207
-#: microblogs/mastodon/mastodoneditaccountwidget.ui:199
-#: microblogs/pumpio/pumpioeditaccountwidget.ui:200
-#: microblogs/twitter/twittereditaccount_base.ui:208
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:198
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:198
+#: microblogs/twitter/twittereditaccount_base.ui:206
 #, kde-format
 msgid "Enable"
 msgstr "Ενεργοποίηση"
@@ -2421,14 +2421,14 @@ msgid "Dialog"
 msgstr "Διάλογος"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: microblogs/pumpio/pumpiomessagedialog.ui:46
+#: microblogs/pumpio/pumpiomessagedialog.ui:44
 #: microblogs/pumpio/pumpiopostwidget.cpp:112
 #, kde-format
 msgid "CC:"
 msgstr "Κοιν:"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: microblogs/pumpio/pumpiomessagedialog.ui:70
+#: microblogs/pumpio/pumpiomessagedialog.ui:68
 #: microblogs/pumpio/pumpiopostwidget.cpp:89
 #, kde-format
 msgid "To:"

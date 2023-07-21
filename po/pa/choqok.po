@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-07 00:50+0000\n"
+"POT-Creation-Date: 2023-07-21 00:49+0000\n"
 "PO-Revision-Date: 2019-02-09 14:03-0800\n"
 "Last-Translator: A S Alam <alam.yellow@gmail.com>\n"
 "Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
@@ -106,88 +106,88 @@ msgid "&Add..."
 msgstr "ਜੋੜੋ(&A)..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnEdit)
-#: choqok/config/accounts/accountswidget_base.ui:57
+#: choqok/config/accounts/accountswidget_base.ui:56
 #, kde-format
 msgid "Modify the selected account"
 msgstr "ਚੁਣਿਆ ਅਕਾਊਂਟ ਸੋਧੋ"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnEdit)
-#: choqok/config/accounts/accountswidget_base.ui:60
+#: choqok/config/accounts/accountswidget_base.ui:59
 #, kde-format
 msgid "&Modify..."
 msgstr "ਸੋਧ(&M)..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnRemove)
-#: choqok/config/accounts/accountswidget_base.ui:74
+#: choqok/config/accounts/accountswidget_base.ui:72
 #, kde-format
 msgid "Remove the selected account"
 msgstr "ਚੁਣਿਆ ਅਕਾਊਂਟ ਹਟਾਓ"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
-#: choqok/config/accounts/accountswidget_base.ui:77
+#: choqok/config/accounts/accountswidget_base.ui:75
 #, kde-format
 msgid "&Remove"
 msgstr "ਹਟਾਓ(&R)"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:162
+#: choqok/config/accounts/accountswidget_base.ui:157
 #, kde-format
 msgid "Alias"
 msgstr "ਏਲੀਆਸ"
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:165
+#: choqok/config/accounts/accountswidget_base.ui:160
 #, fuzzy, kde-format
 #| msgid "Add a new account"
 msgid "An alias for the account"
 msgstr "ਨਵਾਂ ਅਕਾਊਂਟ ਸ਼ਾਮਲ ਕਰੋ"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:170
+#: choqok/config/accounts/accountswidget_base.ui:165
 #, kde-format
 msgid "Micro-Blog"
 msgstr "ਮਾਈਕਰੋਬਲੌਗ"
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:173
+#: choqok/config/accounts/accountswidget_base.ui:168
 #, fuzzy, kde-format
 #| msgid "Twitter account"
 msgid "The type of the account"
 msgstr "ਟਵਿੱਟਰ ਅਕਾਊਂਟ"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:178
+#: choqok/config/accounts/accountswidget_base.ui:173
 #, kde-format
 msgid "Enabled"
 msgstr "ਸਮਰੱਥ ਹੈ"
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:181
+#: choqok/config/accounts/accountswidget_base.ui:176
 #, kde-format
 msgid "Whether the microblog is enabled or disabled"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:186
+#: choqok/config/accounts/accountswidget_base.ui:181
 #, kde-format
 msgid "Read Only"
 msgstr "ਕੇਵਲ ਪੜ੍ਹਨ ਲਈ"
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:189
+#: choqok/config/accounts/accountswidget_base.ui:184
 #, kde-format
 msgid "Read Only account"
 msgstr "ਕੇਵਲ ਪੜ੍ਹਨ ਅਕਾਊਂਟ"
 
 #. i18n: ectx: property (text), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:194 choqok/mainwindow.cpp:202
+#: choqok/config/accounts/accountswidget_base.ui:189 choqok/mainwindow.cpp:202
 #: libchoqok/ui/quickpost.cpp:98
 #, kde-format
 msgid "Quick Post"
 msgstr "ਤੁਰੰਤ ਭੇਜੋ"
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
-#: choqok/config/accounts/accountswidget_base.ui:197
+#: choqok/config/accounts/accountswidget_base.ui:192
 #, kde-format
 msgid "Show in Quick Post"
 msgstr "ਤੁਰੰਤ ਪੋਸਟ ਵਿੱਚ ਵੇਖੋ"
@@ -739,7 +739,7 @@ msgstr "ਚੋਕਿਉਕ - ਬੰਦ"
 #: libchoqok/ui/quickpost.cpp:75
 #: microblogs/mastodon/mastodoncomposerwidget.cpp:45
 #: microblogs/pumpio/pumpiocomposerwidget.cpp:47
-#: microblogs/pumpio/pumpiomessagedialog.ui:90
+#: microblogs/pumpio/pumpiomessagedialog.ui:88
 #: microblogs/twitter/twittercomposerwidget.cpp:58
 #, kde-format
 msgid "Attach a file"
@@ -1975,9 +1975,9 @@ msgstr "ਯੂਜ਼ਰ ਨਾਂ:"
 #. i18n: ectx: attribute (title), widget (QWidget, tabTimelines)
 #: microblogs/friendica/friendicaeditaccount_base.ui:182
 #: microblogs/laconica/laconicaeditaccount_base.ui:182
-#: microblogs/mastodon/mastodoneditaccountwidget.ui:174
-#: microblogs/pumpio/pumpioeditaccountwidget.ui:175
-#: microblogs/twitter/twittereditaccount_base.ui:183
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:173
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:173
+#: microblogs/twitter/twittereditaccount_base.ui:181
 #, kde-format
 msgid "Timelines Configuration"
 msgstr "ਟਾਈਮਲਾਈਨ ਸੰਰਚਨਾ"
@@ -1986,9 +1986,9 @@ msgstr "ਟਾਈਮਲਾਈਨ ਸੰਰਚਨਾ"
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: microblogs/friendica/friendicaeditaccount_base.ui:194
 #: microblogs/laconica/laconicaeditaccount_base.ui:194
-#: microblogs/mastodon/mastodoneditaccountwidget.ui:186
-#: microblogs/pumpio/pumpioeditaccountwidget.ui:187
-#: microblogs/twitter/twittereditaccount_base.ui:195
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:185
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:185
+#: microblogs/twitter/twittereditaccount_base.ui:193
 #, kde-format
 msgid "Which timelines do you like to be enabled?"
 msgstr ""
@@ -1996,9 +1996,9 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QTableWidget, timelinesTable)
 #: microblogs/friendica/friendicaeditaccount_base.ui:202
 #: microblogs/laconica/laconicaeditaccount_base.ui:202
-#: microblogs/mastodon/mastodoneditaccountwidget.ui:194
-#: microblogs/pumpio/pumpioeditaccountwidget.ui:195
-#: microblogs/twitter/twittereditaccount_base.ui:203
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:193
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:193
+#: microblogs/twitter/twittereditaccount_base.ui:201
 #, kde-format
 msgid "Name"
 msgstr "ਨਾਂ"
@@ -2006,9 +2006,9 @@ msgstr "ਨਾਂ"
 #. i18n: ectx: property (text), widget (QTableWidget, timelinesTable)
 #: microblogs/friendica/friendicaeditaccount_base.ui:207
 #: microblogs/laconica/laconicaeditaccount_base.ui:207
-#: microblogs/mastodon/mastodoneditaccountwidget.ui:199
-#: microblogs/pumpio/pumpioeditaccountwidget.ui:200
-#: microblogs/twitter/twittereditaccount_base.ui:208
+#: microblogs/mastodon/mastodoneditaccountwidget.ui:198
+#: microblogs/pumpio/pumpioeditaccountwidget.ui:198
+#: microblogs/twitter/twittereditaccount_base.ui:206
 #, kde-format
 msgid "Enable"
 msgstr "ਚਾਲੂ"
@@ -2423,14 +2423,14 @@ msgid "Dialog"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: microblogs/pumpio/pumpiomessagedialog.ui:46
+#: microblogs/pumpio/pumpiomessagedialog.ui:44
 #: microblogs/pumpio/pumpiopostwidget.cpp:112
 #, kde-format
 msgid "CC:"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: microblogs/pumpio/pumpiomessagedialog.ui:70
+#: microblogs/pumpio/pumpiomessagedialog.ui:68
 #: microblogs/pumpio/pumpiopostwidget.cpp:89
 #, fuzzy, kde-format
 #| msgctxt "Send message to"
