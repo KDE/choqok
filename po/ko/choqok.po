@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the choqok package.
-# Shinjo Park <kde@peremen.name>, 2020, 2022.
+# Shinjo Park <kde@peremen.name>, 2020, 2022, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: choqok\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-21 00:49+0000\n"
-"PO-Revision-Date: 2022-05-07 02:00+0200\n"
+"PO-Revision-Date: 2023-08-07 22:25+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1075,13 +1075,13 @@ msgstr "내가 보낸 개인 메시지"
 #, kde-format
 msgctxt "Timeline Name"
 msgid "Favorite"
-msgstr "책갈피"
+msgstr "북마크"
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:111
 #, kde-format
 msgctxt "Timeline description"
 msgid "Your favorites"
-msgstr "내 책갈피 목록"
+msgstr "내 북마크 목록"
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:116
 #, kde-format
@@ -1179,12 +1179,12 @@ msgstr "글을 삭제하지 못했습니다. %1"
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:619
 #, kde-format
 msgid "Favorite creation failed. %1"
-msgstr "책갈피에 추가할 수 없습니다. %1"
+msgstr "북마크에 추가할 수 없습니다. %1"
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:671
 #, kde-format
 msgid "Removing the favorite failed. %1"
-msgstr "책갈피에서 삭제할 수 없습니다. %1"
+msgstr "북마크에서 삭제할 수 없습니다. %1"
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:721
 #, kde-format
@@ -1361,7 +1361,7 @@ msgstr "전체 답장"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Favorite"
-msgstr "책갈피"
+msgstr "북마크"
 
 #: helperlibs/twitterapihelper/twitterapipostwidget.cpp:113
 #, kde-format
@@ -2163,7 +2163,7 @@ msgstr "글을 공유할 수 없습니다. %1"
 #: microblogs/pumpio/pumpiomicroblog.cpp:715
 #, kde-format
 msgid "Cannot set/unset the post as favorite. %1"
-msgstr "글을 책갈피에 추가/삭제할 수 없습니다. %1"
+msgstr "글을 북마크에 추가/삭제할 수 없습니다. %1"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:400
 #: microblogs/pumpio/pumpiomicroblog.cpp:1252
@@ -2200,13 +2200,13 @@ msgstr "연합 타임라인"
 #, kde-format
 msgctxt "Timeline Name"
 msgid "Favourites"
-msgstr "책갈피"
+msgstr "북마크"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:421
 #, kde-format
 msgctxt "Timeline description"
 msgid "Favourites"
-msgstr "책갈피"
+msgstr "북마크"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:522
 #, kde-format
@@ -2273,7 +2273,7 @@ msgstr "부스트"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Favourite"
-msgstr "책갈피"
+msgstr "북마크"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: microblogs/ocs/ocsconfigurebase.ui:19
@@ -2436,13 +2436,13 @@ msgstr "미디어를 업로드하는 중 오류가 발생함"
 #, kde-format
 msgctxt "Timeline Name"
 msgid "Favorites"
-msgstr "책갈피"
+msgstr "북마크"
 
 #: microblogs/pumpio/pumpiomicroblog.cpp:1259
 #, kde-format
 msgctxt "Timeline description"
 msgid "Posts you favorited"
-msgstr "책갈피에 등록한 글"
+msgstr "북마크에 등록한 글"
 
 #: microblogs/pumpio/pumpiomicroblog.cpp:1266
 #, kde-format
