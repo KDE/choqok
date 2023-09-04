@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-21 00:49+0000\n"
-"PO-Revision-Date: 2023-06-11 21:41+0300\n"
+"PO-Revision-Date: 2023-09-03 21:29+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.07.70\n"
+"X-Generator: Lokalize 23.11.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -286,7 +286,7 @@ msgstr "Öntanımlı renk:"
 #: choqok/config/appearance/appearanceconfig_base.ui:150
 #, kde-format
 msgid "Unread post color:"
-msgstr "Okunmamış gönderi rengi:"
+msgstr "Okunmayan gönderi rengi:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: choqok/config/appearance/appearanceconfig_base.ui:194
@@ -350,7 +350,7 @@ msgstr "Sistem Tepsisini &Etkinleştir"
 #, kde-format
 msgid "Mark all unread posts as read, when hiding to system tray"
 msgstr ""
-"Sistem tepsisine gizlerken tüm okunmamış gönderileri okunmuş olarak imle"
+"Sistem tepsisine gizlerken tüm okunmayan gönderileri okundu olarak imle"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useCustomBrowser)
 #: choqok/config/behavior/behaviorconfig_general.ui:83
@@ -726,8 +726,8 @@ msgstr "Zaman akışları yükleniyor..."
 #, kde-format
 msgid "1 unread post"
 msgid_plural "%1 unread posts"
-msgstr[0] "%1 okunmamış ileti"
-msgstr[1] "%1 okunmamış ileti"
+msgstr[0] "%1 okunmayan ileti"
+msgstr[1] "%1 okunmayan ileti"
 
 #: choqok/systrayicon.cpp:108
 #, kde-format
