@@ -1,4 +1,9 @@
-kcoreaddons_add_plugin(konqchoqokplugin konqchoqok.cpp INSTALL_NAMESPACE "kf5/parts")
+kcoreaddons_add_plugin(konqchoqokplugin
+    SOURCES
+        konqchoqok.cpp
+        konqchoqok.qrc
+    INSTALL_NAMESPACE "kf5/parts"
+)
 
 target_link_libraries(konqchoqokplugin
 PUBLIC
@@ -12,5 +17,3 @@ PUBLIC
     KF5::WidgetsAddons
     KF5::XmlGui
 )
-
-install(FILES konqchoqok.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/konqchoqokplugin)

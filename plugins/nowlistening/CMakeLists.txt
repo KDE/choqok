@@ -1,4 +1,10 @@
-kcoreaddons_add_plugin(choqok_nowlistening SOURCES mpris.cpp nowlistening.cpp INSTALL_NAMESPACE "choqok_plugins")
+kcoreaddons_add_plugin(choqok_nowlistening
+    SOURCES
+        mpris.cpp
+        nowlistening.cpp
+        nowlistening.qrc
+    INSTALL_NAMESPACE "choqok_plugins"
+)
 
 kconfig_add_kcfg_files(choqok_nowlistening nowlisteningsettings.kcfgc)
 
@@ -27,5 +33,3 @@ PUBLIC
     KF5::CoreAddons
     KF5::I18n
 )
-
-install(FILES nowlisteningui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/choqok_nowlistening)

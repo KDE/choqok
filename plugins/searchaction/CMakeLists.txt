@@ -1,4 +1,9 @@
-kcoreaddons_add_plugin(choqok_searchaction SOURCES searchaction.cpp INSTALL_NAMESPACE "choqok_plugins")
+kcoreaddons_add_plugin(choqok_searchaction
+    SOURCES
+        searchaction.cpp
+        searchaction.qrc
+    INSTALL_NAMESPACE "choqok_plugins"
+)
 
 target_link_libraries(choqok_searchaction
 PUBLIC
@@ -11,5 +16,3 @@ PUBLIC
     choqok
     twitterapihelper
 )
-
-install(FILES searchactionui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/choqok_searchaction)

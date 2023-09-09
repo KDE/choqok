@@ -1,0 +1,6 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/kxmlgui5/choqok_filter">
+        <file>filterui.rc</file>
+    </qresource>
+</RCC>

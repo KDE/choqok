@@ -4,6 +4,7 @@ kcoreaddons_add_plugin(choqok_filter SOURCES
     filter.cpp
     filtermanager.cpp
     filtersettings.cpp
+    filter.qrc
     INSTALL_NAMESPACE "choqok_plugins"
 )
 
@@ -22,5 +23,3 @@ PUBLIC
     choqok
     twitterapihelper
 )
-
-install(FILES filterui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/choqok_filter)

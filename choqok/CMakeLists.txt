@@ -20,6 +20,8 @@ target_sources(choqok_bin PRIVATE
    mainwindow.cpp
    main.cpp
    systrayicon.cpp
+
+   choqok.qrc
 )
 
 # kconfig_add_kcfg_files(choqok_bin settings.kcfgc)
@@ -47,5 +49,4 @@ install(TARGETS choqok_bin ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS org.kde.choqok.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES org.kde.choqok.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 # install(FILES choqok.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
-install(FILES choqokui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/choqok)
 install(FILES choqok.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
