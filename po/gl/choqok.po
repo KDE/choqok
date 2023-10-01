@@ -67,12 +67,12 @@ msgstr "Axuda"
 #: choqok/config/accounts/accountswidget.cpp:74
 #, kde-format
 msgid "Cannot load the %1 plugin. Please check your installation."
-msgstr "Non se pode cargar o complemento %1. Comprobe a instalación."
+msgstr "Non é posíbel cargar o complemento %1. Comprobe a instalación."
 
 #: choqok/config/accounts/accountswidget.cpp:90
 #, kde-format
 msgid "Cannot find the desired account."
-msgstr "Non se pode atopar a conta desexada."
+msgstr "Non é posíbel atopar a conta desexada."
 
 #: choqok/config/accounts/accountswidget.cpp:110
 #, kde-format
@@ -82,7 +82,7 @@ msgstr "Seguro que quere retirar a conta seleccionada?"
 #: choqok/config/accounts/accountswidget.cpp:117
 #, kde-format
 msgid "Cannot remove the account."
-msgstr "Non se pode retirar esta conta."
+msgstr "Non é posíbel retirar esta conta."
 
 #: choqok/config/accounts/accountswidget.cpp:238
 #, kde-format
@@ -214,7 +214,7 @@ msgid ""
 "Please check the fields' data.\n"
 "Maybe a required field is empty?"
 msgstr ""
-"Non se pode validar a información de entrada.\n"
+"Non é posíbel validar a información de entrada.\n"
 "Comprobe os datos dos campos.\n"
 "Quizais un dos campos requiridos estea baleiro?"
 
@@ -351,8 +351,8 @@ msgstr "Activar a área de notificacións"
 #, kde-format
 msgid "Mark all unread posts as read, when hiding to system tray"
 msgstr ""
-"Marcar todas as publicacións sen ler como lidas ao agochar na bandexa do "
-"sistema."
+"Marcar todas as publicacións sen ler como lidas ao agochar na área de "
+"notificación."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useCustomBrowser)
 #: choqok/config/behavior/behaviorconfig_general.ui:83
@@ -866,7 +866,7 @@ msgid ""
 "Friends list for account %1 could not be updated:\n"
 "%2"
 msgstr ""
-"Non se puido actualizar a lista de amizades da conta %1:\n"
+"Non foi posíbel actualizar a lista de amizades da conta %1:\n"
 "%2"
 
 #: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:393
@@ -1005,13 +1005,13 @@ msgstr "Marcas feitas a este usuario"
 #: microblogs/twitter/twittersearch.cpp:115
 #, kde-format
 msgid "Unable to fetch search results."
-msgstr "Non se poden obter os resultados da busca."
+msgstr "Non é posíbel obter os resultados da busca."
 
 #: helperlibs/gnusocialapihelper/gnusocialapisearch.cpp:136
 #: microblogs/twitter/twittersearch.cpp:123
 #, kde-format
 msgid "Unable to fetch search results: %1"
-msgstr "Non se poden obter os resultados da busca: %1"
+msgstr "Non é posíbel obter os resultados da busca: %1"
 
 #: helperlibs/twitterapihelper/twitterapidmessagedialog.cpp:45
 #: microblogs/mastodon/mastodondmessagedialog.cpp:45
@@ -1189,7 +1189,7 @@ msgstr ""
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:516
 #, kde-format
 msgid "Fetching new post failed, with error:%1"
-msgstr "Non se puido obter a nova publicación, o erro foi:%1"
+msgstr "Non foi posíbel obter a nova publicación, o erro foi:%1"
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:566
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:575
@@ -1197,7 +1197,7 @@ msgstr "Non se puido obter a nova publicación, o erro foi:%1"
 #: microblogs/pumpio/pumpiomicroblog.cpp:964
 #, kde-format
 msgid "Removing the post failed. %1"
-msgstr "Non se puido retirar a publicación. %1"
+msgstr "Non foi posíbel retirar a publicación. %1"
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:619
 #, kde-format
@@ -1232,7 +1232,7 @@ msgid ""
 "Followers list for account %1 could not be updated:\n"
 "%2"
 msgstr ""
-"Non se puido actualizar a lista de seguidores da conta %1:\n"
+"Non foi posíbel actualizar a lista de seguidores da conta %1:\n"
 "%2"
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:836
@@ -1326,7 +1326,7 @@ msgstr ""
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1414
 #, kde-format
 msgid "Could not parse the data that has been received from the server."
-msgstr "Non se puideron analizar os datos recibidos do servidor."
+msgstr "Non foi posíbel analizar os datos recibidos do servidor."
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1542
 #: microblogs/mastodon/mastodonmicroblog.cpp:891
@@ -1459,7 +1459,7 @@ msgstr "Número de páxina"
 #: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:150
 #, kde-format
 msgid "Cannot load user information."
-msgstr "Non se pode cargar a información do usuario."
+msgstr "Non é posíbel cargar a información do usuario."
 
 #: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:239
 #, kde-format
@@ -1536,19 +1536,19 @@ msgid ""
 "Unable to open url \"%1\".\n"
 "Please check Qt installation or set a custom web browser in Configurations."
 msgstr ""
-"Non se pode abrir o URL «%1».\n"
+"Non é posíbel abrir o URL «%1».\n"
 "Revise a instalación de Qt ou defina un navegador web personalizado na "
 "configuración."
 
 #: libchoqok/mediamanager.cpp:90
 #, kde-format
 msgid "Cannot create a KDE Job. Please check your installation."
-msgstr "Non se pode crear un traballo de KDE. Comprobe a instalación."
+msgstr "Non é posíbel crear un traballo de KDE. Comprobe a instalación."
 
 #: libchoqok/mediamanager.cpp:115
 #, kde-format
 msgid "Cannot download image from %1."
-msgstr "Non se pode descargar a imaxe de %1."
+msgstr "Non é posíbel descargar a imaxe de %1."
 
 #: libchoqok/mediamanager.cpp:124
 #, kde-format
@@ -1624,7 +1624,7 @@ msgid ""
 "Cannot open KDE Wallet manager, your secrets will be stored as plain text. "
 "You can install KWallet to fix this."
 msgstr ""
-"Non se pode abrir o xestor de carteiras de KDE, polo que os segredos vanse "
+"Non é posíbel abrir o xestor de carteiras de KDE, polo que os segredos vanse "
 "almacenar como texto simple. Instale KWallet para solucionar o problema."
 
 #: libchoqok/ui/choqoktabbar.cpp:757
@@ -1776,7 +1776,7 @@ msgstr "Enviar"
 #: libchoqok/ui/quickpost.cpp:149
 #, kde-format
 msgid "Cannot create a post without any text."
-msgstr "Non se pode crear unha publicación sen texto."
+msgstr "Non é posíbel crear unha publicación sen texto."
 
 #: libchoqok/ui/quickpost.cpp:154
 #, kde-format
@@ -2196,14 +2196,14 @@ msgstr "Compartiuse a publicación."
 #: microblogs/pumpio/pumpiomicroblog.cpp:926
 #, kde-format
 msgid "Cannot share the post. %1"
-msgstr "Non se pode compartir a publicación. %1"
+msgstr "Non é posíbel compartir a publicación. %1"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:382
 #: microblogs/pumpio/pumpiomicroblog.cpp:715
 #, kde-format
 msgid "Cannot set/unset the post as favorite. %1"
 msgstr ""
-"Non se pode definir ou deixar de definir a publicación como favorita. %1"
+"Non é posíbel definir ou deixar de definir a publicación como favorita. %1"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:400
 #: microblogs/pumpio/pumpiomicroblog.cpp:1252
@@ -2273,7 +2273,7 @@ msgstr "Fallou a creación da nova publicación. %1"
 #: microblogs/pumpio/pumpiomicroblog.cpp:754
 #, kde-format
 msgid "Cannot fetch post. %1"
-msgstr "Non se pode obter a publicación. %1"
+msgstr "Non é posíbel obter a publicación. %1"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:808
 #: microblogs/pumpio/pumpiomicroblog.cpp:1018
@@ -2292,7 +2292,7 @@ msgid ""
 "Following list for account %1 could not be updated:\n"
 "%2"
 msgstr ""
-"Non se puido actualizar a lista de seguimentos da conta %1:\n"
+"Non foi posíbel actualizar a lista de seguimentos da conta %1:\n"
 "%2"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:968
@@ -2439,7 +2439,7 @@ msgstr "Para:"
 #: microblogs/pumpio/pumpiomicroblog.cpp:796
 #, kde-format
 msgid "Cannot fetch replies. %1"
-msgstr "Non se poden obter as respostas. %1"
+msgstr "Non é posíbel obter as respostas. %1"
 
 #: microblogs/pumpio/pumpiomicroblog.cpp:819
 #, kde-format
@@ -2449,7 +2449,7 @@ msgstr "Actualizouse a lista de seguimento da conta %1."
 #: microblogs/pumpio/pumpiomicroblog.cpp:842
 #, kde-format
 msgid "Cannot retrieve the following list. %1"
-msgstr "Non se pode obter a lista de seguimento. %1"
+msgstr "Non é posíbel obter a lista de seguimento. %1"
 
 #: microblogs/pumpio/pumpiomicroblog.cpp:864
 #, kde-format
@@ -2459,7 +2459,7 @@ msgstr "Actualizáronse as listas da conta %1."
 #: microblogs/pumpio/pumpiomicroblog.cpp:891
 #, kde-format
 msgid "Cannot retrieve the lists. %1"
-msgstr "Non se poden obter as listas. %1"
+msgstr "Non é posíbel obter as listas. %1"
 
 #: microblogs/pumpio/pumpiomicroblog.cpp:953
 #, kde-format
@@ -3273,7 +3273,7 @@ msgid ""
 "Cannot create a short URL.\n"
 "%1"
 msgstr ""
-"Non se pode crear un URL curto.\n"
+"Non é posíbel crear un URL curto.\n"
 "%1"
 
 #: plugins/shorteners/bit_ly/bit_ly_config.cpp:51
