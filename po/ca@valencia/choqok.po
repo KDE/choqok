@@ -1569,7 +1569,7 @@ msgstr "S'ha produït un error en comunicar-se amb el servidor"
 #: libchoqok/microblog.cpp:77
 #, kde-format
 msgid "Error on parsing results"
-msgstr "S'ha produït un error en analitzar els resultats"
+msgstr "S'ha produït un error en l'anàlisi sintàctica dels resultats"
 
 #: libchoqok/microblog.cpp:79
 #, kde-format
