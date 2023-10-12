@@ -1989,7 +1989,7 @@ msgstr "Contrasinal:"
 #: plugins/shorteners/yourls/yourlsprefs.ui:34
 #, kde-format
 msgid "Username:"
-msgstr "Nome de usuario:"
+msgstr "Nome de usuaria:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tab)
 #. i18n: ectx: attribute (title), widget (QWidget, tabTimelines)
@@ -2586,7 +2586,7 @@ msgstr "Engadir."
 #, kde-format
 msgid "You should provide both list author username and list name."
 msgstr ""
-"Hai que fornecer tanto o nome de usuario do autor da lista como o nome da "
+"Hai que fornecer tanto o nome de usuaria do autor da lista como o nome da "
 "lista."
 
 #: microblogs/twitter/twitterlistdialog.cpp:99
@@ -2610,7 +2610,7 @@ msgstr "Nome da lista:"
 #: microblogs/twitter/twitterlistdialog_base.ui:52
 #, kde-format
 msgid "User name:"
-msgstr "Nome de usuario:"
+msgstr "Nome de usuaria:"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, loadUserLists)
 #: microblogs/twitter/twitterlistdialog_base.ui:78
@@ -2738,7 +2738,7 @@ msgstr "Tweets deste usuario"
 #, kde-format
 msgctxt "Tweets are Twitter posts"
 msgid "Tweets Including This Username"
-msgstr "Tweets que conteñen o nome deste nome de usuario"
+msgstr "Tweets que conteñen o nome deste nome de usuaria"
 
 #: microblogs/twitter/twittersearch.cpp:50
 #, kde-format
@@ -2978,7 +2978,7 @@ msgstr "Só amosar respostas a min e ás miñas amizades."
 #: plugins/filter/filtersettings.cpp:30
 #, kde-format
 msgid "Author Username"
-msgstr "Nome de usuario do autor"
+msgstr "Nome de usuaria do autor"
 
 #: plugins/filter/filtersettings.cpp:31
 #, kde-format
@@ -3119,7 +3119,7 @@ msgstr ""
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "size:8pt; font-weight:600;\">%username%</span><span style=\" font-size:8pt;"
-"\"> - o seu nome de usuario</span></p>\n"
+"\"> - o seu nome de usuaria</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "size:8pt; font-weight:600;\">%fullname%</span><span style=\" font-size:8pt;"
@@ -3641,7 +3641,7 @@ msgstr "Enviar ficheiros mediante:"
 #: plugins/uploaders/mobypicture/mobypictureprefs.ui:64
 #, kde-format
 msgid "Login:"
-msgstr "Nome de usuario:"
+msgstr "Nome de usuaria:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/uploaders/mobypicture/mobypictureprefs.ui:74
