@@ -1786,8 +1786,8 @@ msgstr ""
 msgid ""
 "Link to uploaded medium will be added here after uploading process succeed."
 msgstr ""
-"Ací s'afegirà l'enllaç al suport pujat una vegada el procés de pujada haja "
-"tingut èxit."
+"Ací s'afegirà l'enllaç cap al suport pujat una vegada el procés de pujada "
+"haja tingut èxit."
 
 #: libchoqok/ui/textbrowser.cpp:105
 #, kde-format
