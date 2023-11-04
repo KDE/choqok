@@ -25,8 +25,7 @@
                 "Name[sl]": "Andrey Esin",
                 "Name[sv]": "Andrey Esin",
                 "Name[tr]": "Andrey Esin",
-                "Name[uk]": "Andrey Esin",
-                "Name[x-test]": "xxAndrey Esinxx"
+                "Name[uk]": "Andrey Esin"
             }
         ],
         "Category": "Shorteners",
@@ -52,7 +51,6 @@
         "Description[sv]": "Ett insticksprogram för att avkorta webbadresser via tjänsten goo.gl.",
         "Description[tr]": "goo.gl hizmetini kullanarak URL'leri kısaltmak için bir eklenti.",
         "Description[uk]": "Додаток для скорочення адрес за допомогою служб goo.gl.",
-        "Description[x-test]": "xxA plugin to shorten URLs via the goo.gl service.xx",
         "EnabledByDefault": false,
         "Icon": "choqok",
         "Id": "choqok_goo_gl",
@@ -80,7 +78,6 @@
         "Name[sv]": "goo.gl",
         "Name[tr]": "goo.gl",
         "Name[uk]": "goo.gl",
-        "Name[x-test]": "xxgoo.glxx",
         "Version": "0.2",
         "Website": "https://choqok.kde.org"
     }

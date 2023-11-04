@@ -23,7 +23,6 @@
         "Description[sv]": "bit.ly",
         "Description[tr]": "bit.ly",
         "Description[uk]": "bit.ly",
-        "Description[x-test]": "xxbit.lyxx",
         "Icon": "kaboodle",
         "Name": "bit.ly",
         "Name[ca@valencia]": "bit.ly",
@@ -47,7 +46,6 @@
         "Name[sl]": "bit.ly",
         "Name[sv]": "bit.ly",
         "Name[tr]": "bit.ly",
-        "Name[uk]": "bit.ly",
-        "Name[x-test]": "xxbit.lyxx"
+        "Name[uk]": "bit.ly"
     }
 }

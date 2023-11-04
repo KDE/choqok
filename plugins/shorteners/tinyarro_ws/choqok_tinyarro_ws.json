@@ -25,8 +25,7 @@
                 "Name[sl]": "Andrey Esin",
                 "Name[sv]": "Andrey Esin",
                 "Name[tr]": "Andrey Esin",
-                "Name[uk]": "Andrey Esin",
-                "Name[x-test]": "xxAndrey Esinxx"
+                "Name[uk]": "Andrey Esin"
             }
         ],
         "Category": "Shorteners",
@@ -52,7 +51,6 @@
         "Description[sv]": "Ett insticksprogram för att avkorta webbadresser via tjänsten tinyarro.ws.",
         "Description[tr]": "tinyarro.ws hizmetini kullanarak URL'leri kısaltmak için bir eklenti.",
         "Description[uk]": "Додаток для скорочення адрес за допомогою служби tinyarro.ws.",
-        "Description[x-test]": "xxA plugin to shorten URLs via the tinyarro.ws service.xx",
         "EnabledByDefault": false,
         "Icon": "choqok",
         "Id": "choqok_tinyarro_ws",
@@ -80,7 +78,6 @@
         "Name[sv]": "tinyarro.ws",
         "Name[tr]": "tinyarro.ws",
         "Name[uk]": "tinyarro.ws",
-        "Name[x-test]": "xxtinyarro.wsxx",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     },

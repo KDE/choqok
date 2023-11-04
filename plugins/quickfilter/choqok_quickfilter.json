@@ -24,8 +24,7 @@
                 "Name[sl]": "Farhad Hedayati Fard",
                 "Name[sv]": "Farhad Hedayati Fard",
                 "Name[tr]": "Ferhat Hidayeti Fard",
-                "Name[uk]": "Farhad Hedayati Fard",
-                "Name[x-test]": "xxFarhad Hedayati Fardxx"
+                "Name[uk]": "Farhad Hedayati Fard"
             }
         ],
         "Category": "Plugins",
@@ -51,7 +50,6 @@
         "Description[sv]": "Filtrera inlägg enligt författarnamn eller innehållets text",
         "Description[tr]": "Gönderileri, yazar adı veya içerik metni ile süzün",
         "Description[uk]": "Фільтрування дописів за іменем автора або текстом вмісту",
-        "Description[x-test]": "xxFilter posts by author name or content textxx",
         "EnabledByDefault": true,
         "Icon": "document-preview",
         "Id": "choqok_quickfilter",
@@ -78,7 +76,6 @@
         "Name[sv]": "Snabbfiltrera inlägg",
         "Name[tr]": "Gönderileri Tez Süz",
         "Name[uk]": "Швидке фільтрування дописів",
-        "Name[x-test]": "xxQuickly Filter postsxx",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     }

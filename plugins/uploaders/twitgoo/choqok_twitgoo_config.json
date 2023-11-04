@@ -22,7 +22,6 @@
         "Description[sv]": "Ladda upp bild till twitgoo.com",
         "Description[tr]": "twitgoo.com'a görsel yükle",
         "Description[uk]": "Вивантаження зображення на twitgoo.com",
-        "Description[x-test]": "xxUpload image to twitgoo.comxx",
         "Icon": "kaboodle",
         "Name": "Twitgoo",
         "Name[ca@valencia]": "Twitgoo",
@@ -45,7 +44,6 @@
         "Name[sl]": "Twitgoo",
         "Name[sv]": "Twitgoo",
         "Name[tr]": "Twitgoo",
-        "Name[uk]": "Twitgoo",
-        "Name[x-test]": "xxTwitgooxx"
+        "Name[uk]": "Twitgoo"
     }
 }

@@ -25,8 +25,7 @@
                 "Name[sl]": "Mehrdad Momeny",
                 "Name[sv]": "Mehrdad Momeny",
                 "Name[tr]": "Mehrdad Momeny",
-                "Name[uk]": "Mehrdad Momeny",
-                "Name[x-test]": "xxMehrdad Momenyxx"
+                "Name[uk]": "Mehrdad Momeny"
             }
         ],
         "Category": "MicroBlogs",
@@ -52,7 +51,6 @@
         "Description[sv]": "Twitter.com-tjänst",
         "Description[tr]": "Twitter.com Hizmeti",
         "Description[uk]": "Служба Twitter.com",
-        "Description[x-test]": "xxTwitter.com Servicexx",
         "EnabledByDefault": false,
         "Icon": "twitter_microblog",
         "Id": "choqok_twitter",
@@ -80,7 +78,6 @@
         "Name[sv]": "Twitter",
         "Name[tr]": "Twitter",
         "Name[uk]": "Twitter",
-        "Name[x-test]": "xxTwitterxx",
         "Version": "0.7",
         "Website": "https://choqok.kde.org"
     }

@@ -22,7 +22,6 @@
         "Description[sv]": "Anpassa Choqoks beteende",
         "Description[tr]": "Choqok'un Davranışını Kişiselleştir",
         "Description[uk]": "Налаштувати поведінку Choqok",
-        "Description[x-test]": "xxPersonalize Choqok's Behaviorxx",
         "Icon": "choqok",
         "Name": "Behavior",
         "Name[ca@valencia]": "Comportament",
@@ -46,7 +45,6 @@
         "Name[sl]": "Obnašanje",
         "Name[sv]": "Beteende",
         "Name[tr]": "Davranış",
-        "Name[uk]": "Поведінка",
-        "Name[x-test]": "xxBehaviorxx"
+        "Name[uk]": "Поведінка"
     }
 }

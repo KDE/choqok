@@ -22,7 +22,6 @@
         "Description[sv]": "Ladda upp bild till flickr.com",
         "Description[tr]": "flickr.com'a görsel yükle",
         "Description[uk]": "Вивантаження зображення на flickr.com",
-        "Description[x-test]": "xxUpload image to flickr.comxx",
         "Icon": "kaboodle",
         "Name": "Flickr",
         "Name[ca@valencia]": "Flickr",
@@ -46,7 +45,6 @@
         "Name[sl]": "Flickr",
         "Name[sv]": "Flickr",
         "Name[tr]": "Flicker",
-        "Name[uk]": "Flickr",
-        "Name[x-test]": "xxFlickrxx"
+        "Name[uk]": "Flickr"
     }
 }

@@ -22,7 +22,6 @@
         "Description[sv]": "Hantera dina konton",
         "Description[tr]": "Hesaplarınızı Yönetin",
         "Description[uk]": "Керування вашими обліковими записами",
-        "Description[x-test]": "xxManage Your Accountsxx",
         "Icon": "preferences-desktop-user",
         "Name": "Accounts",
         "Name[ca@valencia]": "Comptes",
@@ -46,7 +45,6 @@
         "Name[sl]": "Računi",
         "Name[sv]": "Konton",
         "Name[tr]": "Hesaplar",
-        "Name[uk]": "Облікові записи",
-        "Name[x-test]": "xxAccountsxx"
+        "Name[uk]": "Облікові записи"
     }
 }

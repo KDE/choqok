@@ -24,8 +24,7 @@
                 "Name[sl]": "Eugene Shalygin",
                 "Name[sv]": "Eugene Shalygin",
                 "Name[tr]": "Eugene Shalygin",
-                "Name[uk]": "Eugene Shalygin",
-                "Name[x-test]": "xxEugene Shalyginxx"
+                "Name[uk]": "Eugene Shalygin"
             }
         ],
         "Category": "Plugins",
@@ -51,7 +50,6 @@
         "Description[sv]": "Extrahera den fullständiga webbadressen med användning av tjänsten longurl.org, och visa den som ett verktygstips",
         "Description[tr]": "Tam URL'yi longurl.org kullanarak çıkar ve bir araç ipucu olarak göster",
         "Description[uk]": "Визначає повну форму запису адреси за допомогою longurl.org і показує її на панелі підказки",
-        "Description[x-test]": "xxExtract the full URL using longurl.org service and show it as a tooltipxx",
         "EnabledByDefault": true,
         "Icon": "document-preview",
         "Id": "choqok_longurl",
@@ -78,7 +76,6 @@
         "Name[sv]": "Expandera webbadresser via longurl.org",
         "Name[tr]": "longurl.org ile URL'leri Genişlet",
         "Name[uk]": "Розгортання адрес за допомогою longurl.org",
-        "Name[x-test]": "xxExpand URLs via longurl.orgxx",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     }

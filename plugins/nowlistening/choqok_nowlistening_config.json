@@ -22,7 +22,6 @@
         "Description[sv]": "Talar om för dina vänner vad du lyssnar på.",
         "Description[tr]": "Arkadaşlarınıza ne dinlediğinizi söyleyin.",
         "Description[uk]": "Повідомляє вашим друзям про музику, яку ви слухаєте.",
-        "Description[x-test]": "xxTells your friends what you are listening to.xx",
         "Icon": "kaboodle",
         "Name": "Now Listening",
         "Name[ca@valencia]": "Ara s'escolta",
@@ -46,7 +45,6 @@
         "Name[sl]": "Zdaj poslušanje",
         "Name[sv]": "Lyssnar nu",
         "Name[tr]": "Şimdi Dinleniyor",
-        "Name[uk]": "Зараз слухаю",
-        "Name[x-test]": "xxNow Listeningxx"
+        "Name[uk]": "Зараз слухаю"
     }
 }

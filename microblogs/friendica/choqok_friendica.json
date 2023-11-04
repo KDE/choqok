@@ -25,8 +25,7 @@
                 "Name[sl]": "Andrea Scarpino",
                 "Name[sv]": "Andrea Scarpino",
                 "Name[tr]": "Andrea Scarpino",
-                "Name[uk]": "Andrea Scarpino",
-                "Name[x-test]": "xxAndrea Scarpinoxx"
+                "Name[uk]": "Andrea Scarpino"
             }
         ],
         "Category": "MicroBlogs",
@@ -52,7 +51,6 @@
         "Description[sv]": "Friendica",
         "Description[tr]": "Friendica",
         "Description[uk]": "Friendica",
-        "Description[x-test]": "xxFriendicaxx",
         "EnabledByDefault": false,
         "Icon": "friendica_microblog",
         "Id": "choqok_friendica",
@@ -79,7 +77,6 @@
         "Name[sv]": "Friendica",
         "Name[tr]": "Friendica",
         "Name[uk]": "Friendica",
-        "Name[x-test]": "xxFriendicaxx",
         "Version": "0.8",
         "Website": "https://choqok.kde.org"
     }

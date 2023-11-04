@@ -22,7 +22,6 @@
         "Description[sv]": "Ladda upp bild till posterous.com",
         "Description[tr]": "posterous.com'a görsel yükle",
         "Description[uk]": "Вивантаження зображення на posterous.com",
-        "Description[x-test]": "xxUpload image to posterous.comxx",
         "Icon": "kaboodle",
         "Name": "Posterous",
         "Name[ca@valencia]": "Posterous",
@@ -45,7 +44,6 @@
         "Name[sl]": "Posterous",
         "Name[sv]": "Posterous",
         "Name[tr]": "Posterous",
-        "Name[uk]": "Posterous",
-        "Name[x-test]": "xxPosterousxx"
+        "Name[uk]": "Posterous"
     }
 }

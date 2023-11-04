@@ -25,8 +25,7 @@
                 "Name[sl]": "Mehrdad Momeny",
                 "Name[sv]": "Mehrdad Momeny",
                 "Name[tr]": "Mehrdad Momeny",
-                "Name[uk]": "Mehrdad Momeny",
-                "Name[x-test]": "xxMehrdad Momenyxx"
+                "Name[uk]": "Mehrdad Momeny"
             }
         ],
         "Category": "Plugins",
@@ -52,7 +51,6 @@
         "Description[sv]": "Lägg till en sökåtgärd i användargränssnitt med Twitters programmeringsgränssnitt, t.ex. Twitter och GNU social",
         "Description[tr]": "Twitter ve GNU Social gibi mikro blog hizmetlerine bir Arama eyleme ekleyin",
         "Description[uk]": "Додає дію з пошуку до інтерфейсу користувача мікроблогів з API Twitter, зокрема Twitter і GNU social",
-        "Description[x-test]": "xxAdd a Search action to the UI for Twitter API microblogs like Twitter and GNU socialxx",
         "EnabledByDefault": true,
         "Icon": "edit-find",
         "Id": "choqok_searchaction",
@@ -79,7 +77,6 @@
         "Name[sv]": "Sökåẗgärd",
         "Name[tr]": "Arama Eylemi",
         "Name[uk]": "Шукати дію",
-        "Name[x-test]": "xxSearch Actionxx",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     }

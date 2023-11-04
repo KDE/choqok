@@ -22,7 +22,6 @@
         "Description[sv]": "tinyarro.ws",
         "Description[tr]": "tinyarro.ws",
         "Description[uk]": "tinyarro.ws",
-        "Description[x-test]": "xxtinyarro.wsxx",
         "Icon": "kaboodle",
         "Name": "tinyarro.ws",
         "Name[ca@valencia]": "tinyarro.ws",
@@ -46,7 +45,6 @@
         "Name[sl]": "tinyarro.ws",
         "Name[sv]": "tinyarro.ws",
         "Name[tr]": "tinyarro.ws",
-        "Name[uk]": "tinyarro.ws",
-        "Name[x-test]": "xxtinyarro.wsxx"
+        "Name[uk]": "tinyarro.ws"
     }
 }
