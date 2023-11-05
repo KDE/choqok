@@ -37,7 +37,6 @@
   <name xml:lang="sv">Choqok</name>
   <name xml:lang="tr">Choqok</name>
   <name xml:lang="uk">Choqok</name>
-  <name xml:lang="x-test">xxChoqokxx</name>
   <name xml:lang="zh-CN">Choqok</name>
   <name xml:lang="zh-TW">Choqok</name>
   <summary>Micro-blogging client</summary>
@@ -69,7 +68,6 @@
   <summary xml:lang="sv">Mikrobloggprogram</summary>
   <summary xml:lang="tr">Mikro Günlük İstemcisi</summary>
   <summary xml:lang="uk">Клієнт мікроблогів</summary>
-  <summary xml:lang="x-test">xxMicro-blogging clientxx</summary>
   <summary xml:lang="zh-CN">微博客户端</summary>
   <summary xml:lang="zh-TW">微部落格用戶端程式</summary>
   <description>
@@ -103,7 +101,6 @@
     <p xml:lang="sv">Choqok är en klient för mikrobloggar som stöder tjänsterna Twitter.com, GNU Social,  Pump.io och Friendica.</p>
     <p xml:lang="tr">Choqok, Twitter.com, GNU Social, Pump.ip ve Friendica hizmetlerini destekleyen bir mikro günlük istemcisidir.</p>
     <p xml:lang="uk">Choqok — клієнтська програма для роботи з мікроблогами, у якій передбачено підтримку служб Twitter.com GNU Social, Pump.io і Friendica.</p>
-    <p xml:lang="x-test">xxChoqok is a micro-blogging client which supports Twitter.com, GNU Social, Pump.io and Friendica services.xx</p>
     <p xml:lang="zh-CN">Choqok 是一个支持 Twitter.com 和 Pump.io 服务的微博客客户端</p>
     <p xml:lang="zh-TW">Choqok 是一個微部落格用戶端，其支援 Twitter.com、GNU Social、Pump.io 與 Friendica 服務。</p>
     <p>Features:</p>
@@ -140,7 +137,6 @@
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="tr">Özellikler:</p>
     <p xml:lang="uk">Можливості:</p>
-    <p xml:lang="x-test">xxFeatures:xx</p>
     <p xml:lang="zh-CN">功能：</p>
     <p xml:lang="zh-TW">功能：</p>
     <ul>
@@ -175,7 +171,6 @@
       <li xml:lang="sv">Stöder mikrobloggtjänsten Twitter.com</li>
       <li xml:lang="tr">Twitter.com mikro günlük hizmetini destekler</li>
       <li xml:lang="uk">підтримка служби мікроблогів Twitter.com;</li>
-      <li xml:lang="x-test">xxSupporting Twitter.com micro-blogging servicexx</li>
       <li xml:lang="zh-CN">支持 Twitter.com 微博客服务</li>
       <li xml:lang="zh-TW">支援 Twitter.com 微部落格服務</li>
       <li>Supporting self hosted Pump.io services</li>
@@ -206,7 +201,6 @@
       <li xml:lang="sv">Stöder tjänsten Pump.io på egen värddator</li>
       <li xml:lang="tr">Kendi kendine barındırılabilir Pump.io hizmetini destekler</li>
       <li xml:lang="uk">підтримка автономної власної служби Pump.io;</li>
-      <li xml:lang="x-test">xxSupporting self hosted Pump.io servicesxx</li>
       <li xml:lang="zh-CN">支持自己架设的 Pump.io 服务</li>
       <li xml:lang="zh-TW">支援自行架設的 Pump.io 服務</li>
       <li>Supporting self hosted GNU social service</li>
@@ -238,7 +232,6 @@
       <li xml:lang="sv">Stöder tjänsten GNU social på egen värddator</li>
       <li xml:lang="tr">Kendi kendine barındırılabilir GNU social hizmetini destekler</li>
       <li xml:lang="uk">підтримка автономної власної служби GNU social;</li>
-      <li xml:lang="x-test">xxSupporting self hosted GNU social servicexx</li>
       <li xml:lang="zh-CN">支持自己架设的 GNU Social 服务</li>
       <li xml:lang="zh-TW">支援自託管的 GNU social 服務</li>
       <li>Supporting self hosted Friendica services</li>
@@ -269,7 +262,6 @@
       <li xml:lang="sv">Stöder tjänsten Friendica på egen värddator</li>
       <li xml:lang="tr">Kendi kendine barındırılabilir Friendica hizmetini destekler</li>
       <li xml:lang="uk">підтримка автономної власної служби Friendica;</li>
-      <li xml:lang="x-test">xxSupporting self hosted Friendica servicesxx</li>
       <li xml:lang="zh-CN">支持自己架设的 Friendica 服务</li>
       <li xml:lang="zh-TW">支援自行架設的 Friendica 服務</li>
       <li>Supporting User + His/Her Friends time-lines</li>
@@ -303,7 +295,6 @@
       <li xml:lang="sv">Stöd för tidslinjer för användaren och hans eller hennes vänner</li>
       <li xml:lang="tr">Kullanıcının ve arkadaşlarının zaman akışlarını destekler</li>
       <li xml:lang="uk">підтримка показу розкладу повідомлень користувача та його друзів;</li>
-      <li xml:lang="x-test">xxSupporting User + His/Her Friends time-linesxx</li>
       <li xml:lang="zh-CN">支持用户及其好友的时间线</li>
       <li xml:lang="zh-TW">支援使用者與他/她的朋友的動態訊息</li>
       <li>Supporting @Reply time-lines</li>
@@ -337,7 +328,6 @@
       <li xml:lang="sv">Stöd för tidslinjer för svar (@Reply)</li>
       <li xml:lang="tr">@Yanıtla zaman akışlarını destekler</li>
       <li xml:lang="uk">підтримка розкладів @Reply;</li>
-      <li xml:lang="x-test">xxSupporting @Reply time-linesxx</li>
       <li xml:lang="zh-CN">支持 @ 回复时间线</li>
       <li xml:lang="zh-TW">支援 @回覆 動態訊息</li>
       <li>Support for send and receive direct messages</li>
@@ -371,7 +361,6 @@
       <li xml:lang="sv">Stöd för att skicka och ta emot direktmeddelanden</li>
       <li xml:lang="tr">Doğrudan ileti alma ve göndermeyi destekler</li>
       <li xml:lang="uk">підтримка надсилання та отримання безпосередніх повідомлень;</li>
-      <li xml:lang="x-test">xxSupport for send and receive direct messagesxx</li>
       <li xml:lang="zh-CN">支持收发私信</li>
       <li xml:lang="zh-TW">支援傳送與接收訊息</li>
       <li>Support medium upload using external services (Flickr, Imageshack,...)</li>
@@ -402,7 +391,6 @@
       <li xml:lang="sv">Stöder uppladdning av media till extern tjänst (Flickr, Imageshack, ...)</li>
       <li xml:lang="tr">Ortamların dış hizmetlere (Flickr, Imageshack,...) yüklenmesini destekler</li>
       <li xml:lang="uk">підтримка вивантаження мультимедійних даних з використанням зовнішніх служб (Flickr, Imageshack…);</li>
-      <li xml:lang="x-test">xxSupport medium upload using external services (Flickr, Imageshack,...)xx</li>
       <li xml:lang="zh-CN">支持使用外部服务上传媒体 (Flickr, Imageshack,...)</li>
       <li xml:lang="zh-TW">支援使用外部服務上傳媒體（Flickr、Imageshack 等）</li>
       <li>Supporting Multiple Accounts simultaneously</li>
@@ -436,7 +424,6 @@
       <li xml:lang="sv">Stöder flera samtidiga konton</li>
       <li xml:lang="tr">Eşzamanlı olarak birden çok hesabı destekler</li>
       <li xml:lang="uk">підтримка одночасної роботи з декількома обліковими записами;</li>
-      <li xml:lang="x-test">xxSupporting Multiple Accounts simultaneouslyxx</li>
       <li xml:lang="zh-CN">支持同时登录多账户</li>
       <li xml:lang="zh-TW">支援同時登入多個帳號</li>
       <li>Supporting search APIs for all services</li>
@@ -472,7 +459,6 @@
       <li xml:lang="sv">Stöder programmeringsgränssnitt för sökning med alla tjänster</li>
       <li xml:lang="tr">Tüm hizmetler için arama API'lerini destekler</li>
       <li xml:lang="uk">підтримка програмного інтерфейсу пошуку для усіх служб;</li>
-      <li xml:lang="x-test">xxSupporting search APIs for all servicesxx</li>
       <li xml:lang="zh-CN">支持全部服务的搜索 API</li>
       <li xml:lang="zh-TW">支援所有服務的搜尋 API</li>
       <li>KWallet integration</li>
@@ -508,7 +494,6 @@
       <li xml:lang="sv">Integrering med plånboken</li>
       <li xml:lang="tr">K Cüzdan tümleştirmesi</li>
       <li xml:lang="uk">інтеграція з KWallet;</li>
-      <li xml:lang="x-test">xxKWallet integrationxx</li>
       <li xml:lang="zh-CN">KWallet 集成</li>
       <li xml:lang="zh-TW">整合 KWallet</li>
       <li>Ability to make a quick tweet with global shortcuts (Ctrl+Meta+T)</li>
@@ -542,7 +527,6 @@
       <li xml:lang="sv">Möjlighet att göra ett snabbt inlägg med globala snabbtangenter (Ctrl+Meta+T)</li>
       <li xml:lang="tr">Global kısayollar (Kontrol+Meta4T) ile hızlı tweet atabilme olanağı</li>
       <li xml:lang="uk">можливість швидкого створення допису за допомогою загальних скорочень (Ctrl+Alt+T);</li>
-      <li xml:lang="x-test">xxAbility to make a quick tweet with global shortcuts (Ctrl+Meta+T)xx</li>
       <li xml:lang="zh-CN">支持通过全局快捷键 (Ctrl + Meta + T) 快速发布状态</li>
       <li xml:lang="zh-TW">可以使用全域捷徑來發佈快速推文 (Ctrl+Meta+T)</li>
       <li>Ability to notify user about new statuses text, with KNotification or Libnotify</li>
@@ -576,7 +560,6 @@
       <li xml:lang="sv">Möjlighet att underrätta användaren om ny statustext, med KNotification eller Libnotify</li>
       <li xml:lang="tr">KNotification veya Libnotify kullanarak yeni durum iletilerinden kullanıcıyı haberdar etme</li>
       <li xml:lang="uk">можливість сповіщення користувача щодо тексту нових станів за допомогою KNotification або Libnotify;</li>
-      <li xml:lang="x-test">xxAbility to notify user about new statuses text, with KNotification or Libnotifyxx</li>
       <li xml:lang="zh-CN">支持通过 KNotification 或 Libnotify 通知用户新状态</li>
       <li xml:lang="zh-TW">可以通知使用者新的狀態文字，可透過 KNotification 或 Libnotify</li>
       <li>Support for shortening urls with more than 30 characters (shorten on paste)</li>
@@ -610,7 +593,6 @@
       <li xml:lang="sv">Stöd för att avkorta webbadresser med mer än 30 tecken (avkorta vid inklistring)</li>
       <li xml:lang="tr">30 karakterden fazla olan bağlantıları kısaltma desteği (yapıştırma sırasında kısaltma)</li>
       <li xml:lang="uk">підтримка скорочення адрес, що складаються з понад 30 символів (скорочення під час вставлення);</li>
-      <li xml:lang="x-test">xxSupport for shortening urls with more than 30 characters (shorten on paste)xx</li>
       <li xml:lang="zh-CN">支持缩短大于 30 个字符的 URL (粘贴时缩短)</li>
       <li xml:lang="zh-TW">支援縮短超過 30 個字元的網址（在貼上時縮短）</li>
       <li>Support for configuring status lists appearance</li>
@@ -644,7 +626,6 @@
       <li xml:lang="sv">Stöd för att anpassa statuslistornas utseende</li>
       <li xml:lang="tr">Durum listeleri görünüşlerini yapılandırma desteği</li>
       <li xml:lang="uk">підтримка можливості зміни вигляду списків станів.</li>
-      <li xml:lang="x-test">xxSupport for configuring status lists appearancexx</li>
       <li xml:lang="zh-CN">支持配置状态列表外观</li>
       <li xml:lang="zh-TW">支援設定狀態清單外觀</li>
     </ul>
