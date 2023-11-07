@@ -25,7 +25,8 @@
                 "Name[sl]": "Bhaskar Kandiyal",
                 "Name[sv]": "Bhaskar Kandiyal",
                 "Name[tr]": "Baskar Kandiyal",
-                "Name[uk]": "Bhaskar Kandiyal"
+                "Name[uk]": "Bhaskar Kandiyal",
+                "Name[x-test]": "xxBhaskar Kandiyalxx"
             }
         ],
         "Category": "Shorteners",
@@ -51,6 +52,7 @@
         "Description[sv]": "Ett insticksprogram för att avkorta webbadresser via tjänsten url.ca.",
         "Description[tr]": "ur1.ca hizmetini kullanarak URL'leri kısaltmak için bir eklenti.",
         "Description[uk]": "Додаток для скорочення адрес за допомогою служб ur1.ca.",
+        "Description[x-test]": "xxA plugin to shorten URLs via the ur1.ca service.xx",
         "EnabledByDefault": false,
         "Icon": "choqok",
         "Id": "choqok_ur1_ca",
@@ -78,6 +80,7 @@
         "Name[sv]": "ur1.ca",
         "Name[tr]": "ur1.ca",
         "Name[uk]": "ur1.ca",
+        "Name[x-test]": "xxur1.caxx",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     }

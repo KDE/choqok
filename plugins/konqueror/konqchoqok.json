@@ -25,7 +25,8 @@
                 "Name[sl]": "Emanuele Bigiarini",
                 "Name[sv]": "Emanuele Bigiarini",
                 "Name[tr]": "Emanuele Bigiarini",
-                "Name[uk]": "Emanuele Bigiarini"
+                "Name[uk]": "Emanuele Bigiarini",
+                "Name[x-test]": "xxEmanuele Bigiarinixx"
             }
         ],
         "Description": "Post to Choqok the selected text in Konqueror, and other features",
@@ -50,6 +51,7 @@
         "Description[sv]": "Skicka markerad text i Konqueror till Choqok, och andra funktioner",
         "Description[tr]": "Konqueror'da seçili metni Choqok'a gönderir",
         "Description[uk]": "Передавання до Choqok позначеного фрагмента тексту у Konqueror та інші можливості",
+        "Description[x-test]": "xxPost to Choqok the selected text in Konqueror, and other featuresxx",
         "EnabledByDefault": true,
         "Icon": "choqok",
         "Id": "konqchoqokplugin",
@@ -76,6 +78,7 @@
         "Name[sv]": "Choqok-insticksprogram för Konqueror",
         "Name[tr]": "Konqueror Choqok Eklentisi",
         "Name[uk]": "Додаток Choqok до Konqueror",
+        "Name[x-test]": "xxKonqueror Choqok Pluginxx",
         "Version": "0.1"
     }
 }

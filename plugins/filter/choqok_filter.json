@@ -25,7 +25,8 @@
                 "Name[sl]": "Mehrdad Momeny",
                 "Name[sv]": "Mehrdad Momeny",
                 "Name[tr]": "Mehrdad Momeny",
-                "Name[uk]": "Mehrdad Momeny"
+                "Name[uk]": "Mehrdad Momeny",
+                "Name[x-test]": "xxMehrdad Momenyxx"
             }
         ],
         "Category": "Plugins",
@@ -51,6 +52,7 @@
         "Description[sv]": "Filtrerar oönskade inlägg",
         "Description[tr]": "İstenmeyen Gönderileri Süz",
         "Description[uk]": "Вилучення небажаних дописів",
+        "Description[x-test]": "xxFiltering unwanted postsxx",
         "EnabledByDefault": true,
         "Icon": "view-filter",
         "Id": "choqok_filter",
@@ -77,6 +79,7 @@
         "Name[sv]": "Filtrera inlägg",
         "Name[tr]": "Gönderileri Süz",
         "Name[uk]": "Фільтрування дописів",
+        "Name[x-test]": "xxFilter postsxx",
         "Version": "0.5",
         "Website": "https://choqok.kde.org"
     }

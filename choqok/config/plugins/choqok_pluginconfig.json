@@ -23,6 +23,7 @@
         "Description[sv]": "Välj och anpassa insticksprogram",
         "Description[tr]": "Eklentiler Seçin ve Yapılandırın",
         "Description[uk]": "Виберіть і налаштуйте додатки",
+        "Description[x-test]": "xxSelect and Configure Pluginsxx",
         "Icon": "preferences-plugin",
         "Name": "Plugins",
         "Name[ca@valencia]": "Connectors",
@@ -46,6 +47,7 @@
         "Name[sl]": "Vtičniki",
         "Name[sv]": "Insticksprogram",
         "Name[tr]": "Eklentiler",
-        "Name[uk]": "Додатки"
+        "Name[uk]": "Додатки",
+        "Name[x-test]": "xxPluginsxx"
     }
 }

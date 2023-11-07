@@ -25,7 +25,8 @@
                 "Name[sl]": "Andrey Esin",
                 "Name[sv]": "Andrey Esin",
                 "Name[tr]": "Andrey Esin",
-                "Name[uk]": "Andrey Esin"
+                "Name[uk]": "Andrey Esin",
+                "Name[x-test]": "xxAndrey Esinxx"
             }
         ],
         "Category": "Plugins",
@@ -51,6 +52,7 @@
         "Description[sv]": " Anger status för direktmeddelanden som din status i mikroblogg",
         "Description[tr]": "Anlık iletileşme programınızdaki durumu, mikro blog'unuzdaki durumunuz olarak ayarlar.",
         "Description[uk]": "Встановлювати у вашому мікроблозі стану, тотожного до стану у кур’єрі миттєвого обміну повідомленнями",
+        "Description[x-test]": "xxSets status of your instant messenger as your status in micro-blogxx",
         "EnabledByDefault": false,
         "Icon": "kopete",
         "Id": "choqok_imstatus",
@@ -77,6 +79,7 @@
         "Name[sv]": "Meddelandestatus",
         "Name[tr]": "IMStatus",
         "Name[uk]": "Стан у мережі МП",
+        "Name[x-test]": "xxIMStatusxx",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     },

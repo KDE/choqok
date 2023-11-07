@@ -25,7 +25,8 @@
                 "Name[sl]": "Mehrdad Momeny",
                 "Name[sv]": "Mehrdad Momeny",
                 "Name[tr]": "Mehrdad Momeny",
-                "Name[uk]": "Mehrdad Momeny"
+                "Name[uk]": "Mehrdad Momeny",
+                "Name[x-test]": "xxMehrdad Momenyxx"
             }
         ],
         "Category": "MicroBlogs",
@@ -51,6 +52,7 @@
         "Description[sv]": "GNU social (StatusNet, Laconica)",
         "Description[tr]": "GNU social (StatusNet, Laconica)",
         "Description[uk]": "Соціальні мережі GNU (StatusNet, Laconica)",
+        "Description[x-test]": "xxGNU social (StatusNet, Laconica)xx",
         "EnabledByDefault": false,
         "Icon": "laconica_microblog",
         "Id": "choqok_laconica",
@@ -77,6 +79,7 @@
         "Name[sv]": "GNU social",
         "Name[tr]": "GNU Social",
         "Name[uk]": "Соціальна мережа GNU",
+        "Name[x-test]": "xxGNU socialxx",
         "Version": "0.8",
         "Website": "https://choqok.kde.org"
     }
