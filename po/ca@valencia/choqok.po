@@ -1665,7 +1665,7 @@ msgstr "Quadro estilitzat"
 #, kde-format
 msgid "<b>Note:</b><br/><i>Ctrl+S</i> to enable/disable auto spell checker."
 msgstr ""
-"<b>Nota:</b><br/><i>Ctrl+S</i> per a activar/desactivar la verificació "
+"<b>Nota:</b><br/><i>Ctrl+S</i> per a activar o desactivar la verificació "
 "automàtica de l'ortografia."
 
 #: libchoqok/ui/choqoktextedit.cpp:184
@@ -2198,7 +2198,7 @@ msgstr "No s'ha pogut compartir el missatge. %1"
 #: microblogs/pumpio/pumpiomicroblog.cpp:715
 #, kde-format
 msgid "Cannot set/unset the post as favorite. %1"
-msgstr "No s'ha pogut des/marcar el missatge com a preferida. %1"
+msgstr "No s'ha pogut des/marcar el missatge com a preferit. %1"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:400
 #: microblogs/pumpio/pumpiomicroblog.cpp:1252
@@ -2832,7 +2832,7 @@ msgid ""
 "html>"
 msgstr ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Nota:</span> "
-"Qualsevol canvi necessita que es torne a carregar el connector (activar/"
+"Qualsevol canvi necessita que es torne a carregar el connector (activar i "
 "desactivar) perquè siga efectiu.</p></body></html>"
 
 #: plugins/filter/addeditfilter.cpp:47
@@ -3121,7 +3121,7 @@ msgstr ""
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "size:8pt; font-weight:600;\">%client%</span><span style=\" font-size:8pt;\"> "
-"- afig el </span><span style=\" font-size:8pt; font-style:italic;\">Choqok</"
+"- afig </span><span style=\" font-size:8pt; font-style:italic;\">Choqok</"
 "span><span style=\" font-size:8pt;\"> a l'estat</span></p></td></tr></"
 "table></body></html>"
 
