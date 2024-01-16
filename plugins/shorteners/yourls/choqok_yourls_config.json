@@ -23,6 +23,7 @@
         "Description[tr]": "Yourls",
         "Description[uk]": "Yourls",
         "Description[x-test]": "xxYourlsxx",
+        "Description[zh_TW]": "Yourls",
         "Icon": "kaboodle",
         "Name": "Yourls",
         "Name[ca@valencia]": "Yourls",
@@ -46,6 +47,7 @@
         "Name[sv]": "Yourls",
         "Name[tr]": "Yourls",
         "Name[uk]": "Yourls",
-        "Name[x-test]": "xxYourlsxx"
+        "Name[x-test]": "xxYourlsxx",
+        "Name[zh_TW]": "Yourls"
     }
 }

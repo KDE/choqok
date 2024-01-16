@@ -66,7 +66,7 @@
         "Description[uk]": "Вивантажити за допомогою Choqok",
         "Description[x-test]": "xxUpload with Choqokxx",
         "Description[zh_CN]": "用 Choqok 上传",
-        "Description[zh_TW]": "使用 Choqok 上傳",
+        "Description[zh_TW]": "用 Choqok 上傳",
         "Icon": "choqok",
         "License": "GPL",
         "Name": "Upload with Choqok",
@@ -99,7 +99,7 @@
         "Name[uk]": "Вивантажити за допомогою Choqok",
         "Name[x-test]": "xxUpload with Choqokxx",
         "Name[zh_CN]": "用 Choqok 上传",
-        "Name[zh_TW]": "使用 Choqok 上傳",
+        "Name[zh_TW]": "用 Choqok 上傳",
         "X-Purpose-ActionDisplay": "Upload with Choqok...",
         "X-Purpose-ActionDisplay[ca@valencia]": "Puja amb Choqok...",
         "X-Purpose-ActionDisplay[ca]": "Puja amb el Choqok...",
@@ -124,7 +124,8 @@
         "X-Purpose-ActionDisplay[sv]": "Ladda upp med Choqok...",
         "X-Purpose-ActionDisplay[tr]": "Choqok ile Karşıya Yükle...",
         "X-Purpose-ActionDisplay[uk]": "Вивантажити за допомогою Choqok…",
-        "X-Purpose-ActionDisplay[x-test]": "xxUpload with Choqok...xx"
+        "X-Purpose-ActionDisplay[x-test]": "xxUpload with Choqok...xx",
+        "X-Purpose-ActionDisplay[zh_TW]": "用 Choqok 上傳..."
     },
     "X-Purpose-Configuration": [],
     "X-Purpose-Constraints": [

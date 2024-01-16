@@ -25,7 +25,8 @@
                 "Name[sv]": "Ramin Gomari",
                 "Name[tr]": "Ramin Gomari",
                 "Name[uk]": "Ramin Gomari",
-                "Name[x-test]": "xxRamin Gomarixx"
+                "Name[x-test]": "xxRamin Gomarixx",
+                "Name[zh_TW]": "Ramin Gomari"
             }
         ],
         "Category": "Plugins",
@@ -80,6 +81,7 @@
         "Name[tr]": "Şimdi Dinleniyor",
         "Name[uk]": "Зараз слухаю",
         "Name[x-test]": "xxNow Listeningxx",
+        "Name[zh_TW]": "目前聆聽",
         "Version": "0.5",
         "Website": "https://choqok.kde.org"
     },

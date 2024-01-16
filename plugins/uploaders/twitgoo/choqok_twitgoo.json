@@ -26,7 +26,8 @@
                 "Name[sv]": "Andrey Esin",
                 "Name[tr]": "Andrey Esin",
                 "Name[uk]": "Andrey Esin",
-                "Name[x-test]": "xxAndrey Esinxx"
+                "Name[x-test]": "xxAndrey Esinxx",
+                "Name[zh_TW]": "Andrey Esin"
             }
         ],
         "Category": "Uploaders",
@@ -53,6 +54,7 @@
         "Description[tr]": "twitgoo.com'a görsel yükle",
         "Description[uk]": "Вивантаження зображення на twitgoo.com",
         "Description[x-test]": "xxUpload image to twitgoo.comxx",
+        "Description[zh_TW]": "上傳影像至 twitgoo.com",
         "EnabledByDefault": false,
         "Icon": "twitgoo_uploader",
         "Id": "choqok_twitgoo",
@@ -80,6 +82,7 @@
         "Name[tr]": "Twitgoo",
         "Name[uk]": "Twitgoo",
         "Name[x-test]": "xxTwitgooxx",
+        "Name[zh_TW]": "Twitgoo",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     },

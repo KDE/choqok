@@ -25,7 +25,8 @@
                 "Name[sv]": "Scott Banwart",
                 "Name[tr]": "Scott Banwart",
                 "Name[uk]": "Scott Banwart",
-                "Name[x-test]": "xxScott Banwartxx"
+                "Name[x-test]": "xxScott Banwartxx",
+                "Name[zh_TW]": "Scott Banwart"
             }
         ],
         "Category": "Shorteners",
@@ -52,6 +53,7 @@
         "Description[tr]": "ur.ly hizmetini kullanarak URL'leri kısaltmak için bir eklenti.",
         "Description[uk]": "Додаток для скорочення адрес за допомогою служб ur.ly.",
         "Description[x-test]": "xxA plugin to shorten URLs via the ur.ly service.xx",
+        "Description[zh_TW]": "用 ur.ly 服務來縮短網址的外掛程式。",
         "EnabledByDefault": false,
         "Icon": "choqok",
         "Id": "choqok_ur_ly",
@@ -79,6 +81,7 @@
         "Name[tr]": "ur.ly",
         "Name[uk]": "ur.ly",
         "Name[x-test]": "xxur.lyxx",
+        "Name[zh_TW]": "ur.ly",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     }

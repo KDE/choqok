@@ -22,6 +22,7 @@
         "Description[sv]": "Uppladdningsinsticksprogram för Choqok",
         "Description[tr]": "Choqok Karşıya Yükleme Eklentisi",
         "Description[uk]": "Додаток вивантаження для Choqok",
-        "Description[x-test]": "xxChoqok Uploader Pluginxx"
+        "Description[x-test]": "xxChoqok Uploader Pluginxx",
+        "Description[zh_TW]": "Choqok 上傳工具外掛程式"
     }
 }

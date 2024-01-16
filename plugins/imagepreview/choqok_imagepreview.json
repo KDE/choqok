@@ -26,7 +26,8 @@
                 "Name[sv]": "Mehrdad Momeny",
                 "Name[tr]": "Mehrdad Momeny",
                 "Name[uk]": "Mehrdad Momeny",
-                "Name[x-test]": "xxMehrdad Momenyxx"
+                "Name[x-test]": "xxMehrdad Momenyxx",
+                "Name[zh_TW]": "Mehrdad Momeny"
             }
         ],
         "Category": "Plugins",
@@ -53,6 +54,7 @@
         "Description[tr]": "Önizlemelerini yapmak için görsellerin küçük hallerini yükle",
         "Description[uk]": "Завантаження мініатюр зображень для попереднього перегляду",
         "Description[x-test]": "xxLoad a thumbnail of images to have a preview of itxx",
+        "Description[zh_TW]": "載入影像的縮圖來進行預覽",
         "EnabledByDefault": true,
         "Icon": "view-preview",
         "Id": "choqok_imagepreview",
@@ -81,6 +83,7 @@
         "Name[tr]": "Görselleri Önizle",
         "Name[uk]": "Ескізи зображень",
         "Name[x-test]": "xxPreview Imagesxx",
+        "Name[zh_TW]": "預覽影像",
         "Version": "0.3",
         "Website": "https://choqok.kde.org"
     }

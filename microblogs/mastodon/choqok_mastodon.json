@@ -26,7 +26,8 @@
                 "Name[sv]": "Andrea Scarpino",
                 "Name[tr]": "Andrea Scarpino",
                 "Name[uk]": "Andrea Scarpino",
-                "Name[x-test]": "xxAndrea Scarpinoxx"
+                "Name[x-test]": "xxAndrea Scarpinoxx",
+                "Name[zh_TW]": "Andrea Scarpino"
             }
         ],
         "Category": "MicroBlogs",
@@ -53,6 +54,7 @@
         "Description[tr]": "Mastodon social",
         "Description[uk]": "Соціальна мережа Mastodon",
         "Description[x-test]": "xxMastodon socialxx",
+        "Description[zh_TW]": "Mastodon 社群",
         "EnabledByDefault": false,
         "Icon": "mastodon_microblog",
         "Id": "choqok_mastodon",
@@ -80,6 +82,7 @@
         "Name[tr]": "Mastodon social",
         "Name[uk]": "Соціальна мережа Mastodon",
         "Name[x-test]": "xxMastodon socialxx",
+        "Name[zh_TW]": "Mastodon 社群",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     }

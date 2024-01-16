@@ -26,7 +26,8 @@
                 "Name[sv]": "Mehrdad Momeny",
                 "Name[tr]": "Mehrdad Momeny",
                 "Name[uk]": "Mehrdad Momeny",
-                "Name[x-test]": "xxMehrdad Momenyxx"
+                "Name[x-test]": "xxMehrdad Momenyxx",
+                "Name[zh_TW]": "Mehrdad Momeny"
             }
         ],
         "Category": "Plugins",
@@ -53,6 +54,7 @@
         "Description[tr]": "Önemli Gönderileri Bildir",
         "Description[uk]": "Сповіщення щодо важливих дописів",
         "Description[x-test]": "xxNotify Important Postsxx",
+        "Description[zh_TW]": "通知重要的貼文",
         "EnabledByDefault": false,
         "Icon": "dialog-information",
         "Id": "choqok_betternotify",
@@ -80,6 +82,7 @@
         "Name[tr]": "Better Notify",
         "Name[uk]": "Кращі сповіщення",
         "Name[x-test]": "xxBetter Notifyxx",
+        "Name[zh_TW]": "更好的通知",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     },

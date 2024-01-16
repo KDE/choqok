@@ -26,7 +26,8 @@
                 "Name[sv]": "Mehrdad Momeny",
                 "Name[tr]": "Mehrdad Momeny",
                 "Name[uk]": "Mehrdad Momeny",
-                "Name[x-test]": "xxMehrdad Momenyxx"
+                "Name[x-test]": "xxMehrdad Momenyxx",
+                "Name[zh_TW]": "Mehrdad Momeny"
             }
         ],
         "Category": "Uploaders",
@@ -53,6 +54,7 @@
         "Description[tr]": "twitpic.com'a görsel yükle",
         "Description[uk]": "Вивантаження зображення на twitpic.com",
         "Description[x-test]": "xxUpload image to twitpic.comxx",
+        "Description[zh_TW]": "上傳影像至 twitpic.com",
         "EnabledByDefault": false,
         "Icon": "twitpic_uploader",
         "Id": "choqok_twitpic",
@@ -80,6 +82,7 @@
         "Name[tr]": "Twitpic",
         "Name[uk]": "Twitpic",
         "Name[x-test]": "xxTwitpicxx",
+        "Name[zh_TW]": "Twitpic",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     },

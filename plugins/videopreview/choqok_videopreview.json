@@ -26,7 +26,8 @@
                 "Name[sv]": "Emanuele Bigiarini",
                 "Name[tr]": "Emanuele Bigiarini",
                 "Name[uk]": "Emanuele Bigiarini",
-                "Name[x-test]": "xxEmanuele Bigiarinixx"
+                "Name[x-test]": "xxEmanuele Bigiarinixx",
+                "Name[zh_TW]": "Emanuele Bigiarini"
             }
         ],
         "Category": "Plugins",
@@ -53,6 +54,7 @@
         "Description[tr]": "YouTube ve Vimeo videolarının bir önizlemesini yükle",
         "Description[uk]": "Завантаження мініатюр відео з YouTube та Vimeo",
         "Description[x-test]": "xxLoad a preview of YouTube & Vimeo videosxx",
+        "Description[zh_TW]": "載入 YouTube 與 Vimeo 影片的預覽",
         "EnabledByDefault": true,
         "Icon": "video-x-generic",
         "Id": "choqok_videopreview",
@@ -80,6 +82,7 @@
         "Name[tr]": "Videoları Önizle",
         "Name[uk]": "Попередній перегляд відео",
         "Name[x-test]": "xxPreview videosxx",
+        "Name[zh_TW]": "預覽影片",
         "Version": "0.2",
         "Website": "https://choqok.kde.org"
     }

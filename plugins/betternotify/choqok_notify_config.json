@@ -23,6 +23,7 @@
         "Description[tr]": "Önemli Gönderileri Bildir",
         "Description[uk]": "Сповіщення щодо важливих дописів",
         "Description[x-test]": "xxNotify Important Postsxx",
+        "Description[zh_TW]": "通知重要的貼文",
         "Icon": "kaboodle",
         "Name": "Better Notify",
         "Name[ca@valencia]": "Millor notificació",
@@ -46,6 +47,7 @@
         "Name[sv]": "Better Notify",
         "Name[tr]": "Better Notify",
         "Name[uk]": "Кращі сповіщення",
-        "Name[x-test]": "xxBetter Notifyxx"
+        "Name[x-test]": "xxBetter Notifyxx",
+        "Name[zh_TW]": "更好的通知"
     }
 }

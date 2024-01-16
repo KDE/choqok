@@ -26,7 +26,8 @@
                 "Name[sv]": "Andrea Scarpino",
                 "Name[tr]": "Andrea Scarpino",
                 "Name[uk]": "Andrea Scarpino",
-                "Name[x-test]": "xxAndrea Scarpinoxx"
+                "Name[x-test]": "xxAndrea Scarpinoxx",
+                "Name[zh_TW]": "Andrea Scarpino"
             }
         ],
         "Category": "MicroBlogs",
@@ -53,6 +54,7 @@
         "Description[tr]": "Pump.io ağı",
         "Description[uk]": "Мережа Pump.io",
         "Description[x-test]": "xxPump.io networkxx",
+        "Description[zh_TW]": "Pump.io 網路",
         "EnabledByDefault": false,
         "Icon": "pumpio_microblog",
         "Id": "choqok_pumpio",
@@ -80,6 +82,7 @@
         "Name[tr]": "Pump.io ağı",
         "Name[uk]": "Мережа Pump.io",
         "Name[x-test]": "xxPump.io networkxx",
+        "Name[zh_TW]": "Pump.io 網路",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     }

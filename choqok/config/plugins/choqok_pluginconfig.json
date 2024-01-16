@@ -24,6 +24,7 @@
         "Description[tr]": "Eklentiler Seçin ve Yapılandırın",
         "Description[uk]": "Виберіть і налаштуйте додатки",
         "Description[x-test]": "xxSelect and Configure Pluginsxx",
+        "Description[zh_TW]": "選取並設定外掛程式",
         "Icon": "preferences-plugin",
         "Name": "Plugins",
         "Name[ca@valencia]": "Connectors",
@@ -48,6 +49,7 @@
         "Name[sv]": "Insticksprogram",
         "Name[tr]": "Eklentiler",
         "Name[uk]": "Додатки",
-        "Name[x-test]": "xxPluginsxx"
+        "Name[x-test]": "xxPluginsxx",
+        "Name[zh_TW]": "外掛程式"
     }
 }

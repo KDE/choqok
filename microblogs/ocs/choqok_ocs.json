@@ -26,7 +26,8 @@
                 "Name[sv]": "Mehrdad Momeny",
                 "Name[tr]": "Mehrdad Momeny",
                 "Name[uk]": "Mehrdad Momeny",
-                "Name[x-test]": "xxMehrdad Momenyxx"
+                "Name[x-test]": "xxMehrdad Momenyxx",
+                "Name[zh_TW]": "Mehrdad Momeny"
             }
         ],
         "Category": "MicroBlogs",
@@ -53,6 +54,7 @@
         "Description[tr]": "Birlikte Çalışma Hizmetlerini Aç",
         "Description[uk]": "Служби Open Collaboration",
         "Description[x-test]": "xxOpen Collaboration Servicesxx",
+        "Description[zh_TW]": "開放協同服務 (Open Collaboration Services)",
         "EnabledByDefault": false,
         "Icon": "ocs_microblog",
         "Id": "choqok_ocs",
@@ -80,6 +82,7 @@
         "Name[tr]": "Birlikte Çalışma Hizmetlerini Aç",
         "Name[uk]": "Служби Open Collaboration",
         "Name[x-test]": "xxOpen Collaboration Servicesxx",
+        "Name[zh_TW]": "開放協同服務 (Open Collaboration Services)",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     }

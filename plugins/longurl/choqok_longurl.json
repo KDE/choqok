@@ -25,7 +25,8 @@
                 "Name[sv]": "Eugene Shalygin",
                 "Name[tr]": "Eugene Shalygin",
                 "Name[uk]": "Eugene Shalygin",
-                "Name[x-test]": "xxEugene Shalyginxx"
+                "Name[x-test]": "xxEugene Shalyginxx",
+                "Name[zh_TW]": "Eugene Shalygin"
             }
         ],
         "Category": "Plugins",
@@ -79,6 +80,7 @@
         "Name[tr]": "longurl.org ile URL'leri Genişlet",
         "Name[uk]": "Розгортання адрес за допомогою longurl.org",
         "Name[x-test]": "xxExpand URLs via longurl.orgxx",
+        "Name[zh_TW]": "透過 longurl.org 展開短網址",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     }

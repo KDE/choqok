@@ -23,6 +23,7 @@
         "Description[tr]": "Choqok Görünüm ve Hisini Kişiselleştir",
         "Description[uk]": "Налаштувати вигляд і поведінку Choqok",
         "Description[x-test]": "xxPersonalize Choqok Look and Feelxx",
+        "Description[zh_TW]": "個人化 Choqok 的外觀與感覺",
         "Icon": "preferences-desktop-theme",
         "Name": "Appearance",
         "Name[ca@valencia]": "Aparença",
@@ -47,6 +48,7 @@
         "Name[sv]": "Utseende",
         "Name[tr]": "Görünüş",
         "Name[uk]": "Вигляд",
-        "Name[x-test]": "xxAppearancexx"
+        "Name[x-test]": "xxAppearancexx",
+        "Name[zh_TW]": "外觀"
     }
 }

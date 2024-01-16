@@ -26,7 +26,8 @@
                 "Name[sv]": "Andrey Esin",
                 "Name[tr]": "Andrey Esin",
                 "Name[uk]": "Andrey Esin",
-                "Name[x-test]": "xxAndrey Esinxx"
+                "Name[x-test]": "xxAndrey Esinxx",
+                "Name[zh_TW]": "Andrey Esin"
             }
         ],
         "Category": "Uploaders",
@@ -53,6 +54,7 @@
         "Description[tr]": "flickr.com'a görsel yükle",
         "Description[uk]": "Вивантаження зображення на flickr.com",
         "Description[x-test]": "xxUpload image to flickr.comxx",
+        "Description[zh_TW]": "上傳影像至 flickr.com",
         "EnabledByDefault": false,
         "Icon": "flickr_uploader",
         "Id": "choqok_flickr",
@@ -81,6 +83,7 @@
         "Name[tr]": "Flicker",
         "Name[uk]": "Flickr",
         "Name[x-test]": "xxFlickrxx",
+        "Name[zh_TW]": "Flickr",
         "Version": "0.2",
         "Website": "https://choqok.kde.org"
     },

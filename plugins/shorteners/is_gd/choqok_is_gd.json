@@ -25,7 +25,8 @@
                 "Name[sv]": "Felix Rohrbach",
                 "Name[tr]": "Felix Rohrbach",
                 "Name[uk]": "Felix Rohrbach",
-                "Name[x-test]": "xxFelix Rohrbachxx"
+                "Name[x-test]": "xxFelix Rohrbachxx",
+                "Name[zh_TW]": "Felix Rohrbach"
             }
         ],
         "Category": "Shorteners",
@@ -52,6 +53,7 @@
         "Description[tr]": "is.gd hizmetini kullanarak URL'leri kısaltmak için bir eklenti.",
         "Description[uk]": "Додаток для скорочення адрес за допомогою служб is.gd.",
         "Description[x-test]": "xxA plugin to shorten URLs via the is.gd service.xx",
+        "Description[zh_TW]": "用 is.gd 服務來縮短網址的外掛程式。",
         "EnabledByDefault": false,
         "Icon": "choqok",
         "Id": "choqok_is_gd",
@@ -80,6 +82,7 @@
         "Name[tr]": "is.gd",
         "Name[uk]": "is.gd",
         "Name[x-test]": "xxis.gdxx",
+        "Name[zh_TW]": "is.gd",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     },

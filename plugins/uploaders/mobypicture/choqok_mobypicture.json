@@ -26,7 +26,8 @@
                 "Name[sv]": "Andrey Esin",
                 "Name[tr]": "Andrey Esin",
                 "Name[uk]": "Andrey Esin",
-                "Name[x-test]": "xxAndrey Esinxx"
+                "Name[x-test]": "xxAndrey Esinxx",
+                "Name[zh_TW]": "Andrey Esin"
             }
         ],
         "Category": "Uploaders",
@@ -53,6 +54,7 @@
         "Description[tr]": "mobypicture.com'a görsel yükle",
         "Description[uk]": "Вивантаження зображення на mobypicture.com",
         "Description[x-test]": "xxUpload image to mobypicture.comxx",
+        "Description[zh_TW]": "上傳影像至 mobypicture.com",
         "EnabledByDefault": false,
         "Icon": "mobypicture_uploader",
         "Id": "choqok_mobypicture",
@@ -80,6 +82,7 @@
         "Name[tr]": "Mobypicture",
         "Name[uk]": "Mobypicture",
         "Name[x-test]": "xxMobypicturexx",
+        "Name[zh_TW]": "Mobypicture",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     },

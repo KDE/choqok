@@ -23,6 +23,7 @@
         "Description[tr]": "Hesaplarınızı Yönetin",
         "Description[uk]": "Керування вашими обліковими записами",
         "Description[x-test]": "xxManage Your Accountsxx",
+        "Description[zh_TW]": "管理您的帳號",
         "Icon": "preferences-desktop-user",
         "Name": "Accounts",
         "Name[ca@valencia]": "Comptes",
@@ -47,6 +48,7 @@
         "Name[sv]": "Konton",
         "Name[tr]": "Hesaplar",
         "Name[uk]": "Облікові записи",
-        "Name[x-test]": "xxAccountsxx"
+        "Name[x-test]": "xxAccountsxx",
+        "Name[zh_TW]": "帳號"
     }
 }

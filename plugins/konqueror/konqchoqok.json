@@ -26,7 +26,8 @@
                 "Name[sv]": "Emanuele Bigiarini",
                 "Name[tr]": "Emanuele Bigiarini",
                 "Name[uk]": "Emanuele Bigiarini",
-                "Name[x-test]": "xxEmanuele Bigiarinixx"
+                "Name[x-test]": "xxEmanuele Bigiarinixx",
+                "Name[zh_TW]": "Emanuele Bigiarini"
             }
         ],
         "Description": "Post to Choqok the selected text in Konqueror, and other features",
@@ -79,6 +80,7 @@
         "Name[tr]": "Konqueror Choqok Eklentisi",
         "Name[uk]": "Додаток Choqok до Konqueror",
         "Name[x-test]": "xxKonqueror Choqok Pluginxx",
+        "Name[zh_TW]": "Konqueror Choqok 外掛程式",
         "Version": "0.1"
     }
 }

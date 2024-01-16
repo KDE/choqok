@@ -25,7 +25,8 @@
                 "Name[sv]": "Farhad Hedayati Fard",
                 "Name[tr]": "Ferhat Hidayeti Fard",
                 "Name[uk]": "Farhad Hedayati Fard",
-                "Name[x-test]": "xxFarhad Hedayati Fardxx"
+                "Name[x-test]": "xxFarhad Hedayati Fardxx",
+                "Name[zh_TW]": "Farhad Hedayati Fard"
             }
         ],
         "Category": "Plugins",
@@ -79,6 +80,7 @@
         "Name[tr]": "Gönderileri Tez Süz",
         "Name[uk]": "Швидке фільтрування дописів",
         "Name[x-test]": "xxQuickly Filter postsxx",
+        "Name[zh_TW]": "快速過濾文章",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     }

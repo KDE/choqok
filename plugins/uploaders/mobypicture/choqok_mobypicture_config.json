@@ -23,6 +23,7 @@
         "Description[tr]": "mobypicture.com'a görsel yükle",
         "Description[uk]": "Вивантаження зображення на mobypicture.com",
         "Description[x-test]": "xxUpload image to mobypicture.comxx",
+        "Description[zh_TW]": "上傳影像至 mobypicture.com",
         "Icon": "kaboodle",
         "Name": "Mobypicture",
         "Name[ca@valencia]": "Mobypicture",
@@ -46,6 +47,7 @@
         "Name[sv]": "Mobypicture",
         "Name[tr]": "Mobypicture",
         "Name[uk]": "Mobypicture",
-        "Name[x-test]": "xxMobypicturexx"
+        "Name[x-test]": "xxMobypicturexx",
+        "Name[zh_TW]": "Mobypicture"
     }
 }

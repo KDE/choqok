@@ -26,7 +26,8 @@
                 "Name[sv]": "Mehrdad Momeny",
                 "Name[tr]": "Mehrdad Momeny",
                 "Name[uk]": "Mehrdad Momeny",
-                "Name[x-test]": "xxMehrdad Momenyxx"
+                "Name[x-test]": "xxMehrdad Momenyxx",
+                "Name[zh_TW]": "Mehrdad Momeny"
             }
         ],
         "Category": "Uploaders",
@@ -53,6 +54,7 @@
         "Description[tr]": "imageshack.us'a görsel yükle",
         "Description[uk]": "Вивантаження зображення на imageshack.us",
         "Description[x-test]": "xxUpload image to imageshack.usxx",
+        "Description[zh_TW]": "上傳影像至 imageshack.us",
         "EnabledByDefault": false,
         "Icon": "imageshack_uploader",
         "Id": "choqok_imageshack",
@@ -80,6 +82,7 @@
         "Name[tr]": "ImageShack",
         "Name[uk]": "ImageShack",
         "Name[x-test]": "xxImageShackxx",
+        "Name[zh_TW]": "ImageShack",
         "Version": "0.1",
         "Website": "https://choqok.kde.org"
     }
