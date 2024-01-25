@@ -84,7 +84,7 @@
 <para
 >El &choqok; és un client de microblogs que actualment suporta els serveis Pump.io, GNU social i Twitter.com.</para>
 <para
->El microblog és una forma de blogs multimèdia que permet als usuaris enviar breus actualitzacions de text o microsuports, com fotografies o clips d'àudio i publicar-los. Aquests els poden veure qualsevol persona o un grup restringit, el qual pot decidir l'usuari. Aquests missatges es poden entregar en una varietat de mètodes, inclosos els missatges de text, missatgeria instantània, correu electrònic, àudio digital o el web.</para>
+>El microblog és una forma de blogs multimèdia que permet als usuaris enviar actualitzacions de text breu o microsuports, com fotografies o clips d'àudio i publicar-los. Aquests els poden veure qualsevol persona o un grup restringit, el qual pot decidir l'usuari. Aquests missatges es poden entregar en una varietat de mètodes, inclosos els missatges de text, missatgeria instantània, correu electrònic, àudio digital o el web.</para>
 </chapter>
 
 <chapter id="using">
@@ -219,9 +219,9 @@
 </screenshot>
 
 <para
->Simplement introduïu el vostre àlies únic, nom d'usuari i la contrasenya que vulgueu i feu clic al botó <guibutton
+>Simplement, introduïu el vostre àlies únic, nom d'usuari i la contrasenya que vulgueu i feu clic al botó <guibutton
 >D'acord</guibutton
->. Això comprovarà les vostres credencials i, si tot està bé, el vostre compte estarà a punt per emprar.</para>
+>. Això comprovarà les vostres credencials i, si tot està bé, el vostre compte estarà a punt per a emprar-se.</para>
 <para
 >Podeu configurar altres comptes posteriorment.</para>
 </sect1>
@@ -245,7 +245,7 @@
 >&Ctrl; <keycap
 >T</keycap
 ></keycombo
-> per obrir la finestra de microblog ràpida i escriviu el missatge: <screenshot>
+> per a obrir la finestra de microblog ràpida i escriviu el missatge: <screenshot>
 <screeninfo
 >El diàleg de missatge ràpid</screeninfo>
 	<mediaobject>
