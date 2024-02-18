@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: choqok\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:31+0000\n"
-"PO-Revision-Date: 2023-03-20 22:31+0100\n"
+"PO-Revision-Date: 2024-02-17 13:21+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -91,7 +91,7 @@ msgstr ""
 #: choqok/config/accounts/addaccountdialog.cpp:29
 #, kde-format
 msgid "Add New Account"
-msgstr ""
+msgstr "Aldoni Novan Konton"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnAdd)
 #: choqok/config/accounts/accountswidget_base.ui:40
@@ -157,7 +157,7 @@ msgstr ""
 #: choqok/config/accounts/accountswidget_base.ui:173
 #, kde-format
 msgid "Enabled"
-msgstr ""
+msgstr "Ebligita"
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
 #: choqok/config/accounts/accountswidget_base.ui:176
@@ -169,7 +169,7 @@ msgstr ""
 #: choqok/config/accounts/accountswidget_base.ui:181
 #, kde-format
 msgid "Read Only"
-msgstr ""
+msgstr "Nurlegebla"
 
 #. i18n: ectx: property (toolTip), widget (QTableWidget, accountsTable)
 #: choqok/config/accounts/accountswidget_base.ui:184
@@ -207,7 +207,7 @@ msgstr ""
 #: choqok/config/accounts/editaccountdialog.cpp:31
 #, kde-format
 msgid "Edit Account"
-msgstr ""
+msgstr "Redakti Konton"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_isEmoticonsEnabled)
 #: choqok/config/appearance/appearanceconfig_base.ui:17
@@ -356,7 +356,7 @@ msgstr ""
 #: choqok/config/behavior/behaviorconfig_general.ui:130
 #, kde-format
 msgid "&Update interval:"
-msgstr ""
+msgstr "Ĝisdatiga interval&o:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: choqok/config/behavior/behaviorconfig_general.ui:149
@@ -374,7 +374,7 @@ msgstr "Malŝaltita"
 #: choqok/config/behavior/behaviorconfig_general.ui:169
 #, kde-format
 msgid " minutes"
-msgstr ""
+msgstr "minutoj"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showAllNotifiesInOne)
 #: choqok/config/behavior/behaviorconfig_notifications.ui:17
@@ -480,17 +480,17 @@ msgstr ""
 #: choqok/main.cpp:37
 #, kde-format
 msgid "Andrea Scarpino"
-msgstr ""
+msgstr "Andrea Scarpino"
 
 #: choqok/main.cpp:37
 #, kde-format
 msgid "Developer and Maintainer"
-msgstr ""
+msgstr "Ellaboranto kaj Prizorganto"
 
 #: choqok/main.cpp:39
 #, kde-format
 msgid "Andrey Esin"
-msgstr ""
+msgstr "Andrej Esin"
 
 #: choqok/main.cpp:39 choqok/main.cpp:46
 #, kde-format
@@ -540,7 +540,7 @@ msgstr "Tejas Dinkar"
 #: choqok/main.cpp:48
 #, kde-format
 msgid "Emanuele Bigiarini"
-msgstr ""
+msgstr "Emanuele Bigiarini"
 
 #: choqok/main.cpp:48
 #, kde-format
@@ -585,17 +585,17 @@ msgstr ""
 #: choqok/main.cpp:54
 #, kde-format
 msgid "Lim Yuen Hoe"
-msgstr ""
+msgstr "Lim Yuen Hoe"
 
 #: choqok/main.cpp:54
 #, kde-format
 msgid "Bug fixes and improvements"
-msgstr ""
+msgstr "Cimoj kaj plibonigoj"
 
 #: choqok/main.cpp:55
 #, kde-format
 msgid "Ahmed I. Khalil"
-msgstr ""
+msgstr "Ahmed I. Khalil"
 
 #: choqok/main.cpp:55
 #, kde-format
@@ -640,12 +640,12 @@ msgstr ""
 #: choqok/mainwindow.cpp:237
 #, kde-format
 msgid "Enable Notifications"
-msgstr ""
+msgstr "Ebligi Sciigojn"
 
 #: choqok/mainwindow.cpp:243
 #, kde-format
 msgid "Hide Menubar"
-msgstr ""
+msgstr "Kaŝi Menubreton"
 
 #: choqok/mainwindow.cpp:250
 #, kde-format
@@ -775,20 +775,20 @@ msgstr ""
 #: microblogs/mastodon/mastodondmessagedialog.cpp:126
 #, kde-format
 msgid "Please wait..."
-msgstr ""
+msgstr "Bonvolu atendi..."
 
 #: helperlibs/gnusocialapihelper/gnusocialapiconversationtimelinewidget.cpp:52
 #: helperlibs/twitterapihelper/twitterapishowthread.cpp:37
 #, kde-format
 msgid "Conversation"
-msgstr ""
+msgstr "Konversacio"
 
 #: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:47
 #: microblogs/laconica/laconicamicroblog.cpp:25
 #, kde-format
 msgctxt "Timeline name"
 msgid "Repeated"
-msgstr ""
+msgstr "Ripetis"
 
 #: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:48
 #: microblogs/laconica/laconicamicroblog.cpp:26
@@ -862,7 +862,7 @@ msgstr ""
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:140
 #, kde-format
 msgid "Search for %1"
-msgstr ""
+msgstr "Serĉi %1"
 
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:142
 #, kde-format
@@ -1038,7 +1038,7 @@ msgstr ""
 #, kde-format
 msgctxt "Timeline Name"
 msgid "Inbox"
-msgstr ""
+msgstr "Enirkesto"
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:99
 #, kde-format
@@ -1051,7 +1051,7 @@ msgstr ""
 #, kde-format
 msgctxt "Timeline Name"
 msgid "Outbox"
-msgstr ""
+msgstr "Elirkesto"
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:105
 #, kde-format
@@ -1063,7 +1063,7 @@ msgstr ""
 #, kde-format
 msgctxt "Timeline Name"
 msgid "Favorite"
-msgstr ""
+msgstr "Ŝatata"
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:111
 #, kde-format
@@ -1105,7 +1105,7 @@ msgstr ""
 #: plugins/searchaction/searchaction.cpp:29
 #, kde-format
 msgid "Search..."
-msgstr ""
+msgstr "Serĉi..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnReload)
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:148
@@ -1271,7 +1271,7 @@ msgstr ""
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1274
 #, kde-format
 msgid "Report sent successfully."
-msgstr ""
+msgstr "Raporto sukcese sendita."
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1278
 #, kde-format
@@ -1345,7 +1345,7 @@ msgstr ""
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Favorite"
-msgstr ""
+msgstr "Ŝatata"
 
 #: helperlibs/twitterapihelper/twitterapipostwidget.cpp:113
 #, kde-format
@@ -1374,7 +1374,7 @@ msgstr "Serĉo"
 #, kde-format
 msgctxt "Search query"
 msgid "Query:"
-msgstr ""
+msgstr "Demando:"
 
 #: helperlibs/twitterapihelper/twitterapisearchdialog.cpp:88
 #, kde-format
@@ -1407,7 +1407,7 @@ msgstr "Sekva"
 #: helperlibs/twitterapihelper/twitterapisearchtimelinewidget.cpp:105
 #, kde-format
 msgid "Page Number"
-msgstr ""
+msgstr "Paĝa Nombro"
 
 #: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:150
 #, kde-format
@@ -1423,19 +1423,19 @@ msgstr "Fermi"
 #, kde-format
 msgctxt "User posts"
 msgid "Posts"
-msgstr ""
+msgstr "Afiŝoj"
 
 #: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:252
 #, kde-format
 msgctxt "User friends"
 msgid "Friends"
-msgstr ""
+msgstr "Amikoj"
 
 #: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:253
 #, kde-format
 msgctxt "User followers"
 msgid "Followers"
-msgstr ""
+msgstr "Sekvantoj"
 
 #: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:262
 #, kde-format
@@ -1445,7 +1445,7 @@ msgstr ""
 #: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:266
 #, kde-format
 msgid "<h3>%1</h3>"
-msgstr ""
+msgstr "<h3>%1</h3>"
 
 #: helperlibs/twitterapihelper/twitterapiwhoiswidget.cpp:376
 #, kde-format
@@ -1562,7 +1562,7 @@ msgstr ""
 #: libchoqok/notifymanager.h:28
 #, kde-format
 msgid "Shortening a URL"
-msgstr ""
+msgstr "Mallongigado de URL-o"
 
 #: libchoqok/passwordmanager.cpp:64
 #, kde-format
@@ -1604,7 +1604,7 @@ msgstr "Ujo"
 #: libchoqok/ui/choqoktabbar.cpp:763
 #, kde-format
 msgid "Big"
-msgstr ""
+msgstr "Granda"
 
 #: libchoqok/ui/choqoktabbar.cpp:764
 #, kde-format
@@ -1668,7 +1668,7 @@ msgstr ""
 #: libchoqok/ui/postwidget.cpp:454
 #, kde-format
 msgid "Just now"
-msgstr ""
+msgstr "Ĵus nun"
 
 #: libchoqok/ui/postwidget.cpp:459
 #, kde-format
@@ -2004,7 +2004,7 @@ msgstr ""
 #: microblogs/mastodon/mastodoneditaccountwidget.cpp:91
 #, kde-format
 msgid "Code"
-msgstr ""
+msgstr "Kodo"
 
 #: microblogs/mastodon/mastodoneditaccountwidget.cpp:92
 #, kde-format
@@ -2023,14 +2023,14 @@ msgstr ""
 #: microblogs/twitter/twittereditaccount.cpp:100
 #, kde-format
 msgid "Authorized"
-msgstr ""
+msgstr "Rajtigita"
 
 #: microblogs/mastodon/mastodoneditaccountwidget.cpp:107
 #: microblogs/pumpio/pumpioeditaccountwidget.cpp:107
 #: microblogs/twitter/twittereditaccount.cpp:102
 #, kde-format
 msgid "Authorization Error"
-msgstr ""
+msgstr "Eraro pri Rajtigo"
 
 #: microblogs/mastodon/mastodoneditaccountwidget.cpp:107
 #: microblogs/pumpio/pumpioeditaccountwidget.cpp:107
@@ -2044,7 +2044,7 @@ msgstr ""
 #: microblogs/twitter/twittereditaccount.cpp:112
 #, kde-format
 msgid "Authenticated"
-msgstr ""
+msgstr "Aŭtentikigita"
 
 #. i18n: ectx: property (text), widget (QLabel, kcfg_authenticateStatus)
 #: microblogs/mastodon/mastodoneditaccountwidget.cpp:132
@@ -2068,7 +2068,7 @@ msgstr ""
 #: microblogs/twitter/twittereditaccount_base.ui:73
 #, kde-format
 msgid "Credentials"
-msgstr ""
+msgstr "Akreditaĵoj"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: microblogs/mastodon/mastodoneditaccountwidget.ui:82
@@ -2135,7 +2135,7 @@ msgstr ""
 #, kde-format
 msgctxt "Timeline Name"
 msgid "Local"
-msgstr ""
+msgstr "Loka"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:407
 #, kde-format
@@ -2159,13 +2159,13 @@ msgstr ""
 #, kde-format
 msgctxt "Timeline Name"
 msgid "Favourites"
-msgstr ""
+msgstr "Plej ŝatataj"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:421
 #, kde-format
 msgctxt "Timeline description"
 msgid "Favourites"
-msgstr ""
+msgstr "Plej ŝatataj"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:522
 #, kde-format
@@ -2223,13 +2223,13 @@ msgstr ""
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Boost"
-msgstr ""
+msgstr "Plikonatigi"
 
 #: microblogs/mastodon/mastodonpostwidget.cpp:120
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Favourite"
-msgstr ""
+msgstr "Ŝatataj"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: microblogs/ocs/ocsconfigurebase.ui:19
@@ -2275,14 +2275,14 @@ msgstr ""
 #: microblogs/ocs/ocsmicroblog.cpp:177 microblogs/ocs/ocsmicroblog.cpp:184
 #, kde-format
 msgid "Not Supported"
-msgstr ""
+msgstr "Ne Subtenata"
 
 #: microblogs/ocs/ocsmicroblog.cpp:250
 #: microblogs/pumpio/pumpiomicroblog.cpp:1251
 #, kde-format
 msgctxt "Timeline Name"
 msgid "Activity"
-msgstr ""
+msgstr "Aktiveco"
 
 #: microblogs/ocs/ocsmicroblog.cpp:251
 #, kde-format
@@ -2293,7 +2293,7 @@ msgstr ""
 #: microblogs/twitter/twittereditaccount.cpp:91
 #, kde-format
 msgid "PIN"
-msgstr ""
+msgstr "PIN"
 
 #: microblogs/pumpio/pumpioeditaccountwidget.cpp:97
 #, kde-format
@@ -2390,7 +2390,7 @@ msgstr ""
 #, kde-format
 msgctxt "Timeline Name"
 msgid "Favorites"
-msgstr ""
+msgstr "Plej ŝatataj"
 
 #: microblogs/pumpio/pumpiomicroblog.cpp:1259
 #, kde-format
@@ -2422,7 +2422,7 @@ msgstr "Publika"
 #: microblogs/pumpio/pumpiopostwidget.cpp:119
 #, kde-format
 msgid "Followers"
-msgstr ""
+msgstr "Sekvantoj"
 
 #: microblogs/pumpio/pumpiopostwidget.cpp:98
 #: microblogs/pumpio/pumpiopostwidget.cpp:121
@@ -2534,7 +2534,7 @@ msgstr ""
 #, kde-format
 msgctxt "Timeline Name"
 msgid "Mentions"
-msgstr ""
+msgstr "Mencioj"
 
 #: microblogs/twitter/twittermicroblog.cpp:60
 #, kde-format
@@ -2660,12 +2660,12 @@ msgstr ""
 #: plugins/betternotify/dummynotification.cpp:34
 #, kde-format
 msgid "OK"
-msgstr ""
+msgstr "Bone"
 
 #: plugins/betternotify/notification.cpp:78
 #, kde-format
 msgid "Ignore"
-msgstr ""
+msgstr "Ignori"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tab)
 #: plugins/betternotify/notifyprefs.ui:21
@@ -2683,13 +2683,13 @@ msgstr ""
 #: plugins/betternotify/notifyprefs.ui:39
 #, kde-format
 msgid "Background Color:"
-msgstr ""
+msgstr "Fona Koloro:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: plugins/betternotify/notifyprefs.ui:49
 #, kde-format
 msgid "Font:"
-msgstr ""
+msgstr "Tiparo:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: plugins/betternotify/notifyprefs.ui:59
@@ -2725,7 +2725,7 @@ msgstr ""
 #: plugins/betternotify/notifyprefs.ui:181
 #, kde-format
 msgid "Accounts"
-msgstr ""
+msgstr "Kontoj"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/betternotify/notifyprefs.ui:197
@@ -2808,7 +2808,7 @@ msgstr ""
 #: plugins/filter/filterprefs.ui:24
 #, kde-format
 msgid "Rules"
-msgstr ""
+msgstr "Reguloj"
 
 #. i18n: ectx: property (text), widget (QTableWidget, filters)
 #: plugins/filter/filterprefs.ui:43
@@ -3174,7 +3174,7 @@ msgstr ""
 #: plugins/shorteners/bit_ly/bit_ly_prefs.ui:49
 #, kde-format
 msgid "Validate"
-msgstr ""
+msgstr "Taksi validecon"
 
 #. i18n: ectx: property (text), widget (QLabel, login)
 #: plugins/shorteners/bit_ly/bit_ly_prefs.ui:19
@@ -3358,7 +3358,7 @@ msgstr ""
 #: plugins/uploaders/flickr/flickrconfig.cpp:271
 #, kde-format
 msgid "Not authorized"
-msgstr ""
+msgstr "Ne rajtigita"
 
 #: plugins/uploaders/flickr/flickrconfig.cpp:285
 #, kde-format
@@ -3369,7 +3369,7 @@ msgstr ""
 #: plugins/uploaders/flickr/flickrprefs.ui:24
 #, kde-format
 msgid "Authorization"
-msgstr ""
+msgstr "Rajtigo"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/uploaders/flickr/flickrprefs.ui:51
@@ -3419,19 +3419,19 @@ msgstr ""
 #: plugins/uploaders/flickr/flickrprefs.ui:140
 #, kde-format
 msgid "Safe"
-msgstr ""
+msgstr "Sekura"
 
 #. i18n: ectx: property (text), widget (QRadioButton, cfg_moderate)
 #: plugins/uploaders/flickr/flickrprefs.ui:150
 #, kde-format
 msgid "Moderate"
-msgstr ""
+msgstr "Modera"
 
 #. i18n: ectx: property (text), widget (QRadioButton, cfg_restricted)
 #: plugins/uploaders/flickr/flickrprefs.ui:157
 #, kde-format
 msgid "Restricted"
-msgstr ""
+msgstr "Restriktita"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cfg_hidefromsearch)
 #: plugins/uploaders/flickr/flickrprefs.ui:169
@@ -3490,7 +3490,7 @@ msgstr ""
 #: plugins/uploaders/mobypicture/mobypictureprefs.ui:64
 #, kde-format
 msgid "Login:"
-msgstr ""
+msgstr "Ensaluti:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/uploaders/mobypicture/mobypictureprefs.ui:74
@@ -3508,7 +3508,7 @@ msgstr ""
 #: plugins/uploaders/posterous/posterousprefs.ui:64
 #, kde-format
 msgid "E-mail:"
-msgstr ""
+msgstr "Retpoŝto:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/uploaders/twitgoo/twitgooprefs.ui:17
