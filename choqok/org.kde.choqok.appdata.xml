@@ -89,7 +89,7 @@
     <p xml:lang="eu">Choqok Mikro-blog bezeroa da Twitter.com, Mastodon, GNU Social, Pump.io eta Friendica zerbitzuen euskarria duena.</p>
     <p xml:lang="fi">Choqok on Twitter.com-, GNU Social-, Pump.io- ja Friendica-palveluja tukeva mikroblogausasiakas.</p>
     <p xml:lang="fr">Choqok est un client de microblogage qui prend en charge les services Twitter.com, GNU social, Pump.io et Friendica.</p>
-    <p xml:lang="gl">Choqok é un cliente de microbloque compatíbel cos servizos Twitter.com, GNU Social, Pump.io e Friendica.</p>
+    <p xml:lang="gl">Choqok é un cliente de microblog compatíbel cos servizos Twitter.com, GNU Social, Pump.io e Friendica.</p>
     <p xml:lang="id">Choqok adalah sebuah klien micro-blogging yang mendukung layanan Twitter.com, GNU Social, Pump.io dan Friendica</p>
     <p xml:lang="it">Choqok è un client per micro-blogging che supporta i servizi Twitter.com, GNU Social, Pump.io e Friendica.</p>
     <p xml:lang="ko">Choqok은 트위터, GNU 소셜, Pump.io, Frendica 서비스를 지원하는 마이크로블로그 클라이언트입니다.</p>
@@ -159,7 +159,7 @@
       <li xml:lang="eu">Twitter mikro-blog zerbitzu euskarria</li>
       <li xml:lang="fi">Tukee Twitter.com-mikroblogauspalvelua</li>
       <li xml:lang="fr">Prise en charge du service de microblogage « Twitter.com »</li>
-      <li xml:lang="gl">Compatibilidade co servizo de microblogue Twitter.</li>
+      <li xml:lang="gl">Compatibilidade co servizo de microblog Twitter.</li>
       <li xml:lang="id">Mendukung layanan micro-blogging Twitter.com</li>
       <li xml:lang="it">Supporta il servizio per micro-blogging Twitter.com</li>
       <li xml:lang="ko">트위터 마이크로블로그 지원</li>
@@ -192,7 +192,7 @@
       <li xml:lang="eu">Norberak ostatutako Pump.io zerbitzuen euskarria</li>
       <li xml:lang="fi">Tukee itse isännöityä Pump.io-palvelua</li>
       <li xml:lang="fr">Prise en charge des services auto-hébergés Pump.io</li>
-      <li xml:lang="gl">Compatíbel con servizos de microblogue baseados en Pump.io.</li>
+      <li xml:lang="gl">Compatíbel con servizos de microblog baseados en Pump.io.</li>
       <li xml:lang="id">Mendukung layanan Pump.io yang di-host sendiri</li>
       <li xml:lang="it">Supporta i servizi Pump.io</li>
       <li xml:lang="ko">자가 호스트된 Pump.io 서비스 지원</li>
@@ -224,7 +224,7 @@
       <li xml:lang="eu">Norberak ostatutako GNU social zerbitzuen euskarria</li>
       <li xml:lang="fi">Tukee itse isännöityä GNU social -palvelu</li>
       <li xml:lang="fr">Prise en charge du service auto-hébergé GNU social</li>
-      <li xml:lang="gl">Compatíbel con servizos de microblogue baseados en GNU social.</li>
+      <li xml:lang="gl">Compatíbel con servizos de microblog baseados en GNU social.</li>
       <li xml:lang="id">Mendukung layanan GNU social yang di-host sendiri</li>
       <li xml:lang="it">Supporta il servizio GNU social</li>
       <li xml:lang="ko">자가 호스트된 GNU 소셜 서비스 지원</li>
@@ -255,7 +255,7 @@
       <li xml:lang="eu">Norberak ostatutako Friendica zerbitzuen euskarria</li>
       <li xml:lang="fi">Tukee itse isännöityä Friendica-palvelua</li>
       <li xml:lang="fr">Prise en charge des services auto-hébergés Friendica</li>
-      <li xml:lang="gl">Compatíbel con servizos de microblogue baseados en Friendica.</li>
+      <li xml:lang="gl">Compatíbel con servizos de microblog baseados en Friendica.</li>
       <li xml:lang="id">Mendukung layanan Friendica yang di-host sendiri</li>
       <li xml:lang="it">Supporta i servizi Friendica</li>
       <li xml:lang="ko">자가 호스트된 Frendica 서비스 지원</li>
