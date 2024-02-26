@@ -8,22 +8,22 @@
 # Xosé <xosecalvo@edu.xunta.es>, 2009.
 # Marce Villarino <mvillarino@kde-espana.es>, 2012, 2013.
 # Adrian Chaves Fernandez <adriyetichaves@gmail.com>, 2012, 2013, 2015, 2016, 2017.
-# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2023.
+# SPDX-FileCopyrightText: 2024 Adrián Chaves (Gallaecio)
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: choqok\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:31+0000\n"
-"PO-Revision-Date: 2023-06-24 11:28+0200\n"
+"PO-Revision-Date: 2024-02-25 14:49+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
-"Language-Team: Galician <proxecto@trasno.gal>\n"
+"Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.2\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -478,7 +478,7 @@ msgstr "Complementos xerais"
 #: choqok/main.cpp:28
 #, kde-format
 msgid "KDE Micro-Blogging Client."
-msgstr "Cliente de microblogging para KDE."
+msgstr "Cliente de microbitácoras para KDE."
 
 #: choqok/main.cpp:29
 #, kde-format
@@ -968,7 +968,7 @@ msgstr "Anular a subscrición a %1"
 #, kde-format
 msgctxt "Subscribe to user"
 msgid "Subscribe to %1"
-msgstr "Suscribirse a %1"
+msgstr "Subscribirse a %1"
 
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:223
 #: microblogs/twitter/twitterpostwidget.cpp:180
@@ -1207,7 +1207,7 @@ msgstr "Fallou a creación do favorito. %1"
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:671
 #, kde-format
 msgid "Removing the favorite failed. %1"
-msgstr "Fallou a retiración da mensaxe. %1"
+msgstr "Fallou a retirada da mensaxe. %1"
 
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:721
 #, kde-format
@@ -2844,13 +2844,13 @@ msgstr ""
 #: plugins/filter/addeditfilter.cpp:47
 #, kde-format
 msgid "Modify filter rules"
-msgstr "Modificar as regras de filtraxe"
+msgstr "Modificar as regras de filtro"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, AddEditFilterBase)
 #: plugins/filter/addeditfilter_base.ui:14
 #, kde-format
 msgid "Define new filter rules"
-msgstr "Definir regras de filtraxe novas"
+msgstr "Definir regras de filtro novas"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/filter/addeditfilter_base.ui:22
