@@ -1,0 +1,606 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Slovenian "INCLUDE">
+]>
+
+<book id="choqok" lang="&language;">
+
+<bookinfo>
+<title
+>&choqok; Priročnik</title>
+
+<authorgroup>
+<author
+><firstname
+>Mehrdad</firstname
+> <surname
+>Momeny</surname
+> <affiliation
+> <address
+>mehrdad.momeny@gmail.com</address>
+</affiliation>
+</author>
+<author
+><firstname
+>Anne-Marie</firstname
+> <surname
+>Mahfouf</surname
+> <affiliation
+> <address
+>&Anne-Marie.Mahfouf.mail;</address>
+</affiliation>
+</author>
+<author
+><firstname
+>Andrea</firstname
+> <surname
+>Scarpino</surname
+> <affiliation
+> <address
+>scarpino@kde.org</address>
+</affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>Matjaž</firstname
+><surname
+>Jeran</surname
+><affiliation
+><address
+><email
+>matjaz.jeran@amis.net</email
+></address
+></affiliation
+><contrib
+>Prevod</contrib
+></othercredit
+> 
+</authorgroup>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>25.01.2015</date>
+<releaseinfo
+>1.5</releaseinfo>
+
+<abstract>
+<para
+>&choqok; je odjemalec za mikrobloganje KDE (<ulink url="https://choqok.kde.org"
+>https://choqok.kde.org</ulink
+>).</para>
+</abstract>
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>mikro bloganje</keyword>
+<keyword
+>odjemalec</keyword>
+<keyword
+>Twitter</keyword>
+<keyword
+>Pump.io</keyword>
+<keyword
+>GNU social</keyword>
+</keywordset>
+
+</bookinfo>
+<!--FIXME https://choqok.kde.org/news/2013/09/01/choqok-1-4-released.html -->
+<chapter id="introduction">
+<title
+>Uvod</title>
+
+<para
+>&choqok; je odjemalec za mikrobloganje, ki trenutno podpira storitve Pump.io, GNU social in Twitter.com.</para>
+<para
+>Mikro bloganje je oblika večpredstavnostnega bloganja, ki uporabnikom omogoča pošiljanje kratkih besedilnih posodobitev ali mikro medijev, kot so fotografije ali zvočni posnetki, in njihovo objavo. Te si lahko ogleda kdorkoli ali omejena skupina, ki jo lahko določi uporabnik. Ta sporočila je mogoče poslati na različne načine, vključno z besedilnimi sporočili, takojšnjimi sporočili, e-pošto, digitalnim zvokom ali spletom.</para>
+</chapter>
+
+<chapter id="using">
+<title
+>Uporaba &choqok;</title>
+
+<sect1 id="getting-started">
+<title
+>Kako začeti</title>
+
+<para
+>V meniju &choqok; v glavnem oknu je nekaj časovnic, ki vam omogočajo, da vidite, kaj so vaši prijatelji objavili, odgovore nanje in neposredna sporočila, poslana in prejeta od prijateljev. Lahko tudi objavite novo sporočilo.</para>
+
+<para
+>Vse to bo na voljo, ko konfigurirate vsaj en račun v &choqok;.</para>
+
+<screenshot>
+<screeninfo
+>Tukaj je posnetek zaslona &choqok; glavno okno</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>&choqok; glavno okno</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Na računu imate en zavihek, na posnetku zaslona lahko vidite zavihek z vzdevkom <guilabel
+>Pump.io</guilabel
+> in drugega z vzdevkom <guilabel
+>twitter</guilabel
+>.</para>
+
+<para
+>Na vrhu zavihka lahko izberete pošiljanje neposrednega sporočila nekomu, ki je naročen na vaš račun. Pošiljate lahko neposredna sporočila drugim uporabnikom iste storitve, če sta oba naročena drug na drugega. Če <guilabel
+>Neposredno sporočilo za</guilabel
+> ne označite, bo vaše sporočilo javno objavljeno in vsi vaši prijatelji ga bodo prebrali. Če ga označite, boste nato izbrali ime na seznamu in zasebno sporočilo bo objavljeno samo tej osebi.</para>
+
+<para
+>Območje besedila vam omogoča objavo sporočila, ki mora imeti manj kot 140 znakov. Število preostalih znakov je prikazano zeleno spodaj desno pod besedilnim območjem. Barva se spremeni v oranžno, ko dosežete omejitev 30 znakov, nato pa v rdečo, ko dosežete 0. Če je vaše sporočilo daljše od 140 znakov, boste pozvani, ali ga želite vseeno objaviti. Če se strinjate, bo objavljeno do 140 znakov.</para>
+
+<para
+>Zavihek <guilabel
+>Domov</guilabel
+> prikazuje časovnico, ki je sestavljena iz vseh objav, ki ste jih napisali vi in vaši prijatelji. Objava, ki uporablja Pump.io, se imenuje objava, medtem ko se objava, ki uporablja Twitter, imenuje tvit.</para>
+
+<para
+>Zavihek <guilabel
+>Odgovori</guilabel
+> prikazuje objave, ki so odgovori za vas.</para>
+
+<para
+>Vsa zasebna sporočila, ki ste jih poslali, bodo prikazana na zavihku <guilabel
+>Odpošlji</guilabel
+>, medtem ko bodo prejeta sporočila prikazana na <guilabel
+>zavihku Prejeto</guilabel
+>.</para>
+
+</sect1>
+
+<sect1 id="search">
+<title
+>Iskanje</title>
+
+<para
+>Po storitvah lahko iščete nekaj (vse, kar API za iskanje storitev lahko ponudi odjemalcu).</para>
+
+<para
+>Ta zmožnost je na voljo v meniju <menuchoice
+><guimenu
+>Orodja</guimenu
+> <guimenuitem
+>Iskanje</guimenuitem
+> </menuchoice
+> (bližnjica: <keycombo action="simul"
+>&Ctrl; <keycap
+>F</keycap 
+></keycombo
+>) Na primer, lahko iščete posebno besedo v vseh objavah uporabnikov:</para>
+
+<screenshot>
+<screeninfo
+>&choqok; zmožnost iskanja</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_search.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>&choqok; zmožnost iskanja</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="configuring-account">
+<title
+>Konfiguriranje računa</title>
+
+<para
+>Odprite &choqok; konfiguracijsko okno prek <menuchoice
+><guimenu
+>Nastavitve</guimenu
+> <guimenuitem
+>Konfiguriraj &choqok;...</guimenuitem
+> </menuchoice
+> nato pojdite na zavihek <guilabel
+>Računi</guilabel
+> in kliknite <guibutton
+> Dodaj</guibutton
+>, se prikaže okno <guilabel
+>Dodaj nov račun</guilabel
+>. </para>
+
+<screenshot>
+<screeninfo
+>Dodajanje računa</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="add_account.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Dodajanje računa</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+<para
+>Preprosto vnesite želeni enolični vzdevek, uporabniško ime in geslo ter kliknite gumb <guibutton
+>V redu</guibutton
+>. S tem boste preverili vaše poverilnice in, če je vse v redu, bo vaš račun pripravljen za uporabo.</para>
+<para
+>Pozneje lahko konfigurirate druge račune.</para>
+</sect1>
+
+<sect1 id="special-features">
+<title
+>Posebne lastnosti</title>
+
+<itemizedlist>
+<listitem
+><para
+>Posodabljanje časovnice &choqok; (časovnica je seznam objav vas in vaših prijateljev). </para
+></listitem>
+<listitem
+><para
+>Posebnost je tudi možnost obveščanja uporabnika o novih prejetih objavah. </para
+></listitem>
+<listitem
+><para
+>Hitro objavo lahko objavite tako, da pritisnete <keycombo action="simul"
+>&Ctrl; <keycap
+>T</keycap
+></keycombo
+>, da odprete hitro okno mikro bloga in napišete svojo objavo: <screenshot>
+<screeninfo
+>Pogovorno okno za hitro objavo</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="choqok_quick.png" format="PNG"/>
+	  </imageobject>
+	    <textobject>
+	    <phrase
+>Pogovorno okno za hitro objavo</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+<note
+><para
+>Isto besedilo lahko objavite na vseh računih hkrati.</para
+></note>
+</para
+></listitem>
+<listitem
+><para
+>Ko prejmete nove objave, &choqok; jih označi kot neprebrane in prikaže število neprebranih objav v ikoni sistemske vrstice. Ko se glavno okno prikaže in nato minimizira v sistemski pladenj, označi vsa nova sporočila kot prebrana. </para
+></listitem>
+</itemizedlist>
+</sect1>
+
+</chapter>
+
+<chapter id="commands">
+
+<title
+>Referenca ukazov</title>
+
+<sect1 id="menu">
+<title
+>Elementi menija</title>
+
+<variablelist>
+<title
+>Meni <guimenu
+>Datoteka</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>T</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Hitra objava</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Odprite okno za hitro objavo.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo
+><keycap
+>F5</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Posodobi časovnice</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Posodobite časovnice.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Označi vse kot prebrano</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Označi vsa sporočila kot prebrana.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Zmanjšaj</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Zmanjšaj &choqok; okno na pladenj.</action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Zapri</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Zapri</action
+> &choqok;.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<title
+>Meni <guimenu
+>Orodja</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Orodja</guimenu
+> <guimenuitem
+>Iskanje</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Odpri iskalno okno za trenutni račun.</action>
+</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<title
+>Meni <guimenu
+>Nastavitve</guimenu
+></title>
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>U</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Nastavitve</guimenu
+> <guimenuitem
+>Omogoči časovnik posodobitve</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Preklopi</action
+> časovnik za posodobitev časovnice.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Nastavitve</guimenu
+> <guimenuitem
+>Omogoči obvestila</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Preklop</action
+> obvestil.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Nastavitve</guimenu
+> <guimenuitem
+>Pokaži vrstico stanja</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Preklop</action
+> vrstice stanja.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Nastavitve</guimenu
+> <guimenuitem
+>Konfiguriraj bližnjice ...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+><action
+>Konfigurirajte</action
+> bližnjice na tipkovnici, ki jih uporablja &choqok;. </action>
+</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Nastavitve</guimenu
+> <guimenuitem
+>Konfiguriraj orodne vrstice...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Konfigurirajte</action
+> elemente, ki jih želite postaviti v orodno vrstico. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Nastavitve</guimenu
+> <guimenuitem
+>Konfiguriraj &choqok;...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Prikaži</action
+> &choqok; pogovorno okno z nastavitvami. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>Poleg tega &choqok; ima dobro znane elemente menija <guimenu
+>Pomoč</guimenu
+>. </para>
+</sect1>
+
+</chapter>
+
+
+<chapter id="credits-and-license">
+<title
+>Zasluge in licenca</title>
+
+<para
+>&choqok; avtorske pravice 2008-2015 Mehrdad Momeny <email
+>mehrdad.momeny@gmail.com</email
+> </para>
+<para
+>Avtorske pravice za dokumentacijo 2009 Mehrdad Momeny <email
+>mehrdad.momeny@gmail.com</email
+> </para>
+
+<para
+>Prevod: Matjaž Jeran <email
+>matjaz.jeran@amis.net</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes: nil
+sgml-general-insert-case: lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->
