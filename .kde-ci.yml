@@ -24,3 +24,6 @@ Dependencies:
 - 'on': ['Linux', 'FreeBSD']
   'require':
     'frameworks/kglobalaccel': '@stable'
+
+Options:
+  require-passing-tests-on: ['Linux', 'FreeBSD', 'Windows']
