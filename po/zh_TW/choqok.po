@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: choqok\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:31+0000\n"
-"PO-Revision-Date: 2024-01-15 18:35+0900\n"
+"PO-Revision-Date: 2024-05-09 06:30+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 24.01.90\n"
+"X-Generator: Lokalize 24.04.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -763,7 +763,7 @@ msgstr "選擇要上傳的媒體"
 #: microblogs/twitter/twittercomposerwidget.cpp:138
 #, kde-format
 msgid "Discard Attachment"
-msgstr "丟棄附檔"
+msgstr "捨棄附檔"
 
 #: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:139
 #: microblogs/mastodon/mastodoncomposerwidget.cpp:143
@@ -1652,7 +1652,7 @@ msgstr "縮短網址"
 #: libchoqok/ui/composerwidget.cpp:57
 #, kde-format
 msgid "Discard Reply"
-msgstr "丟棄回覆"
+msgstr "捨棄回覆"
 
 #: libchoqok/ui/composerwidget.cpp:98
 #: microblogs/pumpio/pumpiocomposerwidget.cpp:167
