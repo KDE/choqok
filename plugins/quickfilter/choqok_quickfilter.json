@@ -53,6 +53,7 @@
         "Description[tr]": "Gönderileri, yazar adı veya içerik metni ile süzün",
         "Description[uk]": "Фільтрування дописів за іменем автора або текстом вмісту",
         "Description[x-test]": "xxFilter posts by author name or content textxx",
+        "Description[zh_TW]": "依作者名稱或內容文字過濾貼文",
         "EnabledByDefault": true,
         "Icon": "document-preview",
         "Id": "choqok_quickfilter",

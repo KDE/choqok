@@ -53,6 +53,7 @@
         "Description[tr]": "Tam URL'yi longurl.org kullanarak çıkar ve bir araç ipucu olarak göster",
         "Description[uk]": "Визначає повну форму запису адреси за допомогою longurl.org і показує її на панелі підказки",
         "Description[x-test]": "xxExtract the full URL using longurl.org service and show it as a tooltipxx",
+        "Description[zh_TW]": "用 longurl.org 服務取出完整網址並在工具提示中顯示它",
         "EnabledByDefault": true,
         "Icon": "document-preview",
         "Id": "choqok_longurl",

@@ -23,6 +23,7 @@
         "Description[tr]": "Anlık iletileşme programınızdaki durumu, mikro blog'unuzdaki durumunuz olarak ayarlar.",
         "Description[uk]": "Встановлення у вашому мікроблозі стану, тотожного до стану у програмі для миттєвого обміну повідомленнями.",
         "Description[x-test]": "xxSets status of your instant messenger as your status in micro-blog.xx",
+        "Description[zh_TW]": "將您的即時通訊的狀態設為微型網誌的狀態。",
         "Icon": "kaboodle",
         "Name": "IMStatus",
         "Name[ca@valencia]": "IMStatus",
@@ -46,6 +47,7 @@
         "Name[sv]": "Meddelandestatus",
         "Name[tr]": "IMStatus",
         "Name[uk]": "Стан у мережі МП",
-        "Name[x-test]": "xxIMStatusxx"
+        "Name[x-test]": "xxIMStatusxx",
+        "Name[zh_TW]": "即時通訊狀態"
     }
 }

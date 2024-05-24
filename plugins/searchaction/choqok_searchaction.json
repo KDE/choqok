@@ -54,6 +54,7 @@
         "Description[tr]": "Twitter ve GNU Social gibi mikro blog hizmetlerine bir Arama eyleme ekleyin",
         "Description[uk]": "Додає дію з пошуку до інтерфейсу користувача мікроблогів з API Twitter, зокрема Twitter і GNU social",
         "Description[x-test]": "xxAdd a Search action to the UI for Twitter API microblogs like Twitter and GNU socialxx",
+        "Description[zh_TW]": "新增搜尋動作到類 Twitter API 的微型網誌的介面，像是 Twitter 或 GNU social",
         "EnabledByDefault": true,
         "Icon": "edit-find",
         "Id": "choqok_searchaction",

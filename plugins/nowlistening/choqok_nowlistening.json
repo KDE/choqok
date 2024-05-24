@@ -53,6 +53,7 @@
         "Description[tr]": "Arkadaşlarınıza ne dinlediğinizi söyleyin.",
         "Description[uk]": "Повідомляє вашим друзям про музику, яку ви слухаєте",
         "Description[x-test]": "xxTells your friends what you are listening toxx",
+        "Description[zh_TW]": "讓您的朋友們知道您在聽什麼",
         "EnabledByDefault": true,
         "Icon": "media-playback-start",
         "Id": "choqok_nowlistening",
