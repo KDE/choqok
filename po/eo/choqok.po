@@ -1,14 +1,14 @@
 # Translation of choqok into esperanto.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2009.
-# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
+# Oliver Kellogg <olivermkellogg@gmail.com>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: choqok\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:31+0000\n"
-"PO-Revision-Date: 2024-02-17 13:21+0100\n"
-"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
+"PO-Revision-Date: 2024-05-30 22:41+0200\n"
+"Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -291,66 +291,67 @@ msgstr "&Ĝeneralo"
 #: choqok/config/behavior/behaviorconfig.cpp:64
 #, kde-format
 msgid "&Notifications"
-msgstr ""
+msgstr "&Sciigoj"
 
 #: choqok/config/behavior/behaviorconfig.cpp:75
 #, kde-format
 msgid "URL &Shortening"
-msgstr ""
+msgstr "M&allongigado de URL"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: choqok/config/behavior/behaviorconfig_general.ui:17
 #, kde-format
 msgid "General Options"
-msgstr "Ĝeneralaj opcioj"
+msgstr "Ĝeneralaj Elektebloj"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showSplashScreen)
 #: choqok/config/behavior/behaviorconfig_general.ui:23
 #, kde-format
 msgid "Show splash-screen on startup"
-msgstr ""
+msgstr "Montri ŝpruc-ekranon je startigo"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_markAllAsReadOnExit)
 #: choqok/config/behavior/behaviorconfig_general.ui:33
 #, kde-format
 msgid "Mark all posts as read on exit"
-msgstr ""
+msgstr "Marki ĉiujn sendaĵojn kiel legitaj je eliro"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_enableSpellChecker)
 #: choqok/config/behavior/behaviorconfig_general.ui:43
 #, kde-format
 msgid "Enable automatic spellchecking in the message editor"
-msgstr ""
+msgstr "Ebligi aŭtomatan literumkontrolon en la mesaĝa redaktilo"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_enableSysTray)
 #: choqok/config/behavior/behaviorconfig_general.ui:50
 #, kde-format
 msgid "Enable System &Tray"
-msgstr ""
+msgstr "Ebligi Sistemple&ton"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_markAllAsReadOnHideToSystray)
 #: choqok/config/behavior/behaviorconfig_general.ui:62
 #, kde-format
 msgid "Mark all unread posts as read, when hiding to system tray"
 msgstr ""
+"Marki ĉiujn nelegitajn sendaĵojn kiel legitaj, kiam kaŝante al sistempleto"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useCustomBrowser)
 #: choqok/config/behavior/behaviorconfig_general.ui:83
 #, kde-format
 msgid "Use &custom web browser:"
-msgstr ""
+msgstr "U&zi propran retumilon:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_useCustomRT)
 #: choqok/config/behavior/behaviorconfig_general.ui:101
 #, kde-format
 msgid "Use custom prefix for ReSend [ReTweet]:"
-msgstr ""
+msgstr "Uzi propran prefikson por ReSend [ReTweet]:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: choqok/config/behavior/behaviorconfig_general.ui:120
 #, kde-format
 msgid "Timelines Options"
-msgstr ""
+msgstr "Timelines-Elektebloj"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: choqok/config/behavior/behaviorconfig_general.ui:130
@@ -362,7 +363,7 @@ msgstr "Ĝisdatiga interval&o:"
 #: choqok/config/behavior/behaviorconfig_general.ui:149
 #, kde-format
 msgid "&Number of posts to show in timelines:"
-msgstr ""
+msgstr "&Nombro da sendaĵoj montrendaj en templinioj:"
 
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_updateInterval)
 #: choqok/config/behavior/behaviorconfig_general.ui:166
@@ -374,19 +375,19 @@ msgstr "Malŝaltita"
 #: choqok/config/behavior/behaviorconfig_general.ui:169
 #, kde-format
 msgid " minutes"
-msgstr "minutoj"
+msgstr " minutoj"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showAllNotifiesInOne)
 #: choqok/config/behavior/behaviorconfig_notifications.ui:17
 #, kde-format
 msgid "&Show all new posts in one notification"
-msgstr ""
+msgstr "Montri ĉiujn novajn &sendaĵojn en unu sciigo"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: choqok/config/behavior/behaviorconfig_notifications.ui:26
 #, kde-format
 msgid "&Notification duration:"
-msgstr ""
+msgstr "&Sciigdaŭro:"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_notifyInterval)
 #: choqok/config/behavior/behaviorconfig_notifications.ui:39
@@ -398,19 +399,19 @@ msgstr " sekundoj"
 #: choqok/config/behavior/behaviorconfig_notifications.ui:57
 #, kde-format
 msgid "New post notifications"
-msgstr ""
+msgstr "Sciigoj pri novaj sendaĵoj"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_knotify)
 #: choqok/config/behavior/behaviorconfig_notifications.ui:63
 #, kde-format
 msgid "Show notification using KNotify"
-msgstr ""
+msgstr "Montri sciigojn uzante KNotify"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_libindicate)
 #: choqok/config/behavior/behaviorconfig_notifications.ui:70
 #, kde-format
 msgid "Show notification using Message Indicator"
-msgstr ""
+msgstr "Montri sciigojn uzante Message Indicator"
 
 #: choqok/config/behavior/behaviorconfig_shorten.cpp:71
 #, kde-format
@@ -422,13 +423,13 @@ msgstr "Neniu"
 #: choqok/config/behavior/behaviorconfig_shorten_base.ui:17
 #, kde-format
 msgid "Shorten &URLs on paste"
-msgstr ""
+msgstr "Mallongigi &URL-ojn je algluo"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_removeHttp)
 #: choqok/config/behavior/behaviorconfig_shorten_base.ui:24
 #, kde-format
 msgid "Remove \"http://\" from shortened URLs"
-msgstr ""
+msgstr "Forigi \"http://\" de mallongigitaj URL-oj"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: choqok/config/behavior/behaviorconfig_shorten_base.ui:33
@@ -441,19 +442,19 @@ msgstr ""
 #: libchoqok/ui/uploadmedia_base.ui:71
 #, kde-format
 msgid "Configure plugin"
-msgstr ""
+msgstr "Agordi kromprogramon"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, aboutPlugin)
 #: choqok/config/behavior/behaviorconfig_shorten_base.ui:72
 #: libchoqok/ui/uploadmedia_base.ui:90
 #, kde-format
 msgid "About plugin"
-msgstr ""
+msgstr "Pri kromprogramo"
 
 #: choqok/config/plugins/choqokpluginconfig.cpp:39
 #, kde-format
 msgid "General Plugins"
-msgstr ""
+msgstr "Ĝeneralaj Kromprogramoj"
 
 #: choqok/main.cpp:28
 #, kde-format
@@ -466,6 +467,8 @@ msgid ""
 "(C) 2008-2010 Mehrdad Momeny\n"
 "(C) 2011-2019 Choqok Developers"
 msgstr ""
+"(C) 2008-2010 Mehrdad Momeny\n"
+"(C) 2011-2019 Choqok Developers"
 
 #: choqok/main.cpp:35
 #, kde-format
@@ -475,7 +478,7 @@ msgstr "Mehrdad Momeny"
 #: choqok/main.cpp:35
 #, kde-format
 msgid "Author, Developer and Maintainer"
-msgstr ""
+msgstr "Aŭtoro, Programisto kaj Prizorganto"
 
 #: choqok/main.cpp:37
 #, kde-format
@@ -635,7 +638,7 @@ msgstr "Restarigi"
 #: choqok/mainwindow.cpp:231
 #, kde-format
 msgid "Enable Update Timer"
-msgstr ""
+msgstr "Ebligi Ĝisdatigan Tempumilon"
 
 #: choqok/mainwindow.cpp:237
 #, kde-format
@@ -650,7 +653,7 @@ msgstr "Kaŝi Menubreton"
 #: choqok/mainwindow.cpp:250
 #, kde-format
 msgid "Clear Avatar Cache"
-msgstr ""
+msgstr "Viŝi Avatar-Kaŝmemoron"
 
 #: choqok/mainwindow.cpp:252
 #, kde-format
@@ -660,7 +663,7 @@ msgstr ""
 #: choqok/mainwindow.cpp:257
 #, kde-format
 msgid "Upload Medium..."
-msgstr ""
+msgstr "Alŝuti Aŭdvidaĵon..."
 
 #: choqok/mainwindow.cpp:281
 #, kde-format
@@ -695,19 +698,19 @@ msgstr "Minimumigi"
 #: choqok/mainwindow.cpp:631
 #, kde-format
 msgid "Loading timelines..."
-msgstr ""
+msgstr "Ŝargante templiniojn..."
 
 #: choqok/systrayicon.cpp:99
 #, kde-format
 msgid "1 unread post"
 msgid_plural "%1 unread posts"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 nelegita sendaĵo"
+msgstr[1] "%1 nelegitaj sendaĵoj"
 
 #: choqok/systrayicon.cpp:108
 #, kde-format
 msgid "Choqok - Disabled"
-msgstr ""
+msgstr "Choqok - Malŝaltita"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnAttach)
 #: helperlibs/gnusocialapihelper/gnusocialapicomposerwidget.cpp:49
@@ -1674,34 +1677,34 @@ msgstr "Ĵus nun"
 #, kde-format
 msgid "1 sec ago"
 msgid_plural "%1 secs ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Antaŭ 1 sek"
+msgstr[1] "Antaŭ %1 sek"
 
 #: libchoqok/ui/postwidget.cpp:465
 #, kde-format
 msgid "1 min ago"
 msgid_plural "%1 mins ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Antaŭ 1 min"
+msgstr[1] "Antaŭ %1 min"
 
 #: libchoqok/ui/postwidget.cpp:471
 #, kde-format
 msgid "1 hour ago"
 msgid_plural "%1 hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Antaŭ 1 horo"
+msgstr[1] "Antaŭ %1 horoj"
 
 #: libchoqok/ui/postwidget.cpp:476
 #, kde-format
 msgid "1 day ago"
 msgid_plural "%1 days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Antaŭ 1 tago"
+msgstr[1] "Antaŭ %1 tagoj"
 
 #: libchoqok/ui/postwidget.cpp:481
 #, kde-format
 msgid "Are you sure you want to remove this post from the server?"
-msgstr ""
+msgstr "ĉu vi certas, ke vi volas forigi ĉi sendaĵon de la servilo?"
 
 #: libchoqok/ui/quickpost.cpp:71
 #, kde-format
@@ -1718,7 +1721,7 @@ msgstr "Sendi"
 #: libchoqok/ui/quickpost.cpp:149
 #, kde-format
 msgid "Cannot create a post without any text."
-msgstr ""
+msgstr "Ne eblas krei sendaĵon sen iu teksto."
 
 #: libchoqok/ui/quickpost.cpp:154
 #, kde-format
@@ -1726,12 +1729,16 @@ msgid ""
 "Please configure at least one account to be included in \"Quick Post\".\n"
 "Settings -> Configure Choqok... -> Accounts"
 msgstr ""
+"Bonvolu agordi almenaŭ unu konton por esti inkluzivita en \"Rapida Afiŝo\".\n"
+"Agordoj -> Agordi Choqok... -> Kontoj"
 
 #: libchoqok/ui/quickpost.cpp:261
 #, kde-format
 msgid ""
 "Link to uploaded medium will be added here after uploading process succeed."
 msgstr ""
+"Ligilo al alŝutita aŭdvidaĵo estos aldonita ĉi tie post kiam alŝutprocezo "
+"sukcesis."
 
 #: libchoqok/ui/textbrowser.cpp:105
 #, kde-format
@@ -1742,7 +1749,7 @@ msgstr "Kopii"
 #: libchoqok/ui/textbrowser.cpp:111
 #, kde-format
 msgid "Copy Link Location"
-msgstr ""
+msgstr "Kopii Ligilan Ejon"
 
 #: libchoqok/ui/textbrowser.cpp:116
 #, kde-format
@@ -1754,25 +1761,25 @@ msgstr "Elekti ĉion"
 #, kde-format
 msgid "1 new post in %2 (%3)"
 msgid_plural "%1 new posts in %2 (%3)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 nova sendaĵo en %2 (%3)"
+msgstr[1] "%1 novaj sendaĵoj en %2 (%3)"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: libchoqok/ui/uploadmedia_base.ui:22
 #, kde-format
 msgid "Medium to upload:"
-msgstr ""
+msgstr "Aŭdvidaĵo alŝutenda:"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: libchoqok/ui/uploadmedia_base.ui:39
 #, kde-format
 msgid "Upload via:"
-msgstr ""
+msgstr "Alŝuti per:"
 
 #: libchoqok/ui/uploadmediadialog.cpp:48
 #, kde-format
 msgid "Upload Medium"
-msgstr ""
+msgstr "Alŝuti Aŭdvidaĵon"
 
 #: libchoqok/ui/uploadmediadialog.cpp:56
 #, kde-format
@@ -1782,18 +1789,18 @@ msgstr "Alŝuti"
 #: libchoqok/ui/uploadmediadialog.cpp:115
 #, kde-format
 msgid "Uploading..."
-msgstr ""
+msgstr "Alŝutante..."
 
 #: libchoqok/ui/uploadmediadialog.cpp:174
 #, kde-format
 msgid "Medium uploading failed."
-msgstr ""
+msgstr "Alŝuto de aŭdvidaĵo malsukcesis."
 
 #. i18n: ectx: attribute (title), widget (QWidget, tabAccount)
 #: microblogs/friendica/friendicaeditaccount_base.ui:21
 #, kde-format
 msgid "Friendica Account"
-msgstr ""
+msgstr "Friendica-Konto"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: microblogs/friendica/friendicaeditaccount_base.ui:29
@@ -1815,7 +1822,7 @@ msgstr "A&linomo:"
 #: microblogs/twitter/twittereditaccount_base.ui:40
 #, kde-format
 msgid "The account alias"
-msgstr ""
+msgstr "La konta alinomo"
 
 #. i18n: ectx: property (whatsThis), widget (QLineEdit, kcfg_alias)
 #. i18n: ectx: property (whatsThis), widget (QLineEdit, cfg_alias)
@@ -1867,20 +1874,20 @@ msgstr "Servilo"
 #: microblogs/laconica/laconicaeditaccount_base.ui:83
 #, kde-format
 msgid "API path:"
-msgstr ""
+msgstr "API-pado:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: microblogs/friendica/friendicaeditaccount_base.ui:103
 #, kde-format
 msgid "&Friendica server:"
-msgstr ""
+msgstr "&Friendica-servilo:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_BasicBox)
 #: microblogs/friendica/friendicaeditaccount_base.ui:122
 #: microblogs/laconica/laconicaeditaccount_base.ui:122
 #, kde-format
 msgid "Basic Authentication"
-msgstr ""
+msgstr "Baza Aŭtentigo"
 
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_basicUsername)
 #. i18n: ectx: property (toolTip), widget (QLineEdit, kcfg_basicPassword)
@@ -1890,7 +1897,7 @@ msgstr ""
 #: microblogs/laconica/laconicaeditaccount_base.ui:145
 #, kde-format
 msgid "The name you use to connect to the service"
-msgstr ""
+msgstr "Ka nomo kiun vi uzas por kontekti al la servo"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
 #. i18n: ectx: property (text), widget (QLabel, label_5)
@@ -1993,13 +2000,13 @@ msgstr "#"
 #: microblogs/laconica/laconicaeditaccount_base.ui:21
 #, kde-format
 msgid "GNU social Account"
-msgstr ""
+msgstr "GNU-socia Konto"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: microblogs/laconica/laconicaeditaccount_base.ui:103
 #, kde-format
 msgid "&GNU social server:"
-msgstr ""
+msgstr "&GNU-socia servilo:"
 
 #: microblogs/mastodon/mastodoneditaccountwidget.cpp:91
 #, kde-format
@@ -2009,14 +2016,14 @@ msgstr "Kodo"
 #: microblogs/mastodon/mastodoneditaccountwidget.cpp:92
 #, kde-format
 msgid "Enter the code received from %1"
-msgstr ""
+msgstr "Enigu la kodon ricevitan de %1"
 
 #: microblogs/mastodon/mastodoneditaccountwidget.cpp:105
 #: microblogs/pumpio/pumpioeditaccountwidget.cpp:105
 #: microblogs/twitter/twittereditaccount.cpp:100
 #, kde-format
 msgid "Choqok is authorized successfully."
-msgstr ""
+msgstr "Choqok estas sukcese rajtigita."
 
 #: microblogs/mastodon/mastodoneditaccountwidget.cpp:105
 #: microblogs/pumpio/pumpioeditaccountwidget.cpp:105
@@ -2098,25 +2105,25 @@ msgstr ""
 #: microblogs/twitter/twittereditaccount_base.ui:151
 #, kde-format
 msgid "Verify credentials"
-msgstr ""
+msgstr "Konfirmi atestilojn"
 
 #. i18n: ectx: property (text), widget (QPushButton, kcfg_authorize)
 #: microblogs/mastodon/mastodoneditaccountwidget.ui:146
 #, kde-format
 msgid "&Authenticate with Mastodon Service"
-msgstr ""
+msgstr "&Aŭtentigi per Mastodon-Servo"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:320
 #: microblogs/pumpio/pumpiomicroblog.cpp:912
 #, kde-format
 msgid "The post has been shared."
-msgstr ""
+msgstr "La sendaĵo estis kundividita."
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:333
 #: microblogs/pumpio/pumpiomicroblog.cpp:926
 #, kde-format
 msgid "Cannot share the post. %1"
-msgstr ""
+msgstr "Ne eblas kundividila sendaĵon. %1"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:382
 #: microblogs/pumpio/pumpiomicroblog.cpp:715
@@ -2129,7 +2136,7 @@ msgstr ""
 #, kde-format
 msgctxt "Timeline description"
 msgid "You and people you follow"
-msgstr ""
+msgstr "Vi kaj honoj kiujn vi sekvas"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:406
 #, kde-format
@@ -2141,19 +2148,19 @@ msgstr "Loka"
 #, kde-format
 msgctxt "Timeline description"
 msgid "Local timeline"
-msgstr ""
+msgstr "Loka templinio"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:413
 #, kde-format
 msgctxt "Timeline Name"
 msgid "Federated"
-msgstr ""
+msgstr "Federaciita"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:414
 #, kde-format
 msgctxt "Timeline description"
 msgid "Federated timeline"
-msgstr ""
+msgstr "Federaciita templinio"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:420
 #, kde-format
@@ -2170,12 +2177,12 @@ msgstr "Plej ŝatataj"
 #: microblogs/mastodon/mastodonmicroblog.cpp:522
 #, kde-format
 msgid "Boost of %1"
-msgstr ""
+msgstr "Plifortigo de %1"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:524
 #, kde-format
 msgid "Boosted by %1"
-msgstr ""
+msgstr "Plifortigita per %1"
 
 #: microblogs/mastodon/mastodonmicroblog.cpp:703
 #, kde-format
@@ -2235,13 +2242,13 @@ msgstr "Ŝatataj"
 #: microblogs/ocs/ocsconfigurebase.ui:19
 #, kde-format
 msgid "&Alias:"
-msgstr ""
+msgstr "&Alinomo:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: microblogs/ocs/ocsconfigurebase.ui:67
 #, kde-format
 msgid "Provider"
-msgstr ""
+msgstr "Provizanto"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: microblogs/ocs/ocsconfigurebase.ui:73
@@ -2324,7 +2331,7 @@ msgstr ""
 #: microblogs/pumpio/pumpioeditaccountwidget.ui:146
 #, kde-format
 msgid "&Authenticate with Pump.io Service"
-msgstr ""
+msgstr "&Aŭtentigi per Pump.io-Servo"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, PumpIOMessageDialog)
 #: microblogs/pumpio/pumpiomessagedialog.ui:14
@@ -2468,7 +2475,7 @@ msgstr ""
 #: microblogs/twitter/twittereditaccount_base.ui:21
 #, kde-format
 msgid "Twitter Account"
-msgstr ""
+msgstr "Twitter-Konto"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: microblogs/twitter/twittereditaccount_base.ui:124
@@ -2498,19 +2505,19 @@ msgstr ""
 #: microblogs/twitter/twitterlistdialog.cpp:99
 #, kde-format
 msgid "No user."
-msgstr ""
+msgstr "Neniu uzanto."
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, TwitterListDialogBase)
 #: microblogs/twitter/twitterlistdialog_base.ui:14
 #, kde-format
 msgid "Add List"
-msgstr ""
+msgstr "Aldoni Liston"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: microblogs/twitter/twitterlistdialog_base.ui:26
 #, kde-format
 msgid "List name:"
-msgstr ""
+msgstr "Listnomo:"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: microblogs/twitter/twitterlistdialog_base.ui:52
@@ -2522,13 +2529,13 @@ msgstr "Uzantonomo:"
 #: microblogs/twitter/twitterlistdialog_base.ui:78
 #, kde-format
 msgid "Load user lists"
-msgstr ""
+msgstr "Ŝargi uzantlistojn"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadUserLists)
 #: microblogs/twitter/twitterlistdialog_base.ui:81
 #, kde-format
 msgid "Load Lists"
-msgstr ""
+msgstr "Ŝargi Listojn"
 
 #: microblogs/twitter/twittermicroblog.cpp:59
 #, kde-format
@@ -2540,7 +2547,7 @@ msgstr "Mencioj"
 #, kde-format
 msgctxt "Timeline description"
 msgid "Mentions of you"
-msgstr ""
+msgstr "Mencioj de vi"
 
 #: microblogs/twitter/twittermicroblog.cpp:225
 #, kde-format
@@ -3147,7 +3154,7 @@ msgstr ""
 #: plugins/shorteners/bit_ly/bit_ly_config.cpp:95
 #, kde-format
 msgid "Checking..."
-msgstr "Kontrolas..."
+msgstr "Kontrolante..."
 
 #: plugins/shorteners/bit_ly/bit_ly_config.cpp:121
 #, kde-format
@@ -3389,7 +3396,7 @@ msgstr ""
 #: plugins/uploaders/flickr/flickrprefs.ui:90
 #, kde-format
 msgid "Who can view photo"
-msgstr ""
+msgstr "Kiu povas vidi foton"
 
 #. i18n: ectx: property (text), widget (QRadioButton, cfg_forprivate)
 #: plugins/uploaders/flickr/flickrprefs.ui:96
@@ -3401,7 +3408,7 @@ msgstr "Privata"
 #: plugins/uploaders/flickr/flickrprefs.ui:105
 #, kde-format
 msgid "Visible for friends"
-msgstr ""
+msgstr "Videbla por amikoj"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cfg_forfamily)
 #: plugins/uploaders/flickr/flickrprefs.ui:112
@@ -3471,20 +3478,20 @@ msgstr ""
 #: plugins/uploaders/posterous/posterousprefs.ui:40
 #, kde-format
 msgid "&Twitter account"
-msgstr ""
+msgstr "&Twitter-konto"
 
 #. i18n: ectx: property (text), widget (QRadioButton, cfg_basic)
 #: plugins/uploaders/mobypicture/mobypictureprefs.ui:47
 #, kde-format
 msgid "Mobypicture &login and password:"
-msgstr ""
+msgstr "Ensa&luto kaj pasvorto por Mobypicture:"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/uploaders/mobypicture/mobypictureprefs.ui:57
 #: plugins/uploaders/posterous/posterousprefs.ui:57
 #, kde-format
 msgid "Upload files using:"
-msgstr ""
+msgstr "Alŝuti dosierojn uzante:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/uploaders/mobypicture/mobypictureprefs.ui:64
@@ -3496,13 +3503,13 @@ msgstr "Ensaluti:"
 #: plugins/uploaders/mobypicture/mobypictureprefs.ui:74
 #, kde-format
 msgid "Password (PIN):"
-msgstr ""
+msgstr "Pasvorto (PIN):"
 
 #. i18n: ectx: property (text), widget (QRadioButton, cfg_basic)
 #: plugins/uploaders/posterous/posterousprefs.ui:47
 #, kde-format
 msgid "Posterous &login and password:"
-msgstr ""
+msgstr "Ensa&luto kaj pasvorto por Posterous:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/uploaders/posterous/posterousprefs.ui:64
@@ -3515,10 +3522,10 @@ msgstr "Retpoŝto:"
 #: plugins/uploaders/twitpic/twitpicprefs.ui:17
 #, kde-format
 msgid "Twitter account:"
-msgstr ""
+msgstr "Twitter-konto:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, cfg_directLink)
 #: plugins/uploaders/twitgoo/twitgooprefs.ui:50
 #, kde-format
 msgid "Get direct link to file"
-msgstr ""
+msgstr "Ekhavi rektan ligilon al dosiero"
