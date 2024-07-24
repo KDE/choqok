@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: choqok\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:31+0000\n"
-"PO-Revision-Date: 2024-05-09 06:30+0900\n"
+"PO-Revision-Date: 2024-07-23 21:38+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -240,7 +240,7 @@ msgstr "您會看到文章以轉發者名稱為作者，加上轉發的原始文
 #: choqok/config/appearance/appearanceconfig_base.ui:34
 #, kde-format
 msgid "Show Retweeted/Repeated posts in Choqok way"
-msgstr "以 Choqok 方式顯示重覆發文的文章"
+msgstr "以 Choqok 方式顯示重複發文的文章"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_isCustomUi)
 #: choqok/config/appearance/appearanceconfig_base.ui:44
@@ -798,14 +798,14 @@ msgstr "對話"
 #, kde-format
 msgctxt "Timeline name"
 msgid "Repeated"
-msgstr "已重覆發文"
+msgstr "已重複發文"
 
 #: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:48
 #: microblogs/laconica/laconicamicroblog.cpp:26
 #, kde-format
 msgctxt "Timeline description"
 msgid "Your posts that were repeated by others"
-msgstr "您的文章已被其他人重覆發文"
+msgstr "您的文章已被其他人重複發文"
 
 #: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:184
 #: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:192
@@ -819,17 +819,17 @@ msgstr "上傳媒體失敗：無法讀取媒體檔案。"
 #: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:237
 #, kde-format
 msgid "Repeat of %1"
-msgstr "%1 的重覆發文"
+msgstr "%1 的重複發文"
 
 #: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:239
 #, kde-format
 msgid "Repeated by %1"
-msgstr "由 %1 重覆發文"
+msgstr "由 %1 重複發文"
 
 #: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:245
 #, kde-format
 msgid "Repeat this notice?"
-msgstr "要重覆發出此通知嗎？"
+msgstr "要重複發出此通知嗎？"
 
 #: helperlibs/gnusocialapihelper/gnusocialapimicroblog.cpp:270
 #: helperlibs/twitterapihelper/twitterapimicroblog.cpp:1488
@@ -864,12 +864,12 @@ msgstr "手動重新送出"
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:75
 #, kde-format
 msgid "Repeat"
-msgstr "重覆"
+msgstr "重複"
 
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:76
 #, kde-format
 msgid "Repeat post using API"
-msgstr "使用 API 重覆發文"
+msgstr "使用 API 重複發文"
 
 #: helperlibs/gnusocialapihelper/gnusocialapipostwidget.cpp:140
 #, kde-format
@@ -2014,7 +2014,7 @@ msgstr ""
 #: microblogs/laconica/laconicaeditaccount_base.ui:227
 #, kde-format
 msgid "On re-dent, change exclamation mark to:"
-msgstr "重覆發文時，將驚嘆號改為："
+msgstr "重複發文時，將驚嘆號改為："
 
 #. i18n: ectx: property (text), widget (QLineEdit, kcfg_changeToString)
 #: microblogs/friendica/friendicaeditaccount_base.ui:237
@@ -3077,7 +3077,7 @@ msgstr ""
 #: plugins/imstatus/imstatusprefs.ui:87
 #, kde-format
 msgid "Add repeats to status"
-msgstr "新增重覆到狀態"
+msgstr "新增重複到狀態"
 
 #: plugins/konqueror/konqchoqok.cpp:36 plugins/konqueror/konqchoqok.cpp:91
 #, kde-format
