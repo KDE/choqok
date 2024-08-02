@@ -58,7 +58,7 @@ msgstr "Adjuta"
 #: choqok/config/accounts/accountswidget.cpp:74
 #, kde-format
 msgid "Cannot load the %1 plugin. Please check your installation."
-msgstr "Nonpote cargar le plugin %1. Pro favor verifica tu installation."
+msgstr "Non pote cargar le plugin %1. Pro favor verifica tu installation."
 
 #: choqok/config/accounts/accountswidget.cpp:90
 #, kde-format
